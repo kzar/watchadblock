@@ -1,0 +1,570 @@
+<html>
+  <head>
+    <title>AdBlock Options</title>
+    <link rel="stylesheet" href="options.css" />
+    <script src="jquery/jquery-1.4.min.js"></script>
+    <script src="functions.js"></script>
+    <script src="broadcast_channel.js"></script>
+    <script>
+      listen_for_broadcasts('options_page');
+
+      register_broadcast_listener('user_filters_updated', function() {
+        extension_call('get_user_filters', {}, display_user_filters);
+      });
+      register_broadcast_listener('whitelist_updated', function() {
+        extension_call('get_whitelist', {}, display_whitelist);
+      });
+
+      function display_whitelist(whitelist) {
+        var view = $("#whitelisted_domains");
+
+        var table = $("<table></table>").
+          addClass("entry_table");
+        view.html(table);
+        $.each(whitelist, function(i, entry) {
+          var cell1 = $("<td>" + entry + "</td>");
+          var cell2 = $('<a href="#"></a>').
+            text("Remove").
+            click(function() {
+              extension_call('remove_from_whitelist', {domain:entry});
+            });
+          var row = $("<tr></tr>").
+            append(cell1).
+            append(cell2).
+            appendTo(table);
+        });
+
+        var cell1 = $("<td><input id='txtWhitelistedDomain' /></td>");
+        var cell2 = $("<input/>", 
+                      {type:"button", id:"btnWhitelist", value:"Add",
+                       disabled: "disabled"});
+        $("<tr></tr>").
+          append(cell1).
+          append(cell2).
+          appendTo(table);
+
+        $("#btnWhitelist").click(function() {
+          var domain = $("#txtWhitelistedDomain").val();
+          if (domain == "")
+            return;
+
+          extension_call('add_to_whitelist', {domain: domain});
+          $("#txtWhitelistedDomain").val("");
+        });
+
+        $("#txtWhitelistedDomain").keyup(function() {
+          var ok = true;
+          var domain = $(this).val();
+          if (domain.length < 4)
+            ok = false;
+          if (domain.indexOf(".") == -1)
+            ok = false;
+          else if (domain.lastIndexOf(".") >= domain.length - 2)
+            ok = false;
+          $("#btnWhitelist").attr("disabled", ok ? null : "disabled");
+        });
+      }
+
+      function display_user_filters(filters) {
+        var view = $("#user_filters");
+
+        var table = $("<table></table>").
+          addClass("entry_table");
+        view.html(table);
+        table.append("<tr>" +
+          "<th>Block ads that match this CSS selector...</th>" +
+          "<th>on domains that match this regex</th>" +
+          "</tr>");
+        $.each(filters, function(i, filter) {
+          var cell1 = $("<td>" + filter.css_regex + "</td>");
+          var cell2 = $("<td>" + filter.domain_regex + "</td>");
+          var cell3 = $('<a href="#"></a>').
+            text("Unblock").
+            click(function() {
+              extension_call('remove_user_filter', {filter:filter});
+            });
+          var row = $("<tr></tr>").
+            append(cell1).
+            append(cell2).
+            append(cell3).
+            appendTo(table);
+        });
+
+        var cell1 = $("<td><input id='txtUserFilterCss' /></td>");
+        var cell2 = $("<td><input id='txtUserFilterDomain' /></td>");
+        var cell3 = $("<input/>", {
+          type:"button", 
+          id:"btnAddUserFilter", 
+          value:"Block it!",
+          disabled: "disabled",
+          click: function() {
+            var css_regex = $("#txtUserFilterCss").val();
+            var domain_regex = $("#txtUserFilterDomain").val();
+            if (domain_regex == "" || domain_regex == "*")
+              domain_regex = ".*";
+
+            extension_call(
+              'add_user_filter', 
+              {
+                filter: {
+                  domain_regex: domain_regex,
+                  css_regex: css_regex
+                }
+              }
+            );
+            $("#txtUserFilterCss").val("");
+            $("#txtUserFilterDomain").val("");
+          }
+        });
+
+        $("<tr></tr>").
+          append(cell1).
+          append(cell2).
+          append(cell3).
+          appendTo(table);
+
+          table.append("<tr><td colspan=2 class='plain'><a id='btnUserFilterExamples' href='#'>Help!</a></td></tr>");
+        $("#btnUserFilterExamples").click(function() {
+          $("#user_filter_help").show();
+        });
+
+        var check_for_valid_filter = function() {
+          var ok = true;
+          var css_regex = $("#txtUserFilterCss").val();
+          var domain_regex = $("#txtUserFilterDomain").val();
+          if (css_regex == "")
+            ok = false;
+          if (domain_regex != "*" &&
+              domain_regex != "" && 
+              domain_regex.indexOf(".") == -1)
+            ok = false;
+          $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
+        }
+        $("#txtUserFilterCss").keyup(check_for_valid_filter);
+        $("#txtUserFilterDomain").keyup(check_for_valid_filter);
+      }
+
+      function flash(id, message) {
+        $("#" + id).text(message);
+      }
+
+      // Return a string representation of roughly how long ago the 
+      // given ticks were, e.g. "just now" or "2 hours ago".  If ticks is
+      // undefined, return blank.
+      function how_long_ago(ticks) {
+        if (ticks == undefined)
+          return "";
+        var now = new Date().getTime();
+        var distance = now - ticks;
+        var seconds = Math.round(distance / 1000);
+        if (seconds < 10)
+          return "updated right now";
+        if (seconds < 60)
+          return "updated " + seconds + " seconds ago";
+        var minutes = Math.round(seconds / 60);
+        if (minutes < 60)
+          return ("updated " + minutes + " minute" + 
+                      (minutes > 1 ? "s" : "") + " ago");
+        var hours = Math.round(minutes / 60);
+          return ("updated " + hours + " hour" + 
+                      (hours > 1 ? "s" : "") + " ago");
+      }
+
+
+      // If true, change events won't run.
+      global_refreshing_subscription_view = false;
+      // Cache the fetched subscriptions so we can update their times.
+      global_subscriptions_cached_copy = undefined;
+
+      // Update the "last updated" messages in the subscription view.
+      function redisplay_subscription_update_times() {
+        var subs = global_subscriptions_cached_copy;
+        if (subs == undefined)
+          return;
+        $(".subscription").each(function(i,el) {
+          var when_text = "";
+
+          var url = $("input", el).attr("name");
+          if (subs[url] && subs[url].subscribed)
+            when_text = how_long_ago(subs[url].last_update);
+
+          $(".update_time", el).text(when_text);
+        });
+      }
+
+      // Load the latest subscription model object and display it in
+      // the checkboxes.
+      function refresh_subscription_view() {
+        extension_call('get_subscriptions_minus_text', {}, function(subs) {
+          global_refreshing_subscription_view = true;
+
+          $(".subscription").each(function(i,el) {
+            var is_checked = "";
+
+            var url = $("input", el).attr("name");
+            if (subs[url] && subs[url].subscribed)
+              is_checked = "checked";
+
+              $("input", el).attr("checked", is_checked);
+          });
+
+          global_refreshing_subscription_view = false;
+
+          // Keep this around to update the "last updated" displays.
+          global_subscriptions_cached_copy = subs;
+          redisplay_subscription_update_times();
+        });
+      }
+
+      register_broadcast_listener('optimized_filters_updated', function() {
+        refresh_subscription_view();
+      });
+
+      // Unsubscribe from the given URL.
+      function unsubscribe(url) {
+        extension_call("unsubscribe", {url:url}, function() {
+          flash("subscription_message", "Unsubscribed.");
+        });
+      }
+      // Subscribe to the given URL.  If you can't fetch the latest
+      // version of it, fail.  If then_reload is specified and is
+      // true, reload the page upon success.
+      function subscribe(url, then_reload) {
+        // TODO: use a modal.
+        flash("subscription_message", "Fetching... please wait.");
+        $.ajax({
+          url: url,
+          success: function(text) {
+            extension_call(
+              "subscribe", 
+              {url:url, text:text},
+              function() {
+                flash("subscription_message", "Subscribed.");
+                if (then_reload)
+                  document.location.reload();
+              }
+            );
+          },
+          error: function() {
+            // TODO make this a modal.
+            alert("Failed to fetch this filter!");
+            document.location.reload();
+          }
+        });
+      }
+
+      $(document).ready(function() {
+
+        extension_call('get_user_filters', {}, display_user_filters);
+
+        extension_call('get_whitelist', {}, display_whitelist);
+
+        extension_call('get_optional_features', {}, function(features) {
+          for (var name in features) {
+            $("#enable_" + name).
+              attr("checked", features[name].is_enabled);
+          }
+          $("input.feature:checkbox").change(function() {
+            var is_enabled = $(this).is(':checked');
+            var name = this.id.substring(7); // TODO: hack
+            extension_call(
+              'set_optional_feature', 
+              {name:name, is_enabled:is_enabled}
+            );
+          });
+        });
+
+        extension_call('get_subscriptions_minus_text', {}, 
+                                             function(subscriptions) {
+          // Build subscription checkboxes.
+          for (var url in subscriptions) {
+            var div = $("<div></div>").
+              addClass("subscription");
+
+            var checkbox = $('<input type="checkbox" />').
+              attr("name", url);
+
+            div.
+              append(checkbox).
+              append("<span>" + subscriptions[url].name + "</span>").
+              append($("<span></span>").addClass("update_time"));
+
+            $("#filter_subscriptions").
+              append(div);
+          }
+
+          // Now that it's built, fill it in.
+          refresh_subscription_view();
+
+          // Each subscription checkbox, upon change, should subscribe
+          // or unsubscribe the user and refresh the subscriptions.
+          $('.subscription input:checkbox').change(function() {
+            // If it changed in response to a model change event,
+            // don't naively go tell the model about the event.
+            if (global_refreshing_subscription_view)
+              return;
+
+            var url = $(this).attr("name");
+            var checked = $(this).is(":checked");
+            if (!checked)
+              unsubscribe(url);
+            else
+              subscribe(url);
+          });
+
+        });
+
+        $("#btnUpdateNow").click(function() {
+          $(this).attr("disabled", "disabled");
+          extension_call("freshen_subscriptions", {force:true});
+        });
+
+
+        $("#btnNewSubscriptionUrl").click(function() {
+          var url = $("#txtNewSubscriptionUrl").val();
+          $.get("http://chromeadblock.com/api/url_subscribe.php",
+                {url:url});
+          subscribe(url, true);
+        });
+
+        // Every so often, redisplay "last update" times on subscriptions.
+        window.setInterval(
+          function() { redisplay_subscription_update_times(); },
+          1000 * 60
+        );
+
+      });
+
+    </script>
+  </head>
+  <body>
+    <h1 class="icon">AdBlock Options</h1>
+    <i>Do you love AdBlock?  It would mean the world to us if you took a
+      sec to tweet about it or post to Facebook, linking back to our 
+      install page! Here's the shortlink: 
+      <a href="http://bit.ly/ChromeAdBlock">http://bit.ly/ChromeAdBlock</a>
+      -- thanks so much!
+    </i>
+
+    <div class="section" class="experiments">
+      <h2>General options</h2>
+      <table style="vertical-align:middle; margin-left:-3px">
+        <tr>
+          <td>
+            <p style="font-size:14px">
+            <input type="checkbox" id="want_a_button" />
+            Show the AdBlock button next to the address bar
+            </p>
+          </td>
+          <td>
+            <img id="imgIconScreenshot" />
+          </td>
+        </tr>
+      </table>
+      <p id="button_explanation" class="info" style="display:none">
+        <span style="font-style:italic; font-size:12px; color:#222222">
+          To make the button optional, we put him in a helper extension all 
+          by himself, to be installed along with AdBlock.</i>
+        </span>
+        <br/><br/>
+        To add the button, click <b>Install</b> on the 
+        <a id="link_to_icon" target="top">Browser Button for AdBlock</a> page.
+        <br/><br/>
+        To remove the button, right click him and choose Disable.
+      </p>
+      <script>
+        $(function() {
+          var linkUrl = "https://chrome.google.com/extensions/detail/" +
+                        icon_extension_id;
+          $("#link_to_icon").attr("href", linkUrl);
+
+          var imgUrl = chrome.extension.getURL("img/icon_screenshot.png");
+          $("#imgIconScreenshot").attr("src", imgUrl);
+
+          $("#want_a_button").click(function() {
+            $("#button_explanation").show();
+          });
+
+          // If the icon extension is running, check the box.
+          chrome.extension.sendRequest(icon_extension_id, {}, function() {
+            $("#want_a_button").attr("checked", "checked");
+          });
+        });
+      </script>
+
+      <p>
+      <input type="checkbox" class="feature" id="enable_show_google_search_text_ads" />
+      I like the text ads on Google search results; show me those. 
+      <span style='font-style:italic; color:red'>Beta</span>
+      </p>
+      <script>
+        $("#enable_show_google_search_text_ads").change(function() {
+          var checked = $(this).is(":checked");
+          var options = { show_google_search_text_ads: checked };
+          // Give the optional feature a sec to get saved by the other
+          // change handler before recalculating filters.
+          extension_call('optimize_filters', { options: options });
+        });
+      </script>
+
+      <p>
+      <input type="checkbox" class="feature" id="enable_early_blocking" />
+      Prevent (most) ads from flashing up (recommended)
+      </p>
+
+    </div>
+
+    <div class="section">
+      <h2>Subscribe to filter lists</h2>
+      <p>
+        The defaults are great for English-speaking users in the US.
+        Others may wish to subscribe to more lists.
+      </p>
+      <p class="footnote">
+        Don't subscribe to more than you need -- every one
+        slows you down a tiny bit!  Credits and more lists can be found
+        <a href="http://adblockplus.org/en/subscriptions">here.</a>
+      </p>
+      <p>
+      <div id="subscription_message" class="ok_message">&nbsp;</div>
+      <div id="filter_subscriptions" style="padding-left:30px;">
+      </div>
+      <div style="padding-left:34px;">
+        Or enter a URL:
+        <input id="txtNewSubscriptionUrl" style="width:300px" />
+        <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
+      </div>
+      I will fetch updates daily; you can also
+      <input type="button" id="btnUpdateNow" value="update now." />
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Block an ad that the filters missed</h2>
+      <div id="user_filters"></div>
+
+      <div id="user_filter_help" style="display:none">
+        <p>Remember -- you can always
+        just report the ad to us by 
+        <a href="http://bit.ly/ChromeAdBlock">leaving a comment here</a>, and
+        your report will shortly result in a fix for yourself and for 
+        thousands of other users!</p>
+  
+        <table class="help_table">
+          <tr>
+            <th>Sample CSS selectors</th>
+            <th>What they match</th>
+          </tr>
+          <tr>
+            <td>div[class="ad"]</td>
+            <td>any div whose class is "ad"</td>
+          </tr>
+          <tr>
+            <td>table td img[class^="Ad"][id="bigAd"]</td>
+            <td>any img (within tds within tables) whose class starts 
+              with "Ad" and whose id is "bigAd"</td>
+          </tr>
+          <tr>
+            <td>iframe[name$="AdFrame"][src*="ads.com"]:last-child</td>
+            <td>any iframe whose name ends with "AdFrame" <br/>and whose src 
+              contains "ads.com" and who is the last element in its 
+              parent node</td>
+          </tr>
+          <tr>
+            <th>Sample domain regexes</th>
+            <th>What they match</th>
+          </tr>
+          <tr>
+            <td>.*</td>
+            <td>any domain</td>
+          </tr>
+          <tr>
+            <td>mail..*.com</td>
+            <td>any domain containing "mail." and ".com" in that order</td>
+          </tr>
+          <tr>
+            <td>mail.google.com</td>
+            <td>any domain containing "mail.google.com"</td>
+          </tr>
+          <tr>
+            <td>^mail.google.com$</td>
+            <td>any domain exactly matching "mail.google.com"</td>
+          </tr>
+        </table>
+      </div>
+
+      <p class="note">
+        Got a particularly useful filter?  Why not 
+        <a href="http://bit.ly/ChromeAdBlock">share it with us</a>, so we 
+        can give it to all AdBlock users?
+      </p>
+
+      <b>Shortcut:</b> Press <b>Ctrl-Shift-K</b> (think "Kill!") on a page 
+      to block an ad.  <span style="font-size:smaller">(If you don't see 
+      anything happen, try clicking on the page first.)</span>
+      <input style="margin-left: 15px" type="checkbox" class="feature" 
+             id="enable_blacklist_shortcut" />
+      Shortcut enabled
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Don't run AdBlock on domains that end with...</h2>
+      <div id="whitelisted_domains"></div>
+      <div>
+        <span class="footnote">For example, "google.com" whitelists
+        google.com, mail.google.com, and www.google.com.</span>
+        </p>
+      </div>
+      <p>
+      <b>Shortcut:</b> Press <b>Ctrl-Shift-L</b> (think "Live!") on a page 
+      to keep AdBlock from running on that page's domain.
+      <input style="margin-left: 15px" type="checkbox" class="feature" 
+             id="enable_whitelist_shortcut" />
+      Shortcut enabled
+      </p>
+    </div>
+
+    <div class="section sneaky" style="margin-top:50px;">
+      <h3>For contributors only</h3>
+      <p class="warning">
+        These options are slow, buggy, or only useful when debugging.
+      </p>
+      <p class="footnote">
+        If you use one of these and have feedback to
+        <a href="http://bit.ly/ChromeAdBlock">report</a>, please
+        to mention the URL you visited, your AdBlock and Chrome versions,
+        and your OS version.  Thanks so much for contributing!
+      </p>
+
+      <p>
+      <input type="checkbox" class="feature" id="enable_early_block_src_substrings" />
+      ... including those matched by src substring (which used to help but
+      as of the latest Chrome versions slows you down)
+      </p>
+
+      <p>
+      <input type="checkbox" class="feature" 
+             id="enable_generalized_selectors" />
+      ... and over-block at first in order to finish faster (which
+      currently has bugs)
+      </p>
+
+      <p>
+      <input type="checkbox" class="feature" id="enable_debug_logging" />
+      Show debug statements in Console Log (which slows down AdBlock)
+      </p>
+      <p>
+      <input type="checkbox" class="feature" id="enable_debug_time_logging" />
+      Show timing statements in Console Log (which, ironically, slows down 
+      AdBlock a tiny bit.  Thanks a lot, Heisenberg...)
+      </p>
+      <p class="footnote" style="font-size:x-small">
+      This is the time between AdBlock receiving the
+      list of filters from the background page and AdBlock's code finishing.
+      It does not include the time Chrome spends rendering the page or
+      parsing new style rules.
+      </p>
+    </div>
+  </body>
+</html>

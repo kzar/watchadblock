@@ -1,0 +1,390 @@
+<html>
+  <head>
+    <script src="jquery/jquery-1.4.min.js"></script>
+    <script src="functions.js"></script>
+    <script src="abp_filter_to_json_converter.js"></script>
+    <script src="filters.js"></script>
+    <script>
+      var utils = {};
+      utils.noop = function(options) {}
+
+      // STORAGE
+
+      // Inputs: key:string, default_value:object. 
+      // Returns value or default_value if not stored.
+      utils.storage_get = function(options) {
+        var json = localStorage.getItem(options.key);
+        if (json == null)
+          return options.default_value;
+        return JSON.parse(json);
+      }
+      // Inputs: key:string, value:object.
+      // Returns null.
+      utils.storage_set = function(options) {
+        localStorage.setItem(options.key, JSON.stringify(options.value));
+      }
+      // Inputs: key:string.
+      // Returns null.
+      utils.storage_remove = function(options) {
+        localStorage.removeItem(options.key);
+      }
+  
+      // Return the contents of a local file.
+      // Inputs: file:string - the file relative address, eg "js/foo.js".
+      // Returns: the content of the file.
+      utils.readfile = function(options) {
+        // A bug in jquery prevenst local files from being read, so use XHR.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", chrome.extension.getURL(options.file), false);
+        xhr.send();
+        return xhr.responseText;
+      }
+
+      // OPTIMIZED FILTERS
+
+      // Fetch the optimized filters.
+      // Inputs: none.
+      // Returns: optimized filter object.
+      utils.get_optimized_filters = function(options) {
+        var result = utils.storage_get({
+          key:'optimized_filters',
+          default_value:undefined
+        });
+        if (result != undefined)
+          return result;
+
+        // The user cleared their cookies?
+        log("No optimized filters -- starting from scratch.");
+        // This subscribes the user to a couple filters, and makes
+        // an optimized version.
+        create_subscriptions_object();
+        return utils.get_optional_features(options);
+      }
+
+
+      // OPTIONAL FEATURES
+
+      utils.get_optional_features = function(options) {
+        var features = utils.storage_get({
+          key:'optional_features', 
+          default_value:{}
+        });
+        var feature_names = [
+          "early_blocking",
+          "old_style",
+          "debug_logging",
+          "debug_time_logging",
+          "generalized_selectors",
+          "early_block_src_substrings",
+          "show_google_search_text_ads",
+          "whitelist_shortcut",
+          "blacklist_shortcut"
+          ];
+        for (var i = 0; i < feature_names.length; i++) {
+          var name = feature_names[i];
+          if (!features[name]) {
+            features[name] = { name: name, is_enabled: false };
+            if (name == "whitelist_shortcut")
+              features[name].is_enabled = true; // by default
+            if (name == "blacklist_shortcut")
+              features[name].is_enabled = true; // by default
+          }
+        }
+        return features;
+      }
+      utils.set_optional_feature = function(options) {
+        var features = utils.get_optional_features();
+        if (features[options.name] == null)
+          features[options.name] = { name:options.name };
+        var feature = features[options.name];
+        feature.is_enabled = options.is_enabled;
+        utils.storage_set({key:'optional_features', value:features});
+      }
+  
+      top_frame_domains = {};
+      // TODO: make better.
+      // Inputs: top_frame_domain?: the domain, if the caller is the top
+      // level frame.  Subframes use this to determine if the page is
+      // whitelisted.
+      utils.get_user_demands_v2 = function(options, sender) {
+        if (options.top_frame_domain) {
+          top_frame_domains[sender.tab.id] = options.top_frame_domain;
+        }
+        return {
+          whitelist: utils.get_whitelist(),
+          user_filters: utils.get_user_filters(),
+          filters: utils.get_optimized_filters({}),
+          top_frame_domain: top_frame_domains[sender.tab.id]
+        };
+      }
+
+      // WHITELIST
+
+      utils.get_whitelist = function(options) {
+        return utils.storage_get({key:'whitelist', default_value:[]});
+      }
+      utils.add_to_whitelist = function(options) {
+        var whitelist = utils.get_whitelist();
+        if ($.inArray(options.domain, whitelist) == -1) {
+          whitelist.unshift(options.domain);
+          utils.storage_set({key:'whitelist', value:whitelist});
+          utils.emit_broadcast({fn:'whitelist_updated', options: {}});
+        }
+      }
+      // Inputs: domain:string
+      // Returns: null
+      utils.remove_from_whitelist = function(options) {
+        var whitelist = utils.get_whitelist();
+        var where = whitelist.indexOf(options.domain);
+        if (where == -1)
+          return;
+        whitelist.splice(where, 1);
+        utils.storage_set({key:'whitelist', value:whitelist});
+        utils.emit_broadcast({fn:'whitelist_updated', options: {}});
+      }
+      utils.clear_whitelist = function(options) {
+        utils.storage_set({key:'whitelist', value: []});
+        utils.emit_broadcast({fn:'whitelist_updated', options: {}});
+      }
+
+      // NEW FILTERS
+
+      // Update any out of date filters.
+      // Inputs: force:bool - if true, freshen everybody even if they aren't
+      //                      very stale.  Otherwise, only freshen those
+      //                      staler than we are comfortable with.
+      utils.freshen_subscriptions = function(options) {
+        _subscriptions.freshen_async(options.force);
+      }
+      // Returns map from url to subscription object.  See filters.js for 
+      // description of subscription object.
+      // Inputs: none
+      utils.get_subscriptions_minus_text = function(options) {
+        return _subscriptions.get_subscriptions_minus_text();
+      }
+      // Optimize _subscriptions's filters.
+      // Inputs: options?: { show_google_search_text_ads:bool }.  If options
+      //         object is not specified, optimization uses the curretly
+      //         stored optional_features to determine options.
+      // Returns: null, upon completion
+      utils.optimize_filters = function(options) {
+        _subscriptions.optimize(options.options);
+      }
+      // Subscribes to a filter subscription.
+      // Inputs: url: url to which to subscribe.
+      //         text: filter text string fetched from that url
+      // Returns: null, upon completion
+      utils.subscribe = function(options) {
+        return _subscriptions.subscribe(options.url, options.text);
+      }
+
+      // Unsubscribes from a filter subscription.
+      // Inputs: url: url from which to unsubscribe.
+      // Returns: null, upon completion.
+      utils.unsubscribe = function(options) {
+        return _subscriptions.unsubscribe(options.url);
+      }
+
+
+
+      // USER FILTERS
+
+      utils.get_user_filters = function(options) {
+        return utils.storage_get({key:'user_filters', default_value: []});
+      }
+      utils.add_user_filter = function(options) {
+        var user_filters = utils.get_user_filters();
+        user_filters.unshift(options.filter);
+        utils.storage_set({key:'user_filters', value:user_filters});
+        utils.emit_broadcast({fn:'user_filters_updated', options: {}});
+      }
+      utils.remove_user_filter = function(options) {
+        var user_filters = utils.get_user_filters();
+        for (var i = 0; i < user_filters.length; i++) {
+          if (user_filters[i].domain_regex == options.filter.domain_regex &&
+              user_filters[i].css_regex == options.filter.css_regex) {
+            user_filters.splice(i, 1);
+            utils.storage_set({key:'user_filters', value:user_filters});
+            utils.emit_broadcast({fn:'user_filters_updated', options: {}});
+          }
+        }
+      }
+      utils.clear_user_filters = function(options) {
+        utils.storage_set({key:'user_filters', value: []});
+        utils.emit_broadcast({fn:'user_filters_updated', options: {}});
+      }
+
+      // Called within content scripts, by broadcast_channel.js's 
+      // broadcast(), to bounce messages back to all listeners
+      utils.emit_broadcast = function(request) {
+        log("Broadcasting from background to users " + request.fn);
+        $.each(ports, function(i, port) {
+          port.postMessage(request);
+        });
+      }
+
+      // Called by page_broadcast() to bounce messages back to all 
+      // listeners on the same page as the caller.
+      utils.emit_page_broadcast = function(request, sender) {
+        log("Broadcasting from background (to page " + sender.tab.id +
+            ") to users " + request.fn);
+        $.each(ports, function(i, port) {
+          if (port.sender.tab.id == sender.tab.id)
+            port.postMessage(request);
+        });
+      }
+
+      utils.open_blacklist_ui_on_tab = function(options) {
+        // emit_page_broadcast uses sender.tab.id to determine which page
+        // to send to.  Fake it.
+        // TODO we should really make a cleaner system for letting
+        // content scripts default a tabid to "my tab" while letting the
+        // extension button specify the tab id.
+        var sender = { tab: { id: options.tabid } };
+        utils.emit_page_broadcast(
+          {fn:'top_open_blacklist_ui', options:{}},
+          sender
+        );
+      };
+
+      // Just like open_blacklist_ui
+      utils.open_whitelist_ui_on_tab = function(options) {
+        var sender = { tab: { id: options.tabid } };
+        utils.emit_page_broadcast(
+          {fn:'top_open_whitelist_ui', options:{}},
+          sender
+        );
+      };
+
+      ports = [];
+      chrome.extension.onConnect.addListener(function(port) {
+        port.onDisconnect.addListener(function(disconnected_port) {
+          var where = ports.indexOf(disconnected_port);
+          if (where != -1) {
+            log("REMOVING DISCONNECTED PORT " + where + ":" +
+                disconnected_port.name);
+            ports.splice(where, 1);
+          }
+        });
+        // Because of a Chrome bug that keeps Options pages from firing
+        // window.unload (and thus keeping the Options page port from
+        // calling disconnect()), we must detect the Options page being
+        // reloaded and remove the old port, lest we crash Chrome (as of
+        // Dev build 288.1.)  Otherwise, we would just push the port.
+        if (port.name == "options_page") {
+          log("Length of ports: " + ports.length);
+          var found = false;
+          for (var i = 0; i < ports.length; i++) {
+            if (ports[i].name == "options_page") {
+              log("Removing stupid Options port which doesn't know to die");
+              ports[i] = port;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            log("Adding Options port for the first time.");
+            ports.push(port);
+          }
+        } else {
+          ports.push(port);
+        }
+      });
+
+      debug_background = false;
+      if (utils.get_optional_features({}).debug_logging.is_enabled) {
+        log = function(text) { console.log(text); };
+        debug_background = true;
+      }
+
+      // Called by onRequest[External] to call functions from the field.
+      function dispatchHandler(request, sender, sendResponse) { 
+        if (debug_background) {
+          log("Running: " + request.fn);
+          log("    " + JSON.stringify(request).substring(0, 300));
+        }
+        var result = utils[request.fn](request.options, sender);
+        if (debug_background) {
+          log("Response:");
+          if (result != null)
+            log("    " + JSON.stringify(result).substring(0, 300));
+          else
+            log("    (undefined)");
+        }
+        sendResponse(result);
+      }
+ 
+      // TODO maybe use the port now that we've created it, instead
+      // of these one-off connections?  Time it before changing it.
+      chrome.extension.onRequest.addListener(dispatchHandler);
+
+      // Let the AdBlock icon control us as well.
+      chrome.extension.onRequestExternal.addListener(
+        function(request, sender, sendResponse) {
+          if (sender.id != icon_extension_id)
+            return;
+          dispatchHandler(request, sender, sendResponse);
+        }
+      );
+
+      
+      function create_subscriptions_object() {
+        _subscriptions = new Filters();
+        _subscriptions.updated(function() {
+          utils.emit_broadcast({
+            fn: 'optimized_filters_updated', 
+            options: {}
+          });
+        });
+      }
+      create_subscriptions_object();
+
+
+      // If the user has just installed, make a note of it.  
+      function note_install() {
+        // Don't count the 40,000-some users who have already installed as 
+        // of when this code was deployed, so check for a key that should 
+        // definitely exist: the temp_forced_early_block that we shoved
+        // upon them around 1/1/2010.
+        var installed = utils.storage_get(
+          {key:'temp_forced_early_block', default_value:false}
+        );
+        if (installed)
+          return;
+        $.get("http://chromeadblock.com/api/installed.php");
+        // temp_forced_early_block will get set below.
+      }
+      note_install();
+
+
+
+      // Don't remove this without dealing with install counter above,
+      // which relies on this key existing to detect previously-installed
+      // users.
+      // Temporary to turn "prevent ads from flashing up" into opt-out
+      // TODO: when you remove this, make optional_features support some
+      // things being true rather than false by default.  And why not
+      // go ahead and get rid of the is_enabled garbage.
+      var done_already = utils.storage_get(
+        {key:'temp_forced_early_block', default_value:false}
+      );
+      if (done_already == false) {
+        utils.set_optional_feature({name:'early_blocking', is_enabled:true});
+        utils.storage_set({key:'temp_forced_early_block', value:true});
+      }
+
+      // And force people out of the generalized_selectors sucky experiment
+      done_already = utils.storage_get(
+        {key:'temp_forced_no_generalized_selectors', default_value:false}
+      );
+      if (done_already == false) {
+        utils.set_optional_feature({name:'generalized_selectors', 
+                                    is_enabled:false});
+        utils.storage_set({key:'temp_forced_no_generalized_selectors', 
+                           value:true});
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
