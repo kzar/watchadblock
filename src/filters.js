@@ -281,8 +281,6 @@ Filters.__make_subscription_options = function() {
       " - additional German filters",
     "http://lian.info.tm/liste_fr.txt":
       " - additional French filters",
-    "http://adblockplus.mihalkin.ru/Russia.txt":
-      " - additional Russian filters",
     "http://stanev.org/abp/adblock_bg.txt":
       " - additional Bulgarian filters",
     "http://s3.amazonaws.com/lcp/maty/myfiles/AdBlock-Nauscopio-maty.txt":
@@ -293,6 +291,8 @@ Filters.__make_subscription_options = function() {
       " - additional Romanian filters",
     "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt":
       " - additional Vietnamese filters",
+    "http://ruadlist.googlecode.com/svn/trunk/adblock.txt":
+      "Russian filters",
     "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt":
       "Chinese filters",
     "http://www.bsi.info.pl/filtrABP.txt":

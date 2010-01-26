@@ -84,6 +84,8 @@
           var name = feature_names[i];
           if (!features[name]) {
             features[name] = { name: name, is_enabled: false };
+            if (name == "early_blocking")
+              features[name].is_enabled = true; // by default
             if (name == "whitelist_shortcut")
               features[name].is_enabled = true; // by default
             if (name == "blacklist_shortcut")
@@ -373,16 +375,20 @@
         utils.storage_set({key:'temp_forced_early_block', value:true});
       }
 
-      // And force people out of the generalized_selectors sucky experiment
-      done_already = utils.storage_get(
-        {key:'temp_forced_no_generalized_selectors', default_value:false}
-      );
-      if (done_already == false) {
-        utils.set_optional_feature({name:'generalized_selectors', 
-                                    is_enabled:false});
-        utils.storage_set({key:'temp_forced_no_generalized_selectors', 
-                           value:true});
-      }
+      // TODO temp code to remove broken Russian filter
+      // TODO: we need a general way to do this!
+      (function() {
+        var oldurl = "http://adblockplus.mihalkin.ru/Russia.txt";
+        var newurl = "http://ruadlist.googlecode.com/svn/trunk/adblock.txt";
+        var data = _subscriptions.get_subscriptions_minus_text()[oldurl];
+        if (data && data.subscribed) {
+          $.get(newurl, function(text) {
+            console.log("Switching to new Russian list");
+            _subscriptions.unsubscribe(oldurl);
+            _subscriptions.subscribe(newurl, text);
+          });
+        }
+      })();
     </script>
   </head>
   <body>
