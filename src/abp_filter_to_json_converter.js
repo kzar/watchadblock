@@ -185,6 +185,27 @@ function convert_url_pattern(rule) {
 
   // Convert regexy stuff.
   
+  // First, check if it's already a complicated regex.  If so, bail.
+  // TODO: This is heuristic, but I should be precise.  What am I missing?
+  if (rule.indexOf('[^') != -1 ||
+      rule.indexOf('(?') != -1 ||
+      rule.indexOf('\\/') != -1 ||
+      rule.indexOf('\\.') != -1) {
+    result.rule = rule;
+    try {
+      log("Found a true regex rule - " + rule);
+      new RegExp(result.rule);
+      result.is_regex = true;
+      return [ result ];
+    } catch(e) {
+      log("Found an unparseable regex rule - " + rule);
+      // OK, we thought it was a regex but it's not.  Just discard it.
+      result.is_regex = false;
+      result.rule = 'dummy_rule_matching_nothing';
+      return [ result ];
+    }
+  }
+
   // If must start at domain, remember this for later -- we'll maybe
   // split the rule into two objects.
   var must_start_at_domain = false;
