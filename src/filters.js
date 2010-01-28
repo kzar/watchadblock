@@ -169,17 +169,19 @@ Filters.prototype.subscribe = function(url, text) {
   this._persist_and_optimize();
 }
 
-// Unsubscribe from a url.
+// Unsubscribe from a url.  If the url is not in the standard list of
+// URLs, remove it from _subscriptions instead of just unsubscribing (to
+// handle a filter list being deprecated.)
 // Inputs: url:string from which to unsubscribe.
 // Returns: none, upon completion.
 Filters.prototype.unsubscribe = function(url) {
   if (this._subscriptions[url] == undefined)
     return;
 
-  if (this._subscriptions[url].user_submitted)
-    delete this._subscriptions[url];
-  else
+  if (url in Filters.__subscription_options)
     this._subscriptions[url].subscribed = false;
+  else
+    delete this._subscriptions[url];
 
   this._persist_and_optimize();
 }
@@ -291,7 +293,7 @@ Filters.__make_subscription_options = function() {
       " - additional Romanian filters",
     "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt":
       " - additional Vietnamese filters",
-    "http://ruadlist.googlecode.com/svn/trunk/adblock.txt":
+    "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt":
       "Russian filters",
     "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt":
       "Chinese filters",
