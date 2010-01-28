@@ -386,17 +386,20 @@
         var newurl = "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt";
 
         var subs = _subscriptions.get_subscriptions_minus_text();
-        var found = false;
+        var hadrussian = false;
 
         for (var i = 0; i < oldurls.length; i++) {
           var url = oldurls[i];
-          if (url in subs && subs[url].subscribed) {
-            found = true;
+          if (url in subs) {
+            if (subs[url].subscribed) {
+              hadrussian = true;
+            }
+            // Either way, we want to delete the old entry.
             _subscriptions.unsubscribe(url);
           }
         }
 
-        if (found) {
+        if (hadrussian) {
           $.get(newurl, function(text) {
             console.log("Switching to new Russian list");
             _subscriptions.subscribe(newurl, text);
