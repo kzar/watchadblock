@@ -293,6 +293,8 @@ Filters.__make_subscription_options = function() {
       " - additional Romanian filters",
     "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt":
       " - additional Vietnamese filters",
+    "http://adblock.schack.dk/block.txt":
+      "Danish filters",
     "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt":
       "Russian filters",
     "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt":
