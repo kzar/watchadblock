@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: gpd75bWD2yyqMrfATe5uMw
+! Checksum: 729MvVimxpHQeoQG6svNKQ
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 27 Jan 2010 06:50 UTC
+! Last modified: 28 Jan 2010 15:00 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -227,6 +227,7 @@
 /ads-rec|
 /ads-service.
 /ads-sky|
+/ads.dll/*
 /ads.htm
 /ads.php?
 /ads/acctid
@@ -530,6 +531,7 @@
 /invideoad.
 /ireel/ad*.jpg
 /iwadsense.
+/jivoxadplayer.
 /js.ng/c
 /js.ng/s
 /js/ad_eo_
@@ -562,9 +564,6 @@
 /mtvi_ads_
 /mylayer-ad/*
 /neoads.
-/netspiderads.
-/netspiderads2.
-/netspiderads3.
 /newrightcolad.
 /news_ad.
 /newtopmsgad.
@@ -1784,6 +1783,7 @@ z/adx.js
 ##.ad_bottom_leaderboard
 ##.ad_box
 ##.ad_box2
+##.ad_caption
 ##.ad_contain
 ##.ad_container
 ~salon.com##.ad_content
@@ -1988,6 +1988,7 @@ z/adx.js
 ##.blocked-ads
 ##.blog-ads-container
 ##.blogAdvertisement
+##.blogBigAd
 ##.blog_ad
 ##.body_ad
 ##.body_sponsoredresults_bottom
@@ -2204,6 +2205,7 @@ z/adx.js
 ##.post-ad
 ##.post_ad
 ##.prebodyads
+##.premium_ad_container
 ##.promoAd
 ##.promoAds
 ##.puff-advertorials
@@ -3222,6 +3224,7 @@ z/adx.js
 ||ocp.com.com/ad.js
 ||pbsrc.com^*/sponsor/
 ||pcpro.co.uk/images/*_siteskin
+||pcpro.co.uk^*/pcprositeskin
 ||ps3news.com/banner/
 ||qrz.com/pix/*.gif
 ||retrevo.com^*/pcwframe.jsp?
@@ -3521,7 +3524,8 @@ distrowatch.com##img[title*="E  a  s  y  S  p  e  e  d  y"],[title*="E  n  d  i 
 distrowatch.com##img[title*="E - a - s - y - S - p - e - e - d - y"],[title*="E - n - d - i - a - n"],[title*="F - r - e - e - B - S - D Mall"],[title*="S - e - c - u - r - e - p - o - i - n - t"],[title*="V - y - a - t - t - a"]
 distrowatch.com##img[title*="E a s y S p e e d y"],[title*="E n d i a n"],[title*="F r e e B S D Mall"],[title*="S e c u r e p o i n t"],[title*="V y a t t a"]
 distrowatch.com##img[title*="E-a-s-y-S-p-e-e-d-y"],[title*="E-n-d-i-a-n"],[title*="F-r-e-e-B-S-D Mall"],[title*="S-e-c-u-r-e-p-o-i-n-t"],[title*="V-y-a-t-t-a"]
-distrowatch.com##img[title*="E_a_s_y_S_p_e_e_d_y"],[title*="E_n_d_i_a_n"],[title*="F_r_e_e_B_S_D Mall"],,[title*="S_e_c_u_r_e p_o_i_n_t"],[title*="S_e_c_u_r_e_p_o_i_n_t"],[title*="V_y_a_t_t_a"]
+distrowatch.com##img[title*="E_a_s_y_S_p_e_e_d_y"],[title*="E_n_d_i_a_n"],[title*="F_r_e_e_B_S_D Mall"],[title*="S_e_c_u_r_e p_o_i_n_t"],[title*="S_e_c_u_r_e_p_o_i_n_t"],[title*="V_y_a_t_t_a"]
+distrowatch.com##td.News1 > table[class] > tbody > tr + tr > td[class] > a[href] > img
 divxstage.net##.ad
 dl4all.com##div[style*="border: 1px solid rgb(255, 64, 64);"][style*="rgb(245, 245, 224);"][style*="text-align: justify;"]
 dogpile.com##.paidSearchResult
@@ -3705,7 +3709,6 @@ howstuffworks.com##.searchSponsorItem
 hplusmagazine.com###bottom
 huffingtonpost.com##.contin_below
 hvac-talk.com##td[align="center"][valign="top"][style="padding-left: 10px;"]
-ign.com###LB_Row
 images.search.yahoo.com###r-e
 imageshack.us###add_frame
 imtranslator.net##td[align="right"][valign="bottom"][height="96"]
@@ -3967,9 +3970,12 @@ nearlygood.com###abf
 neopets.com###ban
 neopets.com###ban_bottom
 neoseeker.com##div[style*="background: rgb(239, 239, 239)"][style*="float: right; width: 162px;"]
-neowin.net###div-daniel
-neowin.net###div-marcel
 neowin.net###header-banner
+neowin.net###header-promos
+neowin.net###sidebar > #latest-community + #social-links + .sidebar-block
+neowin.net###sidebar > #latest-community + #social-links + .sidebar-block + .sidebar-block + #poll + .sidebar-block + .sidebar-block
+neowin.net###sidebar > #sidebar-author + .sidebar-block
+neowin.net###sidebar > #sidebar-author + .sidebar-block + #promo + .sidebar-block + .sidebar-block
 nerve.com###topBanner
 netmag.co.uk##div[style="margin: 0px auto; padding-right: 0px; float: left; padding-bottom: 0px; width: 320px; padding-top: 0px; height: 290px; background-color: rgb(255, 255, 255);"]
 networkworld.com###lb_container_top
@@ -4095,6 +4101,7 @@ rapidlibrary.com##a[href*="/adv.php?"]
 ratemyprofessors.com##.rmp_leaderboard
 rawstory.com##td[width="101"][align="center"][style][margin="0"]
 readwriteweb.com###ad_block
+realitytvobsession.com###glinks
 reddit.com##.promotedlink
 reference.com###Resource_Center
 reference.com###abvFold
@@ -4596,6 +4603,7 @@ zuploads.com##.hispeed
 @@||timeinc.net^*/tii_ads.js$script,domain=ew.com
 @@||trutv.com/includes/banners/de/video/sync.$object_subrequest
 @@||tvnz.co.nz/stylesheets/tvnz/lib/js/advertisement.js$script
+@@||ultrabrown.com/images/adheader.jpg$image
 @@||upload.wikimedia.org/wikipedia/commons/
 @@||utarget.co.uk/crossdomain.xml$object_subrequest,domain=tvcatchup.com
 @@||video.nbcuni.com/ads/$object_subrequest
@@ -4617,6 +4625,7 @@ zuploads.com##.hispeed
 @@||gdataonline.com/exp/textad.js$script
 @@||macobserver.com/js/adframe.js$script
 @@||megavideodownloader.com/adimages/|$subdocument
+@@||onlinevideoconverter.com/scripts/advertisement.js$script
 @@||ps3news.com/ads/hdsad.js$script
 @@||ps3news.com/ads/newad.js$script
 @@||ps3news.com/forums/advertisement.js$script
