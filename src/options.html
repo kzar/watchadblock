@@ -102,6 +102,14 @@
             var domain_regex = $("#txtUserFilterDomain").val();
             if (domain_regex == "" || domain_regex == "*")
               domain_regex = ".*";
+            if (css_regex.indexOf("##") != -1) {
+              // The user misunderstood a bug report and thought they
+              // were to add a filter themselves that was in easylist
+              // format.
+              var parts = css_regex.split("##");
+              css_regex = parts[1];
+              domain_regex = parts[0];
+            }
 
             extension_call(
               'add_user_filter', 
