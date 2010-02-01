@@ -1,5 +1,11 @@
 ! Chrome AdBlock auxiliarly filters
 
+15min.lt##iframe[name="plius_frame_outer"]
+15min.lt##img[src^="http://img1.oplius.lt/ads.plius.lt/images/banners"]
+15min.lt##img[src^="http://img2.oplius.lt/ads.plius.lt/images/banners"]
+15min.lt##div[class="bg-ad"]
+15min.lt##div[id="hdrAdsContainer"][class="hdr-ads"]
+15min.lt##div[class="hdr-c2"]
 24h.com.vn##span[id^="ADS_"]
 4chan.org##a[href*="affiliates.jlist.com"]
 addictinggames.com##div[class="right-promo"]
@@ -24,9 +30,16 @@ c-sharpcorner.com##[id*="AdRow"]
 cbssports.com###ad-push-down
 cbssports.com##div#slam-border
 cbssports.com##table.fctable
+cbssports.com##div[id^="ads_flashContent"][id*="Float"]
+cbssports.com##img[src^="http://adlog.com.com/adlog/i/"]
+chacha.com##DIV[id="questionTopAd"]
+chacha.com##DIV[id="questionMiddleAds"]
+chacha.com##DIV[id="qaSideAd"]
 cnet.com###storeFront.leaderBoard
 cnet.com###dynamicHL.leaderboard
 cnn.com##[class*="_adcntr"],[class*="_adspc"]
+cnn.com##DIV[id="gallery_0_ad_0_adgif"][class="cnn_fabcatad"]
+cnn.com##DIV["gallery_0_ad_0Container"]
 demonoid.com##iframe[src*="/bnr_top"]
 derstandard.at###flashbanner,div[class*="Ad"]
 ehow.com##div[class="Text SponsoredResults Section"]
@@ -51,6 +64,8 @@ e24.se##[class^="ad"]
 e24.se##[id^="ad"]
 e24.se##div[class$="articlead"]
 espn.go.com##div#skin[class="ad skin"]
+facebook.com##IFRAME[name^="fb_iframe"][src*="http://fishwranglr.com/g/"]
+facebook.com##IFRAME[name^="fb_iframe"][src*="http://72.2.118.86/g/"]
 fairyshare.com##div[id^="SOCIALLYPUBLISH_"]
 feber.se##div.reklam
 finn.no##div#webplakat,div#skyskraper,div#topbanner
@@ -83,20 +98,27 @@ hyves.nl##iframe[id^="googlead"]
 hyves.nl##div[id^="adhese"],div[class^="adhese"]
 ika-world.com##div[id^="pf"]
 imdb.com##div#tn15adrhs
+imdb.com##DIV[id="top_center_wrapper"]
 isohunt.com##iframe[src*="/iframeAd.php"],img[src*="/a/banners/"]
 itavisen.no###ads_outside_rightColumn,#allerStripe
 itavisen.no##[id^="ad_horseshoe_"],[class^="ad_horseshoe_"]
 kitco.com##object,img[src*="/banners/"]
 kommersant.ru##div[id*="DivAdv"]
 lanacion.com.ar##div[id*="AdDiv"]
+live.com##div[id="CustomerCommunication300x125_SMC"]
 marketingpilgrim.com##a[href*="trackur.com"]
 marketingpilgrim.com##div#eselcornerSmall
+marktplaats.nl##div[class="divHomeWidgetBannerTop"]
+marktplaats.nl##div[class="divHomeWidgetBannerDart"]
+marktplaats.nl##div[class="divHomeWidgetBannerMiddle"]
 metal.de##div[id^="rotation_"]
+mibbit.com##IFRAME[name="google_ads_frame"]
 msn.com###eyeDiv
 mtv3.fi##div#mtvfi_ad_right,div#kaniflash
 mykawartha.com##div[id="td-GblHdrAds"]
 neowin.net##div[style^="background: #d1e0ef;height: 600px;width: 120px;"]
 newgrounds.com##a[class^="adheader"]
+news.bbc.co.uk##div[id^="bbccom_adsense_"]
 nirsoft.net##img[src="reimage1.jpg"]
 nu.nl##div[class^="advertorial"],div#afc_rectangle_1
 pcgameshardware.com##div[style="width:120px; margin-left:auto; margin-right:auto; padding-bottom:10px;"]
@@ -117,6 +139,8 @@ prisonplanet.com##img[src$="banner1b.gif"]
 prisonplanet.com##img[src$="banner2.gif"] 
 prisonplanet.com##img[src$="banner.jpg"]  
 psonly.nl##div#bannerTopLeader
+rbc.ru##div[class="banner"]
+rbc.ru##div[id^="flash_"]
 royalgazette.com##table#table5[valign="top"][width="120"]:last-child
 rense.com##body > center > a > img
 rense.com##img[src*="226x60"]
@@ -139,6 +163,7 @@ spikedhumor.com##div#subAds
 sportsillustrated.cnn.com##div[id^="ew_Banner"]
 sportsillustrated.cnn.com##div[class="cnnInlineAd"]
 svenskafans.com###stortavlor,.adPuff
+subcentral.de##div[id^="sponsorads"]
 suntimes.com##div.leaderboard,div.leaderholder,div#zip2save_link_widget
 suntimes.com##div[id^="p360"]
 techzine.nl##div.show-banner
