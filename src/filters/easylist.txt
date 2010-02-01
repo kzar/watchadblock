@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: 73cJFeLj+G3egwTce1/opw
+! Checksum: Xyp1P5YRl1f1sl/wu1G2cQ
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 30 Jan 2010 23:40 UTC
+! Last modified:  1 Feb 2010 16:00 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -517,6 +517,7 @@
 /iframe_ad.
 /iframe_ads/*
 /iframe_ads?
+/iframe_chitika_
 /iframead.
 /images/ad/*
 /images/ad_
@@ -729,6 +730,7 @@
 /webads_
 /webadverts/*
 /wipeads/*
+/wp-content/ads/*
 /wp-srv/ad/*
 /wpads/iframe.
 /writelayerad.
@@ -754,6 +756,7 @@
 ?file=ads&
 ?getad=&$~object_subrequest
 _ad.aspx
+_ad.php?
 _ad_code.
 _ads.php?
 _adserve/
@@ -1079,6 +1082,7 @@ z/adx.js
 ###ad_C2
 ###ad_YieldManager-300x250
 ###ad_anchor
+###ad_banner
 ###ad_banner_top
 ###ad_bar
 ###ad_bottom
@@ -1151,7 +1155,7 @@ z/adx.js
 ###adposition4
 ###adright
 ###adright2
-~2gb-hosting.com,~apple.com,~dailykos.com,~facebook.com,~radio.de,~www.google.com,~zuploads.com###ads
+~2gb-hosting.com,~apple.com,~dailykos.com,~facebook.com,~radio.de,~tomwans.com,~www.google.com,~zuploads.com###ads
 ###ads-block
 ###ads-bot
 ###ads-bottom
@@ -1528,6 +1532,7 @@ z/adx.js
 ###sponsorAd1
 ###sponsorAd2
 ###sponsorLinks
+###sponsor_banderole
 ###sponsor_panSponsor
 ###sponsored
 ###sponsored-links
@@ -1710,8 +1715,11 @@ z/adx.js
 ##.ad-wrap
 ##.ad0
 ##.ad1
+##.ad10
 ##.ad120
 ##.ad160
+##.ad18
+##.ad19
 ##.ad2
 ##.ad3
 ##.ad300
@@ -1721,6 +1729,7 @@ z/adx.js
 ##.ad310
 ##.ad336x280
 ##.ad468
+##.ad6
 ##.ad620x70
 ##.ad7
 ##.ad728
@@ -1874,7 +1883,7 @@ z/adx.js
 ##.adnotice
 ##.adpadding
 ##.adpic
-##.adright
+~tomwans.com##.adright
 ##.adrow
 ##.ads-banner
 ##.ads-profile
@@ -1903,6 +1912,7 @@ z/adx.js
 ##.ads_mpu
 ##.ads_right
 ##.ads_sc_tl_i
+##.ads_side
 ##.adsborder
 ##.adscreen
 ##.adsection_a2
@@ -2105,11 +2115,14 @@ z/adx.js
 ##.googleAds
 ##.googleAdsense
 ##.googleProfileAd
+##.googlead
 ##.googleads
 ##.googleads_300x250
 ##.googleads_title
 ##.gpAds
 ##.gradientAd
+##.gutter-ad-left
+##.gutter-ad-right
 ##.h_Ads
 ##.hd_advert
 ~burningangel.com##.header-ad
@@ -2127,6 +2140,7 @@ z/adx.js
 ##.homepage-ad
 ##.homepageFlexAdOuter
 ##.homepageMPU
+##.hor_ad
 ##.horizontalAd
 ~radaronline.com##.horizontal_ad
 ##.houseAdsStyle
@@ -2658,7 +2672,7 @@ z/adx.js
 ||dl-rms.com^$third-party
 ||domainsponsor.com^$third-party
 ||doubleclick.net/pfadx/*.mtvi$object_subrequest,third-party
-||doubleclick.net^$object_subrequest,third-party,domain=addictinggames.com|atom.com|businessweek.com|cbs4denver.com|darkhorizons.com|eonline.com|fandango.com|foxbusiness.com|foxnews.com|g4tv.com|gametrailers.com|mtv.co.uk|myfoxphoenix.com|newsweek.com|nick.com|nytimes.com|play.it|ps3news.com|sbsun.com|shockwave.com|space.com|spike.com|thedailygreen.com|thedailyshow.com|thewire.com|washingtonpost.com|wired.com|wsj.com|wwe.com|youtube.com|zoomin.tv
+||doubleclick.net^$object_subrequest,third-party,domain=addictinggames.com|atom.com|break.com|businessweek.com|cbs4denver.com|darkhorizons.com|eonline.com|fandango.com|foxbusiness.com|foxnews.com|g4tv.com|gametrailers.com|mtv.co.uk|myfoxphoenix.com|newsweek.com|nick.com|nytimes.com|play.it|ps3news.com|sbsun.com|shockwave.com|space.com|spike.com|thedailygreen.com|thedailyshow.com|thewire.com|washingtonpost.com|wired.com|wsj.com|wwe.com|youtube.com|zoomin.tv
 ||doubleclick.net^$~object_subrequest,third-party
 ||doubleclick.net^*;sz=$object_subrequest,third-party,domain=1up.com|breitbart.tv|digitaltrends.com|heavy.com|myspace.com|nbc.com|nfl.com
 ||dpbolvw.net^$third-party
@@ -2842,6 +2856,7 @@ z/adx.js
 ||payperpost.com^$third-party
 ||pc-ads.com^$third-party
 ||peer39.net^$third-party
+||pepperjamnetwork.com^$third-party
 ||perfb.com^$third-party
 ||performancingads.com^$third-party
 ||pgmediaserve.com^$third-party
@@ -3006,6 +3021,7 @@ z/adx.js
 ||adultfriendfinder.com/banners/$third-party
 ||advanced-intelligence.com/banner$third-party
 ||affil.mupromo.com^$third-party
+||affiliate.astraweb.com^$third-party
 ||affiliates.a2hosting.com^$third-party
 ||affiliates.jlist.com^$third-party
 ||affiliates.supergreenhosting.com^$third-party
@@ -3499,6 +3515,7 @@ crmbuyer.com##.story-cip
 crn.com###channelwebmarketplacewrapper
 crunchgear.com##.ad
 crunchgear.com##.sponsor_units
+crunchyroll.com##.anime-mrec
 cyberciti.biz###leaderboard
 dailyfinance.com###attic
 dailyfinance.com##.medrect
@@ -3831,6 +3848,7 @@ lemondrop.com##.sidebarBanner
 lemondrop.com##.topBanner
 licensing.biz##.newsinsert
 life.com##.ad
+lifehack.org##.offer
 lifehacker.com###marquee
 lifehacker.com###marquee-frame
 lifehacker.com###skyscraper
@@ -3897,6 +3915,9 @@ mail.yahoo.com###MNW
 mail.yahoo.com###northbanner
 mail.yahoo.com###nwPane
 mail.yahoo.com###swPane
+majorgeeks.com##a[href^="http://www.liutilities.com/products/campaigns/adv/"]
+majorgeeks.com##a[href^="https://secure.avangate.com/affiliate.php?"]
+majorgeeks.com##div > table.author > tbody > tr > td
 majorgeeks.com##table[align="right"][width="336"][style="padding-left: 5px;"]
 makeuseof.com##a[href^="http://makeuseof.com/short/ads/"]
 malaysiastory.com##.box2
@@ -4351,6 +4372,7 @@ tmz.com###skyscraper
 tomsgames.com###pub_header
 tomsgames.it###pub_header
 tomsguide.com##.sideOffers
+tomwans.com##.big_button
 toptechnews.com##.regtext[style="border: 1px solid rgb(192, 192, 192); padding: 5px;"]
 toptechnews.com##table[width="370"][cellpadding="10"][style="border: 1px solid rgb(204, 204, 204); border-collapse: collapse;"]
 toptechnews.com##table[width="990"][cellpadding="5"]
@@ -4656,7 +4678,7 @@ zuploads.com##.hispeed
 @@||macobserver.com/js/adframe.js$script
 @@||megavideodownloader.com/adimages/|$subdocument
 @@||onlinevideoconverter.com/scripts/advertisement.js$script
-@@||ps3news.com/adhtml/$script
+@@||ps3news.com^$script
 @@||superfastfile.com/adimages/|$subdocument
 @@||theteacherscorner.net/adiframe/ad.js$script
 @@||tpmrpg.net/adframe.js$script
