@@ -358,7 +358,7 @@
       <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user">ad</a>, 
       or join the 
       <a href="http://groups.google.com/group/adblockforchrome-discuss">Google
-      group</a>.  See you there!</i>
+      group</a>.  See you there!
     </div>
 
     <div class="section" class="experiments">
@@ -379,7 +379,7 @@
       <p id="button_explanation" class="info" style="display:none">
         <span style="font-style:italic; font-size:12px; color:#222222">
           To make the button optional, we put him in a helper extension all 
-          by himself, to be installed along with AdBlock.</i>
+          by himself, to be installed along with AdBlock.
         </span>
         <br/><br/>
         To add the button, click <b>Install</b> on the 
@@ -440,18 +440,18 @@
         slows you down a tiny bit!  Credits and more lists can be found
         <a href="http://adblockplus.org/en/subscriptions">here.</a>
       </p>
-      <p>
-      <div id="subscription_message" class="ok_message">&nbsp;</div>
-      <div id="filter_subscriptions" style="padding-left:30px;">
+      <div>
+        <div id="subscription_message" class="ok_message">&nbsp;</div>
+        <div id="filter_subscriptions" style="padding-left:30px;">
+        </div>
+        <div style="padding-left:34px;">
+          Or enter a URL:
+          <input id="txtNewSubscriptionUrl" style="width:300px" />
+          <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
+        </div>
+        I will fetch updates daily; you can also
+        <input type="button" id="btnUpdateNow" value="update now." />
       </div>
-      <div style="padding-left:34px;">
-        Or enter a URL:
-        <input id="txtNewSubscriptionUrl" style="width:300px" />
-        <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
-      </div>
-      I will fetch updates daily; you can also
-      <input type="button" id="btnUpdateNow" value="update now." />
-      </p>
     </div>
 
     <div class="section">
@@ -519,7 +519,6 @@
       <input style="margin-left: 15px" type="checkbox" class="feature" 
              id="enable_blacklist_shortcut" />
       Shortcut enabled
-      </p>
     </div>
 
     <div class="section">
@@ -528,7 +527,6 @@
       <div>
         <span class="footnote">For example, "google.com" whitelists
         google.com, mail.google.com, and www.google.com.</span>
-        </p>
       </div>
       <p>
       <b>Shortcut:</b> Press <b>Ctrl-Shift-L</b> (think "Live!") on a page 
