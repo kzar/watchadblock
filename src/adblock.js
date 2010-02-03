@@ -201,6 +201,44 @@ function adblock_begin_v2(features) {
         $("#navbar").css('margin-top', 21);
     }
 
+    if (domain.match("youtube") && features.block_youtube.is_enabled) {
+      // Based heavily off of AdThwart's YouTube in-video ad blocking.
+      // Thanks, Tom!
+      function adThwartBlockYouTube(elt) {
+        log("Blocking YouTube ads");
+        elt = elt || $("#movie_player").get(0);
+        if (!elt)
+          return;
+        var re = /&(ad_|prerolls|watermark|invideo|interstitial|watermark|infringe).*?=.+?(&|$)/gi;
+        // WTF. replace() just gives up after a while, missing things 
+        // near the end of the string. So we run it again.
+        var newFlashVars = elt.getAttribute("flashvars");
+        if (!newFlashVars)
+          return;
+        newFlashVars = newFlashVars.
+                replace(re, "&").
+                replace(re, "&");
+        var replacement = elt.cloneNode(true);
+        replacement.setAttribute("flashvars", newFlashVars + 
+                "&invideo=false&autoplay=1");
+        blocking_youtube = true; // avoid recursion upon DOMNodeInserted
+        elt.parentNode.replaceChild(replacement, elt);
+        blocking_youtube = false;
+        $('style[title="youtube_hack"]').remove();
+      }
+      // movie_player doesn't appear in the originally loaded HTML, so I
+      // suspect it is inserted right after startup.  This code may not be
+      // needed (when I remove it ads are still removed) but I'll leave it
+      // in to be safe.
+      document.addEventListener("DOMNodeInserted", function(e) {
+        if (e.target.id == "movie_player") {
+            if (!blocking_youtube) // avoid recursion
+              adThwartBlockYouTube(e.target);
+        }
+      }, false);
+      adThwartBlockYouTube();
+    }
+
     if (domain.indexOf("acidtests.org") != -1) {
         alert("Hi, this is an alert from AdBlock.  AdBlock horks the ACID test, partially because AdBlock is designed to change the layout of your web pages.  To check Chrome's ACID rating, you'll need to temporarily disable AdBlock; with AdBlock enabled this page will display about a 66/100 and then hang.  (Also, you'll see this alert a few times; just click the 'Stop showing me alerts!' checkbox when it appears).  Sorry for the interruption! -- Michael");
     }

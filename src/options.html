@@ -423,6 +423,12 @@
       </script>
 
       <p>
+      <input type="checkbox" class="feature" id="enable_block_youtube" />
+      Block ads inside Youtube videos.
+      <span style='font-style:italic; color:red'>Beta</span>
+      </p>
+
+      <p>
       <input type="checkbox" class="feature" id="enable_early_blocking" />
       Prevent (most) ads from flashing up (recommended)
       </p>
@@ -552,15 +558,14 @@
 
       <p>
       <input type="checkbox" class="feature" id="enable_early_block_src_substrings" />
-      ... including those matched by src substring (which used to help but
+      Early block by src substring (which used to help but
       as of the latest Chrome versions slows you down)
       </p>
 
       <p>
       <input type="checkbox" class="feature" 
              id="enable_generalized_selectors" />
-      ... and over-block at first in order to finish faster (which
-      currently has bugs)
+      Over-block at first in order to finish faster (which currently has bugs)
       </p>
 
       <p>

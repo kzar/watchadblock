@@ -69,6 +69,11 @@ function do_early_stuff(features, demands) {
 
   facebook_hack();
 
+  if (document.domain.match("youtube") && 
+      features.block_youtube.is_enabled) {
+    block_list_via_css(["#movie_player"], "youtube_hack");
+  }
+
   if (features.early_blocking.is_enabled == false)
     return;
 
