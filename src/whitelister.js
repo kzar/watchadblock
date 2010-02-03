@@ -8,13 +8,15 @@ function verify_whitelist() {
   // defined in blacklister.js
   load_jquery_ui(function() {
 
+    stop_checking_for_whitelist_keypress();
+
     var page = $("<div></div>").
       html("AdBlock won't run on domains ending in '" + domain + "'.").
       dialog({
         title: "Whitelist this domain?",
         width: "auto",
         buttons: {
-          "Cancel": function() { page.dialog('close'); },
+          "Cancel": function() { page.dialog('close'); whitelister_init(); },
           "Whitelist it!": function() {
             extension_call('add_to_whitelist', {domain:domain}, function() {
               document.location.reload();
