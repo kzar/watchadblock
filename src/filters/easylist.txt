@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: Wnaari9ESIjq1DqnvAmScw
+! Checksum: 1IhlMSgKUGmNyxYLC8e3YQ
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified:  2 Feb 2010 22:00 UTC
+! Last modified:  3 Feb 2010 20:00 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -252,6 +252,7 @@
 /adsadclient31.
 /adsadview.
 /adsatt.
+/adsbanner.
 /adscluster.
 /adscontent2.
 /adscript.
@@ -528,6 +529,7 @@
 /images/ads-
 /images/ads/*
 /img/ads/*
+/inc/ads/*
 /include/ads/*
 /includes/ad_
 /includes/ads/*
@@ -743,6 +745,7 @@
 /your-ad.
 /ysmads.
 /zanox/banner/*
+/zanox_ad/*
 8080/ads/
 ?*&ad_keyword=
 ?*&adname=
@@ -1200,6 +1203,7 @@ z/adx.js
 ###adstop
 ###adtech_takeover
 ###adtop
+###adv_bg
 ###adv_google_300
 ###adv_google_728
 ~finn.no,~gcrg.org,~kalaydo.de,~sepa.org.uk###advert
@@ -1350,6 +1354,7 @@ z/adx.js
 ###ft-ad-container
 ###fusionad
 ###ga_300x250
+###gad
 ###gallery_ads
 ###game-info-ad
 ###global_header_ad_area
@@ -1480,6 +1485,7 @@ z/adx.js
 ###rail_ad1
 ###rail_ad2
 ###realEstateAds
+###rect_ad
 ###rectangle-ad
 ###rectangle_ad
 ###region-top-ad
@@ -1523,6 +1529,7 @@ z/adx.js
 ###site_top_ad
 ###skyAd
 ###skyScrapperAd
+###sky_ad
 ###skyscraperAd
 ###skyscraper_advert
 ###sliderAdHolder
@@ -1977,6 +1984,7 @@ z/adx.js
 ##.advertorial
 ##.adverts
 ##.advt
+##.advt-banner-3
 ##.advt300
 ##.advt720
 ##.adwrapper
@@ -2069,6 +2077,7 @@ z/adx.js
 ##.container_serendipity_plugin_google_adsense
 ~theology.edu##.contentAd
 ##.content_ad
+##.content_adsq
 ##.contentad
 ##.contenttextad
 ##.cp_ad
@@ -2166,6 +2175,7 @@ z/adx.js
 ##.inline-mpu-left
 ##.inlineSideAd
 ##.inline_ad_title
+##.inner-advt-banner-3
 ##.innerAds
 ##.innerad
 ##.inpostad
@@ -2499,6 +2509,7 @@ z/adx.js
 ||adjal.com^$third-party
 ||adjug.com^$third-party
 ||adjuggler.com^$third-party
+||adjuggler.net^$third-party
 ||adlink.net^$third-party
 ||admarketplace.net^$third-party
 ||admeld.com^$third-party
@@ -2975,6 +2986,7 @@ z/adx.js
 ||triadmedianetwork.com^$third-party
 ||tribalfusion.com^$third-party
 ||trigami.com^$third-party
+||trker.com^$third-party
 ||twinplan.com^$third-party
 ||twittad.com^$third-party
 ||tyroo.com^$third-party
@@ -3168,6 +3180,7 @@ z/adx.js
 ||payplay.fm^*/mastercs.js
 ||ps3news.com^*.swf
 ||showstreet.com/banner.
+||soundtracklyrics.net^*_az.js
 ||thehighstreetweb.com^*/banners/
 ||videos.mediaite.com/decor/live/white_alpha_60.
 ||wisevid.com/ad/
@@ -3417,7 +3430,6 @@ bangkokpost.com##.buzzBoombox
 basketball.com##td[width="530"] + td[width="120"]
 bbc.co.uk##.bbccom_display_none
 bebo.com##table[style="background-color: rgb(247, 246, 246);"]
-biblegateway.com###a9g-leader-spacer
 bigblueball.com###text-384255551
 bigpond.com##div[id^="sensis_island_ad_"]
 bit-tech.net###broadband-finder-co-uk-120
@@ -3729,6 +3741,7 @@ gigwise.com###skyscraper
 giveawayoftheday.com##.before_hot_tags
 gizmodo.com###marquee
 gizmodo.com###marquee-frame
+gizmodo.com###skyscraper
 gizmodo.com###spacer160
 gizmodo.com##.highlite
 goal.com###marketplaceModule
@@ -3860,6 +3873,9 @@ kotaku.com###marquee
 kotaku.com###marquee-frame
 kotaku.com###skyscraper
 kotaku.com##.highlite
+kovideo.net##.h-728
+kovideo.net##.right-def-160
+kovideo.net##.search-728
 kuklaskorner.com###ultimate
 kval.com###mrktplace_tabbed
 kval.com##.callout
@@ -3868,6 +3884,7 @@ layoutstreet.com##.ad
 learninginfo.org##table[align="left"][width="346"]
 lemondrop.com##.sidebarBanner
 lemondrop.com##.topBanner
+letssingit.com##iframe[id^="adslot_"]
 licensing.biz##.newsinsert
 life.com##.ad
 lifehack.org##.offer
@@ -3907,6 +3924,7 @@ lowbird.com##.teaser
 luxist.com###topleader-wrap
 luxist.com##.medrect
 lyrics007.com##td[bgcolor="#ffcc00"][width="770"][height="110"]
+lyricsbox.com##iframe[id^="adslot_"]
 lyricsfreak.com##.ad
 lyricwiki.org###p-navigation + .portlet
 maannews.net##td[style="border: 1px solid rgb(204, 204, 204); width: 250px; height: 120px;"]
@@ -3961,6 +3979,9 @@ merriam-webster.com###google_creative_3
 metadivx.com##.ad
 metblogs.com###a_medrect
 metblogs.com###a_widesky
+metrolyrics.com##iframe[width="160"][height="600"]
+metrolyrics.com##iframe[width="300"][height="250"]
+metrolyrics.com##iframe[width="728"][height="90"]
 mg.co.za###masthead > table[style="padding-right: 5px;"]:first-child
 mg.co.za##.articlecontinues
 mg.co.za##div[style="width: 300px; height: 250px;"]
@@ -4271,6 +4292,7 @@ someecards.com###some-ads
 someecards.com###some-more-ads
 someecards.com###store
 somethingawful.com##.oma_pal
+songlyrics.com##.content-bottom-banner
 space.com###expandedBanner
 space.com##table[width="321"][height="285"][bgcolor="#000000"]
 space.com##td[colspan="2"]:first-child > table[width="968"]:first-child
