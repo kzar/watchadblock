@@ -123,6 +123,10 @@ Filters.prototype.freshen_async = function(force) {
       success: function(text) {
         var now = new Date().getTime();
         log("Fetched " + url);
+        if (!text || text.length == 0) {
+          localStorage.setItem('fetch_failed', url);
+          return;
+        }
         // In case the subscription disappeared while we were out
         // (which would happen if they unsubscribed to a user-submitted
         // filter)...
@@ -178,8 +182,12 @@ Filters.prototype.unsubscribe = function(url) {
   if (this._subscriptions[url] == undefined)
     return;
 
-  if (url in Filters.__subscription_options)
+  if (url in Filters.__subscription_options) {
     this._subscriptions[url].subscribed = false;
+    // Don't need to do this, but makes the object easier to debug
+    delete this._subscriptions[url].text;
+    delete this._subscriptions[url].last_update;
+  }
   else
     delete this._subscriptions[url];
 
