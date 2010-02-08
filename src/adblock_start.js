@@ -87,20 +87,6 @@ function do_early_stuff(features, demands) {
       selectors.push('[src*="' + srcs[i] + '"]');
   }
 
-  // TODO: these names are terrible.
-  if (features.generalized_selectors.is_enabled) {
-    // Get rid of selectors that can be covered by too-strong selectors.
-    var newselectors = without_generalizable(selectors);
-    log ("SELECTORS WERE " + selectors.length + " AND ARE NOW " +
-         newselectors.length);
-    selectors = newselectors;
-
-    // Add the too-strong selectors.  Later we'll unhide the false
-    // positives.
-    var accusations = get_generalized_selectors();
-    block_list_via_css(accusations, "adblock_accusations");
-  }
-
   // We ignore the URL whitelist; so in adblock.js, if there are any
   // whitelisted items on the page, we remove all the ads, then remove
   // this style element.

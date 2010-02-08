@@ -269,7 +269,6 @@ function adblock_begin_v2(features) {
 
     var f = demands.filters;
 
-    log("WHITELIST SEARCH");
     var whitelisted = get_regex_and_substring_matches(
                         f.whitelisted_src_regexes,
                         f.whitelisted_src_substrings,
@@ -289,30 +288,6 @@ function adblock_begin_v2(features) {
       // TODO: this doesn't actually work half the time, because Chrome
       // has two conflicting directives.  Really I need to make
       // :not(.adblock_innocent) be on every freaking rule.
-    }
-
-    if (features.generalized_selectors.is_enabled &&
-        features.early_blocking.is_enabled) {
-
-      // We accused way too many during adblock_start.  Remove those
-      // who are guilty of the accused crime, then remove the adblock_start
-      // css that accuses the innocent leftovers.
-      var all_selectors = add_includes_and_excludes(f.selectors);
-      var generalizable_selectors = only_generalizable(all_selectors);
-      var guilty = $(generalizable_selectors.join(','));
-
-      if (features.debug_logging.is_enabled) {
-        log("Found the accuser: " + 
-            $('style[title="adblock_accusations"]').length > 0);
-        log("The guilty " + guilty.length + ":");
-        guilty.each(function(i,el) {
-          log("  " + el.nodeName + "#" + el.id + "." + el.className);
-        });
-      }
-
-      guilty.remove();
-      $('style[title="adblock_accusations"]').remove();
-
     }
 
     log("PATTERN SEARCH");
