@@ -58,34 +58,16 @@ function adblock_begin_v2(features) {
 
   // Return a jQuery object containing all [src] and [value] elements that
   // match one of the given regex (if is_regex) or substring patterns.
-  // If skip_srcs, skip [src] (because we already handled this case in 
-  // adblock_start via CSS selectors.)
-  function get_url_matches(patterns, is_regex, skip_srcs) {
+  function get_url_matches(patterns, is_regex) {
     var result = $([]);
 
     log("SRC matches:");
-    if (!skip_srcs) {
-      result = $("[src]").
-        filter(function(i) {
-            if (this.src == undefined) // e.g. <span src="foo"/> does this
-              return false;
-            return matches(this.src.toLowerCase(), patterns, is_regex);
-          });
-    }
-
-    if (features.debug_logging.is_enabled && skip_srcs) {
-      log("Here are the [src]s that I won't block because adblock_start " +
-          "does it for me:");
-      var temp_stuff = $("[src]").
-        filter(function(i) {
-            if (this.src == undefined) // e.g. <span src="foo"/> does this
-              return false;
-            var yep = matches(this.src.toLowerCase(), patterns, is_regex);
-            if (yep)
-              log(" -- that was a " + this.nodeName);
-            return yep;
-          });
-    }
+    result = $("[src]").
+      filter(function(i) {
+          if (this.src == undefined) // e.g. <span src="foo"/> does this
+            return false;
+          return matches(this.src.toLowerCase(), patterns, is_regex);
+        });
 
     log("OBJECT PARAM matches:");
     $("object param[value]").
@@ -103,9 +85,7 @@ function adblock_begin_v2(features) {
 
   // Return a jQuery object containing all [src] and [value] elements that
   // match the given regex and substring lists of filters.
-  // If skip_src_substrings, only check object params for substrings.
-  function get_regex_and_substring_matches(regex_list, substring_list,
-                                           skip_src_substrings) {
+  function get_regex_and_substring_matches(regex_list, substring_list) {
     var regexes = add_includes_and_excludes(regex_list);
     for (var i = 0; i < regexes.length; i++)
       regexes[i] = new RegExp(regexes[i]);
@@ -114,8 +94,7 @@ function adblock_begin_v2(features) {
 
     var substrings = add_includes_and_excludes(substring_list, false);
 
-    var substring_matches = get_url_matches(substrings, false, 
-                                            skip_src_substrings);
+    var substring_matches = get_url_matches(substrings, false);
 
     result = result.add(substring_matches);
 
@@ -271,8 +250,7 @@ function adblock_begin_v2(features) {
 
     var whitelisted = get_regex_and_substring_matches(
                         f.whitelisted_src_regexes,
-                        f.whitelisted_src_substrings,
-                        false);
+                        f.whitelisted_src_substrings);
     log("WHITELISTED: " + whitelisted.length);
 
     if (features.early_blocking.is_enabled) {
@@ -291,16 +269,9 @@ function adblock_begin_v2(features) {
     }
 
     log("PATTERN SEARCH");
-    var skip_src_substrings = (
-        whitelisted.length == 0 &&
-        features.early_blocking.is_enabled &&
-        features.early_block_src_substrings.is_enabled
-    );
-
     var pattern_blocklist = get_regex_and_substring_matches(
                                 f.src_regexes,
-                                f.src_substrings,
-                                skip_src_substrings);
+                                f.src_substrings);
 
     var to_block = pattern_blocklist.not(whitelisted);
     log("PATTERN BLOCKED: " + to_block.length + " (plus " +

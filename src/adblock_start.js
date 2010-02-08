@@ -79,17 +79,10 @@ function do_early_stuff(features, demands) {
 
   early_blacklist(demands.user_filters);
 
-  var selectors = add_includes_and_excludes(demands.filters.selectors);
-
-  if (features.early_block_src_substrings.is_enabled) {
-    var srcs = add_includes_and_excludes(demands.filters.src_substrings);
-    for (var i = 0; i < srcs.length; i++)
-      selectors.push('[src*="' + srcs[i] + '"]');
-  }
-
   // We ignore the URL whitelist; so in adblock.js, if there are any
   // whitelisted items on the page, we remove all the ads, then remove
   // this style element.
+  var selectors = add_includes_and_excludes(demands.filters.selectors);
   block_list_via_css(selectors);
 
   var end = new Date();
