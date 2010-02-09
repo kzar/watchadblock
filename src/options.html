@@ -597,6 +597,32 @@
       It does not include the time Chrome spends rendering the page or
       parsing new style rules.
       </p>
+
+      <p>
+      Subscribe to all filters:
+      <input value="OK" type=button id="btnSubscribeAll" />
+      <br/>
+      Unsubscribe from all filters: 
+      <input value="OK" type=button id="btnUnsubscribeAll" />
+      </p>
+      <script>
+        $(function() {
+          $("#btnSubscribeAll").click(function() {
+            $("input", ".subscription").each(function(i, el) {
+              if (el.checked == false) {
+                subscribe($(el).attr("name"));
+              }
+            });
+          });
+          $("#btnUnsubscribeAll").click(function() {
+            $("input", ".subscription").each(function(i, el) {
+              if (el.checked == true) {
+                unsubscribe($(el).attr("name"));
+              }
+            });
+          });
+        });
+      </script>
     </div>
   </body>
 </html>
