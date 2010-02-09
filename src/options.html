@@ -15,6 +15,19 @@
         extension_call('get_whitelist', {}, display_whitelist);
       });
 
+      function note_visit() {
+        if (localStorage.getItem('visited_options_at') != null)
+          return;
+        var now = new Date().getTime();
+        localStorage.setItem('visited_options_at', now);
+        var installed_at = localStorage.getItem('installed_at', 0);
+        if (installed_at == null)
+          installed_at = 2; // aka "we don't know"
+        $.get("http://chromeadblock.com/api/visit.php", 
+              {options_at:now, installed_at:installed_at});
+      }
+      note_visit();
+
       function display_whitelist(whitelist) {
         var view = $("#whitelisted_domains");
 
