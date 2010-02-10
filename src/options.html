@@ -256,6 +256,11 @@
         $.ajax({
           url: url,
           success: function(text) {
+            if (text[0] != '!' && text[0] != '[') {
+              alert("Please enter the URL of a list of filters to " +
+                    "subscribe to.");
+              return;
+            }
             extension_call(
               "subscribe", 
               {url:url, text:text},
