@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: AQ5GrZBdOR5RenBQU7ueGg
+! Checksum: XYVvZy3kNlVdQzX92aE1jA
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified:  8 Feb 2010 22:00 UTC
+! Last modified:  9 Feb 2010 09:00 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -130,6 +130,7 @@
 /adbanner.
 /adbanner/*
 /adbanners/*
+/adbot_promos/*
 /adbox.gif
 /adbrite.
 /adbureau.
@@ -334,6 +335,7 @@
 /advertising/*
 /advertisingmanual.
 /advertize_on_
+/advertorials/*
 /advertpro/*
 /adverts.
 /adverts/*
@@ -2614,7 +2616,9 @@ z/adx.js
 ||amgdgt.com^$third-party
 ||anrdoezrs.net^$third-party
 ||apmebf.com^$third-party
+||arcadebannerexchange.net^$third-party
 ||arcadebanners.com^$third-party
+||arcadebe.com^$third-party
 ||arti-mediagroup.com^$third-party
 ||as5000.com^$third-party
 ||asklots.com^$third-party
@@ -2871,6 +2875,7 @@ z/adx.js
 ||money4ads.com^$third-party
 ||mootermedia.com^$third-party
 ||moregamers.com^$third-party
+||moreplayerz.com^$third-party
 ||mpression.net^$third-party
 ||nabbr.com^$third-party
 ||nbjmp.com^$third-party
@@ -4088,6 +4093,7 @@ neowin.net###sidebar > #latest-community + #social-links + .sidebar-block
 neowin.net###sidebar > #latest-community + #social-links + .sidebar-block + .sidebar-block + #poll + .sidebar-block + .sidebar-block
 neowin.net###sidebar > #sidebar-author + .sidebar-block
 neowin.net###sidebar > #sidebar-author + .sidebar-block + #promo + .sidebar-block + .sidebar-block
+neowin.net##div[style$="height: 250px; width: 300px;"]
 nerve.com###topBanner
 netmag.co.uk##div[style="margin: 0px auto; padding-right: 0px; float: left; padding-bottom: 0px; width: 320px; padding-top: 0px; height: 290px; background-color: rgb(255, 255, 255);"]
 networkworld.com###lb_container_top
@@ -4687,6 +4693,7 @@ zuploads.com##.hispeed
 @@||i.cdn.turner.com^*/adserviceadapter.swf$object
 @@||ign.com/js.ng/size=headermainad&site=teamxbox$script,domain=teamxbox.com
 @@||im.mstar.com/ads/*.flv$object_subrequest
+@@||images.marketwatch.com/ads/video/$object_subrequest,domain=huffingtonpost.com
 @@||imdb.com/images/*/js/ads.js$script
 @@||img.thedailywtf.com/images/ads/$image
 @@||img.weather.weatherbug.com^*/stickers/$background,image,stylesheet
@@ -4709,6 +4716,8 @@ zuploads.com##.hispeed
 @@||oas.five.tv/realmedia/ads/adstream_sx.ads/demand.five.tv/$object_subrequest
 @@||oascentral.feedroom.com/realmedia/ads/adstream_sx.ads/$script,domain=businessweek.com|economist.com|feedroom.com|stanford.edu
 @@||oascentral.upi.com^$object_subrequest
+@@||objects.tremormedia.com/embed/js/$script,domain=deluxetelevision.com
+@@||objects.tremormedia.com/embed/swf/acudeoplayer.swf$object,domain=deluxetelevision.com
 @@||objects.tremormedia.com/embed/swf/admanager*.swf$object_subrequest
 @@||objects.tremormedia.com/embed/xml/*.xml?r=$object_subrequest,domain=mydamnchannel.com
 @@||omnikool.discovery.com/realmedia/ads/adstream_mjx.ads/dsc.discovery.com/$script

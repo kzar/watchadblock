@@ -343,6 +343,13 @@
 
         $("#btnNewSubscriptionUrl").click(function() {
           var url = $("#txtNewSubscriptionUrl").val();
+          var abp_regex = /^abp.*location=(.*)$/
+          if (url.match(abp_regex)) {
+            url = url.match(abp_regex)[1]; // the part after 'location='
+            if (url.match(/&title/)) // then strip it
+              url = url.substring(0, url.indexOf('&title'));
+            url = unescape(url);
+          }
           $.get("http://chromeadblock.com/api/url_subscribe.php",
                 {url:url});
           subscribe(url, true);
