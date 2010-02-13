@@ -253,19 +253,14 @@ function adblock_begin_v2(features) {
                         f.whitelisted_src_substrings);
     log("WHITELISTED: " + whitelisted.length);
 
+    // TODO: this doesn't actually work half the time, because Chrome
+    // has two conflicting directives.  Really I need to make
+    // :not(.adblock_innocent) be on every freaking rule.
     if (features.early_blocking.is_enabled) {
-      // We don't take the whitelist into account when early blocking,
-      // so anything in the whitelist has been hidden.  Now let's show them.
-      // TODO: this doesn't handle items that arrive on the page after
-      // it has loaded.  We might instead add a CSS rule (to the BOTTOM of
-      // the page) explicitly showing these elements, but that doesn't work
-      // for regex matches or src substrings within OBJECTs.  Perhaps the
-      // current approach will so rarely be a problem that we don't have 
-      // to worry about adding a DOMElementAdded listener.
+      // The CSS rules shouldn't apply to whitelisted entries.  This won't
+      // address items that load after adblock.js runs, but I've never had
+      // a complaint about it.
       whitelisted.show();
-      // TODO: this doesn't actually work half the time, because Chrome
-      // has two conflicting directives.  Really I need to make
-      // :not(.adblock_innocent) be on every freaking rule.
     }
 
     log("PATTERN SEARCH");
@@ -314,9 +309,6 @@ function adblock_begin_v2(features) {
     // assuming we never remove that style element.
     if (features.early_blocking.is_enabled == false)
       run_blacklist(demands.user_filters);
-
-    // TODO if whitelist.length > 0 and we early_blocked, remove our
-    // style elements.
 
     var end = new Date();
     time_log("Total running time (v2): " + (end - start) + " || " +
