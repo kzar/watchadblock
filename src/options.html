@@ -35,7 +35,7 @@
           addClass("entry_table");
         view.html(table);
         $.each(whitelist, function(i, entry) {
-          var cell1 = $("<td>" + entry + "</td>");
+          var cell1 = $("<td>").text(entry);
           var cell2 = $('<a href="#"></a>').
             text("Remove").
             click(function() {
@@ -91,8 +91,8 @@
           "<th>on domains that match this regex</th>" +
           "</tr>");
         $.each(filters, function(i, filter) {
-          var cell1 = $("<td>" + filter.css_regex + "</td>");
-          var cell2 = $("<td>" + filter.domain_regex + "</td>");
+          var cell1 = $("<td>").text(filter.css_regex);
+          var cell2 = $("<td>").text(filter.domain_regex);
           var cell3 = $('<a href="#"></a>').
             text("Unblock").
             click(function() {
