@@ -70,7 +70,9 @@
           var domain = $(this).val();
           if (domain.length < 4)
             ok = false;
-          if (domain.indexOf(".") == -1)
+          if (domain == "localhost")
+            ok = true;
+          else if (domain.indexOf(".") == -1)
             ok = false;
           else if (domain.lastIndexOf(".") >= domain.length - 2)
             ok = false;
