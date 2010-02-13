@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: jQ0n2/hIPSXBS+uS4XQXdQ
+! Checksum: 7Sp9g6uGiC9yROj1Wdks7A
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 10 Feb 2010 20:20 UTC
+! Last modified: 13 Feb 2010 22:10 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -14,6 +14,7 @@
 !------------------------------------General ad blocking rules-------------------------------------!
 ! *** easylist_general_block.txt ***
 &ad_type_id=
+&adsensenumber=
 .aspx?zoneid=*&task=
 .au/_ads/
 .au/ads/
@@ -286,6 +287,7 @@
 /adsinclude.
 /adsinsert.
 /adsky.php
+/adslots.
 /adslug_
 /adsmanagement/*
 /adsmanager/*
@@ -408,6 +410,7 @@
 /bannery/*?banner=
 /baselinead.
 /behaviorads/*
+/bg_ads_
 /bigboxad.
 /bkgrndads/*
 /blogad_
@@ -486,7 +489,6 @@
 /fuseads/*
 /gamersad.
 /get-ad.php?
-/get_ad.php?
 /get_player_ads_
 /getad.php?
 /getad.php|
@@ -547,6 +549,7 @@
 /invideoad.
 /ireel/ad*.jpg
 /iwadsense.
+/ji_advertise.
 /jivoxadplayer.
 /js.ng/c
 /js.ng/s
@@ -768,6 +771,7 @@
 ?ad_ids=*&referer=
 ?ad_type=
 ?ad_width=
+?adarea=
 ?adclass=
 ?adpage=
 ?adtype=
@@ -776,6 +780,7 @@
 ?getad=&$~object_subrequest
 _ad.aspx
 _ad.php?
+_ad_big.
 _ad_code.
 _ads.php?
 _adserve/
@@ -990,6 +995,8 @@ z/adx.js
 ###HeaderAdsBlock
 ###HeroAd
 ###HouseAd
+###Journal_Ad_125
+###Journal_Ad_300
 ###LeftAdF1
 ###LeftAdF2
 ###PageLeaderAd
@@ -1042,7 +1049,7 @@ z/adx.js
 ###ad-wrap-right
 ###ad-wrapper1
 ###ad-yahoo-simple
-###ad1
+~tvgorge.com###ad1
 ###ad125x125
 ###ad160x600
 ###ad160x600right
@@ -1063,6 +1070,7 @@ z/adx.js
 ###ad600
 ~natgeo.tv###ad728x90
 ###adB
+###adBadges
 ###adBanner
 ###adBanner120x600
 ###adBannerTable
@@ -1080,6 +1088,7 @@ z/adx.js
 ###adPlaceHolderRight
 ###adSenseModule
 ###adServer_marginal
+###adSidebarSq
 ###adSky
 ###adSlider
 ###adSpace300_ifrMain
@@ -1379,6 +1388,7 @@ z/adx.js
 ###ft-ad-1
 ###ft-ad-container
 ###fusionad
+###g_ad
 ###ga_300x250
 ###gad
 ###gallery-ad-m0
@@ -1745,6 +1755,7 @@ z/adx.js
 ##.ad-rect
 ##.ad-rectangle
 ##.ad-rectangle-text
+##.ad-related
 ##.ad-ri
 ##.ad-right
 ##.ad-right-txt
@@ -1815,6 +1826,7 @@ z/adx.js
 ~outspark.com##.adModule
 ##.adNewsChannel
 ##.adNoticeOut
+##.adObj
 ##.adRight
 ##.adServer
 ##.adSlot
@@ -1940,6 +1952,7 @@ z/adx.js
 ##.ads-profile
 ##.ads-right
 ##.ads-sidebar
+##.ads-text
 ##.ads2
 ##.ads3
 ~chw.net,~cub.com,~joinmyband.co.uk,~lets-sell.info##.ads:not(body)
@@ -2220,6 +2233,7 @@ z/adx.js
 ##.innerad
 ##.inpostad
 ##.islandAd
+##.js-advert
 ##.kw_advert
 ##.kw_advert_pair
 ##.l_ad_sub
@@ -2369,6 +2383,7 @@ z/adx.js
 ##.sideheadsponsorsad
 ##.singleAd
 ##.singleAdsContainer
+##.singlead
 ##.sitesponsor
 ##.skinAd
 ##.skin_ad_638
@@ -2744,6 +2759,7 @@ z/adx.js
 ||dl-rms.com^$third-party
 ||domainsponsor.com^$third-party
 ||doubleclick.net/pfadx/*.mtvi$object_subrequest,third-party
+||doubleclick.net/pfadx/*adcat=$object_subrequest,third-party
 ||doubleclick.net^$object_subrequest,third-party,domain=addictinggames.com|atom.com|break.com|businessweek.com|cbs4denver.com|darkhorizons.com|eonline.com|fandango.com|foxbusiness.com|foxnews.com|g4tv.com|gametrailers.com|joblo.com|mtv.co.uk|myfoxphoenix.com|newsweek.com|nick.com|nytimes.com|play.it|ps3news.com|sbsun.com|shockwave.com|space.com|spike.com|thedailygreen.com|thedailyshow.com|thewire.com|washingtonpost.com|wired.com|wsj.com|wwe.com|youtube.com|zoomin.tv
 ||doubleclick.net^$~object_subrequest,third-party
 ||doubleclick.net^*;sz=$object_subrequest,third-party,domain=1up.com|breitbart.tv|digitaltrends.com|heavy.com|myspace.com|nbc.com|nfl.com
@@ -2980,6 +2996,7 @@ z/adx.js
 ||rwpads.com^$third-party
 ||sa.entireweb.com^$third-party
 ||safelistextreme.com^$third-party
+||salvador24.com^$third-party
 ||sbaffiliates.com^$third-party
 ||scanscout.com^$third-party
 ||sendptp.com^$third-party
@@ -3221,6 +3238,7 @@ z/adx.js
 ||break.com^*/sponsors/
 ||c21media.net/uploads/flash/*.swf
 ||codeasily.com^*/codeasily.js
+||da.feedsportal.com^*/a2.img$image
 ||dailymail.co.uk^*/promoboxes/
 ||divxstage.net/images/download.png
 ||ecommerce-journal.com/specdata.php?
@@ -3228,6 +3246,7 @@ z/adx.js
 ||glam.com^*/affiliate/
 ||hostsearch.com/creative/
 ||idg.com.au^*_skin.jpg
+||itpro.co.uk/images/skins/
 ||kewlshare.com/reward.
 ||macworld.co.uk^*/textdeals/
 ||meetic.com/js/*/site_under_
@@ -3241,8 +3260,10 @@ z/adx.js
 ||prisonplanet.com^*advert.
 ||prisonplanet.com^*banner
 ||prisonplanet.com^*sky.
+||project-for-sell.com/_google.php
 ||ps3news.com^*.swf
 ||showstreet.com/banner.
+||softcab.com/google.php?
 ||soundtracklyrics.net^*_az.js
 ||thehighstreetweb.com^*/banners/
 ||tripadvisor.com^*/skyscraper.jpg
@@ -3272,7 +3293,7 @@ z/adx.js
 ||dimshare.com/empire.
 ||dl4all.com/data4.files/dpopupwindow.
 ||earthlink.net^*/promos/
-||ebayrtm.com/rtm?*&c=
+||ebayrtm.com/rtm?
 ||ebuddy.com/banners/
 ||ebuddy.com/textlink.php?
 ||ebuddy.com/web_banners/
@@ -3474,6 +3495,7 @@ autoblog.com##.topleader
 autobloggreen.com##.medrect
 autosport.com##.content[width] td[height="17"][bgcolor="#dcdcdc"]
 autosport.com##td[align="center"][valign="top"][height="266"][bgcolor="#dcdcdc"]
+autotrader.co.uk###placeholderTopLeaderboard
 avsforum.com##td[width="125"][valign="top"][style="padding-left: 15px;"]
 avsforum.com##td[width="193"][valign="top"]
 avsforum.com##td[width="300"][valign="top"][rowspan="3"]
@@ -3485,6 +3507,8 @@ bangkokpost.com##.boomboxSize1
 bangkokpost.com##.buzzBoombox
 basketball.com##td[width="530"] + td[width="120"]
 bbc.co.uk##.bbccom_display_none
+bdnews24.com###bannerdiv2
+bdnews24.com##.add
 bebo.com##table[style="background-color: rgb(247, 246, 246);"]
 bigblueball.com###text-384255551
 bigpond.com##div[id^="sensis_island_ad_"]
@@ -3517,6 +3541,7 @@ break.com##.ad
 break.com##.breaking_news
 breakingviews.com###floatit
 breitbart.com##.sidebar
+brighouseecho.co.uk###banner01
 brisbanetimes.com.au##.ad
 broadcastnewsroom.com###shopperartbox
 broadcastnewsroom.com##.bfua
@@ -3540,8 +3565,10 @@ cartoonnetwork.com###leaderboard
 ccfcforum.com##.tablepad
 ccfcforum.com##img[alt="ISS"]
 celebnipslipblog.com###HeaderBanner
+cell.com###main_banner
 cgenie.com###ja-banner
 cgenie.com##.cgenie_banner4
+channel3000.com###leaderboard-sticky
 channel4.com###c4ad-Middle1
 chicagotribune.com###story-body-parent + .rail
 chickipedia.com##div[style*="/ad_bg.gif)"]
@@ -3646,7 +3673,10 @@ discovery.com##.rectangle
 disney.go.com###banner
 distrowatch.com##a[href^="http://www.acunetix.com/cross-site-scripting/scanner.htm"] > *
 distrowatch.com##body > br + div
-distrowatch.com##img[title*="BSDMall"],img[title*="Easy.Speedy"],img[title*="Easy-Speedy"],img[title*="E:n:d:i:a:n"],img[title*="F - r - e - e   B - S - D Mall"],img[title*="NexentaStor"],img[title*="N e x e n t a S t o r"],img[title*="S-e-c-u-r-e P-o-i-n-t"],img[title*="S_e_c_u_r_e P_o_i_n_t"],img[title*="V - y - a - t - t - a"],img
+distrowatch.com##img[title*="B S D M a l l"],img[title*="E:n:d:i:a:n"],img[title*="E:n:d.i:a:n"],img[title*="F - r - e - e   B - S - D Mall"],img[title*="V  y  a  t  t  a"]
+distrowatch.com##img[title*="Easy"][title*="Speedy"]
+distrowatch.com##img[title*="N e x e n t a"][title*="S t o r"]
+distrowatch.com##img[title*="S-e-c-u-r-e"][title*="P-o-i-n-t"]
 divxstage.net##.ad
 dl4all.com##div[style*="border: 1px solid rgb(255, 64, 64);"][style*="rgb(245, 245, 224);"][style*="text-align: justify;"]
 dogpile.com##.paidSearchResult
@@ -3787,6 +3817,7 @@ gawker.com###skyscraper
 gawker.com##.highlite
 geek.com##.leaderboard
 geekologie.com###leaderboard
+get-ip.de##div[style*="width: 250px; height: 250px;"]
 gethuman.com##td[style="width: 200px;"]
 getprice.com.au##table[id*="AdAware"]
 gigwise.com###skyscraper
@@ -3815,10 +3846,12 @@ growingbusiness.co.uk##.siteLeaderBoard
 h-online.com##.bcadv
 haaretz.com##a[target="_blank"][href^="http://dclk.themarker.com/"]
 haaretz.com##td[width="120"][valign="top"]
+halifaxcourier.co.uk###banner01
 hardocp.com##.ad
 harpers.org##.topbanner
 healthboards.com##img[height="103"][src*="/health/health_"]
 healthboards.com##td[align="left"][width="300"]:first-child
+hebdenbridgetimes.co.uk###banner01
 helenair.com##table.bordered[align="center"][width="728"]
 helpwithwindows.com###ad
 helpwithwindows.com###desc
@@ -3881,6 +3914,7 @@ irishtimes.com###banner-area
 itnewsonline.com##table[width="300"][height="250"]
 itnewsonline.com##td[width="120"]
 itp.net##div[id^="oas-"]
+itpro.co.uk###skyScraper
 itproportal.com###hp-accordion
 itproportal.com##.teaser
 itworld.com###more_resources
@@ -4339,6 +4373,7 @@ snow.co.nz###content-footer-wrap
 snow.co.nz###header-banner
 snowtv.co.nz###header-banner
 softonic.com##.topbanner
+softonic.com##.topbanner_program
 softpedia.com##.logotable[align="right"] > a[target="_blank"]
 softpedia.com##.pagehead_op2
 softpedia.com##img[width="600"][height="90"]
@@ -4470,6 +4505,7 @@ tinypic.com##.medrec
 tips.net###googlebig
 tmz.com###leaderboard
 tmz.com###skyscraper
+todaystmj4.com###leaderboard1
 tomsgames.com###pub_header
 tomsgames.it###pub_header
 tomsguide.com##.sideOffers
@@ -4630,6 +4666,7 @@ yahoo.com##div[id^="y708-promo-"]
 yatsoba.com##.sponsors
 yauba.com##a[onclick^="on_moo("][onclick*=".ask.com/r?"]
 yesasia.com##.advHr
+yorkshirepost.co.uk###banner01
 yourtomtom.com##div[style^="border"][style*="rgb(180, 195, 154)"][style*="background: rgb(249, 252, 241)"]
 youtube.com###chrome-promo
 youtube.com###feedmodule-PRO
@@ -4659,12 +4696,12 @@ zuploads.com##.hispeed
 @@||2mdn.net/*_ecw_$image,domain=wwe.com
 @@||a.giantrealm.com/assets/vau/grplayer*.swf$object
 @@||ad.gogopin.com^$~document
+@@||adap.tv/redir/client/adplayer.swf?$object_subrequest,domain=ehow.com|xxlmag.com
 @@||addictinggames.com/jsource/ad_functions.js$script
 @@||adjuggler.com^$script,domain=videodetective.com
 @@||adm.fwmrm.net^$object_subrequest
 @@||ads.adap.tv/control?$object_subrequest,domain=xxlmag.com
 @@||ads.adap.tv/crossdomain.xml$object_subrequest,domain=xxlmag.com
-@@||ads.adap.tv/redir/client/adplayer.swf?$object_subrequest,domain=xxlmag.com
 @@||ads.adultswim.com/js.ng/site=toonswim&toonswim_pos=600x400_ctr&toonswim_rollup=games$script
 @@||ads.ahds.ac.uk^$~document
 @@||ads.cnn.com/js.ng/*&cnn_intl_subsection=download$script
@@ -4718,13 +4755,13 @@ zuploads.com##.hispeed
 @@||i.cdn.turner.com^*/adserviceadapter.swf$object
 @@||ign.com/js.ng/size=headermainad&site=teamxbox$script,domain=teamxbox.com
 @@||im.mstar.com/ads/*.flv$object_subrequest
-@@||images.marketwatch.com/ads/video/$object_subrequest,domain=huffingtonpost.com
 @@||imdb.com/images/*/js/ads.js$script
 @@||img.thedailywtf.com/images/ads/$image
 @@||img.weather.weatherbug.com^*/stickers/$background,image,stylesheet
 @@||jobs.wa.gov.au/images/advertimages/$background,image
 @@||lightningcast.net/servlets/getplaylist?*&responsetype=asx&$object
 @@||liverail.com/crossdomain.xml$object_subrequest
+@@||liverail.com/swf/*/plugins/flowplayer/$object_subrequest
 @@||mads.cbs.com/mac-ad?$object_subrequest
 @@||mads.com.com/ads/common/faith/*.xml$object_subrequest
 @@||media.salemwebnetwork.com/js/admanager/swfobject.js$script,domain=christianity.com
@@ -4747,7 +4784,7 @@ zuploads.com##.hispeed
 @@||objects.tremormedia.com/embed/xml/*.xml?r=$object_subrequest,domain=mydamnchannel.com
 @@||omnikool.discovery.com/realmedia/ads/adstream_mjx.ads/dsc.discovery.com/$script
 @@||quit.org.au/images/images/ad/$image
-@@||redir.adap.tv/redir/client/adplayer.swf?$object_subrequest,domain=cracked.com
+@@||redir.adap.tv/redir/client/adplayer.swf?$object_subrequest,domain=cracked.com|videosift.com
 @@||sankakucomplex.com/img/www/d/spcjs.php?id=$script
 @@||sankakucomplex.com/wp-content/themes/*/sankaku.js?*&adname=*&spc=/spc.php?
 @@||seavideo-ak.espn.go.com/ads/$object_subrequest
@@ -4775,7 +4812,6 @@ zuploads.com##.hispeed
 @@||video.nbcuni.com/ads/$object_subrequest
 @@||vortex.accuweather.com/adc2004/pub/ads/js/ads-2006_vod.js$script
 @@||vox-static.liverail.com/swf/*/admanager.swf$object_subrequest
-@@||vox-static.liverail.com/swf/*/plugins/flowplayer/$object_subrequest
 @@||weather.com/common/a2/oasadframe.html?position=pagespon$subdocument
 @@||weather.com/common/a2/oasadframe.html?position=pointspon$subdocument
 @@||widget.slide.com^*/ads/*/preroll.swf$object_subrequest

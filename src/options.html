@@ -312,9 +312,13 @@
             var checkbox = $('<input type="checkbox" />').
               attr("name", url);
 
+            var name = $("<span>").
+              text(subscriptions[url].name);
+
             div.
+              attr("title", url).
               append(checkbox).
-              append("<span>" + subscriptions[url].name + "</span>").
+              append(name).
               append($("<span></span>").addClass("update_time"));
 
             $("#filter_subscriptions").
