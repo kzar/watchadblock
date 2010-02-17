@@ -26,80 +26,122 @@ function run_blacklist(user_filters) {
   }
 }
 
+function Matcher(filters) {
+  this.filters = filters;
+
+  var regexes = add_includes_and_excludes(filters.whitelisted_src_regexes);
+  for (var i = 0; i < regexes.length; i++)
+    regexes[i] = new RegExp(regexes[i]);
+  this.compiled_whitelisted_regexes = regexes;
+
+  regexes = add_includes_and_excludes(filters.src_regexes);
+  for (var i = 0; i < regexes.length; i++)
+    regexes[i] = new RegExp(regexes[i]);
+  this.compiled_regexes = regexes;
+
+  this.whitelisted_substrings = add_includes_and_excludes(
+          filters.whitelisted_src_substrings);
+  this.substrings = add_includes_and_excludes(
+          filters.src_substrings);
+
+}
+// Return true if 'target' matches any of 'patterns'.
+Matcher.prototype.matches = function(target, patterns, is_regex) {
+  // Avoid realllly slow checking on huge strings -- google
+  // image search results being one example.
+  target = target.substring(0, LENGTH_CUTOFF);
+
+  for (var i = 0; i < patterns.length; i++) {
+    if ( (!is_regex && this.substring_match(patterns[i], target)) ||
+         ( is_regex && this.regex_match(patterns[i], target)) ) {
+      log("  * " + (is_regex ? "regex" : "substring") + " match: '" + 
+          patterns[i] + "' matches '" + target + "'");
+      return true;
+    }
+  }
+  return false;
+}
+// Split out for profiling's sake.
+Matcher.prototype.substring_match = function(pattern, target) {
+  // See matches() for reason
+  pattern = pattern.substring(0, LENGTH_CUTOFF);
+
+  return target.indexOf(pattern) != -1;
+}
+// TODO: see dev/TODO -- this is slow.  Speed it up.
+Matcher.prototype.regex_match = function(pattern, target) {
+  return pattern.test(target);
+}
+// Return a jQuery object containing all [src] and [value] elements that
+// match one of the given regex (if is_regex) or substring patterns.
+Matcher.prototype.get_url_matches = function(patterns, is_regex) {
+  var result = $([]);
+  var that = this;
+
+  log("SRC matches:");
+  result = $("[src]").
+    filter(function(i) {
+        if (this.src == undefined) // e.g. <span src="foo"/> does this
+          return false;
+        return that.matches(this.src.toLowerCase(), patterns, is_regex);
+      });
+
+  log("OBJECT PARAM matches:");
+  $("object param[value]").
+    filter(function(i) {
+        if (this.value == undefined)
+          return false;
+        return that.matches(this.value.toLowerCase(), patterns, is_regex);
+      }).
+    each(function(i, el) {
+        result = result.add($(el).closest("object"));
+      });
+
+  return result;
+}
+// Return true if the given string is matched by our filters.
+Matcher.prototype.is_matched = function(value) {
+  value = value.toLowerCase();
+  var answer = false;
+  if (this.matches(value, this.compiled_regexes, true))
+    answer = true;
+  else if (this.matches(value, this.substrings, false))
+    answer = true;
+
+  if (answer == true) { // check that they're not whitelisted
+    if (this.matches(value, this.compiled_whitelisted_regexes, true))
+      return false;
+    if (this.matches(value, this.whitelisted_substrings, false))
+      return false;
+  }
+
+  return answer;
+}
+// Return a jQuery object containing all [src] and [value] elements that
+// match the given regex and substring lists of filters.
+Matcher.prototype.get_regex_and_substring_matches = function(isWhitelist) {
+
+  var regexes, substrings;
+
+  if (isWhitelist) {
+    regexes = this.compiled_whitelisted_regexes;
+    substrings = this.whitelisted_substrings;
+  } else {
+    regexes = this.compiled_regexes;
+    substrings = this.substrings;
+  }
+
+  var result = this.get_url_matches(regexes, true);
+
+  var substring_matches = this.get_url_matches(substrings, false);
+
+  result = result.add(substring_matches);
+
+  return result;
+}
+
 
 function adblock_begin_v2(features) {
-  // Return true if 'target' matches any of 'patterns'.
-  function matches(target, patterns, is_regex) {
-    // Avoid realllly slow checking on huge strings -- google
-    // image search results being one example.
-    target = target.substring(0, LENGTH_CUTOFF);
-
-    for (var i = 0; i < patterns.length; i++) {
-      if ( (!is_regex && substring_match(patterns[i], target)) ||
-           ( is_regex && regex_match(patterns[i], target)) ) {
-        log("  * " + (is_regex ? "regex" : "substring") + " match: '" + 
-            patterns[i] + "' matches '" + target + "'");
-        return true;
-      }
-    }
-    return false;
-  }
-  // Split out for profiling's sake.
-  function substring_match(pattern, target) {
-      // See matches() for reason
-      pattern = pattern.substring(0, LENGTH_CUTOFF);
-
-      return target.indexOf(pattern) != -1;
-  }
-  // TODO: see dev/TODO -- this is slow.  Speed it up.
-  function regex_match(pattern, target) {
-      return pattern.test(target);
-  }
-
-  // Return a jQuery object containing all [src] and [value] elements that
-  // match one of the given regex (if is_regex) or substring patterns.
-  function get_url_matches(patterns, is_regex) {
-    var result = $([]);
-
-    log("SRC matches:");
-    result = $("[src]").
-      filter(function(i) {
-          if (this.src == undefined) // e.g. <span src="foo"/> does this
-            return false;
-          return matches(this.src.toLowerCase(), patterns, is_regex);
-        });
-
-    log("OBJECT PARAM matches:");
-    $("object param[value]").
-      filter(function(i) {
-          if (this.value == undefined)
-            return false;
-          return matches(this.value.toLowerCase(), patterns, is_regex);
-        }).
-      each(function(i, el) {
-          result = result.add($(el).closest("object"));
-        });
-
-    return result;
-  }
-
-  // Return a jQuery object containing all [src] and [value] elements that
-  // match the given regex and substring lists of filters.
-  function get_regex_and_substring_matches(regex_list, substring_list) {
-    var regexes = add_includes_and_excludes(regex_list);
-    for (var i = 0; i < regexes.length; i++)
-      regexes[i] = new RegExp(regexes[i]);
-
-    var result = get_url_matches(regexes, true, false);
-
-    var substrings = add_includes_and_excludes(substring_list, false);
-
-    var substring_matches = get_url_matches(substrings, false);
-
-    result = result.add(substring_matches);
-
-    return result;
-  }
 
   function run_selector_blocklist(f, whitelisted) {
     var selectors = add_includes_and_excludes(f.selectors);
@@ -246,11 +288,9 @@ function adblock_begin_v2(features) {
     if (document.domain == "mail.google.com")
       return;
 
-    var f = demands.filters;
+    var matcher = new Matcher(demands.filters);
 
-    var whitelisted = get_regex_and_substring_matches(
-                        f.whitelisted_src_regexes,
-                        f.whitelisted_src_substrings);
+    var whitelisted = matcher.get_regex_and_substring_matches(true);
     log("WHITELISTED: " + whitelisted.length);
 
     // TODO: this doesn't actually work half the time, because Chrome
@@ -264,9 +304,7 @@ function adblock_begin_v2(features) {
     }
 
     log("PATTERN SEARCH");
-    var pattern_blocklist = get_regex_and_substring_matches(
-                                f.src_regexes,
-                                f.src_substrings);
+    var pattern_blocklist = matcher.get_regex_and_substring_matches(false);
 
     var to_block = pattern_blocklist.not(whitelisted);
     log("PATTERN BLOCKED: " + to_block.length + " (plus " +
@@ -282,7 +320,7 @@ function adblock_begin_v2(features) {
       if (features.debug_logging.is_enabled) {
         log("Skipping SELECTOR SEARCH -- here's what adblock_start covered:");
         log(" (this won't show items that arrived after the page loaded)");
-        var selectors = add_includes_and_excludes(f.selectors);
+        var selectors = add_includes_and_excludes(demands.filters.selectors);
         var candidates = $(selectors.join(','));
         var to_block = candidates.not(whitelisted);
         // List which selectors removed which ads.
@@ -300,8 +338,17 @@ function adblock_begin_v2(features) {
         log("[end of skipped SELECTOR SEARCH]");
       }
     } else {
-      run_selector_blocklist(f, whitelisted);
+      run_selector_blocklist(demands.filters, whitelisted);
     }
+
+    var bgimage = $("body").css("background-image").match(/^url\((.*)\)$/);
+    if (bgimage) {
+      log("BACKGROUND IMAGE");
+      var bg_url = bgimage[1];
+      if (matcher.is_matched(bg_url))
+        $("body").css("background-image", null);
+    }
+
 
     run_specials();
 
@@ -313,6 +360,8 @@ function adblock_begin_v2(features) {
     var end = new Date();
     time_log("Total running time (v2): " + (end - start) + " || " +
              document.location.href);
+
+
     _done_with_cache("adblock");
   });
 }
