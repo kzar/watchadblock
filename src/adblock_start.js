@@ -15,10 +15,7 @@ function block_list_via_css(selectors, title) {
     css_chunk.innerText += selectors.splice(0, chunksize).join(',') +
                                " { visibility:hidden !important; " +
                                "   display:none !important; }";
-    // TODO: This is the heavyweight line.  Make fewer, smaller css_chunks &
-    // we save time.  (Either because sticking in so much raw text is hard,
-    // or because thinking about so many rules is hard.)
-    d.insertBefore(css_chunk, d.firstChild);
+    d.insertBefore(css_chunk, null);
   }
 }
 
