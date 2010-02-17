@@ -258,7 +258,9 @@
         $.ajax({
           url: url,
           success: function(text) {
-            if (text[0] != '!' && text[0] != '[') {
+            if (text[0] != '!' && 
+                text[0] != '[' &&
+                text.indexOf('(Adblock') != 0) {
               alert("Please enter the URL of a list of filters to " +
                     "subscribe to.");
               return;

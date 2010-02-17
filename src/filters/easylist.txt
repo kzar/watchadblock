@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: x9mE5RMAX3wLCy4jN10NjA
+! Checksum: 6ZYxtXHyM65dHi8HJ4asOQ
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 13 Feb 2010 22:30 UTC
+! Last modified: 16 Feb 2010 21:40 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -73,11 +73,13 @@
 /ad/frame
 /ad/google
 /ad/header
+/ad/img/*
 /ad/inad
 /ad/init
 /ad/lrec
 /ad/mercury
 /ad/mrec
+/ad/script/*
 /ad/serve
 /ad/skyscraper
 /ad/sponsor
@@ -116,6 +118,7 @@
 /ad_reloader_
 /ad_right.
 /ad_serv.
+/ad_serve.
 /ad_server.
 /ad_server/*
 /ad_sizes=
@@ -236,11 +239,14 @@
 /ads.htm
 /ads.php?
 /ads/acctid
+/ads/ad-
 /ads/common/*
 /ads/frame
 /ads/freewheel/*
 /ads/html
 /ads/java
+/ads/labels/*
+/ads/pa/*
 /ads/paid
 /ads/right
 /ads/text
@@ -337,6 +343,7 @@
 /advertising.
 /advertising/*
 /advertisingmanual.
+/advertisment.
 /advertize_on_
 /advertorials/*
 /advertpro/*
@@ -356,6 +363,7 @@
 /affads/*
 /affilatebanner.
 /affiliate*.php?
+/affiliate/banners/*
 /affiliate_banners/*
 /affiliatebanners/*
 /affiliates.*.aspx?
@@ -705,6 +713,7 @@
 /sponsorads/*
 /sponsored_links_
 /sponsoredlinks.
+/sponsoredlinks/*
 /square-ads/*
 /squaread.
 /static/ad_
@@ -761,6 +770,7 @@
 /zanox/banner/*
 /zanox_ad/*
 8080/ads/
+;iframeid=ad_
 ?*&ad_keyword=
 ?*&adname=
 ?*&adspace=
@@ -775,6 +785,7 @@
 ?adpage=
 ?adtype=
 ?advertising=
+?advtile=
 ?file=ads&
 ?getad=&$~object_subrequest
 _ad.aspx
@@ -923,6 +934,7 @@ z/adx.js
 *_300x250*
 *_336x280*
 *_468-60.*
+*_468.gif*
 *_468.htm*
 *_468_60.*
 *_468_60_*
@@ -1085,6 +1097,7 @@ z/adx.js
 ###adMiddle0Frontpage
 ###adMiniPremiere
 ###adPlaceHolderRight
+###adRight
 ###adSenseModule
 ###adServer_marginal
 ###adSidebarSq
@@ -1350,6 +1363,7 @@ z/adx.js
 ###contentads
 ###contentinlineAd
 ###contextualad
+###ctl00_adFooter
 ###ctrlsponsored
 ###cubeAd
 ###cube_ads
@@ -1444,6 +1458,7 @@ z/adx.js
 ###horizontal-banner-ad
 ###horizontal_ad
 ###houseAd
+###icePage_SearchLinks_AdRightDiv
 ###inlinead
 ###inlinegoogleads
 ###insider_ad_wrapper
@@ -1481,6 +1496,7 @@ z/adx.js
 ###medRecAd
 ###menuAds
 ###mid-ad300x250
+###mid-table-ad
 ###mid_mpu
 ###middlead
 ###middleads
@@ -1533,6 +1549,8 @@ z/adx.js
 ###rightAd300x250
 ###rightAdColumn
 ###rightColAd
+###rightColumnMpuAd
+###rightColumnSkyAd
 ###right_ad_wrapper
 ###right_advertisement
 ###right_advertising
@@ -1553,6 +1571,7 @@ z/adx.js
 ###sideAd
 ###sideBarAd
 ###side_ad_wrapper
+###side_ads_by_google
 ###sidead
 ###sidebar-125x125-ads
 ###sidebar-125x125-ads-below-index
@@ -1563,6 +1582,7 @@ z/adx.js
 ###sidebar_sponsoredresult_body
 ###sidebarad
 ###sideline-ad
+###site-leaderboard-ads
 ###site_top_ad
 ###skyAd
 ###skyScrapperAd
@@ -2087,7 +2107,7 @@ z/adx.js
 ##.bottomAds
 ##.bottomad
 ##.bottomrightrailAd
-~neowin.net##.boxAd
+##.boxAd
 ##.box_ad
 ##.box_advertisment_62_border
 ##.box_content_ad
@@ -2174,6 +2194,7 @@ z/adx.js
 ##.gglAds
 ##.google-ad-container
 ##.google-ads
+##.google-ads-boxout
 ##.google-right-ad
 ##.google-sponsored-ads
 ##.google468_60
@@ -2212,6 +2233,7 @@ z/adx.js
 ##.hor_ad
 ##.horizontalAd
 ~radaronline.com##.horizontal_ad
+##.hortad
 ##.houseAdsStyle
 ##.hp2-adtag
 ##.hp_ad_cont
@@ -2270,6 +2292,7 @@ z/adx.js
 ##.module-ads
 ##.modulegad
 ##.moduletable-advert
+##.moduletablesquaread
 ~gamespot.com##.mpu
 ##.mpu-ad
 ##.mpu-title
@@ -2480,6 +2503,7 @@ z/adx.js
 ##.txt-ads
 ##.type_promoads
 ##.usenext
+##.vertad
 ##.videoAd
 ##.view-promo-mpu-right
 ##.wide-ad
@@ -3254,6 +3278,7 @@ z/adx.js
 ||mirror.co.uk^*/m4_partners/
 ||nirsoft.net/banners/
 ||payplay.fm^*/mastercs.js
+||pcauthority.com.au^*/skins/
 ||photosupload.net/photosupload.js
 ||pinknews.co.uk/newweb/
 ||prisonplanet.com^*advert.
@@ -3380,7 +3405,6 @@ z/adx.js
 ||qrz.com/pix/*.gif
 ||retrevo.com^*/pcwframe.jsp?
 ||richmedia.yimg.com^
-||scoop.co.nz/xl?$subdocument
 ||sendspace.com^*?zone=
 ||shop.com/cc.class/dfp?
 ||shops.tgdaily.com^*&widget=
@@ -3929,6 +3953,7 @@ jame-world.com##.adv_right
 jamendo.com###ad
 jamendo.com##.col_extra
 japantimes.co.jp###FooterAdBlock
+jarrowandhebburngazette.com###banner01
 jeuxvideo-flash.com###pub_header
 jewtube.com###adv
 jewtube.com###div[style="border: 1px solid rgb(221, 221, 221); padding: 5px; display: block; width: 468px; height: 60px; text-align: left;"]
@@ -4318,8 +4343,8 @@ sciencedaily.com##.skyscraper
 sciencedirect.com###leaderboard
 scientificamerican.com##.clearfix[style="border-top: 1px solid rgb(204, 204, 204); height: 158px; text-align: center; margin-top: 17px; padding-top: 10px; color: rgb(204, 204, 204);"]
 scoop.co.nz###top-banner
+scoop.co.nz###top-banner-base
 scoop.co.nz###topHeader
-scoop.co.nz##li[id^="scoopad_"]
 scotsman.com###banner01
 search.aol.co.uk##.PMB
 search.aol.co.uk##.SLL
@@ -4688,9 +4713,7 @@ zone.msn.com##.SuperBannerTVMain
 zuploads.com##.hispeed
 !---------------------------------Exception rules to fix problems----------------------------------!
 ! *** easylist_whitelist.txt ***
-@@.com/ads/*.swf?clicktag=$object_subrequest,domain=rollingstone.com
 @@/adfinder.jsp?*/oascentral.feedroom.com/realmedia/ads/*$subdocument,domain=businessweek.com|economist.com|feedroom.com|stanford.edu
-@@/ads.js?*/adbanner$script,~third-party,domain=novamov.com|zshare.net
 @@/ads.php?zone=*listen$subdocument,domain=last.fm
 @@||2mdn.net/*_ecw_$image,domain=wwe.com
 @@||a.giantrealm.com/assets/vau/grplayer*.swf$object
@@ -4752,6 +4775,7 @@ zuploads.com##.hispeed
 @@||guim.co.uk^*/styles/wide/google-ads.css$stylesheet
 @@||gws.ign.com/ws/search?*&google_adpage=$script
 @@||i.cdn.turner.com^*/adserviceadapter.swf$object
+@@||i.real.com/ads/*.swf?clicktag=$object_subrequest,domain=rollingstone.com
 @@||ign.com/js.ng/size=headermainad&site=teamxbox$script,domain=teamxbox.com
 @@||im.mstar.com/ads/*.flv$object_subrequest
 @@||imdb.com/images/*/js/ads.js$script
@@ -4767,6 +4791,7 @@ zuploads.com##.hispeed
 @@||media.washingtonpost.com/wp-srv/ad/ad_v2.js$script
 @@||media.washingtonpost.com/wp-srv/ad/tiffany_manager.js$script
 @@||motherjones.com/files/resized/files/*300x250$image
+@@||mozilla.com/img/tignish/plugincheck/*/728_90/loading.png$image,domain=mozilla.com
 @@||newgrounds.com/ads/ad_medals.gif$image
 @@||newsarama.com/common/js/advertisements.js$script
 @@||newsweek.com/ads/adscripts/prod/*_$script
@@ -4825,12 +4850,15 @@ zuploads.com##.hispeed
 @@||avforums.com/forums/adframe.js$script
 @@||eq2flames.com/adframe.js$script
 @@||gdataonline.com/exp/textad.js$script
+@@||hackers.co.id/adframe/adframe.js$script
 @@||macobserver.com/js/adframe.js$script
 @@||megavideodownloader.com/adimages/|$subdocument
+@@||novamov.com/ads.js?*&ad_url=/adbanner$script
 @@||onlinevideoconverter.com/scripts/advertisement.js$script
 @@||superfastfile.com/adsense.js$script
 @@||theteacherscorner.net/adiframe/ad.js$script
 @@||tpmrpg.net/adframe.js$script
+@@||zshare.net/ads.js?*&ad_url=/adbanner$script
 !Non-English
 @@||adswizz.com/www/delivery/$object_subrequest,domain=video.belga.be
 @@||adtech.de/?adrawdata/3.0/*;|$object_subrequest,domain=nelonen.fi|tv2.dk
