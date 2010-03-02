@@ -38,7 +38,7 @@ if (window == window.top) {
   });
 }
 
-register_broadcast_listener('send_flash_to_back', function(options) {
+register_broadcast_listener('send_content_to_back', function(options) {
   // Objects and embeds can catch our clicks unless we lay a div over
   // them.  But even then they can catch our clicks unless they were loaded
   // with wmode=transparent.  So, make them load that way, so that our
@@ -58,6 +58,16 @@ register_broadcast_listener('send_flash_to_back', function(options) {
         hide().
         attr('wmode', 'transparent');
       window.setTimeout(function() { log("showing"); $(el).show(); }, 250);
+    });
+
+  // Also, anybody with a z-index over 1 million is going to get in our
+  // way.  Decrease it.
+  $('[style*="z-index"]').
+    filter(function(i) {
+        return $(this).css('z-index') >= 1000000;
+      }).
+    each(function(i, el) {
+        $(el).css('z-index', 999999);
     });
 });
 

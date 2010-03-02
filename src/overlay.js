@@ -6,7 +6,7 @@ Overlay = function(options) {
     css("position", "absolute").
     css("left", el.position().left).
     css("top", el.position().top).
-    css("z-index", 100000).
+    css("z-index", 1000000).
     width(el.width()).
     height(el.height());
   this.el = el;
