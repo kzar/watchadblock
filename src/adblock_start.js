@@ -71,9 +71,6 @@ function do_early_stuff(features, demands) {
     block_list_via_css(["#movie_player"], "youtube_hack");
   }
 
-  if (features.early_blocking.is_enabled == false)
-    return;
-
   early_blacklist(demands.user_filters);
 
   // We ignore the URL whitelist; so in adblock.js, if there are any

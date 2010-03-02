@@ -70,8 +70,6 @@
           default_value:{}
         });
         var feature_names = [
-          "early_blocking",
-          "old_style",
           "debug_logging",
           "debug_time_logging",
           "block_youtube",
@@ -83,8 +81,6 @@
           var name = feature_names[i];
           if (!features[name]) {
             features[name] = { name: name, is_enabled: false };
-            if (name == "early_blocking")
-              features[name].is_enabled = true; // by default
             if (name == "whitelist_shortcut")
               features[name].is_enabled = true; // by default
             if (name == "blacklist_shortcut")

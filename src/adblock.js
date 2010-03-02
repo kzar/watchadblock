@@ -4,28 +4,6 @@ var LENGTH_CUTOFF = 200;
 
 var domain = document.domain;
 
-function run_blacklist(user_filters) {
-  var blacklist_matches = [];
-  $.each(user_filters, function(i, filter) {
-    if (new RegExp(filter.domain_regex).test(document.domain)) {
-      var targets = $(filter.css_regex);
-      if (targets.length > 0) {
-        log("domain '" + filter.domain_regex + "' user filter '" + 
-            filter.css_regex + " removing " + targets.length + " items");
-        $(filter.css_regex).remove();
-
-        blacklist_matches.push(filter.css_regex);
-      }
-    }
-  });
-
-  if (blacklist_matches.length > 0) {
-    // Block via CSS.
-    $("html").prepend($("<style></style>").text(
-          blacklist_matches.join(",") + " { visibility:hidden; }"));
-  }
-}
-
 function Matcher(filters) {
   this.filters = filters;
 
@@ -296,12 +274,11 @@ function adblock_begin_v2(features) {
     // TODO: this doesn't actually work half the time, because Chrome
     // has two conflicting directives.  Really I need to make
     // :not(.adblock_innocent) be on every freaking rule.
-    if (features.early_blocking.is_enabled) {
-      // The CSS rules shouldn't apply to whitelisted entries.  This won't
-      // address items that load after adblock.js runs, but I've never had
-      // a complaint about it.
-      whitelisted.show();
-    }
+
+    // The CSS rules shouldn't apply to whitelisted entries.  This won't
+    // address items that load after adblock.js runs, but I've never had
+    // a complaint about it.
+    whitelisted.show();
 
     log("PATTERN SEARCH");
     var pattern_blocklist = matcher.get_regex_and_substring_matches(false);
@@ -311,15 +288,13 @@ function adblock_begin_v2(features) {
         (pattern_blocklist.length - to_block.length) + " whitelisted)");
     to_block.remove();
 
-    if (features.early_blocking.is_enabled &&
-        whitelisted.length == 0) {
+    if (whitelisted.length == 0) {
       // There are no whitelisted elements on the page; that means that
       // there were no false positives among the items caught by
       // early blocking.  Thus, there's no reason to again find and remove
       // those items from the page!
       if (features.debug_logging.is_enabled) {
-        log("Skipping SELECTOR SEARCH -- here's what adblock_start covered:");
-        log(" (this won't show items that arrived after the page loaded)");
+        log("Early blocked:");
         var selectors = add_includes_and_excludes(demands.filters.selectors);
         var candidates = $(selectors.join(','));
         var to_block = candidates.not(whitelisted);
@@ -351,11 +326,6 @@ function adblock_begin_v2(features) {
 
 
     run_specials();
-
-    // Blacklist is handled already if they are early blocking --
-    // assuming we never remove that style element.
-    if (features.early_blocking.is_enabled == false)
-      run_blacklist(demands.user_filters);
 
     var end = new Date();
     time_log("Total running time (v2): " + (end - start) + " || " +
