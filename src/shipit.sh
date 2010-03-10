@@ -10,4 +10,4 @@ curl http://adblockplus.mozdev.org/easylist/easylist.txt > filters/easylist.txt
 svn diff filters/easylist.txt | grep '^[+-]'
 echo
 
-rm -f ../adblock_for_chrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblock_for_chrome.zip adblockforchrome/)
+rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblockforchrome.zip adblockforchrome/)
