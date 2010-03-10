@@ -1,3 +1,5 @@
+infinite_loop_workaround("clickwatcher");
+
 // Requires overlay.js and jquery
 
 // Class that watches the whole page for a click, including iframes and

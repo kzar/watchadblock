@@ -1,3 +1,5 @@
+infinite_loop_workaround("whitelister");
+
 var may_show_whitelist_ui = true;
 
 function verify_whitelist() {

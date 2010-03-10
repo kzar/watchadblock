@@ -1,3 +1,5 @@
+infinite_loop_workaround("filters");
+
 // Requires jquery, abp_filter_to_json_converter
 
 // Inviolate rules about new Filters()._subscriptions:

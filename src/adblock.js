@@ -1,3 +1,5 @@
+infinite_loop_workaround("adblock");
+
 // Don't inspect past this far into a URL, because it makes for some
 // painful regexes.
 var LENGTH_CUTOFF = 200;

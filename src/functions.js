@@ -1,3 +1,15 @@
+function infinite_loop_workaround(where) {
+  // Chrome 5 doesn't have this problem, but Chrome 4 gets stupid on XHTML
+  // pages when we load jQuery.  So we have to run this function in EVERY
+  // script we load, to avoid running if necessary.
+  if (typeof abort_abort_abort != "undefined") {
+    console.log("Dying in " + where);
+    die_to_avoid_infinite_loop_in_chrome_4;
+  }
+}
+
+infinite_loop_workaround("functions");
+
 if (typeof _adblock_cache != "undefined") {
   // As of Chrome .288 and 1.2.70, ebay.com runs this 6 times.  Why?
   console.log("Already ran on " + document.location.href + "; aborting.");

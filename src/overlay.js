@@ -1,3 +1,5 @@
+infinite_loop_workaround("overlay");
+
 Overlay = function(options) {
 
   var el = $(options.dom_element);

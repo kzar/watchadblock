@@ -1,3 +1,5 @@
+infinite_loop_workaround("filter_to_json");
+
 // *** everything matches with one of these:
 // !: comment
 // contains ## : selector

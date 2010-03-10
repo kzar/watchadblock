@@ -1,3 +1,5 @@
+infinite_loop_workaround("blacklistui");
+
 // Requires clickwatcher.js and elementchain.js and jQuery
 
 // Wizard that walks the user through clicking an ad, selecting an element,

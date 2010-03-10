@@ -1,3 +1,5 @@
+infinite_loop_workaround("broadcaster");
+
 // TODO: Wrap in a typeof check to work around Chrome bug that makes
 // adblock_start run multiple times on some pages (e.g. ebay.com homepage).  
 if (typeof dispatcher == "undefined") {
