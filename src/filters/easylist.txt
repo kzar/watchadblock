@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: R/Uhs7OJovkU1efeLoaDMQ
+! Checksum: mgEzPNBu6kkNdqZoVOpHyw
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 10 Mar 2010 12:53 UTC
+! Last modified: 11 Mar 2010 18:30 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -553,6 +553,7 @@
 /google_ad_
 /google_ads.
 /google_ads/*
+/google_adsense.
 /google_adsense_
 /google_afc.
 /googlead-
@@ -1890,6 +1891,7 @@ z/adx.js
 ##.ad-footer-leaderboard
 ##.ad-google
 ##.ad-gray
+##.ad-hdr
 ##.ad-holder
 ##.ad-homeleaderboard
 ##.ad-island
@@ -1990,6 +1992,7 @@ z/adx.js
 ##.adSuperboard
 ##.adTag
 ##.adText
+##.adTileWrap
 ##.adTitle
 ##.adTout
 ##.adTxt
@@ -2676,6 +2679,7 @@ z/adx.js
 ##.top-ad
 ##.top-ad-space
 ##.top-ads
+##.topAdWrap
 ~timescall.com##.topAds
 ##.topAdvertisement
 ##.topBannerAd
@@ -2753,7 +2757,6 @@ z/adx.js
 ||777seo.com^$third-party
 ||7search.com^$third-party
 ||aa.voice2page.com^$third-party
-||abmr.net^$third-party
 ||accuserveadsystem.com^$third-party
 ||acf-webmaster.net^$third-party
 ||acronym.com^$third-party
@@ -3548,6 +3551,7 @@ z/adx.js
 ||ibanners.empoweredcomms.com.au^
 ||idg.com.au/images/*_promo$image
 ||idg.com.au^*_skin.jpg
+||illimitux.net/js/abp.js
 ||imageshack.us/ym.php?$subdocument
 ||independent.co.uk/multimedia/archive/$subdocument
 ||infoseek.co.jp/isweb/clip.html
@@ -4140,6 +4144,9 @@ huffingtonpost.com##.contin_below
 hvac-talk.com##td[align="center"][valign="top"][style="padding-left: 10px;"]
 i4u.com###topBanner > div#right
 idg.com.au###top_adblock_fix
+illimitux.net###screens
+illimitux.net##.pub_bot
+illimitux.net##.pub_top
 images.search.yahoo.com###r-e
 imageshack.us###add_frame
 imtranslator.net##td[align="right"][valign="bottom"][height="96"]
@@ -5016,6 +5023,7 @@ zuploads.com##.hispeed
 @@||autotrader.co.nz/data/adverts/$image
 @@||belointeractive.com^*/ads/*@*?|$script
 @@||bitgravity.com/revision3/swf/player/admanager.swf?$object_subrequest,domain=area5.tv
+@@||brothersoft.com/gads/coop_show_download.php?soft_id=$script
 @@||chloe.videogamer.com/data/*/videos/adverts/$object_subrequest
 @@||cinshare.com/js/isalive.js?$script
 @@||cnet.com/ads/common/adclient/*.swf$object_subrequest

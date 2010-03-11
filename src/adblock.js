@@ -240,10 +240,6 @@ function adblock_begin_v2(features) {
       adThwartBlockYouTube();
     }
 
-    if (domain.indexOf("acidtests.org") != -1) {
-        alert("Hi, this is an alert from AdBlock.  AdBlock horks the ACID test, partially because AdBlock is designed to change the layout of your web pages.  To check Chrome's ACID rating, you'll need to temporarily disable AdBlock; with AdBlock enabled this page will display about a 66/100 and then hang.  (Also, you'll see this alert a few times; just click the 'Stop showing me alerts!' checkbox when it appears).  Sorry for the interruption! -- Michael");
-    }
-
   }
 
   // TODO: opts code copied from adblock_start.js
