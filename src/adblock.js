@@ -206,35 +206,63 @@ function adblock_begin_v2(features) {
       // Based heavily off of AdThwart's YouTube in-video ad blocking.
       // Thanks, Tom!
       function adThwartBlockYouTube(elt) {
-        log("Blocking YouTube ads");
         elt = elt || $("#movie_player").get(0);
         if (!elt)
           return;
-        var re = /&(ad_|prerolls|watermark|invideo|interstitial|watermark|infringe).*?=.+?(&|$)/gi;
-        // WTF. replace() just gives up after a while, missing things 
-        // near the end of the string. So we run it again.
-        var newFlashVars = elt.getAttribute("flashvars");
-        if (!newFlashVars)
-          return;
-        newFlashVars = newFlashVars.
-                replace(re, "&").
-                replace(re, "&");
-        var replacement = elt.cloneNode(true);
-        replacement.setAttribute("flashvars", newFlashVars + 
-                "&invideo=false&autoplay=1");
-        blocking_youtube = true; // avoid recursion upon DOMNodeInserted
+        log("Blocking YouTube ads");
+
+        var origFlashVars = elt.getAttribute("flashvars");
+        // In the new YouTube design, flashvars could be in a <param> child node
+        var inParam = false;
+        if(!origFlashVars) {
+            origFlashVars = elt.querySelector('param[name="flashvars"]');
+            // Give up if we still can't find it
+            if(!origFlashVars)
+                return;
+            inParam = true;
+            origFlashVars = origFlashVars.getAttribute("value");
+        }
+        // Don't mess with the movie player object if we don't actually find any ads
+        var adCheckRE = /&(ad_|prerolls|invideo|interstitial).*?=.+?(&|$)/gi;
+        if(!origFlashVars.match(adCheckRE))
+            return;
+        // WTF. replace() just gives up after a while, missing things near the end of the string. So we run it again.
+        var re = /&(ad_|prerolls|invideo|interstitial|watermark|infringe).*?=.+?(&|$)/gi;
+        var newFlashVars = origFlashVars.replace(re, "&").replace(re, "&") + "&invideo=false&autoplay=1";
+        var replacement = elt.cloneNode(true); // Clone child nodes also
+        // Doing this stuff fires a DOMNodeInserted, which will cause infinite recursion into this function.
+        // So we inhibit it using have_blocked_youtube.
+        have_blocked_youtube = true;
+        if(inParam) {
+            // Grab new <param> and set its flashvars
+            newParam = replacement.querySelector('param[name="flashvars"]');;
+            newParam.setAttribute("value", newFlashVars);
+        } else {
+            replacement.setAttribute("flashvars", newFlashVars);
+        }
         elt.parentNode.replaceChild(replacement, elt);
-        blocking_youtube = false;
-        $('style[title="youtube_hack"]').remove();
+        var disable_url = chrome.extension.getURL("options.html");
+        var message = "<div style='font-size: x-small; font-weight:italic; text-align:center'>No video?  Reload the page.  If this happens a lot, disable YouTube ad blocking under <a target='_new' href='" + disable_url + "'>AdBlock Options</a>.</div>";
+        $("#movie_player").before(message);
+        // It seems to reliably make the movie play if we hide then show it.
+        // Doing that too quickly can leave the Flash player in place but
+        // entirely white (and I can't figure out why.)  750ms seems to work
+        // and is quick enough to not be bothersome; and the message we
+        // display should handle it even if this turns out to not work all
+        // of the time.
+        $("#movie_player").hide();
+        window.setTimeout(function() { $("#movie_player").show(); }, 750);
       }
       // movie_player doesn't appear in the originally loaded HTML, so I
       // suspect it is inserted right after startup.  This code may not be
       // needed (when I remove it ads are still removed) but I'll leave it
       // in to be safe.
+      have_blocked_youtube = false;
       document.addEventListener("DOMNodeInserted", function(e) {
         if (e.target.id == "movie_player") {
-            if (!blocking_youtube) // avoid recursion
-              adThwartBlockYouTube(e.target);
+          if (!have_blocked_youtube) { // avoid recursion
+            adThwartBlockYouTube(e.target);
+          }
         }
       }, false);
       adThwartBlockYouTube();
