@@ -4,15 +4,28 @@ infinite_loop_workaround("blacklister");
 // thepiratebay.org [search for 'boots'] has good iframe tags.
 
 function load_jquery_ui(callback) { 
+  function load_css(src) {
+    var url = chrome.extension.getURL(src);
+    var link = $('<link rel="stylesheet" type="text/css" />').
+      attr('href', url);
+    $("head").append(link);
+  }
   extension_call('readfile', 
       {file:"jquery/jquery-ui-1.7.2.custom.min.js"}, 
       function(result) {
         eval(result); // suck it, Trebek
-        var src = "jquery/css/start/jquery-ui-1.7.2.custom.css";
-        var url = chrome.extension.getURL(src);
-        var link = $('<link rel="stylesheet" type="text/css" />').
-            attr('href', url);
-        $("head").append(link);
+
+        load_css("jquery/css/start/jquery-ui-1.7.2.custom.css");
+        load_css("jquery/css/override-page.css");
+
+        var icon = chrome.extension.getURL("img/icon24.png");
+        var css_chunk = document.createElement("style");
+        css_chunk.innerText = ".ui-dialog-titlebar " +
+            " { background: #2191C0 url(" + icon + ") " +
+            " center left no-repeat !important; " +
+            " padding-left: 38px !important; }";
+        $("html").prepend(css_chunk);
+
         callback();
       }
   );

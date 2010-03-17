@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: 0pw8J1uun3qxWNc68uGUaA
+! Checksum: iU5PYfKQhHINyaD+0Bn77Q
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 17 Mar 2010 08:00 UTC
+! Last modified: 17 Mar 2010 18:00 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -535,6 +535,7 @@
 /footer_ad_include.
 /fuseads/*
 /gamersad.
+/genericrichmediabannerad/*
 /get-ad.php?
 /get_player_ads_
 /getad.php?
@@ -2349,7 +2350,9 @@ z/adx.js
 ##.cubeAd
 ##.cube_ads
 ##.darla_ad
+##.dartAdImage
 ##.dart_ad
+##.dart_tag
 ##.dartadvert
 ##.dartiframe
 ##.dc-ad
@@ -2553,6 +2556,7 @@ z/adx.js
 ##.puff-advertorials
 ##.quigo-ad
 ##.qzvAdDiv
+##.r_ad_box
 ##.rad_container
 ##.rectad
 ##.rectangleAd
@@ -3424,10 +3428,13 @@ z/adx.js
 ||googlesyndication.com^*/domainpark.cgi?$third-party
 ||grammar.coursekey.com/inter/$third-party
 ||gsniper.com/images/$third-party
+||hostingcatalog.com/banner.php?$third-party
 ||iselectmedia.com^*/banners/$third-party
 ||jlist.com/feed.php?affid=$third-party
 ||kallout.com^*.php?id=$third-party
+||l.yimg.com^*&partner=*&url=$subdocument,third-party
 ||lastlocation.com/images/banner$third-party
+||lightningcast.net^*/getplaylist?$object_subrequest,third-party
 ||liutilities.com/partners/affiliate/$third-party
 ||livejasmin.com/?t_id=*&psid=$third-party
 ||longtailvideo.com/adtonomy.swf$third-party
@@ -3476,7 +3483,6 @@ z/adx.js
 ||visit.homepagle.com^$third-party
 ||ws.amazon.*/widgets/q?$third-party
 ||xgaming.com/rotate*.php?$third-party
-||zbar2.zynga.com^$third-party
 !---------------------------------Site specific ad blocking rules----------------------------------!
 ! *** easylist_specific_block.txt ***
 ||1up.com^*/promos/
@@ -3605,9 +3611,7 @@ z/adx.js
 ||kestrel.ospreymedialp.com^
 ||kewlshare.com/reward.
 ||kitz.co.uk/files/jump2/
-||l.yimg.com^*&partner=*&url=$subdocument,third-party
 ||labtimes.org/banner/
-||lightningcast.net^*/getplaylist?$third-party,domain=reuters.com
 ||linuxtopia.org/includes/$subdocument
 ||loaded.it^*/iframe_vid.
 ||loaded.it^*/my_banner
@@ -3662,6 +3666,7 @@ z/adx.js
 ||qrz.com/pix/*.gif
 ||retrevo.com^*/pcwframe.jsp?
 ||richmedia.yimg.com^
+||sciencedaily.com^*/google-story2-rb.js
 ||sendspace.com^*?zone=
 ||shop.com/cc.class/dfp?
 ||shops.tgdaily.com^*&widget=
@@ -3697,6 +3702,7 @@ z/adx.js
 ||videosift.com/bnr.php?
 ||w3schools.com/banners/
 ||wareseeker.com/banners/
+||webhostingtalk.com/js/hail.js
 ||whispersinthecorridors.com/banner2009/
 ||wikia.com/__varnish_
 ||windowsitpro.com^*/doubleclick/

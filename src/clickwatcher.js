@@ -103,8 +103,6 @@ ClickWatcher.prototype._build_ui = function() {
 
   var page = $("<div></div>").
       append("Click the ad, and I'll walk you through blocking it.").
-      append("<br/><br/>").
-      append('<input type=button value="Cancel" />').
       css({
         'background': 'white',
         'text-align': 'left',
@@ -117,16 +115,15 @@ ClickWatcher.prototype._build_ui = function() {
           minHeight:50,
           autoOpen: false,
           title:'Block an ad',
+          buttons: {
+            "Cancel": function() { page.dialog('close'); }
+          },
           close: function() { 
             $("*").unbind('click', click_catch_this);
             Overlay.removeAll();
             that._onClose();
           }
         });
-  page.find("input").
-    click(function() {
-        page.dialog('close');
-      });
 
   return page;
 }

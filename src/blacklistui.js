@@ -56,14 +56,6 @@ BlacklistUi.prototype.handle_change = function() {
   this._redrawPage2();
 }
 BlacklistUi.prototype.show = function() {
-  var icon = chrome.extension.getURL("img/icon24.png");
-  var css_chunk = document.createElement("style");
-  css_chunk.innerText = ".ui-dialog-titlebar " +
-      " { background: #2191C0 url(" + icon + ") " +
-      " center left no-repeat !important; " +
-      " padding-left: 38px !important; }";
-  $("html").prepend(css_chunk);
-
   this._clickWatcher.show();
 }
 BlacklistUi.prototype._build_page1 = function() {
@@ -75,16 +67,22 @@ BlacklistUi.prototype._build_page1 = function() {
            "<div id='slider'></div>" +
            "<div id='selected_data' style='font-size:smaller; height:7em'>" +
            "</div>" +
-           "<div style='clear:left'>" +
-           "  <input type=button value='Cancel' id='btnCancel1'/>" +
-           "  <input type=button value='Looks Good' id='btnOk1'/>" +
-           "</div>" +
            "</div>");
   page.dialog({
       zIndex:10000000, 
       position:[50, 50],
       width: 410,
       autoOpen: false,
+      buttons: {
+        "Looks Good": function() {
+          that._cancelled = false;
+          that._ui_page1.dialog('close');
+          that._cancelled = true;
+          that._redrawPage2();
+          that._ui_page2.dialog('open');
+        },
+        "Cancel": function() { that._ui_page1.dialog('close'); }
+      },
       close: function() {
         that._onClose();
       }
@@ -112,18 +110,6 @@ BlacklistUi.prototype._build_page1 = function() {
       }
     });
 
-  $("#btnOk1", page).click(function() {
-    that._cancelled = false;
-    that._ui_page1.dialog('close');
-    that._cancelled = true;
-    that._redrawPage2();
-    that._ui_page2.dialog('open');
-  });
-
-  $("#btnCancel1", page).click(function() {
-    that._ui_page1.dialog('close');
-  });
-
   return page;
 }
 
@@ -141,7 +127,7 @@ BlacklistUi.prototype._build_page2 = function() {
     "<div>" +
     "<br/><b>Not sure?</b> just press 'Block it!' below.<br/>" +
     "<b>Frustrated?</b> Just " +
-    "<a id='giveup' style='text-decoration:underline'>report the ad</a> " +
+    "<a target='_new' href='http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user'>report the ad</a> " +
     "instead and we'll take care of it!<br/>" +
     "<br/></div>" +
     "<div style='clear:left; font-size:smaller'>" +
@@ -153,11 +139,6 @@ BlacklistUi.prototype._build_page2 = function() {
     "    </div>" +
     "  </div>" +
     "</div>" +
-    "<div>" +
-    "<input type=button value='Back' id='btnBack'/>" +
-    "<input type=button value='Cancel' id='btnCancel2'/>" +
-    "<input type=button value='Block it!' id='btnOk2'/>" +
-    "</div>" +
     "</div>");
 
   page.dialog({
@@ -165,6 +146,28 @@ BlacklistUi.prototype._build_page2 = function() {
       position:[50, 50],
       width: 500,
       autoOpen: false,
+      title: "Last step: What makes this an ad?",
+      buttons: {
+        "Block it!": function() {
+          var filter = {
+            domain_regex: document.domain, // TODO option to specify
+            css_regex: $("#summary", that._ui_page2).text()
+          };
+          extension_call('add_user_filter', { filter: filter }, function() {
+            that._fire('block');
+          });
+        },
+        "Cancel": function() {
+          that._ui_page2.dialog('close');
+        },
+        "Back": function() {
+          that._cancelled = false;
+          that._ui_page2.dialog('close');
+          that._cancelled = true;
+          that._redrawPage1();
+          that._ui_page1.dialog('open');
+        }
+      },
       close: function() {
         that._onClose();
       }
@@ -173,62 +176,6 @@ BlacklistUi.prototype._build_page2 = function() {
       'text-align': 'left',
       'font-size': '12px',
     });
-
-  page.dialog('option', 'title', 'Last step: What makes this an ad?');
-
-  $("#giveup", page).click(function() {
-    var giveup = $("<div>").
-      html("Let us know about the ad and we'll take care of it " +
-           "for you and for thousands of other users.<br/><br/>" +
-           "Describe the ad: <input id='txtGiveup' />").
-      dialog({
-        title: "Let us block the ad for you.",
-        width: 400,
-        buttons: {
-          "Cancel": function() { giveup.dialog('close'); },
-          "Report it!": function() {
-            extension_call('get_subscriptions_minus_text', {}, 
-                           function(subs) {
-              var sub_names = "\n";
-              for (var url in subs) {
-                if (subs[url].subscribed)
-                  sub_names += "  " + subs[url].name + "\n";
-              }
-
-              var url = "http://chromeadblock.com/reportad.php?url=";
-              url += escape(document.location.href);
-              url += "&frustrated=yes";
-              url += "&comment=" + escape($("#txtGiveup").val());
-              url += "&subscriptions=" + escape(sub_names);
-              document.location.href = url;
-            });
-          }
-        }
-      });
-    $("#txtGiveup").focus();
-  });
-
-  $("#btnBack", page).click(function() {
-    that._cancelled = false;
-    that._ui_page2.dialog('close');
-    that._cancelled = true;
-    that._redrawPage1();
-    that._ui_page1.dialog('open');
-  });
-
-  $("#btnCancel2", page).click(function() {
-    that._ui_page2.dialog('close');
-  });
-
-  $("#btnOk2", page).click(function() {
-    var filter = {
-      domain_regex: document.domain, // TODO option to specify
-      css_regex: $("#summary", that._ui_page2).text()
-    };
-    extension_call('add_user_filter', { filter: filter }, function() {
-      that._fire('block');
-    });
-  });
 
   return page;
 }

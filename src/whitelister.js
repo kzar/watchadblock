@@ -13,17 +13,21 @@ function verify_whitelist() {
     stop_checking_for_whitelist_keypress();
 
     var page = $("<div></div>").
-      html("AdBlock won't run on domains ending in '" + domain + "'.").
+      html("AdBlock won't run on domains ending in<br/>'" + domain + "'.").
       dialog({
         title: "Whitelist this domain?",
         width: "auto",
+        minHeight: 50,
         buttons: {
-          "Cancel": function() { page.dialog('close'); whitelister_init(); },
+          "Cancel": function() { page.dialog('close'); },
           "Whitelist it!": function() {
             extension_call('add_to_whitelist', {domain:domain}, function() {
               document.location.reload();
             });
           }
+        },
+        close: function() {
+          whitelister_init();
         }
       });
 
