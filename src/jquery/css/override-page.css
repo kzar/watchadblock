@@ -1,7 +1,13 @@
 /* Don't let page CSS bleed into our modals. */
 
 .ui-dialog a[href] { text-decoration: underline !important; }
-.ui-dialog * { font-size: 12px !important; }
+.ui-dialog *,.ui-dialog-title * { 
+    font-size: 12px !important;
+    font-family: Verdana, Arial, sans-serif !important; 
+}
+span.ui-dialog-title {
+    color: white !important;
+}
 .ui-dialog button { 
     font-family: Verdana, Arial, sans-serif !important;
     color: white !important;
