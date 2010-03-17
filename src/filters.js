@@ -44,7 +44,7 @@ function Filters() {
   this._subscriptions = Filters.__merge_with_default(stored_subscriptions);
   this._persist_and_optimize();
   
-  this.freshen_async();
+  this.freshen_async(true);
 
   var hours = 1;
   var that = this;
