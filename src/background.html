@@ -123,6 +123,7 @@
         return utils.storage_get({key:'whitelist', default_value:[]});
       }
       utils.add_to_whitelist = function(options) {
+        options.domain = options.domain.toLowerCase();
         var whitelist = utils.get_whitelist();
         if ($.inArray(options.domain, whitelist) == -1) {
           whitelist.unshift(options.domain);
@@ -193,7 +194,9 @@
       }
       utils.add_user_filter = function(options) {
         var user_filters = utils.get_user_filters();
-        user_filters.unshift(options.filter);
+        var new_filter = options.filter;
+        new_filter.domain_regex = new_filter.domain_regex.toLowerCase();
+        user_filters.unshift(new_filter);
         utils.storage_set({key:'user_filters', value:user_filters});
         utils.emit_broadcast({fn:'user_filters_updated', options: {}});
       }
