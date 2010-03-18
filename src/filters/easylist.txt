@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: iU5PYfKQhHINyaD+0Bn77Q
+! Checksum: ix/mAhdAOhX682uvHyp6Xg
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 17 Mar 2010 18:00 UTC
+! Last modified: 18 Mar 2010 02:20 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -31,7 +31,7 @@
 .com/ss/ad/
 .html?ad=
 .net/_ads/
-.net/ad/
+.net/ad/$~object_subrequest
 .net/ads/
 .net/adv/
 .nz/ads/
@@ -113,6 +113,7 @@
 /ad_banner_right/*
 /ad_configuration.
 /ad_creatives.
+/ad_engine?
 /ad_feed.js?
 /ad_forum_
 /ad_frame.
@@ -800,6 +801,7 @@
 /tmo/ads/*
 /toigoogleads.
 /toolkitads.
+/top_ad.
 /top_ads/*
 /trackads/*
 /tracked_ad.
@@ -2183,6 +2185,7 @@ z/adx.js
 ##.adtag
 ~anzwers.com.au,~u-file.net##.adtext
 ##.adtop
+##.adv-mpu
 ##.adv250
 ##.advBottomHome
 ##.advHr
@@ -3077,6 +3080,7 @@ z/adx.js
 ||gamecetera.com^$third-party
 ||gamersbanner.com^$third-party
 ||gannett.gcion.com^$third-party
+||geo-idm.fr^$third-party
 ||geopromos.com^$third-party
 ||gestionpub.com^$third-party
 ||gimiclub.com^$third-party
@@ -3859,6 +3863,7 @@ build.co.uk##a[href^="http://www.build.co.uk/buttonredirect.asp?"]
 businessinsider.com###FM1
 businessweek.com###bwMall
 businessweek.com##.ad
+buxtonadvertiser.co.uk###banner01
 buzzfocus.com###eyebrowtop
 buzznet.com###topSection
 c21media.net##table[border="0"][width="130"]
@@ -5152,7 +5157,9 @@ zuploads.com##.hispeed
 @@||objects.tremormedia.com/embed/xml/*.xml?r=$object_subrequest,domain=mydamnchannel.com
 @@||omnikool.discovery.com/realmedia/ads/adstream_mjx.ads/dsc.discovery.com/$script
 @@||pagead2.googlesyndication.com/pagead/expansion_embed.js$script,domain=myspace.com
+@@||pagead2.googlesyndication.com/pagead/scache/show_invideo_ads.js$script,domain=sciencedaily.com
 @@||pagead2.googlesyndication.com/pagead/show_ads.js$script,domain=myspace.com
+@@||pagead2.googlesyndication.com/pagead/static?format=in_video_ads&$subdocument,domain=sciencedaily.com
 @@||quit.org.au/images/images/ad/$image
 @@||redir.adap.tv/redir/client/adplayer.swf?$object_subrequest,domain=cracked.com|videosift.com
 @@||rosauers.com/locations/ads.html$subdocument
