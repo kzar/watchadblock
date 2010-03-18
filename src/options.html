@@ -179,6 +179,7 @@
           return "";
         var now = new Date().getTime();
         var distance = now - ticks;
+
         var seconds = Math.round(distance / 1000);
         if (seconds < 10)
           return "updated right now";
@@ -189,8 +190,12 @@
           return ("updated " + minutes + " minute" + 
                       (minutes > 1 ? "s" : "") + " ago");
         var hours = Math.round(minutes / 60);
+        if (hours < 24)
           return ("updated " + hours + " hour" + 
                       (hours > 1 ? "s" : "") + " ago");
+        var days = Math.round(hours / 24);
+        return ("updated " + days + " day" + 
+                      (days > 1 ? "s" : "") + " ago");
       }
 
 
@@ -355,7 +360,7 @@
 
         $("#btnUpdateNow").click(function() {
           $(this).attr("disabled", "disabled");
-          extension_call("freshen_subscriptions", {force:true});
+          extension_call("freshen_subscriptions", {older_than:0});
         });
 
 
@@ -490,6 +495,8 @@
         slows you down a tiny bit!  Credits and more lists can be found
         <a href="http://adblockplus.org/en/subscriptions">here.</a>
       </p>
+      I will fetch updates every 5 days; you can also
+      <input type="button" id="btnUpdateNow" value="update now." />
       <div>
         <div id="subscription_message" class="ok_message">&nbsp;</div>
         <div id="filter_subscriptions" style="padding-left:30px;">
@@ -499,8 +506,6 @@
           <input id="txtNewSubscriptionUrl" style="width:300px" />
           <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
         </div>
-        I will fetch updates daily; you can also
-        <input type="button" id="btnUpdateNow" value="update now." />
       </div>
     </div>
 

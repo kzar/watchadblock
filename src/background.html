@@ -150,11 +150,10 @@
       // NEW FILTERS
 
       // Update any out of date filters.
-      // Inputs: force:bool - if true, freshen everybody even if they aren't
-      //                      very stale.  Otherwise, only freshen those
-      //                      staler than we are comfortable with.
+      // Inputs: older_than:integer - number of hours.  If anyone is
+      //         staler than this, update them.  Defaults to 5 days.
       utils.freshen_subscriptions = function(options) {
-        _subscriptions.freshen_async(options.force);
+        _subscriptions.freshen_async(options.older_than);
       }
       // Returns map from url to subscription object.  See filters.js for 
       // description of subscription object.

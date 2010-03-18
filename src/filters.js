@@ -44,7 +44,8 @@ function Filters() {
   this._subscriptions = Filters.__merge_with_default(stored_subscriptions);
   this._persist_and_optimize();
   
-  this.freshen_async(true);
+  // Anything over 3 days old, go ahead and fetch at Chrome startup.
+  this.freshen_async(72);
 
   var hours = 1;
   var that = this;
@@ -108,11 +109,12 @@ Filters.prototype.optimize = function(options) {
 
 // If any subscribed filters are out of date, asynchronously load updated
 // versions, then call this._persist_and_optimize().  Asynchronous.
-// Inputs: force?:bool -- if true, freshen everybody regardless of staleness.
+// Inputs: older_than?:int -- number of hours.  Any subscriptions staler
+//         than this will be updated.  Defaults to 5 days.
 // Returns: null (asynchronous)
-Filters.prototype.freshen_async = function(force) {
+Filters.prototype.freshen_async = function(older_than) {
   function out_of_date(subscription) {
-    var hours_between_updates = force ? 0 : 24;
+    var hours_between_updates = older_than || 120;
     var millis = new Date().getTime() - subscription.last_update;
     return (millis > 1000 * 60 * 60 * hours_between_updates);
   }
