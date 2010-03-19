@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: D4tcZlAZIgf5hhbTXD5Z6w
+! Checksum: FlcWrmRL6HmvY2wMBDJ7DA
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 18 Mar 2010 22:00 UTC
+! Last modified: 19 Mar 2010 16:40 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -226,6 +226,7 @@
 /admaster.
 /admaster?
 /admedia.
+/admentor/*
 /admin/ad_
 /adnetwork.
 /adng.html
@@ -356,6 +357,7 @@
 /adtext.
 /adtext_
 /adtology.
+/adtop.do
 /adtop.js
 /adtrack/*
 /adtraff.
@@ -454,6 +456,7 @@
 /bannerview.*?
 /bannery/*?banner=
 /baselinead.
+/basic/ad/*
 /behaviorads/*
 /bg_ads_
 /bigboxad.
@@ -1253,6 +1256,10 @@ z/adx.js
 ###ad_halfpage
 ###ad_head
 ###ad_header
+###ad_horseshoe_left
+###ad_horseshoe_right
+###ad_horseshoe_spacer
+###ad_horseshoe_top
 ###ad_island
 ###ad_layer2
 ###ad_leader
@@ -1608,6 +1615,7 @@ z/adx.js
 ###leader-board-ad
 ###leader-sponsor
 ###leaderad
+###leaderad_section
 ###leaderboard-ad
 ###leaderboard-bottom-ad
 ###leaderboard_ad
@@ -1978,7 +1986,7 @@ z/adx.js
 ##.ad300x600
 ##.ad310
 ##.ad336x280
-##.ad468
+~itavisen.no##.ad468
 ##.ad6
 ##.ad620x70
 ##.ad7
@@ -2242,7 +2250,7 @@ z/adx.js
 ##.advertisement_header
 ##.advertisement_horizontal
 ##.advertiser
-##.advertising
+~trove.nla.gov.au##.advertising
 ##.advertising-header
 ##.advertisingTable
 ~macwelt.de##.advertisment
@@ -2773,6 +2781,7 @@ z/adx.js
 ##.y7-advertisement
 ##.yahoo-sponsored
 ##.yahoo_ads
+##.yan-sponsored
 ##.ygrp-ad
 ##.yrail_ad_wrap
 ##.yrail_ads
@@ -4217,6 +4226,7 @@ idg.com.au###top_adblock_fix
 illimitux.net###screens
 illimitux.net##.pub_bot
 illimitux.net##.pub_top
+iloubnan.info###bann
 images.search.yahoo.com###r-e
 imageshack.us###add_frame
 imtranslator.net##td[align="right"][valign="bottom"][height="96"]
@@ -5074,8 +5084,8 @@ zuploads.com##.hispeed
 @@||addictinggames.com/jsource/ad_functions.js$script
 @@||adjuggler.com^$script,domain=videodetective.com
 @@||adm.fwmrm.net^$object_subrequest
-@@||ads.adap.tv/control?$object_subrequest,domain=xxlmag.com
-@@||ads.adap.tv/crossdomain.xml$object_subrequest,domain=xxlmag.com
+@@||ads.adap.tv/control?$object_subrequest,domain=ky3.com|xxlmag.com
+@@||ads.adap.tv/crossdomain.xml$object_subrequest,domain=ky3.com|xxlmag.com
 @@||ads.adultswim.com/js.ng/site=toonswim&toonswim_pos=600x400_ctr&toonswim_rollup=games$script
 @@||ads.ahds.ac.uk^$~document
 @@||ads.cnn.com/js.ng/*&cnn_intl_subsection=download$script
