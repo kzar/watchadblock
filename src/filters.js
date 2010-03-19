@@ -114,7 +114,7 @@ Filters.prototype.optimize = function(options) {
 // Returns: null (asynchronous)
 Filters.prototype.freshen_async = function(older_than) {
   function out_of_date(subscription) {
-    var hours_between_updates = older_than || 120;
+    var hours_between_updates = (older_than == undefined ? 120 : older_than);
     var millis = new Date().getTime() - subscription.last_update;
     return (millis > 1000 * 60 * 60 * hours_between_updates);
   }
