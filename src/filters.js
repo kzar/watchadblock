@@ -248,13 +248,13 @@ Filters._load_hardcoded_subscriptions = function() {
   result[real_url] = localfetch(
           real_url,
           chrome.extension.getURL("filters/adblock_custom.txt"),
-          "Chrome AdBlock custom filters (highly recommended)");
+          "Chrome AdBlock custom filters (recommended)");
 
   real_url = "http://adblockplus.mozdev.org/easylist/easylist.txt";
   result[real_url] = localfetch(
           real_url,
           chrome.extension.getURL("filters/easylist.txt"),
-          "EasyList (highly recommended)");
+          "EasyList (recommended)");
 
   return result;
 }
@@ -288,39 +288,39 @@ Filters.__merge_with_default = function(subscription_data) {
 Filters.__make_subscription_options = function() {
   var official_options = {
     "http://sites.google.com/site/chromeadblock/aux_filters.txt": 
-      "Chrome AdBlock custom filters (highly recommended)",
+      "Chrome AdBlock custom filters (recommended)",
     "http://adblockplus.mozdev.org/easylist/easylist.txt":
-      "EasyList (highly recommended)",
-    "http://adblockplus.mozdev.org/easylist/easylistgermany.txt":
-      " - additional German filters",
-    "http://lian.info.tm/liste_fr.txt":
-      " - additional French filters",
+      "EasyList (recommended)",
     "http://stanev.org/abp/adblock_bg.txt":
       " - additional Bulgarian filters",
-    "http://s3.amazonaws.com/lcp/maty/myfiles/AdBlock-Nauscopio-maty.txt":
-      " - additional Spanish filters",
+    "http://lian.info.tm/liste_fr.txt":
+      " - additional French filters",
+    "http://adblockplus.mozdev.org/easylist/easylistgermany.txt":
+      " - additional German filters",
     "http://brianyi.com/corset.txt":
       " - additional Korean filters",
     "http://www.picpoc.ro/menetzrolist.txt":
       " - additional Romanian filters",
+    "http://s3.amazonaws.com/lcp/maty/myfiles/AdBlock-Nauscopio-maty.txt":
+      " - additional Spanish filters",
     "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt":
       " - additional Vietnamese filters",
-    "http://adblock.schack.dk/block.txt":
-      "Danish filters",
-    "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt":
-      "Russian filters",
     "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt":
       "Chinese filters",
-    "http://www.bsi.info.pl/filtrABP.txt":
-      "Polish filters",
-    "http://chewey.de/mozilla/data/adblock.txt":
-      "German filters",
+    "http://adblock.schack.dk/block.txt":
+      "Danish filters",
     "http://dutchmega.nl/dutchblock/list.txt":
       "Dutch filters",
     "http://israellist.googlecode.com/files/IsraelList.txt":
       "Israeli filters",
     "http://www.fanboy.co.nz/adblock/fanboy-adblocklist-jpn.txt":
-      "Japanese filters"
+      "Japanese filters",
+    "http://chewey.de/mozilla/data/adblock.txt":
+      "German filters",
+    "http://www.bsi.info.pl/filtrABP.txt":
+      "Polish filters",
+    "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt":
+      "Russian filters",
   };
   var result = {};
   for (var url in official_options) {
