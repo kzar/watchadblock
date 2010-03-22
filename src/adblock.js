@@ -342,7 +342,9 @@ function adblock_begin_v2(features) {
       run_selector_blocklist(demands.filters, whitelisted);
     }
 
-    var bgimage = $("body").css("background-image").match(/^url\((.*)\)$/);
+    var bgimage_css = $("body").css("background-image") || "";
+    // "" if no <body> -- e.g. if in a <frameset>
+    var bgimage = bgimage_css.match(/^url\((.*)\)$/);
     if (bgimage) {
       log("BACKGROUND IMAGE");
       var bg_url = bgimage[1];
