@@ -319,7 +319,7 @@ Filters.__make_subscription_options = function() {
       "German filters",
     "http://www.bsi.info.pl/filtrABP.txt":
       "Polish filters",
-    "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt":
+    "http://ruadlist.googlecode.com/svn/trunk/adblock.txt":
       "Russian filters",
   };
   var result = {};

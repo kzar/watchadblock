@@ -361,15 +361,15 @@
 
 
 
-      // TODO temp code to remove broken Russian filter
+      // TODO golly gosh darnit, need to switch back to ruadlist because it
+      // turns out it's actually the most popular and correct Russian list.
       // TODO: we need a general way to do this!
       try {
       (function() {
         var oldurls = [
-          "http://ruadlist.googlecode.com/svn/trunk/adblock.txt",
-          "http://adblockplus.mihalkin.ru/Russia.txt"
+          "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt"
           ];
-        var newurl = "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt";
+        var newurl = "http://ruadlist.googlecode.com/svn/trunk/adblock.txt";
 
         var subs = _subscriptions.get_subscriptions_minus_text();
         var hadrussian = false;
