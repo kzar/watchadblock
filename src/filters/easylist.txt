@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: OnPKSYbLSuDdK4T5BXNW2Q
+! Checksum: 2AWEnsleRKFWh4euPTCtHg
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 19 Mar 2010 22:20 UTC
+! Last modified: 21 Mar 2010 21:50 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -16,6 +16,7 @@
 &ad_type_id=
 -ad.html
 -banner-ads/
+.ad.footer.
 .aspx?zoneid=*&task=
 .au/_ads/
 .au/ads/
@@ -145,6 +146,7 @@
 /ad_supertile/*
 /ad_tag_
 /ad_tile/*
+/ad_title_
 /ad_top.
 /ad_vert.
 /ad_view_
@@ -336,6 +338,7 @@
 /adspro/*
 /adsremote.
 /adsreporting/*
+/adsrule.
 /adssrv.
 /adstorage.
 /adstracking.
@@ -517,6 +520,7 @@
 /doubleclick/iframe.
 /doubleclickcontainer.
 /doubleclicktag.
+/download/ad.
 /drawad.php?
 /dsg/bnn/*
 /dt.cms.ad.page.
@@ -621,6 +625,7 @@
 /js/ads/*
 /js/ads_
 /jsfiles/ads/*
+/keyade.js
 /kredit-ad.
 /layer-ad.
 /layer-ads.
@@ -783,6 +788,7 @@
 /sponsorads/*
 /sponsored_links_
 /sponsored_text.
+/sponsored_top.
 /sponsoredlinks.
 /sponsoredlinks/*
 /square-ads/*
@@ -877,12 +883,14 @@ _adspaces.
 _adtitle.
 _advert.
 _advert1.
+_adwrap.
 _blogads.
 _box_ads/
 _buttonad.
 _companionad.
 _custom_ad.
 _custom_ad_sets.
+_displaytopads.
 _dynamicads/
 _fd_adbg1a.
 _fd_adbg2.
@@ -1175,6 +1183,7 @@ z/adx.js
 ###ad375x85
 ###ad526x250
 ###ad600
+###ad728Wrapper
 ~natgeo.tv###ad728x90
 ###adB
 ###adBadges
@@ -1228,6 +1237,7 @@ z/adx.js
 ###adTop
 ###adTopboxright
 ###adUnit
+###adWrapper
 ###adZoneTop
 ###ad_160x600
 ###ad_190x90
@@ -1383,6 +1393,7 @@ z/adx.js
 ###advert-header
 ###advert-leaderboard
 ###advert-top
+###advertBanner
 ###advert_250x250
 ###advert_box
 ###advert_leaderboard
@@ -1531,6 +1542,7 @@ z/adx.js
 ###footer_text_ad
 ###fr_ad_center
 ###frnContentAd
+###from_our_sponsors
 ###front_mpu
 ###ft-ad
 ###ft-ad-1
@@ -1843,6 +1855,7 @@ z/adx.js
 ###vert_ad
 ###vertical_ad
 ###vertical_ads
+###video_cnv_ad
 ###video_overlay_ad
 ###walltopad
 ###welcomeAdsContainer
@@ -1896,6 +1909,7 @@ z/adx.js
 ##.HPNewAdsBannerDiv
 ##.HomeContentAd
 ##.LeftTowerAd
+##.M2Advertisement
 ##.MD_adZone
 ##.MPU
 ##.MPUHolder
@@ -2691,6 +2705,7 @@ z/adx.js
 ##.sponsoredLinksHeader
 ##.sponsored_ads
 ##.sponsored_box
+##.sponsored_box_search
 ##.sponsored_by
 ##.sponsored_links
 ##.sponsored_links_title_container
@@ -2880,6 +2895,7 @@ z/adx.js
 ||adpinion.com^$third-party
 ||adpionier.de^$third-party
 ||adpremo.com^$third-party
+||adrocket.com^$third-party
 ||adroll.com^$third-party
 ||ads-stats.com^$third-party
 ||ads4cheap.com^$third-party
@@ -3193,6 +3209,7 @@ z/adx.js
 ||mediatarget.com^$third-party
 ||medleyads.com^$third-party
 ||medrx.sensis.com.au^$third-party
+||meetic-partners.com^$third-party
 ||megaclick.com^$third-party
 ||mercuras.com^$third-party
 ||metaffiliation.com^$third-party
@@ -3559,6 +3576,7 @@ z/adx.js
 ||break.com^*/sponsors/
 ||burnsoftware.info*/!
 ||c21media.net/uploads/flash/*.swf
+||candystand.com/banners/
 ||cdmediaworld.com*/!
 ||centos.org/donors/
 ||ciao.co.uk/load_file.php?
@@ -3660,6 +3678,7 @@ z/adx.js
 ||mirror.co.uk^*/gutters/
 ||mirror.co.uk^*/m4_gutters/
 ||mirror.co.uk^*/m4_partners/
+||mirror.co.uk^*/people_promotions/
 ||mmorpg.com/images/skins/
 ||mp3mediaworld.com*/!
 ||msn.com/?adunitid
@@ -3896,6 +3915,8 @@ buzzfocus.com###eyebrowtop
 buzznet.com###topSection
 c21media.net##table[border="0"][width="130"]
 campustechnology.com###leaderboard
+candystand.com##.cs_square_banner
+candystand.com##.cs_wide_banner
 canmag.com##td[align="center"][height="278"]
 canoe.ca###commerce
 canoe.ca###subbanner
@@ -4116,6 +4137,7 @@ feministing.com##div[class^="banner"]
 ffiles.com###right_col
 file-extensions.org###uniBan
 filedropper.com###sidebar
+filefactory.com###aContainer
 filefront.com##div[style="width: 300px; min-height: 250px;"]
 filehippo.com##.ad
 filespump.com##table[width="100%"][border="0"][bgcolor="#dce0e3"][align="center"]
@@ -4208,6 +4230,7 @@ healthboards.com##img[height="103"][src*="/health/health_"]
 healthboards.com##td[align="left"][width="300"]:first-child
 hebdenbridgetimes.co.uk###banner01
 helenair.com##table.bordered[align="center"][width="728"]
+help.com###bwp
 helpwithwindows.com###ad
 helpwithwindows.com###desc
 heraldscotland.com###leaderboard
@@ -4399,6 +4422,7 @@ macupdate.com##div[style*="width: 728px; height: 90px;"][style*="margin: 0px aut
 macworld.co.uk###footer
 macworld.co.uk###topBannerSpot
 macworld.com###shopping
+madeformums.com###contentbanner
 magme.com###top_banner
 mail.google.com##.oM
 mail.google.com##.rh > #ra
@@ -5029,6 +5053,7 @@ wow.com###topleader-wrap
 wow.com##.medrect
 wsj.com##.spn_links_box
 wunderground.com##div[style^="background: transparent url(http://icons-pe.wxug.com/graphics/statefarm_bg.gif)"]
+wwl.com###BannerXGroup
 wwtdd.com##.post_insert
 xbox360rally.com###topbanner
 xml.com###leaderboard
@@ -5119,6 +5144,7 @@ zuploads.com##.hispeed
 @@||belointeractive.com^*/ads/*@*?|$script
 @@||bitgravity.com/revision3/swf/player/admanager.swf?$object_subrequest,domain=area5.tv
 @@||brothersoft.com/gads/coop_show_download.php?soft_id=$script
+@@||candystand.com/assets/images/ads/$image
 @@||chloe.videogamer.com/data/*/videos/adverts/$object_subrequest
 @@||cinshare.com/js/isalive.js?$script
 @@||cnet.com/ads/common/adclient/*.swf$object_subrequest

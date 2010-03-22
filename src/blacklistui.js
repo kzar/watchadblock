@@ -127,7 +127,7 @@ BlacklistUi.prototype._build_page2 = function() {
     "<div>" +
     "<br/><b>Not sure?</b> just press 'Block it!' below.<br/>" +
     "<b>Frustrated?</b> Just " +
-    "<a target='_new' href='http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user'>report the ad</a> " +
+    "<a target='_new' href='http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user&summary=Ad%20report:%20" + escape(document.location.href) + "'>report the ad</a> " +
     "instead and we'll take care of it!<br/>" +
     "<br/></div>" +
     "<div style='clear:left; font-size:smaller'>" +
