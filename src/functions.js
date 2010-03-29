@@ -141,10 +141,17 @@ function add_includes_and_excludes(ruleset) {
   // We should revisit whether it's fast enough to pass the domain to the
   // background in get_user_demands and have the background optimize right
   // then and there.
+  // 
+  // As of 3/29/2010, this is finally biting us in RuAd.  For now, I'll
+  // hackily cover this case, but I think a rewrite of the optimization
+  // system is warranted.
 
   var result = [];
-  for (var entry in result_hash)
-    result.push(entry);
+  for (var entry in result_hash) {
+    // Hackily cover the case described above
+    if (entry.indexOf('A:not([href^="/"]):not') != 0)
+      result.push(entry);
+  }
   return result;
 }
 
