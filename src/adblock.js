@@ -111,6 +111,13 @@ Matcher.prototype.get_regex_and_substring_matches = function(isWhitelist) {
     substrings = this.substrings;
   }
 
+  // TODO: we call this twice?!  So we have to find and filter these
+  // elements twice?!  Why not call it once, pass it a regex and a
+  // substring list, and check the substrings first, and then the
+  // regexes if still not matched, and I can't imagine that won't
+  // be faster.
+  // And while you're at it, get rid of is_matched().  Can you roll
+  // bg-image checking into get_url_matches?
   var result = this.get_url_matches(regexes, true);
 
   var substring_matches = this.get_url_matches(substrings, false);
@@ -123,44 +130,20 @@ Matcher.prototype.get_regex_and_substring_matches = function(isWhitelist) {
 
 function adblock_begin_v2(features) {
 
-  function run_selector_blocklist(f, whitelisted) {
+  // Remove <embed> tags hidden by selector-based rules, so Flash objects
+  // don't take up CPU.
+  function remove_embeds_by_selector(f, whitelisted) {
     var selectors = add_includes_and_excludes(f.selectors);
-    // TODO: I'd love to avoid joining these guys, but jQuery doesn't
-    // accept an array of strings and interpret them correctly.
-    var candidates = $(selectors.join(','));
+    // Only apply the selectors to <embed> tags, because we only want to
+    // remove Flash.  Grab their parent <object> tags while we're at it.
+    var embedded_ads = $("embed").find(selectors.join(',')).not(whitelisted);
+    var object_parents = embedded_ads.parent().find('[nodeName="OBJECT"]');
 
-    var to_block = candidates.not(whitelisted);
-
-  
-    if (features.debug_logging.is_enabled) {
-      log("SELECTOR SEARCH");
-      log("# selector rules: " + selectors.length);
-      log("matched elements: " + candidates.length);
-      log("whitelist length: " + whitelisted.length);
-      log("without whitelisted: " + to_block.length);
-      // List which selectors removed which ads.
-      for (var i = 0; i < selectors.length; i++) {
-          var dead = $(selectors[i]);
-          if (dead.length > 0) {
-            for (var j = 0; j < dead.length; j++) {
-              log("  * css match: '" + selectors[i].substring(0,80) +
-                  "' matches '" + 
-                  $(dead[j]).html().substring(0,80).replace(/\n/g, '') +
-                  "...'");
-            }
-          }
-      }
-      log("SELECTOR BLOCKED: " + to_block.length + " (plus " +
-          (candidates.length - to_block.length) + " whitelisted)");
-    }
-
-    to_block.remove();
+    embedded_ads.add(object_parents).remove();
   }
 
   // Run special site-specific code.
   function run_specials() {
-    // TODO make this a hashtable lookup by domain to run a function.
-  
     var domain = document.domain;
 
     if (domain.indexOf("chess.com") != -1) {
@@ -294,54 +277,44 @@ function adblock_begin_v2(features) {
 
     var matcher = new Matcher(demands.filters);
 
+    // TODO: this doesn't actually work half the time, because Chrome has two
+    // conflicting directives.  Really I need to make :not(.adblock_innocent)
+    // be on every freaking rule, or remove the elements then remove the
+    // injected <style> tag.
+    // Also, this won't address items that load after adblock.js runs, but I've
+    // never had a complaint about it.
+    log("Matching whitelisted elements by regex or substring.");
     var whitelisted = matcher.get_regex_and_substring_matches(true);
-    log("WHITELISTED: " + whitelisted.length);
-
-    // TODO: this doesn't actually work half the time, because Chrome
-    // has two conflicting directives.  Really I need to make
-    // :not(.adblock_innocent) be on every freaking rule.
-
-    // The CSS rules shouldn't apply to whitelisted entries.  This won't
-    // address items that load after adblock.js runs, but I've never had
-    // a complaint about it.
     whitelisted.show();
 
-    log("PATTERN SEARCH");
-    var pattern_blocklist = matcher.get_regex_and_substring_matches(false);
+    log("Matching elements by regex or substring.");
+    matcher.get_regex_and_substring_matches(false).not(whitelisted).remove();
 
-    var to_block = pattern_blocklist.not(whitelisted);
-    log("PATTERN BLOCKED: " + to_block.length + " (plus " +
-        (pattern_blocklist.length - to_block.length) + " whitelisted)");
-    to_block.remove();
-
-    if (whitelisted.length == 0) {
-      // There are no whitelisted elements on the page; that means that
-      // there were no false positives among the items caught by
-      // early blocking.  Thus, there's no reason to again find and remove
-      // those items from the page!
-      if (features.debug_logging.is_enabled) {
-        log("Early blocked:");
-        var selectors = add_includes_and_excludes(demands.filters.selectors);
-        var candidates = $(selectors.join(','));
-        var to_block = candidates.not(whitelisted);
-        // List which selectors removed which ads.
-        for (var i = 0; i < selectors.length; i++) {
-            var dead = $(selectors[i]);
-            if (dead.length > 0) {
-              for (var j = 0; j < dead.length; j++) {
-                log("  * css match: '" + selectors[i].substring(0,80) +
-                    "' matches '" + 
-                    $(dead[j]).html().substring(0,80).replace(/\n/g, '') +
-                    "...'");
-              }
-            }
+    // CSS hides all items matched by selector rules (and whitelisted
+    // items are then explicitly show()n above.)  
+    if (features.debug_logging.is_enabled) {
+      log("Items matched by adblock_start CSS (excluding whitelisted):");
+      var selectors = add_includes_and_excludes(demands.filters.selectors);
+      for (var i = 0; i < selectors.length; i++) {
+        var dead = $(selectors[i]).not(whitelisted);
+        for (var j = 0; j < dead.length; j++) {
+          log("  * css '" + selectors[i].substring(0,80) + "' matches '" + 
+              $(dead[j]).html().substring(0,80).replace(/\n/g, '') + "...'");
         }
-        log("[end of skipped SELECTOR SEARCH]");
       }
-    } else {
-      run_selector_blocklist(demands.filters, whitelisted);
     }
+    // However, we want to actually remove <embed> objects so Flash
+    // doesn't take up CPU.
+    remove_embeds_by_selector(demands.filters, whitelisted);
 
+    // TODO: this doesn't match <div> background-images, which we had to
+    // special-case in run_specials().  Better would be something like
+    // $("has-css:background-image").filter(by regex).css("bgimage", null);
+    // Is there such a thing as has-css or its ilk? (I'm on a plane right now.)
+    // If so, is it fast?  I don't want to have to touch every freaking
+    // element.  Maybe $("body,div").filter(has bgimage matching regex)
+    // would be better -- either way, profile it.
+    // Remove background images
     var bgimage_css = $("body").css("background-image") || "";
     // "" if no <body> -- e.g. if in a <frameset>
     var bgimage = bgimage_css.match(/^url\((.*)\)$/);
