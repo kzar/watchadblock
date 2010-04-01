@@ -311,12 +311,12 @@ Filters.__make_subscription_options = function() {
       "Danish filters",
     "http://dutchmega.nl/dutchblock/list.txt":
       "Dutch filters",
+    "http://chewey.de/mozilla/data/adblock.txt":
+      "German filters",
     "http://israellist.googlecode.com/files/IsraelList.txt":
       "Israeli filters",
     "http://www.fanboy.co.nz/adblock/fanboy-adblocklist-jpn.txt":
       "Japanese filters",
-    "http://chewey.de/mozilla/data/adblock.txt":
-      "German filters",
     "http://www.bsi.info.pl/filtrABP.txt":
       "Polish filters",
     "http://ruadlist.googlecode.com/svn/trunk/adblock.txt":
