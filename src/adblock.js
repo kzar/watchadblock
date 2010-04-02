@@ -224,9 +224,28 @@ function adblock_begin_v2(features) {
             replacement.setAttribute("flashvars", newFlashVars);
         }
         elt.parentNode.replaceChild(replacement, elt);
-        var disable_url = chrome.extension.getURL("options.html");
-        var message = "<div style='font-size: x-small; font-weight:italic; text-align:center'>No video?  Reload the page.  If this happens a lot, disable YouTube ad blocking under <a target='_new' href='" + disable_url + "'>AdBlock Options</a>.</div>";
-        $("#movie_player").before(message);
+
+        if (features.show_youtube_help_msg.is_enabled) {
+          var disable_url = chrome.extension.getURL("options.html");
+          var message = $("<div>").
+            css({"font-size": "x-small", "font-style": "italic",
+                 "text-align": "center", "color": "black",
+                 "font-weight": "normal", "background-color": "white"}).
+            append("<span>No video?  Reload the page.  If this happens a lot, disable YouTube ad blocking under <a target='_new' href='" + disable_url + "'>AdBlock Options</a>.</span>");
+          var closer = $("<a>", {href:"#"}).
+            css({"font-style":"normal", "margin-left":"20px"}).
+            text("[x]").
+            click(function() {
+              message.remove();
+              extension_call(
+                "set_optional_feature",
+                {name: "show_youtube_help_msg", is_enabled: false}
+              );
+            });
+          message.append(closer);
+          $("#movie_player").before(message);
+        }
+
         // It seems to reliably make the movie play if we hide then show it.
         // Doing that too quickly can leave the Flash player in place but
         // entirely white (and I can't figure out why.)  750ms seems to work

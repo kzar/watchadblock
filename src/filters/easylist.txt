@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: 2c5ty0RjTjTGl/T2d/G6lA
+! Checksum: PN8Qb2HpRXq1LWIY/L+ycw
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 29 Mar 2010 15:03 UTC
+! Last modified:  2 Apr 2010 09:20 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -15,6 +15,7 @@
 ! *** easylist_general_block.txt ***
 &ad_type_id=
 +adverts/
+-ad-large.
 -ad.html
 -banner-ads/
 .ad.footer.
@@ -24,6 +25,7 @@
 .ca/ads/
 .com/ad-
 .com/ad/
+.com/ads.
 .com/ads/
 .com/ads?
 .com/adv/
@@ -72,6 +74,7 @@
 /ad-server/*
 /ad-top-fr.
 /ad-topbanner-single.
+/ad-vert.
 /ad-vertical-single.
 /ad.asp?
 /ad.aspx
@@ -129,6 +132,7 @@
 /ad_insert.
 /ad_js.php
 /ad_label_
+/ad_leader.
 /ad_left.
 /ad_legend_
 /ad_manager.
@@ -161,6 +165,7 @@
 /adbox.gif
 /adbrite.
 /adbureau.
+/adcell/*
 /adchannel_
 /adclick.
 /adclient.
@@ -383,6 +388,7 @@
 /advert/*
 /advert?
 /advert_
+/advertise-
 /advertise.
 /advertise/*
 /advertisement-
@@ -502,6 +508,7 @@
 /commercials/*
 /common/ad/*
 /common/ads/*
+/companion_ads.
 /contentad|
 /contextad.
 /controller/ads/*
@@ -660,6 +667,7 @@
 /media/ads/*
 /megaad.
 /metaadserver/*
+/misc/ad-
 /miva_ads.
 /mnetorfad.js
 /mod_ad/*
@@ -960,6 +968,7 @@ z/adx.js
 |http://adsys.
 |http://adv.
 |http://adver.
+|http://advertiser.
 |http://bwp.*/search
 |http://feeds.*/~a/
 |http://getad.
@@ -1153,6 +1162,7 @@ z/adx.js
 ###ad-728
 ###ad-banner
 ###ad-bottom
+###ad-bottom-wrapper
 ###ad-colB-1
 ~apple.com###ad-container
 ###ad-footer
@@ -1216,6 +1226,7 @@ z/adx.js
 ~campusdish.com###adBanner
 ###adBanner120x600
 ###adBannerTable
+###adBannerTop
 ###adBar
 ~jobs.wa.gov.au,~pricewatch.com###adContainer
 ###adFps
@@ -1594,6 +1605,7 @@ z/adx.js
 ###ft-ad-1
 ###ft-ad-container
 ###fusionad
+###fw-advertisement
 ###g_ad
 ###g_adsense
 ###ga_300x250
@@ -1667,17 +1679,20 @@ z/adx.js
 ###interstitial_ad_wrapper
 ###islandAd
 ###j_ad
+###jmp-ad-buttons
 ###landing-adserver
 ###lateAd
 ###lb-sponsor-left
 ###lb-sponsor-right
 ###leader-board-ad
 ###leader-sponsor
+###leaderAdContainer
 ###leaderad
 ###leaderad_section
 ###leaderboard-ad
 ###leaderboard-bottom-ad
 ###leaderboard_ad
+###leftAdContainer
 ###leftSectionAd300-100
 ###left_ad
 ###left_adspace
@@ -1862,6 +1877,7 @@ z/adx.js
 ###textAds
 ###text_ad
 ###text_advert
+###the-last-ad-standing
 ###thefooterad
 ###themis-ads
 ###tile-ad
@@ -1947,6 +1963,7 @@ z/adx.js
 ##.Ad_E_Wrapper
 ##.Ad_Right
 ##.Ads
+##.AdsBoxSection
 ##.AdvertisementTextTag
 ##.ArticleInlineAd
 ##.BannerAd
@@ -2055,6 +2072,7 @@ z/adx.js
 ~itavisen.no##.ad468
 ##.ad6
 ##.ad620x70
+##.ad626X35
 ##.ad7
 ##.ad728
 ##.ad728x90
@@ -2221,7 +2239,7 @@ z/adx.js
 ##.admpu
 ##.adnotice
 ##.adpadding
-~bipbip.co.il##.adpic
+~bipbip.co.il,~quoka.de##.adpic
 ~tomwans.com##.adright
 ##.adrow
 ##.adrow-post
@@ -2272,7 +2290,7 @@ z/adx.js
 ##.adspacer
 ##.adstrip
 ##.adtag
-~anzwers.com.au,~u-file.net##.adtext
+~anzwers.com.au,~quoka.de,~u-file.net##.adtext
 ##.adtop
 ##.adv-mpu
 ##.adv250
@@ -2313,6 +2331,7 @@ z/adx.js
 ##.advertisement468
 ##.advertisementColumnGroup
 ##.advertisementContainer
+##.advertisementLabel
 ##.advertisementPanel
 ##.advertisement_caption
 ##.advertisement_header
@@ -2373,6 +2392,7 @@ z/adx.js
 ##.bigad
 ##.billboard_ad
 ##.block-ad
+##.block-adsense
 ##.block_ad
 ##.blocked-ads
 ##.blog-ads-container
@@ -2799,6 +2819,7 @@ z/adx.js
 ##.textAds
 ##.text_ads
 ##.textad
+##.textad_headline
 ~frogueros.com##.textads
 ##.textlink-ads
 ##.thisIsAd
@@ -2836,6 +2857,7 @@ z/adx.js
 ##.twoadcolr
 ##.tx_smartadserver_pi1
 ##.txt-ads
+##.txtadvertise
 ##.type_promoads
 ##.usenext
 ##.vertad
@@ -3521,6 +3543,7 @@ z/adx.js
 ||affiliates.generatorsoftware.com^$third-party
 ||affiliates.jlist.com^$third-party
 ||affiliates.supergreenhosting.com^$third-party
+||affiliation.fotovista.com^$third-party
 ||apple.com/itunesaffiliates/$third-party
 ||aweber.com/banners/$third-party
 ||b.sell.com^$third-party
@@ -3547,6 +3570,7 @@ z/adx.js
 ||enticelabs.com/el/$third-party
 ||eplreplays.com/wl/$third-party
 ||feedburner.com/~a/$third-party
+||flipchat.com/index.php?$third-party
 ||frontsight.com^*/banners/$third-party
 ||fugger.netfirms.com/moa.swf$third-party
 ||gamestop.com^*/aflbanners/$third-party
@@ -3744,6 +3768,7 @@ z/adx.js
 ||labtimes.org/banner/
 ||lightningcast.net^*/getplaylist?$third-party,domain=reuters.com
 ||linuxtopia.org/includes/$subdocument
+||loaded.it/images/ban*.swf
 ||loaded.it^*/iframe_vid.
 ||loaded.it^*/my_banner
 ||macobserver.com^*/deal_brothers/
@@ -3942,6 +3967,7 @@ azstarnet.com##.bannerinstory
 babble.com.au###leaderboard-bottom
 babble.com.au###leaderboard-top
 babble.com.au###medium-rectangle
+babynamegenie.com##.promo
 bangkokpost.com##.boomboxSize1
 bangkokpost.com##.buzzBoombox
 basketball.com##td[width="530"] + td[width="120"]
@@ -4328,6 +4354,7 @@ hotjobs.yahoo.com###sponsorResults
 hotlinkfiles.com###leaderboard
 howstuffworks.com###MedRectHome
 howstuffworks.com###SponLogo
+howstuffworks.com##.adv
 howstuffworks.com##.search-span
 howstuffworks.com##.searchSponsorItem
 hplusmagazine.com###bottom
@@ -4699,6 +4726,7 @@ ovguide.com##.banner-rectangleMedium
 p2pnet.net###sidebar > ul:first-child + table[width="19%"]
 p2pnet.net###sidebar2
 p2pnet.net##td[align="center"][width="100%"] > a[style="border: 0px none ; margin: 0px;"][target="_blank"] > img
+pagead2.googlesyndication.com##html
 pcauthority.com.au##.featured-retailers
 pcmag.com###homeRegionPremiumPartner
 pcmag.com###w_leaderboard
@@ -5202,8 +5230,9 @@ zone.msn.com##.SuperBannerTVMain
 zuploads.com##.hispeed
 !---------------------------------Exception rules to fix problems----------------------------------!
 ! *** easylist_whitelist.txt ***
+@@||2mdn.net/*/dartshell*.swf$object_subrequest,domain=nationalgeographic.com
 @@||2mdn.net/*_ecw_$image,domain=wwe.com
-@@||2mdn.net/crossdomain.xml$object_subrequest,domain=imdb.com
+@@||2mdn.net/crossdomain.xml$object_subrequest
 @@||2mdn.net/viewad/817-grey.gif$object_subrequest,domain=imdb.com
 @@||a.giantrealm.com/assets/vau/grplayer*.swf$object
 @@||ad.gogopin.com^$~document
@@ -5244,6 +5273,7 @@ zuploads.com##.hispeed
 @@||bitgravity.com/revision3/swf/player/admanager.swf?$object_subrequest,domain=area5.tv
 @@||brothersoft.com/gads/coop_show_download.php?soft_id=$script
 @@||candystand.com/assets/images/ads/$image
+@@||cdn.springboard.gorillanation.com/storage/lightbox_code/static/companion_ads.js$script,domain=gamerevolution.com
 @@||chloe.videogamer.com/data/*/videos/adverts/$object_subrequest
 @@||cinshare.com/js/isalive.js?$script
 @@||cnet.com/ads/common/adclient/*.swf$object_subrequest
@@ -5275,6 +5305,7 @@ zuploads.com##.hispeed
 @@||freeonlinegames.com/advertising/google-loader.swf?$object
 @@||gannett.gcion.com/addyn/3.0/*/adtech;alias=pluck_signin$script
 @@||garrysmod.org/ads/$background,image,script,stylesheet
+@@||googleads.g.doubleclick.net/pagead/ads?client=$subdocument,domain=seeingwithsound.com
 @@||gr.burstnet.com/crossdomain.xml$object_subrequest,domain=filefront.com
 @@||guim.co.uk^*/styles/wide/google-ads.css$stylesheet
 @@||gws.ign.com/ws/search?*&google_adpage=$script
@@ -5316,9 +5347,10 @@ zuploads.com##.hispeed
 @@||objects.tremormedia.com/embed/swf/admanager*.swf$object_subrequest
 @@||objects.tremormedia.com/embed/xml/*.xml?r=$object_subrequest,domain=mydamnchannel.com
 @@||omnikool.discovery.com/realmedia/ads/adstream_mjx.ads/dsc.discovery.com/$script
+@@||pagead2.googlesyndication.com/pagead/ads?client=$subdocument,domain=seeingwithsound.com
 @@||pagead2.googlesyndication.com/pagead/expansion_embed.js$script,domain=myspace.com
 @@||pagead2.googlesyndication.com/pagead/scache/show_invideo_ads.js$script,domain=sciencedaily.com
-@@||pagead2.googlesyndication.com/pagead/show_ads.js$script,domain=myspace.com
+@@||pagead2.googlesyndication.com/pagead/show_ads.js$script,domain=myspace.com|seeingwithsound.com
 @@||pagead2.googlesyndication.com/pagead/static?format=in_video_ads&$subdocument,domain=sciencedaily.com
 @@||quit.org.au/images/images/ad/$image
 @@||redir.adap.tv/redir/client/adplayer.swf?$object_subrequest,domain=cracked.com|videosift.com
@@ -5383,7 +5415,7 @@ zuploads.com##.hispeed
 @@||onlinevideoconverter.com/scripts/advertisement.js$script
 @@||superfastfile.com/adsense.js$script
 @@||superfastfile.com/advertisement.js$script
-@@||theteacherscorner.net/adiframe/ad.js$script
+@@||theteacherscorner.net/adiframe/jext.js?$script
 @@||tpmrpg.net/adframe.js$script
 @@||video2mp3.net/img/adfarm.js$script
 @@||zshare.net/ads.js?*&ad_url=/adbanner$script

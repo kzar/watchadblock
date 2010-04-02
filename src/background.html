@@ -73,6 +73,7 @@
           "debug_logging",
           "debug_time_logging",
           "block_youtube",
+          "show_youtube_help_msg",
           "show_google_search_text_ads",
           "whitelist_shortcut",
           "blacklist_shortcut"
@@ -86,6 +87,8 @@
             if (name == "blacklist_shortcut")
               features[name].is_enabled = true; // by default
             if (name == "block_youtube")
+              features[name].is_enabled = true; // by default
+            if (name == "show_youtube_help_msg")
               features[name].is_enabled = true; // by default
           }
         }
