@@ -305,7 +305,8 @@ function adblock_begin_v2(features) {
     }
     // However, we want to actually remove <embed> objects so Flash
     // doesn't take up CPU.
-    remove_embeds_by_selector(demands.filters, whitelisted);
+    // TODO: actually, this takes lots of time, so don't do it.
+    //remove_embeds_by_selector(demands.filters, whitelisted);
 
     // TODO: this doesn't match <div> background-images, which we had to
     // special-case in run_specials().  Better would be something like
