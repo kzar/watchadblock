@@ -1,7 +1,7 @@
 infinite_loop_workaround("myfilters");
 
 
-// Requires jquery
+// Requires jquery and 'utils.get_optional_features' method from background
 
 // MyFilters class manages subscriptions and the FilterSet.
 
@@ -26,7 +26,7 @@ function MyFilters() {
   // subscription options, merge with MyFilters.__subscription_options.
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
 
-  this._persist();
+  this.update();
   
   // Anything over 3 days old, go ahead and fetch at Chrome startup.
   this.freshen_async(72);
@@ -74,7 +74,7 @@ MyFilters._temp_convert_from_old_system = function() {
 }
 
 // Event fired when subscriptions have been updated, after the subscriptions
-// have been persisted.
+// have been persisted and filterset recalculated.
 // Inputs: callback: fn(void)
 MyFilters.prototype.updated = function(callback) {
   this._event_handlers.updated.push(callback);
@@ -84,8 +84,18 @@ MyFilters.prototype.updated = function(callback) {
 // the "updated" handler.
 // Inputs: none.
 // Returns: null, after completion.
-MyFilters.prototype._persist = function() {
+MyFilters.prototype.update = function() {
   localStorage.setItem('filter_lists', JSON.stringify(this._subscriptions));
+
+  this.rebuild();
+
+  // Fire updated event
+  for (var i = 0; i < this._event_handlers.updated.length; i++)
+    this._event_handlers.updated[i]();
+}
+
+// Rebuild this.filterset based on the current settings and subscriptions.
+MyFilters.prototype.rebuild = function() {
   var texts = [];
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
@@ -96,14 +106,10 @@ MyFilters.prototype._persist = function() {
   if (options.show_google_search_text_ads.is_enabled)
     ignored |= Filter.adTypes.GOOGLE_TEXT_AD;
   this.filterset = FilterSet.fromText(texts.join('\n'), ignored);
-
-  // Fire updated event
-  for (var i = 0; i < this._event_handlers.updated.length; i++)
-    this._event_handlers.updated[i]();
 }
 
 // If any subscribed filters are out of date, asynchronously load updated
-// versions, then call this._persist().  Asynchronous.
+// versions, then call this.update().  Asynchronous.
 // Inputs: older_than?:int -- number of hours.  Any subscriptions staler
 //         than this will be updated.  Defaults to 5 days.
 // Returns: null (asynchronous)
@@ -113,9 +119,10 @@ MyFilters.prototype.freshen_async = function(older_than) {
     var millis = new Date().getTime() - subscription.last_update;
     return (millis > 1000 * 60 * 60 * hours_between_updates);
   }
-  // Fetch the latest filter text, put it in this._subscriptions, and persist.
+  // Fetch the latest filter text, put it in this._subscriptions, and update
+  // ourselves.
   var that = this;
-  function fetch_and_persist(filter_id) {
+  function fetch_and_update(filter_id) {
     var url = that._subscriptions[filter_id].url;
     $.ajax({
       url: url,
@@ -134,7 +141,7 @@ MyFilters.prototype.freshen_async = function(older_than) {
 
         that._subscriptions[filter_id].text = text;
         that._subscriptions[filter_id].last_update = new Date().getTime();
-        that._persist();
+        that.update();
       },
       error: function() { log("Error fetching " + url); }
     });
@@ -142,7 +149,7 @@ MyFilters.prototype.freshen_async = function(older_than) {
   for (var id in this._subscriptions) {
     if (this._subscriptions[id].subscribed &&
         out_of_date(this._subscriptions[id])) {
-      fetch_and_persist(id);
+      fetch_and_update(id);
     }
   }
 }
@@ -167,7 +174,7 @@ MyFilters.prototype.subscribe = function(id, url, text) {
   this._subscriptions[id].subscribed = true;
   this._subscriptions[id].last_update = new Date().getTime();
   this._subscriptions[id].text = text;
-  this._persist();
+  this.update();
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
@@ -186,7 +193,7 @@ MyFilters.prototype.unsubscribe = function(id) {
   else
     delete this._subscriptions[id];
 
-  this._persist();
+  this.update();
 }
 
 // Return a map from subscription id to
