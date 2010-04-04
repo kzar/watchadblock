@@ -108,7 +108,7 @@ function convert_whitelisted_url_pattern(rule) {
 function convert_selector(rule) {
   if (rule.indexOf("##") == -1) {
     // Old-style syntax; convert to new-style
-    rule.replace('#', '##');
+    rule = rule.replace('#', '##');
     rule = rule.replace(/\(/g, '[');
     rule = rule.replace(/\)/g, ']');
   }
