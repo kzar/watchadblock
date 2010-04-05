@@ -19,7 +19,7 @@ infinite_loop_workaround("filter_to_json");
 // Returns: new (unoptimized) filter object
 function convert_filter_list_to_object(filter_text, options) {
   var result = new_filter_object();
-  filter_rules = filter_text.split('\n');
+  var filter_rules = filter_text.split('\n');
   for (var i = 0; i < filter_rules.length; i++) {
     // Some rules are separated by \r\n; and hey, some rules may
     // have leading or trailing whitespace for some reason.
