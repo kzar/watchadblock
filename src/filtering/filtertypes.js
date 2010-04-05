@@ -131,10 +131,14 @@ var SelectorFilter = function(text) {
     this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
 
   if (text.indexOf("##") == -1) {
-    // Old-style syntax; convert to new-style
-    text.replace('#', '##');
-    text = text.replace(/\(/g, '[');
-    text = text.replace(/\)/g, ']');
+    try {
+      text = SelectorFilter._old_style_to_new(text);
+    } catch (e) { // couldn't parse it.
+      log("Found an unparseable selector '" + text + "'");
+      this._domains = Filter._domainInfo('nowhere', ',');
+      this._selector = "MatchesNothing";
+      return;
+    }
   }
 
   var parts = text.split('##');
@@ -146,6 +150,39 @@ SelectorFilter.prototype = {
   __proto__: Filter.prototype,
 
   __type: "SelectorFilter"
+}
+// Convert a deprecated "old-style" filter text to the new style.
+SelectorFilter._old_style_to_new = function(text) {
+  // Old-style is domain#node(attr=value) or domain#node(attr)
+  // domain and node are optional, and there can be many () parts.
+  text = text.replace('#', '##');
+  var parts = text.split('##'); // -> [domain, rule]
+  var domain = parts[0];
+  var rule = parts[1];
+
+  // Make sure the rule has only the following two things:
+  // 1. a node -- this is optional and must be '*' or alphanumeric
+  // 2. a series of ()-delimited arbitrary strings -- also optional
+  //    the ()s can't be empty, and can't start with '='
+  if (rule.length == 0 || 
+      !rule.match(/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i))
+    throw new Error("bad selector filter");
+
+  var first_segment = rule.indexOf('(');
+
+  if (first_segment == -1)
+    return domain + '##' + rule;
+
+  var node = rule.substring(0, first_segment);
+  var segments = rule.substring(first_segment);
+
+  // turn all (foo) groups into [foo]
+  segments = segments.replace(/\((.*?)\)/g, "[$1]");
+  // turn all [foo=bar baz] groups into [foo="bar baz"]
+  // Specifically match:    = then not " then anything till ]
+  segments = segments.replace(/=([^"][^\]]*)/g, '="$1"');
+
+  return domain + "##" + node + segments;
 }
 
 // Filters that block by URL regex or substring.
@@ -185,7 +222,8 @@ PatternFilter._parseRule = function(text) {
     domainText: ''
   };
 
-  // TODO: handle match-case option correctly
+  // TODO: handle match-case option correctly.  For now we just pretend
+  // that everything that shows up was in lower case.
   text = text.toLowerCase();
 
   var parts = text.split('$');

@@ -70,12 +70,28 @@ FilterSet.prototype = {
   // take into account domains (call patternFilterSetForDomain() first to get
   // the subset applies to a certain domain.)
   matches: function(url) {
-    for (var i = 0; i < this._whitelistFilters.length; i++)
-      if (this._whitelistFilters[i].matches(url))
+    // TODO: ignoring match-case option for now, and forcing case-insensitive
+    // match.
+    url = url.toLowerCase();
+    // TODO: is there a better place to do this?
+    // Limiting length of URL to avoid painful regexes.
+    var LENGTH_CUTOFF = 200;
+    url = url.substring(0, LENGTH_CUTOFF);
+
+    for (var i = 0; i < this._whitelistFilters.length; i++) {
+      if (this._whitelistFilters[i].matches(url)) {
+        log("Whitelisted: '" + this._whitelistFilters[i]._rule + 
+            "' -> " + url);
         return false;
-    for (var i = 0; i < this._patternFilters.length; i++)
-      if (this._patternFilters[i].matches(url))
+      }
+    }
+    for (var i = 0; i < this._patternFilters.length; i++) {
+      if (this._patternFilters[i].matches(url)) {
+        log("Matched: '" + this._patternFilters[i]._rule + 
+            "' -> " + url);
         return true;
+      }
+    }
     return false;
   }
 }

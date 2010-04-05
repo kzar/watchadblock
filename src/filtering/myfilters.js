@@ -100,6 +100,11 @@ MyFilters.prototype.rebuild = function() {
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
       texts.push(this._subscriptions[id].text);
+  texts = texts.join('\n').split('\n');
+
+  // Remove duplicates.
+  var hash = {}; for (var i = 0; i < texts.length; i++) hash[texts[i]] = 1;
+  texts = []; for (var unique_text in hash) texts.push(unique_text);
 
   var options = utils.get_optional_features({});
   var ignored = Filter.adTypes.NONE;
@@ -155,19 +160,19 @@ MyFilters.prototype.freshen_async = function(older_than) {
 }
 
 // Subscribe to a filter list.
-// Inputs: id:string id of this filter -- either a known id, or one made up
-//                   on the spot for a user submitted subscription.
-//         url:string Undefined unless this is a user submitted subscription.
-//                    The location of the filter text online.
+// Inputs: id:string id of this filter -- either a well-known id, or "url:xyz",
+//                   where xyz is the URL of a user-specified filterlist.
 //         text:string value of the filter.  It's the caller's job to fetch
 //                     and provide this.
 // Returns: none, upon completion.
-MyFilters.prototype.subscribe = function(id, url, text) {
+MyFilters.prototype.subscribe = function(id, text) {
   if (this._subscriptions[id] == undefined) {
     // New user-submitted filter.
+    if (id.substring(0,4) != "url:")
+      return; // dunno what went wrong, but let's quietly ignore it.
     this._subscriptions[id] = {
-      url: url,
-      name: url,
+      url: id.substring(4), // "url:xyz" -> "xyz"
+      name: id.substring(4),
       user_submitted: true
     };
   }

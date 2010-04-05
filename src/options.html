@@ -212,9 +212,9 @@
         $(".subscription").each(function(i,el) {
           var when_text = "";
 
-          var url = $("input", el).attr("name");
-          if (subs[url] && subs[url].subscribed)
-            when_text = how_long_ago(subs[url].last_update);
+          var id = $("input", el).attr("name");
+          if (subs[id] && subs[id].subscribed)
+            when_text = how_long_ago(subs[id].last_update);
 
           $(".update_time", el).text(when_text);
         });
@@ -229,8 +229,8 @@
           $(".subscription").each(function(i,el) {
             var is_checked = "";
 
-            var url = $("input", el).attr("name");
-            if (subs[url] && subs[url].subscribed)
+            var id = $("input", el).attr("name");
+            if (subs[id] && subs[id].subscribed)
               is_checked = "checked";
 
               $("input", el).attr("checked", is_checked);
@@ -244,21 +244,28 @@
         });
       }
 
-      register_broadcast_listener('optimized_filters_updated', function() {
+      register_broadcast_listener('filters_updated', function() {
         refresh_subscription_view();
       });
 
-      // Unsubscribe from the given URL.
-      function unsubscribe(url) {
-        extension_call("unsubscribe", {url:url}, function() {
+      // Unsubscribe from the given filterlist id.
+      function unsubscribe(id) {
+        extension_call("unsubscribe", {id:id}, function() {
           flash("subscription_message", "Unsubscribed.");
         });
       }
-      // Subscribe to the given URL.  If you can't fetch the latest
-      // version of it, fail.  If then_reload is specified and is
-      // true, reload the page upon success.  If log_on_success then
-      // record a successful subscription.
-      function subscribe(url, then_reload, log_on_success) {
+      // Subscribe to the given filterlist id.  id is either a well-known id, or
+      // "url:xyz", where xyz is the URL of a user-specified filter list.
+      // If you can't fetch the latest version of the list, fail.  If 
+      // then_reload is specified and is true, reload the page upon 
+      // success.  If log_on_success then record a successful subscription.
+      function subscribe(id, then_reload, log_on_success) {
+        var url;
+        if (id in global_subscriptions_cached_copy)
+          url = global_subscriptions_cached_copy[id].url;
+        else
+          url = id.substring(4); // "url:xyz"
+
         // TODO: use a modal.
         flash("subscription_message", "Fetching... please wait.");
         $.ajax({
@@ -269,6 +276,7 @@
                 text.indexOf('(Adblock') != 0) {
               alert("Please enter the URL of a list of filters to " +
                     "subscribe to.");
+              flash("subscription_message", "That wasn't a list URL.");
               return;
             }
             if (log_on_success) {
@@ -277,7 +285,7 @@
             }
             extension_call(
               "subscribe", 
-              {url:url, text:text},
+              {id: id, text:text},
               function() {
                 flash("subscription_message", "Subscribed.");
                 if (then_reload)
@@ -317,18 +325,18 @@
         extension_call('get_subscriptions_minus_text', {}, 
                                              function(subscriptions) {
           // Build subscription checkboxes.
-          for (var url in subscriptions) {
+          for (var id in subscriptions) {
             var div = $("<div></div>").
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
-              attr("name", url);
+              attr("name", id);
 
             var name = $("<span>").
-              text(subscriptions[url].name);
+              text(subscriptions[id].name);
 
             div.
-              attr("title", url).
+              attr("title", subscriptions[id].url).
               append(checkbox).
               append(name).
               append($("<span></span>").addClass("update_time"));
@@ -348,12 +356,12 @@
             if (global_refreshing_subscription_view)
               return;
 
-            var url = $(this).attr("name");
+            var id = $(this).attr("name");
             var checked = $(this).is(":checked");
             if (!checked)
-              unsubscribe(url);
+              unsubscribe(id);
             else
-              subscribe(url);
+              subscribe(id);
           });
 
         });
@@ -373,7 +381,7 @@
               url = url.substring(0, url.indexOf('&title'));
             url = unescape(url);
           }
-          subscribe(url, true, true);
+          subscribe("url:" + url, true, true);
         });
 
         // Every so often, redisplay "last update" times on subscriptions.
@@ -472,7 +480,7 @@
           var options = { show_google_search_text_ads: checked };
           // Give the optional feature a sec to get saved by the other
           // change handler before recalculating filters.
-          extension_call('optimize_filters', { options: options });
+          extension_call('rebuild_filters', { options: options });
         });
       </script>
 

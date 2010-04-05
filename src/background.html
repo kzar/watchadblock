@@ -4,9 +4,49 @@
     <script src="functions.js"></script>
     <script src="abp_filter_to_json_converter.js"></script>
     <script src="filters.js"></script>
+    <script src="filtering/filtertypes.js"></script>
+    <script src="filtering/filterset.js"></script>
+    <script src="filtering/myfilters.js"></script>
     <script>
       var utils = {};
       utils.noop = function(options) {}
+
+
+      // V3 FILTERING
+
+      // Inputs: elementInfo: list of { url:string, id } objects.
+      //         domain: domain of page that requested these elements.
+      // If a url is empty or null, it will be ignored.
+      // Returns: array of ids that are ads.
+      utils.find_ads_in = function(options) {
+        var filterset = _test_new_subscriptions.filterset;
+        // limit to domain
+        // TODO: timing tests to see if this is much slower than not
+        // using jquery
+        filterset = filterset.patternFilterSetForDomain(options.domain);
+        return $(options.elementInfo).
+          filter(function() { return this.url && filterset.matches(this.url); }).
+          map(function(i, entry) { return entry.id; }).
+          toArray();
+      }
+
+      // Inputs: domain: domain of page that requested the selectors.
+      // Returns: the selector strings from all selector filters that should
+      //          apply to the given domain.
+      utils.selectors_for_domain = function(options) {
+        return _test_new_subscriptions.filterset.selectorsForDomain(
+                                                        options.domain);
+      }
+
+      // Rebuild the filterset based on the current settings and
+      // subscriptions.
+      // Inputs: options?: { show_google_search_text_ads:bool }.  If options
+      //         object is not specified, uses the curretly
+      //         stored optional_features to determine options.
+      // Returns: null, upon completion
+      utils.update_filters = function(options) {
+        _test_new_subscriptions.update();
+      }
 
       // STORAGE
 
@@ -38,27 +78,6 @@
         xhr.open("GET", chrome.extension.getURL(options.file), false);
         xhr.send();
         return xhr.responseText;
-      }
-
-      // OPTIMIZED FILTERS
-
-      // Fetch the optimized filters.
-      // Inputs: none.
-      // Returns: optimized filter object.
-      utils.get_optimized_filters = function(options) {
-        var result = utils.storage_get({
-          key:'optimized_filters',
-          default_value:undefined
-        });
-        if (result != undefined)
-          return result;
-
-        // The user cleared their cookies?
-        log("No optimized filters -- starting from scratch.");
-        // This subscribes the user to a couple filters, and makes
-        // an optimized version.
-        create_subscriptions_object();
-        return utils.get_optional_features(options);
       }
 
 
@@ -120,6 +139,35 @@
         };
       }
 
+      // TODO: make better.
+      // Inputs: domain:string the domain of the calling frame.
+      //         is_top_frame?:bool true if the caller is the top
+      //           level frame.  Subframes use this frame's domain to determine 
+      //           if they are whitelisted.
+      utils.get_features_and_filters = function(options, sender) {
+        var start = new Date();
+        if (options.is_top_frame) {
+          top_frame_domains[sender.tab.id] = options.domain;
+        }
+        // TODO why the heck doesn't this work when cached_extension_call?!?
+        // selectors is always 0, except maybe it will be full once in a while?
+        // is this a Chrome bug or a race condition that I'm forgetting about?
+        // When I log from here I have the full set of selectors, and in
+        // cached_extension_call they are gone.  If I manually fill a
+        // TDO_temp_selector_copy from result.selectors before returning,
+        // it seems fine.  WEIRD.
+        var result = {
+          whitelist: utils.get_whitelist(),
+          user_filters: utils.get_user_filters(),
+          selectors: utils.selectors_for_domain({domain:options.domain}),
+          features: utils.get_optional_features(),
+          top_frame_domain: top_frame_domains[sender.tab.id],
+        };
+        var end = new Date();
+        console.log("time to run: " + (end - start) + " || " + options.domain);
+        return result;
+      }
+
       // WHITELIST
 
       utils.get_whitelist = function(options) {
@@ -156,35 +204,28 @@
       // Inputs: older_than:integer - number of hours.  If anyone is
       //         staler than this, update them.  Defaults to 5 days.
       utils.freshen_subscriptions = function(options) {
-        _subscriptions.freshen_async(options.older_than);
+        _test_new_subscriptions.freshen_async(options.older_than);
       }
-      // Returns map from url to subscription object.  See filters.js for 
+      // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.
       // Inputs: none
       utils.get_subscriptions_minus_text = function(options) {
-        return _subscriptions.get_subscriptions_minus_text();
-      }
-      // Optimize _subscriptions's filters.
-      // Inputs: options?: { show_google_search_text_ads:bool }.  If options
-      //         object is not specified, optimization uses the curretly
-      //         stored optional_features to determine options.
-      // Returns: null, upon completion
-      utils.optimize_filters = function(options) {
-        _subscriptions.optimize(options.options);
+        return _test_new_subscriptions.get_subscriptions_minus_text();
       }
       // Subscribes to a filter subscription.
-      // Inputs: url: url to which to subscribe.
+      // Inputs: id: id to which to subscribe.  Either a well-known
+      //             id, or "url:xyz" pointing to a user-specified list.
       //         text: filter text string fetched from that url
       // Returns: null, upon completion
       utils.subscribe = function(options) {
-        return _subscriptions.subscribe(options.url, options.text);
+        return _test_new_subscriptions.subscribe(options.id, options.text);
       }
 
       // Unsubscribes from a filter subscription.
-      // Inputs: url: url from which to unsubscribe.
+      // Inputs: id: id from which to unsubscribe.
       // Returns: null, upon completion.
       utils.unsubscribe = function(options) {
-        return _subscriptions.unsubscribe(options.url);
+        return _test_new_subscriptions.unsubscribe(options.id);
       }
 
 
@@ -332,16 +373,14 @@
       );
 
       
-      function create_subscriptions_object() {
-        _subscriptions = new Filters();
-        _subscriptions.updated(function() {
-          utils.emit_broadcast({
-            fn: 'optimized_filters_updated', 
-            options: {}
-          });
+      // TODO: rename to _myfilters or something.
+      _test_new_subscriptions = new MyFilters();
+      _test_new_subscriptions.updated(function() {
+        utils.emit_broadcast({
+          fn: 'filters_updated', 
+          options: {}
         });
-      }
-      create_subscriptions_object();
+      });
 
 
       // If the user has just installed, make a note of it.  
@@ -362,40 +401,6 @@
       }
       note_install();
 
-
-
-      // TODO golly gosh darnit, need to switch back to ruadlist because it
-      // turns out it's actually the most popular and correct Russian list.
-      // TODO: we need a general way to do this!
-      try {
-      (function() {
-        var oldurls = [
-          "http://fanboy-adblock-list.googlecode.com/hg/fanboy-morpeh-rus.txt"
-          ];
-        var newurl = "http://ruadlist.googlecode.com/svn/trunk/adblock.txt";
-
-        var subs = _subscriptions.get_subscriptions_minus_text();
-        var hadrussian = false;
-
-        for (var i = 0; i < oldurls.length; i++) {
-          var url = oldurls[i];
-          if (url in subs) {
-            if (subs[url].subscribed) {
-              hadrussian = true;
-            }
-            // Either way, we want to delete the old entry.
-            _subscriptions.unsubscribe(url);
-          }
-        }
-
-        if (hadrussian) {
-          $.get(newurl, function(text) {
-            console.log("Switching to new Russian list");
-            _subscriptions.subscribe(newurl, text);
-          });
-        }
-      })();
-      } catch (e) { console.log("Failed to convert Russian filter:" + e); }
     </script>
   </head>
   <body>

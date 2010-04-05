@@ -45,12 +45,25 @@ extension_call = function(fn, options, callback) {
 // Like extension_call, but if you've called fn before with the same
 // options, return a cached result.
 cached_extension_call = function(fn, options, callback) {
+  var TODO_temp_logging = false;
+  if (fn == "get_features_and_filters") {
+    console.log("??");
+    TODO_temp_logging = true;
+  }
   var key = "extension_call::" + fn + "(" + JSON.stringify(options) + ")";
   if (key in _adblock_cache) {
+    if (TODO_temp_logging) {
+      console.log("** " + key + " cached. Value:");
+      console.log(_adblock_cache[key]);
+    }
     callback(_adblock_cache[key]);
   } else {
     extension_call(fn, options, function(result) {
       _adblock_cache[key] = result;
+      if (TODO_temp_logging) {
+        console.log("++ " + key + " not cached.  New value:");
+        console.log(_adblock_cache[key]);
+      }
       callback(result);
     });
   }
@@ -62,6 +75,7 @@ if (debug_id)
   icon_extension_id = "mghkcncoapjmpodfikchllepihialcdc";
 
 // These are replaced with console.log in adblock_start if the user chooses.
+DEBUG = false;
 log = function() { };
 time_log = function() { };
 

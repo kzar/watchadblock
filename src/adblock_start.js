@@ -57,10 +57,26 @@ function facebook_hack() {
   }
 }
 
-function do_early_stuff(features, demands) {
+
+
+var opts = { domain: document.domain };
+// The top frame should tell the background what domain it's on.  The
+// subframes will be told what domain the top is on.
+if (window == window.top)
+  opts.is_top_frame = true;
+    
+// returns everyintg _v3 did, plus _optional_features and selectors.
+extension_call('get_features_and_filters', opts, function(data) {
   var start = new Date();
 
-  if (page_is_whitelisted(demands.whitelist, demands.top_frame_domain))
+  if (data.features.debug_logging.is_enabled) {
+    DEBUG = true;
+    log = function(text) { console.log(text); };
+  }
+  if (data.features.debug_time_logging.is_enabled)
+    time_log = function(text) { console.log(text); };
+
+  if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
     return;
 
   if (gmail_hack())
@@ -68,35 +84,15 @@ function do_early_stuff(features, demands) {
 
   facebook_hack();
 
-  early_blacklist(demands.user_filters);
+  early_blacklist(data.user_filters);
 
-  // We ignore the URL whitelist; so in adblock.js, if there are any
-  // whitelisted items on the page, we remove all the ads, then remove
-  // this style element.
-  var selectors = add_includes_and_excludes(demands.filters.selectors);
-  block_list_via_css(selectors);
+  block_list_via_css(data.selectors);
+
+  // In case adblock.js already ran, let the cache know we're done so
+  // it can delete itself.
+  _done_with_cache("adblock_start");
 
   var end = new Date();
   time_log("adblock_start run time: " + (end - start) + " || " +
            document.location.href);
-}
-
-cached_extension_call('get_optional_features', {}, function(features) {
-  if (features.debug_logging.is_enabled)
-    log = function(text) { console.log(text); };
-  if (features.debug_time_logging.is_enabled)
-    time_log = function(text) { console.log(text); };
-
-  var opts = {};
-  // The top frame should tell the background what domain it's on.  The
-  // subframes will be told what domain the top is on.
-  if (window == window.top)
-    opts.top_frame_domain = document.domain;
-    
-  cached_extension_call('get_user_demands_v2', opts, function(demands) {
-    do_early_stuff(features, demands);
-    // In case adblock.js already ran, let the cache know we're done so
-    // it can delete itself.
-    _done_with_cache("adblock_start");
-  });
 });
