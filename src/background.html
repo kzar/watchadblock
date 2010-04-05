@@ -38,11 +38,8 @@
                                                         options.domain);
       }
 
-      // Rebuild the filterset based on the current settings and
-      // subscriptions.
-      // Inputs: options?: { show_google_search_text_ads:bool }.  If options
-      //         object is not specified, uses the curretly
-      //         stored optional_features to determine options.
+      // Rebuild the filterset based on the current settings and subscriptions.
+      // Inputs: none.
       // Returns: null, upon completion
       utils.update_filters = function(options) {
         _test_new_subscriptions.update();

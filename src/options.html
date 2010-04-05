@@ -476,11 +476,11 @@
       </p>
       <script>
         $("#enable_show_google_search_text_ads").change(function() {
-          var checked = $(this).is(":checked");
-          var options = { show_google_search_text_ads: checked };
           // Give the optional feature a sec to get saved by the other
           // change handler before recalculating filters.
-          extension_call('update_filters', { options: options });
+          window.setTimeout(function() { 
+            extension_call('update_filters', { }); 
+          }, 1000);
         });
       </script>
 
