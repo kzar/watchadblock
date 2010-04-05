@@ -63,7 +63,7 @@ MyFilters._temp_convert_from_old_system = function() {
       }
     }
     if (!found) { // user_submitted
-      new_subs['user_specified:' + url] = old_subs[url];
+      new_subs['url:' + url] = old_subs[url];
     }
   }
 
