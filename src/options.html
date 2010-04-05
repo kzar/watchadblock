@@ -480,7 +480,7 @@
           var options = { show_google_search_text_ads: checked };
           // Give the optional feature a sec to get saved by the other
           // change handler before recalculating filters.
-          extension_call('rebuild_filters', { options: options });
+          extension_call('update_filters', { options: options });
         });
       </script>
 
