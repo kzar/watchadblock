@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: XYAFDa89yhWEG6eGlw9QkQ
+! Checksum: SlZgJOYhpFXRaBOhcOuCZw
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 12 Apr 2010 21:10 UTC
+! Last modified: 13 Apr 2010 14:30 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -19,6 +19,7 @@
 -ad.html
 -banner-ads/
 .ad.footer.
+.adplacement=
 .aspx?zoneid=*&task=
 .au/_ads/
 .au/ads/
@@ -3809,6 +3810,7 @@ n728x90_
 ||dig.abclocal.go.com/preroll/
 ||digdug.divxnetworks.com^
 ||distrowatch.com/images/$image
+||distrowatch.com^*/kokoku/
 ||divxstage.net/images/download.png
 ||dl4all.com/data4.files/dpopupwindow.js
 ||earthlink.net^*/promos/
@@ -4429,6 +4431,7 @@ geekologie.com###leaderboard
 generation-nt.com##.pub125
 generation-nt.com##.pub2
 generation-nt.com##.pub3
+genuineforextrading.com###clickbank
 get-ip.de##div[style*="width: 250px; height: 250px;"]
 gethuman.com##td[style="width: 200px;"]
 getprice.com.au##table[id*="AdAware"]
@@ -5154,6 +5157,7 @@ thestreet.com###brokerage
 thestreet.com###textLinks
 thestreet.com###textLinksContainer
 thesuperficial.com###leaderboard
+thetandd.com##.yahoo_content_match
 thevarguy.com###middlebannerwrapper
 thevarguy.com##.squarebanner160x160
 thewrap.com##div[id^="block-thewrap_ads_250x300"]
@@ -5437,8 +5441,7 @@ zuploads.com##.hispeed
 @@||dart.clearchannel.com/html.ng/$object_subrequest,domain=radio1045.com
 @@||deviantart.com/global/difi/?$subdocument
 @@||direct.fairfax.com.au/hserver/*/site=vid.*/adtype=embedded/$script
-@@||distrowatch.com/images/*/*.png|$image
-@@||distrowatch.com/images/*?-300x250$image
+@@||distrowatch.com/images/other/*.png|$image
 @@||doubleclick.net/ad/*smartclip$script,domain=last.fm
 @@||doubleclick.net/adj/*smartclip$script,domain=last.fm
 @@||doubleclick.net/adj/imdb2.consumer.video/*;sz=320x240,$script
@@ -5563,6 +5566,7 @@ zuploads.com##.hispeed
 @@||zedo.com/*.xml$object_subrequest,domain=rajshri.com
 @@||zedo.com//$object_subrequest,domain=rajshri.com
 !Anti-Adblock
+@@||artificialvision.com^$script,domain=seeingwithsound.com
 @@||arto.com/includes/js/adtech.de/script.axd/adframe.js?$script
 @@||avforums.com/forums/adframe.js$script
 @@||cinshare.com/js/*ad_type$script
@@ -5575,9 +5579,7 @@ zuploads.com##.hispeed
 @@||megavideodownloader.com/adimages/|$subdocument
 @@||novamov.com/ads.js?*&ad_url=/adbanner$script
 @@||onlinevideoconverter.com/scripts/advertisement.js$script
-@@||seeingwithsound.com/_468.gif$image
-@@||seeingwithsound.com/adbox.gif$image
-@@||seeingwithsound.com^$script
+@@||seeingwithsound.com^$image,script
 @@||superfastfile.com/adsense.js$script
 @@||superfastfile.com/advertisement.js$script
 @@||theteacherscorner.net/adiframe/jext.js?$script

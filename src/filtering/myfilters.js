@@ -319,7 +319,7 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional German filters",
     },
     "easylist_plun_korean": {
-      url: "http://corset-abp.googlecode.com/svn/trunk/corset.txt",
+      url: "http://abp-corset.googlecode.com/hg/corset.txt",
       name: " - additional Korean filters",
     },
     "easylist_plus_romanian": {
