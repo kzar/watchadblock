@@ -274,6 +274,14 @@ MyFilters.__merge_with_default = function(subscription_data) {
   for (var id in subscription_data) {
     if (MyFilters.__subscription_options[id] == undefined)
       subscription_data[id].user_submitted = true; // maybe already was
+    // TODO: since the URLs in the official options are always canonical for
+    // well-known lists, stop storing the url as a property in local storage,
+    // and start calling MyFilters.urlForId(id), which parses url:xyz style
+    // ids, or looks up the answer in the official options.  
+    // But for now, make sure that any subscribed filters get their URLs
+    // updated with the new address.
+    else
+      subscription_data[id].url = MyFilters.__subscription_options[id].url;
   }
   for (var id in MyFilters.__subscription_options) {
     if (subscription_data[id] == undefined) {
@@ -311,7 +319,7 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional German filters",
     },
     "easylist_plun_korean": {
-      url: "http://brianyi.com/corset.txt",
+      url: "http://corset-abp.googlecode.com/svn/trunk/corset.txt",
       name: " - additional Korean filters",
     },
     "easylist_plus_romanian": {
