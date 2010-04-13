@@ -4,6 +4,7 @@
     <script src="functions.js"></script>
     <script src="abp_filter_to_json_converter.js"></script>
     <script src="filters.js"></script>
+    <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
@@ -19,23 +20,24 @@
       // If a url is empty or null, it will be ignored.
       // Returns: array of ids that are ads.
       utils.find_ads_in = function(options) {
+        // TODO: replace filter() and map() calls thruout with array ones
+        // when possible -- jquery is unnecessary on arrays
         var filterset = _test_new_subscriptions.filterset;
-        // limit to domain
-        // TODO: timing tests to see if this is much slower than not
-        // using jquery
-        filterset = filterset.patternFilterSetForDomain(options.domain);
-        return $(options.elementInfo).
-          filter(function() { return this.url && filterset.matches(this.url); }).
-          map(function(i, entry) { return entry.id; }).
-          toArray();
+        // limit to a domain
+        var limited = filterset.limitedToDomain(options.domain);
+        // TODO: timing tests to see if this is much slower than a normal loop
+        return options.elementInfo.
+          filter(function(el) { return el.url && limited.matches(el.url); }).
+          map(function(el) { return el.id; });
       }
 
       // Inputs: domain: domain of page that requested the selectors.
       // Returns: the selector strings from all selector filters that should
       //          apply to the given domain.
       utils.selectors_for_domain = function(options) {
-        return _test_new_subscriptions.filterset.selectorsForDomain(
-                                                        options.domain);
+        return _test_new_subscriptions.filterset.
+          limitedToDomain(options.domain).
+          getSelectors();
       }
 
       // Rebuild the filterset based on the current settings and subscriptions.

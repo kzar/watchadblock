@@ -108,6 +108,10 @@ MyFilters.prototype.rebuild = function() {
 
   var options = utils.get_optional_features({});
   var ignored = Filter.adTypes.NONE;
+  // TODO: don't do ignored ad type filtering here; do it at runtime when
+  // you try to match a URL or when you want to know if a selector should
+  // be applied.(?)  Then we don't have to rebuild the filters when they
+  // change ad types.
   if (options.show_google_search_text_ads.is_enabled)
     ignored |= Filter.adTypes.GOOGLE_TEXT_AD;
   this.filterset = FilterSet.fromText(texts.join('\n'), ignored);

@@ -1,11 +1,24 @@
 infinite_loop_workaround("filterset");
 
+// Requires fifocache.js.
+
 // Filter objects representing the given filter text.
 function FilterSet() {
   this._whitelistFilters = [];
   this._patternFilters = [];
   this._selectorFilters = [];
+
+  // If not null, the filters in this FilterSet all apply to this domain.
+  this._limitedToDomain = null;
+
+  // Caches the last several domain-limited subsets of this filterset, so
+  // that when someone asks several times for our selectors or patterns
+  // for a given domain, we aren't recalculating.  The cache lives on the
+  // instance rather than being a class attribute so that get free cache
+  // clearing when the user's filterset changes.
+  this._domainLimitedCache = new FifoCache(10);
 }
+
 
 // Builds Filter objects from text.
 // ignoredAdTypes is a bitset of ad types whose filters should not be
@@ -39,36 +52,30 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
 }
 
 FilterSet.prototype = {
-  // Returns the list of CSS selectors that apply to the given domain.
-  selectorsForDomain: function(domain) {
-    var result = [];
-    var filters = this._selectorFilters;
-    for (var i = 0; i < filters.length; i++)
-      if (filters[i].appliesToDomain(domain))
-        result.push(filters[i].selector);
-    return result;
+  // Return a new FilterSet containing the subset of this FilterSet's filters
+  // that apply to the given domain.
+  limitedToDomain: function(domain) {
+    if (this._domainLimitedCache.get(domain) == undefined) {
+      var result = new FilterSet();
+      result._limitedToDomain = domain;
+
+      result._patternFilters = this._patternFilters.filter(function(f) {
+        return f.appliesToDomain(domain);
+      });
+      result._whitelistFilters = this._whitelistFilters.filter(function(f) {
+        return f.appliesToDomain(domain);
+      });
+      result._selectorFilters = this._selectorFilters.filter(function(f) {
+        return f.appliesToDomain(domain);
+      });
+
+      this._domainLimitedCache.set(domain, result);
+    }
+    return this._domainLimitedCache.get(domain);
   },
-  // Returns a new FilterSet object: the subset of this which apply to the
-  // given domain.  Excludes selector filters.
-  patternFilterSetForDomain: function(domain) {
-    var result = new FilterSet();
 
-    var filters = this._patternFilters;
-    for (var i = 0; i < filters.length; i++)
-      if (filters[i].appliesToDomain(domain))
-        result._patternFilters.push(filters[i]);
-
-    filters = this._whitelistFilters;
-    for (var i = 0; i < filters.length; i++)
-      if (filters[i].appliesToDomain(domain))
-        result._whitelistFilters.push(filters[i]);
-
-    return result;
-  },
-  // True if the given url is matches by this filterset, taking whitelist and
-  // pattern rules into account.  Does not test selector filters, and does not
-  // take into account domains (call patternFilterSetForDomain() first to get
-  // the subset applies to a certain domain.)
+  // True if the given url is matched by this filterset, taking whitelist and
+  // pattern rules into account.  Does not test selector filters.
   matches: function(url) {
     // TODO: ignoring match-case option for now, and forcing case-insensitive
     // match.
@@ -93,5 +100,11 @@ FilterSet.prototype = {
       }
     }
     return false;
+  },
+
+  // Return the list of selector strings contained in all SelectorFilters
+  // in this FilterSet.
+  getSelectors: function() {
+    return this._selectorFilters.map(function(f) { return f.selector; });
   }
 }
