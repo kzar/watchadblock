@@ -174,11 +174,21 @@ MyFilters.prototype.subscribe = function(id, text) {
     // New user-submitted filter.
     if (id.substring(0,4) != "url:")
       return; // dunno what went wrong, but let's quietly ignore it.
-    this._subscriptions[id] = {
-      url: id.substring(4), // "url:xyz" -> "xyz"
-      name: id.substring(4),
-      user_submitted: true
-    };
+    // See if they accidentally subscribed to a URL that is already well-known.
+    var wellKnownId = null;
+    for (var existingId in this._subscriptions) {
+      if (id == 'url:' + this._subscriptions[existingId].url)
+        wellKnownId = existingId;
+    }
+    if (wellKnownId) {
+      id = wellKnownId;
+    } else {
+      this._subscriptions[id] = {
+        url: id.substring(4), // "url:xyz" -> "xyz"
+        name: id.substring(4),
+        user_submitted: true
+      };
+    }
   }
   this._subscriptions[id].subscribed = true;
   this._subscriptions[id].last_update = new Date().getTime();
