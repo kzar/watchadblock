@@ -23,7 +23,8 @@ function remove_ad_elements_by_url(data) {
   // map indexes to elements, and those same indexes to info about the element.
   var els = $("img,script,embed,iframe,link,object,body");
   var elInfo = els.map(function(id, el) { 
-      return {id: id, url: urlForElement(el)}; 
+      var elType = typeForElement(el);
+      return {id: id, url: urlForElement(el, elType), type: elType}; 
     });
 
   extension_call(
@@ -58,6 +59,7 @@ function purgeElement(el, elInfo) {
 }
 // Return the url tied to the given element.  null is OK if we can't find one.
 function urlForElement(el, type) {
+  // TODO: handle background images, based on 'type'.
   switch (el.nodeName) {
     case 'IMG': return el.src;
     case 'SCRIPT': return el.src;
@@ -76,6 +78,20 @@ function urlForElement(el, type) {
   }
 }
 
+// Return the ElementType element type of the given element.
+function typeForElement(el) {
+  // TODO: handle background images that aren't just the BODY.
+  switch (el.nodeName) {
+    case 'IMG': return ElementTypes.image;
+    case 'SCRIPT': return ElementTypes.script;
+    case 'OBJECT': 
+    case 'EMBED': return ElementTypes.object;
+    case 'IFRAME': return ElementTypes.subdocument;
+    case 'LINK': return ElementTypes.stylesheet;
+    case 'BODY': return ElementTypes.background;
+    default: return ElementTypes.NONE;
+  }
+}
 // Run special site-specific code.
 function run_specials(features) {
   var domain = document.domain;

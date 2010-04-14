@@ -74,9 +74,10 @@ FilterSet.prototype = {
     return this._domainLimitedCache.get(domain);
   },
 
-  // True if the given url is matched by this filterset, taking whitelist and
-  // pattern rules into account.  Does not test selector filters.
-  matches: function(url) {
+  // True if the given url requested by the given type of element is matched 
+  // by this filterset, taking whitelist and pattern rules into account.  
+  // Does not test selector filters.
+  matches: function(url, elementType) {
     // TODO: ignoring match-case option for now, and forcing case-insensitive
     // match.
     url = url.toLowerCase();
@@ -86,14 +87,14 @@ FilterSet.prototype = {
     url = url.substring(0, LENGTH_CUTOFF);
 
     for (var i = 0; i < this._whitelistFilters.length; i++) {
-      if (this._whitelistFilters[i].matches(url)) {
+      if (this._whitelistFilters[i].matches(url, elementType)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + 
             "' -> " + url);
         return false;
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
-      if (this._patternFilters[i].matches(url)) {
+      if (this._patternFilters[i].matches(url, elementType)) {
         log("Matched: '" + this._patternFilters[i]._rule + 
             "' -> " + url);
         return true;

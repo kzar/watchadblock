@@ -193,6 +193,7 @@ var PatternFilter = function(text) {
 
   this._domains = Filter._domainInfo(data.domainText, '|');
   this._isRegex = data.isRegex;
+  this._allowedElementTypes = data.allowedElementTypes;
 
   if (this._isRegex)
     this._rule = new RegExp(data.rule);
@@ -203,10 +204,10 @@ var PatternFilter = function(text) {
     this._rule2 = data.rule2;
 }
 
-// Return a { rule, rule2?, isRegex, domainText } object for the
-// given filter text.  Works really hard to make patterns substring matches
-// rather than regex matches, because regex matches are the bottleneck in
-// AdBlock.  Even if it causes a few false positives, it's worth it -- we'll
+// Return a { rule, rule2?, isRegex, domainText, allowedElementTypes } object
+// for the given filter text.  Works really hard to make patterns substring
+// matches rather than regex matches, because regex matches are the bottleneck
+// in AdBlock.  Even if it causes a few false positives, it's worth it -- we'll
 // add support for AdBlock extras nixing individual rules and replacing them
 // with its own if we must.  If rule2 is specified, it must be checked along
 // with rule.
@@ -219,7 +220,8 @@ PatternFilter._parseRule = function(text) {
   var result = {
     isRegex: false,
     mustStartAtDomain: false,
-    domainText: ''
+    domainText: '',
+    allowedElementTypes: ElementTypes.NONE
   };
 
   // TODO: handle match-case option correctly.  For now we just pretend
@@ -228,14 +230,44 @@ PatternFilter._parseRule = function(text) {
 
   var parts = text.split('$');
 
-  // TODO: handle other options, including types.
+  var invertedElementTypes = false;
+
   if (parts.length > 1) {
     var options = parts[1].split(',');
     for (var i = 0; i < options.length; i++) {
-      if (options[i].indexOf('domain=') == 0)
-        result.domainText = options[i].substring(7);
+      var option = options[i];
+
+      if (option.indexOf('domain=') == 0)
+        result.domainText = option.substring(7);
+
+      var inverted = (option[0] == '~');
+      if (inverted)
+        option = option.substring(1);
+
+      if (option in ElementTypes) { // this option is a known element type
+        if (inverted) {
+          // They explicitly forbade an element type.  Assume all element
+          // types listed are forbidden: we build up the list and then
+          // invert it at the end.  (This won't work if they explicitly
+          // allow some types and disallow other types, but what would that
+          // even mean?  e.g. $image,~object.)
+          invertedElementTypes = true;
+          option = option.substring(1);
+        }
+        result.allowedElementTypes |= ElementTypes[option];
+      }
+
+      // TODO: handle other options.
     }
   }
+
+  // No element types mentioned?  All types are allowed.
+  if (result.allowedElementTypes == ElementTypes.NONE)
+    result.allowedElementTypes = ElementTypes.ALL;
+
+  // Some mentioned, who were excluded?  Allow ALL except those mentioned.
+  if (invertedElementTypes)
+    result.allowedElementTypes = ~result.allowedElementTypes;
 
   var rule = parts[0];
 
@@ -374,9 +406,13 @@ PatternFilter.prototype = {
 
   __type: "PatternFilter",
 
-  // Returns true if an element  loaded from the given URL would be matched by
-  // this filter.  Does not take the domain of the element into account.
-  matches: function(url) {
+  // Returns true if an element of the given type loaded from the given URL 
+  // would be matched by this filter.  Does not take the domain of the 
+  // element into account.
+  matches: function(url, elementType) {
+    if (!(elementType & this._allowedElementTypes))
+      return false;
+
     if (this._isRegex)
       return this._rule.test(url);
 

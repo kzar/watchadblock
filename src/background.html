@@ -4,6 +4,7 @@
     <script src="functions.js"></script>
     <script src="abp_filter_to_json_converter.js"></script>
     <script src="filters.js"></script>
+    <script src="filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
     <script src="filtering/filterset.js"></script>
@@ -15,7 +16,8 @@
 
       // V3 FILTERING
 
-      // Inputs: elementInfo: list of { url:string, id } objects.
+      // Inputs: elementInfo: list of { url:string, type:ElementType, id } 
+      //                      objects.
       //         domain: domain of page that requested these elements.
       // If a url is empty or null, it will be ignored.
       // Returns: array of ids that are ads.
@@ -27,8 +29,12 @@
         var limited = filterset.limitedToDomain(options.domain);
         // TODO: timing tests to see if this is much slower than a normal loop
         return options.elementInfo.
-          filter(function(el) { return el.url && limited.matches(el.url); }).
-          map(function(el) { return el.id; });
+          filter(function(el) {  
+              return el.url && limited.matches(el.url, el.type); 
+            }).
+          map(function(el) { 
+              return el.id; 
+            });
       }
 
       // Inputs: domain: domain of page that requested the selectors.

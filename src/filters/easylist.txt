@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: SlZgJOYhpFXRaBOhcOuCZw
+! Checksum: TuxXJeJC4tE/pc4y49FxxQ
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 13 Apr 2010 14:30 UTC
+! Last modified: 13 Apr 2010 18:20 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -1142,7 +1142,7 @@ n728x90_
 ###AdRectangle
 ###AdShowcase_F1
 ###AdSky23
-###AdSkyscraper
+~seeingwithsound.com###AdSkyscraper
 ###AdSponsor_SF
 ###AdTargetControl1_iframe
 ###AdText
@@ -2951,6 +2951,7 @@ n728x90_
 ##.usenext
 ##.vertad
 ##.videoAd
+##.videoBoxAd
 ##.view-promo-mpu-right
 ##.wide-ad
 ##.wide-skyscraper-ad
@@ -4424,6 +4425,7 @@ gamesindustry.biz###leader
 gamesradar.com##.tablets
 gawker.com###marquee
 gawker.com###marquee-frame
+gawker.com###skySpacer
 gawker.com###skyscraper
 gawker.com##.highlite
 geek.com##.leaderboard
@@ -5142,6 +5144,7 @@ themoscowtimes.com##.top_banner
 thenation.com##.ad
 thenation.com##.modalContainer
 thenation.com##.modalOverlay
+theonion.com##.ad
 thepspblog.com###featured
 thepspblog.com###mta_bar
 theregister.co.uk###jobs-promo
@@ -5566,7 +5569,7 @@ zuploads.com##.hispeed
 @@||zedo.com/*.xml$object_subrequest,domain=rajshri.com
 @@||zedo.com//$object_subrequest,domain=rajshri.com
 !Anti-Adblock
-@@||artificialvision.com^$script,domain=seeingwithsound.com
+@@||artificialvision.com^$image,script,domain=seeingwithsound.com
 @@||arto.com/includes/js/adtech.de/script.axd/adframe.js?$script
 @@||avforums.com/forums/adframe.js$script
 @@||cinshare.com/js/*ad_type$script
@@ -5585,6 +5588,7 @@ zuploads.com##.hispeed
 @@||theteacherscorner.net/adiframe/jext.js?$script
 @@||tpmrpg.net/adframe.js$script
 @@||video2mp3.net/img/adfarm.js$script
+@@||visualprosthesis.com^$image,script,domain=seeingwithsound.com
 @@||zshare.net/ads.js?*&ad_url=/adbanner$script
 !Non-English
 @@||adser.localport.it/banman.asp?zoneid=71$subdocument
