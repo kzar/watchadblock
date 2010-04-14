@@ -268,9 +268,17 @@
 
         // TODO: use a modal.
         flash("subscription_message", "Fetching... please wait.");
+        var onError = function() {
+            alert("Failed to fetch this filter!");
+            document.location.reload();
+        }
         $.ajax({
           url: url,
           success: function(text) {
+            if (!text) {
+              onError(); // not sure why we even get here, but we do
+              return;
+            }
             if (text[0] != '!' && 
                 text[0] != '[' &&
                 text.indexOf('(Adblock') != 0) {
@@ -293,11 +301,7 @@
               }
             );
           },
-          error: function() {
-            // TODO make this a modal.
-            alert("Failed to fetch this filter!");
-            document.location.reload();
-          }
+          error: onError
         });
       }
 
