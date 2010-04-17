@@ -144,6 +144,15 @@ var SelectorFilter = function(text) {
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
   this.selector = parts[1];
+
+  // Handle all the broken selectors that I've ever seen.  I may end up
+  // having to take code from AdBlockPlus to correctly parse all possible
+  // selectors, since people have verified their selectors against ABP's
+  // particular implementation.  For now though, I'll just one-off fix the
+  // invalid ones that I come across.
+
+  // ChinaList: #[id^="ad_thread"] -> [id^="ad_thread"]
+  this.selector = this.selector.replace(/^#\[/, '*[');
 }
 SelectorFilter.prototype = {
   // Inherit from Filter.
