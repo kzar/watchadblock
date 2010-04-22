@@ -262,7 +262,7 @@ MyFilters._load_hardcoded_subscriptions = function() {
   }
 
   result["adblock_custom"] = localfetch(
-          "http://sites.google.com/site/chromeadblock/aux_filters.txt",
+          "http://chromeadblock.com/filters/adblock_custom.txt",
           chrome.extension.getURL("filters/adblock_custom.txt"),
           "Chrome AdBlock custom filters (recommended)");
 
@@ -309,7 +309,7 @@ MyFilters.__merge_with_default = function(subscription_data) {
 MyFilters.__make_subscription_options = function() {
   var official_options = {
     "adblock_custom": {
-      url: "http://sites.google.com/site/chromeadblock/aux_filters.txt",
+      url: "http://chromeadblock.com/filters/adblock_custom.txt",
       name: "Chrome AdBlock custom filters (recommended)",
     },
     "easylist": {
