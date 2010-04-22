@@ -356,6 +356,10 @@ MyFilters.__make_subscription_options = function() {
       url: "http://chewey.de/mozilla/data/adblock.txt",
       name: "German filters",
     },
+    "italian": {
+      url: "http://mozilla.gfsolone.com/filtri.txt",
+      name: "Italian filters",
+    },
     "israeli": {
       url: "http://israellist.googlecode.com/files/IsraelList.txt",
       name: "Israeli filters",
