@@ -102,7 +102,9 @@
             css("margin-left", "4px").
             text("Edit").
             click(function() {
-              document.cookie = ("blacklist_edit_entry=" + escape(filter.css_regex) + '&' + escape(filter.domain_regex));
+              // Make a global variable that will be consumed when the
+              // filters are redrawn
+              blacklist_edit_entry = filter;
               extension_call('remove_user_filter', {filter:filter});
             });
           var row = $("<tr></tr>").
@@ -175,22 +177,13 @@
         $("#txtUserFilterDomain").keyup(check_for_valid_filter);
 		  
         //Put filters from 'edit' in the textboxes
-        if (document.cookie.length > 0) {
-          if (document.cookie.indexOf('blacklist_edit_entry=')>=0) {
-            var editedCss = document.cookie.substring(
-                document.cookie.indexOf('blacklist_edit_entry=') + 21);
-            var editedDomain = '';
-            if (editedCss.indexOf('&') > 0) {
-              editedDomain = editedCss.substring(editedCss.indexOf('&') + 1);
-              editedCss = editedCss.substring(0, editedCss.indexOf('&'));
-            }
-            if (editedCss.length > 0) {
-              $('#txtUserFilterCss').val(unescape(editedCss));
-              $('#txtUserFilterDomain').val(unescape(editedDomain));
-              check_for_valid_filter();
-            }
-            document.cookie=("blacklist_edit_entry=");
+        if (typeof blacklist_edit_entry != "undefined") {
+          if (blacklist_edit_entry.css_regex.length > 0) {
+            $('#txtUserFilterCss').val(blacklist_edit_entry.css_regex);
+            $('#txtUserFilterDomain').val(blacklist_edit_entry.domain_regex);
+            check_for_valid_filter();
           }
+          delete blacklist_edit_entry; // remove global variable
         }
       }
 
