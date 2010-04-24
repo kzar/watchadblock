@@ -98,10 +98,17 @@
             click(function() {
               extension_call('remove_user_filter', {filter:filter});
             });
+			 var cell4 = $('<a href="#user_filters" style="margin-left:4px;"></a>').
+            text("Edit").
+            click(function() {
+				  document.cookie=("blacklist_edit_entry=" +escape(filter.css_regex)+'&'+escape(filter.domain_regex));
+              extension_call('remove_user_filter', {filter:filter});
+            });
           var row = $("<tr></tr>").
             append(cell1).
             append(cell2).
             append(cell3).
+				append(cell4).
             appendTo(table);
         });
 
@@ -165,6 +172,24 @@
         }
         $("#txtUserFilterCss").keyup(check_for_valid_filter);
         $("#txtUserFilterDomain").keyup(check_for_valid_filter);
+		  
+		//Put filters from 'edit' in the textboxes
+		if (document.cookie.length > 0) {
+			if (document.cookie.indexOf('blacklist_edit_entry=')>=0) {
+				 var EditedCss = document.cookie.substring(document.cookie.indexOf('blacklist_edit_entry=') + 21);
+		       var EditedDomain = '';
+				 if (EditedCss.indexOf('&') > 0) {
+					 EditedDomain = EditedCss.substring(EditedCss.indexOf('&') + 1);
+					 EditedCss = EditedCss.substring(0, EditedCss.indexOf('&'));
+				 }
+			    if (EditedCss.length > 0) {
+					document.getElementById('txtUserFilterCss').value = unescape(EditedCss);
+					document.getElementById('txtUserFilterDomain').value = unescape(EditedDomain);
+					check_for_valid_filter();
+				 }
+				 document.cookie=("blacklist_edit_entry=");
+			  }
+			}
       }
 
       function flash(id, message) {
@@ -395,7 +420,6 @@
         );
 
       });
-
     </script>
   </head>
   <body>
