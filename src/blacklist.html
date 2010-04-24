@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="options.css" /> 
+<script src="jquery/jquery-1.4.min.js"></script>
+    <script src="functions.js"></script>
+    <script src="broadcast_channel.js"></script>
+    <script type="text/javascript" src="tabbed.js"></script>  
+</head>
+<body>
+<h2>Block an ad that the filters missed</h2>
+      <div id="user_filters"></div>
+
+      <div id="user_filter_help" style="display:none">
+        <p>Remember -- you can always just 
+        <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user">report the ad to us</a>,
+        and your report will result in a fix for yourself and for 
+        over a hundred thousand other users!</p>
+  
+        <table class="help_table">
+          <tr>
+            <th>Sample CSS selectors</th>
+            <th>What they match</th>
+          </tr>
+          <tr>
+            <td>div[class="ad"]</td>
+            <td>any div whose class is "ad"</td>
+          </tr>
+          <tr>
+            <td>table td img[class^="Ad"][id="bigAd"]</td>
+            <td>any img (within tds within tables) whose class starts 
+              with "Ad" and whose id is "bigAd"</td>
+          </tr>
+          <tr>
+            <td>iframe[name$="AdFrame"][src*="ads.com"]:last-child</td>
+            <td>any iframe whose name ends with "AdFrame" <br/>and whose src 
+              contains "ads.com" and who is the last element in its 
+              parent node</td>
+          </tr>
+          <tr>
+            <th>Sample domain regexes</th>
+            <th>What they match</th>
+          </tr>
+          <tr>
+            <td>.*</td>
+            <td>any domain</td>
+          </tr>
+          <tr>
+            <td>mail..*.com</td>
+            <td>any domain containing "mail." and ".com" in that order</td>
+          </tr>
+          <tr>
+            <td>mail.google.com</td>
+            <td>any domain containing "mail.google.com"</td>
+          </tr>
+          <tr>
+            <td>^mail.google.com$</td>
+            <td>any domain exactly matching "mail.google.com"</td>
+          </tr>
+        </table>
+      </div>
+
+      <p class="note">
+        Got a particularly useful filter?  Why not 
+        <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user">share it with us</a>,
+        so we can give it to all AdBlock users?
+      </p>
+
+      <b>Shortcut:</b> Press <b>Ctrl-Shift-K</b> (think "Kill!") on a page 
+      to block an ad.  <span style="font-size:smaller">(If you don't see 
+      anything happen, try clicking on the page first.)</span>
+      <input style="margin-left: 15px" type="checkbox" class="feature" 
+             id="enable_blacklist_shortcut" />
+      Shortcut enabled
+    </div>
+</body>
+</html>

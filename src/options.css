@@ -115,17 +115,22 @@ a.tab:hover {
   color: #606060;
 }
 
-a.tab.activeTab, a.tab.activeTab:hover, a.tab.activeTab:visited {
+a.tab.activeTab:hover, a.tab.activeTab:visited {
   background-color: #c0c0c0;
   color: #000000;
+}
+
+a.tab.activeTab {
+  background-color: #c0c0c0;
+  color: #FFFFFF;
 }
 
 div.tabMain {
   background-color: #c0c0c0;
   border: 1px solid #000000;
   padding: 0.5em;
-  height: 400px;
-  width: 700px;
+  height: 450px;
+  width: 750px;
 }
 
 div.tabIframeWrapper {
