@@ -1,0 +1,445 @@
+  <html>
+  <head>
+    <title>AdBlock Options</title>
+    <link rel="stylesheet" href="options.css" /> 
+<script src="jquery/jquery-1.4.min.js"></script>
+    <script src="functions.js"></script>
+    <script src="broadcast_channel.js"></script>
+    <script type="text/javascript" src="tabbed.js"></script>    
+    <script>
+      listen_for_broadcasts('options_page');
+
+      register_broadcast_listener('user_filters_updated', function() {
+        extension_call('get_user_filters', {}, display_user_filters);
+      });
+      register_broadcast_listener('whitelist_updated', function() {
+        extension_call('get_whitelist', {}, display_whitelist);
+      });
+
+      function note_visit() {
+        if (localStorage.getItem('visited_options_at') != null)
+          return;
+        var now = new Date().getTime();
+        localStorage.setItem('visited_options_at', now);
+        var installed_at = localStorage.getItem('installed_at', 0);
+        if (installed_at == null)
+          installed_at = 2; // aka "we don't know"
+        $.get("http://chromeadblock.com/api/visit.php", 
+              {options_at:now, installed_at:installed_at});
+      }
+      note_visit();
+
+      function display_whitelist(whitelist) {
+        var view = $("#whitelisted_domains");
+
+        var table = $("<table></table>").
+          addClass("entry_table");
+        view.html(table);
+        $.each(whitelist, function(i, entry) {
+          var cell1 = $("<td>").text(entry);
+          var cell2 = $('<a href="#whitelisted_domains"></a>').
+            text("Remove").
+            click(function() {
+              extension_call('remove_from_whitelist', {domain:entry});
+            });
+          var row = $("<tr></tr>").
+            append(cell1).
+            append(cell2).
+            appendTo(table);
+        });
+
+        var cell1 = $("<td><input id='txtWhitelistedDomain' /></td>");
+        var cell2 = $("<input/>", 
+                      {type:"button", id:"btnWhitelist", value:"Add",
+                       disabled: "disabled"});
+        $("<tr></tr>").
+          append(cell1).
+          append(cell2).
+          appendTo(table);
+
+        $("#btnWhitelist").click(function() {
+          var domain = $("#txtWhitelistedDomain").val();
+          if (domain == "")
+            return;
+
+          extension_call('add_to_whitelist', {domain: domain});
+          $("#txtWhitelistedDomain").val("");
+        });
+
+        $("#txtWhitelistedDomain").keyup(function() {
+          var ok = true;
+          var domain = $(this).val();
+          if (domain.length < 4)
+            ok = false;
+          if (domain == "localhost")
+            ok = true;
+          else if (domain.indexOf(".") == -1)
+            ok = false;
+          else if (domain.lastIndexOf(".") >= domain.length - 2)
+            ok = false;
+          $("#btnWhitelist").attr("disabled", ok ? null : "disabled");
+        });
+      }
+
+      function display_user_filters(filters) {
+        var view = $("#user_filters");
+
+        var table = $("<table></table>").
+          addClass("entry_table");
+        view.html(table);
+        table.append("<tr>" +
+          "<th>Block ads that match this CSS selector...</th>" +
+          "<th>on domains that match this regex</th>" +
+          "</tr>");
+        $.each(filters, function(i, filter) {
+          var cell1 = $("<td>").text(filter.css_regex);
+          var cell2 = $("<td>").text(filter.domain_regex);
+          var cell3 = $('<a href="#user_filters_link"></a>').
+            text("Unblock").
+            click(function() {
+              extension_call('remove_user_filter', {filter:filter});
+            });
+          var cell4 = $('<a href="#user_filters_link"></a>').
+            css("margin-left", "4px").
+            text("Edit").
+            click(function() {
+              // Make a global variable that will be consumed when the
+              // filters are redrawn
+              blacklist_edit_entry = filter;
+              extension_call('remove_user_filter', {filter:filter});
+            });
+          var row = $("<tr></tr>").
+            append(cell1).
+            append(cell2).
+            append(cell3).
+            append(cell4).
+            appendTo(table);
+        });
+
+        var cell1 = $("<td><input id='txtUserFilterCss' /></td>");
+        var cell2 = $("<td><input id='txtUserFilterDomain' /></td>");
+        var cell3 = $("<input/>", {
+          type:"button", 
+          id:"btnAddUserFilter", 
+          value:"Block it!",
+          disabled: "disabled",
+          click: function() {
+            var css_regex = $("#txtUserFilterCss").val();
+            var domain_regex = $("#txtUserFilterDomain").val();
+            if (domain_regex == "" || domain_regex == "*")
+              domain_regex = ".*";
+            if (css_regex.indexOf("##") != -1) {
+              // The user misunderstood a bug report and thought they
+              // were to add a filter themselves that was in easylist
+              // format.
+              var parts = css_regex.split("##");
+              css_regex = parts[1];
+              domain_regex = parts[0];
+            }
+
+            extension_call(
+              'add_user_filter', 
+              {
+                filter: {
+                  domain_regex: domain_regex,
+                  css_regex: css_regex
+                }
+              }
+            );
+            $("#txtUserFilterCss").val("");
+            $("#txtUserFilterDomain").val("");
+          }
+        });
+
+        $("<tr></tr>").
+          append(cell1).
+          append(cell2).
+          append(cell3).
+          appendTo(table);
+
+          table.append("<tr><td colspan=2 class='plain'><a id='btnUserFilterExamples' href='#'>Help!</a></td></tr>");
+        $("#btnUserFilterExamples").click(function() {
+          $("#user_filter_help").show();
+        });
+
+        var check_for_valid_filter = function() {
+          var ok = true;
+          var css_regex = $("#txtUserFilterCss").val();
+          var domain_regex = $("#txtUserFilterDomain").val();
+          if (css_regex == "")
+            ok = false;
+          if (domain_regex != "*" &&
+              domain_regex != "" && 
+              domain_regex.indexOf(".") == -1)
+            ok = false;
+          $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
+        }
+        $("#txtUserFilterCss").keyup(check_for_valid_filter);
+        $("#txtUserFilterDomain").keyup(check_for_valid_filter);
+		  
+        //Put filters from 'edit' in the textboxes
+        if (typeof blacklist_edit_entry != "undefined") {
+          if (blacklist_edit_entry.css_regex.length > 0) {
+            $('#txtUserFilterCss').val(blacklist_edit_entry.css_regex);
+            $('#txtUserFilterDomain').val(blacklist_edit_entry.domain_regex);
+            check_for_valid_filter();
+          }
+          delete blacklist_edit_entry; // remove global variable
+        }
+      }
+
+      function flash(id, message) {
+        $("#" + id).text(message);
+      }
+
+      // Return a string representation of roughly how long ago the 
+      // given ticks were, e.g. "just now" or "2 hours ago".  If ticks is
+      // undefined, return blank.
+      function how_long_ago(ticks) {
+        if (ticks == undefined)
+          return "";
+        var now = new Date().getTime();
+        var distance = now - ticks;
+
+        var seconds = Math.round(distance / 1000);
+        if (seconds < 10)
+          return "updated right now";
+        if (seconds < 60)
+          return "updated " + seconds + " seconds ago";
+        var minutes = Math.round(seconds / 60);
+        if (minutes < 60)
+          return ("updated " + minutes + " minute" + 
+                      (minutes > 1 ? "s" : "") + " ago");
+        var hours = Math.round(minutes / 60);
+        if (hours < 24)
+          return ("updated " + hours + " hour" + 
+                      (hours > 1 ? "s" : "") + " ago");
+        var days = Math.round(hours / 24);
+        return ("updated " + days + " day" + 
+                      (days > 1 ? "s" : "") + " ago");
+      }
+
+
+      // If true, change events won't run.
+      global_refreshing_subscription_view = false;
+      // Cache the fetched subscriptions so we can update their times.
+      global_subscriptions_cached_copy = undefined;
+
+      // Update the "last updated" messages in the subscription view.
+      function redisplay_subscription_update_times() {
+        var subs = global_subscriptions_cached_copy;
+        if (subs == undefined)
+          return;
+        $(".subscription").each(function(i,el) {
+          var when_text = "";
+
+          var id = $("input", el).attr("name");
+          if (subs[id] && subs[id].subscribed)
+            when_text = how_long_ago(subs[id].last_update);
+
+          $(".update_time", el).text(when_text);
+        });
+      }
+
+      // Load the latest subscription model object and display it in
+      // the checkboxes.
+      function refresh_subscription_view() {
+        extension_call('get_subscriptions_minus_text', {}, function(subs) {
+          global_refreshing_subscription_view = true;
+
+          $(".subscription").each(function(i,el) {
+            var is_checked = "";
+
+            var id = $("input", el).attr("name");
+            if (subs[id] && subs[id].subscribed)
+              is_checked = "checked";
+
+              $("input", el).attr("checked", is_checked);
+          });
+
+          global_refreshing_subscription_view = false;
+
+          // Keep this around to update the "last updated" displays.
+          global_subscriptions_cached_copy = subs;
+          redisplay_subscription_update_times();
+        });
+      }
+
+      register_broadcast_listener('filters_updated', function() {
+        refresh_subscription_view();
+      });
+
+      // Unsubscribe from the given filterlist id.
+      function unsubscribe(id) {
+        extension_call("unsubscribe", {id:id}, function() {
+          flash("subscription_message", "Unsubscribed.");
+        });
+      }
+      // Subscribe to the given filterlist id.  id is either a well-known id, or
+      // "url:xyz", where xyz is the URL of a user-specified filter list.
+      // If you can't fetch the latest version of the list, fail.  If 
+      // then_reload is specified and is true, reload the page upon 
+      // success.  If log_on_success then record a successful subscription.
+      function subscribe(id, then_reload, log_on_success) {
+        var url;
+        if (id in global_subscriptions_cached_copy)
+          url = global_subscriptions_cached_copy[id].url;
+        else
+          url = id.substring(4); // "url:xyz"
+
+        // TODO: use a modal.
+        flash("subscription_message", "Fetching... please wait.");
+        var onError = function() {
+            alert("Failed to fetch this filter!");
+            document.location.reload();
+        }
+        $.ajax({
+          url: url,
+          success: function(text) {
+            if (!text) {
+              onError(); // not sure why we even get here, but we do
+              return;
+            }
+            if (text[0] != '!' && 
+                text[0] != '[' &&
+                text.indexOf('(Adblock') != 0) {
+              alert("Please enter the URL of a list of filters to " +
+                    "subscribe to.");
+              flash("subscription_message", "That wasn't a list URL.");
+              return;
+            }
+            if (log_on_success) {
+              $.get("http://chromeadblock.com/api/url_subscribe.php",
+                    {url:url});
+            }
+            extension_call(
+              "subscribe", 
+              {id: id, text:text},
+              function() {
+                flash("subscription_message", "Subscribed.");
+                if (then_reload)
+                  document.location.reload();
+              }
+            );
+          },
+          error: onError
+        });
+      }
+
+      $(document).ready(function() {
+
+        extension_call('get_user_filters', {}, display_user_filters);
+
+        extension_call('get_whitelist', {}, display_whitelist);
+
+        extension_call('get_optional_features', {}, function(features) {
+          for (var name in features) {
+            $("#enable_" + name).
+              attr("checked", features[name].is_enabled);
+          }
+          $("input.feature:checkbox").change(function() {
+            var is_enabled = $(this).is(':checked');
+            var name = this.id.substring(7); // TODO: hack
+            extension_call(
+              'set_optional_feature', 
+              {name:name, is_enabled:is_enabled}
+            );
+          });
+        });
+
+        extension_call('get_subscriptions_minus_text', {}, 
+                                             function(subscriptions) {
+          // Build subscription checkboxes.
+          for (var id in subscriptions) {
+            var div = $("<div></div>").
+              addClass("subscription");
+
+            var checkbox = $('<input type="checkbox" />').
+              attr("name", id);
+
+            var name = $("<span>").
+              text(subscriptions[id].name);
+
+            div.
+              attr("title", subscriptions[id].url).
+              append(checkbox).
+              append(name).
+              append($("<span></span>").addClass("update_time"));
+
+            $("#filter_subscriptions").
+              append(div);
+          }
+
+          // Now that it's built, fill it in.
+          refresh_subscription_view();
+
+          // Each subscription checkbox, upon change, should subscribe
+          // or unsubscribe the user and refresh the subscriptions.
+          $('.subscription input:checkbox').change(function() {
+            // If it changed in response to a model change event,
+            // don't naively go tell the model about the event.
+            if (global_refreshing_subscription_view)
+              return;
+
+            var id = $(this).attr("name");
+            var checked = $(this).is(":checked");
+            if (!checked)
+              unsubscribe(id);
+            else
+              subscribe(id);
+          });
+
+        });
+
+        $("#btnUpdateNow").click(function() {
+          $(this).attr("disabled", "disabled");
+          extension_call("freshen_subscriptions", {older_than:0});
+        });
+
+
+        $("#btnNewSubscriptionUrl").click(function() {
+          var url = $("#txtNewSubscriptionUrl").val();
+          var abp_regex = /^abp.*location=(.*)$/
+          if (url.match(abp_regex)) {
+            url = url.match(abp_regex)[1]; // the part after 'location='
+            if (url.match(/&title/)) // then strip it
+              url = url.substring(0, url.indexOf('&title'));
+            url = unescape(url);
+          }
+          subscribe("url:" + url, true, true);
+        });
+
+        // Every so often, redisplay "last update" times on subscriptions.
+        window.setInterval(
+          function() { redisplay_subscription_update_times(); },
+          1000 * 60
+        );
+
+      });
+    </script>
+<body bgcolor="white">
+ <h2>Subscribe to filter lists</h2>
+      <p>
+        The defaults are great for English-speaking users in the US.
+        Others may wish to subscribe to more lists.
+      </p>
+      <p class="footnote">
+        Don't subscribe to more than you need -- every one
+        slows you down a tiny bit!  Credits and more lists can be found
+        <a href="http://adblockplus.org/en/subscriptions">here.</a>
+      </p>
+      I will fetch updates every 5 days; you can also
+      <input type="button" id="btnUpdateNow" value="update now." />
+      <div>
+        <div id="subscription_message" class="ok_message">&nbsp;</div>
+        <div id="filter_subscriptions" style="padding-left:30px;">
+        </div>
+        <div style="padding-left:20px;">
+          Or enter a URL:
+          <input id="txtNewSubscriptionUrl" style="width:300px" />
+          <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
+        </div>
+      </div>
+</body>
+</head>
+</html>
