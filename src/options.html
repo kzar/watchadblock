@@ -93,12 +93,13 @@
         $.each(filters, function(i, filter) {
           var cell1 = $("<td>").text(filter.css_regex);
           var cell2 = $("<td>").text(filter.domain_regex);
-          var cell3 = $('<a href="#user_filters"></a>').
+          var cell3 = $('<a href="#user_filters_link"></a>').
             text("Unblock").
             click(function() {
               extension_call('remove_user_filter', {filter:filter});
             });
-          var cell4 = $('<a href="#user_filters" style="margin-left:4px;"></a>').
+          var cell4 = $('<a href="#user_filters_link"></a>).
+            css("margin-left", "4px").
             text("Edit").
             click(function() {
               document.cookie = ("blacklist_edit_entry=" + escape(filter.css_regex) + '&' + escape(filter.domain_regex));
@@ -176,15 +177,16 @@
         //Put filters from 'edit' in the textboxes
         if (document.cookie.length > 0) {
           if (document.cookie.indexOf('blacklist_edit_entry=')>=0) {
-            var EditedCss = document.cookie.substring(document.cookie.indexOf('blacklist_edit_entry=') + 21);
-            var EditedDomain = '';
-            if (EditedCss.indexOf('&') > 0) {
-              EditedDomain = EditedCss.substring(EditedCss.indexOf('&') + 1);
-              EditedCss = EditedCss.substring(0, EditedCss.indexOf('&'));
+            var editedCss = document.cookie.substring(
+                document.cookie.indexOf('blacklist_edit_entry=') + 21);
+            var editedDomain = '';
+            if (editedCss.indexOf('&') > 0) {
+              editedDomain = editedCss.substring(editedCss.indexOf('&') + 1);
+              editedCss = editedCss.substring(0, editedCss.indexOf('&'));
             }
-            if (EditedCss.length > 0) {
-              document.getElementById('txtUserFilterCss').value = unescape(EditedCss);
-              document.getElementById('txtUserFilterDomain').value = unescape(EditedDomain);
+            if (editedCss.length > 0) {
+              $('#txtUserFilterCss').val(unescape(editedCss));
+              $('#txtUserFilterDomain').val(unescape(editedDomain));
               check_for_valid_filter();
             }
             document.cookie=("blacklist_edit_entry=");
@@ -549,6 +551,7 @@
       </div>
     </div>
 
+    <a name="user_filters_link"></a>
     <div class="section">
       <h2>Block an ad that the filters missed</h2>
       <div id="user_filters"></div>
