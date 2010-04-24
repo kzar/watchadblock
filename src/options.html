@@ -36,7 +36,7 @@
         view.html(table);
         $.each(whitelist, function(i, entry) {
           var cell1 = $("<td>").text(entry);
-          var cell2 = $('<a href="#"></a>').
+          var cell2 = $('<a href="#whitelisted_domains"></a>').
             text("Remove").
             click(function() {
               extension_call('remove_from_whitelist', {domain:entry});
@@ -93,7 +93,7 @@
         $.each(filters, function(i, filter) {
           var cell1 = $("<td>").text(filter.css_regex);
           var cell2 = $("<td>").text(filter.domain_regex);
-          var cell3 = $('<a href="#"></a>').
+          var cell3 = $('<a href="#user_filters"></a>').
             text("Unblock").
             click(function() {
               extension_call('remove_user_filter', {filter:filter});
