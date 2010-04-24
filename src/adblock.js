@@ -1,24 +1,32 @@
 infinite_loop_workaround("adblock");
 
-function debug_print_selector_matches(selectors) {
+function debug_print_selector_matches() {
   if (!DEBUG)
     return;
 
-  $(selectors).
-    filter(function() { return $("" + this).length > 0; }).
-    each(function(i, selector) {
-      log("Debug: CSS '" + selector + "' hid:");
-      $(selector).each(function(i, el) {
-        log("       " + el.nodeName + "#" + el.id + "." + el.className);
-      });
+  extension_call(
+    "selectors_for_domain", 
+    { domain: document.domain },
+    function(selectors) {
+      selectors.
+        filter(function(selector) { return $(selector).length > 0; }).
+        forEach(function(selector) {
+          log("Debug: CSS '" + selector + "' hid:");
+          $(selector).each(function(i, el) {
+            log("       " + el.nodeName + "#" + el.id + "." + el.className);
+          });
+        });
     });
 }
 
 // Find all elements that load a resource, find which ones are loading ad
 // resources, and remove them.  Asynchronous.
-function remove_ad_elements_by_url(data) {
+// first_run:bool - true is passed the first time this is called.
+function remove_ad_elements_by_url(first_run) {
   // TODO: more than just the list below?
   // TODO: handle background images in places other than BODY tag
+
+  var start = new Date();
 
   // map indexes to elements, and those same indexes to info about the element.
   var els = $("img,script,embed,iframe,link,object,body");
@@ -41,7 +49,8 @@ function remove_ad_elements_by_url(data) {
       time_log("adblock_main run time: " + (end - start) + " || " +
                document.location.href);
 
-      debug_print_selector_matches(data.selectors);
+      if (first_run)
+        debug_print_selector_matches();
     }
   );
 }
@@ -230,7 +239,6 @@ function adblock_begin_v2() {
     opts.is_top_frame = true;
 
   extension_call('get_features_and_filters', opts, function(data) {
-    start = new Date();
     log("==== ADBLOCKING PAGE: " + document.location.href);
 
     // TODO: why send the whitelist just to check it?  do it in background.
@@ -248,7 +256,21 @@ function adblock_begin_v2() {
 
     run_specials(data.features);
 
-    remove_ad_elements_by_url(data);
+    remove_ad_elements_by_url(true);
+    // If more elements are inserted later, run again.
+    document.addEventListener("DOMNodeInserted", function(e) {
+      // Give it a moment to do its work, then block the whole page again
+      // once.  If many nodes were inserted, just run once.
+      if (typeof global_run_again_timer != "undefined") {
+        log("Bail");
+        return;
+      }
+      log("Running again in a moment because a new node was inserted.");
+      global_run_again_timer = window.setTimeout(function() {
+        delete global_run_again_timer;
+        remove_ad_elements_by_url();
+      }, 500);
+    });
   });
 }
 adblock_begin_v2();

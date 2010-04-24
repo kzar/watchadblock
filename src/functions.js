@@ -10,13 +10,6 @@ function infinite_loop_workaround(where) {
 
 infinite_loop_workaround("functions");
 
-if (typeof _adblock_cache != "undefined") {
-  // As of Chrome .288 and 1.2.70, ebay.com runs this 6 times.  Why?
-  console.log("Already ran on " + document.location.href + "; aborting.");
-  // Prevent adblock_start, adblock, etc from running at all.
-  i_am_crashing_on_purpose;
-}
-
 // Data that various parts of the program may find useful to cache.
 // You can never rely on something being in here if the code that placed
 // it in here was run asynchronously, because of race conditions.

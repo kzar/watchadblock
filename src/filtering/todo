@@ -1,23 +1,9 @@
-verify frontend pattern blocking
-  - how?  it's going... need to find several different examples and
-    make sure prod version does same thing as this version.
+handle domnodeinserted
 
-verify object blocking
-
-verify options page works
-
-# incorporating user's blacklist (tho we can leave it the old way for now)
-
-later:
-  handle domnodeinserted
-  remove hidden items fo realtho
-   - so, send over in demands_v3 so it can be cached?  didn't we find that
-     to be butt-slow?
+remove hidden items fo realtho
+ - so, send over in demands_v3 so it can be cached?  didn't we find that
+   to be butt-slow?
 
 timing stats on regex vs substring matches
 
-i got an aw snap on facebook -- see what adthwart did to fix this and why it
-happened.
-
-note the revision of the last good release, so it's easy to revert when
-  this has a showstopping bug.
+incorporating user's blacklist (tho we can leave it the old way for now)
