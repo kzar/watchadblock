@@ -438,7 +438,9 @@
     </table>
     <br/>
     <div style="font-style:italic; padding-left:5px">
-      <a href="http://code.google.com/p/adblockforchrome/wiki/Changelog">Changelog</a> -- Want to contribute?  You can report a 
+      Version <span id="version_number"></span>
+      (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog">changelog</a>) 
+      -- Want to contribute?  You can report a 
       <a href="http://chromeadblock.com/bugs">bug</a> or an 
       <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user">ad</a>, 
       or join the 
@@ -489,6 +491,19 @@
           chrome.extension.sendRequest(icon_extension_id, {}, function() {
             $("#want_a_button").attr("checked", "checked");
           });
+
+          // Fill in version number next to changelog link
+          try {
+            var xhr = new XMLHttpRequest(); 
+            xhr.open("GET", chrome.extension.getURL('manifest.json'), false); 
+            xhr.onreadystatechange = function() { 
+              if(this.readyState == 4) { 
+                var theManifest = JSON.parse(this.responseText);
+                $("#version_number").text(theManifest.version);
+              } 
+            }; 
+            xhr.send(); 
+          } catch (ex) {} // silently fail
         });
       </script>
 
