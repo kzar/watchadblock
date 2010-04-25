@@ -55,7 +55,7 @@ function shipit() {
 
 function main() {
     if [ $1 = "shipit" ]; then shipit
-    elif [ $1 = "filterdiff" ]; then diff <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
+    elif [ $1 = "filterdiff" ]; then diff -b <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
     elif [ $1 = "updatefilters" ]; then scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
     else usage
     fi
