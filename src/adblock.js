@@ -56,11 +56,17 @@ function remove_ad_elements_by_url(first_run) {
 }
 function purgeElement(el, elInfo) {
   log("Purging " + el.nodeName + ": " + elInfo.url);
-  // TODO: handle objects wrapping embeds, and background images
+  // TODO: handle background images
   if (el.nodeName == "EMBED" && el.parentNode.nodeName == "OBJECT")
     $(el).parent().remove(); // removes el as well
   else if (el.nodeName == "BODY")
     $(el).css('background-image', null);
+  else if (el.nodeName == "SCRIPT") {
+    // Removing the element is useless as it has already run, and it makes
+    // bankrate.com display a blank screen in Chrome 5 dev, so we basically do
+    // nothing.
+    el.src = ""; 
+  }
   else
     $(el).remove();
   // TODO: i suspect i'm missing something else here... what did the old

@@ -26,24 +26,29 @@ function shipit() {
 
     thisdir=$(basename $(pwd)) # works whether we check out as trunk or afc or...
     rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -r adblockforchrome.zip $thisdir/)
+    echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     grep "$version" ../wiki/Changelog.wiki && {
-        echo "Did you forget to bump the version in manifest.json?"
-        exit 1
+        echo -n "Did you forget to bump the version in manifest.json (y/n)? "
+        read answer
+        [ "$answer" = "y" ] && exit 1
+        skip_changelog=1
     }
 
-    echo -n "Changelog entry: *$version*: "
-    read description
-    sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
+    if [ "$skip_changelog" != 1 ]; then
+        echo -n "Changelog entry: *$version*: "
+        read description
+        sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
+    fi
     echo
     grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
     echo
-    echo -n "Check in wiki entry (y/n)? "
+    echo -n "Check in wiki and code (y/n)? "
     read answer
-    [ "$answer" = y ] && svn ci ../wiki/Changelog.wiki -m "Changelog entry for new version $version: $description"
-    echo
-    echo "Don't forget to check in the actual code, too."
+    [ "$answer" = y ] && {
+      svn ci ../wiki/Changelog.wiki -m "Changelog entry for new version $version: $description" && svn ci
+    }
 }
 
 function main() {
