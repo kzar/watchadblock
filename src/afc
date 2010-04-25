@@ -25,7 +25,7 @@ function shipit() {
     echo
 
     thisdir=$(basename $(pwd)) # works whether we check out as trunk or afc or...
-    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblockforchrome.zip $thisdir/)
+    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -r adblockforchrome.zip $thisdir/)
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     grep "$version" ../wiki/Changelog.wiki && {

@@ -15,7 +15,7 @@ function load_jquery_ui(callback) {
       function(result) {
         eval(result); // suck it, Trebek
 
-        load_css("jquery/css/redmond/jquery-ui-1.8.custom.css");
+        load_css("jquery/css/custom-theme/jquery-ui-1.8.custom.css");
         load_css("jquery/css/override-page.css");
 
         var icon = chrome.extension.getURL("img/icon24.png");
