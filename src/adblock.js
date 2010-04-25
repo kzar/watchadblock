@@ -76,7 +76,7 @@ function urlForElement(el, type) {
     case 'IFRAME': return el.src;
     case 'LINK': return el.href;
     case 'OBJECT': 
-      var param = $("param[value]", el);
+      var param = $('param[name="movie"][value]', el);
       if (param.length > 0)
         return param.get(0).value;
       else
