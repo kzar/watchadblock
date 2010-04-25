@@ -148,17 +148,16 @@
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
-              attr("name", id).
-              attr("id", id.replace(/[^A-Za-z0-9]/g,''));
+              attr("name", id);
 
             var name = $("<span>").
               text(subscriptions[id].name).
               attr("title", subscriptions[id].url).
-              attr("id", id.replace(/[^A-Za-z0-9]/g,'')).
               css("cursor", "pointer").
               click(function() {
-                $("input#" + this.id).click();
-                $("input#" + this.id).change();
+                $(this).closest("div").find("input"). // my checkbox
+                  click().  // toggle the UI
+                  change(); // activate the handler as if a user had clicked it
               });
 
             var link_to_list = $("<a>", { target: "_new" }).
