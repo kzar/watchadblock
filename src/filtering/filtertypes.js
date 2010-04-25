@@ -203,6 +203,7 @@ var PatternFilter = function(text) {
   this._domains = Filter._domainInfo(data.domainText, '|');
   this._isRegex = data.isRegex;
   this._allowedElementTypes = data.allowedElementTypes;
+  this._options = data.options;
 
   if (this._isRegex)
     this._rule = new RegExp(data.rule);
@@ -230,7 +231,8 @@ PatternFilter._parseRule = function(text) {
     isRegex: false,
     mustStartAtDomain: false,
     domainText: '',
-    allowedElementTypes: ElementTypes.NONE
+    allowedElementTypes: ElementTypes.NONE,
+    options: FilterOptions.NONE
   };
 
   // TODO: handle match-case option correctly.  For now we just pretend
@@ -264,6 +266,12 @@ PatternFilter._parseRule = function(text) {
           option = option.substring(1);
         }
         result.allowedElementTypes |= ElementTypes[option];
+      }
+      else if (option == 'third-party') {
+        // Note: explicitly not supporting ~third-party; we'll incorrectly
+        // treat it as third-party and if we ever get a bug report we'll
+        // deal with it.  EasyList doesn't use that feature.
+        result.options |= FilterOptions.THIRDPARTY;
       }
 
       // TODO: handle other options.
@@ -416,10 +424,23 @@ PatternFilter.prototype = {
   __type: "PatternFilter",
 
   // Returns true if an element of the given type loaded from the given URL 
-  // would be matched by this filter.  Does not take the domain of the 
-  // element into account.
-  matches: function(url, elementType) {
+  // would be matched by this filter.
+  //   url:string the url the element is loading.
+  //   elementType:ElementTypes the type of DOM element.
+  //   urlOrigin: the domain of url, basically
+  //   docOrigin: the document.domain that contains the element, basically
+  matches: function(url, elementType, urlOrigin, docOrigin) {
     if (!(elementType & this._allowedElementTypes))
+      return false;
+
+    // TODO: This is probably imperfect third-party testing, but it works
+    // better than nothing, and I haven't gotten to looking into ABP's
+    // internals for the exact specification.
+
+    // If the resource is being loaded from the same origin as the document,
+    // and your rule applies to third-party loads only, we don't care what
+    // regex your rule contains, even if it's for someotherserver.com.
+    if ((this._options & FilterOptions.THIRDPARTY) && (urlOrigin == docOrigin))
       return false;
 
     if (this._isRegex)

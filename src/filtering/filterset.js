@@ -51,6 +51,18 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
   return result;
 }
 
+// Strip www. from domain if it exists and return the result.
+FilterSet._withoutWww = function(domain) {
+  if (domain.match(/^www\./))
+    domain = domain.substring(4);
+  return domain;
+}
+
+// Given a url, return its domain.
+FilterSet._domainFor = function(url) {
+  return (url.match('://(.*?)/') || [ null, "unknown.com" ])[1];
+}
+
 FilterSet.prototype = {
   // Return a new FilterSet containing the subset of this FilterSet's filters
   // that apply to the given domain.
@@ -81,22 +93,26 @@ FilterSet.prototype = {
     // TODO: ignoring match-case option for now, and forcing case-insensitive
     // match.
     url = url.toLowerCase();
+
+    var urlOrigin = FilterSet._withoutWww(FilterSet._domainFor(url));
+    var docOrigin = FilterSet._withoutWww(this._limitedToDomain);
+
     // TODO: is there a better place to do this?
     // Limiting length of URL to avoid painful regexes.
     var LENGTH_CUTOFF = 200;
     url = url.substring(0, LENGTH_CUTOFF);
 
     for (var i = 0; i < this._whitelistFilters.length; i++) {
-      if (this._whitelistFilters[i].matches(url, elementType)) {
-        log("Whitelisted: '" + this._whitelistFilters[i]._rule + 
-            "' -> " + url);
+      if (this._whitelistFilters[i].matches(url, elementType, 
+          urlOrigin, docOrigin)) {
+        log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
         return false;
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
-      if (this._patternFilters[i].matches(url, elementType)) {
-        log("Matched: '" + this._patternFilters[i]._rule + 
-            "' -> " + url);
+      if (this._patternFilters[i].matches(url, elementType, 
+          urlOrigin, docOrigin)) {
+        log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
         return true;
       }
     }
