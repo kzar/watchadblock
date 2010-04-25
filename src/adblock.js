@@ -185,7 +185,7 @@ function run_specials(features) {
       elt.parentNode.replaceChild(replacement, elt);
 
       if (features.show_youtube_help_msg.is_enabled) {
-        var disable_url = chrome.extension.getURL("options.html");
+        var disable_url = chrome.extension.getURL("options/index.html");
         var message = $("<div>").
           css({"font-size": "x-small", "font-style": "italic",
                "text-align": "center", "color": "black",

@@ -65,7 +65,7 @@ cached_extension_call = function(fn, options, callback) {
 icon_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
 debug_id = false; // shipit will refuse to ship if this is true
 if (debug_id)
-  icon_extension_id = "mghkcncoapjmpodfikchllepihialcdc";
+  icon_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
 
 // These are replaced with console.log in adblock_start if the user chooses.
 DEBUG = false;

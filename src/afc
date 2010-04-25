@@ -5,6 +5,11 @@ function usage() {
     echo "$0 shipit"
     echo "$0 filterdiff"
     echo "$0 updatefilters"
+    echo
+    echo "This may be useful:"
+    echo
+    echo "    http://adblockforchrome.googlecode.com/svn/trunk/filters/adblock_custom.txt"
+    echo
     exit 1
 }
 
@@ -23,6 +28,11 @@ function shipit() {
     rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblockforchrome.zip $thisdir/)
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    grep "$version" ../wiki/Changelog.wiki && {
+        echo "Did you forget to bump the version in manifest.json?"
+        exit 1
+    }
+
     echo -n "Changelog entry: *$version*: "
     read description
     sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
@@ -32,6 +42,8 @@ function shipit() {
     echo -n "Check in wiki entry (y/n)? "
     read answer
     [ "$answer" = y ] && svn ci ../wiki/Changelog.wiki -m "Changelog entry for new version $version: $description"
+    echo
+    echo "Don't forget to check in the actual code, too."
 }
 
 function main() {
