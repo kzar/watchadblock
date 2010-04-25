@@ -149,11 +149,11 @@
 
             var checkbox = $('<input type="checkbox" />').
               attr("name", id).
-              attr("id", id.replace(/[^A-Za-z]/g,''));
+              attr("id", id.replace(/[^A-Za-z0-9]/g,''));
 
             var name = $("<span>").
               text(subscriptions[id].name).
-              attr("id", id.replace(/[^A-Za-z]/g,'')).
+              attr("id", id.replace(/[^A-Za-z0-9]/g,'')).
               css("cursor", "pointer").
               click(function() {
                 $("input#" + this.id).click();
