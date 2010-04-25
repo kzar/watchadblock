@@ -10,4 +10,5 @@ curl http://adblockplus.mozdev.org/easylist/easylist.txt > filters/easylist.txt
 svn diff filters/easylist.txt | grep '^[+-]'
 echo
 
-rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblockforchrome.zip adblockforchrome/)
+thisdir=$(basename $(pwd)) # works whether we check out as trunk or afc or...
+rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblockforchrome.zip $thisdir/)
