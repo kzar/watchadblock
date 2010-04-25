@@ -160,12 +160,12 @@
                 $("input#" + this.id).change();
               });
 
-            var link_to_list = $("<a>").
+            var link_to_list = $("<a>", { target: "_new" }).
               text('show').
               css("margin-left", "6px").
               css("font-size", "10px").
               css("display", "none").
-              attr("class", "LinkToList").
+              attr("class", "linkToList").
               attr("href", subscriptions[id].url);
 
             div.
@@ -282,7 +282,7 @@
         });
 
         $("#btnShowLinks").click(function() {
-          $(".LinkToList").css("display", "inline");
+          $(".linkToList").css("display", "inline");
           $("#btnShowLinks").attr("disabled", "disabled");
         });
       });
