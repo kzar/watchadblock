@@ -11,11 +11,11 @@ function load_jquery_ui(callback) {
     $("head").append(link);
   }
   extension_call('readfile', 
-      {file:"jquery/jquery-ui-1.7.2.custom.min.js"}, 
+      {file:"jquery/jquery-ui-1.8.custom.min.js"}, 
       function(result) {
         eval(result); // suck it, Trebek
 
-        load_css("jquery/css/start/jquery-ui-1.7.2.custom.css");
+        load_css("jquery/css/redmond/jquery-ui-1.8.custom.css");
         load_css("jquery/css/override-page.css");
 
         var icon = chrome.extension.getURL("img/icon24.png");

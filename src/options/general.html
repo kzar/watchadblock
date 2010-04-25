@@ -1,0 +1,98 @@
+  <script>
+    $(function() {
+      var linkUrl = "https://chrome.google.com/extensions/detail/" +
+                    icon_extension_id;
+      $("#link_to_icon").attr("href", linkUrl);
+
+      var imgUrl = chrome.extension.getURL("img/icon_screenshot.png");
+      $("#imgIconScreenshot").attr("src", imgUrl);
+
+      $("#want_a_button").click(function() {
+        $("#button_explanation").show();
+      });
+
+      // If the icon extension is running, check the box.
+      chrome.extension.sendRequest(icon_extension_id, {}, function() {
+        $("#want_a_button").attr("checked", "checked");
+      });
+
+      // Check or uncheck each option.
+      extension_call('get_optional_features', {}, function(features) {
+        for (var name in features) {
+          $("#enable_" + name).
+            attr("checked", features[name].is_enabled);
+        }
+        $("input.feature:checkbox").change(function() {
+          var is_enabled = $(this).is(':checked');
+          var name = this.id.substring(7); // TODO: hack
+          extension_call(
+            'set_optional_feature', 
+            {name:name, is_enabled:is_enabled}
+          );
+        });
+      });
+
+    });
+  </script>
+
+  <div class="section" class="experiments">
+    <h2>General options</h2>
+    <table style="vertical-align:middle; margin-left:-3px">
+      <tr>
+        <td>
+          <p style="font-size:14px">
+          <input type="checkbox" id="want_a_button" />
+          Show the AdBlock button next to the address bar
+          </p>
+        </td>
+        <td>
+          <img id="imgIconScreenshot" />
+        </td>
+      </tr>
+    </table>
+    <p id="button_explanation" class="info" style="display:none">
+      <span style="font-style:italic; font-size:12px; color:#222222">
+        To make the button optional, we put him in a helper extension all 
+        by himself, to be installed along with AdBlock.
+      </span>
+      <br/><br/>
+      To add the button, click <b>Install</b> on the 
+      <a id="link_to_icon" target="top">Browser Button for AdBlock</a> page.
+      <br/><br/>
+      To remove the button, right click him and choose Disable.
+    </p>
+
+    <p>
+    <input type="checkbox" class="feature" id="enable_show_google_search_text_ads" />
+    I like the text ads on Google search results; show me those. 
+    <span style='font-style:italic; color:red'>Beta</span>
+    </p>
+    <script>
+      // TODO: This is a dumb race condition, and still has a bug where
+      // if the user reloads/closes the options page within a second
+      // of clicking this, the filters aren't rebuilt.  Call this inside
+      // the feature change handler if it's this checkbox being clicked.
+      $("#enable_show_google_search_text_ads").change(function() {
+        // Give the optional feature a sec to get saved by the other
+        // change handler before recalculating filters.
+        window.setTimeout(function() { 
+          extension_call('update_filters', { }); 
+        }, 1000);
+      });
+    </script>
+
+    <p>
+    <input type="checkbox" class="feature" id="enable_block_youtube" />
+    Block ads inside YouTube videos.
+    <span style='font-style:italic; color:red'>Beta</span>
+    </p>
+
+  </div>
+
+  <div class="sneaky">
+    <input type="checkbox" class="feature" id="enable_debug_logging" />
+    Show debug statements in Console Log (which slows down AdBlock)
+    <br/>
+    <input type="checkbox" class="feature" id="enable_debug_time_logging" />
+    Show timing statements in Console Log (which slows down AdBlock)
+  </div>

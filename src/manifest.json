@@ -11,12 +11,12 @@
     "http://*/*", "https://*/*"
   ],
   "background_page": "background.html",
-  "options_page": "options.html",
+  "options_page": "options/index.html",
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "jquery/jquery-1.4.min.js", 
+        "jquery/jquery-1.4.2.min.js", 
         "functions.js", 
         "broadcast_channel.js", 
         "adblock_start.js"

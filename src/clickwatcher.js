@@ -111,7 +111,7 @@ ClickWatcher.prototype._build_ui = function() {
       dialog({
           zIndex:10000000, 
           position:[50, 50],
-          height:130,
+          height:150,
           minHeight:50,
           autoOpen: false,
           title:'Block an ad',

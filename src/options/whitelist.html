@@ -1,0 +1,79 @@
+  <script>
+      register_broadcast_listener('whitelist_updated', function() {
+        extension_call('get_whitelist', {}, display_whitelist);
+      });
+
+      function display_whitelist(whitelist) {
+        var view = $("#whitelisted_domains");
+
+        var table = $("<table></table>").
+          addClass("entry_table");
+        view.html(table);
+        $.each(whitelist, function(i, entry) {
+          var cell1 = $("<td>").text(entry);
+          var cell2 = $('<a href="#whitelisted_domains"></a>').
+            text("Remove").
+            click(function() {
+              extension_call('remove_from_whitelist', {domain:entry});
+            });
+          var row = $("<tr></tr>").
+            append(cell1).
+            append(cell2).
+            appendTo(table);
+        });
+
+        var cell1 = $("<td><input id='txtWhitelistedDomain' /></td>");
+        var cell2 = $("<input/>", 
+                      {type:"button", id:"btnWhitelist", value:"Add",
+                       disabled: "disabled"});
+        $("<tr></tr>").
+          append(cell1).
+          append(cell2).
+          appendTo(table);
+
+        $("#btnWhitelist").click(function() {
+          var domain = $("#txtWhitelistedDomain").val();
+          if (domain == "")
+            return;
+
+          extension_call('add_to_whitelist', {domain: domain});
+          $("#txtWhitelistedDomain").val("");
+        });
+
+        $("#txtWhitelistedDomain").keyup(function() {
+          var ok = true;
+          var domain = $(this).val();
+          if (domain.length < 4)
+            ok = false;
+          if (domain == "localhost")
+            ok = true;
+          else if (domain.indexOf(".") == -1)
+            ok = false;
+          else if (domain.lastIndexOf(".") >= domain.length - 2)
+            ok = false;
+          $("#btnWhitelist").attr("disabled", ok ? null : "disabled");
+        });
+      }
+
+      $(function() {
+        extension_call('get_whitelist', {}, display_whitelist);
+
+        load_options();
+      });
+
+  </script>
+  <div class="section">
+    <h2>Don't run AdBlock on domains that end with...</h2>
+    <div id="whitelisted_domains"></div>
+    <div>
+      <span class="footnote">For example, "google.com" whitelists
+      google.com, mail.google.com, and www.google.com.</span>
+    </div>
+    <p>
+    <b>Shortcut:</b> Press <b>Ctrl-Shift-L</b> (think "Live!") on a page 
+    to keep AdBlock from running on that page's domain.
+    <input style="margin-left: 15px" type="checkbox" class="feature" 
+           id="enable_whitelist_shortcut" />
+    Shortcut enabled
+    </p>
+  </div>
