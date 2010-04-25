@@ -49,6 +49,8 @@ function shipit() {
     [ "$answer" = y ] && {
       svn ci ../wiki/Changelog.wiki -m "Changelog entry for new version $version: $description" && svn ci
     }
+
+    echo "Last step: go push the new adblockforchrome.zip up to the Gallery."
 }
 
 function main() {

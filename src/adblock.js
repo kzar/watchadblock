@@ -32,7 +32,11 @@ function remove_ad_elements_by_url(first_run) {
   var els = $("img,script,embed,iframe,link,object,body");
   var elInfo = els.map(function(id, el) { 
       var elType = typeForElement(el);
-      return {id: id, url: urlForElement(el, elType), type: elType}; 
+      return {
+        id: id, 
+        url: relativeToAbsoluteUrl(urlForElement(el, elType)), 
+        type: elType
+      };
     });
 
   extension_call(
@@ -72,6 +76,23 @@ function purgeElement(el, elInfo) {
   // TODO: i suspect i'm missing something else here... what did the old
   // code do?
 }
+
+// Author: Tom Joseph of AdThwart
+function relativeToAbsoluteUrl(url) {
+    if(!url)
+        return url;
+    // If URL is already absolute, don't mess with it
+    if(url.match(/^http/))
+        return url;
+    // Leading / means absolute path
+    if(url[0] == '/')
+        return document.location.protocol + "//" + document.location.host + url;
+
+    // Remove filename and add relative URL to it
+    var base = document.baseURI.match(/.+\//);
+    if(!base) return document.baseURI + "/" + url;
+    return base[0] + url;
+}
 // Return the url tied to the given element.  null is OK if we can't find one.
 function urlForElement(el, type) {
   // TODO: handle background images, based on 'type'.
@@ -89,7 +110,8 @@ function urlForElement(el, type) {
         return null;
     case 'BODY':
       // TODO: make sure this isn't so slow that we must LBYL
-      return $(el).css('background-image');
+      var bgImage = $(el).css('background-image');
+      return (bgImage == "none" ? null: bgImage);
   }
 }
 

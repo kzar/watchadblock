@@ -386,8 +386,9 @@ PatternFilter._parseRule = function(text) {
   if (result.isRegex) {
     // ? at the start of a regex means something special; escape it always.
     rule = rule.replace(/\?/g, '\\?');
-    // . shouldn't mean "match any character"
-    rule = rule.replace(/\./g, '\\.');
+    // . shouldn't mean "match any character" unless it's followed by a * in
+    // which case we were almost certainly the ones who put it there.
+    rule = rule.replace(/\.(?!\*)/g, '\\.');
   }
 
   result.rule = rule;
