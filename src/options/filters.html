@@ -148,10 +148,17 @@
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
-              attr("name", id);
+              attr("name", id).
+              attr("id", id.replace(/[^A-Za-z]/g,''));
 
             var name = $("<span>").
-              text(subscriptions[id].name);
+              text(subscriptions[id].name).
+              attr("id", id.replace(/[^A-Za-z]/g,'')).
+              css("cursor", "pointer").
+              click(function() {
+                $("input#" + this.id).click();
+                $("input#" + this.id).change();
+              });
 
             div.
               attr("title", subscriptions[id].url).
