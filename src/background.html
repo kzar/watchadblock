@@ -22,7 +22,7 @@
       utils.find_ads_in = function(options) {
         // TODO: replace filter() and map() calls thruout with array ones
         // when possible -- jquery is unnecessary on arrays
-        var filterset = _test_new_subscriptions.filterset;
+        var filterset = _myfilters.filterset;
         // limit to a domain
         var limited = filterset.limitedToDomain(options.domain);
         // TODO: timing tests to see if this is much slower than a normal loop
@@ -39,7 +39,7 @@
       // Returns: the selector strings from all selector filters that should
       //          apply to the given domain.
       utils.selectors_for_domain = function(options) {
-        return _test_new_subscriptions.filterset.
+        return _myfilters.filterset.
           limitedToDomain(options.domain).
           getSelectors();
       }
@@ -48,7 +48,7 @@
       // Inputs: none.
       // Returns: null, upon completion
       utils.update_filters = function(options) {
-        _test_new_subscriptions.update();
+        _myfilters.update();
       }
 
       // STORAGE
@@ -207,13 +207,13 @@
       // Inputs: older_than:integer - number of hours.  If anyone is
       //         staler than this, update them.  Defaults to 5 days.
       utils.freshen_subscriptions = function(options) {
-        _test_new_subscriptions.freshen_async(options.older_than);
+        _myfilters.freshen_async(options.older_than);
       }
       // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.
       // Inputs: none
       utils.get_subscriptions_minus_text = function(options) {
-        return _test_new_subscriptions.get_subscriptions_minus_text();
+        return _myfilters.get_subscriptions_minus_text();
       }
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
@@ -221,14 +221,14 @@
       //         text: filter text string fetched from that url
       // Returns: null, upon completion
       utils.subscribe = function(options) {
-        return _test_new_subscriptions.subscribe(options.id, options.text);
+        return _myfilters.subscribe(options.id, options.text);
       }
 
       // Unsubscribes from a filter subscription.
       // Inputs: id: id from which to unsubscribe.
       // Returns: null, upon completion.
       utils.unsubscribe = function(options) {
-        return _test_new_subscriptions.unsubscribe(options.id);
+        return _myfilters.unsubscribe(options.id);
       }
 
 
@@ -376,9 +376,8 @@
       );
 
       
-      // TODO: rename to _myfilters or something.
-      _test_new_subscriptions = new MyFilters();
-      _test_new_subscriptions.updated(function() {
+      _myfilters = new MyFilters();
+      _myfilters.updated(function() {
         utils.emit_broadcast({
           fn: 'filters_updated', 
           options: {}
