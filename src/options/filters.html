@@ -164,10 +164,19 @@
                 $("input#" + this.id).change();
               });
 
+            var link_to_list = $("<a>").
+              text('show').
+              css("margin-left", "6px").
+              css("font-size", "10px").
+              css("display", "none").
+              attr("class", "LinkToList").
+              attr("href", subscriptions[id].url);
+
             div.
               attr("title", subscriptions[id].url).
               append(checkbox).
               append(name).
+              append(link_to_list).
               append($("<span></span>").addClass("update_time"));
 
             $("#filter_subscriptions").
@@ -251,10 +260,13 @@
   <div class="sneaky">
     <p>
     Subscribe to all filters:
-    <input value="OK" type=button id="btnSubscribeAll" />
+    <input value="OK" type="button" id="btnSubscribeAll" />
     <br/>
     Unsubscribe from all filters: 
-    <input value="OK" type=button id="btnUnsubscribeAll" />
+    <input value="OK" type="button" id="btnUnsubscribeAll" />
+    <br/>
+    Show links to the filter lists: 
+    <input value="OK" type="button" id="btnShowLinks" />
     </p>
     <script>
       $(function() {
@@ -271,6 +283,11 @@
               unsubscribe($(el).attr("name"));
             }
           });
+        });
+
+        $("#btnShowLinks").click(function() {
+          $(".LinkToList").css("display", "inline");
+          $("#btnShowLinks").attr("disabled", "disabled");
         });
       });
     </script>
