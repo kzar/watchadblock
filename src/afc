@@ -1,0 +1,47 @@
+#!/bin/bash
+
+function usage() {
+    echo "Usage:"
+    echo "$0 shipit"
+    echo "$0 filterdiff"
+    echo "$0 updatefilters"
+    exit 1
+}
+
+function shipit() {
+    grep 'debug_id.*true;' functions.js && {
+      echo "Fix debug_id, stupid"
+      exit 1
+    }
+
+    curl http://adblockplus.mozdev.org/easylist/easylist.txt > filters/easylist.txt
+
+    svn diff filters/easylist.txt | grep '^[+-]'
+    echo
+
+    thisdir=$(basename $(pwd)) # works whether we check out as trunk or afc or...
+    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/dev/*' -r adblockforchrome.zip $thisdir/)
+
+    version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    echo -n "Changelog entry: *$version*: "
+    read description
+    sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
+    echo
+    grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
+    echo
+    echo -n "Check in wiki entry (y/n)? "
+    read answer
+    [ "$answer" = y ] && svn ci ../wiki/Changelog.wiki -m "Changelog entry for new version $version: $description"
+}
+
+function main() {
+    if [ $1 = "shipit" ]; then shipit
+    elif [ $1 = "filterdiff" ]; then diff <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
+    elif [ $1 = "updatefilters" ]; then scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
+    else usage
+    fi
+}
+
+cd $(dirname $0)
+[ $# != 1 ] && usage
+main "$1"
