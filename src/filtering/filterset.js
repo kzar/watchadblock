@@ -94,8 +94,12 @@ FilterSet.prototype = {
     // match.
     url = url.toLowerCase();
 
+    // TODO: This is probably imperfect third-party testing, but it works
+    // better than nothing, and I haven't gotten to looking into ABP's
+    // internals for the exact specification.
     var urlOrigin = FilterSet._withoutWww(FilterSet._domainFor(url));
     var docOrigin = FilterSet._withoutWww(this._limitedToDomain);
+    var isThirdParty = (urlOrigin != docOrigin);
 
     // TODO: is there a better place to do this?
     // Limiting length of URL to avoid painful regexes.
@@ -103,15 +107,13 @@ FilterSet.prototype = {
     url = url.substring(0, LENGTH_CUTOFF);
 
     for (var i = 0; i < this._whitelistFilters.length; i++) {
-      if (this._whitelistFilters[i].matches(url, elementType, 
-          urlOrigin, docOrigin)) {
+      if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
         return false;
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
-      if (this._patternFilters[i].matches(url, elementType, 
-          urlOrigin, docOrigin)) {
+      if (this._patternFilters[i].matches(url, elementType, isThirdParty)) {
         log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
         return true;
       }

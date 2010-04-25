@@ -427,20 +427,16 @@ PatternFilter.prototype = {
   // would be matched by this filter.
   //   url:string the url the element is loading.
   //   elementType:ElementTypes the type of DOM element.
-  //   urlOrigin: the domain of url, basically
-  //   docOrigin: the document.domain that contains the element, basically
-  matches: function(url, elementType, urlOrigin, docOrigin) {
+  //   isThirdParty: true if the request for url was from a page of a
+  //       different origin
+  matches: function(url, elementType, isThirdParty) {
     if (!(elementType & this._allowedElementTypes))
       return false;
-
-    // TODO: This is probably imperfect third-party testing, but it works
-    // better than nothing, and I haven't gotten to looking into ABP's
-    // internals for the exact specification.
 
     // If the resource is being loaded from the same origin as the document,
     // and your rule applies to third-party loads only, we don't care what
     // regex your rule contains, even if it's for someotherserver.com.
-    if ((this._options & FilterOptions.THIRDPARTY) && (urlOrigin == docOrigin))
+    if ((this._options & FilterOptions.THIRDPARTY) && !isThirdParty)
       return false;
 
     if (this._isRegex)
