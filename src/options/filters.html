@@ -85,6 +85,10 @@
         extension_call("unsubscribe", {id:id}, function() {
           flash("subscription_message", "Unsubscribed.");
         });
+        if (id.indexOf('url:') == 0) {
+          $('div.subscription[title="' + id.substring(4) + '"]').
+            css("display", "none");
+        }
       }
       // Subscribe to the given filterlist id.  id is either a well-known id, or
       // "url:xyz", where xyz is the URL of a user-specified filter list.
