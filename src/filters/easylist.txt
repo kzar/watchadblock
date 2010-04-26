@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: ke0SaH+lPdFpRlvRt1+REg
+! Checksum: 3BI9yIcv2wcOBS46Aapz8A
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 25 Apr 2010 21:50 UTC
+! Last modified: 26 Apr 2010 21:20 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -1488,6 +1488,7 @@ n728x90_
 ###ads-dell
 ###ads-horizontal
 ###ads-indextext
+###ads-leaderboard1
 ###ads-lrec
 ###ads-rhs
 ###ads-top
@@ -2219,6 +2220,8 @@ n728x90_
 ##.adBgMId
 ##.adBgTop
 ~ksl.com##.adBox
+##.adBoxContent
+##.adBoxSidebar
 ##.adBoxSingle
 ##.adCMRight
 ##.adColumn
@@ -2394,9 +2397,11 @@ n728x90_
 ##.ads-banner
 ##.ads-categories-bsa
 ##.ads-links-general
+##.ads-mpu
 ##.ads-profile
 ##.ads-right
 ##.ads-sidebar
+##.ads-sky
 ##.ads-text
 ##.ads2
 ##.ads3
@@ -3344,6 +3349,7 @@ n728x90_
 ||dl-rms.com^$third-party
 ||domainsponsor.com^$third-party
 ||doubleclick.net/pfadx/*.mtvi$object_subrequest,third-party
+||doubleclick.net/pfadx/*;sz=$object_subrequest,third-party
 ||doubleclick.net/pfadx/*adcat=$object_subrequest,third-party
 ||doubleclick.net^$object_subrequest,third-party,domain=addictinggames.com|atom.com|break.com|businessweek.com|cbs4denver.com|darkhorizons.com|doubleviking.com|eonline.com|fandango.com|foxbusiness.com|foxnews.com|g4tv.com|gametrailers.com|joblo.com|mtv.co.uk|myfoxphoenix.com|newsweek.com|nick.com|nintendoeverything.com|nytimes.com|play.it|ps3news.com|sbsun.com|shockwave.com|space.com|spike.com|thedailygreen.com|thedailyshow.com|thewire.com|washingtonpost.com|wired.com|wsj.com|wwe.com|youtube.com|zoomin.tv
 ||doubleclick.net^$~object_subrequest,third-party
@@ -4015,6 +4021,7 @@ n728x90_
 ||ocforums.com/adj/
 ||ocp.com.com/ad.js
 ||payplay.fm^*/mastercs.js
+||pbs.org^*/sponsors/
 ||pbsrc.com/sponsor/
 ||pbsrc.com^*/sponsor/
 ||pcauthority.com.au^*/skins/
@@ -4023,6 +4030,7 @@ n728x90_
 ||pcpro.co.uk^*/pcprositeskin
 ||pcpro.co.uk^*skin_wide.
 ||pettube.com/images/*-partner.
+||photoshopguides.com/banners/
 ||photosupload.net/photosupload.js
 ||pinknews.co.uk/newweb/
 ||prisonplanet.com^*advert.
@@ -4307,6 +4315,7 @@ comicgenesis.com###ks_da
 comicsalliance.com##.sidebarBanner
 comicsalliance.com##.topBanner
 comingsoon.net###col2TopPub
+comingsoon.net###upperPub
 complex.com##.ad
 computeractive.co.uk##.leaderboard
 computerandvideogames.com###skyslot
@@ -5000,6 +5009,7 @@ p2pnet.net###sidebar > ul:first-child + table[width="19%"]
 p2pnet.net###sidebar2
 p2pnet.net##td[align="center"][width="100%"] > a[style="border: 0px none ; margin: 0px;"][target="_blank"] > img
 pagead2.googlesyndication.com##html
+pbs.org##.newshour-support-wrap
 pcauthority.com.au##.featured-retailers
 pcmag.com###homeRegionPremiumPartner
 pcmag.com###special_offers_trio
@@ -5033,6 +5043,7 @@ pdfzone.com##.sponsors_container
 pdfzone.com##div[style="float: left; width: 336px; margin-right: 16px; margin-bottom: 5px;"]
 pedulum.com###header_top
 penny-arcade.com###funding-h
+perl.com###leaderboard
 pettube.com###ca
 phazeddl.com##a[href^="http://www.downloadpost.com/"]
 phonescoop.com###botlink
@@ -5301,6 +5312,7 @@ thestates.fm###banbo
 thestreet.com###brokerage
 thestreet.com###textLinks
 thestreet.com###textLinksContainer
+thesun.co.uk##.srch_cont
 thesuperficial.com###leaderboard
 thetandd.com##.yahoo_content_match
 thevarguy.com###middlebannerwrapper
@@ -5590,7 +5602,7 @@ zuploads.com##.hispeed
 @@||bitgravity.com/revision3/swf/player/admanager.swf?$object_subrequest,domain=area5.tv
 @@||brothersoft.com/gads/coop_show_download.php?soft_id=$script
 @@||candystand.com/assets/images/ads/$image
-@@||cdn.springboard.gorillanation.com/storage/lightbox_code/static/companion_ads.js$script,domain=gamerevolution.com
+@@||cdn.springboard.gorillanation.com/storage/lightbox_code/static/companion_ads.js$script,domain=comingsoon.net|gamerevolution.com
 @@||chloe.videogamer.com/data/*/videos/adverts/$object_subrequest
 @@||cinshare.com/js/isalive.js?$script
 @@||cnet.com/ads/common/adclient/*.swf$object_subrequest
@@ -5599,6 +5611,8 @@ zuploads.com##.hispeed
 @@||dart.clearchannel.com/html.ng/$object_subrequest,domain=radio1045.com
 @@||deviantart.com/global/difi/?$subdocument
 @@||direct.fairfax.com.au/hserver/*/site=vid.*/adtype=embedded/$script
+@@||distrowatch.com/bcpougykz/hyqbvkoggc/$image
+@@||distrowatch.com/bcpougykz/mmlih/$image
 @@||distrowatch.com/images/apps/$image
 @@||distrowatch.com/images/icon-*/*.png|$image
 @@||distrowatch.com/images/other/$image
@@ -5756,7 +5770,7 @@ zuploads.com##.hispeed
 @@||seeingwithsound.com^$image,script,domain=artificialvision.com
 @@||superfastfile.com/adsense.js$script
 @@||superfastfile.com/advertisement.js$script
-@@||theteacherscorner.net/adiframe/jext.js?$script
+@@||theteacherscorner.net/adiframe/$script
 @@||tpmrpg.net/adframe.js$script
 @@||video2mp3.net/img/adfarm.js$script
 @@||visualprosthesis.com^$image,script,domain=artificialvision.com|seeingwithsound.com
