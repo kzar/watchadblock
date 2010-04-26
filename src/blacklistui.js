@@ -275,8 +275,8 @@ BlacklistUi.prototype._redrawPage2 = function() {
       continue;
 
     var checkbox = $("<div></div>").
-      append("<input type=checkbox " + ((attr == 'src' || attr == 'data' || attr == 'href') ? '': 'checked') + 
-             " id=ck" + attr + " /> ").
+      append("<input type=checkbox " + ((attr == 'src' || attr == 'data' || attr == 'href') ? 
+             '': 'checked') + " id=ck" + attr + " /> ").
       append("<b>" + (attr == 'nodeName' ? "Type" : attr) + 
              "</b> will be <i>" + val + "</i>");
 
@@ -344,7 +344,6 @@ BlacklistUi.prototype._generatedAdReportUrl = function() {
     body.push("");
     body.push("=== The selector created by the user ===");
     body.push(this._makeFilter());
-    body.push("");
 
     var bodystring = body.join('\n');
     result.push("&comment=" + escape(bodystring));
