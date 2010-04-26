@@ -61,6 +61,12 @@
         load_options();
       });
 
+      $('.optionDescription').click(function() {
+        $(this).prev('input').
+          click().
+          change();
+      });
+
   </script>
   <div class="section">
     <h2>Don't run AdBlock on domains that end with...</h2>
@@ -74,6 +80,6 @@
     to keep AdBlock from running on that page's domain.
     <input style="margin-left: 15px" type="checkbox" class="feature" 
            id="enable_whitelist_shortcut" />
-    Shortcut enabled
+    <span class="optionDescription">Shortcut enabled</span>
     </p>
   </div>

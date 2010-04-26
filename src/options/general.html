@@ -32,6 +32,12 @@
         });
       });
 
+      $('.optionDescription').click(function() {
+        $(this).prev('input').
+          click().
+          change();
+      });
+
     });
   </script>
 
@@ -41,8 +47,8 @@
       <tr>
         <td>
           <p style="font-size:14px">
-          <input type="checkbox" id="want_a_button" />
-          Show the AdBlock button next to the address bar
+            <input type="checkbox" id="want_a_button" />
+            <span class="optionDescription">Show the AdBlock button next to the address bar<span>
           </p>
         </td>
         <td>
@@ -63,9 +69,9 @@
     </p>
 
     <p>
-    <input type="checkbox" class="feature" id="enable_show_google_search_text_ads" />
-    I like the text ads on Google search results; show me those. 
-    <span style='font-style:italic; color:red'>Beta</span>
+      <input type="checkbox" class="feature" id="enable_show_google_search_text_ads" />
+      <span class="optionDescription">I like the text ads on Google search results; show me those.</span>
+      <span style='font-style:italic; color:red'>Beta</span>
     </p>
     <script>
       // TODO: This is a dumb race condition, and still has a bug where
@@ -82,17 +88,17 @@
     </script>
 
     <p>
-    <input type="checkbox" class="feature" id="enable_block_youtube" />
-    Block ads inside YouTube videos.
-    <span style='font-style:italic; color:red'>Beta</span>
+      <input type="checkbox" class="feature" id="enable_block_youtube" />
+      <span class="optionDescription">Block ads inside YouTube videos.</span>
+      <span style='font-style:italic; color:red'>Beta</span>
     </p>
 
   </div>
 
   <div class="sneaky">
     <input type="checkbox" class="feature" id="enable_debug_logging" />
-    Show debug statements in Console Log (which slows down AdBlock)
+    <span class="optionDescription">Show debug statements in Console Log (which slows down AdBlock)</span>
     <br/>
     <input type="checkbox" class="feature" id="enable_debug_time_logging" />
-    Show timing statements in Console Log (which slows down AdBlock)
+    <span class="optionDescription">Show timing statements in Console Log (which slows down AdBlock)</span>
   </div>

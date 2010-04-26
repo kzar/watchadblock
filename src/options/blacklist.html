@@ -115,6 +115,12 @@
 
       load_options();
     });
+
+      $('.optionDescription').click(function() {
+        $(this).prev('input').
+          click().
+          change();
+      });
   </script>
 
   <a name="user_filters_link"></a>
@@ -182,7 +188,5 @@
     anything happen, try clicking on the page first.)</span>
     <input style="margin-left: 15px" type="checkbox" class="feature" 
            id="enable_blacklist_shortcut" />
-    Shortcut enabled
+    <span class="optionDescription">Shortcut enabled</span>
   </div>
-
-
