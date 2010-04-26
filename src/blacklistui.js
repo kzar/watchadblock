@@ -138,7 +138,8 @@ BlacklistUi.prototype._build_page2 = function() {
     "page:" +
     "  <div style='margin-left:15px;margin-bottom:15px'>" +
     "    <div>" +
-    "      <div id='summary'></div></i>" +
+    "      <div id='summary'></div><br/>" +
+    "      <div id='filter_warning'></div>" +
     "    </div>" +
     "  </div>" +
     "</div>" +
@@ -152,13 +153,15 @@ BlacklistUi.prototype._build_page2 = function() {
       title: "Last step: What makes this an ad?",
       buttons: {
         "Block it!": function() {
-          var filter = {
-            domain_regex: document.domain, // TODO option to specify
-            css_regex: $("#summary", that._ui_page2).text()
-          };
-          extension_call('add_user_filter', { filter: filter }, function() {
-            that._fire('block');
-          });
+          if ($("#summary", that._ui_page2).text().length > 0) {
+            var filter = {
+              domain_regex: document.domain, // TODO option to specify
+              css_regex: $("#summary", that._ui_page2).text()
+            };
+            extension_call('add_user_filter', { filter: filter }, function() {
+              that._fire('block');
+            });
+          } else {alert('Geen filter opgegeven!');}
         },
         "Cancel": function() {
           that._ui_page2.dialog('close');
@@ -224,7 +227,19 @@ BlacklistUi.prototype._makeFilter = function() {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
       result.push('[' + attrs[i] + '="' + el.attr(attrs[i]) + '"]');
   }
-
+  //BUG: for some reason this does not display the warning when you
+  //1. Open the blacklister and press cancel on the final page
+  //2. Open the blacklister again and now change the checkboxes...
+  //Do you have any ideas Michael? Kind regards, Famlam!
+  $("#filter_warning").
+    css("display", (
+      ((result.length == 1 && $("input:checkbox#cknodeName", detailsDiv).is(':checked')) || 
+        (result.length == 0)) ? "block" : "none")).
+    css("font-weight", "bold").
+    css("color", "red").
+    text((result.length == 1) ? 
+      "Be carefull: this filter blocks all " + result[0] + " elements on the page!" : 
+      "Warning: no filter specified!");
   return result.join('');
 }
 
