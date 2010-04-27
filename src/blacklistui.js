@@ -188,7 +188,7 @@ BlacklistUi.prototype._build_page2 = function() {
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
   var text = '&lt;' + el[0].nodeName;
-  var attrs = ["id", "class", "name", "src", "href", "data"];
+  var attrs = ["id", "class", "name", "src", "href"];
   for (var i in attrs) {
     var val = BlacklistUi._ellipsis(el.attr(attrs[i]));
     if (val != null && val != "") {
@@ -222,7 +222,7 @@ BlacklistUi.prototype._makeFilter = function() {
       }
     }
   }
-  var attrs = [ 'id', 'class', 'name', 'src', 'href', 'data'];
+  var attrs = [ 'id', 'class', 'name', 'src', 'href' ];
   for (var i in attrs) {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
       result.push('[' + attrs[i] + '="' + el.attr(attrs[i]) + '"]');
@@ -266,7 +266,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
   }
 
   detailsDiv.html("");
-  var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href', 'data'];
+  var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href'];
   for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
     var val = BlacklistUi._ellipsis(el.attr(attr));
@@ -285,7 +285,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
       });
 
     var checkbox = $("<div></div>").
-      append("<input type=checkbox " + ((attr == 'src' || attr == 'data' || attr == 'href') ? 
+      append("<input type=checkbox " + ((attr == 'src' || attr == 'href') ? 
              '': 'checked') + " id=ck" + attr + " /> ").
       append(checkboxlabel);
 
