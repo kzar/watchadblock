@@ -320,6 +320,9 @@ MyFilters.__make_subscription_options = function() {
       url: "http://stanev.org/abp/adblock_bg.txt",
       name: " - additional Bulgarian filters",
     },
+    "easylist_plus_finnish": {
+      url: "http://www.wiltteri.net/wiltteri.txt",
+      name: " - additional Finnish filters",
     "easylist_plus_french": {
       url: "http://lian.info.tm/liste_fr.txt",
       name: " - additional French filters",
@@ -344,6 +347,10 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       name: "Chinese filters",
     },
+    "czech": {
+      url: "http://adblock.dajbych.net/adblock.txt",
+      name: "Czech filters",
+    },
     "danish": {
       url: "http://adblock.schack.dk/block.txt",
       name: "Danish filters",
@@ -355,6 +362,10 @@ MyFilters.__make_subscription_options = function() {
     "german": {
       url: "http://chewey.de/mozilla/data/adblock.txt",
       name: "German filters",
+    },
+    "hungarian": {
+      url: "http://pete.teamlupus.hu/hufilter.txt",
+      name: "Hungarian filters",
     },
     "italian": {
       url: "http://mozilla.gfsolone.com/filtri.txt",
@@ -379,6 +390,10 @@ MyFilters.__make_subscription_options = function() {
     "russian": {
       url: "http://ruadlist.googlecode.com/svn/trunk/adblock.txt",
       name: "Russian filters",
+    },
+     "ukranian": {
+      url: "http://adblock.oasis.org.ua/banlist.txt",
+      name: "Ukranian filters",
     },
   };
   var result = {};
