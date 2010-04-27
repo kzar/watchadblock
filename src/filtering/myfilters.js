@@ -337,7 +337,7 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional Romanian filters",
     },
     "easylist_plus_spanish": {
-      url: "http://s3.amazonaws.com/lcp/maty/myfiles/AdBlock-Nauscopio-maty.txt",
+      url: "http://sites.google.com/site/nauscopio/Home/AdBlock-Nauscopio-maty.txt",
       name: " - additional Spanish filters",
     },
     "easylist_plus_vietnamese": {
