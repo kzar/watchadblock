@@ -16,16 +16,24 @@
             click(function() {
               extension_call('remove_from_whitelist', {domain:entry});
             });
+          var cell3 = $('<a href="#whitelisted_domains"></a>').
+            css("margin-left", "4px").
+            text("Edit").
+            click(function() {
+              whitelist_edit_entry = entry;
+              extension_call('remove_from_whitelist', {domain:entry});
+            });
           var row = $("<tr></tr>").
             append(cell1).
             append(cell2).
+            append(cell3).
             appendTo(table);
         });
 
         var cell1 = $("<td><input id='txtWhitelistedDomain' /></td>");
         var cell2 = $("<input/>", 
                       {type:"button", id:"btnWhitelist", value:"Add",
-                       disabled: "disabled"});
+                       disabled: "disabled", style: "height:22px;margin-top:2px;"});
         $("<tr></tr>").
           append(cell1).
           append(cell2).
@@ -41,18 +49,23 @@
         });
 
         $("#txtWhitelistedDomain").keyup(function() {
-          var ok = true;
           var domain = $(this).val();
-          if (domain.length < 4)
-            ok = false;
-          if (domain == "localhost")
+          var regexp = /^(\.?([a-zA-Z0-9\-]{1,}\.){1,}[a-zA-Z]{2,6})$/;
+          var ok = regexp.test(domain); //Domain name
+          if (!ok)
+            regexp = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
+            ok = regexp.test(domain); //IP
+          if (domain == "localhost") //localhost
             ok = true;
-          else if (domain.indexOf(".") == -1)
-            ok = false;
-          else if (domain.lastIndexOf(".") >= domain.length - 2)
-            ok = false;
           $("#btnWhitelist").attr("disabled", ok ? null : "disabled");
         });
+
+        //Put entry from 'edit' in the textbox
+        if (typeof whitelist_edit_entry != "undefined") {
+          $('#txtWhitelistedDomain').val(whitelist_edit_entry);
+          $("#txtWhitelistedDomain").keyup();
+          delete whitelist_edit_entry;
+        }
       }
 
       $(function() {
