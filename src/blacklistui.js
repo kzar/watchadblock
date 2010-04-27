@@ -107,7 +107,7 @@ BlacklistUi.prototype._build_page1 = function() {
     css('margin', 10).
     slider({
       min:0, 
-      max:depth,
+      max:Math.max(depth - 1, 1),
       slide: function(event, ui) {
         that._chain.moveTo(ui.value);
       }
@@ -274,11 +274,20 @@ BlacklistUi.prototype._redrawPage2 = function() {
     if (val == '' || val == null)
       continue;
 
+    var checkboxlabel = $("<span></span>").
+      append("<b>" + (attr == 'nodeName' ? "Type" : attr) + 
+             "</b> will be <i>" + val + "</i>").
+      css("cursor", "pointer").
+      click(function() {
+        $(this).prev('input').
+          click().
+          change();
+      });
+
     var checkbox = $("<div></div>").
       append("<input type=checkbox " + ((attr == 'src' || attr == 'data' || attr == 'href') ? 
              '': 'checked') + " id=ck" + attr + " /> ").
-      append("<b>" + (attr == 'nodeName' ? "Type" : attr) + 
-             "</b> will be <i>" + val + "</i>");
+      append(checkboxlabel);
 
     checkbox.find("input").change(function() {
       updateFilter();
