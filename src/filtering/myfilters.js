@@ -323,6 +323,7 @@ MyFilters.__make_subscription_options = function() {
     "easylist_plus_finnish": {
       url: "http://www.wiltteri.net/wiltteri.txt",
       name: " - additional Finnish filters",
+    },
     "easylist_plus_french": {
       url: "http://lian.info.tm/liste_fr.txt",
       name: " - additional French filters",
