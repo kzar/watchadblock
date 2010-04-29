@@ -87,7 +87,7 @@ BlacklistUi.prototype._build_page1 = function() {
         "Cancel": function() {
           that._ui_page1.dialog('close');
           page.remove();
-		  }
+        }
       },
       close: function() {
         that._onClose();
