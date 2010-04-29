@@ -40,6 +40,7 @@ ClickWatcher.prototype.show = function() {
   window.setTimeout(function() {
     that._ui = that._build_ui();
     wait.dialog('close');
+	 wait.remove();
     that._ui.dialog('open');
   }, 10);
 }
@@ -122,6 +123,7 @@ ClickWatcher.prototype._build_ui = function() {
             $("*").unbind('click', click_catch_this);
             Overlay.removeAll();
             that._onClose();
+            page.remove();
           }
         });
 

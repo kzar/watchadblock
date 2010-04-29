@@ -84,7 +84,10 @@ BlacklistUi.prototype._build_page1 = function() {
           that._redrawPage2();
           that._ui_page2.dialog('open');
         },
-        "Cancel": function() { that._ui_page1.dialog('close'); }
+        "Cancel": function() {
+          that._ui_page1.dialog('close');
+          page.remove();
+		  }
       },
       close: function() {
         that._onClose();
@@ -165,6 +168,7 @@ BlacklistUi.prototype._build_page2 = function() {
         },
         "Cancel": function() {
           that._ui_page2.dialog('close');
+          page.remove();
         },
         "Back": function() {
           that._cancelled = false;
