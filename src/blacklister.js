@@ -4,6 +4,12 @@ infinite_loop_workaround("blacklister");
 // thepiratebay.org [search for 'boots'] has good iframe tags.
 
 function load_jquery_ui(callback) { 
+  if (typeof global_have_loaded_jquery_ui != "undefined") {
+    callback();
+    return; // don't inject stylesheets more than once
+  }
+  global_have_loaded_jquery_ui = true;
+
   function load_css(src) {
     var url = chrome.extension.getURL(src);
     var link = $('<link rel="stylesheet" type="text/css" />').

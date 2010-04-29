@@ -1,62 +1,54 @@
 infinite_loop_workaround("whitelister");
 
 var may_show_whitelist_ui = true;
-var already_shown_whitelist_ui = false;
 
 function verify_whitelist() {
   if (!may_show_whitelist_ui)
     return;
   var domain = document.domain;
 
-  if (!already_shown_whitelist_ui) {
-    // defined in blacklister.js
-    load_jquery_ui(function() {
-      stop_checking_for_whitelist_keypress();
-      already_shown_whitelist_ui = true;
-
-      var page = $("<div></div>").
-        html("<div id='adblockslider'></div>" + 
-          "AdBlock won't run on domains ending in<br/>" +
-          "'<i id='adblockdomainname'>" + domain + "</i>'.").
-        dialog({
-          title: "Whitelist this domain?",
-          width: "300px",
-          minHeight: 50,
-          buttons: {
-            "Cancel": function() { page.dialog('close');},
-            "Whitelist it!": function() {
-              extension_call('add_to_whitelist', {domain:domain}, function() {
-                document.location.reload();
-              });
-            }
-          },
-          close: function() {
-            whitelister_init();
-          }
-        }).
-          attr("id", "adblock_whitelister");
-
-        var domainparts = domain.split('.');
-        $("#adblockslider", page).
-          css('margin', 10).
-          css('display', (domainparts.length == 2) ? "none" : "block").
-          slider({
-            min:0,
-            max:Math.max(domainparts.length - 2, 1),
-            slide: function(event, ui) {
-              domain = '';
-              for (var i = ui.value; i<=(domainparts.length - 2); i++) 
-                domain += domainparts[i] + '.';
-              domain += domainparts[domainparts.length - 1];
-              $("#adblockdomainname").
-                text(domain);
-            }
-      });
-    });
-  } else {
+  // defined in blacklister.js
+  load_jquery_ui(function() {
     stop_checking_for_whitelist_keypress();
-    $("#adblock_whitelister").parent().css("display", "block");
-  }
+
+    var page = $("<div>", {id: "adblock_whitelister"}).
+      html("<div id='adblockslider'></div>" + 
+        "AdBlock won't run on domains ending in<br/>" +
+        "'<i id='adblockdomainname'>" + domain + "</i>'.").
+      dialog({
+        title: "Whitelist this domain?",
+        width: "300px",
+        minHeight: 50,
+        buttons: {
+          "Cancel": function() { page.dialog('close');},
+          "Whitelist it!": function() {
+            extension_call('add_to_whitelist', {domain:domain}, function() {
+              document.location.reload();
+            });
+          }
+        },
+        close: function() {
+          whitelister_init();
+        }
+      });
+
+    var domainparts = domain.split('.');
+    $("#adblockslider", page).
+      css('margin', 10).
+      css('display', (domainparts.length == 2) ? "none" : "block").
+      slider({
+        min:0,
+        max:Math.max(domainparts.length - 2, 1),
+        slide: function(event, ui) {
+          domain = '';
+          for (var i = ui.value; i<=(domainparts.length - 2); i++) 
+            domain += domainparts[i] + '.';
+          domain += domainparts[domainparts.length - 1];
+          $("#adblockdomainname", page).
+            text(domain);
+        }
+      });
+  });
 }
 
 function stop_checking_for_whitelist_keypress() {

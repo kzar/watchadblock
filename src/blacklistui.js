@@ -231,14 +231,14 @@ BlacklistUi.prototype._makeFilter = function() {
   //1. Open the blacklister and press cancel on the final page
   //2. Open the blacklister again and now change the checkboxes...
   //Do you have any ideas Michael? Kind regards, Famlam!
-  $("#filter_warning").
+  $("#filter_warning", this._ui_page2).
     css("display", (
       ((result.length == 1 && $("input:checkbox#cknodeName", detailsDiv).is(':checked')) || 
         (result.length == 0)) ? "block" : "none")).
     css("font-weight", "bold").
     css("color", "red").
     text((result.length == 1) ? 
-      "Be carefull: this filter blocks all " + result[0] + " elements on the page!" : 
+      "Be careful: this filter blocks all " + result[0] + " elements on the page!" : 
       "Warning: no filter specified!");
   return result.join('');
 }
