@@ -29,6 +29,7 @@ function shipit() {
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    svn up ../wiki/Changelog.wiki >/dev/null 2>&1
     grep "$version" ../wiki/Changelog.wiki && {
         echo -n "Did you forget to bump the version in manifest.json (y/n)? "
         read answer
