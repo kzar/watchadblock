@@ -29,6 +29,7 @@ function verify_whitelist() {
         },
         close: function() {
           whitelister_init();
+          page.remove();
         }
       });
 
