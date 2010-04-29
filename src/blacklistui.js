@@ -227,19 +227,21 @@ BlacklistUi.prototype._makeFilter = function() {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
       result.push('[' + attrs[i] + '="' + el.attr(attrs[i]) + '"]');
   }
-  //BUG: for some reason this does not display the warning when you
-  //1. Open the blacklister and press cancel on the final page
-  //2. Open the blacklister again and now change the checkboxes...
-  //Do you have any ideas Michael? Kind regards, Famlam!
+  var showWarning = (result.length == 0 ||
+                     (
+                      result.length == 1 && 
+                      $("input:checkbox#cknodeName", detailsDiv).is(':checked')
+                     )
+                    );
+  var warningMessage = "Warning: no filter specified!";
+  if (result.length == 1)
+    warningMessage = "Be careful: this filter blocks all " + result[0] + 
+                     " elements on the page!";
   $("#filter_warning", this._ui_page2).
-    css("display", (
-      ((result.length == 1 && $("input:checkbox#cknodeName", detailsDiv).is(':checked')) || 
-        (result.length == 0)) ? "block" : "none")).
+    css("display", (showWarning ? "block" : "none")).
     css("font-weight", "bold").
     css("color", "red").
-    text((result.length == 1) ? 
-      "Be careful: this filter blocks all " + result[0] + " elements on the page!" : 
-      "Warning: no filter specified!");
+    text(warningMessage);
   return result.join('');
 }
 
