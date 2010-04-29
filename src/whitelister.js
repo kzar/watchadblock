@@ -11,7 +11,7 @@ function verify_whitelist() {
   load_jquery_ui(function() {
     stop_checking_for_whitelist_keypress();
 
-    var page = $("<div>", {id: "adblock_whitelister"}).
+    var page = $("<div>").
       html("<div id='adblockslider'></div>" + 
         "AdBlock won't run on domains ending in<br/>" +
         "'<i id='adblockdomainname'>" + domain + "</i>'.").
