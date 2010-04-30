@@ -45,6 +45,7 @@
         id:"btnAddUserFilter", 
         value:"Block it!",
         disabled: "disabled",
+        style: "height: 22px; margin-top:2px;",
         click: function() {
           var css_regex = $("#txtUserFilterCss").val();
           var domain_regex = $("#txtUserFilterDomain").val();
@@ -56,7 +57,7 @@
             // format.
             var parts = css_regex.split("##");
             css_regex = parts[1];
-            domain_regex = parts[0];
+            domain_regex = (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0];
           }
 
           extension_call(
