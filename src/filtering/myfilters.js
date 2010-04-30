@@ -382,7 +382,7 @@ MyFilters.__make_subscription_options = function() {
       url: "http://www.fanboy.co.nz/adblock/fanboy-adblocklist-jpn.txt",
       name: "Japanese filters",
     },
-    "easylist_plun_korean": { // no longer w/ easylist, but ids mustn't change
+    "korean": {
       url: "http://abp-corset.googlecode.com/hg/corset.txt",
       name: "Korean filters",
     },
