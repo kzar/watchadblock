@@ -66,8 +66,22 @@
               is_checked = "checked";
 
               $("input", el).attr("checked", is_checked);
+              
+              if (id.indexOf('url:') == 0 && is_checked == false) {
+                var remove_filter_label = $("<a>").
+                  css("font-size", "10px").
+                  attr("href", "#subscription_message").
+                  text("Remove from list").
+                  addClass("remove_filter").
+                  click(function() {
+                    unsubscribe({id:id, del:true});
+                    $(this).closest("div").css("display", "none");
+                  });
+                $(this).closest("div").append(remove_filter_label);
+                $(this).closest("div").find(".update_time").text("");
+              }
           });
-
+          
           global_refreshing_subscription_view = false;
 
           // Keep this around to update the "last updated" displays.
@@ -180,21 +194,19 @@
 
           // Now that it's built, fill it in.
           refresh_subscription_view();
-
+          
           // Each subscription checkbox, upon change, should subscribe
           // or unsubscribe the user and refresh the subscriptions.
           $('.subscription input:checkbox').change(function() {
-            // If it changed in response to a model change event,
-            // don't naively go tell the model about the event.
-            if (global_refreshing_subscription_view)
-              return;
-
             var id = $(this).attr("name");
-            var checked = $(this).is(":checked");
-            if (!checked)
-              unsubscribe(id);
-            else
-              subscribe(id);
+            if (!$(this).is(":checked")) {
+              if (!global_refreshing_subscription_view) 
+                unsubscribe({id:id, del:false});
+            } else {
+              if (!global_refreshing_subscription_view) 
+                subscribe(id);
+              $(this).closest("div").find(".remove_filter").remove();
+            }
           });
 
         });
@@ -203,7 +215,6 @@
           $(this).attr("disabled", "disabled");
           extension_call("freshen_subscriptions", {older_than:0});
         });
-
 
         $("#btnNewSubscriptionUrl").click(function() {
           var url = $("#txtNewSubscriptionUrl").val();

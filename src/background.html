@@ -225,10 +225,10 @@
       }
 
       // Unsubscribes from a filter subscription.
-      // Inputs: id: id from which to unsubscribe.
+      // Inputs: id: id from which to unsubscribe.   
       // Returns: null, upon completion.
       utils.unsubscribe = function(options) {
-        return _myfilters.unsubscribe(options.id);
+        return _myfilters.unsubscribe(options.id.id, options.id.del);
       }
 
 
