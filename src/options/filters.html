@@ -160,7 +160,7 @@
           var temp_list_easylist_add = [];
           var temp_list_normal = [];
           var temp_list_custom_lists = [];
-          var sorted_list = [];
+          var sorted_list = ['adblock_custom', 'easylist'];
           for (var id in subscriptions) {
             if (id.indexOf('url:')==0) 
               temp_list_custom_lists.push(id);
@@ -170,8 +170,6 @@
               else
                 if (id != 'easylist' && id != 'adblock_custom')
                   temp_list_normal.push(id);
-                else
-                  sorted_list.push(id);
           }
           temp_list_easylist_add.sort();
           temp_list_normal.sort();
