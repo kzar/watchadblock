@@ -56,7 +56,7 @@
             // were to add a filter themselves that was in easylist
             // format.
             var parts = css_regex.split("##");
-            css_regex = parts[1];
+            css_regex = (parts[1] == null || parts[1] == '') ? 'NO[valid="filter"]' : parts[1];
             domain_regex = (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0];
           }
 

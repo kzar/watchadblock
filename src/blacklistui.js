@@ -87,7 +87,7 @@ BlacklistUi.prototype._build_page1 = function() {
         "Cancel": function() {
           that._ui_page1.dialog('close');
           page.remove();
-        }
+      }
       },
       close: function() {
         that._onClose();
@@ -168,6 +168,29 @@ BlacklistUi.prototype._build_page2 = function() {
         },
         "Cancel": function() {
           that._ui_page2.dialog('close');
+          page.remove();
+        },
+        "Edit": function() {
+          var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
+          that._ui_page2.dialog('close');
+          custom_filter = prompt("Please type the correct filter below and press OK", custom_filter);
+          if (custom_filter != null && custom_filter != '' &&
+              custom_filter.indexOf('##') != custom_filter.length - 2 &&
+              custom_filter.indexOf('####') == -1) {
+            if (custom_filter.indexOf('##') == -1) 
+              custom_filter = "##" + custom_filter;
+            var parts = custom_filter.split("##");
+            var filter = {
+                domain_regex: (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0],
+                css_regex: parts[1]
+              };
+            extension_call('add_user_filter', { filter: filter }, function() {
+              that._fire('block');
+            });
+          } else {
+            if (custom_filter != null) //null => user clicked cancel
+              alert('Geen filter opgegeven!');
+          }
           page.remove();
         },
         "Back": function() {
