@@ -156,14 +156,38 @@
       $(function() {
         extension_call('get_subscriptions_minus_text', {}, 
                                              function(subscriptions) {
-          // Build subscription checkboxes.
+          //sorting the list
+          var temp_list_easylist_add = [];
+          var temp_list_normal = [];
+          var temp_list_custom_lists = [];
+          var sorted_list = [];
           for (var id in subscriptions) {
+            if (id.indexOf('url:')==0) 
+              temp_list_custom_lists.push(id);
+             else
+              if (subscriptions[id].name.indexOf(" - additional ") == 0)
+                temp_list_easylist_add.push(id);
+              else
+                if (id != 'easylist' && id != 'adblock_custom')
+                  temp_list_normal.push(id);
+                else
+                  sorted_list.push(id);
+          }
+          temp_list_easylist_add.sort();
+          temp_list_normal.sort();
+          temp_list_custom_lists.sort();
+          sorted_list = sorted_list.concat(temp_list_easylist_add);
+          sorted_list = sorted_list.concat(temp_list_normal);
+          sorted_list = sorted_list.concat(temp_list_custom_lists);
+
+          // Build subscription checkboxes.
+          for (var number in sorted_list) {
+            var id = sorted_list[number];
             var div = $("<div></div>").
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
               attr("name", id);
-
             var name = $("<span>").
               text(subscriptions[id].name).
               attr("title", subscriptions[id].url).
