@@ -225,15 +225,14 @@ MyFilters.prototype.unsubscribe = function(id, del) {
 // }
 MyFilters.prototype.get_subscriptions_minus_text = function() {
   var result = {};
-  var list_to_get_the_name_of = MyFilters.__make_subscription_options();//
   for (var id in this._subscriptions) {
     result[id] = {
       url: this._subscriptions[id].url,
       subscribed: this._subscriptions[id].subscribed,
       user_submitted: this._subscriptions[id].user_submitted,
-      name: ((list_to_get_the_name_of[id] == undefined) ?
+      name: ((MyFilters.__subscription_options[id] == undefined) ?
                    this._subscriptions[id].name :
-                   list_to_get_the_name_of[id].name),
+                   MyFilters.__subscription_options[id].name),
       last_update: this._subscriptions[id].last_update
     }
   }
