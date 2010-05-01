@@ -247,6 +247,13 @@
           subscribe("url:" + url, true, true);
         });
 
+        $('#txtNewSubscriptionUrl').keypress(function(event) {
+          if (event.keyCode == '13') {
+            event.preventDefault();
+            $("#btnNewSubscriptionUrl").click();
+          }
+        });
+        
         // Every so often, redisplay "last update" times on subscriptions.
         window.setInterval(
           function() { redisplay_subscription_update_times(); },

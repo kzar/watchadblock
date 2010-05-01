@@ -100,6 +100,13 @@
       $("#txtUserFilterCss").keyup(check_for_valid_filter);
       $("#txtUserFilterDomain").keyup(check_for_valid_filter);
     
+      $('#txtUserFilterCss, #txtUserFilterDomain').keypress(function(event) {
+        if (event.keyCode == '13' && $("#btnAddUserFilter").attr("disabled") == false) {
+          event.preventDefault();
+          $("#btnAddUserFilter").click();
+        }
+      });
+    
       //Put filters from 'edit' in the textboxes
       if (typeof blacklist_edit_entry != "undefined") {
         if (blacklist_edit_entry.css_regex.length > 0) {

@@ -47,6 +47,13 @@
           extension_call('add_to_whitelist', {domain: domain});
           $("#txtWhitelistedDomain").val("");
         });
+        
+        $('#txtWhitelistedDomain').keypress(function(event) {
+          if (event.keyCode == '13' && $("#btnWhitelist").attr("disabled") == false) {
+            event.preventDefault();
+            $("#btnWhitelist").click();
+          }
+        });
 
         $("#txtWhitelistedDomain").keyup(function() {
           var domain = $(this).val();
