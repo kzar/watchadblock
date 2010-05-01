@@ -157,30 +157,27 @@
         extension_call('get_subscriptions_minus_text', {}, 
                                              function(subscriptions) {
           //sorting the list
-          var temp_list_easylist_add = [];
-          var temp_list_normal = [];
-          var temp_list_custom_lists = [];
-          var sorted_list = ['adblock_custom', 'easylist'];
+          //1, 2: AB custom and easylist
+          //3: additional easylist filters
+          //4: other default filters
+          //5: custom filter lists
+          //To seperate the items I used '$*/', as it never exists in any URL
+          var sorted_list = ['1$*/$*/adblock_custom', '2$*/$*/easylist'];
           for (var id in subscriptions) {
             if (id.indexOf('url:')==0) 
-              temp_list_custom_lists.push(id);
+              sorted_list.push('5$*/' + subscriptions[id].name + '$*/' + id);
              else
               if (subscriptions[id].name.indexOf(" - additional ") == 0)
-                temp_list_easylist_add.push(id);
+                sorted_list.push('3$*/' + subscriptions[id].name + '$*/' + id);
               else
                 if (id != 'easylist' && id != 'adblock_custom')
-                  temp_list_normal.push(id);
+                  sorted_list.push('4$*/' + subscriptions[id].name + '$*/' + id);
           }
-          temp_list_easylist_add.sort();
-          temp_list_normal.sort();
-          temp_list_custom_lists.sort();
-          sorted_list = sorted_list.concat(temp_list_easylist_add);
-          sorted_list = sorted_list.concat(temp_list_normal);
-          sorted_list = sorted_list.concat(temp_list_custom_lists);
+          sorted_list.sort();
 
           // Build subscription checkboxes.
           for (var number in sorted_list) {
-            var id = sorted_list[number];
+            var id = sorted_list[number].substring(sorted_list[number].lastIndexOf('$*/') + 3);
             var div = $("<div></div>").
               addClass("subscription");
 
