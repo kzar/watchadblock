@@ -57,7 +57,7 @@
 
         $("#txtWhitelistedDomain").keyup(function() {
           var domain = $(this).val();
-          var regexp = /^(\.?([a-zA-Z0-9\-]{1,}\.){1,}[a-zA-Z]{2,6})$/;
+          var regexp = /^(\.?([a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,6})$/;
           var ok = regexp.test(domain); //Domain name
           if (!ok)
             regexp = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/;
