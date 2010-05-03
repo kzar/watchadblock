@@ -70,10 +70,11 @@
               if (id.indexOf('url:') == 0 && is_checked == false) {
                 var remove_filter_label = $("<a>").
                   css("font-size", "10px").
-                  attr("href", "#subscription_message").
+                  attr("href", "#").
                   text("Remove from list").
                   addClass("remove_filter").
-                  click(function() {
+                  click(function(event) {
+                    event.preventDefault();
                     unsubscribe({id:id, del:true});
                     $(this).closest("div").css("display", "none");
                   });

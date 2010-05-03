@@ -16,15 +16,17 @@
       $.each(filters, function(i, filter) {
         var cell1 = $("<td>").text(filter.css_regex);
         var cell2 = $("<td>").text(filter.domain_regex);
-        var cell3 = $('<a href="#user_filters_link"></a>').
+        var cell3 = $('<a href="#"></a>').
           text("Unblock").
-          click(function() {
+          click(function(event) {
+            event.preventDefault();
             extension_call('remove_user_filter', {filter:filter});
           });
-        var cell4 = $('<a href="#user_filters_link"></a>').
+        var cell4 = $('<a href="#"></a>').
           css("margin-left", "4px").
           text("Edit").
-          click(function() {
+          click(function(event) {
+            event.preventDefault();
             // Make a global variable that will be consumed when the
             // filters are redrawn
             blacklist_edit_entry = filter;
@@ -81,8 +83,10 @@
         appendTo(table);
 
         table.append("<tr><td colspan=2 class='plain'><a id='btnUserFilterExamples' href='#'>Help!</a></td></tr>");
-      $("#btnUserFilterExamples").click(function() {
+      $("#btnUserFilterExamples").click(function(event) {
+        event.preventDefault();
         $("#user_filter_help").show();
+        $(this).remove();
       });
 
       var check_for_valid_filter = function() {
