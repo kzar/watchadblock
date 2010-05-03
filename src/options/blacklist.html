@@ -58,7 +58,7 @@
             // were to add a filter themselves that was in easylist
             // format.
             var parts = css_regex.split("##");
-            css_regex = (parts[1] == null || parts[1] == '') ? 'NO[valid="filter"]' : parts[1];
+            css_regex = (parts[1] == null || parts[1] == '') ? '*' : parts[1];
             domain_regex = (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0];
           }
 
@@ -90,15 +90,27 @@
       });
 
       var check_for_valid_filter = function() {
-        var ok = true;
         var css_regex = $("#txtUserFilterCss").val();
         var domain_regex = $("#txtUserFilterDomain").val();
-        if (css_regex == "")
-          ok = false;
-        if (domain_regex != "*" &&
-            domain_regex != "" && 
-            domain_regex.indexOf(".") == -1)
-          ok = false;
+        var ok = true;
+        var test_domain_regex = (css_regex.indexOf('##') >= 0)
+            ? css_regex.substring(0, css_regex.indexOf('##'))
+            : domain_regex;
+          if (test_domain_regex != "*" &&
+              test_domain_regex != "" && 
+              test_domain_regex.indexOf(".") == -1)
+            ok = false;
+        if (ok) {
+          //note: this doesn't check the content of the :not( ) selector
+          //as that would almost double the size of the regex...
+          //TODO: add a valid 'domain name regex'-regex, but wait for
+          //issue 267 to be fixed first. Until this time any
+          //user adding a filter containing multiple '##' will get
+          //a broken filter
+          //When you modify this regex, also modify the one in blacklistui.js
+          var validate_regex = /(\#\#|^)((((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?(((\[([a-zA-Z0-9\-]+)((\~|\^|\$|\*|\|)?\=\".+\")?\])+)|((\:(root|nth(\-last)?\-child\(((\d+)|odd|even)\)|nth(\-last)?\-of\-type\(((\d+)|odd|even)\)|(first|last|only)\-child|(first|last|only)\-of\-type|empty|link|visited|active|hover|focus|target|(contains|not)\(.+\)|lang\([a-zA-Z\-]+\)|(en|dis)abled|checked|\:(first\-(line|letter)|before|after|selection)))+)|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)))+(\ ?)+((\>|\+|\~)(\ ?)+)?)+$/;
+          ok = validate_regex.test(css_regex);
+        }
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#txtUserFilterCss").keyup(check_for_valid_filter);
@@ -110,7 +122,7 @@
           $("#btnAddUserFilter").click();
         }
       });
-    
+
       //Put filters from 'edit' in the textboxes
       if (typeof blacklist_edit_entry != "undefined") {
         if (blacklist_edit_entry.css_regex.length > 0) {

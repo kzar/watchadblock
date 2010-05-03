@@ -174,11 +174,12 @@ BlacklistUi.prototype._build_page2 = function() {
           var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
           that._ui_page2.dialog('close');
           custom_filter = prompt("Please type the correct filter below and press OK", custom_filter);
-          if (custom_filter != null && custom_filter != '' &&
-              custom_filter.indexOf('##') != custom_filter.length - 2 &&
+          if (custom_filter.indexOf('##') == -1) 
+            custom_filter = "##" + custom_filter;
+          var validator_regex = /(\#\#|^)((((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?(((\[([a-zA-Z0-9\-]+)((\~|\^|\$|\*|\|)?\=\".+\")?\])+)|((\:(root|nth(\-last)?\-child\(((\d+)|odd|even)\)|nth(\-last)?\-of\-type\(((\d+)|odd|even)\)|(first|last|only)\-child|(first|last|only)\-of\-type|empty|link|visited|active|hover|focus|target|(contains|not)\(.+\)|lang\([a-zA-Z\-]+\)|(en|dis)abled|checked|\:(first\-(line|letter)|before|after|selection)))+)|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)))+(\ ?)+((\>|\+|\~)(\ ?)+)?)+$/;
+          var valid_filter = validator_regex.test(custom_filter);
+          if (valid_filter && custom_filter != null &&
               custom_filter.indexOf('####') == -1) {
-            if (custom_filter.indexOf('##') == -1) 
-              custom_filter = "##" + custom_filter;
             var parts = custom_filter.split("##");
             var filter = {
                 domain_regex: (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0],
@@ -189,7 +190,7 @@ BlacklistUi.prototype._build_page2 = function() {
             });
           } else {
             if (custom_filter != null) //null => user clicked cancel
-              alert('Geen filter opgegeven!');
+              alert('The filter is invalid!');
           }
           page.remove();
         },
