@@ -176,8 +176,7 @@ BlacklistUi.prototype._build_page2 = function() {
           custom_filter = prompt("Please type the correct filter below and press OK", custom_filter);
           if (custom_filter.indexOf('##') == -1) 
             custom_filter = "##" + custom_filter;
-          var validator_regex = /(\#\#|^)((((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?(((\[[a-zA-Z0-9\-]+((\~|\^|\$|\*|\|)?\=\".+\")?\])+)|(\:\:?[a-zA-Z\-]+(\(.+\))?)|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)))+(\ )*((\>|\+|\~)(\ )*)?)+$/;
-          var valid_filter = validator_regex.test(custom_filter);
+          var valid_filter = global_filter_validation_regex.test(custom_filter);
           if (valid_filter && custom_filter != null &&
               custom_filter.indexOf('####') == -1) {
             var parts = custom_filter.split("##");
