@@ -101,8 +101,6 @@
               test_domain_regex.indexOf(".") == -1)
             ok = false;
         if (ok) {
-          //note: this doesn't check the content of the :not( ) selector
-          //as that would almost double the size of the regex...
           //TODO: add a valid 'domain name regex'-regex, but wait for
           //issue 267 to be fixed first. Until this time any
           //user adding a filter containing multiple '##' will get
