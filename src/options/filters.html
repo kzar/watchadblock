@@ -154,31 +154,35 @@
           //3: additional easylist filters
           //4: other default filters
           //5: custom filter lists
-          //To seperate the items I used '$*/', as it never exists in any URL
-          var sorted_list = ['1$*/$*/adblock_custom', '2$*/$*/easylist'];
+          var sorted_list = [];
           for (var id in subscriptions) {
-            if (id.indexOf('url:') == 0)
-              sorted_list.push('5$*/' + subscriptions[id].name + '$*/' + id);
-             else
-              if (subscriptions[id].name.indexOf(" - additional ") == 0)
-                sorted_list.push('3$*/' + subscriptions[id].name + '$*/' + id);
-              else
-                if (id != 'easylist' && id != 'adblock_custom')
-                  sorted_list.push('4$*/' + subscriptions[id].name + '$*/' + id);
+            var entry = subscriptions[id];
+            if (id == 'easylist' || id == 'adblock_custom')
+              entry.order = "1" + id;
+            else if (entry.user_submitted) 
+              entry.order = "5" + entry.name;
+            else if (entry.name.indexOf(" - additional ") == 0)
+              entry.order = "3" + entry.name;
+            else
+              entry.order = "4" + entry.name;
+            entry.id = id;
+            sorted_list.push(entry);
           }
-          sorted_list.sort();
+          sorted_list.sort(function(a,b) { 
+            return a.order > b.order ? 1 : (a.order == b.order ? 0 : -1);
+          });
 
           // Build subscription checkboxes.
-          for (var number in sorted_list) {
-            var id = sorted_list[number].substring(sorted_list[number].lastIndexOf('$*/') + 3);
+          for (var i = 0; i < sorted_list.length; i++) {
+            var entry = sorted_list[i];
             var div = $("<div></div>").
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
-              attr("name", id);
+              attr("name", entry.id);
             var name = $("<span>").
-              text(subscriptions[id].name).
-              attr("title", subscriptions[id].url).
+              text(entry.name).
+              attr("title", entry.url).
               css("cursor", "pointer").
               click(function() {
                 $(this).closest("div").find("input"). // my checkbox
@@ -192,7 +196,7 @@
               css("font-size", "10px").
               css("display", "none").
               attr("class", "linkToList").
-              attr("href", subscriptions[id].url);
+              attr("href", entry.url);
               
             var remove_filter_label = $("<a>").
               css("font-size", "10px").
