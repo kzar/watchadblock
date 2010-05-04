@@ -66,19 +66,9 @@
               is_checked = "checked";
 
               $("input", el).attr("checked", is_checked);
-              
+
               if (id.indexOf('url:') == 0 && is_checked == false) {
-                var remove_filter_label = $("<a>").
-                  css("font-size", "10px").
-                  attr("href", "#").
-                  text("Remove from list").
-                  addClass("remove_filter").
-                  click(function(event) {
-                    event.preventDefault();
-                    unsubscribe({id:id, del:true});
-                    $(this).closest("div").css("display", "none");
-                  });
-                $(this).closest("div").append(remove_filter_label);
+                $(this).find(".remove_filter").css("display", "inline");
                 $(this).closest("div").find(".update_time").text("");
               }
           });
@@ -96,9 +86,11 @@
       });
 
       // Unsubscribe from the given filterlist id.
-      function unsubscribe(id) {
-        extension_call("unsubscribe", {id:id}, function() {
-          flash("subscription_message", "Unsubscribed.");
+      // 'del' determines if it should be deleted too
+      function unsubscribe(id, del) {
+        extension_call("unsubscribe", {id:id, del:del}, function() {
+          var message = (del) ? "Removed." : "Unsubscribed."
+          flash("subscription_message", message);
         });
       }
       // Subscribe to the given filterlist id.  id is either a well-known id, or
@@ -165,7 +157,7 @@
           //To seperate the items I used '$*/', as it never exists in any URL
           var sorted_list = ['1$*/$*/adblock_custom', '2$*/$*/easylist'];
           for (var id in subscriptions) {
-            if (id.indexOf('url:')==0) 
+            if (id.indexOf('url:') == 0)
               sorted_list.push('5$*/' + subscriptions[id].name + '$*/' + id);
              else
               if (subscriptions[id].name.indexOf(" - additional ") == 0)
@@ -201,12 +193,25 @@
               css("display", "none").
               attr("class", "linkToList").
               attr("href", subscriptions[id].url);
+              
+            var remove_filter_label = $("<a>").
+              css("font-size", "10px").
+              css("display", "none").
+              attr("href", "#").
+              text("Remove from list").
+              addClass("remove_filter").
+              click(function(event) {
+                event.preventDefault();
+                unsubscribe(id, true);
+                $(this).closest("div").css("display", "none");
+              });
 
             div.
               append(checkbox).
               append(name).
               append(link_to_list).
-              append($("<span></span>").addClass("update_time"));
+              append($("<span></span>").addClass("update_time")).
+              append(remove_filter_label);
 
             $("#filter_subscriptions").
               append(div);
@@ -218,15 +223,20 @@
           // Each subscription checkbox, upon change, should subscribe
           // or unsubscribe the user and refresh the subscriptions.
           $('.subscription input:checkbox').change(function() {
+            var checked = $(this).is(":checked");
+            if (checked)
+              $(this).closest("div").find(".remove_filter").css("display", "none");
+              
+            // If it changed in response to a model change event,
+            // don't naively go tell the model about the event.
+            if (global_refreshing_subscription_view) 
+              return;
+            
             var id = $(this).attr("name");
-            if (!$(this).is(":checked")) {
-              if (!global_refreshing_subscription_view) 
-                unsubscribe({id:id, del:false});
-            } else {
-              if (!global_refreshing_subscription_view) 
-                subscribe(id);
-              $(this).closest("div").find(".remove_filter").remove();
-            }
+            if (!checked)
+              unsubscribe(id, false)
+            else
+              subscribe(id);
           });
 
         });

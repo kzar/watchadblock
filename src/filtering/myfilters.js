@@ -199,6 +199,7 @@ MyFilters.prototype.subscribe = function(id, text) {
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
 // it from _subscriptions completely.
 // Inputs: id:string of filter list from which to unsubscribe.
+//         del: (bool) if the filter should be removed or not
 // Returns: none, upon completion.
 MyFilters.prototype.unsubscribe = function(id, del) {
   if (this._subscriptions[id] == undefined)
