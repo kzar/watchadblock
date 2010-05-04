@@ -108,7 +108,7 @@
           //user adding a filter containing multiple '##' will get
           //a broken filter
           //When you modify this regex, also modify the one in blacklistui.js
-          var validate_regex = /(\#\#|^)((((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?(((\[([a-zA-Z0-9\-]+)((\~|\^|\$|\*|\|)?\=\".+\")?\])+)|((\:(root|nth(\-last)?\-child\(((\d+)|odd|even)\)|nth(\-last)?\-of\-type\(((\d+)|odd|even)\)|(first|last|only)\-child|(first|last|only)\-of\-type|empty|link|visited|active|hover|focus|target|(contains|not)\(.+\)|lang\([a-zA-Z\-]+\)|(en|dis)abled|checked|\:(first\-(line|letter)|before|after|selection)))+)|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)))+(\ ?)+((\>|\+|\~)(\ ?)+)?)+$/;
+          var validate_regex = /(\#\#|^)((((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?(((\[[a-zA-Z0-9\-]+((\~|\^|\$|\*|\|)?\=\".+\")?\])+)|(\:\:?[a-zA-Z\-]+(\(.+\))?)|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)))+(\ )*((\>|\+|\~)(\ )*)?)+$/;
           ok = validate_regex.test(css_regex);
         }
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
