@@ -87,4 +87,4 @@ function page_is_whitelisted(whitelist, the_domain) {
 //TODO: insert a valid 'domain name regex'-regex, but wait for
 //issue 267 to be fixed first. Until this time any user adding
 //a filter containing multiple '##' will get a broken filter
-var global_filter_validation_regex = /(\#\#|^)((((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?(((\[[a-zA-Z0-9\-]+((\~|\^|\$|\*|\|)?\=\".+\")?\])+)|(\:\:?[a-zA-Z\-]+(\(.+\))?)|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)))+(\ )*((\>|\+|\~)(\ )*)?)+$/;
+var global_filter_validation_regex = /(\#\#|^)(((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?((\[[a-zA-Z0-9\-]+((\~|\^|\$|\*|\|)?\=\".+\")?\])+|\:\:?[a-zA-Z\-]+(\(.+\))?|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)+)\ *((\>|\+|\~)\ *)?)+$/;
