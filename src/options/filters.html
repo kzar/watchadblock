@@ -89,7 +89,7 @@
       // 'del' determines if it should be deleted too
       function unsubscribe(id, del) {
         extension_call("unsubscribe", {id:id, del:del}, function() {
-          var message = (del) ? "Removed." : "Unsubscribed."
+          var message = (del) ? "Removed." : "Unsubscribed.";
           flash("subscription_message", message);
         });
       }
