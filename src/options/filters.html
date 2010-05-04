@@ -67,7 +67,7 @@
 
               $("input", el).attr("checked", is_checked);
 
-              if (id.indexOf('url:') == 0 && is_checked == false) {
+              if (subs[id].user_submitted && is_checked == false) {
                 $(this).find(".remove_filter").css("display", "inline");
                 $(this).closest("div").find(".update_time").text("");
               }
