@@ -1,6 +1,8 @@
 /* Don't let page CSS bleed into our modals. */
 
-.ui-dialog a[href] { text-decoration: underline !important; }
+.ui-dialog a[href] {
+    text-decoration: underline !important;
+}
 .ui-dialog *,.ui-dialog-title * { 
     font-size: 12px !important;
     font-family: Verdana, Arial, sans-serif !important; 
@@ -10,7 +12,7 @@ span.ui-dialog-title {
     color: white !important;
 }
 .ui-dialog .ui-dialog-titlebar, .ui-dialog  .ui-dialog-content {
-	 display: block !important;
+    display: block !important;
 }
 .ui-dialog button { 
     font-family: Verdana, Arial, sans-serif !important;
@@ -26,14 +28,16 @@ span.ui-dialog-title {
 .ui-dialog.ui-state-hover button { 
     background: #79C9EC !important;
 }
-
 .ui-dialog #adblock-details input {
-	 min-width: 13px !important;
+    min-width: 13px !important;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-	 background-image: none !important;
+    background-image: none !important;
 }
 .ui-dialog .ui-dialog-content #slider {
-	 height: 9px !important;
-	 background-image: none !important;
+    height: 9px !important;
+    background-image: none !important;
+}
+.ui-dialog .ui-dialog-content div {
+    display: block;
 }
