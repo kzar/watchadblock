@@ -334,6 +334,10 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
       name: " - additional German filters",
     },
+    "easylist_plus_polish": {
+      url: "http://adblocklist.org/adblock-pxf-polish.txt",
+      name: " - additional Polish filters",
+    },
     "easylist_plus_romanian": {
       url: "http://www.picpoc.ro/menetzrolist.txt",
       name: " - additional Romanian filters",
@@ -387,7 +391,7 @@ MyFilters.__make_subscription_options = function() {
       name: "Korean filters",
     },
     "polish": {
-      url: "http://www.bsi.info.pl/filtrABP.txt",
+      url: "http://www.niecko.pl/adblock/adblock.txt",
       name: "Polish filters",
     },
     "russian": {
