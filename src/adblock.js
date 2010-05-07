@@ -284,20 +284,15 @@ function element_is_empty(element) {
   return true;
 }
 
-function collapse_blocked_elements(data) {
-  if (!data.features.collapse_blocked_elements.is_enabled)
-    return;
-
-  if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
-    return;
+function collapse_blocked_elements(data_selectors, data_user_filters) {
   log("Collapsing blocked elements");
 
   //create the list of selectors
-  var selectors = data.selectors.join(',');
+  var selectors = data_selectors.join(',');
   var custom_filters = [];
-  for (var i = 0; i < data.user_filters.length; i++) {
-    if (new RegExp(data.user_filters[i].domain_regex).test(document.domain))
-      custom_filters.push(data.user_filters[i].css_regex);
+  for (var i = 0; i < data_user_filters.length; i++) {
+    if (new RegExp(data_user_filters[i].domain_regex).test(document.domain))
+      custom_filters.push(data_user_filters[i].css_regex);
   }
   if (custom_filters.length > 0)
     selectors = selectors + ',' + custom_filters.join(',');
@@ -335,7 +330,8 @@ function adblock_begin_v2() {
     log("==== ADBLOCKING PAGE: " + document.location.href);
 
     // TODO: why send the whitelist just to check it?  do it in background.
-    if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
+    if (page_is_whitelisted(data.whitelist, data.top_frame_domain,
+        data.features.dont_block_on_https.is_enabled))
       return;
 
     listen_for_broadcasts();
@@ -349,7 +345,8 @@ function adblock_begin_v2() {
 
     run_specials(data.features);
 
-    collapse_blocked_elements(data);
+    if (data.features.collapse_blocked_elements.is_enabled)
+      collapse_blocked_elements(data.selectors, data.user_filters);
 
     remove_ad_elements_by_url(true);
     // If more elements are inserted later, run again.
