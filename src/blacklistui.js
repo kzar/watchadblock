@@ -164,7 +164,7 @@ BlacklistUi.prototype._build_page2 = function() {
             extension_call('add_user_filter', { filter: filter }, function() {
               that._fire('block');
             });
-          } else {alert('Geen filter opgegeven!');}
+          } else {alert("No filter specified!");}
         },
         "Cancel": function() {
           that._ui_page2.dialog('close');
@@ -307,11 +307,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
       append("<b>" + (attr == 'nodeName' ? "Type" : attr) + 
              "</b> will be <i>" + val + "</i>").
       css("cursor", "pointer").
-      click(function() {
-        $(this).prev('input').
-          click().
-          change();
-      });
+      click(checkboxlabel_clicked);
 
     var checkbox = $("<div></div>").
       append("<input type=checkbox " + ((attr == 'src' || attr == 'href') ? 
