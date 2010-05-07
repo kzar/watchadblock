@@ -260,6 +260,71 @@ function run_specials(features) {
 }
 
 
+function element_is_empty(element) {
+  //element is already removed or something like that
+  if (element == undefined)
+    return false;
+
+  var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
+  for (var i=0;i<element.childNodes.length;i++) {
+    //comments, non-visible texts, line breaks, scripts and style elements
+    //do not show up on the page and count as 'empty'.
+    switch (element.childNodes[i].nodeName) {
+      case '#comment': break;
+      case '#text':
+       if (test_regex.test(element.childNodes[i].nodeValue))
+          return false; else break;
+      case 'SCRIPT': break;
+      case 'STYLE': break;
+      case 'BR': break;
+      default: return false;
+    }
+  }
+
+  return true;
+}
+
+function collapse_blocked_elements(data) {
+  if (!data.features.collapse_blocked_elements.is_enabled)
+    return;
+
+  if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
+    return;
+  log("Collapsing blocked elements");
+
+  //create the list of selectors
+  var selectors = data.selectors.join(',');
+  var custom_filters = [];
+  for (var i = 0; i < data.user_filters.length; i++) {
+    if (new RegExp(data.user_filters[i].domain_regex).test(document.domain))
+      custom_filters.push(data.user_filters[i].css_regex);
+  }
+  if (custom_filters.length > 0)
+    selectors = selectors + ',' + custom_filters.join(',');
+
+
+  var selectors_match = $(selectors).length;
+  for (var i=0; i<selectors_match; i++) {
+    if ($(selectors)[0] == undefined) 
+      continue
+
+    //remove the ad
+    var parent_of_selector = $(selectors)[0].parentElement;
+    $($(selectors)[0]).remove();
+
+    while (element_is_empty(parent_of_selector)) {
+      //remove the parent element(s)
+      if (parent_of_selector.nodeName == 'BODY'
+          || parent_of_selector.nodeName == 'FRAME')
+        break;
+      var new_parent_of_selector = parent_of_selector.parentElement;
+      $(parent_of_selector).remove();
+      parent_of_selector = new_parent_of_selector;
+    }
+  }
+}
+
+
 function adblock_begin_v2() {
   // TODO: opts code copied from adblock_start.js
   var opts = { domain: document.domain };
@@ -283,6 +348,8 @@ function adblock_begin_v2() {
       return;
 
     run_specials(data.features);
+
+    collapse_blocked_elements(data);
 
     remove_ad_elements_by_url(true);
     // If more elements are inserted later, run again.
