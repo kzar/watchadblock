@@ -202,7 +202,7 @@
               addClass("remove_filter").
               click(function(event) {
                 event.preventDefault();
-                unsubscribe(id, true);
+                unsubscribe($(this).closest("div").children("input").attr("name"), true);
                 $(this).closest("div").css("display", "none");
               });
 
@@ -219,7 +219,7 @@
 
           // Now that it's built, fill it in.
           refresh_subscription_view();
-          
+
           // Each subscription checkbox, upon change, should subscribe
           // or unsubscribe the user and refresh the subscriptions.
           $('.subscription input:checkbox').change(function() {
