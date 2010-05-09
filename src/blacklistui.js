@@ -316,9 +316,6 @@ BlacklistUi.prototype._redrawPage2 = function() {
 
     checkbox.find("input").change(function() {
       updateFilter();
-      var any = ($(summary.text()).length != 0);
-      $("#btnOk2", that._ui_page2).attr("disabled", (any?null:"disabled"));
-
     });
 
     detailsDiv.append(checkbox);
