@@ -334,6 +334,10 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
       name: " - additional German filters",
     },
+    "easylist_plus_norwegian": {
+      url: "http://home.online.no/~mlangsho/adblock.txt",
+      name: " - additional Norwegian filters",
+    },
     "easylist_plus_polish": {
       url: "http://adblocklist.org/adblock-pxf-polish.txt",
       name: " - additional Polish filters",
