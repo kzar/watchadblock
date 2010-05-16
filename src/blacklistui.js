@@ -137,7 +137,7 @@ BlacklistUi.prototype._build_page2 = function() {
     " so everybody can benefit!<br/>" +
     "<br/></div>" +
     "<div style='clear:left; font-size:smaller'>" +
-    "Hey geeks: this is the filter, which you can change on the Options " +
+    "This is the filter. It can be changed on the Options page: " +
     "page:" +
     "  <div style='margin-left:15px;margin-bottom:15px'>" +
     "    <div>" +
