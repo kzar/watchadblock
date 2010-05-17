@@ -65,12 +65,12 @@
             if (subs[id] && subs[id].subscribed)
               is_checked = "checked";
 
-              $("input", el).attr("checked", is_checked);
+            $("input", el).attr("checked", is_checked);
 
-              if (subs[id].user_submitted && is_checked == false) {
-                $(this).find(".remove_filter").css("display", "inline");
-                $(this).closest("div").find(".update_time").text("");
-              }
+            if (subs[id] && subs[id].user_submitted && is_checked == false) {
+              $(this).find(".remove_filter").css("display", "inline");
+              $(this).closest("div").find(".update_time").text("");
+            }
           });
           
           global_refreshing_subscription_view = false;
@@ -202,8 +202,8 @@
               addClass("remove_filter").
               click(function(event) {
                 event.preventDefault();
-                unsubscribe($(this).closest("div").children("input").attr("name"), true);
-                $(this).closest("div").css("display", "none");
+                unsubscribe(entry.id, true);
+                $(this).closest("div").remove();
               });
 
             div.
