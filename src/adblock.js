@@ -285,20 +285,20 @@ function adblock_begin_v2() {
     run_specials(data.features);
 
     remove_ad_elements_by_url(true);
+
     // If more elements are inserted later, run again.
-    document.addEventListener("DOMNodeInserted", function(e) {
-      // Give it a moment to do its work, then block the whole page again
-      // once.  If many nodes were inserted, just run once.
-      if (typeof global_run_again_timer != "undefined") {
-        log("Bail");
-        return;
-      }
-      log("Running again in a moment because a new node was inserted.");
-      global_run_again_timer = window.setTimeout(function() {
-        delete global_run_again_timer;
+    function handleInsertedNode(e) {
+      log("Sweeping the page because a new node was inserted.");
+      // So we don't fire a million times if the page is very active
+      document.removeEventListener("DOMNodeInserted", handleInsertedNode);
+
+      window.setTimeout(function() {
+        document.addEventListener("DOMNodeInserted", handleInsertedNode);
         remove_ad_elements_by_url();
       }, 500);
-    });
+    }
+    document.addEventListener("DOMNodeInserted", handleInsertedNode);
+
   });
 }
 adblock_begin_v2();
