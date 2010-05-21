@@ -350,7 +350,7 @@ BlacklistUi.prototype._generatedAdReportUrl = function() {
     var result = [];
     result.push("http://code.google.com/p/adblockforchrome/issues/entry");
     result.push("?template=Ad%20report%20from%20user");
-    result.push("&summary=" + escape("Ad report: " + document.location.href));
+    result.push("&summary=" + escape("Ad report: " + location.hostname));
 
     var body = [];
     body.push("Thanks for reporting an ad!  Please answer the three" +
@@ -360,11 +360,14 @@ BlacklistUi.prototype._generatedAdReportUrl = function() {
     body.push("   Update Now to update your filters, then reload the page,");
     body.push("   does the ad still appear?");
     body.push("");
+    body.push("");
     body.push("2. What does the ad look like?  (We can't always tell which");
     body.push("   part of the page you think is an ad!)");
     body.push("");
+    body.push("");
     body.push("3. Any other information that would be helpful, besides what");
     body.push("   is listed below?");
+    body.push("");
     body.push("");
     body.push("-------- Please don't touch below this line. ---------");
     body.push("=== URL with ad ===");
