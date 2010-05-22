@@ -239,6 +239,17 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
   }
   return result;
 }
+// Return a map from subscription id to
+// {
+//   text:string - all filters from this subscription
+// }
+MyFilters.prototype.get_subscriptions_text = function() {
+  var result = {};
+  for (var id in this._subscriptions) {
+    result[id] = {text: this._subscriptions[id].text}
+  }
+  return result;
+}
 
 // Return a new subscriptions object containing all available subscriptions,
 // with EasyList and AdBlock custom filters subscribed from disk.
@@ -313,6 +324,10 @@ MyFilters.__make_subscription_options = function() {
     "adblock_custom": {
       url: "http://chromeadblock.com/filters/adblock_custom.txt",
       name: "Chrome AdBlock custom filters (recommended)",
+    },
+    "__AdBlock_Advanced_Filters__": {
+      url: "",
+      name: "AdBlock advanced filters",
     },
     "easylist": {
       url: "http://adblockplus.mozdev.org/easylist/easylist.txt",

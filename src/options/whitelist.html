@@ -106,6 +106,9 @@
     <p>
     Remove all items from the list:
     <input value="OK" type="button" id="btnClearWhitelist"/>
+    <br/>
+    Show advanced mode:
+    <input value="OK" type="button" id="advancedfilteroptions_whitelist"/>
     </p>
     <script>
       $(function() {      
@@ -114,6 +117,18 @@
                       'this list?\nThis action cannot be undone!')) 
             $("#whitelisted_domains > .entry_table > tbody > tr > a:first-of-type").click();
         });
+
+        if (typeof advanced_tab_loaded != "undefined") {
+          $("[id^='advancedfilteroptions']").attr("disabled", "disabled");
+          delete advanced_tab_loaded;
+        } else {
+          $("#advancedfilteroptions_whitelist").click(function() {
+            advanced_tab_loaded = true;
+            $("#tabpages").tabs("add", "advanced.html", "Advanced");
+            $("[id^='advancedfilteroptions']").attr("disabled", "disabled");
+            $("#tabpages").tabs("select", $("#tabpages").tabs("length") - 1);
+          });
+        }
       });
     </script>
   </div>

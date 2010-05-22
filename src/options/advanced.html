@@ -1,0 +1,54 @@
+  <script>
+    var id = "__AdBlock_Advanced_Filters__";
+    var originaltext = "";
+    
+    $("#btnSaveAdvancedFilters").click(function() {
+      var text = $("#txtFiltersAdvanced").val();
+
+      if (!text) {
+        extension_call("unsubscribe", {id:id, del:false});
+      } else {
+        extension_call("subscribe", {id:id, text:text});
+      }
+      
+      $("#lblSaveWarning").css("display", "none");
+      $("#btnSaveAdvancedFilters").attr("disabled", "disabled");
+      originaltext = text;
+    });
+    
+    extension_call('get_subscriptions_text', {}, function(subscriptions) {
+      $("#txtFiltersAdvanced").val(subscriptions[id].text);
+      originaltext = $("#txtFiltersAdvanced").val();
+    });
+    
+    $("#txtFiltersAdvanced").keyup(function() {
+      if ($("#txtFiltersAdvanced").val() == originaltext) {
+        $("#lblSaveWarning").css("display", "none");
+        $("#btnSaveAdvancedFilters").attr("disabled", "disabled");
+      } else {
+        $("#lblSaveWarning").css("display", "inline");
+        $("#btnSaveAdvancedFilters").attr("disabled", null);
+      }
+    });
+  </script>
+
+  <div class="section">
+    <h2>Custom filters</h2>
+    <p>
+      Most of the time you'll find all the options you need on the 
+      filter list, blacklist or whitelist tabs,<br/>
+      but you might ever need to have a special filter. You can add it here:
+    </p>
+    <p class="footnote">
+      Be careful: if you make a mistake here a lot of other filters,
+      including the official filters, could get broken too!
+    </p>
+    <div>
+      <textarea id="txtFiltersAdvanced" cols="80" rows="12"></textarea>
+      <br/>
+      <input value="Save!" type="button" id="btnSaveAdvancedFilters" disabled="disabled"/>
+      <span id="lblSaveWarning" style="color:red;margin-left:20px;display:none;">
+        <b>Don't forget to save!</b>
+      </span>
+    </div>
+  </div>
