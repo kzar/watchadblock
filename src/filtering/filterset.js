@@ -11,6 +11,9 @@ function FilterSet() {
   // If not null, the filters in this FilterSet all apply to this domain.
   this._limitedToDomain = null;
 
+  // Caches results for this.matches() 
+  this._matchCache = {};
+
   // Caches the last several domain-limited subsets of this filterset, so
   // that when someone asks several times for our selectors or patterns
   // for a given domain, we aren't recalculating.  The cache lives on the
@@ -97,9 +100,16 @@ FilterSet.prototype = {
     // TODO: This is probably imperfect third-party testing, but it works
     // better than nothing, and I haven't gotten to looking into ABP's
     // internals for the exact specification.
+    // TODO: rework so urlOrigin and docOrigin don't get recalculated over
+    // and over; it's always the same answer.
     var urlOrigin = FilterSet._withoutWww(FilterSet._domainFor(url));
     var docOrigin = FilterSet._withoutWww(this._limitedToDomain);
     var isThirdParty = (urlOrigin != docOrigin);
+
+    // matchCache approach taken from ABP
+    var key = url + " " + elementType + " " + isThirdParty;
+    if (key in this._matchCache)
+      return this._matchCache[key];
 
     // TODO: is there a better place to do this?
     // Limiting length of URL to avoid painful regexes.
@@ -109,15 +119,18 @@ FilterSet.prototype = {
     for (var i = 0; i < this._whitelistFilters.length; i++) {
       if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
+        this._matchCache[key] = false;
         return false;
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
       if (this._patternFilters[i].matches(url, elementType, isThirdParty)) {
         log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
+        this._matchCache[key] = true;
         return true;
       }
     }
+    this._matchCache[key] = false;
     return false;
   },
 
