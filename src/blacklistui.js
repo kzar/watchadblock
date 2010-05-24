@@ -138,7 +138,6 @@ BlacklistUi.prototype._build_page2 = function() {
     "<br/></div>" +
     "<div style='clear:left; font-size:smaller'>" +
     "This is the filter. It can be changed on the Options page: " +
-    "page:" +
     "  <div style='margin-left:15px;margin-bottom:15px'>" +
     "    <div>" +
     "      <div id='summary'></div><br/>" +
