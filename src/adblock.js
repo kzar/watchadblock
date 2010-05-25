@@ -280,7 +280,6 @@ function element_is_empty(element) {
       default: return false;
     }
   }
-
   return true;
 }
 
@@ -297,15 +296,14 @@ function collapse_blocked_elements(data_selectors, data_user_filters) {
   if (custom_filters.length > 0)
     selectors = selectors + ',' + custom_filters.join(',');
 
-
-  var selectors_match = $(selectors).length;
-  for (var i=0; i<selectors_match; i++) {
-    if ($(selectors)[0] == undefined) 
-      continue
+  var matched_selectors = $(selectors);
+  for (var i=0; i<matched_selectors.length; i++) {
+    if (matched_selectors[i] == undefined) 
+      continue;
 
     //remove the ad
-    var parent_of_selector = $(selectors)[0].parentElement;
-    $($(selectors)[0]).remove();
+    var parent_of_selector = matched_selectors[i].parentElement;
+    $(matched_selectors[i]).remove();
 
     while (element_is_empty(parent_of_selector)) {
       //remove the parent element(s)
