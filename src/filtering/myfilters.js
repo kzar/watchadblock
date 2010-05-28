@@ -337,6 +337,10 @@ MyFilters.__make_subscription_options = function() {
       url: "http://stanev.org/abp/adblock_bg.txt",
       name: " - additional Bulgarian filters",
     },
+    "dutch": { //id must not change!
+      url: "http://sites.google.com/site/dutchadblockfilters/AdBlock_Dutch_hide.txt",
+      name: " - additional Dutch filters",
+    },
     "easylist_plus_finnish": {
       url: "http://www.wiltteri.net/wiltteri.txt",
       name: " - additional Finnish filters",
@@ -380,10 +384,6 @@ MyFilters.__make_subscription_options = function() {
     "danish": {
       url: "http://adblock.schack.dk/block.txt",
       name: "Danish filters",
-    },
-    "dutch": {
-      url: "http://dutchmega.nl/dutchblock/list.txt",
-      name: "Dutch filters",
     },
     "german": {
       url: "http://chewey.de/mozilla/data/adblock.txt",
