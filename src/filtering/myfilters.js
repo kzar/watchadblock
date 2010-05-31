@@ -365,10 +365,6 @@ MyFilters.__make_subscription_options = function() {
       url: "http://www.picpoc.ro/menetzrolist.txt",
       name: " - additional Romanian filters",
     },
-    "easylist_plus_spanish": {
-      url: "http://sites.google.com/site/nauscopio/Home/AdBlock-Nauscopio-maty.txt",
-      name: " - additional Spanish filters",
-    },
     "easylist_plus_vietnamese": {
       url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
       name: " - additional Vietnamese filters",
@@ -412,6 +408,10 @@ MyFilters.__make_subscription_options = function() {
     "polish": {
       url: "http://www.niecko.pl/adblock/adblock.txt",
       name: "Polish filters",
+    },
+    "easylist_plus_spanish": { //id must not change!
+      url: "abp.mozilla-hispano.org/nauscopio/filtros.txt",
+      name: "Spanish filters",
     },
     "russian": {
       url: "http://ruadlist.googlecode.com/svn/trunk/adblock.txt",
