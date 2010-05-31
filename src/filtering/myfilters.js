@@ -410,7 +410,7 @@ MyFilters.__make_subscription_options = function() {
       name: "Polish filters",
     },
     "easylist_plus_spanish": { //id must not change!
-      url: "abp.mozilla-hispano.org/nauscopio/filtros.txt",
+      url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
       name: "Spanish filters",
     },
     "russian": {
