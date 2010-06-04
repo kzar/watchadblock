@@ -1,5 +1,3 @@
-infinite_loop_workaround("elementchain");
-
 // Requires jquery.
 
 // Lets you move up and down the DOM starting from a specific element.

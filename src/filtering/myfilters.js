@@ -1,6 +1,3 @@
-infinite_loop_workaround("myfilters");
-
-
 // Requires jquery and 'utils.get_optional_features' method from background
 
 // MyFilters class manages subscriptions and the FilterSet.

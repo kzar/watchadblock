@@ -1,5 +1,3 @@
-infinite_loop_workaround("adblock_start");
-
 // Add style rules hiding the given list of selectors.
 // If title is specified, apply this title to the style element for later
 // identification.

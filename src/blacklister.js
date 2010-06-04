@@ -1,5 +1,3 @@
-infinite_loop_workaround("blacklister");
-
 // TODO note: gamestar.de has a good <object> tag with <embed> in it;
 // thepiratebay.org [search for 'boots'] has good iframe tags.
 
