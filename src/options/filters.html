@@ -203,7 +203,7 @@
               addClass("remove_filter").
               click(function(event) {
                 event.preventDefault();
-                unsubscribe(entry.id, true);
+                unsubscribe($(this).closest("div").children("input").attr("name"), true);
                 $(this).closest("div").remove();
               });
 
