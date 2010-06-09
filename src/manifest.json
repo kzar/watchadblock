@@ -32,7 +32,7 @@
         "clickwatcher.js",
         "elementchain.js",
         "blacklistui.js",
-        "blacklister.js", 
+        "blacklister.js",
         "whitelister.js"
       ],
       "run_at": "document_end",
@@ -40,7 +40,7 @@
     },
     {
       "matches": ["http://*/*", "https://*/*"],
-      "js": [ "adblock.js" ],
+      "js": [ "adblock.js", "filteroptions.js" ],
       "run_at": "document_end",
       "all_frames": true
     }

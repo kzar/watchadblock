@@ -331,8 +331,10 @@ function adblock_begin_v2() {
       return;
 
     listen_for_broadcasts();
-    blacklister_init();
-    whitelister_init();
+    if (window == window.top) {
+      blacklister_init();
+      whitelister_init();
+    }
 
     // GMail is already handled in adblock_start.
     // TODO: is this fast enough now that I don't need a special case?
