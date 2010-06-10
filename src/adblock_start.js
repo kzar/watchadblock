@@ -1,5 +1,59 @@
 infinite_loop_workaround("adblock_start");
 
+// If url is relative, convert to absolute.
+function relativeToAbsoluteUrl(url) {
+    // Author: Tom Joseph of AdThwart
+    if(!url)
+        return url;
+    // If URL is already absolute, don't mess with it
+    if(url.match(/^http/))
+        return url;
+    // Leading / means absolute path
+    if(url[0] == '/')
+        return document.location.protocol + "//" + document.location.host + url;
+
+    // Remove filename and add relative URL to it
+    var base = document.baseURI.match(/.+\//);
+    if(!base) return document.baseURI + "/" + url;
+    return base[0] + url;
+}
+// Return the url tied to the given element.  null is OK if we can't find one.
+function urlForElement(el, type) {
+  // TODO: handle background images, based on 'type'.
+  switch (el.nodeName) {
+    case 'IMG': return el.src;
+    case 'SCRIPT': return el.src;
+    case 'EMBED': return el.src;
+    case 'IFRAME': return el.src;
+    case 'LINK': return el.href;
+    case 'OBJECT': 
+      var param = $('param[name="movie"][value]', el);
+      if (param.length > 0)
+        return param.get(0).value;
+      else
+        return null;
+    case 'BODY':
+      // TODO: make sure this isn't so slow that we must LBYL
+      var bgImage = $(el).css('background-image');
+      return (bgImage == "none" ? null: bgImage);
+  }
+}
+
+// Return the ElementType element type of the given element.
+function typeForElement(el) {
+  // TODO: handle background images that aren't just the BODY.
+  switch (el.nodeName) {
+    case 'IMG': return ElementTypes.image;
+    case 'SCRIPT': return ElementTypes.script;
+    case 'OBJECT': 
+    case 'EMBED': return ElementTypes.object;
+    case 'IFRAME': return ElementTypes.subdocument;
+    case 'LINK': return ElementTypes.stylesheet;
+    case 'BODY': return ElementTypes.background;
+    default: return ElementTypes.NONE;
+  }
+}
+
 // Add style rules hiding the given list of selectors.
 // If title is specified, apply this title to the style element for later
 // identification.
