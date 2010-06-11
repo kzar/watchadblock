@@ -49,4 +49,7 @@ scp AdBlockForSafari.tgz $user@safariadblock.com:$rdir/versions/$vd/ || {
   exit 1
 }
 
+rm -rf safaribuild_tempdir.safariext* AdBlockForSafari.tgz
+
 $ssh "$rdir/point_to_version $vd"
+echo "Last step: update update.plist on the server to notify users."
