@@ -49,8 +49,7 @@ if (SAFARI) {
 
     extension: {
       getURL: function(path) { 
-        // SAFARITODO fix my folder structure so the "safari/" isn't needed
-        return safari.extension.baseURI + "safari/" + path;
+        return safari.extension.baseURI + path;
       },
 
       sendRequest: (function() {

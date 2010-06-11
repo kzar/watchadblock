@@ -77,7 +77,7 @@
     <table>
       <tr>
         <td style="padding-right:10px">
-          <a href="http://chromeadblock.com/donate?from=options" target="_new">
+          <a class="donatelink" href="http://chromeadblock.com/paypal_donate/donation.php" target="_new">
             <img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif"
                  title="Hooray! Thank you!"/></a>
         </td>
@@ -85,12 +85,21 @@
           Do you love AdBlock?  My name's Michael.  I've dropped to a
           less-than-full-time job in order to develop AdBlock and support my
           users.  Please use and enjoy AdBlock, and if you can
-          <a href="http://chromeadblock.com/paypal_donate?you=awesome" target="_new">
+          <a class="donatelink" href="http://chromeadblock.com/paypal_donate/donation.php" target="_new">
             make a donation</a>
           of any amount, I'd appreciate it <b>immensely</b> :)
         </td>
       </tr>
     </table>
+    <script>
+      $(function() {
+        if (SAFARI) {
+          $(".donatelink").each(function(i, el) {
+            el.href += "?browser=safari";
+          });
+        }
+      });
+    </script>
     <br/>
     <div style="padding-left:5px; margin-bottom:20px">
       Want to contribute code, bug reports, or ad reports?  We
