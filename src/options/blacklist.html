@@ -206,3 +206,25 @@
            id="enable_blacklist_shortcut" />
     <span class="optionDescription">Shortcut enabled</span>
   </div>
+
+  <div class="sneaky">
+    <p>
+    Show advanced mode:
+    <input value="OK" type="button" id="advancedfilteroptions_blacklist"/>
+    </p>
+    <script>
+      $(function() {      
+        if (typeof advanced_tab_loaded != "undefined") {
+          $("[id^='advancedfilteroptions']").attr("disabled", "disabled");
+          delete advanced_tab_loaded;
+        } else {
+          $("#advancedfilteroptions_blacklist").click(function() {
+            advanced_tab_loaded = true;
+            $("#tabpages").tabs("add", "advanced.html", "Advanced");
+            $("[id^='advancedfilteroptions']").attr("disabled", "disabled");
+            $("#tabpages").tabs("select", $("#tabpages").tabs("length") - 1);
+          });
+        }
+      });
+    </script>
+  </div>
