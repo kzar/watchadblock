@@ -245,7 +245,11 @@ function adblock_begin_v2() {
         remove_ad_elements_by_url();
       }, 500);
     }
-    document.addEventListener("DOMNodeInserted", handleInsertedNode);
+    // Safari does true resource blocking, so we don't have to worry about
+    // new nodes being inserted.
+    if (!SAFARI) {
+      document.addEventListener("DOMNodeInserted", handleInsertedNode);
+    }
 
   });
 }

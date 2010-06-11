@@ -1,5 +1,6 @@
 <html>
   <head>
+    <script src="port.js"></script>
     <script src="jquery/jquery-1.4.2.min.js"></script>
     <script src="functions.js"></script>
     <script src="filteroptions.js"></script>
@@ -367,14 +368,16 @@
       // of these one-off connections?  Time it before changing it.
       chrome.extension.onRequest.addListener(dispatchHandler);
 
-      // Let the AdBlock icon control us as well.
-      chrome.extension.onRequestExternal.addListener(
-        function(request, sender, sendResponse) {
-          if (sender.id != icon_extension_id)
-            return;
-          dispatchHandler(request, sender, sendResponse);
-        }
-      );
+      if (!SAFARI) {
+        // Let the AdBlock icon control us as well.
+        chrome.extension.onRequestExternal.addListener(
+          function(request, sender, sendResponse) {
+            if (sender.id != icon_extension_id)
+              return;
+            dispatchHandler(request, sender, sendResponse);
+          }
+        );
+      }
 
       
       _myfilters = new MyFilters();
@@ -403,6 +406,42 @@
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
       }
       note_install();
+
+      // Safari specific code.
+      if (SAFARI) {
+        // True blocking support.
+        safari.application.addEventListener("message", function(messageEvent) {
+          if (messageEvent.name != "canLoad")
+            return;
+
+          var url = messageEvent.message.url;
+          var elType = messageEvent.message.elType;
+          var pageDomain = messageEvent.message.pageDomain;
+
+          var limited = _myfilters.filterset.limitedToDomain(pageDomain);
+          var isMatched = url && limited.matches(url, elType);
+          if (isMatched)
+            console.log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
+          messageEvent.message = !isMatched;
+        }, false);
+
+        // Open Options page upon Toolbar button click.
+        safari.application.addEventListener("command", function(commandEvent) {
+          if (commandEvent.command == "AdBlockOptions") {
+            safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
+          }
+          if (commandEvent.command == "show-blacklist-wizard") {
+            safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
+          }
+        }, false);
+
+        // Right click handler for demo hack, because keyboard shortcuts aren't working
+        safari.application.addEventListener("contextmenu", function(event) {
+          if (!event.userInfo)
+            return;
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "Show Blacklist Wizard");
+        }, false);
+      }
 
     </script>
   </head>
