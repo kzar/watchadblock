@@ -18,6 +18,11 @@
         });
       }
 
+      $("#enable_dont_block_on_https").change(function() {
+        $("#dont_block_on_https_warning").
+          css("display", $(this).is(":checked") ? "block" : "none");
+      });
+
       // Check or uncheck each option.
       extension_call('get_optional_features', {}, function(features) {
         for (var name in features) {
@@ -98,6 +103,17 @@
       <input type="checkbox" class="feature" id="enable_block_youtube" />
       <span class="optionDescription">Block ads inside YouTube videos.</span>
       <span style='font-style:italic; color:red'>Beta</span>
+    </p>
+    
+    <p>
+      <input type="checkbox" class="feature" id="enable_dont_block_on_https" />
+      <span class="optionDescription">Don't block ads on secure pages.</span>
+    </p>
+    <p id="dont_block_on_https_warning" class="info" style="display:none">
+      <span style="font-style:italic; font-size:12px; color:#222222">
+        Please note that AdBlock will still run on secure (https://) pages!<br/>
+        It just doesn't remove anything from those pages.
+      </span>
     </p>
 
   </div>

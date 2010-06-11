@@ -143,7 +143,8 @@ extension_call('get_features_and_filters', opts, function(data) {
   if (data.features.debug_time_logging.is_enabled)
     time_log = function(text) { console.log(text); };
 
-  if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
+  if (page_is_whitelisted(data.whitelist, data.top_frame_domain,
+        data.features.dont_block_on_https.is_enabled))
     return;
 
   if (gmail_hack())
