@@ -94,7 +94,8 @@ ClickWatcher.prototype._build_ui = function() {
   // ad, and I *really* don't want to figure out inter-frame communication
   // so that the blacklist UI's slider works between multiple layers of 
   // iframes... just overlay iframes and treat them as a giant object.
-  $("object,embed,iframe").each(function(i, dom_element) {
+  $("object,embed,iframe,[onclick]:empty").
+      each(function(i, dom_element) {
     var killme_overlay = new Overlay({
       dom_element: dom_element,
       click_handler: click_catch
@@ -129,7 +130,3 @@ ClickWatcher.prototype._build_ui = function() {
 
   return page;
 }
-
-
-
-
