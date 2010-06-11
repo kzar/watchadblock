@@ -11,10 +11,12 @@
         $("#button_explanation").show();
       });
 
-      // If the icon extension is running, check the box.
-      chrome.extension.sendRequest(icon_extension_id, {}, function() {
-        $("#want_a_button").attr("checked", "checked");
-      });
+      if (!SAFARI) {
+        // If the icon extension is running, check the box.
+        chrome.extension.sendRequest(icon_extension_id, {}, function() {
+          $("#want_a_button").attr("checked", "checked");
+        });
+      }
 
       // Check or uncheck each option.
       extension_call('get_optional_features', {}, function(features) {
@@ -67,6 +69,11 @@
       <br/><br/>
       To remove the button, right click him and choose Disable.
     </p>
+    <script>
+      if (SAFARI) {
+        $("#show_adblock_button_tr").hide();
+      }
+    </script>
 
     <p>
       <input type="checkbox" class="feature" id="enable_show_google_search_text_ads" />

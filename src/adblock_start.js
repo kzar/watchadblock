@@ -3,6 +3,7 @@ infinite_loop_workaround("adblock_start");
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
     // Author: Tom Joseph of AdThwart
+    
     if(!url)
         return url;
     // If URL is already absolute, don't mess with it
@@ -38,7 +39,6 @@ function urlForElement(el, type) {
       return (bgImage == "none" ? null: bgImage);
   }
 }
-
 // Return the ElementType element type of the given element.
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
@@ -52,6 +52,19 @@ function typeForElement(el) {
     case 'BODY': return ElementTypes.background;
     default: return ElementTypes.NONE;
   }
+}
+
+function enableTrueBlocking() {
+  // Only works in Safari.
+  document.addEventListener("beforeload", function(event) {
+    const el = event.target;
+    // Cancel the load if canLoad is false.
+    var elType = typeForElement(el);
+    var url = relativeToAbsoluteUrl(urlForElement(el, elType));
+    if (false == safari.self.tab.canLoad(event, { url: url, elType: elType, pageDomain: document.domain }))
+      event.preventDefault();
+    // SAFARITODO collapse the element as well, and we can skip running find_ads_in in adblock.js
+  }, true);
 }
 
 // Add style rules hiding the given list of selectors.
@@ -137,6 +150,10 @@ extension_call('get_features_and_filters', opts, function(data) {
     return;
 
   facebook_hack();
+
+  if (SAFARI) {
+    enableTrueBlocking();
+  }
 
   early_blacklist(data.user_filters);
 

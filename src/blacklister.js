@@ -111,6 +111,22 @@ function check_for_blacklist_keypress(e) {
   }
 }  
 
+// Keypress doesn't work reliably in Safari, so make the blacklist
+// available in the context menu until we support just right clicking
+// on an ad or Flash object.
+if (SAFARI) {
+  // Wait for right click
+  window.addEventListener("contextmenu", function(event) {
+    safari.self.tab.setContextMenuEventUserInfo(event, true);
+  }, false);
+  // Handle right click menu item click
+  safari.self.addEventListener("message", function(event) {
+    if (event.name != "show-blacklist-wizard")
+      return;
+    page_broadcast('top_open_blacklist_ui', {});
+  }, false);
+}
+
 // For the extension icon, so we can't open more than once on a tab.
 var may_open_blacklist = true;
 
