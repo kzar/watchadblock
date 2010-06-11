@@ -1,6 +1,13 @@
 sdir=safaribuild_tempdir.safariextension
+cd $(dirname $0)
 dir=$(basename $(pwd))
 cd ..
+
+v=$(echo $(grep '<string>10[0-9]\.' $dir/Info.plist))
+echo -n "You expect to ship version $v, right? (y/n) "
+read answer
+[ "$answer" = y ] || exit 1
+
 rm -rf $sdir
 cp -R $dir $sdir
 rm -f AdBlockForSafari.tgz
@@ -8,4 +15,3 @@ tar czvf AdBlockForSafari.tgz $sdir
 clear
 echo Built AdBlockForSafari.tgz.
 echo Now load $sdir into Safari and build safaribuild.safariextz.
-echo Make sure you updated the Info.plist!
