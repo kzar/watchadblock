@@ -233,6 +233,15 @@
         return _myfilters.unsubscribe(options.id, options.del);
       }
 
+      // Opens a popup that subscribes to a new list
+      // Must be here because other pages cannot open popups...
+      // Inputs: url: the URL of the list to subscribe to
+      utils.subscribe_popup = function(options) {
+        window.open(chrome.extension.getURL('subscribe.html?' + options.url),
+        "_blank", 'scrollbars=0,location=0,resizable=0,width=450,height=140');
+      }
+
+
 
 
       // USER FILTERS
