@@ -105,3 +105,19 @@
     <span class="optionDescription">Shortcut enabled</span>
     </p>
   </div>
+
+  <div class="sneaky">
+    <p>
+    Remove all items from the list:
+    <input value="OK" type="button" id="btnClearWhitelist"/>
+    </p>
+    <script>
+      $(function() {      
+        $("#btnClearWhitelist").click(function() {
+          if (confirm('Are you sure you would like to clear ' +
+                      'this list?\nThis action cannot be undone!')) 
+            $("#whitelisted_domains > .entry_table > tbody > tr > a:first-of-type").click();
+        });
+      });
+    </script>
+  </div>
