@@ -184,11 +184,7 @@
               text(entry.name).
               attr("title", entry.url).
               css("cursor", "pointer").
-              click(function() {
-                $(this).closest("div").find("input"). // my checkbox
-                  click().  // toggle the UI
-                  change(); // activate the handler as if a user had clicked it
-              });
+              click(checkboxlabel_clicked);
 
             var link_to_list = $("<a>", { target: "_new" }).
               text('show').
