@@ -1,5 +1,3 @@
-infinite_loop_workaround("adblock");
-
 function debug_print_selector_matches() {
   if (!DEBUG)
     return;

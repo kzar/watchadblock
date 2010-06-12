@@ -1,5 +1,3 @@
-infinite_loop_workaround("filterset");
-
 // Requires fifocache.js.
 
 // Filter objects representing the given filter text.
