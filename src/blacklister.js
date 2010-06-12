@@ -37,37 +37,35 @@ function load_jquery_ui(callback) {
   );
 }
 
-if (window == window.top) {
-  register_broadcast_listener('top_open_blacklist_ui', function(options) {
-    if (!may_open_blacklist)
-      return;
+register_broadcast_listener('top_open_blacklist_ui', function(options) {
+  if (!may_open_blacklist)
+    return;
 
-    stop_checking_for_blacklist_keypress();
+  stop_checking_for_blacklist_keypress();
 
-    load_jquery_ui(function() {
-      extension_call("get_subscriptions_minus_text", {}, function(subs) {
+  load_jquery_ui(function() {
+    extension_call("get_subscriptions_minus_text", {}, function(subs) {
 
-        var sub_names = [];
-        for (var url in subs) {
-          if (subs[url].subscribed)
-            sub_names.push(subs[url].name);
-        }
+      var sub_names = [];
+      for (var url in subs) {
+        if (subs[url].subscribed)
+          sub_names.push(subs[url].name);
+      }
 
-        var blacklist_ui = new BlacklistUi(sub_names);
-        blacklist_ui.cancel(function() {
-          blacklister_init();
-        });
-        blacklist_ui.block(function() {
-          // We would call blacklister_init() if we weren't about to reload.
-          document.location.reload();
-        });
-        blacklist_ui.show();
-
+      var blacklist_ui = new BlacklistUi(sub_names);
+      blacklist_ui.cancel(function() {
+        blacklister_init();
       });
-    });
+      blacklist_ui.block(function() {
+        // We would call blacklister_init() if we weren't about to reload.
+        document.location.reload();
+      });
+      blacklist_ui.show();
 
+    });
   });
-}
+
+});
 
 register_broadcast_listener('send_content_to_back', function(options) {
   // Objects and embeds can catch our clicks unless we lay a div over

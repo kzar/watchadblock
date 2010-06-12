@@ -8,7 +8,8 @@
     "128": "img/icon128.png"
   },
   "permissions": [
-    "http://*/*", "https://*/*"
+    "http://*/*", 
+    "https://*/*"
   ],
   "background_page": "background.html",
   "options_page": "options/index.html",
@@ -32,11 +33,15 @@
         "clickwatcher.js",
         "elementchain.js",
         "blacklistui.js",
-        "blacklister.js", 
-        "whitelister.js", 
-        "filteroptions.js",
-        "adblock.js"
+        "blacklister.js",
+        "whitelister.js"
       ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [ "adblock.js", "filteroptions.js" ],
       "run_at": "document_end",
       "all_frames": true
     }

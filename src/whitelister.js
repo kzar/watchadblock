@@ -71,7 +71,5 @@ function whitelister_init() {
   $("body").keydown(check_for_whitelist_keypress);
 }
 
-if (window == window.top) {
-  listen_for_broadcasts();
-  register_broadcast_listener('top_open_whitelist_ui', verify_whitelist);
-}
+listen_for_broadcasts();
+register_broadcast_listener('top_open_whitelist_ui', verify_whitelist);
