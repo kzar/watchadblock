@@ -4,9 +4,7 @@ infinite_loop_workaround("blacklistui");
 
 // Wizard that walks the user through clicking an ad, selecting an element,
 // and choosing properties to block.
-// Input: subscribed_filters_list: list of string names of subscribed filters.
-function BlacklistUi(subscribed_filters_list) {
-  this._subscribed_filters_list = subscribed_filters_list;
+function BlacklistUi() {
 
   // If a dialog is ever closed without setting this to false, the
   // object fires a cancel event.
@@ -346,44 +344,6 @@ BlacklistUi._ellipsis = function(value, size) {
 // Return a URL containing a prefilled ad report based on the current page
 // and the filter they've attempted to create in the BlacklistUi.
 BlacklistUi.prototype._generatedAdReportUrl = function() {
-    var result = [];
-    result.push("http://code.google.com/p/adblockforchrome/issues/entry");
-    result.push("?template=Ad%20report%20from%20user");
-    var hostname = document.location.hostname;
-    result.push("&summary=" + escape("Ad report: " + hostname));
-
-    var body = [];
-    body.push("Thanks for reporting an ad!  Answer #1 and #2 below or we " +
-              " will probably ignore your report.");
-    body.push("");
-    body.push("1. When you click Wrench -> Extensions -> AdBlock Options ->");
-    body.push("   Update Now to update your filters, then reload the page,");
-    body.push("   does the ad still appear?");
-    body.push("");
-    body.push("");
-    body.push("2. What does the ad look like?  (We can't always tell which");
-    body.push("   part of the page you think is an ad!)");
-    body.push("");
-    body.push("");
-    body.push("3. Any other information that would be helpful, besides what");
-    body.push("   is listed below?");
-    body.push("");
-    body.push("");
-    body.push("-------- Please don't touch below this line. ---------");
-    body.push("=== URL with ad ===");
-    body.push(document.location.href);
-    body.push("");
-    body.push("=== Subscribed filters ===");
-    body.push(this._subscribed_filters_list.join('\n'));
-    body.push("");
-    body.push("=== Browser: ===");
-    body.push(SAFARI ? "Safari" : "Chrome");
-    body.push("");
-    body.push("=== The selector created by the user ===");
-    body.push(this._makeFilter());
-
-    var bodystring = body.join('\n');
-    result.push("&comment=" + escape(bodystring));
-
-    return result.join('');
+    return chrome.extension.getURL('adreport.html?from=blacklister&url=' +
+         escape(location.href) + '&suggested=' + escape(this._makeFilter()));
 }

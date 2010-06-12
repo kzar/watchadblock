@@ -133,6 +133,8 @@
     });
 
     $('.optionDescription').click(checkboxlabel_clicked);
+    
+    $('#adreportlink').attr('href', '../adreport.html?from=options');
   </script>
 
   <a name="user_filters_link"></a>
@@ -191,7 +193,7 @@
 
     <p class="note">
       Got a particularly useful filter?  Why not 
-      <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user" target="_new">share it with us</a>,
+      <a id='adreportlink' target="_new">share it with us</a>,
       so we can give it to all AdBlock users?
     </p>
 

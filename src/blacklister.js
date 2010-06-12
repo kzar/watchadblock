@@ -45,15 +45,7 @@ if (window == window.top) {
     stop_checking_for_blacklist_keypress();
 
     load_jquery_ui(function() {
-      extension_call("get_subscriptions_minus_text", {}, function(subs) {
-
-        var sub_names = [];
-        for (var url in subs) {
-          if (subs[url].subscribed)
-            sub_names.push(subs[url].name);
-        }
-
-        var blacklist_ui = new BlacklistUi(sub_names);
+        var blacklist_ui = new BlacklistUi();
         blacklist_ui.cancel(function() {
           blacklister_init();
         });
@@ -63,7 +55,6 @@ if (window == window.top) {
         });
         blacklist_ui.show();
 
-      });
     });
 
   });
