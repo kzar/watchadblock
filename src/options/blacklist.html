@@ -206,3 +206,19 @@
            id="enable_blacklist_shortcut" />
     <span class="optionDescription">Shortcut enabled</span>
   </div>
+
+  <div class="sneaky">
+    <p>
+    Remove all items from the list:
+    <input value="OK" type="button" id="btnClearBlacklist"/>
+    </p>
+    <script>
+      $(function() {      
+        $("#btnClearBlacklist").click(function() {
+          if (confirm('Are you sure you would like to clear ' +
+                      'this list?\nThis action cannot be undone!')) 
+            $("#user_filters > .entry_table > tbody > tr > a:first-of-type").click();
+        });
+      });
+    </script>
+  </div>
