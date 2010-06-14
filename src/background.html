@@ -153,13 +153,6 @@
         if (options.is_top_frame) {
           top_frame_domains[sender.tab.id] = options.domain;
         }
-        // TODO why the heck doesn't this work when cached_extension_call?!?
-        // selectors is always 0, except maybe it will be full once in a while?
-        // is this a Chrome bug or a race condition that I'm forgetting about?
-        // When I log from here I have the full set of selectors, and in
-        // cached_extension_call they are gone.  If I manually fill a
-        // TDO_temp_selector_copy from result.selectors before returning,
-        // it seems fine.  WEIRD.
         var result = {
           whitelist: utils.get_whitelist(),
           user_filters: utils.get_user_filters(),

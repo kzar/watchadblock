@@ -10,56 +10,11 @@ function infinite_loop_workaround(where) {
 
 infinite_loop_workaround("functions");
 
-// Data that various parts of the program may find useful to cache.
-// You can never rely on something being in here if the code that placed
-// it in here was run asynchronously, because of race conditions.
-_adblock_cache = {
-};
-
-// When adblock and adblock_start are both done with the extension cache,
-// we can clear it to save RAM.
-_done_with_cache = function(whom) {
-  _adblock_cache["FINISHED::" + whom] = true;
-  if (_adblock_cache["FINISHED::adblock_start"] &&
-      _adblock_cache["FINISHED::adblock"]) {
-    log("Removing _adblock_cache");
-    _adblock_cache = {};
-  }
-}
-
-
 // Run a function on the background page.
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
   if (callback == null) callback = function() {};
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
-}
-
-// Like extension_call, but if you've called fn before with the same
-// options, return a cached result.
-cached_extension_call = function(fn, options, callback) {
-  var TODO_temp_logging = false;
-  if (fn == "get_features_and_filters") {
-    console.log("??");
-    TODO_temp_logging = true;
-  }
-  var key = "extension_call::" + fn + "(" + JSON.stringify(options) + ")";
-  if (key in _adblock_cache) {
-    if (TODO_temp_logging) {
-      console.log("** " + key + " cached. Value:");
-      console.log(_adblock_cache[key]);
-    }
-    callback(_adblock_cache[key]);
-  } else {
-    extension_call(fn, options, function(result) {
-      _adblock_cache[key] = result;
-      if (TODO_temp_logging) {
-        console.log("++ " + key + " not cached.  New value:");
-        console.log(_adblock_cache[key]);
-      }
-      callback(result);
-    });
-  }
 }
 
 icon_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
