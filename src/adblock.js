@@ -45,10 +45,6 @@ function remove_ad_elements_by_url(first_run) {
     function(ad_ids) {
       $(ad_ids).each(function(i, id) { purgeElement(els[id], elInfo[id]); });
 
-      // TODO: I don't like this being stuck deep in here.  Collapse
-      // some levels or make this superfluous.
-      _done_with_cache("adblock");
-
       var end = new Date();
       time_log("adblock_main run time: " + (end - start) + " || " +
                document.location.href);
@@ -232,7 +228,12 @@ function adblock_begin_v2() {
 
     run_specials(data.features);
 
-    remove_ad_elements_by_url(true);
+    // Safari already removes elements via true blocking.
+    if (!SAFARI) {
+      remove_ad_elements_by_url(true); // calls debug_print_selector_matches
+    } else {
+      debug_print_selector_matches();
+    }
 
     // If more elements are inserted later, run again.
     function handleInsertedNode(e) {

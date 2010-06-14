@@ -61,9 +61,11 @@ function enableTrueBlocking() {
     // Cancel the load if canLoad is false.
     var elType = typeForElement(el);
     var url = relativeToAbsoluteUrl(urlForElement(el, elType));
-    if (false == safari.self.tab.canLoad(event, { url: url, elType: elType, pageDomain: document.domain }))
+    if (false == safari.self.tab.canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
-    // SAFARITODO collapse the element as well, and we can skip running find_ads_in in adblock.js
+      if (el.nodeName != "BODY")
+        $(el).remove();
+    }
   }, true);
 }
 
@@ -158,10 +160,6 @@ extension_call('get_features_and_filters', opts, function(data) {
   early_blacklist(data.user_filters);
 
   block_list_via_css(data.selectors);
-
-  // In case adblock.js already ran, let the cache know we're done so
-  // it can delete itself.
-  _done_with_cache("adblock_start");
 
   var end = new Date();
   time_log("adblock_start run time: " + (end - start) + " || " +
