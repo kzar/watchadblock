@@ -1,23 +1,19 @@
   <script>
-    var id = "__AdBlock_Advanced_Filters__";
     var originaltext = "";
     
     $("#btnSaveAdvancedFilters").click(function() {
       var text = $("#txtFiltersAdvanced").val();
 
-      if (!text) {
-        extension_call("unsubscribe", {id:id, del:false});
-      } else {
-        extension_call("subscribe", {id:id, text:text});
-      }
-      
+      extension_call("storage_set", { key: "custom_filters", value: text });
+
       $("#lblSaveWarning").css("display", "none");
       $("#btnSaveAdvancedFilters").attr("disabled", "disabled");
       originaltext = text;
     });
     
-    extension_call('get_subscriptions_text', {}, function(subscriptions) {
-      $("#txtFiltersAdvanced").val(subscriptions[id].text);
+    extension_call('storage_get', {key: "custom_filters", value: ''}, 
+                   function(text) {
+      $("#txtFiltersAdvanced").val(text);
       originaltext = $("#txtFiltersAdvanced").val();
     });
     

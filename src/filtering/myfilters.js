@@ -100,10 +100,15 @@ MyFilters.prototype.rebuild = function() {
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
       texts.push(this._subscriptions[id].text);
+
+  // Include custom filters.
+  texts.push( utils.storage_get({key: 'custom_filters', default_value: ''}) );
+
   texts = texts.join('\n').split('\n');
 
-  // Remove duplicates.
+  // Remove duplicates and empties.
   var hash = {}; for (var i = 0; i < texts.length; i++) hash[texts[i]] = 1;
+  delete hash[''];
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
   var options = utils.get_optional_features({});
@@ -324,10 +329,6 @@ MyFilters.__make_subscription_options = function() {
     "adblock_custom": {
       url: "http://chromeadblock.com/filters/adblock_custom.txt",
       name: "AdBlock custom filters (recommended)",
-    },
-    "__AdBlock_Advanced_Filters__": {
-      url: "",
-      name: "AdBlock advanced filters",
     },
     "easylist": {
       url: "http://adblockplus.mozdev.org/easylist/easylist.txt",

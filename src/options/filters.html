@@ -156,7 +156,6 @@
           //5: custom filter lists
           var sorted_list = [];
           for (var id in subscriptions) {
-            if (id == "__AdBlock_Advanced_Filters__") continue;
             var entry = subscriptions[id];
             if (id == 'easylist' || id == 'adblock_custom')
               entry.order = "1" + id;
