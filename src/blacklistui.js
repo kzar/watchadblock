@@ -33,6 +33,23 @@ function BlacklistUi(subscribed_filters_list) {
 
   // TODO: makeEvent('cancel', 'click') and it sets up fns for us.
 }
+
+function preview(filter) {
+  $("#adblock_blacklist_preview_css").remove();
+  if (!filter) return;
+  var css_preview = document.createElement("style");
+  css_preview.type = "text/css";
+  css_preview.id = "adblock_blacklist_preview_css";
+  var d = "body .ui-dialog:last-child ";
+  css_preview.innerText = d + "input {display:inline-block!important;} " +
+      d + ", " + d + "div:not(#filter_warning), " + d + ".ui-icon, " + d +
+      "a:not(#adreportlink), " + d + "center, " + d +
+      "button {display:block!important;} " +  d + "#adblock-details, " + d +
+      "span, " + d + "b, " + d + "#adreportlink, " + d +
+      "i {display:inline!important;} " + filter + " {display:none!important;}";
+  document.documentElement.appendChild(css_preview);
+}
+
 // TODO: same event framework as ClickWatcher
 BlacklistUi.prototype.cancel = function(callback) {
   this._callbacks.cancel.push(callback);
@@ -61,6 +78,7 @@ BlacklistUi.prototype.handle_change = function() {
 BlacklistUi.prototype.show = function() {
   this._clickWatcher.show();
 }
+
 BlacklistUi.prototype._build_page1 = function() {
   var that = this;
 
@@ -83,6 +101,7 @@ BlacklistUi.prototype._build_page1 = function() {
           that._cancelled = true;
           that._redrawPage2();
           that._ui_page2.dialog('open');
+          preview($('#summary', that._ui_page2).text());
         },
         "Cancel": function() {
           that._ui_page1.dialog('close');
@@ -157,7 +176,7 @@ BlacklistUi.prototype._build_page2 = function() {
         "Block it!": function() {
           if ($("#summary", that._ui_page2).text().length > 0) {
             var filter = {
-              domain_regex: document.domain, // TODO option to specify
+              domain_regex: document.domain,
               css_regex: $("#summary", that._ui_page2).text()
             };
             extension_call('add_user_filter', { filter: filter }, function() {
@@ -202,6 +221,7 @@ BlacklistUi.prototype._build_page2 = function() {
       },
       close: function() {
         that._onClose();
+        preview('');
       }
     }).css({
       'background': 'white',
@@ -286,7 +306,8 @@ BlacklistUi.prototype._redrawPage2 = function() {
     $("#adreportlink", that._ui_page2).
       attr("href", that._generatedAdReportUrl());
 
-    var matchCount = $(summary.text()).length;
+    var matchCount = $(summary.text()+":not('div.ui-dialog')").length;
+    matchCount -= $('.ui-dialog ' + summary.text()).length;
     $("#count", that._ui_page2).
       html("<center>That matches <b>" + matchCount + 
            (matchCount == 1 ? " item" : " items") + 
@@ -315,6 +336,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
 
     checkbox.find("input").change(function() {
       updateFilter();
+      preview($("#summary", this._ui_page2).text());
     });
 
     detailsDiv.append(checkbox);
