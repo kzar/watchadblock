@@ -15,6 +15,7 @@ read answer
 
 rm -rf $sdir
 cp -R $dir $sdir
+find $sdir -name .svn | xargs rm -rf
 rm -f AdBlockForSafari.tgz
 tar czvf AdBlockForSafari.tgz $sdir
 clear
