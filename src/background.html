@@ -52,6 +52,14 @@
         _myfilters.update();
       }
 
+      // Set the custom filters to the given \n-separated text string, and 
+      // rebuild the filterset.
+      // Inputs: filters:string the new filters.
+      utils.set_custom_filters = function(options) {
+        utils.storage_set({key: 'custom_filters', value: options.filters});
+        _myfilters.update();
+      }
+
       // STORAGE
 
       // Inputs: key:string, default_value:object. 
