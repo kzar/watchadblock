@@ -94,7 +94,7 @@
     <h2>Don't run AdBlock on domains that end with...</h2>
     <div id="whitelisted_domains"></div>
     <div>
-      <span class="footnote">For example, "google.com" whitelists
+      <span class="footnote">For example, "google.com" turns off AdBlock for
       google.com, mail.google.com, and www.google.com.</span>
     </div>
     <p>
@@ -104,26 +104,4 @@
            id="enable_whitelist_shortcut" />
     <span class="optionDescription">Shortcut enabled</span>
     </p>
-  </div>
-
-  <div class="sneaky">
-    <p>
-    Show advanced mode:
-    <input value="OK" type="button" id="advancedfilteroptions_whitelist"/>
-    </p>
-    <script>
-      $(function() {      
-        if (typeof advanced_tab_loaded != "undefined") {
-          $("[id^='advancedfilteroptions']").attr("disabled", "disabled");
-          delete advanced_tab_loaded;
-        } else {
-          $("#advancedfilteroptions_whitelist").click(function() {
-            advanced_tab_loaded = true;
-            $("#tabpages").tabs("add", "advanced.html", "Advanced");
-            $("[id^='advancedfilteroptions']").attr("disabled", "disabled");
-            $("#tabpages").tabs("select", $("#tabpages").tabs("length") - 1);
-          });
-        }
-      });
-    </script>
   </div>
