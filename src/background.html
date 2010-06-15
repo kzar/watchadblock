@@ -52,10 +52,15 @@
         _myfilters.update();
       }
 
+      // Get the custom filters text as a \n-separated text string.
+      utils.get_custom_filters_text = function(options) {
+        return utils.storage_get({key: 'custom_filters', default_value: ''});
+      }
+
       // Set the custom filters to the given \n-separated text string, and 
       // rebuild the filterset.
       // Inputs: filters:string the new filters.
-      utils.set_custom_filters = function(options) {
+      utils.set_custom_filters_text = function(options) {
         utils.storage_set({key: 'custom_filters', value: options.filters});
         _myfilters.update();
       }
@@ -68,7 +73,12 @@
         var json = localStorage.getItem(options.key);
         if (json == null)
           return options.default_value;
-        return JSON.parse(json);
+        try {
+          return JSON.parse(json);
+        } catch (e) {
+          console.log("Couldn't parse json for " + options.key);
+          return options.default_value;
+        }
       }
       // Inputs: key:string, value:object.
       // Returns null.
@@ -417,6 +427,33 @@
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
       }
       note_install();
+
+
+
+      // If the user hasn't yet moved their user filters over to
+      // custom filters, do so now.
+      function temp_convert_to_custom_filters() {
+        var user_filters = utils.storage_get({key: 'user_filters', default_value:0});
+        if (user_filters == 0)
+          return;
+        var new_rules = [];
+        for (var i = 0; i < user_filters.length; i++) {
+          var f = user_filters[i];
+          if (f.domain_regex == '.*' || f.domain_regex == '*')
+            f.domain_regex = '';
+          // If any users actually put regexes into the domain_regex, tough: we
+          // drop those blacklist rules.
+          if (f.domain_regex.indexOf('*') != -1)
+            continue;
+          new_rules.push(f.domain_regex + "##" + f.css_regex);
+        }
+        // Shouldn't be any, but just in case.
+        var current_custom_filters = utils.get_custom_filters_text({});
+        utils.set_custom_filters_text({filters: current_custom_filters + '\n' + new_rules.join('\n')});
+        // utils.storage_remove({key: 'user_filters'});
+      }
+      temp_convert_to_custom_filters();
+
 
       // Safari specific code.
       if (SAFARI) {

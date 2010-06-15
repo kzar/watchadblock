@@ -4,7 +4,7 @@
     $("#btnSaveAdvancedFilters").click(function() {
       var text = $("#txtFiltersAdvanced").val();
 
-      extension_call("set_custom_filters", { filters: text });
+      extension_call("set_custom_filters_text", { filters: text });
 
       $("#lblSaveWarning").css("display", "none");
       $("#btnSaveAdvancedFilters").attr("disabled", "disabled");
