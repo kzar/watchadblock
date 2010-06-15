@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: Wpj7coLvIqQb3+kApt0wOA
+! Checksum: aYlf8rGRudbkJIGhKaG/ng
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 14 Jun 2010 21:20 UTC
+! Last modified: 15 Jun 2010 17:30 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -527,6 +527,7 @@
 /audioads/*
 /auditudeadunit.
 /auto_ad_
+/back-ad.
 /ban_m.php?
 /banimpress.
 /banman.asp?
@@ -2123,7 +2124,7 @@ n728x90_
 ###post5_adbox
 ###priceGrabberAd
 ###print_ads
-###printads
+~bipbip.co.il###printads
 ###product-adsense
 ###promo-ad
 ###promoAds
@@ -2590,7 +2591,7 @@ n728x90_
 ~marktplaats.nl##.adSummary
 ##.adSuperboard
 ##.adTag
-##.adText
+~bipbip.co.il##.adText
 ##.adTileWrap
 ##.adTiler
 ~stadtlist.de,~superbikeplanet.com##.adTitle
@@ -2798,7 +2799,7 @@ n728x90_
 ##.adspot
 ##.adstrip
 ##.adtag
-~anzwers.com.au,~quoka.de,~u-file.net##.adtext
+~anzwers.com.au,~bipbip.co.il,~quoka.de,~u-file.net##.adtext
 ##.adtext_gray
 ##.adtext_onwhite
 ##.adtop
@@ -3496,6 +3497,7 @@ n728x90_
 ##a[href^="http://adserving.liveuniversenetwork.com/"]
 ##a[href^="http://latestdownloads.net/download.php?"]
 ##a[href^="http://secure.signup-page.com/"]
+##a[href^="http://secure.signup-way.com/"]
 ##a[href^="http://www.FriendlyDuck.com/AF_"]
 ##a[href^="http://www.adbrite.com/mb/commerce/purchase_form.php?"]
 ##a[href^="http://www.liutilities.com/aff"]
@@ -3503,14 +3505,10 @@ n728x90_
 ##a[href^="http://www.ringtonematcher.com/"]
 !Google
 ###mbEnd[cellspacing="0"][style="padding: 0pt; white-space: nowrap;"]
-###mbEnd[width="30%"][style]
-###mboxEnd[width="30%"][style]
 ##div#mclip_container:first-child:last-child
 ##div#tads.c
-##div[style="font-size: small; background-color: rgb(255, 249, 221);"]
 ##table.ra[align="left"][width="30%"]
 ##table.ra[align="right"][width="30%"]
-##table[style="background: none repeat scroll 0% 0% rgb(255, 248, 231); padding: 8px; margin-top: 0px;"]
 !--------------------------------------Third-party adservers---------------------------------------!
 ! *** easylist_adservers.txt ***
 ||10pipsaffiliates.com^$third-party
@@ -4047,6 +4045,7 @@ n728x90_
 ||sa.entireweb.com^$third-party
 ||safelistextreme.com^$third-party
 ||salvador24.com^$third-party
+||saple.net^$third-party
 ||sbaffiliates.com^$third-party
 ||scanscout.com^$third-party
 ||sendptp.com^$third-party
@@ -4398,6 +4397,7 @@ n728x90_
 ||dig.abclocal.go.com/preroll/
 ||digdug.divxnetworks.com^
 ||digitaljournal.com/promo/
+||distrowatch.com/images/$background,image
 ||distrowatch.com^*.png|$background,image
 ||divxstage.net/images/download.png
 ||dl4all.com/data4.files/dpopupwindow.js
@@ -4931,10 +4931,8 @@ deviantart.com##div[style="float: right; position: relative; width: 410px; text-
 digitalspy.co.uk###rhs728 > table[width="300"][height="250"]
 digitalspy.co.uk##div[style="border-style: solid; border-color: rgb(209, 209, 225); border-width: 0pt 0pt 1px 1px; margin: 0pt 0pt 10px 10px; padding: 0pt 0pt 7px 7px; float: right; width: 300px;"]
 digitalspy.co.uk##table[align="center"][width="728"]
-dimshare.com##a[href^="http://campaigns.ireel.com/"]
-dimshare.com##a[href^="http://www.affbuzzads.com/affiliate/"]
-dimshare.com##a[href^="http://www.flvdirect.com/movies/?aff="]
-dimshare.com##a[href^="http://www.graboid.com/affiliates/"]
+dimshare.com##.style1
+dimshare.com##table[border="0"][width="352"]
 dir.yahoo.com##td[width="215"]
 discovery.com##.rectangle
 disney.go.com###banner
@@ -5268,7 +5266,7 @@ jeuxvideo-flash.com###pub_header
 jewtube.com###div[style="border: 1px solid rgb(221, 221, 221); padding: 5px; display: block; width: 468px; height: 60px; text-align: left;"]
 jezebel.com###skyscraper
 joox.net###body-sidebar
-joox.net##a[href^="http://www.flvdirect.com/movies/?aff="]
+joox.net##img[alt="Download FLV Direct"]
 joystickdivision.com###Page_Header
 joystiq.com###topleader-wrap
 joystiq.com##.medrect
@@ -5308,7 +5306,6 @@ lbc.co.uk###topbanner
 learninginfo.org##table[align="left"][width="346"]
 lemondrop.com##.sidebarBanner
 lemondrop.com##.topBanner
-letssingit.com##iframe[id^="adslot_"]
 licensing.biz##.newsinsert
 life.com##.ad
 lifehack.org##.offer
@@ -5379,11 +5376,9 @@ mail.google.com##.oM
 mail.yahoo.com###MNW
 mail.yahoo.com###northbanner
 mail.yahoo.com###nwPane
-majorgeeks.com##a[href^="http://www.liutilities.com/products/campaigns/adv/"]
-majorgeeks.com##a[href^="https://secure.avangate.com/affiliate.php?"]
-majorgeeks.com##div > table.author > tbody > tr > td
+majorgeeks.com##a[target="_blank"]
+majorgeeks.com##a[target="top"]
 majorgeeks.com##table[align="right"][width="336"][style="padding-left: 5px;"]
-majorgeeks.com##table[width="478"][height="70"]
 malaysiastory.com##.box2
 maltonmercury.co.uk###banner01
 map24.com###cont_m24up
@@ -5397,7 +5392,6 @@ mediafire.com###catfish_div
 mediafire.com##.download_banner_container
 mediafire.com##.ninesixty_container:last-child td[align="right"][valign="top"]:first-child
 mediaite.com###magnify_widget_rect_handle
-meebo.com##div[id$="MediaBar"]
 megafileupload.com##.banner300
 megafileupload.com##.big_banner
 mercurynews.com###mn_SP_Links
@@ -5441,8 +5435,6 @@ mosnews.com##.right_pop
 motherjones.com##.post-continues
 motherproof.com###leader
 motorcycle-usa.com##.bannergoogle
-movie2k.com###ball
-movie2k.com##a[href^="http://www.ireel.com/signup?ref="]
 moviecritic.com.au###glinks
 moviefone.com###WIAModule
 moviefone.com##.ent_promo_sidetexttitle
@@ -5453,14 +5445,8 @@ moviesplanet.com##.gb
 movshare.net##.ad
 mp3-shared.net##a[href^="http://click.yottacash.com?PID="]
 mp3raid.com##a[href^="http://www.mp3va.com/search.php?"]
-msn.com###lgad
-msn.com###mlad
-msn.com###rtMod_wonderwall
 msn.com##.abs
 msn.com##.ad
-msn.com##.prtnrtbs
-msn.com##a[href^="http://g.msn.com/0AD0"]
-msn.com##div[id^="sponsored_"]
 msnbc.msn.com###Dcolumn
 msnbc.msn.com###marketplace
 msnbc.msn.com##.w460
@@ -5486,7 +5472,7 @@ myspace.com###medRec
 myspace.com###music_googlelinks
 myspace.com###music_medrec
 myspace.com###tkn_medrec
-mywebsearch.com##a[id^="rst"].desc
+mywebsearch.com##.desc
 narutofan.com###right-spon
 nasdaq.com##div[style="vertical-align: middle; width: 336px; height: 284px;"]
 nationalpost.com##.ad
@@ -5498,7 +5484,7 @@ neopets.com###ban_bottom
 neopets.com##a[style="display: block; margin-left: auto; margin-right: auto; width: 996px; height: 94px;"]
 neowin.net###special-steve
 neowin.net##.unspecific
-neowin.net##div[style$="height: 250px; width: 300px;"]
+neowin.net##div[style="background: url(\"/images/atlas/aww2.png\") no-repeat scroll center center transparent ! important; height: 250px; width: 300px;"]
 nerve.com###topBanner
 netchunks.com###af_adblock
 netchunks.com###m_top_adblock
@@ -5520,7 +5506,7 @@ news.yahoo.com###ymh-invitational-recs
 news4jax.com##a[target="_blank"][href^="http://ad.doubleclick.net/"]
 newsarama.com##.marketplace
 newscientist.com##a[href^="http://www.google.com/aclk?"]
-newsfactor.com##td[background$="/back-ad.gif"]
+newsfactor.com##td[style="border-left: 1px solid rgb(192, 192, 192); padding-top: 3px; padding-bottom: 3px;"]
 newsmax.com###noprint1
 newsmax.com##.sponsors_spacer
 newsonjapan.com###squarebanner300x250
@@ -5549,7 +5535,6 @@ notdoppler.com##td[style="background-image: url(\"img/main_topshadow-light.gif\"
 notdoppler.com##td[width="728"][height="90"]
 notebooks.com##.efbleft
 noupe.com##.ad
-novamov.com##a[href^="http://secure.signup-way.com/"]
 nwsource.com###skyscraperwide
 nwsource.com##.adblock
 nwsource.com##.googlemiddle
@@ -5696,7 +5681,8 @@ runescape.com###tb
 rushlimbaugh.com###top_leaderboard
 rwonline.com##table[width="665"]
 schlockmercenary.com##td[colspan="3"]
-sci-tech-today.com##td[background$="/back-ad.gif"]
+sci-tech-today.com##td[style="border-left: 1px dashed rgb(192, 192, 192); padding: 5px;"]
+sci-tech-today.com##td[style="border-left: 1px solid rgb(192, 192, 192); padding-top: 3px; padding-bottom: 3px;"]
 scienceblogs.com###leaderboard
 scienceblogs.com##.skyscraper
 sciencedaily.com##.rectangle
@@ -5729,7 +5715,8 @@ search.yahoo.com###east
 search.yahoo.com###sec-col
 search.yahoo.com##.bbox
 search.yahoo.com##.overture
-searchenginejournal.com##a[id^="bsa_"]
+searchenginejournal.com##.even
+searchenginejournal.com##.odd
 seattlepi.com##.wingadblock
 secretmaryo.org##div[style="width: 728px; height: 90px; margin-left: 6px;"]
 securityfocus.com##td[width="160"][bgcolor="#eaeaea"]
@@ -5853,7 +5840,6 @@ techrepublic.com.com###spotlight
 techrepublic.com.com###wpPromo
 techrepublic.com.com##.essentialTopics
 techrepublic.com.com##.hotspot
-techspot.com##a[href^="http://www.techspot.com/openxads/"]
 techwatch.co.uk##table[width="250"][height="300"]
 techweb.com###h_banner
 techweb.com##div[id^="p_p_id_SponsoredLinks_"]
@@ -5880,10 +5866,6 @@ theaa.com###unanimis1
 theage.com.au##.ad
 thebizzare.com##.adblock
 thecelebritycafe.com##table[width="135"][height="240"]
-thecellfreak.com##.banheader
-thecellfreak.com##.block-tcftv
-thecellfreak.com##.hotdeals2
-thecellfreak.com##div[id^="block-adscence"]
 thecourier.co.uk###sidebarMiddleCol
 theeagle.com##.SectionRightRail300x600Box
 thefashionspot.com###roadblock
@@ -5939,7 +5921,6 @@ thisisleicestershire.co.uk##.banner-extButton
 thisismoney.co.uk###Sky
 thisisplymouth.co.uk##.leaderboard
 tidbits.com###top_banner
-tidbits.com##div[class^="sponsor"]
 time.com##.sep
 timeanddate.com##fieldset[style="float: right; width: 180px;"]
 timeout.com##.MD_textLinks01
@@ -6054,7 +6035,6 @@ walletpop.com##.medrect
 walletpop.com##.sponsWidget
 washingtonpost.com###textlinkWrapper
 washingtonscene.thehill.com##.top
-watch-movies.ro##a[href^="http://secure.signup-way.com/"]
 watoday.com.au##.ad
 weather.ninemsn.com.au###msnhd_div3
 weatherbug.com##.wXcds1
@@ -6231,8 +6211,10 @@ zuploads.com##.hispeed
 @@||deviantart.com/global/difi/?*&ad_frame=$subdocument
 @@||direct.fairfax.com.au/hserver/*/site=vid.*/adtype=embedded/$script
 @@||discovery.com/components/consolidate-static/?files=*/adsense-for-content.css$stylesheet
+@@||discovery.com/components/consolidate-static/?files=*/adsense-for-search.css$stylesheet
 @@||distrowatch.com/images/icon-large/$image
 @@||distrowatch.com/images/icon-small/$image
+@@||distrowatch.com/images/other/$image
 @@||distrowatch.com/images/people/$image
 @@||distrowatch.com/images/screenshots/$image
 @@||doubleclick.net/ad/*smartclip$script,domain=last.fm
