@@ -366,21 +366,17 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblock.schack.dk/block.txt",
       name: "Danish filters",
     },
-    "german": {
-      url: "http://chewey.de/mozilla/data/adblock.txt",
-      name: "German filters",
-    },
     "hungarian": {
       url: "http://pete.teamlupus.hu/hufilter.txt",
       name: "Hungarian filters",
     },
-    "italian": {
-      url: "http://mozilla.gfsolone.com/filtri.txt",
-      name: "Italian filters",
-    },
     "israeli": {
       url: "http://israellist.googlecode.com/files/IsraelList.txt",
       name: "Israeli filters",
+    },
+    "italian": {
+      url: "http://mozilla.gfsolone.com/filtri.txt",
+      name: "Italian filters",
     },
     "japanese": {
       url: "http://www.fanboy.co.nz/adblock/fanboy-adblocklist-jpn.txt",
@@ -394,15 +390,15 @@ MyFilters.__make_subscription_options = function() {
       url: "http://www.niecko.pl/adblock/adblock.txt",
       name: "Polish filters",
     },
-    "easylist_plus_spanish": { //id must not change!
-      url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
-      name: "Spanish filters",
-    },
     "russian": {
       url: "http://ruadlist.googlecode.com/svn/trunk/adblock.txt",
       name: "Russian filters",
     },
-     "ukranian": {
+    "easylist_plus_spanish": { //id must not change!
+      url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
+      name: "Spanish filters",
+    },
+    "ukranian": {
       url: "http://adblock.oasis.org.ua/banlist.txt",
       name: "Ukranian filters",
     },
