@@ -100,10 +100,15 @@ MyFilters.prototype.rebuild = function() {
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
       texts.push(this._subscriptions[id].text);
+
+  // Include custom filters.
+  texts.push( utils.storage_get({key: 'custom_filters', default_value: ''}) );
+
   texts = texts.join('\n').split('\n');
 
-  // Remove duplicates.
+  // Remove duplicates and empties.
   var hash = {}; for (var i = 0; i < texts.length; i++) hash[texts[i]] = 1;
+  delete hash[''];
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
   var options = utils.get_optional_features({});

@@ -156,11 +156,9 @@ BlacklistUi.prototype._build_page2 = function() {
       buttons: {
         "Block it!": function() {
           if ($("#summary", that._ui_page2).text().length > 0) {
-            var filter = {
-              domain_regex: document.domain, // TODO option to specify
-              css_regex: $("#summary", that._ui_page2).text()
-            };
-            extension_call('add_user_filter', { filter: filter }, function() {
+            var filter = document.domain + "##" + 
+                         $("#summary", that._ui_page2).text();
+            extension_call('add_custom_filter', { filter: filter }, function() {
               that._fire('block');
             });
           } else {alert('No filter specified!');}
@@ -178,12 +176,7 @@ BlacklistUi.prototype._build_page2 = function() {
           var valid_filter = global_filter_validation_regex.test(custom_filter);
           if (valid_filter && custom_filter != null &&
               custom_filter.indexOf('####') == -1) {
-            var parts = custom_filter.split("##");
-            var filter = {
-                domain_regex: (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0],
-                css_regex: parts[1]
-              };
-            extension_call('add_user_filter', { filter: filter }, function() {
+            extension_call('add_custom_filter', { filter: custom_filter }, function() {
               that._fire('block');
             });
           } else {

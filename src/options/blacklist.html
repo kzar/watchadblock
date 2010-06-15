@@ -1,95 +1,79 @@
+  <style>
+    .addControls {
+      margin-left: 20px;
+    }
+    .entryTable {
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .entryTable input[type="button"] {
+      height: 22px;
+    }
+    .guide {
+      font-style: italic;
+      color: grey;
+    }
+  </style>
+
   <script>
-    register_broadcast_listener('user_filters_updated', function() {
-      extension_call('get_user_filters', {}, display_user_filters);
-    });
+    $(function() {
 
-    function display_user_filters(filters) {
-      var view = $("#user_filters");
+      function appendCustomFilter(filter) {
+        var customFilterText = $("#txtFiltersAdvanced").val();
+        $("#txtFiltersAdvanced").val(filter + "\n" + customFilterText);
+        saveFilters();
+      }
 
-      var table = $("<table></table>").
-        addClass("entry_table");
-      view.html(table);
-      table.append("<tr>" +
-        "<th>Block ads that match this CSS selector...</th>" +
-        "<th>on domains that match this regex</th>" +
-        "</tr>");
-      $.each(filters, function(i, filter) {
-        var cell1 = $("<td>").text(filter.css_regex);
-        var cell2 = $("<td>").text(filter.domain_regex);
-        var cell3 = $('<a href="#"></a>').
-          text("Unblock").
-          click(function(event) {
-            event.preventDefault();
-            extension_call('remove_user_filter', {filter:filter});
-          });
-        var cell4 = $('<a href="#"></a>').
-          css("margin-left", "4px").
-          text("Edit").
-          click(function(event) {
-            event.preventDefault();
-            // Make a global variable that will be consumed when the
-            // filters are redrawn
-            blacklist_edit_entry = filter;
-            extension_call('remove_user_filter', {filter:filter});
-          });
-        var row = $("<tr></tr>").
-          append(cell1).
-          append(cell2).
-          append(cell3).
-          append(cell4).
-          appendTo(table);
+      $("#txtUserFilterCss").val('div[class*="exampleClass"][id="someBigAd"]');
+      $("#txtUserFilterDomain").val('*');
+
+      $("#txtBlockUrl").val(".com/flashAd");
+      $("#txtBlockUrlDomain").val("*");
+
+      $("#btnAddUserFilter").click(function() {
+        var blockCss = $("#txtUserFilterCss").val();
+        var blockDomain = $("#txtUserFilterDomain").val();
+
+        if (blockDomain == '.*' || blockDomain == "*" || blockDomain == '')
+          appendCustomFilter("##" + blockCss);
+        else
+          appendCustomFilter(blockDomain + "##" + blockCss);
+
+        $(this).closest(".entryTable").find("input:text").val("");
+        $(this).attr("disabled", "disabled");
       });
 
-      var cell1 = $("<td><input id='txtUserFilterCss' /></td>");
-      var cell2 = $("<td><input id='txtUserFilterDomain' /></td>");
-      var cell3 = $("<input/>", {
-        type:"button", 
-        id:"btnAddUserFilter", 
-        value:"Block it!",
-        disabled: "disabled",
-        style: "height: 22px; margin-top:2px;",
-        click: function() {
-          var css_regex = $("#txtUserFilterCss").val();
-          var domain_regex = $("#txtUserFilterDomain").val();
-          if (domain_regex == "" || domain_regex == "*")
-            domain_regex = ".*";
-          if (css_regex.indexOf("##") != -1) {
-            // The user misunderstood a bug report and thought they
-            // were to add a filter themselves that was in easylist
-            // format.
-            var parts = css_regex.split("##");
-            css_regex = (parts[1] == null || parts[1] == '') ? '*' : parts[1];
-            domain_regex = (parts[0] == '' || parts[0] == '*') ? '.*' : parts[0];
-          }
+      $("#btnAddUrlBlock").click(function() {
+        var blockUrl = $("#txtBlockUrl").val().trim();
+        var blockDomain = $("#txtBlockUrlDomain").val().trim();
+        if (blockDomain == '*')
+          blockDomain = '';
 
-          extension_call(
-            'add_user_filter', 
-            {
-              filter: {
-                domain_regex: domain_regex,
-                css_regex: css_regex
-              }
-            }
-          );
-          $("#txtUserFilterCss").val("");
-          $("#txtUserFilterDomain").val("");
-        }
+        if (blockDomain == '')
+          appendCustomFilter(blockUrl);
+        else
+          appendCustomFilter(blockUrl + "$domain=" + blockDomain);
+
+        $(this).closest(".entryTable").find("input:text").val("");
+        $(this).attr("disabled", "disabled");
       });
 
-      $("<tr></tr>").
-        append(cell1).
-        append(cell2).
-        append(cell3).
-        appendTo(table);
+      var validateUrlFilter = function() {
+        var blockUrl = $("#txtBlockUrl").val().trim();
+        var blockDomain = $("#txtBlockUrlDomain").val().trim();
+        if (blockDomain == '*')
+          blockDomain = '';
 
-        table.append("<tr><td colspan=2 class='plain'><a id='btnUserFilterExamples' href='#'>Help!</a></td></tr>");
-      $("#btnUserFilterExamples").click(function(event) {
-        event.preventDefault();
-        $("#user_filter_help").show();
-        $(this).remove();
-      });
+        var ok = true;
+        if (blockUrl == '')
+          ok = false;
+        if (blockDomain != '' && blockDomain.indexOf('.') == -1)
+          ok = false;
+        $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
+      }
+      $("#divUrlBlock input:text").keyup(validateUrlFilter);
 
-      var check_for_valid_filter = function() {
+      var validateCssFilter = function() {
         var css_regex = $("#txtUserFilterCss").val();
         var domain_regex = $("#txtUserFilterDomain").val();
         var ok = true;
@@ -105,102 +89,140 @@
         }
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
-      $("#txtUserFilterCss").keyup(check_for_valid_filter);
-      $("#txtUserFilterDomain").keyup(check_for_valid_filter);
+      $("#divCssBlock input:text").keyup(validateCssFilter);
     
-      $('#txtUserFilterCss, #txtUserFilterDomain').keypress(function(event) {
-        if (event.keyCode == '13' && $("#btnAddUserFilter").attr("disabled") == false) {
+      $('.entryTable input:text').keypress(function(event) {
+        var submitButton = $(this).closest(".entryTable").find(":button");
+        if (event.keyCode == '13' && submitButton.attr("disabled") == false) {
           event.preventDefault();
-          $("#btnAddUserFilter").click();
+          submitButton.click();
         }
       });
 
-      //Put filters from 'edit' in the textboxes
-      if (typeof blacklist_edit_entry != "undefined") {
-        if (blacklist_edit_entry.css_regex.length > 0) {
-          $('#txtUserFilterCss').val(blacklist_edit_entry.css_regex);
-          $('#txtUserFilterDomain').val(blacklist_edit_entry.domain_regex);
-          check_for_valid_filter();
-        }
-        delete blacklist_edit_entry; // remove global variable
+      $("a.controlsLink").click(function() {
+        var myControls = $(this).closest("div").find(".addControls");
+        $(".addControls").not(myControls).slideUp();
+        myControls.slideDown();
+      });
+
+      $("#btnEditAdvancedFilters").click(function() {
+        $("#divAddNewFilter").slideUp();
+        $(".addControls").slideUp();
+        $("#txtFiltersAdvanced").attr("disabled", null);
+        $("#divSaveButton").slideDown();
+        $("#btnEditAdvancedFilters").hide();
+      });
+
+      function saveFilters() {
+        var text = $("#txtFiltersAdvanced").val();
+        extension_call("set_custom_filters_text", { filters: text });
+
+        $("#divAddNewFilter").slideDown();
+        $("#txtFiltersAdvanced").attr("disabled", "disabled");
+        $("#divSaveButton").slideUp();
+        $("#btnEditAdvancedFilters").show();
       }
-    }
-
-    $(document).ready(function() {
-      extension_call('get_user_filters', {}, display_user_filters);
-
-      load_options();
+      $("#btnSaveAdvancedFilters").click(saveFilters);
+      
+      extension_call('get_custom_filters_text', {}, function(text) {
+        $("#txtFiltersAdvanced").val(text);
+      });
+    
     });
 
+    $(document).ready(function() {
+      load_options();
+
     $('.optionDescription').click(checkboxlabel_clicked);
+    });
   </script>
 
-  <a name="user_filters_link"></a>
   <div class="section">
-    <h2>Block an ad that the filters missed</h2>
-    <div id="user_filters"></div>
+    <h2>Block an ad that the filter lists missed</h2>
 
-    <div id="user_filter_help" style="display:none">
-      <p>Remember -- you can always just 
-      <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user" target="_new">report the ad to us</a>,
-      and your report will result in a fix for yourself and for 
-      over a hundred thousand other users!</p>
-
-      <table class="help_table">
-        <tr>
-          <th>Sample CSS selectors</th>
-          <th>What they match</th>
-        </tr>
-        <tr>
-          <td>div[class="ad"]</td>
-          <td>any div whose class is "ad"</td>
-        </tr>
-        <tr>
-          <td>table td img[class^="Ad"][id="bigAd"]</td>
-          <td>any img (within tds within tables) whose class starts 
-            with "Ad" and whose id is "bigAd"</td>
-        </tr>
-        <tr>
-          <td>iframe[name$="AdFrame"][src*="ads.com"]:last-child</td>
-          <td>any iframe whose name ends with "AdFrame" <br/>and whose src 
-            contains "ads.com" and who is the last element in its 
-            parent node</td>
-        </tr>
-        <tr>
-          <th>Sample domain regexes</th>
-          <th>What they match</th>
-        </tr>
-        <tr>
-          <td>.*</td>
-          <td>any domain</td>
-        </tr>
-        <tr>
-          <td>mail..*.com</td>
-          <td>any domain containing "mail." and ".com" in that order</td>
-        </tr>
-        <tr>
-          <td>mail.google.com</td>
-          <td>any domain containing "mail.google.com"</td>
-        </tr>
-        <tr>
-          <td>^mail.google.com$</td>
-          <td>any domain exactly matching "mail.google.com"</td>
-        </tr>
-      </table>
+    <div>
+      <b>Shortcut:</b> Press <b>Ctrl-Shift-K</b> (think "Kill!") on a page 
+      to block an ad.  <span style="font-size:smaller">(If you don't see 
+      anything happen, try clicking on the page first.)</span>
+      <input style="margin-left: 15px" type="checkbox" class="feature" 
+             id="enable_blacklist_shortcut" />
+      <span class="optionDescription">Shortcut enabled</span>
     </div>
 
-    <p class="note">
-      Got a particularly useful filter?  Why not 
-      <a href="http://code.google.com/p/adblockforchrome/issues/entry?template=Ad%20report%20from%20user" target="_new">share it with us</a>,
-      so we can give it to all AdBlock users?
-    </p>
+    <div>
 
-    <b>Shortcut:</b> Press <b>Ctrl-Shift-K</b> (think "Kill!") on a page 
-    to block an ad.  <span style="font-size:smaller">(If you don't see 
-    anything happen, try clicking on the page first.)</span>
-    <input style="margin-left: 15px" type="checkbox" class="feature" 
-           id="enable_blacklist_shortcut" />
-    <span class="optionDescription">Shortcut enabled</span>
+      <div id="divAddNewFilter">
+        <h3>Add a new filter:</h3>
+
+        <div>
+          <a class="controlsLink" id="aUrlBlock" href="#">Block an ad by its URL</a>
+          <div id="divUrlBlock" class="addControls" style="display:none">
+            <table class="entryTable">
+              <tr>
+                <td>Block URLs containing this text</td>
+                <td>
+                <td>Domain of page to apply on</td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td><input id="txtBlockUrl" style="width:300px"/></td>
+                <td class="guide">$domain=</td>
+                <td><input id="txtBlockUrlDomain"/></td>
+                <td><input id="btnAddUrlBlock" type="button" value="Block it!"/></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <a class="controlsLink" id="aCssBlock" href="#">Hide a section of a webpage</a>
+          <div id="divCssBlock" class="addControls" style="display:none">
+            <table class="entryTable">
+              <tr>
+                <td>Domain of page to apply on</td>
+                <td>
+                <td>CSS to match</td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td><input id="txtUserFilterDomain" style="width:200px"/></td>
+                <td class="guide">##</td>
+                <td><input id="txtUserFilterCss" style="width:300px"/></td>
+                <td><input id="btnAddUserFilter" type="button" value="Block it!"/></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <h3>Manually edit your filters:</h3>
+      <div>
+        <input value="Edit" type="button" id="btnEditAdvancedFilters" />
+        <div id="divSaveButton" style="display:none">
+          <p class="footnote">
+            Be careful: if you make a mistake here a lot of other filters,
+            including the official filters, could get broken too!<br/>
+            Read the
+            <a href="http://adblockplus.org/en/filters" target="_new">filter syntax tutorial</a>
+            to learn how to add advanced blacklist and whitelist filters.
+          </p>
+          <input value="Save" type="button" id="btnSaveAdvancedFilters" />
+          <span id="lblSaveWarning" style="color:red;margin-left:20px">
+            <b>Don't forget to save!</b>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <div>
+      <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
+      <br/>
+    </div>
+
   </div>
 
   <div class="sneaky">

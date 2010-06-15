@@ -16,12 +16,12 @@ function verify_whitelist() {
         "AdBlock won't run on domains ending in<br/>" +
         "'<i id='adblockdomainname'>" + domain + "</i>'.").
       dialog({
-        title: "Whitelist this domain?",
+        title: "Exclude this domain?",
         width: "300px",
         minHeight: 50,
         buttons: {
           "Cancel": function() { page.dialog('close');},
-          "Whitelist it!": function() {
+          "OK!": function() {
             extension_call('add_to_whitelist', {domain:domain}, function() {
               document.location.reload();
             });

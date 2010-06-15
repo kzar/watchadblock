@@ -90,19 +90,6 @@ function block_list_via_css(selectors, title) {
   }
 }
 
-function early_blacklist(user_filters) {
-  var blacklisted = [];
-  for (var i = 0; i < user_filters.length; i++) {
-    var filter = user_filters[i];
-    if (new RegExp(filter.domain_regex).test(document.domain))
-      blacklisted.push(filter.css_regex);
-  }
-  if (blacklisted.length > 0) {
-    log("Blacklist adding " + blacklisted.length + " CSS rules.");
-    block_list_via_css(blacklisted);
-  }
-}
-
 // If we're on GMail, do a speed hack and return true.
 function gmail_hack() {
   // TODO: move this into a more general place.
@@ -156,8 +143,6 @@ extension_call('get_features_and_filters', opts, function(data) {
   if (SAFARI) {
     enableTrueBlocking();
   }
-
-  early_blacklist(data.user_filters);
 
   block_list_via_css(data.selectors);
 
