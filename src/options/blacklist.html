@@ -16,10 +16,12 @@
   </style>
 
   <script>
-    register_broadcast_listener('filters_updated', function(filters) {
-      if ($("#txtFiltersAdvanced").attr("disabled") != null)
-        return;
-      $("#txtFiltersAdvanced").val(filters);
+    register_broadcast_listener('filters_updated', function() {
+      extension_call('get_custom_filters_text', {}, function(filters) {
+        if ($("#txtFiltersAdvanced").attr("disabled") == false)
+          return;
+        $("#txtFiltersAdvanced").val(filters);
+      });
     });
 
     $(function() {
