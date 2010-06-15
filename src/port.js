@@ -78,7 +78,13 @@ if (SAFARI) {
               return;
 
             callback(messageEvent.message.data);
-            safari.self.removeEventListener("message", responseHandler, false);
+            // Change to calling in 0-ms setTimeout, as Safari team thinks
+            // this will work around their crashing until they can release
+            // a fix.
+            // safari.self.removeEventListener("message", responseHandler, false);
+            window.setTimeout(function() {
+              safari.self.removeEventListener("message", responseHandler, false);
+            }, 0);
           };
 
           safari.self.addEventListener("message", responseHandler, false);
