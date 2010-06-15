@@ -244,17 +244,6 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
   }
   return result;
 }
-// Return a map from subscription id to
-// {
-//   text:string - all filters from this subscription
-// }
-MyFilters.prototype.get_subscriptions_text = function() {
-  var result = {};
-  for (var id in this._subscriptions) {
-    result[id] = {text: this._subscriptions[id].text}
-  }
-  return result;
-}
 
 // Return a new subscriptions object containing all available subscriptions,
 // with EasyList and AdBlock custom filters subscribed from disk.
