@@ -155,7 +155,6 @@
         }
         return {
           whitelist: utils.get_whitelist(),
-          user_filters: utils.get_user_filters(),
           filters: utils.get_optimized_filters({}),
           top_frame_domain: top_frame_domains[sender.tab.id]
         };
@@ -180,7 +179,6 @@
         // it seems fine.  WEIRD.
         var result = {
           whitelist: utils.get_whitelist(),
-          user_filters: utils.get_user_filters(),
           selectors: utils.selectors_for_domain({domain:options.domain}),
           features: utils.get_optional_features(),
           top_frame_domain: top_frame_domains[sender.tab.id],
@@ -256,33 +254,10 @@
 
 
 
-      // USER FILTERS
-
-      utils.get_user_filters = function(options) {
-        return utils.storage_get({key:'user_filters', default_value: []});
-      }
-      utils.add_user_filter = function(options) {
-        var user_filters = utils.get_user_filters();
-        var new_filter = options.filter;
-        new_filter.domain_regex = new_filter.domain_regex.toLowerCase();
-        user_filters.unshift(new_filter);
-        utils.storage_set({key:'user_filters', value:user_filters});
-        utils.emit_broadcast({fn:'user_filters_updated', options: {}});
-      }
-      utils.remove_user_filter = function(options) {
-        var user_filters = utils.get_user_filters();
-        for (var i = 0; i < user_filters.length; i++) {
-          if (user_filters[i].domain_regex == options.filter.domain_regex &&
-              user_filters[i].css_regex == options.filter.css_regex) {
-            user_filters.splice(i, 1);
-            utils.storage_set({key:'user_filters', value:user_filters});
-            utils.emit_broadcast({fn:'user_filters_updated', options: {}});
-          }
-        }
-      }
-      utils.clear_user_filters = function(options) {
-        utils.storage_set({key:'user_filters', value: []});
-        utils.emit_broadcast({fn:'user_filters_updated', options: {}});
+      utils.add_custom_filter = function(options) {
+        var custom_filters = utils.get_custom_filters_text({});
+        custom_filters = custom_filters + '\n' + options.filter;
+        utils.set_custom_filters_text({filters: custom_filters });
       }
 
       // Called within content scripts, by broadcast_channel.js's 
