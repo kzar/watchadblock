@@ -52,6 +52,14 @@
         _myfilters.update();
       }
 
+      // Add a new custom filter entry.
+      // Inputs: filter:string line of text to add to custom filters.
+      utils.add_custom_filter = function(options) {
+        var custom_filters = utils.get_custom_filters_text({});
+        custom_filters = custom_filters + '\n' + options.filter;
+        utils.set_custom_filters_text({filters: custom_filters });
+      }
+
       // Get the custom filters text as a \n-separated text string.
       utils.get_custom_filters_text = function(options) {
         return utils.storage_get({key: 'custom_filters', default_value: ''});
@@ -249,13 +257,6 @@
         return _myfilters.unsubscribe(options.id, options.del);
       }
 
-
-
-      utils.add_custom_filter = function(options) {
-        var custom_filters = utils.get_custom_filters_text({});
-        custom_filters = custom_filters + '\n' + options.filter;
-        utils.set_custom_filters_text({filters: custom_filters });
-      }
 
       // Called within content scripts, by broadcast_channel.js's 
       // broadcast(), to bounce messages back to all listeners
