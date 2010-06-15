@@ -416,7 +416,7 @@
         // Shouldn't be any, but just in case.
         var current_custom_filters = utils.get_custom_filters_text({});
         utils.set_custom_filters_text({filters: current_custom_filters + '\n' + new_rules.join('\n')});
-        // utils.storage_remove({key: 'user_filters'});
+        utils.storage_remove({key: 'user_filters'});
       }
       temp_convert_to_custom_filters();
 
