@@ -402,6 +402,10 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblock.oasis.org.ua/banlist.txt",
       name: "Ukranian filters",
     },
+    "easyprivacy": {
+      url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
+      name: "EasyPrivacy",
+    },
   };
   var result = {};
   for (var id in official_options) {
