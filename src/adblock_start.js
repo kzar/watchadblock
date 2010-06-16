@@ -54,14 +54,35 @@ function typeForElement(el) {
   }
 }
 
+// Browser-agnostic canLoad function.
+// Returns false if data.url, data.elType, and data.pageDomain together
+// should not be blocked.
+function browser_canLoad(event, data) {
+  if (SAFARI) {
+    return safari.self.tab.canLoad(event, data);
+  } else {
+    // The first time this is called we must build our filters.
+    if (typeof _local_filterset == "undefined") {
+      _local_filterset = FilterSet.fromText(__sourceText);
+      delete __sourceText;
+    }
+
+    // TODO: copied from background.html from Safari section.
+    var limited = _local_filterset.limitedToDomain(data.pageDomain);
+    var isMatched = data.url && limited.matches(data.url, data.elType);
+    if (isMatched)
+      console.log("CHROME TRUE BLOCK " + data.url);
+    return !isMatched;
+  }
+}
+
 function enableTrueBlocking() {
-  // Only works in Safari.
   document.addEventListener("beforeload", function(event) {
     const el = event.target;
     // Cancel the load if canLoad is false.
     var elType = typeForElement(el);
     var url = relativeToAbsoluteUrl(urlForElement(el, elType));
-    if (false == safari.self.tab.canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
+    if (false == browser_canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
       if (el.nodeName != "BODY") {
         // TODO: temp workaround Safari crashing bug.
@@ -118,17 +139,15 @@ function facebook_hack() {
   }
 }
 
-
-
 var opts = { domain: document.domain };
 // The top frame should tell the background what domain it's on.  The
 // subframes will be told what domain the top is on.
 if (window == window.top)
   opts.is_top_frame = true;
     
-// returns everyintg _v3 did, plus _optional_features and selectors.
 extension_call('get_features_and_filters', opts, function(data) {
   var start = new Date();
+  __sourceText = data.filtertext;
 
   if (data.features.debug_logging.is_enabled) {
     DEBUG = true;
@@ -145,9 +164,8 @@ extension_call('get_features_and_filters', opts, function(data) {
 
   facebook_hack();
 
-  if (SAFARI) {
+  if (SAFARI || data.features.true_blocking_support.is_enabled)
     enableTrueBlocking();
-  }
 
   block_list_via_css(data.selectors);
 

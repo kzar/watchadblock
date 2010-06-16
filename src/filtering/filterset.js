@@ -28,6 +28,7 @@ function FilterSet() {
 // included in this FilterSet (e.g. because the user likes that type of ads.)
 FilterSet.fromText = function(text, ignoredAdTypes) {
   var result = new FilterSet();
+  result._sourceText = text;
 
   var lines = text.split('\n');
   for (var i = 0; i < lines.length; i++) {
