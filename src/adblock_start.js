@@ -63,8 +63,13 @@ function enableTrueBlocking() {
     var url = relativeToAbsoluteUrl(urlForElement(el, elType));
     if (false == safari.self.tab.canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
-      if (el.nodeName != "BODY")
-        $(el).remove();
+      if (el.nodeName != "BODY") {
+        // TODO: temp workaround Safari crashing bug.
+        // $(el).remove();
+        window.setTimeout(function() {
+          $(el).remove();
+        }, 0);
+      }
     }
   }, true);
 }
