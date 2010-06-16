@@ -49,20 +49,11 @@
       <br/>
       <span style='font-style:italic;'>Note that Chrome doesn't fully support this, so a few resources might still
       be downloaded and hidden if you're on a fast computer.</span>
-      <br/>
-      <span id="chromeblock_warning" style='font-style:italic; color:red'>
-        This only works in Chrome 6.0.427.0 and later.  You have version <span
-          id="chromeversion"></span>.  Install the 
-        <a href="http://www.chromium.org/getting-involved/dev-channel">dev build of Chrome</a> to get 
-        the latest version.</span>
     </p>
     <script>
       $(function() {
         if (!SAFARI) {
           $("#chromeblock").show();
-          $("#chromeversion").text(navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
-          if (browserHasTrueBlocking())
-            $("#chromeblock_warning").hide();
         }
       }); 
     </script>
