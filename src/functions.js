@@ -52,26 +52,3 @@ function checkboxlabel_clicked() {
     click(). //trigger the UI
     change(); // activate the handler as if a user had clicked it
 }
-
-// Return true if the browser supports true blocking.
-var browserHasTrueBlocking = function() {
-  if (SAFARI)
-    return true;
-  try {
-    var version = navigator.userAgent.match('Chrome\/([0-9.]+)')[1];
-    var parts = version.split('.');
-    var major = parseInt(parts[0]);
-    var minor = parseInt(parts[1]);
-    var dot = parseInt(parts[2]);
-    if (major < 6) return false;
-    if (major > 6) return true;
-    if (minor > 0) return true;
-    if (dot < 427) return false;
-    return true;
-  }
-  catch (ex) {
-    console.log("Failed to detect resource blocking: " + ex.message);
-    return false;
-  }
-}
-
