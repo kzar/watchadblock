@@ -153,14 +153,17 @@
           //1, 2: AB custom and easylist
           //3: additional easylist filters
           //4: other default filters
-          //5: custom filter lists
+          //5: EasyPrivacy
+          //6: custom filter lists
           var sorted_list = [];
           for (var id in subscriptions) {
             var entry = subscriptions[id];
             if (id == 'easylist' || id == 'adblock_custom')
               entry.order = "1" + id;
+            else if (id == 'easyprivacy')
+              entry.order = "5" + id;
             else if (entry.user_submitted) 
-              entry.order = "5" + entry.name;
+              entry.order = "6" + entry.name;
             else if (entry.name.indexOf(" - additional ") == 0)
               entry.order = "3" + entry.name;
             else
