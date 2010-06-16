@@ -228,7 +228,9 @@ function adblock_begin_v2() {
 
     run_specials(data.features);
 
-    // Safari already removes elements via true blocking.
+    // Safari already remove elements via true blocking.
+    // Chrome 6 can't reliably do it for all elements, so we still have
+    // to run this code.
     if (!SAFARI) {
       remove_ad_elements_by_url(true); // calls debug_print_selector_matches
     } else {
@@ -246,8 +248,10 @@ function adblock_begin_v2() {
         remove_ad_elements_by_url();
       }, 500);
     }
-    // Safari does true resource blocking, so we don't have to worry about
-    // new nodes being inserted.
+    // Safari does true resource blocking, so we don't have to worry about new
+    // nodes being inserted.
+    // Chrome 6 can't reliably do it for all elements, so we still have
+    // to run this code.
     if (!SAFARI) {
       document.addEventListener("DOMNodeInserted", handleInsertedNode);
     }

@@ -125,7 +125,8 @@
           "show_youtube_help_msg",
           "show_google_search_text_ads",
           "whitelist_shortcut",
-          "blacklist_shortcut"
+          "blacklist_shortcut",
+          "true_blocking_support"
           ];
         for (var i = 0; i < feature_names.length; i++) {
           var name = feature_names[i];
@@ -139,6 +140,8 @@
               features[name].is_enabled = true; // by default
             if (name == "show_youtube_help_msg")
               features[name].is_enabled = true; // by default
+            if (name == "true_blocking_support" && browserHasTrueBlocking())
+              features[name].is_enabled = true; // by default, if supported
           }
         }
         return features;
@@ -183,6 +186,7 @@
           selectors: utils.selectors_for_domain({domain:options.domain}),
           features: utils.get_optional_features(),
           top_frame_domain: top_frame_domains[sender.tab.id],
+          filtertext: _myfilters.filterset._sourceText
         };
         var end = new Date();
         console.log("time to run: " + (end - start) + " || " + options.domain);

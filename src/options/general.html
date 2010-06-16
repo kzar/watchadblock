@@ -41,6 +41,32 @@
 
   <div class="section" class="experiments">
     <h2>General options</h2>
+
+    <p id="chromeblock" style="display:none">
+      <input type="checkbox" class="feature" id="enable_true_blocking_support" />
+      <span class="optionDescription">Block most ads from even being downloaded, instead of just hiding them.</span>
+      <span style='font-style:italic; color:red'>Beta</span>
+      <br/>
+      <span style='font-style:italic;'>Note that Chrome doesn't fully support this, so a few resources might still
+      be downloaded and hidden if you're on a fast computer.</span>
+      <br/>
+      <span id="chromeblock_warning" style='font-style:italic; color:red'>
+        This only works in Chrome 6.0.427.0 and later.  You have version <span
+          id="chromeversion"></span>.  Install the 
+        <a href="http://www.chromium.org/getting-involved/dev-channel">dev build of Chrome</a> to get 
+        the latest version.</span>
+    </p>
+    <script>
+      $(function() {
+        if (!SAFARI) {
+          $("#chromeblock").show();
+          $("#chromeversion").text(navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
+          if (browserHasTrueBlocking())
+            $("#chromeblock_warning").hide();
+        }
+      }); 
+    </script>
+
     <table style="vertical-align:middle; margin-left:-3px">
       <tr id="show_adblock_button_tr">
         <td>
@@ -74,7 +100,6 @@
     <p>
       <input type="checkbox" class="feature" id="enable_show_google_search_text_ads" />
       <span class="optionDescription">I like the text ads on Google search results; show me those.</span>
-      <span style='font-style:italic; color:red'>Beta</span>
     </p>
     <script>
       // TODO: This is a dumb race condition, and still has a bug where
