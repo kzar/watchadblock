@@ -66,6 +66,15 @@
         $(this).attr("disabled", "disabled");
       });
 
+      function validateDomain(domain) {
+        if (domain == '') return true;
+        var domain_validation_regex = /^(([a-zA-Z0-9\-]+\.)+[0-9a-zA-Z]{1,6})|[a-zA-Z0-9\-\.]*\*[a-zA-Z0-9\-\.\*]*$/;
+        if (!domain_validation_regex.test(domain)) return false;
+        if (domain.indexOf('..') > -1) return false;
+        if (domain.indexOf('**') > -1) return false;
+        return true;
+      }
+
       var validateUrlFilter = function() {
         var blockUrl = $("#txtBlockUrl").val().trim();
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
@@ -75,7 +84,7 @@
         var ok = true;
         if (blockUrl == '')
           ok = false;
-        if (blockDomain != '' && blockDomain.indexOf('.') == -1)
+        if (!validateDomain(blockDomain))
           ok = false;
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
@@ -85,20 +94,15 @@
         var css_regex = $("#txtUserFilterCss").val();
         var domain_regex = $("#txtUserFilterDomain").val();
         var ok = true;
-        var test_domain_regex = (css_regex.indexOf('##') >= 0)
-            ? css_regex.substring(0, css_regex.indexOf('##'))
-            : domain_regex;
-          if (test_domain_regex != "*" &&
-              test_domain_regex != "" && 
-              test_domain_regex.indexOf(".") == -1)
-            ok = false;
+        if (!validateDomain(domain_regex))
+          ok = false;
         if (ok) {
           ok = global_filter_validation_regex.test(css_regex);
         }
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#divCssBlock input:text").keyup(validateCssFilter);
-    
+
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
         if (event.keyCode == '13' && submitButton.attr("disabled") == false) {
@@ -108,9 +112,11 @@
       });
 
       $("a.controlsLink").click(function() {
+        event.preventDefault();
         var myControls = $(this).closest("div").find(".addControls");
         $(".addControls").not(myControls).slideUp();
         myControls.slideDown();
+        $('input:text:not([id*="Domain"])', myControls)[0].select();
       });
 
       $("#btnEditAdvancedFilters").click(function() {
@@ -119,6 +125,7 @@
         $("#txtFiltersAdvanced").attr("disabled", null);
         $("#divSaveButton").slideDown();
         $("#btnEditAdvancedFilters").hide();
+        $("#txtFiltersAdvanced").focus();
       });
 
       function saveFilters() {
@@ -135,7 +142,6 @@
       extension_call('get_custom_filters_text', {}, function(text) {
         $("#txtFiltersAdvanced").val(text);
       });
-    
     });
 
     $(document).ready(function() {
@@ -231,20 +237,4 @@
       <br/>
     </div>
 
-  </div>
-
-  <div class="sneaky">
-    <p>
-    Remove all items from the list:
-    <input value="OK" type="button" id="btnClearBlacklist"/>
-    </p>
-    <script>
-      $(function() {      
-        $("#btnClearBlacklist").click(function() {
-          if (confirm('Are you sure you would like to clear ' +
-                      'this list?\nThis action cannot be undone!')) 
-            $("#user_filters > .entry_table > tbody > tr > a:first-of-type").click();
-        });
-      });
-    </script>
   </div>
