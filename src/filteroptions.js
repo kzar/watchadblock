@@ -15,6 +15,6 @@ ElementTypes.ALL = 63; // all bits turned on
 
 var FilterOptions = {
   NONE: 0,
-  THIRDPARTY: 1, // TODO: doesn't work yet
+  THIRDPARTY: 1,
   MATCHCASE: 2, // TODO: doesn't work yet
 }
