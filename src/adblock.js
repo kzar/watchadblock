@@ -257,3 +257,13 @@ function adblock_begin_v2() {
   });
 }
 adblock_begin_v2();
+
+//subscribe to the list when you click an abp: link
+$('a[href^="abp:subscribe?"][href*="location="]').click(function(event) {
+  event.preventDefault();
+  var url = $(this).attr('href');
+  url = url.substring(url.indexOf('location=') + 9);
+  if (url.indexOf('&title=') != -1)
+    url = url.substring(0, url.indexOf('&title='));
+  extension_call('subscribe_popup', {url:url});
+});
