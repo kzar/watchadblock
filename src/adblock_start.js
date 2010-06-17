@@ -1,5 +1,3 @@
-infinite_loop_workaround("adblock_start");
-
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
     // Author: Tom Joseph of AdThwart

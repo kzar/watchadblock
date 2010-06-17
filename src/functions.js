@@ -1,15 +1,3 @@
-function infinite_loop_workaround(where) {
-  // Chrome 5 doesn't have this problem, but Chrome 4 gets stupid on XHTML
-  // pages when we load jQuery.  So we have to run this function in EVERY
-  // script we load, to avoid running if necessary.
-  if (typeof abort_abort_abort != "undefined") {
-    console.log("Dying in " + where);
-    die_to_avoid_infinite_loop_in_chrome_4;
-  }
-}
-
-infinite_loop_workaround("functions");
-
 // Run a function on the background page.
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
