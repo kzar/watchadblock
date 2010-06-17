@@ -82,22 +82,22 @@
           blockDomain = '';
 
         var ok = true;
-        if (blockUrl == '')
-          ok = false;
         if (!validateDomain(blockDomain))
+          ok = false;
+        if (blockUrl == '')
           ok = false;
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
       $("#divUrlBlock input:text").keyup(validateUrlFilter);
 
       var validateCssFilter = function() {
-        var css_regex = $("#txtUserFilterCss").val();
-        var domain_regex = $("#txtUserFilterDomain").val();
+        var blockCss = $("#txtUserFilterCss").val().trim();
+        var blockDomain = $("#txtUserFilterDomain").val().trim();
         var ok = true;
-        if (!validateDomain(domain_regex))
+        if (!validateDomain(blockDomain))
           ok = false;
         if (ok) {
-          ok = global_filter_validation_regex.test(css_regex);
+          ok = global_filter_validation_regex.test(blockCss);
         }
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
@@ -116,7 +116,7 @@
         var myControls = $(this).closest("div").find(".addControls");
         $(".addControls").not(myControls).slideUp();
         myControls.slideDown();
-        $('input:text:not([id*="Domain"])', myControls)[0].select();
+        $('input:text:not([id*="Domain"])', myControls).select();
       });
 
       $("#btnEditAdvancedFilters").click(function() {
