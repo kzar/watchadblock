@@ -69,7 +69,7 @@ function browser_canLoad(event, data) {
     var limited = _local_filterset.limitedToDomain(data.pageDomain);
     var isMatched = data.url && limited.matches(data.url, data.elType);
     if (isMatched)
-      console.log("CHROME TRUE BLOCK " + data.url);
+      log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
 }
