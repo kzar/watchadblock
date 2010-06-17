@@ -1,3 +1,12 @@
+  <style type="text/css">
+    .entry_table td {
+        vertical-align: top;
+      }
+      .entry_table {
+        font-size: 12px;
+      }
+  </style>
+
   <script>
       register_broadcast_listener('whitelist_updated', function() {
         extension_call('get_whitelist', {}, display_whitelist);
