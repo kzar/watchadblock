@@ -19,13 +19,17 @@ function shipit() {
       exit 1
     }
 
+    [ "$(basename $(pwd))" = 'trunk' ] || {
+      echo "Sorry, you must run this from trunk."
+      exit 1
+    }
+
     curl http://adblockplus.mozdev.org/easylist/easylist.txt > filters/easylist.txt
 
     svn diff filters/easylist.txt | grep '^[+-]'
     echo
 
-    thisdir=$(basename $(pwd)) # works whether we check out as trunk or afc or...
-    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -r adblockforchrome.zip $thisdir/)
+    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -r adblockforchrome.zip trunk/)
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
@@ -45,13 +49,18 @@ function shipit() {
     echo
     grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
     echo
-    echo -n "Check in wiki and code (y/n)? "
+    echo -n "Check in wiki and code, and make a tag for the release (y/n)? "
     read answer
     [ "$answer" = y ] && {
-      svn ci ../wiki/Changelog.wiki -m "Changelog entry for new version $version: $description" && svn ci
+      cd ..
+      svn cp trunk tags/$version || {
+        echo "Couldn't make tags/$version.  Aborting checkin."
+        exit 1
+      }
+      svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
     }
 
-    echo "Last step: go push the new adblockforchrome.zip up to the Gallery."
+    echo "Last step: go push the new adblockforchrome.zip up to the Gallery, and ship Safari if you want."
 }
 
 function main() {
