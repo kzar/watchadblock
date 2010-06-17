@@ -73,8 +73,8 @@
         text(shorten_url(list_url));
 
       //after the subscribing is finished...
-      function finished(succes) {
-        $('span').text(succes ? 'Finished!' : 'Failed!');
+      function finished(success) {
+        $('span').text(success ? 'Finished!' : 'Failed!');
         window.setTimeout(function() {
           window.close();
         }, succes ? 2000 : 3500);
