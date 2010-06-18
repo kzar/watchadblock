@@ -219,11 +219,6 @@ function adblock_begin_v2() {
     blacklister_init();
     whitelister_init();
 
-    // GMail is already handled in adblock_start.
-    // TODO: is this fast enough now that I don't need a special case?
-    if (document.domain == "mail.google.com")
-      return;
-
     run_specials(data.features);
 
     // Safari already remove elements via true blocking.
