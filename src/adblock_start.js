@@ -114,19 +114,6 @@ function block_list_via_css(selectors, title) {
   }
 }
 
-function facebook_hack() {
-  // TODO: Put this somewhere general.  Or, maybe we could incorporate
-  // this approach into handling 'no-collapse' options, and then this 
-  // just becomes a filter rule with no-collapse.
-  if (document.domain.indexOf("facebook.com") != -1) {
-    var css_chunk = document.createElement("style");
-    css_chunk.innerText = '.profile_sidebar_ads * { visibility:hidden ' +
-       '!important; }';
-    var d = document.documentElement;
-    d.insertBefore(css_chunk, d.firstChild);
-  }
-}
-
 var opts = { domain: document.domain };
 // The top frame should tell the background what domain it's on.  The
 // subframes will be told what domain the top is on.
@@ -146,8 +133,6 @@ extension_call('get_features_and_filters', opts, function(data) {
 
   if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
     return;
-
-  facebook_hack();
 
   if (SAFARI || data.features.true_blocking_support.is_enabled)
     enableTrueBlocking();
