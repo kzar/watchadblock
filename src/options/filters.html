@@ -45,7 +45,7 @@
           var when_text = "";
 
           var id = $("input", el).attr("name");
-          if (subs[id] && subs[id].subscribed)
+          if (subs[id] && subs[id].subscribed && subs[id].last_update != 0)
             when_text = how_long_ago(subs[id].last_update);
 
           $(".update_time", el).text(when_text);
