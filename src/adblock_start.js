@@ -114,6 +114,16 @@ function block_list_via_css(selectors, title) {
   }
 }
 
+// If we're on GMail, do a speed hack and return true.
+function gmail_hack() {
+  // TODO: move this into a more general place.
+  var isGmail = (document.domain == "mail.google.com");
+  if (isGmail)
+    block_list_via_css([".oM,.rh > #ra"]);
+
+  return isGmail;
+}
+
 var opts = { domain: document.domain };
 // The top frame should tell the background what domain it's on.  The
 // subframes will be told what domain the top is on.
@@ -132,6 +142,9 @@ extension_call('get_features_and_filters', opts, function(data) {
     time_log = function(text) { console.log(text); };
 
   if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
+    return;
+
+  if (gmail_hack())
     return;
 
   if (SAFARI || data.features.true_blocking_support.is_enabled)
