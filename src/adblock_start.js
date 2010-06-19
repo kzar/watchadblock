@@ -114,9 +114,7 @@ function block_list_via_css(selectors, title) {
   }
 }
 
-// If we're on GMail, do a speed hack and return true.
 function gmail_hack() {
-  // TODO: move this into a more general place.
   var isGmail = (document.domain == "mail.google.com");
   if (isGmail)
     block_list_via_css([".oM,.rh > #ra"]);
@@ -144,6 +142,10 @@ extension_call('get_features_and_filters', opts, function(data) {
   if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
     return;
 
+  // Gmail has a bug where any injected CSS selector of the
+  // form <nodename>[style<anything>] somehow makes the CC and BCC
+  // fields disappear onclick, and breaks the email autocomplete
+  // feature.  So we special case Gmail.
   if (gmail_hack())
     return;
 

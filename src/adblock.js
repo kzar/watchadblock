@@ -219,8 +219,8 @@ function adblock_begin_v2() {
     blacklister_init();
     whitelister_init();
 
-    // GMail is already handled in adblock_start.
-    // TODO: is this fast enough now that I don't need a special case?
+    // GMail is already handled in adblock_start, because we have to special
+    // case it to work around a Chrome/Gmail bug.
     if (document.domain == "mail.google.com")
       return;
 
