@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: JAIta2EilUG4hLZ3964k0g
+! Checksum: 8m8VK78d5LCiSm9b6Z8u2A
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 18 Jun 2010 06:50 UTC
+! Last modified: 18 Jun 2010 21:20 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -592,6 +592,7 @@
 /cashad2.
 /central/ads/*
 /cgi-bin/ads/*
+/channelblockads.
 /chitika-ad?
 /circads.
 /cms/js/ad_
@@ -817,6 +818,7 @@
 /miva_ads.
 /mnetorfad.js
 /mobilephonesad/*
+/mod/adman/*
 /mod_ad/*
 /modules/ad_
 /modules/ads/*
@@ -1006,6 +1008,7 @@
 /system/ad/*
 /systemad.
 /systemad_
+/tdlads/*
 /templates/_ads/*
 /testingad.
 /textad.
@@ -1129,6 +1132,7 @@ _gads_bottom.
 _gads_footer.
 _gads_top.
 _images/ads/
+_org_ad.
 _overlay_ad.
 _paidadvert_
 _player_ads_
@@ -2106,6 +2110,7 @@ n728x90_
 ###mpuad
 ###mrecAdContainer
 ###ms_ad
+###msad
 ###multiLinkAdContainer
 ###n_sponsor_ads
 ###namecom_ad_hosting_main
@@ -2227,6 +2232,8 @@ n728x90_
 ###splinks
 ###sponLinkDiv_1
 ###sponlink
+###sponsAds
+###sponsLinks
 ###spons_left
 ###sponseredlinks
 ###sponsor-search
@@ -2873,6 +2880,7 @@ n728x90_
 ##.advt-banner-3
 ##.advt300
 ##.advt720
+##.adwordListings
 ##.adwrapper
 ##.adwrapper-lrec
 ##.adwrapper948
@@ -3079,8 +3087,10 @@ n728x90_
 ##.gpAds
 ##.gradientAd
 ##.gsfAd
+##.gt_ad
 ##.gt_ad_300x250
 ##.gt_ad_728x90
+##.gt_adlabel
 ##.gutter-ad-left
 ##.gutter-ad-right
 ##.h_Ads
@@ -3167,6 +3177,8 @@ n728x90_
 ##.marketing-ad
 ##.mdl-ad
 ##.media-advert
+##.mediaAd
+##.mediaAdContainer
 ##.medium-rectangle-ad
 ##.messageBoardAd
 ##.micro_ad
@@ -3283,6 +3295,7 @@ n728x90_
 ##.right_ad
 ##.right_ad_text
 ##.right_ads
+##.right_col_ad
 ##.right_hand_advert_column
 ##.rightad
 ##.rightad_1
@@ -3345,6 +3358,7 @@ n728x90_
 ##.skyAdd
 ##.sky_ad
 ##.skyscraper-ad
+##.slinks
 ##.slpBigSlimAdUnit
 ##.slpSquareAdUnit
 ##.sm_ad
@@ -3373,6 +3387,7 @@ n728x90_
 ##.sponsored-chunk
 ##.sponsored-editorial
 ##.sponsored-links
+##.sponsored-links-holder
 ##.sponsored-post
 ##.sponsored-results
 ##.sponsored-text
@@ -3447,6 +3462,7 @@ n728x90_
 ~timescall.com##.topAds
 ##.topAdvertisement
 ##.topBannerAd
+##.top_Ad
 ##.top_ad
 ##.top_ad_728_90
 ##.top_ad_disclaimer
@@ -3458,6 +3474,7 @@ n728x90_
 ##.top_sponsor
 ##.topad
 ##.topadbox
+##.topads
 ##.topadspot
 ##.topcontentadvertisement
 ##.topic_inad
@@ -4327,6 +4344,7 @@ n728x90_
 ||webmd.com/bi_common/bi_affiliate.js$third-party
 ||ws.amazon.*/widgets/q?$third-party
 ||xgaming.com/rotate*.php?$third-party
+||xml.exactseek.com/cgi-bin/js-feed.cgi?$third-party
 !Preliminary third-party adult section
 ||awempire.com/ban/$third-party
 ||hotcaracum.com/banner/$third-party
@@ -4563,6 +4581,9 @@ n728x90_
 ||ps3news.com/banner/
 ||ps3news.com^*.swf
 ||qrz.com/pix/*.gif
+||rejournal.com/images/banners/
+||rejournal.com/users/blinks/
+||rejournal.com^*/images/homepage/
 ||retrevo.com^*/pcwframe.jsp?
 ||richmedia.yimg.com^
 ||sciencedaily.com^*/google-story2-rb.js
@@ -4800,6 +4821,8 @@ btjunkie.org##th[align="left"][height="100%"]
 buffalonews.com###bot-main
 buffalonews.com##.leaderboard_top
 bunalti.com##img[width="728"][height="90"]
+business.com###sponsoredwellcontainerbottom
+business.com###sponsoredwellcontainertop
 businessdictionary.com###topBnr
 businessinsider.com###FM1
 businessweek.com###bwMall
@@ -4938,6 +4961,7 @@ deviantart.com##.subbyCloseX
 deviantart.com##a[href^="http://advertising.deviantart.com/"]
 deviantart.com##div[gmi-name="ad_zone"]
 deviantart.com##div[style="float: right; position: relative; width: 410px; text-align: left;"]
+dictionary.co.uk##table[border="0"][width="570"]
 digitalspy.co.uk##.marketing_puff
 dimshare.com##.style1
 dimshare.com##table[border="0"][width="352"]
@@ -5018,6 +5042,8 @@ eweek.com##.hp_link_online_classifieds
 eweek.com##.omniture_module_tracker
 eweek.com##a[href^="http://ad.doubleclick.net/"]
 eweek.com##table[width="500"][style="border: 1px solid rgb(204, 204, 204); margin: 5px 10px 5px 20px;"]
+exactseek.com###featured
+exactseek.com##.recommended
 examiner.co.uk##.promotop
 examiner.com##.headerbg
 excelforum.com##.contentLeft
@@ -5227,6 +5253,8 @@ instapaper.com###deckpromo
 intelligencer.ca###banZone
 intelligencer.ca##.bnr
 interfacelift.com##.ad
+internet.com###mbEnd
+internet.com##.ch
 internetevolution.com##div[style="border: 2px solid rgb(230, 230, 230); margin-top: 30px;"]
 investopedia.com###leader
 investopedia.com##.mainbodyleftcolumntrade
@@ -5433,6 +5461,7 @@ mobilecrunch.com##.ad
 mobilecrunch.com##.sponsor_units
 mofunzone.com###ldrbrd_td
 money.cnn.com###moneySponsorBox
+money.co.uk###topBar
 morningstar.com##.LeaderWrap
 morningstar.com##.aadsection_b1
 morningstar.com##.aadsection_b2
@@ -5664,6 +5693,8 @@ reference.com###centerbanner_game
 reference.com###rc
 reference.com##.spl_unshd
 reference.com##.spl_unshd_NC
+rejournal.com##img[style="border-width: 0px;"]
+rejournal.com##img[width="200"][height="100"]
 restaurants.com##.latad
 reverso.net##.columnBanner2
 rivals.com###thecontainer
@@ -5706,6 +5737,9 @@ search.aol.com##.PMB
 search.aol.com##.SLL
 search.aol.com##.WOL
 search.cnbc.com###ms_aur
+search.com##.citeurl
+search.com##.dtext
+search.com##a[href^="http://shareware.search.com/click?"]
 search.excite.co.uk###results11_container
 search.excite.co.uk##td[width="170"][valign="top"]
 search.icq.com##.more_sp
@@ -5957,6 +5991,9 @@ travel.yahoo.com##.spon
 travel.yahoo.com##.tgl-block
 treehugger.com##.google-indiv-box2
 treehugger.com##.leaderboard
+tripadvisor.co.uk###COMMERCE_BOT
+tripadvisor.co.uk###COMMERCE_MID
+tripadvisor.co.uk###COMMERCE_TOP
 tripadvisor.com###COMMERCE_REPEAT
 tripadvisor.com###COMMERCE_RHS
 tripadvisor.com###COMMERCE_TOP
@@ -5992,6 +6029,8 @@ uploading.com##div[style="background: rgb(246, 246, 246) none repeat scroll 0% 0
 uploading.com##div[style="margin: -2px auto 19px; display: block; position: relative;"]
 urbandictionary.com###rollup
 urbandictionary.com##.zazzle_links
+url.org###resspons1
+url.org###resspons2
 urlesque.com##.sidebarBanner
 urlesque.com##.topBanner
 usatoday.com###footerSponsorOne
@@ -6129,6 +6168,7 @@ zomganime.com##div[style="background-color: rgb(239, 239, 239); width: 728px; he
 zomganime.com##marquee[width="160"]
 zone.msn.com##.SuperBannerTVMain
 zuploads.com##.hispeed
+zuula.com##.sponsor
 !---------------------------------Exception rules to fix problems----------------------------------!
 ! *** easylist_whitelist.txt ***
 @@||123people.com/trackads/display?zones=$script
