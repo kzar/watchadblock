@@ -49,33 +49,40 @@
         options[search[item].split('=')[0]] = 
                          unescape(search[item].split('=')[1]);
       }
-      //checking if they are using the newest version of AdBlock
+      //check if they are using the newest version of AdBlock
       var AdBlockVersion;
-      function getVersionNumber() {
-        try {
-          var xhr = new XMLHttpRequest(); 
-          xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
-          xhr.onreadystatechange = function() { 
-            if(this.readyState == 4) { 
-              var theManifest = JSON.parse(this.responseText);
-              AdBlockVersion = theManifest.version;
-            } 
-          }; 
-          xhr.send(); 
-        } catch (ex) {}
-      }
-      $.ajax({
-        //TODO: UPLOAD A FILE WITH THE NEWEST ADBLOCK VERSION!!!
-        url: "~~~URL_WITH_TEXT_FILE_WITH_NOTHING_BUT_ADBLOCK_VERSION_NUMBER~~~",
-        success: function(text) {
-          if (!text) return;
-          if (!(/^\d+\.\d+\.\d+\.\d+$/).test(text)) return;
-          if (text != AdBlockVersion && AdBlockVersion) {
-            alert('A new version of AdBlock is available. Please first' +
-            'update to the newest version before submitting a report!');
-            window.close();
+      $(function () {
+        var downloadedVersion;
+        function checkNewerAvailable() {
+          if (downloadedVersion && AdBlockVersion
+              && downloadedVersion != AdBlockVersion) {
+            $("div[id^='step'][id$='DIV']").css('display', 'none');
+            $("#whattodo").text(
+                 "You are using an old version of AdBlock. Please" +
+                 " first update to the newest version of AdBlock");
           }
-        },
+        }
+        try {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+          xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+              AdBlockVersion = JSON.parse(this.responseText).version;
+              checkNewerAvailable();
+            }
+          };
+          xhr.send();
+        } catch (ex) {}
+        $.ajax({
+          url: "http://adblockforchrome.googlecode.com/svn/trunk/manifest.json",
+          success: function(text) {
+            if (!text) return;
+            try {
+              downloadedVersion = JSON.parse(text).version;
+              checkNewerAvailable();
+            } catch (ex) {}
+          },
+        });
       });
 
       //get the list of subscribed filters and
@@ -106,7 +113,7 @@
 
         var body = [];
         body.push("Thanks for reporting an ad!  Answer at least #1 below " +
-                  "or we will probably ignore your report.");
+                  "or we might ignore your report.");
         body.push("");
         body.push("- What does the ad look like?  (We can't always tell which");
         body.push("  part of the page you think is an ad!)");
@@ -135,8 +142,11 @@
         body.push("=== Subscribed filters ===");
         body.push(subscribed_filter_names.join('\n'));
         body.push("");
-        body.push("=== Browser: ===");
-        body.push(SAFARI ? "Safari" : "Google Chrome");
+        body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
+        body.push(SAFARI ? "Safari " :
+          "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
+        if (AdBlockVersion) 
+          body.push("AdBlock " + AdBlockVersion);
         if (options['suggested']) {
           body.push("");
           body.push("=== The selector created by the user ===");
@@ -324,6 +334,10 @@
         $("#whattodo").html("You can report the ad to us <a href='" +
           generateReportURL() + "'>in the issue tracker</a>");
       });
+
+
+      //GENERAL: clicking a radiobutton label triggers the radiobutton
+      $(".optionDescription").click(checkboxlabel_clicked);
     </script>
     
     <div id="whattodo"></div>
