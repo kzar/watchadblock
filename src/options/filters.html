@@ -182,7 +182,14 @@
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
-              attr("name", entry.id);
+              attr("name", entry.id).
+              click(function() {
+                if ($(this).next('span').text().indexOf(" - additional ") == 0
+                    && !$('input[name="easylist"]').is(':checked')
+                    && !$(this).is(':checked'))
+                  $('input[name="easylist"]').click();
+                });
+
             var name = $("<span>").
               text(entry.name).
               attr("title", entry.url).

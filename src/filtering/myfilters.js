@@ -165,6 +165,26 @@ MyFilters.prototype.freshen_async = function(older_than) {
   }
 }
 
+//Fetch a locally stored subscription!
+function localfetch(real_url, local_url, name) {
+  // jQuery has a bug that keeps $.ajax() from loading local files.
+  // Use plain old XHR.
+  try {
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", local_url, false);
+    ajax.send();
+    var text = ajax.responseText;
+    return {
+      url: real_url,
+      name: name, 
+      user_submitted: false,
+      subscribed: true,
+      text: text,
+      last_update: 0 // update ASAP
+    };
+  } catch(ex) {}
+}
+
 // Subscribe to a filter list.
 // Inputs: id:string id of this filter -- either a well-known id, or "url:xyz",
 //                   where xyz is the URL of a user-specified filterlist.
@@ -172,12 +192,12 @@ MyFilters.prototype.freshen_async = function(older_than) {
 //                     and provide this.
 // Returns: none, upon completion.
 MyFilters.prototype.subscribe = function(id, text) {
+  var wellKnownId = null;
   if (this._subscriptions[id] == undefined) {
     // New user-submitted filter.
     if (id.substring(0,4) != "url:")
       return; // dunno what went wrong, but let's quietly ignore it.
     // See if they accidentally subscribed to a URL that is already well-known.
-    var wellKnownId = null;
     for (var existingId in this._subscriptions) {
       if (id == 'url:' + this._subscriptions[existingId].url)
         wellKnownId = existingId;
@@ -191,7 +211,23 @@ MyFilters.prototype.subscribe = function(id, text) {
         user_submitted: true
       };
     }
+  } else {
+    //default filter
+    wellKnownId = id;
   }
+
+  //subscribe to EasyList too if the filter was an additional one...
+  if (wellKnownId &&
+      this._subscriptions[id].name.indexOf(' - additional') == 0 &&
+      this._subscriptions['easylist'].subscribed == false) {
+    var easylist_local = localfetch(
+        MyFilters.__subscription_options['easylist'].url,
+        chrome.extension.getURL("filters/easylist.txt"),
+        MyFilters.__subscription_options['easylist'].name);
+    if (easylist_local)
+      this.subscribe('easylist', easylist_local.text);
+  }
+
   this._subscriptions[id].subscribed = true;
   this._subscriptions[id].last_update = new Date().getTime();
   this._subscriptions[id].text = text;
@@ -248,35 +284,19 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
 MyFilters._load_hardcoded_subscriptions = function() {
   var result = {};
 
-  function localfetch(real_url, local_url, name) {
-    // jQuery has a bug that keeps $.ajax() from loading local files.
-    // Use plain old XHR.
-    var ajax = new XMLHttpRequest();
-    ajax.open("GET", local_url, false);
-    ajax.send();
-    var text = ajax.responseText;
-    return {
-      url: real_url,
-      name: name, 
-      user_submitted: false,
-      subscribed: true,
-      text: text,
-      last_update: 0 // update ASAP
-    };
-  }
-
   result["adblock_custom"] = localfetch(
-          "http://chromeadblock.com/filters/adblock_custom.txt",
+          MyFilters.__subscription_options['adblock_custom'].url,
           chrome.extension.getURL("filters/adblock_custom.txt"),
-          "AdBlock custom filters (recommended)");
+          MyFilters.__subscription_options['adblock_custom'].name);
 
   result["easylist"] = localfetch(
-          "http://adblockplus.mozdev.org/easylist/easylist.txt",
+          MyFilters.__subscription_options['easylist'].url,
           chrome.extension.getURL("filters/easylist.txt"),
-          "EasyList (recommended)");
+          MyFilters.__subscription_options['easylist'].name);
 
   return result;
 }
+
 // Merge the given list of subscription data with the default list.  Any
 // items marked as "user_submitted=false" in the data which is not in the
 // default list are converted to user_submitted; any items in the default
