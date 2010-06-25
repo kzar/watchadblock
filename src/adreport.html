@@ -49,41 +49,6 @@
         options[search[item].split('=')[0]] = 
                          unescape(search[item].split('=')[1]);
       }
-      //check if they are using the newest version of AdBlock
-      var AdBlockVersion;
-      $(function () {
-        var downloadedVersion;
-        function checkNewerAvailable() {
-          if (downloadedVersion && AdBlockVersion
-              && downloadedVersion != AdBlockVersion) {
-            $("div[id^='step'][id$='DIV']").css('display', 'none');
-            $("#whattodo").text(
-                 "You are using an old version of AdBlock. Please" +
-                 " first update to the newest version of AdBlock");
-          }
-        }
-        try {
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
-          xhr.onreadystatechange = function() {
-            if(this.readyState == 4) {
-              AdBlockVersion = JSON.parse(this.responseText).version;
-              checkNewerAvailable();
-            }
-          };
-          xhr.send();
-        } catch (ex) {}
-        $.ajax({
-          url: "http://adblockforchrome.googlecode.com/svn/trunk/manifest.json",
-          success: function(text) {
-            if (!text) return;
-            try {
-              downloadedVersion = JSON.parse(text).version;
-              checkNewerAvailable();
-            } catch (ex) {}
-          },
-        });
-      });
 
       //get the list of subscribed filters and
       //all unsubscribed default filters
@@ -181,7 +146,7 @@
 
 
     <!--STEP 1-->
-    <div class="section" id="step1DIV" style="display:block">
+    <div class="section" id="step1DIV" style="display:block;">
       <h2>Up to date filters</h2>
       If you update your filters and then reload the page that contained the
       ad, does the ad still appear?<br/>
@@ -334,12 +299,67 @@
         $("#whattodo").html("You can report the ad to us <a href='" +
           generateReportURL() + "'>in the issue tracker</a>");
       });
-
-
-      //GENERAL: clicking a radiobutton label triggers the radiobutton
-      $(".optionDescription").click(checkboxlabel_clicked);
     </script>
     
     <div id="whattodo"></div>
+    
+    <!--GENERAL STUFF-->
+    <script type="text/javascript">
+      //clicking a radiobutton label triggers the radiobutton
+      $(".optionDescription").click(checkboxlabel_clicked);
+      
+      //check for updates
+      var AdBlockVersion;
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+        xhr.onreadystatechange = function() {
+          if(this.readyState == 4) {
+            //get the current version
+            AdBlockVersion = JSON.parse(this.responseText).version;
+            //check for newer versions
+            var xhr2 = new XMLHttpRequest();
+            var checkURL = "http://clients2.google.com/service/update2/crx?" +
+                "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
+                AdBlockVersion + "%26uc";
+            if (SAFARI) 
+              checkURL = "http://safariadblock.com/update.plist";
+            //fetch the version check file
+            xhr2.open("GET", checkURL, false);
+            xhr2.onreadystatechange = function() {
+              if(this.readyState == 4) {
+                var updateURL;
+                if (!SAFARI) {
+                  var usefultext = this.responseText.match(/\<updatecheck.+status\=\".*\"\/\>/)[0];
+                  if (!usefultext) return;
+                  var status = usefultext.match(/status\=\"[^\"]*\"/)[0]
+                  status = status.replace('status="', '').replace('"','');
+                  if (status == "ok") {
+                    updateURL = usefultext.match(/codebase\=\"[^\"]*\"/)[0]
+                    updateURL = updateURL.replace('codebase="', '')
+                    updateURL = updateURL.replace('"','');
+                  }
+                } else {
+                  var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0]
+                  version = version.replace(/\<[^\<]+\>/g,'');
+                  if (version != AdBlockVersion) {
+                    updateURL = this.responseText.match(/http\:\/\/.*\.safariextz/)[0];
+                  }
+                }
+                //new version available
+                if (updateURL) {
+                  $("#whattodo").html(
+                      "You are using an old version of AdBlock. Please" +
+                      " first <a href='" + updateURL + "'>update</a> to the newest version of AdBlock");
+                  $("div[id^='step'][id$='DIV']").css('display', 'none');
+                }
+              }
+            };
+            xhr2.send();
+          }
+        };
+        xhr.send();
+      } catch (ex) {}
+    </script>
   </body>
 </html>
