@@ -74,7 +74,55 @@ function browser_canLoad(event, data) {
   }
 }
 
-function enableTrueBlocking() {
+function collapse_blocked_elements(adelement, collapseEnabled) {
+  //check if an element is empty
+  function element_is_empty(element) {
+    //element is already removed or something like that
+    if (element == undefined)
+      return false;
+
+    var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
+    for (var i=0;i<element.childNodes.length;i++) {
+      //comments, non-visible texts, line breaks, scripts and style elements
+      //do not show up on the page and count as 'empty'.
+      switch (element.childNodes[i].nodeName) {
+        case '#comment':
+        case 'SCRIPT':
+        case 'STYLE':
+        case 'BR':
+        case '#text':
+          if (test_regex.test(element.childNodes[i].nodeValue))
+            return false;
+          else
+            break;
+        default:
+          return false;
+      }
+    }
+    return true;
+  }
+
+  //remove the ad itself and store the parent
+  var parent_of_selector = adelement.parentElement;
+  $(adelement).remove();
+
+  if (collapseEnabled) {
+    log("Collapsing blocked element: " +
+        adelement.nodeName + "#" + adelement.id +
+        "." + adelement.className);
+    while (element_is_empty(parent_of_selector)) {
+      //remove the parent element(s)
+      if (parent_of_selector.nodeName == 'BODY'
+          || parent_of_selector.nodeName == 'FRAME')
+        break;
+      var new_parent_of_selector = parent_of_selector.parentElement;
+      $(parent_of_selector).remove();
+      parent_of_selector = new_parent_of_selector;
+    }
+  }
+}
+
+function enableTrueBlocking(alsoCollapse) {
   document.addEventListener("beforeload", function(event) {
     const el = event.target;
     // Cancel the load if canLoad is false.
@@ -86,7 +134,7 @@ function enableTrueBlocking() {
         // TODO: temp workaround Safari crashing bug.
         // $(el).remove();
         window.setTimeout(function() {
-          $(el).remove();
+          collapse_blocked_elements(el, alsoCollapse);
         }, 0);
       }
     }
@@ -145,12 +193,12 @@ extension_call('get_features_and_filters', opts, function(data) {
   // Gmail has a bug where any injected CSS selector of the
   // form <nodename>[style<anything>] somehow makes the CC and BCC
   // fields disappear onclick, and breaks the email autocomplete
-  // feature.  So we special case Gmail.
+  // feature. So we special case Gmail.
   if (gmail_hack())
     return;
 
   if (SAFARI || data.features.true_blocking_support.is_enabled)
-    enableTrueBlocking();
+    enableTrueBlocking(data.features.collapse_blocked_elements.is_enabled);
 
   block_list_via_css(data.selectors);
 
