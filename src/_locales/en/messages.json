@@ -1,0 +1,51 @@
+{
+  //manifest.json
+  "description": {
+    "message": "AdBlock for Chrome!  Blocks ads all over the web.  Rated 4.5 out of 5 stars by our users!",
+    "description": "Extension description in manifest."
+  },
+
+  //adblock.js
+  "selectorhid": {
+    "message": "Debug: CSS '$selector$' hid:",
+    "description": "Debug log message to tell you a selector has been matched.",
+    "placeholders": {
+      "selector": {
+        "content": "$1",
+        "example": "div#adblock"
+      }
+    }
+  },
+  "timelog": {
+    "message": "$scriptname$ run time: $runtime$ ms || $url$",
+    "description": "Debug time log message to tell you how long a part of the code ran.",
+    "placeholders": {
+      "scriptname": {
+        "content": "$1",
+        "example": "adblock_main"
+      },
+      "runtime": {
+        "content": "$2",
+        "example": "22"
+      },
+      "url": {
+        "content": "$3",
+        "example": "http://foo.com/"
+      }
+    }
+  },
+  "purginglog": {
+    "message": "Purging $node$: $url$",
+    "description": "Debug log message to tell you an element has been purged.",
+    "placeholders": {
+      "node": {
+        "content": "$1",
+        "example": "DIV"
+      },
+      "url": {
+        "content": "$2",
+        "example": "http://foo.com/"
+      }
+    }
+  }
+}

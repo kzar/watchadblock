@@ -40,3 +40,10 @@ function checkboxlabel_clicked() {
     click(). //trigger the UI
     change(); // activate the handler as if a user had clicked it
 }
+
+function translate(messageID, arguments) {
+  if (arguments)
+    return chrome.i18n.getMessage(messageID, arguments)
+  else
+    return chrome.i18n.getMessage(messageID)
+}

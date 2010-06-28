@@ -9,7 +9,7 @@ function debug_print_selector_matches() {
       selectors.
         filter(function(selector) { return $(selector).length > 0; }).
         forEach(function(selector) {
-          log("Debug: CSS '" + selector + "' hid:");
+          log(translate("selectorhid", selector));
           $(selector).each(function(i, el) {
             log("       " + el.nodeName + "#" + el.id + "." + el.className);
           });
@@ -44,8 +44,7 @@ function remove_ad_elements_by_url(first_run) {
       $(ad_ids).each(function(i, id) { purgeElement(els[id], elInfo[id]); });
 
       var end = new Date();
-      time_log("adblock_main run time: " + (end - start) + " || " +
-               document.location.href);
+      time_log(translate("timelog", ["adblock_main", end - start, location.href]));
 
       if (first_run)
         debug_print_selector_matches();
@@ -53,7 +52,7 @@ function remove_ad_elements_by_url(first_run) {
   );
 }
 function purgeElement(el, elInfo) {
-  log("Purging " + el.nodeName + ": " + elInfo.url);
+  log(translate('purginglog', [el.nodeName, elInfo.url]));
   // TODO: handle background images
   if (el.nodeName == "EMBED" && el.parentNode.nodeName == "OBJECT")
     $(el).parent().remove(); // removes el as well
