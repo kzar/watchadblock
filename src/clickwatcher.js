@@ -38,7 +38,7 @@ ClickWatcher.prototype.show = function() {
   window.setTimeout(function() {
     that._ui = that._build_ui();
     wait.dialog('close');
-	  wait.remove();
+    wait.remove();
     that._ui.dialog('open');
   }, 10);
 }

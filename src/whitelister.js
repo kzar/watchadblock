@@ -9,22 +9,23 @@ function verify_whitelist() {
   load_jquery_ui(function() {
     stop_checking_for_whitelist_keypress();
 
+    var btns = {};
+    btns[translate("buttoncancel")] = function() { page.dialog('close');}
+    btns[translate("buttonok")] = 
+        function() {
+          extension_call('add_to_whitelist', {domain:domain}, function() {
+            document.location.reload();
+          });
+        }
+
     var page = $("<div>").
-      html("<div id='adblockslider'></div>" + 
-        "AdBlock won't run on domains ending in<br/>" +
-        "'<i id='adblockdomainname'>" + domain + "</i>'.").
+      html("<div id='adblockslider'></div>" + translate("whitelistertext") +
+        "<br/>'<i id='adblockdomainname'>" + domain + "</i>'.").
       dialog({
-        title: "Exclude this domain?",
+        title: translate("whitelistertitle"),
         width: "300px",
         minHeight: 50,
-        buttons: {
-          "Cancel": function() { page.dialog('close');},
-          "OK!": function() {
-            extension_call('add_to_whitelist', {domain:domain}, function() {
-              document.location.reload();
-            });
-          }
-        },
+        buttons: btns,
         close: function() {
           whitelister_init();
           page.remove();
