@@ -2,13 +2,13 @@
   //manifest.json
   "description": {
     "message": "AdBlock for Chrome!  Blocks ads all over the web.  Rated 4.5 out of 5 stars by our users!",
-    "description": "Extension description in manifest."
+    "description": "Extension description in manifest"
   },
 
   //adblock.js
   "selectorhid": {
     "message": "Debug: CSS '$selector$' hid:",
-    "description": "Debug log message to tell you a selector has been matched.",
+    "description": "Debug log message to tell you a selector has been matched",
     "placeholders": {
       "selector": {
         "content": "$1",
@@ -18,7 +18,7 @@
   },
   "timelog": {
     "message": "$scriptname$ run time: $runtime$ ms || $url$",
-    "description": "Debug time log message to tell you how long a part of the code ran.",
+    "description": "Debug time log message to tell you how long a part of the code ran",
     "placeholders": {
       "scriptname": {
         "content": "$1",
@@ -36,7 +36,7 @@
   },
   "purginglog": {
     "message": "Purging $node$: $url$",
-    "description": "Debug log message to tell you an element has been purged.",
+    "description": "Debug log message to tell you an element has been purged",
     "placeholders": {
       "node": {
         "content": "$1",
@@ -47,5 +47,33 @@
         "example": "http://foo.com/"
       }
     }
+  },
+  "youtubeblockedlog": {
+    "message": "Blocking YouTube ads",
+    "description": "Debug log message to tell you ads have been removed from a YouTube video"
+  },
+  "youtubevideomessage": {
+    "message": "No video? Reload the page. If this happens a lot, disable YouTube ad blocking under $link$.",
+    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video",
+    "placeholders": {
+      "link": {
+        "content": "$1AdBlock Options$2",
+        "example": "<a target='_new' href='options/index.html'>AdBlock Options</a>"
+      }
+    }
+  },
+  "adblockingpagelog": {
+    "message": "==== ADBLOCKING PAGE: $url$",
+    "description": "Debug log message that tells you a page is being adblocked",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "http://foo.com/"
+      }
+    }
+  },
+  "sweepingpagelog": {
+    "message": "Sweeping the page because a new node was inserted.",
+    "description": "Debug log message to tell you AdBlock ran again"
   }
 }

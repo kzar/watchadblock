@@ -120,7 +120,7 @@ function run_specials(features) {
       elt = elt || $("#movie_player").get(0);
       if (!elt)
         return;
-      log("Blocking YouTube ads");
+      log(translate("youtubeblockedlog"));
 
       var origFlashVars = elt.getAttribute("flashvars");
       // In the new YouTube design, flashvars could be in a <param> child node
@@ -159,7 +159,7 @@ function run_specials(features) {
           css({"font-size": "x-small", "font-style": "italic",
                "text-align": "center", "color": "black",
                "font-weight": "normal", "background-color": "white"}).
-          append("<span>No video?  Reload the page.  If this happens a lot, disable YouTube ad blocking under <a target='_new' href='" + disable_url + "'>AdBlock Options</a>.</span>");
+          append("<span>" + translate("youtubevideomessage", ["<a target='_new' href='" + disable_url + "'>", "</a>"]) + "</span>");
         var closer = $("<a>", {href:"#"}).
           css({"font-style":"normal", "margin-left":"20px"}).
           text("[x]").
@@ -208,7 +208,7 @@ function adblock_begin_v2() {
     opts.is_top_frame = true;
 
   extension_call('get_features_and_filters', opts, function(data) {
-    log("==== ADBLOCKING PAGE: " + document.location.href);
+    log(translate("adblockingpagelog", location.href));
 
     // TODO: why send the whitelist just to check it?  do it in background.
     if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
@@ -236,7 +236,7 @@ function adblock_begin_v2() {
 
     // If more elements are inserted later, run again.
     function handleInsertedNode(e) {
-      log("Sweeping the page because a new node was inserted.");
+      log(translate("sweepingpagelog"));
       // So we don't fire a million times if the page is very active
       document.removeEventListener("DOMNodeInserted", handleInsertedNode);
 
