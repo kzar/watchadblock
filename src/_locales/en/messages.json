@@ -59,8 +59,7 @@
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video",
     "placeholders": {
       "link": {
-        "content": "$1AdBlock Options$2",
-        "example": "<a target='_new' href='options/index.html'>AdBlock Options</a>"
+        "content": "$1AdBlock Options$2"
       }
     }
   },
@@ -89,5 +88,128 @@
         "example": "http://foo.com/"
       }
     }
+  },
+
+  //blacklister.js
+  "logshowing": {
+    "message": "showing",
+    "description": "Debug log message to tell you an element is shown again"
+  },
+
+  //blacklistui.js
+  "sliderexplanation": {
+    "message": "Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
+    "description": "Blacklister slider page message"
+  },
+  "slidertitle": {
+    "message": "Step 1: Figure out what to block",
+    "description": "Blacklister slider page title"
+  },
+  "blacklisteroptions1": {
+    "message": "What do you think will be true about this ad every time you visit this page?",
+    "description": "Blacklister attribute chosing page message"
+  },
+  "blacklisternotsure": {
+    "message": "$1Not sure?$2 just press 'Block it!' below.",
+    "description": "Blacklister attribute chosing page message"
+  },
+  "blacklisterwanttohelp": {
+    "message": "$1Want to help?$2 $reportad$",
+    "description": "Blacklister attribute chosing page message",
+    "placeholders": {
+      "reportad": {
+        "content": "$3Report the ad$4 so everybody can benefit!"
+      }
+    }
+  },
+  "blacklisterthefilter": {
+    "message": "The filter, which can be changed on the Options page:",
+    "description": "Blacklister attribute chosing page message"
+  },
+  "blacklisteroptionstitle": {
+    "message": "Last step: What makes this an ad?",
+    "description": "Blacklister options page title"
+  },
+  "blacklisternofilter": {
+    "message": "No filter specified!",
+    "description": "Warning if the user hasn't specified a filter"
+  },
+  "blacklistereditfilter": {
+    "message": "Please type the correct filter below and press OK",
+    "description": "Text if the user wants to manually edit a filter"
+  },
+  "blacklistereditinvalid": {
+    "message": "The filter is invalid!",
+    "description": "Messagebox if the manually edited filter is invalid"
+  },
+  "blacklisterblockedelement": {
+    "message": "Blocked element:",
+    "description": "Tells the user what the blocked element is on the slider page"
+  },
+  "blacklisterwarningnofilter": {
+    "message": "Warning: no filter specified!",
+    "description": "Warns the user that no filter was specified"
+  },
+  "blacklisterblocksalloftype": {
+    "message": "Be careful: this filter blocks all $elementtype$ elements on the page!",
+    "description": "Warns the user that all elements of type X will be blocked",
+    "placeholders": {
+      "elementtype": {
+        "content": "$1",
+        "example": "DIV"
+      }
+    }
+  },
+  "blacklistersinglematch": {
+    "message": "That matches$1 1 $2item on this page.",
+    "description": "Tells the user only one match was found"
+  },
+  "blacklistermatches": {
+    "message": "That matches $matchcount$ items on this page.",
+    "description": "Tells the user multiple matches were found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "blacklisterattrwillbe": {
+    "message": "$attribute$ will be $value$",
+    "description": "Checkbox label",
+    "placeholders": {
+      "attribute": {
+        "content": "$1",
+        "example": "class"
+      },
+      "value": {
+        "content": "$2",
+        "example": "AdBanner"
+      }
+    }
+  },
+  "blacklistertype": {
+    "message": "Type",
+    "description": "node name is called 'Type'"
+  },
+  "buttonlooksgood": {
+    "message": "Looks good",
+    "description": "Looks good button"
+  },
+  "buttoncancel": {
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "buttonblockit": {
+    "message": "Block it!",
+    "description": "Block button"
+  },
+  "buttonedit": {
+    "message": "Edit",
+    "description": "Edit filter manually button"
+  },
+  "buttonback": {
+    "message": "Back",
+    "description": "Back to previous wizard page button"
   }
 }
