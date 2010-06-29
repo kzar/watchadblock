@@ -13,7 +13,7 @@ function listen_for_broadcasts(portname) {
   port = chrome.extension.connect({name: portname || "Broadcast receiver"});
   port.onMessage.addListener(function(request) {
     if (dispatcher[request.fn] == null) {
-      log("No dispatch function '" + request.fn + "'");
+      log(translate("broadcastnodispatch", request.fn));
     } else {
       dispatcher[request.fn](request.options);
     }

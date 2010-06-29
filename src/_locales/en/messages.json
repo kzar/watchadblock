@@ -211,5 +211,35 @@
   "buttonback": {
     "message": "Back",
     "description": "Back to previous wizard page button"
+  },
+
+  //broadcast_channel.js
+  "broadcastnodispatch": {
+    "message": "No dispatch function '$requestfn$'",
+    "description": "Error message",
+    "placeholders": {
+      "requestfn": {
+        "content": "$1",
+        "example": "top_open_blacklist_ui"
+      }
+    }
+  },
+  
+  //clickwatcher.js
+  "findingads": {
+    "message": "Finding ads...",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "findingadswait": {
+    "message": "This'll only take a moment.",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "blockanadtitle": {
+    "message": "Block an ad",
+    "description": "Title of the first two dialogs of the blacklister"
+  },
+  "clickthead": {
+    "message": "Click the ad, and I'll walk you through blocking it.",
+    "description": "When you have to click the ad to continue"
   }
 }

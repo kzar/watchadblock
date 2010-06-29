@@ -20,25 +20,25 @@ ClickWatcher.prototype._fire = function(eventName, arg) {
 ClickWatcher.prototype.show = function() {
   var that = this;
   var wait = $("<div></div>").
-    append("Finding ads...<br/><br/>").
-    append("<i>This'll only take a moment.</i>").
+    append(translate("findingads") + "<br/><br/>").
+    append("<i>" + translate("findingadswait") + "</i>").
     css({
       'background': 'white',
       'text-align': 'left',
       'font-size': '12px',
     }).
     dialog({
-      zIndex:10000000, 
-      position:[50, 50],
-      height:120,
-      minHeight:50,
-      title:'Block an ad',
+      zIndex: 10000000, 
+      position: [50, 50],
+      height: 120,
+      minHeight: 50,
+      title: translate("blockanadtitle")
     });
   // setTimeout to give 'wait' a chance to display
   window.setTimeout(function() {
     that._ui = that._build_ui();
     wait.dialog('close');
-	 wait.remove();
+	  wait.remove();
     that._ui.dialog('open');
   }, 10);
 }
@@ -101,8 +101,11 @@ ClickWatcher.prototype._build_ui = function() {
     killme_overlay.display();
   });
 
+  var btn = {};
+  btn[translate("buttoncancel")] = function() { page.dialog('close'); }
+
   var page = $("<div></div>").
-      append("Click the ad, and I'll walk you through blocking it.").
+      append(translate("clickthead")).
       css({
         'background': 'white',
         'text-align': 'left',
@@ -114,10 +117,8 @@ ClickWatcher.prototype._build_ui = function() {
           height:150,
           minHeight:50,
           autoOpen: false,
-          title:'Block an ad',
-          buttons: {
-            "Cancel": function() { page.dialog('close'); }
-          },
+          title: translate("blockanadtitle"),
+          buttons: btn,
           close: function() { 
             $("*").unbind('click', click_catch_this);
             Overlay.removeAll();
