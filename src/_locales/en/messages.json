@@ -5,18 +5,8 @@
     "description": "Extension description in manifest"
   },
 
-  //adblock.js
-  "selectorhid": {
-    "message": "Debug: CSS '$selector$' hid:",
-    "description": "Debug log message to tell you a selector has been matched",
-    "placeholders": {
-      "selector": {
-        "content": "$1",
-        "example": "div#adblock"
-      }
-    }
-  },
-  "timelog": {
+  //multiple scripts
+  "timelog": {//adblock.js and adblock_start.js
     "message": "$scriptname$ run time: $runtime$ ms || $url$",
     "description": "Debug time log message to tell you how long a part of the code ran",
     "placeholders": {
@@ -31,6 +21,18 @@
       "url": {
         "content": "$3",
         "example": "http://foo.com/"
+      }
+    }
+  },
+
+  //adblock.js
+  "selectorhid": {
+    "message": "Debug: CSS '$selector$' hid:",
+    "description": "Debug log message to tell you a selector has been matched",
+    "placeholders": {
+      "selector": {
+        "content": "$1",
+        "example": "div#adblock"
       }
     }
   },
@@ -75,5 +77,17 @@
   "sweepingpagelog": {
     "message": "Sweeping the page because a new node was inserted.",
     "description": "Debug log message to tell you AdBlock ran again"
+  },
+
+  //adblock_start.js
+  "chrometrueblock": {
+    "message": "CHROME TRUE BLOCK: $url$",
+    "description": "Debug log message that tells you a resource has been blocked",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "http://foo.com/"
+      }
+    }
   }
 }

@@ -69,7 +69,7 @@ function browser_canLoad(event, data) {
     var limited = _local_filterset.limitedToDomain(data.pageDomain);
     var isMatched = data.url && limited.matches(data.url, data.elType);
     if (isMatched)
-      log("CHROME TRUE BLOCK " + data.url);
+      log(translate("chrometrueblock", data.url));
     return !isMatched;
   }
 }
@@ -155,6 +155,5 @@ extension_call('get_features_and_filters', opts, function(data) {
   block_list_via_css(data.selectors);
 
   var end = new Date();
-  time_log("adblock_start run time: " + (end - start) + " || " +
-           document.location.href);
+  time_log(translate("timelog", ["adblock_start", end - start, location.href]));
 });
