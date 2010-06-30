@@ -132,7 +132,7 @@ var SelectorFilter = function(text) {
     try {
       text = SelectorFilter._old_style_to_new(text);
     } catch (e) { // couldn't parse it.
-      log(translate("logunparsableselector", text)); //"Found an unparseable selector '" + text + "'");
+      log(translate("logunparsableselector", text));
       this._domains = Filter._domainInfo('nowhere', ',');
       this._selector = "MatchesNothing";
       return;
@@ -303,10 +303,10 @@ PatternFilter._parseRule = function(text) {
     try {
       new RegExp(result.rule);
       result.isRegex = true;
-      log(translate("logregexfound", rule));//"Found a true regex rule - " + rule);
+      log(translate("logregexfound", rule));
       return result;
     } catch(e) {
-      log(translate("logregexunparsable", rule));//log("Found an unparseable regex rule - " + rule);
+      log(translate("logregexunparsable", rule));
       // OK, we thought it was a regex but it's not.  Just discard it.
       result.rule = 'dummy_rule_matching_nothing';
       return result;
@@ -396,7 +396,7 @@ PatternFilter._parseRule = function(text) {
     try {
       new RegExp(result.rule);
     } catch(e) {
-      log(translate("logregexunparsable", result.rule));//"Found an unparseable regex rule - " + result.rule);
+      log(translate("logregexunparsable", result.rule));
       // OK, something went wrong.  Just discard it.
       result.isRegex = false;
       result.rule = 'dummy_rule_matching_nothing';
