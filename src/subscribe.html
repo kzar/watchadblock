@@ -21,14 +21,14 @@
       }
       h2 {
         margin: 0px;
-        background: url(chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/img/icon24.png);
+        background: url(img/icon24.png);
         background-repeat: no-repeat;
         padding-left:33px;
       }
       h3 {
         margin-bottom:5px;
       }
-      span {
+      span#result {
         color:red;
         margin-left:5px;
       }
@@ -37,11 +37,16 @@
   <body>
     <div>
       <h2>AdBlock</h2>
-      <h3>Subscribing to filter list...<span></span></h3>
+      <h3><span i18n="subscribingtitle"></span><span id="result"></span></h3>
       <a target="_new"></a>
     </div>
 
     <script type="text/javascript">
+      //translation
+      $("[i18n]").each(function() {
+        $(this).text(translate($(this).attr("i18n")))
+      });
+
       //shorten long URLs
       function shorten_url(value) {
         if (value.indexOf('://') == -1 ||
@@ -74,7 +79,9 @@
 
       //after the subscribing is finished...
       function finished(success) {
-        $('span').text(success ? 'Finished!' : 'Failed!');
+        $('span#result').text(success ?
+          translate("subscribingfinished") :
+          translate("subscribingfailed"));
         window.setTimeout(function() {
           window.close();
         }, success ? 2000 : 3500);
