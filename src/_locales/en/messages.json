@@ -216,7 +216,7 @@
   //broadcast_channel.js
   "broadcastnodispatch": {
     "message": "No dispatch function '$requestfn$'",
-    "description": "Error message",
+    "description": "Error log message",
     "placeholders": {
       "requestfn": {
         "content": "$1",
@@ -255,5 +255,89 @@
   "buttonok": {
     "message": "OK!",
     "description": "OK button"
+  },
+  
+  //filtering/filterset.js
+  "logmatched": {
+    "message": "Matched: '$rule$' -> $url$",
+    "description": "Debug log message to tell you a match has been found",
+    "placeholders": {
+      "rule": {
+        "content": "$1",
+        "example": "/show_ads.js"
+      },
+      "url": {
+        "content": "$2",
+        "example": "http://foo.com/"
+      }
+    }
+  },
+  "logwhitelisted": {
+    "message": "Whitelisted: '$rule$' -> $url$",
+    "description": "Debug log message to tell you a whitelisted resource has been found",
+    "placeholders": {
+      "rule": {
+        "content": "$1",
+        "example": "/show_ads.js"
+      },
+      "url": {
+        "content": "$2",
+        "example": "http://foo.com/"
+      }
+    }
+  },
+  
+  //filtering/filtertypes.js
+  "logunparsableselector": {
+    "message": "Found an unparseable selector '$selector$'",
+    "description": "Error log message",
+    "placeholders": {
+      "selector": {
+        "content": "$1",
+        "example": "div[id^$='a+b]"
+      }
+    }
+  },
+  "logregexfound": {
+    "message": "Found a true regex rule - $regex$",
+    "description": "Debug log message to tell you a regex has been found",
+    "placeholders": {
+      "regex": {
+        "content": "$1",
+        "example": "any regex"
+      }
+    }
+  },
+  "logregexunparsable": {
+    "message": "Found an unparseable regex rule - $regex$",
+    "description": "Debug log message to tell you a regex could not be parsed",
+    "placeholders": {
+      "regex": {
+        "content": "$1",
+        "example": "any broken regex"
+      }
+    }
+  },
+  
+  //filtering/myfilters.js
+  "logfetched": {
+    "message": "Fetched $url$",
+    "description": "Debug log message to tell you a list has been fetched",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "http://foo.com/list.txt"
+      }
+    }
+  },
+  "logfetchfailed": {
+    "message": "Error fetching $url$",
+    "description": "Debug log message to tell you a list could not be fetched",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "http://foo.com/list.txt"
+      }
+    }
   }
 }

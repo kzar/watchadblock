@@ -117,14 +117,14 @@ FilterSet.prototype = {
 
     for (var i = 0; i < this._whitelistFilters.length; i++) {
       if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
-        log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
+        log(translate("logwhitelisted", [this._whitelistFilters[i]._rule, url]));
         this._matchCache[key] = false;
         return false;
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
       if (this._patternFilters[i].matches(url, elementType, isThirdParty)) {
-        log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
+        log(translate("logmatched", [this._patternFilters[i]._rule, url]));
         this._matchCache[key] = true;
         return true;
       }
