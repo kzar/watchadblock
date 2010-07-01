@@ -8,7 +8,7 @@
     "description": "Extension description in manifest"
   },
 
-  //multiple scripts
+  //multiple files
   "timelog": {//adblock.js and adblock_start.js
     "message": "$scriptname$ run time: $runtime$ ms || $url$",
     "description": "Debug time log message to tell you how long a part of the code ran",
@@ -34,6 +34,18 @@
   "buttonok": {//whitelister.js, options/filters.html
     "message": "OK!",
     "description": "OK button"
+  },
+  "shortcutenabled": {//options/blacklist.html, options/whitelist.html
+    "message": "Shortcut enabled",
+    "description": "The checkbox label for the shortcut option"
+  },
+  "buttonblockit": {//blacklistui.js, options/blacklist.html
+    "message": "Block it!",
+    "description": "Block button"
+  },
+  "buttonedit": {//blacklisterui.js, options/blacklister.html
+    "message": "Edit",
+    "description": "Edit filter manually button"
   },
 
   //adblock.js
@@ -206,14 +218,6 @@
   "buttonlooksgood": {
     "message": "Looks good",
     "description": "Looks good button"
-  },
-  "buttonblockit": {
-    "message": "Block it!",
-    "description": "Block button"
-  },
-  "buttonedit": {
-    "message": "Edit",
-    "description": "Edit filter manually button"
   },
   "buttonback": {
     "message": "Back",
@@ -715,5 +719,65 @@
   "showlinkstolists": {
     "message": "Show links to the filter lists:",
     "description": "option on second tab page"
+  },
+
+  //options/blacklist.html
+  "blacklisttabtitle": {
+    "message": "Block an ad that the filter lists missed",
+    "description": "Title of the third tab"
+  },
+  "blacklistshortcutmessage": {
+    "message": "$1Shortcut:$2 Press $keys$ (think 'Kill!') on a page to block an ad. $4(If you don't see anything happen, try clicking on the page first.)$5",
+    "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
+    "placeholders": {
+      "keys": {
+        "content": "$3",
+        "example": "Ctrl-Shift-K"
+      }
+    }
+  },
+  "addnewfilter": {
+    "message": "Add a new filter:",
+    "description": "Subtitle on the third tab"
+  },
+  "linkblockadbyrul": {
+    "message": "Block an ad by its URL",
+    "description": "Link on the third tab"
+  },
+  "linkhidesection": {
+    "message": "Hide a section of a webpage",
+    "description": "Link on the third tab"
+  },
+  "blockurlwithtext": {
+    "message": "Block URLs containing this text",
+    "description": "Message of the url-blocking area"
+  },
+  "csstomatch": {
+    "message": "CSS to match",
+    "description": "Message of the css-hiding area"
+  },
+  "blockdomain": {
+    "message": "Domain of page to apply on",
+    "description": "Message of the url and css -blocking area"
+  },
+  "manualfilteredit": {
+    "message": "Manually edit your filters:",
+    "description": "Subtitle on the third tab"
+  },
+  "brokenfilterbreakingfilters": {
+    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!",
+    "description": "Warning when manually editing"
+  },
+  "filtertutorial": {
+    "message": "Read the $1filter syntax tutorial$2 to learn how to add advanced blacklist and whitelist filters.",
+    "description": "Tutorial when blacklisting manually"
+  },
+  "savebutton": {
+    "message": "Save",
+    "description": "Save button"
+  },
+  "savereminder": {
+    "message": "Don't forget to save!",
+    "description": "Reminder to press save"
   }
 }

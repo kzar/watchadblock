@@ -39,8 +39,8 @@
       $("#txtBlockUrlDomain").val("*");
 
       $("#btnAddUserFilter").click(function() {
-        var blockCss = $("#txtUserFilterCss").val();
-        var blockDomain = $("#txtUserFilterDomain").val();
+        var blockCss = $("#txtUserFilterCss").val().trim();
+        var blockDomain = $("#txtUserFilterDomain").val().trim();
 
         if (blockDomain == '.*' || blockDomain == "*" || blockDomain == '')
           appendCustomFilter("##" + blockCss);
@@ -146,36 +146,32 @@
 
     $(document).ready(function() {
       load_options();
-
-      $('.optionDescription').click(checkboxlabel_clicked);
     });
   </script>
 
   <div class="section">
-    <h2>Block an ad that the filter lists missed</h2>
+    <h2 i18n="blacklisttabtitle"></h2>
 
     <div>
-      <b>Shortcut:</b> Press <b>Ctrl-Shift-K</b> (think "Kill!") on a page 
-      to block an ad.  <span style="font-size:smaller">(If you don't see 
-      anything happen, try clicking on the page first.)</span>
+      <span id="blacklistshortcut"></span>
       <input style="margin-left: 15px" type="checkbox" class="feature" 
              id="enable_blacklist_shortcut" />
-      <span class="optionDescription">Shortcut enabled</span>
+      <span class="optionDescription" i18n="shortcutenabled"></span>
     </div>
 
     <div>
 
       <div id="divAddNewFilter">
-        <h3>Add a new filter:</h3>
+        <h3 i18n="addnewfilter"></h3>
 
         <div>
-          <a class="controlsLink" id="aUrlBlock" href="#">Block an ad by its URL</a>
+          <a class="controlsLink" id="aUrlBlock" href="#" i18n="linkblockadbyrul"></a>
           <div id="divUrlBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
-                <td>Block URLs containing this text</td>
-                <td>
-                <td>Domain of page to apply on</td>
+                <td i18n="blockurlwithtext"></td>
+                <td></td>
+                <td i18n="blockdomain"></td>
               </tr>
               <tr>
               </tr>
@@ -183,20 +179,20 @@
                 <td><input id="txtBlockUrl" style="width:300px"/></td>
                 <td class="guide">$domain=</td>
                 <td><input id="txtBlockUrlDomain"/></td>
-                <td><input id="btnAddUrlBlock" type="button" value="Block it!"/></td>
+                <td><input id="btnAddUrlBlock" type="button"/></td>
               </tr>
             </table>
           </div>
         </div>
 
         <div>
-          <a class="controlsLink" id="aCssBlock" href="#">Hide a section of a webpage</a>
+          <a class="controlsLink" id="aCssBlock" href="#" i18n="linkhidesection"></a>
           <div id="divCssBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
-                <td>Domain of page to apply on</td>
-                <td>
-                <td>CSS to match</td>
+                <td i18n="blockdomain"></td>
+                <td></td>
+                <td i18n="csstomatch"></td>
               </tr>
               <tr>
               </tr>
@@ -204,7 +200,7 @@
                 <td><input id="txtUserFilterDomain" style="width:200px"/></td>
                 <td class="guide">##</td>
                 <td><input id="txtUserFilterCss" style="width:300px"/></td>
-                <td><input id="btnAddUserFilter" type="button" value="Block it!"/></td>
+                <td><input id="btnAddUserFilter" type="button"/></td>
               </tr>
             </table>
           </div>
@@ -212,20 +208,17 @@
 
       </div>
 
-      <h3>Manually edit your filters:</h3>
+      <h3 i18n="manualfilteredit"></h3>
       <div>
-        <input value="Edit" type="button" id="btnEditAdvancedFilters" />
+        <input type="button" id="btnEditAdvancedFilters" />
         <div id="divSaveButton" style="display:none">
           <p class="footnote">
-            Be careful: if you make a mistake here a lot of other filters,
-            including the official filters, could get broken too!<br/>
-            Read the
-            <a href="http://adblockplus.org/en/filters" target="_new">filter syntax tutorial</a>
-            to learn how to add advanced blacklist and whitelist filters.
+            <span i18n="brokenfilterbreakingfilters"></span><br/>
+            <span id="tutorial"></span>
           </p>
-          <input value="Save" type="button" id="btnSaveAdvancedFilters" />
+          <input type="button" id="btnSaveAdvancedFilters" />
           <span id="lblSaveWarning" style="color:red;margin-left:20px">
-            <b>Don't forget to save!</b>
+            <b i18n="savereminder"></b>
           </span>
         </div>
       </div>
@@ -238,3 +231,22 @@
     </div>
 
   </div>
+  <script type="text/javascript">
+    //translation
+    $("[i18n]").each(function() {
+      $(this).text(translate($(this).attr("i18n")));
+    });
+    $("#blacklistshortcut").html(translate("blacklistshortcutmessage", 
+        ['<b>', '</b>', '<b>Ctrl-Shift-K</b>', '<span style="font-size:smaller">',
+        '</span>']));
+    $("#btnAddUserFilter, #btnAddUrlBlock").
+        attr("value", translate("buttonblockit"));
+    $("#btnEditAdvancedFilters").attr("value", translate("buttonedit"));
+    $("#tutorial").html(translate("filtertutorial", 
+        ['<a href="http://adblockplus.org/en/filters" target="_new">',
+        '</a>']));
+    $("#btnSaveAdvancedFilters").attr('value', translate("savebutton"));
+
+    //clicking the checkbox label checks the checkbox
+    $('.optionDescription').click(checkboxlabel_clicked);
+  </script>
