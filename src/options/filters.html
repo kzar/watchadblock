@@ -14,20 +14,23 @@
 
         var seconds = Math.round(distance / 1000);
         if (seconds < 10)
-          return "updated right now";
+          return translate("updatedrightnow");
         if (seconds < 60)
-          return "updated " + seconds + " seconds ago";
+          return translate("updatedsecondsago", seconds);
         var minutes = Math.round(seconds / 60);
+        if (minutes == 1)
+          return translate("updatedminuteago");
         if (minutes < 60)
-          return ("updated " + minutes + " minute" + 
-                      (minutes > 1 ? "s" : "") + " ago");
+          return translate("updatedminutesago", minutes);
         var hours = Math.round(minutes / 60);
+        if (hours == 1)
+          return translate("updatedhourago");
         if (hours < 24)
-          return ("updated " + hours + " hour" + 
-                      (hours > 1 ? "s" : "") + " ago");
+          return translate("updatedhoursago", hours);
         var days = Math.round(hours / 24);
-        return ("updated " + days + " day" + 
-                      (days > 1 ? "s" : "") + " ago");
+        if (days == 1)
+          return translate("updateddayago");
+        return translate("updateddaysago", days);
       }
 
 
@@ -89,7 +92,8 @@
       // 'del' determines if it should be deleted too
       function unsubscribe(id, del) {
         extension_call("unsubscribe", {id:id, del:del}, function() {
-          var message = (del) ? "Removed." : "Unsubscribed.";
+          var message = (del) ? translate("removedlabel")
+                              : translate("unsubscribedlabel");
           flash("subscription_message", message);
         });
       }
@@ -105,9 +109,9 @@
         else
           url = id.substring(4); // "url:xyz"
 
-        flash("subscription_message", "Fetching... please wait.");
+        flash("subscription_message", translate("fetchinglabel"));
         var onError = function() {
-          alert("Failed to fetch this filter!");
+          alert(translate("failedtofetchfilter"));
           var myIndex = $("#tabpages").tabs("option", "selected");
           $("#tabpages").tabs("load", myIndex);
         }
@@ -121,9 +125,8 @@
             if (text[0] != '!' && 
                 text[0] != '[' &&
                 text.indexOf('(Adblock') != 0) {
-              alert("Please enter the URL of a list of filters to " +
-                    "subscribe to.");
-              flash("subscription_message", "That wasn't a list URL.");
+              alert(translate("enterurloflist"));
+              flash("subscription_message", translate("nolisturllabel"));
               return;
             }
             if (log_on_success) {
@@ -134,7 +137,7 @@
               "subscribe", 
               {id: id, text:text},
               function() {
-                flash("subscription_message", "Subscribed.");
+                flash("subscription_message", translate("subscribedlabel"));
                 if (then_reload) {
                   var myIndex = $("#tabpages").tabs("option", "selected");
                   $("#tabpages").tabs("load", myIndex);
@@ -201,7 +204,7 @@
               css("font-size", "10px").
               css("display", "none").
               attr("href", "#").
-              text("Remove from list").
+              text(translate("removefromlist")).
               addClass("remove_filter").
               click(function(event) {
                 event.preventDefault();
@@ -244,11 +247,6 @@
 
         });
 
-        $("#btnUpdateNow").click(function() {
-          $(this).attr("disabled", "disabled");
-          extension_call("freshen_subscriptions", {older_than:0});
-        });
-
         $("#btnNewSubscriptionUrl").click(function() {
           var url = $("#txtNewSubscriptionUrl").val();
           var abp_regex = /^abp.*location=(.*)$/
@@ -279,40 +277,32 @@
   </script>
 
   <div class="section">
-    <h2>Subscribe to filter lists</h2>
-    <p>
-      The defaults are great for English-speaking users in the US.
-      Others may wish to subscribe to more lists.
-    </p>
-    <p class="footnote">
-      Don't subscribe to more than you need -- every one
-      slows you down a tiny bit!  Credits and more lists can be found
-      <a href="http://adblockplus.org/en/subscriptions" target="_new">here</a>.
-    </p>
-    I will fetch updates every 5 days; you can also
-    <input type="button" id="btnUpdateNow" value="update now." />
+    <h2 i18n="filterstabtitle"></h2>
+    <p i18n="defaultsexplanation"></p>
+    <p class="footnote"></p>
+    <span id="updatemessage"></span>
     <div>
       <div id="subscription_message" class="ok_message">&nbsp;</div>
       <div id="filter_subscriptions" style="padding-left:30px;">
       </div>
       <div style="padding-left:34px;">
-        Or enter a URL:
+        <span i18n="orenteraurl"></span>
         <input id="txtNewSubscriptionUrl" style="width:300px" />
-        <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
+        <input type="button" id="btnNewSubscriptionUrl" />
       </div>
     </div>
   </div>
 
   <div class="sneaky">
     <p>
-    Subscribe to all filters:
-    <input value="OK" type="button" id="btnSubscribeAll" />
+    <span i18n="subscribetoall"></span>
+    <input type="button" id="btnSubscribeAll" />
     <br/>
-    Unsubscribe from all filters: 
-    <input value="OK" type="button" id="btnUnsubscribeAll" />
+    <span i18n="subscribetonone"></span>
+    <input type="button" id="btnUnsubscribeAll" />
     <br/>
-    Show links to the filter lists: 
-    <input value="OK" type="button" id="btnShowLinks" />
+    <span i18n="showlinkstolists"></span> 
+    <input type="button" id="btnShowLinks" />
     </p>
     <script>
       $(function() {
@@ -338,3 +328,23 @@
       });
     </script>
   </div>
+
+  <script type="text/javascript">
+    //translation
+    $("[i18n]").each(function() {
+      $(this).text(translate($(this).attr("i18n")));
+    });
+    $(".sneaky input").attr('value', translate("buttonok"));
+    $(".footnote").html(translate("filterlistlink", 
+        ['<a href="http://adblockplus.org/en/subscriptions" target="_new">',
+        '</a>']));
+    $("#updatemessage").html(translate("updatenowmessage", 
+        ['<input type="button" id="btnUpdateNow" value="', '" />']));
+    $("#btnNewSubscriptionUrl").attr('value', translate('subscribebutton'));
+
+    //set the action for the update now button
+    $("#btnUpdateNow").click(function() {
+      $(this).attr("disabled", "disabled");
+      extension_call("freshen_subscriptions", {older_than:0});
+    });
+  </script>

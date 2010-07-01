@@ -42,8 +42,10 @@ function checkboxlabel_clicked() {
 }
 
 function translate(messageID, arguments) {
-  if (arguments)
+  if (typeof(arguments) == "object")
     return chrome.i18n.getMessage(messageID, arguments)
+  else if (typeof(arguments) != "undefined")
+    return chrome.i18n.getMessage(messageID, String(arguments))
   else
     return chrome.i18n.getMessage(messageID)
 }

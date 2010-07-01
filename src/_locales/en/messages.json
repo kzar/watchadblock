@@ -1,3 +1,6 @@
+//Translation by the Chrome AdBlock programmers
+//Last updated for version 2.0.9
+
 {
   //manifest.json
   "description": {
@@ -27,6 +30,10 @@
   "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
     "message": "Cancel",
     "description": "Cancel button"
+  },
+  "buttonok": {//whitelister.js, options/filters.html
+    "message": "OK!",
+    "description": "OK button"
   },
 
   //adblock.js
@@ -252,10 +259,6 @@
     "message": "Exclude this domain?",
     "description": "The title of the whitelister dialog"
   },
-  "buttonok": {
-    "message": "OK!",
-    "description": "OK button"
-  },
   
   //filtering/filterset.js
   "logmatched": {
@@ -318,7 +321,7 @@
       }
     }
   },
-  
+
   //filtering/myfilters.js
   "logfetched": {
     "message": "Fetched $url$",
@@ -340,7 +343,7 @@
       }
     }
   },
-  
+
   //background.html
   "couldntparsejson": {
     "message": "Couldn't parse json for $key$",
@@ -477,7 +480,7 @@
     "description": "Adreport step 1"
   },
   //<<<TO BE CONTINUED>>> but first wait until branches/issue-3106 is merged
-  
+
   //subscribe.html
   "subscribingtitle": {
     "message": "Subscribing to filter list...",
@@ -490,5 +493,227 @@
   "subscribingfailed": {
     "message": "Failed!",
     "description": "abp: link subscriber result"
+  },
+
+  //options/index.html
+  "optionsversion": {
+    "message": "Version $version$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.0.9"
+      }
+    }
+  },
+  "optionschangelog": {
+    "message": "changelog",
+    "description": "changelog link"
+  },
+  "optionstitle": {
+    "message": "Options",
+    "description": "Title for the options page"
+  },
+  "donatethanks": {
+    "message": "Hooray! Thank you!",
+    "description": "Tooltip if you hover the donate image"
+  },
+  "optionsintro": {
+    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can $1make a donation$2 of any amount, I'd appreciate it$3 immensely$4 :)",
+    "description": "Intro of the options page"
+  },
+  "optionscontribute": {
+    "message": "Want to contribute code, bug reports or ad reports? We $1need your help$2!",
+    "description": "Intro of the options page"
+  },
+  "tabgeneral": {
+    "message": "General",
+    "description": "A tab on the options page"
+  },
+  "tabfilterlists": {
+    "message": "Filter lists",
+    "description": "A tab on the options page"
+  },
+  "tabblacklist": {
+    "message": "Blacklist",
+    "description": "A tab on the options page"
+  },
+  "tabexcluded": {
+    "message": "Excluded sites",
+    "description": "A tab on the options page"
+  },
+  
+  //options/general.html
+  "generaloptions": {
+    "message": "General options",
+    "description": "Title of first tab page"
+  },
+  "blocknothideoption": {
+    "message": "Block most ads from even being downloaded, instead of just hiding them.",
+    "description": "Option on first tab page"
+  },
+  "betalabel": {
+    "message": "Beta",
+    "description": "Option on first tab page"
+  },
+  "blocknothidewarning": {
+    "message": "Note that Chrome doesn't fully support this, so a few resources might still be downloaded and hidden if you're on a fast computer.",
+    "description": "Warning for block instead of hiding option"
+  },
+  "buttonexplanation": {
+    "message": "$1To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.$2To add the button, click $3Install $4 on the $5Browser Button for AdBlock$6 page.$7To remove the button, right click him and choose Disable.",
+    "description": "Explanation of how the button works"
+  },
+  "buttonextension": {
+    "message": "Show the AdBlock button next to the address bar",
+    "description": "Option on first tab page"
+  },
+  "googletextads": {
+    "message": "I like the text ads on Google search results; show me those.",
+    "description": "Option on first tab page"
+  },
+  "youtubeads": {
+    "message": "Block ads inside YouTube videos.",
+    "description": "Option on first tab page"
+  },
+  "debuginlogoption": {
+    "message": "Show debug statements in Console Log (which slows down AdBlock)",
+    "description": "Option on first tab page"
+  },
+  "timeinlogoption": {
+    "message": "Show timing statements in Console Log (which slows down AdBlock)",
+    "description": "Option on first tab page"
+  },
+
+  //options/filters.html
+  "updatedrightnow": {
+    "message": "updated right now",
+    "description": "Label for subscription"
+  },
+  "updatedsecondsago": {
+    "message": "updated $seconds$ seconds ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminutesago": {
+    "message": "updated $minutes$ minutes ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "minutes": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedhoursago": {
+    "message": "updated $hours$ hours ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "hours": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updateddaysago": {
+    "message": "updated $days$ days ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminuteago": {
+    "message": "updated 1 minute ago",
+    "description": "Label for subscription"
+  },
+  "updatedhourago": {
+    "message": "updated 1 hour ago",
+    "description": "Label for subscription"
+  },
+  "updateddayago": {
+    "message": "updated 1 day ago",
+    "description": "Label for subscription"
+  },
+  "removedlabel": {
+    "message": "Removed.",
+    "description": "Status label"
+  },
+  "unsubscribedlabel": {
+    "message": "Unsubscribed.",
+    "description": "Status label"
+  },
+  "fetchinglabel": {
+    "message": "Fetching... please wait.",
+    "description": "Status label"
+  },
+  "subscribedlabel": {
+    "message": "Subscribed.",
+    "description": "Status label"
+  },
+  "nolisturllabel": {
+    "message": "That wasn't a list URL.",
+    "description": "Status label"
+  },
+  "failedtofetchfilter": {
+    "message": "Failed to fetch this filter!",
+    "description": "Error messagebox"
+  },
+  "enterurloflist": {
+    "message": "Please enter the URL of a list of filters to subscribe to.",
+    "description": "Error messagebox"
+  },
+  "removefromlist": {
+    "message": "Remove from list",
+    "description": "Label to remove a custom filter"
+  },
+  "filterstabtitle": {
+    "message": "Subscribe to filter lists",
+    "description": "Title of the filter list tab"
+  },
+  "defaultsexplanation": {
+    "message": "The defaults are great for English-speaking users in the US. Others may wish to subscribe to more lists.",
+    "description": "Explanation of the filter lists"
+  },
+  "filterlistlink": {
+    "message": "Don't subscribe to more than you need -- every one slows you down a tiny bit! Credits and more lists can be found $link$.",
+    "description": "Explanation of the filter lists",
+    "placeholders": {
+      "link": {
+        "content": "$1here$2",
+        "example": "here"
+      }
+    }
+  },
+  "updatenowmessage": {
+    "message": "I will fetch updates every 5 days; you can also $1update now$2.",
+    "description": "update filters text + button"
+  },
+  "orenteraurl": {
+    "message": "Or enter a URL:",
+    "description": "link for custom subscription"
+  },
+  "subscribebutton": {
+    "message": "Subscribe",
+    "description": "subscribe to a list button"
+  },
+  "subscribetoall": {
+    "message": "Subscribe to all filters:",
+    "description": "option on second tab page"
+  },
+  "subscribetonone": {
+    "message": "Unsubscribe from all filters:",
+    "description": "option on second tab page"
+  },
+  "showlinkstolists": {
+    "message": "Show links to the filter lists:",
+    "description": "option on second tab page"
   }
 }
