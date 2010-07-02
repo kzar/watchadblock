@@ -133,15 +133,23 @@
     "description": "Blacklister attribute chosing page message"
   },
   "blacklisternotsure": {
-    "message": "$1Not sure?$2 just press 'Block it!' below.",
-    "description": "Blacklister attribute chosing page message"
-  },
-  "blacklisterwanttohelp": {
-    "message": "$1Want to help?$2 $reportad$",
+    "message": "$bold$ just press 'Block it!' below.",
     "description": "Blacklister attribute chosing page message",
     "placeholders": {
-      "reportad": {
-        "content": "$3Report the ad$4 so everybody can benefit!"
+      "bold": {
+        "content": "$1Not sure?$2"
+      }
+    }
+  },
+  "blacklisterwanttohelp": {
+    "message": "$bold$ $link$ so everybody can benefit!",
+    "description": "Blacklister attribute chosing page message",
+    "placeholders": {
+      "link": {
+        "content": "$3Report the ad$4"
+      },
+      "bold": {
+        "content": "$1Want to help?$2"
       }
     }
   },
@@ -184,8 +192,14 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "That matches$1 1 $2item on this page.",
-    "description": "Tells the user only one match was found"
+    "message": "That matches $matchcount$ item on this page.",
+    "description": "Tells the user only one match was found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "1"
+      }
+    }
   },
   "blacklistermatches": {
     "message": "That matches $matchcount$ items on this page.",
@@ -523,12 +537,25 @@
     "description": "Tooltip if you hover the donate image"
   },
   "optionsintro": {
-    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can $1make a donation$2 of any amount, I'd appreciate it$3 immensely$4 :)",
-    "description": "Intro of the options page"
+    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can $link$ of any amount, I'd appreciate it $bold$ :)",
+    "description": "Intro of the options page",
+    "placeholders": {
+      "link": {
+        "content": "$1make a donation$2"
+      },
+      "bold": {
+        "content": "$3immensely$4"
+      }
+    }
   },
   "optionscontribute": {
-    "message": "Want to contribute code, bug reports or ad reports? We $1need your help$2!",
-    "description": "Intro of the options page"
+    "message": "Want to contribute code, bug reports or ad reports? We $link$!",
+    "description": "Intro of the options page",
+    "placeholders": {
+      "link": {
+        "content": "$1need your help$2"
+      }
+    }
   },
   "tabgeneral": {
     "message": "General",
@@ -565,8 +592,22 @@
     "description": "Warning for block instead of hiding option"
   },
   "buttonexplanation": {
-    "message": "$1To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.$2To add the button, click $3Install $4 on the $5Browser Button for AdBlock$6 page.$7To remove the button, right click him and choose Disable.",
-    "description": "Explanation of how the button works"
+    "message": "$italic$$newline$To add the button, click $bold$ on the $link$ page.$newline$To remove the button, right click him and choose Disable.",
+    "description": "Explanation of how the button works",
+    "placeholders": {
+      "italic": {
+        "content": "$1To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.$2"
+      },
+      "bold": {
+        "content": "$3Install$4"
+      },
+      "link": {
+        "content": "$5Browser Button for AdBlock$6"
+      },
+      "newline": {
+        "content": "$7"
+      }
+    }
   },
   "buttonextension": {
     "message": "Show the AdBlock button next to the address bar",
@@ -691,14 +732,18 @@
     "description": "Explanation of the filter lists",
     "placeholders": {
       "link": {
-        "content": "$1here$2",
-        "example": "here"
+        "content": "$1here$2"
       }
     }
   },
   "updatenowmessage": {
-    "message": "I will fetch updates every 5 days; you can also $1update now$2.",
-    "description": "update filters text + button"
+    "message": "I will fetch updates every 5 days; you can also $button$.",
+    "description": "update filters text + button",
+    "placeholders": {
+      "button": {
+        "content": "$1update now$2"
+      }
+    }
   },
   "orenteraurl": {
     "message": "Or enter a URL:",
@@ -819,12 +864,18 @@
     "description": "Title of the third tab"
   },
   "blacklistshortcutmessage": {
-    "message": "$1Shortcut:$2 Press $keys$ (think 'Kill!') on a page to block an ad. $4(If you don't see anything happen, try clicking on the page first.)$5",
+    "message": "$bold$ Press $keys$ (think 'Kill!') on a page to block an ad. $smaller$",
     "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
     "placeholders": {
+      "bold": {
+        "content": "$1Shortcut:$2"
+      },
       "keys": {
         "content": "$3",
         "example": "Ctrl-Shift-K"
+      },
+      "smaller": {
+        "content": "$4(If you don't see anything happen, try clicking on the page first.)$5"
       }
     }
   },
@@ -861,8 +912,13 @@
     "description": "Warning when manually editing"
   },
   "filtertutorial": {
-    "message": "Read the $1filter syntax tutorial$2 to learn how to add advanced blacklist and whitelist filters.",
-    "description": "Tutorial when blacklisting manually"
+    "message": "Read the $link$ to learn how to add advanced blacklist and whitelist filters.",
+    "description": "Tutorial when blacklisting manually",
+    "placeholders": {
+      "link": {
+        "content": "$1filter syntax tutorial$2"
+      }
+    }
   },
   "savebutton": {
     "message": "Save",
@@ -887,9 +943,12 @@
     "description": "text on the 4th tab page"
   },
   "whitelistshortcutmessage": {
-    "message": "$1Shortcut:$2 Press $keys$ (think 'Live!') on a page to not block ads on that domain.",
+    "message": "$bold$ Press $keys$ (think 'Live!') on a page to not block ads on that domain.",
     "description": "Note: 'Live' must be translated into another word that starts with a 'L'. Otherwise, don't translate it!",
     "placeholders": {
+      "bold": {
+        "content": "$1Shortcut:$2"
+      },
       "keys": {
         "content": "$3",
         "example": "Ctrl-Shift-L"

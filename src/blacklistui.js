@@ -278,7 +278,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
     var matchCount = $(summary.text()).length;
     $("#count", that._ui_page2).
       html("<center>" + ((matchCount == 1) ? 
-          translate("blacklistersinglematch", ["<b>", "</b>"]) :
+          translate("blacklistersinglematch", "<b>1</b>") :
           translate("blacklistermatches", "<b>" + matchCount + "</b>")) 
           + "</center>");
   }

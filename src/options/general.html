@@ -1,9 +1,5 @@
   <script>
     $(function() {
-      var linkUrl = "https://chrome.google.com/extensions/detail/" +
-                    icon_extension_id;
-      $("#link_to_icon").attr("href", linkUrl);
-
       var imgUrl = chrome.extension.getURL("img/icon_screenshot.png");
       $("#imgIconScreenshot").attr("src", imgUrl);
 
@@ -115,8 +111,10 @@
       $(this).text(translate($(this).attr("i18n")));
     });
     $("#button_explanation").html(translate("buttonexplanation", 
-        ['<i style="font-size:12px;">', '</i><br/><br/>', '<b>', '</b>',
-        '<a id="link_to_icon" target="top">', '</a>', '<br/><br/>']));
+        ['<i style="font-size:12px;">', '</i>', '<b>', '</b>',
+        '<a id="link_to_icon" target="top" href="' +
+        'https://chrome.google.com/extensions/detail/' + icon_extension_id +
+        '">', '</a>', '<br/><br/>']));
 
     //clicking the checkbox label checks the checkbox
     $('.optionDescription').click(checkboxlabel_clicked);
