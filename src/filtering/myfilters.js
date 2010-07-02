@@ -24,9 +24,9 @@ function MyFilters() {
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
 
   this.update();
-  
-  // Anything over 3 days old, go ahead and fetch at Chrome startup.
-  this.freshen_async(72);
+
+  // Check for subscriptions to be updated on startup
+  this.freshen_async();
 
   var hours = 1;
   var that = this;
@@ -126,7 +126,11 @@ MyFilters.prototype.rebuild = function() {
 // Returns: null (asynchronous)
 MyFilters.prototype.freshen_async = function(older_than) {
   function out_of_date(subscription) {
-    var hours_between_updates = (older_than == undefined ? 120 : older_than);
+    //older_than set? then use older_than
+    //else if expires set? then use expires (in hours) * 24 hours/day
+    //else use 5 days (120 hours)
+    var hours_between_updates = (older_than != undefined ? older_than :
+      (subscription.expires != undefined ? subscription.expires * 24 : 120));
     var millis = new Date().getTime() - subscription.last_update;
     return (millis > 1000 * 60 * 60 * hours_between_updates);
   }
@@ -152,6 +156,8 @@ MyFilters.prototype.freshen_async = function(older_than) {
 
         that._subscriptions[filter_id].text = text;
         that._subscriptions[filter_id].last_update = new Date().getTime();
+        var expiresCheckLines = text.split('\n', 15);
+        that._subscriptions[filter_id].expires = getExpiresAfter(expiresCheckLines);
         that.update();
       },
       error: function() { log("Error fetching " + url); }
@@ -195,7 +201,25 @@ MyFilters.prototype.subscribe = function(id, text) {
   this._subscriptions[id].subscribed = true;
   this._subscriptions[id].last_update = new Date().getTime();
   this._subscriptions[id].text = text;
+  var expiresCheckLines = text.split('\n', 15); //15 lines should be enough
+  this._subscriptions[id].expires = getExpiresAfter(expiresCheckLines);
   this.update();
+}
+
+//searches for the expires after string of a subscription
+//inputs an array of lines from a filter list
+function getExpiresAfter(lines) {
+  var expiresregex = /(expires\:\ ?|expires\ after\ )\d*[1-9]\d*\ ?h?/i;
+  for (var line in lines) {
+    if (!Filter.isComment(lines[line])) continue;
+    var matches = lines[line].match(expiresregex);
+    if (matches)
+      if (matches[0].indexOf("h") != -1)
+        return Math.ceil(lines[line].match(/\d*[1-9]\d*/)[0] / 24);
+      else
+        return Math.min(lines[line].match(/\d*[1-9]\d*/)[0], 21);
+  }
+  return 5; //default
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
@@ -210,6 +234,7 @@ MyFilters.prototype.unsubscribe = function(id, del) {
   this._subscriptions[id].subscribed = false;
   delete this._subscriptions[id].text;
   delete this._subscriptions[id].last_update;
+  delete this._subscriptions[id].expires;
 
   if (!(id in MyFilters.__subscription_options) && del) {
     delete this._subscriptions[id];
@@ -225,6 +250,7 @@ MyFilters.prototype.unsubscribe = function(id, del) {
 //   user_submitted:bool - true if this is a url typed in by the user
 //   last_update?:number - if the subscription has ever been fetched,
 //                         the ticks at which it was last fetched
+//   expires:number - days after which the list expires
 // }
 MyFilters.prototype.get_subscriptions_minus_text = function() {
   var result = {};
@@ -236,7 +262,8 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
       name: ((MyFilters.__subscription_options[id] == undefined) ?
                    this._subscriptions[id].name :
                    MyFilters.__subscription_options[id].name),
-      last_update: this._subscriptions[id].last_update
+      last_update: this._subscriptions[id].last_update,
+      expires: this._subscriptions[id].expires
     }
   }
   return result;
@@ -261,7 +288,8 @@ MyFilters._load_hardcoded_subscriptions = function() {
       user_submitted: false,
       subscribed: true,
       text: text,
-      last_update: 0 // update ASAP
+      last_update: 0, // update ASAP
+      expires: 5
     };
   }
 
