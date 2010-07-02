@@ -161,17 +161,23 @@
           var sorted_list = [];
           for (var id in subscriptions) {
             var entry = subscriptions[id];
-            if (id == 'easylist' || id == 'adblock_custom')
-              entry.order = "1" + id;
+            if (id == 'adblock_custom')
+              entry.order = "1adblock_custom";
+            else if (id == 'easylist')
+              entry.order = "2easylist";
             else if (id == 'easyprivacy')
-              entry.order = "5" + id;
-            else if (entry.user_submitted) 
-              entry.order = "6" + entry.name;
+              entry.order = "5easyprivacy";
+            else if (entry.user_submitted)
+              entry.order = "6" +
+                  translate("filter" + id).toLowerCase() || entry.name;
             else if (entry.name.indexOf(" - additional ") == 0)
-              entry.order = "3" + entry.name;
+              entry.order = "3" +
+                  translate("filter" + id).toLowerCase() || entry.name;
             else
-              entry.order = "4" + entry.name;
+              entry.order = "4" +
+                  translate("filter" + id).toLowerCase() || entry.name;
             entry.id = id;
+            entry.name = translate("filter" + id) || entry.name;
             sorted_list.push(entry);
           }
           sorted_list.sort(function(a,b) {

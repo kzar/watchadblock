@@ -21,14 +21,14 @@
         $.each(whitelist, function(i, entry) {
           var cell1 = $("<td>").text(entry);
           var cell2 = $('<a href="#"></a>').
-            text("Remove").
+            text(translate("removelabel")).
             click(function(event) {
               event.preventDefault();
               extension_call('remove_from_whitelist', {domain:entry});
             });
           var cell3 = $('<a href="#"></a>').
             css("margin-left", "4px").
-            text("Edit").
+            text(translate("buttonedit")).
             click(function(event) {
               event.preventDefault();
               whitelist_edit_entry = entry;
@@ -42,9 +42,9 @@
         });
 
         var cell1 = $("<td><input id='txtWhitelistedDomain' /></td>");
-        var cell2 = $("<input/>", 
-                      {type:"button", id:"btnWhitelist", value:"Add",
-                       disabled: "disabled", style: "height:22px;margin-top:2px;"});
+        var cell2 = $("<input/>",
+               {type:"button", id:"btnWhitelist", value:translate("addbutton"),
+                disabled: "disabled", style: "height:22px;margin-top:2px;"});
         $("<tr></tr>").
           append(cell1).
           append(cell2).
@@ -91,30 +91,25 @@
 
         load_options();
       });
-
-      $('.optionDescription').click(checkboxlabel_clicked);
-
   </script>
   <div class="section">
-    <h2>Don't block ads on domains that end with...</h2>
+    <h2 i18n="excludedsitestitle"></h2>
     <div id="whitelisted_domains"></div>
     <div>
-      <span class="footnote">For example, "google.com" will stop blocking ads
-        on google.com, mail.google.com, and www.google.com.</span>
+      <span class="footnote" i18n="excludedsitesexample"></span>
     </div>
     <p>
-    <b>Shortcut:</b> Press <b>Ctrl-Shift-L</b> (think "Live!") on a page 
-    to not block ads on that domain.
+    <span id="whitelistshortcut"></span>
     <input style="margin-left: 15px" type="checkbox" class="feature" 
            id="enable_whitelist_shortcut" />
-    <span class="optionDescription">Shortcut enabled</span>
+    <span class="optionDescription" i18n="shortcutenabled"></span>
     </p>
   </div>
 
   <div class="sneaky">
     <p>
-    Remove all items from the list:
-    <input value="OK" type="button" id="btnClearWhitelist"/>
+    <span i18n="removeallfromlist"></span>
+    <input type="button" id="btnClearWhitelist"/>
     </p>
     <script>
       $(function() {      
@@ -126,3 +121,15 @@
       });
     </script>
   </div>
+
+  <script type="text/javascript">
+    //translation
+    $("[i18n]").each(function() {
+      $(this).text(translate($(this).attr("i18n")));
+    });
+    $("#whitelistshortcut").html(translate("whitelistshortcutmessage", ["<b>", "</b>", "<b>Ctrl-Shift-L</b>"]));
+    $("#btnClearWhitelist").attr('value', translate('buttonok'));
+
+    //clicking the checkbox label checks the checkbox
+    $('.optionDescription').click(checkboxlabel_clicked);
+  </script>
