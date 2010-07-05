@@ -9,7 +9,7 @@ function debug_print_selector_matches() {
       selectors.
         filter(function(selector) { return $(selector).length > 0; }).
         forEach(function(selector) {
-          log(translate("selectorhid", selector));
+          log("Debug: CSS '" + selector + "' hid:");
           $(selector).each(function(i, el) {
             log("       " + el.nodeName + "#" + el.id + "." + el.className);
           });
@@ -44,7 +44,8 @@ function remove_ad_elements_by_url(first_run) {
       $(ad_ids).each(function(i, id) { purgeElement(els[id], elInfo[id]); });
 
       var end = new Date();
-      time_log(translate("timelog", ["adblock_main", end - start, location.href]));
+      time_log("adblock_main run time: " + (end - start) + " ms || " +
+               location.href);
 
       if (first_run)
         debug_print_selector_matches();
@@ -52,7 +53,7 @@ function remove_ad_elements_by_url(first_run) {
   );
 }
 function purgeElement(el, elInfo) {
-  log(translate('purginglog', [el.nodeName, elInfo.url]));
+  log("Purging " + el.nodeName + ": " + elInfo.url);
   // TODO: handle background images
   if (el.nodeName == "EMBED" && el.parentNode.nodeName == "OBJECT")
     $(el).parent().remove(); // removes el as well
@@ -120,7 +121,7 @@ function run_specials(features) {
       elt = elt || $("#movie_player").get(0);
       if (!elt)
         return;
-      log(translate("youtubeblockedlog"));
+      log("Blocking YouTube ads");
 
       var origFlashVars = elt.getAttribute("flashvars");
       // In the new YouTube design, flashvars could be in a <param> child node
@@ -208,7 +209,7 @@ function adblock_begin_v2() {
     opts.is_top_frame = true;
 
   extension_call('get_features_and_filters', opts, function(data) {
-    log(translate("adblockingpagelog", location.href));
+    log("==== ADBLOCKING PAGE: " + location.href);
 
     // TODO: why send the whitelist just to check it?  do it in background.
     if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
@@ -236,7 +237,7 @@ function adblock_begin_v2() {
 
     // If more elements are inserted later, run again.
     function handleInsertedNode(e) {
-      log(translate("sweepingpagelog"));
+      log("Sweeping the page because a new node was inserted.");
       // So we don't fire a million times if the page is very active
       document.removeEventListener("DOMNodeInserted", handleInsertedNode);
 

@@ -71,13 +71,13 @@ register_broadcast_listener('send_content_to_back', function(options) {
       $(el).
         hide().
         append('<param name="wmode" value="transparent">');
-      window.setTimeout(function() { log(translate("logshowing")); $(el).show(); }, 250);
+      window.setTimeout(function() { log("showing"); $(el).show(); }, 250);
     });
   $("embed").each(function(i, el) {
       $(el).
         hide().
         attr('wmode', 'transparent');
-      window.setTimeout(function() { log(translate("logshowing")); $(el).show(); }, 250);
+      window.setTimeout(function() { log("showing"); $(el).show(); }, 250);
     });
 
   // Also, anybody with a z-index over 1 million is going to get in our

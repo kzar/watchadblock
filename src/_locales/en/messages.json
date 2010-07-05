@@ -9,24 +9,6 @@
   },
 
   //multiple files
-  "timelog": {//adblock.js and adblock_start.js
-    "message": "$scriptname$ run time: $runtime$ ms || $url$",
-    "description": "Debug time log message to tell you how long a part of the code ran",
-    "placeholders": {
-      "scriptname": {
-        "content": "$1",
-        "example": "adblock_main"
-      },
-      "runtime": {
-        "content": "$2",
-        "example": "22"
-      },
-      "url": {
-        "content": "$3",
-        "example": "http://foo.com/"
-      }
-    }
-  },
   "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
     "message": "Cancel",
     "description": "Cancel button"
@@ -49,34 +31,6 @@
   },
 
   //adblock.js
-  "selectorhid": {
-    "message": "Debug: CSS '$selector$' hid:",
-    "description": "Debug log message to tell you a selector has been matched",
-    "placeholders": {
-      "selector": {
-        "content": "$1",
-        "example": "div#adblock"
-      }
-    }
-  },
-  "purginglog": {
-    "message": "Purging $node$: $url$",
-    "description": "Debug log message to tell you an element has been purged",
-    "placeholders": {
-      "node": {
-        "content": "$1",
-        "example": "DIV"
-      },
-      "url": {
-        "content": "$2",
-        "example": "http://foo.com/"
-      }
-    }
-  },
-  "youtubeblockedlog": {
-    "message": "Blocking YouTube ads",
-    "description": "Debug log message to tell you ads have been removed from a YouTube video"
-  },
   "youtubevideomessage": {
     "message": "No video? Reload the page. If this happens a lot, disable YouTube ad blocking under $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video",
@@ -85,38 +39,6 @@
         "content": "$1AdBlock Options$2"
       }
     }
-  },
-  "adblockingpagelog": {
-    "message": "==== ADBLOCKING PAGE: $url$",
-    "description": "Debug log message that tells you a page is being adblocked",
-    "placeholders": {
-      "url": {
-        "content": "$1",
-        "example": "http://foo.com/"
-      }
-    }
-  },
-  "sweepingpagelog": {
-    "message": "Sweeping the page because a new node was inserted.",
-    "description": "Debug log message to tell you AdBlock ran again"
-  },
-
-  //adblock_start.js
-  "chrometrueblock": {
-    "message": "CHROME TRUE BLOCK: $url$",
-    "description": "Debug log message that tells you a resource has been blocked",
-    "placeholders": {
-      "url": {
-        "content": "$1",
-        "example": "http://foo.com/"
-      }
-    }
-  },
-
-  //blacklister.js
-  "logshowing": {
-    "message": "showing",
-    "description": "Debug log message to tell you an element is shown again"
   },
 
   //blacklistui.js
@@ -238,18 +160,6 @@
     "description": "Back to previous wizard page button"
   },
 
-  //broadcast_channel.js
-  "broadcastnodispatch": {
-    "message": "No dispatch function '$requestfn$'",
-    "description": "Error log message",
-    "placeholders": {
-      "requestfn": {
-        "content": "$1",
-        "example": "top_open_blacklist_ui"
-      }
-    }
-  },
-  
   //clickwatcher.js
   "findingads": {
     "message": "Finding ads...",
@@ -276,200 +186,6 @@
   "whitelistertitle": {
     "message": "Exclude this domain?",
     "description": "The title of the whitelister dialog"
-  },
-  
-  //filtering/filterset.js
-  "logmatched": {
-    "message": "Matched: '$rule$' -> $url$",
-    "description": "Debug log message to tell you a match has been found",
-    "placeholders": {
-      "rule": {
-        "content": "$1",
-        "example": "/show_ads.js"
-      },
-      "url": {
-        "content": "$2",
-        "example": "http://foo.com/"
-      }
-    }
-  },
-  "logwhitelisted": {
-    "message": "Whitelisted: '$rule$' -> $url$",
-    "description": "Debug log message to tell you a whitelisted resource has been found",
-    "placeholders": {
-      "rule": {
-        "content": "$1",
-        "example": "/show_ads.js"
-      },
-      "url": {
-        "content": "$2",
-        "example": "http://foo.com/"
-      }
-    }
-  },
-  
-  //filtering/filtertypes.js
-  "logunparsableselector": {
-    "message": "Found an unparseable selector '$selector$'",
-    "description": "Error log message",
-    "placeholders": {
-      "selector": {
-        "content": "$1",
-        "example": "div[id^$='a+b]"
-      }
-    }
-  },
-  "logregexfound": {
-    "message": "Found a true regex rule - $regex$",
-    "description": "Debug log message to tell you a regex has been found",
-    "placeholders": {
-      "regex": {
-        "content": "$1",
-        "example": "any regex"
-      }
-    }
-  },
-  "logregexunparsable": {
-    "message": "Found an unparseable regex rule - $regex$",
-    "description": "Debug log message to tell you a regex could not be parsed",
-    "placeholders": {
-      "regex": {
-        "content": "$1",
-        "example": "any broken regex"
-      }
-    }
-  },
-
-  //filtering/myfilters.js
-  "logfetched": {
-    "message": "Fetched $url$",
-    "description": "Debug log message to tell you a list has been fetched",
-    "placeholders": {
-      "url": {
-        "content": "$1",
-        "example": "http://foo.com/list.txt"
-      }
-    }
-  },
-  "logfetchfailed": {
-    "message": "Error fetching $url$",
-    "description": "Debug log message to tell you a list could not be fetched",
-    "placeholders": {
-      "url": {
-        "content": "$1",
-        "example": "http://foo.com/list.txt"
-      }
-    }
-  },
-
-  //background.html
-  "couldntparsejson": {
-    "message": "Couldn't parse json for $key$",
-    "description": "Error log message telling you an option could not be loaded",
-    "placeholders": {
-      "key": {
-        "content": "$1",
-        "example": "whitelist"
-      }
-    }
-  },
-  "timetorun": {
-    "message": "time to run: $runtime$ ms || $domain$",
-    "description": "Debug log message to tell you how long a part of the code ran",
-    "placeholders": {
-      "runtime": {
-        "content": "$1",
-        "example": "22"
-      },
-      "domain": {
-        "content": "$2",
-        "example": "foo.com"
-      }
-    }
-  },
-  "broadcasttousers": {
-    "message": "Broadcasting from background to users $requestfn$",
-    "description": "Debug log message",
-    "placeholders": {
-      "requestfn": {
-        "content": "$1",
-        "example": "top_open_blacklist_ui"
-      }
-    }
-  },
-  "broadcasttouserstab": {
-    "message": "Broadcasting from background (to page $tabid$) to users $requestfn$",
-    "description": "Debug log message",
-    "placeholders": {
-      "tabid": {
-        "content": "$1",
-        "example": "3221"
-      },
-      "requestfn": {
-        "content": "$2",
-        "example": "top_open_blacklist_ui"
-      }
-    }
-  },
-  "removedisconnectedport": {
-    "message": "REMOVING DISCONNECTED PORT $port$",
-    "description": "Debug log message",
-    "placeholders": {
-      "port": {
-        "content": "$1",
-        "example": "2:port"
-      }
-    }
-  },
-  "lenghtofports": {
-    "message": "Length of ports: $length$",
-    "description": "Debug log message",
-    "placeholders": {
-      "length": {
-        "content": "$1",
-        "example": "8"
-      }
-    }
-  },
-  "stupidport": {
-    "message": "Removing stupid Options port which doesn't know to die",
-    "description": "Debug log message"
-  },
-  "addingoptionsport": {
-    "message": "Adding Options port for the first time.",
-    "description": "Debug log message"
-  },
-  "runningfn": {
-    "message": "Running: $requestfn$",
-    "description": "Debug log message",
-    "placeholders": {
-      "requestfn": {
-        "content": "$1",
-        "example": "top_open_blacklist_ui"
-      }
-    }
-  },
-  "response": {
-    "message": "Response:",
-    "description": "Debug log message"
-  },
-  "undefined": {
-    "message": "undefined",
-    "description": "Debug log message"
-  },
-  "safaritrueblock": {
-    "message": "SAFARI TRUE BLOCK $url$: $matched$",
-    "description": "Debug log message that tells you a resource has been blocked",
-    "placeholders": {
-      "url": {
-        "content": "$1",
-        "example": "http://foo.com/"
-      },
-      "matched": {
-        "content": "$2",
-        "example": "true"
-      }
-    }
   },
 
   //adreport.html
@@ -573,7 +289,7 @@
     "message": "Excluded sites",
     "description": "A tab on the options page"
   },
-  
+
   //options/general.html
   "generaloptions": {
     "message": "General options",
@@ -737,7 +453,7 @@
     }
   },
   "updatenowmessage": {
-    "message": "I will fetch updates every 5 days; you can also $button$.",
+    "message": "I will fetch updates automatically; you can also $button$.",
     "description": "update filters text + button",
     "placeholders": {
       "button": {

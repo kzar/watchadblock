@@ -84,7 +84,7 @@
         try {
           return JSON.parse(json);
         } catch (e) {
-          console.log(translate("couldntparsejson", options.key));
+          log("Couldn't parse json for " + options.key);
           return options.default_value;
         }
       }
@@ -189,7 +189,7 @@
           filtertext: _myfilters.filterset._sourceText
         };
         var end = new Date();
-        console.log(translate("timetorun", [end - start, options.domain]));
+        log("time to run: " + (end - start) + " ms || " + options.domain);
         return result;
       }
 
@@ -265,7 +265,7 @@
       // Called within content scripts, by broadcast_channel.js's 
       // broadcast(), to bounce messages back to all listeners
       utils.emit_broadcast = function(request) {
-        log(translate("broadcasttousers", request.fn));
+        log("Broadcasting from background to users " + request.fn);
         $.each(ports, function(i, port) {
           port.postMessage(request);
         });
@@ -274,7 +274,8 @@
       // Called by page_broadcast() to bounce messages back to all 
       // listeners on the same page as the caller.
       utils.emit_page_broadcast = function(request, sender) {
-        log(translate("broadcasttousers", [sender.tab.id, request.fn]));
+        log("Broadcasting from background (to page " + sender.tab.id +
+            ") to users " + request.fn);
         $.each(ports, function(i, port) {
           if (port.sender.tab.id == sender.tab.id)
             port.postMessage(request);
@@ -308,7 +309,8 @@
         port.onDisconnect.addListener(function(disconnected_port) {
           var where = ports.indexOf(disconnected_port);
           if (where != -1) {
-            log(translate("removedisconnectedport", where + ":" + disconnected_port.name));
+            log("REMOVING DISCONNECTED PORT " + where + ":" +
+                disconnected_port.name);
             ports.splice(where, 1);
           }
         });
@@ -318,18 +320,18 @@
         // reloaded and remove the old port, lest we crash Chrome (as of
         // Dev build 288.1.)  Otherwise, we would just push the port.
         if (port.name == "options_page") {
-          log(translate("lenghtofports", ports.length));
+          log("Length of ports: " + ports.length);
           var found = false;
           for (var i = 0; i < ports.length; i++) {
             if (ports[i].name == "options_page") {
-              log(translate("stupidport"));
+              log("Removing stupid Options port which doesn't know to die");
               ports[i] = port;
               found = true;
               break;
             }
           }
           if (!found) {
-            log(translate("addingoptionsport"));
+            log("Adding Options port for the first time.");
             ports.push(port);
           }
         } else {
@@ -346,16 +348,16 @@
       // Called by onRequest[External] to call functions from the field.
       function dispatchHandler(request, sender, sendResponse) { 
         if (debug_background) {
-          log(translate("running", request.fn));
+          log("Running: " + request.fn);
           log("    " + JSON.stringify(request).substring(0, 300));
         }
         var result = utils[request.fn](request.options, sender);
         if (debug_background) {
-          log(translate("response"));
+          log("Response:");
           if (result != null)
             log("    " + JSON.stringify(result).substring(0, 300));
           else
-            log("    (" + translate("undefined") + ")");
+            log("    (undefined)");
         }
         sendResponse(result);
       }
@@ -444,7 +446,7 @@
           var limited = _myfilters.filterset.limitedToDomain(pageDomain);
           var isMatched = url && limited.matches(url, elType);
           if (isMatched)
-            console.log(translate("safaritrueblock", [url, isMatched]));
+            log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
         }, false);
 

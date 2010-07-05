@@ -138,7 +138,7 @@ MyFilters.prototype.freshen_async = function(older_than) {
     $.ajax({
       url: url,
       success: function(text) {
-        log(translate("logfetched", url));
+        log("Fetched " + url);
         if (!text || text.length == 0) // happens sometimes.  Weird, I know
           return;
         if (Filter.isComment(text) == false) // every legit list starts thus
@@ -154,7 +154,7 @@ MyFilters.prototype.freshen_async = function(older_than) {
         that._subscriptions[filter_id].last_update = new Date().getTime();
         that.update();
       },
-      error: function() { log(translate("logfetchfailed", url)); }
+      error: function() { log("Error fetching " + url); }
     });
   }
   for (var id in this._subscriptions) {
