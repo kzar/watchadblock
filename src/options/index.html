@@ -58,7 +58,16 @@
       }
 
       $(function() {
-        $("#tabpages").tabs({ spinner: "", cache: true });
+        function get_last_tab() {
+          var cookies = document.cookie.split(';');
+          for (var i=0; i<cookies.length; i++) {
+            var thiscookie = $.trim(cookies[i]);
+            if (thiscookie.indexOf('lasttab=') == 0)
+              return thiscookie.substring(8);
+          }
+          return 0;
+        }
+        $("#tabpages").tabs({ spinner: "", cache: true, selected: get_last_tab() });
 
         displayVersionNumber();
 

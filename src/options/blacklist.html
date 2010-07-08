@@ -148,6 +148,8 @@
       load_options();
 
       $('.optionDescription').click(checkboxlabel_clicked);
+
+      document.cookie = "lasttab=" + $('#tabpages').tabs('option', 'selected');
     });
   </script>
 
