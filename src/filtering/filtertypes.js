@@ -245,7 +245,7 @@ PatternFilter._parseRule = function(text) {
   var invertedElementTypes = false;
 
   if (parts.length > 1) {
-    var options = parts[1].split(',');
+    var options = parts[parts.length - 1].split(',');
     for (var i = 0; i < options.length; i++) {
       var option = options[i];
 
@@ -288,6 +288,11 @@ PatternFilter._parseRule = function(text) {
     result.allowedElementTypes = ~result.allowedElementTypes;
 
   var rule = parts[0];
+  if (parts.length > 2) {
+    for (var i = 1; i <= parts.length - 2; i++)
+      rule += parts[i];
+  }
+  
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
@@ -297,9 +302,7 @@ PatternFilter._parseRule = function(text) {
   // Convert regexy stuff.
   
   // First, check if it's already a complicated regex.  If so, bail.
-  if (rule.match(
-        /^\/.*\/(?:\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*)?$/)
-        && !rule.match(/^\/[a-zA-Z0-9\-\/]+\/$/)) {
+  if (rule.match(/^\/.*[^a-zA-Z0-9\-\/].*\/$/)) {
     result.rule = rule;
     try {
       log("Found a true regex rule - " + rule);
