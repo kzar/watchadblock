@@ -203,8 +203,11 @@ var PatternFilter = function(text) {
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
 
-  if (this._isRegex)
+  if (this._isRegex) {
+    if (data.rule.match(/^\/.*\/$/))
+      data.rule = data.rule.substr(1, data.rule.length - 2);
     this._rule = new RegExp(data.rule);
+    }
   else
     this._rule = data.rule;
 
@@ -294,11 +297,9 @@ PatternFilter._parseRule = function(text) {
   // Convert regexy stuff.
   
   // First, check if it's already a complicated regex.  If so, bail.
-  // TODO: This is heuristic, but I should be precise.  What am I missing?
-  if (rule.indexOf('[^') != -1 ||
-      rule.indexOf('(?') != -1 ||
-      rule.indexOf('\\/') != -1 ||
-      rule.indexOf('\\.') != -1) {
+  if (rule.match(
+        /^\/.*\/(?:\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*)?$/)
+        && !rule.match(/^\/[a-zA-Z0-9\-\/]+\/$/)) {
     result.rule = rule;
     try {
       log("Found a true regex rule - " + rule);
