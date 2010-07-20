@@ -73,48 +73,7 @@ function purgeElement(el, elInfo) {
 
 // Run special site-specific code.
 function run_specials(features) {
-  var domain = document.domain;
-
-  if (domain.indexOf("chess.com") != -1) {
-      // Their sucky HTML coders absolutely positioned the search box,
-      // so blocking the top ad makes the search box appear too low on the
-      // page.
-      var search_form = $("#search_form").closest("div");
-      search_form.css("top", "40px");
-  }
-
-  if (domain.indexOf("honestjohn.co.uk") != -1) {
-    $(".sponsads1").closest(".pane").remove();
-  }
-  
-  if (domain.indexOf("cbssports.com") != -1) {
-      $("body").css("background-image", "url()");
-  }
-
-  if (domain.indexOf("songmeanings.net") != -1) {
-      $("#rm_container").remove();
-      $("body").css("overflow", "auto");
-  }
-
-  if (domain.indexOf("newgrounds.com") != -1) {
-      $("div#main").css('background-image', '');
-  }
-
-  if (domain.indexOf("99.se") != -1) {
-      $('div[id*="Banner"]').html("");
-  }
-
-  if (domain.indexOf("vanguard.com") != -1) {
-      // Remove broken lack-of-JS check
-      $(".hidePageIfJSdisabled").removeClass("hidePageIfJSdisabled");
-  }
-
-  if (domain.indexOf("imdb.com") != -1) {
-      $("#top_ad_wrapper").remove(); // in case they aren't on EasyList
-      $("#navbar").css('margin-top', 21);
-  }
-
-  if (domain.match("youtube") && features.block_youtube.is_enabled) {
+  if (document.domain.match("youtube") && features.block_youtube.is_enabled) {
     // Based heavily off of AdThwart's YouTube in-video ad blocking.
     // Thanks, Tom!
     function adThwartBlockYouTube(elt) {
