@@ -240,43 +240,48 @@ PatternFilter._parseRule = function(text) {
   // that everything that shows up was in lower case.
   text = text.toLowerCase();
 
-  var parts = text.split('$');
+  var lastDollar = text.lastIndexOf('$');
+  if (lastDollar == -1) {
+    var rule = text;
+    var options = [];
+  }
+  else {
+    var rule = text.substr(0, lastDollar);
+    var options = text.substr(lastDollar).split(',');
+  }
 
   var invertedElementTypes = false;
 
-  if (parts.length > 1) {
-    var options = parts[parts.length - 1].split(',');
-    for (var i = 0; i < options.length; i++) {
-      var option = options[i];
+  for (var i = 0; i < options.length; i++) {
+    var option = options[i];
 
-      if (option.indexOf('domain=') == 0)
-        result.domainText = option.substring(7);
+    if (option.indexOf('domain=') == 0)
+      result.domainText = option.substring(7);
 
-      var inverted = (option[0] == '~');
-      if (inverted)
+    var inverted = (option[0] == '~');
+    if (inverted)
+      option = option.substring(1);
+
+    if (option in ElementTypes) { // this option is a known element type
+      if (inverted) {
+        // They explicitly forbade an element type.  Assume all element
+        // types listed are forbidden: we build up the list and then
+        // invert it at the end.  (This won't work if they explicitly
+        // allow some types and disallow other types, but what would that
+        // even mean?  e.g. $image,~object.)
+        invertedElementTypes = true;
         option = option.substring(1);
-
-      if (option in ElementTypes) { // this option is a known element type
-        if (inverted) {
-          // They explicitly forbade an element type.  Assume all element
-          // types listed are forbidden: we build up the list and then
-          // invert it at the end.  (This won't work if they explicitly
-          // allow some types and disallow other types, but what would that
-          // even mean?  e.g. $image,~object.)
-          invertedElementTypes = true;
-          option = option.substring(1);
-        }
-        result.allowedElementTypes |= ElementTypes[option];
       }
-      else if (option == 'third-party') {
-        // Note: explicitly not supporting ~third-party; we'll incorrectly
-        // treat it as third-party and if we ever get a bug report we'll
-        // deal with it.  EasyList doesn't use that feature.
-        result.options |= FilterOptions.THIRDPARTY;
-      }
-
-      // TODO: handle other options.
+      result.allowedElementTypes |= ElementTypes[option];
     }
+    else if (option == 'third-party') {
+      // Note: explicitly not supporting ~third-party; we'll incorrectly
+      // treat it as third-party and if we ever get a bug report we'll
+      // deal with it.  EasyList doesn't use that feature.
+      result.options |= FilterOptions.THIRDPARTY;
+    }
+
+    // TODO: handle other options.
   }
 
   // No element types mentioned?  All types are allowed.
@@ -287,12 +292,6 @@ PatternFilter._parseRule = function(text) {
   if (invertedElementTypes)
     result.allowedElementTypes = ~result.allowedElementTypes;
 
-  var rule = parts[0];
-  if (parts.length > 2) {
-    for (var i = 1; i <= parts.length - 2; i++)
-      rule += parts[i];
-  }
-  
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
