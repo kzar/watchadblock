@@ -89,7 +89,7 @@ function collapse_blocked_elements(adelement, collapseEnabled) {
         case '#comment':
         case 'SCRIPT':
         case 'STYLE':
-        case 'BR':
+        case 'BR': break;
         case '#text':
           if (test_regex.test(element.childNodes[i].nodeValue))
             return false;
