@@ -203,7 +203,7 @@ var PatternFilter = function(text) {
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
 
-  if (this._isRegex) {
+  if (this._isRegex)
     this._rule = new RegExp(data.rule);
   else
     this._rule = data.rule;
