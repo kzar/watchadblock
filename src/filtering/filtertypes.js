@@ -204,10 +204,7 @@ var PatternFilter = function(text) {
   this._options = data.options;
 
   if (this._isRegex) {
-    if (data.rule.match(/^\/.*\/$/))
-      data.rule = data.rule.substr(1, data.rule.length - 2);
     this._rule = new RegExp(data.rule);
-    }
   else
     this._rule = data.rule;
 
@@ -304,7 +301,7 @@ PatternFilter._parseRule = function(text) {
   if (rule.match(/^\/.+\/$/)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
-      new RegExp(result.rule);
+      new RegExp(result.rule); // Make sure it parses correctly
       result.isRegex = true;
       return result;
     } catch(e) {
