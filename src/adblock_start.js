@@ -107,15 +107,6 @@ function parentIsEmptyWithoutMe(node) {
   return true;
 }
 
-// Remove el_to_remove and any parents who become empty as a result.
-function removeAndCollapse(el_to_remove) {
-  while (parentIsEmptyWithoutMe(el_to_remove)) {
-    el_to_remove = el_to_remove.parentElement;
-  }
-
-  $(el_to_remove).remove();
-}
-
 function enableTrueBlocking(alsoCollapse) {
   document.addEventListener("beforeload", function(event) {
     const el = event.target;
@@ -128,10 +119,11 @@ function enableTrueBlocking(alsoCollapse) {
         // TODO: temp workaround Safari crashing bug.
         // $(el).remove();
         window.setTimeout(function() {
-          if (alsoCollapse)
-            removeAndCollapse(el);
-          else
-            $(el).remove();
+          if (alsoCollapse) // then find the highest element that we can remove
+            while (parentIsEmptyWithoutMe(el))
+              el = el.parentElement;
+
+          $(el).remove();
         }, 0);
       }
     }
