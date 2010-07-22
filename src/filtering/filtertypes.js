@@ -244,7 +244,8 @@ PatternFilter._parseRule = function(text) {
   }
   else {
     var rule = text.substr(0, lastDollar);
-    var options = text.substr(lastDollar).split(',');
+    var optionsText = text.substr(lastDollar + 1);
+    var options = ( optionsText == "" ? [] : optionsText.split(',') );
   }
 
   var invertedElementTypes = false;
