@@ -237,43 +237,49 @@ PatternFilter._parseRule = function(text) {
   // that everything that shows up was in lower case.
   text = text.toLowerCase();
 
-  var parts = text.split('$');
+  var lastDollar = text.lastIndexOf('$');
+  if (lastDollar == -1) {
+    var rule = text;
+    var options = [];
+  }
+  else {
+    var rule = text.substr(0, lastDollar);
+    var optionsText = text.substr(lastDollar + 1);
+    var options = ( optionsText == "" ? [] : optionsText.split(',') );
+  }
 
   var invertedElementTypes = false;
 
-  if (parts.length > 1) {
-    var options = parts[1].split(',');
-    for (var i = 0; i < options.length; i++) {
-      var option = options[i];
+  for (var i = 0; i < options.length; i++) {
+    var option = options[i];
 
-      if (option.indexOf('domain=') == 0)
-        result.domainText = option.substring(7);
+    if (option.indexOf('domain=') == 0)
+      result.domainText = option.substring(7);
 
-      var inverted = (option[0] == '~');
-      if (inverted)
+    var inverted = (option[0] == '~');
+    if (inverted)
+      option = option.substring(1);
+
+    if (option in ElementTypes) { // this option is a known element type
+      if (inverted) {
+        // They explicitly forbade an element type.  Assume all element
+        // types listed are forbidden: we build up the list and then
+        // invert it at the end.  (This won't work if they explicitly
+        // allow some types and disallow other types, but what would that
+        // even mean?  e.g. $image,~object.)
+        invertedElementTypes = true;
         option = option.substring(1);
-
-      if (option in ElementTypes) { // this option is a known element type
-        if (inverted) {
-          // They explicitly forbade an element type.  Assume all element
-          // types listed are forbidden: we build up the list and then
-          // invert it at the end.  (This won't work if they explicitly
-          // allow some types and disallow other types, but what would that
-          // even mean?  e.g. $image,~object.)
-          invertedElementTypes = true;
-          option = option.substring(1);
-        }
-        result.allowedElementTypes |= ElementTypes[option];
       }
-      else if (option == 'third-party') {
-        // Note: explicitly not supporting ~third-party; we'll incorrectly
-        // treat it as third-party and if we ever get a bug report we'll
-        // deal with it.  EasyList doesn't use that feature.
-        result.options |= FilterOptions.THIRDPARTY;
-      }
-
-      // TODO: handle other options.
+      result.allowedElementTypes |= ElementTypes[option];
     }
+    else if (option == 'third-party') {
+      // Note: explicitly not supporting ~third-party; we'll incorrectly
+      // treat it as third-party and if we ever get a bug report we'll
+      // deal with it.  EasyList doesn't use that feature.
+      result.options |= FilterOptions.THIRDPARTY;
+    }
+
+    // TODO: handle other options.
   }
 
   // No element types mentioned?  All types are allowed.
@@ -284,7 +290,6 @@ PatternFilter._parseRule = function(text) {
   if (invertedElementTypes)
     result.allowedElementTypes = ~result.allowedElementTypes;
 
-  var rule = parts[0];
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
@@ -293,21 +298,18 @@ PatternFilter._parseRule = function(text) {
 
   // Convert regexy stuff.
   
-  // First, check if it's already a complicated regex.  If so, bail.
-  // TODO: This is heuristic, but I should be precise.  What am I missing?
-  if (rule.indexOf('[^') != -1 ||
-      rule.indexOf('(?') != -1 ||
-      rule.indexOf('\\/') != -1 ||
-      rule.indexOf('\\.') != -1) {
-    result.rule = rule;
+  // First, check if the rule itself is in regex form.  If so, we're done.
+  if (rule.match(/^\/.+\/$/)) {
+    result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
-      log("Found a true regex rule - " + rule);
-      new RegExp(result.rule);
+      new RegExp(result.rule); // Make sure it parses correctly
       result.isRegex = true;
       return result;
     } catch(e) {
       log("Found an unparseable regex rule - " + rule);
       // OK, we thought it was a regex but it's not.  Just discard it.
+      // TODO: let parser throw exceptions which are caught, rather than having
+      // to keep dummy rules.
       result.rule = 'dummy_rule_matching_nothing';
       return result;
     }
@@ -372,18 +374,13 @@ PatternFilter._parseRule = function(text) {
       result.isRegex = true;
     }
   }
-  // I've seen AdBlock rules that contain '|' in the middle, which
-  // regexes interpret to mean 'or'.  Specifically, 'adddyn|*|adtech;' which
-  // converts to 'adddyn|.*|adtech;' which matches EVERYTHING.  So if we
-  // see those characters, we strip them.
-  // TODO: figure out how this is supposed to be interpreted and interpret
-  // it correctly.
-  rule = rule.replace(/\|/g, '');
 
   // Escape what might be interpreted as a special character.
   if (result.isRegex) {
     // ? at the start of a regex means something special; escape it always.
     rule = rule.replace(/\?/g, '\\?');
+    // A '|' within a string should really be a pipe.
+    rule = rule.replace(/\|/g, '\\|');
     // . shouldn't mean "match any character" unless it's followed by a * in
     // which case we were almost certainly the ones who put it there.
     rule = rule.replace(/\.(?!\*)/g, '\\.');
