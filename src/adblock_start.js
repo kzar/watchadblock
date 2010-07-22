@@ -74,7 +74,49 @@ function browser_canLoad(event, data) {
   }
 }
 
-function enableTrueBlocking() {
+// Returns true if node.parent contains no visible content other
+// than node itself.
+function parentIsEmptyWithoutMe(node) {
+  if (!node || !node.parentElement)
+    return false;
+  var parent = node.parentElement;
+
+  var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
+  for (var i=0;i<parent.childNodes.length;i++) {
+    switch (parent.childNodes[i].nodeName) {
+      case '#comment':
+      case 'SCRIPT':
+      case 'STYLE':
+      case 'BR':
+        break;
+      case '#text':
+        if (test_regex.test(parent.childNodes[i].nodeValue))
+          return false;
+        else
+          break;
+      default:
+        if (parent.childNodes[i] !== node)
+          return false;
+    }
+  }
+
+  log("Collapsing empty parent of blocked element: " +
+      parent.nodeName + "#" + parent.id +
+      "." + parent.className);
+
+  return true;
+}
+
+// Remove el_to_remove and any parents who become empty as a result.
+function removeAndCollapse(el_to_remove) {
+  while (parentIsEmptyWithoutMe(el_to_remove)) {
+    el_to_remove = el_to_remove.parentElement;
+  }
+
+  $(el_to_remove).remove();
+}
+
+function enableTrueBlocking(alsoCollapse) {
   document.addEventListener("beforeload", function(event) {
     const el = event.target;
     // Cancel the load if canLoad is false.
@@ -86,7 +128,10 @@ function enableTrueBlocking() {
         // TODO: temp workaround Safari crashing bug.
         // $(el).remove();
         window.setTimeout(function() {
-          $(el).remove();
+          if (alsoCollapse)
+            removeAndCollapse(el);
+          else
+            $(el).remove();
         }, 0);
       }
     }
@@ -145,12 +190,12 @@ extension_call('get_features_and_filters', opts, function(data) {
   // Gmail has a bug where any injected CSS selector of the
   // form <nodename>[style<anything>] somehow makes the CC and BCC
   // fields disappear onclick, and breaks the email autocomplete
-  // feature.  So we special case Gmail.
+  // feature. So we special case Gmail.
   if (gmail_hack())
     return;
 
   if (SAFARI || data.features.true_blocking_support.is_enabled)
-    enableTrueBlocking();
+    enableTrueBlocking(data.features.collapse_blocked_elements.is_enabled);
 
   block_list_via_css(data.selectors);
 
