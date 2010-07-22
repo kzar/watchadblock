@@ -300,17 +300,18 @@ PatternFilter._parseRule = function(text) {
 
   // Convert regexy stuff.
   
-  // First, check if it's already a complicated regex.  If so, bail.
-  if (rule.match(/^\/.*[^a-zA-Z0-9\-\/].*\/$/)) {
-    result.rule = rule;
+  // First, check if the rule itself is in regex form.  If so, we're done.
+  if (rule.match(/^\/.+\/$/)) {
+    result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
-      log("Found a true regex rule - " + rule);
       new RegExp(result.rule);
       result.isRegex = true;
       return result;
     } catch(e) {
       log("Found an unparseable regex rule - " + rule);
       // OK, we thought it was a regex but it's not.  Just discard it.
+      // TODO: let parser throw exceptions which are caught, rather than having
+      // to keep dummy rules.
       result.rule = 'dummy_rule_matching_nothing';
       return result;
     }
@@ -375,18 +376,13 @@ PatternFilter._parseRule = function(text) {
       result.isRegex = true;
     }
   }
-  // I've seen AdBlock rules that contain '|' in the middle, which
-  // regexes interpret to mean 'or'.  Specifically, 'adddyn|*|adtech;' which
-  // converts to 'adddyn|.*|adtech;' which matches EVERYTHING.  So if we
-  // see those characters, we strip them.
-  // TODO: figure out how this is supposed to be interpreted and interpret
-  // it correctly.
-  rule = rule.replace(/\|/g, '');
 
   // Escape what might be interpreted as a special character.
   if (result.isRegex) {
     // ? at the start of a regex means something special; escape it always.
     rule = rule.replace(/\?/g, '\\?');
+    // A '|' within a string should really be a pipe.
+    rule = rule.replace(/\|/g, '\\|');
     // . shouldn't mean "match any character" unless it's followed by a * in
     // which case we were almost certainly the ones who put it there.
     rule = rule.replace(/\.(?!\*)/g, '\\.');
