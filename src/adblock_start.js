@@ -74,46 +74,44 @@ function browser_canLoad(event, data) {
   }
 }
 
-function collapse_blocked_elements(adelement, collapseEnabled) {
-  // Returns true if node.parent contains no visible content other
-  // than node itself.
-  function parent_is_empty_without_me(node) {
-    if (!node || !node.parentElement)
-      return false;
-    var element = node.parentElement;
+// Returns true if node.parent contains no visible content other
+// than node itself.
+function parentIsEmptyWithoutMe(node) {
+  if (!node || !node.parentElement)
+    return false;
+  var parent = node.parentElement;
 
-    var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
-    for (var i=0;i<element.childNodes.length;i++) {
-      switch (element.childNodes[i].nodeName) {
-        case '#comment':
-        case 'SCRIPT':
-        case 'STYLE':
-        case 'BR':
+  var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
+  for (var i=0;i<parent.childNodes.length;i++) {
+    switch (parent.childNodes[i].nodeName) {
+      case '#comment':
+      case 'SCRIPT':
+      case 'STYLE':
+      case 'BR':
+        break;
+      case '#text':
+        if (test_regex.test(parent.childNodes[i].nodeValue))
+          return false;
+        else
           break;
-        case '#text':
-          if (test_regex.test(element.childNodes[i].nodeValue))
-            return false;
-          else
-            break;
-        default:
-          if (element.childNodes[i] !== node)
-            return false;
-      }
-    }
-    return true;
-  }
-
-  //remove the ad itself and store the parent
-  var el_to_remove = adelement;
-
-  if (collapseEnabled) {
-    log("Collapsing blocked element: " +
-        adelement.nodeName + "#" + adelement.id +
-        "." + adelement.className);
-    while (parent_is_empty_without_me(el_to_remove)) {
-      el_to_remove = el_to_remove.parentElement;
+      default:
+        if (parent.childNodes[i] !== node)
+          return false;
     }
   }
+  return true;
+}
+
+// Remove el_to_remove and any parents who become empty as a result.
+function removeAndCollapse(el_to_remove) {
+  log("Collapsing blocked element: " +
+      el_to_remove.nodeName + "#" + el_to_remove.id +
+      "." + el_to_remove.className);
+
+  while (parentIsEmptyWithoutMe(el_to_remove)) {
+    el_to_remove = el_to_remove.parentElement;
+  }
+
   $(el_to_remove).remove();
 }
 
@@ -129,7 +127,10 @@ function enableTrueBlocking(alsoCollapse) {
         // TODO: temp workaround Safari crashing bug.
         // $(el).remove();
         window.setTimeout(function() {
-          collapse_blocked_elements(el, alsoCollapse);
+          if (alsoCollapse)
+            removeAndCollapse(el);
+          else
+            $(el).remove();
         }, 0);
       }
     }
