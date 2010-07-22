@@ -75,51 +75,46 @@ function browser_canLoad(event, data) {
 }
 
 function collapse_blocked_elements(adelement, collapseEnabled) {
-  //check if an element is empty
-  function element_is_empty(element) {
-    //element is already removed or something like that
-    if (element == undefined)
+  // Returns true if node.parent contains no visible content other
+  // than node itself.
+  function parent_is_empty_without_me(node) {
+    if (!node || !node.parentElement)
       return false;
+    var element = node.parentElement;
 
     var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
     for (var i=0;i<element.childNodes.length;i++) {
-      //comments, non-visible texts, line breaks, scripts and style elements
-      //do not show up on the page and count as 'empty'.
       switch (element.childNodes[i].nodeName) {
         case '#comment':
         case 'SCRIPT':
         case 'STYLE':
-        case 'BR': break;
+        case 'BR':
+          break;
         case '#text':
           if (test_regex.test(element.childNodes[i].nodeValue))
             return false;
           else
             break;
         default:
-          return false;
+          if (element.childNodes[i] !== node)
+            return false;
       }
     }
     return true;
   }
 
   //remove the ad itself and store the parent
-  var parent_of_selector = adelement.parentElement;
-  $(adelement).remove();
+  var el_to_remove = adelement;
 
   if (collapseEnabled) {
     log("Collapsing blocked element: " +
         adelement.nodeName + "#" + adelement.id +
         "." + adelement.className);
-    while (element_is_empty(parent_of_selector)) {
-      //remove the parent element(s)
-      if (parent_of_selector.nodeName == 'BODY'
-          || parent_of_selector.nodeName == 'FRAME')
-        break;
-      var new_parent_of_selector = parent_of_selector.parentElement;
-      $(parent_of_selector).remove();
-      parent_of_selector = new_parent_of_selector;
+    while (parent_is_empty_without_me(el_to_remove)) {
+      el_to_remove = el_to_remove.parentElement;
     }
   }
+  $(el_to_remove).remove();
 }
 
 function enableTrueBlocking(alsoCollapse) {
