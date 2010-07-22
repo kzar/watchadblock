@@ -99,15 +99,16 @@ function parentIsEmptyWithoutMe(node) {
           return false;
     }
   }
+
+  log("Collapsing empty parent of blocked element: " +
+      parent.nodeName + "#" + parent.id +
+      "." + parent.className);
+
   return true;
 }
 
 // Remove el_to_remove and any parents who become empty as a result.
 function removeAndCollapse(el_to_remove) {
-  log("Collapsing blocked element: " +
-      el_to_remove.nodeName + "#" + el_to_remove.id +
-      "." + el_to_remove.className);
-
   while (parentIsEmptyWithoutMe(el_to_remove)) {
     el_to_remove = el_to_remove.parentElement;
   }
