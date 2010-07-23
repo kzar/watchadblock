@@ -1,10 +1,10 @@
 [Adblock Plus 1.1]
-! Checksum: /pa/LN2XEmczM5Dn2aYymQ
+! Checksum: uX0dL3wRb/7cAYtzi8K3jA
 !
 ! Rick752's EasyList - Global English ad blocking subscription
 ! https://easylist.adblockplus.org/
 ! License: http://creativecommons.org/licenses/by-sa/3.0/
-! Last modified: 22 Jul 2010 22:20 UTC
+! Last modified: 23 Jul 2010 13:00 UTC
 ! Expires: 5 days (updates automatically every 5 days)
 !
 ! Please report unblocked ads or mistakenly blocked content:
@@ -1276,6 +1276,7 @@
 /webads.
 /webads_
 /webadverts/*
+/welcome_ad.
 /wipeads/*
 /wp-content/ads/*
 /wp-content/plugins/fasterim-optin/*
@@ -1634,8 +1635,8 @@ n728x90_
 ###AdsRight
 ###AdsWrap
 ###Ads_BA_CAD
-###Ads_BA_CAD_box
 ###Ads_BA_CAD2
+###Ads_BA_CAD_box
 ###Ads_BA_SKY
 ###AdvertMPU23b
 ###AdvertPanel
@@ -1836,6 +1837,7 @@ n728x90_
 ###adLB
 ###adLayer
 ###adLeaderboard
+###adLeaderTop
 ###adMPU
 ###adMiddle0Frontpage
 ###adMiniPremiere
@@ -1884,6 +1886,7 @@ n728x90_
 ###adTile
 ###adTop
 ###adTopboxright
+###adTower
 ###adUnit
 ###adWrapper
 ###adZoneTop
@@ -2740,6 +2743,7 @@ n728x90_
 ###second-adlayer
 ###secondBoxAdContainer
 ###section-container-ddc_ads
+###section-sponsors
 ###section_advertorial_feature
 ###servfail-ads
 ###sew-ad1
@@ -2873,6 +2877,7 @@ n728x90_
 ###text_ad
 ###text_advert
 ###textad
+###textad3
 ###the-last-ad-standing
 ###thefooterad
 ###themis-ads
@@ -3356,6 +3361,7 @@ n728x90_
 ##.ad_power
 ##.ad_rectangle
 ~didaktik-der-mathematik.de##.ad_right
+##.ad_right_col
 ##.ad_sidebar
 ##.ad_skyscraper
 ##.ad_slug
@@ -3651,6 +3657,7 @@ n728x90_
 ##.alb-content-ad
 ##.alt_ad
 ##.anchorAd
+##.another_text_ad
 ##.answer_ad_content
 ##.aolSponsoredLinks
 ##.aopsadvert
@@ -4954,6 +4961,7 @@ n728x90_
 ||ltassrv.com^$third-party
 ||lzjl.com^$third-party
 ||madisonlogic.com^$third-party
+||markethealth.com^$third-party
 ||marketingsolutions.yahoo.com^$third-party
 ||maxserving.com^$third-party
 ||mb01.com^$third-party
@@ -5264,6 +5272,7 @@ n728x90_
 ||buzznet.com^*/showpping-banner-$third-party
 ||c-sharpcorner.com^*/banners/$third-party
 ||cas.clickability.com^$third-party
+||cash.neweramediaworks.com^$third-party
 ||cashmakingpowersites.com^*/banners/$third-party
 ||cashmyvideo.com/images/cashmyvideo_banner.gif$third-party
 ||cazoz.com/banner.php$third-party
@@ -5306,6 +5315,7 @@ n728x90_
 ||iselectmedia.com^*/banners/$third-party
 ||jlist.com/feed.php?affid=$third-party
 ||joylandcasino.com/promoredirect?$third-party
+||justcutegirls.com/banners/$third-party
 ||kallout.com^*.php?id=$third-party
 ||l.yimg.com^*&partner=*&url=$subdocument,third-party
 ||lastlocation.com/images/banner$third-party
@@ -5917,6 +5927,7 @@ autotrader.co.uk###placeholderTopLeaderboard
 avsforum.com##td[width="125"][valign="top"][style="padding-left: 15px;"]
 avsforum.com##td[width="193"][valign="top"]
 avsforum.com##td[width="300"][valign="top"][rowspan="3"]
+awfulplasticsurgery.com##a[href^="http://www.freeipadoffer.com/default.aspx?r="]
 azarask.in##.ad
 azstarnet.com##.bannerinstory
 babble.com.au###leaderboard-bottom
@@ -6383,6 +6394,7 @@ golivewire.com##div[style="height: 292px; margin-left: 10px; background-image: u
 goodgearguide.com.au##a[href^="http://ad.doubleclick.net/"]
 goodhopefm.co.za##.mrec
 goodhousekeeping.com###hpV2_728x90
+google.com##.ts[style="margin: 0pt 0pt 12px; height: 92px;"]
 googletutor.com##div[style="width: 125px; text-align: center;"]
 googlewatch.eweek.com###topBanner
 governmentvideo.com##table[width="665"]
@@ -6912,6 +6924,7 @@ ovguide.com##.banner-rectangleMedium
 p2pnet.net###sidebar > ul:first-child + table[width="19%"]
 p2pnet.net###sidebar2
 p2pnet.net##td[align="center"][width="100%"] > a[style="border: 0px none ; margin: 0px;"][target="_blank"] > img
+pagead2.googlesyndication.com##html
 passedoutphotos.com###top-leaderboard
 passedoutphotos.com##.leaderboard
 pbs.org##.newshour-support-wrap
@@ -7779,7 +7792,7 @@ zuula.com##.sponsor
 @@||redir.adap.tv/redir/client/static/as3adplayer.swf$domain=newsinc.com
 @@||rosauers.com/locations/ads.html
 @@||sam.itv.com/xtserver/acc_random=*.video.preroll/seg=$object_subrequest
-@@||sankakustatic.com/wp-content/themes/*/spc.php?$script
+@@||sankakustatic.com^$script
 @@||search.excite.co.uk/minify.php?files*/css/feed/adsearch.css
 @@||seavideo-ak.espn.go.com/ads/$object_subrequest
 @@||seesaw.com/cp/c4/realmedia/ads/adstream_sx.ads/$xmlhttprequest
@@ -7883,7 +7896,7 @@ zuula.com##.sponsor
 @@||zshare.net/ads.js?*&ad_url=/adbanner
 !Non-English
 @@||adser.localport.it/banman.asp?zoneid=71$subdocument
-@@||adswizz.com/www/delivery/$object_subrequest,domain=video.belga.be
+@@||adswizz.com/www/delivery/$object_subrequest,domain=alloclips.com|video.belga.be
 @@||adtech.de/?adrawdata/3.0/*;|$object_subrequest,domain=nelonen.fi|tv2.dk
 @@||adtech.panthercustomer.com^*.flv$domain=tv3.ie
 @@||afterdark-nfs.com/ad/$background,image,script,stylesheet
@@ -7900,6 +7913,7 @@ zuula.com##.sponsor
 @@||fotojorgen.no/images/*/webadverts/$image
 @@||hry.cz/ad/adcode.js
 @@||img.deniksport.cz/css/reklama.css?
+@@||nextmedia.com/admedia/$object_subrequest
 @@||openx.zomoto.nl/live/www/delivery/fl.js
 @@||openx.zomoto.nl/live/www/delivery/spcjs.php?id=
 @@||pagead2.googlesyndication.com/pagead/abglogo/abg-da-100c-000000.png$domain=janno.dk|nielco.dk
