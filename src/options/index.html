@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
     <script src="../port.js"></script>
     <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <script src="../jquery/jquery.cookie.js"></script>
     <script src="../jquery/jquery-ui-1.8.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script src="../broadcast_channel.js"></script>
@@ -58,16 +59,7 @@
       }
 
       $(function() {
-        function get_last_tab() {
-          var cookies = document.cookie.split(';');
-          for (var i=0; i<cookies.length; i++) {
-            var thiscookie = $.trim(cookies[i]);
-            if (thiscookie.indexOf('lasttab=') == 0)
-              return thiscookie.substring(8);
-          }
-          return 0;
-        }
-        $("#tabpages").tabs({ spinner: "", cache: true, selected: get_last_tab() });
+        $("#tabpages").tabs({ spinner: "", cache: true, cookie: {}  });
 
         displayVersionNumber();
 
