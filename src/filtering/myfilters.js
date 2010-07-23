@@ -226,7 +226,6 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
     if (match) {
       var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
       sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
-      log("Expires after " + sub_data.expiresAfterHours + " hours");
       break;
     }
   }
