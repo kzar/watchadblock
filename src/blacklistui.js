@@ -34,19 +34,25 @@ function BlacklistUi(subscribed_filters_list) {
   // TODO: makeEvent('cancel', 'click') and it sets up fns for us.
 }
 
-function preview(filter) {
+// Hide the specified CSS selector on the page, or if null, stop hiding.
+function preview(selector) {
   $("#adblock_blacklist_preview_css").remove();
-  if (!filter) return;
+  if (!selector) return;
   var css_preview = document.createElement("style");
   css_preview.type = "text/css";
   css_preview.id = "adblock_blacklist_preview_css";
   var d = "body .ui-dialog:last-child ";
+
+  // Show the blacklist UI.
   css_preview.innerText = d + "input {display:inline-block!important;} " +
       d + ", " + d + "div:not(#filter_warning), " + d + ".ui-icon, " + d +
       "a:not(#adreportlink), " + d + "center, " + d +
       "button {display:block!important;} " +  d + "#adblock-details, " + d +
       "span, " + d + "b, " + d + "#adreportlink, " + d +
-      "i {display:inline!important;} " + filter + " {display:none!important;}";
+      "i {display:inline!important;} ";
+  // Hide the specified selector.
+  css_preview.innerText += selector + " {display:none!important;}";
+
   document.documentElement.appendChild(css_preview);
 }
 
@@ -221,7 +227,7 @@ BlacklistUi.prototype._build_page2 = function() {
       },
       close: function() {
         that._onClose();
-        preview('');
+        preview(null); // cancel preview
       }
     }).css({
       'background': 'white',
@@ -301,13 +307,15 @@ BlacklistUi.prototype._redrawPage2 = function() {
   var summary = $("#summary", that._ui_page2);
 
   function updateFilter() {
-    summary.html(that._makeFilter());
+    var theFilter = that._makeFilter();
+
+    summary.html(theFilter);
 
     $("#adreportlink", that._ui_page2).
       attr("href", that._generatedAdReportUrl());
 
-    var matchCount = $(summary.text()+":not('div.ui-dialog')").length;
-    matchCount -= $('.ui-dialog ' + summary.text()).length;
+    var matchCount = $(theFilter).not(".ui-dialog").not(".ui-dialog *").length;
+
     $("#count", that._ui_page2).
       html("<center>That matches <b>" + matchCount + 
            (matchCount == 1 ? " item" : " items") + 
