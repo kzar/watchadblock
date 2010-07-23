@@ -259,8 +259,10 @@ MyFilters.prototype.unsubscribe = function(id, del) {
 //   url:string - url of this subscription
 //   name:string - friendly name of this subscription
 //   user_submitted:bool - true if this is a url typed in by the user
-//   last_update?:number - if the subscription has ever been fetched,
-//                         the ticks at which it was last fetched
+//   last_update?:number - undefined if unsubscribed.  The ticks at which
+//                         this subscription was last fetched.  0 if it was
+//                         loaded off the hard drive and never successfully
+//                         fetched from the web.
 // }
 MyFilters.prototype.get_subscriptions_minus_text = function() {
   var result = {};
