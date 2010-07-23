@@ -214,7 +214,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
 
   // Record how many days until we need to update the subscription text
   sub_data.expires = 5; // The default
-  var expiresRegex = /(?:expires\:\ ?|expires\ after\ )(\d*[1-9]\d*) ?(h?)/i;
+  var expiresRegex = /(?:expires\:\ ?|expires\ after\ )(\d*[1-9]\d*)\ ?(h?)/i;
   var expiresCheckLines = text.split('\n', 15); //15 lines should be enough
   for (var i = 0; i < expiresCheckLines.length; i++) {
     if (!Filter.isComment(expiresCheckLines[i]))
@@ -223,7 +223,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
     if (match) {
       var num = match[1];
       var is_hours = (match[2] == "h");
-      sub_data.expires = (is_hours ? Math.ceil(num/24) : Math.min(num, 21);
+      sub_data.expires = Math.min(is_hours ? Math.ceil(num/24) : num, 21);
       log("Expires after " + sub_data.expires + " days");
       break;
     }
