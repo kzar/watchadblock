@@ -109,7 +109,7 @@ function parentIsEmptyWithoutMe(node) {
 
 function enableTrueBlocking(alsoCollapse) {
   document.addEventListener("beforeload", function(event) {
-    const el = event.target;
+    var el = event.target;
     // Cancel the load if canLoad is false.
     var elType = typeForElement(el);
     var url = relativeToAbsoluteUrl(urlForElement(el, elType));
