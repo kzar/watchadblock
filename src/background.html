@@ -226,11 +226,9 @@
 
       // NEW FILTERS
 
-      // Update any out of date filters.
-      // Inputs: older_than:integer - number of hours.  If anyone is
-      //         staler than this, update them.  Defaults to 5 days.
-      utils.freshen_subscriptions = function(options) {
-        _myfilters.freshen_async(options.older_than);
+      // Fetch the latest version of all subscribed lists now.
+      utils.update_subscriptions_now = function(options) {
+        _myfilters.freshen_async(true);
       }
       // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.

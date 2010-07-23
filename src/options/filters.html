@@ -247,7 +247,7 @@
 
         $("#btnUpdateNow").click(function() {
           $(this).attr("disabled", "disabled");
-          extension_call("freshen_subscriptions", {older_than:0});
+          extension_call("update_subscriptions_now", {});
         });
 
         $("#btnNewSubscriptionUrl").click(function() {
