@@ -121,11 +121,10 @@ MyFilters.prototype.rebuild = function() {
 
 // If any subscribed filters are out of date, asynchronously load updated
 // versions, then call this.update().  Asynchronous.
-// Inputs: older_than?:int -- number of hours.  Any subscriptions staler
-//         than this will be updated.  Defaults to the subscription's
-//         specified expiration, or 5 days if none is specified.
+// Inputs: force?:bool -- if true, update all subscribed lists even if
+//         they aren't out of date.
 // Returns: null (asynchronous)
-MyFilters.prototype.freshen_async = function(older_than) {
+MyFilters.prototype.freshen_async = function(force) {
   var that = this; // temp along with 7/23/2010 code below
   function out_of_date(subscription) {
     // temp code to add .expiresAfterHours property to pre-7/23/2010 subscriptions.
@@ -135,11 +134,10 @@ MyFilters.prototype.freshen_async = function(older_than) {
       localStorage.setItem('filter_lists', JSON.stringify(that._subscriptions));
     } // end temp code
 
-    var hours_between_updates = (older_than != undefined ? 
-      older_than : subscription.expiresAfterHours);
+    if (force) return true;
 
     var millis = new Date().getTime() - subscription.last_update;
-    return (millis > 1000 * 60 * 60 * hours_between_updates);
+    return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
   }
   // Fetch the latest filter text, put it in this._subscriptions, and update
   // ourselves.
