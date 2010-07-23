@@ -233,6 +233,10 @@ PatternFilter._parseRule = function(text) {
     options: FilterOptions.NONE
   };
 
+  // TODO: handle match-case option correctly.  For now we just pretend
+  // that everything that shows up was in lower case.
+  text = text.toLowerCase();
+
   var lastDollar = text.lastIndexOf('$');
   if (lastDollar == -1) {
     var rule = text;
@@ -240,7 +244,7 @@ PatternFilter._parseRule = function(text) {
   }
   else {
     var rule = text.substr(0, lastDollar);
-    var optionsText = text.substr(lastDollar + 1).toLowerCase();
+    var optionsText = text.substr(lastDollar + 1);
     var options = ( optionsText == "" ? [] : optionsText.split(',') );
   }
 
@@ -269,12 +273,10 @@ PatternFilter._parseRule = function(text) {
       result.allowedElementTypes |= ElementTypes[option];
     }
     else if (option == 'third-party') {
-      result.options |= 
-          (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
-    }
-    else if (option == 'match-case') {
-      //doesn't have an inverted function
-      result.options |= FilterOptions.MATCHCASE;
+      // Note: explicitly not supporting ~third-party; we'll incorrectly
+      // treat it as third-party and if we ever get a bug report we'll
+      // deal with it.  EasyList doesn't use that feature.
+      result.options |= FilterOptions.THIRDPARTY;
     }
 
     // TODO: handle other options.
@@ -312,9 +314,6 @@ PatternFilter._parseRule = function(text) {
       return result;
     }
   }
-
-  if (!(result.options & FilterOptions.MATCHCASE))
-    rule = rule.toLowerCase();
 
   // If must start at domain, remember this for later -- we'll handle
   // two cases to cover it.
@@ -436,12 +435,6 @@ PatternFilter.prototype = {
     if ((this._options & FilterOptions.THIRDPARTY) && !isThirdParty)
       return false;
 
-    if ((this._options & FilterOptions.FIRSTPARTY) && isThirdParty)
-      return false;
-
-    if (!(this._options & FilterOptions.MATCHCASE))
-      url = url.toLowerCase();
-
     if (this._isRegex)
       return this._rule.test(url);
 
@@ -453,7 +446,7 @@ PatternFilter.prototype = {
     if (this._rule2 && url.indexOf(this._rule2) != -1)
       return true;
 
-      return false;
+    return false;
   }
 }
 
