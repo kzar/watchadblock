@@ -122,15 +122,17 @@ MyFilters.prototype.rebuild = function() {
 // If any subscribed filters are out of date, asynchronously load updated
 // versions, then call this.update().  Asynchronous.
 // Inputs: older_than?:int -- number of hours.  Any subscriptions staler
-//         than this will be updated.  Defaults to 5 days.
+//         than this will be updated.  Defaults to the subscription's
+//         specified expiration, or 5 days if none is specified.
 // Returns: null (asynchronous)
 MyFilters.prototype.freshen_async = function(older_than) {
   function out_of_date(subscription) {
-    //older_than set? then use older_than
-    //else if expires set? then use expires (in hours) * 24 hours/day
-    //else use 5 days (120 hours)
-    var hours_between_updates = (older_than != undefined ? older_than :
-      (subscription.expires != undefined ? subscription.expires * 24 : 120));
+    if (older_than != undefined)
+      var hours_between_updates = older_than;
+    else if (subscription.expires != undefined)
+      var hours_between_updates = subscription.expires * 24; // days -> hours
+    else
+      var hours_between_updates = 120; // 5 days
     var millis = new Date().getTime() - subscription.last_update;
     return (millis > 1000 * 60 * 60 * hours_between_updates);
   }
@@ -154,10 +156,8 @@ MyFilters.prototype.freshen_async = function(older_than) {
         if (that._subscriptions[filter_id] == undefined)
           return;
 
-        that._subscriptions[filter_id].text = text;
-        that._subscriptions[filter_id].last_update = new Date().getTime();
-        var expiresCheckLines = text.split('\n', 15);
-        that._subscriptions[filter_id].expires = getExpiresAfter(expiresCheckLines);
+        that._updateSubscriptionText(filter_id, text);
+        
         that.update();
       },
       error: function() { log("Error fetching " + url); }
@@ -198,28 +198,36 @@ MyFilters.prototype.subscribe = function(id, text) {
       };
     }
   }
-  this._subscriptions[id].subscribed = true;
-  this._subscriptions[id].last_update = new Date().getTime();
-  this._subscriptions[id].text = text;
-  var expiresCheckLines = text.split('\n', 15); //15 lines should be enough
-  this._subscriptions[id].expires = getExpiresAfter(expiresCheckLines);
+  this._updateSubscriptionText(id, text);
+
   this.update();
 }
 
-//searches for the expires after string of a subscription
-//inputs an array of lines from a filter list
-function getExpiresAfter(lines) {
-  var expiresregex = /(expires\:\ ?|expires\ after\ )\d*[1-9]\d*\ ?h?/i;
-  for (var line in lines) {
-    if (!Filter.isComment(lines[line])) continue;
-    var matches = lines[line].match(expiresregex);
-    if (matches)
-      if (matches[0].indexOf("h") != -1)
-        return Math.ceil(lines[line].match(/\d*[1-9]\d*/)[0] / 24);
-      else
-        return Math.min(lines[line].match(/\d*[1-9]\d*/)[0], 21);
+// Record that subscription_id is subscribed, was updated now, and has
+// the given text.  Requires that this._subscriptions[subscription_id] exists.
+MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
+  var sub_data = this._subscriptions[subscription_id];
+
+  sub_data.subscribed = true;
+  sub_data.text = text;
+  sub_data.last_update = new Date().getTime();
+
+  // Record how many days until we need to update the subscription text
+  sub_data.expires = 5; // The default
+  var expiresRegex = /(?:expires\:\ ?|expires\ after\ )(\d*[1-9]\d*) ?(h?)/i;
+  var expiresCheckLines = text.split('\n', 15); //15 lines should be enough
+  for (var i = 0; i < expiresCheckLines.length; i++) {
+    if (!Filter.isComment(expiresCheckLines[i]))
+      continue;
+    var match = expiresCheckLines[i].match(expiresRegex);
+    if (match) {
+      var num = match[1];
+      var is_hours = (match[2] == "h");
+      sub_data.expires = (is_hours ? Math.ceil(num/24) : Math.min(num, 21);
+      log("Expires after " + sub_data.expires + " days");
+      break;
+    }
   }
-  return 5; //default
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
