@@ -16,21 +16,21 @@
         if (seconds < 10)
           return translate("updatedrightnow");
         if (seconds < 60)
-          return translate("updatedsecondsago", seconds);
+          return translate("updatedsecondsago", [seconds]);
         var minutes = Math.round(seconds / 60);
         if (minutes == 1)
           return translate("updatedminuteago");
         if (minutes < 60)
-          return translate("updatedminutesago", minutes);
+          return translate("updatedminutesago", [minutes]);
         var hours = Math.round(minutes / 60);
         if (hours == 1)
           return translate("updatedhourago");
         if (hours < 24)
-          return translate("updatedhoursago", hours);
+          return translate("updatedhoursago", [hours]);
         var days = Math.round(hours / 24);
         if (days == 1)
           return translate("updateddayago");
-        return translate("updateddaysago", days);
+        return translate("updateddaysago", [days]);
       }
 
 

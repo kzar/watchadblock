@@ -161,7 +161,7 @@ BlacklistUi.prototype._build_page2 = function() {
       function() {
         var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
         that._ui_page2.dialog('close');
-        custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
+        custom_filter = prompt(translate("blacklistereditfilter"), [custom_filter]);
         if (custom_filter.indexOf('##') == -1) 
           custom_filter = "##" + custom_filter;
         var valid_filter = global_filter_validation_regex.test(custom_filter);
@@ -251,7 +251,7 @@ BlacklistUi.prototype._makeFilter = function() {
   if (result.length == 0)
     warningMessage = translate("blacklisterwarningnofilter");
   else if (result.length == 1 && $("input:checkbox#cknodeName", detailsDiv).is(':checked'))
-    warningMessage = translate("blacklisterblocksalloftype", result[0]);
+    warningMessage = translate("blacklisterblocksalloftype", [result[0]]);
   $("#filter_warning", this._ui_page2).
     css("display", (warningMessage ? "block" : "none")).
     css("font-weight", "bold").
@@ -278,8 +278,8 @@ BlacklistUi.prototype._redrawPage2 = function() {
     var matchCount = $(summary.text()).length;
     $("#count", that._ui_page2).
       html("<center>" + ((matchCount == 1) ? 
-          translate("blacklistersinglematch", "<b>1</b>") :
-          translate("blacklistermatches", "<b>" + matchCount + "</b>")) 
+          translate("blacklistersinglematch", ["<b>1</b>"]) :
+          translate("blacklistermatches", ["<b>" + matchCount + "</b>"])) 
           + "</center>");
   }
 
