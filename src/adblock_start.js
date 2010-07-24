@@ -80,6 +80,8 @@ function parentIsEmptyWithoutMe(node) {
   if (!node || !node.parentElement)
     return false;
   var parent = node.parentElement;
+  if (parent.nodeName == "BODY" || parent.nodeName == "FRAME")
+    return false;
 
   var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
   for (var i=0;i<parent.childNodes.length;i++) {
