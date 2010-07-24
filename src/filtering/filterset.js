@@ -38,8 +38,10 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
       replace(/ *$/, '');
 
     var filter = Filter.fromText(line);
-    if (filter._adType & ignoredAdTypes)
+    if (filter._adType & ignoredAdTypes) {
+      log("Ignoring filter " + line);
       continue;
+    }
     // What's the right way to do this?
     if (filter.__type == "SelectorFilter")
       result._selectorFilters.push(filter);
