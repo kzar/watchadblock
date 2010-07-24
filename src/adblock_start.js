@@ -153,14 +153,6 @@ function block_list_via_css(selectors, title) {
   }
 }
 
-function gmail_hack() {
-  var isGmail = (document.domain == "mail.google.com");
-  if (isGmail)
-    block_list_via_css([".oM,.rh > #ra"]);
-
-  return isGmail;
-}
-
 var opts = { domain: document.domain };
 // The top frame should tell the background what domain it's on.  The
 // subframes will be told what domain the top is on.
@@ -179,13 +171,6 @@ extension_call('get_features_and_filters', opts, function(data) {
     time_log = function(text) { console.log(text); };
 
   if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
-    return;
-
-  // Gmail has a bug where any injected CSS selector of the
-  // form <nodename>[style<anything>] somehow makes the CC and BCC
-  // fields disappear onclick, and breaks the email autocomplete
-  // feature. So we special case Gmail.
-  if (gmail_hack())
     return;
 
   if (SAFARI || data.features.true_blocking_support.is_enabled)
