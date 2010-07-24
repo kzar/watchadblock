@@ -161,7 +161,7 @@ BlacklistUi.prototype._build_page2 = function() {
       function() {
         var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
         that._ui_page2.dialog('close');
-        custom_filter = prompt(translate("blacklistereditfilter"), [custom_filter]);
+        custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
         if (custom_filter.indexOf('##') == -1) 
           custom_filter = "##" + custom_filter;
         var valid_filter = global_filter_validation_regex.test(custom_filter);
