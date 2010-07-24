@@ -53,11 +53,10 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
   return result;
 }
 
-// Strip www. from domain if it exists and return the result.
-FilterSet._withoutWww = function(domain) {
-  if (domain.match(/^www\./))
-    domain = domain.substring(4);
-  return domain;
+// Strip third+ level domain names from the domain and return the result.
+FilterSet._secondLevelDomainOnly = function(domain) {
+  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
+  return match[0].toLowerCase();
 }
 
 // Given a url, return its domain.
@@ -92,17 +91,13 @@ FilterSet.prototype = {
   // by this filterset, taking whitelist and pattern rules into account.  
   // Does not test selector filters.
   matches: function(url, elementType) {
-    // TODO: ignoring match-case option for now, and forcing case-insensitive
-    // match.
-    url = url.toLowerCase();
-
     // TODO: This is probably imperfect third-party testing, but it works
     // better than nothing, and I haven't gotten to looking into ABP's
     // internals for the exact specification.
     // TODO: rework so urlOrigin and docOrigin don't get recalculated over
     // and over; it's always the same answer.
-    var urlOrigin = FilterSet._withoutWww(FilterSet._domainFor(url));
-    var docOrigin = FilterSet._withoutWww(this._limitedToDomain);
+    var urlOrigin = FilterSet._secondLevelDomainOnly(FilterSet._domainFor(url));
+    var docOrigin = FilterSet._secondLevelDomainOnly(this._limitedToDomain);
     var isThirdParty = (urlOrigin != docOrigin);
 
     // matchCache approach taken from ABP
