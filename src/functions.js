@@ -41,11 +41,9 @@ function checkboxlabel_clicked() {
     change(); // activate the handler as if a user had clicked it
 }
 
-function translate(messageID, arguments) {
-  if (typeof(arguments) == "object")
-    return chrome.i18n.getMessage(messageID, arguments)
-  else if (typeof(arguments) != "undefined")
-    return chrome.i18n.getMessage(messageID, String(arguments))
-  else
-    return chrome.i18n.getMessage(messageID)
+function translate(messageID, args) {
+  // If the user didn't specify a second parameter, then 'args' is
+  // set to undefined; and calling getMessage(messageID) is
+  // exactly equivalent to calling getMessage(messageID, undefined).
+  return chrome.i18n.getMessage(messageID, args);
 }
