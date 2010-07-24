@@ -453,7 +453,7 @@ PatternFilter.prototype = {
     if (this._rule2 && url.indexOf(this._rule2) != -1)
       return true;
 
-      return false;
+    return false;
   }
 }
 

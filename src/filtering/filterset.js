@@ -54,9 +54,9 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
 }
 
 // Strip third+ level domain names from the domain and return the result.
-FilterSet._SecondLevelDomainOnly = function(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ null ];
-  return (match[0] || domain).toLowerCase();
+FilterSet._secondLevelDomainOnly = function(domain) {
+  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
+  return match[0].toLowerCase();
 }
 
 // Given a url, return its domain.
@@ -96,8 +96,8 @@ FilterSet.prototype = {
     // internals for the exact specification.
     // TODO: rework so urlOrigin and docOrigin don't get recalculated over
     // and over; it's always the same answer.
-    var urlOrigin = FilterSet._SecondLevelDomainOnly(FilterSet._domainFor(url));
-    var docOrigin = FilterSet._SecondLevelDomainOnly(this._limitedToDomain);
+    var urlOrigin = FilterSet._secondLevelDomainOnly(FilterSet._domainFor(url));
+    var docOrigin = FilterSet._secondLevelDomainOnly(this._limitedToDomain);
     var isThirdParty = (urlOrigin != docOrigin);
 
     // matchCache approach taken from ABP
