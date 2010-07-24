@@ -264,7 +264,6 @@ PatternFilter._parseRule = function(text) {
         // allow some types and disallow other types, but what would that
         // even mean?  e.g. $image,~object.)
         invertedElementTypes = true;
-        option = option.substring(1);
       }
       result.allowedElementTypes |= ElementTypes[option];
     }
