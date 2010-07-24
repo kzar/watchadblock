@@ -36,38 +36,14 @@ function MyFilters() {
   );
 }
 
-// Convert from localStorage.subscriptions, which maps urls to subs info, to
-// localStorage.filter_lists, which maps ids to subs info
+// 7/24/2010: delete remnants of old filter system, now that everyone has
+// been converted from old to new without losing their old filters.
+// You can remove this code within a month or so -- no big deal if someone
+// never runs it.
 MyFilters._temp_convert_from_old_system = function() {
-  var old_subs = localStorage.getItem('subscriptions');
-  if (old_subs == null)
-    return; // brand new user
-
-  var converted = localStorage.getItem('converted_to_new_filters');
-  if (converted)
-    return;
-
-  old_subs = JSON.parse(old_subs);
-
-  var sub_options = MyFilters.__subscription_options;
-  var new_subs = {};
-  for (var url in old_subs) {
-    var found = false;
-    for (var id in sub_options) {
-      if (sub_options[id].url == url) {
-        new_subs[id] = old_subs[url];
-        found = true;
-      }
-    }
-    if (!found) { // user_submitted
-      new_subs['url:' + url] = old_subs[url];
-    }
-  }
-
-  // TODO: when everyone has converted, delete 'subscriptions' entirely.
-  // and 'optimized_filters'.
-  localStorage.setItem('converted_to_new_filters', true);
-  localStorage.setItem('filter_lists', JSON.stringify(new_subs));
+  localStorage.removeItem('subscriptions');
+  localStorage.removeItem('optimized_filters');
+  localStorage.removeItem('converted_to_new_filters');
 }
 
 // Event fired when subscriptions have been updated, after the subscriptions
