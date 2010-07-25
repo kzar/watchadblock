@@ -232,22 +232,12 @@
     "description": "Tooltip if you hover the donate image"
   },
   "optionsintro": {
-    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can $link$ of any amount, I'd appreciate it <b>immensely</b> :)",
-    "description": "Intro of the options page",
-    "placeholders": {
-      "link": {
-        "content": "$1make a donation$2"
-      }
-    }
+    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can <a>make a donation</a> of any amount, I'd appreciate it <b>immensely</b> :)",
+    "description": "Intro of the options page"
   },
   "optionscontribute": {
-    "message": "Want to contribute code, bug reports or ad reports? We $link$!",
-    "description": "Intro of the options page",
-    "placeholders": {
-      "link": {
-        "content": "$1need your help$2"
-      }
-    }
+    "message": "Want to contribute code, bug reports or ad reports? We <a>need your help</a>!",
+    "description": "Intro of the options page"
   },
   "tabgeneral": {
     "message": "General",
@@ -284,16 +274,8 @@
     "description": "Warning for block instead of hiding option"
   },
   "buttonexplanation": {
-    "message": "$italic$<br/><br/>To add the button, click <b>Install</b> on the $link$ page.<br/><br/>To remove the button, right click him and choose Disable.",
-    "description": "Explanation of how the button works",
-    "placeholders": {
-      "italic": {
-        "content": "$1To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.$2"
-      },
-      "link": {
-        "content": "$3Browser Button for AdBlock$4"
-      }
-    }
+    "message": "<i>To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.</i><br/><br/>To add the button, click <b>Install</b> on the <a>Browser Button for AdBlock</a> page.<br/><br/>To remove the button, right click him and choose Disable.",
+    "description": "Explanation of how the button works"
   },
   "buttonextension": {
     "message": "Show the AdBlock button next to the address bar",
@@ -414,22 +396,12 @@
     "description": "Explanation of the filter lists"
   },
   "filterlistlink": {
-    "message": "Don't subscribe to more than you need -- every one slows you down a tiny bit! Credits and more lists can be found $link$.",
-    "description": "Explanation of the filter lists",
-    "placeholders": {
-      "link": {
-        "content": "$1here$2"
-      }
-    }
+    "message": "Don't subscribe to more than you need -- every one slows you down a tiny bit! Credits and more lists can be found <a>here</a>.",
+    "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "I will fetch updates automatically; you can also $button$.",
-    "description": "update filters text + button",
-    "placeholders": {
-      "button": {
-        "content": "$1update now$2"
-      }
-    }
+    "message": "I will fetch updates automatically; you can also <a>update now</a>.",
+    "description": "update filters text + button"
   },
   "orenteraurl": {
     "message": "Or enter a URL:",
@@ -554,15 +526,11 @@
     "description": "Title of the third tab"
   },
   "blacklistshortcutmessage": {
-    "message": "<b>Shortcut:</b> Press $keys$ (think 'Kill!') on a page to block an ad. $smaller$",
+    "message": "<b>Shortcut:</b> Press <b>$keys$</b> (think 'Kill!') on a page to block an ad.  <small>(If you don't see anything happen, try clicking on the page first.)</small>",
     "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
     "placeholders": {
       "keys": {
-        "content": "$1",
-        "example": "Ctrl-Shift-K"
-      },
-      "smaller": {
-        "content": "$2(If you don't see anything happen, try clicking on the page first.)$3"
+        "content": "Ctrl-Shift-K"
       }
     }
   },
@@ -594,18 +562,9 @@
     "message": "Manually edit your filters:",
     "description": "Subtitle on the third tab"
   },
-  "brokenfilterbreakingfilters": {
-    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!",
-    "description": "Warning when manually editing"
-  },
-  "filtertutorial": {
-    "message": "Read the $link$ to learn how to add advanced blacklist and whitelist filters.",
-    "description": "Tutorial when blacklisting manually",
-    "placeholders": {
-      "link": {
-        "content": "$1filter syntax tutorial$2"
-      }
-    }
+  "filtersavewarning": {
+    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!<br/>Read the <a>filter syntax tutorial</a> to learn how to add advanced blacklist and whitelist filters.",
+    "description": "Warning when blacklisting manually"
   },
   "savebutton": {
     "message": "Save",
@@ -630,12 +589,11 @@
     "description": "text on the 4th tab page"
   },
   "whitelistshortcutmessage": {
-    "message": "<b>Shortcut:</b> Press $keys$ (think 'Live!') on a page to not block ads on that domain.",
+    "message": "<b>Shortcut:</b> Press <b>$keys$</b> (think 'Live!') on a page to not block ads on that domain.",
     "description": "Note: 'Live' must be translated into another word that starts with a 'L'. Otherwise, don't translate it!",
     "placeholders": {
       "keys": {
-        "content": "$1",
-        "example": "Ctrl-Shift-L"
+        "content": "Ctrl-Shift-L"
       }
     }
   },

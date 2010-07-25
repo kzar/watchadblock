@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title></title>
+    <title i18n="optionstitle"></title>
     <link rel="stylesheet" href="options.css" />
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
     <script src="../port.js"></script>
@@ -68,20 +68,7 @@
         
         //translation
         localizePage();
-        $("title, .icon").text(translate("optionstitle"));
-        $("#intro").html(translate("optionsintro",
-            ['<a class="donatelink" href="#" target="_new">', '</a>']));
-        $("#contributelink").html(translate("optionscontribute",
-            ['<a href="http://code.google.com/p/adblockforchrome/wiki/HowToContribute" target="_new">',
-            '</a>']));
 
-        //adjust the donate link for Safari
-        $(".donatelink").each(function(i, el) {
-          if (SAFARI) 
-            el.href = "http://chromeadblock.com/paypal_donate/donation.php?browser=safari";
-          else
-            el.href = "http://chromeadblock.com/paypal_donate/donation.php";
-        });
       });
     </script>
   </head>
@@ -90,7 +77,7 @@
       <span id="version_number"></span>
       (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
     </div>
-    <h1 class="icon"></h1>
+    <h1 class="icon" i18n="optionstitle"></h1>
     <table>
       <tr>
         <td style="padding-right:10px">
@@ -98,13 +85,27 @@
             <img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" width="92"/>
           </a>
         </td>
-        <td style="font-style:italic; font-size:14px" id="intro"></td>
+        <td style="font-style:italic; font-size:14px">
+          <span i18n="optionsintro" i18n_replacement_el="donate_link"></span>
+          <a id="donate_link" class="donatelink" href="#" target="_new"></a>
+        </td>
       </tr>
     </table>
+    <script>
+      $(function() {
+        //adjust the donate link for Safari
+        if (SAFARI)
+          $(".donatelink").attr("href", "http://chromeadblock.com/paypal_donate/donation.php?browser=safari");
+        else
+          $(".donatelink").attr("href", "http://chromeadblock.com/paypal_donate/donation.php");
+      });
+    </script>
 
     <br/>
-    <div style="padding-left:5px; margin-bottom:20px" id="contributelink">
-    </div>
+    <div style="padding-left:5px; margin-bottom:20px" 
+         i18n="optionscontribute" i18n_replacement_el="contribute_link"></div>
+    <a id="contribute_link" target="_new"
+       href="http://code.google.com/p/adblockforchrome/wiki/HowToContribute"></a>
 
     <div id="tabpages">
       <ul>

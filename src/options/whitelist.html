@@ -93,8 +93,6 @@
         
         //translation
         localizePage();
-        $("#whitelistshortcut").html(translate("whitelistshortcutmessage", 
-            ["<b>Ctrl-Shift-L</b>"]));
 
         //clicking the checkbox label checks the checkbox
         $('.optionDescription').click(checkboxlabel_clicked);
@@ -107,7 +105,7 @@
       <span class="footnote" i18n="excludedsitesexample"></span>
     </div>
     <p>
-    <span id="whitelistshortcut"></span>
+    <span i18n="whitelistshortcutmessage"></span>
     <input style="margin-left: 15px" type="checkbox" class="feature" 
            id="enable_whitelist_shortcut" />
     <span class="optionDescription" i18n="shortcutenabled"></span>

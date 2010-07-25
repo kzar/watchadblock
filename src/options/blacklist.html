@@ -145,12 +145,6 @@
       
       //translation
       localizePage();
-      $("#blacklistshortcut").html(translate("blacklistshortcutmessage", 
-          ['<b>Ctrl-Shift-K</b>', '<span style="font-size:smaller">', '</span>']));
-      $("#btnAddUserFilter, #btnAddUrlBlock").
-          attr("value", translate("buttonblockit"));
-      $("#tutorial").html(translate("filtertutorial", 
-          ['<a href="http://adblockplus.org/en/filters" target="_new">', '</a>']));
 
       //clicking the checkbox label checks the checkbox
       $('.optionDescription').click(checkboxlabel_clicked);
@@ -163,7 +157,7 @@
     <h2 i18n="blacklisttabtitle"></h2>
 
     <div>
-      <span id="blacklistshortcut"></span>
+      <span i18n="blacklistshortcutmessage"></span>
       <input style="margin-left: 15px" type="checkbox" class="feature" 
              id="enable_blacklist_shortcut" />
       <span class="optionDescription" i18n="shortcutenabled"></span>
@@ -222,10 +216,11 @@
       <div>
         <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
         <div id="divSaveButton" style="display:none">
-          <p class="footnote">
-            <span i18n="brokenfilterbreakingfilters"></span><br/>
-            <span id="tutorial"></span>
-          </p>
+          <p i18n="filtersavewarning" i18n_replacement_el="tutorlink"
+             class="footnote"></p>
+          <a id="tutorlink" href="http://adblockplus.org/en/filters" 
+             target="_new"></a>
+
           <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
           <span id="lblSaveWarning" style="color:red;margin-left:20px">
             <b i18n="savereminder"></b>

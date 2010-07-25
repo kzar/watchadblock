@@ -1,10 +1,14 @@
   <script>
     $(function() {
+      var linkUrl = "https://chrome.google.com/extensions/detail/" +
+                    icon_extension_id;
+      $("#link_to_icon").attr("href", linkUrl);
+
       var imgUrl = chrome.extension.getURL("img/icon_screenshot.png");
       $("#imgIconScreenshot").attr("src", imgUrl);
 
       $("#want_a_button").click(function() {
-        $("#button_explanation").show();
+        $('[i18n="buttonexplanation"]').show();
       });
 
       if (!SAFARI) {
@@ -32,11 +36,9 @@
       
       //translation
       localizePage();
-      $("#button_explanation").html(translate("buttonexplanation", 
-          ['<i style="font-size:12px;">', '</i>',
-          '<a id="link_to_icon" target="top" href="' +
-          'https://chrome.google.com/extensions/detail/' + icon_extension_id +
-          '">', '</a>']));
+      $('[i18n="buttonexplanation"] i').
+        css("font-style", "12px").
+        css("color", "#222222");
 
       //clicking the checkbox label checks the checkbox
       $('.optionDescription').click(checkboxlabel_clicked);
@@ -75,7 +77,9 @@
         </td>
       </tr>
     </table>
-    <p id="button_explanation" class="info" style="display:none"></p>
+    <p class="info" style="display:none" i18n="buttonexplanation" 
+       i18n_replacement_el="link_to_icon"></p>
+    <a id="link_to_icon" target="top"></a>
     <script>
       if (SAFARI) {
         $("#show_adblock_button_tr").hide();

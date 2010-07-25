@@ -280,11 +280,6 @@
 
         //translation
         localizePage();
-        $(".footnote").html(translate("filterlistlink", 
-            ['<a href="http://adblockplus.org/en/subscriptions" target="_new">',
-            '</a>']));
-        $("#updatemessage").html(translate("updatenowmessage", 
-            ['<input type="button" id="btnUpdateNow" value="', '" />']));
 
         //set the action for the update now button
         $("#btnUpdateNow").click(function() {
@@ -298,8 +293,11 @@
   <div class="section">
     <h2 i18n="filterstabtitle"></h2>
     <p i18n="defaultsexplanation"></p>
-    <p class="footnote"></p>
-    <span id="updatemessage"></span>
+    <p class="footnote" i18n="filterlistlink" i18n_replacement_el="footnotelink"></p>
+    <a id="footnotelink" href="http://adblockplus.org/en/subscriptions" 
+       target="_new"></a>
+    <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>
+    <input type="button" id="btnUpdateNow" />
     <div>
       <div id="subscription_message" class="ok_message">&nbsp;</div>
       <div id="filter_subscriptions" style="padding-left:30px;">
