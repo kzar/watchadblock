@@ -33,6 +33,11 @@ function verify_whitelist() {
       });
 
     var domainparts = domain.split('.');
+    if (domainparts[domainparts.length - 2] == "co") {
+      var newTLD = domainparts[domainparts.length - 2] + "." +
+          domainparts[domainparts.length - 1];
+      domainparts.splice(domainparts.length - 2, 2, newTLD);
+    }
     $("#adblockslider", page).
       css('margin', 10).
       css('display', (domainparts.length == 2) ? "none" : "block").

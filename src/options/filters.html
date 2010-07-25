@@ -169,13 +169,13 @@
               entry.order = "5easyprivacy";
             else if (entry.user_submitted)
               entry.order = "6" +
-                  translate("filter" + id).toLowerCase() || entry.name;
+                  (translate("filter" + id) || entry.name).toLowerCase();
             else if (entry.name.indexOf(" - additional ") == 0)
               entry.order = "3" +
-                  translate("filter" + id).toLowerCase() || entry.name;
+                  (translate("filter" + id) || entry.name).toLowerCase();
             else
               entry.order = "4" +
-                  translate("filter" + id).toLowerCase() || entry.name;
+                  (translate("filter" + id) || entry.name).toLowerCase();
             entry.id = id;
             entry.name = translate("filter" + id) || entry.name;
             sorted_list.push(entry);
@@ -199,7 +199,7 @@
               click(checkboxlabel_clicked);
 
             var link_to_list = $("<a>", { target: "_new" }).
-              text('show').
+              text(translate('labelshow')).
               css("margin-left", "6px").
               css("font-size", "10px").
               css("display", "none").
@@ -278,6 +278,19 @@
           1000 * 60
         );
 
+        //translation
+        localizePage();
+        $(".footnote").html(translate("filterlistlink", 
+            ['<a href="http://adblockplus.org/en/subscriptions" target="_new">',
+            '</a>']));
+        $("#updatemessage").html(translate("updatenowmessage", 
+            ['<input type="button" id="btnUpdateNow" value="', '" />']));
+
+        //set the action for the update now button
+        $("#btnUpdateNow").click(function() {
+          $(this).attr("disabled", "disabled");
+          extension_call("freshen_subscriptions", {older_than:0});
+        });
       });
 
   </script>
@@ -294,7 +307,7 @@
       <div style="padding-left:34px;">
         <span i18n="orenteraurl"></span>
         <input id="txtNewSubscriptionUrl" style="width:300px" />
-        <input type="button" id="btnNewSubscriptionUrl" />
+        <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
       </div>
     </div>
   </div>
@@ -302,13 +315,13 @@
   <div class="sneaky">
     <p>
     <span i18n="subscribetoall"></span>
-    <input type="button" id="btnSubscribeAll" />
+    <input type="button" id="btnSubscribeAll" i18n_value="buttonok" />
     <br/>
     <span i18n="subscribetonone"></span>
-    <input type="button" id="btnUnsubscribeAll" />
+    <input type="button" id="btnUnsubscribeAll" i18n_value="buttonok" />
     <br/>
     <span i18n="showlinkstolists"></span> 
-    <input type="button" id="btnShowLinks" />
+    <input type="button" id="btnShowLinks" i18n_value="buttonok" />
     </p>
     <script>
       $(function() {
@@ -334,23 +347,3 @@
       });
     </script>
   </div>
-
-  <script type="text/javascript">
-    //translation
-    $("[i18n]").each(function() {
-      $(this).text(translate($(this).attr("i18n")));
-    });
-    $(".sneaky input").attr('value', translate("buttonok"));
-    $(".footnote").html(translate("filterlistlink", 
-        ['<a href="http://adblockplus.org/en/subscriptions" target="_new">',
-        '</a>']));
-    $("#updatemessage").html(translate("updatenowmessage", 
-        ['<input type="button" id="btnUpdateNow" value="', '" />']));
-    $("#btnNewSubscriptionUrl").attr('value', translate('subscribebutton'));
-
-    //set the action for the update now button
-    $("#btnUpdateNow").click(function() {
-      $(this).attr("disabled", "disabled");
-      extension_call("freshen_subscriptions", {older_than:0});
-    });
-  </script>

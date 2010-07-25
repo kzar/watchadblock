@@ -29,6 +29,10 @@
     "message": "Edit",
     "description": "Edit filter manually button"
   },
+  "optionstitle": {//adblock.js, options/index.html
+    "message": "AdBlock Options",
+    "description": "Title for the options page"
+  },
 
   //adblock.js
   "youtubevideomessage": {
@@ -36,7 +40,8 @@
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video",
     "placeholders": {
       "link": {
-        "content": "$1AdBlock Options$2"
+        "content": "$1",
+        "example": "AdBlock options. It uses the title of the options page"
       }
     }
   },
@@ -55,23 +60,11 @@
     "description": "Blacklister attribute chosing page message"
   },
   "blacklisternotsure": {
-    "message": "$bold$ just press 'Block it!' below.",
-    "description": "Blacklister attribute chosing page message",
-    "placeholders": {
-      "bold": {
-        "content": "$1Not sure?$2"
-      }
-    }
-  },
-  "blacklisterwanttohelp": {
-    "message": "$bold$ $link$ so everybody can benefit!",
+    "message": "<b>Not sure?</b> just press 'Block it!' below.<br/><b>Want to help?</b> $link$ so everybody can benefit!",
     "description": "Blacklister attribute chosing page message",
     "placeholders": {
       "link": {
-        "content": "$3Report the ad$4"
-      },
-      "bold": {
-        "content": "$1Want to help?$2"
+        "content": "$1Report the ad$2"
       }
     }
   },
@@ -114,14 +107,8 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "That matches $matchcount$ item on this page.",
-    "description": "Tells the user only one match was found",
-    "placeholders": {
-      "matchcount": {
-        "content": "$1",
-        "example": "1"
-      }
-    }
+    "message": "That matches <b>1</b> item on this page.",
+    "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
     "message": "That matches $matchcount$ items on this page.",
@@ -162,11 +149,7 @@
 
   //clickwatcher.js
   "findingads": {
-    "message": "Finding ads...",
-    "description": "When you press ctrl-shift-K the blacklister searches for ads"
-  },
-  "findingadswait": {
-    "message": "This'll only take a moment.",
+    "message": "Finding ads...<br/><br/><i>This'll only take a moment.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
@@ -244,23 +227,16 @@
     "message": "changelog",
     "description": "changelog link"
   },
-  "optionstitle": {
-    "message": "Options",
-    "description": "Title for the options page"
-  },
   "donatethanks": {
     "message": "Hooray! Thank you!",
     "description": "Tooltip if you hover the donate image"
   },
   "optionsintro": {
-    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can $link$ of any amount, I'd appreciate it $bold$ :)",
+    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can $link$ of any amount, I'd appreciate it <b>immensely</b> :)",
     "description": "Intro of the options page",
     "placeholders": {
       "link": {
         "content": "$1make a donation$2"
-      },
-      "bold": {
-        "content": "$3immensely$4"
       }
     }
   },
@@ -308,20 +284,14 @@
     "description": "Warning for block instead of hiding option"
   },
   "buttonexplanation": {
-    "message": "$italic$$newline$To add the button, click $bold$ on the $link$ page.$newline$To remove the button, right click him and choose Disable.",
+    "message": "$italic$<br/><br/>To add the button, click <b>Install</b> on the $link$ page.<br/><br/>To remove the button, right click him and choose Disable.",
     "description": "Explanation of how the button works",
     "placeholders": {
       "italic": {
         "content": "$1To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.$2"
       },
-      "bold": {
-        "content": "$3Install$4"
-      },
       "link": {
-        "content": "$5Browser Button for AdBlock$6"
-      },
-      "newline": {
-        "content": "$7"
+        "content": "$3Browser Button for AdBlock$4"
       }
     }
   },
@@ -481,6 +451,10 @@
     "message": "Show links to the filter lists:",
     "description": "Option on second tab page"
   },
+  "labelshow": {
+    "message": "show",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
   "filteradblock_custom": {
     "message": "AdBlock custom filters (recommended)",
     "description": "A filter list. Don't translate 'AdBlock'"
@@ -580,18 +554,15 @@
     "description": "Title of the third tab"
   },
   "blacklistshortcutmessage": {
-    "message": "$bold$ Press $keys$ (think 'Kill!') on a page to block an ad. $smaller$",
+    "message": "<b>Shortcut:</b> Press $keys$ (think 'Kill!') on a page to block an ad. $smaller$",
     "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
     "placeholders": {
-      "bold": {
-        "content": "$1Shortcut:$2"
-      },
       "keys": {
-        "content": "$3",
+        "content": "$1",
         "example": "Ctrl-Shift-K"
       },
       "smaller": {
-        "content": "$4(If you don't see anything happen, try clicking on the page first.)$5"
+        "content": "$2(If you don't see anything happen, try clicking on the page first.)$3"
       }
     }
   },
@@ -659,14 +630,11 @@
     "description": "text on the 4th tab page"
   },
   "whitelistshortcutmessage": {
-    "message": "$bold$ Press $keys$ (think 'Live!') on a page to not block ads on that domain.",
+    "message": "<b>Shortcut:</b> Press $keys$ (think 'Live!') on a page to not block ads on that domain.",
     "description": "Note: 'Live' must be translated into another word that starts with a 'L'. Otherwise, don't translate it!",
     "placeholders": {
-      "bold": {
-        "content": "$1Shortcut:$2"
-      },
       "keys": {
-        "content": "$3",
+        "content": "$1",
         "example": "Ctrl-Shift-L"
       }
     }

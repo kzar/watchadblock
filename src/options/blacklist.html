@@ -142,9 +142,19 @@
       extension_call('get_custom_filters_text', {}, function(text) {
         $("#txtFiltersAdvanced").val(text);
       });
-    });
+      
+      //translation
+      localizePage();
+      $("#blacklistshortcut").html(translate("blacklistshortcutmessage", 
+          ['<b>Ctrl-Shift-K</b>', '<span style="font-size:smaller">', '</span>']));
+      $("#btnAddUserFilter, #btnAddUrlBlock").
+          attr("value", translate("buttonblockit"));
+      $("#tutorial").html(translate("filtertutorial", 
+          ['<a href="http://adblockplus.org/en/filters" target="_new">', '</a>']));
 
-    $(document).ready(function() {
+      //clicking the checkbox label checks the checkbox
+      $('.optionDescription').click(checkboxlabel_clicked);
+      
       load_options();
     });
   </script>
@@ -179,7 +189,7 @@
                 <td><input id="txtBlockUrl" style="width:300px"/></td>
                 <td class="guide">$domain=</td>
                 <td><input id="txtBlockUrlDomain"/></td>
-                <td><input id="btnAddUrlBlock" type="button"/></td>
+                <td><input id="btnAddUrlBlock" type="button" i18n_value="buttonblockit" /></td>
               </tr>
             </table>
           </div>
@@ -200,7 +210,7 @@
                 <td><input id="txtUserFilterDomain" style="width:200px"/></td>
                 <td class="guide">##</td>
                 <td><input id="txtUserFilterCss" style="width:300px"/></td>
-                <td><input id="btnAddUserFilter" type="button"/></td>
+                <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit"/></td>
               </tr>
             </table>
           </div>
@@ -210,13 +220,13 @@
 
       <h3 i18n="manualfilteredit"></h3>
       <div>
-        <input type="button" id="btnEditAdvancedFilters" />
+        <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
         <div id="divSaveButton" style="display:none">
           <p class="footnote">
             <span i18n="brokenfilterbreakingfilters"></span><br/>
             <span id="tutorial"></span>
           </p>
-          <input type="button" id="btnSaveAdvancedFilters" />
+          <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
           <span id="lblSaveWarning" style="color:red;margin-left:20px">
             <b i18n="savereminder"></b>
           </span>
@@ -231,22 +241,3 @@
     </div>
 
   </div>
-  <script type="text/javascript">
-    //translation
-    $("[i18n]").each(function() {
-      $(this).text(translate($(this).attr("i18n")));
-    });
-    $("#blacklistshortcut").html(translate("blacklistshortcutmessage", 
-        ['<b>', '</b>', '<b>Ctrl-Shift-K</b>', '<span style="font-size:smaller">',
-        '</span>']));
-    $("#btnAddUserFilter, #btnAddUrlBlock").
-        attr("value", translate("buttonblockit"));
-    $("#btnEditAdvancedFilters").attr("value", translate("buttonedit"));
-    $("#tutorial").html(translate("filtertutorial", 
-        ['<a href="http://adblockplus.org/en/filters" target="_new">',
-        '</a>']));
-    $("#btnSaveAdvancedFilters").attr('value', translate("savebutton"));
-
-    //clicking the checkbox label checks the checkbox
-    $('.optionDescription').click(checkboxlabel_clicked);
-  </script>

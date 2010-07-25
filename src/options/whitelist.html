@@ -90,6 +90,14 @@
         extension_call('get_whitelist', {}, display_whitelist);
 
         load_options();
+        
+        //translation
+        localizePage();
+        $("#whitelistshortcut").html(translate("whitelistshortcutmessage", 
+            ["<b>Ctrl-Shift-L</b>"]));
+
+        //clicking the checkbox label checks the checkbox
+        $('.optionDescription').click(checkboxlabel_clicked);
       });
   </script>
   <div class="section">
@@ -109,7 +117,7 @@
   <div class="sneaky">
     <p>
     <span i18n="removeallfromlist"></span>
-    <input type="button" id="btnClearWhitelist"/>
+    <input type="button" id="btnClearWhitelist" i18n_value="buttonok" />
     </p>
     <script>
       $(function() {      
@@ -121,15 +129,3 @@
       });
     </script>
   </div>
-
-  <script type="text/javascript">
-    //translation
-    $("[i18n]").each(function() {
-      $(this).text(translate($(this).attr("i18n")));
-    });
-    $("#whitelistshortcut").html(translate("whitelistshortcutmessage", ["<b>", "</b>", "<b>Ctrl-Shift-L</b>"]));
-    $("#btnClearWhitelist").attr('value', translate('buttonok'));
-
-    //clicking the checkbox label checks the checkbox
-    $('.optionDescription').click(checkboxlabel_clicked);
-  </script>

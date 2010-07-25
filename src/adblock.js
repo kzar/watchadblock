@@ -160,7 +160,9 @@ function run_specials(features) {
           css({"font-size": "x-small", "font-style": "italic",
                "text-align": "center", "color": "black",
                "font-weight": "normal", "background-color": "white"}).
-          append("<span>" + translate("youtubevideomessage", ["<a target='_new' href='" + disable_url + "'>", "</a>"]) + "</span>");
+          append("<span>" + translate("youtubevideomessage", 
+              ["<a target='_new' href='" + disable_url + "'>" + 
+              translate("optionstitle") + "</a>"]) + "</span>");
         var closer = $("<a>", {href:"#"}).
           css({"font-style":"normal", "margin-left":"20px"}).
           text("[x]").

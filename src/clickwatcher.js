@@ -20,8 +20,7 @@ ClickWatcher.prototype._fire = function(eventName, arg) {
 ClickWatcher.prototype.show = function() {
   var that = this;
   var wait = $("<div></div>").
-    append(translate("findingads") + "<br/><br/>").
-    append("<i>" + translate("findingadswait") + "</i>").
+    append(translate("findingads")).
     css({
       'background': 'white',
       'text-align': 'left',

@@ -47,3 +47,15 @@ function translate(messageID, args) {
   // exactly equivalent to calling getMessage(messageID, undefined).
   return chrome.i18n.getMessage(messageID, args);
 }
+function localizePage() {
+  //translate a page into the users language
+  $("[i18n]").each(function() {
+    $(this).text(translate($(this).attr("i18n")));
+  });
+  $("[i18n_value]").each(function() {
+    $(this).val(translate($(this).attr("i18n_value")));
+  });
+  $("[i18n_title]").each(function() {
+    $(this).attr("title", translate($(this).attr("i18n_title")));
+  });
+}

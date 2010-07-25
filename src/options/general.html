@@ -29,6 +29,17 @@
           );
         });
       });
+      
+      //translation
+      localizePage();
+      $("#button_explanation").html(translate("buttonexplanation", 
+          ['<i style="font-size:12px;">', '</i>',
+          '<a id="link_to_icon" target="top" href="' +
+          'https://chrome.google.com/extensions/detail/' + icon_extension_id +
+          '">', '</a>']));
+
+      //clicking the checkbox label checks the checkbox
+      $('.optionDescription').click(checkboxlabel_clicked);
     });
   </script>
 
@@ -104,18 +115,3 @@
     <input type="checkbox" class="feature" id="enable_debug_time_logging" />
     <span class="optionDescription" i18n="timeinlogoption"></span>
   </div>
-
-  <script type="text/javascript">
-    //translation
-    $("[i18n]").each(function() {
-      $(this).text(translate($(this).attr("i18n")));
-    });
-    $("#button_explanation").html(translate("buttonexplanation", 
-        ['<i style="font-size:12px;">', '</i>', '<b>', '</b>',
-        '<a id="link_to_icon" target="top" href="' +
-        'https://chrome.google.com/extensions/detail/' + icon_extension_id +
-        '">', '</a>', '<br/><br/>']));
-
-    //clicking the checkbox label checks the checkbox
-    $('.optionDescription').click(checkboxlabel_clicked);
-  </script>

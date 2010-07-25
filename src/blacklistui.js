@@ -126,9 +126,8 @@ BlacklistUi.prototype._build_page2 = function() {
     " padding: 3px; font-style:italics;' id='count'></div>" +
     "</div>" +
     "<div>" +
-    "<br/>" + translate("blacklisternotsure", ["<b>", "</b>"]) + "<br/>" +
-    translate("blacklisterwanttohelp", 
-              ["<b>", "</b>", "<a target='_new' id='adreportlink'>", "</a>"]) +
+    "<br/>" + translate("blacklisternotsure", 
+    ["<a target='_new' id='adreportlink'>", "</a>"]) +
     "<br/></div>" +
     "<div style='clear:left; font-size:smaller'>" +
     "<br/>" + translate("blacklisterthefilter") +
@@ -278,7 +277,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
     var matchCount = $(summary.text()).length;
     $("#count", that._ui_page2).
       html("<center>" + ((matchCount == 1) ? 
-          translate("blacklistersinglematch", ["<b>1</b>"]) :
+          translate("blacklistersinglematch") :
           translate("blacklistermatches", ["<b>" + matchCount + "</b>"])) 
           + "</center>");
   }
