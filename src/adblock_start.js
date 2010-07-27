@@ -82,7 +82,9 @@ function enableTrueBlocking(alsoCollapse) {
     var url = relativeToAbsoluteUrl(urlForElement(el, elType));
     if (false == browser_canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
-      if (alsoCollapse && el.nodeName != "BODY") {
+      if (alsoCollapse && elType != ElementTypes.script &&
+                          elType != ElementTypes.background &&
+                          elType != ElementTypes.stylesheet) {
         $(el).css({//stronger than .hide()
           "display": "none !important",
           "width": "0px !important",
