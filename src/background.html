@@ -132,17 +132,19 @@
         for (var i = 0; i < feature_names.length; i++) {
           var name = feature_names[i];
           if (!features[name]) {
-            features[name] = { name: name, is_enabled: false };
-            if (name == "whitelist_shortcut")
-              features[name].is_enabled = true; // by default
-            if (name == "blacklist_shortcut")
-              features[name].is_enabled = true; // by default
-            if (name == "block_youtube")
-              features[name].is_enabled = true; // by default
-            if (name == "show_youtube_help_msg")
-              features[name].is_enabled = true; // by default
-            if (name == "true_blocking_support")
-              features[name].is_enabled = true; // by default, if supported
+            features[name] = { name: name };
+            switch (name) {
+              case "whitelist_shortcut":
+              case "blacklist_shortcut":
+              case "block_youtube":
+              case "show_youtube_help_msg":
+              case "true_blocking_support": //if supported
+              case "collapse_blocked_elements":
+                features[name].is_enabled = true; // by default
+                break;
+              default:
+                features[name].is_enabled = false;
+            }
           }
         }
         return features;
