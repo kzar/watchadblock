@@ -85,7 +85,7 @@
         url: list_url,
         success: function(text) {
           if (text && 
-               (text[0] == '!' || text[0] == '[' || text[0] == '(Adblock')
+               (text[0] == '!' || text[0] == '[' || text[0] == '(')
              ) {
           $.get("http://chromeadblock.com/api/url_subscribe.php", 
                                                              {url:list_url});
