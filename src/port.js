@@ -175,6 +175,26 @@ if (SAFARI) {
           console.log("CHROME PORT LIBRARY: onRequestExternal not supported.");
         }
       }
+    },
+
+    i18n: {
+      getMessage: (function() {
+        var _localizedStrings = undefined;
+
+        // Fill _localizedStrings with translations.
+        var _loadLocalizedStrings = function() {
+          _localizedStrings = {}; // TODO
+        }
+
+        var theFunction = function(messageID, args) {
+          if (_localizedStrings == undefined)
+            _loadLocalizedStrings();
+          // TODO: handle args list.
+          return _localizedStrings[messageID];
+        }
+
+        return theFunction;
+      })()
     }
   };
 }
