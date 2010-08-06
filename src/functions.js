@@ -18,7 +18,6 @@ time_log = function() { };
 // TODO: when they whitelist a page, make sure the top level domain is
 // whitelisted, even if they happened to be clicking inside an iframe.
 function page_is_whitelisted(whitelist, the_domain) {
-  if (the_domain == "health.google.com") return true;
   if (the_domain == "acid3.acidtests.org") return true;
   for (var i = 0; i < whitelist.length; i++) {
     if (the_domain.indexOf(whitelist[i]) != -1)
