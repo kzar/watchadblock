@@ -85,13 +85,7 @@ function enableTrueBlocking(alsoCollapse) {
       if (alsoCollapse && elType != ElementTypes.script &&
                           elType != ElementTypes.background &&
                           elType != ElementTypes.stylesheet) {
-        $(el).css({//stronger than .hide()
-          "display": "none !important",
-          "width": "0px !important",
-          "height": "0px !important"
-          }).
-        attr("height", "0").//in case they change the style attribute
-        attr("width", "0");//in case they change the style attribute
+        $(el).remove();
       }
     }
   }, true);
