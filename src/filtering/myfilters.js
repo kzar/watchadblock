@@ -228,16 +228,21 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
 
   // Record how many days until we need to update the subscription text
   sub_data.expiresAfterHours = 120; // The default
-  var expiresRegex = /(?:expires\:\ ?|expires\ after\ )(\d*[1-9]\d*)\ ?(h?)/i;
-  var expiresCheckLines = text.split('\n', 15); //15 lines should be enough
-  for (var i = 0; i < expiresCheckLines.length; i++) {
-    if (!Filter.isComment(expiresCheckLines[i]))
+  var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
+  var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
+  var checkLines = text.split('\n', 15); //15 lines should be enough
+  for (var i = 0; i < checkLines.length; i++) {
+    if (!Filter.isComment(checkLines[i]))
       continue;
-    var match = expiresCheckLines[i].match(expiresRegex);
+    var match = checkLines[i].match(redirectRegex);
+    if (match) {
+      sub_data.url = match[1]; //assuming the URL is always correct
+      sub_data.last_update = 0; //update ASAP
+    }
+    match = checkLines[i].match(expiresRegex);
     if (match) {
       var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
       sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
-      break;
     }
   }
 }
