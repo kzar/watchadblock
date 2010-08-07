@@ -173,7 +173,8 @@ extension_call('get_features_and_filters', opts, function(data) {
   if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
     return;
 
-  if (SAFARI || data.features.true_blocking_support.is_enabled)
+  if (SAFARI || 
+      (data.features.true_blocking_support.is_enabled && window == window.top))
     enableTrueBlocking(data.features.collapse_blocked_elements.is_enabled);
 
   block_list_via_css(data.selectors);
