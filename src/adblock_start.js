@@ -54,42 +54,7 @@ function browser_canLoad(event, data) {
   }
 }
 
-// Returns true if node.parent contains no visible content other
-// than node itself.
-function parentIsEmptyWithoutMe(node) {
-  if (!node || !node.parentElement)
-    return false;
-  var parent = node.parentElement;
-  if (parent.nodeName == "BODY" || parent.nodeName == "FRAME")
-    return false;
-
-  var test_regex = /[\x21-\xFF]/; //all normal characters except spaces
-  for (var i=0;i<parent.childNodes.length;i++) {
-    switch (parent.childNodes[i].nodeName) {
-      case '#comment':
-      case 'SCRIPT':
-      case 'STYLE':
-      case 'BR':
-        break;
-      case '#text':
-        if (test_regex.test(parent.childNodes[i].nodeValue))
-          return false;
-        else
-          break;
-      default:
-        if (parent.childNodes[i] !== node)
-          return false;
-    }
-  }
-
-  log("Collapsing empty parent of blocked element: " +
-      parent.nodeName + "#" + parent.id +
-      "." + parent.className);
-
-  return true;
-}
-
-function enableTrueBlocking(alsoCollapse) {
+function enableTrueBlocking() {
   document.addEventListener("beforeload", function(event) {
     var el = event.target;
     // Cancel the load if canLoad is false.
@@ -97,16 +62,10 @@ function enableTrueBlocking(alsoCollapse) {
     var url = relativeToAbsoluteUrl(event.url);
     if (false == browser_canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
-      if (el.nodeName != "BODY") {
-        // TODO: temp workaround Safari crashing bug.
-        // $(el).remove();
-        window.setTimeout(function() {
-          if (alsoCollapse) // then find the highest element that we can remove
-            while (parentIsEmptyWithoutMe(el))
-              el = el.parentElement;
-
-          $(el).remove();
-        }, 0);
+      if (elType != ElementTypes.script &&
+          elType != ElementTypes.background &&
+          elType != ElementTypes.stylesheet) {
+        $(el).remove();
       }
     }
   }, true);
@@ -155,7 +114,7 @@ extension_call('get_features_and_filters', opts, function(data) {
 
   if (SAFARI || 
       (data.features.true_blocking_support.is_enabled && window == window.top))
-    enableTrueBlocking(data.features.collapse_blocked_elements.is_enabled);
+    enableTrueBlocking();
 
   block_list_via_css(data.selectors);
 
