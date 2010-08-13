@@ -49,7 +49,7 @@ function remove_ad_elements_by_url(first_run) {
   var start = new Date();
 
   // map indexes to elements, and those same indexes to info about the element.
-  var els = $("img,script,embed,iframe,link,object,body");
+  var els = $("img,embed,iframe,link,object,body");
   var elInfo = els.map(function(id, el) { 
       var elType = typeForElement(el);
       return {
@@ -81,12 +81,6 @@ function purgeElement(el, elInfo) {
     $(el).parent().remove(); // removes el as well
   else if (el.nodeName == "BODY")
     $(el).css('background-image', null);
-  else if (el.nodeName == "SCRIPT") {
-    // Removing the element is useless as it has already run, and it makes
-    // bankrate.com display a blank screen in Chrome 5 dev, so we basically do
-    // nothing.
-    el.src = ""; 
-  }
   else
     $(el).remove();
   // TODO: i suspect i'm missing something else here... what did the old
