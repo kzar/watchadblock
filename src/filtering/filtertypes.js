@@ -187,8 +187,17 @@ SelectorFilter._old_style_to_new = function(text) {
   // turn all [foo=bar baz] groups into [foo="bar baz"]
   // Specifically match:    = then not " then anything till ]
   segments = segments.replace(/=([^"][^\]]*)/g, '="$1"');
+  // turn all [foo] into .foo, #foo
+  // #div(adblock) means all divs with class or id adblock
+  // class must be a single class, not multiple (not #*(ad listitem))
+  // I haven't ever seen filters like #div(foo)(anotherfoo), so ignore these
+  var resultFilter = node + segments;
+  var match = resultFilter.match(/\[([^\=]*?)\]/);
+  if (match)
+    resultFilter = resultFilter.replace(match[0], "#" + match[1]) +
+     "," + resultFilter.replace(match[0], "." + match[1]);
 
-  return domain + "##" + node + segments;
+  return domain + "##" + resultFilter;
 }
 
 // Filters that block by URL regex or substring.
