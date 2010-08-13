@@ -74,7 +74,7 @@ function browser_canLoad(event, data) {
   }
 }
 
-function enableTrueBlocking(alsoCollapse) {
+function enableTrueBlocking() {
   document.addEventListener("beforeload", function(event) {
     var el = event.target;
     // Cancel the load if canLoad is false.
@@ -82,9 +82,9 @@ function enableTrueBlocking(alsoCollapse) {
     var url = relativeToAbsoluteUrl(urlForElement(el, elType));
     if (false == browser_canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
-      if (alsoCollapse && elType != ElementTypes.script &&
-                          elType != ElementTypes.background &&
-                          elType != ElementTypes.stylesheet) {
+      if (elType != ElementTypes.script &&
+          elType != ElementTypes.background &&
+          elType != ElementTypes.stylesheet) {
         $(el).remove();
       }
     }
@@ -133,7 +133,7 @@ extension_call('get_features_and_filters', opts, function(data) {
     return;
 
   if (SAFARI || data.features.true_blocking_support.is_enabled)
-    enableTrueBlocking(data.features.collapse_blocked_elements.is_enabled);
+    enableTrueBlocking();
 
   block_list_via_css(data.selectors);
 
