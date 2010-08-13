@@ -84,7 +84,7 @@
         try {
           return JSON.parse(json);
         } catch (e) {
-          console.log("Couldn't parse json for " + options.key);
+          log("Couldn't parse json for " + options.key);
           return options.default_value;
         }
       }
@@ -190,7 +190,7 @@
           filtertext: _myfilters.filterset._sourceText
         };
         var end = new Date();
-        console.log("time to run: " + (end - start) + " || " + options.domain);
+        log("time to run: " + (end - start) + " || " + options.domain);
         return result;
       }
 
@@ -308,34 +308,10 @@
         port.onDisconnect.addListener(function(disconnected_port) {
           var where = ports.indexOf(disconnected_port);
           if (where != -1) {
-            log("REMOVING DISCONNECTED PORT " + where + ":" +
-                disconnected_port.name);
             ports.splice(where, 1);
           }
         });
-        // Because of a Chrome bug that keeps Options pages from firing
-        // window.unload (and thus keeping the Options page port from
-        // calling disconnect()), we must detect the Options page being
-        // reloaded and remove the old port, lest we crash Chrome (as of
-        // Dev build 288.1.)  Otherwise, we would just push the port.
-        if (port.name == "options_page") {
-          log("Length of ports: " + ports.length);
-          var found = false;
-          for (var i = 0; i < ports.length; i++) {
-            if (ports[i].name == "options_page") {
-              log("Removing stupid Options port which doesn't know to die");
-              ports[i] = port;
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            log("Adding Options port for the first time.");
-            ports.push(port);
-          }
-        } else {
-          ports.push(port);
-        }
+        ports.push(port);
       });
 
       debug_background = false;
@@ -412,7 +388,7 @@
           var limited = _myfilters.filterset.limitedToDomain(pageDomain);
           var isMatched = url && limited.matches(url, elType);
           if (isMatched)
-            console.log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
+            log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
         }, false);
 
