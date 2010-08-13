@@ -16,27 +16,7 @@ function relativeToAbsoluteUrl(url) {
     if(!base) return document.baseURI + "/" + url;
     return base[0] + url;
 }
-// Return the url tied to the given element.  null is OK if we can't find one.
-function urlForElement(el, type) {
-  // TODO: handle background images, based on 'type'.
-  switch (el.nodeName) {
-    case 'IMG': return el.src;
-    case 'SCRIPT': return el.src;
-    case 'EMBED': return el.src;
-    case 'IFRAME': return el.src;
-    case 'LINK': return el.href;
-    case 'OBJECT': 
-      var param = $('param[name="movie"][value]', el);
-      if (param.length > 0)
-        return param.get(0).value;
-      else
-        return null;
-    case 'BODY':
-      // TODO: make sure this isn't so slow that we must LBYL
-      var bgImage = $(el).css('background-image');
-      return (bgImage == "none" ? null: bgImage);
-  }
-}
+
 // Return the ElementType element type of the given element.
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
@@ -114,7 +94,7 @@ function enableTrueBlocking(alsoCollapse) {
     var el = event.target;
     // Cancel the load if canLoad is false.
     var elType = typeForElement(el);
-    var url = relativeToAbsoluteUrl(urlForElement(el, elType));
+    var url = relativeToAbsoluteUrl(event.url);
     if (false == browser_canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
       event.preventDefault();
       if (el.nodeName != "BODY") {

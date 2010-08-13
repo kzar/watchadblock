@@ -17,6 +17,28 @@ function debug_print_selector_matches() {
     });
 }
 
+// Return the url tied to the given element.  null is OK if we can't find one.
+function urlForElement(el, type) {
+  // TODO: handle background images, based on 'type'.
+  switch (el.nodeName) {
+    case 'IMG': return el.src;
+    case 'SCRIPT': return el.src;
+    case 'EMBED': return el.src;
+    case 'IFRAME': return el.src;
+    case 'LINK': return el.href;
+    case 'OBJECT': 
+      var param = $('param[name="movie"][value]', el);
+      if (param.length > 0)
+        return param.get(0).value;
+      else
+        return null;
+    case 'BODY':
+      // TODO: make sure this isn't so slow that we must LBYL
+      var bgImage = $(el).css('background-image');
+      return (bgImage == "none" ? null: bgImage);
+  }
+}
+
 // Find all elements that load a resource, find which ones are loading ad
 // resources, and remove them.  Asynchronous.
 // first_run:bool - true is passed the first time this is called.
