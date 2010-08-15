@@ -40,35 +40,49 @@ function browser_canLoad(event, data) {
     return safari.self.tab.canLoad(event, data);
   } else {
     // The first time this is called we must build our filters.
-    if (typeof _local_filterset == "undefined") {
-      _local_filterset = FilterSet.fromText(__sourceText);
+    if (typeof _limited_to_domain == "undefined") {
+      var local_filterset = FilterSet.fromText(__sourceText);
       delete __sourceText;
+      _limited_to_domain = local_filterset.limitedToDomain(data.pageDomain);
     }
 
-    // TODO: copied from background.html from Safari section.
-    var limited = _local_filterset.limitedToDomain(data.pageDomain);
-    var isMatched = data.url && limited.matches(data.url, data.elType);
+    // every time browser_canLoad is called on this page, the pageDomain will
+    // be the same -- so we can just check _limited_to_domain which we
+    // calculated once.  This takes less memory than storing local_filterset
+    // on the page.
+    var isMatched = data.url && _limited_to_domain.matches(data.url, data.elType);
     if (isMatched)
       log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
 }
 
-function enableTrueBlocking() {
-  document.addEventListener("beforeload", function(event) {
-    var el = event.target;
-    // Cancel the load if canLoad is false.
-    var elType = typeForElement(el);
-    var url = relativeToAbsoluteUrl(event.url);
-    if (false == browser_canLoad(event, { url: url, elType: elType, pageDomain: document.domain })) {
-      event.preventDefault();
-      if (elType != ElementTypes.script &&
-          elType != ElementTypes.background &&
-          elType != ElementTypes.stylesheet) {
-        $(el).remove();
-      }
+beforeLoadHandler = function(event) {
+  var el = event.target;
+  // Cancel the load if canLoad is false.
+  var elType = typeForElement(el);
+  var data = { 
+    url: relativeToAbsoluteUrl(event.url),
+    elType: elType,
+    pageDomain: document.domain, 
+    isTopFrame: (window == window.top) 
+  };
+  if (false == browser_canLoad(event, data)) {
+    event.preventDefault();
+    if (elType != ElementTypes.script &&
+        elType != ElementTypes.background &&
+        elType != ElementTypes.stylesheet) {
+      $(el).remove();
     }
-  }, true);
+  }
+}
+
+function enableTrueBlocking() {
+  document.addEventListener("beforeload", beforeLoadHandler, true);
+}
+
+function disableTrueBlocking() {
+  document.removeEventListener("beforeload", beforeLoadHandler, true);
 }
 
 // Add style rules hiding the given list of selectors.
@@ -92,6 +106,10 @@ function block_list_via_css(selectors, title) {
   }
 }
 
+
+if (SAFARI)
+  enableTrueBlocking();
+
 var opts = { domain: document.domain };
 // The top frame should tell the background what domain it's on.  The
 // subframes will be told what domain the top is on.
@@ -100,7 +118,6 @@ if (window == window.top)
     
 extension_call('get_features_and_filters', opts, function(data) {
   var start = new Date();
-  __sourceText = data.filtertext;
 
   if (data.features.debug_logging.is_enabled) {
     DEBUG = true;
@@ -109,12 +126,17 @@ extension_call('get_features_and_filters', opts, function(data) {
   if (data.features.debug_time_logging.is_enabled)
     time_log = function(text) { console.log(text); };
 
-  if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
+  if (data.page_is_whitelisted) {
+    disableTrueBlocking();
     return;
+  }
 
-  if (SAFARI || 
-      (data.features.true_blocking_support.is_enabled && window == window.top))
-    enableTrueBlocking();
+  if (!SAFARI) {
+    __sourceText = data.filtertext;
+
+    if (data.features.true_blocking_support.is_enabled && window == window.top)
+      enableTrueBlocking();
+  }
 
   block_list_via_css(data.selectors);
 

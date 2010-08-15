@@ -186,8 +186,7 @@ function adblock_begin_v2() {
   extension_call('get_features_and_filters', opts, function(data) {
     log("==== ADBLOCKING PAGE: " + document.location.href);
 
-    // TODO: why send the whitelist just to check it?  do it in background.
-    if (page_is_whitelisted(data.whitelist, data.top_frame_domain))
+    if (data.page_is_whitelisted)
       return;
 
     listen_for_broadcasts();
