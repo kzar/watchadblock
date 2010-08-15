@@ -9,6 +9,16 @@
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
     <script>
+      function page_is_whitelisted(whitelist, the_domain) {
+        if (the_domain == "acid3.acidtests.org") return true;
+        for (var i = 0; i < whitelist.length; i++) {
+          if (the_domain.indexOf(whitelist[i]) != -1)
+            return true;
+        }
+        return false;
+      }
+
+
       var utils = {};
       utils.noop = function(options) {}
 
@@ -157,20 +167,6 @@
       }
   
       top_frame_domains = {};
-      // TODO: make better.
-      // Inputs: top_frame_domain?: the domain, if the caller is the top
-      // level frame.  Subframes use this to determine if the page is
-      // whitelisted.
-      utils.get_user_demands_v2 = function(options, sender) {
-        if (options.top_frame_domain) {
-          top_frame_domains[sender.tab.id] = options.top_frame_domain;
-        }
-        return {
-          whitelist: utils.get_whitelist(),
-          filters: utils.get_optimized_filters({}),
-          top_frame_domain: top_frame_domains[sender.tab.id]
-        };
-      }
 
       // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
@@ -182,11 +178,18 @@
         if (options.is_top_frame) {
           top_frame_domains[sender.tab.id] = options.domain;
         }
+
+        var tfd = top_frame_domains[sender.tab.id];
+        var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
+        var selectors = [];
+        if (!whitelisted)
+          selectors = utils.selectors_for_domain({domain:options.domain});
+
         var result = {
-          whitelist: utils.get_whitelist(),
-          selectors: utils.selectors_for_domain({domain:options.domain}),
+          page_is_whitelisted: whitelisted,
+          selectors: selectors,
+          top_frame_domain: tfd,
           features: utils.get_optional_features(),
-          top_frame_domain: top_frame_domains[sender.tab.id],
           filtertext: _myfilters.filterset._sourceText
         };
         var end = new Date();
@@ -322,12 +325,12 @@
 
       // Called by onRequest[External] to call functions from the field.
       function dispatchHandler(request, sender, sendResponse) { 
-        if (debug_background) {
+        if (false) {
           log("Running: " + request.fn);
           log("    " + JSON.stringify(request).substring(0, 300));
         }
         var result = utils[request.fn](request.options, sender);
-        if (debug_background) {
+        if (false) {
           log("Response:");
           if (result != null)
             log("    " + JSON.stringify(result).substring(0, 300));
@@ -380,6 +383,16 @@
         safari.application.addEventListener("message", function(messageEvent) {
           if (messageEvent.name != "canLoad")
             return;
+
+          var tabid = chrome.__getTabId(messageEvent.target);
+          if (messageEvent.message.isTopFrame) {
+            top_frame_domains[tabid] = messageEvent.message.pageDomain;
+          }
+          var tfd = top_frame_domains[tabid];
+          if (page_is_whitelisted(utils.get_whitelist(), tfd)) {
+            messageEvent.message = true;
+            return;
+          }
 
           var url = messageEvent.message.url;
           var elType = messageEvent.message.elType;
