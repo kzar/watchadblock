@@ -9,9 +9,10 @@ var ElementTypes = {
   stylesheet: 8,
   'object': 16,
   subdocument: 32,
+  'object-subrequest': 64,
   // if you add something here, update .ALL below
 }
-ElementTypes.ALL = 63; // all bits turned on
+ElementTypes.ALL = 127; // all bits turned on
 
 var FilterOptions = {
   NONE: 0,
