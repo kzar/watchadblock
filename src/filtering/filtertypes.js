@@ -132,10 +132,6 @@ var SelectorFilter = function(text) {
   if (text.indexOf('~all.google.domains') == 0)
     this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
 
-  if (text.match(/google\..*style[\^\$\*]?=/))
-    this._adType = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
-    
-
   if (text.indexOf("##") == -1) {
     try {
       text = SelectorFilter._old_style_to_new(text);
@@ -146,6 +142,11 @@ var SelectorFilter = function(text) {
       return;
     }
   }
+
+  // WebKit has a bug where style rules aren't parsed properly, so we just
+  // skip them until they fix their bug.
+  if (text.match(/style[\^\$\*]?=/))
+    this._adType = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
 
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
