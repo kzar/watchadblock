@@ -16,16 +16,15 @@ read answer
 rm -rf $sdir
 cp -R $dir $sdir
 find $sdir -name .svn | xargs rm -rf
-rm -f AdBlockForSafari.tgz
-tar czvf AdBlockForSafari.tgz $sdir
 clear
-echo Built AdBlockForSafari.tgz.
-echo Now load $sdir into Safari and build safaribuild.safariextz.
+echo Load $sdir into Safari and build safaribuild.safariextz.
+echo Save it in $(pwd)/.
+echo
 echo Press enter when done.
 read
 
 [ -f safaribuild_tempdir.safariextz ] || {
-  echo "safaribuild_tempdir.safariextz needs to be in the same folder as AdBlockForSafari.tgz."
+  echo "safaribuild_tempdir.safariextz needs to be in $(pwd)."
   exit 1
 }
 
@@ -45,12 +44,8 @@ scp safaribuild_tempdir.safariextz $user@safariadblock.com:$rdir/versions/$vd/Ad
   echo "Failed to scp"
   exit 1
 }
-scp AdBlockForSafari.tgz $user@safariadblock.com:$rdir/versions/$vd/ || {
-  echo "Failed to scp"
-  exit 1
-}
 
-rm -rf safaribuild_tempdir.safariext* AdBlockForSafari.tgz
+rm -rf safaribuild_tempdir.safariext*
 
 $ssh "$rdir/point_to_version $vd"
 echo "Last step: update update.plist on the server to notify users."
