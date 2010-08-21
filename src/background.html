@@ -189,9 +189,10 @@
           page_is_whitelisted: whitelisted,
           selectors: selectors,
           top_frame_domain: tfd,
-          features: utils.get_optional_features(),
-          filtertext: _myfilters.filterset._sourceText
+          features: utils.get_optional_features()
         };
+        if (!SAFARI)
+          result.filtertext = _myfilters.filterset._sourceText;
         var end = new Date();
         log("time to run: " + (end - start) + " || " + options.domain);
         return result;
