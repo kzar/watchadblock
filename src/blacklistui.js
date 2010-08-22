@@ -42,10 +42,9 @@ function preview(selector) {
   // Show the blacklist UI.
   css_preview.innerText = d + "input {display:inline-block!important;} " +
       d + ", " + d + "div:not(#filter_warning), " + d + ".ui-icon, " + d +
-      "a:not(#adreportlink), " + d + "center, " + d +
+      "a, " + d + "center, " + d +
       "button {display:block!important;} " +  d + "#adblock-details, " + d +
-      "span, " + d + "b, " + d + "#adreportlink, " + d +
-      "i {display:inline!important;} ";
+      "span, " + d + "b, " + d + "i {display:inline!important;} ";
   // Hide the specified selector.
   css_preview.innerText += selector + " {display:none!important;}";
 
@@ -149,13 +148,10 @@ BlacklistUi.prototype._build_page2 = function() {
     "<div>" +
     "<div style='margin-left:15px' id='adblock-details'></div><br/>" +
     "<div style='background:#eeeeee;border: 1px solid #dddddd;" +
-    " padding: 3px; font-style:italics;' id='count'></div>" +
+    " padding: 3px;' id='count'></div>" +
     "</div>" +
     "<div>" +
     "<br/><b>Not sure?</b> just press 'Block it!' below.<br/>" +
-    "<b>Want to help?</b> " +
-    "<a target='_new' id='adreportlink'>Report the ad</a> " +
-    " so everybody can benefit!<br/>" +
     "<br/></div>" +
     "<div style='clear:left; font-size:smaller'>" +
     "The filter, which can be changed on the Options page:" +
@@ -300,9 +296,6 @@ BlacklistUi.prototype._redrawPage2 = function() {
 
     summary.html(theFilter);
 
-    $("#adreportlink", that._ui_page2).
-      attr("href", that._generatedAdReportUrl());
-
     var matchCount = $(theFilter).not(".ui-dialog").not(".ui-dialog *").length;
 
     $("#count", that._ui_page2).
@@ -360,11 +353,4 @@ BlacklistUi._ellipsis = function(value, size) {
              value.substring(value.length - half));
 
   return value;
-}
-
-// Return a URL containing a prefilled ad report based on the current page
-// and the filter they've attempted to create in the BlacklistUi.
-BlacklistUi.prototype._generatedAdReportUrl = function() {
-    return chrome.extension.getURL('adreport.html?from=blacklister&url=' +
-         escape(location.href) + '&suggested=' + escape(this._makeFilter()));
 }

@@ -77,25 +77,27 @@
           result = result + escape("Ad report at <enter URL of webpage here>");
 
         var body = [];
-        body.push("Thanks for reporting an ad!  Answer at least #1 below " +
-                  "or we might ignore your report.");
-        body.push("");
-        body.push("- What does the ad look like?  (We can't always tell which");
-        body.push("  part of the page you think is an ad!)");
-        body.push("");
+        body.push("Last step -- point me to the ad so I can fix the bug!  " +
+            "Don't leave anything out or I'll probably " +
+            "have to ignore your report.  Thanks!");
         body.push("");
         if (!options['url']) {
-          body.push("- On what page do you see the ad?");
+          body.push("1. Paste the URL of the webpage showing an ad: ");
           body.push("");
           body.push("");
         }
+        body.push("2. Exactly where on that page is the ad?  What does it " +
+            "look like?  Attach a screenshot, with the ad clearly marked, " +
+            "if you can.");
+        body.push("");
+        body.push("");
         if (!options['suggested']) {
-          body.push("- If you created a working filter, please paste it below");
+          body.push("3. Paste a working filter, if you have one: ");
           body.push("");
           body.push("");
         }
-        body.push("- Any other information that would be helpful, besides");
-        body.push("  what is listed below?");
+        body.push("4. Any other information that would be helpful, besides " +
+            "what is listed below: ");
         body.push("");
         body.push("");
         body.push("-------- Please don't touch below this line. ---------");
@@ -134,24 +136,17 @@
       correct place to report it!<br/>
       Remember: reporting ads is voluntary. If you don't wish to do this you
       can just close this window and block it only for yourself by 
-      <span id="fromblacklisteroroptions"></span>!
+      adding its filter in the 'Blacklister' tab of the options page!
     </div>
-    <script type="text/javascript">
-      //setting the things-to-do if they don't want to report it
-      $('#fromblacklisteroroptions').text(
-        options['from'] == 'blacklister' ?
-        "clicking 'block it' in the blacklister wizard page" :
-        "adding it's filter in the 'Blacklister' tab of the options page");
-    </script>
-
 
     <!--STEP 1-->
     <div class="section" id="step1DIV" style="display:block;">
-      <h2>Up to date filters</h2>
-      If you update your filters and then reload the page that contained the
-      ad, does the ad still appear?<br/>
-      You can update your filters by clicking this button: 
-      <input type="button" value="update my filters!" id="UpdateFilters" />
+      <h2>Make sure your filter lists are up to date</h2>
+      <ol>
+        <li>Click this button: <input type="button" value="Update my filters!" id="UpdateFilters" />
+        <li>Reload the page with the ad.
+      </ol>
+      Does the ad still appear?<br/>
       <div id="step1" class="form">
         <input type="radio" id="step1_yes" name="step1"/>
         <span class="optionDescription">Yes</span>
@@ -206,7 +201,7 @@
           <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com">Spanish</option>
           <option value="ukranian;mailto:adblock.ua at gmail.com">Ukranian</option>
           <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list">Vietnamese</option>
-          <option value="">Other...</option>
+          <option value="easylist;http://forums.lanik.us/">Other</option>
         </select>
       </div>
     </div>
@@ -217,13 +212,14 @@
         var selected = $("#step2_lang option:selected");
         $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
         var required_lists = selected.attr('value').split(';');
-        for (var i=0; i < required_lists.length-1; i++)
+        for (var i=0; i < required_lists.length-1; i++) {
           if (unsubscribed_default_filters[required_lists[i]]) {
             $("#whattodo").text(
-                       "You'll have to subscribe to this filter list first: " +
+                       "Subscribe to this filter list, then try again: " +
                          unsubscribed_default_filters[required_lists[i]].name);
             return;
           }
+        }
         contact = required_lists[required_lists.length-1];
         $("#step3DIV").css("display", "block");
       });
@@ -232,72 +228,40 @@
     
     <!--STEP 3-->
     <div class="section" id="step3DIV">
-      <h2>FireFox</h2>
-      Do you have FireFox with AdBlock Plus installed?
-      <div id="step3" class="form">
+      <h2>Check in Firefox</h2>
+      <ol>
+        <li>Install Firefox if you don't have it.
+        <li>Install Adblock Plus for Firefox if you don't have it.
+        <li>In Firefox, subscribe to the same filter lists as you have here (except AdBlock Custom filters).
+        <li>In Firefox, load the page with the ad.
+      </ol>
+      Does the ad appear in Firefox?
+      <div class="form" id="step3">
         <input type="radio" id="step3_yes" name="step3"/>
         <span class="optionDescription">Yes</span>
         <input type="radio" id="step3_no" name="step3" />
         <span class="optionDescription">No</span>
-      </div>
-    </div>
-    <script type="text/javascript">
-      //if the user clicks a radio button
-      $("#step3_yes").click(function() {
-        $("#step3").html("<span class='answer'>Yes</span>");
-        $("#customenabled").text(
-          unsubscribed_default_filters['adblock_custom'] == undefined ?
-          " (except for the Chrome AdBlock custom filters)" : "");
-        $("#step4DIV").css("display", "block");
-      });
-      $("#step3_no").click(function() {
-        $("#step3").html("<span class='answer'>No</span>");
-        $("#whattodo").html("You can report the ad to us <a href='" +
-                           generateReportURL() + "'>in the issue tracker</a>");
-      });
-    </script>
-    
-    
-    <!--STEP 4-->
-    <div class="section" id="step4DIV">
-      <h2>Blocked in FireFox</h2>
-      If you visit the site in FireFox, using the same filters as in
-      AdBlock<span id="customenabled"></span>, does the ad appear then?
-      <div class="form" id="step4">
-        <input type="radio" id="step4_yes" name="step4"/>
-        <span class="optionDescription">Yes</span>
-        <input type="radio" id="step4_no" name="step4" />
-        <span class="optionDescription">No</span>
-        <input type="radio" id="step4_wontcheck" name="step4" />
+        <input type="radio" id="step3_wontcheck" name="step3" />
         <span class="optionDescription">I don't want to check this</span>
       </div>
     </div>
     <script type="text/javascript">
       //If the user clicks a radio button
-      $("#step4_yes").click(function() {
-        $("#step4").html("<span class='answer'>Yes</span>");
-        if (contact) {
-          if (contact.indexOf('mailto:') == 0) {
-            contact = contact.replace(" at ", "@");
-            $("#whattodo").html("You'll have to contact the maintainer of " +
-              "the AdBlock list that is supposed to block the ad:<br/>" +
-              "<a href='" + contact + "'>" + contact.substring(7) + "</a>");
-          } else
-            $("#whattodo").html("You'll have to contact the maintainer of " +
-              "the AdBlock list that is supposed to block the ad:<br/>" +
-              "<a href='" + contact + "'>" + contact + "</a>");
-        } else $("#whattodo").html("You can report the ad to us "+
-          "<a href='" + generateReportURL() + "'>in the issue tracker</a>");
+      $("#step3_yes").click(function() {
+        $("#step3").html("<span class='answer'>Yes</span>");
+        if (contact.indexOf('mailto:') == 0)
+          contact = contact.replace(" at ", "@").substring(7);
+        $("#whattodo").html("This is a filter list problem.  Report it here: " +
+          "<a href='" + contact + "'>" + contact + "</a>");
       });
-      $("#step4_no").click(function() {
-        $("#step4").html("<span class='answer'>No</span>");
+      $("#step3_no").click(function() {
+        $("#step3").html("<span class='answer'>No</span>");
         $("#whattodo").html("You can report the ad to us <a href='" +
-          generateReportURL() + "'>in the issue tracker</a>");
+          generateReportURL() + "'>in the issue tracker</a>.  (We are already aware that we can't block ads in most videos; we're waiting on support in WebKit.)");
       });
-      $("#step4_wontcheck").click(function() {
-        $("#step4").html("<span class='answer'>I don't want to check this</span>");
-        $("#whattodo").html("You can report the ad to us <a href='" +
-          generateReportURL() + "'>in the issue tracker</a>");
+      $("#step3_wontcheck").click(function() {
+        $("#step3").html("<span class='answer'>I don't want to check this</span>");
+        $("#whattodo").html("OK, you can still block this ad for yourself on the Options page.  Thanks!");
       });
     </script>
     
