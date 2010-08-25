@@ -1,23 +1,16 @@
-﻿//Translation by Famlam
-//Contact via the issue tracker
-//Last updated for version 2.0.20
-
-//TODO:
-//adreport.html (because: not possible yet)
-//browserbutton (because: not possible yet)
-//strings added after branch was created
-
+//Translation by John Rey
+//Last updated for version 2.0.24
 
 {
   //manifest.json
   "description": {
-    "message": "AdBlock voor Chrome!  Blokkeert advertenties op het internet.  Beoordeeld met 4,5 van de 5 sterren door de gebruikers!",
+    "message": "AdBlock für Chrome!  Blockt Werbung im ganzen Internet.  Bewertung der Nutzer: 4,5 von 5 Sternen!",
     "description": "Extension description in manifest"
   },
 
   //multiple files
   "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
-    "message": "Annuleren",
+    "message": "Abbrechen",
     "description": "Cancel button"
   },
   "buttonok": {//whitelister.js, options/filters.html
@@ -25,25 +18,25 @@
     "description": "OK button"
   },
   "shortcutenabled": {//options/blacklist.html, options/whitelist.html
-    "message": "ingeschakeld",
+    "message": "Tastenkürzel aktivieren",
     "description": "The checkbox label for the shortcut option"
   },
   "buttonblockit": {//blacklistui.js, options/blacklist.html
-    "message": "Blokkeer!",
+    "message": "Blocken!",
     "description": "Block button"
   },
   "buttonedit": {//blacklisterui.js, options/blacklister.html
-    "message": "Bewerken",
+    "message": "Bearbeiten",
     "description": "Edit filter manually button"
   },
   "optionstitle": {//adblock.js, options/index.html
-    "message": "AdBlock Opties",
+    "message": "AdBlock Einstellungen",
     "description": "Title for the options page"
   },
 
   //adblock.js
   "youtubevideomessage": {
-    "message": "Geen video? Herlaad de pagina. Als dit vaker gebeurt, schakel Blokkeer YouTube video-advertenties in $link$ uit.",
+    "message": "Kein Video? Aktualisieren Sie die Seite. Falls dies öfters passiert, deaktivieren Sie das Blocken von YouTube-Werbung in den $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
@@ -55,56 +48,56 @@
 
   //blacklistui.js
   "sliderexplanation": {
-    "message": "Verplaats de schuifbalk tot de advertentie verdwenen is, en het geblokkeerde element bruikbaar lijkt.",
+    "message": "Verschieben Sie den Regler bis die Werbung vollständig geblockt wird und der Teil der Seite gut aussieht.",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
-    "message": "Stap 1: Zoek uit wat geblokkeerd moet worden",
+    "message": "Schritt 1: Herausfinden, was geblockt werden soll",
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "Wat denk je dat elke keer geldt wanneer je deze pagina bezoekt?",
+    "message": "Was glauben Sie, trifft jedesmal zu, wenn sie diese Seite besuchen?",
     "description": "Blacklister attribute chosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Niet zeker?</b> klik onderaan gewoon op 'Blokkeer!'.<br/><b>Wil je helpen?</b> $link$ zodat iedereen er profijt van heeft!",
+    "message": "<b>Nicht sicher?</b> Drücken Sie einfach 'Blocken!' unterhalb.<br/><b>Wollen Sie helfen?</b> $link$, so hat jeder etwas davon!",
     "description": "Blacklister attribute chosing page message",
     "placeholders": {
       "link": {
-        "content": "$1Meld deze advertentie$2"
+        "content": "$1Melden Sie die Werbung$2"
       }
     }
   },
   "blacklisterthefilter": {
-    "message": "Het filter, dat veranderd kan worden op de optiespagina:",
+    "message": "Filter (kann in den Einstellungen verändert werden):",
     "description": "Blacklister attribute chosing page message"
   },
   "blacklisteroptionstitle": {
-    "message": "Laatste stap: Wat maakt dit een advertentie?",
+    "message": "Letzer Schritt: Was macht dies zu Werbung?",
     "description": "Blacklister options page title"
   },
   "blacklisternofilter": {
-    "message": "Geen filter opgegeven!",
+    "message": "Kein Filter angegeben!",
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter": {
-    "message": "Typ aub het juiste filter hieronder in en klik daarna op OK",
+    "message": "Bitte geben Sie den korrekten Filter unten ein und drücken Sie auf OK",
     "description": "Text if the user wants to manually edit a filter"
   },
   "blacklistereditinvalid": {
-    "message": "Dit filter is ongeldig!",
+    "message": "Der Filter ist ungültig!",
     "description": "Messagebox if the manually edited filter is invalid"
   },
   "blacklisterblockedelement": {
-    "message": "Geblokkeerd element:",
+    "message": "Geblocktes Element:",
     "description": "Tells the user what the blocked element is on the slider page"
   },
   "blacklisterwarningnofilter": {
-    "message": "Waarschuwing: geen filter opgegeven!",
+    "message": "Achtung: kein Filter angegeben!",
     "description": "Warns the user that no filter was specified"
   },
   "blacklisterblocksalloftype": {
-    "message": "Let op: dit filter blokkeert alle $elementtype$ elementen op de pagina!",
+    "message": "Achtung: dieser Filter blockt alle $elementtype$ Elemente auf dieser Seite!",
     "description": "Warns the user that all elements of type X will be blocked",
     "placeholders": {
       "elementtype": {
@@ -114,11 +107,11 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "Dat geldt voor <b>1</b> item op deze pagina.",
+    "message": "Dies trifft auf <b>1</b> Element auf dieser Seite zu.",
     "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
-    "message": "Dat geldt voor $matchcount$ items op deze pagina.",
+    "message": "Dies trifft auf $matchcount$ Elemente auf dieser Seite zu.",
     "description": "Tells the user multiple matches were found",
     "placeholders": {
       "matchcount": {
@@ -128,7 +121,7 @@
     }
   },
   "blacklisterattrwillbe": {
-    "message": "$attribute$ is gelijk aan $value$",
+    "message": "$attribute$ wird $value$ sein",
     "description": "Checkbox label",
     "placeholders": {
       "attribute": {
@@ -142,59 +135,86 @@
     }
   },
   "blacklistertype": {
-    "message": "Type",
+    "message": "Typ",
     "description": "node name is called 'Type'"
   },
   "buttonlooksgood": {
-    "message": "Ziet er goed uit",
+    "message": "Sieht gut aus!",
     "description": "Looks good button"
   },
   "buttonback": {
-    "message": "Vorige",
+    "message": "Zurück",
     "description": "Back to previous wizard page button"
   },
 
   //clickwatcher.js
   "findingads": {
-    "message": "Advertenties zoeken...<br/><br/><i>Dit duurt maar eventjes.</i>",
+    "message": "Suche Werbung...<br/><br/><i>Dies kann einen Moment dauern.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
-    "message": "Blokkeer een advertentie",
+    "message": "Werbung blocken",
     "description": "Title of the first two dialogs of the blacklister"
   },
   "clickthead": {
-    "message": "Klik op de advertentie, en ik zal je helpen om deze te blokkeren.",
+    "message": "Klicken Sie auf die Werbung und ich werde Ihnen helfen sie zu blocken.",
     "description": "When you have to click the ad to continue"
   },
 
   //whitelister.js
   "whitelistertext": {
-    "message": "AdBlock zal niets blokkeren op domein",
+    "message": "AdBlock wird nichts blocken auf Seiten die enden auf",
     "description": "The message of the whitelister dialog"
   },
   "whitelistertitle": {
-    "message": "Dit domein uitsluiten?",
+    "message": "Diese Seite ausschliessen?",
     "description": "The title of the whitelister dialog"
   },
 
+  //adreport.html
+  "adreportintro": {
+    "message": "Sie haben Werbung auf einer Website gefunden? Ich werde Ihnen dabei helfen den richtigen Ort zufinden, um diese Werbung zu melden!",
+    "description": "Adreport intro message"
+  },
+  "willnotreportblacklister": {
+    "message": "Anmerkung: Werbung zu melden ist freiwillig. Wenn Sie die Werbung nicht melden wollen, können Sie diese Seite schließen und sie nur für Sie selbst blocken, indem Sie auf 'Blocken!' im Blacklist-Assistenten klicken!",
+    "description": "Adreport intro message"
+  },
+  "willnotreportoptions": {
+    "message": "Anmerkung: Werbung zu melden ist freiwillig. Wenn Sie die Werbung nicht melden wollen, können Sie diese Seite schließen und sie nur für Sie selbst blocken, indem Sie die Filter in den Blacklist-Einstellungen hinzufügen!",
+    "description": "Adreport intro message"
+  },
+  "uptodatefilters": {
+    "message": "Aktuelle Filter",
+    "description": "Adreport step 1"
+  },
+  "doesitstillappear": {
+    "message": "Wenn Sie Ihre Filter updaten und dann die Website die Werbung enthält aktualisieren, zeigt es die Werbung noch an?",
+    "description": "Adreport step 1"
+  },
+  "clickupdatefiltersbutton": {
+    "message": "Sie können Ihre Filter updaten, indem Sie auf diesen Button klicken:",
+    "description": "Adreport step 1"
+  },
+  //<<<TO BE CONTINUED>>> but first wait until branches/issue-3106 is merged
+
   //subscribe.html
   "subscribingtitle": {
-    "message": "Aanmelden bij een lijst met filters...",
+    "message": "Filterliste abonnieren...",
     "description": "abp: link subscriber title"
   },
   "subscribingfinished": {
-    "message": "Klaar!",
+    "message": "Fertig!",
     "description": "abp: link subscriber result"
   },
   "subscribingfailed": {
-    "message": "Mislukt!",
+    "message": "Fehlgeschlagen!",
     "description": "abp: link subscriber result"
   },
 
   //options/index.html
   "optionsversion": {
-    "message": "Versie $version$",
+    "message": "Version $version$",
     "description": "Version number",
     "placeholders": {
       "version": {
@@ -204,45 +224,45 @@
     }
   },
   "optionschangelog": {
-    "message": "wijzigingen",
+    "message": "Changelog",
     "description": "changelog link"
   },
   "donatethanks": {
-    "message": "Hoera! Dank je wel!",
+    "message": "Hurra! Vielen Dank!",
     "description": "Tooltip if you hover the donate image"
   },
   "optionsintro": {
-    "message": "Houd je van AdBlock? Mijn naam is Michael. Ik ben part-time gaan werken om AdBlock te kunnen verbeteren en mijn gebruikers te ondersteunen. Heb veel plezier met het gebruik van AdBlock, en als je <a>wilt doneren</a>, dan zou ik dat <b>enorm</b> waarderen :)",
+    "message": "Sie lieben AdBlock?  Mein Name ist Michael.  Ich habe zu einem Teilzeitjob gewechselt um AdBlock zu entwickeln und um den Nutzern zu helfen.  Bitte nutzen Sie AdBlock und, wenn Sie wollen, <a>spenden Sie</a> in jeglicher Höhe, ich würde es <b>sehr</b> begrüßen :)",
     "description": "Intro of the options page"
   },
   "optionscontribute": {
-    "message": "Wil je verbeteringen, advertenties of fouten rapporteren? We <a>hebben je hulp nodig</a>!",
+    "message": " Wollen Sie Code beisteuern oder Fehler bzw. Werbung melden? Wir <a>brauchen Ihre Hilfe</a>!",
     "description": "Intro of the options page"
   },
   "tabgeneral": {
-    "message": "Algemeen",
+    "message": "Allgemein",
     "description": "A tab on the options page"
   },
   "tabfilterlists": {
-    "message": "Officiële filters",
+    "message": "Filterlisten",
     "description": "A tab on the options page"
   },
   "tabblacklist": {
-    "message": "Eigen filters",
+    "message": "Blacklist",
     "description": "A tab on the options page"
   },
   "tabexcluded": {
-    "message": "Uitgesloten sites",
+    "message": "Whitelist",
     "description": "A tab on the options page"
   },
 
   //options/general.html
   "generaloptions": {
-    "message": "Algemene opties",
+    "message": "Allgemeine Einstellungen",
     "description": "Title of first tab page"
   },
   "blocknothideoption": {
-    "message": "Blokkeer de meeste advertenties, in plaats van ze te verbergen.",
+    "message": "die meiste Werbung vom downloaden abhalten, anstatt sie nur zu verbergen",
     "description": "Option on first tab page"
   },
   "betalabel": {
@@ -250,41 +270,41 @@
     "description": "Option on first tab page"
   },
   "blocknothidewarning": {
-    "message": "Let op dat Chrome dit niet volledig ondersteund, dus een paar advertenties zullen toch geladen en daarna pas verborgen worden als je een snelle computer hebt.",
+    "message": "Anmerkung: Chrome unterstützt diese Funktion nicht vollständig, d. h. ein kleiner Teil an Werbung wird möglicherweise noch heruntergeladen und verborgen auf einem schnellen Computer.",
     "description": "Warning for block instead of hiding option"
   },
   "buttonexplanation": {
-    "message": "<i>Om de browserknop optioneel te maken, hebben we hem in een aparte extensie gestopt.</i><br/><br/>Om de knop toe toe voegen, klik op <b>Installeren</b> op de <a>Browser Button for AdBlock</a>-pagina.<br/><br/>Om hem te verwijderen, klik er met de rechtermuisknop op en klik op Uitschakelen.",
+    "message": "<i>Um den Button optional zu machen, haben wir ihn in eine extra Erweiterung gepackt. Er kann hier zusammen mit AdBlock installiert werden.</i><br/><br/>Um den Button hinzuzufügen, klicken Sie auf <b>Install</b> auf der <a>Browser Button for AdBlock</a> Website.<br/><br/>Um den Button zu entfernen: Rechtsklick -> Disable (Entfernen).",
     "description": "Explanation of how the button works"
   },
   "buttonextension": {
-    "message": "Toon de browserknop naast de adresbalk",
+    "message": "Adblock Button neben der Adressleiste anzeigen",
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "Ik wil de tekstadvertenties op Google kunnen zien.",
+    "message": "Textwerbung in den Google-Suchergebnissen nicht blocken",
     "description": "Option on first tab page"
   },
   "youtubeads": {
-    "message": "Blokkeer YouTube video-advertenties.",
+    "message": "Werbung in YouTube Videos blocken",
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "Toon foutopsporingsmeldingen in de console (dit vertraagt AdBlock)",
+    "message": "Debug-Berichte in der Logdatei anzeigen (verlangsamt AdBlock)",
     "description": "Option on first tab page"
   },
   "timeinlogoption": {
-    "message": "Toon tijdsduurmeldingen in de console (dit vertraagt AdBlock)",
+    "message": "Timing-Berichte in der Logdatei anzeigen (verlangsamt AdBlock)",
     "description": "Option on first tab page"
   },
 
   //options/filters.html
   "updatedrightnow": {
-    "message": "net bijgewerkt",
+    "message": "gerade geupdatet",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
-    "message": "$seconds$ seconden geleden bijgewerkt",
+    "message": "vor $seconds$ Sekunden geupdatet",
     "description": "Label for subscription",
     "placeholders": {
       "seconds": {
@@ -294,7 +314,7 @@
     }
   },
   "updatedminutesago": {
-    "message": "$minutes$ minuten geleden bijgewerkt",
+    "message": "vor $minutes$ Minuten geupdatet",
     "description": "Label for subscription",
     "placeholders": {
       "minutes": {
@@ -304,7 +324,7 @@
     }
   },
   "updatedhoursago": {
-    "message": "$hours$ uur geleden bijgewerkt",
+    "message": "vor $hours$ Stunden geupdatet",
     "description": "Label for subscription",
     "placeholders": {
       "hours": {
@@ -314,7 +334,7 @@
     }
   },
   "updateddaysago": {
-    "message": "$days$ dagen geleden bijgewerkt",
+    "message": "vor $days$ Tagen geupdatet",
     "description": "Label for subscription",
     "placeholders": {
       "days": {
@@ -324,189 +344,189 @@
     }
   },
   "updatedminuteago": {
-    "message": "1 minuut geleden bijgewerkt",
+    "message": "vor 1 Minute geupdatet",
     "description": "Label for subscription"
   },
   "updatedhourago": {
-    "message": "1 uur geleden bijgewerkt",
+    "message": "vor 1 Stunde geupdatet",
     "description": "Label for subscription"
   },
   "updateddayago": {
-    "message": "1 dag geleden bijgewerkt",
+    "message": "vor 1 Tag geupdatet",
     "description": "Label for subscription"
   },
   "removedlabel": {
-    "message": "Verwijderd.",
+    "message": "Entfernt.",
     "description": "Status label"
   },
   "unsubscribedlabel": {
-    "message": "Afgemeld.",
+    "message": "Abonnement beendet.",
     "description": "Status label"
   },
   "fetchinglabel": {
-    "message": "Ophalen... wacht aub.",
+    "message": "Filter abrufen... bitte warten.",
     "description": "Status label"
   },
   "subscribedlabel": {
-    "message": "Aangemeld.",
+    "message": "Abonniert.",
     "description": "Status label"
   },
   "nolisturllabel": {
-    "message": "Dat was geen geldige link of lijst.",
+    "message": "Dies ist keine Filterlisten-URL.",
     "description": "Status label"
   },
   "failedtofetchfilter": {
-    "message": "Dit filter kon niet opgehaald worden!",
+    "message": "Abrufen des Filters fehlgeschlagen!",
     "description": "Error messagebox"
   },
   "enterurloflist": {
-    "message": "Vul aub de link naar een lijst met filters in.",
+    "message": "Bitte geben Sie die URL der Filterliste ein, die Sie abonnieren möchten.",
     "description": "Error messagebox"
   },
   "removefromlist": {
-    "message": "Uit lijst verwijderen",
+    "message": "aus Liste entfernen",
     "description": "Label to remove a custom filter"
   },
   "filterstabtitle": {
-    "message": "Aanmelden bij officiële filters",
+    "message": "Abonnieren Sie Filterlisten",
     "description": "Title of the filter list tab"
   },
   "defaultsexplanation": {
-    "message": "De standaard lijsten zijn geschikt voor Engels-sprekende gebruikers. Anderen zullen misschien ook andere lijsten willen gebruiken.",
+    "message": "Die Standardfilter sind gut für englischsprachige Nutzer aus den USA. Andere Nutzer wollen eventuell mehr Listen abonnieren.",
     "description": "Explanation of the filter lists"
   },
   "filterlistlink": {
-    "message": "Meld je niet voor meer lijsten dan je nodig hebt aan. Elke lijst zal je iets vertragen! Credits en andere lijsten kunnen <a>hier</a> gevonden worden.",
+    "message": "Abonnieren Sie nicht mehr Filter als Sie wirklich benötigen - jeder Filter verlangsamt den Browser etwas!  Credits und noch mehr Listen finden Sie <a>hier</a>.",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "Ik zoek automatisch naar updates; je kunt de lijsten ook <a>nu bijwerken</a>.",
+    "message": " Ich werde die Listen alle 5 Tage updaten. Außerdem können Sie auch <a>jetzt updaten</a>.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
-    "message": "Of voer een URL in:",
+    "message": "Oder geben Sie eine URL ein:",
     "description": "link for custom subscription"
   },
   "subscribebutton": {
-    "message": "Aanmelden",
+    "message": "Abonnieren",
     "description": "subscribe to a list button"
   },
   "subscribetoall": {
-    "message": "Bij alle lijsten aanmelden:",
+    "message": "Alle Filter abonnieren:",
     "description": "option on second tab page"
   },
   "subscribetonone": {
-    "message": "Bij alle lijsten afmelden:",
+    "message": "Alle Filterabonnements beenden:",
     "description": "option on second tab page"
   },
   "showlinkstolists": {
-    "message": "Toon links naar de lijsten:",
+    "message": "Links zu den Filterlisten anzeigen:",
     "description": "Option on second tab page"
   },
   "labelshow": {
-    "message": "toon",
+    "message": "anzeigen",
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "AdBlock custom filters (aanbevolen)",
+    "message": "AdBlock Standardfilter (empfohlen)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
-    "message": "EasyList (aanbevolen)",
+    "message": "EasyList (empfohlen)",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - Bulgarische uitbreiding",
+    "message": " - zusätzliche bulgarische Filter",
     "description": "A filter list"
   },
   "filterdutch": {
-    "message": " - Nederlandse uitbreiding",
+    "message": " - zusätzliche niederländische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_finnish": {
-    "message": " - Finse uitbreiding",
+    "message": " - zusätzliche finnische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_french": {
-    "message": " - Franse uitbreiding",
+    "message": " - zusätzliche französische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_german": {
-    "message": " - Duitse uitbreiding",
+    "message": " - zusätzliche deutsche Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_norwegian": {
-    "message": " - Noorse uitbreiding",
+    "message": " - zusätzliche norwegische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_polish": {
-    "message": " - Poolse uitbreiding",
+    "message": " - zusätzliche polnische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_romanian": {
-    "message": " - Roemeense uitbreiding",
+    "message": " - zusätzliche rumänische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
-    "message": " - Vietnamese uitbreiding",
+    "message": " - zusätzliche vietnamesische Filter",
     "description": "A filter list"
   },
   "filterchinese": {
-    "message": "Chinese filters",
+    "message": "Chinesische Filter",
     "description": "A filter list"
   },
   "filterczech": {
-    "message": "Tsjechisch filters",
+    "message": "Tschechische Filter",
     "description": "A filter list"
   },
   "filterdanish": {
-    "message": "Deense filters",
+    "message": "Dänische Filter",
     "description": "A filter list"
   },
   "filterhungarian": {
-    "message": "Hongaarse filters",
+    "message": "Ungarische Filter",
     "description": "A filter list"
   },
   "filterisraeli": {
-    "message": "Israëlische filters",
+    "message": "Israelische Filter",
     "description": "A filter list"
   },
   "filteritalian": {
-    "message": "Italiaanse filters",
+    "message": "Italienische Filter",
     "description": "A filter list"
   },
   "filterjapanese": {
-    "message": "Japanse filters",
+    "message": "Japanische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plun_korean": {
-    "message": "Koreaanse filters",
+    "message": "Koreanische Filter",
     "description": "A filter list"
   },
   "filterpolish": {
-    "message": "Poolse filters",
+    "message": "Polnische Filter",
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": "Russische filters",
+    "message": "Russische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_spanish": {
-    "message": "Spaanse filters",
+    "message": "Spanische Filter",
     "description": "A filter list"
   },
   "filterukranian": {
-    "message": "Oekraïense filters",
+    "message": "Ukrainische Filter",
     "description": "A filter list"
   },
 
   //options/blacklist.html
   "blacklisttabtitle": {
-    "message": "Blokkeer een advertentie die de filters gemist hebben",
+    "message": "Werbung blocken, die nicht vom Filter geblockt wird...",
     "description": "Title of the third tab"
   },
   "blacklistshortcutmessage": {
-    "message": "<b>Snelkoppeling:</b> Druk op <b>$keys$</b> op een pagina om een advertentie te blokkeren. <small>(Als er niets gebeurt, klik dan eerst op de pagina.)</small>",
+    "message": "<b>Tastenkürzel:</b> Drücken Sie <b>$keys$</b> auf Seiten auf denen Werbung erscheint, um diese zu blocken. <small>(Falls nichts passiert, klicken Sie zuerst auf die Website.)</small>",
     "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
     "placeholders": {
       "keys": {
@@ -515,61 +535,61 @@
     }
   },
   "addnewfilter": {
-    "message": "Nieuw filter toevoegen:",
+    "message": "Neuen Filter hinzufügen:",
     "description": "Subtitle on the third tab"
   },
   "linkblockadbyrul": {
-    "message": "Blokkeer een advertentie via zijn URL",
+    "message": "Werbung über ihre URL blocken",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
-    "message": "Verberg een deel van een pagina",
+    "message": "Teil einer Website blocken",
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
-    "message": "Blokkeer URLs die deze tekst bevatten",
+    "message": "URLs mit diesem Text blocken",
     "description": "Message of the url-blocking area"
   },
   "csstomatch": {
-    "message": "CSS regels om te vergelijken",
+    "message": "CSS, das geblockt werden soll",
     "description": "Message of the css-hiding area"
   },
   "blockdomain": {
-    "message": "Domein om het filter op toe te passen",
+    "message": "Domain der Seite",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
-    "message": "Bewerk je filters handmatig:",
+    "message": "Filter manuell bearbeiten:",
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "Pas op: als je hier een fout maakt dan kunnen de andere filters, inclusief de officiële, ook onbruikbaar worden!<br/>Lees de <a>filter syntaxis uitleg (Engelstalig)</a> voor meer informatie over het maken van filters.",
+    "message": "Achtung: wenn Sie hier einen Fehler machen, können viele andere Filter, und auch die offiziellen Filter, beschädigt werden!<br/>Lesen Sie das <a>Filtersyntax-Tutorial</a> um zu lernen, wie man erweiterte Blacklist- und Whitelistfilter erstellt.",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
-    "message": "Opslaan",
+    "message": "Speichern",
     "description": "Save button"
   },
   "savereminder": {
-    "message": "Vergeet niet op te slaan!",
+    "message": "Vergessen Sie nicht zu speichern!",
     "description": "Reminder to press save"
   },
 
   //options/whitelist.html
   "removelabel": {
-    "message": "Verwijderen",
+    "message": "Entfernen",
     "description": "link to remove a excluded site"
   },
   "excludedsitestitle": {
-    "message": "Blokkeer geen advertenties op domeinen die eindigen op...",
+    "message": "Keine Werbung blocken auf Seiten die enden mit...",
     "description": "title of the 4th tab page"
   },
   "excludedsitesexample": {
-    "message": "Bijvoorbeeld, 'google.com' sluit google.com, mail.google.com en www.google.com uit.",
+    "message": "Beispiel: 'google.com' würde Werbung erlauben auf den Seiten: google.com, mail.google.com und www.google.com.",
     "description": "text on the 4th tab page"
   },
   "whitelistshortcutmessage": {
-    "message": "<b>Snelkoppeling:</b> Druk op <b>$keys$</b> (denk 'Live!') op een pagina om deze uit te sluiten.",
+    "message": "<b>Tastenkürzel:</b> Drücken Sie <b>$keys$</b> auf Seiten auf denen keine Werbung geblockt werden soll.",
     "description": "Note: 'Live' must be translated into another word that starts with a 'L'. Otherwise, don't translate it!",
     "placeholders": {
       "keys": {
@@ -578,11 +598,11 @@
     }
   },
   "addbutton": {
-    "message": "Voeg toe",
+    "message": "Hinzufügen",
     "description": "add button"
   },
   "removeallfromlist": {
-    "message": "Verwijder alle items uit deze lijst:",
+    "message": "Liste leeren:",
     "description": "option on 4th tab page"
   }
 }
