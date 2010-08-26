@@ -305,13 +305,9 @@
                 if (!SAFARI) {
                   var usefultext = this.responseText.match(/\<updatecheck.+status\=\".*\"\/\>/)[0];
                   if (!usefultext) return;
-                  var status = usefultext.match(/status\=\"[^\"]*\"/)[0]
-                  status = status.replace('status="', '').replace('"','');
-                  if (status == "ok") {
-                    updateURL = usefultext.match(/codebase\=\"[^\"]*\"/)[0]
-                    updateURL = updateURL.replace('codebase="', '')
-                    updateURL = updateURL.replace('"','');
-                  }
+                  var status = usefultext.match(/status\=\"([^\"]*)\"/)[1];
+                  if (status == "ok")
+                    updateURL = usefultext.match(/codebase\=\"([^\"]*)\"/)[1];
                 } else {
                   var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0]
                   version = version.replace(/\<[^\<]+\>/g,'');
