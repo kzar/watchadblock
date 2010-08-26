@@ -1,7 +1,6 @@
 <!--
    URL:
    chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/adreport.html
-   ?from=[options|blacklister]
    &url={domain_href}
    &suggested={suggestedfilter}
 -->
@@ -250,9 +249,9 @@
       $("#step3_yes").click(function() {
         $("#step3").html("<span class='answer'>Yes</span>");
         if (contact.indexOf('mailto:') == 0)
-          contact = contact.replace(" at ", "@").substring(7);
+          contact = contact.replace(" at ", "@");
         $("#whattodo").html("This is a filter list problem.  Report it here: " +
-          "<a href='" + contact + "'>" + contact + "</a>");
+          "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>");
       });
       $("#step3_no").click(function() {
         $("#step3").html("<span class='answer'>No</span>");
