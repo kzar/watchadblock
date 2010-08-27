@@ -326,18 +326,7 @@
 
       // Called by onRequest[External] to call functions from the field.
       function dispatchHandler(request, sender, sendResponse) { 
-        if (false) {
-          log("Running: " + request.fn);
-          log("    " + JSON.stringify(request).substring(0, 300));
-        }
         var result = utils[request.fn](request.options, sender);
-        if (false) {
-          log("Response:");
-          if (result != null)
-            log("    " + JSON.stringify(result).substring(0, 300));
-          else
-            log("    (undefined)");
-        }
         sendResponse(result);
       }
  
