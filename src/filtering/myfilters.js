@@ -351,7 +351,7 @@ MyFilters.__make_subscription_options = function() {
       name: "AdBlock custom filters (recommended)",
     },
     "easylist": {
-      url: "http://adblockplus.mozdev.org/easylist/easylist.txt",
+      url: "https://easylist-downloads.adblockplus.org/easylist.txt",
       name: "EasyList (recommended)",
     },
     "easylist_plus_bulgarian": {
@@ -371,7 +371,7 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional French filters",
     },
     "easylist_plus_german": {
-      url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
+      url: "https://easylist-downloads.adblockplus.org/easylistgermany.txt",
       name: " - additional German filters",
     },
     "easylist_plus_norwegian": {
@@ -385,6 +385,10 @@ MyFilters.__make_subscription_options = function() {
     "easylist_plus_romanian": {
       url: "http://www.picpoc.ro/menetzrolist.txt",
       name: " - additional Romanian filters",
+    },
+    "russian": { //id must not change!
+      url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
+      name: " - additional Russian filters",
     },
     "easylist_plus_vietnamese": {
       url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
@@ -425,10 +429,6 @@ MyFilters.__make_subscription_options = function() {
     "polish": {
       url: "http://www.niecko.pl/adblock/adblock.txt",
       name: "Polish filters",
-    },
-    "russian": {
-      url: "http://ruadlist.googlecode.com/svn/trunk/adblock.txt",
-      name: "Russian filters",
     },
     "easylist_plus_spanish": { //id must not change!
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
