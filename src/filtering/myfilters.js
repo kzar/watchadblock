@@ -415,7 +415,7 @@ MyFilters.__make_subscription_options = function() {
       name: "Italian filters",
     },
     "japanese": {
-      url: "http://www.fanboy.co.nz/adblock/fanboy-adblocklist-jpn.txt",
+      url: "https://secure.fanboy.co.nz/fanboy-japanese.txt",
       name: "Japanese filters",
     },
     "easylist_plun_korean": { // no longer w/ easylist, but ids mustn't change
