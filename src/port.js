@@ -177,24 +177,53 @@ if (SAFARI) {
       }
     },
 
-    i18n: {
-      getMessage: (function() {
-        var _localizedStrings = undefined;
+    i18n: (function() {
+      var _messages = undefined;
 
-        // Fill _localizedStrings with translations.
-        var _loadLocalizedStrings = function() {
-          _localizedStrings = {}; // TODO
-        }
+      // getMessage() calls this to load messages from disk if they aren't
+      // already there.  Note that it can only access the disk if it isn't
+      // being called from code injected onto a page; to work correctly when
+      // injected onto a page, first call
+      // chrome.i18n._setMessagesFileText(data).
+      function _loadMessages() {
+        var xhr = new XMLHttpRequest();
+        var file = chrome.extension.getURL(chrome.i18n._messagesFile);
+        xhr.open("GET", file, false);
+        xhr.onreadystatechange = function() {
+          if(this.readyState == 4) {
+            chrome.i18n._setMessagesFileText(this.responseText);
+          }
+        };
+        xhr.send();
+      }
 
-        var theFunction = function(messageID, args) {
-          if (_localizedStrings == undefined)
-            _loadLocalizedStrings();
+      var theI18nObject = {
+        // Manually set the messages object for localization.  You only need
+        // to call this if using chrome.i18n.getMessage() from a content 
+        // script.
+        _setMessagesFileText: function(text) {
+          // remove comments, which break JSON parsing
+          text = text.replace(/\/\/[^\n]+/g, '');
+          _messages = JSON.parse(text);
+        },
+
+        // Return the extension resource file containing messages localalized
+        // to the current locale, e.g. "_locales/de/messages.json".
+        get _messagesFile() {
+          var locale = "nl"; // TODO
+          var filename = '_locales/' + locale + '/messages.json';
+          return filename;
+        },
+
+        getMessage: function(messageID, args) {
+          if (_messages == undefined)
+            _loadMessages();
           // TODO: handle args list.
-          return _localizedStrings[messageID];
+          return _messages[messageID].message;
         }
+      };
 
-        return theFunction;
-      })()
-    }
+      return theI18nObject;
+    })()
   };
 }
