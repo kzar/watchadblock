@@ -1,8 +1,7 @@
 <!--
    URL:
    chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/adreport.html
-   ?from=[options|blacklister]
-   &url={domain_href}
+   ?url={domain_href}
    &suggested={suggestedfilter}
 -->
 <html>
@@ -77,17 +76,17 @@
           result = result + escape("Ad report at <enter URL of webpage here>");
 
         var body = [];
-        body.push("Last step -- point me to the ad so I can fix the bug!  " +
+        body.push("Last step -- point me to the ad so I can fix the bug! " +
             "Don't leave anything out or I'll probably " +
-            "have to ignore your report.  Thanks!");
+            "have to ignore your report. Thanks!");
         body.push("");
         if (!options['url']) {
           body.push("1. Paste the URL of the webpage showing an ad: ");
           body.push("");
           body.push("");
         }
-        body.push("2. Exactly where on that page is the ad?  What does it " +
-            "look like?  Attach a screenshot, with the ad clearly marked, " +
+        body.push("2. Exactly where on that page is the ad? What does it " +
+            "look like? Attach a screenshot, with the ad clearly marked, " +
             "if you can.");
         body.push("");
         body.push("");
@@ -201,7 +200,7 @@
           <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com">Spanish</option>
           <option value="ukranian;mailto:adblock.ua at gmail.com">Ukranian</option>
           <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list">Vietnamese</option>
-          <option value="easylist;http://forums.lanik.us/">Other</option>
+          <option value="">Other</option>
         </select>
       </div>
     </div>
@@ -211,13 +210,22 @@
       $("#step2_lang").change(function() {
         var selected = $("#step2_lang option:selected");
         $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
-        var required_lists = selected.attr('value').split(';');
-        for (var i=0; i < required_lists.length-1; i++) {
-          if (unsubscribed_default_filters[required_lists[i]]) {
-            $("#whattodo").text(
-                       "Subscribe to this filter list, then try again: " +
-                         unsubscribed_default_filters[required_lists[i]].name);
-            return;
+        if (selected.text() == 'Other') {
+          $("#whattodo").html(
+            "We don't have a default filter list for that language.<br/>" +
+            "Please try to find a suitable list that supports this language " +
+            "<a href='http://adblockplus.org/en/subscriptions'>here</a> or " +
+            "block this ad for yourself on the Options page.");
+          return;
+        } else {
+          var required_lists = selected.attr('value').split(';');
+          for (var i=0; i < required_lists.length - 1; i++) {
+            if (unsubscribed_default_filters[required_lists[i]]) {
+              $("#whattodo").text(
+                    "Subscribe to this filter list, then try again: " +
+                    unsubscribed_default_filters[required_lists[i]].name);
+              return;
+            }
           }
         }
         contact = required_lists[required_lists.length-1];
@@ -250,18 +258,19 @@
       $("#step3_yes").click(function() {
         $("#step3").html("<span class='answer'>Yes</span>");
         if (contact.indexOf('mailto:') == 0)
-          contact = contact.replace(" at ", "@").substring(7);
-        $("#whattodo").html("This is a filter list problem.  Report it here: " +
-          "<a href='" + contact + "'>" + contact + "</a>");
+          contact = contact.replace(" at ", "@");
+        $("#whattodo").html("This is a filter list problem. Report it here: " +
+          "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>");
       });
       $("#step3_no").click(function() {
         $("#step3").html("<span class='answer'>No</span>");
         $("#whattodo").html("You can report the ad to us <a href='" +
-          generateReportURL() + "'>in the issue tracker</a>.  (We are already aware that we can't block ads in most videos; we're waiting on support in WebKit.)");
+          generateReportURL() + "'>in the issue tracker</a>. (We are already" +
+          " aware that we can't block ads in most videos; we're waiting on support in WebKit.)");
       });
       $("#step3_wontcheck").click(function() {
         $("#step3").html("<span class='answer'>I don't want to check this</span>");
-        $("#whattodo").html("OK, you can still block this ad for yourself on the Options page.  Thanks!");
+        $("#whattodo").html("OK, you can still block this ad for yourself on the Options page. Thanks!");
       });
     </script>
     
@@ -296,13 +305,9 @@
                 if (!SAFARI) {
                   var usefultext = this.responseText.match(/\<updatecheck.+status\=\".*\"\/\>/)[0];
                   if (!usefultext) return;
-                  var status = usefultext.match(/status\=\"[^\"]*\"/)[0]
-                  status = status.replace('status="', '').replace('"','');
-                  if (status == "ok") {
-                    updateURL = usefultext.match(/codebase\=\"[^\"]*\"/)[0]
-                    updateURL = updateURL.replace('codebase="', '')
-                    updateURL = updateURL.replace('"','');
-                  }
+                  var status = usefultext.match(/status\=\"([^\"]*)\"/)[1];
+                  if (status == "ok")
+                    updateURL = usefultext.match(/codebase\=\"([^\"]*)\"/)[1];
                 } else {
                   var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0]
                   version = version.replace(/\<[^\<]+\>/g,'');
