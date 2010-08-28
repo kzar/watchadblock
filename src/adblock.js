@@ -89,6 +89,12 @@ function purgeElement(el, elInfo) {
 
 // Run special site-specific code.
 function run_specials(features) {
+  if (location.host.indexOf('mail.live.com') != -1) {
+    //removing the space remaining in Hotmail/WLMail
+    $(".Unmanaged .WithSkyscraper #MainContent").
+      css("margin-right", "1px");
+  }
+
   if (document.domain.match("youtube") && features.block_youtube.is_enabled) {
     // Based heavily off of AdThwart's YouTube in-video ad blocking.
     // Thanks, Tom!
