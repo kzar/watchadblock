@@ -120,6 +120,14 @@
         return xhr.responseText;
       }
 
+      if (SAFARI) {
+        // Return chrome.i18n._getL10nData() for content scripts who cannot
+        // call that function (since it loads extension files from disk.)
+        utils.get_l10n_data = function(options) {
+          return chrome.i18n._getL10nData();
+        }
+      }
+
 
       // OPTIONAL FEATURES
 
@@ -194,7 +202,7 @@
         if (!SAFARI)
           result.filtertext = _myfilters.filterset._sourceText;
         var end = new Date();
-        log("time to run: " + (end - start) + " || " + options.domain);
+        log("time to run: " + (end - start) + " ms || " + options.domain);
         return result;
       }
 
