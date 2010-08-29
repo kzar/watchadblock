@@ -141,6 +141,6 @@ extension_call('get_features_and_filters', opts, function(data) {
   block_list_via_css(data.selectors);
 
   var end = new Date();
-  time_log("adblock_start run time: " + (end - start) + " || " +
-           document.location.href);
+  time_log("adblock_start run time: " + (end - start) + " ms || " +
+           location.href);
 });

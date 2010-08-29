@@ -310,6 +310,7 @@ PatternFilter._parseRule = function(text) {
     try {
       new RegExp(result.rule); // Make sure it parses correctly
       result.isRegex = true;
+      log("Found a true regex rule - " + rule);
       return result;
     } catch(e) {
       log("Found an unparseable regex rule - " + rule);

@@ -66,8 +66,8 @@ function remove_ad_elements_by_url(first_run) {
       $(ad_ids).each(function(i, id) { purgeElement(els[id], elInfo[id]); });
 
       var end = new Date();
-      time_log("adblock_main run time: " + (end - start) + " || " +
-               document.location.href);
+      time_log("adblock_main run time: " + (end - start) + " ms || " +
+               location.href);
 
       if (first_run)
         debug_print_selector_matches();
@@ -141,7 +141,9 @@ function run_specials(features) {
           css({"font-size": "x-small", "font-style": "italic",
                "text-align": "center", "color": "black",
                "font-weight": "normal", "background-color": "white"}).
-          append("<span>No video?  Reload the page.  If this happens a lot, disable YouTube ad blocking under <a target='_new' href='" + disable_url + "'>AdBlock Options</a>.</span>");
+          append("<span>" + translate("youtubevideomessage", 
+              ["<a target='_new' href='" + disable_url + "'>" + 
+              translate("optionstitle") + "</a>"]) + "</span>");
         var closer = $("<a>", {href:"#"}).
           css({"font-style":"normal", "margin-left":"20px"}).
           text("[x]").
@@ -190,7 +192,7 @@ function adblock_begin_v2() {
     opts.is_top_frame = true;
 
   extension_call('get_features_and_filters', opts, function(data) {
-    log("==== ADBLOCKING PAGE: " + document.location.href);
+    log("==== ADBLOCKING PAGE: " + location.href);
 
     if (data.page_is_whitelisted)
       return;

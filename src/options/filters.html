@@ -14,20 +14,23 @@
 
         var seconds = Math.round(distance / 1000);
         if (seconds < 10)
-          return "updated right now";
+          return translate("updatedrightnow");
         if (seconds < 60)
-          return "updated " + seconds + " seconds ago";
+          return translate("updatedsecondsago", [seconds]);
         var minutes = Math.round(seconds / 60);
+        if (minutes == 1)
+          return translate("updatedminuteago");
         if (minutes < 60)
-          return ("updated " + minutes + " minute" + 
-                      (minutes > 1 ? "s" : "") + " ago");
+          return translate("updatedminutesago", [minutes]);
         var hours = Math.round(minutes / 60);
+        if (hours == 1)
+          return translate("updatedhourago");
         if (hours < 24)
-          return ("updated " + hours + " hour" + 
-                      (hours > 1 ? "s" : "") + " ago");
+          return translate("updatedhoursago", [hours]);
         var days = Math.round(hours / 24);
-        return ("updated " + days + " day" + 
-                      (days > 1 ? "s" : "") + " ago");
+        if (days == 1)
+          return translate("updateddayago");
+        return translate("updateddaysago", [days]);
       }
 
 
@@ -89,7 +92,8 @@
       // 'del' determines if it should be deleted too
       function unsubscribe(id, del) {
         extension_call("unsubscribe", {id:id, del:del}, function() {
-          var message = (del) ? "Removed." : "Unsubscribed.";
+          var message = (del) ? translate("removedlabel")
+                              : translate("unsubscribedlabel");
           flash("subscription_message", message);
         });
       }
@@ -105,9 +109,9 @@
         else
           url = id.substring(4); // "url:xyz"
 
-        flash("subscription_message", "Fetching... please wait.");
+        flash("subscription_message", translate("fetchinglabel"));
         var onError = function() {
-          alert("Failed to fetch this filter!");
+          alert(translate("failedtofetchfilter"));
           var myIndex = $("#tabpages").tabs("option", "selected");
           $("#tabpages").tabs("load", myIndex);
         }
@@ -121,9 +125,8 @@
             if (text[0] != '!' && 
                 text[0] != '[' &&
                 text.indexOf('(Adblock') != 0) {
-              alert("Please enter the URL of a list of filters to " +
-                    "subscribe to.");
-              flash("subscription_message", "That wasn't a list URL.");
+              alert(translate("enterurloflist"));
+              flash("subscription_message", translate("nolisturllabel"));
               return;
             }
             if (log_on_success) {
@@ -134,7 +137,7 @@
               "subscribe", 
               {id: id, text:text},
               function() {
-                flash("subscription_message", "Subscribed.");
+                flash("subscription_message", translate("subscribedlabel"));
                 if (then_reload) {
                   var myIndex = $("#tabpages").tabs("option", "selected");
                   $("#tabpages").tabs("load", myIndex);
@@ -158,17 +161,23 @@
           var sorted_list = [];
           for (var id in subscriptions) {
             var entry = subscriptions[id];
-            if (id == 'easylist' || id == 'adblock_custom')
-              entry.order = "1" + id;
+            if (id == 'adblock_custom')
+              entry.order = "1adblock_custom";
+            else if (id == 'easylist')
+              entry.order = "2easylist";
             else if (id == 'easyprivacy')
-              entry.order = "5" + id;
-            else if (entry.user_submitted) 
-              entry.order = "6" + entry.name;
+              entry.order = "5easyprivacy";
+            else if (entry.user_submitted)
+              entry.order = "6" +
+                  (translate("filter" + id) || entry.name).toLowerCase();
             else if (entry.name.indexOf(" - additional ") == 0)
-              entry.order = "3" + entry.name;
+              entry.order = "3" +
+                  (translate("filter" + id) || entry.name).toLowerCase();
             else
-              entry.order = "4" + entry.name;
+              entry.order = "4" +
+                  (translate("filter" + id) || entry.name).toLowerCase();
             entry.id = id;
+            entry.name = translate("filter" + id) || entry.name;
             sorted_list.push(entry);
           }
           sorted_list.sort(function(a,b) {
@@ -191,7 +200,7 @@
               click(checkboxlabel_clicked);
 
             var link_to_list = $("<a>", { target: "_new" }).
-              text('show').
+              text(translate('labelshow')).
               css("margin-left", "6px").
               css("font-size", "10px").
               css("display", "none").
@@ -202,7 +211,7 @@
               css("font-size", "10px").
               css("display", "none").
               attr("href", "#").
-              text("Remove from list").
+              text(translate("removefromlist")).
               addClass("remove_filter").
               click(function(event) {
                 event.preventDefault();
@@ -275,45 +284,42 @@
           1000 * 60
         );
 
+        //translation
+        localizePage();
       });
 
   </script>
 
   <div class="section">
-    <h2>Subscribe to filter lists</h2>
-    <p>
-      The defaults are great for English-speaking users in the US.
-      Others may wish to subscribe to more lists.
-    </p>
-    <p class="footnote">
-      Don't subscribe to more than you need -- every one
-      slows you down a tiny bit!  Credits and more lists can be found
-      <a href="http://adblockplus.org/en/subscriptions" target="_new">here</a>.
-    </p>
-    I will fetch updates every 5 days; you can also
-    <input type="button" id="btnUpdateNow" value="update now." />
+    <h2 i18n="filterstabtitle"></h2>
+    <p i18n="defaultsexplanation"></p>
+    <p class="footnote" i18n="filterlistlink" i18n_replacement_el="footnotelink"></p>
+    <a id="footnotelink" href="http://adblockplus.org/en/subscriptions" 
+       target="_new"></a>
+    <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>
+    <input type="button" id="btnUpdateNow" />
     <div>
       <div id="subscription_message" class="ok_message">&nbsp;</div>
       <div id="filter_subscriptions" style="padding-left:30px;">
       </div>
       <div style="padding-left:34px;">
-        Or enter a URL:
+        <span i18n="orenteraurl"></span>
         <input id="txtNewSubscriptionUrl" style="width:300px" />
-        <input type="button" id="btnNewSubscriptionUrl" value="Subscribe" />
+        <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
       </div>
     </div>
   </div>
 
   <div class="sneaky">
     <p>
-    Subscribe to all filters:
-    <input value="OK" type="button" id="btnSubscribeAll" />
+    <span i18n="subscribetoall"></span>
+    <input type="button" id="btnSubscribeAll" i18n_value="buttonok" />
     <br/>
-    Unsubscribe from all filters: 
-    <input value="OK" type="button" id="btnUnsubscribeAll" />
+    <span i18n="subscribetonone"></span>
+    <input type="button" id="btnUnsubscribeAll" i18n_value="buttonok" />
     <br/>
-    Show links to the filter lists: 
-    <input value="OK" type="button" id="btnShowLinks" />
+    <span i18n="showlinkstolists"></span> 
+    <input type="button" id="btnShowLinks" i18n_value="buttonok" />
     </p>
     <script>
       $(function() {
