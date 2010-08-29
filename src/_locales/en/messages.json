@@ -1,0 +1,608 @@
+﻿//Translation by the Chrome AdBlock programmers
+//Last updated for version 2.0.9
+
+{
+  //manifest.json
+  "description": {
+    "message": "AdBlock for Chrome!  Blocks ads all over the web.  Rated 4.5 out of 5 stars by our users!",
+    "description": "Extension description in manifest"
+  },
+
+  //multiple files
+  "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "buttonok": {//whitelister.js, options/filters.html
+    "message": "OK!",
+    "description": "OK button"
+  },
+  "shortcutenabled": {//options/blacklist.html, options/whitelist.html
+    "message": "Shortcut enabled",
+    "description": "The checkbox label for the shortcut option"
+  },
+  "buttonblockit": {//blacklistui.js, options/blacklist.html
+    "message": "Block it!",
+    "description": "Block button"
+  },
+  "buttonedit": {//blacklisterui.js, options/blacklister.html
+    "message": "Edit",
+    "description": "Edit filter manually button"
+  },
+  "optionstitle": {//adblock.js, options/index.html
+    "message": "AdBlock Options",
+    "description": "Title for the options page"
+  },
+
+  //adblock.js
+  "youtubevideomessage": {
+    "message": "No video? Reload the page. If this happens a lot, disable YouTube ad blocking under $link$.",
+    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "AdBlock Options"
+      }
+    }
+  },
+
+  //blacklistui.js
+  "sliderexplanation": {
+    "message": "Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
+    "description": "Blacklister slider page message"
+  },
+  "slidertitle": {
+    "message": "Step 1: Figure out what to block",
+    "description": "Blacklister slider page title"
+  },
+  "blacklisteroptions1": {
+    "message": "What do you think will be true about this ad every time you visit this page?",
+    "description": "Blacklister attribute chosing page message"
+  },
+  "blacklisternotsure": {
+    "message": "<b>Not sure?</b> just press 'Block it!' below.<br/><b>Want to help?</b> $link$ so everybody can benefit!",
+    "description": "Blacklister attribute chosing page message",
+    "placeholders": {
+      "link": {
+        "content": "$1Report the ad$2"
+      }
+    }
+  },
+  "blacklisterthefilter": {
+    "message": "The filter, which can be changed on the Options page:",
+    "description": "Blacklister attribute chosing page message"
+  },
+  "blacklisteroptionstitle": {
+    "message": "Last step: What makes this an ad?",
+    "description": "Blacklister options page title"
+  },
+  "blacklisternofilter": {
+    "message": "No filter specified!",
+    "description": "Warning if the user hasn't specified a filter"
+  },
+  "blacklistereditfilter": {
+    "message": "Please type the correct filter below and press OK",
+    "description": "Text if the user wants to manually edit a filter"
+  },
+  "blacklistereditinvalid": {
+    "message": "The filter is invalid!",
+    "description": "Messagebox if the manually edited filter is invalid"
+  },
+  "blacklisterblockedelement": {
+    "message": "Blocked element:",
+    "description": "Tells the user what the blocked element is on the slider page"
+  },
+  "blacklisterwarningnofilter": {
+    "message": "Warning: no filter specified!",
+    "description": "Warns the user that no filter was specified"
+  },
+  "blacklisterblocksalloftype": {
+    "message": "Be careful: this filter blocks all $elementtype$ elements on the page!",
+    "description": "Warns the user that all elements of type X will be blocked",
+    "placeholders": {
+      "elementtype": {
+        "content": "$1",
+        "example": "DIV"
+      }
+    }
+  },
+  "blacklistersinglematch": {
+    "message": "That matches <b>1</b> item on this page.",
+    "description": "Tells the user only one match was found"
+  },
+  "blacklistermatches": {
+    "message": "That matches $matchcount$ items on this page.",
+    "description": "Tells the user multiple matches were found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "blacklisterattrwillbe": {
+    "message": "$attribute$ will be $value$",
+    "description": "Checkbox label",
+    "placeholders": {
+      "attribute": {
+        "content": "$1",
+        "example": "class"
+      },
+      "value": {
+        "content": "$2",
+        "example": "AdBanner"
+      }
+    }
+  },
+  "blacklistertype": {
+    "message": "Type",
+    "description": "node name is called 'Type'"
+  },
+  "buttonlooksgood": {
+    "message": "Looks good",
+    "description": "Looks good button"
+  },
+  "buttonback": {
+    "message": "Back",
+    "description": "Back to previous wizard page button"
+  },
+
+  //clickwatcher.js
+  "findingads": {
+    "message": "Finding ads...<br/><br/><i>This'll only take a moment.</i>",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "blockanadtitle": {
+    "message": "Block an ad",
+    "description": "Title of the first two dialogs of the blacklister"
+  },
+  "clickthead": {
+    "message": "Click the ad, and I'll walk you through blocking it.",
+    "description": "When you have to click the ad to continue"
+  },
+
+  //whitelister.js
+  "whitelistertext": {
+    "message": "AdBlock won't run on domains ending in",
+    "description": "The message of the whitelister dialog"
+  },
+  "whitelistertitle": {
+    "message": "Exclude this domain?",
+    "description": "The title of the whitelister dialog"
+  },
+
+  //adreport.html
+  "adreportintro": {
+    "message": "So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!",
+    "description": "Adreport intro message"
+  },
+  "willnotreportblacklister": {
+    "message": "Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by clicking 'block it' in the blacklister wizard page!",
+    "description": "Adreport intro message"
+  },
+  "willnotreportoptions": {
+    "message": "Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Blacklister' tab of the options page!",
+    "description": "Adreport intro message"
+  },
+  "uptodatefilters": {
+    "message": "Up to date filters",
+    "description": "Adreport step 1"
+  },
+  "doesitstillappear": {
+    "message": "If you update your filters and then reload the page that contained the ad, does the ad still appear?",
+    "description": "Adreport step 1"
+  },
+  "clickupdatefiltersbutton": {
+    "message": "You can update your filters by clicking this button:",
+    "description": "Adreport step 1"
+  },
+  //<<<TO BE CONTINUED>>> but first wait until branches/issue-3106 is merged
+
+  //subscribe.html
+  "subscribingtitle": {
+    "message": "Subscribing to filter list...",
+    "description": "abp: link subscriber title"
+  },
+  "subscribingfinished": {
+    "message": "Finished!",
+    "description": "abp: link subscriber result"
+  },
+  "subscribingfailed": {
+    "message": "Failed!",
+    "description": "abp: link subscriber result"
+  },
+
+  //options/index.html
+  "optionsversion": {
+    "message": "Version $version$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.0.9"
+      }
+    }
+  },
+  "optionschangelog": {
+    "message": "changelog",
+    "description": "changelog link"
+  },
+  "donatethanks": {
+    "message": "Hooray! Thank you!",
+    "description": "Tooltip if you hover the donate image"
+  },
+  "optionsintro": {
+    "message": "Do you love AdBlock? My name's Michael. I've dropped to a less-than-full-time job in order to develop AdBlock and support my users. Please use and enjoy AdBlock, and if you can <a>make a donation</a> of any amount, I'd appreciate it <b>immensely</b> :)",
+    "description": "Intro of the options page"
+  },
+  "optionscontribute": {
+    "message": "Want to contribute code, bug reports or ad reports? We <a>need your help</a>!",
+    "description": "Intro of the options page"
+  },
+  "tabgeneral": {
+    "message": "General",
+    "description": "A tab on the options page"
+  },
+  "tabfilterlists": {
+    "message": "Filter lists",
+    "description": "A tab on the options page"
+  },
+  "tabblacklist": {
+    "message": "Blacklist",
+    "description": "A tab on the options page"
+  },
+  "tabexcluded": {
+    "message": "Excluded sites",
+    "description": "A tab on the options page"
+  },
+
+  //options/general.html
+  "generaloptions": {
+    "message": "General options",
+    "description": "Title of first tab page"
+  },
+  "blocknothideoption": {
+    "message": "Block most ads from even being downloaded, instead of just hiding them.",
+    "description": "Option on first tab page"
+  },
+  "betalabel": {
+    "message": "Beta",
+    "description": "Option on first tab page"
+  },
+  "blocknothidewarning": {
+    "message": "Note that Chrome doesn't fully support this, so a few resources might still be downloaded and hidden if you're on a fast computer.",
+    "description": "Warning for block instead of hiding option"
+  },
+  "buttonexplanation": {
+    "message": "<i>To make the button optional, we put him in a helper extension all by himself, to be installed along with AdBlock.</i><br/><br/>To add the button, click <b>Install</b> on the <a>Browser Button for AdBlock</a> page.<br/><br/>To remove the button, right click him and choose Disable.",
+    "description": "Explanation of how the button works"
+  },
+  "buttonextension": {
+    "message": "Show the AdBlock button next to the address bar",
+    "description": "Option on first tab page"
+  },
+  "googletextads": {
+    "message": "I like the text ads on Google search results; show me those.",
+    "description": "Option on first tab page"
+  },
+  "youtubeads": {
+    "message": "Block ads inside YouTube videos.",
+    "description": "Option on first tab page"
+  },
+  "debuginlogoption": {
+    "message": "Show debug statements in Console Log (which slows down AdBlock)",
+    "description": "Option on first tab page"
+  },
+  "timeinlogoption": {
+    "message": "Show timing statements in Console Log (which slows down AdBlock)",
+    "description": "Option on first tab page"
+  },
+
+  //options/filters.html
+  "updatedrightnow": {
+    "message": "updated right now",
+    "description": "Label for subscription"
+  },
+  "updatedsecondsago": {
+    "message": "updated $seconds$ seconds ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminutesago": {
+    "message": "updated $minutes$ minutes ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "minutes": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedhoursago": {
+    "message": "updated $hours$ hours ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "hours": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updateddaysago": {
+    "message": "updated $days$ days ago",
+    "description": "Label for subscription",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminuteago": {
+    "message": "updated 1 minute ago",
+    "description": "Label for subscription"
+  },
+  "updatedhourago": {
+    "message": "updated 1 hour ago",
+    "description": "Label for subscription"
+  },
+  "updateddayago": {
+    "message": "updated 1 day ago",
+    "description": "Label for subscription"
+  },
+  "removedlabel": {
+    "message": "Removed.",
+    "description": "Status label"
+  },
+  "unsubscribedlabel": {
+    "message": "Unsubscribed.",
+    "description": "Status label"
+  },
+  "fetchinglabel": {
+    "message": "Fetching... please wait.",
+    "description": "Status label"
+  },
+  "subscribedlabel": {
+    "message": "Subscribed.",
+    "description": "Status label"
+  },
+  "nolisturllabel": {
+    "message": "That wasn't a list URL.",
+    "description": "Status label"
+  },
+  "failedtofetchfilter": {
+    "message": "Failed to fetch this filter!",
+    "description": "Error messagebox"
+  },
+  "enterurloflist": {
+    "message": "Please enter the URL of a list of filters to subscribe to.",
+    "description": "Error messagebox"
+  },
+  "removefromlist": {
+    "message": "Remove from list",
+    "description": "Label to remove a custom filter"
+  },
+  "filterstabtitle": {
+    "message": "Subscribe to filter lists",
+    "description": "Title of the filter list tab"
+  },
+  "defaultsexplanation": {
+    "message": "The defaults are great for English-speaking users in the US. Others may wish to subscribe to more lists.",
+    "description": "Explanation of the filter lists"
+  },
+  "filterlistlink": {
+    "message": "Don't subscribe to more than you need -- every one slows you down a tiny bit! Credits and more lists can be found <a>here</a>.",
+    "description": "Explanation of the filter lists"
+  },
+  "updatenowmessage": {
+    "message": "I will fetch updates automatically; you can also <a>update now</a>.",
+    "description": "update filters text + button"
+  },
+  "orenteraurl": {
+    "message": "Or enter a URL:",
+    "description": "link for custom subscription"
+  },
+  "subscribebutton": {
+    "message": "Subscribe",
+    "description": "subscribe to a list button"
+  },
+  "subscribetoall": {
+    "message": "Subscribe to all filters:",
+    "description": "option on second tab page"
+  },
+  "subscribetonone": {
+    "message": "Unsubscribe from all filters:",
+    "description": "option on second tab page"
+  },
+  "showlinkstolists": {
+    "message": "Show links to the filter lists:",
+    "description": "Option on second tab page"
+  },
+  "labelshow": {
+    "message": "show",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
+  "filteradblock_custom": {
+    "message": "AdBlock custom filters (recommended)",
+    "description": "A filter list. Don't translate 'AdBlock'"
+  },
+  "filtereasylist": {
+    "message": "EasyList (recommended)",
+    "description": "A filter list. Don't translate 'EasyList'"
+  },
+  "filtereasylist_plus_bulgarian": {
+    "message": " - additional Bulgarian filters",
+    "description": "A filter list"
+  },
+  "filterdutch": {
+    "message": " - additional Dutch filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_finnish": {
+    "message": " - additional Finnish filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_french": {
+    "message": " - additional French filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_german": {
+    "message": " - additional German filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_norwegian": {
+    "message": " - additional Norwegian filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_polish": {
+    "message": " - additional Polish filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_romanian": {
+    "message": " - additional Romanian filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_vietnamese": {
+    "message": " - additional Vietnamese filters",
+    "description": "A filter list"
+  },
+  "filterchinese": {
+    "message": "Chinese filters",
+    "description": "A filter list"
+  },
+  "filterczech": {
+    "message": "Czech filters",
+    "description": "A filter list"
+  },
+  "filterdanish": {
+    "message": "Danish filters",
+    "description": "A filter list"
+  },
+  "filterhungarian": {
+    "message": "Hungarian filters",
+    "description": "A filter list"
+  },
+  "filterisraeli": {
+    "message": "Israeli filters",
+    "description": "A filter list"
+  },
+  "filteritalian": {
+    "message": "Italian filters",
+    "description": "A filter list"
+  },
+  "filterjapanese": {
+    "message": "Japanese filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plun_korean": {
+    "message": "Korean filters",
+    "description": "A filter list"
+  },
+  "filterpolish": {
+    "message": "Polish filters",
+    "description": "A filter list"
+  },
+  "filterrussian": {
+    "message": "Russian filters",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_spanish": {
+    "message": "Spanish filters",
+    "description": "A filter list"
+  },
+  "filterukranian": {
+    "message": "Ukranian filters",
+    "description": "A filter list"
+  },
+
+  //options/blacklist.html
+  "blacklisttabtitle": {
+    "message": "Block an ad that the filter lists missed",
+    "description": "Title of the third tab"
+  },
+  "blacklistshortcutmessage": {
+    "message": "<b>Shortcut:</b> Press <b>$keys$</b> (think 'Kill!') on a page to block an ad. <small>(If you don't see anything happen, try clicking on the page first.)</small>",
+    "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
+    "placeholders": {
+      "keys": {
+        "content": "Ctrl-Shift-K"
+      }
+    }
+  },
+  "addnewfilter": {
+    "message": "Add a new filter:",
+    "description": "Subtitle on the third tab"
+  },
+  "linkblockadbyrul": {
+    "message": "Block an ad by its URL",
+    "description": "Link on the third tab"
+  },
+  "linkhidesection": {
+    "message": "Hide a section of a webpage",
+    "description": "Link on the third tab"
+  },
+  "blockurlwithtext": {
+    "message": "Block URLs containing this text",
+    "description": "Message of the url-blocking area"
+  },
+  "csstomatch": {
+    "message": "CSS to match",
+    "description": "Message of the css-hiding area"
+  },
+  "blockdomain": {
+    "message": "Domain of page to apply on",
+    "description": "Message of the url and css -blocking area"
+  },
+  "manualfilteredit": {
+    "message": "Manually edit your filters:",
+    "description": "Subtitle on the third tab"
+  },
+  "filtersavewarning": {
+    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!<br/>Read the <a>filter syntax tutorial</a> to learn how to add advanced blacklist and whitelist filters.",
+    "description": "Warning when blacklisting manually"
+  },
+  "savebutton": {
+    "message": "Save",
+    "description": "Save button"
+  },
+  "savereminder": {
+    "message": "Don't forget to save!",
+    "description": "Reminder to press save"
+  },
+
+  //options/whitelist.html
+  "removelabel": {
+    "message": "Remove",
+    "description": "link to remove a excluded site"
+  },
+  "excludedsitestitle": {
+    "message": "Don't block ads on domains that end with...",
+    "description": "title of the 4th tab page"
+  },
+  "excludedsitesexample": {
+    "message": "For example, 'google.com' will stop blocking ads on google.com, mail.google.com, and www.google.com.",
+    "description": "text on the 4th tab page"
+  },
+  "whitelistshortcutmessage": {
+    "message": "<b>Shortcut:</b> Press <b>$keys$</b> (think 'Live!') on a page to not block ads on that domain.",
+    "description": "Note: 'Live' must be translated into another word that starts with a 'L'. Otherwise, don't translate it!",
+    "placeholders": {
+      "keys": {
+        "content": "Ctrl-Shift-L"
+      }
+    }
+  },
+  "addbutton": {
+    "message": "Add",
+    "description": "add button"
+  },
+  "removeallfromlist": {
+    "message": "Remove all items from the list:",
+    "description": "option on 4th tab page"
+  }
+}
