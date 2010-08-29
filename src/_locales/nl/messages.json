@@ -170,8 +170,14 @@
 
   //whitelister.js
   "whitelistertext": {
-    "message": "AdBlock zal niets blokkeren op domein",
-    "description": "The message of the whitelister dialog"
+    "message": "AdBlock zal niets blokkeren op domein<br/>$domain$.",
+    "description": "The message of the whitelister dialog",
+    "placeholders": {
+      "domain": {
+        "content": "'<i>$1</i>'",
+        "example": "'<i>live.msn.com</i>'"
+      }
+    }
   },
   "whitelistertitle": {
     "message": "Dit domein uitsluiten?",

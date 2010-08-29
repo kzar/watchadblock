@@ -163,8 +163,14 @@
 
   //whitelister.js
   "whitelistertext": {
-    "message": "AdBlock won't run on domains ending in",
-    "description": "The message of the whitelister dialog"
+    "message": "AdBlock won't run on domains ending in<br/>$domain$.",
+    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
+    "placeholders": {
+      "domain": {
+        "content": "'<i>$1</i>'",
+        "example": "'<i>live.msn.com</i>'"
+      }
+    }
   },
   "whitelistertitle": {
     "message": "Exclude this domain?",

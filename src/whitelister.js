@@ -9,22 +9,22 @@ function verify_whitelist() {
   load_jquery_ui(function() {
     stop_checking_for_whitelist_keypress();
 
+    var btns = {};
+    btns[translate("buttoncancel")] = function() { page.dialog('close');}
+    btns[translate("buttonok")] = 
+        function() {
+          extension_call('add_to_whitelist', {domain:domain}, function() {
+            document.location.reload();
+          });
+        }
+
     var page = $("<div>").
-      html("<div id='adblockslider'></div>" + 
-        "AdBlock won't run on domains ending in<br/>" +
-        "'<i id='adblockdomainname'>" + domain + "</i>'.").
+      html("<div id='adblockslider'></div>" + translate("whitelistertext", [ domain ])).
       dialog({
-        title: "Exclude this domain?",
+        title: translate("whitelistertitle"),
         width: "300px",
         minHeight: 50,
-        buttons: {
-          "Cancel": function() { page.dialog('close');},
-          "OK!": function() {
-            extension_call('add_to_whitelist', {domain:domain}, function() {
-              document.location.reload();
-            });
-          }
-        },
+        buttons: btns,
         close: function() {
           whitelister_init();
           page.remove();
@@ -32,6 +32,11 @@ function verify_whitelist() {
       });
 
     var domainparts = domain.split('.');
+    if (domainparts[domainparts.length - 2] == "co") {
+      var newTLD = domainparts[domainparts.length - 2] + "." +
+          domainparts[domainparts.length - 1];
+      domainparts.splice(domainparts.length - 2, 2, newTLD);
+    }
     $("#adblockslider", page).
       css('margin', 10).
       css('display', (domainparts.length == 2) ? "none" : "block").
@@ -43,8 +48,7 @@ function verify_whitelist() {
           for (var i = ui.value; i<=(domainparts.length - 2); i++) 
             domain += domainparts[i] + '.';
           domain += domainparts[domainparts.length - 1];
-          $("#adblockdomainname", page).
-            text(domain);
+          $("i", page).text(domain);
         }
       });
   });
