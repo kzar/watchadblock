@@ -1,40 +1,34 @@
-﻿//Translation by John Rey
-//Last updated for version 2.0.24
-
-{
-  //manifest.json
+﻿{
   "description": {
     "message": "AdBlock für Chrome!  Blockt Werbung im ganzen Internet.  Bewertung der Nutzer: 4,5 von 5 Sternen!",
     "description": "Extension description in manifest"
   },
 
-  //multiple files
-  "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
+  "buttoncancel": {
     "message": "Abbrechen",
     "description": "Cancel button"
   },
-  "buttonok": {//whitelister.js, options/filters.html
+  "buttonok": {
     "message": "OK!",
     "description": "OK button"
   },
-  "shortcutenabled": {//options/blacklist.html, options/whitelist.html
+  "shortcutenabled": {
     "message": "Tastenkürzel aktivieren",
     "description": "The checkbox label for the shortcut option"
   },
-  "buttonblockit": {//blacklistui.js, options/blacklist.html
+  "buttonblockit": {
     "message": "Blocken!",
     "description": "Block button"
   },
-  "buttonedit": {//blacklisterui.js, options/blacklister.html
+  "buttonedit": {
     "message": "Bearbeiten",
     "description": "Edit filter manually button"
   },
-  "optionstitle": {//adblock.js, options/index.html
+  "optionstitle": {
     "message": "AdBlock Einstellungen",
     "description": "Title for the options page"
   },
 
-  //adblock.js
   "youtubevideomessage": {
     "message": "Kein Video? Aktualisieren Sie die Seite. Falls dies öfters passiert, deaktivieren Sie das Blocken von YouTube-Werbung in den $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -46,7 +40,6 @@
     }
   },
 
-  //blacklistui.js
   "sliderexplanation": {
     "message": "Verschieben Sie den Regler bis die Werbung vollständig geblockt wird und der Teil der Seite gut aussieht.",
     "description": "Blacklister slider page message"
@@ -142,7 +135,6 @@
     "description": "Back to previous wizard page button"
   },
 
-  //clickwatcher.js
   "findingads": {
     "message": "Suche Werbung...<br/><br/><i>Dies kann einen Moment dauern.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
@@ -156,7 +148,6 @@
     "description": "When you have to click the ad to continue"
   },
 
-  //whitelister.js
   "whitelistertext": {
     "message": "AdBlock wird nichts blocken auf Seiten die enden auf<br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
@@ -172,7 +163,6 @@
     "description": "The title of the whitelister dialog"
   },
 
-  //adreport.html
   "adreportintro": {
     "message": "Sie haben Werbung auf einer Website gefunden? Ich werde Ihnen dabei helfen den richtigen Ort zufinden, um diese Werbung zu melden!",
     "description": "Adreport intro message"
@@ -197,9 +187,7 @@
     "message": "Sie können Ihre Filter updaten, indem Sie auf diesen Button klicken:",
     "description": "Adreport step 1"
   },
-  //<<<TO BE CONTINUED>>> but first wait until branches/issue-3106 is merged
 
-  //subscribe.html
   "subscribingtitle": {
     "message": "Filterliste abonnieren...",
     "description": "abp: link subscriber title"
@@ -213,7 +201,6 @@
     "description": "abp: link subscriber result"
   },
 
-  //options/index.html
   "optionsversion": {
     "message": "Version $version$",
     "description": "Version number",
@@ -253,7 +240,6 @@
     "description": "A tab on the options page"
   },
 
-  //options/general.html
   "generaloptions": {
     "message": "Allgemeine Einstellungen",
     "description": "Title of first tab page"
@@ -295,7 +281,6 @@
     "description": "Option on first tab page"
   },
 
-  //options/filters.html
   "updatedrightnow": {
     "message": "gerade geupdatet",
     "description": "Label for subscription"
@@ -517,7 +502,6 @@
     "description": "A filter list"
   },
 
-  //options/blacklist.html
   "blacklisttabtitle": {
     "message": "Werbung blocken, die nicht vom Filter geblockt wird...",
     "description": "Title of the third tab"
@@ -572,7 +556,6 @@
     "description": "Reminder to press save"
   },
 
-  //options/whitelist.html
   "removelabel": {
     "message": "Entfernen",
     "description": "link to remove a excluded site"

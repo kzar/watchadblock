@@ -1,47 +1,34 @@
-﻿//Translation by Famlam
-//Contact via the issue tracker
-//Last updated for version 2.0.20
-
-//TODO:
-//adreport.html (because: not possible yet)
-//browserbutton (because: not possible yet)
-//strings added after branch was created
-
-
-{
-  //manifest.json
+﻿{
   "description": {
     "message": "AdBlock voor Chrome!  Blokkeert advertenties op het internet.  Beoordeeld met 4,5 van de 5 sterren door de gebruikers!",
     "description": "Extension description in manifest"
   },
 
-  //multiple files
-  "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
+  "buttoncancel": {
     "message": "Annuleren",
     "description": "Cancel button"
   },
-  "buttonok": {//whitelister.js, options/filters.html
+  "buttonok": {
     "message": "OK!",
     "description": "OK button"
   },
-  "shortcutenabled": {//options/blacklist.html, options/whitelist.html
+  "shortcutenabled": {
     "message": "ingeschakeld",
     "description": "The checkbox label for the shortcut option"
   },
-  "buttonblockit": {//blacklistui.js, options/blacklist.html
+  "buttonblockit": {
     "message": "Blokkeer!",
     "description": "Block button"
   },
-  "buttonedit": {//blacklisterui.js, options/blacklister.html
+  "buttonedit": {
     "message": "Bewerken",
     "description": "Edit filter manually button"
   },
-  "optionstitle": {//adblock.js, options/index.html
+  "optionstitle": {
     "message": "AdBlock Opties",
     "description": "Title for the options page"
   },
 
-  //adblock.js
   "youtubevideomessage": {
     "message": "Geen video? Herlaad de pagina. Als dit vaker gebeurt, schakel Blokkeer YouTube video-advertenties in $link$ uit.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -53,7 +40,6 @@
     }
   },
 
-  //blacklistui.js
   "sliderexplanation": {
     "message": "Verplaats de schuifbalk tot de advertentie verdwenen is, en het geblokkeerde element bruikbaar lijkt.",
     "description": "Blacklister slider page message"
@@ -68,7 +54,7 @@
   },
   "blacklisternotsure": {
     "message": "<b>Niet zeker?</b> klik onderaan gewoon op 'Blokkeer!'.",
-    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
     "message": "Het filter, dat veranderd kan worden op de optiespagina:",
@@ -149,7 +135,6 @@
     "description": "Back to previous wizard page button"
   },
 
-  //clickwatcher.js
   "findingads": {
     "message": "Advertenties zoeken...<br/><br/><i>Dit duurt maar eventjes.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
@@ -163,7 +148,6 @@
     "description": "When you have to click the ad to continue"
   },
 
-  //whitelister.js
   "whitelistertext": {
     "message": "AdBlock zal niets blokkeren op domein<br/>$domain$.",
     "description": "The message of the whitelister dialog",
@@ -179,7 +163,6 @@
     "description": "The title of the whitelister dialog"
   },
 
-  //subscribe.html
   "subscribingtitle": {
     "message": "Aanmelden bij een lijst met filters...",
     "description": "abp: link subscriber title"
@@ -193,7 +176,6 @@
     "description": "abp: link subscriber result"
   },
 
-  //options/index.html
   "optionsversion": {
     "message": "Versie $version$",
     "description": "Version number",
@@ -233,7 +215,6 @@
     "description": "A tab on the options page"
   },
 
-  //options/general.html
   "generaloptions": {
     "message": "Algemene opties",
     "description": "Title of first tab page"
@@ -275,7 +256,6 @@
     "description": "Option on first tab page"
   },
 
-  //options/filters.html
   "updatedrightnow": {
     "message": "net bijgewerkt",
     "description": "Label for subscription"
@@ -445,7 +425,7 @@
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": "- Russische uitbreiding",
+    "message": " - Russische uitbreiding",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
@@ -497,7 +477,6 @@
     "description": "A filter list"
   },
 
-  //options/blacklist.html
   "blacklisttabtitle": {
     "message": "Blokkeer een advertentie die de filters gemist hebben",
     "description": "Title of the third tab"
@@ -552,7 +531,6 @@
     "description": "Reminder to press save"
   },
 
-  //options/whitelist.html
   "removelabel": {
     "message": "Verwijderen",
     "description": "link to remove a excluded site"

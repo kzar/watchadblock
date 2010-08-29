@@ -1,40 +1,34 @@
-﻿//Translation by the Chrome AdBlock programmers
-//Last updated for version 2.0.9
-
-{
-  //manifest.json
+﻿{
   "description": {
     "message": "AdBlock for Chrome!  Blocks ads all over the web.  Rated 4.5 out of 5 stars by our users!",
     "description": "Extension description in manifest"
   },
 
-  //multiple files
-  "buttoncancel": {//blacklistui.js, clickwatcher.js, whitelister.js
+  "buttoncancel": {
     "message": "Cancel",
     "description": "Cancel button"
   },
-  "buttonok": {//whitelister.js, options/filters.html
+  "buttonok": {
     "message": "OK!",
     "description": "OK button"
   },
-  "shortcutenabled": {//options/blacklist.html, options/whitelist.html
+  "shortcutenabled": {
     "message": "Shortcut enabled",
     "description": "The checkbox label for the shortcut option"
   },
-  "buttonblockit": {//blacklistui.js, options/blacklist.html
+  "buttonblockit": {
     "message": "Block it!",
     "description": "Block button"
   },
-  "buttonedit": {//blacklisterui.js, options/blacklister.html
+  "buttonedit": {
     "message": "Edit",
     "description": "Edit filter manually button"
   },
-  "optionstitle": {//adblock.js, options/index.html
+  "optionstitle": {
     "message": "AdBlock Options",
     "description": "Title for the options page"
   },
 
-  //adblock.js
   "youtubevideomessage": {
     "message": "No video? Reload the page. If this happens a lot, disable YouTube ad blocking under $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -46,7 +40,6 @@
     }
   },
 
-  //blacklistui.js
   "sliderexplanation": {
     "message": "Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
     "description": "Blacklister slider page message"
@@ -61,7 +54,7 @@
   },
   "blacklisternotsure": {
     "message": "<b>Not sure?</b> just press 'Block it!' below.",
-    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
     "message": "The filter, which can be changed on the Options page:",
@@ -142,7 +135,6 @@
     "description": "Back to previous wizard page button"
   },
 
-  //clickwatcher.js
   "findingads": {
     "message": "Finding ads...<br/><br/><i>This'll only take a moment.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
@@ -156,7 +148,6 @@
     "description": "When you have to click the ad to continue"
   },
 
-  //whitelister.js
   "whitelistertext": {
     "message": "AdBlock won't run on domains ending in<br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
@@ -172,7 +163,6 @@
     "description": "The title of the whitelister dialog"
   },
 
-  //adreport.html
   "adreportintro": {
     "message": "So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!",
     "description": "Adreport intro message"
@@ -197,9 +187,7 @@
     "message": "You can update your filters by clicking this button:",
     "description": "Adreport step 1"
   },
-  //<<<TO BE CONTINUED>>> but first wait until branches/issue-3106 is merged
 
-  //subscribe.html
   "subscribingtitle": {
     "message": "Subscribing to filter list...",
     "description": "abp: link subscriber title"
@@ -213,7 +201,6 @@
     "description": "abp: link subscriber result"
   },
 
-  //options/index.html
   "optionsversion": {
     "message": "Version $version$",
     "description": "Version number",
@@ -253,7 +240,6 @@
     "description": "A tab on the options page"
   },
 
-  //options/general.html
   "generaloptions": {
     "message": "General options",
     "description": "Title of first tab page"
@@ -295,7 +281,6 @@
     "description": "Option on first tab page"
   },
 
-  //options/filters.html
   "updatedrightnow": {
     "message": "updated right now",
     "description": "Label for subscription"
@@ -465,7 +450,7 @@
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": "- additional Russian filters",
+    "message": " - additional Russian filters",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
@@ -517,7 +502,6 @@
     "description": "A filter list"
   },
 
-  //options/blacklist.html
   "blacklisttabtitle": {
     "message": "Block an ad that the filter lists missed",
     "description": "Title of the third tab"
@@ -580,7 +564,6 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  //options/whitelist.html
   "removelabel": {
     "message": "Remove",
     "description": "link to remove a excluded site"
