@@ -70,7 +70,7 @@
   },
   "blacklistereditfilter": {
     "message": "Please type the correct filter below and press OK",
-    "description": "Text if the user wants to manually edit a filter"
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid": {
     "message": "The filter is invalid!",
@@ -161,6 +161,10 @@
   "whitelistertitle": {
     "message": "Exclude this domain?",
     "description": "The title of the whitelister dialog"
+  },
+  "buttonexclude": {
+    "message": "Exclude",
+    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
 
   "adreportintro": {
@@ -592,5 +596,227 @@
   "removeallfromlist": {
     "message": "Remove all items from the list:",
     "description": "option on 4th tab page"
+  },
+  "adblockreportinganad": {
+    "message": "AdBlock - Reporting an ad",
+    "description": "title of ad report page"
+  },
+  "adreport1": {
+    "message": "So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!<br/> Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Blacklist' tab of the options page!",
+    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
+  },
+  "updateyourlists": {
+    "message": "Make sure your filter lists are up to date",
+    "description": "instruction on ad report page"
+  },
+  "clickupdatefilters": {
+    "message": "Click this: <a>Update my filters!</a>",
+    "description": "instruction on ad report page"
+  },
+  "reloadadpage": {
+    "message": "Reload the page with the ad.",
+    "description": "instruction on ad report page"
+  },
+  "adstillappear": {
+    "message": "Does the ad still appear?",
+    "description": "question on ad reporting page"
+  },
+  "yes": {
+    "message": "Yes",
+    "description": "A positive response to a question"
+  },
+  "no": {
+    "message": "No",
+    "description": "A negative response to a question"
+  },
+  "adalreadyblocked": {
+    "message": "You don't have to do anything as the ad is already blocked",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "correctfilters": {
+    "message": "Correct filters",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "reallyclearlist": {
+    "message": "Are you sure you would like to clear this list?",
+    "description": "confirmation of clearing a list of iteams"
+  },
+  "pagelanguagecheck": {
+    "message": "In what language is that page written?",
+    "description": "question on ad report page"
+  },
+  "lang_english": {
+    "message": "English",
+    "description": "language"
+  },
+  "lang_bulgarian": {
+    "message": "Bulgarian",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "Chinese",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "Czech",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "Danish",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "Dutch",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "Finnish",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "French",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "German",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "Hungarian",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "Israeli",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "Italian",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "Japanese",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "Korean",
+    "description": "language"
+  },
+  "lang_norwegian": {
+    "message": "Norwegian",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "Polish",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "Romanian",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "Russian",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "Spanish",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "Ukranian",
+    "description": "language"
+  },
+  "lang_vietnamese": {
+    "message": "Vietnamese",
+    "description": "language"
+  },
+  "other": {
+    "message": "Other",
+    "description": "multiple choice option"
+  },
+  "nodefaultfilter": {
+    "message": "We don't have a default filter list for that language.<br/>Please try to find a suitable list that supports this language $link$ or block this ad for yourself on the Blacklist page.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+    "placeholders": {
+      "link": {
+        "content": "$1here$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "retryaftersubscribe": {
+    "message": "Subscribe to this filter list, then try again: $list_title$",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "checkinfirefox": {
+    "message": "Check in Firefox",
+    "description": "tell a user to see if a reported ad also appears in firefox"
+  },
+  "checkinfirefox1": {
+    "message": "Install Firefox if you don't have it.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox2": {
+    "message": "Install Adblock Plus for Firefox if you don't have it.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox3": {
+    "message": "In Firefox, subscribe to the same filter lists as you have here (except AdBlock Custom filters).",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox4": {
+    "message": "In Firefox, load the page with the ad.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox5": {
+    "message": "Does the ad appear in Firefox?",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "refusetocheck": {
+    "message": "I don't want to check this",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reportfilterlistproblem": {
+    "message": "This is a filter list problem. Report it here: $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reporttous": {
+    "message": "You can report the ad to us $in_the_issue_tracker_link$. (We are already aware that we can't block ads in most videos; we're waiting on support in WebKit.)",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
+    "placeholders": {
+      "in_the_issue_tracker_link": {
+        "content": "$1in the issue tracker$2",
+        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+      }
+    }
+  },
+  "fixityourself": {
+    "message": "OK, you can still block this ad for yourself on the Options page. Thanks!",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "updatefromoldversion": {
+    "message": "You are using an old version of AdBlock. Please first $updatelink$ to the newest version of AdBlock",
+    "description": "ad report page instruction",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1update$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+      }
+    }
+  },
+  "cantundo": {
+    "message": "This action cannot be undone!",
+    "description": "Warning a user before confirming an action"
   }
 }

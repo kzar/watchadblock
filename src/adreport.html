@@ -6,7 +6,7 @@
 -->
 <html>
   <head>
-    <title>AdBlock - Reporting an ad</title>
+    <title i18n="adblockreportinganad"></title>
     <link rel="stylesheet" href="options/options.css" />
     <script src="port.js" type="text/javascript"></script>
     <script src="jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
@@ -40,6 +40,10 @@
       }
     </style>
     <script type="text/javascript">
+      $(function() {
+        localizePage();
+      });
+
       //fetching the options...
       var options = [];
       var search = location.search.substring(1).split('&');
@@ -130,27 +134,22 @@
 
 
     <!--STEP 0-->
-    <div style="padding-left:5px; margin-bottom:20px">
-      So you just found an ad on a web page? Well, I'll help you to find the
-      correct place to report it!<br/>
-      Remember: reporting ads is voluntary. If you don't wish to do this you
-      can just close this window and block it only for yourself by 
-      adding its filter in the 'Blacklister' tab of the options page!
-    </div>
+    <div style="padding-left:5px; margin-bottom:20px" i18n="adreport1"></div>
 
     <!--STEP 1-->
     <div class="section" id="step1DIV" style="display:block;">
-      <h2>Make sure your filter lists are up to date</h2>
+      <h2 i18n="updateyourlists"></h2>
       <ol>
-        <li>Click this button: <input type="button" value="Update my filters!" id="UpdateFilters" />
-        <li>Reload the page with the ad.
+        <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters">
+        <li i18n="reloadadpage">
       </ol>
-      Does the ad still appear?<br/>
+      <input type="button" value="Update my filters!" id="UpdateFilters" />
+      <span i18n="adstillappear"></span><br/>
       <div id="step1" class="form">
         <input type="radio" id="step1_yes" name="step1"/>
-        <span class="optionDescription">Yes</span>
+        <span class="optionDescription" i18n="yes"></span>
         <input type="radio" id="step1_no" name="step1" />
-        <span class="optionDescription">No</span>
+        <span class="optionDescription" i18n="no"></span>
       </div>
     </div>
     <script type="text/javascript">
@@ -161,12 +160,11 @@
       });
       //if the user clicks a radio button
       $("#step1_no").click(function() {
-        $("#step1").html("<span class='answer'>No</span>");
-        $("#whattodo").text(
-                 "You don't have to do anything as the ad is already blocked");
+        $("#step1").html("<span class='answer'>" + translate("no") + "</span>");
+        $("#whattodo").text(translate("adalreadyblocked"));
       });
       $("#step1_yes").click(function() {
-        $("#step1").html("<span class='answer'>Yes</span>");
+        $("#step1").html("<span class='answer'>" + translate("yes") + "</span>");
         $("#step2DIV").css("display", "block");
       });
     </script>
@@ -174,33 +172,33 @@
     
     <!--STEP 2-->
     <div class="section" id="step2DIV">
-      <h2>Correct filters</h2>
-      In what language is that page written?
+      <h2 i18n="correctfilters"></h2>
+      <span i18n="pagelanguagecheck"></span>
       <div id="step2" class="form">
         <select id="step2_lang">
           <option disabled="disabled"></option>
-          <option value="easylist;http://forums.lanik.us/">English</option>
-          <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org">Bulgarian</option>
-          <option value="chinese;http://code.google.com/p/adblock-chinalist/issues/list">Chinese</option>
-          <option value="czech;">Czech</option>
-          <option value="danish;mailto:henrik at schack.dk">Danish</option>
-          <option value="easylist;dutch;http://code.google.com/p/dutchadblockfilters/issues/list">Dutch</option>
-          <option value="easylist;easylist_plus_finnish;http://www.wiltteri.net/?page_id=157/wiltteri-lista/">Finnish</option>
-          <option value="easylist;easylist_plus_french;http://forums.lanik.us/viewforum.php?f=91">French</option>
-          <option value="easylist;easylist_plus_german;http://forums.lanik.us/viewforum.php?f=90">German</option>
-          <option value="hungarian;mailto:pete at teamlupus.hu">Hungarian</option>
-          <option value="israeli;http://code.google.com/p/israellist/issues/list">Israeli</option>
-          <option value="italian;mailto:giovanni at gfsolone.com">Italian</option>
-          <option value="japanese;mailto:mp3geek at gmail.com">Japanese</option>
-          <option value="easylist_plun_korean;http://corset.tistory.com/guestbook">Korean</option>
-          <option value="easylist;easylist_plus_norwegian;mailto:mlan76 at gmail.com">Norwegian</option>
-          <option value="easylist;easylist_plus_polish;polish;mailto:admin at adblocklist.org">Polish</option>
-          <option value="easylist;easylist_plus_romanian;mailto:menetz at gmail.com">Romanian</option>
-          <option value="russian;http://forum.mozilla-russia.org/viewtopic.php?id=3679">Russian</option>
-          <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com">Spanish</option>
-          <option value="ukranian;mailto:adblock.ua at gmail.com">Ukranian</option>
-          <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list">Vietnamese</option>
-          <option value="">Other</option>
+          <option value="easylist;http://forums.lanik.us/" i18n="lang_english"></option>
+          <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org" i18n="lang_bulgarian"></option>
+          <option value="chinese;http://code.google.com/p/adblock-chinalist/issues/list" i18n="lang_chinese"></option>
+          <option value="czech;" i18n="lang_czech"></option>
+          <option value="danish;mailto:henrik at schack.dk" i18n="lang_danish"></option>
+          <option value="easylist;dutch;http://code.google.com/p/dutchadblockfilters/issues/list" i18n="lang_dutch"></option>
+          <option value="easylist;easylist_plus_finnish;http://www.wiltteri.net/?page_id=157/wiltteri-lista/" i18n="lang_finnish"></option>
+          <option value="easylist;easylist_plus_french;http://forums.lanik.us/viewforum.php?f=91" i18n="lang_french"></option>
+          <option value="easylist;easylist_plus_german;http://forums.lanik.us/viewforum.php?f=90" i18n="lang_german"></option>
+          <option value="hungarian;mailto:pete at teamlupus.hu" i18n="lang_hungarian"></option>
+          <option value="israeli;http://code.google.com/p/israellist/issues/list" i18n="lang_israeli"></option>
+          <option value="italian;mailto:giovanni at gfsolone.com" i18n="lang_italian"></option>
+          <option value="japanese;mailto:mp3geek at gmail.com" i18n="lang_japanese"></option>
+          <option value="easylist_plun_korean;http://corset.tistory.com/guestbook" i18n="lang_korean"></option>
+          <option value="easylist;easylist_plus_norwegian;mailto:mlan76 at gmail.com" i18n="lang_norwegian"></option>
+          <option value="easylist;easylist_plus_polish;polish;mailto:admin at adblocklist.org" i18n="lang_polish"></option>
+          <option value="easylist;easylist_plus_romanian;mailto:menetz at gmail.com" i18n="lang_romanian"></option>
+          <option value="russian;http://forum.mozilla-russia.org/viewtopic.php?id=3679" i18n="lang_russian"></option>
+          <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com" i18n="lang_spanish"></option>
+          <option value="ukranian;mailto:adblock.ua at gmail.com" i18n="lang_ukranian"></option>
+          <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list" i18n="lang_vietnamese"></option>
+          <option value="" i18n="other"></option>
         </select>
       </div>
     </div>
@@ -210,20 +208,16 @@
       $("#step2_lang").change(function() {
         var selected = $("#step2_lang option:selected");
         $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
-        if (selected.text() == 'Other') {
-          $("#whattodo").html(
-            "We don't have a default filter list for that language.<br/>" +
-            "Please try to find a suitable list that supports this language " +
-            "<a href='http://adblockplus.org/en/subscriptions'>here</a> or " +
-            "block this ad for yourself on the Options page.");
+        if (selected.text() == translate("other")) {
+          $("#whattodo").html(translate("nodefaultfilter", 
+                                        ["<a href='http://adblockplus.org/en/subscriptions'>", "</a>"]));
           return;
         } else {
           var required_lists = selected.attr('value').split(';');
           for (var i=0; i < required_lists.length - 1; i++) {
             if (unsubscribed_default_filters[required_lists[i]]) {
-              $("#whattodo").text(
-                    "Subscribe to this filter list, then try again: " +
-                    unsubscribed_default_filters[required_lists[i]].name);
+              $("#whattodo").text(translate("retryaftersubscribe",
+                    unsubscribed_default_filters[required_lists[i]].name));
               return;
             }
           }
@@ -236,41 +230,41 @@
     
     <!--STEP 3-->
     <div class="section" id="step3DIV">
-      <h2>Check in Firefox</h2>
+      <h2 i18n="checkinfirefox"></h2>
       <ol>
-        <li>Install Firefox if you don't have it.
-        <li>Install Adblock Plus for Firefox if you don't have it.
-        <li>In Firefox, subscribe to the same filter lists as you have here (except AdBlock Custom filters).
-        <li>In Firefox, load the page with the ad.
+        <li i18n="checkinfirefox1">
+        <li i18n="checkinfirefox2">
+        <li i18n="checkinfirefox3">
+        <li i18n="checkinfirefox4">
       </ol>
-      Does the ad appear in Firefox?
+      <span i18n="checkinfirefox5"></span>
       <div class="form" id="step3">
         <input type="radio" id="step3_yes" name="step3"/>
-        <span class="optionDescription">Yes</span>
+        <span class="optionDescription" i18n="yes"></span>
         <input type="radio" id="step3_no" name="step3" />
-        <span class="optionDescription">No</span>
+        <span class="optionDescription" i18n="no"></span>
         <input type="radio" id="step3_wontcheck" name="step3" />
-        <span class="optionDescription">I don't want to check this</span>
+        <span class="optionDescription" i18n="refusetocheck"></span>
       </div>
     </div>
     <script type="text/javascript">
       //If the user clicks a radio button
       $("#step3_yes").click(function() {
-        $("#step3").html("<span class='answer'>Yes</span>");
+        $("#step3").html("<span class='answer'>" + translate("yes") + "</span>");
         if (contact.indexOf('mailto:') == 0)
           contact = contact.replace(" at ", "@");
-        $("#whattodo").html("This is a filter list problem. Report it here: " +
-          "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>");
+        var reportLink = "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>";
+        $("#whattodo").html(translate("reportfilterlistproblem", reportLink));
       });
       $("#step3_no").click(function() {
-        $("#step3").html("<span class='answer'>No</span>");
-        $("#whattodo").html("You can report the ad to us <a href='" +
-          generateReportURL() + "'>in the issue tracker</a>. (We are already" +
-          " aware that we can't block ads in most videos; we're waiting on support in WebKit.)");
+        $("#step3").html("<span class='answer'>" + translate("no") + "</span>");
+        var reportLinkOpen = "<a href='" + generateReportURL() + "'>";
+        var reportLinkClose = "</a>";
+        $("#whattodo").html(translate("reporttous", [reportLinkOpen, reportLinkClose]));
       });
       $("#step3_wontcheck").click(function() {
-        $("#step3").html("<span class='answer'>I don't want to check this</span>");
-        $("#whattodo").html("OK, you can still block this ad for yourself on the Options page. Thanks!");
+        $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
+        $("#whattodo").html(translate("fixityourself"));
       });
     </script>
     
@@ -317,9 +311,7 @@
                 }
                 //new version available
                 if (updateURL) {
-                  $("#whattodo").html(
-                      "You are using an old version of AdBlock. Please" +
-                      " first <a href='" + updateURL + "'>update</a> to the newest version of AdBlock");
+                  $("#whattodo").html(translate("updatefromoldversion", ["<a href='" + updateURL + "'>", "</a>"]));
                   $("div[id^='step'][id$='DIV']").css('display', 'none');
                 }
               }
