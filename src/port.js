@@ -207,6 +207,47 @@ if (SAFARI) {
         return JSON.parse(text);
       }
 
+      // Insert substitution args into a localized string.
+      function parseString(msgData, args) {
+        // If no substitution, just turn $$ into $ and short-circuit.
+        if (msgData.placeholders == undefined && args == undefined)
+          return msgData.message.replace(/\$\$/g, '$');
+
+        // Substitute a regex while understanding that $$ should be untouched
+        function safesub(txt, re, replacement) {
+          var dollaRegex = /\$\$/g, dollaSub = "~~~I18N~~:";
+          txt = txt.replace(dollaRegex, dollaSub);
+          txt = txt.replace(re, replacement);
+          // Put back in "$$" ("$$$$" somehow escapes down to "$$")
+          var undollaRegex = /~~~I18N~~:/g, undollaSub = "$$$$";
+          txt = txt.replace(undollaRegex, undollaSub);
+          return txt;
+        }
+
+        var $n_re = /\$([1-9])/g;
+        var $n_subber = function(_, num) { return args[num - 1]; };
+
+        var placeholders = {};
+        // Fill in $N in placeholders
+        for (var name in msgData.placeholders) {
+          var content = msgData.placeholders[name].content;
+          placeholders[name.toLowerCase()] = safesub(content, $n_re, $n_subber);
+        }
+        // Fill in $N in message
+        var message = safesub(msgData.message, $n_re, $n_subber);
+        // Fill in $Place_Holder1$ in message
+        message = safesub(message, /\$([a-zA-Z0-9_]+?)\$/g, function(full, name) {
+          var lowered = name.toLowerCase();
+          if (lowered in placeholders)
+            return placeholders[lowered];
+          return full; // e.g. '$FoO$' instead of 'foo'
+        });
+        // Replace $$ with $
+        message = message.replace(/\$\$/g, '$');
+
+        return message;
+      }
+
       var l10nData = undefined;
 
       var theI18nObject = {
@@ -271,12 +312,11 @@ if (SAFARI) {
             // scripts are supposed to have set l10nData already
             chrome.i18n._setL10nData(chrome.i18n._getL10nData());
           }
-          // TODO: handle args list.
           for (var i = 0; i < l10nData.locales.length; i++) {
             var map = l10nData.messages[l10nData.locales[i]];
             // We must have the locale, and the locale must have the message
             if (map && messageID in map)
-              return map[messageID].message;
+              return parseString(map[messageID], args);
           }
           return "";
         }
