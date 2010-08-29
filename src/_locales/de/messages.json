@@ -57,20 +57,15 @@
   },
   "blacklisteroptions1": {
     "message": "Was glauben Sie, trifft jedesmal zu, wenn sie diese Seite besuchen?",
-    "description": "Blacklister attribute chosing page message"
+    "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Nicht sicher?</b> Drücken Sie einfach 'Blocken!' unterhalb.<br/><b>Wollen Sie helfen?</b> $link$, so hat jeder etwas davon!",
-    "description": "Blacklister attribute chosing page message",
-    "placeholders": {
-      "link": {
-        "content": "$1Melden Sie die Werbung$2"
-      }
-    }
+    "message": "<b>Nicht sicher?</b> Drücken Sie einfach 'Blocken!' unterhalb.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
     "message": "Filter (kann in den Einstellungen verändert werden):",
-    "description": "Blacklister attribute chosing page message"
+    "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
     "message": "Letzer Schritt: Was macht dies zu Werbung?",
@@ -163,8 +158,14 @@
 
   //whitelister.js
   "whitelistertext": {
-    "message": "AdBlock wird nichts blocken auf Seiten die enden auf",
-    "description": "The message of the whitelister dialog"
+    "message": "AdBlock wird nichts blocken auf Seiten die enden auf<br/>$domain$.",
+    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
+    "placeholders": {
+      "domain": {
+        "content": "'<i>$1</i>'",
+        "example": "'<i>live.msn.com</i>'"
+      }
+    }
   },
   "whitelistertitle": {
     "message": "Diese Seite ausschliessen?",
@@ -233,10 +234,6 @@
   },
   "optionsintro": {
     "message": "Sie lieben AdBlock?  Mein Name ist Michael.  Ich habe zu einem Teilzeitjob gewechselt um AdBlock zu entwickeln und um den Nutzern zu helfen.  Bitte nutzen Sie AdBlock und, wenn Sie wollen, <a>spenden Sie</a> in jeglicher Höhe, ich würde es <b>sehr</b> begrüßen :)",
-    "description": "Intro of the options page"
-  },
-  "optionscontribute": {
-    "message": " Wollen Sie Code beisteuern oder Fehler bzw. Werbung melden? Wir <a>brauchen Ihre Hilfe</a>!",
     "description": "Intro of the options page"
   },
   "tabgeneral": {
@@ -467,6 +464,10 @@
     "message": " - zusätzliche rumänische Filter",
     "description": "A filter list"
   },
+  "filterrussian": {
+    "message": " - zusätzliche russische Filter",
+    "description": "A filter list"
+  },
   "filtereasylist_plus_vietnamese": {
     "message": " - zusätzliche vietnamesische Filter",
     "description": "A filter list"
@@ -505,10 +506,6 @@
   },
   "filterpolish": {
     "message": "Polnische Filter",
-    "description": "A filter list"
-  },
-  "filterrussian": {
-    "message": "Russische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_spanish": {
