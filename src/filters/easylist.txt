@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: H7KUeUleAI/thy6xyIfQ0g
+! Checksum: DO3uq3MrYshBkBnsZHEIdQ
 ! EasyList - https://easylist.adblockplus.org/
-! Last modified: 26 Aug 2010 17:40 UTC
+! Last modified: 29 Aug 2010 08:30 UTC
 ! EasyList expires after 5 days (update frequency).
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
 !
@@ -826,6 +826,7 @@
 /emediatead.
 /ext_ads.
 /external/ad.
+/external/ads/*
 /external_ads.
 /eyewondermanagement.
 /fastclick160.
@@ -3376,11 +3377,11 @@ n728x90_
 ##.adBgBottom
 ##.adBgMId
 ##.adBgTop
-##.adBoxBorder
-##.adBoxInBignews
 ~ksl.com##.adBox
 ##.adBoxBody
+##.adBoxBorder
 ##.adBoxContent
+##.adBoxInBignews
 ##.adBoxSidebar
 ##.adBoxSingle
 ##.adCMRight
@@ -3808,7 +3809,7 @@ n728x90_
 ##.advertisement_header
 ##.advertisement_horizontal
 ##.advertisement_top
-##.advertiser
+~zlinked.com##.advertiser
 ##.advertiser-links
 ~tonprenom.com,~trove.nla.gov.au##.advertising
 ##.advertising-banner
@@ -4017,6 +4018,7 @@ n728x90_
 ##.cse_ads
 ##.cspAd
 ##.ct_ad
+##.cube-ad
 ##.cubeAd
 ##.cube_ads
 ##.currency_ad
@@ -4697,10 +4699,10 @@ n728x90_
 ##.type_miniad
 ##.type_promoads
 ##.ukAds
+##.undertimyads
 ##.universalboxADVBOX01
 ##.universalboxADVBOX03
 ##.universalboxADVBOX04a
-##.undertimyads
 ##.usenext
 ##.vertad
 ##.videoAd
@@ -4769,6 +4771,7 @@ n728x90_
 ###mbEnd[cellspacing="0"][style="padding: 0pt; white-space: nowrap;"]
 ##div#mclip_container:first-child:last-child
 ##div#rhs_block[style="padding-top: 5px;"]
+##div#rhs_block[style="padding-top:5px"]
 ##div#tads.c
 ##table.ra[align="left"][width="30%"]
 ##table.ra[align="right"][width="30%"]
@@ -4973,6 +4976,7 @@ n728x90_
 ||bannertgt.com^$third-party
 ||bauermedia.co.uk^$third-party
 ||bbelements.com^$third-party
+||beaconads.com^$third-party
 ||begun.ru^$third-party
 ||belointeractive.com^$third-party
 ||bestcasinopartner.com^$third-party
@@ -5198,6 +5202,7 @@ n728x90_
 ||kerg.net^$third-party
 ||ketoo.com^$third-party
 ||kitnmedia.com^$third-party
+||klikvip.com^$third-party
 ||klipmart.com^$third-party
 ||kontera.com^$third-party
 ||kqzyfj.com^$third-party
@@ -5709,6 +5714,7 @@ n728x90_
 ||stats.sitesuite.org^$third-party
 ||stockroom.com/banners/
 ||storage.to/affiliate/$third-party
+||sweed.to/affiliates/
 ||sweeva.com/widget.php?w=$third-party
 ||swiftco.net/banner/
 ||theatm.info/images/$third-party
@@ -5842,6 +5848,7 @@ n728x90_
 ||crushorflush.com/html/promoframe.html
 ||d-addicts.com^*/banner/
 ||da.feedsportal.com^
+||dads.new.digg.com^
 ||dailydeals.sfgate.com/widget/
 ||dailymail.co.uk^*/promoboxes/
 ||dailymotion.com/images/ie.png
@@ -6200,6 +6207,7 @@ n728x90_
 ||yimg.com^*/flash/promotions/
 ||yourmovies.com.au^*/side_panels_
 ||yourtomtom.com^*/back_adblock.gif
+||ytimg.com^*/new_watch_background.jpg$domain=youtube.com
 ||ytimg.com^*_banner.jpg?$domain=youtube.com
 ||zam.com/i/promos/*-skin.
 ||zophar.net/files/tf_
@@ -6384,6 +6392,7 @@ bloomberg.com##.leaderboard
 blurtit.com##.adblock
 boingboing.net###cheetos_collapsed
 boingboing.net##div[style="height: 630px; width: 300px;"]
+boingboing.net##.ad
 books.google.ca###rhswrapper font[size="-1"]
 books.google.co.nz###rhswrapper font[size="-1"]
 books.google.co.uk###rhswrapper font[size="-1"]
@@ -6460,6 +6469,7 @@ channel3000.com###leaderboard-sticky
 channel4.com###c4ad-Middle1
 checkoutmyink.com###centerbanner
 checkoutmyink.com###mid
+chicagobreakingbusiness.com##.ad
 chicagotribune.com###story-body-parent + .rail
 chinapost.com.tw###winner
 chinasmack.com##.ad
@@ -6643,6 +6653,7 @@ edn.com##.sponsorcontent
 edn.com##div[style="font-family: verdana,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 10px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: rgb(51, 51, 51); background-color: rgb(160, 186, 200); padding-bottom: 7px;"]
 eeeuser.com###header
 egreetings.com##td[style="background-color: rgb(255, 255, 255); vertical-align: top;"]
+ehow.com###jsWhoCanHelp
 ehow.com##.takeoverBanner
 electricenergyonline.com###top_pub
 electricenergyonline.com###tower_pub
@@ -8310,6 +8321,7 @@ zuula.com##.sponsor
 @@||img.thedailywtf.com/images/ads/
 @@||img.weather.weatherbug.com^*/stickers/$background,image,stylesheet
 @@||imgag.com/product/full/el/adaptvadplayer.swf$domain=egreetings.com
+@@||itv.com/_app/cmn/js/itvjs.adserver.js
 @@||jdn.monster.com/render/adservercontinuation.aspx?$subdocument,domain=monster.com
 @@||jobs.wa.gov.au/images/advertimages/
 @@||js.revsci.net/gateway/gw.js?$domain=foxbusiness.com|foxnews.com
