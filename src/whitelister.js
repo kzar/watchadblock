@@ -11,7 +11,7 @@ function verify_whitelist() {
 
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
-    btns[translate("buttonok")] = 
+    btns[translate("buttonexclude")] = 
         function() {
           extension_call('add_to_whitelist', {domain:domain}, function() {
             document.location.reload();
