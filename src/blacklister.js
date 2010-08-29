@@ -35,9 +35,8 @@ function load_jquery_ui(callback) {
         // but the page itself doesn't have access to extension resources.
         // Since we'll be using getMessage(), we have to ask the background
         // page for the data.
-        var messagesFile = chrome.i18n._messagesFile;
-        extension_call('readfile', {file:messagesFile}, function(messages) {
-          chrome.i18n._setMessagesFileText(messages);
+        extension_call('get_l10n_data', {}, function(data) {
+          chrome.i18n._setL10nData(data);
           callback();
         });
       }

@@ -178,48 +178,107 @@ if (SAFARI) {
     },
 
     i18n: (function() {
-      var _messages = undefined;
 
-      // getMessage() calls this to load messages from disk if they aren't
-      // already there.  Note that it can only access the disk if it isn't
-      // being called from code injected onto a page; to work correctly when
-      // injected onto a page, first call
-      // chrome.i18n._setMessagesFileText(data).
-      function _loadMessages() {
+      function syncFetch(file, fn) {
         var xhr = new XMLHttpRequest();
-        var file = chrome.extension.getURL(chrome.i18n._messagesFile);
-        xhr.open("GET", file, false);
+        xhr.open("GET", chrome.extension.getURL(file), false);
         xhr.onreadystatechange = function() {
-          if(this.readyState == 4) {
-            chrome.i18n._setMessagesFileText(this.responseText);
+          if(this.readyState == 4 && this.responseText != "") {
+            fn(this.responseText);
           }
         };
-        xhr.send();
+        try {
+          xhr.send();
+        }
+        catch (e) {
+          // File not found, perhaps
+        }
       }
 
+      // Parse JSON even if it contains comments.
+      function safe_JSON_parse(text) {
+        // Match any char but a colon, then //, then the rest of the line
+        // Replace it with the matched char.
+        // This is to avoid matching the // in "http://foo.com"
+        text = text.replace(/([^:])\/\/[^\n]+/g, '$1');
+        // And match // at the start of the line, since the above forces it
+        // to have a leading character.
+        text = text.replace(/^\/\/[^\n]+/g, '');
+        return JSON.parse(text);
+      }
+
+      var l10nData = undefined;
+
       var theI18nObject = {
-        // Manually set the messages object for localization.  You only need
-        // to call this if using chrome.i18n.getMessage() from a content 
-        // script.
-        _setMessagesFileText: function(text) {
-          // remove comments, which break JSON parsing
-          text = text.replace(/\/\/[^\n]+/g, '');
-          _messages = JSON.parse(text);
+        // chrome.i18n.getMessage() may be used in any extension resource page
+        // without any preparation.  But if you want to use it from a content
+        // script in Safari, the content script must first run code like this:
+        //
+        //   get_localization_data_from_global_page_async(function(data) {
+        //     chrome.i18n._setL10nData(data);
+        //     // now I can call chrome.i18n.getMessage()
+        //   });
+        //   // I cannot call getMessage() here because the above call
+        //   // is asynchronous.
+        //
+        // The global page will need to receive your request message, call
+        // chrome.i18n._getL10nData(), and return its result.
+        //
+        // We can't avoid this, because the content script can't load
+        // l10n data for itself, because it's not allowed to make the xhr
+        // call to load the message files from disk.  Sorry :(
+        _getL10nData: function() {
+          var result = { locales: [] };
+
+          // == Find all locales we might need to pull messages from, in order
+          // 1: The user's current locale
+          result.locales.push(navigator.language);
+          // 2: Perhaps a region-agnostic version of the current locale
+          if (navigator.language.length > 2)
+            result.locales.push(navigator.language.substring(0, 2));
+          // 3: Default locale
+          syncFetch("manifest.json", function(manifestText) {
+            var defaultLocale = safe_JSON_parse(manifestText).default_locale;
+            if (result.locales.indexOf(defaultLocale) == -1)
+              result.locales.push(defaultLocale);
+          });
+
+          // Load all locale files that exist in that list
+          result.messages = {};
+          for (var i = 0; i < result.locales.length; i++) {
+            locale = result.locales[i];
+            var file = "_locales/" + locale + "/messages.json";
+            // Doesn't call the callback if file doesn't exist
+            syncFetch(file, function(text) {
+              result.messages[locale] = safe_JSON_parse(text);
+            });
+          }
+
+          return result;
         },
 
-        // Return the extension resource file containing messages localalized
-        // to the current locale, e.g. "_locales/de/messages.json".
-        get _messagesFile() {
-          var locale = "nl"; // TODO
-          var filename = '_locales/' + locale + '/messages.json';
-          return filename;
+        // Manually set the localization data.  You only need to call this
+        // if using chrome.i18n.getMessage() from a content script, before
+        // the first call.  You must pass the value of _getL10nData(),
+        // which can only be called by the global page.
+        _setL10nData: function(data) {
+          l10nData = data;
         },
 
         getMessage: function(messageID, args) {
-          if (_messages == undefined)
-            _loadMessages();
+          if (l10nData == undefined) {
+            // Assume that we're not in a content script, because content 
+            // scripts are supposed to have set l10nData already
+            chrome.i18n._setL10nData(chrome.i18n._getL10nData());
+          }
           // TODO: handle args list.
-          return _messages[messageID].message;
+          for (var i = 0; i < l10nData.locales.length; i++) {
+            var map = l10nData.messages[l10nData.locales[i]];
+            // We must have the locale, and the locale must have the message
+            if (map && messageID in map)
+              return map[messageID].message;
+          }
+          return "";
         }
       };
 
