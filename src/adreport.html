@@ -46,7 +46,7 @@
 
       //fetching the options...
       var options = [];
-      var search = location.search.substring(1).split('&');
+      var search = document.location.search.substring(1).split('&');
       for (var item in search) {
         if (search[item].indexOf('=') == -1) continue;
         options[search[item].split('=')[0]] = 

@@ -142,5 +142,5 @@ extension_call('get_features_and_filters', opts, function(data) {
 
   var end = new Date();
   time_log("adblock_start run time: " + (end - start) + " ms || " +
-           location.href);
+           document.location.href);
 });

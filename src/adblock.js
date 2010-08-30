@@ -67,7 +67,7 @@ function remove_ad_elements_by_url(first_run) {
 
       var end = new Date();
       time_log("adblock_main run time: " + (end - start) + " ms || " +
-               location.href);
+               document.location.href);
 
       if (first_run)
         debug_print_selector_matches();
@@ -89,7 +89,7 @@ function purgeElement(el, elInfo) {
 
 // Run special site-specific code.
 function run_specials(features) {
-  if (location.host.indexOf('mail.live.com') != -1) {
+  if (document.location.host.indexOf('mail.live.com') != -1) {
     //removing the space remaining in Hotmail/WLMail
     $(".Unmanaged .WithSkyscraper #MainContent").
       css("margin-right", "1px");
@@ -192,7 +192,7 @@ function adblock_begin_v2() {
     opts.is_top_frame = true;
 
   extension_call('get_features_and_filters', opts, function(data) {
-    log("==== ADBLOCKING PAGE: " + location.href);
+    log("==== ADBLOCKING PAGE: " + document.location.href);
 
     if (data.page_is_whitelisted)
       return;
