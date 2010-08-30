@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <title i18n="optionstitle"></title>
+    <link rel="stylesheet" href="options.css" />
+    <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
+    <script src="../port.js"></script>
+    <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <script src="../jquery/jquery.cookie.js"></script>
+    <script src="../jquery/jquery-ui-1.8.custom.min.js"></script>
+    <script src="../functions.js"></script>
+    <script src="../broadcast_channel.js"></script>
+    <script>
+      listen_for_broadcasts();
+
+      function note_visit() {
+        if (localStorage.getItem('visited_options_at') != null)
+          return;
+        var now = new Date().getTime();
+        localStorage.setItem('visited_options_at', now);
+        var installed_at = localStorage.getItem('installed_at', 0);
+        if (installed_at == null)
+          installed_at = 2; // aka "we don't know"
+        $.get("http://chromeadblock.com/api/visit.php", 
+              {options_at:now, installed_at:installed_at});
+      }
+
+      function displayVersionNumber() {
+        try {
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+          xhr.onreadystatechange = function() {
+            if(this.readyState == 4) {
+              var theManifest = JSON.parse(this.responseText);
+              $("#version_number").text(translate("optionsversion", [theManifest.version]));
+            }
+          };
+          xhr.send();
+        } catch (ex) {} // silently fail
+      }
+
+      // Check or uncheck each loaded DOM option checkbox according to the 
+      // user's saved settings.
+      function load_options() {
+        // Check or uncheck each option.
+        extension_call('get_optional_features', {}, function(features) {
+          for (var name in features) {
+            $("#enable_" + name).
+              attr("checked", features[name].is_enabled);
+          }
+          $("input.feature:checkbox").change(function() {
+            var is_enabled = $(this).is(':checked');
+            var name = this.id.substring(7); // TODO: hack
+            extension_call(
+              'set_optional_feature', 
+              {name:name, is_enabled:is_enabled}
+            );
+          });
+        });
+      }
+
+      $(function() {
+        $("#tabpages").tabs({ spinner: "", cache: true, cookie: {}  });
+
+        displayVersionNumber();
+
+        $(".icon").css("background-image", "url(../img/icon32.png)");
+
+        note_visit();
+        
+        //translation
+        localizePage();
+
+      });
+    </script>
+  </head>
+  <body>
+    <div style="float:right;"> 
+      <span id="version_number"></span>
+      (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
+    </div>
+    <h1 class="icon" i18n="optionstitle"></h1>
+    <table>
+      <tr>
+        <td style="padding-right:10px">
+          <a class="donatelink" href="#" target="_new" i18n_title="donatethanks">
+            <img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" width="92"/>
+          </a>
+        </td>
+        <td style="font-style:italic; font-size:14px">
+          <span i18n="optionsintro" i18n_replacement_el="donate_link"></span>
+          <a id="donate_link" class="donatelink" href="#" target="_new"></a>
+        </td>
+      </tr>
+    </table>
+    <script>
+      $(function() {
+        //adjust the donate link for Safari
+        if (SAFARI)
+          $(".donatelink").attr("href", "http://chromeadblock.com/paypal_donate/donation.php?browser=safari");
+        else
+          $(".donatelink").attr("href", "http://chromeadblock.com/paypal_donate/donation.php");
+      });
+    </script>
+
+    <div id="tabpages">
+      <ul>
+        <li><a href="general.html"><span i18n="tabgeneral"></span></a></li>
+        <li><a href="filters.html"><span i18n="tabfilterlists"></span></a></li>
+        <li><a href="blacklist.html"><span i18n="tabblacklist"></span></a></li>
+        <li><a href="whitelist.html"><span i18n="tabexcluded"></span></a></li>
+      </ul>
+    </div>
+  </body>
+</html>

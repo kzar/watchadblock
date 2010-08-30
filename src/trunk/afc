@@ -1,0 +1,76 @@
+#!/bin/bash
+
+function usage() {
+    echo "Usage:"
+    echo "$0 shipit"
+    echo "$0 filterdiff"
+    echo "$0 updatefilters"
+    echo
+    echo "This may be useful:"
+    echo
+    echo "    http://adblockforchrome.googlecode.com/svn/trunk/filters/adblock_custom.txt"
+    echo
+    exit 1
+}
+
+function shipit() {
+    grep 'debug_id.*true;' functions.js && {
+      echo "Fix debug_id, stupid"
+      exit 1
+    }
+
+    [ "$(basename $(pwd))" = 'trunk' ] || {
+      echo "Sorry, you must run this from trunk."
+      exit 1
+    }
+
+    curl http://adblockplus.mozdev.org/easylist/easylist.txt > filters/easylist.txt
+
+    svn diff filters/easylist.txt | grep '^[+-]'
+    echo
+
+    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -r adblockforchrome.zip trunk/)
+    echo
+
+    version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    svn up ../wiki/Changelog.wiki >/dev/null 2>&1
+    grep "$version" ../wiki/Changelog.wiki && {
+        echo -n "Did you forget to bump the version in manifest.json (y/n)? "
+        read answer
+        [ "$answer" = "y" ] && exit 1
+        skip_changelog=1
+    }
+
+    if [ "$skip_changelog" != 1 ]; then
+        echo -n "Changelog entry: *$version*: "
+        read description
+        sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
+    fi
+    echo
+    grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
+    echo
+    echo -n "Check in wiki and code, and make a tag for the release (y/n)? "
+    read answer
+    [ "$answer" = y ] && {
+      cd ..
+      svn cp trunk tags/$version || {
+        echo "Couldn't make tags/$version.  Aborting checkin."
+        exit 1
+      }
+      svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
+    }
+
+    echo "Last step: go push the new adblockforchrome.zip up to the Gallery, and ship Safari if you want."
+}
+
+function main() {
+    if [ $1 = "shipit" ]; then shipit
+    elif [ $1 = "filterdiff" ]; then diff -b <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
+    elif [ $1 = "updatefilters" ]; then scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
+    else usage
+    fi
+}
+
+cd $(dirname $0)
+[ $# != 1 ] && usage
+main "$1"

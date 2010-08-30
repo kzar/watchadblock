@@ -1,0 +1,120 @@
+  <script>
+    $(function() {
+      var linkUrl = "https://chrome.google.com/extensions/detail/" +
+                    icon_extension_id;
+      $("#link_to_icon").attr("href", linkUrl);
+
+      var imgUrl = chrome.extension.getURL("img/icon_screenshot.png");
+      $("#imgIconScreenshot").attr("src", imgUrl);
+
+      $("#want_a_button").click(function() {
+        $('[i18n="buttonexplanation"]').show();
+      });
+
+      if (!SAFARI) {
+        // If the icon extension is running, check the box.
+        chrome.extension.sendRequest(icon_extension_id, {}, function() {
+          $("#want_a_button").attr("checked", "checked");
+        });
+      }
+
+      // Check or uncheck each option.
+      extension_call('get_optional_features', {}, function(features) {
+        for (var name in features) {
+          $("#enable_" + name).
+            attr("checked", features[name].is_enabled);
+        }
+        $("input.feature:checkbox").change(function() {
+          var is_enabled = $(this).is(':checked');
+          var name = this.id.substring(7); // TODO: hack
+          extension_call(
+            'set_optional_feature', 
+            {name:name, is_enabled:is_enabled}
+          );
+        });
+      });
+      
+      //translation
+      localizePage();
+      $('[i18n="buttonexplanation"] i').
+        css("font-style", "12px").
+        css("color", "#222222");
+
+      //clicking the checkbox label checks the checkbox
+      $('.optionDescription').click(checkboxlabel_clicked);
+    });
+  </script>
+
+  <div class="section" class="experiments">
+    <h2 i18n="generaloptions"></h2>
+
+    <p id="chromeblock" style="display:none">
+      <input type="checkbox" class="feature" id="enable_true_blocking_support" />
+      <span class="optionDescription" i18n="blocknothideoption"></span>
+      <span style='font-style:italic; color:red' i18n="betalabel"></span>
+      <br/>
+      <span style='font-style:italic; font-size: 12px; margin-left: 25px;' i18n="blocknothidewarning">
+      </span>
+    </p>
+    <script>
+      $(function() {
+        if (!SAFARI) {
+          $("#chromeblock").show();
+        }
+      });
+    </script>
+
+    <table style="vertical-align:middle; margin-left:-3px">
+      <tr id="show_adblock_button_tr">
+        <td>
+          <p style="font-size:14px">
+            <input type="checkbox" id="want_a_button" />
+            <span class="optionDescription" i18n="buttonextension"><span>
+          </p>
+        </td>
+        <td>
+          <img id="imgIconScreenshot" />
+        </td>
+      </tr>
+    </table>
+    <p class="info" style="display:none" i18n="buttonexplanation" 
+       i18n_replacement_el="link_to_icon"></p>
+    <a id="link_to_icon" target="top"></a>
+    <script>
+      if (SAFARI) {
+        $("#show_adblock_button_tr").hide();
+      }
+    </script>
+
+    <p>
+      <input type="checkbox" class="feature" id="enable_show_google_search_text_ads"/>
+      <span class="optionDescription" i18n="googletextads"></span>
+    </p>
+    <script>
+      // TODO: This is a dumb race condition, and still has a bug where
+      // if the user reloads/closes the options page within a second
+      // of clicking this, the filters aren't rebuilt.  Call this inside
+      // the feature change handler if it's this checkbox being clicked.
+      $("#enable_show_google_search_text_ads").change(function() {
+        // Give the optional feature a sec to get saved by the other
+        // change handler before recalculating filters.
+        window.setTimeout(function() { 
+          extension_call('update_filters', { }); 
+        }, 1000);
+      });
+    </script>
+
+    <p>
+      <input type="checkbox" class="feature" id="enable_block_youtube" />
+      <span class="optionDescription" i18n="youtubeads"></span>
+      <span style='font-style:italic; color:red' i18n="betalabel"></span>
+    </p>
+  </div>
+
+  <div class="sneaky">
+    <input type="checkbox" class="feature" id="enable_debug_logging" />
+    <span class="optionDescription" i18n="debuginlogoption"></span>
+    <br/>
+    <input type="checkbox" class="feature" id="enable_debug_time_logging" />
+    <span class="optionDescription" i18n="timeinlogoption"></span>
+  </div>
