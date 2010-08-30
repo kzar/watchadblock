@@ -30,7 +30,7 @@
   },
 
   "youtubevideomessage": {
-    "message": "Kein Video? Aktualisieren Sie die Seite. Falls dies öfters passiert, deaktivieren Sie das Blocken von YouTube-Werbung in den $link$.",
+    "message": "Kein Video? Aktualisieren Sie die Seite.<br/>Falls dies öfters passiert, deaktivieren Sie das Blocken von YouTube-Werbung in den $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
@@ -49,11 +49,11 @@
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "Was glauben Sie, trifft jedesmal zu, wenn sie diese Seite besuchen?",
+    "message": "Was glauben Sie, trifft jedesmal zu, wenn Sie diese Seite besuchen?",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Nicht sicher?</b> Drücken Sie einfach 'Blocken!' unterhalb.",
+    "message": "<b>Nicht sicher?</b> Klicken Sie einfach auf 'Blocken!'.",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
@@ -69,8 +69,8 @@
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter": {
-    "message": "Bitte geben Sie den korrekten Filter unten ein und drücken Sie auf OK",
-    "description": "Text if the user wants to manually edit a filter"
+    "message": "Bitte geben Sie den korrekten Filter unten ein und klicken Sie auf OK",
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid": {
     "message": "Der Filter ist ungültig!",
@@ -144,7 +144,7 @@
     "description": "Title of the first two dialogs of the blacklister"
   },
   "clickthead": {
-    "message": "Klicken Sie auf die Werbung und ich werde Ihnen helfen sie zu blocken.",
+    "message": "Klicken Sie auf die Werbung und ich werde Ihnen dabei helfen sie zu blocken.",
     "description": "When you have to click the ad to continue"
   },
 
@@ -161,6 +161,10 @@
   "whitelistertitle": {
     "message": "Diese Seite ausschliessen?",
     "description": "The title of the whitelister dialog"
+  },
+  "buttonexclude": {
+    "message": "Ausschliessen",
+    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
 
   "adreportintro": {
@@ -245,7 +249,7 @@
     "description": "Title of first tab page"
   },
   "blocknothideoption": {
-    "message": "die meiste Werbung vom downloaden abhalten, anstatt sie nur zu verbergen",
+    "message": "die meiste Werbung vom Downloaden abhalten, anstatt sie nur zu verbergen",
     "description": "Option on first tab page"
   },
   "betalabel": {
@@ -257,7 +261,7 @@
     "description": "Warning for block instead of hiding option"
   },
   "buttonexplanation": {
-    "message": "<i>Um den Button optional zu machen, haben wir ihn in eine extra Erweiterung gepackt. Er kann hier zusammen mit AdBlock installiert werden.</i><br/><br/>Um den Button hinzuzufügen, klicken Sie auf <b>Install</b> auf der <a>Browser Button for AdBlock</a> Website.<br/><br/>Um den Button zu entfernen: Rechtsklick -> Disable (Entfernen).",
+    "message": "<i>Um den Button optional zu machen, haben wir ihn in eine extra Erweiterung gepackt. Er kann hier zusammen mit AdBlock installiert werden.</i><br/><br/>Um den Button hinzuzufügen, klicken Sie auf <b>Install</b> auf der <a>Browser Button for AdBlock</a> Website.<br/><br/>Um den Button zu entfernen: Rechtsklick -> Deaktivieren.",
     "description": "Explanation of how the button works"
   },
   "buttonextension": {
@@ -265,7 +269,7 @@
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "Textwerbung in den Google-Suchergebnissen nicht blocken",
+    "message": "Textwerbung in den Google-Suchergebnissen anzeigen",
     "description": "Option on first tab page"
   },
   "youtubeads": {
@@ -273,11 +277,11 @@
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "Debug-Berichte in der Logdatei anzeigen (verlangsamt AdBlock)",
+    "message": "Debug-Berichte in der Konsole anzeigen (verlangsamt AdBlock)",
     "description": "Option on first tab page"
   },
   "timeinlogoption": {
-    "message": "Timing-Berichte in der Logdatei anzeigen (verlangsamt AdBlock)",
+    "message": "Timing-Berichte in der Konsole anzeigen (verlangsamt AdBlock)",
     "description": "Option on first tab page"
   },
 
@@ -458,52 +462,52 @@
     "description": "A filter list"
   },
   "filterchinese": {
-    "message": "Chinesische Filter",
+    "message": "chinesische Filter",
     "description": "A filter list"
   },
   "filterczech": {
-    "message": "Tschechische Filter",
+    "message": "tschechische Filter",
     "description": "A filter list"
   },
   "filterdanish": {
-    "message": "Dänische Filter",
+    "message": "dänische Filter",
     "description": "A filter list"
   },
   "filterhungarian": {
-    "message": "Ungarische Filter",
+    "message": "ungarische Filter",
     "description": "A filter list"
   },
   "filterisraeli": {
-    "message": "Israelische Filter",
+    "message": "israelische Filter",
     "description": "A filter list"
   },
   "filteritalian": {
-    "message": "Italienische Filter",
+    "message": "italienische Filter",
     "description": "A filter list"
   },
   "filterjapanese": {
-    "message": "Japanische Filter",
+    "message": "japanische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plun_korean": {
-    "message": "Koreanische Filter",
+    "message": "koreanische Filter",
     "description": "A filter list"
   },
   "filterpolish": {
-    "message": "Polnische Filter",
+    "message": "polnische Filter",
     "description": "A filter list"
   },
   "filtereasylist_plus_spanish": {
-    "message": "Spanische Filter",
+    "message": "spanische Filter",
     "description": "A filter list"
   },
   "filterukranian": {
-    "message": "Ukrainische Filter",
+    "message": "ukrainische Filter",
     "description": "A filter list"
   },
 
   "blacklisttabtitle": {
-    "message": "Werbung blocken, die nicht vom Filter geblockt wird...",
+    "message": "Werbung blocken, die nicht vom Filter geblockt wird",
     "description": "Title of the third tab"
   },
   "blacklistshortcutmessage": {
@@ -555,7 +559,7 @@
     "message": "Vergessen Sie nicht zu speichern!",
     "description": "Reminder to press save"
   },
-    "advanced": {
+  "advanced": {
     "message": "Fortgeschritten",
     "description": "Section label for advanced options"
   },
@@ -563,13 +567,13 @@
     "message": "<a>Werbung melden</a> an das AdBlock Entwicklerteam oder die Filterlistenentwickler.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
-  
+
   "removelabel": {
     "message": "Entfernen",
     "description": "link to remove a excluded site"
   },
   "excludedsitestitle": {
-    "message": "Keine Werbung blocken auf Seiten die enden mit...",
+    "message": "Keine Werbung blocken auf Seiten die enden auf...",
     "description": "title of the 4th tab page"
   },
   "excludedsitesexample": {
@@ -592,5 +596,227 @@
   "removeallfromlist": {
     "message": "Liste leeren:",
     "description": "option on 4th tab page"
+  },
+  "adblockreportinganad": {
+    "message": "AdBlock - Werbung melden",
+    "description": "title of ad report page"
+  },
+  "adreport1": {
+    "message": "Sie haben Werbung auf einer Website gefunden? Ich werde Ihnen dabei helfen den richtigen Ort zufinden, um diese Werbung zu melden!<br/> Anmerkung: Werbung zu melden ist freiwillig. Wenn Sie die Werbung nicht melden wollen, können Sie diese Seite schließen und sie nur für Sie selbst blocken, indem Sie die Filter in den Blacklist-Einstellungen hinzufügen!",
+    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
+  },
+  "updateyourlists": {
+    "message": "Stellen Sie sicher, dass Ihre Filterlisten auf dem neuesten Stand sind",
+    "description": "instruction on ad report page"
+  },
+  "clickupdatefilters": {
+    "message": "Klicken Sie hier: <a>Meine Filter updaten!</a>",
+    "description": "instruction on ad report page"
+  },
+  "reloadadpage": {
+    "message": "Aktualisieren Sie die Seite mit Werbung.",
+    "description": "instruction on ad report page"
+  },
+  "adstillappear": {
+    "message": "Ist die Werbung immer noch angezeigt?",
+    "description": "question on ad reporting page"
+  },
+  "yes": {
+    "message": "Ja",
+    "description": "A positive response to a question"
+  },
+  "no": {
+    "message": "Nein",
+    "description": "A negative response to a question"
+  },
+  "adalreadyblocked": {
+    "message": "Sie müssen nun nichts mehr tun, da die Werbung schon geblockt wird",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "correctfilters": {
+    "message": "Richtige Filter",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "reallyclearlist": {
+    "message": "Sind Sie sicher, dass Sie die Liste leeren möchten?",
+    "description": "confirmation of clearing a list of iteams"
+  },
+  "pagelanguagecheck": {
+    "message": "In welcher Sprache ist die Seite verfasst?",
+    "description": "question on ad report page"
+  },
+  "lang_english": {
+    "message": "Englisch",
+    "description": "language"
+  },
+  "lang_bulgarian": {
+    "message": "Bulgarisch",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "Chinesisch",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "Tschechisch",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "Dänisch",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "Niederländisch",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "Finnisch",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "Französisch",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "Deutsch",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "Ungarisch",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "Israelisch",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "Italienisch",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "Japanisch",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "Koreanisch",
+    "description": "language"
+  },
+  "lang_norwegian": {
+    "message": "Norwegisch",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "Polnisch",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "Rumänisch",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "Russisch",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "Spanisch",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "Ukrainisch",
+    "description": "language"
+  },
+  "lang_vietnamese": {
+    "message": "Vietnamesisch",
+    "description": "language"
+  },
+  "other": {
+    "message": "Sonstige",
+    "description": "multiple choice option"
+  },
+  "nodefaultfilter": {
+    "message": "Wir haben keine Filterliste für diese Sprache.<br/>Bitte versuchen Sie $link$ eine passende Liste, die Ihre Sprache unterstützt zu finden oder blocken Sie die Werbung für sich selbst in den Blacklisteinstellungen.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+    "placeholders": {
+      "link": {
+        "content": "$1hier$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "retryaftersubscribe": {
+    "message": "Abonnieren Sie diese Filterliste und versuchen Sie es erneut: $list_title$",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "checkinfirefox": {
+    "message": "In Firefox überprüfen",
+    "description": "tell a user to see if a reported ad also appears in firefox"
+  },
+  "checkinfirefox1": {
+    "message": "Installieren Sie Firefox, falls Sie es nicht schon installiert haben.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox2": {
+    "message": "Installieren Sie Adblock Plus für Firefox, falls Sie es nicht schon installiert haben.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox3": {
+    "message": "Abonnieren Sie in Firefox die selben Filterlisten, die Sie hier abonniert haben (außer AdBlock Standardfiltern).",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox4": {
+    "message": "Aktualisieren Sie die Seite mit Werbung in Firefox.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox5": {
+    "message": "Ist die Werbung in Firefox sichtbar?",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "refusetocheck": {
+    "message": "Ich will das nicht überprüfen",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reportfilterlistproblem": {
+    "message": "Dies ist ein Filterlistenproblem. Melden Sie es hier: $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reporttous": {
+    "message": "Wenn Sie Englisch sprechen, können Sie uns die Werbung $in_the_issue_tracker_link$ melden. (Uns ist bewusst, dass die meiste Werbung in Videos noch nicht geblockt wird. Wir warten auf die Unterstützung durch WebKit.)",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
+    "placeholders": {
+      "in_the_issue_tracker_link": {
+        "content": "$1im Issue Tracker$2",
+        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+      }
+    }
+  },
+  "fixityourself": {
+    "message": "OK, Sie können die Werbung auch für Sie selbst blocken in den AdBlock Einstellungen. Danke!",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "updatefromoldversion": {
+    "message": "Sie benutzen eine veraltete Version von AdBlock. Bitte $updatelink$ Sie zuerst auf die neueste Version von AdBlock",
+    "description": "ad report page instruction",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1updaten$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+      }
+    }
+  },
+  "cantundo": {
+    "message": "Dieser Vorgang kann nicht rückgängig gemacht werden!",
+    "description": "Warning a user before confirming an action"
   }
 }

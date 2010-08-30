@@ -180,7 +180,7 @@
           <option value="easylist;http://forums.lanik.us/" i18n="lang_english"></option>
           <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org" i18n="lang_bulgarian"></option>
           <option value="chinese;http://code.google.com/p/adblock-chinalist/issues/list" i18n="lang_chinese"></option>
-          <option value="czech;" i18n="lang_czech"></option>
+          <option value="czech;http://adblock.dajbych.net/" i18n="lang_czech"></option>
           <option value="danish;mailto:henrik at schack.dk" i18n="lang_danish"></option>
           <option value="easylist;dutch;http://code.google.com/p/dutchadblockfilters/issues/list" i18n="lang_dutch"></option>
           <option value="easylist;easylist_plus_finnish;http://www.wiltteri.net/?page_id=157/wiltteri-lista/" i18n="lang_finnish"></option>
@@ -217,7 +217,7 @@
           for (var i=0; i < required_lists.length - 1; i++) {
             if (unsubscribed_default_filters[required_lists[i]]) {
               $("#whattodo").text(translate("retryaftersubscribe",
-                    unsubscribed_default_filters[required_lists[i]].name));
+                    translate("filter" + required_lists[i])));
               return;
             }
           }

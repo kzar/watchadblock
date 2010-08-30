@@ -162,6 +162,10 @@
     "message": "Dit domein uitsluiten?",
     "description": "The title of the whitelister dialog"
   },
+  "buttonexclude": {
+    "message": "Uitsluiten!",
+    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+  },
 
   "subscribingtitle": {
     "message": "Aanmelden bij een lijst met filters...",
@@ -393,7 +397,7 @@
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - Bulgarische uitbreiding",
+    "message": " - Bulgaarse uitbreiding",
     "description": "A filter list"
   },
   "filterdutch": {
@@ -437,7 +441,7 @@
     "description": "A filter list"
   },
   "filterczech": {
-    "message": "Tsjechisch filters",
+    "message": "Tsjechische filters",
     "description": "A filter list"
   },
   "filterdanish": {
@@ -559,5 +563,235 @@
   "removeallfromlist": {
     "message": "Verwijder alle items uit deze lijst:",
     "description": "option on 4th tab page"
+  },
+  "adblockreportinganad": {
+    "message": "AdBlock - Advertentie rapporteren",
+    "description": "title of ad report page"
+  },
+  "adreport1": {
+    "message": "Dus je hebt een website met een advertentie gevonden? Ik zal je helpen om de juiste plaats te vinden om dit te rapporteren!<br/>Vergeet niet dat dit vrijwillig is. Als je dit niet wilt doen dan kun je het filter gewoon toevoegen in de optiespagina!",
+    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
+  },
+  "updateyourlists": {
+    "message": "Zorg ervoor dat je filters bijgewerkt zijn",
+    "description": "instruction on ad report page"
+  },
+  "clickupdatefilters": {
+    "message": "Klik hierop: <a>Filters bijwerken!</a>",
+    "description": "instruction on ad report page"
+  },
+  "reloadadpage": {
+    "message": "Herlaad de pagina met de advertentie.",
+    "description": "instruction on ad report page"
+  },
+  "adstillappear": {
+    "message": "Zie je de advertentie nog steeds?",
+    "description": "question on ad reporting page"
+  },
+  "yes": {
+    "message": "Ja",
+    "description": "A positive response to a question"
+  },
+  "no": {
+    "message": "Nee",
+    "description": "A negative response to a question"
+  },
+  "adalreadyblocked": {
+    "message": "Je hoeft niets te doen. De advertentie is al geblokkeerd.",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "correctfilters": {
+    "message": "Juiste filters",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "reallyclearlist": {
+    "message": "Weet je zeker dat je deze lijst wilt wissen?",
+    "description": "confirmation of clearing a list of iteams"
+  },
+  "pagelanguagecheck": {
+    "message": "In welke taal is de pagina geschreven?",
+    "description": "question on ad report page"
+  },
+  "lang_english": {
+    "message": "Engels",
+    "description": "language"
+  },
+  "lang_bulgarian": {
+    "message": "Bulgaars",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "Chinees",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "Tsjechisch",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "Deens",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "Nederlands",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "Fins",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "Frans",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "Duits",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "Hongaars",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "Israëlisch",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "Italiaans",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "Japans",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "Koreaans",
+    "description": "language"
+  },
+  "lang_norwegian": {
+    "message": "Noors",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "Pools",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "Roemeens",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "Russisch",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "Spaans",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "Oekraïens",
+    "description": "language"
+  },
+  "lang_vietnamese": {
+    "message": "Vietnamees",
+    "description": "language"
+  },
+  "other": {
+    "message": "Anders",
+    "description": "multiple choice option"
+  },
+  "nodefaultfilter": {
+    "message": "We hebben geen standaardlijst voor deze taal.<br/>Probeer aub $link$ een goede lijst te vinden of blokkeer de advertentie alleen voor jezelf via de optiespagina.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+    "placeholders": {
+      "link": {
+        "content": "$1hier$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "retryaftersubscribe": {
+    "message": "Meld je aan voor deze lijst en probeer opnieuw: $list_title$",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "checkinfirefox": {
+    "message": "In FireFox controleren",
+    "description": "tell a user to see if a reported ad also appears in firefox"
+  },
+  "checkinfirefox1": {
+    "message": "Installeer FireFox als je dat nog niet hebt.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox2": {
+    "message": "Installeer AdBlock Plus als je dat nog niet hebt.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox3": {
+    "message": "Meld je in FireFox aan bij dezelfde filterlijsten als hier (m.u.v. AdBlock Custom filters).",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox4": {
+    "message": "In FireFox, laad de pagina met de advertentie.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox5": {
+    "message": "Zie je de advertentie ook in FireFox?",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "refusetocheck": {
+    "message": "Ik wil dit niet controleren",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reportfilterlistproblem": {
+    "message": "Dit is een taak voor de beheerder van een lijst. Rapporteer het hier: $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reporttous": {
+    "message": "Je kunt de advertentie aan ons rapporteren $in_the_issue_tracker_link$ (Engelstalig).<br/>(We weten dat we geen advertenties in films en Flash kunnen blokkeren. We wachten op ondersteuning van WebKit.)",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
+    "placeholders": {
+      "in_the_issue_tracker_link": {
+        "content": "$1in de issue tracker$2",
+        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+      }
+    }
+  },
+  "fixityourself": {
+    "message": "OK, je kunt de advertentie voor jezelf blokkeren. Bedankt!",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "updatefromoldversion": {
+    "message": "Je gebruikt een oude versie van AdBlock. $updatelink$ eerst naar de nieuwste versie!",
+    "description": "ad report page instruction",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1Update$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+      }
+    }
+  },
+  "cantundo": {
+    "message": "Dit kan niet ongedaan gemaakt worden!",
+    "description": "Warning a user before confirming an action"
+  },
+  "advanced": {
+    "message": "Extra",
+    "description": "Section label for advanced options"
+  },
+  "reportanad": {
+    "message": "<a>rapporteer een advertentie</a> aan de beheerders van de filter lijsten.",
+    "description": "A link for users who found an ad somewhere and want to report it"
   }
 }
