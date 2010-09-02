@@ -148,6 +148,7 @@ PS: If you wanted to help me get to the point where I can be self-supporting -- 
 def main():
     donation_count = donation_message_count()
     i = amt = 0
+    thanked = []
     for donation in donation_messages():
         i += 1
         amt += donation.amount
@@ -178,11 +179,17 @@ def main():
         print "Sending..."
         send('gundlach.business@gmail.com', donation.email, 
              'I got your donation :)', donation.get_response())
+        thanked.append(donation)
         print
         print
 
 
 
+    for i in range(len(5)):
+        print()
+    for d in thanked:
+        print "$%.0f %s -- %s" % (d.amount, d.name, d.note)
+    print
     print "Done.  %d donations totalling $%.2f." % (i, amt)
 
 if __name__ == '__main__':
