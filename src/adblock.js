@@ -205,6 +205,14 @@ function adblock_begin_v2() {
         safari.self.tab.setContextMenuEventUserInfo(event, true);
       }, false);
     }
+    if (!SAFARI) {
+      // Make the right-click menu items do something (we can't actually
+      // hide them on tab selection change without 'tabs' permission,
+      // so we always show them but make them do nothing until we verify
+      // that we're not whitelisted.)
+      may_open_blacklist_ui = true;
+      may_open_whitelist_ui = true;
+    }
 
     run_specials(data.features);
 

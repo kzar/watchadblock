@@ -1,5 +1,5 @@
 // Global lock so we can't open more than once on a tab.
-var blacklist_ui_open = false;
+var may_open_blacklist_ui = false;
 
 function load_jquery_ui(callback) {
   if (typeof global_have_loaded_jquery_ui != "undefined") {
@@ -49,18 +49,18 @@ function load_jquery_ui(callback) {
 
 if (window == window.top) {
   register_broadcast_listener('top_open_blacklist_ui', function(options) {
-    if (blacklist_ui_open)
+    if (!may_open_blacklist_ui)
       return;
 
-    blacklist_ui_open = true;
+    may_open_blacklist_ui = false;
 
     load_jquery_ui(function() {
       var blacklist_ui = new BlacklistUi();
       blacklist_ui.cancel(function() {
-        blacklist_ui_open = false;
+        may_open_blacklist_ui = true;
       });
       blacklist_ui.block(function() {
-        blacklist_ui_open = false; // no-op, actually, since we now reload
+        may_open_blacklist_ui = true; // no-op, actually, since we now reload
         document.location.reload();
       });
       blacklist_ui.show();
