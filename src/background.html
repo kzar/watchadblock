@@ -423,12 +423,12 @@
           messageEvent.message = !isMatched;
         }, false);
 
-        // Open Options page upon Toolbar button click.
         safari.application.addEventListener("command", function(commandEvent) {
+          // Open Options page upon Toolbar button click.
           if (commandEvent.command == "AdBlockOptions") {
             safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
           }
-          if (commandEvent.command == "show-blacklist-wizard") {
+          if (commandEvent.command in { "show-whitelist-wizard": 1, "show-blacklist-wizard": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
           }
         }, false);
