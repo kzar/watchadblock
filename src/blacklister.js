@@ -1,7 +1,7 @@
-// TODO note: gamestar.de has a good <object> tag with <embed> in it;
-// thepiratebay.org [search for 'boots'] has good iframe tags.
+// Global lock so we can't open more than once on a tab.
+var blacklist_ui_open = false;
 
-function load_jquery_ui(callback) { 
+function load_jquery_ui(callback) {
   if (typeof global_have_loaded_jquery_ui != "undefined") {
     callback();
     return; // don't inject stylesheets more than once
@@ -49,18 +49,18 @@ function load_jquery_ui(callback) {
 
 if (window == window.top) {
   register_broadcast_listener('top_open_blacklist_ui', function(options) {
-    if (!may_open_blacklist)
+    if (blacklist_ui_open)
       return;
 
-    stop_checking_for_blacklist_keypress();
+    blacklist_ui_open = true;
 
     load_jquery_ui(function() {
       var blacklist_ui = new BlacklistUi();
       blacklist_ui.cancel(function() {
-        blacklister_init();
+        blacklist_ui_open = false;
       });
       blacklist_ui.block(function() {
-        // We would call blacklister_init() if we weren't about to reload.
+        blacklist_ui_open = false; // no-op, actually, since we now reload
         document.location.reload();
       });
       blacklist_ui.show();
@@ -103,18 +103,9 @@ register_broadcast_listener('send_content_to_back', function(options) {
     });
 });
 
-function check_for_blacklist_keypress(e) { 
-  if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode == 75) { // K
-    extension_call('get_optional_features', {}, function(features) {
-      if (features.blacklist_shortcut.is_enabled)
-        page_broadcast('top_open_blacklist_ui', {});
-    });
-  }
-}  
 
-// Keypress doesn't work reliably in Safari, so make the blacklist
-// available in the context menu until we support just right clicking
-// on an ad or Flash object.
+// Safari context menu support, until we unify Chrome & Safari
+// support via port.js
 if (SAFARI) {
   // Wait for right click
   window.addEventListener("contextmenu", function(event) {
@@ -128,17 +119,3 @@ if (SAFARI) {
   }, false);
 }
 
-// For the extension icon, so we can't open more than once on a tab.
-var may_open_blacklist = true;
-
-function stop_checking_for_blacklist_keypress() {
-  may_open_blacklist = false;
-  $("body").unbind("keydown", check_for_blacklist_keypress);
-}
-
-function blacklister_init() {
-  may_open_blacklist = true;
-  $("body").
-      unbind('keydown', check_for_blacklist_keypress). // just in case
-      keydown(check_for_blacklist_keypress);
-}

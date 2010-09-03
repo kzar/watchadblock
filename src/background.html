@@ -143,7 +143,6 @@
           "show_youtube_help_msg",
           "show_google_search_text_ads",
           "whitelist_shortcut",
-          "blacklist_shortcut",
           "true_blocking_support"
           ];
         for (var i = 0; i < feature_names.length; i++) {
@@ -152,7 +151,6 @@
             features[name] = { name: name };
             switch (name) {
               case "whitelist_shortcut":
-              case "blacklist_shortcut":
               case "block_youtube":
               case "show_youtube_help_msg":
               case "true_blocking_support": //if supported
@@ -338,8 +336,6 @@
         sendResponse(result);
       }
  
-      // TODO maybe use the port now that we've created it, instead
-      // of these one-off connections?  Time it before changing it.
       chrome.extension.onRequest.addListener(dispatchHandler);
 
       if (!SAFARI) {
@@ -373,6 +369,21 @@
       }
       note_install();
 
+      // Chrome specific code.
+      if (!SAFARI) {
+        // Add context menu items.
+        chrome.contextMenus.create({
+          title:"Show blacklist wizard", 
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{}},
+              sender
+            );
+          }
+        });
+      }
 
 
       // Safari specific code.

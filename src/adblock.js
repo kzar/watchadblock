@@ -198,7 +198,6 @@ function adblock_begin_v2() {
       return;
 
     listen_for_broadcasts();
-    blacklister_init();
     whitelister_init();
 
     run_specials(data.features);
