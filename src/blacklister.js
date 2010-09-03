@@ -107,10 +107,6 @@ register_broadcast_listener('send_content_to_back', function(options) {
 // Safari context menu support, until we unify Chrome & Safari
 // support via port.js
 if (SAFARI) {
-  // Wait for right click
-  window.addEventListener("contextmenu", function(event) {
-    safari.self.tab.setContextMenuEventUserInfo(event, true);
-  }, false);
   // Handle right click menu item click
   safari.self.addEventListener("message", function(event) {
     if (event.name != "show-blacklist-wizard")

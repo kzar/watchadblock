@@ -199,6 +199,13 @@ function adblock_begin_v2() {
 
     listen_for_broadcasts();
 
+    if (SAFARI) {
+      // Add entries to right click menu.
+      window.addEventListener("contextmenu", function(event) {
+        safari.self.tab.setContextMenuEventUserInfo(event, true);
+      }, false);
+    }
+
     run_specials(data.features);
 
     // Safari already remove elements via true blocking.
