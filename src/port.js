@@ -272,8 +272,9 @@ if (SAFARI) {
           var result = { locales: [] };
 
           // == Find all locales we might need to pull messages from, in order
-          // 1: The user's current locale
-          result.locales.push(navigator.language);
+          // 1: The user's current locale, converted to match the format of
+          //    the _locales directories (e.g. "en-US" becomes "en_US"
+          result.locales.push(navigator.language.replace('-', '_'));
           // 2: Perhaps a region-agnostic version of the current locale
           if (navigator.language.length > 2)
             result.locales.push(navigator.language.substring(0, 2));
