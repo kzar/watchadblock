@@ -142,7 +142,6 @@
           "block_youtube",
           "show_youtube_help_msg",
           "show_google_search_text_ads",
-          "whitelist_shortcut",
           "true_blocking_support"
           ];
         for (var i = 0; i < feature_names.length; i++) {
@@ -150,7 +149,6 @@
           if (!features[name]) {
             features[name] = { name: name };
             switch (name) {
-              case "whitelist_shortcut":
               case "block_youtube":
               case "show_youtube_help_msg":
               case "true_blocking_support": //if supported
@@ -383,6 +381,17 @@
             );
           }
         });
+        chrome.contextMenus.create({
+          title:"Don't run on this domain...", 
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_whitelist_ui', options:{}},
+              sender
+            );
+          }
+        });
       }
 
 
@@ -424,11 +433,12 @@
           }
         }, false);
 
-        // Right click handler for demo hack, because keyboard shortcuts aren't working
+        // Add context menus
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "Show Blacklist Wizard");
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "AdBlock: Show Blacklist Wizard");
+          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", "AdBlock: Don't run on this domain...");
         }, false);
       }
 
