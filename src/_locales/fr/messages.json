@@ -17,11 +17,11 @@
     "description": "The checkbox label for the shortcut option"
   },
   "buttonblockit": {
-    "message": "Bloquez le !",
+    "message": "Bloquer",
     "description": "Block button"
   },
   "buttonedit": {
-    "message": "Editer",
+    "message": "Éditer",
     "description": "Edit filter manually button"
   },
   "optionstitle": {
@@ -30,7 +30,7 @@
   },
 
   "youtubevideomessage": {
-    "message": "Pas de video ? Actualisez la page. Si cela se reproduit, désactivez le blocage de publicité Youtube ici : $link$.",
+    "message": "Pas de vidéo ? Actualisez la page. Si cela se reproduit, désactivez le blocage de publicité Youtube ici : $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
@@ -41,19 +41,19 @@
   },
 
   "sliderexplanation": {
-    "message": "Faites glisser le curseur jusqu'à ce que l'annonce soit bloqué correctement sur la page, et l'élément bloqué semble utile.",
+    "message": "Faites glisser le curseur jusqu'à ce que l'annonce soit bloqué correctement sur la page.",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
-    "message": "Étape 1 : Sachez quoi bloquer",
+    "message": "Étape 1 : Indiquer l'élément à bloquer",
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "Que pensez-vous ce qui sera vrai à propos de cette annonce à chaque fois que vous visitez cette page ?",
+    "message": "Cochez les cases vraies à propos des valeurs de cette publicité.",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Pas sur ?</b> Appuyez sur 'Block it!' en dessous.",
+    "message": "<b>Pas sur ?</b> Appuyez sur 'Bloquer' en dessous.",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
@@ -61,7 +61,7 @@
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
-    "message": "Dernière étape : Qu'est-ce qui rend cela une publicité ?",
+    "message": "Dernière étape : Quelles sont les valeurs correctes de cette publicité ?",
     "description": "Blacklister options page title"
   },
   "blacklisternofilter": {
@@ -224,7 +224,7 @@
     "description": "Tooltip if you hover the donate image"
   },
   "optionsintro": {
-    "message": "Vous aimez AdBlock ? Mon nom set Michael. J'ai chuté à un emploi à mi-temps afin de developer AdBlock et souvenir mes utilisateurs. Merci d'utiliser et de profiter d'AdBlock, et si vous pouvez <a>faire un don</a> de n'importe quelle somme j'apprécirais <b>énormément</b> :)",
+    "message": "Vous aimez AdBlock ? Mon nom est Michael. Je suis passé à un emploi mi-temps afin de développer AdBlock et soutenir mes utilisateurs. Merci d'utiliser et de profiter d'AdBlock, et si vous pouvez <a>faire un don</a> de n'importe quelle somme j'apprécierais <b>énormément/b> :)",
     "description": "Intro of the options page"
   },
   "tabgeneral": {
@@ -273,7 +273,7 @@
     "description": "Option on first tab page"
   },
   "youtubeads": {
-    "message": "Bloquez les publicités sur les vidéos YouTube.",
+    "message": "Bloquer les publicités sur les vidéos YouTube.",
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
@@ -374,19 +374,19 @@
     "description": "Label to remove a custom filter"
   },
   "filterstabtitle": {
-    "message": "Abonnez-vous aux listes de filtres",
+    "message": "Abonnement aux listes de filtres",
     "description": "Title of the filter list tab"
   },
   "defaultsexplanation": {
-    "message": "Les valeurs par defat sont excellentes pour les utilisateurs anglais. D'autres souhaiteront peut-être s'abonner à d'autres filtres.",
+    "message": "Les valeurs par défaut sont excellentes pour les utilisateurs anglais. L'abonnement à d'autres filtres seront préférables pour les autres utilisateurs.",
     "description": "Explanation of the filter lists"
   },
   "filterlistlink": {
-    "message": "Ne pas souscrire à plus ce que vous avez besoin - chaque filtre ralentit la navigation un tout petit peu ! Les crédits et plus de listes peuvent être trouvés <a>ici</a>.",
+    "message": "Ne pas souscrire à plus de ce que vous avez besoin, chaque filtre ralentit la navigation un tout petit peu ! Les crédits et plus de listes peuvent être trouvés <a>ici</a>.",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "Je chercherais les mises à jour automatiquement, vous pouvez également <a>mettre à jour maintenant</a>.",
+    "message": "Les mises à jours seront installées automatiquement. Vous pouvez également <a>mettre à jour maintenant</a>.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -502,13 +502,22 @@
     "description": "A filter list"
   },
   "filterukranian": {
-    "message": "Filtres Ukrainien",
+    "message": "Filtres ukrainiens",
     "description": "A filter list"
   },
 
   "blacklisttabtitle": {
     "message": "Bloquer une publicité que les listes de filtres ont oublié",
     "description": "Title of the third tab"
+  },
+  "blacklistshortcutmessage": {
+    "message": "<b>Raccourci :</b> Appuyez sur <b>$keys$</b> sur une page pour bloquer une publicité. <small>(Si rien ne se passe, essayez de cliquer sur la première page)</small>",
+    "description": "Note: 'Kill' must be translated into another word that starts with a 'K'. Otherwise, don't translate it!",
+    "placeholders": {
+      "keys": {
+        "content": "Ctrl-Shift-K"
+      }
+    }
   },
   "addnewfilter": {
     "message": "Ajouter un nouveau filtre :",
@@ -568,8 +577,17 @@
     "description": "title of the 4th tab page"
   },
   "excludedsitesexample": {
-    "message": "Par exemple, avec 'google.com' les publicités seront bloquées sur google.com, mail.google.com, and www.google.com.",
+    "message": "Par exemple, avec 'google.com' les publicités seront bloquées sur google.com, mail.google.com, et www.google.com.",
     "description": "text on the 4th tab page"
+  },
+  "whitelistshortcutmessage": {
+    "message": "<b>Raccourci :</b> Appuyez sur <b>$keys$</b> sur une page pour ne pas bloquer les publicités sur ce domaine.",
+    "description": "Note: 'Live' must be translated into another word that starts with a 'L'. Otherwise, don't translate it!",
+    "placeholders": {
+      "keys": {
+        "content": "Ctrl-Shift-L"
+      }
+    }
   },
   "addbutton": {
     "message": "Ajouter",
