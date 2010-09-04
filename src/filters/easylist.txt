@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: LUyiAWmeTlUjFs0iEki1MA
+! Checksum: 5X6ETaLERDR1ZWHb9DUFMA
 ! EasyList - https://easylist.adblockplus.org/
-! Last modified:  3 Sep 2010 13:30 UTC
+! Last modified:  3 Sep 2010 23:20 UTC
 ! EasyList expires after 5 days (update frequency).
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
 !
@@ -57,6 +57,7 @@
 .com/ad2/
 .com/ad?
 .com/ad_
+.com/adops/
 .com/ads-
 .com/ads.
 .com/ads/
@@ -1848,6 +1849,7 @@ n728x90_
 ###ad-target
 ###ad-target-Leaderbord
 ###ad-teaser
+###ad-text
 ~gismeteo.com,~gismeteo.ru,~gismeteo.ua###ad-top
 ###ad-top-banner
 ###ad-top-text-low
@@ -2465,6 +2467,7 @@ n728x90_
 ###common_top_adspace
 ###companionAdDiv
 ###containerLocalAds
+###containerLocalAdsInner
 ###containerMrecAd
 ###content-ad-header
 ###content-header-ad
@@ -3018,6 +3021,7 @@ n728x90_
 ###tabAdvertising
 ###tblAd
 ###tbl_googlead
+###tcwAd
 ###template_ad_leaderboard
 ###tertiary_advertising
 ###text-ad
@@ -3426,6 +3430,7 @@ n728x90_
 ##.adLeaderboard
 ##.adLeft
 ##.adLoaded
+##.adLocal
 ##.adMastheadLeft
 ##.adMastheadRight
 ##.adMkt2Colw
@@ -6441,6 +6446,7 @@ books.google.co.za###rhswrapper font[size="-1"]
 books.google.com###rhswrapper font[size="-1"]
 books.google.com.au###rhswrapper font[size="-1"]
 booookmark.com###sitematches
+bostonherald.com##div[style="position: relative; margin-bottom: 16px; background-color: rgb(233, 233, 233); border-left: 16px solid rgb(23, 23, 23); padding: 20px 12px 20px 20px; clear: both;"]
 brandsoftheworld.com###leaderboardTop
 break.com##.ad
 break.com##.breaking_news
@@ -7069,6 +7075,7 @@ japanvisitor.com###sponsor
 jarrowandhebburngazette.com###banner01
 javalobby.org###topLeaderboard
 jayisgames.com##.bfg-feature
+jdownloader.org##a[href^="http://fileserve.com/signup.php?reff="]
 jeuxvideo-flash.com###pub_header
 jewtube.com###adv
 jewtube.com##div[style="display: block; width: 468px; height: 60px; padding: 5px; border: 1px solid rgb(221, 221, 221); text-align: left;"]
@@ -7413,6 +7420,7 @@ news.aol.co.uk###tdiv74
 news.cnet.com###bottom-leader
 news.com.au##.ad
 news.com.au##.sponsors
+news.nationalgeographic.com###headerboard
 news.yahoo.com###ymh-invitational-recs
 newsarama.com##.marketplace
 newsfactor.com##td[style="border-left: 1px solid rgb(192, 192, 192); padding-top: 3px; padding-bottom: 3px;"]
@@ -7804,6 +7812,8 @@ stormfront.org##table[width="863"]
 streamingmedia.com##.sponlinkbox
 stumblehere.com##td[width="270"][height="110"]
 stv.tv###collapsedBanner
+stv.tv###expandedBanner
+stv.tv###google
 stylelist.com###cod-promo
 stylelist.com##.fromsponsor
 stylelist.com##.partnerPromo
@@ -8437,8 +8447,8 @@ zuula.com##.sponsor
 @@||oas.five.tv/realmedia/ads/adstream_sx.ads/demand.five.tv/$object_subrequest
 @@||oascentral.feedroom.com/realmedia/ads/adstream_sx.ads/$script,domain=businessweek.com|economist.com|feedroom.com|stanford.edu
 @@||oascentral.surfline.com/realmedia/ads/adstream_sx.ads/www.surfline.com/articles$object_subrequest
-@@||objects.tremormedia.com/embed/js/$domain=deluxetelevision.com
-@@||objects.tremormedia.com/embed/swf/acudeoplayer.swf$domain=deluxetelevision.com
+@@||objects.tremormedia.com/embed/js/$domain=bostonherald.com|deluxetelevision.com
+@@||objects.tremormedia.com/embed/swf/acudeoplayer.swf$domain=bostonherald.com|deluxetelevision.com
 @@||objects.tremormedia.com/embed/swf/admanager*.swf
 @@||objects.tremormedia.com/embed/xml/*.xml?r=$object_subrequest,domain=mydamnchannel.com
 @@||objects.tremormedia.com/net/js/ads.js$domain=deluxetelevision.com
