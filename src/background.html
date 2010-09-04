@@ -184,6 +184,7 @@
         var tfd = top_frame_domains[sender.tab.id];
         var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
         var selectors = [];
+        var features = utils.get_optional_features();
         if (!whitelisted)
           selectors = utils.selectors_for_domain({domain:options.domain});
 
@@ -191,10 +192,12 @@
           page_is_whitelisted: whitelisted,
           selectors: selectors,
           top_frame_domain: tfd,
-          features: utils.get_optional_features()
+          features: features
         };
-        if (!SAFARI)
-          result.filtertext = _myfilters.filterset._sourceText;
+        if (!SAFARI) {
+          if (features.true_blocking_support.is_enabled)
+            result.filtertext = _myfilters.filterset._sourceText;
+        }
         var end = new Date();
         log("time to run: " + (end - start) + " ms || " + options.domain);
         return result;
