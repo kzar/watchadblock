@@ -1,34 +1,5 @@
 // Requires clickwatcher.js and elementchain.js and jQuery
 
-// Wizard that walks the user through clicking an ad, selecting an element,
-// and choosing properties to block.
-function BlacklistUi() {
-
-  // If a dialog is ever closed without setting this to false, the
-  // object fires a cancel event.
-  this._cancelled = true;
-
-  this._clickWatcher = new ClickWatcher();
-  var that = this;
-  this._clickWatcher.cancel(function() {
-    that._fire('cancel');
-  });
-  this._clickWatcher.click(function(element) {
-    that._chain = new ElementChain(element);
-    that._last = that._chain.current();
-    that._chain.change(that, that.handle_change);
-    that._chain.change();
-
-    that._ui_page1 = that._build_page1();
-    that._ui_page2 = that._build_page2();
-    that._redrawPage1();
-    that._ui_page1.dialog('open');
-  });
-
-  this._callbacks = { 'cancel': [], 'block': [] };
-
-  // TODO: makeEvent('cancel', 'click') and it sets up fns for us.
-}
 
 // Hide the specified CSS selector on the page, or if null, stop hiding.
 function preview(selector) {
@@ -49,6 +20,18 @@ function preview(selector) {
   css_preview.innerText += selector + " {display:none!important;}";
 
   document.documentElement.appendChild(css_preview);
+}
+
+// Wizard that walks the user through selecting an element and choosing
+// properties to block.
+function BlacklistUi(clicked_item) {
+  // If a dialog is ever closed without setting this to false, the
+  // object fires a cancel event.
+  this._cancelled = true;
+
+  this._callbacks = { 'cancel': [], 'block': [] };
+
+  this._clicked_item = clicked_item;
 }
 
 // TODO: same event framework as ClickWatcher
@@ -76,8 +59,36 @@ BlacklistUi.prototype.handle_change = function() {
   this._redrawPage1();
   this._redrawPage2();
 }
+
+
 BlacklistUi.prototype.show = function() {
-  this._clickWatcher.show();
+  // If we don't know the clicked element, we must find it first.
+  if (this._clicked_item == null) {
+    var clickWatcher = new ClickWatcher();
+    var that = this;
+    clickWatcher.cancel(function() {
+      that._fire('cancel');
+    });
+    clickWatcher.click(function(element) {
+      that._clicked_item = element;
+      that.show();
+    });
+    clickWatcher.show();
+    return;
+  }
+
+  // If we do know the clicked element, go straight to the slider.
+  else {
+    this._chain = new ElementChain(this._clicked_item);
+    this._last = this._chain.current();
+    this._chain.change(this, this.handle_change);
+    this._chain.change();
+
+    this._ui_page1 = this._build_page1();
+    this._ui_page2 = this._build_page2();
+    this._redrawPage1();
+    this._ui_page1.dialog('open');
+  }
 }
 
 BlacklistUi.prototype._build_page1 = function() {

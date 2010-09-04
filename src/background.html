@@ -20,8 +20,6 @@
 
 
       var utils = {};
-      utils.noop = function(options) {}
-
 
       // V3 FILTERING
 
@@ -142,8 +140,6 @@
           "block_youtube",
           "show_youtube_help_msg",
           "show_google_search_text_ads",
-          "whitelist_shortcut",
-          "blacklist_shortcut",
           "true_blocking_support"
           ];
         for (var i = 0; i < feature_names.length; i++) {
@@ -151,8 +147,6 @@
           if (!features[name]) {
             features[name] = { name: name };
             switch (name) {
-              case "whitelist_shortcut":
-              case "blacklist_shortcut":
               case "block_youtube":
               case "show_youtube_help_msg":
               case "true_blocking_support": //if supported
@@ -231,10 +225,6 @@
         utils.storage_set({key:'whitelist', value:whitelist});
         utils.emit_broadcast({fn:'whitelist_updated', options: {}});
       }
-      utils.clear_whitelist = function(options) {
-        utils.storage_set({key:'whitelist', value: []});
-        utils.emit_broadcast({fn:'whitelist_updated', options: {}});
-      }
 
       // NEW FILTERS
 
@@ -293,6 +283,7 @@
         });
       }
 
+
       utils.open_blacklist_ui_on_tab = function(options) {
         // emit_page_broadcast uses sender.tab.id to determine which page
         // to send to.  Fake it.
@@ -305,7 +296,7 @@
           sender
         );
       };
-
+      
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
         var sender = { tab: { id: options.tabid } };
@@ -314,6 +305,9 @@
           sender
         );
       };
+
+
+
 
       ports = [];
       chrome.extension.onConnect.addListener(function(port) {
@@ -338,8 +332,6 @@
         sendResponse(result);
       }
  
-      // TODO maybe use the port now that we've created it, instead
-      // of these one-off connections?  Time it before changing it.
       chrome.extension.onRequest.addListener(dispatchHandler);
 
       if (!SAFARI) {
@@ -373,6 +365,43 @@
       }
       note_install();
 
+      // Chrome specific code.
+      if (!SAFARI) {
+        // Add context menu items.
+        chrome.contextMenus.create({
+          title:"Block this ad",
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{info: info}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title:"Block an ad on this page...",
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title:"Don't run on this domain...", 
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_whitelist_ui', options:{}},
+              sender
+            );
+          }
+        });
+      }
 
 
       // Safari specific code.
@@ -403,21 +432,24 @@
           messageEvent.message = !isMatched;
         }, false);
 
-        // Open Options page upon Toolbar button click.
         safari.application.addEventListener("command", function(commandEvent) {
+          // Open Options page upon Toolbar button click.
           if (commandEvent.command == "AdBlockOptions") {
             safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
           }
-          if (commandEvent.command == "show-blacklist-wizard") {
+          if (commandEvent.command in 
+              {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
           }
         }, false);
 
-        // Right click handler for demo hack, because keyboard shortcuts aren't working
+        // Add context menus
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "Show Blacklist Wizard");
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "AdBlock this ad");
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", "AdBlock an ad on this page...");
+          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", "Don't run AdBlock on this domain...");
         }, false);
       }
 

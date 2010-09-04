@@ -198,8 +198,21 @@ function adblock_begin_v2() {
       return;
 
     listen_for_broadcasts();
-    blacklister_init();
-    whitelister_init();
+
+    // The wizards by default don't respond to contextmenu clicks,
+    // because Chrome can't hide the contextmenus on whitelisted
+    // pages.  Now that we know we're not whitelisted, make the
+    // wizards respond.
+    may_open_blacklist_ui = true;
+    may_open_whitelist_ui = true;
+
+    if (SAFARI) {
+      // Add entries to right click menu.  Unlike Chrome, we can make
+      // the menu items only appear on non-whitelisted pages.
+      window.addEventListener("contextmenu", function(event) {
+        safari.self.tab.setContextMenuEventUserInfo(event, true);
+      }, false);
+    }
 
     run_specials(data.features);
 

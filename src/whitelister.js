@@ -1,13 +1,14 @@
-var may_show_whitelist_ui = true;
+// Global lock so we can't open more than once on a tab.
+var may_open_whitelist_ui = false;
 
 function verify_whitelist() {
-  if (!may_show_whitelist_ui)
+  if (!may_open_whitelist_ui)
     return;
   var domain = document.domain;
 
   // defined in blacklister.js
   load_jquery_ui(function() {
-    stop_checking_for_whitelist_keypress();
+    may_open_whitelist_ui = false;
 
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
@@ -26,7 +27,7 @@ function verify_whitelist() {
         minHeight: 50,
         buttons: btns,
         close: function() {
-          whitelister_init();
+          may_open_whitelist_ui = true;
           page.remove();
         }
       });
@@ -54,26 +55,20 @@ function verify_whitelist() {
   });
 }
 
-function stop_checking_for_whitelist_keypress() {
-  may_show_whitelist_ui = false;
-  $("body").unbind('keydown', check_for_whitelist_keypress);
-}
-
-function check_for_whitelist_keypress(e) {
-  if (e.ctrlKey && e.shiftKey && e.keyCode == 76) { // L
-    extension_call('get_optional_features', {}, function(features) {
-      if (features.whitelist_shortcut.is_enabled)
-        verify_whitelist();
-    });
-  }
-}
-
-function whitelister_init() {
-  may_show_whitelist_ui = true;
-  $("body").keydown(check_for_whitelist_keypress);
-}
 
 if (window == window.top) {
   listen_for_broadcasts();
   register_broadcast_listener('top_open_whitelist_ui', verify_whitelist);
 }
+
+// Safari context menu support, until we unify Chrome & Safari
+// support via port.js
+if (SAFARI) {
+  // Handle right click menu item click
+  safari.self.addEventListener("message", function(event) {
+    if (event.name != "show-whitelist-wizard")
+      return;
+    page_broadcast('top_open_whitelist_ui', {});
+  }, false);
+}
+
