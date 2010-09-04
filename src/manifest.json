@@ -22,7 +22,7 @@
         "broadcast_channel.js", 
 
       
-        "filteroptions.js",
+        "filtering/filteroptions.js",
         "filtering/fifocache.js",
         "filtering/filtertypes.js",
         "filtering/filterset.js",
@@ -36,10 +36,10 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "overlay.js", 
-        "clickwatcher.js",
-        "elementchain.js",
-        "blacklistui.js",
+        "blacklisting/overlay.js", 
+        "blacklisting/clickwatcher.js",
+        "blacklisting/elementchain.js",
+        "blacklisting/blacklistui.js",
         "blacklister.js", 
         "whitelister.js", 
         "adblock.js"
