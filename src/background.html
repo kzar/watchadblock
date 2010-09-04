@@ -372,7 +372,7 @@
       if (!SAFARI) {
         // Add context menu items.
         chrome.contextMenus.create({
-          title:"Block this ad",
+          title: translate("contextmenuhidethis"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -383,7 +383,7 @@
           }
         });
         chrome.contextMenus.create({
-          title:"Block an ad on this page...",
+          title: translate("contextmenuhideanything"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -394,7 +394,7 @@
           }
         });
         chrome.contextMenus.create({
-          title:"Don't run on this domain...", 
+          title: translate("contextmenuexcludedomain"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -450,9 +450,9 @@
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "AdBlock this ad");
-          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", "AdBlock an ad on this page...");
-          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", "Don't run AdBlock on this domain...");
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
+          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
 
