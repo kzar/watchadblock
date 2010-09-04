@@ -47,6 +47,14 @@ function load_jquery_ui(callback) {
   );
 }
 
+// Record the last element to be right-clicked, since that information isn't
+// passed to the contextmenu click handler that calls top_open_blacklist_ui
+var rightclicked_item = null;
+$("body").bind("contextmenu", function(e) {
+  rightclicked_item = e.srcElement;
+}).click(function() {
+  rightclicked_item = null;
+});
 if (window == window.top) {
   register_broadcast_listener('top_open_blacklist_ui', function(options) {
     if (!may_open_blacklist_ui)
@@ -55,7 +63,19 @@ if (window == window.top) {
     may_open_blacklist_ui = false;
 
     load_jquery_ui(function() {
-      var blacklist_ui = new BlacklistUi();
+      // If they chose "Block an ad on this page..." ask them to click the ad
+      if (options.nothing_clicked)
+        rightclicked_item = null;
+
+      // If they right clicked in a frame in Chrome, use the frame instead
+      if (options.info && options.info.frameUrl) {
+        var frame = $("iframe").filter(function(i, el) {
+          return el.src == options.info.frameUrl;
+        });
+        if (frame.length == 1)
+          rightclicked_item = frame[0];
+      }
+      var blacklist_ui = new BlacklistUi(rightclicked_item);
       blacklist_ui.cancel(function() {
         may_open_blacklist_ui = true;
       });
@@ -109,9 +129,9 @@ register_broadcast_listener('send_content_to_back', function(options) {
 if (SAFARI) {
   // Handle right click menu item click
   safari.self.addEventListener("message", function(event) {
-    if (event.name != "show-blacklist-wizard")
-      return;
-    page_broadcast('top_open_blacklist_ui', {});
+    if (event.name == "show-blacklist-wizard")
+      page_broadcast('top_open_blacklist_ui', {});
+    else if (event.name == "show-clickwatcher-ui")
+      page_broadcast('top_open_blacklist_ui', {nothing_clicked:true});
   }, false);
 }
-

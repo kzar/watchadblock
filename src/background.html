@@ -343,12 +343,23 @@
       if (!SAFARI) {
         // Add context menu items.
         chrome.contextMenus.create({
-          title:"Show blacklist wizard", 
+          title:"Block this ad",
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
             utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{}},
+              {fn:'top_open_blacklist_ui', options:{info: info}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title:"Block an ad on this page...",
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
               sender
             );
           }
@@ -400,7 +411,8 @@
           if (commandEvent.command == "AdBlockOptions") {
             safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
           }
-          if (commandEvent.command in { "show-whitelist-wizard": 1, "show-blacklist-wizard": 1 }) {
+          if (commandEvent.command in 
+              {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
           }
         }, false);
@@ -409,8 +421,9 @@
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "AdBlock: Show Blacklist Wizard");
-          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", "AdBlock: Don't run on this domain...");
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "AdBlock this ad");
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", "AdBlock an ad on this page...");
+          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", "Don't run AdBlock on this domain...");
         }, false);
       }
 
