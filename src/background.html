@@ -283,6 +283,32 @@
         });
       }
 
+
+      utils.open_blacklist_ui_on_tab = function(options) {
+        // emit_page_broadcast uses sender.tab.id to determine which page
+        // to send to.  Fake it.
+        // TODO we should really make a cleaner system for letting
+        // content scripts default a tabid to "my tab" while letting the
+        // extension button specify the tab id.
+        var sender = { tab: { id: options.tabid } };
+        utils.emit_page_broadcast(
+          {fn:'top_open_blacklist_ui', options:{}},
+          sender
+        );
+      };
+      
+      // Just like open_blacklist_ui
+      utils.open_whitelist_ui_on_tab = function(options) {
+        var sender = { tab: { id: options.tabid } };
+        utils.emit_page_broadcast(
+          {fn:'top_open_whitelist_ui', options:{}},
+          sender
+        );
+      };
+
+
+
+
       ports = [];
       chrome.extension.onConnect.addListener(function(port) {
         port.onDisconnect.addListener(function(disconnected_port) {
