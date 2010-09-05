@@ -140,6 +140,7 @@
           "block_youtube",
           "show_youtube_help_msg",
           "show_google_search_text_ads",
+          "show_context_menu_items",
           "true_blocking_support"
           ];
         for (var i = 0; i < feature_names.length; i++) {
@@ -149,6 +150,7 @@
             switch (name) {
               case "block_youtube":
               case "show_youtube_help_msg":
+              case "show_context_menu_items":
               case "true_blocking_support": //if supported
                 features[name].is_enabled = true; // by default
                 break;
@@ -369,7 +371,7 @@
       note_install();
 
       // Chrome specific code.
-      if (!SAFARI) {
+      if (!SAFARI && utils.get_optional_features({}).show_context_menu_items.is_enabled) {
         // Add context menu items.
         chrome.contextMenus.create({
           title:"Block this ad",
