@@ -452,6 +452,8 @@
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
+          if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
+            return;
           event.contextMenu.appendContextMenuItem("show-blacklist-wizard", "AdBlock this ad");
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", "AdBlock an ad on this page...");
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", "Don't run AdBlock on this domain...");

@@ -107,7 +107,14 @@
     <p>
       <input type="checkbox" class="feature" id="enable_show_context_menu_items" />
       <span class="optionDescription" i18n="showcontextmenus"></span>
-      <span i18n="pleaserestart"></span>
+      <span id='pleaserestart'></span>
+      
+      <script>
+        $(function() {
+          if (!SAFARI)
+            $("#pleaserestart").text(translate("pleaserestart"));
+        });
+      </script>
     </p>
 
     <p>
