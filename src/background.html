@@ -9,16 +9,6 @@
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
     <script>
-      function page_is_whitelisted(whitelist, the_domain) {
-        if (the_domain == "acid3.acidtests.org") return true;
-        for (var i = 0; i < whitelist.length; i++) {
-          if (the_domain.indexOf(whitelist[i]) != -1)
-            return true;
-        }
-        return false;
-      }
-
-
       var utils = {};
 
       // V3 FILTERING
@@ -305,6 +295,28 @@
           sender
         );
       };
+
+
+
+      (function() {
+        // Set the button image according to the URL of the current tab.
+        function updateButtonUI() {
+          getCurrentTabInfo(function(info) {
+            if (info.whitelisted)
+              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+            else
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
+          });
+        }
+
+        chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+          if (tab.selected)
+            updateButtonUI();
+        });
+        chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
+          updateButtonUI();
+        });
+      })();
 
 
 

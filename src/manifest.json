@@ -8,8 +8,13 @@
     "128": "img/icon128.png"
   },
   "permissions": [
-    "http://*/*", "https://*/*", "contextMenus"
+    "http://*/*", "https://*/*", "contextMenus", "tabs"
   ],
+  "browser_action": {
+    "default_icon": "img/icon19.png",
+    "default_title": "AdBlock Options",
+    "popup": "button/popup.html"
+  },
   "background_page": "background.html",
   "options_page": "options/index.html",
   "content_scripts": [

@@ -56,3 +56,45 @@ function localizePage() {
     $(this).addClass("i18n-replaced");
   });
 }
+
+// Returns true if anything in whitelist matches the_domain.
+function page_is_whitelisted(whitelist, the_domain) {
+  if (the_domain == "acid3.acidtests.org") return true;
+  for (var i = 0; i < whitelist.length; i++) {
+    if (the_domain.indexOf(whitelist[i]) != -1)
+      return true;
+  }
+  return false;
+}
+
+
+
+// Get interesting information about the current tab.
+// Inputs:
+//   url: string
+//   callback: function(info).
+//   info object passed to callback: {
+//     tab: Tab object
+//     whitelisted: bool - whether the current tab's URL is whitelisted.
+//     domain: string
+//   }
+// Returns: null (asynchronous)
+function getCurrentTabInfo(callback) {
+  var whitelist = JSON.parse(localStorage.getItem('whitelist') || '[]');
+  chrome.tabs.getSelected(undefined, function(tab) {
+    // TODO: this matches file:///home/foo as /home, though
+    // really we should keep the button from displaying at all
+    // on non-http:// and https:// pages. (Does it do this anymore
+    // now that it's not its own extension?)
+    // TODO: use code from elsewhere to extract domain
+    var domain = tab.url.match(".*://(..*?)/")[1];
+    callback({
+      tab: tab,
+      domain: domain,
+      // TODO: support this
+      whitelisted: page_is_whitelisted(whitelist, domain)
+    });
+  });
+}
+
+
