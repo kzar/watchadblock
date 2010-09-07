@@ -356,7 +356,7 @@ MyFilters.__make_subscription_options = function() {
       name: "AdBlock custom filters (recommended)",
     },
     "easylist": {
-      url: "https://easylist-downloads.adblockplus.org/easylist.txt",
+      url: "http://adblockplus.mozdev.org/easylist/easylist.txt",
       name: "EasyList (recommended)",
     },
     "easylist_plus_bulgarian": {
@@ -376,7 +376,7 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional French filters",
     },
     "easylist_plus_german": {
-      url: "https://easylist-downloads.adblockplus.org/easylistgermany.txt",
+      url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
       name: " - additional German filters",
     },
     "easylist_plus_norwegian": {
