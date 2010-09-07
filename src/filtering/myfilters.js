@@ -356,7 +356,7 @@ MyFilters.__make_subscription_options = function() {
       name: "AdBlock custom filters (recommended)",
     },
     "easylist": {
-      url: "https://easylist-downloads.adblockplus.org/easylist.txt",
+      url: "http://adblockplus.mozdev.org/easylist/easylist.txt",
       name: "EasyList (recommended)",
     },
     "easylist_plus_bulgarian": {
