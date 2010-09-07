@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: aHiJ7KIBK6IgoLc4PP3I3A
+! Checksum: XE6Ny/zE7dsL5dX7qOPgGA
 ! EasyList - https://easylist.adblockplus.org/
-! Last modified:  6 Sep 2010 14:50 UTC
+! Last modified:  7 Sep 2010 15:20 UTC
 ! Expires: 5 days (update frequency)
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
 !
@@ -601,6 +601,7 @@
 /advertise.
 /advertise/*
 /advertisehere.
+/advertisement2.
 /advertisement-
 /advertisement.
 /advertisement/*
@@ -3969,6 +3970,7 @@ n728x90_
 ~ixbtlabs.com##.bottom_ad_block
 ##.bottom_sponsor
 ##.bottomad
+##.bottomadvert
 ##.bottomrightrailAd
 ##.bottomvidad
 ##.box-ad
@@ -5095,6 +5097,8 @@ n728x90_
 ||clickexperts.net^$third-party
 ||clickfuse.com^$third-party
 ||clickintext.net^$third-party
+||clicksor.com^$third-party
+||clicksor.net^$third-party
 ||clickthrucash.com^$third-party
 ||clixgalore.com^$third-party
 ||cogsdigital.com^$third-party
@@ -5832,6 +5836,7 @@ n728x90_
 ||about.com/0g/$subdocument
 ||abovetopsecret.com/300_
 ||ac2.msn.com^
+||access.njherald.com^
 ||activewin.com^*/blaze_static2.gif
 ||adpaths.com/_aspx/cpcinclude.aspx?
 ||ads.readwriteweb.com^
@@ -6175,7 +6180,6 @@ n728x90_
 ||retrevo.com^*/pcwframe.jsp?
 ||richmedia.yimg.com^
 ||riderfans.com/other/
-||rottentomatoes.com^*/inc_beta/rt.js
 ||sameip.org/images/froghost.gif
 ||scenereleases.info/wp-content/*.swf
 ||sciencedaily.com^*/google-story2-rb.js
@@ -8399,7 +8403,7 @@ zuula.com##.sponsor
 @@||doubleclick.net^*/adj/wwe.shows/ecw_ecwreplay;*;sz=624x325;$script
 @@||doubleclick.net^*/listen/*;sz=$script,domain=last.fm
 @@||doubleclick.net^*/ndm.tcm/video;$script,domain=player.video.news.com.au
-@@||doubleclick.net^*/videoplayer*wnad46=worldnow$subdocument,domain=wflx.com
+@@||doubleclick.net^*/videoplayer*=worldnow$subdocument,domain=ktiv.com|wflx.com
 @@||dstw.adgear.com/crossdomain.xml$domain=hot899.com|streamtheworld.com
 @@||dstw.adgear.com/impressions/int/as=*.json?ag_r=$object_subrequest,domain=hot899.com|streamtheworld.com
 @@||dyncdn.buzznet.com/catfiles/?f=dojo/*.googleadservices.$script
@@ -8593,6 +8597,7 @@ zuula.com##.sponsor
 @@||216.97.231.225^$domain=seeingwithsound.com
 @@||84.243.214.232^$image,domain=seeingwithsound.com
 @@||ads*.dateiverzeichnis.net^$script
+@@||ads.clicksor.com/showad.php?*&adtype=7&$script,domain=rapid8.com
 @@||ads.gtainside.com/openx/ad.js
 @@||akihabaranews.com/images/ad/
 @@||artificialvision.com^$elemhide,image,script
@@ -8621,9 +8626,11 @@ zuula.com##.sponsor
 @@||onlinevideoconverter.com/scripts/advertisement.js
 @@||pagead2.googlesyndication.com/pagead/render_ads.js$domain=seeingwithsound.com
 @@||photobucket.com^$image,domain=seeingwithsound.com
+@@||pub.clicksor.net/newserving/js/show_ad.js$domain=rapid8.com
 @@||ratebeer.com/javascript/advertisement.js
 @@||seeingwithsound.cn^$image,script,domain=artificialvision.com|metamodal.com|seeingwithsound.com
 @@||seeingwithsound.com^$elemhide,image,script
+@@||serw.clicksor.com/newserving/getkey.php?$script,domain=rapid8.com
 @@||sites.google.com/site/$image,script,domain=artificialvision.com|metamodal.com|seeingwithsound.com
 @@||sportsm8.com/adsense.js
 @@||spreadlink.us/advertisement.js
