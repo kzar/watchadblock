@@ -127,7 +127,8 @@
         $("#divAddNewFilter").slideUp();
         $(".addControls").slideUp();
         $("#txtFiltersAdvanced").attr("disabled", null);
-        $("#divSaveButton").slideDown();
+        $("#btnSaveAdvancedFilters").slideDown();
+        $("#savereminder").show();
         $("#btnEditAdvancedFilters").hide();
         $("#txtFiltersAdvanced").focus();
       });
@@ -138,7 +139,8 @@
 
         $("#divAddNewFilter").slideDown();
         $("#txtFiltersAdvanced").attr("disabled", "disabled");
-        $("#divSaveButton").slideUp();
+        $("#btnSaveAdvancedFilters").slideUp();
+        $("#savereminder").hide();
         $("#btnEditAdvancedFilters").show();
       }
       $("#btnSaveAdvancedFilters").click(saveFilters);
@@ -213,18 +215,22 @@
 
       <h3 i18n="manualfilteredit"></h3>
       <div>
-        <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
-        <div id="divSaveButton" style="display:none">
-          <p i18n="filtersavewarning" i18n_replacement_el="tutorlink"
-             class="footnote"></p>
-          <a id="tutorlink" href="http://adblockplus.org/en/filters" 
-             target="_new"></a>
-
-          <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
-          <span id="lblSaveWarning" style="color:red;margin-left:20px">
-            <b i18n="savereminder"></b>
-          </span>
-        </div>
+        <table>
+          <tr>
+            <td style="min-width: 105px;">
+              <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
+              <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton"
+                 style="display:none;" />
+            </td>
+            <td i18n="filtersavewarning" i18n_replacement_el="tutorlink"
+             class="footnote" style="padding-left:9px;"></td>
+          </tr><tr><td></td>
+            <td style="display:none;color:red;padding-left:9px;font-weight:bold;" 
+             i18n="savereminder" id="savereminder"></td>
+          </tr>
+        </table>
+        <a id="tutorlink" href="http://adblockplus.org/en/filters"
+           target="_new"></a>
       </div>
 
     </div>
