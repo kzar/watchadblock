@@ -1,6 +1,6 @@
 ﻿{
   "description": {
-    "message": "크롬 전용 애드블록(AdBlock)! 웹 사이트의 광고를 차단하고, 5점 만점에 4.5점의 가장 인기 있는 확장 프로그램!",
+    "message": "크롬 전용 애드블록! 웹 사이트의 광고 차단, 5점 만점에 4.5점의 사용자 평가!",
     "description": "Extension description in manifest"
   },
 
@@ -172,7 +172,7 @@
     "description": "abp: link subscriber result"
   },
   "subscribingfailed": {
-    "message": "실패함!",
+    "message": "실패함",
     "description": "abp: link subscriber result"
   },
 
@@ -195,8 +195,8 @@
     "description": "Tooltip if you hover the donate image"
   },
   "optionsintro": {
-    "message": "AdBlock을 좋아합니까?  저의 이름은 마이클입니다. AdBlock을 개발하고 사용자들을 지원하기 위해 거의 모든 시간을 투자하고 있습니다.<br/>
-    AdBlock을 통해 쾌적함을 누리시고, 저에게 고마운 마음을 전하기 위해 <b><a>기부</a></b>를 해주신다면 <b>매우</b> 고마워할 것입니다*^^*",
+    "message": "AdBlock을 좋아합니까?  저의 이름은 마이클이며, AdBlock 개발과 사용자에 대한 지원을 위해 거의 모든 시간을 투자하고 있습니다.<br/>
+    AdBlock으로 쾌적함을 누리시고, 어느 정도의 <b><a>기부</a></b>를 해주신다면 <b>매우</b> 고마워할 것입니다*^^*",
     "description": "Intro of the options page"
   },
   "tabgeneral": {
@@ -221,7 +221,7 @@
     "description": "Title of first tab page"
   },
   "blocknothideoption": {
-    "message": "광고를 숨기지 않고 대부분의 광고를 차단함.",
+    "message": "광고를 숨기지 않고 대부분의 광고를 차단함",
     "description": "Option on first tab page"
   },
   "betalabel": {
@@ -248,6 +248,14 @@
     "message": "유튜브 비디오 내부의 광고 차단",
     "description": "Option on first tab page"
   },
+  "showcontextmenus": {
+    "message": "문맥 메뉴에 항목을 추가함",
+    "description": "Option on first tab page"
+  },
+  "pleaserestart": {
+    "message": "(크롬을 다시 시작해야 함)",
+    "description": "Explaining that changing an optional feature requires restarting Chrome before it will take effect"
+  },
   "debuginlogoption": {
     "message": "콘솔 로그에서 차단/숨김 상태 기록 (AdBlock의 처리 속도가 느려짐)",
     "description": "Option on first tab page"
@@ -258,7 +266,7 @@
   },
 
   "updatedrightnow": {
-    "message": "즉시 업데이트됨",
+    "message": "지금 업데이트됨",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
@@ -358,7 +366,7 @@
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "구독 필터는 5일 주기로 자동 업데이트됨. 또는 <a>즉시 업데이트</a>",
+    "message": "구독 필터는 5일 주기로 자동 업데이트됨. 또는 <a>지금 업데이트</a>",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -386,11 +394,11 @@
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "AdBlock custom filters (권장)",
+    "message": "AdBlock custom filters (AdBlock 구독 필터)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
-    "message": "EasyList (권장)",
+    "message": "EasyList (영어권 구독 필터)",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
@@ -478,6 +486,10 @@
     "description": "A filter list"
   },
 
+  "blacklistclickmessage": {
+   "message": "광고를 제거하려면 웹 페이지에서 마우스 오른쪽 버튼을 클릭하거나 사용자 필터를 직접 입력하십시오.",
+   "description": "Message at the top of the blacklist options tab"
+   },
   "blacklisttabtitle": {
     "message": "사용자 필터 관리",
     "description": "Title of the third tab"
