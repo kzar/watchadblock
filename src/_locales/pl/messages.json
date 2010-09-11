@@ -45,7 +45,7 @@
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "Zastanów się, co będzie się zgadzać dla tej reklamy za każdym razem gdy odwiedzisz tę witrynę?",
+    "message": "Co będzie się zgadzać dla tej reklamy za każdym razem gdy odwiedzisz tę witrynę?",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
@@ -155,11 +155,11 @@
     }
   },
   "whitelistertitle": {
-    "message": "Wykluczyć tę domenę?",
+    "message": "Dodać tę domenę do białej listy?",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
-    "message": "Wyklucz",
+    "message": "Dodaj",
     "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
 
@@ -211,7 +211,7 @@
     "description": "A tab on the options page"
   },
   "tabexcluded": {
-    "message": "Wykluczone strony",
+    "message": "Biała lista",
     "description": "A tab on the options page"
   },
 
@@ -228,7 +228,7 @@
     "description": "Option on first tab page"
   },
   "blocknothidewarning": {
-    "message": "Zważ, iż Chrome nie wspiera tego w pełni, więc niewielka ilość danych może zostać pobrana i ukryta jeśli masz szybki komputer.",
+    "message": "Chrome nie wspiera tego w pełni, jeżeli masz szybki komputer to niewielka ilość danych może zostać pobrana i ukryta.",
     "description": "Warning for block instead of hiding option"
   },
   "buttonexplanation": {
@@ -246,6 +246,14 @@
   "youtubeads": {
     "message": "Blokuj reklamy w filmach YouTube.",
     "description": "Option on first tab page"
+  },
+  "showcontextmenus": {
+    "message": "Dodaj pozycje do menu kontekstowego.",
+    "description": "Option on first tab page"
+  },
+  "pleaserestart": {
+    "message": "(Wymaga ponownego uruchomienia Chrome)",
+    "description": "Explaining that changing an optional feature requires restarting Chrome before it will take effect"
   },
   "debuginlogoption": {
     "message": "Pokazuj komunikaty debugowania w logach konsoli (spowalnia AdBlock)",
@@ -357,7 +365,7 @@
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "Aktualizacje są pobierane automatycznie; możesz również wcisnąć przycisk: <a>Uaktualnij</a>.",
+    "message": "Aktualizacje są pobierane automatycznie; możesz również wcisnąć przycisk: <a>Uaktualnij</a>",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -477,6 +485,10 @@
     "description": "A filter list"
   },
 
+  "blacklistclickmessage": {
+    "message": "Kliknij w reklamę prawym klawiszem myszy by ją zablokować, lub zablokuj ją samodzielnie tutaj.",
+    "description": "Message at the top of the blacklist options tab"
+  },
   "blacklisttabtitle": {
     "message": "Zablokuj reklamę, którą listy filtrów ominęły",
     "description": "Title of the third tab"
@@ -510,15 +522,15 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "Bądź ostrożny: jeśli popełnisz błąd, może on zablokować inne filtry, także te oficialne!<br/>Przeczytaj <a>filter syntax tutorial</a> aby nauczyć się jak dodawać zaawansowane wpisy do czarnej i białej listy filtrów.",
+    "message": "Uwaga: jeśli popełnisz błąd, może on zablokować inne filtry, także te oficialne!<br/>Przeczytaj <a>filter syntax tutorial</a> aby nauczyć się jak dodawać zaawansowane wpisy do czarnej i białej listy filtrów.",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
-    "message": "Zachowaj",
+    "message": "Zapisz",
     "description": "Save button"
   },
   "savereminder": {
-    "message": "Nie zapomnij zachować!",
+    "message": "Nie zapomnij zapisać!",
     "description": "Reminder to press save"
   },
   "advanced": {
@@ -556,7 +568,7 @@
   },
   "adreport1": {
     "message": "Znalazłeś reklamę na jakiejś stronie, która nie została zablokowana? Dowiedz się gdzie możesz to zgłosić<br/> Pamiętaj: raportowanie reklam jest dobrowolne. Jeśli sobie tego nie życzysz, możesz po prostu zamknąć to okno i zablokować ją wyłącznie dla siebie, dodając filtr w zakładce 'Czarna lista' na stronie 'Ustawienia AdBlock'!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabBlacklist' message."
+    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "Upewnij się, że twoje listy filtrów są aktualne",
@@ -575,15 +587,15 @@
     "description": "question on ad reporting page"
   },
   "yes": {
-    "message": "Tak, reklama nadal się wyświetla",
+    "message": "Tak, reklama nadal się wyświetla.",
     "description": "A positive response to a question"
   },
   "no": {
-    "message": "Nie, reklama zniknęła",
+    "message": "Nie, reklama zniknęła.",
     "description": "A negative response to a question"
   },
   "adalreadyblocked": {
-    "message": "Nic nie musisz robić, gdyż reklama jest już zablokowana",
+    "message": "Nic nie musisz robić, gdyż reklama jest już zablokowana.",
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "correctfilters": {
@@ -745,11 +757,11 @@
     }
   },
   "reporttous": {
-    "message": "Jeśli znasz angielski, możesz zgłosić reklamę do nas na $in_the_issue_tracker_link$. (Jesteśmy świadomi, że nie możemy blokować reklam w większości filmach wideo. Czekamy aż WebKit to umożliwi.)",
+    "message": "Jeśli znasz angielski, możesz zgłosić reklamę do nas w $in_the_issue_tracker_link$. (Jesteśmy świadomi, że nie możemy blokować reklam w większości filmach wideo. Czekamy aż WebKit to umożliwi.)",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
-        "content": "$1issue tracker$2",
+        "content": "$1systemie śledzenia błędów$2",
         "example": "<a href='issuetracker.html'>in the issue tracker</a>"
       }
     }
@@ -759,7 +771,7 @@
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {
-    "message": "Korzystasz ze starej wersji AdBlock. Najpierw $updatelink$ rozszerzenie AdBlock",
+    "message": "Korzystasz ze starej wersji AdBlock. Najpierw $updatelink$ rozszerzenie AdBlock.",
     "description": "ad report page instruction",
     "placeholders": {
       "updatelink": {
