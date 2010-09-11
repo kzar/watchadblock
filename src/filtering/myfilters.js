@@ -403,10 +403,6 @@ MyFilters.__make_subscription_options = function() {
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       name: "Chinese filters",
     },
-    "czech": {
-      url: "http://adblock.dajbych.net/adblock.txt",
-      name: "Czech filters",
-    },
     "danish": {
       url: "http://adblock.schack.dk/block.txt",
       name: "Danish filters",
