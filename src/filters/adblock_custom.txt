@@ -404,8 +404,7 @@ dinside.no##div#rightAdsSection
 discuss.com.hk##DIV.ad
 discuss.com.hk##div.banner_b1
 discuss.com.hk##IFRAME[src="http://i1.hk/promo/carfeed/i.php"]
-distrowatch.com##IMG[src="images/jnnufs"]
-distrowatch.com##TABLE.qxwrv
+distrowatch.com##[href*="linuxidentity.php"],[href*="linuxcdorg.php"],[href*="netsonic.php"],[href*="acunetix.com"],[href*="3cx.com"],[href*="cloud.bg"],[href*="secpoint.com"],[href*="osdisc.com"],[href*="amazon.com"],[href*="tradepub.com"]
 dizihd.com##img[src^="http://www.tugranet.net/banner-"]
 dn.se##div.advert-group
 dnevnik.bg##DIV.news
@@ -1750,16 +1749,16 @@ http://zde-affinity.edgecaching.net/
 mpnrs.com
 promo.md$domain=forum.md
 valueclick.net
-yieldmanager.
 @@||247realmedia.com^$domain=channel4.com
 @@||24ur.com/adserver/adall.php
 @@||channel4.com/*/adstream_
+@@||distrowatch.com/images/$background,image
+@@||distrowatch.com^*.png|
 @@||openx.org^$domain=openx.org
 @@||static.stuff.co.nz/images/*
 @@||tre.it^$~third-party
 @@||www.google.com/adsense/*$domain=www.google.com
 @@||www.google.com/images/adsense/*$domain=www.google.com
-|!$domain=gamecopyworld.com
 ||d*.sina.com.cn$object,image
 ||static.stuff.co.nz/*/*/*$background
 ||static.tek.no/images/main/bodyBgStretch.png$domain=hardware.no
@@ -1772,6 +1771,7 @@ yieldmanager.
 ||adv-adserver.com^
 ||adw.sapo.pt^
 ||ap.delfi.ee/*$domain=delfi.ee
+||distrowatch.com/images/*-small.png|
 ||eas.hitta.se^
 ||euroads.se^$third-party
 ||kombes.com^$third-party
