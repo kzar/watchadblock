@@ -185,8 +185,8 @@ def main():
 
 
 
-    for i in range(5):
-        print()
+    for k in range(5):
+        print
     for d in thanked:
         print "$%.0f %s -- %s" % (d.amount, d.name, d.note)
     print
