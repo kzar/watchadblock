@@ -12,6 +12,10 @@
     "message": "OK!",
     "description": "OK button"
   },
+  "shortcutenabled": {
+    "message": "Scorciatoia attivata",
+    "description": "The checkbox label for the shortcut option"
+  },
   "buttonblockit": {
     "message": "Bloccalo!",
     "description": "Block button"
@@ -35,7 +39,7 @@
       }
     }
   },
-
+  
   "sliderexplanation": {
     "message": "Sposta la barra di scorrimento fino a bloccare correttamente l'elemento selezionato e a dare alla pagina l'aspetto desiderato.",
     "description": "Blacklister slider page message"
@@ -90,6 +94,7 @@
       }
     }
   },
+  
   "blacklistersinglematch": {
     "message": "<b>1</b> elemento dello stesso tipo trovato sulla pagina",
     "description": "Tells the user only one match was found"
@@ -139,6 +144,7 @@
     "message": "Blocca una pubblicità",
     "description": "Title of the first two dialogs of the blacklister"
   },
+  
   "clickthead": {
     "message": "Clicca quello che vuoi bloccare e ti guiderò nell'operazione.",
     "description": "When you have to click the ad to continue"
@@ -154,15 +160,17 @@
       }
     }
   },
+  
   "whitelistertitle": {
     "message": "Escludere questo dominio?",
     "description": "The title of the whitelister dialog"
   },
+  
   "buttonexclude": {
     "message": "Escludi",
     "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
-
+  
   "subscribingtitle": {
     "message": "Mi sto abbonando alla lista filtri...",
     "description": "abp: link subscriber title"
@@ -175,7 +183,7 @@
     "message": "Si è verificato un problema!",
     "description": "abp: link subscriber result"
   },
-
+  
   "optionsversion": {
     "message": "Versione $version$",
     "description": "Version number",
@@ -263,7 +271,7 @@
     "message": "Mostra la cronologia dei messaggi nella Console (rallenta AdBlock)",
     "description": "Option on first tab page"
   },
-
+  
   "updatedrightnow": {
     "message": "appena aggiornato",
     "description": "Label for subscription"
@@ -359,6 +367,7 @@
   "defaultsexplanation": {
     "message": "Le impostazioni di default sono ottimizzate per utenti che abitano negli Stati Uniti. Per utenti di altri paesi sono disponibili altre liste qui sotto.",
     "description": "Explanation of the filter lists"
+  },
   },
   "filterlistlink": {
     "message": "Non abbonarti a più liste di quante te ne servano -- ciascuna rallenta un po' (veramente poco) le prestazioni. Altre liste si trovano <a>qui</a>.",
@@ -484,9 +493,13 @@
     "message": "filtri Ucraini",
     "description": "A filter list"
   },
-
+  
+  "blacklistclickmessage": {
+    "message": "Clicca col tasto destro su una pubblicità per bloccarla -- oppure bloccala qui manualmente.",
+    "description": "Message at the top of the blacklist options tab"
+  },
   "blacklisttabtitle": {
-    "message": "Blocca una pubblicità non presente nelle liste filtri",
+    "message": "Blocca una pubblicità non presente nella lista filtri.",
     "description": "Title of the third tab"
   },
   "addnewfilter": {
@@ -537,8 +550,8 @@
     "message": "<a>Segnala una pubblicità</a> ad AdBlock o al responsabile della lista.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
-
-  "removelabel": {
+  
+   "removelabel": {
     "message": "Rimuovi",
     "description": "link to remove a excluded site"
   },
@@ -563,7 +576,8 @@
     "description": "title of ad report page"
   },
   "adreport1": {
-    "message": "Hai appena trovato una pubblicità su questa pagina e vorresti segnalarla? Ti aiuterò a trovare il posto giusto per farlo.<br/> Ricorda: segnalare una pubblicità non è obbligatorio. Se non vuoi farlo, chiudi questa finestra e bloccala solo per te aggiungendo un filtro nella scheda 'Lista Nera' delle.",
+    "message": "Hai appena trovato una pubblicità su questa pagina e vorresti segnalarla? Ti aiuterò a trovare il posto giusto per farlo.<br/> Ricorda: segnalare una pubblicità non è obbligatorio. Se non vuoi farlo, chiudi questa finestra e bloccala solo per te aggiungendo un filtro nella scheda 'Lista Nera' delle 
+    .",
     "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
