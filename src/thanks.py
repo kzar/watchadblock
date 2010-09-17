@@ -61,18 +61,37 @@ def donation_messages():
                 d = Donation(email_msg)
             except:
                 print ("*" * 70 + '\n') * 3
-                print "Couldn't parse message from %s; leaving unread." % email_msg['from']
+                print "Couldn't parse message from %s; ignoring." % email_msg['from']
                 print ("*" * 70 + '\n') * 3
             else: # no exception
                 yield Donation(email_msg)
-                m.select('afc/donations')
-                m.fetch(msgid, '(RFC822)') # marks as read
     except:
         print "*" * 40
         print ("Error reading your mailbox; giving up early.")
         raise
     finally:
         m.logout()
+
+def mark_as_read_and_send(donations):
+    m = donation_mailbox()
+    for donation in donations:
+        print "Sending to %s" % donation.email
+        try:
+            send('gundlach.business@gmail.com', donation.email, 
+                 'I got your donation :)', donation.get_response())
+        except:
+            print "Failed to send -- not marking as read"
+            continue
+
+        print "Marking as read %s" % donation.email
+        try:
+            m.select('afc/donations')
+            m.fetch(msgid, '(RFC822)') # marks as read
+        except:
+            print "*" * 40
+            print ("Error -- skipped marking %s" % donation.email)
+    m.logout()
+
 
 
 class Donation(object):
@@ -176,21 +195,19 @@ def main():
                 os.system('vim /tmp/reply.txt')
                 donation.set_response(open('/tmp/reply.txt').read())
 
-        print "Sending..."
-        send('gundlach.business@gmail.com', donation.email, 
-             'I got your donation :)', donation.get_response())
         thanked.append(donation)
         print
         print
-
-
 
     for k in range(5):
         print
     for d in thanked:
         print "$%.0f %s -- %s" % (d.amount, d.name, d.note)
     print
-    print "Done.  %d donations totalling $%.2f." % (i, amt)
+    print "%d donations totalling $%.2f." % (i, amt)
+
+    mark_as_read_and_send(thanked)
+
 
 if __name__ == '__main__':
     main()
