@@ -58,13 +58,13 @@ def donation_messages():
             msg = m.fetch(msgid, '(RFC822)')[1][0][1] # not marked as read
             email_msg = email.message_from_string(msg)
             try:
-                d = Donation(email_msg)
+                d = Donation(email_msg, msgid=msgid)
             except:
                 print ("*" * 70 + '\n') * 3
                 print "Couldn't parse message from %s; ignoring." % email_msg['from']
                 print ("*" * 70 + '\n') * 3
             else: # no exception
-                yield Donation(email_msg)
+                yield d
     except:
         print "*" * 40
         print ("Error reading your mailbox; giving up early.")
@@ -86,7 +86,7 @@ def mark_as_read_and_send(donations):
         print "Marking as read %s" % donation.email
         try:
             m.select('afc/donations')
-            m.fetch(msgid, '(RFC822)') # marks as read
+            m.fetch(donation.msgid, '(RFC822)') # marks as read
         except:
             print "*" * 40
             print ("Error -- skipped marking %s" % donation.email)
@@ -96,8 +96,9 @@ def mark_as_read_and_send(donations):
 
 class Donation(object):
 
-    def __init__(self, email_message):
+    def __init__(self, email_message, msgid):
         self.message = email_message
+        self.msgid = msgid
         self._parse_message()
 
     @staticmethod
