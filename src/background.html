@@ -312,6 +312,19 @@
       };
 
 
+      (function() {
+        if (!SAFARI) {
+          // Warn users once about upcoming 'tabs' permission
+          // TODO: remove this upon adding tabs permission
+          var key = 'saw_tabs_permission_warning';
+          var has_seen = utils.storage_get({key:key, default_value:false});
+          if (!has_seen) {
+            utils.storage_set({key:key, value:true});
+            window.open(chrome.extension.getURL('pages/tabswarning.html'));
+          }
+        }
+      })();
+
 
 
       ports = [];
