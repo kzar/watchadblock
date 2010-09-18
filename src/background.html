@@ -264,7 +264,7 @@
       // Must be here because other pages cannot open popups...
       // Inputs: url: the URL of the list to subscribe to
       utils.subscribe_popup = function(options) {
-        window.open(chrome.extension.getURL('subscribe.html?' + options.url),
+        window.open(chrome.extension.getURL('pages/subscribe.html?' + options.url),
         "_blank", 'scrollbars=0,location=0,resizable=0,width=450,height=140');
       }
 
@@ -317,9 +317,8 @@
           // Warn users once about upcoming 'tabs' permission
           // TODO: remove this upon adding tabs permission
           var key = 'saw_tabs_permission_warning';
-          var has_seen = utils.storage_get({key:key, default_value:false});
-          if (!has_seen) {
-            utils.storage_set({key:key, value:true});
+          if (localStorage.getItem(key) == null)
+            localStorage.setItem(key, true);
             window.open(chrome.extension.getURL('pages/tabswarning.html'));
           }
         }
