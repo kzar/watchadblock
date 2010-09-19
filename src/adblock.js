@@ -191,7 +191,7 @@ function adblock_begin_v2() {
   if (window == window.top)
     opts.is_top_frame = true;
 
-  extension_call('get_features_and_filters', opts, function(data) {
+  extension_call('get_features_and_page_info', opts, function(data) {
     log("==== ADBLOCKING PAGE: " + document.location.href);
 
     if (data.page_is_whitelisted)

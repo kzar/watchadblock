@@ -205,6 +205,31 @@
         return result;
       }
 
+      // Inputs: domain:string the domain of the calling frame.
+      //         is_top_frame?:bool true if the caller is the top
+      //           level frame.  Subframes use this frame's domain to determine 
+      //           if they are whitelisted.
+      // Same as get_features_and_filters, except that it doesn't contain filters
+      utils.get_features_and_page_info = function(options, sender) {
+        var start = new Date();
+        if (options.is_top_frame) {
+          top_frame_domains[sender.tab.id] = options.domain;
+        }
+
+        var tfd = top_frame_domains[sender.tab.id];
+        var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
+        var features = utils.get_optional_features();
+
+        var result = {
+          page_is_whitelisted: whitelisted,
+          top_frame_domain: tfd,
+          features: features
+        };
+        var end = new Date();
+        log("time to run: " + (end - start) + " ms || " + options.domain);
+        return result;
+      }
+
       // WHITELIST
 
       utils.get_whitelist = function(options) {
