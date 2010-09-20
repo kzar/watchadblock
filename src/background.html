@@ -197,7 +197,7 @@
           features: features
         };
         if (!SAFARI) {
-          if (features.true_blocking_support.is_enabled)
+          if (!whitelisted && features.true_blocking_support.is_enabled)
             result.filtertext = _myfilters.filterset._sourceText;
         }
         var end = new Date();
