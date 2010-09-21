@@ -187,7 +187,7 @@
         var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
         var selectors = [];
         var features = utils.get_optional_features();
-        if (!whitelisted)
+        if (!whitelisted && options.domain)
           selectors = utils.selectors_for_domain({domain:options.domain});
 
         var result = {
