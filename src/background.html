@@ -177,7 +177,9 @@
       //         is_top_frame?:bool true if the caller is the top
       //           level frame.  Subframes use this frame's domain to determine 
       //           if they are whitelisted.
-      utils.get_features_and_filters = function(options, sender) {
+      //         include_filters?:bool true if selectors and filtertext should
+      //           be sent.  Defaults to false.
+      utils.get_content_script_data = function(options, sender) {
         var start = new Date();
         if (options.is_top_frame) {
           top_frame_domains[sender.tab.id] = options.domain;
@@ -187,7 +189,7 @@
         var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
         var selectors = [];
         var features = utils.get_optional_features();
-        if (!whitelisted)
+        if (!whitelisted && options.include_filters)
           selectors = utils.selectors_for_domain({domain:options.domain});
 
         var result = {
@@ -197,13 +199,16 @@
           features: features
         };
         if (!SAFARI) {
-          if (features.true_blocking_support.is_enabled)
+          if (!whitelisted && options.include_filters &&
+              features.true_blocking_support.is_enabled) {
             result.filtertext = _myfilters.filterset._sourceText;
+          }
         }
         var end = new Date();
         log("time to run: " + (end - start) + " ms || " + options.domain);
         return result;
       }
+
 
       // WHITELIST
 

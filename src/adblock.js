@@ -186,12 +186,11 @@ function run_specials(features) {
 
 
 function adblock_begin_v2() {
-  // TODO: opts code copied from adblock_start.js
   var opts = { domain: document.domain };
   if (window == window.top)
     opts.is_top_frame = true;
 
-  extension_call('get_features_and_filters', opts, function(data) {
+  extension_call('get_content_script_data', opts, function(data) {
     log("==== ADBLOCKING PAGE: " + document.location.href);
 
     if (data.page_is_whitelisted)
