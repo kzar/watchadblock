@@ -25,6 +25,7 @@ function typeForElement(el) {
     case 'SCRIPT': return ElementTypes.script;
     case 'OBJECT': 
     case 'EMBED': return ElementTypes.object;
+    case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
@@ -57,6 +58,25 @@ function browser_canLoad(event, data) {
   }
 }
 
+//Do not make the frame display a white area
+//Not calling .remove(); as this causes some sites to reload continuesly
+function removeFrame(el) {
+  var parentEl = $(el).parent();
+  var cols = (parentEl.attr('cols').indexOf(',') > 0);
+  if (!cols && parentEl.attr('rows').indexOf(',') <= 0)
+    return;
+  var frameIndex = 0;
+  var thisEl = el;
+  while (thisEl && thisEl.nodeName != 'frameset') {
+    if (thisEl.nodeName == "FRAME") 
+      frameIndex ++;
+    thisEl = thisEl.previousSibling;
+  }
+  var sizes = parentEl.attr((cols ? 'cols' : 'rows')).split(',');
+  sizes[frameIndex - 1] = 0;
+  parentEl.attr((cols ? 'cols' : 'rows'), sizes.join(','))
+}
+
 beforeLoadHandler = function(event) {
   var el = event.target;
   // Cancel the load if canLoad is false.
@@ -71,9 +91,11 @@ beforeLoadHandler = function(event) {
     event.preventDefault();
     if (elType != ElementTypes.script &&
         elType != ElementTypes.background &&
-        elType != ElementTypes.stylesheet) {
+        elType != ElementTypes.stylesheet &&
+        el.nodeName != "FRAME")
       $(el).remove();
-    }
+    else if (el.nodeName == "FRAME")
+      removeFrame(el);
   }
 }
 

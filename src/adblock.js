@@ -21,10 +21,10 @@ function debug_print_selector_matches() {
 function urlForElement(el, type) {
   // TODO: handle background images, based on 'type'.
   switch (el.nodeName) {
-    case 'IMG': return el.src;
-    case 'SCRIPT': return el.src;
-    case 'EMBED': return el.src;
-    case 'IFRAME': return el.src;
+    case 'IMG':  
+    case 'EMBED': 
+    case 'IFRAME': 
+    case 'FRAME': return el.src;
     case 'LINK': return el.href;
     case 'OBJECT': 
       var param = $('param[name="movie"][value]', el);
@@ -49,7 +49,7 @@ function remove_ad_elements_by_url(first_run) {
   var start = new Date();
 
   // map indexes to elements, and those same indexes to info about the element.
-  var els = $("img,embed,iframe,link,object,body");
+  var els = $("img,embed,iframe,frame,link,object,body");
   var elInfo = els.map(function(id, el) { 
       var elType = typeForElement(el);
       return {
@@ -81,6 +81,8 @@ function purgeElement(el, elInfo) {
     $(el).parent().remove(); // removes el as well
   else if (el.nodeName == "BODY")
     $(el).css('background-image', null);
+  else if (el.nodeName == "FRAME")
+    removeFrame(el);
   else
     $(el).remove();
   // TODO: i suspect i'm missing something else here... what did the old
