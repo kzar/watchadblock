@@ -269,7 +269,7 @@
       // Must be here because other pages cannot open popups...
       // Inputs: url: the URL of the list to subscribe to
       utils.subscribe_popup = function(options) {
-        window.open(chrome.extension.getURL('subscribe.html?' + options.url),
+        window.open(chrome.extension.getURL('pages/subscribe.html?' + options.url),
         "_blank", 'scrollbars=0,location=0,resizable=0,width=450,height=140');
       }
 
@@ -316,6 +316,19 @@
         );
       };
 
+
+      (function() {
+        if (!SAFARI) {
+          // Warn users once about upcoming 'tabs' permission
+          // TODO: remove this upon adding tabs permission
+          var key = 'saw_tabs_permission_warning';
+          if (localStorage.getItem(key) == null) {
+            localStorage.setItem(key, true);
+            win = window.open(chrome.extension.getURL('pages/tabswarning.html'), "win", "width=800,height=620");
+            win.moveTo(20,20);
+          }
+        }
+      })();
 
 
 

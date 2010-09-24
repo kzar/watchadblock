@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>A note from AdBlock</title>
+    <link rel="stylesheet" href="../options/options.css" />
+    <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <style>
+      h1 { 
+        background-image: url(/img/icon32.png); 
+        background-repeat: no-repeat;
+        padding-left:40px;
+      }
+      body {
+        width:95%
+      }
+      div#wrapper {
+        margin: auto;
+        margin-top:20px;
+        width: 95%
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <span style="font-style: italic; font-size:small">Pardon me for interrupting, but I need to tell you:</span><br/>
+      <h1>AdBlock is getting an upgrade.</h1>
+      In about a week you will see this message in Chrome:
+      <br/><br/>
+      <img src="warning.png">
+      <br/><br/>
+      Be sure to <b>click "Re-enable"</b> when you see that message to turn AdBlock back on!
+      <br/>
+      <span style="font-size:small; color:gray">If you forget, you'll need to go to Wrench menu | Tools | Extensions to re-enable AdBlock.</span>
+      <br/><br/><br/>
+
+      <h2>Don't worry, this isn't scary.</h2>
+      <br/>
+
+      <span id="explanationtext">
+        I'm just adding a toolbar button to AdBlock (which you can hide if you don't want it).
+      </span>
+      <script>
+        // If they have the browser button extension installed, change the explanation.
+        chrome.extension.sendRequest("picdndbpdnapajibahnnogkjofaeooof", {}, function() {
+          $("#explanationtext").html("I'm just merging the <i>Browser Button for AdBlock</i> extension into AdBlock.");
+        });
+      </script>
+      <br/><br/>
+      The toolbar button needs permission to talk to your browser, causing this message to appear.  The specific
+      permission it needs is called "view your browsing history", but rest assured that AdBlock isn't snooping on you.
+      <br/><br/><br/>
+      <h2>OK, that's all -- sorry to interrupt you!</h2><br/>
+      I hope AdBlock makes you happy every day!  Lately AdBlock has added right-click ad-blocking support, true resource blocking to save your bandwidth, custom blacklist editing, and translation into 13 languages (and counting!)  Please consider <b><a href="http://chromeadblock.com/paypal_donate">donating</a> to keep AdBlock going</b>.  Pretty please?
+      <br/><br/>- Michael
+    </div>
+  </body>
+</html>
+
