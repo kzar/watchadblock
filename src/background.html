@@ -348,19 +348,6 @@
       }
       utils.addChromeContextMenus();
 
-      (function() {
-        if (!SAFARI) {
-          // Warn users once about upcoming 'tabs' permission
-          // TODO: remove this upon adding tabs permission
-          var key = 'saw_tabs_permission_warning';
-          if (localStorage.getItem(key) == null) {
-            localStorage.setItem(key, true);
-            win = window.open(chrome.extension.getURL('pages/tabswarning.html'), "win", "width=800,height=620");
-            win.moveTo(20,20);
-          }
-        }
-      })();
-
       if (!SAFARI) {
         // Set the button image according to the URL of the current tab.
         function updateButtonUI() {
