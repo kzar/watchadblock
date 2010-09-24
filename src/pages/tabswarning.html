@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>A note from AdBlock</title>
+    <link rel="stylesheet" href="../options/options.css" />
+    <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <script>
+      $(function() {
+      });
+    </script>
+  </head>
+  <body>
+    <span style="font-style: italic; font-size:small">Pardon me interrupting, but I needed to tell you:</span><br/>
+    <h1>Your AdBlock extension is getting an upgrade.</h1>
+    In about a week this message will appear in Chrome:
+    <br/><br/>
+    <img src="">
+    <br/><br/>
+    <b>Click "Enable"</b> when you see that message to make AdBlock work again!
+    <br/><br/><br/><br/>
+
+    <h2>What does this mean?</h2>
+    <br/>
+    This is Michael, the author of AdBlock.<br/><br/>
+    <span id="explanationtext"></span><br/><br/><br/>
+    <script>
+      var hasBrowserButton = true;
+      if (hasBrowserButton) {
+        $("#explanationtext").html("I'm merging the <i>Browser Button for AdBlock</i> extension into AdBlock itself.  To do that, AdBlock will require extra permissions in Chrome -- the same permissions <i>Browser Button for AdBlock</i> already has.");
+      } else {
+        $("#explanationtext").html("I'm adding a toolbar button to AdBlock, which requires more permissions in Chrome than before.  (If you don't want the button you can hide it.)");
+      }
+    </script>
+    <h2>When I click Enable I see a privacy warning!  Are you invading my privacy?!</h2>
+    <br/>
+    Nope!  Chrome just shows this warning because extensions can access your web pages.
+    <br/><br/>
+  </body>
+</html>
+
