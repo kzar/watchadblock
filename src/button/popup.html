@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css"/>
+    <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <script src="../functions.js"></script>
+    <script>
+      // Show each DOM id in the list.
+      function show(list) {
+        for (var i = 0; i < list.length; i++) {
+          $("#" + list[i]).show();
+        }
+      }
+
+      // Hide each DOM id in the list.
+      function hide(list) {
+        for (var i = 0; i < list.length; i++) {
+          $("#" + list[i]).hide();
+        }
+      }
+
+      // Set the domain name throughout the popup, ellipsifying if necessary.
+      function setDomain(name) {
+        if (name.length > 25) {
+          name = name.substring(0, 17) + "..." +
+              name.substring(name.length - 5);
+        }
+        $(".domainspan").text(name);
+      }
+
+      // Set menu entries appropriately for the selected tab.
+      function customize_for_this_tab() {
+        var menu_items = [
+          "div_pause_adblock",
+          "div_unpause_adblock",
+          "div_blacklist",
+          "div_whitelist",
+          "div_whitelisted",
+          "separator1",
+          "div_options",
+          "div_help_disable",
+        ];
+        hide(menu_items);
+
+        getCurrentTabInfo(function(info) {
+          if (localStorage.getItem('adblock_is_paused')) {
+            show(["div_unpause_adblock", "separator1", "div_options"]);
+          } else if (info.disabled_site) {
+            show(["div_options", "div_help_disable"]);
+          } else if (info.whitelisted) {
+            show(["div_pause_adblock", "div_whitelisted", "separator1", "div_options", "div_help_disable"]);
+          } else {
+            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "separator1", "div_options", "div_help_disable"]);
+          }
+          setDomain(info.domain);
+        });
+      }
+
+      $(function() {
+        customize_for_this_tab();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <div id="titletext">AdBlock</div>
+      <script>
+        $("#titletext").click(function() {
+          var url = "https://chrome.google.com/extensions/detail/" +
+              adblock_extension_id;
+          chrome.tabs.create({url:url});
+        });
+      </script>
+
+
+      <div id="div_pause_adblock" class="menu-entry">
+        Pause AdBlock
+      </div>
+      <script>
+        $("#div_pause_adblock").click(function() {
+          localStorage.setItem('adblock_is_paused', true);
+          chrome.extension.getBackgroundPage().updateButtonUI();
+          chrome.contextMenus.removeAll();
+          window.close();
+        });
+      </script>
+
+
+      <div id="div_unpause_adblock" class="menu-entry">
+        Unpause AdBlock
+      </div>
+      <script>
+        $("#div_unpause_adblock").click(function() {
+          localStorage.removeItem('adblock_is_paused');
+          chrome.extension.getBackgroundPage().updateButtonUI();
+          chrome.extension.getBackgroundPage().utils.addChromeContextMenus();
+          window.close();
+        });
+      </script>
+
+
+      <div id="div_blacklist" class="menu-entry">
+        Block an ad on this page
+      </div>
+      <script>
+        $("#div_blacklist").click(function() {
+          getCurrentTabInfo(function(info) {
+            extension_call(
+              'open_blacklist_ui_on_tab',
+              {tabid:info.tab.id},
+              function() { window.close(); }
+            );
+          });
+        });
+      </script>
+
+
+      <div id="div_whitelist" class="menu-entry">
+        Don't run on <span class="domainspan">this site</span>
+      </div>
+      <script>
+        $("#div_whitelist").click(function() {
+          getCurrentTabInfo(function(info) {
+            extension_call("add_to_whitelist", {domain:info.domain}, function() {
+              // Reload the tab
+              chrome.tabs.update(info.tab.id, {url: info.tab.url});
+              window.close();
+            });
+          })
+        });
+      </script>
+
+
+      <div id="div_whitelisted" style="display:none" class="menu-entry">
+        Block ads on <span class="domainspan">this site</span>
+      </div>
+      <script>
+        $("#div_whitelisted").click(function() {
+          getCurrentTabInfo(function(info) {
+            extension_call("remove_from_whitelist", {domain:info.domain}, 
+                         function() {
+              // Reload the tab
+              chrome.tabs.update(info.tab.id, {url: info.tab.url});
+              window.close();
+            });
+          })
+        });
+      </script>
+
+
+      <div id="separator1" class="separator"></div>
+
+      <div id="div_options" class="menu-entry">
+        Options
+      </div>
+      <script>
+        $("#div_options").click(function() {
+          chrome.tabs.create({url:chrome.extension.getURL("options/index.html")});
+        });
+      </script>
+
+      <div id="div_help_disable">
+        <div class="menu-entry">
+          Don't show this button
+        </div>
+        <div id="help_disable_explanation" class="info" style="display:none">
+          <p>
+            To hide this button, drag it to the right edge of your extension
+            buttons, then click just to the right of the address bar and
+            drag to the right.
+          </p>
+        </div>
+      </div>
+      <script>
+        $("#div_help_disable").click(function() {
+          $("#help_disable_explanation").show();
+        });
+      </script>
+
+
+    </div>
+  </body>
+</html>

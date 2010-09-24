@@ -56,3 +56,58 @@ function localizePage() {
     $(this).addClass("i18n-replaced");
   });
 }
+
+// Returns true if anything in whitelist matches the_domain.
+function page_is_whitelisted(whitelist, the_domain) {
+  if (the_domain == "acid3.acidtests.org") return true;
+  for (var i = 0; i < whitelist.length; i++) {
+    if (the_domain.indexOf(whitelist[i]) != -1)
+      return true;
+  }
+  return false;
+}
+
+
+
+// Get interesting information about the current tab.
+// Inputs:
+//   url: string
+//   callback: function(info).
+//   info object passed to callback: {
+//     tab: Tab object
+//     whitelisted: bool - whether the current tab's URL is whitelisted.
+//     domain: string
+//     disabled_site: bool - true if the url is e.g. about:blank or the 
+//                           Extension Gallery, where extensions don't run.
+//   }
+// Returns: null (asynchronous)
+function getCurrentTabInfo(callback) {
+  var utils = chrome.extension.getBackgroundPage().utils;
+  var whitelist = utils.get_whitelist();
+  chrome.tabs.getSelected(undefined, function(tab) {
+    // TODO: use code from elsewhere to extract domain
+    var parts = tab.url.match("(.*?)://(..*?)/");
+    if (!parts) // may be "about:blank" or similar
+      parts = tab.url.match("(.*?):(.*)");
+    var scheme = parts[1];
+    var domain = parts[2];
+
+    var disabled_site = false;
+    if (scheme != 'http' && scheme != 'https')
+      disabled_site = true;
+    if (tab.url.match('://chrome.google.com/extensions'))
+      disabled_site = true;
+
+    var result = {
+      tab: tab,
+      disabled_site: disabled_site,
+      domain: domain,
+    };
+    if (!disabled_site)
+      result.whitelisted = page_is_whitelisted(whitelist, domain);
+
+    callback(result);
+  });
+}
+
+

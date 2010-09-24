@@ -3,22 +3,12 @@
     <script src="port.js"></script>
     <script src="jquery/jquery-1.4.2.min.js"></script>
     <script src="functions.js"></script>
-    <script src="filteroptions.js"></script>
+    <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
     <script>
-      function page_is_whitelisted(whitelist, the_domain) {
-        if (the_domain == "acid3.acidtests.org") return true;
-        for (var i = 0; i < whitelist.length; i++) {
-          if (the_domain.indexOf(whitelist[i]) != -1)
-            return true;
-        }
-        return false;
-      }
-
-
       var utils = {};
 
       // V3 FILTERING
@@ -196,6 +186,7 @@
           page_is_whitelisted: whitelisted,
           selectors: selectors,
           top_frame_domain: tfd,
+          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: features
         };
         if (!SAFARI) {
@@ -316,6 +307,46 @@
         );
       };
 
+      utils.addChromeContextMenus = function() {
+        // Chrome specific code.
+        if (!SAFARI) {
+          // Add context menu items.
+          chrome.contextMenus.create({
+            title: translate("contextmenuhidethis"),
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{info: info}},
+                sender
+              );
+            }
+          });
+          chrome.contextMenus.create({
+            title: translate("contextmenuhideanything"),
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                sender
+              );
+            }
+          });
+          chrome.contextMenus.create({
+            title: translate("contextmenuexcludedomain"),
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_whitelist_ui', options:{}},
+                sender
+              );
+            }
+          });
+        }
+      }
+      utils.addChromeContextMenus();
 
       (function() {
         if (!SAFARI) {
@@ -329,6 +360,30 @@
           }
         }
       })();
+
+      if (!SAFARI) {
+        // Set the button image according to the URL of the current tab.
+        function updateButtonUI() {
+          if (localStorage.getItem('adblock_is_paused')) {
+            chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            return;
+          }
+          getCurrentTabInfo(function(info) {
+            if (info.whitelisted)
+              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+            else
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
+          });
+        }
+
+        chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+          if (tab.selected)
+            updateButtonUI();
+        });
+        chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
+          updateButtonUI();
+        });
+      }
 
 
 
@@ -387,44 +442,6 @@
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
       }
       note_install();
-
-      // Chrome specific code.
-      if (!SAFARI && utils.get_optional_features({}).show_context_menu_items.is_enabled) {
-        // Add context menu items.
-        chrome.contextMenus.create({
-          title: translate("contextmenuhidethis"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{info: info}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuhideanything"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuexcludedomain"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
-              sender
-            );
-          }
-        });
-      }
 
 
       // Safari specific code.

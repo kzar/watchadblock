@@ -8,9 +8,14 @@
     "128": "img/icon128.png"
   },
   "permissions": [
-    "http://*/*", "https://*/*", "contextMenus"
+    "http://*/*", "https://*/*", "contextMenus", "tabs"
   ],
   "minimum_chrome_version": "6",
+  "browser_action": {
+    "default_icon": "img/icon19.png",
+    "default_title": "AdBlock Options",
+    "popup": "button/popup.html"
+  },
   "background_page": "background.html",
   "options_page": "options/index.html",
   "content_scripts": [
@@ -23,7 +28,7 @@
         "broadcast_channel.js", 
 
       
-        "filteroptions.js",
+        "filtering/filteroptions.js",
         "filtering/fifocache.js",
         "filtering/filtertypes.js",
         "filtering/filterset.js",
@@ -37,10 +42,10 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "overlay.js", 
-        "clickwatcher.js",
-        "elementchain.js",
-        "blacklistui.js",
+        "blacklisting/overlay.js", 
+        "blacklisting/clickwatcher.js",
+        "blacklisting/elementchain.js",
+        "blacklisting/blacklistui.js",
         "blacklister.js", 
         "whitelister.js", 
         "adblock.js"
