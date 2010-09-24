@@ -1,7 +1,7 @@
 [Adblock Plus 1.1]
-! Checksum: LnwvG4dhP4/B/qMJEo+u5w
+! Checksum: q4yJh7r2RPraqE0LEZqYMA
 ! EasyList - https://easylist.adblockplus.org/
-! Last modified: 24 Sep 2010 10:20 UTC
+! Last modified: 24 Sep 2010 20:30 UTC
 ! Expires: 5 days (update frequency)
 ! Licence: https://easylist-downloads.adblockplus.org/COPYING
 !
@@ -132,6 +132,7 @@
 /ad.aspx
 /ad.cgi?
 /ad.css?
+/ad.epl?
 /ad.html
 /ad.jsp?
 /ad.mason?
@@ -1221,6 +1222,7 @@
 /showflashad.
 /showlayer.
 /showmarketingmaterial.
+/side-ad-
 /side-ads-
 /sidead.
 /sideads/*
@@ -1731,6 +1733,7 @@ n728x90_
 ###Ad_Top
 ~cynamite.de###Adbanner
 ###Adrectangle
+###Ads
 ###AdsContent
 ###AdsRight
 ###AdsWrap
@@ -1835,7 +1838,7 @@ n728x90_
 ###ad-buttons
 ###ad-colB-1
 ###ad-column
-~apple.com,~madame.lefigaro.fr###ad-container
+~madame.lefigaro.fr###ad-container
 ###ad-content
 ###ad-contentad
 ###ad-footer
@@ -1889,7 +1892,7 @@ n728x90_
 ###ad-trailerboard-spot
 ###ad-typ1
 ###ad-west
-~apple.com###ad-wrap
+###ad-wrap
 ###ad-wrap-right
 ###ad-wrapper
 ###ad-wrapper1
@@ -2000,6 +2003,7 @@ n728x90_
 ###adSquare
 ###adStaticA
 ###adStrip
+###adSuperAd
 ###adSuperPremiere
 ###adSuperbanner
 ###adTableCell
@@ -2205,7 +2209,7 @@ n728x90_
 ###adright
 ###adright2
 ###adrighthome
-~2gb-hosting.com,~addoway.com,~apple.com,~bash.org.ru,~block-adblock-plus.com,~dailykos.com,~divxhosting.net,~facebook.com,~harpers.org,~miloyski.com,~radio.de,~tomwans.com,~tonprenom.com,~www.google.com,~zuploads.com,~zuploads.net###ads
+~2gb-hosting.com,~addoway.com,~bash.org.ru,~block-adblock-plus.com,~dailykos.com,~divxhosting.net,~facebook.com,~harpers.org,~miloyski.com,~radio.de,~tomwans.com,~tonprenom.com,~www.google.com,~zuploads.com,~zuploads.net###ads
 ###ads-468
 ###ads-area
 ###ads-block
@@ -2382,6 +2386,8 @@ n728x90_
 ###anchorAd
 ###annoying_ad
 ###ap_adframe
+###apiBackgroundAd
+###apiTopAdWrap
 ###araHealthSponsorAd
 ###article-ad-container
 ###article-box-ad
@@ -2945,8 +2951,8 @@ n728x90_
 ###rotatingads
 ###row2AdContainer
 ###rt-ad
-###rt-ad468
 ###rt-ad-top
+###rt-ad468
 ###rtMod_ad
 ###rtmod_ad
 ###sAdsBox
@@ -3176,6 +3182,7 @@ n728x90_
 ###video_cnv_ad
 ###video_overlay_ad
 ###videoadlogo
+###viewportAds
 ###walltopad
 ###weblink_ads_container
 ###welcomeAdsContainer
@@ -3511,6 +3518,7 @@ n728x90_
 ##.adHeadline
 ~superhry.cz##.adHolder
 ##.adHome300x250
+##.adHorisontal
 ##.adInNews
 ##.adLabel
 ##.adLeader
@@ -3675,6 +3683,7 @@ n728x90_
 ##.ad_wrapper_top
 ##.ad_zone
 ##.adarea
+##.adarea-long
 ##.adbanner
 ##.adbannerbox
 ##.adbannerright
@@ -3913,6 +3922,7 @@ n728x90_
 ~browsershots.org##.advert_list
 ##.advert_note
 ##.advert_top
+##.advertheader-red
 ~tonprenom.com##.advertise
 ##.advertise-here
 ##.advertise-homestrip
@@ -3983,6 +3993,8 @@ n728x90_
 ##.answer_ad_content
 ##.aolSponsoredLinks
 ##.aopsadvert
+##.apiAdMarkerAbove
+##.apiAds
 ##.archive-ads
 ##.art_ads
 ##.article-ads
@@ -5307,6 +5319,7 @@ n728x90_
 ||forexyard.com^$third-party
 ||forrestersurveys.com^$third-party
 ||freebannerswap.co.uk^$third-party
+||freelancer.com^$third-party
 ||friendlyduck.com^$third-party
 ||ftjcfx.com^$third-party
 ||funklicks.com^$third-party
@@ -5952,7 +5965,6 @@ n728x90_
 ||174.143.241.129^$domain=astalavista.com
 ||1up.com^*/promos/
 ||216.151.186.5^*/serve.php?$domain=sendspace.com
-||2cpu.com/2cpu/*side*.html
 ||4chan.org/support/
 ||5min.com^*/banners/
 ||77.247.178.36/layer/$domain=movie2k.com
@@ -6776,9 +6788,9 @@ cricbuzz.com###chrome_home_banner
 cricbuzz.com###tata_phton_home_banner
 cricinfo.com##.ciHomeSponcerLink
 cricinfo.com##.hpSpncrHead
-cricinfo.com##.pnl320B + * + * > .div300Pad
 cricinfo.com##.seatwaveM
 cricinfo.com##.seriesSpncr
+cricinfo.com##.spncrSmry
 cricvid.info###bannerfloat2
 crikey.com.au###top
 crikey.com.au##.crikey_widget_small_island
@@ -7105,6 +7117,7 @@ gethuman.com##td[style="width: 200px;"]
 getprice.com.au##li[style="clear: both; padding-left: 0pt; padding-bottom: 0pt; width: 580px;"]
 ghacks.net##.gutterlink
 gigabyteupload.com##input[onclick^="window.location.href='http://www.affbuzzads.com/affiliate/"]
+gigasize.com##.topbanner
 gigwise.com###skyscraper
 giveawayoftheday.com##.before_hot_tags
 gizmocrunch.com##div[style="background-color: rgb(235, 242, 247); width: 560px;"]
@@ -7645,6 +7658,7 @@ neopets.com##a[style="display: block; margin-left: auto; margin-right: auto; wid
 neowin.net###special-steve
 neowin.net##.unspecific
 neowin.net##div[style="background: url(\"/images/atlas/aww2.png\") no-repeat scroll center center transparent ! important; height: 250px; width: 300px;"]
+neowin.net##div[style="background:url(/images/atlas/aww2.png) no-repeat center center !important;height:250px;width:300px"]
 nerej.com###bottom_banner
 nerve.com###topBanner
 netchunks.com###af_adblock
@@ -7765,6 +7779,7 @@ pbs.org###corp-sponsor-sec
 pbs.org###masthead1
 pbs.org###masthead2
 pbs.org##.newshour-support-wrap
+pc-freak.net##div[style="position: absolute; left: 740px; top: 240px; width: 0px;"]
 pcadvisor.co.uk###broadbandchoices_frm
 pcadvisor.co.uk###mastHeadTopLeft
 pcauthority.com.au##.featured-retailers
@@ -8448,8 +8463,8 @@ wowwiki.com###HOME_LEFT_SKYSCRAPER_1
 wowwiki.com###HOME_TOP_LEADERBOARD
 wowwiki.com###LEFT_SKYSCRAPER_1
 wowwiki.com###TOP_LEADERBOARD
-wphostingdiscount.com##.ad
 wpbt2.org##.home_banners
+wphostingdiscount.com##.ad
 wptv.com##.module.horizontal
 wsj.com##.spn_links_box
 wwl.com###BannerXGroup
@@ -8502,6 +8517,7 @@ yourtomtom.com##div[style="height: 600px; padding: 6px 0pt; border: 1px solid rg
 youtube.com###feedmodule-PRO
 youtube.com###homepage-chrome-side-promo
 youtube.com###search-pva
+youtube.com###watch-branded-actions
 youtube.com###watch-buy-urls
 youtube.com##.promoted-videos
 youtube.com##.watch-extra-info-column
@@ -8623,8 +8639,12 @@ zxxo.net##a[href^="http://www.linkbucks.com/referral/"]
 @@||direct.fairfax.com.au/hserver/*/site=vid.*/adtype=embedded/$script
 @@||discovery.com/components/consolidate-static/?files=*/adsense-
 @@||disneyphotopass.com/adimages/
+@@||distrowatch.com/images/cvcmxd/$image
+@@||distrowatch.com/images/hugmwf/$image
 @@||distrowatch.com/images/icon-large/$image
 @@||distrowatch.com/images/icon-small/$image
+@@||distrowatch.com/images/oebitb/$image
+@@||distrowatch.com/images/other/$image
 @@||distrowatch.com/images/people/$image
 @@||distrowatch.com/images/screenshots/$image
 @@||doubleclick.net/ad/*smartclip$script,domain=last.fm
@@ -8846,6 +8866,7 @@ zxxo.net##a[href^="http://www.linkbucks.com/referral/"]
 @@||metamodal.com^$elemhide,image,script
 @@||multi-load.com/peel.js$domain=multi-load.com
 @@||multiup.org/advertisement.js
+@@||ninjaraider.com/adsense/$script
 @@||novamov.com/ads.js?*&ad_url=/adbanner
 @@||nwanime.com^$script
 @@||onlinevideoconverter.com/scripts/advertisement.js
