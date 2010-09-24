@@ -77,7 +77,7 @@ def mark_as_read_and_send(donations):
     for donation in donations:
         print "Sending to %s" % donation.email
         try:
-            send('gundlach.business@gmail.com', donation.email, 
+            send('adblockforchrome@gmail.com', donation.email, 
                  'I got your donation :)', donation.get_response())
         except:
             print "Failed to send -- not marking as read"
