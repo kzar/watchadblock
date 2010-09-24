@@ -181,6 +181,7 @@
           page_is_whitelisted: whitelisted,
           selectors: selectors,
           top_frame_domain: tfd,
+          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: utils.get_optional_features()
         };
         if (!SAFARI)
@@ -296,11 +297,55 @@
         );
       };
 
+      utils.addChromeContextMenus = function() {
+        // Chrome specific code.
+        if (!SAFARI) {
+          // Add context menu items.
+          chrome.contextMenus.create({
+            title:"Block this ad",
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{info: info}},
+                sender
+              );
+            }
+          });
+          chrome.contextMenus.create({
+            title:"Block an ad on this page...",
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                sender
+              );
+            }
+          });
+          chrome.contextMenus.create({
+            title:"Don't run on this domain...", 
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_whitelist_ui', options:{}},
+                sender
+              );
+            }
+          });
+        }
+      }
+      utils.addChromeContextMenus();
 
 
-      (function() {
+      if (!SAFARI) {
         // Set the button image according to the URL of the current tab.
         function updateButtonUI() {
+          if (localStorage.getItem('adblock_is_paused')) {
+            chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            return;
+          }
           getCurrentTabInfo(function(info) {
             if (info.whitelisted)
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
@@ -316,7 +361,7 @@
         chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
           updateButtonUI();
         });
-      })();
+      }
 
 
 
@@ -376,45 +421,6 @@
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
       }
       note_install();
-
-      // Chrome specific code.
-      if (!SAFARI) {
-        // Add context menu items.
-        chrome.contextMenus.create({
-          title:"Block this ad",
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{info: info}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title:"Block an ad on this page...",
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title:"Don't run on this domain...", 
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
-              sender
-            );
-          }
-        });
-      }
-
 
       // Safari specific code.
       if (SAFARI) {

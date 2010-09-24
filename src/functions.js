@@ -77,23 +77,36 @@ function page_is_whitelisted(whitelist, the_domain) {
 //     tab: Tab object
 //     whitelisted: bool - whether the current tab's URL is whitelisted.
 //     domain: string
+//     disabled_site: bool - true if the url is e.g. about:blank or the 
+//                           Extension Gallery, where extensions don't run.
 //   }
 // Returns: null (asynchronous)
 function getCurrentTabInfo(callback) {
-  var whitelist = JSON.parse(localStorage.getItem('whitelist') || '[]');
+  var utils = chrome.extension.getBackgroundPage().utils;
+  var whitelist = utils.get_whitelist();
   chrome.tabs.getSelected(undefined, function(tab) {
-    // TODO: this matches file:///home/foo as /home, though
-    // really we should keep the button from displaying at all
-    // on non-http:// and https:// pages. (Does it do this anymore
-    // now that it's not its own extension?)
     // TODO: use code from elsewhere to extract domain
-    var domain = tab.url.match(".*://(..*?)/")[1];
-    callback({
+    var parts = tab.url.match("(.*?)://(..*?)/");
+    if (!parts) // may be "about:blank" or similar
+      parts = tab.url.match("(.*?):(.*)");
+    var scheme = parts[1];
+    var domain = parts[2];
+
+    var disabled_site = false;
+    if (scheme != 'http' && scheme != 'https')
+      disabled_site = true;
+    if (tab.url.match('://chrome.google.com/extensions'))
+      disabled_site = true;
+
+    var result = {
       tab: tab,
+      disabled_site: disabled_site,
       domain: domain,
-      // TODO: support this
-      whitelisted: page_is_whitelisted(whitelist, domain)
-    });
+    };
+    if (!disabled_site)
+      result.whitelisted = page_is_whitelisted(whitelist, domain);
+
+    callback(result);
   });
 }
 

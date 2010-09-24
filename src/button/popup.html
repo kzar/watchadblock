@@ -4,34 +4,105 @@
     <script src="../jquery/jquery-1.4.2.min.js"></script>
     <script src="../functions.js"></script>
     <script>
-      function add_menu_entry(text, action) {
-        $("<div>", {"class":"menu-entry"}).
-          text(text).
-          click(action).
-          appendTo("#main");
+      // Show each DOM id in the list.
+      function show(list) {
+        for (var i = 0; i < list.length; i++) {
+          $("#" + list[i]).show();
+        }
+      }
+
+      // Hide each DOM id in the list.
+      function hide(list) {
+        for (var i = 0; i < list.length; i++) {
+          $("#" + list[i]).hide();
+        }
+      }
+
+      // Set the domain name throughout the popup, ellipsifying if necessary.
+      function setDomain(name) {
+        if (name.length > 25) {
+          name = name.substring(0, 17) + "..." +
+              name.substring(name.length - 5);
+        }
+        $(".domainspan").text(name);
       }
 
       // Set menu entries appropriately for the selected tab.
       function customize_for_this_tab() {
+        var menu_items = [
+          "div_pause_adblock",
+          "div_unpause_adblock",
+          "div_blacklist",
+          "div_whitelist",
+          "div_whitelisted",
+          "separator1",
+          "div_options",
+          "div_help_disable",
+        ];
+        hide(menu_items);
+
         getCurrentTabInfo(function(info) {
-          if (info.whitelisted) {
-            $("#div_whitelist").add("#div_blacklist").hide();
-            $("#div_whitelisted").show();
+          if (localStorage.getItem('adblock_is_paused')) {
+            show(["div_unpause_adblock", "separator1", "div_options"]);
+          } else if (info.disabled_site) {
+            show(["div_options", "div_help_disable"]);
+          } else if (info.whitelisted) {
+            show(["div_pause_adblock", "div_whitelisted", "separator1", "div_options", "div_help_disable"]);
+          } else {
+            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "separator1", "div_options", "div_help_disable"]);
           }
-          if (info.domain.length > 25) {
-            info.domain = info.domain.substring(0, 17) + "..." +
-                info.domain.substring(info.domain.length - 5);
-          }
-          $(".domainspan").text(info.domain);
+          setDomain(info.domain);
         });
       }
 
       $(function() {
+        customize_for_this_tab();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <div id="titletext">AdBlock</div>
+      <script>
         $("#titletext").click(function() {
           var url = "https://chrome.google.com/extensions/detail/" +
               adblock_extension_id;
           chrome.tabs.create({url:url});
         });
+      </script>
+
+
+      <div id="div_pause_adblock" class="menu-entry">
+        Pause AdBlock
+      </div>
+      <script>
+        $("#div_pause_adblock").click(function() {
+          localStorage.setItem('adblock_is_paused', true);
+          chrome.extension.getBackgroundPage().updateButtonUI();
+          chrome.contextMenus.removeAll();
+          window.close();
+        });
+      </script>
+
+
+      <div id="div_unpause_adblock" class="menu-entry">
+        Unpause AdBlock
+      </div>
+      <script>
+        $("#div_unpause_adblock").click(function() {
+          localStorage.removeItem('adblock_is_paused');
+          chrome.extension.getBackgroundPage().updateButtonUI();
+          chrome.extension.getBackgroundPage().utils.addChromeContextMenus();
+          window.close();
+        });
+      </script>
+
+
+      <div id="div_blacklist" class="menu-entry">
+        Block an ad on this page
+      </div>
+      <script>
         $("#div_blacklist").click(function() {
           getCurrentTabInfo(function(info) {
             extension_call(
@@ -41,6 +112,13 @@
             );
           });
         });
+      </script>
+
+
+      <div id="div_whitelist" class="menu-entry">
+        Don't run on <span class="domainspan">this site</span>
+      </div>
+      <script>
         $("#div_whitelist").click(function() {
           getCurrentTabInfo(function(info) {
             extension_call("add_to_whitelist", {domain:info.domain}, function() {
@@ -50,6 +128,13 @@
             });
           })
         });
+      </script>
+
+
+      <div id="div_whitelisted" style="display:none" class="menu-entry">
+        Block ads on <span class="domainspan">this site</span>
+      </div>
+      <script>
         $("#div_whitelisted").click(function() {
           getCurrentTabInfo(function(info) {
             extension_call("remove_from_whitelist", {domain:info.domain}, 
@@ -60,46 +145,39 @@
             });
           })
         });
-        $("#div_options").click(function() {
-          chrome.tabs.create({url:chrome.extension.getURL("options/index.html")});
-        });
-        $("#div_help_disable").click(function() {
-          $("#help_disable_explanation").show();
-        });
+      </script>
 
-        customize_for_this_tab();
-      });
 
-    </script>
-  </head>
-  <body>
-    <div class="wrapper" id="main">
-      <h4 id="titletext">AdBlock</h4>
-      <div id="div_blacklist" class="menu-entry">
-        Block an ad on this page
-      </div>
-      <div id="div_whitelist" class="menu-entry">
-        Don't run on <span class="domainspan">this site</span>
-      </div>
-      <div id="div_whitelisted" style="display:none" class="menu-entry">
-        Block ads on <span class="domainspan">this site</span>
-      </div>
+      <div id="separator1" class="separator"></div>
+
       <div id="div_options" class="menu-entry">
         Options
       </div>
-      <hr/>
-      <div>
-        <div id="div_help_disable" class="menu-entry">
+      <script>
+        $("#div_options").click(function() {
+          chrome.tabs.create({url:chrome.extension.getURL("options/index.html")});
+        });
+      </script>
+
+      <div id="div_help_disable">
+        <div class="menu-entry">
           Don't show this button
         </div>
         <div id="help_disable_explanation" class="info" style="display:none">
           <p>
             To hide this button, drag it to the right edge of your extension
-            buttons, then click down just to the right of the address bar and
-            drag right.
+            buttons, then click just to the right of the address bar and
+            drag to the right.
           </p>
         </div>
       </div>
+      <script>
+        $("#div_help_disable").click(function() {
+          $("#help_disable_explanation").show();
+        });
+      </script>
+
+
     </div>
   </body>
 </html>

@@ -194,7 +194,7 @@ function adblock_begin_v2() {
   extension_call('get_features_and_filters', opts, function(data) {
     log("==== ADBLOCKING PAGE: " + document.location.href);
 
-    if (data.page_is_whitelisted)
+    if (data.page_is_whitelisted || data.adblock_is_paused)
       return;
 
     listen_for_broadcasts();
