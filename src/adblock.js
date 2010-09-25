@@ -35,6 +35,9 @@ function urlForElement(el, type) {
     case 'BODY':
       // TODO: make sure this isn't so slow that we must LBYL
       var bgImage = $(el).css('background-image');
+      var match = bgImage.match(/^url\((.*)\)$/);
+      if (match)
+        bgImage = match[1];
       return (bgImage == "none" ? null: bgImage);
   }
 }
@@ -80,7 +83,7 @@ function purgeElement(el, elInfo) {
   if (el.nodeName == "EMBED" && el.parentNode.nodeName == "OBJECT")
     $(el).parent().remove(); // removes el as well
   else if (el.nodeName == "BODY")
-    $(el).css('background-image', null);
+    $(el).css('background-image', 'none !important');
   else
     $(el).remove();
   // TODO: i suspect i'm missing something else here... what did the old
