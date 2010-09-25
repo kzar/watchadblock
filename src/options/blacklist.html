@@ -127,7 +127,7 @@
         $("#divAddNewFilter").slideUp();
         $(".addControls").slideUp();
         $("#txtFiltersAdvanced").attr("disabled", null);
-        $("#divSaveButton").slideDown();
+        $("#spanSaveButton").show();
         $("#btnEditAdvancedFilters").hide();
         $("#txtFiltersAdvanced").focus();
       });
@@ -138,7 +138,7 @@
 
         $("#divAddNewFilter").slideDown();
         $("#txtFiltersAdvanced").attr("disabled", "disabled");
-        $("#divSaveButton").slideUp();
+        $("#spanSaveButton").hide();
         $("#btnEditAdvancedFilters").show();
       }
       $("#btnSaveAdvancedFilters").click(saveFilters);
@@ -211,23 +211,23 @@
 
       </div>
 
-      <h3 i18n="manualfilteredit"></h3>
-      <div>
-        <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
-        <div id="divSaveButton" style="display:none">
-          <p i18n="filtersavewarning" i18n_replacement_el="tutorlink"
-             class="footnote"></p>
-          <a id="tutorlink" href="http://adblockplus.org/en/filters" 
-             target="_new"></a>
-
-          <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
-          <span id="lblSaveWarning" style="color:red;margin-left:20px">
-            <b i18n="savereminder"></b>
+      <div style="margin-top:15px">
+        <h3 style="display: inline" i18n="manualfilteredit"></h3>
+        <span>
+          <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
+          <span id="spanSaveButton" style="display:none">
+            <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
+            <span style="color:red; font-weight: bold; margin-left:20px" i18n="savereminder"></span>
           </span>
-        </div>
+        </span>
       </div>
 
-    </div>
+      <div>
+        <div i18n="filtersavewarning" i18n_replacement_el="tutorlink"
+           class="footnote" style="margin-top: 5px; margin-bottom: 5px"></div>
+        <a id="tutorlink" href="http://adblockplus.org/en/filters" 
+           target="_new"></a>
+     </div>
 
     <div>
       <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
