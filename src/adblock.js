@@ -194,11 +194,13 @@ function adblock_begin_v2() {
     opts.is_top_frame = true;
 
   extension_call('get_content_script_data', opts, function(data) {
-    log("==== ADBLOCKING PAGE: " + document.location.href);
-
-    if (data.page_is_whitelisted)
+    if (data.page_is_whitelisted) {
+      log("==== EXCLUDED PAGE: " + document.location.href);
       return;
+    }
 
+    log("==== ADBLOCKING PAGE: " + document.location.href);
+    
     listen_for_broadcasts();
 
     // The wizards by default don't respond to contextmenu clicks,

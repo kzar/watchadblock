@@ -343,11 +343,8 @@
         ports.push(port);
       });
 
-      debug_background = false;
-      if (utils.get_optional_features({}).debug_logging.is_enabled) {
+      if (utils.get_optional_features({}).debug_logging.is_enabled)
         log = function(text) { console.log(text); };
-        debug_background = true;
-      }
 
       // Called by onRequest[External] to call functions from the field.
       function dispatchHandler(request, sender, sendResponse) { 
