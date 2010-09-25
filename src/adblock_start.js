@@ -110,37 +110,45 @@ function block_list_via_css(selectors, title) {
 if (SAFARI)
   enableTrueBlocking();
 
-var opts = { domain: document.domain };
-// The top frame should tell the background what domain it's on.  The
-// subframes will be told what domain the top is on.
-if (window == window.top)
-  opts.is_top_frame = true;
-    
-extension_call('get_features_and_filters', opts, function(data) {
-  var start = new Date();
+function adblock_begin() {
 
-  if (data.features.debug_logging.is_enabled) {
-    DEBUG = true;
-    log = function(text) { console.log(text); };
-  }
-  if (data.features.debug_time_logging.is_enabled)
-    time_log = function(text) { console.log(text); };
+  var opts = { domain: document.domain };
+  // The top frame should tell the background what domain it's on.  The
+  // subframes will be told what domain the top is on.
+  if (window == window.top)
+    opts.is_top_frame = true;
+      
+  extension_call('get_features_and_filters', opts, function(data) {
+    var start = new Date();
 
-  if (data.page_is_whitelisted) {
-    disableTrueBlocking();
-    return;
-  }
+    if (data.features.debug_logging.is_enabled) {
+      DEBUG = true;
+      log = function(text) { console.log(text); };
+    }
+    if (data.features.debug_time_logging.is_enabled)
+      time_log = function(text) { console.log(text); };
 
-  if (!SAFARI) {
-    __sourceText = data.filtertext;
+    if (data.page_is_whitelisted) {
+      disableTrueBlocking();
+      return;
+    }
 
-    if (data.features.true_blocking_support.is_enabled && window == window.top)
-      enableTrueBlocking();
-  }
+    if (!SAFARI) {
+      __sourceText = data.filtertext;
 
-  block_list_via_css(data.selectors);
+      if (data.features.true_blocking_support.is_enabled && window == window.top)
+        enableTrueBlocking();
+    }
 
-  var end = new Date();
-  time_log("adblock_start run time: " + (end - start) + " ms || " +
-           document.location.href);
-});
+    block_list_via_css(data.selectors);
+
+    var end = new Date();
+    time_log("adblock_start run time: " + (end - start) + " ms || " +
+             document.location.href);
+  });
+
+}
+
+// Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
+if (document.location != 'about:blank')
+  adblock_begin();
