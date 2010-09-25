@@ -188,7 +188,7 @@ function run_specials(features) {
 }
 
 
-function adblock_begin_v2() {
+function adblock_begin_part_2() {
   var opts = { domain: document.domain };
   if (window == window.top)
     opts.is_top_frame = true;
@@ -250,15 +250,18 @@ function adblock_begin_v2() {
 
   });
 }
-adblock_begin_v2();
 
-//subscribe to the list when you click an abp: link
-$('[href^="abp:"], [href^="ABP:"]').click(function(event) {
-  event.preventDefault();
-  var match = $(this).attr('href').
-      match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]*).*$/i);
-  if (match) {
-    var url = match[4];
-    extension_call('subscribe_popup', {url:url});
-  }
-});
+if (window.location != 'about:blank') {
+  adblock_begin_part_2();
+
+  //subscribe to the list when you click an abp: link
+  $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
+    event.preventDefault();
+    var match = $(this).attr('href').
+        match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]*).*$/i);
+    if (match) {
+      var url = match[4];
+      extension_call('subscribe_popup', {url:url});
+    }
+  });
+}
