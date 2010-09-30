@@ -1,7 +1,10 @@
+<!DOCTYPE HTML>
 <html>
   <head>
     <link rel="stylesheet" href="popup.css"/>
+    <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css"/>
     <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <script src="../jquery/jquery-ui-1.8.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
       // Show each DOM id in the list.
@@ -173,7 +176,101 @@
       </div>
       <script>
         $("#div_help_disable").click(function() {
-          $("#help_disable_explanation").show();
+          $("#help_disable_explanation").slideDown();
+        });
+      </script>
+
+      <div class="separator"></div>
+      <div id="div_donate">
+        <div id="please" style="text-decoration: underline; color: blue">Please donate!</div>
+        <div id="donation_wrapper" style="display:none;">
+          <div id="donation_panel">
+            I'd love to do this work full time, and donations would help me get there.
+            <hr/>
+            <div>
+              <span>Donate</span>
+              $<input id="donation_amount" maxlength="5" value="30"/>
+              <br/>
+              <div id="donate_slider"></div>
+            </div>
+            <br/>
+            <div>
+              And add a note
+              <span style="font-size:x-small">(a donation with a note makes my day!)</span><br/>
+              <input type="text" id="donate_note" maxlength=200 style="width:250px" /><br/>
+            <table>
+              <tr>
+                <td><input type="button" style="font-weight: bold; font-size:large" value="Donate" id="btnDonate"/></td>
+                <td><span id="donation_measure"></span></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+        function update_measure() {
+          var amt = $("#donation_amount").val();
+          var msgs = {
+            10: "Thanks!",
+            25: "I could pay my water bill with this!",
+            30: "I would really appreciate this!",
+            50: "This would buy my wife and me a nice dinner!",
+            75: "I could pay my phone bill with this!",
+            100: "You're helping me earn a living!",
+            150: "Wow!  Thank you so much!",
+            200: "You are amazing!"
+          };
+          var scores = {}
+          for (var size in msgs) {
+            scores[size] = amt - size;
+          }
+          best = 10000;
+          for (var size in scores) {
+            if (scores[size] < best && scores[size] >= 0) {
+              best = scores[size];
+              answer = size;
+            }
+          }
+          $("#donation_measure").text(msgs[answer]);
+        }
+        $(function() {
+          slid = false;
+          $("#div_donate").mouseenter(function() { 
+            if (slid) return;
+            slid = true;
+            $("#donation_wrapper").slideDown();
+            $("body, #donation_wrapper").animate({width: "+=100"}, {queue: false});
+          });
+          $("#donate_slider").width(200).slider({
+            min: 10,
+            max: 200,
+            range: "min",
+            value: $("#donation_amount").val(),
+            step: 5,
+            slide: function(event, ui) {
+              $("#donation_amount").val(ui.value);
+              update_measure();
+            }
+          });
+          $("#donation_amount").
+            width(35).
+            keyup(function() { 
+              $("#donate_slider").slider("value", this.value); 
+              update_measure();
+            });
+          $("#btnDonate").click(function() {
+            var amt = $("#donation_amount").val().trimLeft().trimRight();
+            if (!amt.match(/^[1-9]*(\.?)[0-9]+$/))
+              return;
+              var url = "https://www.paypal.com/cgi-bin/webscr?form=_xclick&cmd=_donations&business=gundlach.business@gmail.com&currency_code=USD&item_name=AdBlock%20for%20Chrome&no_note=1";
+            if ($("#donate_note").val() != "")
+              url += "&on0=msg&os0=" + escape($("#donate_note").val());
+            url += "&amount=" + amt;
+            // TODO: add an &image_url=[150x50 logo]
+            chrome.tabs.create({url: url});
+            window.close();
+          });
+          update_measure();
         });
       </script>
 
