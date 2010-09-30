@@ -22,14 +22,6 @@ function load_jquery_ui(callback) {
       load_css("jquery/css/custom-theme/jquery-ui-1.8.custom.css");
       load_css("jquery/css/override-page.css");
 
-      var icon = chrome.extension.getURL("img/icon24.png");
-      var css_chunk = document.createElement("style");
-      css_chunk.innerText = ".ui-dialog-titlebar " +
-          " { background: #2191C0 url(" + icon + ") " +
-          " center left no-repeat !important; " +
-          " padding-left: 38px !important; }";
-      $("html").prepend(css_chunk);
-
       if (SAFARI) {
         // chrome.i18n.getMessage() lazily loads a file from disk using xhr,
         // but the page itself doesn't have access to extension resources.
