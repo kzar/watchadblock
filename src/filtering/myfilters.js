@@ -6,7 +6,6 @@
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
 function MyFilters() {
-  MyFilters._temp_convert_from_old_system();
   this._event_handlers = { 'updated': [] };
 
   var subscriptions_json = localStorage.getItem('filter_lists');
@@ -34,16 +33,6 @@ function MyFilters() {
     function() { that.freshen_async(); }, 
     hours * 60 * 60 * 1000
   );
-}
-
-// 7/24/2010: delete remnants of old filter system, now that everyone has
-// been converted from old to new without losing their old filters.
-// You can remove this code within a month or so -- no big deal if someone
-// never runs it.
-MyFilters._temp_convert_from_old_system = function() {
-  localStorage.removeItem('subscriptions');
-  localStorage.removeItem('optimized_filters');
-  localStorage.removeItem('converted_to_new_filters');
 }
 
 // Event fired when subscriptions have been updated, after the subscriptions
@@ -99,15 +88,7 @@ MyFilters.prototype.rebuild = function() {
 //         they aren't out of date.
 // Returns: null (asynchronous)
 MyFilters.prototype.freshen_async = function(force) {
-  var that = this; // temp along with 7/23/2010 code below
   function out_of_date(subscription) {
-    // temp code to add .expiresAfterHours property to pre-7/23/2010 subscriptions.
-    // Remove after you're confident everyone has updated since 7/23/2010.
-    if (subscription.expiresAfterHours == undefined) {
-      subscription.expiresAfterHours = 120;
-      localStorage.setItem('filter_lists', JSON.stringify(that._subscriptions));
-    } // end temp code
-
     if (force) return true;
 
     var millis = new Date().getTime() - subscription.last_update;
@@ -126,7 +107,7 @@ MyFilters.prototype.freshen_async = function(force) {
           return;
         if (Filter.isComment(text) == false) // every legit list starts thus
           return;
-          
+
         // In case the subscription disappeared while we were out
         // (which would happen if they unsubscribed to a user-submitted
         // filter)...
@@ -134,7 +115,7 @@ MyFilters.prototype.freshen_async = function(force) {
           return;
 
         that._updateSubscriptionText(filter_id, text);
-        
+
         that.update();
       },
       error: function() { log("Error fetching " + url); }

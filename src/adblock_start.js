@@ -86,9 +86,7 @@ function disableTrueBlocking() {
 }
 
 // Add style rules hiding the given list of selectors.
-// If title is specified, apply this title to the style element for later
-// identification.
-function block_list_via_css(selectors, title) {
+function block_list_via_css(selectors) {
   var d = document.documentElement;
   // Setting this small chokes Chrome -- don't do it!  I set it back to
   // 10000 from 100 on 1/10/2010 -- at some point you should just get rid
@@ -96,8 +94,6 @@ function block_list_via_css(selectors, title) {
   var chunksize = 10000;
   while (selectors.length > 0) {
     var css_chunk = document.createElement("style");
-    if (title)
-      css_chunk.title = title;
     css_chunk.type = "text/css";
     css_chunk.innerText += selectors.splice(0, chunksize).join(',') +
                                " { visibility:hidden !important; " +
