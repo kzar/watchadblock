@@ -17,7 +17,7 @@ td { margin: 0px; padding: 0px; }
   padding-bottom: 5px;
 }
 
-a:not(#donation_amount_change) {
+a:not(.blue) {
   color: inherit;
   text-decoration: none;
 }
@@ -33,7 +33,7 @@ a:not(#donation_amount_change) {
 
 .menu-entry {
   padding: 3px 2px;
-  cursor:default;
+  cursor:pointer;
 }
 
 .menu-entry:hover {
@@ -62,11 +62,11 @@ a:not(#donation_amount_change) {
   text-decoration: underline;
 }
 
-#donation_wrapper {
-  margin: 5px;
+.box-wrapper {
+  margin: 5px 5px 5px 0px;
 }
 
-#donation_panel {
+.box {
   background:white; 
   -webkit-border-radius: 5px;
   border: 1px solid black; 
@@ -108,3 +108,14 @@ a:not(#donation_amount_change) {
 #btnDonate a:active {
     background: -webkit-gradient(linear, left top, left bottom, from(#0080ff), to(#000080));
 }
+
+#newtitle {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+#new_release_close {
+  margin: -7px -3px 0px 0px;
+  font-family: "Courier", sans-serif;
+}
+

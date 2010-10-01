@@ -33,11 +33,13 @@
       // Set menu entries appropriately for the selected tab.
       function customize_for_this_tab() {
         var menu_items = [
+          "div_status_whitelisted",
+          "div_status_disabled",
+          "div_status_paused",
+          "separator0",
           "div_pause_adblock",
-          "div_unpause_adblock",
           "div_blacklist",
           "div_whitelist",
-          "div_whitelisted",
           "separator1",
           "div_options",
           "div_help_disable",
@@ -46,11 +48,11 @@
 
         getCurrentTabInfo(function(info) {
           if (localStorage.getItem('adblock_is_paused')) {
-            show(["div_unpause_adblock", "separator1", "div_options"]);
+            show(["div_status_paused", "separator0", "div_options"]);
           } else if (info.disabled_site) {
-            show(["div_options", "div_help_disable"]);
+            show(["div_status_disabled", "separator0", "div_options", "div_help_disable"]);
           } else if (info.whitelisted) {
-            show(["div_pause_adblock", "div_whitelisted", "separator1", "div_options", "div_help_disable"]);
+            show(["div_status_whitelisted", "separator0", "div_pause_adblock", "separator1", "div_options", "div_help_disable"]);
           } else {
             show(["div_pause_adblock", "div_blacklist", "div_whitelist", "separator1", "div_options", "div_help_disable"]);
           }
@@ -69,12 +71,91 @@
       <div id="titletext">AdBlock</div>
       <script>
         $("#titletext").click(function() {
-          var url = "https://chrome.google.com/extensions/detail/" +
-              adblock_extension_id;
+          var url = "https://chrome.google.com/extensions/detail/gighmmpiobklfepjocnamgkkbiglidom";
           chrome.tabs.create({url:url});
         });
       </script>
 
+
+      <!-- ***************** New release notification **************** -->
+
+      <div id="div_new_release" style="display:none">
+        <div class="box-wrapper">
+          <div class = "box">
+            <div id="new_release_close" style="float:right"><a class="blue" href="#">x</a></div>
+            <div id="newtitle">New in version 2.2.0:</div>
+            This toolbar button :)
+          </div>
+        </div>
+        <div class="separator"></div>
+      </div>
+      <script>
+        $(function() {
+          var bg = chrome.extension.getBackgroundPage();
+          // If there was badge text set, informing the user of a new
+          // version, clear it.
+          chrome.browserAction.setBadgeText({text: ''});
+          chrome.browserAction.setTitle({title: ''});
+          localStorage.setItem('saw_badge_version', bg.version_to_notify);
+
+          var last_notified = localStorage.getItem('last_notified_version');
+          if (last_notified == null) {
+            // If the user is brand new, don't show version notices.
+            localStorage.setItem('last_notified_version', bg.version_to_notify);
+          }
+          else if (last_notified != bg.version_to_notify) {
+            // If the user hasn't dismissed the latest notice, show it.
+            $("#div_new_release").show();
+
+            $("#new_release_close").click(function() {
+              $("#div_new_release").slideUp();
+              localStorage.setItem('last_notified_version', bg.version_to_notify);
+            });
+          }
+        });
+      </script>
+
+
+      <!-- ************ Standard menu entries *********** -->
+
+      <div id="div_status_whitelisted" class="menu-entry">
+        <span style="font-style:italic">AdBlock is disabled on <span class="domainspan">this site</span></span>.
+        <a href="#" class="blue">enable</a>
+      </div>
+      <script>
+        $("#div_status_whitelisted a").click(function() {
+          getCurrentTabInfo(function(info) {
+            extension_call("remove_from_whitelist", {domain:info.domain}, 
+                         function() {
+              // Reload the tab
+              chrome.tabs.update(info.tab.id, {url: info.tab.url});
+              window.close();
+            });
+          })
+        });
+      </script>
+
+
+      <div id="div_status_disabled" style="font-style: italic">
+        AdBlock can not run on this domain.
+      </div>
+
+      <div id="div_status_paused" class="menu-entry">
+        <span style="font-style:italic">AdBlock is paused.</span>
+        <a href="#" class="blue">unpause</a>
+      </div>
+      <script>
+        $("#div_status_paused a").click(function() {
+          localStorage.removeItem('adblock_is_paused');
+          chrome.extension.getBackgroundPage().updateButtonUI();
+          chrome.extension.getBackgroundPage().utils.addChromeContextMenus();
+          window.close();
+        });
+      </script>
+
+
+
+      <div id="separator0" class="separator"></div>
 
       <div id="div_pause_adblock" class="menu-entry">
         Pause AdBlock
@@ -84,19 +165,6 @@
           localStorage.setItem('adblock_is_paused', true);
           chrome.extension.getBackgroundPage().updateButtonUI();
           chrome.contextMenus.removeAll();
-          window.close();
-        });
-      </script>
-
-
-      <div id="div_unpause_adblock" class="menu-entry">
-        Unpause AdBlock
-      </div>
-      <script>
-        $("#div_unpause_adblock").click(function() {
-          localStorage.removeItem('adblock_is_paused');
-          chrome.extension.getBackgroundPage().updateButtonUI();
-          chrome.extension.getBackgroundPage().utils.addChromeContextMenus();
           window.close();
         });
       </script>
@@ -134,24 +202,10 @@
       </script>
 
 
-      <div id="div_whitelisted" style="display:none" class="menu-entry">
-        Block ads on <span class="domainspan">this site</span>
-      </div>
-      <script>
-        $("#div_whitelisted").click(function() {
-          getCurrentTabInfo(function(info) {
-            extension_call("remove_from_whitelist", {domain:info.domain}, 
-                         function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
-            });
-          })
-        });
-      </script>
-
-
       <div id="separator1" class="separator"></div>
+
+
+      <!-- **************** Extras ************** -->
 
       <div id="div_options" class="menu-entry">
         Options
@@ -182,10 +236,13 @@
 
       <div class="separator"></div>
 
+
+      <!-- ****************** Donations *************** -->
+
       <div id="div_donate">
         <div id="please" style="text-decoration: underline; color: blue">Please donate!</div>
-        <div id="donation_wrapper" style="display:none;">
-          <div id="donation_panel">
+        <div id="donation_wrapper" class="box-wrapper" style="display:none;">
+          <div id="donation_panel" class="box">
             I'm not a corporation; I'm just a guy.  Please help me pay my bills!
             <hr/>
             <table>
@@ -195,7 +252,7 @@
                 <td>
                   <div id="fixed_donation">
                     <span id="donation_amount_txt">30</span>
-                    <a href="#" id="donation_amount_change">change</a>
+                    <a href="#" class="blue" id="donation_amount_change">change</a>
                   </div>
                   <div id="varied_donation" style="display:none">
                     <input style="float:left" id="donation_amount_input" maxlength="5" value="30" />
