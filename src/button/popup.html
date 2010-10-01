@@ -64,7 +64,7 @@
     </script>
   </head>
   <body>
-    <div class="wrapper">
+    <div id="wrapper">
 
       <div id="titletext">AdBlock</div>
       <script>
@@ -181,26 +181,57 @@
       </script>
 
       <div class="separator"></div>
+
       <div id="div_donate">
         <div id="please" style="text-decoration: underline; color: blue">Please donate!</div>
         <div id="donation_wrapper" style="display:none;">
           <div id="donation_panel">
-            I'd love to do this work full time, and donations would help me get there.
+            I'm not a corporation; I'm just a guy.  Please help me pay my bills!
             <hr/>
-            <div>
-              <span>Donate</span>
-              $<input id="donation_amount" maxlength="5" value="30"/>
-              <br/>
-              <div id="donate_slider"></div>
-            </div>
-            <br/>
-            <div>
-              And add a note
-              <span style="font-size:x-small">(a donation with a note makes my day!)</span><br/>
-              <input type="text" id="donate_note" maxlength=200 style="width:250px" /><br/>
             <table>
               <tr>
-                <td><input type="button" style="font-weight: bold; font-size:large" value="Donate" id="btnDonate"/></td>
+                <td><span>Donate:</span></td>
+                <td>$</td>
+                <td>
+                  <div id="fixed_donation">
+                    <span id="donation_amount_txt">30</span>
+                    <a href="#" id="donation_amount_change">change</a>
+                  </div>
+                  <div id="varied_donation" style="display:none">
+                    <input style="float:left" id="donation_amount_input" maxlength="5" value="30" />
+                    <table>
+                      <tr>
+                        <td>
+                          <div style="width: 200px" id="donate_slider"></div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div style="font-size: x-small; float:right">more</div>
+                          <div style="font-size: x-small;" >less</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><span>Note:</span></td>
+                <td></td>
+                <td colspan="2">
+                  <input type="text" placeholder="I love AdBlock!" id="donate_note" maxlength=200 />
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2"></td>
+                <td colspan="2">
+                  <span style="font-size:x-small">(a donation with a note makes my day!)</span>
+                </td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td><div id="btnDonate"><a href="#">Donate</a></div></td>
                 <td><span id="donation_measure"></span></td>
               </tr>
             </table>
@@ -209,72 +240,83 @@
       </div>
       <script>
         function update_measure() {
-          var amt = $("#donation_amount").val();
+          var amt = $("#donation_amount_input").val();
           var msgs = {
             10: "Thanks!",
-            25: "I could pay my water bill with this!",
+            20: "I could pay my water bill with this!",
             30: "I would really appreciate this!",
             50: "This would buy my wife and me a nice dinner!",
             75: "I could pay my phone bill with this!",
             100: "You're helping me earn a living!",
             150: "Wow!  Thank you so much!",
-            200: "You are amazing!"
+            200: 'I will call you up to say thank you -- leave your number in your Note!',
+            500: 'I will make up a song about you, call you up, and sing it to you!',
+            501: "I'll make up a song about you, call you up, and sing it to you!  And if you want I will put your name on a Funders page!",
+            5000: "I'll make up a song about you, call you up, and sing it to you!  And if you want I will put your name on a Funders page!  And your feature request becomes Pri-Critical in the bug tracker!",
+            10000: "Um, anything above $10,000 and I will contact you about more permanent sponsorship :)"
           };
-          var scores = {}
-          for (var size in msgs) {
-            scores[size] = amt - size;
-          }
-          best = 10000;
-          for (var size in scores) {
-            if (scores[size] < best && scores[size] >= 0) {
-              best = scores[size];
-              answer = size;
+          var best = 10000000;
+          var answer = 10;
+          for (var level in msgs) {
+            var score = amt - level; // how much they went over; lower is good
+            if (score < best && score >= 0) {
+              best = score;
+              answer = level;
             }
           }
           $("#donation_measure").text(msgs[answer]);
         }
         $(function() {
+          // Slide down the donation div upon mouseenter
           slid = false;
           $("#div_donate").mouseenter(function() { 
             if (slid) return;
             slid = true;
             $("#donation_wrapper").slideDown();
-            $("body, #donation_wrapper").animate({width: "+=100"}, {queue: false});
+            $("body, #donation_wrapper, #wrapper").animate({width: "+=200"}, {queue: false});
           });
-          $("#donate_slider").width(200).slider({
+
+          // Show the slider upon "change" click
+          $("#donation_amount_change").click(function() {
+            $("#fixed_donation, #varied_donation").toggle();
+          });
+
+          // Make a slider that moves when they type a number and vice versa
+          $("#donate_slider").height(".5em").slider({
             min: 10,
-            max: 200,
+            max: 500,
             range: "min",
-            value: $("#donation_amount").val(),
+            value: $("#donation_amount_input").val(),
             step: 5,
             slide: function(event, ui) {
-              $("#donation_amount").val(ui.value);
+              $("#donation_amount_input").val(ui.value);
               update_measure();
             }
           });
-          $("#donation_amount").
+          $("#donation_amount_input").
             width(35).
             keyup(function() { 
               $("#donate_slider").slider("value", this.value); 
               update_measure();
             });
-          $("#btnDonate").click(function() {
-            var amt = $("#donation_amount").val().trimLeft().trimRight();
-            if (!amt.match(/^[1-9]*(\.?)[0-9]+$/))
+
+          // Only send them to Paypal if they entered a valid amount
+          $("#btnDonate a").click(function() {
+            var amt = parseFloat($("#donation_amount_input").val());
+            if (isNaN(amt) || amt <= 0.50)
               return;
-              var url = "https://www.paypal.com/cgi-bin/webscr?form=_xclick&cmd=_donations&business=gundlach.business@gmail.com&currency_code=USD&item_name=AdBlock%20for%20Chrome&no_note=1";
+            var url = "https://www.paypal.com/cgi-bin/webscr?form=_xclick&cmd=_donations&business=gundlach.business@gmail.com&currency_code=USD&item_name=AdBlock%20for%20Chrome&no_note=1&custom=cb";
             if ($("#donate_note").val() != "")
-              url += "&on0=msg&os0=" + escape($("#donate_note").val());
+              url += "&on0=Note&os0=" + escape($("#donate_note").val());
             url += "&amount=" + amt;
-            // TODO: add an &image_url=[150x50 logo]
+            // TODO: add an &image_url=[150x50 logo] -- I tried this but
+            // nothing happened.
             chrome.tabs.create({url: url});
             window.close();
           });
           update_measure();
         });
       </script>
-
-
     </div>
   </body>
 </html>
