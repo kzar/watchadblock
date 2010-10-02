@@ -330,24 +330,46 @@
           $("#donation_measure").text(msgs[answer]);
         }
         $(function() {
-          // Slide down the donation div upon mouseenter, and back up on
-          // close; after close, require a click to slide down.
-          slid = false;
+          // Show the donation div upon momentary mouse hover or upon click.
+          // Once the user closes the div, only a click will re-show it.
+          var STATE = { 
+            UNSEEN_NOT_HOVERED: 1, // div has never been seen
+            UNSEEN_HOVERED: 2,     // user is hovering over "open" link
+            OPEN: 3,               // div is open
+            DISMISSED: 4           // User has seen and closed div
+          };
+          var state = STATE.UNSEEN_NOT_HOVERED;
+          $("#please").mouseenter(function() {
+            if (state != STATE.UNSEEN_NOT_HOVERED)
+              return;
+            state = STATE.UNSEEN_HOVERED;
+            window.setTimeout(function() {
+              if (state == STATE.UNSEEN_HOVERED)
+                openit();
+            }, 300);
+          });
+          $("#please").mouseleave(function() {
+            if (state == STATE.UNSEEN_HOVERED)
+              state = STATE.UNSEEN_NOT_HOVERED;
+          });
+          $("#please").click(function() {
+            if (state != STATE.OPEN)
+              openit();
+          });
+          $("#donate_close").click(function() {
+            closeit();
+          });
           function openit() {
-            if (slid) return;
-            slid = true;
+            state = STATE.OPEN;
+            $("#please").css("color", "purple");
             $("#donation_wrapper").slideDown();
             $("body, #donation_wrapper, #wrapper").animate({width: "+=200"}, {queue: false});
           }
-          $("#please").mouseenter(openit);
-          $("#donate_close").click(function() {
+          function closeit() {
+            state = STATE.DISMISSED;
             $("body, #donation_wrapper, #wrapper").animate({width: "-=200"}, {queue: false});
             $("#donation_wrapper").slideUp();
-            $("#please").click(function() {
-              slid = false;
-              openit();
-            });
-          });
+          }
 
           // Show the slider upon "change" click
           $("#donation_amount_change").click(function() {
