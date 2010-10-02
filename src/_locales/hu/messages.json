@@ -1,790 +1,788 @@
-﻿{
-  "description": {
-    "message": "AdBlock Chrome-hoz!  Blokkolja a reklámokat az egész weben.  4.5-re értékelve az 5-ből a felhasználók által!",
-    "description": "Extension description in manifest"
-  },
-
-  "buttoncancel": {
-    "message": "Mégse",
-    "description": "Cancel button"
-  },
-  "buttonok": {
-    "message": "OK!",
-    "description": "OK button"
-  },
-  "buttonblockit": {
-    "message": "Blokkolás",
-    "description": "Block button"
-  },
-  "buttonedit": {
-    "message": "Szerkesztés",
-    "description": "Edit filter manually button"
-  },
-  "optionstitle": {
-    "message": "AdBlock Beállítások",
-    "description": "Title for the options page"
-  },
-
-  "youtubevideomessage": {
-    "message": "Nincs videó? Töltse újra az oldalt. Ha ez sokszor előfordul, kapcsolja ki a Youtube reklámblokkolást az $link$ban.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
+{
+   "adalreadyblocked": {
+      "description": "on the ad report page, telling a user there is nothing to do",
+      "message": "Nem kell semmit csin\u00E1lnia, mivel a rekl\u00E1m m\u00E1r blokkolva lett"
+   },
+   "adblockreportinganad": {
+      "description": "title of ad report page",
+      "message": "AdBlock - Rekl\u00E1m jelent\u00E9se"
+   },
+   "addbutton": {
+      "description": "add button",
+      "message": "Hozz\u00E1ad\u00E1s"
+   },
+   "addnewfilter": {
+      "description": "Subtitle on the third tab",
+      "message": "\u00DAj sz\u0171r\u0151 hozz\u00E1ad\u00E1sa:"
+   },
+   "adreport1": {
+      "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message.",
+      "message": "Sz\u00F3val tal\u00E1lt egy rekl\u00E1mot egy weboldalon? Rendben, seg\u00EDtek megtal\u00E1lni a megfelel\u0151 helyet a jelent\u00E9shez!\u003Cbr/\u003E Eml\u00E9keztet\u0151\u00FCl: a rekl\u00E1mok jelent\u00E9se \u00F6nk\u00E9ntes. Ha nem akarja csin\u00E1lni, bez\u00E1rhatja ezt az ablakot, \u00E9s blokkolhatja csak mag\u00E1nak a sz\u0171r\u0151 hozz\u00E1ad\u00E1s\u00E1val a be\u00E1ll\u00EDt\u00E1sok oldal 'Feketelista' f\u00FCl\u00E9n!"
+   },
+   "adstillappear": {
+      "description": "question on ad reporting page",
+      "message": "A rekl\u00E1m m\u00E9g mindig megjelenik?"
+   },
+   "advanced": {
+      "description": "Section label for advanced options",
+      "message": "Halad\u00F3"
+   },
+   "betalabel": {
+      "description": "Option on first tab page",
+      "message": "B\u00E9ta"
+   },
+   "blacklistclickmessage": {
+      "description": "Message at the top of the blacklist options tab",
+      "message": "Kattintson jobb gombbal egy rekl\u00E1mra az oldalon a blokkol\u00E1shoz -- vagy blokkolja itt manu\u00E1lisan."
+   },
+   "blacklisterattrwillbe": {
+      "description": "Checkbox label",
+      "message": "A(z) $attribute$ $value$ lesz",
+      "placeholders": {
+         "attribute": {
+            "content": "$1",
+            "example": "class"
+         },
+         "value": {
+            "content": "$2",
+            "example": "AdBanner"
+         }
       }
-    }
-  },
-
-  "sliderexplanation": {
-    "message": "Húzza a csúszkát addig, amíg a reklám nincs megfelelően blokkolva, és a blokkolt elem használhatónak néz ki.",
-    "description": "Blacklister slider page message"
-  },
-  "slidertitle": {
-    "message": "1. lépés: Találja ki mit akar blokkolni",
-    "description": "Blacklister slider page title"
-  },
-  "blacklisteroptions1": {
-    "message": "Mit gondol, igaz lesz erre a reklámra mindig, amikor meglátogatja az oldalt?",
-    "description": "Blacklister attribute choosing page message"
-  },
-  "blacklisternotsure": {
-    "message": "<b>Nem biztos?</b> nyomja meg a 'Blokkolás' gombot lent",
-    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
-  },
-  "blacklisterthefilter": {
-    "message": "A szűrő, amit meg tud változtatni a Beállítások oldalon:",
-    "description": "Blacklister attribute choosing page message"
-  },
-  "blacklisteroptionstitle": {
-    "message": "Utolsó lépés: Mi okozza ezt a reklámot?",
-    "description": "Blacklister options page title"
-  },
-  "blacklisternofilter": {
-    "message": "Nincs szűrő meghatározva!",
-    "description": "Warning if the user hasn't specified a filter"
-  },
-  "blacklistereditfilter": {
-    "message": "Írja be a helyes szűrőt lent, és nyomjon OK-t",
-    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
-  },
-  "blacklistereditinvalid": {
-    "message": "A szűrő érvénytelen!",
-    "description": "Messagebox if the manually edited filter is invalid"
-  },
-  "blacklisterblockedelement": {
-    "message": "Blokkolt elem:",
-    "description": "Tells the user what the blocked element is on the slider page"
-  },
-  "blacklisterwarningnofilter": {
-    "message": "Figyelem: nincs szűrő meghatározva!",
-    "description": "Warns the user that no filter was specified"
-  },
-  "blacklisterblocksalloftype": {
-    "message": "Legyen óvatos: ez a szűrő blokkol minden $elementtype$ elemet az oldalon!",
-    "description": "Warns the user that all elements of type X will be blocked",
-    "placeholders": {
-      "elementtype": {
-        "content": "$1",
-        "example": "DIV"
+   },
+   "blacklisterblockedelement": {
+      "description": "Tells the user what the blocked element is on the slider page",
+      "message": "Blokkolt elem:"
+   },
+   "blacklisterblocksalloftype": {
+      "description": "Warns the user that all elements of type X will be blocked",
+      "message": "Legyen \u00F3vatos: ez a sz\u0171r\u0151 blokkol minden $elementtype$ elemet az oldalon!",
+      "placeholders": {
+         "elementtype": {
+            "content": "$1",
+            "example": "DIV"
+         }
       }
-    }
-  },
-  "blacklistersinglematch": {
-    "message": "Ez <b>1</b> elemre illik az oldalon.",
-    "description": "Tells the user only one match was found"
-  },
-  "blacklistermatches": {
-    "message": "Ez $matchcount$ elemre illik az oldalon.",
-    "description": "Tells the user multiple matches were found",
-    "placeholders": {
-      "matchcount": {
-        "content": "$1",
-        "example": "5"
+   },
+   "blacklistereditfilter": {
+      "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text.",
+      "message": "\u00CDrja be a helyes sz\u0171r\u0151t lent, \u00E9s nyomjon OK-t"
+   },
+   "blacklistereditinvalid": {
+      "description": "Messagebox if the manually edited filter is invalid",
+      "message": "A sz\u0171r\u0151 \u00E9rv\u00E9nytelen!"
+   },
+   "blacklistermatches": {
+      "description": "Tells the user multiple matches were found",
+      "message": "Ez $matchcount$ elemre illik az oldalon.",
+      "placeholders": {
+         "matchcount": {
+            "content": "$1",
+            "example": "5"
+         }
       }
-    }
-  },
-  "blacklisterattrwillbe": {
-    "message": "A(z) $attribute$ $value$ lesz",
-    "description": "Checkbox label",
-    "placeholders": {
-      "attribute": {
-        "content": "$1",
-        "example": "class"
-      },
-      "value": {
-        "content": "$2",
-        "example": "AdBanner"
+   },
+   "blacklisternofilter": {
+      "description": "Warning if the user hasn't specified a filter",
+      "message": "Nincs sz\u0171r\u0151 meghat\u00E1rozva!"
+   },
+   "blacklisternotsure": {
+      "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message.",
+      "message": "\u003Cb\u003ENem biztos?\u003C/b\u003E nyomja meg a 'Blokkol\u00E1s' gombot lent"
+   },
+   "blacklisteroptions1": {
+      "description": "Blacklister attribute choosing page message",
+      "message": "Mit gondol, igaz lesz erre a rekl\u00E1mra mindig, amikor megl\u00E1togatja az oldalt?"
+   },
+   "blacklisteroptionstitle": {
+      "description": "Blacklister options page title",
+      "message": "Utols\u00F3 l\u00E9p\u00E9s: Mi okozza ezt a rekl\u00E1mot?"
+   },
+   "blacklistersinglematch": {
+      "description": "Tells the user only one match was found",
+      "message": "Ez \u003Cb\u003E1\u003C/b\u003E elemre illik az oldalon."
+   },
+   "blacklisterthefilter": {
+      "description": "Blacklister attribute choosing page message",
+      "message": "A sz\u0171r\u0151, amit meg tud v\u00E1ltoztatni a Be\u00E1ll\u00EDt\u00E1sok oldalon:"
+   },
+   "blacklistertype": {
+      "description": "node name is called 'Type'",
+      "message": "T\u00EDpus"
+   },
+   "blacklisterwarningnofilter": {
+      "description": "Warns the user that no filter was specified",
+      "message": "Figyelem: nincs sz\u0171r\u0151 meghat\u00E1rozva!"
+   },
+   "blacklisttabtitle": {
+      "description": "Title of the third tab",
+      "message": "Blokkoljon egy rekl\u00E1mot amit a sz\u0171r\u0151 kihagyott"
+   },
+   "blockanadtitle": {
+      "description": "Title of the first two dialogs of the blacklister",
+      "message": "Egy rekl\u00E1m blokkol\u00E1sa"
+   },
+   "blockdomain": {
+      "description": "Message of the url and css -blocking area",
+      "message": "Az oldal domain-je, amin alkalmazva legyen"
+   },
+   "blocknothideoption": {
+      "description": "Option on first tab page",
+      "message": "A legt\u00F6bb rekl\u00E1m let\u00F6lt\u00E9s\u00E9nek blokkol\u00E1sa, elrejt\u00E9s\u00FCk helyett."
+   },
+   "blocknothidewarning": {
+      "description": "Warning for block instead of hiding option",
+      "message": "Vegye figyelembe, hogy a Chrome nem teljesen t\u00E1mogatja ezt, ez\u00E9rt egy p\u00E1r elem esetleg m\u00E9g mindig let\u00F6lt\u0151dhet, \u00E9s el lesz rejtve, ha \u00F6n egy gyors g\u00E9pet haszn\u00E1l."
+   },
+   "blockurlwithtext": {
+      "description": "Message of the url-blocking area",
+      "message": "URL-ek blokkol\u00E1sa, amelyek tartalmazz\u00E1k ezt a sz\u00F6veget"
+   },
+   "buttonback": {
+      "description": "Back to previous wizard page button",
+      "message": "Vissza"
+   },
+   "buttonblockit": {
+      "description": "Block button",
+      "message": "Blokkol\u00E1s"
+   },
+   "buttoncancel": {
+      "description": "Cancel button",
+      "message": "M\u00E9gse"
+   },
+   "buttonedit": {
+      "description": "Edit filter manually button",
+      "message": "Szerkeszt\u00E9s"
+   },
+   "buttonexclude": {
+      "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)",
+      "message": "Kiz\u00E1r\u00E1s"
+   },
+   "buttonexplanation": {
+      "description": "Explanation of how the button works",
+      "message": "\u003Ci\u003EAz\u00E9rt, hogy opcion\u00E1lis legyen a gomb, \u00E9s telep\u00EDthet\u0151 az AbBlock-al egy\u00FCtt, egy k\u00FCl\u00F6n kieg\u00E9sz\u00EDt\u0151be raktuk.\u003C/i\u003E\u003Cbr/\u003E\u003Cbr/\u003EA gomb hozz\u00E1ad\u00E1s\u00E1hoz kattintson a \u003Cb\u003ETelep\u00EDt\u00E9s\u003C/\u003Ere a \u003Ca\u003EBrowser Button for Abclock\u003C/a\u003E oldalon.\u003Cbr/\u003E\u003Cbr/\u003EAz elt\u00E1vol\u00EDt\u00E1shoz kattintson jobb gombbal r\u00E1, \u00E9s v\u00E1lassza a Kikapcsol\u00E1st.\u003C/i\u003E"
+   },
+   "buttonextension": {
+      "description": "Option on first tab page",
+      "message": "Mutassa az Adblock gombot a c\u00EDms\u00E1vt\u00F3l jobbra."
+   },
+   "buttonlooksgood": {
+      "description": "Looks good button",
+      "message": "J\u00F3l n\u00E9z ki"
+   },
+   "buttonok": {
+      "description": "OK button",
+      "message": "OK!"
+   },
+   "cantundo": {
+      "description": "Warning a user before confirming an action",
+      "message": "Ez a m\u0171velet nem vonhat\u00F3 vissza!"
+   },
+   "checkinfirefox": {
+      "description": "tell a user to see if a reported ad also appears in firefox",
+      "message": "Pr\u00F3b\u00E1lja ki Firefox-ban"
+   },
+   "checkinfirefox1": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "Telep\u00EDtse fel a Firefox-ot, ha m\u00E9g nincs."
+   },
+   "checkinfirefox2": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "Telep\u00EDtse fel az Adblock Plus-t Firefoxhoz, ha m\u00E9g nincs."
+   },
+   "checkinfirefox3": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "Iratkozzon fel ugyan azokra a sz\u0171r\u0151 list\u00E1kra Firefoxban, mint itt (kiv\u00E9ve az AdBlock egyedi sz\u0171r\u0151ket)."
+   },
+   "checkinfirefox4": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "T\u00F6ltse be az oldalt Firefoxban a rekl\u00E1mmal."
+   },
+   "checkinfirefox5": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "Megjelenik a rekl\u00E1m Firefoxban?"
+   },
+   "clickthead": {
+      "description": "When you have to click the ad to continue",
+      "message": "Kattinston a rekl\u00E1mra, \u00E9s v\u00E9gig fogom vezetni a folyamaton."
+   },
+   "clickupdatefilters": {
+      "description": "instruction on ad report page",
+      "message": "Kattintson ide: \u003Ca\u003ESz\u0171r\u0151im friss\u00EDt\u00E9se!\u003C/a\u003E"
+   },
+   "correctfilters": {
+      "description": "on the ad report page, label describing having the right set of filters",
+      "message": "Helyes sz\u0171r\u0151k"
+   },
+   "csstomatch": {
+      "description": "Message of the css-hiding area",
+      "message": "Illeszked\u0151 CSS"
+   },
+   "debuginlogoption": {
+      "description": "Option on first tab page",
+      "message": "Mutassa a hibakeres\u00E9si adatokat a Console Log-ban (ami lelass\u00EDtja az AdBlock-ot)"
+   },
+   "defaultsexplanation": {
+      "description": "Explanation of the filter lists",
+      "message": "Az alap\u00E9rtelmezettek j\u00F3k az angolul besz\u00E9l\u0151 felhaszn\u00E1l\u00F3knak, Amerik\u00E1ban. M\u00E1sok esetleg fel szeretn\u00E9nek iratkozni t\u00F6bb list\u00E1ra."
+   },
+   "description": {
+      "description": "Extension description in manifest",
+      "message": "AdBlock Chrome-hoz!  Blokkolja a rekl\u00E1mokat az eg\u00E9sz weben.  4.5-re \u00E9rt\u00E9kelve az 5-b\u0151l a felhaszn\u00E1l\u00F3k \u00E1ltal!"
+   },
+   "donatethanks": {
+      "description": "Tooltip if you hover the donate image",
+      "message": "Hurr\u00E1! K\u00F6sz\u00F6n\u00F6m!"
+   },
+   "enterurloflist": {
+      "description": "Error messagebox",
+      "message": "\u00CDrja be a sz\u0171r\u0151k list\u00E1j\u00E1nak az URL-j\u00E9t, amire fel szeretne iratkozni."
+   },
+   "excludedsitesexample": {
+      "description": "text on the 4th tab page",
+      "message": "P\u00E9ld\u00E1ul, a 'google.com' kikapcsolja a blokkol\u00E1st a google.com, mail.google.com, www.google.com oldalakon."
+   },
+   "excludedsitestitle": {
+      "description": "title of the 4th tab page",
+      "message": "Ne tiltsa le a rekl\u00E1mokat azokon domain-eken, amik ezzel v\u00E9gz\u0151dnek..."
+   },
+   "failedtofetchfilter": {
+      "description": "Error messagebox",
+      "message": "Nem siker\u00FClt bet\u00F6lteni a sz\u0171r\u0151t"
+   },
+   "fetchinglabel": {
+      "description": "Status label",
+      "message": "Bet\u00F6lt\u00E9s...k\u00E9rem v\u00E1rjon"
+   },
+   "filteradblock_custom": {
+      "description": "A filter list. Don't translate 'AdBlock'",
+      "message": "Adblock egyedi sz\u0171r\u0151k (javasolt)"
+   },
+   "filterchinese": {
+      "description": "A filter list",
+      "message": "K\u00EDnai sz\u0171r\u0151k"
+   },
+   "filterczech": {
+      "description": "A filter list",
+      "message": "Cseh sz\u0171r\u0151k"
+   },
+   "filterdanish": {
+      "description": "A filter list",
+      "message": "D\u00E1n sz\u0171r\u0151k"
+   },
+   "filterdutch": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi holland sz\u0171r\u0151k"
+   },
+   "filtereasylist": {
+      "description": "A filter list. Don't translate 'EasyList'",
+      "message": "EasyList (javasolt)"
+   },
+   "filtereasylist_plun_korean": {
+      "description": "A filter list",
+      "message": "Koreai sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_bulgarian": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi bolg\u00E1r sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_finnish": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi finn sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_french": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi francia sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_german": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi n\u00E9met sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_norwegian": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi norv\u00E9g sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_polish": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi lengyel sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_romanian": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi rom\u00E1n sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_spanish": {
+      "description": "A filter list",
+      "message": "Spanyol sz\u0171r\u0151k"
+   },
+   "filtereasylist_plus_vietnamese": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi vietn\u00E1mi sz\u0171r\u0151k"
+   },
+   "filterhungarian": {
+      "description": "A filter list",
+      "message": "Magyar sz\u0171r\u0151k"
+   },
+   "filterisraeli": {
+      "description": "A filter list",
+      "message": "Izraeli sz\u0171r\u0151k"
+   },
+   "filteritalian": {
+      "description": "A filter list",
+      "message": "Olasz sz\u0171r\u0151k"
+   },
+   "filterjapanese": {
+      "description": "A filter list",
+      "message": "Jap\u00E1n sz\u0171r\u0151k"
+   },
+   "filterlistlink": {
+      "description": "Explanation of the filter lists",
+      "message": "Ne iratkozzon fel t\u00F6bbre, mint amennyire sz\u00FCks\u00E9ge van -- mindegyik egy kicsit lelass\u00EDtja a b\u00F6ng\u00E9sz\u0151t! K\u00E9sz\u00EDt\u0151k, \u00E9s egy\u00E9b list\u00E1k megtal\u00E1lhat\u00F3ak \u003Ca\u003Eitt\u003C/a\u003E. "
+   },
+   "filterpolish": {
+      "description": "A filter list",
+      "message": "Lengyel sz\u0171r\u0151k"
+   },
+   "filterrussian": {
+      "description": "A filter list",
+      "message": " - tov\u00E1bbi orosz sz\u0171r\u0151k"
+   },
+   "filtersavewarning": {
+      "description": "Warning when blacklisting manually",
+      "message": "Legyen \u00F3vatos: ha hib\u00E1zik, sok sz\u0171r\u0151, bele\u00E9rtve a hivatalos sz\u0171r\u0151ket, elromolhatnak!\u003Cbr/\u003EOlvassa el a \u003Ca\u003Esz\u0171r\u0151 szintaxis seg\u00E9dletet\u003C/a\u003E, hogy megtanulja, hogyan kell \u00F6sszetett feketelista, \u00E9s feh\u00E9rlista sz\u0171r\u0151ket hozz\u00E1adni."
+   },
+   "filterstabtitle": {
+      "description": "Title of the filter list tab",
+      "message": "Feliratkoz\u00E1s sz\u0171r\u0151 list\u00E1kra"
+   },
+   "filterukranian": {
+      "description": "A filter list",
+      "message": "Ukr\u00E1n sz\u0171r\u0151k"
+   },
+   "findingads": {
+      "description": "When you press ctrl-shift-K the blacklister searches for ads",
+      "message": "Rekl\u00E1mok keres\u00E9se...\u003Cbr/\u003E\u003Cbr/\u003E\u003Ci\u003ECsak egy p\u00E1r pillanatig tart\u003C/i\u003E"
+   },
+   "fixityourself": {
+      "description": "telling a user who won't report an ad to us how to handle it for herself",
+      "message": "OK, m\u00E9g mindig blokkolhatja a rekl\u00E1mot mag\u00E1nak a Be\u00E1ll\u00EDt\u00E1sok oldalon. K\u00F6sz\u00F6nj\u00FCk!"
+   },
+   "generaloptions": {
+      "description": "Title of first tab page",
+      "message": "\u00C1ltal\u00E1nos be\u00E1ll\u00EDt\u00E1sok"
+   },
+   "googletextads": {
+      "description": "Option on first tab page",
+      "message": "Szeretem a sz\u00F6veges hirdet\u00E9seket a Google-\u00F6n, mutassa ezeket."
+   },
+   "labelshow": {
+      "description": "The label when you click the 'show links to filter lists' option",
+      "message": "mutassa"
+   },
+   "lang_bulgarian": {
+      "description": "language",
+      "message": "Bolg\u00E1r"
+   },
+   "lang_chinese": {
+      "description": "language",
+      "message": "K\u00EDnai"
+   },
+   "lang_czech": {
+      "description": "language",
+      "message": "Cseh"
+   },
+   "lang_danish": {
+      "description": "language",
+      "message": "D\u00E1n"
+   },
+   "lang_dutch": {
+      "description": "language",
+      "message": "Holland"
+   },
+   "lang_english": {
+      "description": "language",
+      "message": "Angol"
+   },
+   "lang_finnish": {
+      "description": "language",
+      "message": "Finn"
+   },
+   "lang_french": {
+      "description": "language",
+      "message": "Francia"
+   },
+   "lang_german": {
+      "description": "language",
+      "message": "N\u00E9met"
+   },
+   "lang_hungarian": {
+      "description": "language",
+      "message": "Magyar"
+   },
+   "lang_israeli": {
+      "description": "language",
+      "message": "Izraeli"
+   },
+   "lang_italian": {
+      "description": "language",
+      "message": "Olasz"
+   },
+   "lang_japanese": {
+      "description": "language",
+      "message": "Jap\u00E1n"
+   },
+   "lang_korean": {
+      "description": "language",
+      "message": "Koreai"
+   },
+   "lang_norwegian": {
+      "description": "language",
+      "message": "Norv\u00E9g"
+   },
+   "lang_polish": {
+      "description": "language",
+      "message": "Lengyel"
+   },
+   "lang_romanian": {
+      "description": "language",
+      "message": "Rom\u00E1n"
+   },
+   "lang_russian": {
+      "description": "language",
+      "message": "Orosz"
+   },
+   "lang_spanish": {
+      "description": "language",
+      "message": "Spanyol"
+   },
+   "lang_ukranian": {
+      "description": "language",
+      "message": "Ukr\u00E1n"
+   },
+   "lang_vietnamese": {
+      "description": "language",
+      "message": "Vietn\u00E1mi"
+   },
+   "linkblockadbyurl": {
+      "description": "Link on the third tab",
+      "message": "Rekl\u00E1m blokkol\u00E1sa az URL-je alapj\u00E1n:"
+   },
+   "linkhidesection": {
+      "description": "Link on the third tab",
+      "message": "Weboldal egy r\u00E9sz\u00E9nek elrejt\u00E9se:"
+   },
+   "manualfilteredit": {
+      "description": "Subtitle on the third tab",
+      "message": "Sz\u0171r\u0151k m\u00F3dos\u00EDt\u00E1sa manu\u00E1lisan:"
+   },
+   "no": {
+      "description": "A negative response to a question",
+      "message": "Nem"
+   },
+   "nodefaultfilter": {
+      "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+      "message": "Nincs egy alap sz\u0171r\u0151 list\u00E1nk erre a nyelvre.\u003Cbr/\u003EK\u00E9rj\u00FCk pr\u00F3b\u00E1ljon keresni egy megfelel\u0151 list\u00E1t $link$, ami t\u00E1mogatja ezt a nyelvet, vagy blokkolja ezt a rekl\u00E1mot mag\u00E1nak a Feketelista oldalon.",
+      "placeholders": {
+         "link": {
+            "content": "$1itt$2",
+            "example": "\u003Ca href='http://abp.org'\u003Ehere\u003C/a\u003E"
+         }
       }
-    }
-  },
-  "blacklistertype": {
-    "message": "Típus",
-    "description": "node name is called 'Type'"
-  },
-  "buttonlooksgood": {
-    "message": "Jól néz ki",
-    "description": "Looks good button"
-  },
-  "buttonback": {
-    "message": "Vissza",
-    "description": "Back to previous wizard page button"
-  },
-
-  "findingads": {
-    "message": "Reklámok keresése...<br/><br/><i>Csak egy pár pillanatig tart</i>",
-    "description": "When you press ctrl-shift-K the blacklister searches for ads"
-  },
-  "blockanadtitle": {
-    "message": "Egy reklám blokkolása",
-    "description": "Title of the first two dialogs of the blacklister"
-  },
-  "clickthead": {
-    "message": "Kattinston a reklámra, és végig fogom vezetni a folyamaton.",
-    "description": "When you have to click the ad to continue"
-  },
-
-  "whitelistertext": {
-    "message": "Az AdBlock nem fog futni az alábbi végződésű domain-eken:<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
+   },
+   "nolisturllabel": {
+      "description": "Status label",
+      "message": "Ez nem egy list\u00E1t tartalmaz\u00F3 URL volt."
+   },
+   "optionschangelog": {
+      "description": "changelog link",
+      "message": "v\u00E1ltoz\u00E1sok list\u00E1ja"
+   },
+   "optionsintro": {
+      "description": "Intro of the options page",
+      "message": "Szereti az Adblockot? A nevem Michael. Egy r\u00E9szmunkaid\u0151s \u00E1ll\u00E1sra v\u00E1ltottam, hogy tudjam fejleszteni az Adblock-ot, \u00E9s seg\u00EDteni a felhaszn\u00E1l\u00F3imat. K\u00E9rem haszn\u00E1lja, \u00E9s \u00E9lvezze az Adblock-ot, \u00E9s ha tud, \u003Ca\u003Et\u00E1mogasson\u003C/a\u003E b\u00E1rmekkora \u00F6sszeggel, \u003Cb\u003Ev\u00E9gtelen\u00FCl\u003C/b\u003E \u00F6r\u00FCln\u00E9k neki :)"
+   },
+   "optionstitle": {
+      "description": "Title for the options page",
+      "message": "AdBlock Be\u00E1ll\u00EDt\u00E1sok"
+   },
+   "optionsversion": {
+      "description": "Version number",
+      "message": "Verzi\u00F3: $version$",
+      "placeholders": {
+         "version": {
+            "content": "$1",
+            "example": "2.0.9"
+         }
       }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Kizárja ezt a domain-t?",
-    "description": "The title of the whitelister dialog"
-  },
-  "buttonexclude": {
-    "message": "Kizárás",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
-  },
-
-  "subscribingtitle": {
-    "message": "Feliratkozás a szűrő listára",
-    "description": "abp: link subscriber title"
-  },
-  "subscribingfinished": {
-    "message": "Kész!",
-    "description": "abp: link subscriber result"
-  },
-  "subscribingfailed": {
-    "message": "Hiba!",
-    "description": "abp: link subscriber result"
-  },
-
-  "optionsversion": {
-    "message": "Verzió: $version$",
-    "description": "Version number",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.0.9"
+   },
+   "orenteraurl": {
+      "description": "link for custom subscription",
+      "message": "Vagy \u00EDrjon be egy URL-t:"
+   },
+   "other": {
+      "description": "multiple choice option",
+      "message": "Egy\u00E9b"
+   },
+   "pagelanguagecheck": {
+      "description": "question on ad report page",
+      "message": "Milyen nyelv\u0171 az oldal?"
+   },
+   "pleaserestart": {
+      "description": "Explaining that changing an optional feature requires restarting Chrome before it will take effect",
+      "message": "(\u00DAjra kell ind\u00EDtani a Chrome-ot)"
+   },
+   "reallyclearlist": {
+      "description": "confirmation of clearing a list of iteams",
+      "message": "Biztos benne, hogy t\u00F6r\u00F6lni szeretn\u00E9 a list\u00E1t?"
+   },
+   "refusetocheck": {
+      "description": "user is telling us they don't wish to investigate something for us",
+      "message": "Nem akarom megn\u00E9zni."
+   },
+   "reloadadpage": {
+      "description": "instruction on ad report page",
+      "message": "Oldal \u00FAjrat\u00F6lt\u00E9se a rekl\u00E1mmal"
+   },
+   "removeallfromlist": {
+      "description": "option on 4th tab page",
+      "message": "\u00D6sszes elem elt\u00E1vol\u00EDt\u00E1sa a list\u00E1b\u00F3l:"
+   },
+   "removedlabel": {
+      "description": "Status label",
+      "message": "Elt\u00E1vol\u00EDtva."
+   },
+   "removefromlist": {
+      "description": "Label to remove a custom filter",
+      "message": "Elt\u00E1vol\u00EDt\u00E1s a list\u00E1r\u00F3l"
+   },
+   "removelabel": {
+      "description": "link to remove a excluded site",
+      "message": "Elt\u00E1vol\u00EDt\u00E1s"
+   },
+   "reportanad": {
+      "description": "A link for users who found an ad somewhere and want to report it",
+      "message": "\u003Ca\u003ERekl\u00E1m jelent\u00E9se\u003C/a\u003E az AdBlock-nak, vagy a sz\u0171r\u0151 lista karbantart\u00F3inak."
+   },
+   "reportfilterlistproblem": {
+      "description": "telling the user to report an ad to a filter list maintainer",
+      "message": "Ez egy sz\u0171r\u0151 lista probl\u00E9ma. Jelentse itt: $link$",
+      "placeholders": {
+         "link": {
+            "content": "$1",
+            "example": "EXAMPLE 1: \u003Ca href='mailto:someguy@list.com'\u003EJohn Doe\u003C/a\u003E  EXAMPLE 2: \u003Ca href='http://easylist.org'\u003EEasyList forums\u003C/a\u003E"
+         }
       }
-    }
-  },
-  "optionschangelog": {
-    "message": "változások listája",
-    "description": "changelog link"
-  },
-  "donatethanks": {
-    "message": "Hurrá! Köszönöm!",
-    "description": "Tooltip if you hover the donate image"
-  },
-  "optionsintro": {
-    "message": "Szereti az Adblockot? A nevem Michael. Egy részmunkaidős állásra váltottam, hogy tudjam fejleszteni az Adblock-ot, és segíteni a felhasználóimat. Kérem használja, és élvezze az Adblock-ot, és ha tud, <a>támogasson</a> bármekkora összeggel, <b>végtelenül</b> örülnék neki :)",
-    "description": "Intro of the options page"
-  },
-  "tabgeneral": {
-    "message": "Általános",
-    "description": "A tab on the options page"
-  },
-  "tabfilterlists": {
-    "message": "Szűrők",
-    "description": "A tab on the options page"
-  },
-  "tabblacklist": {
-    "message": "Feketelista",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "Kizárt oldalak",
-    "description": "A tab on the options page"
-  },
-
-  "generaloptions": {
-    "message": "Általános beállítások",
-    "description": "Title of first tab page"
-  },
-  "blocknothideoption": {
-    "message": "A legtöbb reklám letöltésének blokkolása, elrejtésük helyett.",
-    "description": "Option on first tab page"
-  },
-  "betalabel": {
-    "message": "Béta",
-    "description": "Option on first tab page"
-  },
-  "blocknothidewarning": {
-    "message": "Vegye figyelembe, hogy a Chrome nem teljesen támogatja ezt, ezért egy pár elem esetleg még mindig letöltődhet, és el lesz rejtve, ha ön egy gyors gépet használ.",
-    "description": "Warning for block instead of hiding option"
-  },
-  "buttonexplanation": {
-    "message": "<i>Azért, hogy opcionális legyen a gomb, és telepíthető az AbBlock-al együtt, egy külön kiegészítőbe raktuk.</i><br/><br/>A gomb hozzáadásához kattintson a <b>Telepítés</>re a <a>Browser Button for Abclock</a> oldalon.<br/><br/>Az eltávolításhoz kattintson jobb gombbal rá, és válassza a Kikapcsolást.</i>",
-    "description": "Explanation of how the button works"
-  },
-  "buttonextension": {
-    "message": "Mutassa az Adblock gombot a címsávtól jobbra.",
-    "description": "Option on first tab page"
-  },
-  "googletextads": {
-    "message": "Szeretem a szöveges hirdetéseket a Google-ön, mutassa ezeket.",
-    "description": "Option on first tab page"
-  },
-  "youtubeads": {
-    "message": "Reklámok blokkolása a Yotube videókban.",
-    "description": "Option on first tab page"
-  },
-  "pleaserestart": {
-    "message": "(Újra kell indítani a Chrome-ot)",
-    "description": "Explaining that changing an optional feature requires restarting Chrome before it will take effect"
-  },
-  "showcontextmenus": {
-    "message": "Elemek hozzáadása a környezeti menühöz.",
-    "description": "Option on first tab page"
-  },
-  "debuginlogoption": {
-    "message": "Mutassa a hibakeresési adatokat a Console Log-ban (ami lelassítja az AdBlock-ot)",
-    "description": "Option on first tab page"
-  },
-  "timeinlogoption": {
-    "message": "Mutassa az időmérési adatokat a Console Log-ban (ami lelasítja az AdBlock-ot)",
-    "description": "Option on first tab page"
-  },
-
-  "updatedrightnow": {
-    "message": "éppen most frissítve",
-    "description": "Label for subscription"
-  },
-  "updatedsecondsago": {
-    "message": "$seconds$ másodperce frissítve ",
-    "description": "Label for subscription",
-    "placeholders": {
-      "seconds": {
-        "content": "$1",
-        "example": "15"
+   },
+   "reporttous": {
+      "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
+      "message": "Ha besz\u00E9l angolul, jelentheti a rekl\u00E1mot nek\u00FCnk a $in_the_issue_tracker_link$. (Tudjuk, hogy nem vagyunk k\u00E9pesek a rekl\u00E1mokat blokkolni a legt\u00F6bb vide\u00F3ban; a Webkit-ben val\u00F3 t\u00E1mogat\u00E1sra v\u00E1runk.)",
+      "placeholders": {
+         "in_the_issue_tracker_link": {
+            "content": "$1hibak\u00F6vet\u0151ben$2",
+            "example": "\u003Ca href='issuetracker.html'\u003Ein the issue tracker\u003C/a\u003E"
+         }
       }
-    }
-  },
-  "updatedminutesago": {
-    "message": "$minutes$ perce frissítve ",
-    "description": "Label for subscription",
-    "placeholders": {
-      "minutes": {
-        "content": "$1",
-        "example": "15"
+   },
+   "retryaftersubscribe": {
+      "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+      "message": "Iratkozzon fel erre a sz\u0171r\u0151 list\u00E1ra, majd pr\u00F3b\u00E1lja \u00FAjra: $list_title$",
+      "placeholders": {
+         "list_title": {
+            "content": "$1",
+            "example": "French filters"
+         }
       }
-    }
-  },
-  "updatedhoursago": {
-    "message": "$hours$ órája frissítve ",
-    "description": "Label for subscription",
-    "placeholders": {
-      "hours": {
-        "content": "$1",
-        "example": "15"
+   },
+   "savebutton": {
+      "description": "Save button",
+      "message": "Ment\u00E9s"
+   },
+   "savereminder": {
+      "description": "Reminder to press save",
+      "message": "Ne felejtsen el menteni!"
+   },
+   "showcontextmenus": {
+      "description": "Option on first tab page",
+      "message": "Elemek hozz\u00E1ad\u00E1sa a k\u00F6rnyezeti men\u00FCh\u00F6z."
+   },
+   "showlinkstolists": {
+      "description": "Option on second tab page",
+      "message": "Linkek mutat\u00E1sa a sz\u0171r\u0151 list\u00E1khoz:"
+   },
+   "sliderexplanation": {
+      "description": "Blacklister slider page message",
+      "message": "H\u00FAzza a cs\u00FAszk\u00E1t addig, am\u00EDg a rekl\u00E1m nincs megfelel\u0151en blokkolva, \u00E9s a blokkolt elem haszn\u00E1lhat\u00F3nak n\u00E9z ki."
+   },
+   "slidertitle": {
+      "description": "Blacklister slider page title",
+      "message": "1. l\u00E9p\u00E9s: Tal\u00E1lja ki mit akar blokkolni"
+   },
+   "subscribebutton": {
+      "description": "subscribe to a list button",
+      "message": "Feliratkoz\u00E1s"
+   },
+   "subscribedlabel": {
+      "description": "Status label",
+      "message": "Feliratkozva."
+   },
+   "subscribetoall": {
+      "description": "option on second tab page",
+      "message": "Feliratkoz\u00E1s az \u00F6sszes sz\u0171r\u0151re:"
+   },
+   "subscribetonone": {
+      "description": "option on second tab page",
+      "message": "Leiratkoz\u00E1s az \u00F6sszes sz\u0171r\u0151r\u0151l:"
+   },
+   "subscribingfailed": {
+      "description": "abp: link subscriber result",
+      "message": "Hiba!"
+   },
+   "subscribingfinished": {
+      "description": "abp: link subscriber result",
+      "message": "K\u00E9sz!"
+   },
+   "subscribingtitle": {
+      "description": "abp: link subscriber title",
+      "message": "Feliratkoz\u00E1s a sz\u0171r\u0151 list\u00E1ra"
+   },
+   "tabblacklist": {
+      "description": "A tab on the options page",
+      "message": "Feketelista"
+   },
+   "tabexcluded": {
+      "description": "A tab on the options page",
+      "message": "Kiz\u00E1rt oldalak"
+   },
+   "tabfilterlists": {
+      "description": "A tab on the options page",
+      "message": "Sz\u0171r\u0151k"
+   },
+   "tabgeneral": {
+      "description": "A tab on the options page",
+      "message": "\u00C1ltal\u00E1nos"
+   },
+   "timeinlogoption": {
+      "description": "Option on first tab page",
+      "message": "Mutassa az id\u0151m\u00E9r\u00E9si adatokat a Console Log-ban (ami lelas\u00EDtja az AdBlock-ot)"
+   },
+   "unsubscribedlabel": {
+      "description": "Status label",
+      "message": "Leiratkozva."
+   },
+   "updateddayago": {
+      "description": "Label for subscription",
+      "message": "1 napja friss\u00EDtve "
+   },
+   "updateddaysago": {
+      "description": "Label for subscription",
+      "message": "$days$ napja friss\u00EDtve ",
+      "placeholders": {
+         "days": {
+            "content": "$1",
+            "example": "15"
+         }
       }
-    }
-  },
-  "updateddaysago": {
-    "message": "$days$ napja frissítve ",
-    "description": "Label for subscription",
-    "placeholders": {
-      "days": {
-        "content": "$1",
-        "example": "15"
+   },
+   "updatedhourago": {
+      "description": "Label for subscription",
+      "message": "1 \u00F3r\u00E1ja friss\u00EDtve "
+   },
+   "updatedhoursago": {
+      "description": "Label for subscription",
+      "message": "$hours$ \u00F3r\u00E1ja friss\u00EDtve ",
+      "placeholders": {
+         "hours": {
+            "content": "$1",
+            "example": "15"
+         }
       }
-    }
-  },
-  "updatedminuteago": {
-    "message": "1 perce frissítve ",
-    "description": "Label for subscription"
-  },
-  "updatedhourago": {
-    "message": "1 órája frissítve ",
-    "description": "Label for subscription"
-  },
-  "updateddayago": {
-    "message": "1 napja frissítve ",
-    "description": "Label for subscription"
-  },
-  "removedlabel": {
-    "message": "Eltávolítva.",
-    "description": "Status label"
-  },
-  "unsubscribedlabel": {
-    "message": "Leiratkozva.",
-    "description": "Status label"
-  },
-  "fetchinglabel": {
-    "message": "Betöltés...kérem várjon",
-    "description": "Status label"
-  },
-  "subscribedlabel": {
-    "message": "Feliratkozva.",
-    "description": "Status label"
-  },
-  "nolisturllabel": {
-    "message": "Ez nem egy listát tartalmazó URL volt.",
-    "description": "Status label"
-  },
-  "failedtofetchfilter": {
-    "message": "Nem sikerült betölteni a szűrőt",
-    "description": "Error messagebox"
-  },
-  "enterurloflist": {
-    "message": "Írja be a szűrők listájának az URL-jét, amire fel szeretne iratkozni.",
-    "description": "Error messagebox"
-  },
-  "removefromlist": {
-    "message": "Eltávolítás a listáról",
-    "description": "Label to remove a custom filter"
-  },
-  "filterstabtitle": {
-    "message": "Feliratkozás szűrő listákra",
-    "description": "Title of the filter list tab"
-  },
-  "defaultsexplanation": {
-    "message": "Az alapértelmezettek jók az angolul beszélő felhasználóknak, Amerikában. Mások esetleg fel szeretnének iratkozni több listára.",
-    "description": "Explanation of the filter lists"
-  },
-  "filterlistlink": {
-    "message": "Ne iratkozzon fel többre, mint amennyire szüksége van -- mindegyik egy kicsit lelassítja a böngészőt! Készítők, és egyéb listák megtalálhatóak <a>itt</a>. ",
-    "description": "Explanation of the filter lists"
-  },
-  "updatenowmessage": {
-    "message": "I will fetch updates automatically; you can also <a>update now</a>.",
-    "message": "Le fogom tölteni a frissítéseket automatikusan; de akár ön is <a>frissíthet most</a>",
-    "description": "update filters text + button"
-  },
-  "orenteraurl": {
-    "message": "Vagy írjon be egy URL-t:",
-    "description": "link for custom subscription"
-  },
-  "subscribebutton": {
-    "message": "Feliratkozás",
-    "description": "subscribe to a list button"
-  },
-  "subscribetoall": {
-    "message": "Feliratkozás az összes szűrőre:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Leiratkozás az összes szűrőről:",
-    "description": "option on second tab page"
-  },
-  "showlinkstolists": {
-    "message": "Linkek mutatása a szűrő listákhoz:",
-    "description": "Option on second tab page"
-  },
-  "labelshow": {
-    "message": "mutassa",
-    "description": "The label when you click the 'show links to filter lists' option"
-  },
-  "filteradblock_custom": {
-    "message": "Adblock egyedi szűrők (javasolt)",
-    "description": "A filter list. Don't translate 'AdBlock'"
-  },
-  "filtereasylist": {
-    "message": "EasyList (javasolt)",
-    "description": "A filter list. Don't translate 'EasyList'"
-  },
-  "filtereasylist_plus_bulgarian": {
-    "message": " - további bolgár szűrők",
-    "description": "A filter list"
-  },
-  "filterdutch": {
-    "message": " - további holland szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_finnish": {
-    "message": " - további finn szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_french": {
-    "message": " - további francia szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_german": {
-    "message": " - további német szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_norwegian": {
-    "message": " - további norvég szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_polish": {
-    "message": " - további lengyel szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_romanian": {
-    "message": " - további román szűrők",
-    "description": "A filter list"
-  },
-  "filterrussian": {
-    "message": " - további orosz szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_vietnamese": {
-    "message": " - további vietnámi szűrők",
-    "description": "A filter list"
-  },
-  "filterchinese": {
-    "message": "Kínai szűrők",
-    "description": "A filter list"
-  },
-  "filterczech": {
-    "message": "Cseh szűrők",
-    "description": "A filter list"
-  },
-  "filterdanish": {
-    "message": "Dán szűrők",
-    "description": "A filter list"
-  },
-  "filterhungarian": {
-    "message": "Magyar szűrők",
-    "description": "A filter list"
-  },
-  "filterisraeli": {
-    "message": "Izraeli szűrők",
-    "description": "A filter list"
-  },
-  "filteritalian": {
-    "message": "Olasz szűrők",
-    "description": "A filter list"
-  },
-  "filterjapanese": {
-    "message": "Japán szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plun_korean": {
-    "message": "Koreai szűrők",
-    "description": "A filter list"
-  },
-  "filterpolish": {
-    "message": "Lengyel szűrők",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_spanish": {
-    "message": "Spanyol szűrők",
-    "description": "A filter list"
-  },
-  "filterukranian": {
-    "message": "Ukrán szűrők",
-    "description": "A filter list"
-  },
-
-  "blacklistclickmessage": {
-    "message": "Kattintson jobb gombbal egy reklámra az oldalon a blokkoláshoz -- vagy blokkolja itt manuálisan.",
-    "description": "Message at the top of the blacklist options tab"
-  },
-  "blacklisttabtitle": {
-    "message": "Blokkoljon egy reklámot amit a szűrő kihagyott",
-    "description": "Title of the third tab"
-  },
-  "addnewfilter": {
-    "message": "Új szűrő hozzáadása:",
-    "description": "Subtitle on the third tab"
-  },
-  "linkblockadbyurl": {
-    "message": "Reklám blokkolása az URL-je alapján:",
-    "description": "Link on the third tab"
-  },
-  "linkhidesection": {
-    "message": "Weboldal egy részének elrejtése:",
-    "description": "Link on the third tab"
-  },
-  "blockurlwithtext": {
-    "message": "URL-ek blokkolása, amelyek tartalmazzák ezt a szöveget",
-    "description": "Message of the url-blocking area"
-  },
-  "csstomatch": {
-    "message": "Illeszkedő CSS",
-    "description": "Message of the css-hiding area"
-  },
-  "blockdomain": {
-    "message": "Az oldal domain-je, amin alkalmazva legyen",
-    "description": "Message of the url and css -blocking area"
-  },
-  "manualfilteredit": {
-    "message": "Szűrők módosítása manuálisan:",
-    "description": "Subtitle on the third tab"
-  },
-  "filtersavewarning": {
-    "message": "Legyen óvatos: ha hibázik, sok szűrő, beleértve a hivatalos szűrőket, elromolhatnak!<br/>Olvassa el a <a>szűrő szintaxis segédletet</a>, hogy megtanulja, hogyan kell összetett feketelista, és fehérlista szűrőket hozzáadni.",
-    "description": "Warning when blacklisting manually"
-  },
-  "savebutton": {
-    "message": "Mentés",
-    "description": "Save button"
-  },
-  "savereminder": {
-    "message": "Ne felejtsen el menteni!",
-    "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Haladó",
-    "description": "Section label for advanced options"
-  },
-  "reportanad": {
-    "message": "<a>Reklám jelentése</a> az AdBlock-nak, vagy a szűrő lista karbantartóinak.",
-    "description": "A link for users who found an ad somewhere and want to report it"
-  },
-
-  "removelabel": {
-    "message": "Eltávolítás",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Ne tiltsa le a reklámokat azokon domain-eken, amik ezzel végződnek...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "For example, 'google.com' will stop blocking ads on google.com, mail.google.com, and www.google.com.",
-    "message": "Például, a 'google.com' kikapcsolja a blokkolást a google.com, mail.google.com, www.google.com oldalakon.",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "Hozzáadás",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "Összes elem eltávolítása a listából:",
-    "description": "option on 4th tab page"
-  },
-  "adblockreportinganad": {
-    "message": "AdBlock - Reklám jelentése",
-    "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "Szóval talált egy reklámot egy weboldalon? Rendben, segítek megtalálni a megfelelő helyet a jelentéshez!<br/> Emlékeztetőül: a reklámok jelentése önkéntes. Ha nem akarja csinálni, bezárhatja ezt az ablakot, és blokkolhatja csak magának a szűrő hozzáadásával a beállítások oldal 'Feketelista' fülén!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
-  },
-  "updateyourlists": {
-    "message": "Győződjön meg róla, hogy a szűrő listái naprakészek",
-    "description": "instruction on ad report page"
-  },
-  "clickupdatefilters": {
-    "message": "Kattintson ide: <a>Szűrőim frissítése!</a>",
-    "description": "instruction on ad report page"
-  },
-  "reloadadpage": {
-    "message": "Oldal újratöltése a reklámmal",
-    "description": "instruction on ad report page"
-  },
-  "adstillappear": {
-    "message": "A reklám még mindig megjelenik?",
-    "description": "question on ad reporting page"
-  },
-  "yes": {
-    "message": "Igen",
-    "description": "A positive response to a question"
-  },
-  "no": {
-    "message": "Nem",
-    "description": "A negative response to a question"
-  },
-  "adalreadyblocked": {
-    "message": "Nem kell semmit csinálnia, mivel a reklám már blokkolva lett",
-    "description": "on the ad report page, telling a user there is nothing to do"
-  },
-  "correctfilters": {
-    "message": "Helyes szűrők",
-    "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Biztos benne, hogy törölni szeretné a listát?",
-    "description": "confirmation of clearing a list of iteams"
-  },
-  "pagelanguagecheck": {
-    "message": "Milyen nyelvű az oldal?",
-    "description": "question on ad report page"
-  },
-  "lang_english": {
-    "message": "Angol",
-    "description": "language"
-  },
-  "lang_bulgarian": {
-    "message": "Bolgár",
-    "description": "language"
-  },
-  "lang_chinese": {
-    "message": "Kínai",
-    "description": "language"
-  },
-  "lang_czech": {
-    "message": "Cseh",
-    "description": "language"
-  },
-  "lang_danish": {
-    "message": "Dán",
-    "description": "language"
-  },
-  "lang_dutch": {
-    "message": "Holland",
-    "description": "language"
-  },
-  "lang_finnish": {
-    "message": "Finn",
-    "description": "language"
-  },
-  "lang_french": {
-    "message": "Francia",
-    "description": "language"
-  },
-  "lang_german": {
-    "message": "Német",
-    "description": "language"
-  },
-  "lang_hungarian": {
-    "message": "Magyar",
-    "description": "language"
-  },
-  "lang_israeli": {
-    "message": "Izraeli",
-    "description": "language"
-  },
-  "lang_italian": {
-    "message": "Olasz",
-    "description": "language"
-  },
-  "lang_japanese": {
-    "message": "Japán",
-    "description": "language"
-  },
-  "lang_korean": {
-    "message": "Koreai",
-    "description": "language"
-  },
-  "lang_norwegian": {
-    "message": "Norvég",
-    "description": "language"
-  },
-  "lang_polish": {
-    "message": "Lengyel",
-    "description": "language"
-  },
-  "lang_romanian": {
-    "message": "Román",
-    "description": "language"
-  },
-  "lang_russian": {
-    "message": "Orosz",
-    "description": "language"
-  },
-  "lang_spanish": {
-    "message": "Spanyol",
-    "description": "language"
-  },
-  "lang_ukranian": {
-    "message": "Ukrán",
-    "description": "language"
-  },
-  "lang_vietnamese": {
-    "message": "Vietnámi",
-    "description": "language"
-  },
-  "other": {
-    "message": "Egyéb",
-    "description": "multiple choice option"
-  },
-  "nodefaultfilter": {
-    "message": "Nincs egy alap szűrő listánk erre a nyelvre.<br/>Kérjük próbáljon keresni egy megfelelő listát $link$, ami támogatja ezt a nyelvet, vagy blokkolja ezt a reklámot magának a Feketelista oldalon.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1itt$2",
-        "example": "<a href='http://abp.org'>here</a>"
+   },
+   "updatedminuteago": {
+      "description": "Label for subscription",
+      "message": "1 perce friss\u00EDtve "
+   },
+   "updatedminutesago": {
+      "description": "Label for subscription",
+      "message": "$minutes$ perce friss\u00EDtve ",
+      "placeholders": {
+         "minutes": {
+            "content": "$1",
+            "example": "15"
+         }
       }
-    }
-  },
-  "retryaftersubscribe": {
-    "message": "Subscribe to this filter list, then try again: $list_title$",
-    "message": "Iratkozzon fel erre a szűrő listára, majd próbálja újra: $list_title$",
-    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
-    "placeholders": {
-      "list_title": {
-        "content": "$1",
-        "example": "French filters"
+   },
+   "updatedrightnow": {
+      "description": "Label for subscription",
+      "message": "\u00E9ppen most friss\u00EDtve"
+   },
+   "updatedsecondsago": {
+      "description": "Label for subscription",
+      "message": "$seconds$ m\u00E1sodperce friss\u00EDtve ",
+      "placeholders": {
+         "seconds": {
+            "content": "$1",
+            "example": "15"
+         }
       }
-    }
-  },
-  "checkinfirefox": {
-    "message": "Próbálja ki Firefox-ban",
-    "description": "tell a user to see if a reported ad also appears in firefox"
-  },
-  "checkinfirefox1": {
-    "message": "Telepítse fel a Firefox-ot, ha még nincs.",
-    "description": "instruction for how to check Firefox for a reported ad"
-  },
-  "checkinfirefox2": {
-    "message": "Telepítse fel az Adblock Plus-t Firefoxhoz, ha még nincs.",
-    "description": "instruction for how to check Firefox for a reported ad"
-  },
-  "checkinfirefox3": {
-    "message": "Iratkozzon fel ugyan azokra a szűrő listákra Firefoxban, mint itt (kivéve az AdBlock egyedi szűrőket).",
-    "description": "instruction for how to check Firefox for a reported ad"
-  },
-  "checkinfirefox4": {
-    "message": "Töltse be az oldalt Firefoxban a reklámmal.",
-    "description": "instruction for how to check Firefox for a reported ad"
-  },
-  "checkinfirefox5": {
-    "message": "Megjelenik a reklám Firefoxban?",
-    "description": "instruction for how to check Firefox for a reported ad"
-  },
-  "refusetocheck": {
-    "message": "Nem akarom megnézni.",
-    "description": "user is telling us they don't wish to investigate something for us"
-  },
-  "reportfilterlistproblem": {
-    "message": "Ez egy szűrő lista probléma. Jelentse itt: $link$",
-    "description": "telling the user to report an ad to a filter list maintainer",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+   },
+   "updatefromoldversion": {
+      "description": "ad report page instruction",
+      "message": "Egy r\u00E9gebbi verzi\u00F3j\u00E1t haszn\u00E1lja az AdBlock-nak. K\u00E9rj\u00FCk el\u0151sz\u00F6r $updatelink$ az AdBlock leg\u00FAjabb verzi\u00F3j\u00E1ra",
+      "placeholders": {
+         "updatelink": {
+            "content": "$1friss\u00EDtsen$2",
+            "example": "\u003Ca href='http://chrome.com/update_here.ctx'\u003Eupdate\u003C/a\u003E"
+         }
       }
-    }
-  },
-  "reporttous": {
-    "message": "Ha beszél angolul, jelentheti a reklámot nekünk a $in_the_issue_tracker_link$. (Tudjuk, hogy nem vagyunk képesek a reklámokat blokkolni a legtöbb videóban; a Webkit-ben való támogatásra várunk.)",
-    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
-    "placeholders": {
-      "in_the_issue_tracker_link": {
-        "content": "$1hibakövetőben$2",
-        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+   },
+   "updatenowmessage": {
+      "description": "update filters text + button",
+      "message": "Le fogom t\u00F6lteni a friss\u00EDt\u00E9seket automatikusan; de ak\u00E1r \u00F6n is \u003Ca\u003Efriss\u00EDthet most\u003C/a\u003E"
+   },
+   "updateyourlists": {
+      "description": "instruction on ad report page",
+      "message": "Gy\u0151z\u0151dj\u00F6n meg r\u00F3la, hogy a sz\u0171r\u0151 list\u00E1i naprak\u00E9szek"
+   },
+   "whitelistertext": {
+      "description": "The message of the whitelister dialog, putting the domain name on a separate line",
+      "message": "Az AdBlock nem fog futni az al\u00E1bbi v\u00E9gz\u0151d\u00E9s\u0171 domain-eken:\u003Cbr/\u003E$domain$.",
+      "placeholders": {
+         "domain": {
+            "content": "'\u003Ci\u003E$1\u003C/i\u003E'",
+            "example": "'\u003Ci\u003Elive.msn.com\u003C/i\u003E'"
+         }
       }
-    }
-  },
-  "fixityourself": {
-    "message": "OK, még mindig blokkolhatja a reklámot magának a Beállítások oldalon. Köszönjük!",
-    "description": "telling a user who won't report an ad to us how to handle it for herself"
-  },
-  "updatefromoldversion": {
-    "message": "Egy régebbi verzióját használja az AdBlock-nak. Kérjük először $updatelink$ az AdBlock legújabb verziójára",
-    "description": "ad report page instruction",
-    "placeholders": {
-      "updatelink": {
-        "content": "$1frissítsen$2",
-        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+   },
+   "whitelistertitle": {
+      "description": "The title of the whitelister dialog",
+      "message": "Kiz\u00E1rja ezt a domain-t?"
+   },
+   "yes": {
+      "description": "A positive response to a question",
+      "message": "Igen"
+   },
+   "youtubeads": {
+      "description": "Option on first tab page",
+      "message": "Rekl\u00E1mok blokkol\u00E1sa a Yotube vide\u00F3kban."
+   },
+   "youtubevideomessage": {
+      "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
+      "message": "Nincs vide\u00F3? T\u00F6ltse \u00FAjra az oldalt. Ha ez sokszor el\u0151fordul, kapcsolja ki a Youtube rekl\u00E1mblokkol\u00E1st az $link$ban.",
+      "placeholders": {
+         "link": {
+            "content": "$1",
+            "example": "AdBlock Options"
+         }
       }
-    }
+   },
+   "contextmenuhidethis": {
+    "message": "Ennek a rekl\u00E1mnak a blokkol\u00E1sa",
+    "description": "Context menu entry"
   },
-  "cantundo": {
-    "message": "Ez a művelet nem vonható vissza!",
-    "description": "Warning a user before confirming an action"
+  "contextmenuhideanything": {
+    "message": "Egy rekl\u00E1m blokkol\u00E1sa az oldalon...",
+    "description": "Context menu entry"
+  },
+  "contextmenuexcludedomain": {
+    "message": "Ne blokkoljon ezen a domain-en...",
+    "description": "Context menu entry"
   }
 }
