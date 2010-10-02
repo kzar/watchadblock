@@ -5,11 +5,6 @@ extension_call = function(fn, options, callback) {
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
 }
 
-icon_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
-debug_id = false; // shipit will refuse to ship if this is true
-if (debug_id)
-  icon_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
-
 // These are replaced with console.log in adblock_start if the user chooses.
 DEBUG = false;
 log = function() { };

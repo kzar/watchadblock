@@ -414,24 +414,12 @@
         debug_background = true;
       }
 
-      // Called by onRequest[External] to call functions from the field.
-      function dispatchHandler(request, sender, sendResponse) { 
-        var result = utils[request.fn](request.options, sender);
-        sendResponse(result);
-      }
- 
-      chrome.extension.onRequest.addListener(dispatchHandler);
-
-      if (!SAFARI) {
-        // Let the AdBlock icon control us as well.
-        chrome.extension.onRequestExternal.addListener(
-          function(request, sender, sendResponse) {
-            if (sender.id != icon_extension_id)
-              return;
-            dispatchHandler(request, sender, sendResponse);
-          }
-        );
-      }
+      chrome.extension.onRequest.addListener(
+        function(request, sender, sendResponse) { 
+          var result = utils[request.fn](request.options, sender);
+          sendResponse(result);
+        }
+      );
 
       
       _myfilters = new MyFilters();
