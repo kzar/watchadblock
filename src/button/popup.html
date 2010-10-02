@@ -240,9 +240,10 @@
       <!-- ****************** Donations *************** -->
 
       <div id="div_donate">
-        <div id="please" style="text-decoration: underline; color: blue">Please donate!</div>
-        <div id="donation_wrapper" class="box-wrapper" style="display:none;">
+        <a href="#" class="blue" id="please" style="float:left">Please donate!</a>
+        <div id="donation_wrapper" class="box-wrapper" style="display:none; clear:left">
           <div id="donation_panel" class="box">
+            <div id="donate_close" style="float:right"><a class="blue" href="#">x</a></div>
             I'm not a corporation; I'm just a guy.  Please help me pay my bills!
             <hr/>
             <table>
@@ -288,7 +289,7 @@
             </table>
             <table>
               <tr>
-                <td><div id="btnDonate"><a href="#">Donate</a></div></td>
+                <td><div id="btnDonate" title="via Paypal"><a href="#">Donate</a></div></td>
                 <td><span id="donation_measure"></span></td>
               </tr>
             </table>
@@ -299,14 +300,19 @@
         function update_measure() {
           var amt = $("#donation_amount_input").val();
           var msgs = {
-            10: "Thanks!",
+            0: "Thanks!",
+            2.71: "e!",
+            2.73: "Thanks!",
+            3.14: "Pi!",
+            3.15: "Thanks!",
+            10: "Thanks! You'll get an emailed 'thank you' too.",
             20: "I could pay my water bill with this!",
             30: "I would really appreciate this!",
             50: "This would buy my wife and me a nice dinner!",
             75: "I could pay my phone bill with this!",
-            100: "You're helping me earn a living!",
-            150: "Wow!  Thank you so much!",
-            200: 'I will call you up to say thank you -- leave your number in your Note!',
+            100: "You're helping me earn a living! I will write you a haiku and email it to you.",
+            150: 'I will call you up to say thank you -- leave your number in your Note!',
+            200: "Wow!  Thank you so much! I will draw and send you a picture -- tell me in the Note what I should draw!",
             500: 'I will make up a song about you, call you up, and sing it to you!',
             501: "I'll make up a song about you, call you up, and sing it to you!  And if you want I will put your name on a Funders page!",
             5000: "I'll make up a song about you, call you up, and sing it to you!  And if you want I will put your name on a Funders page!  And your feature request becomes Pri-Critical in the bug tracker!",
@@ -324,18 +330,29 @@
           $("#donation_measure").text(msgs[answer]);
         }
         $(function() {
-          // Slide down the donation div upon mouseenter
+          // Slide down the donation div upon mouseenter, and back up on
+          // close; after close, require a click to slide down.
           slid = false;
-          $("#div_donate").mouseenter(function() { 
+          function openit() {
             if (slid) return;
             slid = true;
             $("#donation_wrapper").slideDown();
             $("body, #donation_wrapper, #wrapper").animate({width: "+=200"}, {queue: false});
+          }
+          $("#please").mouseenter(openit);
+          $("#donate_close").click(function() {
+            $("body, #donation_wrapper, #wrapper").animate({width: "-=200"}, {queue: false});
+            $("#donation_wrapper").slideUp();
+            $("#please").click(function() {
+              slid = false;
+              openit();
+            });
           });
 
           // Show the slider upon "change" click
           $("#donation_amount_change").click(function() {
             $("#fixed_donation, #varied_donation").toggle();
+            $("#donation_amount_input").focus();
           });
 
           // Make a slider that moves when they type a number and vice versa
