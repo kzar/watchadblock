@@ -3,22 +3,12 @@
     <script src="port.js"></script>
     <script src="jquery/jquery-1.4.2.min.js"></script>
     <script src="functions.js"></script>
-    <script src="filteroptions.js"></script>
+    <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
     <script>
-      function page_is_whitelisted(whitelist, the_domain) {
-        if (the_domain == "acid3.acidtests.org") return true;
-        for (var i = 0; i < whitelist.length; i++) {
-          if (the_domain.indexOf(whitelist[i]) != -1)
-            return true;
-        }
-        return false;
-      }
-
-
       var utils = {};
 
       // V3 FILTERING
@@ -196,6 +186,7 @@
           page_is_whitelisted: whitelisted,
           selectors: selectors,
           top_frame_domain: tfd,
+          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: features
         };
         if (!SAFARI) {
@@ -316,19 +307,93 @@
         );
       };
 
-
-      (function() {
+      utils.addChromeContextMenus = function() {
+        // Chrome specific code.
         if (!SAFARI) {
-          // Warn users once about upcoming 'tabs' permission
-          // TODO: remove this upon adding tabs permission
-          var key = 'saw_tabs_permission_warning';
-          if (localStorage.getItem(key) == null) {
-            localStorage.setItem(key, true);
-            win = window.open(chrome.extension.getURL('pages/tabswarning.html'), "win", "width=800,height=620");
-            win.moveTo(20,20);
-          }
+          // Add context menu items.
+          chrome.contextMenus.create({
+            title: translate("contextmenuhidethis"),
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{info: info}},
+                sender
+              );
+            }
+          });
+          chrome.contextMenus.create({
+            title: translate("contextmenuhideanything"),
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                sender
+              );
+            }
+          });
+          chrome.contextMenus.create({
+            title: translate("contextmenuexcludedomain"),
+            contexts:["all"], 
+            onclick: function(info, tab) {
+              var sender = { tab: tab };
+              utils.emit_page_broadcast(
+                {fn:'top_open_whitelist_ui', options:{}},
+                sender
+              );
+            }
+          });
         }
-      })();
+      }
+      utils.addChromeContextMenus();
+
+      if (!SAFARI) {
+        // Set the button image according to the URL of the current tab.
+        function updateButtonUI() {
+          if (localStorage.getItem('adblock_is_paused')) {
+            chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            return;
+          }
+          getCurrentTabInfo(function(info) {
+            if (info.whitelisted)
+              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+            else
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
+          });
+        }
+
+        chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+          if (tab.selected)
+            updateButtonUI();
+        });
+        chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
+          updateButtonUI();
+        });
+      }
+
+
+      // BROWSER ACTION BADGE
+      if (!SAFARI) {
+        // The string to display to the user in the "new version" div.
+        // Update this whenever a release warrants a browser action
+        // badge and an info div in the popup.  Note that it is
+        // not compared with the manifest -- you can set it to whatever
+        // value you want.
+        version_to_notify = '2.2';
+
+        var saw = localStorage.getItem('saw_badge_version');
+        if (saw == null) {
+          // If they've just installed, don't show the badge.
+          localStorage.setItem('saw_badge_version', version_to_notify);
+        }
+        else if (saw != version_to_notify) {
+          // If they haven't seen the latest, show it.
+          chrome.browserAction.setTitle({title:"New version!"});
+          chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
+          chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
+        }
+      }
 
 
 
@@ -346,24 +411,12 @@
       if (utils.get_optional_features({}).debug_logging.is_enabled)
         log = function(text) { console.log(text); };
 
-      // Called by onRequest[External] to call functions from the field.
-      function dispatchHandler(request, sender, sendResponse) { 
-        var result = utils[request.fn](request.options, sender);
-        sendResponse(result);
-      }
- 
-      chrome.extension.onRequest.addListener(dispatchHandler);
-
-      if (!SAFARI) {
-        // Let the AdBlock icon control us as well.
-        chrome.extension.onRequestExternal.addListener(
-          function(request, sender, sendResponse) {
-            if (sender.id != icon_extension_id)
-              return;
-            dispatchHandler(request, sender, sendResponse);
-          }
-        );
-      }
+      chrome.extension.onRequest.addListener(
+        function(request, sender, sendResponse) { 
+          var result = utils[request.fn](request.options, sender);
+          sendResponse(result);
+        }
+      );
 
       
       _myfilters = new MyFilters();
@@ -384,44 +437,6 @@
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
       }
       note_install();
-
-      // Chrome specific code.
-      if (!SAFARI && utils.get_optional_features({}).show_context_menu_items.is_enabled) {
-        // Add context menu items.
-        chrome.contextMenus.create({
-          title: translate("contextmenuhidethis"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{info: info}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuhideanything"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuexcludedomain"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
-              sender
-            );
-          }
-        });
-      }
 
 
       // Safari specific code.

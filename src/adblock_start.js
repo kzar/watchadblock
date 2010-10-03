@@ -128,7 +128,7 @@ function adblock_begin() {
     if (data.features.debug_time_logging.is_enabled)
       time_log = function(text) { console.log(text); };
 
-    if (data.page_is_whitelisted) {
+    if (data.page_is_whitelisted || data.adblock_is_paused) {
       disableTrueBlocking();
       return;
     }

@@ -1,23 +1,5 @@
   <script>
     $(function() {
-      var linkUrl = "https://chrome.google.com/extensions/detail/" +
-                    icon_extension_id;
-      $("#link_to_icon").attr("href", linkUrl);
-
-      var imgUrl = chrome.extension.getURL("img/icon_screenshot.png");
-      $("#imgIconScreenshot").attr("src", imgUrl);
-
-      $("#want_a_button").click(function() {
-        $('[i18n="buttonexplanation"]').show();
-      });
-
-      if (!SAFARI) {
-        // If the icon extension is running, check the box.
-        chrome.extension.sendRequest(icon_extension_id, {}, function() {
-          $("#want_a_button").attr("checked", "checked");
-        });
-      }
-
       // Check or uncheck each option.
       extension_call('get_optional_features', {}, function(features) {
         for (var name in features) {
@@ -36,9 +18,6 @@
       
       //translation
       localizePage();
-      $('[i18n="buttonexplanation"] i').
-        css("font-style", "12px").
-        css("color", "#222222");
 
       //clicking the checkbox label checks the checkbox
       $('.optionDescription').click(checkboxlabel_clicked);
@@ -62,28 +41,6 @@
           $("#chromeblock").show();
         }
       });
-    </script>
-
-    <table style="vertical-align:middle; margin-left:-3px">
-      <tr id="show_adblock_button_tr">
-        <td>
-          <p style="font-size:14px">
-            <input type="checkbox" id="want_a_button" />
-            <span class="optionDescription" i18n="buttonextension"><span>
-          </p>
-        </td>
-        <td>
-          <img id="imgIconScreenshot" />
-        </td>
-      </tr>
-    </table>
-    <p class="info" style="display:none" i18n="buttonexplanation" 
-       i18n_replacement_el="link_to_icon"></p>
-    <a id="link_to_icon" target="top"></a>
-    <script>
-      if (SAFARI) {
-        $("#show_adblock_button_tr").hide();
-      }
     </script>
 
     <p>
