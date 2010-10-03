@@ -307,68 +307,91 @@
         );
       };
 
-      utils.addChromeContextMenus = function() {
-        // Chrome specific code.
-        if (!SAFARI) {
-          // Add context menu items.
-          chrome.contextMenus.create({
-            title: translate("contextmenuhidethis"),
-            contexts:["all"], 
-            onclick: function(info, tab) {
-              var sender = { tab: tab };
-              utils.emit_page_broadcast(
-                {fn:'top_open_blacklist_ui', options:{info: info}},
-                sender
-              );
-            }
-          });
-          chrome.contextMenus.create({
-            title: translate("contextmenuhideanything"),
-            contexts:["all"], 
-            onclick: function(info, tab) {
-              var sender = { tab: tab };
-              utils.emit_page_broadcast(
-                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-                sender
-              );
-            }
-          });
-          chrome.contextMenus.create({
-            title: translate("contextmenuexcludedomain"),
-            contexts:["all"], 
-            onclick: function(info, tab) {
-              var sender = { tab: tab };
-              utils.emit_page_broadcast(
-                {fn:'top_open_whitelist_ui', options:{}},
-                sender
-              );
-            }
-          });
-        }
+      // Turn on or off the context menus in Chrome based on whether the
+      // domain in question is whitelisted, adblock is paused, or the user
+      // has disabled the menus in the Options.
+      // Inputs:
+      //   url:string the url of the tab being right clicked
+      // Returns: null
+      utils.setChromeContextMenus = function(options) {
+        if (SAFARI)
+          return;
+        var showThem = true;
+
+        var domain = url_parts(options.url).domain;
+        var whitelist = utils.get_whitelist({});
+        var whitelisted = page_is_whitelisted(whitelist, domain);
+        var features = utils.get_optional_features({});
+        var disabled = !features.show_context_menu_items.is_enabled;
+        var paused = localStorage.getItem('adblock_is_paused');
+
+        chrome.contextMenus.removeAll();
+
+        if (paused || disabled || whitelisted)
+          return;
+        
+        chrome.contextMenus.create({
+          title: translate("contextmenuhidethis"),
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{info: info}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title: translate("contextmenuhideanything"),
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title: translate("contextmenuexcludedomain"),
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_whitelist_ui', options:{}},
+              sender
+            );
+          }
+        });
       }
-      utils.addChromeContextMenus();
 
       if (!SAFARI) {
-        // Set the button image according to the URL of the current tab.
-        function updateButtonUI() {
-          if (localStorage.getItem('adblock_is_paused')) {
-            chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
-            return;
-          }
+        // Set the button image and context menus according to the URL 
+        // of the current tab.
+        // TODO getCurrentTabInfo calculated is_whitelisted and disabled_site
+        // and then we recalculate this in setChromeContextMenus which is
+        // wasteful and unnecessarily complex.  Review exactly what we need to
+        // do on tab change and do it all in one place.
+        function updateButtonUIAndContextMenus() {
           getCurrentTabInfo(function(info) {
-            if (info.whitelisted)
+            utils.setChromeContextMenus({url: info.tab.url});
+
+            if (localStorage.getItem('adblock_is_paused')) {
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (info.whitelisted) {
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
-            else
+            } else {
               chrome.browserAction.setIcon({path:"img/icon19.png"});
+            }
           });
         }
 
         chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-          if (tab.selected)
-            updateButtonUI();
+          if (tab.selected && changeInfo.url)
+            updateButtonUIAndContextMenus();
         });
         chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
-          updateButtonUI();
+          updateButtonUIAndContextMenus();
         });
       }
 

@@ -147,8 +147,7 @@
       <script>
         $("#div_status_paused a").click(function() {
           localStorage.removeItem('adblock_is_paused');
-          chrome.extension.getBackgroundPage().updateButtonUI();
-          chrome.extension.getBackgroundPage().utils.addChromeContextMenus();
+          chrome.extension.getBackgroundPage().updateButtonUIAndContextMenus();
           window.close();
         });
       </script>
@@ -163,7 +162,7 @@
       <script>
         $("#div_pause_adblock").click(function() {
           localStorage.setItem('adblock_is_paused', true);
-          chrome.extension.getBackgroundPage().updateButtonUI();
+          chrome.extension.getBackgroundPage().updateButtonUIAndContextMenus();
           chrome.contextMenus.removeAll();
           window.close();
         });
