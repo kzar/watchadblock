@@ -62,6 +62,18 @@ function page_is_whitelisted(whitelist, the_domain) {
   return false;
 }
 
+// Returns a data object for a url containing scheme and domain.
+function url_parts(url) {
+  var parts = url.match("(.*?)://(..*?)/");
+  if (!parts) // may be "about:blank" or similar
+    parts = url.match("(.*?):(.*)");
+  var scheme = parts[1];
+  var domain = parts[2];
+  return {
+    scheme: scheme,
+    domain: domain
+  };
+}
 
 
 // Get interesting information about the current tab.
@@ -81,14 +93,11 @@ function getCurrentTabInfo(callback) {
   var whitelist = utils.get_whitelist();
   chrome.tabs.getSelected(undefined, function(tab) {
     // TODO: use code from elsewhere to extract domain
-    var parts = tab.url.match("(.*?)://(..*?)/");
-    if (!parts) // may be "about:blank" or similar
-      parts = tab.url.match("(.*?):(.*)");
-    var scheme = parts[1];
-    var domain = parts[2];
+
+    var url = url_parts(tab.url);
 
     var disabled_site = false;
-    if (scheme != 'http' && scheme != 'https')
+    if (url.scheme != 'http' && url.scheme != 'https')
       disabled_site = true;
     if (tab.url.match('://chrome.google.com/extensions'))
       disabled_site = true;
@@ -96,10 +105,10 @@ function getCurrentTabInfo(callback) {
     var result = {
       tab: tab,
       disabled_site: disabled_site,
-      domain: domain,
+      domain: url.domain,
     };
     if (!disabled_site)
-      result.whitelisted = page_is_whitelisted(whitelist, domain);
+      result.whitelisted = page_is_whitelisted(whitelist, url.domain);
 
     callback(result);
   });
