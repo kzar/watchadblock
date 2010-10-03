@@ -358,6 +358,8 @@
           getCurrentTabInfo(function(info) {
             if (info.whitelisted)
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+            else if (info.disabled_site)
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
             else
               chrome.browserAction.setIcon({path:"img/icon19.png"});
           });
