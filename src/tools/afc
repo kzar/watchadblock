@@ -14,8 +14,6 @@ function usage() {
 }
 
 function shipit() {
-    cd ..
-
     grep 'debug_id.*true;' functions.js && {
       echo "Fix debug_id, stupid"
       exit 1
@@ -74,5 +72,6 @@ function main() {
 }
 
 cd $(dirname $0)
+cd ..
 [ $# != 1 ] && usage
 main "$1"
