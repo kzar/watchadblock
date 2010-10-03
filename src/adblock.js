@@ -194,7 +194,7 @@ function adblock_begin_part_2() {
     opts.is_top_frame = true;
 
   extension_call('get_content_script_data', opts, function(data) {
-    if (data.adblock_is_paused)
+    if (data.adblock_is_paused) {
       return;
     }
     
