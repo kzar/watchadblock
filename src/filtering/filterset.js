@@ -29,6 +29,7 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
   result._sourceText = text;
 
   var lines = text.split('\n');
+  var ignoredCounter = 0;
   for (var i = 0; i < lines.length; i++) {
     // Some rules are separated by \r\n; and hey, some rules may
     // have leading or trailing whitespace for some reason.
@@ -39,7 +40,7 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
 
     var filter = Filter.fromText(line);
     if (filter._adType & ignoredAdTypes) {
-      log("Ignoring filter " + line);
+      ignoredCounter += 1;
       continue;
     }
     // What's the right way to do this?
@@ -51,6 +52,8 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
       result._patternFilters.push(filter);
     // else it's CommentFilter or some other garbage that we ignore.
   }
+  if (ignoredCounter) 
+    log("Ignoring " + ignoredCounter + " [style] filters");
 
   return result;
 }
