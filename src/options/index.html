@@ -79,16 +79,13 @@
       (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
-    <div style="margin: 1em 0px">
-      Please consider donating via the toolbar button :)
-    </div>
+    <div style="margin: 1em 0px" id="donate"></div>
     <script>
       $(function() {
-        //adjust the donate link for Safari
         if (SAFARI)
-          $(".donatelink").attr("href", "http://chromeadblock.com/paypal_donate/donation.php?browser=safari");
+          $("#donate").html('If you like AdBlock, please consider <a href="http://chromeadblock.com/paypal_donate/donation.php?browser=safari">donating</a>!  Thanks :)');
         else
-          $(".donatelink").attr("href", "http://chromeadblock.com/paypal_donate/donation.php");
+          $("#donate").html('If you like AdBlock, please consider donating via the toolbar button!  Thanks :)');
       });
     </script>
 
