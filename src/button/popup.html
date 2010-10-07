@@ -68,9 +68,9 @@
   <body>
     <div id="wrapper">
 
-      <div id="titletext">AdBlock</div>
+      <div id="titletext"><span>AdBlock</span></div>
       <script>
-        $("#titletext").click(function() {
+        $("#titletext span").click(function() {
           var url = "https://chrome.google.com/extensions/detail/gighmmpiobklfepjocnamgkkbiglidom";
           chrome.tabs.create({url:url});
         });

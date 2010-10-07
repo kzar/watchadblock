@@ -54,11 +54,13 @@ a:not(.blue) {
 }
 #titletext {
   padding: 8px 8px 2px 0px;
-  font-weight: bold;
   text-align: right;
+}
+#titletext span {
+  font-weight: bold;
   cursor: default;
 }
-#titletext:hover {
+#titletext span:hover {
   text-decoration: underline;
 }
 
