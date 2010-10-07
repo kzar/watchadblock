@@ -21,9 +21,9 @@ function debug_print_selector_matches() {
 function urlForElement(el, type) {
   // TODO: handle background images, based on 'type'.
   switch (el.nodeName) {
-    case 'IMG': return el.src;
-    case 'SCRIPT': return el.src;
-    case 'EMBED': return el.src;
+    case 'IMG': 
+    case 'EMBED': 
+    case 'INPUT':
     case 'IFRAME': return el.src;
     case 'LINK': return el.href;
     case 'OBJECT': 
@@ -52,7 +52,7 @@ function remove_ad_elements_by_url(first_run) {
   var start = new Date();
 
   // map indexes to elements, and those same indexes to info about the element.
-  var els = $("img,embed,iframe,link,object,body");
+  var els = $("img,embed,iframe,input,link,object,body");
   var elInfo = els.map(function(id, el) { 
       var elType = typeForElement(el);
       return {
