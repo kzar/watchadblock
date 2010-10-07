@@ -1,3 +1,9 @@
+// temporary code while we have Browser Button For AdBlock
+button_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
+debug_button = false;
+if (debug_button)
+  button_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
+  
 // Run a function on the background page.
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
