@@ -1,6 +1,6 @@
 // temporary code while we have Browser Button For AdBlock
 button_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
-debug_button = true;
+debug_button = false;
 if (debug_button)
   button_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
   
