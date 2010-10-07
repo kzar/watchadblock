@@ -75,6 +75,8 @@ if (window == window.top) {
         if (frame.length == 1)
           rightclicked_item = frame[0];
       }
+      if (rightclicked_item && rightclicked_item.nodeName == "BODY")
+        rightclicked_item = null;
       var blacklist_ui = new BlacklistUi(rightclicked_item);
       blacklist_ui.cancel(function() {
         may_open_blacklist_ui = true;
