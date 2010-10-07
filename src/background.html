@@ -381,7 +381,7 @@
 
             if (localStorage.getItem('adblock_is_paused')) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
-            } else if (info.disabled_site)
+            } else if (info.disabled_site) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
             } else if (info.whitelisted) {
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
