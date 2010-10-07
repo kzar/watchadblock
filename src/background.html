@@ -461,6 +461,10 @@
         var now = new Date().getTime();
         utils.storage_set({key:'installed_at', value:now});
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
+        // TODO: open in safari as well
+        if (!SAFARI) {
+          chrome.tabs.create({url: "pages/installed.html"});
+        }
       }
       note_install();
 
