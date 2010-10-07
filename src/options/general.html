@@ -53,8 +53,8 @@
         });
         chrome.extension.sendRequest(button_extension_id, {}, function() {
           $("#chromebutton input").attr("checked", true);
-          $("#chromebutton_how_to_enable").hide();
-          $("#chromebutton_how_to_disable").show();
+          $('[i18n="chromebutton_how_to_enable"]').hide();
+          $('[i18n="chromebutton_how_to_disable"]').show();
         });
       });
     </script>
