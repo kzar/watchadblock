@@ -1,3 +1,5 @@
+#!/bin/python
+
 #TODO: check for people who donate multiple times.
 #TODO: don't send as soon as I type their name, in case I made a mistake (and
 #it's too slow anyway).  Batch them up and send and mark them whenever I get
