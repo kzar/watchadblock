@@ -90,13 +90,12 @@ beforeLoadHandler = function(event) {
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    if (elType != ElementTypes.script &&
-        elType != ElementTypes.background &&
-        elType != ElementTypes.stylesheet &&
-        el.nodeName != "FRAME")
-      $(el).remove();
-    else if (el.nodeName == "FRAME")
+    if (el.nodeName == "FRAME")
       removeFrame(el);
+    else if (elType != ElementTypes.script &&
+        elType != ElementTypes.background &&
+        elType != ElementTypes.stylesheet)
+      $(el).remove();
   }
 }
 
