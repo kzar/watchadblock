@@ -66,15 +66,8 @@ function removeFrame(el) {
   if (!cols && parentEl.attr('rows').indexOf(',') <= 0)
     return;
   cols = (cols ? 'cols' : 'rows');
-  var frameIndex = 0;
-  var thisEl = el;
-  while (thisEl && thisEl.nodeName != 'frameset') {
-    if (thisEl.nodeName == "FRAME") 
-      frameIndex ++;
-    thisEl = thisEl.previousSibling;
-  }
   var sizes = parentEl.attr(cols).split(',');
-  sizes[frameIndex - 1] = 0;
+  sizes[$(el).prevUntil(parentEl).length] = 0;
   parentEl.attr(cols, sizes.join(','));
 }
 
