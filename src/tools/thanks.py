@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python
 
 #TODO: check for people who donate multiple times.
 #TODO: don't send as soon as I type their name, in case I made a mistake (and
@@ -31,10 +31,10 @@ Subject: %s
     server.sendmail(from_, to, msg)
     server.quit()
 
-def donation_message_count():
+def donation_message_count(max_count):
     try:
         m = donation_mailbox(True)
-        return len(m.search(None, 'UNSEEN')[1][0].split())
+        return min(len(m.search(None, 'UNSEEN')[1][0].split()), max_count)
     finally:
         m.logout()
 
@@ -45,14 +45,14 @@ def donation_mailbox(readonly=False):
     # http://tools.ietf.org/html/rfc3501.html has all the things you can search with
     return m
 
-def donation_messages():
+def donation_messages(max_count):
     """
     Return a generator yielding a message at a time.  It only marks it read
     when you iterate past it (so if your program crashes, you won't have marked
     as read a message that you haven't dealt with).
     """
     m = donation_mailbox()
-    unseens = m.search(None, 'UNSEEN')[1][0].split()
+    unseens = m.search(None, 'UNSEEN')[1][0].split()[ :max_count]
     try:
         for msgid in unseens:
             # TODO: there is surely a more efficient way to do this.
@@ -61,6 +61,12 @@ def donation_messages():
             email_msg = email.message_from_string(msg)
             try:
                 d = Donation(email_msg, msgid=msgid)
+                if d.amount >= 100:
+                    raise ValueError("%s donated %.2f; you need to send them something." 
+                                     % (d.name, d.amount))
+            except ValueError as ex:
+                print ("*" * 70 + '\n') * 3
+                print ex.message
             except:
                 print ("*" * 70 + '\n') * 3
                 print "Couldn't parse message from %s; ignoring." % email_msg['from']
@@ -167,11 +173,11 @@ PS: If you wanted to help me get to the point where I can be self-supporting -- 
 """ % dict(nickname=self.nickname, original=original)
 
 
-def main():
-    donation_count = donation_message_count()
+def main(number_to_thank=1000000):
+    donation_count = donation_message_count(number_to_thank)
     i = amt = 0
     thanked = []
-    for donation in donation_messages():
+    for donation in donation_messages(number_to_thank):
         i += 1
         amt += donation.amount
         print "%d of %d" % (i, donation_count)
@@ -187,7 +193,7 @@ def main():
             print
             print "-" * 30
             print
-        print " %s (%s): $%.2f" % (donation.name, donation.email, donation.amount)
+        print " $%.2f: %s (%s)" % (donation.amount, donation.name, donation.email)
         nick = raw_input("'%s' is my nickname guess: press enter or type a correction: " %
                          donation.nickname)
         if nick:
@@ -213,4 +219,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    import sys
+    count = int(sys.argv[1]) if len(sys.argv) > 1 else None
+    main(count)
