@@ -129,6 +129,9 @@ class Donation(object):
         self.name = re.search('Contributor: (.*)', self.body).group(1).strip()
         self.nickname = self.name.split(' ')[0].title()
         self.note = re.search('Message: (.*?)=20', self.body, re.DOTALL)
+        if not self.note:
+            self.note = re.search('payment: Note: (.*?)Contributor:', 
+                                  self.body, re.DOTALL)
         if self.note:
             self.note = self.note.group(1)
             self.note = self._cleanup(self.note)
@@ -220,5 +223,7 @@ def main(number_to_thank=1000000):
 
 if __name__ == '__main__':
     import sys
-    count = int(sys.argv[1]) if len(sys.argv) > 1 else None
-    main(count)
+    if len(sys.argv) > 1:
+        main(int(sys.argv[1]))
+    else:
+        main()
