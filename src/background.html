@@ -366,6 +366,16 @@
             );
           }
         });
+        chrome.contextMenus.create({
+          title: "Block this resource",
+          contexts:["image"], 
+          onclick: function(info, tab) {
+            var query = '?image=' + escape(info.srcUrl);
+            query += '&domain=' + escape(tab.url.match(/\:\/\/([^\/]+)\//)[1]);
+            window.open(chrome.extension.getURL('pages/resourceblock.html' + query),
+            "_blank", 'location=0,width=1024,height=590');
+          }
+        });
       }
 
       if (!SAFARI) {

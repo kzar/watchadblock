@@ -4,12 +4,16 @@ perform i18n changes/translate() calls
 figure out how to load the resources
 figure out how to get the domain
 clean up code; match 80chars/line rule
-check if not invalid domain in textbox
 -->
 <html>
   <head>
     <script type="text/javascript">
-      //temporary resources to be loaded...
+      var domain = '';
+      var resources = [];
+      //temporary: resources to be loaded...
+      //when this is done, move the two 'var ' lines to the other <script> tag
+      if (!window.location.search) {
+      var domain = 'www.24vandaag.nl';
       var resources = [];
       resources["http://platform.twitter.com/widgets/images/tweet.png"] = {type: "image"};
       resources["##hidingrule"] = {filter: '24vandaag.nl##hidingrule'};
@@ -118,7 +122,7 @@ check if not invalid domain in textbox
       resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
       resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
       resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
-      var domain = 'www.24vandaag.nl';
+      }
     </script>
     <title>Block a resource</title>
     <link rel="stylesheet" type="text/css" href="../options/options.css" />
@@ -315,6 +319,15 @@ check if not invalid domain in textbox
       }
 
       $(function() {
+        if (window.location.search) {//if opened by the context menu:
+          var query = window.location.search.substring(1);
+          domain = unescape(query.match(/\&domain\=(.*)$/)[1]);
+          query = query.replace(/\&domain\=(.*)$/, '');
+          var temp_url = unescape(query.match(/\=(.+)$/)[1]);
+          var temp_type = query.match(/^(.+)\=/)[1];
+          resources[temp_url] = {type:temp_type};
+        }
+
         //create the table of resources and make it sortable
         generateTable();
         $("#resourceslist").tablesorter({
@@ -409,13 +422,18 @@ check if not invalid domain in textbox
             //Add the filter
             $("#addthefilter").click(function() {
               extension_call('add_custom_filter', { filter: createfilter() }, function() {
-                alert("The filter was succesfully added!");
+                alert("The filter was succesfully added!\nReload the page to see the result!");
                 window.close();
               });
             });
           });
         });
-        
+
+        //if opened by the context menu:
+        if (window.location.search) {
+          $("#resourceslist input").click();
+        }
+
         //When one clicks on a label, check/uncheck the connected input
         $('.optionDescription').live('click', checkboxlabel_clicked);
       });
