@@ -1,0 +1,466 @@
+<!--TODO
+call localizePage()
+perform i18n changes/translate() calls
+figure out how to load the resources
+figure out how to get the domain
+clean up code; match 80chars/line rule
+check if not invalid domain in textbox
+-->
+<html>
+  <head>
+    <script type="text/javascript">
+      //temporary resources to be loaded...
+      var resources = [];
+      resources["http://platform.twitter.com/widgets/images/tweet.png"] = {type: "image"};
+      resources["##hidingrule"] = {filter: '24vandaag.nl##hidingrule'};
+      resources["http://s7.addthis.com/static/r07/widget22.png"] = {type: "image"};
+      resources["http://static.ak.fbcdn.net/rsrc.php/zh/r/Ch71Zv858xU.png"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/allepartijen.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/allepolitici.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/images/ui-bg_glass_65_ffffff_1x400.png"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/background.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundgrijs.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundgroen.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundopinie.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/ss_sf_left.png"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/ss_sf_right.png"] = {type: "image"};
+      resources["http://www.google.com/uds/modules/elements/newsshow/generic-noborder-298x248.gif"] = {type: "image"};
+      resources["http://a0.twimg.com/profile_images/104605408/wim_normal.jpg"] = {type: "image"};
+      resources["http://a0.twimg.com/profile_images/1084923492/7063aae7-1f96-4e5d-8862-c179376a4a4b_normal.jpg"] = {type: "image"};
+      resources["http://a0.twimg.com/profile_images/889186980/femkehaar_normal.jpg"] = {type: "image"};
+      resources["http://a0.twimg.com/profile_images/907841588/andre_twitter_normal.jpg"] = {type: "image"};
+      resources["http://a1.twimg.com/profile_images/1122994577/dsc3nr2_normal.JPG"] = {type: "image"};
+      resources["http://a2.twimg.com/profile_images/1020356798/Afbeelding_52_normal.png"] = {type: "image"};
+      resources["http://a2.twimg.com/profile_images/656335562/GL_ZIDT_badge_INTEGR_RGB_normal.png"] = {type: "image"};
+      resources["http://a2.twimg.com/profile_images/815362166/GW2_normal.jpg"] = {type: "image"};
+      resources["http://a2.twimg.com/profile_images/897943090/verkiezingsposter_2010_internet_normal.jpg"] = {type: "image"};
+      resources["http://a3.twimg.com/profile_images/894603035/twitterfoto_normal.jpg"] = {type: "image"};
+      resources["http://a3.twimg.com/profile_images/990474255/foto_2_normal.JPG"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/5f5OHIocm3c/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/90j0v3INyjo/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/CE6qFPkqZb0/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/F9up5Y4ZUPM/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/ax8bNFF4Z1I/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/e75yQd8ebVw/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/usT1I9ggS9k/0.jpg"] = {type: "image"};
+      resources["http://i.ytimg.com/vi/zTkD10ekL3k/0.jpg"] = {type: "image"};
+      resources["http://l.addthiscdn.com/live/t00/250lo.gif?kd8xwl&uid=4cb0528c36b511ac&CXNID=2000001.5215456080540439072NXC&pub=svanrijsewijk&rev=82281&si=4cb0529e2fa64645&ln=nl&uf=0&pi=1&dp=www.24vandaag.nl&pc=tbx"] = {filter: "||addthiscdn.com/live/", type: "image"};
+      resources["http://nt0.ggpht.com/news/tbn/iC8TEcLVB6kJ"] = {type: "image"};
+      resources["http://nt0.ggpht.com/news/tbn/uAkJ4azUgEQJ"] = {type: "image"};
+      resources["http://nt0.ggpht.com/news/tbn/xNGmlucT9HwJ"] = {type: "image"};
+      resources["http://nt1.ggpht.com/news/tbn/3evpXVYfUnMJ"] = {type: "image"};
+      resources["http://nt2.ggpht.com/news/tbn/UouA47y7RCkJ"] = {type: "image"};
+      resources["http://nt3.ggpht.com/news/tbn/gz5wLZ5OQegJ"] = {type: "image"};
+      resources["http://nt3.ggpht.com/news/tbn/l-yeHk-h6rkJ"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/elsevier.gif"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/home-fotos.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/home-laatstenieuws.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/home-politiekepartijen.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/home-twitter.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/home-videos.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/joop.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/logo.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/nd.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/nos.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/nu.gif"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/parlementenpolitiek.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/refdag.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/trouw.gif"] = {type: "image"};
+      resources["http://www.24vandaag.nl/images/twitterbanner.jpg"] = {type: "image"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/favicon.ico"] = {type: "image"};
+      resources["http://www.google-analytics.com/__utm.gif?utmwv=4.7.2&utmn=1049402725&utmhn=www.24vandaag.nl&utmcs=UTF-8&utmsr=1600x900&utmsc=24-bit&utmul=nl&utmje=1&utmfl=10.2%20d161&utmdt=24Vandaag%2C%20het%20laatste%20politieke%20nieuws&utmhid=213266367&utmr=-&utmp=%2F&utmac=UA-383680-8&utmcc=__utma%3D9291830.2009037066.1286623884.1286623884.1286623884.1%3B%2B__utmz%3D9291830.1286623884.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B"] = {filter: "/__utm.gif", type: "image"};
+      resources["http://www.google.com/uds/css/youtube-logo-55x24.png"] = {type: "image"};
+      resources["http://www.google.com/uds/modules/elements/newsshow/cleardot.gif"] = {type: "image"};
+      resources["http://www.google.com/uds/modules/elements/newsshow/no-image-80x60.gif"] = {type: "image"};
+      resources["http://www.google.com/uds/stats?r0=hl%7Celements&nc=1286623917570_15350"] = {filter: "||google.com/uds/stats?", type: "image"};
+      resources["http://www.google.com/uds/stats?r0=hl%7Csearch&r1=hl%7Csearch&nc=1286623916861_15178"] = {filter: "||google.com/uds/stats?", type: "subdocument"};
+      resources["http://platform.twitter.com/widgets/tweet_button.html?url=http%3A%2F%2Fwww.24vandaag.nl%2F&count=horizontal&text=24Vandaag%2C%20het%20laatste%20politieke%20nieuws&via=AddThis"] = {type: "subdocument"};
+      resources["http://s7.addthis.com/static/r07/sh24.html#"] = {type: "subdocument"};
+      resources["http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.24vandaag.nl%2F&layout=button_count&show_faces=false&width=100&action=like&font=arial&"] = {type: "subdocument"};
+      resources["http://www.google.com/uds/modules/elements/newsshow/iframe.html?topic=p&ned=nl_nl&rsz=large&hl=nl&format=300x250"] = {type: "script"};
+      resources["http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"] = {type: "script"};
+      resources["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"] = {type: "script"};
+      resources["http://ajax.googleapis.com/ajax/services/search/news?key=internal-newsshow&v=1.0&source=uds-ns-300x250&topic=p&rsz=large&ned=nl_nl&hl=nl&callback=_callbacks_._0gf2enh6k"] = {filter: "@@||ajax.googleapis.com/ajax/services/search/news?", type: "script"};
+      resources["http://api.twitter.com/1/24vandaag/lists/lijsttrekkers/statuses.json?per_page=8&callback=jsonp1286623901536&_=1286623902423"] = {type: "script"};
+      resources["http://api.twitter.com/1/24vandaag/lists/politici/statuses.json?per_page=8&callback=jsonp1286623901534&_=1286623902407"] = {type: "script"};
+      resources["http://api.twitter.com/1/24vandaag/lists/politieke-partijen/statuses.json?per_page=8&callback=jsonp1286623901535&_=1286623902413"] = {type: "script"};
+      resources["http://pagead2.googlesyndication.com/pagead/show_ads.js"] = {filter: "||pagead2.googlesyndication.com^$~object_subrequest,third-party", type: "script"};
+      resources["http://s7.addthis.com/js/250/addthis_widget.js"] = {type: "script"};
+      resources["http://static.ak.fbcdn.net/rsrc.php/z1/r/h0YSh5UKKFr.js"] = {type: "script"};
+      resources["http://static.ak.fbcdn.net/rsrc.php/zK/p/r/HWL11JhzW9w.js"] = {type: "script"};
+      resources["http://static.ak.fbcdn.net/rsrc.php/zl/p/r/yi2jboDEovM.js"] = {type: "script"};
+      resources["http://urls.api.twitter.com/1/urls/count.json?url=http%3A%2F%2Fwww.24vandaag.nl%2F&callback=twttr.receiveCount"] = {type: "script"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.min.js"] = {type: "script"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.js"] = {type: "script"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/twitter.js"] = {type: "script"};
+      resources["http://www.google-analytics.com/ga.js"] = {type: "script"};
+      resources["http://www.google.com/jsapi"] = {type: "script"};
+      resources["http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q"] = {type: "script"};
+      resources["http://www.google.com/jsapi?key=internal-newsshow&autoload={modules:[{name:elements;version:1;packages:[newsshow];language:nl}]}"] = {type: "script"};
+      resources["http://www.google.com/uds/GvideoSearch?callback=google.search.VideoSearch.RawCompletion&context=0&lstkp=0&rsz=small&hl=nl&gss=.nl&sig=3e6df43077b5c81cfa8f106ec8536c5c&q=ytchannel%3ADemocraten66&key=notsupplied&v=1.0"] = {type: "script"};
+      resources["http://www.google.com/uds/GvideoSearch?callback=google.search.VideoSearch.RawCompletion&context=0&lstkp=0&rsz=small&hl=nl&gss=.nl&sig=3e6df43077b5c81cfa8f106ec8536c5c&q=ytchannel%3APVVep&key=notsupplied&v=1.0"] = {type: "script"};
+      resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/default,slideshow,newsshow+nl.I.js"] = {type: "script"};
+      resources["http://www.google.com/uds/api/search/1.0/3e6df43077b5c81cfa8f106ec8536c5c/default+nl.I.js"] = {type: "script"};
+      resources["http://www.google.com/uds/api?file=uds.js&v=1.0"] = {type: "script"};
+      resources["http://www.google.com/uds/api?file=uds.js&v=1.0&source=uds-vsw&key=ABQIAAAASZYRhigKwbnL3sllNH75nBQrTe3wsRoG6AcrvOOXYmjGvRPuBBRul0wzRFNGEY5LdFgpjfJvb8cNcg"] = {type: "script"};
+      resources["http://www.google.com/uds/solutions/slideshow/gfslideshow.js"] = {type: "script"};
+      resources["http://www.google.com/uds/solutions/videobar/gsvideobar.js"] = {type: "script"};
+      resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.js?mode=new"] = {type: "script"};
+      resources["http://s7.addthis.com/static/r07/widget45.css"] = {type: "script"};
+      resources["http://static.ak.fbcdn.net/rsrc.php/z5/r/Fm9hhBrLU3y.css"] = {type: "script"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/joomla.css"] = {type: "script"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.css"] = {type: "stylesheet"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.query.css"] = {type: "stylesheet"};
+      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/template_css.css"] = {type: "stylesheet"};
+      resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
+      resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
+      resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
+      resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
+      resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
+      resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
+      var domain = 'www.24vandaag.nl';
+    </script>
+    <title>Block a resource</title>
+    <link rel="stylesheet" type="text/css" href="../options/options.css" />
+    <script src="../port.js" type="text/javascript"></script>
+    <script src="../jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="../jquery/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="../functions.js" type="text/javascript"></script>
+    <style type="text/css">
+      .icon {
+        background-image:url('../img/icon32.png')
+      }
+      #resourceslist {
+        text-align: left;
+        cursor: default;
+        width: 100%;
+        margin-bottom:10px;
+      }
+      .header {
+        background-image: url(../img/sort.gif);	
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: center left;
+        padding-left: 20px;
+      }
+      .headerSortDown {
+        background-image: url(../img/sortdesc.gif);	
+      }
+      .headerSortUp {
+        background-image: url(../img/sortasc.gif);	
+      }
+      #resourceslist td, #selectblockableurl :not(#confirmUrl):not(b) {
+        font-size: 12px;
+        padding: 0px;
+        padding-right: 5px;
+      }
+      #resourceslist tbody td:last-of-type:first-letter {
+        visibility:hidden;
+      }
+      .blocked {
+        color:red;
+      }
+      .whitelisted {
+        color:green;
+      }
+      #legend {
+        font-size: 12px;
+        background-color: white;
+        position:fixed;
+        top: 25px;
+        right: 10px;
+        padding: 5px;
+      }
+      .hiding {
+        color:blue;
+      }
+      .clickableRow {
+        cursor: pointer;
+      }
+      #selectblockableurl input:radio {
+        margin-right: 7px;
+      }
+      #filterpreview {
+        font-size:12px;
+        font-style:italic;
+      }
+      #addthefilter {
+        font-weight:bold;
+        font-size:15px;
+      }
+    </style>
+    <script type="text/javascript">
+      function generateTable() {
+        //Generate the table containing all resources
+        function truncateI(j) {
+          if (j.length > 90)
+            if (j.indexOf('?') > 43 && j.indexOf('?') <= 85)
+              j = j.substring(0, j.indexOf('?') + 1) + '[...]';
+          if (j.length > 90)
+            j = j.substring(0, 86) + '[...]';
+          return j;
+        }
+        var rows = [];
+        for (var i in resources) {
+          var type = {sort:3, name:undefined};
+          if (resources[i].filter)
+            if (resources[i].filter[0] == '@')
+              type = {sort:2, name:'whitelisted'};
+            else if (i[0] == '#')
+              type = {sort:0, name:'hiding'};
+            else
+              type = {sort:1, name:'blocked'};
+
+          var thisrow = "<tr" + (type.name ? ' class="' + type.name + '"' : '') + ">";
+          var disabled = (type.name == 'whitelisted' || type.name == 'hiding');
+          thisrow += "<td><input type='checkbox'" + (disabled ? ' disabled="disabled"' : '') + "/></td>";
+          disabled = (disabled ? '' : ' class="clickableRow"');
+          thisrow += "<td" + disabled + " title='" + i + "'>" + truncateI(i) + "</td>";
+          thisrow += "<td" + disabled + " i18n='" + (resources[i].type ? resources[i].type : 'hiding') + "'>" + (resources[i].type ? resources[i].type : 'hiding') + "</td>";
+          thisrow += "<td" + disabled + ">" + (type.name ? type.sort + resources[i].filter : '3-') + "</td>";
+          thisrow += "</tr>";
+          rows.push(thisrow);
+        }
+        $("#resourceslist tbody").append(rows.join(''));
+      };
+
+      //Generate a list of pre-defined url filters
+      function generateFilterSuggestions() {
+        var url = $(".selected td:nth-of-type(2)").attr('title');
+        url = url.replace(/\W{5}\(.*\)$/, '').replace(/\#.*$/, '');
+        var isBlocked = ($(".selected").hasClass("blocked"));
+        var blocksuggestions = [];
+        var strippedUrl = url.replace(/^[a-z]{0,5}\:\/\/(www\.)?/, '');
+        blocksuggestions.push(strippedUrl);
+        if (strippedUrl.indexOf("?") > 0 || strippedUrl.indexOf("#") > 0) {
+          strippedUrl = strippedUrl.replace(/(\?|\#).*/, '');
+          blocksuggestions.push(strippedUrl);
+        }
+        if (strippedUrl.indexOf("/") > 0 && 
+            strippedUrl.lastIndexOf('/') != strippedUrl.indexOf('/')) {
+          strippedUrl = strippedUrl.substr(0, strippedUrl.lastIndexOf('/') + 1);
+          blocksuggestions.push(strippedUrl);
+        }
+        if (strippedUrl.indexOf('/') > 0) {
+          strippedUrl = strippedUrl.substr(0, strippedUrl.indexOf('/'));
+          blocksuggestions.push(strippedUrl);
+        }
+        if (strippedUrl.indexOf('.') != strippedUrl.lastIndexOf('.')) {
+          if (strippedUrl.replace('.co.', '').indexOf('.') != -1) {
+            strippedUrl = strippedUrl.match(/[^.]+\.(co\.)?[^.]+$/i)[0];
+            blocksuggestions.push(strippedUrl);
+          }
+        }
+
+        var suggestions = [];
+        for (var i in blocksuggestions) {
+          suggestions.push("<input type='radio' name='urloption' value='" + 
+              (isBlocked ? '@@||' : '||') + blocksuggestions[i] + "'/>" +
+              "<span class='optionDescription'> " + blocksuggestions[i] + "</span><br/>");
+        }
+        $("#suggestions").html(suggestions.join(''));
+        if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
+          $($("#suggestions").children('input')[1]).attr('checked', 'checked');
+        else
+          $("#suggestions").find('input:first-child').attr('checked', 'checked');
+        
+        if (!isBlocked)
+          $("#selectblockableurl b").text("Block every resource containing:");
+        else
+          $("#selectblockableurl b").text("Whitelist every resource containing:");
+        $("#custom + .optionDescription").
+          html("Custom: <input type='text' id='customurl' value='" + url + 
+          "' size='99' title='Note: you can use * as wildcard here'/>");
+      }
+
+      //Create the filter that will be applied
+      function createfilter() {
+        var isBlocked = ($(".selected").hasClass("blocked"));
+        var urlfilter = '';
+        if ($('#selectblockableurl #customurl').length != 0)
+          urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val();
+        else
+          urlfilter = $('#selectblockableurl input').val();
+        if ((/^(\@\@)?\/.*\/$/).test(urlfilter))
+          urlfilter += '*';
+
+        var options = [];
+        $("#chooseoptions > input:checked, #types > input:not(:checked)").each(function() {
+          if ($(this).val())
+            options.push($(this).val());
+        });
+
+        return urlfilter + ((options.length != 0) ? '$' + options.join(',') : '');
+      }
+
+      function CheckThirdParty(domain1, domain2) {
+        var match1 = domain1.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain1 ];
+        var match2 = domain2.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain2 ];
+        return (match1[0].toLowerCase() != match2[0].toLowerCase());
+      }
+      function GetThirdPartyDomain(domain) {
+        var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
+        return match[0].toLowerCase();
+      }
+
+      function isValidDomainList(text) {
+        var splitted = text.split('|');
+        var checkregex = /\~?([a-zA-Z0-9\-]+\.)*[a-zA-Z]+/;
+        for (var i in splitted) {
+          var matches = splitted[i].match(checkregex);
+          if (!matches || matches[0] != splitted[i])
+            return false;
+        }
+        return true;
+      }
+
+      $(function() {
+        //create the table of resources and make it sortable
+        generateTable();
+        $("#resourceslist").tablesorter({
+          headers: { 0: { sorter: false}},
+          cancelSelection: true,
+          sortList: [[3,0],[1,0],[3,0]]
+        });
+        $("#resourceslist tbody tr").mouseenter(function() {
+          if ($(this).hasClass('selected'))
+            return;
+          $(this).children(":not(:first-child)").
+            css("border-top", "black 1px dotted").
+            css("border-bottom", "black 1px dotted");
+        });
+        $("#resourceslist tr").mouseleave(function() {
+          $(this).children().
+            css("border", "none");
+        });
+
+        //close the legend
+        $("#legend a").click(function(event) {
+          event.preventDefault();
+          $("#legend").remove();
+        });
+
+        //An item has been selected
+        $('.clickableRow, input:enabled', '#resourceslist').click(function() {
+          $(this).parents('tr').addClass('selected');
+          $("#resourceslist tr:not(.selected)").remove();
+          $("#resourceslist tr input").
+            attr('checked', 'checked').
+            attr('disabled', 'disabled');
+          $('.clickableRow').removeClass('clickableRow');
+          $('#resourceslist tr').css('border', 'black 1px dotted');
+          $('#legend').remove();
+          
+          //Show the 'choose url' area
+          $("#selectblockableurl").show();
+          generateFilterSuggestions();
+          //If the user clicks the 'next' button
+          $("#confirmUrl").click(function() {
+            if (($('#custom:checked').length == 1 && $('#customurl').val().trim() == '')) {
+              alert('Please enter a valid URL pattern to match!');
+              return;
+            }
+            //Hide unused stuff
+            $("#selectblockableurl input:radio:not(:checked)").nextUntil('input').remove();
+            $("#selectblockableurl input:radio:not(:checked)").remove();
+            $("#confirmUrl").next().remove();
+            $("#confirmUrl").remove();
+            $("#selectblockableurl *:not(br):not(b)").attr("disabled", "disabled");
+
+            //Show the options
+            $("#chooseoptions").show();
+            var domainOfSelectedUrl = $(".selected td:nth-of-type(2)").
+                attr('title').replace(/^[a-z]{0,5}\:\/\//, '').match(/^[^\/]+/)[0];
+            var isThirdParty = CheckThirdParty(domain, domainOfSelectedUrl);
+            if (!isThirdParty) {
+              $("#thirdparty + * + *").remove();
+              $("#thirdparty + *").remove();
+              $("#thirdparty").remove();
+            } else
+              $("#thirdparty + span").html("Any website EXCEPT websites on domain <i>" + 
+                GetThirdPartyDomain(domainOfSelectedUrl) + "</i>");
+            $("#domainlist").
+              val(domain.replace(/^www\./, '')).
+              click(function() {
+                $("#domainis").
+                  attr("checked", "checked").
+                  change();
+              }).
+              keyup(function() {
+                if (isValidDomainList($(this).val().trim().replace(/[a-z](\ |\,\ |\;\ |\;|\,)[\~a-z0-9]/gi,'a|a'))){
+                  $("#domainis").val('domain=' + $(this).val().trim().replace(/\ |\,|\;/g,'|'));
+                  $("#domainlist").css('color', 'black');
+                } else {
+                  $("#domainis").val('');
+                  $("#domainlist").css('color', 'red');
+                }
+                $("#filterpreview").text(createfilter());
+              });
+            $("#domainis").val('domain=' + domain.replace(/^www\./, ''));
+            var selectorForFixedType = '[value="~' + $(".selected td:nth-of-type(3)").attr('i18n') + '"]';
+            $(selectorForFixedType).attr('disabled', 'disabled');
+
+            //Update the preview filter
+            $("#chooseoptions *").change(function() {
+              $("#filterpreview").text(createfilter());
+            });
+            $("#filterpreview").text(createfilter());
+
+            //Add the filter
+            $("#addthefilter").click(function() {
+              extension_call('add_custom_filter', { filter: createfilter() }, function() {
+                alert("The filter was succesfully added!");
+                window.close();
+              });
+            });
+          });
+        });
+        
+        //When one clicks on a label, check/uncheck the connected input
+        $('.optionDescription').live('click', checkboxlabel_clicked);
+      });
+    </script>
+  </head>
+  <body>
+    <h1 class="icon">AdBlock</h1>
+    <b>Select the resource you would like to block or unblock</b>
+    <table id="resourceslist">
+      <thead><tr>
+        <th></th>
+        <th>Resource</th>
+        <th>Type</th>
+        <th>Matched filter</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    <div id="legend"><b">Legend:</b> <i style="color:red">blocked resources</i>, <i style="color:green">whitelisted resources</i> &amp; <i>blockable resources</i>; <i style="color:blue">hiding rules applied</i>.&nbsp;&nbsp;<a href="#">(x)</a></div>
+    
+    <form id="selectblockableurl" style="display:none;">
+      <b></b>
+      <div id="suggestions"></div>
+      <input type='radio' name='urloption' id='custom' />
+      <span class='optionDescription'></span><br/>
+      <input type='button' style='margin-left:22px;' value='Next step' id='confirmUrl' />
+    </form>
+
+    <form id="chooseoptions" style="display:none;">
+      <b>This filter will be applied when you are browsing:</b><br/>
+      <input type="radio" name="domainoptions" value="" checked="checked" /><span class="optionDescription">Any website</span><br/>
+      <input type="radio" name="domainoptions" id="thirdparty" value="third-party" /><span class="optionDescription"></span><br/>
+      <input type="radio" name="domainoptions" id="domainis" /><span class="optionDescription">ONLY pages on these domains: </span>
+      <input type="text" size="30" id="domainlist" title="Seperate multiple domains with commas or spaces"/><br/><br/>
+      <b>This filter is case sensitive:</b><br/>
+      <input type="radio" name="caseoption" value="match-case" /><span class="optionDescription">Yes</span> 
+      <input type="radio" name="caseoption" value="" checked="checked" /><span class="optionDescription">No</span><br/><br/>
+      <b>This filter applies to resources of these types:</b><br/>
+      <div id="types">
+        <input type="checkbox" value="~subdocument" checked="checked" /><span class='optionDescription'>Frames</span>
+        <input type="checkbox" value="~object" checked="checked" /><span class='optionDescription'>Interactive objects</span>
+        <input type="checkbox" value="~image" checked="checked" /><span class='optionDescription'>Images</span>
+        <input type="checkbox" value="~script" checked="checked" /><span class='optionDescription'>Scripts</span>
+        <input type="checkbox" value="~stylesheet" checked="checked" /><span class='optionDescription'>Style definitions</span><br/><br/>
+      </div>
+      <input type="button" id="addthefilter" value="Add this filter"/> <span id="filterpreview"></span>
+    </form>
+  </body>
+</html>
