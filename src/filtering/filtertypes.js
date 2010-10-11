@@ -208,35 +208,17 @@ var PatternFilter = function(text) {
   var data = PatternFilter._parseRule(text);
 
   this._domains = Filter._domainInfo(data.domainText, '|');
-  this._isRegex = data.isRegex;
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
 
-  if (this._isRegex)
-    this._rule = new RegExp(data.rule);
-  else
-    this._rule = data.rule;
-
-  if (data.rule2)
-    this._rule2 = data.rule2;
+  this._rule = new RegExp(data.rule);
 }
 
-// Return a { rule, rule2?, isRegex, domainText, allowedElementTypes } object
-// for the given filter text.  Works really hard to make patterns substring
-// matches rather than regex matches, because regex matches are the bottleneck
-// in AdBlock.  Even if it causes a few false positives, it's worth it -- we'll
-// add support for AdBlock extras nixing individual rules and replacing them
-// with its own if we must.  If rule2 is specified, it must be checked along
-// with rule.
-//
-// TODO: when we divide out the regex time by the # of regexes, versus divide
-// out the the substring time by the # of substrings, is it that much better?
-// This would be a lot simpler otherwise...
+// Return a { rule, domainText, allowedElementTypes } object
+// for the given filter text.
 PatternFilter._parseRule = function(text) {
 
   var result = {
-    isRegex: false,
-    mustStartAtDomain: false,
     domainText: '',
     allowedElementTypes: ElementTypes.NONE,
     options: FilterOptions.NONE
@@ -299,17 +281,16 @@ PatternFilter._parseRule = function(text) {
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
-  if (rule.match(/^@@/))
+  if (/^@@/.test(rule))
     rule = rule.substring(2);
 
   // Convert regexy stuff.
-  
+
   // First, check if the rule itself is in regex form.  If so, we're done.
-  if (rule.match(/^\/.+\/$/)) {
+  if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
       new RegExp(result.rule); // Make sure it parses correctly
-      result.isRegex = true;
       log("Found a true regex rule - " + rule);
       return result;
     } catch(e) {
@@ -325,99 +306,52 @@ PatternFilter._parseRule = function(text) {
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
-  // If must start at domain, remember this for later -- we'll handle
-  // two cases to cover it.
-  var mustStartAtDomain = false;
-  if (rule[0] == '|' && rule[1] == '|') {
-    mustStartAtDomain = true;
-    rule = rule.substring(2);
-  }
-
-  if (rule[rule.length - 1] == '|') {
-    rule = rule.replace(/\|$/, '$');
-    result.isRegex = true;
-  }
-
   // If it starts or ends with *, strip that -- it's a no-op.
   if (rule[0] == '*')
-    rule = rule.substring(1);
+    rule = rule.replace(/^\*/, '');
   if (rule[rule.length - 1] == '*')
     rule = rule.replace(/\*$/, '');
 
-  // And then, if it ends with a ^, I frankly don't care that you want
-  // to only match a delimiter.  You should have thought of that before
-  // being slow, hmmmm?
+  //If it ends with a ^, strip it
   if (rule[rule.length - 1] == '^')
     rule = rule.replace(/\^$/, '');
 
-  // Any other *s are legit.
-  var newRule;
-  newRule = rule.replace(/\*/g, '.*');
-  if (newRule != rule)
-      result.isRegex = true;
-  rule = newRule;
+  //If a rule contains *, replace that by .*
+  rule = rule.replace(/\*/g, '.*');
 
-  // TODO we usually forced ^ to mean '/' before -- will this slow us down?
-  // It may be better to special case replace ^ after .com/.org/.net with
-  // '/', and ^ at the end with nothing (and deal with a few false
-  // positives), or something... need to time this.
-  // TODO: a quick test replacing this with '.' (match one character)
-  // didn't show a marked improvement on slashdot.org.
-  // TODO: According to ABP syntax, ^ is supposed to match the end of
-  // an address, but EasyList doesn't make use of that, so I won't either.
-  newRule = rule.replace(/\^/g, '[^-.%a-zA-Z0-9]');
-  if (newRule != rule)
-      result.isRegex = true;
-  rule = newRule;
+  //real end point of rule
+  if (rule[rule.length - 1] == '|')
+    rule = rule.replace(/\|$/, '$');
 
-  // Do this after ^ lest we re-replace ourselves
-  if (rule[0] == '|') {
-    if (rule.indexOf('|http://') == 0 || rule.indexOf('|https://') == 0) {
-      // If your rule starts with http://, I don't care that you want to
-      // make sure you're not in the middle of another URL somewhere.
-      // I'm sure you'll be fine.
-      rule = rule.substring(1);
-    } else {
-      // Otherwise, we should pay attention, lest it be e.g. |ad which
-      // would match overload.com, unless we add the ^.
-      rule = rule.replace('|', '^');
-      result.isRegex = true;
-    }
-  }
+  //^ is a separator char in ABP
+  rule = rule.replace(/\^/g, '[^-.%a-zA-Z0-9]');
 
-  // Escape what might be interpreted as a special character.
-  if (result.isRegex) {
-    // ? at the start of a regex means something special; escape it always.
-    rule = rule.replace(/\?/g, '\\?');
-    // A '|' within a string should really be a pipe.
-    rule = rule.replace(/\|/g, '\\|');
-    // . shouldn't mean "match any character" unless it's followed by a * in
-    // which case we were almost certainly the ones who put it there.
-    rule = rule.replace(/\.(?!\*)/g, '\\.');
-  }
+  // ? at the start of a regex means something special; escape it always.
+  rule = rule.replace(/\?/g, '\\?');
+  // . shouldn't mean "match any character" unless it's followed by a * in
+  // which case we were almost certainly the ones who put it there.
+  rule = rule.replace(/\.(?!\*)/g, '\\.');
+  // A + means one or more repetitions in regex. Escape it.
+  rule = rule.replace(/\+/g, '\\+');
+
+  //If a rule starts with || or |
+  if (rule[0] == '|' && rule[1] == '|')
+    rule = rule.replace(/^\|\|/, '://([^/]+\\.)*');
+  else if (rule[0] == '|')
+    rule = rule.replace(/^\|/, '^');
+
+  // Any other '|' within a string should really be a pipe.
+  rule = rule.replace(/\|/g, '\\|');
 
   result.rule = rule;
 
-  if (result.isRegex) {
-    // verify it. TODO copied-and-modified from above.
-    try {
-      new RegExp(result.rule);
-    } catch(e) {
-      log("Found an unparseable regex rule - " + result.rule);
-      // OK, something went wrong.  Just discard it.
-      result.isRegex = false;
-      result.rule = 'dummy_rule_matching_nothing';
-    }
-  }
-
-  if (mustStartAtDomain) {
-    if (result.isRegex) { // check for :// or an actual dot before rule.
-      result.rule = "(://|\\.)" + result.rule;
-    } else {
-      var oldrule = result.rule;
-      result.rule = "://" + oldrule;
-      result.rule2 = "." + oldrule;
-    }
+  // verify it. TODO copied-and-modified from above.
+  try {
+    new RegExp(result.rule);
+  } catch(e) {
+    log("Found an unparseable rule\n" + oldrule + '\n' + rule);
+    // OK, something went wrong.  Just discard it.
+    result.rule = 'dummy_rule_matching_nothing';
   }
 
   return result;
@@ -451,18 +385,7 @@ PatternFilter.prototype = {
     if (!(this._options & FilterOptions.MATCHCASE))
       url = url.toLowerCase();
 
-    if (this._isRegex)
-      return this._rule.test(url);
-
-    if (url.indexOf(this._rule) != -1)
-      return true;
-
-    // When parsing, we may have decided we want to check either of two
-    // rules, to handle the "||" aka must-start-at-domain option.
-    if (this._rule2 && url.indexOf(this._rule2) != -1)
-      return true;
-
-    return false;
+    return this._rule.test(url);
   }
 }
 
