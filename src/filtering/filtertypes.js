@@ -349,7 +349,7 @@ PatternFilter._parseRule = function(text) {
   try {
     new RegExp(result.rule);
   } catch(e) {
-    log("Found an unparseable rule\n" + oldrule + '\n' + rule);
+    log("Found an unparseable rule - " + rule);
     // OK, something went wrong.  Just discard it.
     result.rule = 'dummy_rule_matching_nothing';
   }
