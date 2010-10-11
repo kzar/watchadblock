@@ -397,7 +397,7 @@ MyFilters.__make_subscription_options = function() {
       name: "Hungarian filters",
     },
     "israeli": {
-      url: "http://israellist.googlecode.com/files/IsraelList.txt",
+      url: "https://secure.fanboy.co.nz/israelilist//IsraelList.txt",
       name: "Israeli filters",
     },
     "italian": {
