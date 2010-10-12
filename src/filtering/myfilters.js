@@ -369,7 +369,7 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional Polish filters",
     },
     "easylist_plus_romanian": {
-      url: "http://www.picpoc.ro/menetzrolist.txt",
+      url: "http://www.zoso.ro/pages/rolist.txt",
       name: " - additional Romanian filters",
     },
     "russian": { //id must not change!
