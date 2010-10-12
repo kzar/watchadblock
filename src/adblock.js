@@ -98,7 +98,7 @@ function run_specials(features) {
       css("margin-right", "1px");
   }
 
-  if (document.domain.match("youtube") && features.block_youtube.is_enabled) {
+  if (/youtube/.test(document.domain) && features.block_youtube.is_enabled) {
     // Based heavily off of AdThwart's YouTube in-video ad blocking.
     // Thanks, Tom!
     function adThwartBlockYouTube(elt) {
@@ -120,7 +120,7 @@ function run_specials(features) {
       }
       // Don't mess with the movie player object if we don't actually find any ads
       var adCheckRE = /&(ad_|prerolls|invideo|interstitial).*?=.+?(&|$)/gi;
-      if(!origFlashVars.match(adCheckRE))
+      if(!adCheckRE.test(origFlashVars))
           return;
       // WTF. replace() just gives up after a while, missing things near the end of the string. So we run it again.
       var re = /&(ad_|prerolls|invideo|interstitial|watermark|infringe).*?=.+?(&|$)/gi;

@@ -58,7 +58,7 @@
           blockDomain = '';
 
         //prevent regexes
-        if (blockUrl.match(/^\/.*\/$/))
+        if (/^\/.*\/$/.test(blockUrl))
           blockUrl = blockUrl + "*";
 
         if (blockDomain == '')

@@ -262,9 +262,9 @@
         $("#btnNewSubscriptionUrl").click(function() {
           var url = $("#txtNewSubscriptionUrl").val();
           var abp_regex = /^abp.*location=(.*)$/
-          if (url.match(abp_regex)) {
+          if (abp_regex.test(url)) {
             url = url.match(abp_regex)[1]; // the part after 'location='
-            if (url.match(/&title/)) // then strip it
+            if (/&title/.test(url)) // then strip it
               url = url.substring(0, url.indexOf('&title'));
             url = unescape(url);
           }
