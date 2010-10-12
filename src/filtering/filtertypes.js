@@ -294,7 +294,7 @@ PatternFilter._parseRule = function(text) {
       log("Found a true regex rule - " + rule);
       return result;
     } catch(e) {
-      log("Found an unparseable regex rule - " + rule);
+      log("Found an unparseable regex rule - " + text);
       // OK, we thought it was a regex but it's not.  Just discard it.
       // TODO: let parser throw exceptions which are caught, rather than having
       // to keep dummy rules.
@@ -349,7 +349,7 @@ PatternFilter._parseRule = function(text) {
   try {
     new RegExp(result.rule);
   } catch(e) {
-    log("Found an unparseable rule - " + rule);
+    log("Found an unparseable rule - " + text);
     // OK, something went wrong.  Just discard it.
     result.rule = 'dummy_rule_matching_nothing';
   }
