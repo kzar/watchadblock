@@ -114,7 +114,7 @@ function adblock_begin() {
   if (window == window.top)
     opts.is_top_frame = true;
   if (SAFARI)
-    opts.include_filters: false;
+    opts.include_filters = false;
 
   extension_call('get_content_script_data', opts, function(data) {
     var start = new Date();
