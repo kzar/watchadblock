@@ -25,6 +25,7 @@ function typeForElement(el) {
     case 'IMG': return ElementTypes.image;
     case 'SCRIPT': return ElementTypes.script;
     case 'OBJECT': 
+    case 'VIDEO': 
     case 'EMBED': return ElementTypes.object;
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': return ElementTypes.stylesheet;
