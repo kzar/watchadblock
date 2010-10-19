@@ -25,8 +25,6 @@
       $(function() {
         displayVersionNumber();
 
-        $(".icon").css("background-image", "url(../img/icon32.png)");
-
         // Check or uncheck each option.
         extension_call('get_optional_features', {}, function(features) {
           for (var name in features) {
