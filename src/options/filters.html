@@ -191,13 +191,13 @@
               addClass("subscription");
 
             var checkbox = $('<input type="checkbox" />').
-              attr("name", entry.id);
+              attr("name", entry.id).
+              attr("id", "subscription" + i);
 
-            var name = $("<span>").
+            var name = $("<label>").
               text(entry.name).
               attr("title", entry.url).
-              css("cursor", "pointer").
-              click(checkboxlabel_clicked);
+              attr("for", "subscription" + i);
 
             var link_to_list = $("<a>", { target: "_new" }).
               text(translate('labelshow')).

@@ -19,7 +19,7 @@
         font-size: 1.2em;
         margin-left: 10px;
       }
-      .optionDescription {
+      label {
         margin-right: 15px;
       }
       div.form {
@@ -147,9 +147,9 @@
       <span i18n="adstillappear"></span><br/>
       <div id="step1" class="form">
         <input type="radio" id="step1_yes" name="step1"/>
-        <span class="optionDescription" i18n="yes"></span>
+        <label for="step1_yes" i18n="yes"></label>
         <input type="radio" id="step1_no" name="step1" />
-        <span class="optionDescription" i18n="no"></span>
+        <label for="step1_no" i18n="no"></label>
       </div>
     </div>
     <script type="text/javascript">
@@ -240,11 +240,11 @@
       <span i18n="checkinfirefox5"></span>
       <div class="form" id="step3">
         <input type="radio" id="step3_yes" name="step3"/>
-        <span class="optionDescription" i18n="yes"></span>
+        <label for="step3_yes" i18n="yes"></label>
         <input type="radio" id="step3_no" name="step3" />
-        <span class="optionDescription" i18n="no"></span>
+        <label for="step3_no" i18n="no"></label>
         <input type="radio" id="step3_wontcheck" name="step3" />
-        <span class="optionDescription" i18n="refusetocheck"></span>
+        <label for="step3_wontcheck" i18n="refusetocheck"></label>
       </div>
     </div>
     <script type="text/javascript">
@@ -272,9 +272,6 @@
     
     <!--GENERAL STUFF-->
     <script type="text/javascript">
-      //clicking a radiobutton label triggers the radiobutton
-      $(".optionDescription").click(checkboxlabel_clicked);
-      
       //check for updates
       var AdBlockVersion;
       try {
