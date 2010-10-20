@@ -133,8 +133,7 @@
           "block_youtube",
           "show_youtube_help_msg",
           "show_google_search_text_ads",
-          "show_context_menu_items",
-          "true_blocking_support"
+          "show_context_menu_items"
           ];
         for (var i = 0; i < feature_names.length; i++) {
           var name = feature_names[i];
@@ -144,7 +143,6 @@
               case "block_youtube":
               case "show_youtube_help_msg":
               case "show_context_menu_items":
-              case "true_blocking_support": //if supported
                 features[name].is_enabled = true; // by default
                 break;
               default:
@@ -193,10 +191,8 @@
           features: features
         };
         if (!SAFARI) {
-          if (!whitelisted && options.include_filters &&
-              features.true_blocking_support.is_enabled) {
+          if (!whitelisted && options.include_filters)
             result.filtertext = _myfilters.filterset._sourceText;
-          }
         }
         var end = new Date();
         log("time to run: " + (end - start) + " ms || " + options.domain);
@@ -521,7 +517,6 @@
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
-
     </script>
   </head>
   <body>

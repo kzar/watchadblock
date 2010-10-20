@@ -41,9 +41,9 @@ function browser_canLoad(event, data) {
   } else {
     // The first time this is called we must build our filters.
     if (typeof _limited_to_domain == "undefined") {
-      var local_filterset = FilterSet.fromText(__sourceText);
-      delete __sourceText;
-      _limited_to_domain = local_filterset.limitedToDomain(data.pageDomain);
+      event.mustBePurged = true;
+      LOADED_TOO_FAST.push({data:event});
+      return true;
     }
 
     // every time browser_canLoad is called on this page, the pageDomain will
@@ -51,7 +51,9 @@ function browser_canLoad(event, data) {
     // calculated once.  This takes less memory than storing local_filterset
     // on the page.
     var isMatched = data.url && _limited_to_domain.matches(data.url, data.elType);
-    if (isMatched)
+    if (isMatched && event.mustBePurged)
+      log("Purging if possible " + data.url);
+    else if (isMatched)
       log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
@@ -69,8 +71,9 @@ beforeLoadHandler = function(event) {
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    if (elType != ElementTypes.script &&
-        elType != ElementTypes.background &&
+    if (elType == ElementTypes.background)
+      $(el).css("background-image", "none");
+    else if (elType != ElementTypes.script &&
         elType != ElementTypes.stylesheet) {
       $(el).remove();
     }
@@ -102,11 +105,10 @@ function block_list_via_css(selectors) {
   }
 }
 
-
-if (SAFARI)
-  enableTrueBlocking();
-
 function adblock_begin() {
+  enableTrueBlocking();
+  if (!SAFARI)
+    LOADED_TOO_FAST = [];
 
   var opts = { domain: document.domain, include_filters: true };
   // The top frame should tell the background what domain it's on.  The
@@ -129,11 +131,15 @@ function adblock_begin() {
       return;
     }
 
+    //Chrome can't block resources immediately. Therefore all resources
+    //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
-      __sourceText = data.filtertext;
+      var local_filterset = FilterSet.fromText(data.filtertext);
+      _limited_to_domain = local_filterset.limitedToDomain(document.domain);
 
-      if (data.features.true_blocking_support.is_enabled && window == window.top)
-        enableTrueBlocking();
+      for (var i in LOADED_TOO_FAST)
+        beforeLoadHandler(LOADED_TOO_FAST[i].data);
+      delete LOADED_TOO_FAST;
     }
 
     block_list_via_css(data.selectors);
