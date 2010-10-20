@@ -41,7 +41,7 @@ function browser_canLoad(event, data) {
   } else {
     // The first time this is called we must build our filters.
     if (typeof _limited_to_domain == "undefined") {
-      var local_filterset = FilterSet.fromText(__sourceText);
+      var local_filterset = FilterSet.fromText(__sourceText, 0, true);
       delete __sourceText;
       _limited_to_domain = local_filterset.limitedToDomain(data.pageDomain);
     }

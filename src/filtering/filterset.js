@@ -24,7 +24,8 @@ function FilterSet() {
 // Builds Filter objects from text.
 // ignoredAdTypes is a bitset of ad types whose filters should not be
 // included in this FilterSet (e.g. because the user likes that type of ads.)
-FilterSet.fromText = function(text, ignoredAdTypes) {
+// excludeHiding: should hiding rules be excluded from the result
+FilterSet.fromText = function(text, ignoredAdTypes, excludeHiding) {
   var result = new FilterSet();
   result._sourceText = text;
 
@@ -44,7 +45,7 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
       continue;
     }
     // What's the right way to do this?
-    if (filter.__type == "SelectorFilter")
+    if (filter.__type == "SelectorFilter" && !excludeHiding)
       result._selectorFilters.push(filter);
     else if (filter.__type == "WhitelistFilter")
       result._whitelistFilters.push(filter);
