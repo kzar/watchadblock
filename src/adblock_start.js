@@ -128,6 +128,7 @@ function adblock_begin() {
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       disableTrueBlocking();
+      delete LOADED_TOO_FAST;
       return;
     }
 
