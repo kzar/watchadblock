@@ -125,6 +125,8 @@ function run_specials(features) {
       // WTF. replace() just gives up after a while, missing things near the end of the string. So we run it again.
       var re = /&(ad_|prerolls|invideo|interstitial|watermark|infringe).*?=.+?(&|$)/gi;
       var newFlashVars = origFlashVars.replace(re, "&").replace(re, "&") + "&invideo=false";
+if (/\/user\//.test(document.location.href) == false)
+  newFlashVars += '&autoplay=1';
       var replacement = elt.cloneNode(true); // Clone child nodes also
       // Doing this stuff fires a DOMNodeInserted, which will cause infinite recursion into this function.
       // So we inhibit it using have_blocked_youtube.
