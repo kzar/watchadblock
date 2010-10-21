@@ -44,6 +44,8 @@ function browser_canLoad(event, data) {
       var local_filterset = FilterSet.fromText(__sourceText);
       delete __sourceText;
       _limited_to_domain = local_filterset.limitedToDomain(data.pageDomain);
+      // We don't need these locally, so delete them to save memory.
+      delete _limited_to_domain._selectorFilters;
     }
 
     // every time browser_canLoad is called on this page, the pageDomain will
