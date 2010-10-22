@@ -26,9 +26,9 @@ Filter.fromText = function(text) {
     if (Filter.isComment(text))
       cache[text] = CommentFilter.get_singleton();
     // old style selector syntax contains a #, then some text, then a (.
-    else if (text.match(/##/) || text.match(/#.*\(/))
+    else if (/##/.test(text) || /#.*\(/.test(text))
       cache[text] = new SelectorFilter(text);
-    else if (text.match(/^@@/))
+    else if (/^@@/.test(text))
       cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
@@ -145,7 +145,7 @@ var SelectorFilter = function(text) {
 
   // WebKit has a bug where style rules aren't parsed properly, so we just
   // skip them until they fix their bug.
-  if (text.match(/style[\^\$\*]?=/))
+  if (/style[\^\$\*]?=/.test(text))
     this._adType = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
 
   var parts = text.split('##');
@@ -172,7 +172,7 @@ SelectorFilter._old_style_to_new = function(text) {
   // 2. a series of ()-delimited arbitrary strings -- also optional
   //    the ()s can't be empty, and can't start with '='
   if (rule.length == 0 || 
-      !rule.match(/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i))
+      !/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i.test(rule))
     throw new Error("bad selector filter");
 
   var first_segment = rule.indexOf('(');
