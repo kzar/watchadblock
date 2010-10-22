@@ -16,27 +16,6 @@
 
       // V3 FILTERING
 
-      // Inputs: elementInfo: list of { url:string, type:ElementType, id } 
-      //                      objects.
-      //         domain: domain of page that requested these elements.
-      // If a url is empty or null, it will be ignored.
-      // Returns: array of ids that are ads.
-      utils.find_ads_in = function(options) {
-        // TODO: replace filter() and map() calls thruout with array ones
-        // when possible -- jquery is unnecessary on arrays
-        var filterset = _myfilters.filterset;
-        // limit to a domain
-        var limited = filterset.limitedToDomain(options.domain);
-        // TODO: timing tests to see if this is much slower than a normal loop
-        return options.elementInfo.
-          filter(function(el) {  
-              return el.url && limited.matches(el.url, el.type); 
-            }).
-          map(function(el) { 
-              return el.id; 
-            });
-      }
-
       // Inputs: domain: domain of page that requested the selectors.
       // Returns: the selector strings from all selector filters that should
       //          apply to the given domain.
