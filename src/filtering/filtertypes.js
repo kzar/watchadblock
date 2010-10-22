@@ -307,25 +307,18 @@ PatternFilter._parseRule = function(text) {
     rule = rule.toLowerCase();
 
   // If it starts or ends with *, strip that -- it's a no-op.
-  if (rule[0] == '*')
-    rule = rule.replace(/^\*/, '');
-  if (rule[rule.length - 1] == '*')
-    rule = rule.replace(/\*$/, '');
-
-  //If it ends with a ^, strip it
-  if (rule[rule.length - 1] == '^')
-    rule = rule.replace(/\^$/, '');
+  rule = rule.replace(/^\*/, '');
+  rule = rule.replace(/\*$/, '');
+  // ^ at the end of a rule should only match a delimiter, but we ignore that
+  // for efficiency's sake.
+  rule = rule.replace(/\^$/, '');
 
   //If a rule contains *, replace that by .*
   rule = rule.replace(/\*/g, '.*');
-
-  //real end point of rule
-  if (rule[rule.length - 1] == '|')
-    rule = rule.replace(/\|$/, '$');
-
+  // Rules ending in | means the URL should end there
+  rule = rule.replace(/\|$/, '$');
   //^ is a separator char in ABP
   rule = rule.replace(/\^/g, '[^-.%a-zA-Z0-9]');
-
   // ? at the start of a regex means something special; escape it always.
   rule = rule.replace(/\?/g, '\\?');
   // . shouldn't mean "match any character" unless it's followed by a * in
@@ -333,13 +326,11 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/\.(?!\*)/g, '\\.');
   // A + means one or more repetitions in regex. Escape it.
   rule = rule.replace(/\+/g, '\\+');
-
-  //If a rule starts with || or |
-  if (rule[0] == '|' && rule[1] == '|')
-    rule = rule.replace(/^\|\|/, '://([^/]+\\.)*');
-  else if (rule[0] == '|')
-    rule = rule.replace(/^\|/, '^');
-
+  // Starting with || means it should start at a domain or subdomain name, so
+  // match ://<the rule> or ://some.domains.here.and.then.<the rule>
+  rule = rule.replace(/^\|\|/, '://([^/]+\\.)*');
+  // Starting with | means it should be at the beginning of the URL.
+  rule = rule.replace(/^\|/, '^');
   // Any other '|' within a string should really be a pipe.
   rule = rule.replace(/\|/g, '\\|');
 
