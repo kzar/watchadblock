@@ -306,6 +306,8 @@ PatternFilter._parseRule = function(text) {
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
+  // Rules ending in | means the URL should end there
+  rule = rule.replace(/\|$/, '$');
   // If it starts or ends with *, strip that -- it's a no-op.
   rule = rule.replace(/^\*/, '');
   rule = rule.replace(/\*$/, '');
@@ -315,8 +317,6 @@ PatternFilter._parseRule = function(text) {
 
   //If a rule contains *, replace that by .*
   rule = rule.replace(/\*/g, '.*');
-  // Rules ending in | means the URL should end there
-  rule = rule.replace(/\|$/, '$');
   //^ is a separator char in ABP
   rule = rule.replace(/\^/g, '[^-.%a-zA-Z0-9]');
   // ? at the start of a regex means something special; escape it always.
