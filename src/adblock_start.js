@@ -39,7 +39,7 @@ function browser_canLoad(event, data) {
   if (SAFARI) {
     return safari.self.tab.canLoad(event, data);
   } else {
-    // The first time this is called we must build our filters.
+    // If we haven't yet asynchronously loaded our filters, store for later.
     if (typeof _limited_to_domain == "undefined") {
       event.mustBePurged = true;
       LOADED_TOO_FAST.push({data:event});
@@ -71,21 +71,11 @@ beforeLoadHandler = function(event) {
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    if (elType == ElementTypes.background)
+    if (elType & ElementTypes.background)
       $(el).css("background-image", "none");
-    else if (elType != ElementTypes.script &&
-        elType != ElementTypes.stylesheet) {
+    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet))
       $(el).remove();
-    }
   }
-}
-
-function enableTrueBlocking() {
-  document.addEventListener("beforeload", beforeLoadHandler, true);
-}
-
-function disableTrueBlocking() {
-  document.removeEventListener("beforeload", beforeLoadHandler, true);
 }
 
 // Add style rules hiding the given list of selectors.
@@ -106,9 +96,10 @@ function block_list_via_css(selectors) {
 }
 
 function adblock_begin() {
-  enableTrueBlocking();
   if (!SAFARI)
     LOADED_TOO_FAST = [];
+
+  document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { domain: document.domain, include_filters: true };
   // The top frame should tell the background what domain it's on.  The
@@ -127,7 +118,7 @@ function adblock_begin() {
       time_log = function(text) { console.log(text); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
-      disableTrueBlocking();
+      document.removeEventListener("beforeload", beforeLoadHandler, true);
       delete LOADED_TOO_FAST;
       return;
     }
@@ -138,7 +129,7 @@ function adblock_begin() {
       var local_filterset = FilterSet.fromText(data.filtertext);
       _limited_to_domain = local_filterset.limitedToDomain(document.domain);
 
-      for (var i in LOADED_TOO_FAST)
+      for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
       delete LOADED_TOO_FAST;
     }

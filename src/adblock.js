@@ -134,9 +134,6 @@ function adblock_begin_part_2() {
     
     listen_for_broadcasts();
 
-    may_open_blacklist_ui = true;
-    may_open_whitelist_ui = true;
-
     if (SAFARI) {
       // Add entries to right click menu.  Unlike Chrome, we can make
       // the menu items only appear on non-whitelisted pages.
@@ -147,7 +144,7 @@ function adblock_begin_part_2() {
 
     run_specials(data.features);
 
-    //Chrome nor Safari does block background images. So remove them
+    //Neither Chrome nor Safari blocks background images. So remove them
     //TODO: Remove background images for elements other than <body>
     var bgImage = $("body").css('background-image');
     var match = bgImage.match(/^url\((.*)\)$/);

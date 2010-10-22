@@ -1,5 +1,5 @@
 // Global lock so we can't open more than once on a tab.
-var may_open_blacklist_ui = false;
+var may_open_blacklist_ui = true;
 
 function load_jquery_ui(callback) {
   if (typeof global_have_loaded_jquery_ui != "undefined") {
