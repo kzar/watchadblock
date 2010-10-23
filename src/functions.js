@@ -14,7 +14,6 @@ extension_call = function(fn, options, callback) {
 // These are replaced with console.log in adblock_start if the user chooses.
 DEBUG = false;
 log = function() { };
-time_log = function() { };
 
 //Regex to validate a user-created filter.
 //TODO: insert a valid 'domain name regex'-regex, but wait for

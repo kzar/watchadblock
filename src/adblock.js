@@ -49,8 +49,6 @@ function remove_ad_elements_by_url(first_run) {
   // TODO: more than just the list below?
   // TODO: handle background images in places other than BODY tag
 
-  var start = new Date();
-
   // map indexes to elements, and those same indexes to info about the element.
   var els = $("img,embed,iframe,link,object,body");
   var elInfo = els.map(function(id, el) { 
@@ -67,10 +65,6 @@ function remove_ad_elements_by_url(first_run) {
     {domain: document.domain, elementInfo: elInfo.toArray()},
     function(ad_ids) {
       $(ad_ids).each(function(i, id) { purgeElement(els[id], elInfo[id]); });
-
-      var end = new Date();
-      time_log("adblock_main run time: " + (end - start) + " ms || " +
-               document.location.href);
 
       if (first_run)
         debug_print_selector_matches();
