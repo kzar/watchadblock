@@ -73,7 +73,7 @@ beforeLoadHandler = function(event) {
     event.preventDefault();
     if (elType & ElementTypes.background)
       $(el).css("background-image", "none");
-    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet))
+    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
       $(el).remove();
   }
 }
