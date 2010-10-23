@@ -17,79 +17,6 @@ function debug_print_selector_matches() {
     });
 }
 
-// Return the url tied to the given element.  null is OK if we can't find one.
-function urlForElement(el, type) {
-  // TODO: handle background images, based on 'type'.
-  switch (el.nodeName) {
-    case 'IMG': return el.src;
-    case 'SCRIPT': return el.src;
-    case 'EMBED': return el.src;
-    case 'IFRAME': return el.src;
-    case 'LINK': return el.href;
-    case 'OBJECT': 
-      var param = $('param[name="movie"][value]', el);
-      if (param.length > 0)
-        return param.get(0).value;
-      else
-        return null;
-    case 'BODY':
-      // TODO: make sure this isn't so slow that we must LBYL
-      var bgImage = $(el).css('background-image');
-      var match = bgImage.match(/^url\((.*)\)$/);
-      if (match)
-        bgImage = match[1];
-      return (bgImage == "none" ? null: bgImage);
-  }
-}
-
-// Find all elements that load a resource, find which ones are loading ad
-// resources, and remove them.  Asynchronous.
-// first_run:bool - true is passed the first time this is called.
-function remove_ad_elements_by_url(first_run) {
-  // TODO: more than just the list below?
-  // TODO: handle background images in places other than BODY tag
-
-  var start = new Date();
-
-  // map indexes to elements, and those same indexes to info about the element.
-  var els = $("img,embed,iframe,link,object,body");
-  var elInfo = els.map(function(id, el) { 
-      var elType = typeForElement(el);
-      return {
-        id: id, 
-        url: relativeToAbsoluteUrl(urlForElement(el, elType)), 
-        type: elType
-      };
-    });
-
-  extension_call(
-    'find_ads_in', 
-    {domain: document.domain, elementInfo: elInfo.toArray()},
-    function(ad_ids) {
-      $(ad_ids).each(function(i, id) { purgeElement(els[id], elInfo[id]); });
-
-      var end = new Date();
-      time_log("adblock_main run time: " + (end - start) + " ms || " +
-               document.location.href);
-
-      if (first_run)
-        debug_print_selector_matches();
-    }
-  );
-}
-function purgeElement(el, elInfo) {
-  log("Purging " + el.nodeName + ": " + elInfo.url);
-  // TODO: handle background images
-  if (el.nodeName == "EMBED" && el.parentNode.nodeName == "OBJECT")
-    $(el).parent().remove(); // removes el as well
-  else if (el.nodeName == "BODY")
-    $(el).css('background-image', 'none !important');
-  else
-    $(el).remove();
-  // TODO: i suspect i'm missing something else here... what did the old
-  // code do?
-}
-
 // Run special site-specific code.
 function run_specials(features) {
   if (document.location.host.indexOf('mail.live.com') != -1) {
@@ -207,13 +134,6 @@ function adblock_begin_part_2() {
     
     listen_for_broadcasts();
 
-    // The wizards by default don't respond to contextmenu clicks,
-    // because Chrome can't hide the contextmenus on whitelisted
-    // pages.  Now that we know we're not whitelisted, make the
-    // wizards respond.
-    may_open_blacklist_ui = true;
-    may_open_whitelist_ui = true;
-
     if (SAFARI) {
       // Add entries to right click menu.  Unlike Chrome, we can make
       // the menu items only appear on non-whitelisted pages.
@@ -224,34 +144,23 @@ function adblock_begin_part_2() {
 
     run_specials(data.features);
 
-    // Safari already remove elements via true blocking.
-    // Chrome 6 can't reliably do it for all elements, so we still have
-    // to run this code.
-    if (!SAFARI) {
-      remove_ad_elements_by_url(true); // calls debug_print_selector_matches
-    } else {
-      debug_print_selector_matches();
+    //Neither Chrome nor Safari blocks background images. So remove them
+    //TODO: Remove background images for elements other than <body>
+    var bgImage = $("body").css('background-image');
+    var match = bgImage.match(/^url\((.*)\)$/);
+    if (match)
+      bgImage = match[1];
+    if (bgImage && bgImage != "none") {
+      var fakeEvent = {
+        target: $("body")[0],
+        url: bgImage,
+        mustBePurged: true,
+        preventDefault: function(){}
+      }
+      beforeLoadHandler(fakeEvent);
     }
 
-    // If more elements are inserted later, run again.
-    function handleInsertedNode(e) {
-      log("Sweeping the page because a new node was inserted.");
-      // So we don't fire a million times if the page is very active
-      document.removeEventListener("DOMNodeInserted", handleInsertedNode);
-
-      window.setTimeout(function() {
-        document.addEventListener("DOMNodeInserted", handleInsertedNode);
-        remove_ad_elements_by_url();
-      }, 500);
-    }
-    // Safari does true resource blocking, so we don't have to worry about new
-    // nodes being inserted.
-    // Chrome 6 can't reliably do it for all elements, so we still have
-    // to run this code.
-    if (!SAFARI) {
-      document.addEventListener("DOMNodeInserted", handleInsertedNode);
-    }
-
+    debug_print_selector_matches();
   });
 }
 

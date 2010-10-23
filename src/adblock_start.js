@@ -39,11 +39,11 @@ function browser_canLoad(event, data) {
   if (SAFARI) {
     return safari.self.tab.canLoad(event, data);
   } else {
-    // The first time this is called we must build our filters.
+    // If we haven't yet asynchronously loaded our filters, store for later.
     if (typeof _limited_to_domain == "undefined") {
-      var local_filterset = FilterSet.fromText(__sourceText);
-      delete __sourceText;
-      _limited_to_domain = local_filterset.limitedToDomain(data.pageDomain);
+      event.mustBePurged = true;
+      LOADED_TOO_FAST.push({data:event});
+      return true;
       // We don't need these locally, so delete them to save memory.
       delete _limited_to_domain._selectorFilters;
     }
@@ -53,7 +53,9 @@ function browser_canLoad(event, data) {
     // calculated once.  This takes less memory than storing local_filterset
     // on the page.
     var isMatched = data.url && _limited_to_domain.matches(data.url, data.elType);
-    if (isMatched)
+    if (isMatched && event.mustBePurged)
+      log("Purging if possible " + data.url);
+    else if (isMatched)
       log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
@@ -71,20 +73,11 @@ beforeLoadHandler = function(event) {
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    if (elType != ElementTypes.script &&
-        elType != ElementTypes.background &&
-        elType != ElementTypes.stylesheet) {
+    if (elType & ElementTypes.background)
+      $(el).css("background-image", "none");
+    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
       $(el).remove();
-    }
   }
-}
-
-function enableTrueBlocking() {
-  document.addEventListener("beforeload", beforeLoadHandler, true);
-}
-
-function disableTrueBlocking() {
-  document.removeEventListener("beforeload", beforeLoadHandler, true);
 }
 
 // Add style rules hiding the given list of selectors.
@@ -104,11 +97,11 @@ function block_list_via_css(selectors) {
   }
 }
 
-
-if (SAFARI)
-  enableTrueBlocking();
-
 function adblock_begin() {
+  if (!SAFARI)
+    LOADED_TOO_FAST = [];
+
+  document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { domain: document.domain, include_filters: true };
   // The top frame should tell the background what domain it's on.  The
@@ -127,15 +120,20 @@ function adblock_begin() {
       time_log = function(text) { console.log(text); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
-      disableTrueBlocking();
+      document.removeEventListener("beforeload", beforeLoadHandler, true);
+      delete LOADED_TOO_FAST;
       return;
     }
 
+    //Chrome can't block resources immediately. Therefore all resources
+    //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
-      __sourceText = data.filtertext;
+      var local_filterset = FilterSet.fromText(data.filtertext);
+      _limited_to_domain = local_filterset.limitedToDomain(document.domain);
 
-      if (data.features.true_blocking_support.is_enabled && window == window.top)
-        enableTrueBlocking();
+      for (var i=0; i < LOADED_TOO_FAST.length; i++)
+        beforeLoadHandler(LOADED_TOO_FAST[i].data);
+      delete LOADED_TOO_FAST;
     }
 
     block_list_via_css(data.selectors);

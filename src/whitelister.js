@@ -1,5 +1,5 @@
 // Global lock so we can't open more than once on a tab.
-var may_open_whitelist_ui = false;
+var may_open_whitelist_ui = true;
 
 function verify_whitelist() {
   if (!may_open_whitelist_ui)
