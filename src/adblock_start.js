@@ -108,13 +108,11 @@ if (SAFARI)
 
 function adblock_begin() {
 
-  var opts = { domain: document.domain, include_filters: true };
+  var opts = { domain: document.domain, include_filters: !SAFARI };
   // The top frame should tell the background what domain it's on.  The
   // subframes will be told what domain the top is on.
   if (window == window.top)
     opts.is_top_frame = true;
-  if (SAFARI)
-    opts.include_filters = false;
 
   extension_call('get_content_script_data', opts, function(data) {
     var start = new Date();
