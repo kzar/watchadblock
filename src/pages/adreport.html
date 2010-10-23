@@ -257,14 +257,38 @@
         $("#whattodo").html(translate("reportfilterlistproblem", reportLink));
       });
       $("#step3_no").click(function() {
+        $("#step4DIV").css("display", "block");
         $("#step3").html("<span class='answer'>" + translate("no") + "</span>");
-        var reportLinkOpen = "<a href='" + generateReportURL() + "'>";
-        var reportLinkClose = "</a>";
-        $("#whattodo").html(translate("reporttous", [reportLinkOpen, reportLinkClose]));
       });
       $("#step3_wontcheck").click(function() {
         $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
         $("#whattodo").html(translate("fixityourself"));
+      });
+    </script>
+    
+    
+    <!--STEP 4-->
+    <div class="section" id="step4DIV">
+      <h2 i18n="flashads"></h2>
+      <span i18n="cantblockflashwarning"></span>
+      <div class="form" id="step4">
+        <input type="radio" id="step4_yes" name="step4"/>
+        <span class="optionDescription" i18n="yes"></span>
+        <input type="radio" id="step4_no" name="step4" />
+        <span class="optionDescription" i18n="no"></span>
+      </div>
+    </div>
+    <script type="text/javascript">
+      //If the user clicks a radio button
+      $("#step4_yes").click(function() {
+        $("#step4").html("<span class='answer'>" + translate("yes") + "</span>");
+        $("#whattodo").html(translate("cantblockflash"));
+      });
+      $("#step4_no").click(function() {
+        $("#step4").html("<span class='answer'>" + translate("no") + "</span>");
+        var reportLinkOpen = "<a href='" + generateReportURL() + "'>";
+        var reportLinkClose = "</a>";
+        $("#whattodo").html(translate("reporttous1", [reportLinkOpen, reportLinkClose]));
       });
     </script>
     
