@@ -155,7 +155,8 @@ function adblock_begin_part_2() {
         target: $("body")[0],
         url: bgImage,
         mustBePurged: true,
-        preventDefault: function(){}
+        preventDefault: function(){},
+        type: "beforeload"
       }
       beforeLoadHandler(fakeEvent);
     }
