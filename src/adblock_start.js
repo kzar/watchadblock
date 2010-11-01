@@ -91,8 +91,7 @@ function block_list_via_css(selectors) {
   css_chunk.type = "text/css";
   while (selectors.length > 0) {
     css_chunk.innerText += selectors.splice(0, chunksize).join(',') +
-                               " { visibility:hidden !important; " +
-                               "display:none !important;}\n";
+                 " {visibility:hidden !important; display:none !important;}\n";
   }
   d.insertBefore(css_chunk, null);
 }
