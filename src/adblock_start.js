@@ -86,15 +86,15 @@ function block_list_via_css(selectors) {
   // Setting this small chokes Chrome -- don't do it!  I set it back to
   // 10000 from 100 on 1/10/2010 -- at some point you should just get rid
   // of the while loop if you never use chunking again.
-  var chunksize = 10000;
+  var chunksize = 1000;
+  var css_chunk = document.createElement("style");
+  css_chunk.type = "text/css";
   while (selectors.length > 0) {
-    var css_chunk = document.createElement("style");
-    css_chunk.type = "text/css";
     css_chunk.innerText += selectors.splice(0, chunksize).join(',') +
                                " { visibility:hidden !important; " +
-                               "   display:none !important; }";
-    d.insertBefore(css_chunk, null);
+                               "display:none !important;}\n";
   }
+  d.insertBefore(css_chunk, null);
 }
 
 function adblock_begin() {
