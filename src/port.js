@@ -16,7 +16,8 @@
 
 try {
   chrome.extension.getURL; // verify 'extension' property exists
-  SAFARI = false;
+  if (typeof SAFARI == "undefined")
+    SAFARI = false;
 }
 catch (e) {
   SAFARI = true;
