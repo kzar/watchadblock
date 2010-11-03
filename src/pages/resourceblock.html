@@ -12,116 +12,123 @@ clean up code; match 80chars/line rule
       var resources = [];
       //temporary: resources to be loaded...
       //when this is done, move the two 'var ' lines to the other <script> tag
-      if (!window.location.search) {
-      var domain = 'www.24vandaag.nl';
-      var resources = [];
-      resources["http://platform.twitter.com/widgets/images/tweet.png"] = {type: "image"};
-      resources["##hidingrule"] = {filter: '24vandaag.nl##hidingrule'};
-      resources["http://s7.addthis.com/static/r07/widget22.png"] = {type: "image"};
-      resources["http://static.ak.fbcdn.net/rsrc.php/zh/r/Ch71Zv858xU.png"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/allepartijen.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/allepolitici.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/images/ui-bg_glass_65_ffffff_1x400.png"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/background.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundgrijs.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundgroen.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundopinie.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/ss_sf_left.png"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/ss_sf_right.png"] = {type: "image"};
-      resources["http://www.google.com/uds/modules/elements/newsshow/generic-noborder-298x248.gif"] = {type: "image"};
-      resources["http://a0.twimg.com/profile_images/104605408/wim_normal.jpg"] = {type: "image"};
-      resources["http://a0.twimg.com/profile_images/1084923492/7063aae7-1f96-4e5d-8862-c179376a4a4b_normal.jpg"] = {type: "image"};
-      resources["http://a0.twimg.com/profile_images/889186980/femkehaar_normal.jpg"] = {type: "image"};
-      resources["http://a0.twimg.com/profile_images/907841588/andre_twitter_normal.jpg"] = {type: "image"};
-      resources["http://a1.twimg.com/profile_images/1122994577/dsc3nr2_normal.JPG"] = {type: "image"};
-      resources["http://a2.twimg.com/profile_images/1020356798/Afbeelding_52_normal.png"] = {type: "image"};
-      resources["http://a2.twimg.com/profile_images/656335562/GL_ZIDT_badge_INTEGR_RGB_normal.png"] = {type: "image"};
-      resources["http://a2.twimg.com/profile_images/815362166/GW2_normal.jpg"] = {type: "image"};
-      resources["http://a2.twimg.com/profile_images/897943090/verkiezingsposter_2010_internet_normal.jpg"] = {type: "image"};
-      resources["http://a3.twimg.com/profile_images/894603035/twitterfoto_normal.jpg"] = {type: "image"};
-      resources["http://a3.twimg.com/profile_images/990474255/foto_2_normal.JPG"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/5f5OHIocm3c/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/90j0v3INyjo/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/CE6qFPkqZb0/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/F9up5Y4ZUPM/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/ax8bNFF4Z1I/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/e75yQd8ebVw/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/usT1I9ggS9k/0.jpg"] = {type: "image"};
-      resources["http://i.ytimg.com/vi/zTkD10ekL3k/0.jpg"] = {type: "image"};
-      resources["http://l.addthiscdn.com/live/t00/250lo.gif?kd8xwl&uid=4cb0528c36b511ac&CXNID=2000001.5215456080540439072NXC&pub=svanrijsewijk&rev=82281&si=4cb0529e2fa64645&ln=nl&uf=0&pi=1&dp=www.24vandaag.nl&pc=tbx"] = {filter: "||addthiscdn.com/live/", type: "image"};
-      resources["http://nt0.ggpht.com/news/tbn/iC8TEcLVB6kJ"] = {type: "image"};
-      resources["http://nt0.ggpht.com/news/tbn/uAkJ4azUgEQJ"] = {type: "image"};
-      resources["http://nt0.ggpht.com/news/tbn/xNGmlucT9HwJ"] = {type: "image"};
-      resources["http://nt1.ggpht.com/news/tbn/3evpXVYfUnMJ"] = {type: "image"};
-      resources["http://nt2.ggpht.com/news/tbn/UouA47y7RCkJ"] = {type: "image"};
-      resources["http://nt3.ggpht.com/news/tbn/gz5wLZ5OQegJ"] = {type: "image"};
-      resources["http://nt3.ggpht.com/news/tbn/l-yeHk-h6rkJ"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/elsevier.gif"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/home-fotos.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/home-laatstenieuws.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/home-politiekepartijen.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/home-twitter.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/home-videos.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/joop.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/logo.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/nd.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/nos.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/nu.gif"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/parlementenpolitiek.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/refdag.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/trouw.gif"] = {type: "image"};
-      resources["http://www.24vandaag.nl/images/twitterbanner.jpg"] = {type: "image"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/favicon.ico"] = {type: "image"};
-      resources["http://www.google-analytics.com/__utm.gif?utmwv=4.7.2&utmn=1049402725&utmhn=www.24vandaag.nl&utmcs=UTF-8&utmsr=1600x900&utmsc=24-bit&utmul=nl&utmje=1&utmfl=10.2%20d161&utmdt=24Vandaag%2C%20het%20laatste%20politieke%20nieuws&utmhid=213266367&utmr=-&utmp=%2F&utmac=UA-383680-8&utmcc=__utma%3D9291830.2009037066.1286623884.1286623884.1286623884.1%3B%2B__utmz%3D9291830.1286623884.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B"] = {filter: "/__utm.gif", type: "image"};
-      resources["http://www.google.com/uds/css/youtube-logo-55x24.png"] = {type: "image"};
-      resources["http://www.google.com/uds/modules/elements/newsshow/cleardot.gif"] = {type: "image"};
-      resources["http://www.google.com/uds/modules/elements/newsshow/no-image-80x60.gif"] = {type: "image"};
-      resources["http://www.google.com/uds/stats?r0=hl%7Celements&nc=1286623917570_15350"] = {filter: "||google.com/uds/stats?", type: "image"};
-      resources["http://www.google.com/uds/stats?r0=hl%7Csearch&r1=hl%7Csearch&nc=1286623916861_15178"] = {filter: "||google.com/uds/stats?", type: "subdocument"};
-      resources["http://platform.twitter.com/widgets/tweet_button.html?url=http%3A%2F%2Fwww.24vandaag.nl%2F&count=horizontal&text=24Vandaag%2C%20het%20laatste%20politieke%20nieuws&via=AddThis"] = {type: "subdocument"};
-      resources["http://s7.addthis.com/static/r07/sh24.html#"] = {type: "subdocument"};
-      resources["http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.24vandaag.nl%2F&layout=button_count&show_faces=false&width=100&action=like&font=arial&"] = {type: "subdocument"};
-      resources["http://www.google.com/uds/modules/elements/newsshow/iframe.html?topic=p&ned=nl_nl&rsz=large&hl=nl&format=300x250"] = {type: "script"};
-      resources["http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"] = {type: "script"};
-      resources["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"] = {type: "script"};
-      resources["http://ajax.googleapis.com/ajax/services/search/news?key=internal-newsshow&v=1.0&source=uds-ns-300x250&topic=p&rsz=large&ned=nl_nl&hl=nl&callback=_callbacks_._0gf2enh6k"] = {filter: "@@||ajax.googleapis.com/ajax/services/search/news?", type: "script"};
-      resources["http://api.twitter.com/1/24vandaag/lists/lijsttrekkers/statuses.json?per_page=8&callback=jsonp1286623901536&_=1286623902423"] = {type: "script"};
-      resources["http://api.twitter.com/1/24vandaag/lists/politici/statuses.json?per_page=8&callback=jsonp1286623901534&_=1286623902407"] = {type: "script"};
-      resources["http://api.twitter.com/1/24vandaag/lists/politieke-partijen/statuses.json?per_page=8&callback=jsonp1286623901535&_=1286623902413"] = {type: "script"};
-      resources["http://pagead2.googlesyndication.com/pagead/show_ads.js"] = {filter: "||pagead2.googlesyndication.com^$~object_subrequest,third-party", type: "script"};
-      resources["http://s7.addthis.com/js/250/addthis_widget.js"] = {type: "script"};
-      resources["http://static.ak.fbcdn.net/rsrc.php/z1/r/h0YSh5UKKFr.js"] = {type: "script"};
-      resources["http://static.ak.fbcdn.net/rsrc.php/zK/p/r/HWL11JhzW9w.js"] = {type: "script"};
-      resources["http://static.ak.fbcdn.net/rsrc.php/zl/p/r/yi2jboDEovM.js"] = {type: "script"};
-      resources["http://urls.api.twitter.com/1/urls/count.json?url=http%3A%2F%2Fwww.24vandaag.nl%2F&callback=twttr.receiveCount"] = {type: "script"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.min.js"] = {type: "script"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.js"] = {type: "script"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/twitter.js"] = {type: "script"};
-      resources["http://www.google-analytics.com/ga.js"] = {type: "script"};
-      resources["http://www.google.com/jsapi"] = {type: "script"};
-      resources["http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q"] = {type: "script"};
-      resources["http://www.google.com/jsapi?key=internal-newsshow&autoload={modules:[{name:elements;version:1;packages:[newsshow];language:nl}]}"] = {type: "script"};
-      resources["http://www.google.com/uds/GvideoSearch?callback=google.search.VideoSearch.RawCompletion&context=0&lstkp=0&rsz=small&hl=nl&gss=.nl&sig=3e6df43077b5c81cfa8f106ec8536c5c&q=ytchannel%3ADemocraten66&key=notsupplied&v=1.0"] = {type: "script"};
-      resources["http://www.google.com/uds/GvideoSearch?callback=google.search.VideoSearch.RawCompletion&context=0&lstkp=0&rsz=small&hl=nl&gss=.nl&sig=3e6df43077b5c81cfa8f106ec8536c5c&q=ytchannel%3APVVep&key=notsupplied&v=1.0"] = {type: "script"};
-      resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/default,slideshow,newsshow+nl.I.js"] = {type: "script"};
-      resources["http://www.google.com/uds/api/search/1.0/3e6df43077b5c81cfa8f106ec8536c5c/default+nl.I.js"] = {type: "script"};
-      resources["http://www.google.com/uds/api?file=uds.js&v=1.0"] = {type: "script"};
-      resources["http://www.google.com/uds/api?file=uds.js&v=1.0&source=uds-vsw&key=ABQIAAAASZYRhigKwbnL3sllNH75nBQrTe3wsRoG6AcrvOOXYmjGvRPuBBRul0wzRFNGEY5LdFgpjfJvb8cNcg"] = {type: "script"};
-      resources["http://www.google.com/uds/solutions/slideshow/gfslideshow.js"] = {type: "script"};
-      resources["http://www.google.com/uds/solutions/videobar/gsvideobar.js"] = {type: "script"};
-      resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.js?mode=new"] = {type: "script"};
-      resources["http://s7.addthis.com/static/r07/widget45.css"] = {type: "script"};
-      resources["http://static.ak.fbcdn.net/rsrc.php/z5/r/Fm9hhBrLU3y.css"] = {type: "script"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/joomla.css"] = {type: "script"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.css"] = {type: "stylesheet"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.query.css"] = {type: "stylesheet"};
-      resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/template_css.css"] = {type: "stylesheet"};
-      resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
-      resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
-      resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
-      resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
-      resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
-      resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
+      var TEMP_ADD_RESOURCES = false;
+      if (window.location.search) {
+        if (window.location.search.indexOf('&') == -1)
+          TEMP_ADD_RESOURCES = true;
+      } else {
+        domain = 'www.24vandaag.nl';
+        TEMP_ADD_RESOURCES = true;
+      }
+
+      if (TEMP_ADD_RESOURCES) {
+        resources["http://platform.twitter.com/widgets/images/tweet.png"] = {type: "image"};
+        resources["##hidingrule"] = {filter: '24vandaag.nl##hidingrule'};
+        resources["http://s7.addthis.com/static/r07/widget22.png"] = {type: "image"};
+        resources["http://static.ak.fbcdn.net/rsrc.php/zh/r/Ch71Zv858xU.png"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/allepartijen.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/allepolitici.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/images/ui-bg_glass_65_ffffff_1x400.png"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/background.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundgrijs.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundgroen.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/backgroundopinie.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/ss_sf_left.png"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/images/ss_sf_right.png"] = {type: "image"};
+        resources["http://www.google.com/uds/modules/elements/newsshow/generic-noborder-298x248.gif"] = {type: "image"};
+        resources["http://a0.twimg.com/profile_images/104605408/wim_normal.jpg"] = {type: "image"};
+        resources["http://a0.twimg.com/profile_images/1084923492/7063aae7-1f96-4e5d-8862-c179376a4a4b_normal.jpg"] = {type: "image"};
+        resources["http://a0.twimg.com/profile_images/889186980/femkehaar_normal.jpg"] = {type: "image"};
+        resources["http://a0.twimg.com/profile_images/907841588/andre_twitter_normal.jpg"] = {type: "image"};
+        resources["http://a1.twimg.com/profile_images/1122994577/dsc3nr2_normal.JPG"] = {type: "image"};
+        resources["http://a2.twimg.com/profile_images/1020356798/Afbeelding_52_normal.png"] = {type: "image"};
+        resources["http://a2.twimg.com/profile_images/656335562/GL_ZIDT_badge_INTEGR_RGB_normal.png"] = {type: "image"};
+        resources["http://a2.twimg.com/profile_images/815362166/GW2_normal.jpg"] = {type: "image"};
+        resources["http://a2.twimg.com/profile_images/897943090/verkiezingsposter_2010_internet_normal.jpg"] = {type: "image"};
+        resources["http://a3.twimg.com/profile_images/894603035/twitterfoto_normal.jpg"] = {type: "image"};
+        resources["http://a3.twimg.com/profile_images/990474255/foto_2_normal.JPG"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/5f5OHIocm3c/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/90j0v3INyjo/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/CE6qFPkqZb0/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/F9up5Y4ZUPM/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/ax8bNFF4Z1I/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/e75yQd8ebVw/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/usT1I9ggS9k/0.jpg"] = {type: "image"};
+        resources["http://i.ytimg.com/vi/zTkD10ekL3k/0.jpg"] = {type: "image"};
+        resources["http://l.addthiscdn.com/live/t00/250lo.gif?kd8xwl&uid=4cb0528c36b511ac&CXNID=2000001.5215456080540439072NXC&pub=svanrijsewijk&rev=82281&si=4cb0529e2fa64645&ln=nl&uf=0&pi=1&dp=www.24vandaag.nl&pc=tbx"] = {filter: "||addthiscdn.com/live/", type: "image"};
+        resources["http://nt0.ggpht.com/news/tbn/iC8TEcLVB6kJ"] = {type: "image"};
+        resources["http://nt0.ggpht.com/news/tbn/uAkJ4azUgEQJ"] = {type: "image"};
+        resources["http://nt0.ggpht.com/news/tbn/xNGmlucT9HwJ"] = {type: "image"};
+        resources["http://nt1.ggpht.com/news/tbn/3evpXVYfUnMJ"] = {type: "image"};
+        resources["http://nt2.ggpht.com/news/tbn/UouA47y7RCkJ"] = {type: "image"};
+        resources["http://nt3.ggpht.com/news/tbn/gz5wLZ5OQegJ"] = {type: "image"};
+        resources["http://nt3.ggpht.com/news/tbn/l-yeHk-h6rkJ"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/elsevier.gif"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/home-fotos.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/home-laatstenieuws.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/home-politiekepartijen.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/home-twitter.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/home-videos.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/joop.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/logo.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/nd.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/nos.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/nu.gif"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/parlementenpolitiek.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/refdag.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/trouw.gif"] = {type: "image"};
+        resources["http://www.24vandaag.nl/images/twitterbanner.jpg"] = {type: "image"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/favicon.ico"] = {type: "image"};
+        resources["http://www.google-analytics.com/__utm.gif?utmwv=4.7.2&utmn=1049402725&utmhn=www.24vandaag.nl&utmcs=UTF-8&utmsr=1600x900&utmsc=24-bit&utmul=nl&utmje=1&utmfl=10.2%20d161&utmdt=24Vandaag%2C%20het%20laatste%20politieke%20nieuws&utmhid=213266367&utmr=-&utmp=%2F&utmac=UA-383680-8&utmcc=__utma%3D9291830.2009037066.1286623884.1286623884.1286623884.1%3B%2B__utmz%3D9291830.1286623884.1.1.utmcsr%3D(direct)%7Cutmccn%3D(direct)%7Cutmcmd%3D(none)%3B"] = {filter: "/__utm.gif", type: "image"};
+        resources["http://www.google.com/uds/css/youtube-logo-55x24.png"] = {type: "image"};
+        resources["http://www.google.com/uds/modules/elements/newsshow/cleardot.gif"] = {type: "image"};
+        resources["http://www.google.com/uds/modules/elements/newsshow/no-image-80x60.gif"] = {type: "image"};
+        resources["http://www.google.com/uds/stats?r0=hl%7Celements&nc=1286623917570_15350"] = {filter: "||google.com/uds/stats?", type: "image"};
+        resources["http://www.google.com/uds/stats?r0=hl%7Csearch&r1=hl%7Csearch&nc=1286623916861_15178"] = {filter: "||google.com/uds/stats?", type: "subdocument"};
+        resources["http://platform.twitter.com/widgets/tweet_button.html?url=http%3A%2F%2Fwww.24vandaag.nl%2F&count=horizontal&text=24Vandaag%2C%20het%20laatste%20politieke%20nieuws&via=AddThis"] = {type: "subdocument"};
+        resources["http://s7.addthis.com/static/r07/sh24.html#"] = {type: "subdocument"};
+        resources["http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.24vandaag.nl%2F&layout=button_count&show_faces=false&width=100&action=like&font=arial&"] = {type: "subdocument"};
+        resources["http://www.google.com/uds/modules/elements/newsshow/iframe.html?topic=p&ned=nl_nl&rsz=large&hl=nl&format=300x250"] = {type: "script"};
+        resources["http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"] = {type: "script"};
+        resources["http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"] = {type: "script"};
+        resources["http://ajax.googleapis.com/ajax/services/search/news?key=internal-newsshow&v=1.0&source=uds-ns-300x250&topic=p&rsz=large&ned=nl_nl&hl=nl&callback=_callbacks_._0gf2enh6k"] = {filter: "@@||ajax.googleapis.com/ajax/services/search/news?", type: "script"};
+        resources["http://api.twitter.com/1/24vandaag/lists/lijsttrekkers/statuses.json?per_page=8&callback=jsonp1286623901536&_=1286623902423"] = {type: "script"};
+        resources["http://api.twitter.com/1/24vandaag/lists/politici/statuses.json?per_page=8&callback=jsonp1286623901534&_=1286623902407"] = {type: "script"};
+        resources["http://api.twitter.com/1/24vandaag/lists/politieke-partijen/statuses.json?per_page=8&callback=jsonp1286623901535&_=1286623902413"] = {type: "script"};
+        resources["http://pagead2.googlesyndication.com/pagead/show_ads.js"] = {filter: "||pagead2.googlesyndication.com^$~object_subrequest,third-party", type: "script"};
+        resources["http://s7.addthis.com/js/250/addthis_widget.js"] = {type: "script"};
+        resources["http://static.ak.fbcdn.net/rsrc.php/z1/r/h0YSh5UKKFr.js"] = {type: "script"};
+        resources["http://static.ak.fbcdn.net/rsrc.php/zK/p/r/HWL11JhzW9w.js"] = {type: "script"};
+        resources["http://static.ak.fbcdn.net/rsrc.php/zl/p/r/yi2jboDEovM.js"] = {type: "script"};
+        resources["http://urls.api.twitter.com/1/urls/count.json?url=http%3A%2F%2Fwww.24vandaag.nl%2F&callback=twttr.receiveCount"] = {type: "script"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.min.js"] = {type: "script"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.js"] = {type: "script"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/twitter.js"] = {type: "script"};
+        resources["http://www.google-analytics.com/ga.js"] = {type: "script"};
+        resources["http://www.google.com/jsapi"] = {type: "script"};
+        resources["http://www.google.com/jsapi?key=ABQIAAAA1XbMiDxx_BTCY2_FkPh06RRaGTYH6UMl8mADNa0YKuWNNa8VNxQEerTAUcfkyrr6OwBovxn7TDAH5Q"] = {type: "script"};
+        resources["http://www.google.com/jsapi?key=internal-newsshow&autoload={modules:[{name:elements;version:1;packages:[newsshow];language:nl}]}"] = {type: "script"};
+        resources["http://www.google.com/uds/GvideoSearch?callback=google.search.VideoSearch.RawCompletion&context=0&lstkp=0&rsz=small&hl=nl&gss=.nl&sig=3e6df43077b5c81cfa8f106ec8536c5c&q=ytchannel%3ADemocraten66&key=notsupplied&v=1.0"] = {type: "script"};
+        resources["http://www.google.com/uds/GvideoSearch?callback=google.search.VideoSearch.RawCompletion&context=0&lstkp=0&rsz=small&hl=nl&gss=.nl&sig=3e6df43077b5c81cfa8f106ec8536c5c&q=ytchannel%3APVVep&key=notsupplied&v=1.0"] = {type: "script"};
+        resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/default,slideshow,newsshow+nl.I.js"] = {type: "script"};
+        resources["http://www.google.com/uds/api/search/1.0/3e6df43077b5c81cfa8f106ec8536c5c/default+nl.I.js"] = {type: "script"};
+        resources["http://www.google.com/uds/api?file=uds.js&v=1.0"] = {type: "script"};
+        resources["http://www.google.com/uds/api?file=uds.js&v=1.0&source=uds-vsw&key=ABQIAAAASZYRhigKwbnL3sllNH75nBQrTe3wsRoG6AcrvOOXYmjGvRPuBBRul0wzRFNGEY5LdFgpjfJvb8cNcg"] = {type: "script"};
+        resources["http://www.google.com/uds/solutions/slideshow/gfslideshow.js"] = {type: "script"};
+        resources["http://www.google.com/uds/solutions/videobar/gsvideobar.js"] = {type: "script"};
+        resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.js?mode=new"] = {type: "script"};
+        resources["http://s7.addthis.com/static/r07/widget45.css"] = {type: "script"};
+        resources["http://static.ak.fbcdn.net/rsrc.php/z5/r/Fm9hhBrLU3y.css"] = {type: "script"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/joomla.css"] = {type: "script"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.css"] = {type: "stylesheet"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/jquery.tweet.query.css"] = {type: "stylesheet"};
+        resources["http://www.24vandaag.nl/templates/pj_flexum_15/css/template_css.css"] = {type: "stylesheet"};
+        resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
+        resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
+        resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
+        resources["http://www.google.com/uds/api/elements/1.0/f93f17b91c8ceb6316a8fa51458d8a22/newsshow.css"] = {type: "stylesheet"};
+        resources["http://www.google.com/uds/css/gsearch.css"] = {type: "stylesheet"};
+        resources["http://www.google.com/uds/solutions/videosearch/gsvideosearch.css"] = {type: "stylesheet"};
       }
     </script>
     <title>Block a resource</title>
@@ -133,6 +140,9 @@ clean up code; match 80chars/line rule
     <style type="text/css">
       .icon {
         background-image:url('../img/icon32.png')
+      }
+      input:disabled + label {
+        cursor:default;
       }
       #resourceslist {
         text-align: left;
@@ -258,9 +268,9 @@ clean up code; match 80chars/line rule
 
         var suggestions = [];
         for (var i in blocksuggestions) {
-          suggestions.push("<input type='radio' name='urloption' value='" + 
+          suggestions.push("<input type='radio' name='urloption' id='suggest_" + i + "' value='" +
               (isBlocked ? '@@||' : '||') + blocksuggestions[i] + "'/>" +
-              "<span class='optionDescription'> " + blocksuggestions[i] + "</span><br/>");
+              "<label for='suggest_" + i + "'> " + blocksuggestions[i] + "</label><br/>");
         }
         $("#suggestions").html(suggestions.join(''));
         if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
@@ -272,7 +282,7 @@ clean up code; match 80chars/line rule
           $("#selectblockableurl b").text("Block every resource containing:");
         else
           $("#selectblockableurl b").text("Whitelist every resource containing:");
-        $("#custom + .optionDescription").
+        $("#custom + label").
           html("Custom: <input type='text' id='customurl' value='" + url + 
           "' size='99' title='Note: you can use * as wildcard here'/>");
       }
@@ -319,13 +329,19 @@ clean up code; match 80chars/line rule
       }
 
       $(function() {
-        if (window.location.search) {//if opened by the context menu:
+        if (window.location.search) {
+          //can be of the forms
+          //  ?resourcetype=resourceURL&domain=domain
+          //  ?domain=domain
           var query = window.location.search.substring(1);
-          domain = unescape(query.match(/\&domain\=(.*)$/)[1]);
-          query = query.replace(/\&domain\=(.*)$/, '');
-          var temp_url = unescape(query.match(/\=(.+)$/)[1]);
-          var temp_type = query.match(/^(.+)\=/)[1];
-          resources[temp_url] = {type:temp_type};
+          domain = unescape(query.match(/(^|\&)domain\=(.*)$/)[2]);
+          query = query.replace(/(^|\&)domain\=(.*)$/, '');
+          var temp_resource = query.match(/^(.+)\=(.+)$/);
+          if (temp_resource) {
+            var temp_url = unescape(temp_resource[2]);
+            var temp_type = temp_resource[1];
+            resources[temp_url] = {type:temp_type};
+          }
         }
 
         //create the table of resources and make it sortable
@@ -355,6 +371,8 @@ clean up code; match 80chars/line rule
 
         //An item has been selected
         $('.clickableRow, input:enabled', '#resourceslist').click(function() {
+          if ($('.selected','#resourceslist').length > 0)
+            return; //already selected a resource
           $(this).parents('tr').addClass('selected');
           $("#resourceslist tr:not(.selected)").remove();
           $("#resourceslist tr input").
@@ -390,7 +408,7 @@ clean up code; match 80chars/line rule
               $("#thirdparty + *").remove();
               $("#thirdparty").remove();
             } else
-              $("#thirdparty + span").html("Any website EXCEPT websites on domain <i>" + 
+              $("#thirdparty + label").html("Any website EXCEPT websites on domain <i>" + 
                 GetThirdPartyDomain(domainOfSelectedUrl) + "</i>");
             $("#domainlist").
               val(domain.replace(/^www\./, '')).
@@ -429,13 +447,10 @@ clean up code; match 80chars/line rule
           });
         });
 
-        //if opened by the context menu:
-        if (window.location.search) {
+        //if opened by the context menu, this variable exists
+        if (temp_url) {
           $("#resourceslist input").click();
         }
-
-        //When one clicks on a label, check/uncheck the connected input
-        $('.optionDescription').live('click', checkboxlabel_clicked);
       });
     </script>
   </head>
@@ -457,26 +472,27 @@ clean up code; match 80chars/line rule
       <b></b>
       <div id="suggestions"></div>
       <input type='radio' name='urloption' id='custom' />
-      <span class='optionDescription'></span><br/>
+      <label for='custom'></label><br/>
       <input type='button' style='margin-left:22px;' value='Next step' id='confirmUrl' />
     </form>
 
     <form id="chooseoptions" style="display:none;">
       <b>This filter will be applied when you are browsing:</b><br/>
-      <input type="radio" name="domainoptions" value="" checked="checked" /><span class="optionDescription">Any website</span><br/>
-      <input type="radio" name="domainoptions" id="thirdparty" value="third-party" /><span class="optionDescription"></span><br/>
-      <input type="radio" name="domainoptions" id="domainis" /><span class="optionDescription">ONLY pages on these domains: </span>
+      <input type="radio" name="domainoptions" value="" checked="checked" id="onEverySite" /><label for="onEverySite">Any website</label><br/>
+      <input type="radio" name="domainoptions" id="thirdparty" value="third-party" /><label for="thirdparty"></label><br/>
+      <input type="radio" name="domainoptions" id="domainis" /><label for="domainis">ONLY pages on these domains: </label>
       <input type="text" size="30" id="domainlist" title="Seperate multiple domains with commas or spaces"/><br/><br/>
       <b>This filter is case sensitive:</b><br/>
-      <input type="radio" name="caseoption" value="match-case" /><span class="optionDescription">Yes</span> 
-      <input type="radio" name="caseoption" value="" checked="checked" /><span class="optionDescription">No</span><br/><br/>
+      <input type="radio" name="caseoption" value="match-case" id='matchcaseYes'/><label for="matchcaseYes">Yes</label> 
+      <input type="radio" name="caseoption" value="" checked="checked" id='matchcaseNo'/><label for="matchcaseNo">No</label><br/><br/>
       <b>This filter applies to resources of these types:</b><br/>
       <div id="types">
-        <input type="checkbox" value="~subdocument" checked="checked" /><span class='optionDescription'>Frames</span>
-        <input type="checkbox" value="~object" checked="checked" /><span class='optionDescription'>Interactive objects</span>
-        <input type="checkbox" value="~image" checked="checked" /><span class='optionDescription'>Images</span>
-        <input type="checkbox" value="~script" checked="checked" /><span class='optionDescription'>Scripts</span>
-        <input type="checkbox" value="~stylesheet" checked="checked" /><span class='optionDescription'>Style definitions</span><br/><br/>
+        <input type="checkbox" value="~media" checked="checked" id="typemed"/><label for='typemed'>Audio and video</label>
+        <input type="checkbox" value="~subdocument" checked="checked" id="typesub" /><label for='typesub'>Frames</label>
+        <input type="checkbox" value="~object" checked="checked" id="typeobj" /><label for='typeobj'>Interactive objects</label>
+        <input type="checkbox" value="~image" checked="checked" id="typeimg"/><label for='typeimg'>Images</label>
+        <input type="checkbox" value="~script" checked="checked" id='typescr'/><label for='typescr'>Scripts</label>
+        <input type="checkbox" value="~stylesheet" checked="checked" id='typesty'/><label for='typesty'>Style definitions</label><br/><br/>
       </div>
       <input type="button" id="addthefilter" value="Add this filter"/> <span id="filterpreview"></span>
     </form>
