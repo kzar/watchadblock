@@ -101,6 +101,7 @@ MyFilters.prototype.freshen_async = function(force) {
     var url = that._subscriptions[filter_id].url;
     $.ajax({
       url: url,
+      cache: false,
       success: function(text) {
         log("Fetched " + url);
         if (!text || text.length == 0) // happens sometimes.  Weird, I know
