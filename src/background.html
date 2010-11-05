@@ -366,13 +366,17 @@
           });
         }
 
-        chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-          if (tab.selected && changeInfo.url)
+        //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
+        //Otherwise the extension doesn't work (e.g. doesn't block ads)
+        if (chrome.tabs) {
+          chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+            if (tab.selected && changeInfo.url)
+              updateButtonUIAndContextMenus();
+          });
+          chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
             updateButtonUIAndContextMenus();
-        });
-        chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
-          updateButtonUIAndContextMenus();
-        });
+          });
+        }
       }
 
 
