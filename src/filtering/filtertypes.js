@@ -19,7 +19,7 @@ Filter.adTypes = {
 }
 
 // Return a Filter instance for the given filter text.
-Filter.fromText = function(text) {
+Filter.fromText = function(text, includeRealRule) {
   var cache = Filter._cache;
   if (!(text in cache)) {
 
@@ -29,10 +29,9 @@ Filter.fromText = function(text) {
     else if (text.match(/##/) || text.match(/#.*\(/))
       cache[text] = new SelectorFilter(text);
     else if (text.match(/^@@/))
-      cache[text] = new WhitelistFilter(text);
+      cache[text] = new WhitelistFilter(text, includeRealRule);
     else
-      cache[text] = new PatternFilter(text);
-
+      cache[text] = new PatternFilter(text, includeRealRule);
   }
   return cache[text];
 }
@@ -202,7 +201,7 @@ SelectorFilter._old_style_to_new = function(text) {
 }
 
 // Filters that block by URL regex or substring.
-var PatternFilter = function(text) {
+var PatternFilter = function(text, includeRealRule) {
   Filter.call(this); // call base constructor
 
   var data = PatternFilter._parseRule(text);
@@ -211,6 +210,8 @@ var PatternFilter = function(text) {
   this._isRegex = data.isRegex;
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
+  if (includeRealRule)
+    this._realRule = text;
 
   if (this._isRegex)
     this._rule = new RegExp(data.rule);
@@ -467,8 +468,8 @@ PatternFilter.prototype = {
 }
 
 // Filters that specify URL regexes or substrings that should not be blocked.
-var WhitelistFilter = function(text) {
-  PatternFilter.call(this, text); // call base constructor.
+var WhitelistFilter = function(text, includeRealRule) {
+  PatternFilter.call(this, text, includeRealRule); // call base constructor.
 
   // TODO: Really, folks, this just ain't the way to do polymorphism.
   this.__type = "WhitelistFilter";
