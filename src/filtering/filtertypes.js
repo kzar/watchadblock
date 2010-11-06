@@ -276,7 +276,7 @@ PatternFilter._parseRule = function(text) {
 
   // Since ABP 1.3 'image' can also refer to 'background'
   if (result.allowedElementTypes & ElementTypes.image)
-    result.allowedElementTypes |= ElementTypes.background
+    result.allowedElementTypes |= ElementTypes.background;
 
   // Some mentioned, who were excluded?  Allow ALL except those mentioned.
   if (invertedElementTypes)
