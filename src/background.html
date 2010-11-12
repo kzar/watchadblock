@@ -345,7 +345,7 @@
           return;
         
         chrome.contextMenus.create({
-          title: translate("contextmenuhidethis"),
+          title: translate("contextmenuhidethis1"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -356,7 +356,7 @@
           }
         });
         chrome.contextMenus.create({
-          title: translate("contextmenuhideanything"),
+          title: translate("contextmenuhideanything1"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -378,8 +378,8 @@
           }
         });
         chrome.contextMenus.create({
-          title: "Block this resource",
-          contexts:["image"], 
+          title: translate('contextmenublockthis'),
+          contexts:["image"],
           onclick: function(info, tab) {
             var query = '?image=' + escape(info.srcUrl);
             query += '&domain=' + escape(tab.url.match(/\:\/\/([^\/]+)\//)[1]);
@@ -389,7 +389,7 @@
         });
         //TEMP---MOVE TO BUTTON
         chrome.contextMenus.create({
-          title: "Block a resource on this page",
+          title: translate('contextmenublockanything'),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -547,8 +547,8 @@
             return;
           if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
-          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis1"));
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything1"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
