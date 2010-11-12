@@ -67,6 +67,7 @@ beforeLoadHandler = function(event) {
     pageDomain: document.domain, 
     isTopFrame: (window == window.top) 
   };
+  collect_resources.push(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (elType != ElementTypes.script &&
@@ -107,13 +108,13 @@ if (SAFARI)
   enableTrueBlocking();
 
 function adblock_begin() {
-
+  collect_resources = [];
   var opts = { domain: document.domain, include_filters: true };
   // The top frame should tell the background what domain it's on.  The
   // subframes will be told what domain the top is on.
   if (window == window.top)
     opts.is_top_frame = true;
-      
+
   extension_call('get_content_script_data', opts, function(data) {
     var start = new Date();
 

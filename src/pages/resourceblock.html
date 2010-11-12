@@ -1,9 +1,10 @@
 <!--TODO
 call localizePage()
 perform i18n changes/translate() calls
-figure out how to load the resources
-figure out how to get the domain
 clean up code; match 80chars/line rule
+remove list from localstorage if no longer needed
+do not collect duplicate resources in adblock.js
+Optional: display resources from subframes?
 -->
 <html>
   <head>
@@ -31,7 +32,7 @@ clean up code; match 80chars/line rule
         TEMP_ADD_RESOURCES = true;
       }
 
-      if (TEMP_ADD_RESOURCES) {
+      if (TEMP_ADD_RESOURCES && (1==2)) {//(1==2) simply disables this block of code
         resources["http://platform.twitter.com/widgets/images/tweet.png"] = {type: ElementTypes.image};
         resources["##hidingrule"] = {filter: '24vandaag.nl##hidingrule'};
         resources["http://s7.addthis.com/static/r07/widget22.png"] = {type: ElementTypes.image};
@@ -490,6 +491,16 @@ clean up code; match 80chars/line rule
             alert('This page is whitelisted or AdBlock is paused. Therefore no resources are caught, so this page cannot be used');
             window.close();
             return;
+          }
+          var loaded_resources = JSON.parse(localStorage.getItem("resources" + domain.replace(/(\.|\-)/g, '_')));
+          for (var i=0; i<loaded_resources.length; i++) {
+            if (/^HIDE\:.+/.test(loaded_resources[i])) {
+              var filter = "##" + loaded_resources[i].substring(5);
+              resources[filter] = {filter: filter};
+            } else {
+              var blockmatches = loaded_resources[i].split(':|:', 2);
+              resources[blockmatches[1]] = {type:Number(blockmatches[0])};
+            }
           }
           finally_it_has_loaded_its_stuff();
           //if opened by the context menu, this variable exists

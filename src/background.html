@@ -301,6 +301,16 @@
         );
       };
       
+      //options:
+      //resources: the resource(s)
+      //domain: the tld
+      utils.show_resourceblocker = function(options) {
+        utils.storage_set({
+            key: "resources" + options.domain.replace(/(\.|\-)/g, '_'),
+            value: options.resources});
+        chrome.tabs.create({url: "pages/resourceblock.html?domain=" + options.domain});
+      }
+      
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
         var sender = { tab: { id: options.tabid } };
@@ -374,6 +384,16 @@
             query += '&domain=' + escape(tab.url.match(/\:\/\/([^\/]+)\//)[1]);
             window.open(chrome.extension.getURL('pages/resourceblock.html' + query),
             "_blank", 'location=0,width=1024,height=590');
+          }
+        });
+        //TEMP---MOVE TO BUTTON
+        chrome.contextMenus.create({
+          title: "Block a resource on this page",
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'page_send_resources', options:{}}, sender);
           }
         });
       }

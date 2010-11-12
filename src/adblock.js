@@ -10,6 +10,7 @@ function debug_print_selector_matches() {
         filter(function(selector) { return $(selector).length > 0; }).
         forEach(function(selector) {
           log("Debug: CSS '" + selector + "' hid:");
+          collect_resources.push('HIDE:' + selector);
           $(selector).each(function(i, el) {
             log("       " + el.nodeName + "#" + el.id + "." + el.className);
           });
@@ -206,6 +207,10 @@ function adblock_begin_part_2() {
     log("==== ADBLOCKING PAGE: " + document.location.href);
     
     listen_for_broadcasts();
+    if (window == window.top)
+      register_broadcast_listener('page_send_resources', function() {
+        extension_call('show_resourceblocker', {domain: data.top_frame_domain, resources: collect_resources});
+      });
 
     // The wizards by default don't respond to contextmenu clicks,
     // because Chrome can't hide the contextmenus on whitelisted
