@@ -67,7 +67,7 @@ beforeLoadHandler = function(event) {
     pageDomain: document.domain, 
     isTopFrame: (window == window.top) 
   };
-  collect_resources.push(elType + ':|:' + data.url);
+  collect_resources[elType + ':|:' + data.url] = null;
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (elType != ElementTypes.script &&

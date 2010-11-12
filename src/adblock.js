@@ -10,7 +10,7 @@ function debug_print_selector_matches() {
         filter(function(selector) { return $(selector).length > 0; }).
         forEach(function(selector) {
           log("Debug: CSS '" + selector + "' hid:");
-          collect_resources.push('HIDE:' + selector);
+          collect_resources['HIDE:' + selector] = null;
           $(selector).each(function(i, el) {
             log("       " + el.nodeName + "#" + el.id + "." + el.className);
           });
@@ -209,7 +209,10 @@ function adblock_begin_part_2() {
     listen_for_broadcasts();
     if (window == window.top)
       register_broadcast_listener('page_send_resources', function() {
-        extension_call('show_resourceblocker', {domain: data.top_frame_domain, resources: collect_resources});
+        var resources_to_send = [];
+        for (var i in collect_resources)
+          resources_to_send.push(i);
+        extension_call('show_resourceblocker', {domain: data.top_frame_domain, resources: resources_to_send});
       });
 
     // The wizards by default don't respond to contextmenu clicks,
