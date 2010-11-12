@@ -203,6 +203,9 @@ Optional: display resources from subframes?
         font-size:12px;
         font-style:italic;
       }
+      .onlyifdebug {
+        display:none;
+      }
       #addthefilter {
         font-weight:bold;
         font-size:15px;
@@ -359,6 +362,8 @@ Optional: display resources from subframes?
       }
 
       function finally_it_has_loaded_its_stuff() {
+        if (domaindata.features.debug_logging.is_enabled)
+          $(".onlyifdebug").show()
         //create the table of resources and make it sortable
         generateTable();
         $("#resourceslist").tablesorter({
@@ -522,7 +527,7 @@ Optional: display resources from subframes?
       </tr></thead>
       <tbody><tr id="loading"><td colspan="4" style="text-align:center;color:blue;font-size:22px;font-weight:bold;">0LOADING...</td></tr></tbody>
     </table>
-    <div id="legend"><b">Legend:</b> <i style="color:red">blocked resources</i>, <i style="color:green">whitelisted resources</i> &amp; <i>blockable resources</i>; <i style="color:blue">hiding rules applied</i>.&nbsp;&nbsp;<a href="#">(x)</a></div>
+    <div id="legend"><b">Legend:</b> <i style="color:red">blocked resources</i>, <i style="color:green">whitelisted resources</i> &amp; <i>blockable resources</i><span class="onlyifdebug">; <i style="color:blue">hiding rules applied</i></span>.&nbsp;&nbsp;<a href="#">(x)</a></div>
     
     <form id="selectblockableurl" style="display:none;">
       <b></b>
