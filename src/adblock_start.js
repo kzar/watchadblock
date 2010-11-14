@@ -130,8 +130,11 @@ function adblock_begin() {
     if (!SAFARI) {
       var local_filterset = FilterSet.fromText(data.filtertext);
       _limited_to_domain = local_filterset.limitedToDomain(document.domain);
+
       // We don't need these locally, so delete them to save memory.
       delete _limited_to_domain._selectorFilters;
+      delete _limited_to_domain._domainLimitedCache;
+
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
       delete LOADED_TOO_FAST;
