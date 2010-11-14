@@ -7,6 +7,7 @@
     <script src="../jquery/jquery-1.4.2.min.js"></script>
     <script src="../jquery/jquery-ui-1.8.custom.min.js"></script>
     <script src="../functions.js"></script>
+    <script src="../filtering/myfilters.js"></script>
     <script>
       function displayVersionNumber() {
         try {
@@ -112,6 +113,90 @@
             }, 1000);
           });
         </script>
+
+        <h2 style="margin-top:30px;height:12px;">Recommended filters</h2><br/>
+        <p style="margin:0px;">
+          <span class="footnote">In order to block ads, AdBlock must use some filter lists. The following lists are recommended:</span><br/>
+          <input type="checkbox" id="adblock_custom" checked="checked" />
+          <label for="adblock_custom">Special filters for Chrome and Safari</label><br/>
+          <input type="checkbox" id="easylist" checked="checked" />
+          <label for="easylist">General filters</label><br/>
+          <input type="checkbox" id="localizedfilter" checked="checked" />
+          <label for="localizedfilter">Filters optimized for your language <span class="langname"></span></label>
+        </p>
+        <script>
+          function subscribe(list_id, log) {
+            var list_url = MyFilters.__subscription_options[list_id].url;
+            $.ajax({
+              url: list_url,
+              success: function(text) {
+                if (text && 
+                     (text[0] == '!' || text[0] == '[' || text[0] == '(')) {
+                  extension_call("subscribe", {id: list_id, text:text});
+                  if (log)
+                    $.get("http://chromeadblock.com/api/url_subscribe.php", 
+                        {url:list_url});
+                }
+              }
+            });
+          }
+          function unsubscribe(list_id) {
+            extension_call("unsubscribe", {id: list_id, del:false});
+          }
+          function langToList(lang) {
+            switch(lang) {
+              case 'bg': return 'easylist_plus_bulgarian';
+              case 'cs': return 'czech';
+              case 'cu': return 'easylist_plus_bulgarian';
+              case 'da': return 'danish';
+              case 'de': return 'easylist_plus_german';
+              case 'es': return 'easylist_plus_spanish';
+              case 'fi': return 'easylist_plus_finnish';
+              case 'fr': return 'easylist_plus_french';
+              case 'he': return 'israeli';
+              case 'hu': return 'hungarian';
+              case 'it': return 'italian';
+              case 'ja': return 'japanese';
+              case 'ko': return 'easylist_plun_korean';
+              case 'nb': return 'easylist_plus_norwegian';
+              case 'nl': return 'dutch';
+              case 'nn': return 'easylist_plus_norwegian';
+              case 'no': return 'easylist_plus_norwegian';
+              case 'pl': return 'easylist_plus_polish'; //sorry for the other polish list
+              case 'ro': return 'easylist_plus_romanian';
+              case 'ru': return 'russian';
+              case 'uk': return 'ukranian';
+              case 'vi': return 'easylist_plus_vietnamese';
+              case 'zh': return 'chinese';
+              default: return '';
+            }
+          }
+          $(function() {
+            var language = navigator.language.match(/^([a-z]+).*/i)[1];
+            $("#adblock_custom, #easylist").change(function() {
+              var subscription = $(this).attr('id');
+              if ($(this).is(":checked"))
+                subscribe(subscription);
+              else
+                unsubscribe(subscription);
+            });
+            var list_for_lang = langToList(language);
+            if (!list_for_lang) {
+              $("#localizedfilter").next().remove();
+              $("#localizedfilter").remove();
+            } else {
+              $(".langname").text('(' + language.toUpperCase() + ')');
+              $("#localizedfilter").change(function() {
+                if ($(this).is(":checked"))
+                  subscribe(list_for_lang, true);
+                else
+                  unsubscribe(list_for_lang);
+              });
+              subscribe(list_for_lang, true);
+            }
+          });
+        </script>
+          
 
         <div style="margin-top:2em" i18n="setotheroptions"></div>
       </div>
