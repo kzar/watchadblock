@@ -114,28 +114,26 @@
           });
         </script>
 
-        <h2 style="margin-top:30px;height:12px;">Recommended filters</h2><br/>
+        <h2 style="margin-top:30px;" i18n="recommendedfilters"></h2>
         <p style="margin:0px;">
-          <span class="footnote">In order to block ads, AdBlock must use some filter lists. The following lists are recommended:</span><br/>
+          <span class="footnote" i18n="whyyouneedfilters"></span><br/>
           <input type="checkbox" id="adblock_custom" checked="checked" />
-          <label for="adblock_custom">Special filters for Chrome and Safari</label><br/>
+          <label for="adblock_custom" i18n="chromesafarifilters"></label><br/>
           <input type="checkbox" id="easylist" checked="checked" />
-          <label for="easylist">General filters</label><br/>
+          <label for="easylist" i18n="generalfilters"></label><br/>
           <input type="checkbox" id="localizedfilter" checked="checked" />
-          <label for="localizedfilter">Filters optimized for your language <span class="langname"></span></label>
+          <label for="localizedfilter" i18n="languagespecificfilters"></label>
         </p>
         <script>
-          function subscribe(list_id, log) {
+          function subscribe(list_id) {
             var list_url = MyFilters.__subscription_options[list_id].url;
             $.ajax({
               url: list_url,
+              cache: false,
               success: function(text) {
                 if (text && 
                      (text[0] == '!' || text[0] == '[' || text[0] == '(')) {
                   extension_call("subscribe", {id: list_id, text:text});
-                  if (log)
-                    $.get("http://chromeadblock.com/api/url_subscribe.php", 
-                        {url:list_url});
                 }
               }
             });
@@ -188,15 +186,14 @@
               $(".langname").text('(' + language.toUpperCase() + ')');
               $("#localizedfilter").change(function() {
                 if ($(this).is(":checked"))
-                  subscribe(list_for_lang, true);
+                  subscribe(list_for_lang);
                 else
                   unsubscribe(list_for_lang);
               });
-              subscribe(list_for_lang, true);
+              subscribe(list_for_lang);
             }
           });
         </script>
-          
 
         <div style="margin-top:2em" i18n="setotheroptions"></div>
       </div>
