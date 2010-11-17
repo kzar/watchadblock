@@ -146,5 +146,6 @@ function adblock_begin() {
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
-if (document.location != 'about:blank')
+// until crbug.com/63397 is fixed, ignore SVG images
+if (document.location != 'about:blank' && !/\.svg$/.test(document.location.href))
   adblock_begin();
