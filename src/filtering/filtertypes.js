@@ -318,7 +318,7 @@ PatternFilter._parseRule = function(text) {
   //If a rule contains *, replace that by .*
   rule = rule.replace(/\*/g, '.*');
   //^ is a separator char in ABP
-  rule = rule.replace(/\^/g, '[^-.%a-zA-Z0-9]');
+  rule = rule.replace(/\^/g, '[^\-.%a-zA-Z0-9]');
   // ? at the start of a regex means something special; escape it always.
   rule = rule.replace(/\?/g, '\\?');
   // . shouldn't mean "match any character" unless it's followed by a * in
@@ -328,11 +328,13 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/\+/g, '\\+');
   // Starting with || means it should start at a domain or subdomain name, so
   // match ://<the rule> or ://some.domains.here.and.then.<the rule>
-  rule = rule.replace(/^\|\|/, '://([^/]+\\.)*');
+  rule = rule.replace(/^\|\|/, '\://([^/]+\\.)*');
   // Starting with | means it should be at the beginning of the URL.
   rule = rule.replace(/^\|/, '^');
   // Any other '|' within a string should really be a pipe.
   rule = rule.replace(/\|/g, '\\|');
+  // Using escaped characters is faster. Only replace the most common one: /
+  rule = rule.replace(/\//g, '\\/');
 
   result.rule = rule;
 
