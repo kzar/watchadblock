@@ -210,8 +210,7 @@ var PatternFilter = function(text) {
   this._domains = Filter._domainInfo(data.domainText, '|');
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
-
-  this._rule = new RegExp(data.rule);
+  this._rule = data.rule;
 }
 
 // Return a { rule, domainText, allowedElementTypes } object
@@ -290,17 +289,16 @@ PatternFilter._parseRule = function(text) {
   if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
-      new RegExp(result.rule); // Make sure it parses correctly
+      result.rule = new RegExp(result.rule); // Make sure it parses correctly
       log("Found a true regex rule - " + rule);
-      return result;
     } catch(e) {
       log("Found an unparseable regex rule - " + text);
       // OK, we thought it was a regex but it's not.  Just discard it.
       // TODO: let parser throw exceptions which are caught, rather than having
       // to keep dummy rules.
-      result.rule = 'dummy_rule_matching_nothing';
-      return result;
+      result.rule = new RegExp('$dummy_rule_matching_nothing');
     }
+    return result;
   }
 
   if (!(result.options & FilterOptions.MATCHCASE))
@@ -336,15 +334,13 @@ PatternFilter._parseRule = function(text) {
   // Using escaped characters is faster. Only replace the most common one: /
   rule = rule.replace(/\//g, '\\/');
 
-  result.rule = rule;
-
   // verify it. TODO copied-and-modified from above.
   try {
-    new RegExp(result.rule);
+    result.rule = new RegExp(rule);
   } catch(e) {
     log("Found an unparseable rule - " + text);
     // OK, something went wrong.  Just discard it.
-    result.rule = 'dummy_rule_matching_nothing';
+    result.rule = new RegExp('$dummy_rule_matching_nothing');
   }
 
   return result;
