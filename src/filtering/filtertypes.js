@@ -89,6 +89,9 @@ Filter._domainIsInList = function(domain, list) {
       return true;
     if (domain.match("\\." + list[i] + "$")) // ends w/ a period + list[i]?
       return true;
+    var tldmatches = list[i].match(/^(.+)\.tld$/);
+    if (tldmatches && domain.match("(^|\\.)" + tldmatches[1] + "\\.[a-z]+$"))
+      return true;
   }
   return false;
 }

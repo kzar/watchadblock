@@ -74,7 +74,7 @@ beforeLoadHandler = function(event) {
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (elType & ElementTypes.background)
-      $(el).css("background-image", "none");
+      $(el).css("background-image", "none !important");
     else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
       $(el).remove();
   }
