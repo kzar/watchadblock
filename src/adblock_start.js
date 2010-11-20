@@ -110,14 +110,10 @@ function adblock_begin() {
     opts.is_top_frame = true;
 
   extension_call('get_content_script_data', opts, function(data) {
-    var start = new Date();
-
     if (data.features.debug_logging.is_enabled) {
       DEBUG = true;
       log = function(text) { console.log(text); };
     }
-    if (data.features.debug_time_logging.is_enabled)
-      time_log = function(text) { console.log(text); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
@@ -141,10 +137,6 @@ function adblock_begin() {
     }
 
     block_list_via_css(data.selectors);
-
-    var end = new Date();
-    time_log("adblock_start run time: " + (end - start) + " ms || " +
-             document.location.href);
   });
 
 }
