@@ -81,6 +81,7 @@
         //subscribe to a list
         $.ajax({
           url: list_url,
+          cache: false,
           success: function(text) {
             if (text && 
                  (text[0] == '!' || text[0] == '[' || text[0] == '(Adblock')

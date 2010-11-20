@@ -117,6 +117,7 @@
         }
         $.ajax({
           url: url,
+          cache: false,
           success: function(text) {
             if (!text) {
               onError(); // not sure why we even get here, but we do
