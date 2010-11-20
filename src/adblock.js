@@ -26,6 +26,12 @@ function run_specials(features) {
     $(".Managed .WithSkyscraper #MainContent").
       css("right", "1px");
   }
+  if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href)) {
+    //issue 3971: due to 'display:none' the page isn't displayed correctly
+    $("#AutoNumber1").
+      css("width", "100%").
+      css("margin", "0px");
+  }
 
   if (/youtube/.test(document.domain) && features.block_youtube.is_enabled) {
     // Based heavily off of AdThwart's YouTube in-video ad blocking.
