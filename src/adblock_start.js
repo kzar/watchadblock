@@ -41,11 +41,11 @@ function browser_canLoad(event, data) {
   } else {
     // If we haven't yet asynchronously loaded our filters, store for later.
     if (typeof _limited_to_domain == "undefined") {
-      event.mustBePurged = true;
-      LOADED_TOO_FAST.push({data:event});
+      if (!(data.elType & ElementTypes.script)) {
+        event.mustBePurged = true;
+        LOADED_TOO_FAST.push({data:event});
+      }
       return true;
-      // We don't need these locally, so delete them to save memory.
-      delete _limited_to_domain._selectorFilters;
     }
 
     // every time browser_canLoad is called on this page, the pageDomain will
@@ -130,6 +130,10 @@ function adblock_begin() {
     if (!SAFARI) {
       var local_filterset = FilterSet.fromText(data.filtertext);
       _limited_to_domain = local_filterset.limitedToDomain(document.domain);
+
+      // We don't need these locally, so delete them to save memory.
+      delete _limited_to_domain._selectorFilters;
+      delete _limited_to_domain._domainLimitedCache;
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
