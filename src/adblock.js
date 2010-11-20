@@ -23,6 +23,8 @@ function run_specials(features) {
     //removing the space remaining in Hotmail/WLMail
     $(".Unmanaged .WithSkyscraper #MainContent").
       css("margin-right", "1px");
+    $(".Managed .WithSkyscraper #MainContent").
+      css("right", "1px");
   }
 
   if (/youtube/.test(document.domain) && features.block_youtube.is_enabled) {
