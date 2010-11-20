@@ -165,7 +165,8 @@ function adblock_begin_part_2() {
   });
 }
 
-if (window.location != 'about:blank') {
+// until crbug.com/63397 is fixed, ignore SVG images
+if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) {
   adblock_begin_part_2();
 
   //subscribe to the list when you click an abp: link
