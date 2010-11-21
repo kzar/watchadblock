@@ -112,3 +112,15 @@ function getCurrentTabInfo(callback) {
 }
 
 
+// Return the CSS text that will hide elements matching the given 
+// array of selectors.
+function css_hide_for_selectors(selectors) {
+  var result = [];
+  var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
+  for (var i = 0; i < selectors.length; i += GROUPSIZE) {
+    var line = selectors.slice(i, i + GROUPSIZE);
+    var rule = " { visibility:hidden !important; display:none !important; }";
+    result.push(line.join(',') + rule);
+  }
+  return result.join(' ');
+}

@@ -83,18 +83,10 @@ beforeLoadHandler = function(event) {
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {
   var d = document.documentElement;
-  // Setting this small chokes Chrome -- don't do it!  I set it back to
-  // 10000 from 100 on 1/10/2010 -- at some point you should just get rid
-  // of the while loop if you never use chunking again.
-  var chunksize = 10000;
-  while (selectors.length > 0) {
-    var css_chunk = document.createElement("style");
-    css_chunk.type = "text/css";
-    css_chunk.innerText += selectors.splice(0, chunksize).join(',') +
-                               " { visibility:hidden !important; " +
-                               "   display:none !important; }";
-    d.insertBefore(css_chunk, null);
-  }
+  var css_chunk = document.createElement("style");
+  css_chunk.type = "text/css";
+  css_chunk.innerText = css_hide_for_selectors(selectors);
+  d.insertBefore(css_chunk, null);
 }
 
 function adblock_begin() {
@@ -103,12 +95,11 @@ function adblock_begin() {
 
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
-  var opts = { domain: document.domain, include_filters: !SAFARI };
-  // The top frame should tell the background what domain it's on.  The
-  // subframes will be told what domain the top is on.
-  if (window == window.top)
-    opts.is_top_frame = true;
-
+  var opts = { 
+    domain: document.domain, 
+    from_adblock_start: true,
+    is_top_frame: (window == window.top)
+  };
   extension_call('get_content_script_data', opts, function(data) {
     if (data.features.debug_logging.is_enabled) {
       DEBUG = true;
@@ -120,6 +111,9 @@ function adblock_begin() {
       delete LOADED_TOO_FAST;
       return;
     }
+
+    if (SAFARI) // Chrome does this in background.html
+      block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them
@@ -136,7 +130,6 @@ function adblock_begin() {
       delete LOADED_TOO_FAST;
     }
 
-    block_list_via_css(data.selectors);
   });
 
 }

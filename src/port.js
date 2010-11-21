@@ -14,13 +14,10 @@
 // still be available in Safari, and the chrome.* APIs will be
 // unchanged in Chrome.
 
-try {
-  chrome.extension.getURL; // verify 'extension' property exists
-  SAFARI = false;
-}
-catch (e) {
-  SAFARI = true;
-}
+if (typeof SAFARI == "undefined") {
+
+// True in Safari, false in Chrome.
+SAFARI = (typeof safari !== "undefined");
 
 if (SAFARI) {
   // Replace the 'chrome' object with a Safari adapter.
@@ -327,3 +324,5 @@ if (SAFARI) {
     })()
   };
 }
+
+} // end if (typeof SAFARI == "undefined")
