@@ -1,0 +1,108 @@
+<html>
+  <head>
+    <title>AdBlock</title>
+    <script src="../jquery/jquery-1.4.2.min.js"></script>
+    <script src="../functions.js"></script>
+    <style type="text/css">
+      body {
+        font: 14px arial;
+      }
+      div { 
+        border: 1px solid #666666;
+        -webkit-border-radius: 10px;
+        padding: 10px;
+        background-color: #f8faff;
+      }
+      a {
+        font-size: small;
+        font-style: italic;
+        margin-left: 10px;
+        color:#222
+      }
+      h2 {
+        margin: 0px;
+        background: url(../img/icon24.png);
+        background-repeat: no-repeat;
+        padding-left:33px;
+      }
+      h3 {
+        margin-bottom:5px;
+      }
+      span#result {
+        color:red;
+        margin-left:5px;
+      }
+    </style>
+    <script type="text/javascript">
+      $(function() {
+        //translation
+        localizePage();
+
+        //shorten long URLs
+        function shorten_url(value) {
+          if (value.indexOf('://') == -1 ||
+              value.indexOf('/') == -1) return value;
+
+          var size = 64;
+          if (value.length <= size) return value;
+
+          if (value.length > size)
+            value = value.substring(value.indexOf("://") + 3);
+
+          if (value.length <= size) return value;
+
+          var domain = value.substring(0, value.indexOf('/'));
+          var file = value.substring(value.lastIndexOf('/'));
+          if (domain.length + 4 + file.length <= size)
+            return (domain + '/...' + file);
+
+          return (value.substring(0, size / 2 - 2) + "..." + 
+                   value.substring(value.length - size / 2 - 2));
+        }
+
+        //Get the URL
+        var list_url = unescape(document.location.search).substring(1);
+
+        //Set the link to the list
+        $('a').
+          attr('href', list_url).
+          text(shorten_url(list_url));
+
+        //after the subscribing is finished...
+        function finished(success) {
+          $('span#result').text(success ?
+            translate("subscribingfinished") :
+            translate("subscribingfailed"));
+          window.setTimeout(function() {
+            window.close();
+          }, success ? 2000 : 3500);
+        }
+
+        //subscribe to a list
+        $.ajax({
+          url: list_url,
+          cache: false,
+          success: function(text) {
+            if (text && 
+                 (text[0] == '!' || text[0] == '[' || text[0] == '(Adblock')
+               ) {
+            $.get("http://chromeadblock.com/api/url_subscribe.php", 
+                                                               {url:list_url});
+
+            extension_call("subscribe", {id: 'url:' + list_url, text:text},
+                                                  function() {finished(true);});
+            } else finished(false);
+          },
+          error: function() {finished(false);}
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <h2>AdBlock</h2>
+      <h3><span i18n="subscribingtitle"></span><span id="result"></span></h3>
+      <a target="_new"></a>
+    </div>
+  </body>
+</html>
