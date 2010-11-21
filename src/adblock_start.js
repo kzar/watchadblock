@@ -112,8 +112,10 @@ function adblock_begin() {
       return;
     }
 
-    if (SAFARI) // Chrome does this in background.html
-      block_list_via_css(data.selectors);
+    // TEMP: until we know how to use insertCSS properly in Chrome,
+    // Chrome needs to manually block CSS just like Safari.
+    // if (SAFARI) // Chrome does this in background.html
+    block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them

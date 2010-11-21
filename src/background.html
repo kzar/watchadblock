@@ -175,11 +175,20 @@
           // than using their wacked-out addContentStyleSheet.
           result.selectors = selectors;
         } else {
-          // Chrome inserts CSS using an extension API.
-          chrome.tabs.insertCSS(
+          /* temp commenting out until I am sure how to use this.
+             how do i handle a.com loading iframes from b.com?
+             they need to run different CSS, but the only way to
+             inject CSS onto the b.com subframe using insertCSS() 
+             is to use the allFrames:true option -- which would put
+             a.com's, not b.com's, CSS onto the frame.
+            // Chrome inserts CSS using an extension API.
+            chrome.tabs.insertCSS(
             sender.tab.id,
             { code: css_hide_for_selectors(selectors) }
-          );
+          );*/
+          // Until we know how to use insertCSS, we've got to
+          // do manual CSS injection instead, just like Safari.
+          result.selectors = selectors;
         }
         // Chrome needs filtertext to hack true blocking until a real
         // blocking API comes along.
