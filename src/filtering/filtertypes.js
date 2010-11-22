@@ -294,7 +294,6 @@ PatternFilter._parseRule = function(text) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
       result.rule = new RegExp(result.rule); // Make sure it parses correctly
-      log("Found a true regex rule - " + rule);
     } catch(e) {
       log("Found an unparseable regex rule - " + text);
       // OK, we thought it was a regex but it's not.  Just discard it.
