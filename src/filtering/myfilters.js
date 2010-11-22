@@ -130,25 +130,17 @@ MyFilters.prototype.freshen_async = function(force) {
   }
 }
 
-//Fetch a locally stored subscription!
-function localfetch(real_url, local_url, name) {
-  // jQuery has a bug that keeps $.ajax() from loading local files.
-  // Use plain old XHR.
-  try {
-    var ajax = new XMLHttpRequest();
-    ajax.open("GET", local_url, false);
-    ajax.send();
-    var text = ajax.responseText;
-    return {
-      url: real_url,
-      name: name, 
-      user_submitted: false,
-      subscribed: true,
-      text: text,
-      last_update: 0, // update ASAP
-      expiresAfterHours: 120
-    };
-  } catch(ex) {}
+//Get a default subscription that has to be updated ASAP
+function getDefaultSubscription(id) {
+  return {
+    url: MyFilters.__subscription_options[id].url,
+    name: MyFilters.__subscription_options[id].name,
+    user_submitted: false,
+    subscribed: true,
+    text: '',
+    last_update: 0, //update ASAP
+    expiresAfterHours: 120
+  }
 }
 
 // Subscribe to a filter list.
@@ -186,12 +178,9 @@ MyFilters.prototype.subscribe = function(id, text) {
   if (wellKnownId &&
       this._subscriptions[id].name.indexOf(' - additional') == 0 &&
       this._subscriptions['easylist'].subscribed == false) {
-    var easylist_local = localfetch(
-        MyFilters.__subscription_options['easylist'].url,
-        chrome.extension.getURL("filters/easylist.txt"),
-        MyFilters.__subscription_options['easylist'].name);
-    if (easylist_local)
-      this.subscribe('easylist', easylist_local.text);
+    this._subscriptions['easylist'] = getDefaultSubscription('easylist');
+    this.update();
+    this.freshen_async();
   }
 
   this._updateSubscriptionText(id, text);
@@ -314,18 +303,7 @@ MyFilters._load_default_subscriptions = function() {
       default: return '';
     }
   }
-  function getDefaultSubscription(id) {
-    return {
-      url: MyFilters.__subscription_options[id].url,
-      name: MyFilters.__subscription_options[id].name,
-      user_submitted: false,
-      subscribed: true,
-      text: '',
-      last_update: 0, //update ASAP
-      expiresAfterHours: 120
-    }
-  }
-  
+
   //Update will be done immediately after this function returns
   result["adblock_custom"] = getDefaultSubscription('adblock_custom');
   result["easylist"] = getDefaultSubscription('easylist');
