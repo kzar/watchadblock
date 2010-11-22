@@ -82,7 +82,7 @@
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
-    "message": "Filtr, který lze později změnit na stránce Nastavení:",
+    "message": "Filtr, který lze později změnit v Nastavení na záložce Vlastní filtr:",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
@@ -174,7 +174,7 @@
   },
 
   "whitelistertext": {
-    "message": "AdBlock se nebude spouštět na doménách končících<br/>$domain$.",
+    "message": "Nepoužívat AdBlock na doménách končících:<br/>$domain$",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
@@ -184,11 +184,11 @@
     }
   },
   "whitelistertitle": {
-    "message": "Vyřadit tuto doménu?",
+    "message": "Nepoužívat na této doméně?",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
-    "message": "Vyřadit",
+    "message": "Uložit",
     "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
 
@@ -228,11 +228,11 @@
     "description": "A tab on the options page"
   },
   "tabblacklist": {
-    "message": "Blacklist",
+    "message": "Vlastní filtr",
     "description": "A tab on the options page"
   },
   "tabexcluded": {
-    "message": "Vyřazené stránky",
+    "message": "Vlastní výjimky",
     "description": "A tab on the options page"
   },
 
@@ -262,7 +262,7 @@
   },
 
   "updatedrightnow": {
-    "message": "aktualizováno nyní",
+    "message": "aktualizováno právě teď",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
@@ -390,7 +390,7 @@
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "AdBlock vlastní filtry (doporučeno)",
+    "message": "AdBlock filtry (doporučeno)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
@@ -519,7 +519,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "Buďte opatrní: Pokud zde uděláte chybu, spousta jiných filtrů, včetně těch oficiálních, může být také poškozena!<br/>Přečtěte si <a>filter syntax tutorial</a>, kde se dozvíte, jak přidávat pokročilé blacklisty a seznamy vyřazených stránek.",
+    "message": "Buďte opatrní: Pokud zde uděláte chybu, spousta jiných filtrů, včetně těch oficiálních, může být také poškozena!<br/>Přečtěte si <a>filter syntax tutorial (anglicky)</a>, kde se dozvíte, jak přidávat pokročilé vlastní filtry a výjimky.",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -564,7 +564,7 @@
     "description": "title of ad report page"
   },
   "adreport1": {
-    "message": "Našli jste reklamu na webové stránce? Dobrá, pomohu vám najít správné místo kde ji nahlásit!<br/> Pamatujte: Nahlášení reklamy je dobrovolné. Pokud si ji nepřejete nahlásit, můžete zavřít toto okno a zablokovat ji jen pro sebe tím, že přidáte její filtr v nastavení na záložce Blacklist!",
+    "message": "Našli jste reklamu na webové stránce? Dobrá, pomohu vám najít správné místo kde ji nahlásit!<br/> Pamatujte: Nahlášení reklamy je dobrovolné. Pokud si ji nepřejete nahlásit, můžete zavřít toto okno a zablokovat ji jen pro sebe tím, že přidáte její filtr v Nastavení na záložce Vlastní filtr!",
     "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
@@ -696,7 +696,7 @@
     "description": "multiple choice option"
   },
   "nodefaultfilter": {
-    "message": "Nemáme výchozí seznam filtrů pro daný jazyk.<br/>Prosím, zkuste najít vhodný seznam pro tento jazyk $link$ nebo si tuto reklamu zablokujte jen pro sebe na stránce Blacklist.",
+    "message": "Nemáme výchozí seznam filtrů pro daný jazyk.<br/>Prosím, zkuste najít vhodný seznam pro tento jazyk $link$ nebo si tuto reklamu zablokujte jen pro sebe v Nastavení na záložce Vlastní filtr.",
     "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
     "placeholders": {
       "link": {
@@ -764,7 +764,7 @@
     }
   },
   "fixityourself": {
-    "message": "OK, můžete si zablokovat tuto reklamu jen pro sebe na stránce Nastavení. Díky!",
+    "message": "OK, můžete si zablokovat tuto reklamu jen pro sebe v Nastavení na záložce Vlastní filtr. Díky!",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {
@@ -790,11 +790,27 @@
     "description": "Context menu entry"
   },
   "contextmenuexcludedomain": {
-    "message": "Nespouštět na této doméně...",
+    "message": "Nepoužívat na této doméně...",
     "description": "Context menu entry"
+   },
+  "filecleanerwarning": {
+    "message": "Pokud vidíte tuto zprávu při každém spuštění AdBlock, ujistěte se, že nepoužíváte souborový čistič, který také čistí 'localStorage' soubory.",
+    "description": "Help for users who use hyperactive file cleaners"
   },
   "somequicksetup": {
     "message": "Rychlé nastavení",
     "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "Videa a Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "Objevuje se reklama ve filmu nebo před ním nebo v jakémkoli jiném doplňku, např. ve Flashové hře?",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "Nemůžeme zatím blokovat reklamy uvnitř objektů Flash nebo v jiných doplňcích. Čekáme na podporu od prohlížeče a WebKitu.",
+    "description": "Result of the final ad report question"
   }
 }

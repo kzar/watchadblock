@@ -14,8 +14,8 @@ function MyFilters() {
   var stored_subscriptions = JSON.parse(subscriptions_json);
 
   if (stored_subscriptions == null) {
-    // Brand new user.  Install some filters for them.
-    stored_subscriptions = MyFilters._load_hardcoded_subscriptions();
+    // Brand new user. Install some filters for them.
+    stored_subscriptions = MyFilters._load_default_subscriptions();
   }
 
   // In case a new version of AdBlock has removed or added some
@@ -279,21 +279,60 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
   return result;
 }
 
-// Return a new subscriptions object containing all available subscriptions,
-// with EasyList and AdBlock custom filters subscribed from disk.
+// If the user wasn't subscribed to any lists, subscribe to
+// EasyList, AdBlock custom and (if any) a localized subscription
 // Inputs: none.
-MyFilters._load_hardcoded_subscriptions = function() {
+MyFilters._load_default_subscriptions = function() {
   var result = {};
 
-  result["adblock_custom"] = localfetch(
-          MyFilters.__subscription_options['adblock_custom'].url,
-          chrome.extension.getURL("filters/adblock_custom.txt"),
-          MyFilters.__subscription_options['adblock_custom'].name);
-
-  result["easylist"] = localfetch(
-          MyFilters.__subscription_options['easylist'].url,
-          chrome.extension.getURL("filters/easylist.txt"),
-          MyFilters.__subscription_options['easylist'].name);
+  //returns the ID of a list for a given language code
+  function langToList(lang) {
+    switch(lang) {
+      case 'bg': return 'easylist_plus_bulgarian';
+      case 'cs': return 'czech';
+      case 'cu': return 'easylist_plus_bulgarian';
+      case 'da': return 'danish';
+      case 'de': return 'easylist_plus_german';
+      case 'es': return 'easylist_plus_spanish';
+      case 'fi': return 'easylist_plus_finnish';
+      case 'fr': return 'easylist_plus_french';
+      case 'he': return 'israeli';
+      case 'hu': return 'hungarian';
+      case 'it': return 'italian';
+      case 'ja': return 'japanese';
+      case 'ko': return 'easylist_plun_korean';
+      case 'nb': return 'easylist_plus_norwegian';
+      case 'nl': return 'dutch';
+      case 'nn': return 'easylist_plus_norwegian';
+      case 'no': return 'easylist_plus_norwegian';
+      case 'pl': return 'easylist_plus_polish';//sorry for the other polish list
+      case 'ro': return 'easylist_plus_romanian';
+      case 'ru': return 'russian';
+      case 'uk': return 'ukranian';
+      case 'vi': return 'easylist_plus_vietnamese';
+      case 'zh': return 'chinese';
+      default: return '';
+    }
+  }
+  function getDefaultSubscription(id) {
+    return {
+      url: MyFilters.__subscription_options[id].url,
+      name: MyFilters.__subscription_options[id].name,
+      user_submitted: false,
+      subscribed: true,
+      text: '',
+      last_update: 0, //update ASAP
+      expiresAfterHours: 120
+    }
+  }
+  
+  //Update will be done immediately after this function returns
+  result["adblock_custom"] = getDefaultSubscription('adblock_custom');
+  result["easylist"] = getDefaultSubscription('easylist');
+  var language = navigator.language.match(/^([a-z]+).*/i)[1];
+  var list_for_lang = langToList(language);
+  if (list_for_lang)
+    result[list_for_lang] = getDefaultSubscription(list_for_lang);
 
   return result;
 }

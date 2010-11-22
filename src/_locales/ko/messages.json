@@ -26,7 +26,7 @@
    },
 
   "installedtitle": {
-    "message": "AdBlock(애드블록)이 설치되었습니다!",
+    "message": "애드블록 설치 완료!",
     "description": "Title for the installation success page"
   },
   "installisdone": {
@@ -34,11 +34,11 @@
     "description": "Message on the installation success page"
   },
   "donaterequest": {
-    "message": "AdBlock<b>을 즐겨 사용하신다면 <a>기부</a>를 부탁드립니다.<br/>그러면 저는 가족들을 부양할 수 있습니다! 고맙습니다 *^^* -- 마이클</b>",
+    "message": "AdBlock<b>을 즐겨 사용하신다면 저의 가족들을 부양할 수 있도록<br/><a>기부</a>를 부탁드립니다. 애드블록을 사용해주셔서 고맙습니다 *^^* -- 마이클</b>",
     "description": "Donation request on installation success page"
   },
   "setotheroptions": {
-    "message": "옵션 설정과 구독 필터의 구독은 렌치 > 도구 > 확장 프로그램 > 애드블록 옵션에서 가능함",
+    "message": "옵션과 구독 필터 설정 : 렌치 아이콘 > 도구 > 확장 프로그램 > 애드블록 옵션",
     "description": "Message on installation success page"
   },
   "chromebutton_how_to_disable": {
@@ -245,7 +245,7 @@
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "구글 검색 결과에서 텍스트 광고 보이기",
+    "message": "구글 검색 결과에 텍스트 광고 보이기",
     "description": "Option on first tab page"
   },
   "youtubeads": {
@@ -257,7 +257,7 @@
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "콘솔 로그에서 차단/숨김 상태 기록 (AdBlock의 처리 속도가 느려짐)",
+    "message": "콘솔 로그에 차단/숨김 상태 기록 (AdBlock의 처리 속도가 느려짐)",
     "description": "Option on first tab page"
   },
   "updatedrightnow": {
@@ -389,7 +389,7 @@
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "AdBlock custom filters (AdBlock 구독 필터)",
+    "message": "AdBlock custom filters (애드블록 구독 필터)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
@@ -518,7 +518,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "주의 : 필터를 잘못 작성하면 웹 페이지에 오작동이 발생하거나 페이지를 불러오는 속도가 저하될 수 있습니다!<br/>필터 작성 방법은 필터 표준화 정보를 제공하는 Adblock Plus 홈페이지를 참고하십시오 : <a>바로가기</a>",
+    "message": "주의 : 필터를 잘못 작성하면 웹 페이지에 오작동이 발생하거나 페이지를 불러오는 속도가 저하될 수 있습니다!<br/>필터 작성 방법은 표준화된 필터 정보를 제공하는 Adblock Plus 홈페이지를 참고하십시오 : <a>바로가기</a>",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -792,8 +792,24 @@
     "message": "이 도메인의 광고 허용",
     "description": "Context menu entry"
   },
+  "filecleanerwarning": {
+    "message": "애드블록을 시작할 때마다 이 페이지가 나타나면 'localStorage' 파일을 삭제하는 파일 클리너를 사용하지 마십시오.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
   "somequicksetup": {
     "message": "빠른 설정",
     "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "비디오와 플래시",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "영화에서 내부와 시작하기 전의 광고 또는 플래시 게임과 같이 다른 플러그인에 광고가 존재합니까?",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "플래시나 다른 플러그인의 내부 광고 차단 기능은 아직 지원하지 않습니다. 브라우저와 웹키트에서 그 기능을 지원하기를 기다리고 있습니다.",
+    "description": "Result of the final ad report question"
   }
 }
