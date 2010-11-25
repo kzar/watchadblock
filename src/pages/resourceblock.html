@@ -371,7 +371,7 @@
           if (temp_resource) {
             var temp_url = unescape(temp_resource[2]);
             var temp_type = temp_resource[1];
-            resources[temp_url] = {type:temp_type};
+            resources[temp_url] = {type:ElementTypes[temp_type]};
           }
         }
 
