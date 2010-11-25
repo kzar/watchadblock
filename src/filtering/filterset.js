@@ -24,7 +24,7 @@ function FilterSet() {
 // Builds Filter objects from text.
 // ignoredAdTypes is a bitset of ad types whose filters should not be
 // included in this FilterSet (e.g. because the user likes that type of ads.)
-FilterSet.fromText = function(text, ignoredAdTypes, includeRealRule) {
+FilterSet.fromText = function(text, ignoredAdTypes) {
   var result = new FilterSet();
   result._sourceText = text;
 
@@ -38,7 +38,7 @@ FilterSet.fromText = function(text, ignoredAdTypes, includeRealRule) {
       replace(/^ */, '').
       replace(/ *$/, '');
 
-    var filter = Filter.fromText(line, includeRealRule);
+    var filter = Filter.fromText(line);
     if (filter._adType & ignoredAdTypes) {
       ignoredCounter += 1;
       continue;
@@ -95,7 +95,7 @@ FilterSet.prototype = {
   // True if the given url requested by the given type of element is matched 
   // by this filterset, taking whitelist and pattern rules into account.  
   // Does not test selector filters.
-  matches: function(url, elementType, returnTheFilter) {
+  matches: function(url, elementType) {
     // TODO: This is probably imperfect third-party testing, but it works
     // better than nothing, and I haven't gotten to looking into ABP's
     // internals for the exact specification.
@@ -107,7 +107,7 @@ FilterSet.prototype = {
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;
-    if (key in this._matchCache && !returnTheFilter)
+    if (key in this._matchCache && typeof includeRealRule == "undefined")
       return this._matchCache[key];
 
     // TODO: is there a better place to do this?
@@ -119,14 +119,14 @@ FilterSet.prototype = {
       if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
         this._matchCache[key] = false;
-        return (returnTheFilter ? this._whitelistFilters[i]._realRule : false);
+        return (this._whitelistFilters[i]._realRule || false);
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
       if (this._patternFilters[i].matches(url, elementType, isThirdParty)) {
         log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
         this._matchCache[key] = true;
-        return (returnTheFilter ? this._patternFilters[i]._realRule : true);
+        return (this._patternFilters[i]._realRule || true);
       }
     }
     this._matchCache[key] = false;

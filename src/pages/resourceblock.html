@@ -89,11 +89,11 @@
       var domain = '';
       var resources = [];
       var domaindata;
+      var includeRealRule = true;
 
       function generateTable() {
         //find matching filters
-        var local_filterset = FilterSet.fromText(domaindata.filtertext, 
-                              undefined, true);
+        var local_filterset = FilterSet.fromText(domaindata.filtertext);
         var _limited_to_domain = local_filterset.limitedToDomain(domain);
         delete domaindata;
 
@@ -123,7 +123,7 @@
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
           if (!matchingfilter)
-            matchingfilter = _limited_to_domain.matches(i, resources[i].type, true);
+            matchingfilter = _limited_to_domain.matches(i, resources[i].type);
 
           var type = {sort:3, name:undefined};
           if (matchingfilter)
@@ -375,9 +375,11 @@
           }
         }
 
-        $(window).unload(function() {
-          localStorage.setItem('last_resources', JSON.stringify(loaded_resources));
-        });
+        if (!temp_url) {
+          $(window).unload(function() {
+            localStorage.setItem('last_resources', JSON.stringify(loaded_resources));
+          });
+        }
 
         var opts = { domain: domain, include_filters: true, is_top_frame: true };
         if (!domain) {
@@ -393,26 +395,28 @@
             window.close();
             return;
           }
-          var localstoragekey = "resources" + domain.replace(/(\.|\-)/g, '_');
-          loaded_resources = JSON.parse(localStorage.getItem(localstoragekey));
-          if (!loaded_resources || loaded_resources.length == 0) {
-            loaded_resources = JSON.parse(localStorage.getItem('last_resources'));
+          if (!temp_url) {
+            var localstoragekey = "resources" + domain.replace(/(\.|\-)/g, '_');
+            loaded_resources = JSON.parse(localStorage.getItem(localstoragekey));
             if (!loaded_resources || loaded_resources.length == 0) {
-              alert(translate('noresourcessend'));
-              window.close();
-              return;
+              loaded_resources = JSON.parse(localStorage.getItem('last_resources'));
+              if (!loaded_resources || loaded_resources.length == 0) {
+                alert(translate('noresourcessend'));
+                window.close();
+                return;
+              }
             }
-          }
-          for (var i=0; i<loaded_resources.length; i++) {
-            if (/^HIDE\:.+/.test(loaded_resources[i])) {
-              var filter = "##" + loaded_resources[i].substring(5);
-              resources[filter] = {filter: filter};
-            } else {
-              var blockmatches = loaded_resources[i].split(':|:', 2);
-              resources[blockmatches[1]] = {type:Number(blockmatches[0])};
+            for (var i=0; i<loaded_resources.length; i++) {
+              if (/^HIDE\:.+/.test(loaded_resources[i])) {
+                var filter = "##" + loaded_resources[i].substring(5);
+                resources[filter] = {filter: filter};
+              } else {
+                var blockmatches = loaded_resources[i].split(':|:', 2);
+                resources[blockmatches[1]] = {type:Number(blockmatches[0])};
+              }
             }
+            localStorage.removeItem(localstoragekey);
           }
-          localStorage.removeItem(localstoragekey);
           finally_it_has_loaded_its_stuff();
           //if opened by the context menu, this variable exists
           if (temp_url)
