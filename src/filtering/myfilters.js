@@ -64,7 +64,8 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  texts.push( utils.storage_get({key: 'custom_filters', default_value: ''}) );
+  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''})
+  texts.push(cleanThisList(customfilters));
 
   texts = texts.join('\n').split('\n');
 
@@ -205,7 +206,6 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
   var sub_data = this._subscriptions[subscription_id];
 
   sub_data.subscribed = true;
-  sub_data.text = text;
   sub_data.last_update = new Date().getTime();
 
   // Record how many days until we need to update the subscription text
@@ -227,6 +227,8 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
       sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
     }
   }
+
+  sub_data.text = cleanThisList(text);
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove

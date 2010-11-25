@@ -281,7 +281,6 @@ PatternFilter._parseRule = function(text) {
   if (invertedElementTypes)
     result.allowedElementTypes = ~result.allowedElementTypes;
 
-
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
   if (/^@@/.test(rule))
@@ -294,9 +293,7 @@ PatternFilter._parseRule = function(text) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
     try {
       result.rule = new RegExp(result.rule); // Make sure it parses correctly
-      log("Found a true regex rule - " + rule);
     } catch(e) {
-      log("Found an unparseable regex rule - " + text);
       // OK, we thought it was a regex but it's not.  Just discard it.
       // TODO: let parser throw exceptions which are caught, rather than having
       // to keep dummy rules.
@@ -342,7 +339,6 @@ PatternFilter._parseRule = function(text) {
   try {
     result.rule = new RegExp(rule);
   } catch(e) {
-    log("Found an unparseable rule - " + text);
     // OK, something went wrong.  Just discard it.
     result.rule = new RegExp('$dummy_rule_matching_nothing');
   }
