@@ -78,7 +78,7 @@ function cleanThisList(text) {
       if (parts[0]) {
         var domains = parts[0].split(',');
         for (var i=0; i<domains.length; i++)
-          if (/^\~?([a-z0-9\-_]+\.)*[a-z0-9]+$/i.test(domains[i]) == false)
+          if (/^\~?([a-z0-9\-_à-ÿ]+\.)*[a-z0-9]+$/i.test(domains[i]) == false)
             return false;
       }
       //...check if the filter is correct...
@@ -102,11 +102,7 @@ function cleanThisList(text) {
       //...check if it wasn't a broken rule...
       if (parsedFilter._rule.source == '$dummy_rule_matching_nothing')
         return false;
-      var rule = String(parsedFilter._rule);
-      var lastDollar = text.lastIndexOf('$');
-      var options = '';
-      if (lastDollar != -1) {
-        options = text.substr(lastDollar).toLowerCase();
+      if (text.lastIndexOf('$') != -1) {
         //...also check if we do support it...
         //Too bad it would be to slow to rebuild the options
         //without the unsupported types
@@ -120,11 +116,12 @@ function cleanThisList(text) {
         }
       }
       //...and then allow it
-      return rule + options;
+      return filter;
     }
   }
 
   var lines = text.split('\n');
+  delete text;
   var result = '';
   for (var i=0; i<lines.length; i++) {
     var newfilter = optimizeFilter(lines[i]);
