@@ -202,12 +202,8 @@
     "message": "Officiële filters",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
+  "tabpersonal": {
     "message": "Eigen filters",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "Uitgesloten sites",
     "description": "A tab on the options page"
   },
 
@@ -469,6 +465,10 @@
     "message": "Verberg een deel van een pagina",
     "description": "Link on the third tab"
   },
+  "linkexcludesection": {
+    "message": "Sluit een webpagina of domein uit",
+    "description": "Link on the third tab"
+  },
   "blockurlwithtext": {
     "message": "Blokkeer URLs die deze tekst bevatten",
     "description": "Message of the url-blocking area"
@@ -477,8 +477,12 @@
     "message": "CSS regels om te vergelijken",
     "description": "Message of the css-hiding area"
   },
+  "excludedomainorurl": {
+    "message": "Het domein of de url waar AdBlock niets zou moeten blokkeren",
+    "description": "Message of the exclude area"
+  },
   "blockdomain": {
-    "message": "Domein om het filter op toe te passen",
+    "message": "Domein om dit op toe te passen",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
@@ -498,33 +502,17 @@
     "description": "Reminder to press save"
   },
 
-  "removelabel": {
-    "message": "Verwijderen",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Blokkeer geen advertenties op domeinen die eindigen op...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "Bijvoorbeeld, 'google.com' sluit google.com, mail.google.com en www.google.com uit.",
-    "description": "text on the 4th tab page"
-  },
   "addbutton": {
     "message": "Voeg toe",
     "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "Verwijder alle items uit deze lijst:",
-    "description": "option on 4th tab page"
   },
   "adblockreportinganad": {
     "message": "AdBlock - Advertentie rapporteren",
     "description": "title of ad report page"
   },
-  "adreport1": {
+  "adreport2": {
     "message": "Dus je hebt een website met een advertentie gevonden? Ik zal je helpen om de juiste plaats te vinden om dit te rapporteren!<br/>Vergeet niet dat dit vrijwillig is. Als je dit niet wilt doen dan kun je het filter gewoon toevoegen in de optiespagina!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
+    "description": "Instructions on ad reporting page. 'Personal filters' should be the same text as the 'tabpersonal' message."
   },
   "updateyourlists": {
     "message": "Zorg ervoor dat je filters bijgewerkt zijn",
@@ -557,10 +545,6 @@
   "correctfilters": {
     "message": "Juiste filters",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Weet je zeker dat je deze lijst wilt wissen?",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "In welke taal is de pagina geschreven?",
@@ -654,9 +638,9 @@
     "message": "Anders",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
+  "nodefaultfilter1": {
     "message": "We hebben geen standaardlijst voor deze taal.<br/>Probeer aub $link$ een goede lijst te vinden of blokkeer de advertentie alleen voor jezelf via de optiespagina.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Personal filters' should be the same message as 'tabpersonal'.",
     "placeholders": {
       "link": {
         "content": "$1hier$2",
@@ -735,10 +719,6 @@
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
-  },
-  "cantundo": {
-    "message": "Dit kan niet ongedaan gemaakt worden!",
-    "description": "Warning a user before confirming an action"
   },
   "advanced": {
     "message": "Extra",

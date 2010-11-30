@@ -51,6 +51,15 @@
         $(this).attr("disabled", "disabled");
       });
 
+      $("#btnAddExcludeFilter").click(function() {
+        var excludeUrl = $("#txtExcludeUrlorDomain").val().trim();
+
+        appendCustomFilter('@@' + excludeUrl + '$document');
+
+        $(this).closest(".entryTable").find("input:text").val("");
+        $(this).attr("disabled", "disabled");
+      });
+
       $("#btnAddUrlBlock").click(function() {
         var blockUrl = $("#txtBlockUrl").val().trim();
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
@@ -106,6 +115,12 @@
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#divCssBlock input:text").keyup(validateCssFilter);
+      
+      var validateExcludeFilter = function() {
+        var excludeUrl = $("#txtExcludeUrlorDomain").val().trim();
+        $("#btnAddExcludeFilter").attr("disabled", excludeUrl ? null : "disabled");
+      }
+      $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
@@ -169,9 +184,8 @@
           <div id="divUrlBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
-                <td i18n="blockurlwithtext"></td>
-                <td></td>
-                <td i18n="blockdomain"></td>
+                <td i18n="blockurlwithtext" colspan="2"></td>
+                <td i18n="blockdomain" colspan="2"></td>
               </tr>
               <tr>
               </tr>
@@ -190,9 +204,8 @@
           <div id="divCssBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
-                <td i18n="blockdomain"></td>
-                <td></td>
-                <td i18n="csstomatch"></td>
+                <td i18n="blockdomain" colspan="2"></td>
+                <td i18n="csstomatch" colspan="2"></td>
               </tr>
               <tr>
               </tr>
@@ -201,6 +214,26 @@
                 <td class="guide">##</td>
                 <td><input id="txtUserFilterCss" style="width:300px"/></td>
                 <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit"/></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <a class="controlsLink" id="aExcludeBlock" href="#" i18n="linkexcludesection"></a>
+          <div id="divExcludeBlock" class="addControls" style="display:none">
+            <table class="entryTable">
+              <tr>
+                <td></td>
+                <td colspan="3" i18n="excludedomainorurl"></td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td class="guide">@@</td>
+                <td><input id="txtExcludeUrlorDomain" style="width:400px"/></td>
+                <td class="guide">$document</td>
+                <td><input id="btnAddExcludeFilter" type="button" i18n_value="addbutton" disabled="disabled"/></td>
               </tr>
             </table>
           </div>

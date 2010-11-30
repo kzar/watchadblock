@@ -227,14 +227,6 @@
     "message": "過濾清單",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
-    "message": "黑名單",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "已排除網站",
-    "description": "A tab on the options page"
-  },
 
   "generaloptions": {
     "message": "一般選項",
@@ -539,33 +531,13 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  "removelabel": {
-    "message": "移除",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "不要在以下字串結尾的網域上阻擋廣告...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "舉例來說，「google.com」將會在「google.com」、「mail.google.com」，和 「www.google.com」上停用AdBlock。",
-    "description": "text on the 4th tab page"
-  },
   "addbutton": {
     "message": "新增",
     "description": "add button"
   },
-  "removeallfromlist": {
-    "message": "移除清單中所有項目：",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
     "message": "AdBlock ─ 廣告回報",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "看來您剛剛發現了一隻漏網之魚？嗯，我將幫您找到正確的回報管道！<br/>請記得：回報廣告純屬自願。如果您並不想這麼做，您可以逕行關閉這個視窗，並回到「黑名單」分頁添加過濾條件，讓結果僅套用到您的電腦上。",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "請確認您的過濾清單都已處在最新狀態",
@@ -598,10 +570,6 @@
   "correctfilters": {
     "message": "選擇正確的過濾清單",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "您確定要清空這個列表嗎？",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "將要回報的頁面使用什麼語言？",
@@ -695,16 +663,6 @@
     "message": "其他",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "我們沒有預設該語言的過濾清單。<br/>請試著找到一個支援此語言的合適清單 $link$ 或自行到「黑名單」頁面加以阻擋。",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1here$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "請先訂閱這個過濾清單，然後重試一次：$list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -776,10 +734,6 @@
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
-  },
-  "cantundo": {
-    "message": "此動作無法復原！",
-    "description": "Warning a user before confirming an action"
   },
   "contextmenuhidethis": {
     "message": "阻擋這個廣告",
