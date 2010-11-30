@@ -199,33 +199,6 @@
         return result;
       }
 
-
-      // WHITELIST
-
-      utils.get_whitelist = function(options) {
-        return utils.storage_get({key:'whitelist', default_value:[]});
-      }
-      utils.add_to_whitelist = function(options) {
-        options.domain = options.domain.toLowerCase();
-        var whitelist = utils.get_whitelist();
-        if ($.inArray(options.domain, whitelist) == -1) {
-          whitelist.unshift(options.domain);
-          utils.storage_set({key:'whitelist', value:whitelist});
-          utils.emit_broadcast({fn:'whitelist_updated', options: {}});
-        }
-      }
-      // Inputs: domain:string
-      // Returns: null
-      utils.remove_from_whitelist = function(options) {
-        var whitelist = utils.get_whitelist();
-        var where = whitelist.indexOf(options.domain);
-        if (where == -1)
-          return;
-        whitelist.splice(where, 1);
-        utils.storage_set({key:'whitelist', value:whitelist});
-        utils.emit_broadcast({fn:'whitelist_updated', options: {}});
-      }
-
       // NEW FILTERS
 
       // Fetch the latest version of all subscribed lists now.
@@ -318,7 +291,6 @@
         var showThem = true;
 
         var domain = url_parts(options.url).domain;
-        var whitelist = utils.get_whitelist({});
         var whitelisted = page_is_whitelisted(options.url);
         var features = utils.get_optional_features({});
         var disabled = !features.show_context_menu_items.is_enabled;
@@ -520,6 +492,23 @@
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
+      }
+
+
+
+
+      // OLD STYLE WHITELIST
+      //   TODO: Remove this when you are convinced everyone has updated their
+      //   version of AdBlock... Say in March or April
+      if (utils.storage_get({key:'whitelist', default_value:[]})) {
+        var old_style_whitelist = utils.storage_get({key:'whitelist', default_value:[]});
+        for (var i=0; i<old_style_whitelist.length; i++) {
+          var website = old_style_whitelist[i];
+          if (website[0] == '.')
+            website = '*' + website;
+          utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+        }
+        //localStorage.removeItem('whitelist')
       }
     </script>
   </head>

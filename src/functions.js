@@ -53,7 +53,7 @@ function page_is_whitelisted(url, type) {
 
   if (!type) 
     type = ElementTypes.document;
-  var whitelist = _myfilters.filterset._whitelistFilters
+  var whitelist = _myfilters.filterset._whitelistFilters;
   for (var i = 0; i < whitelist.length; i++) {
     if (whitelist[i].matches(url, type, false))
       return true;
@@ -89,7 +89,6 @@ function url_parts(url) {
 // Returns: null (asynchronous)
 function getCurrentTabInfo(callback) {
   var utils = chrome.extension.getBackgroundPage().utils;
-  var whitelist = utils.get_whitelist();
   chrome.tabs.getSelected(undefined, function(tab) {
     // TODO: use code from elsewhere to extract domain
 
