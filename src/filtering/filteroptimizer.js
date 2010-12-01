@@ -93,6 +93,10 @@ function cleanThisList(text) {
         ignoringCount ++;
         return '';
       }
+      //...also pick out one special case that cannot be filtered by the regex...
+      if (/^\#\d/.test(parts[1]))
+        return false;
+      
       //...and then allow the filter.
       return filter;
 
