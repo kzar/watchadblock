@@ -24,12 +24,7 @@ function shipit() {
       exit 1
     }
 
-    curl http://adblockplus.mozdev.org/easylist/easylist.txt > filters/easylist.txt
-
-    svn diff filters/easylist.txt | grep '^[+-]'
-    echo
-
-    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -r adblockforchrome.zip trunk/)
+    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r adblockforchrome.zip trunk/)
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
