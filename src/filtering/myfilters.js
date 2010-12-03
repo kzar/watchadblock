@@ -8,9 +8,7 @@
 function MyFilters() {
   this._event_handlers = { 'updated': [] };
 
-  var subscriptions_json = localStorage.getItem('filter_lists');
-  if (subscriptions_json == null)
-    subscriptions_json = "null";
+  var subscriptions_json = localStorage.getItem('filter_lists') || "null";
   var stored_subscriptions = JSON.parse(subscriptions_json);
 
   if (stored_subscriptions == null) {
@@ -131,7 +129,7 @@ MyFilters.prototype.freshen_async = function(force) {
 }
 
 //Get a default subscription that has to be updated ASAP
-function getDefaultSubscription(id) {
+MyFilters.get_default_subscription = function(id) {
   return {
     url: MyFilters.__subscription_options[id].url,
     name: MyFilters.__subscription_options[id].name,
@@ -178,7 +176,7 @@ MyFilters.prototype.subscribe = function(id, text) {
   if (wellKnownId &&
       this._subscriptions[id].name.indexOf(' - additional') == 0 &&
       this._subscriptions['easylist'].subscribed == false) {
-    this._subscriptions['easylist'] = getDefaultSubscription('easylist');
+    this._subscriptions['easylist'] = MyFilters.get_default_subscription('easylist');
     this.update();
     this.freshen_async();
   }
@@ -305,12 +303,12 @@ MyFilters._load_default_subscriptions = function() {
   }
 
   //Update will be done immediately after this function returns
-  result["adblock_custom"] = getDefaultSubscription('adblock_custom');
-  result["easylist"] = getDefaultSubscription('easylist');
+  result["adblock_custom"] = MyFilters.get_default_subscription('adblock_custom');
+  result["easylist"] = MyFilters.get_default_subscription('easylist');
   var language = navigator.language.match(/^([a-z]+).*/i)[1];
   var list_for_lang = langToList(language);
   if (list_for_lang)
-    result[list_for_lang] = getDefaultSubscription(list_for_lang);
+    result[list_for_lang] = MyFilters.get_default_subscription(list_for_lang);
 
   return result;
 }
