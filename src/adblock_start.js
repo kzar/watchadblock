@@ -20,7 +20,7 @@ function relativeToAbsoluteUrl(url) {
 // Return the ElementType element type of the given element.
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
-  switch (el.nodeName) {
+  switch (el.nodeName.toUpperCase()) {
     case 'IMG': return ElementTypes.image;
     case 'SCRIPT': return ElementTypes.script;
     case 'OBJECT': 
