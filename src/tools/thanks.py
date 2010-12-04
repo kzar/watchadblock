@@ -1,10 +1,6 @@
 #!/usr/bin/python
 
 #TODO: check for people who donate multiple times.
-#TODO: don't send as soon as I type their name, in case I made a mistake (and
-#it's too slow anyway).  Batch them up and send and mark them whenever I get
-#one with a note, maybe.
-#TODO: show where they're from.
 
 import email
 import imaplib
@@ -47,22 +43,22 @@ def donation_mailbox(readonly=False):
 
 def donation_messages(max_count):
     """
-    Return a generator yielding a message at a time.  It only marks it read
-    when you iterate past it (so if your program crashes, you won't have marked
-    as read a message that you haven't dealt with).
+    Return an iterator containing max_count unread donation messages.
     """
     m = donation_mailbox()
     unseens = m.search(None, 'UNSEEN')[1][0].split()[ :max_count]
     try:
-        for msgid in unseens:
-            # TODO: there is surely a more efficient way to do this.
-            m.select('afc/donations', readonly=True)
-            msg = m.fetch(msgid, '(RFC822)')[1][0][1] # not marked as read
+        # TODO: there is surely a more efficient way to do this.
+        m.select('afc/donations', readonly=True)
+        data = m.fetch(','.join(unseens), '(RFC822)') # not marked as read
+        msgs = [ tup[1] for tup in data[1][::2] ]
+        for i, msg in enumerate(msgs):
+            msgid = unseens[i]
             email_msg = email.message_from_string(msg)
             try:
                 d = Donation(email_msg, msgid=msgid)
                 if d.amount >= 100:
-                    raise ValueError("%s donated %.2f; you need to send them something." 
+                    raise ValueError("%s donated %.2f; you need to send them something."
                                      % (d.name, d.amount))
             except ValueError as ex:
                 print ("*" * 70 + '\n') * 3
@@ -85,7 +81,7 @@ def mark_as_read_and_send(donations):
     for donation in donations:
         print "Sending to %s" % donation.email
         try:
-            send('adblockforchrome@gmail.com', donation.email, 
+            send('adblockforchrome@gmail.com', donation.email,
                  'I got your donation :)', donation.get_response())
         except:
             print "Failed to send -- not marking as read"
@@ -130,7 +126,7 @@ class Donation(object):
         self.nickname = self.name.split(' ')[0].title()
         self.note = re.search('Message: (.*?)=20', self.body, re.DOTALL)
         if not self.note:
-            self.note = re.search('payment: Note: (.*?)Contributor:', 
+            self.note = re.search('payment: Note: (.*?)Contributor:',
                                   self.body, re.DOTALL)
         if self.note:
             self.note = self.note.group(1)
@@ -175,8 +171,8 @@ Thanks so much!  I wrote AdBlock in the hope that I could make people's lives a 
 PS: I'm not really good at marketing and I don't use Facebook much, but I made a Facebook Page to try to spread the word.  Would you mind going to http://%(browser)sadblock.com/like and "Liking" AdBlock?  I'd appreciate it :)
 
 %(original)s
-""" % dict(nickname=self.nickname, 
-           original=original, 
+""" % dict(nickname=self.nickname,
+           original=original,
            browser=self.browser.lower())
 
 
@@ -200,7 +196,7 @@ def main(number_to_thank=1000000):
             print "-" * 30
             print
         print " $%.2f (%s): %s (%s)" % (
-                        donation.amount, donation.browser, 
+                        donation.amount, donation.browser,
                         donation.name, donation.email)
         nick = raw_input("'%s' is my nickname guess: press enter or type a correction: " %
                          donation.nickname)
