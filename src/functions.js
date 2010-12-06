@@ -47,13 +47,18 @@ function localizePage() {
 }
 
 // Returns true if anything in whitelist matches the_domain.
+//   url: the url of the page
+//   type: one out of ElementTypes, default ElementTypes.document,
+//         to check what the page is whitelisted for: hiding rules or everything
 function page_is_whitelisted(url, type) {
   //special case this one
   if (url == "http://acid3.acidtests.org/") return true;
-
+  if (url.indexOf('#') != -1)
+    url = url.substr(0, url.indexOf('#'));
   if (!type) 
     type = ElementTypes.document;
-  var whitelist = _myfilters.filterset._whitelistFilters;
+  var bg = chrome.extension.getBackgroundPage();
+  var whitelist = bg._myfilters.filterset._whitelistFilters;
   for (var i = 0; i < whitelist.length; i++) {
     if (whitelist[i].matches(url, type, false))
       return true;
