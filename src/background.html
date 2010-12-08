@@ -10,9 +10,28 @@
     <script src="filtering/myfilters.js"></script>
     <script>
       var utils = {};
+      // Detect user type
+      if (localStorage['user_type'] == null) {
+        if (SAFARI) {
+          localStorage['user_type'] = 'safari';
+        }
+        // TODO this
+        else if false:
+          localStorage['user_type'] = 'free';
+        }
+        else if (localStorage['installed_at']) {
+          // They have installed_at but no user_type -- must have
+          // been from before we started recording user_type.
+          localStorage['user_type'] = 'legacy';
+        }
+        else {
+          localStorage['user_type'] = 'paid_199';
+        }
+      }
     </script>
     <script src="button/temporary_background_code.js"></script>
     <script>
+
 
       // V3 FILTERING
 
