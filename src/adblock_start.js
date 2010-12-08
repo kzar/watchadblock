@@ -74,8 +74,9 @@ function removeFrame(el) {
   if (!cols && parentEl.attr('rows').indexOf(',') <= 0)
     return;
   cols = (cols ? 'cols' : 'rows');
+  // Convert e.g. '40,20,10,10,10,10' into '40,20,10,0,10,10'
   var sizes = parentEl.attr(cols).split(',');
-  sizes[$(el).prevUntil(parentEl).length] = 0;
+  sizes[$(el).prevAll().length] = 0;
   parentEl.attr(cols, sizes.join(','));
 }
 
