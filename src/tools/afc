@@ -3,6 +3,7 @@
 function usage() {
     echo "Usage:"
     echo "$0 shipit"
+    echo "$0 freeship"
     echo "$0 filterdiff"
     echo "$0 updatefilters"
     echo
@@ -11,6 +12,27 @@ function usage() {
     echo "    http://adblockforchrome.googlecode.com/svn/trunk/filters/adblock_custom.txt"
     echo
     exit 1
+}
+
+function freeship() {
+    version=$(basename $(pwd))
+    [ "$(basename $(dirname $(pwd)))" = 'tags' ] || {
+      echo "Sorry, you must run this from tags/[some version]."
+      exit 1
+    }
+
+    cd ../..
+
+    cp tags/$version/manifest.json _manifest_temp.txt
+    sed -i 's/"name": "AdBlock".*$/"name": "AdBlock Free",/' tags/$version/manifest.json
+    sed -i 's/"description": "__MSG_.*$/"description": "__MSG_free_description",/' tags/$version/manifest.json
+
+    rm -f FREE_afc_version.zip && (cd tags; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r ../FREE_afc_version.zip $version)
+    mv _manifest_temp.txt tags/$version/manifest.json
+
+    echo
+    echo "Version: $version"
+    echo "Go push the new FREE_afc_version.zip up to the Store."
 }
 
 function shipit() {
@@ -24,7 +46,7 @@ function shipit() {
       exit 1
     }
 
-    rm -f ../adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r adblockforchrome.zip trunk/)
+    rm -f ../paid_adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r paid_adblockforchrome.zip trunk/)
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
@@ -55,11 +77,12 @@ function shipit() {
       svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
     }
 
-    echo "Last step: go push the new adblockforchrome.zip up to the Gallery, and ship Safari if you want."
+    echo "Last step: go push the new paid_adblockforchrome.zip up to the Store, and ship Safari if you want."
 }
 
 function main() {
     if [ $1 = "shipit" ]; then shipit
+    elif [ $1 = "freeship" ]; then freeship
     elif [ $1 = "filterdiff" ]; then diff -b <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
     elif [ $1 = "updatefilters" ]; then scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
     else usage
