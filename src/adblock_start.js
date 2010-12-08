@@ -21,11 +21,14 @@ function relativeToAbsoluteUrl(url) {
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
   switch (el.nodeName.toUpperCase()) {
-    case 'INPUT':
+    case 'INPUT': 
     case 'IMG': return ElementTypes.image;
     case 'SCRIPT': return ElementTypes.script;
     case 'OBJECT': 
     case 'EMBED': return ElementTypes.object;
+    case 'VIDEO': 
+    case 'AUDIO': 
+    case 'SOURCE': return ElementTypes.media;
     case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': return ElementTypes.stylesheet;
