@@ -164,11 +164,17 @@ Paypal
         return """\
 Hi %(nickname)s,
 
-Thanks so much!  I wrote AdBlock in the hope that I could make people's lives a little better, and I consider your donation a confirmation that I'm accomplishing my goal :)  I don't get a lot of donations so I can't support my family with this yet, but it's great to know I'm helping people out.
+I recently took the plunge and am now working on AdBlock as my full time job, supported only by donations.  Not a lot of users donate yet, but I hope to spread the word enough that I can support my family on AdBlock.
+
+So THANK YOU, very much, for donating.  I wrote AdBlock hoping I could make people's lives better, and your donation tells me that I did it :)  It's great to know that I'm helping people out.
 
 - Michael
 
-PS: I'm not really good at marketing and I don't use Facebook much, but I made a Facebook Page to try to spread the word.  Would you mind going to http://%(browser)sadblock.com/like and "Liking" AdBlock?  I'd appreciate it :)
+PS: Word of mouth is my only marketing tool right now.  If you wouldn't mind helping spread the word, would you
+  1) "Like" AdBlock via http://%(browser)sadblock.com/like ,
+  2) post to Facebook/Twitter about %(browser)sadblock.com, and
+  3) in your post, challenge your friends to donate too?
+If you don't use FB/Twitter or just don't feel comfortable asking your friends to donate, don't worry about it :)
 
 %(original)s
 """ % dict(nickname=self.nickname,
