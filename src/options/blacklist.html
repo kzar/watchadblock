@@ -54,6 +54,10 @@
       $("#btnAddExcludeFilter").click(function() {
         var excludeUrl = $("#txtExcludeUrlorDomain").val().trim();
 
+        //prevent regexes
+        if (/^\/.*\/$/.test(excludeUrl))
+          excludeUrl = excludeUrl + "*";
+
         appendCustomFilter('@@' + excludeUrl + '$document');
 
         $(this).closest(".entryTable").find("input:text").val("");
