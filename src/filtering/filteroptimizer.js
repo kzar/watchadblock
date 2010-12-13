@@ -3,7 +3,6 @@
 //And it will already parse the rules on beforehand.
 
 function cleanThisList(text) {
-  //Assuming the $media support branch will be merged before this one
   var unsupported = (ElementTypes.object_subrequest + ElementTypes.font +
                      ElementTypes.dtd + ElementTypes.other + ElementTypes.xbl +
                      ElementTypes.ping + ElementTypes.xmlhttprequest +
