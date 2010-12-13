@@ -41,8 +41,8 @@
         padding: 0px;
         padding-right: 5px;
       }
-      #resourceslist tbody td:last-of-type:first-letter {
-        visibility:hidden;
+      .sorter {
+        display:none;
       }
       .blocked {
         color:red;
@@ -142,8 +142,9 @@
           thisrow += "<td" + disabled + " title='" + i + "'>" + truncateI(i) + "</td>";
           thisrow += "<td" + disabled + " i18n='" + getTypeName(resources[i].type) +
                                 "'>" + getTypeName(resources[i].type) + "</td>";
-          thisrow += "<td" + disabled + ">" + (type.name ? type.sort + 
-                                               matchingfilter : '3-') + "</td>";
+          thisrow += "<td" + disabled + ">" + (type.name ? "<span class='sorter'>" +
+                                               type.sort + "</span>" + matchingfilter :
+                                               "<span class='sorter'>3</span>-") + "</td>";
           thisrow += "</tr>";
           rows.push(thisrow);
         }
