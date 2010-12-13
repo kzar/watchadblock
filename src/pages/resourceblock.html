@@ -420,7 +420,13 @@
           finally_it_has_loaded_its_stuff();
           //if opened by the context menu, this variable exists
           if (temp_url)
-            $("#resourceslist input").click();
+            if ($("#resourceslist input").attr("disabled")) {
+              //in case the resource has been whitelisted
+              alert(translate('resourceiswhitelisted'));
+              window.close();
+              return;
+            } else
+              $("#resourceslist input").click();
         });
       });
     </script>
