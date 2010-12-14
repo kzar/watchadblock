@@ -1,0 +1,816 @@
+{
+  "description1": {
+    "message": "Cea mai populară extensie pentru Chrome, cu 1.5 millione de useri!  Blochează anunțuri/publicități pe internet.",
+    "description": "Extension description in manifest"
+  },
+  "free_description": {
+    "message": "Cea mai populară extensie pentru Chrome -- dar vă rog plătiți suma de $1.99 pentru AdBlock, înloc să instalați aceeasta :)",
+    "description": "Extension description used in free version manifest"
+  },
+
+  "buttoncancel": {
+    "message": "Anula",
+    "description": "Cancel button"
+  },
+  "buttonok": {
+    "message": "OK!",
+    "description": "OK button"
+  },
+  "buttonblockit": {
+    "message": "Blochează-l!",
+    "description": "Block button"
+  },
+  "buttonedit": {
+    "message": "Editează",
+    "description": "Edit filter manually button"
+  },
+  "optionstitle": {
+    "message": "Opțiuni AdBlock",
+    "description": "Title for the options page"
+  },
+
+  "installedtitle": {
+    "message": "AdBlock este instalat!",
+    "description": "Title for the installation success page"
+  },
+  "installisdone": {
+    "message": "Reîncarcă orice filele deschise, și priveste cum anunțurile/publicitățile dispar.",
+    "description": "Message on the installation success page"
+  },
+  "donaterequest": {
+    "message": "Dacă iți place AdBlock, te rog <a>donează</a> ca să pot să îmi întrețin familia!  Mulțumesc :) - Michael",
+    "description": "Donation request on installation success page"
+  },
+  "setotheroptions": {
+    "message": "Poți să setezi alte opțiuni și să te abonezi la filtre în Wrench | Unelte | Extensii | Opțiuni AdBlock.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_how_to_disable": {
+    "message": "Pentru a elimina butonul, click dreapta și alege Dezinstalare.  Aceasta doar dezinstalează butonul Browser Button For AdBlock helper extension.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_how_to_enable": {
+    "message": "Pentru a vedea butonul, instalează <a>aceasta extensie</a>.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_showoption": {
+    "message": "Arată butonul în bara de unelte",
+    "description": "Message on installation success page"
+  },
+
+  "youtubevideomessage": {
+    "message": "Nu există video? Reîncarcă pagina. Dacă acest lucru se întâmplă des, dezactivează blocarea anunțurilor în YouTube $link$.",
+    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "Obțiuni AdBlock"
+      }
+    }
+  },
+
+  "sliderexplanation": {
+    "message": "Glisaţi cursorul până când anunţul este blocat corect pe această pagină, şi elementul blocat arată util.",
+    "description": "Blacklister slider page message"
+  },
+  "slidertitle": {
+    "message": "Pasul 1: Înțelege ce să blochezi",
+    "description": "Blacklister slider page title"
+  },
+  "blacklisteroptions1": {
+    "message": "Ce anume credeţi că va fi adevărat despre acest anunt, de fiecare dată când accesaţi această pagină?",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisternotsure": {
+    "message": "<b>Nu ești sigur?</b> apasă 'Blochează-l!' dedesupt.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
+  },
+  "blacklisterthefilter": {
+    "message": "Filtru, care poate să fie schimbat în pagina de Opțiuni:",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisteroptionstitle": {
+    "message": "Ultimul Pas: Ce face acest lucru un anunţ?",
+    "description": "Blacklister options page title"
+  },
+  "blacklisternofilter": {
+    "message": "Nici un filtru specificat!",
+    "description": "Warning if the user hasn't specified a filter"
+  },
+  "blacklistereditfilter": {
+    "message": "Vă rugăm să introduceţi, de mai jos, filtrul corect şi apăsaţi OK",
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
+  },
+  "blacklistereditinvalid": {
+    "message": "Filtrul este invalid!",
+    "description": "Messagebox if the manually edited filter is invalid"
+  },
+  "blacklisterblockedelement": {
+    "message": "Element blocat:",
+    "description": "Tells the user what the blocked element is on the slider page"
+  },
+  "blacklisterwarningnofilter": {
+    "message": "Atenție: nici un filtru specificat!",
+    "description": "Warns the user that no filter was specified"
+  },
+  "blacklisterblocksalloftype": {
+    "message": "Fii atent: acest filtru blochează toate elementele $elementtype$  pe aceasta pagină!",
+    "description": "Warns the user that all elements of type X will be blocked",
+    "placeholders": {
+      "elementtype": {
+        "content": "$1",
+        "example": "DIV"
+      }
+    }
+  },
+  "blacklistersinglematch": {
+    "message": "Se potriveşte cu  <b>1</b> element pe această pagină.",
+    "description": "Tells the user only one match was found"
+  },
+  "blacklistermatches": {
+    "message": "Se potriveşte cu $matchcount$ elemente pe această pagină.",
+    "description": "Tells the user multiple matches were found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "blacklisterattrwillbe": {
+    "message": "$attribute$ vor fii $value$",
+    "description": "Checkbox label",
+    "placeholders": {
+      "attribute": {
+        "content": "$1",
+        "example": "class"
+      },
+      "value": {
+        "content": "$2",
+        "example": "AdBanner"
+      }
+    }
+  },
+  "blacklistertype": {
+    "message": "Tip",
+    "description": "node name is called 'Type'"
+  },
+  "buttonlooksgood": {
+    "message": "Arată bine",
+    "description": "Looks good button"
+  },
+  "buttonback": {
+    "message": "Înapoi",
+    "description": "Back to previous wizard page button"
+  },
+
+  "findingads": {
+    "message": "Caută anuțuri...<br/><br/><i>Durează doar un moment.</i>",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "blockanadtitle": {
+    "message": "Blochează acest anunț",
+    "description": "Title of the first two dialogs of the blacklister"
+  },
+  "clickthead": {
+    "message": "Click pe anunț, și eu te voi ajuta la blocarea acesta.",
+    "description": "When you have to click the ad to continue"
+  },
+
+  "whitelistertext": {
+    "message": "AdBlock nu va rula pe domenii care se termină în<br/>$domain$.",
+    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
+    "placeholders": {
+      "domain": {
+        "content": "'<i>$1</i>'",
+        "example": "'<i>live.msn.com</i>'"
+      }
+    }
+  },
+  "whitelistertitle": {
+    "message": "Exclude acest domeniu?",
+    "description": "The title of the whitelister dialog"
+  },
+  "buttonexclude": {
+    "message": "Exclude",
+    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+  },
+
+  "subscribingtitle": {
+    "message": "Abonare la lista de filtre...",
+    "description": "abp: link subscriber title"
+  },
+  "subscribingfinished": {
+    "message": "Terminat!",
+    "description": "abp: link subscriber result"
+  },
+  "subscribingfailed": {
+    "message": "Eșuat!",
+    "description": "abp: link subscriber result"
+  },
+
+  "optionsversion": {
+    "message": "Versiune $version$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.0.9"
+      }
+    }
+  },
+  "optionschangelog": {
+    "message": "Log-ul de schimbări",
+    "description": "changelog link"
+  },
+  "tabgeneral": {
+    "message": "General",
+    "description": "A tab on the options page"
+  },
+  "tabfilterlists": {
+    "message": "Listele de filtre",
+    "description": "A tab on the options page"
+  },
+  "tabblacklist": {
+    "message": "Lista neagră",
+    "description": "A tab on the options page"
+  },
+  "tabexcluded": {
+    "message": "Site-uri excluse",
+    "description": "A tab on the options page"
+  },
+
+  "generaloptions": {
+    "message": "Opțiuni generale",
+    "description": "Title of first tab page"
+  },
+  "betalabel": {
+    "message": "Beta",
+    "description": "Option on first tab page"
+  },
+  "googletextads": {
+    "message": "Îmi plac anunţurile text din rezultatele de căutare Google; arată-mi acestea.",
+    "description": "Option on first tab page"
+  },
+  "youtubeads": {
+    "message": "Blocaţi anunţurile în interiorul videoclipuri YouTube.",
+    "description": "Option on first tab page"
+  },
+  "showcontextmenus": {
+    "message": "Adăugă elemente la meniul click dreapta.",
+    "description": "Option on first tab page"
+  },
+  "debuginlogoption": {
+    "message": "Arată depanarea de declaraţii în Consolă (care încetineşte AdBlock)",
+    "description": "Option on first tab page"
+  },
+
+  "updatedrightnow": {
+    "message": "actualizat chiar acum",
+    "description": "Label for subscription"
+  },
+  "updatedsecondsago": {
+    "message": "actualizat $seconds$ seconde în urmă",
+    "description": "Label for subscription",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminutesago": {
+    "message": "actualizat $minutes$ minute în urmă",
+    "description": "Label for subscription",
+    "placeholders": {
+      "minutes": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedhoursago": {
+    "message": "actualizat $hours$ ore în urmă",
+    "description": "Label for subscription",
+    "placeholders": {
+      "hours": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updateddaysago": {
+    "message": "actualizat $days$ zile în urmă",
+    "description": "Label for subscription",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminuteago": {
+    "message": "actualizat un minut în urmă",
+    "description": "Label for subscription"
+  },
+  "updatedhourago": {
+    "message": "actualizat o oră în urmă",
+    "description": "Label for subscription"
+  },
+  "updateddayago": {
+    "message": "actualizat o zi în urmă",
+    "description": "Label for subscription"
+  },
+  "removedlabel": {
+    "message": "Eliminat.",
+    "description": "Status label"
+  },
+  "unsubscribedlabel": {
+    "message": "Dezabonat.",
+    "description": "Status label"
+  },
+  "fetchinglabel": {
+    "message": "Se preiau ... vă rugăm să aşteptaţi.",
+    "description": "Status label"
+  },
+  "subscribedlabel": {
+    "message": "Abonat.",
+    "description": "Status label"
+  },
+  "nolisturllabel": {
+    "message": "Nu a fost o listă de adrese URL.",
+    "description": "Status label"
+  },
+  "failedtofetchfilter": {
+    "message": "Nu a reuşit să aducă acest filtru!",
+    "description": "Error messagebox"
+  },
+  "enterurloflist": {
+    "message": "Vă rugăm să introduceţi adresa URL a unei liste de filtre pentru a vă abona.",
+    "description": "Error messagebox"
+  },
+  "removefromlist": {
+    "message": "Eliminaţi din listă",
+    "description": "Label to remove a custom filter"
+  },
+  "filterstabtitle": {
+    "message": "Aboneaza-te la lista de filtre",
+    "description": "Title of the filter list tab"
+  },
+  "filterlistlink": {
+    "message": "Nu te inscrie la mai multe decât aveţi nevoie - fiecare vă încetinește un pic! Credite şi mai multe liste pot fi găsite <a>aici</a>.",
+    "description": "Explanation of the filter lists"
+  },
+  "updatenowmessage": {
+    "message": "Vă voi descărca automat actualizările; de asemenea, puteţi <a>actualiza acum</a>.",
+    "description": "update filters text + button"
+  },
+  "orenteraurl": {
+    "message": "Sau introduceţi un URL:",
+    "description": "link for custom subscription"
+  },
+  "subscribebutton": {
+    "message": "Abonează",
+    "description": "subscribe to a list button"
+  },
+  "subscribetoall": {
+    "message": "Aboneaza-te la toate filtrele:",
+    "description": "option on second tab page"
+  },
+  "subscribetonone": {
+    "message": "Dezaboneazăte de la toate filtrele:",
+    "description": "option on second tab page"
+  },
+  "showlinkstolists": {
+    "message": "Afişare link-uri către liste de filtrare:",
+    "description": "Option on second tab page"
+  },
+  "labelshow": {
+    "message": "afișează",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
+  "filteradblock_custom": {
+    "message": "AdBlock filtre personalizate (recomandat)",
+    "description": "A filter list. Don't translate 'AdBlock'"
+  },
+  "filtereasylist": {
+    "message": "EasyList (recomandat)",
+    "description": "A filter list. Don't translate 'EasyList'"
+  },
+  "filtereasylist_plus_bulgarian": {
+    "message": " - Filtre suplimentare Bulgare",
+    "description": "A filter list"
+  },
+  "filterdutch": {
+    "message": " - Filtre suplimentare Olandeze",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_finnish": {
+    "message": " - Filtre suplimentare Finlandeze",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_french": {
+    "message": " - Filtre suplimentare Franceze",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_german": {
+    "message": " - Filtre suplimentare Germane",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_norwegian": {
+    "message": " - Filtre suplimentare Norvegiene",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_polish": {
+    "message": " - Filtre suplimentare Poloneze",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_romanian": {
+    "message": " - Filtre suplimentare Românești",
+    "description": "A filter list"
+  },
+  "filterrussian": {
+    "message": " - Filtre suplimentare Ruse",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_vietnamese": {
+    "message": " - Filtre suplimentare Vietnameze",
+    "description": "A filter list"
+  },
+  "filterchinese": {
+    "message": "Filtre Chineze",
+    "description": "A filter list"
+  },
+  "filterczech": {
+    "message": "Filtre Cehe",
+    "description": "A filter list"
+  },
+  "filterdanish": {
+    "message": "Filtre Daneze",
+    "description": "A filter list"
+  },
+  "filterhungarian": {
+    "message": "Filtre Maghiare",
+    "description": "A filter list"
+  },
+  "filterisraeli": {
+    "message": "Filtre Israeliane",
+    "description": "A filter list"
+  },
+  "filteritalian": {
+    "message": "Filtre Italiene",
+    "description": "A filter list"
+  },
+  "filterjapanese": {
+    "message": "Filtre Japoneze",
+    "description": "A filter list"
+  },
+  "filtereasylist_plun_korean": {
+    "message": "Filtre Coreene",
+    "description": "A filter list"
+  },
+  "filterpolish": {
+    "message": "Filtre Poloneze",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_spanish": {
+    "message": "Filtre Spaniole",
+    "description": "A filter list"
+  },
+  "filterukranian": {
+    "message": "Filtre Ucraniene",
+    "description": "A filter list"
+  },
+
+  "blacklistclickmessage": {
+    "message": "Click dreapta pe un anunţ pe o pagină pentru al bloca -- sau blochează-l manual aici.",
+    "description": "Message at the top of the blacklist options tab"
+  },
+  "blacklisttabtitle": {
+    "message": "Blochează un anunţ care listele filtru l-au ratat",
+    "description": "Title of the third tab"
+  },
+  "addnewfilter": {
+    "message": "Adaugă un filtru nou:",
+    "description": "Subtitle on the third tab"
+  },
+  "linkblockadbyurl": {
+    "message": "Blochează un anunţ prin URL lui",
+    "description": "Link on the third tab"
+  },
+  "linkhidesection": {
+    "message": "Ascunde o secţiune a unei pagini web",
+    "description": "Link on the third tab"
+  },
+  "blockurlwithtext": {
+    "message": "Blochează URL-uri care conţin acest text",
+    "description": "Message of the url-blocking area"
+  },
+  "csstomatch": {
+    "message": "CSS pentru a se potrivi",
+    "description": "Message of the css-hiding area"
+  },
+  "blockdomain": {
+    "message": "Domeniu de pagini, se aplică pe",
+    "description": "Message of the url and css -blocking area"
+  },
+  "manualfilteredit": {
+    "message": "Editaţi manual filtrele tale:",
+    "description": "Subtitle on the third tab"
+  },
+  "filtersavewarning": {
+    "message": "Fii atent: dacă faceţi o greşeală aici o mulţime de alte filtre, inclusiv filtre oficial, s-ar putea strica!<br/>Citiţi <a>tutorialul sintaxa pentru filtru</a> pentru a învăţa cum să adăugaţi filtre avansate în lista neagră şi albă.",
+    "description": "Warning when blacklisting manually"
+  },
+  "savebutton": {
+    "message": "Salvează",
+    "description": "Save button"
+  },
+  "savereminder": {
+    "message": "Nu uitați să salvați!",
+    "description": "Reminder to press save"
+  },
+  "advanced": {
+    "message": "Avansat",
+    "description": "Section label for advanced options"
+  },
+  "reportanad": {
+    "message": "<a>Raportează un anunț</a> la AdBlock sau la administratori de filtre.",
+    "description": "A link for users who found an ad somewhere and want to report it"
+  },
+
+  "removelabel": {
+    "message": "Elimină",
+    "description": "link to remove a excluded site"
+  },
+  "excludedsitestitle": {
+    "message": "Nu blocaţi anunţuri pe domeniile care se termina cu...",
+    "description": "title of the 4th tab page"
+  },
+  "excludedsitesexample": {
+    "message": "De exemplu, 'google.com' va opri blocarea anunțurile pe google.com, mail.google.com, și www.google.com.",
+    "description": "text on the 4th tab page"
+  },
+  "addbutton": {
+    "message": "Adaugă",
+    "description": "add button"
+  },
+  "removeallfromlist": {
+    "message": "Elimina toate elementele din lista:",
+    "description": "option on 4th tab page"
+  },
+  "adblockreportinganad": {
+    "message": "AdBlock - Raportarea un anunţ",
+    "description": "title of ad report page"
+  },
+  "adreport1": {
+    "message": "Deci, aţi găsit doar un anunţ pe o pagină web? Ei bine, te voi ajuta pentru a găsi locul corect al raporta!<br/> Reține: raportarea de anunţuri este voluntară. Dacă nu doriţi să faceţi acest lucru puteţi închide această fereastră şi să îl blocaţi doar pentru tine prin adăugarea filtrului în fila 'Lista neagră' din pagina de opţiuni!",
+    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
+  },
+  "updateyourlists": {
+    "message": "Asiguraţi-vă că listele de filtrare sunt actualizate la zi",
+    "description": "instruction on ad report page"
+  },
+  "clickupdatefilters": {
+    "message": "Click pe acest: <a>Actualizează filtrele mele!</a>",
+    "description": "instruction on ad report page"
+  },
+  "reloadadpage": {
+    "message": "Reîncărcă pagina cu anunţul.",
+    "description": "instruction on ad report page"
+  },
+  "adstillappear": {
+    "message": "Anunţul incă apare?",
+    "description": "question on ad reporting page"
+  },
+  "yes": {
+    "message": "Da",
+    "description": "A positive response to a question"
+  },
+  "no": {
+    "message": "Nu",
+    "description": "A negative response to a question"
+  },
+  "adalreadyblocked": {
+    "message": "Nu trebuie să faceţi nimic, anunţul este deja blocat",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "correctfilters": {
+    "message": "Corectează filtrele",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "reallyclearlist": {
+    "message": "Sunteţi sigur că doriţi să ştergeţi această listă?",
+    "description": "confirmation of clearing a list of iteams"
+  },
+  "pagelanguagecheck": {
+    "message": "În ce limbă este scrisă această pagină?",
+    "description": "question on ad report page"
+  },
+  "lang_english": {
+    "message": "Engleză",
+    "description": "language"
+  },
+  "lang_bulgarian": {
+    "message": "Bulgară",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "Chineză",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "Cehă",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "Daneză",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "Olandeză",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "Finlandeză",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "Franceză",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "Germană",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "Maghiară",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "Israeliene",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "Italiană",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "Japaneză",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "Coreeană",
+    "description": "language"
+  },
+  "lang_norwegian": {
+    "message": "Norvegiană",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "Poloneză",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "Română",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "Rusă",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "Spaniolă",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "Ucraineană",
+    "description": "language"
+  },
+  "lang_vietnamese": {
+    "message": "Vietnameză",
+    "description": "language"
+  },
+  "other": {
+    "message": "Altele",
+    "description": "multiple choice option"
+  },
+  "nodefaultfilter": {
+    "message": "Nu avem o listă filtrul pentru acea limbă.<br/>Vă rugăm să încercaţi să găsiţi o listă adecvată care acceptă această limbă $link$ sau blochează acest anunţ pentru tine pe pagina Blacklist.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+    "placeholders": {
+      "link": {
+        "content": "$1here$2",
+        "example": "<a href='http://abp.org'>aici</a>"
+      }
+    }
+  },
+  "retryaftersubscribe": {
+    "message": "Abonează-te la această lista de filtre, apoi încercaţi din nou: $list_title$",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "checkinfirefox": {
+    "message": "Verifică în Firefox",
+    "description": "tell a user to see if a reported ad also appears in firefox"
+  },
+  "checkinfirefox1": {
+    "message": "Instalează Firefox daca nu îl ai.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox2": {
+    "message": "Instalaţi Adblock Plus pentru Firefox, dacă nu îl ai.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox3": {
+    "message": "În Firefox, aboneazăte la aceleaşi liste filtru ca le aveti aici (cu excepţia filtrelor personalizate AdBlock).",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox4": {
+    "message": "În Firefox, încarcă pagina cu anunţul.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox5": {
+    "message": "Anunţul apare în Firefox?",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "refusetocheck": {
+    "message": "Nu vreau să verific acest lucru",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reportfilterlistproblem": {
+    "message": "Aceasta este o problemă din lista filtru. Raportează-l aici: $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reporttous1": {
+    "message": "Dacă știi să vorbești engleză, poți să ne raportezi acest anunţ nouă $in_the_issue_tracker_link$.",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
+    "placeholders": {
+      "in_the_issue_tracker_link": {
+        "content": "$1in the issue tracker$2",
+        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+      }
+    }
+  },
+  "fixityourself": {
+    "message": "OK, puteţi bloca acest anunţ pentru tine pe pagina Opţiuni. Multumesc!",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "updatefromoldversion": {
+    "message": "Utilizați o versiune veche a AdBlock. Te rog întâi $updatelink$ la cea mai nouă versiune de AdBlock",
+    "description": "ad report page instruction",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1update$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>actualizează</a>"
+      }
+    }
+  },
+  "cantundo": {
+    "message": "Această acţiune nu poate fi anulată!",
+    "description": "Warning a user before confirming an action"
+  },
+  "contextmenuhidethis": {
+    "message": "Blochează acest anunț",
+    "description": "Context menu entry"
+  },
+  "contextmenuhideanything": {
+    "message": "Blochează un anunț pe această pagină...",
+    "description": "Context menu entry"
+  },
+  "contextmenuexcludedomain": {
+    "message": "Nu rula pe acest domeniu...",
+    "description": "Context menu entry"
+  },
+  "filecleanerwarning": {
+    "message": "Dacă vedeţi acest mesaj de fiecare dată când se deschide AdBlock, asiguraţi-vă că nu utilizaţi un curațator de fişier care, de asemenea, curăță fișierele din 'localStorage'.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
+  "somequicksetup": {
+    "message": "O configurare rapidă",
+    "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "Video și Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "Anunțul apare în sau înainte de film sau orice alt fel de plugin ca jocuri Flash?",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "Noi nu putem bloca anunţurile în interiorul plugin-uri Flash şi alte încă. Suntem în aşteptare de sprijin pentru browser şi WebKit.",
+    "description": "Result of the final ad report question"
+  }
+}
