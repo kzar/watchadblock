@@ -50,7 +50,7 @@ function cleanThisList(text) {
       //...check if the filter type is ignored...
       // WebKit has a bug where style rules aren't parsed properly, so we just
       // skip them until they fix their bug.
-      if (/\[style.*\]/i.test(parts[1])) {
+      if (/\[style[\^\$\*]?=/i.test(parts[1])) {
         ignoringCount ++;
         return '';
       }
