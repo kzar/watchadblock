@@ -50,7 +50,7 @@ function cleanThisList(text) {
       //...check if the filter type is ignored...
       // WebKit has a bug where style rules aren't parsed properly, so we just
       // skip them until they fix their bug.
-      if (/\[style[\^\$\*]?=/i.test(parts[1])) {
+      if (/\[style.*\]/i.test(parts[1])) {
         ignoringCount ++;
         return '';
       }
@@ -91,7 +91,7 @@ function cleanThisList(text) {
   for (var i=0; i<lines.length; i++) {
     var newfilter = optimizeFilter(lines[i]);
     if (newfilter)
-      result.append(newfilter);
+      result.push(newfilter);
     else if (newfilter === false)
       log("Filter '" + lines[i] + "' could not be parsed");
   }
