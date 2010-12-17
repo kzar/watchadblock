@@ -45,8 +45,12 @@ function cleanThisList(text) {
       //...check if the filter is correct...
       if (!global_filter_validation_regex.test('##' + parts[1]))
           return false;
-      if ($(parts[1] + ',html').length == 0)
+      try {
+        if ($(parts[1] + ',html').length == 0)
+          return false;
+      } catch (e) {
         return false;
+      }
       //...check if the filter type is ignored...
       // WebKit has a bug where style rules aren't parsed properly, so we just
       // skip them until they fix their bug.
