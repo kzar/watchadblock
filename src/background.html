@@ -473,7 +473,6 @@
       // Take a census of filter subscriptions.
       try {
         if (localStorage['tookSubscriptionCensus'] == null) {
-          localStorage['tookSubscriptionCensus'] = true;
           var data = {};
           data.subscriptions = [];
           for (var sub_id in _myfilters._subscriptions) {
@@ -486,7 +485,14 @@
           data.language = navigator.language;
           data.installed_at = localStorage['installed_at'];
           data.options_at = localStorage['visited_options_at'];
-          $.get("http://chromeadblock.com/api/url_census.php", data);
+          $.get(
+            "http://chromeadblock.com/api/url_census.php", 
+            data,
+            function(result) {
+              if (/OK/.test(result))
+                localStorage['tookSubscriptionCensus'] = true;
+            }
+          );
         }
       } catch (ex) { log("Census failed"); log(ex); }
 
