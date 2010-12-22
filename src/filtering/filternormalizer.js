@@ -50,17 +50,14 @@ var FilterNormalizer = {
     // Convert old-style hiding rules to new-style.
     if (/#.*\(/.test(filter) && !/##/.test(filter)) {
       // Throws exception if unparseable.
-      filter = FilterNormalizer.old_style_hiding_to_new(filter);
+      filter = FilterNormalizer._old_style_hiding_to_new(filter);
     }
 
     // If it is a hiding rule...
+    // TODO(gundlach): reuse the test in Filter?
     if (/##/.test(filter)) {
       // All specified domains must be valid.
       var parts = filter.split('##');
-      // TODO(gundlach): check this for blocking rules too
-      if (parts[0] && !FilterNormalizer.verifyDomains(parts[0], ','))
-        return null;
-
       // The selector must be parseable and must not cause other selectors
       // to fail.
       if (!global_filter_validation_regex.test('##' + parts[1]))
@@ -69,7 +66,8 @@ var FilterNormalizer = {
         return null;
 
       // Ignore a special case that WebKit parses badly.
-      if (SelectorFilter(filter).adType == 
+      var parsedFilter = SelectorFilter(filter);
+      if (parsedFilter.adType == 
           Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES)
         return null;
 
@@ -83,20 +81,20 @@ var FilterNormalizer = {
       // TODO(gundlach): move the 'broken rule' checks into here from
       // PatternFilter, like we have for SelectorFilter, and then remove
       // the checks from PatternFilter so it goes faster.
+
       // Remove unparseable rules.
       if (parsedFilter._rule.source == '$dummy_rule_matching_nothing')
         return null;
 
       // Remove rules that only apply to unsupported resource types.
-      if (/\$/.test(text)) {
-        var allowed = parsedFilter._allowedElementTypes;
-        if (ElementTypes.NONE == (allowed & ~unsupported))
-          return null;
-      }
-
-      // TODO(gundlach): verify domain formats.  Extract it out of the
-      // if/else and put it below instead.
+      var allowedTypes = parsedFilter._allowedElementTypes;
+      if (ElementTypes.NONE == (allowedTypes & ~unsupported))
+        return null;
     }
+
+    // Remove filters whose domains aren't formatted properly.
+    if (!FilterNormalizer._verifyDomains(parsedFilter._domains))
+      return null;
 
     // Nothing's wrong with the filter.
     return filter;
@@ -106,7 +104,7 @@ var FilterNormalizer = {
   // Input: filter:string old-style filter
   // Returns: string new-style filter
   // Throws: exception if filter is unparseable.
-  old_style_hiding_to_new: function(filter) {
+  _old_style_hiding_to_new: function(filter) {
     // Old-style is domain#node(attr=value) or domain#node(attr)
     // domain and node are optional, and there can be many () parts.
     filter = filter.replace('#', '##');
@@ -149,14 +147,14 @@ var FilterNormalizer = {
   },
 
   // Return true if the input only contains valid domains.
-  // Input: domainsText: string delim-separated list of domains, possibly
-  //                     preceeded by a '~'
-  //        delim: the text delimiter separater the domains
-  verifyDomains: function(domainsText, delim) {
-    var domains = domainsText.split(delim);
-    for (var i=0; i<domains.length; i++) {
-      if (/^\~?([a-z0-9\-_à-ÿ]+\.)*[a-z0-9]+$/i.test(domains[i]) == false)
-        return false;
+  // Input: domainInfo: { applied_on:array, not_applied_on:array }, where each
+  //                    array entry is a domain.
+  _verifyDomains: function(domainInfo) {
+    for (var name in [ "applied_on", "not_applied_on" ]) {
+      for (var i = 0; i < domainInfo[name].length; i++) {
+        if (/^([a-z0-9\-_à-ÿ]+\.)*[a-z0-9]+$/i.test(domainInfo[name][i]) == false)
+          return false;
+      }
     }
     return true;
   }
