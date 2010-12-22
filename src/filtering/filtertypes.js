@@ -25,9 +25,7 @@ Filter.fromText = function(text) {
   var cache = Filter._cache;
   if (!(text in cache)) {
 
-    if (Filter.isComment(text))
-      cache[text] = CommentFilter.get_singleton();
-    else if (Filter.isSelectorFilter(text))
+    if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
     else if (/^@@/.test(text))
       cache[text] = new WhitelistFilter(text);
@@ -326,18 +324,3 @@ var WhitelistFilter = function(text) {
 // When you call any instance methods on WhitelistFilter, do the same
 // thing as in PatternFilter.
 WhitelistFilter.prototype = PatternFilter.prototype;
-
-// Garbage that we don't care about.
-var CommentFilter = function() {
-  Filter.call(this); // call base constructor.
-}
-CommentFilter._singleton = new CommentFilter();
-CommentFilter.get_singleton = function() {
-  return CommentFilter._singleton;
-}
-CommentFilter.prototype = {
-  // Inherit from Filter.
-  __proto__: Filter.prototype,
-
-  __type: "CommentFilter"
-}

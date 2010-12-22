@@ -39,9 +39,8 @@ FilterSet.fromText = function(text, ignoredAdTypes) {
       result._selectorFilters.push(filter);
     else if (filter.__type == "WhitelistFilter")
       result._whitelistFilters.push(filter);
-    else if (filter.__type == "PatternFilter")
+    else // PatternFilter
       result._patternFilters.push(filter);
-    // else it's CommentFilter or some other garbage that we ignore.
   }
 
   return result;
