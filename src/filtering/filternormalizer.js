@@ -22,7 +22,7 @@ var FilterNormalizer = {
         if (newfilter)
           result.push(newfilter);
       } catch (ex) {
-        log("Filter '" + lines[i] + "' could not be parsed");
+        log("Filter '" + lines[i] + "' could not be parsed: " + ex);
       }
     }
     if (result.length != lines.length)
@@ -42,11 +42,9 @@ var FilterNormalizer = {
     // have leading or trailing whitespace for some reason.
     var filter = filter.replace(/\r$/, '').trim();
 
-    // Remove comment/empty filters, except those containing useful metadata.
-    if (Filter.isComment(filter)) {
-      if (!filter.match(expiresRegex) && !filter.match(redirectRegex))
+    // Remove comment/empty filters.
+    if (Filter.isComment(filter))
         return null;
-    }
 
     // Convert old-style hiding rules to new-style.
     if (/#.*\(/.test(filter) && !/##/.test(filter)) {
@@ -58,22 +56,19 @@ var FilterNormalizer = {
     if (Filter.isSelectorFilter(filter)) {
       // All specified domains must be valid.
       var parts = filter.split('##');
-      // The selector must be parseable and must not cause other selectors
-      // to fail.
       if (!global_filter_validation_regex.test('##' + parts[1]))
-          return null;
+        throw "Failed filter validation regex";
       if ($(parts[1] + ',html').length == 0)
-        return null;
+        throw "Caused other selector filters to fail";
 
-      // Ignore a special case that WebKit parses badly.
-      var parsedFilter = SelectorFilter(filter);
+      var parsedFilter = new SelectorFilter(filter);
       if (parsedFilter.adType == 
           Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES)
-        return null;
+        throw "Ignoring [style] special case that WebKit parses badly";
 
       // Ignore another special case unable to be caught by the previous check.
       if (/^\#\d/.test(parts[1]))
-        return null;
+        throw "Ignoring digit special case";
 
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
@@ -81,12 +76,11 @@ var FilterNormalizer = {
 
       // Remove rules that only apply to unsupported resource types.
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
-        return null;
+        throw "Filter only applies to unsupported element types";
     }
 
-    // Remove filters whose domains aren't formatted properly.
-    if (!FilterNormalizer._verifyDomains(parsedFilter._domains))
-      return null;
+    // Ignore filters whose domains aren't formatted properly.
+    FilterNormalizer._verifyDomains(parsedFilter._domains);
 
     // Nothing's wrong with the filter.
     return filter;
@@ -138,16 +132,15 @@ var FilterNormalizer = {
     return domain + "##" + resultFilter;
   },
 
-  // Return true if the input only contains valid domains.
+  // Throw an exception if the input contains invalid domains.
   // Input: domainInfo: { applied_on:array, not_applied_on:array }, where each
   //                    array entry is a domain.
   _verifyDomains: function(domainInfo) {
     for (var name in [ "applied_on", "not_applied_on" ]) {
       for (var i = 0; i < domainInfo[name].length; i++) {
         if (/^([a-z0-9\-_à-ÿ]+\.)*[a-z0-9]+$/i.test(domainInfo[name][i]) == false)
-          return false;
+          throw "Invalid domain: " + domainInfo[name][i];
       }
     }
-    return true;
   }
 }

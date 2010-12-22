@@ -20,10 +20,6 @@ log = function() { };
 //issue 267 to be fixed first. Until this time any user adding
 //a filter containing multiple '##' will get a broken filter
 var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
-// Regex matching expiry comments in filter subscriptions
-var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
-// Regex matching redirect comments in filter subscriptions
-var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
 
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
