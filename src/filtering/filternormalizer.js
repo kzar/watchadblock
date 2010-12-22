@@ -77,7 +77,7 @@ var FilterNormalizer = {
                          ElementTypes.xmlhttprequest | ElementTypes.document |
                          ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
-        throw "Filter only applies to unsupported element types";
+        return null;
     }
 
     // Ignore filters whose domains aren't formatted properly.
