@@ -27,7 +27,7 @@ Filter.fromText = function(text) {
 
     if (Filter.isComment(text))
       cache[text] = CommentFilter.get_singleton();
-    else if (/##/.test(text))
+    else if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
     else if (/^@@/.test(text))
       cache[text] = new WhitelistFilter(text);
@@ -36,6 +36,10 @@ Filter.fromText = function(text) {
 
   }
   return cache[text];
+}
+
+Filter.isSelectorFilter = function(text) {
+  return /##/.test(text);
 }
 
 Filter.isComment = function(text) {
@@ -148,7 +152,6 @@ SelectorFilter.prototype = {
 
   __type: "SelectorFilter"
 }
-// Convert a deprecated "old-style" filter text to the new style.
 
 // Filters that block by URL regex or substring.
 var PatternFilter = function(text) {

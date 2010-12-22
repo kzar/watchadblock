@@ -206,12 +206,11 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
   var sub_data = this._subscriptions[subscription_id];
 
   sub_data.subscribed = true;
+  sub_data.text = FilterNormalizer.normalizeList(text);
   sub_data.last_update = new Date().getTime();
 
   // Record how many days until we need to update the subscription text
   sub_data.expiresAfterHours = 120; // The default
-  var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
-  var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
   var checkLines = text.split('\n', 15); //15 lines should be enough
   for (var i = 0; i < checkLines.length; i++) {
     if (!Filter.isComment(checkLines[i]))
@@ -227,8 +226,6 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
       sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
     }
   }
-
-  sub_data.text = FilterNormalizer.normalizeList(text);
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove

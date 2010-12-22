@@ -42,13 +42,11 @@ var FilterNormalizer = {
     // have leading or trailing whitespace for some reason.
     var filter = filter.replace(/\r$/, '').trim();
 
-    // Remove comment filters
-    // TODO(gundlach): retain Expires tag
-    if (filter[0] == '!' || filter[0] == '[' || filter[0] == '(')
-      return null;
-    // Remove empty filters
-    if (!filter)
-      return null;
+    // Remove comment/empty filters, except those containing useful metadata.
+    if (Filter.isComment(filter)) {
+      if (!filter.match(expiresRegex) && !filter.match(redirectRegex))
+        return null;
+    }
 
     // Convert old-style hiding rules to new-style.
     if (/#.*\(/.test(filter) && !/##/.test(filter)) {
@@ -57,8 +55,7 @@ var FilterNormalizer = {
     }
 
     // If it is a hiding rule...
-    // TODO(gundlach): reuse the test in Filter?
-    if (/##/.test(filter)) {
+    if (Filter.isSelectorFilter(filter)) {
       // All specified domains must be valid.
       var parts = filter.split('##');
       // The selector must be parseable and must not cause other selectors
