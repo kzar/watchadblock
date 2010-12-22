@@ -307,15 +307,12 @@ PatternFilter._parseRule = function(text) {
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
-  // Rules ending in | means the URL should end there
-  rule = rule.replace(/\|$/, '$');
   // If it starts or ends with *, strip that -- it's a no-op.
   rule = rule.replace(/^\*/, '');
   rule = rule.replace(/\*$/, '');
   // ^ at the end of a rule should only match a delimiter, but we ignore that
   // for efficiency's sake.
   rule = rule.replace(/\^$/, '');
-
   //If a rule contains *, replace that by .*
   rule = rule.replace(/\*/g, '.*');
   //^ is a separator char in ABP
@@ -332,6 +329,8 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/^\|\|/, '\://([^/]+\\.)*');
   // Starting with | means it should be at the beginning of the URL.
   rule = rule.replace(/^\|/, '^');
+  // Rules ending in | means the URL should end there
+  rule = rule.replace(/\|$/, '$');
   // Any other '|' within a string should really be a pipe.
   rule = rule.replace(/\|/g, '\\|');
   // Using escaped characters is faster. Only replace the most common one: /
