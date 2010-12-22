@@ -61,14 +61,15 @@ var FilterNormalizer = {
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
 
+      // Ignore [style] special case that WebKit parses badly.
       var parsedFilter = new SelectorFilter(filter);
       if (parsedFilter.adType == 
           Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES)
-        throw "Ignoring [style] special case that WebKit parses badly";
+        return null;
 
       // Ignore another special case unable to be caught by the previous check.
       if (/^\#\d/.test(parts[1]))
-        throw "Ignoring digit special case";
+        return null;
 
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
