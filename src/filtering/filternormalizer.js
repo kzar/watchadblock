@@ -8,11 +8,6 @@ var FilterNormalizer = {
   // Returns: filter strings separated by '\n' with invalid filters
   //          removed or modified
   normalizeList: function(text) {
-    var unsupported = (ElementTypes.object_subrequest | ElementTypes.font |
-                       ElementTypes.dtd | ElementTypes.other |
-                       ElementTypes.xbl | ElementTypes.ping |
-                       ElementTypes.xmlhttprequest | ElementTypes.document |
-                       ElementTypes.elemhide);
     var lines = text.split('\n');
     delete text;
     var result = [];
@@ -76,6 +71,11 @@ var FilterNormalizer = {
       var parsedFilter = new PatternFilter(filter);
 
       // Remove rules that only apply to unsupported resource types.
+      var unsupported = (ElementTypes.object_subrequest | ElementTypes.font |
+                         ElementTypes.dtd | ElementTypes.other |
+                         ElementTypes.xbl | ElementTypes.ping |
+                         ElementTypes.xmlhttprequest | ElementTypes.document |
+                         ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         throw "Filter only applies to unsupported element types";
     }
