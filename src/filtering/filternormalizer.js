@@ -1,6 +1,7 @@
 // Converts non-standard filters to a standard format, and removes
 // invalid filters.
 var FilterNormalizer = {
+
   // Normalize a set of filters.
   // Remove broken filters, useless comments and unsupported things.
   // Input: text:string filter strings separated by '\n'
@@ -37,7 +38,9 @@ var FilterNormalizer = {
   // Note that 'Expires' comments are considered valid comments that
   // need retention, because they carry information.
   normalizeLine: function(filter) {
-    var filter = filter.trim();
+    // Some rules are separated by \r\n; and hey, some rules may
+    // have leading or trailing whitespace for some reason.
+    var filter = filter.replace(/\r$/, '').trim();
 
     // Remove comment filters
     // TODO(gundlach): retain Expires tag
@@ -76,19 +79,11 @@ var FilterNormalizer = {
         return null;
 
     } else { // If it is a blocking rule...
+      // This will throw an exception if the rule is invalid.
       var parsedFilter = new PatternFilter(filter);
 
-      // TODO(gundlach): move the 'broken rule' checks into here from
-      // PatternFilter, like we have for SelectorFilter, and then remove
-      // the checks from PatternFilter so it goes faster.
-
-      // Remove unparseable rules.
-      if (parsedFilter._rule.source == '$dummy_rule_matching_nothing')
-        return null;
-
       // Remove rules that only apply to unsupported resource types.
-      var allowedTypes = parsedFilter._allowedElementTypes;
-      if (ElementTypes.NONE == (allowedTypes & ~unsupported))
+      if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
     }
 

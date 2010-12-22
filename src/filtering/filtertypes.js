@@ -27,8 +27,7 @@ Filter.fromText = function(text) {
 
     if (Filter.isComment(text))
       cache[text] = CommentFilter.get_singleton();
-    // old style selector syntax contains a #, then some text, then a (.
-    else if (/##/.test(text) || /#.*\(/.test(text))
+    else if (/##/.test(text))
       cache[text] = new SelectorFilter(text);
     else if (/^@@/.test(text))
       cache[text] = new WhitelistFilter(text);
@@ -241,14 +240,7 @@ PatternFilter._parseRule = function(text) {
   // First, check if the rule itself is in regex form.  If so, we're done.
   if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
-    try {
-      result.rule = new RegExp(result.rule); // Make sure it parses correctly
-    } catch(e) {
-      // OK, we thought it was a regex but it's not.  Just discard it.
-      // TODO: let parser throw exceptions which are caught, rather than having
-      // to keep dummy rules.
-      result.rule = new RegExp('$dummy_rule_matching_nothing');
-    }
+    result.rule = new RegExp(result.rule);
     return result;
   }
 
@@ -285,14 +277,7 @@ PatternFilter._parseRule = function(text) {
   // Using escaped characters is faster. Only replace the most common one: /
   rule = rule.replace(/\//g, '\\/');
 
-  // verify it. TODO copied-and-modified from above.
-  try {
-    result.rule = new RegExp(rule);
-  } catch(e) {
-    // OK, something went wrong.  Just discard it.
-    result.rule = new RegExp('$dummy_rule_matching_nothing');
-  }
-
+  result.rule = new RegExp(rule);
   return result;
 }
 
