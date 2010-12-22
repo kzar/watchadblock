@@ -65,7 +65,7 @@ MyFilters.prototype.rebuild = function() {
 
   // Include custom filters.
   var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''})
-  texts.push(cleanThisList(customfilters));
+  texts.push(FilterNormalizer.normalizeList(customfilters));
 
   texts = texts.join('\n').split('\n');
 
@@ -228,7 +228,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
     }
   }
 
-  sub_data.text = cleanThisList(text);
+  sub_data.text = FilterNormalizer.normalizeList(text);
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
