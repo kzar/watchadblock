@@ -20,6 +20,21 @@ function MyFilters() {
   // subscription options, merge with MyFilters.__subscription_options.
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
 
+  // temp code to normalize non-normalize filters, one time.
+  // Installed 12/13/2010.  Remove after everyone has gotten this update.
+  (function(that) {
+    if (localStorage['once_normalized_filters'])
+      return;
+    for (var id in that._subscriptions) {
+      if (that._subscriptions[id].text) {
+        that._subscriptions[id].text = FilterNormalizer.normalizeList(
+                                              that._subscriptions[id].text);
+      }
+    }
+    localStorage['once_normalized_filters'] = 'true';
+  })(this);
+  // end temp code
+
   this.update();
 
   // Check for subscriptions to be updated on startup
