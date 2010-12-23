@@ -89,12 +89,8 @@ MyFilters.prototype.rebuild = function() {
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
   var options = utils.get_optional_features({});
-  // temp Until Chrome fixes their bug, we ignore certain patterns of
-  // rules.
-  var ignored = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
-  if (options.show_google_search_text_ads.is_enabled)
-    ignored |= Filter.adTypes.GOOGLE_TEXT_AD;
-  this.filterset = FilterSet.fromText(texts.join('\n'), ignored);
+  var ignoreGoogleAds = options.show_google_search_text_ads.is_enabled;
+  this.filterset = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds);
 }
 
 // If any subscribed filters are out of date, asynchronously load updated

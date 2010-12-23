@@ -22,18 +22,18 @@ function FilterSet() {
 
 
 // Builds Filter objects from text.
-// ignoredAdTypes is a bitset of ad types whose filters should not be
+// ignoreGoogleAds: true if Google text ads should be shown, false otherwise
 // included in this FilterSet (e.g. because the user likes that type of ads.)
-FilterSet.fromText = function(text, ignoredAdTypes) {
+FilterSet.fromText = function(text, ignoreGoogleAds) {
   var result = new FilterSet();
   result._sourceText = text;
 
   var lines = text.split('\n');
   for (var i = 0; i < lines.length; i++) {
     var filter = Filter.fromText(lines[i]);
-    if (filter._adType & ignoredAdTypes) {
+    if (ignoreGoogleAds && filter._adType == Filter.adTypes.GOOGLE_TEXT_AD)
       continue;
-    }
+
     // What's the right way to do this?
     if (filter.__type == "SelectorFilter")
       result._selectorFilters.push(filter);

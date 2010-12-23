@@ -13,11 +13,7 @@ Filter._cache = {};
 Filter.adTypes = {
   NONE: 0,
   GENERAL: 1,
-  GOOGLE_TEXT_AD: 2,
-  // temp: We need this until Gmail and Calendar no longer hide Bcc/Cc/
-  // Event Details fields upon click, when rules are on the page of the form
-  // ##anything[style="anything"]
-  STYLE_HIDE_BREAKING_GOOGLE_SERVICES: 4,
+  GOOGLE_TEXT_AD: 2
 }
 
 // Return a Filter instance for the given filter text.
@@ -134,11 +130,6 @@ var SelectorFilter = function(text) {
 
   if (text.indexOf('~all.google.domains') == 0)
     this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
-
-  // WebKit has a bug where style rules aren't parsed properly, so we just
-  // skip them until they fix their bug.
-  if (/style[\^\$\*]?=/.test(text))
-    this._adType = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
 
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
