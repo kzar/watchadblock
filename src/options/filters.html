@@ -1,18 +1,19 @@
   <script>
-      function flash(id, message) {
-        $("#" + id).text(message);
+      var removeFlashMsgTimeout;
+      function flash(message, duration) {
+        $("#subscription_message").text(message);
+
+        clearTimeout(removeFlashMsgTimeout);
+        removeFlashMsgTimeout = window.setTimeout(function() {
+          $("#subscription_message").text('');
+        }, duration ? duration : 7500);
       }
 
       // Return a string representation of roughly how long ago the 
       // given ticks were, e.g. "just now" or "2 hours ago".  If ticks is
       // undefined, return blank.
-      function how_long_ago(ticks) {
-        if (ticks == undefined)
-          return "";
-        var now = new Date().getTime();
-        var distance = now - ticks;
-
-        var seconds = Math.round(distance / 1000);
+      function how_long_ago(duration) {
+        var seconds = Math.round(duration / 1000);
         if (seconds < 10)
           return translate("updatedrightnow");
         if (seconds < 60)
@@ -42,17 +43,28 @@
       // Update the "last updated" messages in the subscription view.
       function redisplay_subscription_update_times() {
         var subs = global_subscriptions_cached_copy;
+        var lessThanMinute = false;
         if (subs == undefined)
           return;
         $(".subscription").each(function(i,el) {
           var when_text = "";
-
           var id = $("input", el).attr("name");
-          if (subs[id] && subs[id].subscribed && subs[id].last_update != 0)
-            when_text = how_long_ago(subs[id].last_update);
+          if (subs[id] && subs[id].subscribed && subs[id].last_update) {
+            var timeSinceUpdate = new Date().getTime() - subs[id].last_update;
+            when_text = how_long_ago(timeSinceUpdate);
+            if (timeSinceUpdate < 60000)
+              lessThanMinute = true;
+          }
 
           $(".update_time", el).text(when_text);
         });
+
+        // Every so often, redisplay "last update" times on subscriptions.
+        if (typeof lastUpdateInterval != "undefined") 
+          clearInterval(lastUpdateInterval)
+        lastUpdateInterval = window.setInterval(function() { 
+          redisplay_subscription_update_times();
+        }, lessThanMinute ? 1000 : 60000);
       }
 
       // Load the latest subscription model object and display it in
@@ -94,7 +106,7 @@
         extension_call("unsubscribe", {id:id, del:del}, function() {
           var message = (del) ? translate("removedlabel")
                               : translate("unsubscribedlabel");
-          flash("subscription_message", message);
+          flash(message);
         });
       }
       // Subscribe to the given filterlist id.  id is either a well-known id, or
@@ -109,7 +121,7 @@
         else
           url = id.substring(4); // "url:xyz"
 
-        flash("subscription_message", translate("fetchinglabel"));
+        flash(translate("fetchinglabel"), 60000);
         var onError = function() {
           alert(translate("failedtofetchfilter"));
           var myIndex = $("#tabpages").tabs("option", "selected");
@@ -127,7 +139,7 @@
                 text[0] != '[' &&
                 text.indexOf('(Adblock') != 0) {
               alert(translate("enterurloflist"));
-              flash("subscription_message", translate("nolisturllabel"));
+              flash(translate("nolisturllabel"));
               return;
             }
             if (log_on_success) {
@@ -138,7 +150,7 @@
               "subscribe", 
               {id: id, text:text},
               function() {
-                flash("subscription_message", translate("subscribedlabel"));
+                flash(translate("subscribedlabel"));
                 if (then_reload) {
                   var myIndex = $("#tabpages").tabs("option", "selected");
                   $("#tabpages").tabs("load", myIndex);
@@ -258,6 +270,9 @@
         $("#btnUpdateNow").click(function() {
           $(this).attr("disabled", "disabled");
           extension_call("update_subscriptions_now", {});
+          setTimeout(function() {
+            $("#btnUpdateNow").removeAttr("disabled");
+          }, 300000); //re-enable after 5 minutes
         });
 
         $("#btnNewSubscriptionUrl").click(function() {
@@ -278,12 +293,6 @@
             $("#btnNewSubscriptionUrl").click();
           }
         });
-        
-        // Every so often, redisplay "last update" times on subscriptions.
-        window.setInterval(
-          function() { redisplay_subscription_update_times(); },
-          1000 * 60
-        );
 
         //translation
         localizePage();
@@ -293,14 +302,13 @@
 
   <div class="section">
     <h2 i18n="filterstabtitle"></h2>
-    <p i18n="defaultsexplanation"></p>
     <p class="footnote" i18n="filterlistlink" i18n_replacement_el="footnotelink"></p>
     <a id="footnotelink" href="http://adblockplus.org/en/subscriptions" 
        target="_new"></a>
     <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>
     <input type="button" id="btnUpdateNow" />
     <div>
-      <div id="subscription_message" class="ok_message">&nbsp;</div>
+      <div id="subscription_message" class="ok_message"></div>
       <div id="filter_subscriptions" style="padding-left:30px;">
       </div>
       <div style="padding-left:34px;">

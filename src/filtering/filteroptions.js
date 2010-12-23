@@ -9,9 +9,9 @@ var ElementTypes = {
   stylesheet: 8,
   'object': 16,
   subdocument: 32,
+  media: 128,
   //BELOW ISN'T SUPPORTED YET
   object_subrequest: 64,
-  media: 128,
   font: 256,
   dtd: 512,
   other: 1024,

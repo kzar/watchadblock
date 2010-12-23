@@ -16,9 +16,6 @@ DEBUG = false;
 log = function() { };
 
 //Regex to validate a user-created filter.
-//TODO: insert a valid 'domain name regex'-regex, but wait for
-//issue 267 to be fixed first. Until this time any user adding
-//a filter containing multiple '##' will get a broken filter
 var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
 
 function translate(messageID, args) {

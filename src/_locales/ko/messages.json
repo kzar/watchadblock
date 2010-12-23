@@ -1,7 +1,11 @@
 ﻿{
-  "description": {
-    "message": "크롬 전용 애드블록! 웹 사이트의 광고 차단, 5점 만점에 4.5점의 사용자 평가!",
+  "description1": {
+    "message": "150만명 이상의 사용자와 함께 하는 가장 인기 있는 크롬 확장 프로그램. 인터넷 광고를 차단하십시오!",
     "description": "Extension description in manifest"
+  },
+  "free_description": {
+    "message": "가장 인기 있는 크롬 확장 프로그램 -- AdBlock을 설치하는 대신에 1.99달러를 지불해주십시오.",
+    "description": "Extension description used in free version manifest"
   },
 
   "buttoncancel": {
@@ -30,11 +34,11 @@
     "description": "Title for the installation success page"
   },
   "installisdone": {
-    "message": "보기 싫은 광고를 제거하여 더욱 빠르고 쾌적한 인터넷 환경을 만드십시오.",
+    "message": "보기 싫은 광고를 차단하여 더욱 빠르고 쾌적한 인터넷을 이용하십시오.",
     "description": "Message on the installation success page"
   },
-  "donaterequest": {
-    "message": "AdBlock<b>을 즐겨 사용하신다면 저의 가족들을 부양할 수 있도록<br/><a>기부</a>를 부탁드립니다. 애드블록을 사용해주셔서 고맙습니다 *^^* -- 마이클</b>",
+  "donaterequest2": {
+    "message": "저는 최근에 AdBlock 개발에 전념하기 위해 직장을 그만 두었습니다.<br/>현재 가족을 부양하기 위해 오직 기부에만 의존하고 있습니다. 돈에 집착하지는 않지만 <br/>기본 생활비를 충당할 수 있도록 <b><a>기부</a></b>를 부탁합니다. 고맙습니다. - 마이클",
     "description": "Donation request on installation success page"
   },
   "setotheroptions": {
@@ -46,7 +50,7 @@
     "description": "Message on installation success page"
   },
   "chromebutton_how_to_enable": {
-    "message": "버튼을 보이게 하려면 <a>이 도우미 확장 프로그램</a>을 설치하십시오.",
+    "message": "버튼을 보이게 하려면 <a>보조 확장 프로그램</a>을 설치하십시오.",
     "description": "Message on installation success page"
   },
   "chromebutton_showoption": {
@@ -110,7 +114,7 @@
     "description": "Warns the user that no filter was specified"
   },
   "blacklisterblocksalloftype": {
-    "message": "주의 : 이 필터는 $elementtype$ 요소를 모두 차단합니다!",
+    "message": "주의 : 이 필터는 $elementtype$ 요소를 모두 숨깁니다!",
     "description": "Warns the user that all elements of type X will be blocked",
     "placeholders": {
       "elementtype": {
@@ -124,7 +128,7 @@
     "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
-    "message": "이 페이지에서 $matchcount$개 항목과 일치합니다.",
+    "message": "이 페이지에서 $matchcount$개 요소와 일치합니다.",
     "description": "Tells the user multiple matches were found",
     "placeholders": {
       "matchcount": {
@@ -174,7 +178,7 @@
   },
 
   "whitelistertext": {
-    "message": "도메인이 $domain$로<br/>끝나면 광고를 제거하지 않습니다.",
+    "message": "도메인이 $domain$로<br/>끝나면 광고를 차단하지 않습니다.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
@@ -184,7 +188,7 @@
     }
   },
   "whitelistertitle": {
-    "message": "이 도메인의 광고를 허용하시겠니까?",
+    "message": "이 도메인에서 광고의 차단 해제를 허용하시겠니까?",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
@@ -352,12 +356,8 @@
     "message": "구독 필터 목록",
     "description": "Title of the filter list tab"
   },
-  "defaultsexplanation": {
-    "message": "구독 필터는 기본적으로 영어를 사용하는 사이트에 적용되도록 설정되어 있습니다.<br/>필요하다면 다른 구독 필터를 구독할 수 있습니다.",
-    "description": "Explanation of the filter lists"
-  },
   "filterlistlink": {
-    "message": "필요한 구독 필터만 구독하십시오. 비슷한 기능의 구독 필터를 많이 구독하면 다소 느려질 수 있습니다.<br/>구독 필터 전체 목록 : <a>바로가기</a>",
+    "message": "필요한 구독 필터만 구독하십시오. 비슷한 기능의 구독 필터를 많이 구독하면 느려질 수 있습니다.<br/>구독 필터 전체 목록 : <a>바로가기</a>",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
@@ -389,51 +389,51 @@
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "AdBlock custom filters (애드블록 구독 필터)",
+    "message": "AdBlock custom filters (AdBlock 구독 필터)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
-    "message": "EasyList (영어권 구독 필터)",
+    "message": "EasyList (영어권 기본 구독 필터)",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - 불가리아 부속 구독 필터",
+    "message": " - 불가리아 부가 구독 필터",
     "description": "A filter list"
   },
   "filterdutch": {
-    "message": " - 네덜란드 부속 구독 필터",
+    "message": " - 네덜란드 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_finnish": {
-    "message": " - 핀란드 부속 구독 필터",
+    "message": " - 핀란드 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_french": {
-    "message": " - 프랑스 부속 구독 필터",
+    "message": " - 프랑스 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_german": {
-    "message": " - 독일 부속 구독 필터",
+    "message": " - 독일 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_norwegian": {
-    "message": " - 노르웨이 부속 구독 필터",
+    "message": " - 노르웨이 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_polish": {
-    "message": " - 폴란드 부속 구독 필터",
+    "message": " - 폴란드 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_romanian": {
-    "message": " - 루마니아 부속 구독 필터",
+    "message": " - 루마니아 부가 구독 필터",
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": " - 러시아 부속 구독 필터",
+    "message": " - 러시아 부가 구독 필터",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
-    "message": " - 베트남 부속 구독 필터",
+    "message": " - 베트남 부가 구독 필터",
     "description": "A filter list"
   },
   "filterchinese": {
@@ -482,7 +482,7 @@
   },
 
   "blacklistclickmessage": {
-   "message": "광고를 제거하기 위해 문맥 메뉴로 광고 영역을 숨기거나 사용자 필터를 직접 입력하십시오.",
+   "message": "광고를 차단하기 위해 문맥 메뉴로 광고 영역을 숨기거나 사용자 필터를 직접 추가하십시오.",
    "description": "Message at the top of the blacklist options tab"
    },
   "blacklisttabtitle": {
@@ -518,7 +518,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "주의 : 필터를 잘못 작성하면 웹 페이지에 오작동이 발생하거나 페이지를 불러오는 속도가 저하될 수 있습니다!<br/>필터 작성 방법은 표준화된 필터 정보를 제공하는 Adblock Plus 홈페이지를 참고하십시오 : <a>바로가기</a>",
+    "message": "주의 : 필터를 잘못 작성하면 웹 페이지에 이상 증상이 발생하거나 페이지를 불러오는 속도가 저하될 수 있습니다!<br/>필터 작성 방법은 표준화된 필터 정보를 제공하는 Adblock Plus 홈페이지를 참고하십시오 : <a>바로가기</a>",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -534,7 +534,7 @@
     "description": "Section label for advanced options"
   },
   "reportanad": {
-    "message": "AdBlock 또는 구독 필터 유지자에게 <a>광고 신고</a>",
+    "message": "AdBlock 또는 구독 필터 유지자에게 <a>미차단 광고 신고</a>",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
@@ -543,11 +543,11 @@
     "description": "link to remove a excluded site"
   },
   "excludedsitestitle": {
-    "message": "광고 허용 도메인 관리",
+    "message": "허용 사이트 목록",
     "description": "title of the 4th tab page"
   },
   "excludedsitesexample": {
-    "message": "예를 들어 'google.com'을 추가하면 'googel.com'뿐만 아니라<br/>'mail.google.com', 'www.google.com'와 같은 하위 도메인의 광고도 제거하지 않습니다.",
+    "message": "예를 들어 'google.com'을 추가하면 'google.com'뿐만 아니라<br/>'mail.google.com', 'www.google.com'와 같은 하위 도메인의 광고도 차단하지 않습니다.",
     "description": "text on the 4th tab page"
   },
   "addbutton": {
@@ -555,7 +555,7 @@
     "description": "add button"
   },
   "removeallfromlist": {
-    "message": "허용 사이트의 모든 항목 제거 : ",
+    "message": "허용 사이트 목록의 모든 항목 제거 : ",
     "description": "option on 4th tab page"
   },
   "adblockreportinganad": {
@@ -563,7 +563,7 @@
     "description": "title of ad report page"
   },
   "adreport1": {
-    "message": "그래서 웹 페이지의 광고가 존재합니까? 광고를 신고하기 위해 알맞은 연락처를 찾을 수 있게 도와드립니다!<br/>광고 신고는 자원 봉사이므로 원하지 않는다면 이 창을 닫고, 옵션 페이지의 사용자 필터에만 필터를 추가할 수 있습니다!",
+    "message": "그래서 웹 페이지의 광고가 존재합니까? 미광고를 신고할 수 있도록 도와드립니다!<br/>광고 신고는 선택사항이므로 원하지 않는다면 이 창을 닫고, 사용자 필터에만 필터를 추가하십시오!",
     "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
@@ -591,7 +591,7 @@
     "description": "A negative response to a question"
   },
   "adalreadyblocked": {
-    "message": "광고가 이미 제거되었기 때문에 어떠한 조치도 필요없습니다.",
+    "message": "광고가 이미 차단되었기 때문에 어떠한 조치도 필요없습니다.",
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "correctfilters": {
@@ -763,7 +763,7 @@
     }
   },
   "fixityourself": {
-    "message": "옵션 페이지에 이 광고를 제거할 수 있는 필터를 추가할 수 있습니다. 고맙습니다!",
+    "message": "옵션 페이지에 이 광고를 차단할 수 있는 필터를 추가할 수 있습니다. 고맙습니다!",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {

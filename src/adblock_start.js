@@ -20,11 +20,16 @@ function relativeToAbsoluteUrl(url) {
 // Return the ElementType element type of the given element.
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
-  switch (el.nodeName) {
+  switch (el.nodeName.toUpperCase()) {
+    case 'INPUT': 
     case 'IMG': return ElementTypes.image;
     case 'SCRIPT': return ElementTypes.script;
     case 'OBJECT': 
     case 'EMBED': return ElementTypes.object;
+    case 'VIDEO': 
+    case 'AUDIO': 
+    case 'SOURCE': return ElementTypes.media;
+    case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
@@ -61,6 +66,20 @@ function browser_canLoad(event, data) {
   }
 }
 
+//Do not make the frame display a white area
+//Not calling .remove(); as this causes some sites to reload continuesly
+function removeFrame(el) {
+  var parentEl = $(el).parent();
+  var cols = (parentEl.attr('cols').indexOf(',') > 0);
+  if (!cols && parentEl.attr('rows').indexOf(',') <= 0)
+    return;
+  cols = (cols ? 'cols' : 'rows');
+  // Convert e.g. '40,20,10,10,10,10' into '40,20,10,0,10,10'
+  var sizes = parentEl.attr(cols).split(',');
+  sizes[$(el).prevAll().length] = 0;
+  parentEl.attr(cols, sizes.join(','));
+}
+
 beforeLoadHandler = function(event) {
   var el = event.target;
   // Cancel the load if canLoad is false.
@@ -73,7 +92,9 @@ beforeLoadHandler = function(event) {
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    if (elType & ElementTypes.background)
+    if (el.nodeName == "FRAME")
+      removeFrame(el);
+    else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
     else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
       $(el).remove();
@@ -85,7 +106,8 @@ function block_list_via_css(selectors) {
   var d = document.documentElement;
   var css_chunk = document.createElement("style");
   css_chunk.type = "text/css";
-  css_chunk.innerText = css_hide_for_selectors(selectors);
+  css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
+                        + css_hide_for_selectors(selectors);
   d.insertBefore(css_chunk, null);
 }
 
