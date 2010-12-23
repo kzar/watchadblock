@@ -11,23 +11,27 @@ var FilterNormalizer = {
     var lines = text.split('\n');
     delete text;
     var result = [];
+    var ignoredFilterCount = 0;
     for (var i=0; i<lines.length; i++) {
       try {
         var newfilter = FilterNormalizer.normalizeLine(lines[i]);
         if (newfilter)
           result.push(newfilter);
+        else if (newfilter !== false)
+          ignoredFilterCount++;
       } catch (ex) {
         log("Filter '" + lines[i] + "' could not be parsed: " + ex);
       }
     }
-    if (result.length != lines.length)
-      log('Ignoring ' + (lines.length - result.length) + ' rule(s)');
+    if (ignoredFilterCount)
+      log('Ignoring ' + ignoredFilterCount + ' rule(s)');
     return result.join('\n') + '\n';
   },
 
   // Normalize a single filter.
   // Input: filter:string a single filter
-  // Return: normalized filter string, or null if the line can be ignored. 
+  // Return: normalized filter string if the filter is valid, null if the filter
+  //         will be ignored or false if it isn't supposed to be a filter.
   // Throws: exception if filter could not be parsed.
   //
   // Note that 'Expires' comments are considered valid comments that
@@ -39,7 +43,7 @@ var FilterNormalizer = {
 
     // Remove comment/empty filters.
     if (Filter.isComment(filter))
-        return null;
+        return false;
 
     // Convert old-style hiding rules to new-style.
     if (/#.*\(/.test(filter) && !/##/.test(filter)) {

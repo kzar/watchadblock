@@ -77,8 +77,9 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''})
-  texts.push(FilterNormalizer.normalizeList(customfilters));
+  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''});
+  if (customfilters)
+    texts.push(FilterNormalizer.normalizeList(customfilters));
 
   texts = texts.join('\n').split('\n');
 
