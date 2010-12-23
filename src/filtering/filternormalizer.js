@@ -21,6 +21,7 @@ var FilterNormalizer = {
           ignoredFilterCount++;
       } catch (ex) {
         log("Filter '" + lines[i] + "' could not be parsed: " + ex);
+        ignoredFilterCount++;
       }
     }
     if (ignoredFilterCount)
