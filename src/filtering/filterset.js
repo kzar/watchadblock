@@ -22,38 +22,26 @@ function FilterSet() {
 
 
 // Builds Filter objects from text.
-// ignoredAdTypes is a bitset of ad types whose filters should not be
+// ignoreGoogleAds: true if Google text ads should be shown, false otherwise
 // included in this FilterSet (e.g. because the user likes that type of ads.)
-FilterSet.fromText = function(text, ignoredAdTypes) {
+FilterSet.fromText = function(text, ignoreGoogleAds) {
   var result = new FilterSet();
   result._sourceText = text;
 
   var lines = text.split('\n');
-  var ignoredCounter = 0;
   for (var i = 0; i < lines.length; i++) {
-    // Some rules are separated by \r\n; and hey, some rules may
-    // have leading or trailing whitespace for some reason.
-    var line = lines[i].
-      replace(/\r$/, '').
-      replace(/^ */, '').
-      replace(/ *$/, '');
-
-    var filter = Filter.fromText(line);
-    if (filter._adType & ignoredAdTypes) {
-      ignoredCounter += 1;
+    var filter = Filter.fromText(lines[i]);
+    if (ignoreGoogleAds && filter._adType == Filter.adTypes.GOOGLE_TEXT_AD)
       continue;
-    }
+
     // What's the right way to do this?
     if (filter.__type == "SelectorFilter")
       result._selectorFilters.push(filter);
     else if (filter.__type == "WhitelistFilter")
       result._whitelistFilters.push(filter);
-    else if (filter.__type == "PatternFilter")
+    else // PatternFilter
       result._patternFilters.push(filter);
-    // else it's CommentFilter or some other garbage that we ignore.
   }
-  if (ignoredCounter) 
-    log("Ignoring " + ignoredCounter + " [style] filters");
 
   return result;
 }

@@ -17,10 +17,12 @@ var ElementTypes = {
   other: 1024,
   xbl: 2048,
   ping: 4096,
-  xmlhttprequest: 8192
+  xmlhttprequest: 8192,
+  'document': 16384,
+  elemhide: 32768
   // if you add something here, update .ALL below
 }
-ElementTypes.ALL = 16383; // all bits turned on
+ElementTypes.ALL = 65535; // all bits turned on
 
 var FilterOptions = {
   NONE: 0,

@@ -142,14 +142,14 @@
         $("#btnEditAdvancedFilters").show();
       }
       $("#btnSaveAdvancedFilters").click(saveFilters);
-      
+
       extension_call('get_custom_filters_text', {}, function(text) {
         $("#txtFiltersAdvanced").val(text);
       });
-      
+
       //translation
       localizePage();
-      
+
       load_options();
     });
   </script>

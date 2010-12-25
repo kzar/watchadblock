@@ -5,17 +5,15 @@ var Filter = function() {
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
+// TODO(gundlach): is the extra memory worth it if we only rebuild the
+// FilterSet upon subscribe/unsubscribe/refresh?
 Filter._cache = {};
 
 // Each filter falls into a specific ad type.
 Filter.adTypes = {
   NONE: 0,
   GENERAL: 1,
-  GOOGLE_TEXT_AD: 2,
-  // temp: We need this until Gmail and Calendar no longer hide Bcc/Cc/
-  // Event Details fields upon click, when rules are on the page of the form
-  // ##anything[style="anything"]
-  STYLE_HIDE_BREAKING_GOOGLE_SERVICES: 4,
+  GOOGLE_TEXT_AD: 2
 }
 
 // Return a Filter instance for the given filter text.
@@ -23,10 +21,7 @@ Filter.fromText = function(text) {
   var cache = Filter._cache;
   if (!(text in cache)) {
 
-    if (Filter.isComment(text))
-      cache[text] = CommentFilter.get_singleton();
-    // old style selector syntax contains a #, then some text, then a (.
-    else if (/##/.test(text) || /#.*\(/.test(text))
+    if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
     else if (/^@@/.test(text))
       cache[text] = new WhitelistFilter(text);
@@ -35,6 +30,10 @@ Filter.fromText = function(text) {
 
   }
   return cache[text];
+}
+
+Filter.isSelectorFilter = function(text) {
+  return /##/.test(text);
 }
 
 Filter.isComment = function(text) {
@@ -132,22 +131,6 @@ var SelectorFilter = function(text) {
   if (text.indexOf('~all.google.domains') == 0)
     this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
 
-  if (text.indexOf("##") == -1) {
-    try {
-      text = SelectorFilter._old_style_to_new(text);
-    } catch (e) { // couldn't parse it.
-      log("Found an unparseable selector '" + text + "'");
-      this._domains = Filter._domainInfo('nowhere', ',');
-      this._selector = "MatchesNothing";
-      return;
-    }
-  }
-
-  // WebKit has a bug where style rules aren't parsed properly, so we just
-  // skip them until they fix their bug.
-  if (/style[\^\$\*]?=/.test(text))
-    this._adType = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
-
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
   this.selector = parts[1];
@@ -157,48 +140,6 @@ SelectorFilter.prototype = {
   __proto__: Filter.prototype,
 
   __type: "SelectorFilter"
-}
-// Convert a deprecated "old-style" filter text to the new style.
-SelectorFilter._old_style_to_new = function(text) {
-  // Old-style is domain#node(attr=value) or domain#node(attr)
-  // domain and node are optional, and there can be many () parts.
-  text = text.replace('#', '##');
-  var parts = text.split('##'); // -> [domain, rule]
-  var domain = parts[0];
-  var rule = parts[1];
-
-  // Make sure the rule has only the following two things:
-  // 1. a node -- this is optional and must be '*' or alphanumeric
-  // 2. a series of ()-delimited arbitrary strings -- also optional
-  //    the ()s can't be empty, and can't start with '='
-  if (rule.length == 0 || 
-      !/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i.test(rule))
-    throw new Error("bad selector filter");
-
-  var first_segment = rule.indexOf('(');
-
-  if (first_segment == -1)
-    return domain + '##' + rule;
-
-  var node = rule.substring(0, first_segment);
-  var segments = rule.substring(first_segment);
-
-  // turn all (foo) groups into [foo]
-  segments = segments.replace(/\((.*?)\)/g, "[$1]");
-  // turn all [foo=bar baz] groups into [foo="bar baz"]
-  // Specifically match:    = then not " then anything till ]
-  segments = segments.replace(/=([^"][^\]]*)/g, '="$1"');
-  // turn all [foo] into .foo, #foo
-  // #div(adblock) means all divs with class or id adblock
-  // class must be a single class, not multiple (not #*(ad listitem))
-  // I haven't ever seen filters like #div(foo)(anotherfoo), so ignore these
-  var resultFilter = node + segments;
-  var match = resultFilter.match(/\[([^\=]*?)\]/);
-  if (match)
-    resultFilter = resultFilter.replace(match[0], "#" + match[1]) +
-     "," + resultFilter.replace(match[0], "." + match[1]);
-
-  return domain + "##" + resultFilter;
 }
 
 // Filters that block by URL regex or substring.
@@ -281,7 +222,6 @@ PatternFilter._parseRule = function(text) {
   if (invertedElementTypes)
     result.allowedElementTypes = ~result.allowedElementTypes;
 
-
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
   if (/^@@/.test(rule))
@@ -292,15 +232,7 @@ PatternFilter._parseRule = function(text) {
   // First, check if the rule itself is in regex form.  If so, we're done.
   if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
-    try {
-      result.rule = new RegExp(result.rule); // Make sure it parses correctly
-    } catch(e) {
-      log("Found an unparseable regex rule - " + text);
-      // OK, we thought it was a regex but it's not.  Just discard it.
-      // TODO: let parser throw exceptions which are caught, rather than having
-      // to keep dummy rules.
-      result.rule = new RegExp('$dummy_rule_matching_nothing');
-    }
+    result.rule = new RegExp(result.rule);
     return result;
   }
 
@@ -336,15 +268,7 @@ PatternFilter._parseRule = function(text) {
   // Using escaped characters is faster. Only replace the most common one: /
   rule = rule.replace(/\//g, '\\/');
 
-  // verify it. TODO copied-and-modified from above.
-  try {
-    result.rule = new RegExp(rule);
-  } catch(e) {
-    log("Found an unparseable rule - " + text);
-    // OK, something went wrong.  Just discard it.
-    result.rule = new RegExp('$dummy_rule_matching_nothing');
-  }
-
+  result.rule = new RegExp(rule);
   return result;
 }
 
@@ -390,18 +314,3 @@ var WhitelistFilter = function(text) {
 // When you call any instance methods on WhitelistFilter, do the same
 // thing as in PatternFilter.
 WhitelistFilter.prototype = PatternFilter.prototype;
-
-// Garbage that we don't care about.
-var CommentFilter = function() {
-  Filter.call(this); // call base constructor.
-}
-CommentFilter._singleton = new CommentFilter();
-CommentFilter.get_singleton = function() {
-  return CommentFilter._singleton;
-}
-CommentFilter.prototype = {
-  // Inherit from Filter.
-  __proto__: Filter.prototype,
-
-  __type: "CommentFilter"
-}

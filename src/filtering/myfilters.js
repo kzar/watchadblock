@@ -20,6 +20,21 @@ function MyFilters() {
   // subscription options, merge with MyFilters.__subscription_options.
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
 
+  // temp code to normalize non-normalize filters, one time.
+  // Installed 12/13/2010.  Remove after everyone has gotten this update.
+  (function(that) {
+    if (localStorage['once_normalized_filters'])
+      return;
+    for (var id in that._subscriptions) {
+      if (that._subscriptions[id].text) {
+        that._subscriptions[id].text = FilterNormalizer.normalizeList(
+                                              that._subscriptions[id].text);
+      }
+    }
+    localStorage['once_normalized_filters'] = 'true';
+  })(this);
+  // end temp code
+
   this.update();
 
   // Check for subscriptions to be updated on startup
@@ -62,7 +77,9 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  texts.push( utils.storage_get({key: 'custom_filters', default_value: ''}) );
+  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''});
+  if (customfilters)
+    texts.push(FilterNormalizer.normalizeList(customfilters));
 
   texts = texts.join('\n').split('\n');
 
@@ -72,12 +89,8 @@ MyFilters.prototype.rebuild = function() {
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
   var options = utils.get_optional_features({});
-  // temp Until Chrome fixes their bug, we ignore certain patterns of
-  // rules.
-  var ignored = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
-  if (options.show_google_search_text_ads.is_enabled)
-    ignored |= Filter.adTypes.GOOGLE_TEXT_AD;
-  this.filterset = FilterSet.fromText(texts.join('\n'), ignored);
+  var ignoreGoogleAds = options.show_google_search_text_ads.is_enabled;
+  this.filterset = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds);
 }
 
 // If any subscribed filters are out of date, asynchronously load updated
@@ -192,14 +205,13 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
   var sub_data = this._subscriptions[subscription_id];
 
   sub_data.subscribed = true;
-  sub_data.text = text;
   sub_data.last_update = new Date().getTime();
 
   // Record how many days until we need to update the subscription text
   sub_data.expiresAfterHours = 120; // The default
+  var checkLines = text.split('\n', 15); //15 lines should be enough
   var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
   var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
-  var checkLines = text.split('\n', 15); //15 lines should be enough
   for (var i = 0; i < checkLines.length; i++) {
     if (!Filter.isComment(checkLines[i]))
       continue;
@@ -214,6 +226,8 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
       sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
     }
   }
+
+  sub_data.text = FilterNormalizer.normalizeList(text);
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
