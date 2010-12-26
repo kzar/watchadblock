@@ -58,11 +58,11 @@ var FilterNormalizer = {
     // If it is a hiding rule...
     if (Filter.isSelectorFilter(filter)) {
       //Regex to validate a user-created filter.
-      var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
+      var filter_validation_regex = /^(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
 
       // All specified domains must be valid.
       var parts = filter.split('##');
-      if (!global_filter_validation_regex.test('##' + parts[1]))
+      if (!filter_validation_regex.test(parts[1]))
         throw "Failed filter validation regex";
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
