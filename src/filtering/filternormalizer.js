@@ -72,10 +72,6 @@ var FilterNormalizer = {
       if (/style[\^\$\*]?=/.test(filter))
         return null;
 
-      // Ignore another special case unable to be caught by the previous check.
-      if (/^\#\d/.test(parts[1]))
-        return null;
-
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
       var parsedFilter = new PatternFilter(filter);
