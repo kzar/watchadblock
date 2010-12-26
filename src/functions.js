@@ -15,9 +15,6 @@ extension_call = function(fn, options, callback) {
 DEBUG = false;
 log = function() { };
 
-//Regex to validate a user-created filter.
-var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
-
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
 }

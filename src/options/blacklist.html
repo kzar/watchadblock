@@ -15,6 +15,9 @@
     }
   </style>
 
+  <script type="text/javascript" src="../filtering/filternormalizer.js"></script>
+  <script type="text/javascript" src="../filtering/filtertypes.js"></script>
+  <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
     register_broadcast_listener('filters_updated', function() {
       extension_call('get_custom_filters_text', {}, function(filters) {
@@ -82,14 +85,17 @@
       var validateUrlFilter = function() {
         var blockUrl = $("#txtBlockUrl").val().trim();
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
-        if (blockDomain == '*')
+        if (blockDomain == '*' || !blockDomain)
           blockDomain = '';
-
-        var ok = true;
-        if (!validateDomain(blockDomain))
-          ok = false;
-        if (blockUrl == '')
-          ok = false;
+        else
+          blockDomain = '$domain=' + blockDomain;
+        var ok = false;
+        try {
+          if (FilterNormalizer.normalizeLine(blockUrl + blockDomain))
+            ok = true;
+          if (blockUrl.indexOf('##') != -1)
+            ok = false;
+        } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
       $("#divUrlBlock input:text").keyup(validateUrlFilter);
@@ -97,12 +103,13 @@
       var validateCssFilter = function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
         var blockDomain = $("#txtUserFilterDomain").val().trim();
-        var ok = true;
-        if (!validateDomain(blockDomain))
-          ok = false;
-        if (ok) {
-          ok = global_filter_validation_regex.test(blockCss);
-        }
+        if (blockDomain == '*')
+          blockDomain = '';
+        var ok = false;
+        try {
+          if (FilterNormalizer.normalizeLine(blockDomain + "##" + blockCss))
+            ok = true;
+        } catch(ex) {}
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#divCssBlock input:text").keyup(validateCssFilter);
@@ -224,16 +231,35 @@
            class="footnote" style="margin-top: 5px; margin-bottom: 5px"></div>
         <a id="tutorlink" href="http://adblockplus.org/en/filters" 
            target="_new"></a>
-     </div>
+      </div>
 
-    <div>
-      <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
-      <br/>
+      <div>
+        <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
+        <br/>
+      </div>
+
+      <div style="padding-top:20px">
+        <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
+        <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
+      </div>
+
     </div>
-
-    <div style="padding-top:20px">
-      <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
-      <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
-    </div>
-
+  </div>
+  <div class="sneaky">
+    <p>
+    <span i18n="cleanuplist"></span>
+    <input type="button" id="btnCleanUp" i18n_value="buttonok" />
+    </p>
+    <script>
+      $(function() {
+        $("#btnCleanUp").click(function() {
+          //Don't save immediately, first allow them to review changes
+          if ($("#btnEditAdvancedFilters").is(":visible"))
+            $("#btnEditAdvancedFilters").click();
+          var newFilters = FilterNormalizer.normalizeList($("#txtFiltersAdvanced").val(), true);
+          newFilters = newFilters.replace(/(\n)+$/,'\n');
+          $("#txtFiltersAdvanced").val(newFilters)
+        });
+      });
+    </script>
   </div>
