@@ -17,15 +17,6 @@
 
       // V3 FILTERING
 
-      // Inputs: domain: domain of page that requested the selectors.
-      // Returns: the selector strings from all selector filters that should
-      //          apply to the given domain.
-      utils.selectors_for_domain = function(options) {
-        return _myfilters.filterset.
-          limitedToDomain(options.domain).
-          getSelectors();
-      }
-
       // Rebuild the filterset based on the current settings and subscriptions.
       // Inputs: none.
       // Returns: null, upon completion
@@ -147,54 +138,48 @@
       //         is_top_frame?:bool true if the caller is the top
       //           level frame.  Subframes use this frame's domain to determine 
       //           if they are whitelisted.
-      //         from_adblock_start:bool true if called from adblock_start.js,
-      //           false if from adblock.js.
+      //         include_filters:bool true if hide and block filters should be
+      //           included
       utils.get_content_script_data = function(options, sender) {
         if (options.is_top_frame) {
           top_frame_domains[sender.tab.id] = options.domain;
         }
 
+        // TODO speed: i think sender.tab.url is always the TOP FRAME url omg, not the
+        // subframe url.  so we can get rid of top_frame_domains?
         var tfd = top_frame_domains[sender.tab.id];
         var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
         var features = utils.get_optional_features();
         var result = {
           page_is_whitelisted: whitelisted,
-          selectors: [],
-          top_frame_domain: tfd,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: features
         };
-        if (whitelisted || !options.from_adblock_start)
+        if (whitelisted)
+          return result;
+        // If in debug mode, send filters to adblock.js to print css info.
+        // Normally only adblock_start asks to include_filters.
+        if (!options.include_filters && !features.debug_logging.is_enabled)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
         // apply CSS-hiding rules, and send Chrome a filterset.
 
-        var selectors = utils.selectors_for_domain({domain:options.domain});
-        if (SAFARI) {
-          // Safari applies CSS rules directly on the page rather
-          // than using their wacked-out addContentStyleSheet.
-          result.selectors = selectors;
-        } else {
-          /* temp commenting out until I am sure how to use this.
-             how do i handle a.com loading iframes from b.com?
-             they need to run different CSS, but the only way to
-             inject CSS onto the b.com subframe using insertCSS() 
-             is to use the allFrames:true option -- which would put
-             a.com's, not b.com's, CSS onto the frame.
-            // Chrome inserts CSS using an extension API.
-            chrome.tabs.insertCSS(
-            sender.tab.id,
-            { code: css_hide_for_selectors(selectors) }
-          );*/
-          // Until we know how to use insertCSS, we've got to
-          // do manual CSS injection instead, just like Safari.
-          result.selectors = selectors;
+        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+        // when not cached, it takes about 100ms.  So more caching would be good.  The
+        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+        // should be able to turn up the fifecache size by a lot.  have the fifocache log
+        // how big each new entry is, to verify this.
+        var global_hide = _myfilters.global.cached_getSelectors;
+        var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+        result.selectors = global_hide.concat(nonglobal_hide);
+        // Chrome needs the blocking filters in the content script until a
+        // synchronous background communication API comes along.
+        if (!SAFARI) {
+          var global_block = _myfilters.global.cached_blockFiltersText;
+          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
+          result.block = global_block + nonglobal_block.join('\n');
         }
-        // Chrome needs filtertext to hack true blocking until a real
-        // blocking API comes along.
-        if (!SAFARI)
-          result.filtertext = _myfilters.filterset._sourceText;
 
         return result;
       }
@@ -492,8 +477,9 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var limited = _myfilters.filterset.limitedToDomain(pageDomain);
-          var isMatched = url && limited.matches(url, elType);
+          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
+          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
+                                  limited.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;

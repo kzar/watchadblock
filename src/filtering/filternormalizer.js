@@ -63,7 +63,7 @@ var FilterNormalizer = {
 
       // Ignore [style] special case that WebKit parses badly.
       var parsedFilter = new SelectorFilter(filter);
-      if (/style[\^\$\*]?=/.test(filter))
+      if (/style([\^\$\*]?=|\])/.test(filter))
         return null;
 
       // Ignore another special case unable to be caught by the previous check.

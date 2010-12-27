@@ -1,19 +1,14 @@
-function debug_print_selector_matches() {
+function debug_print_selector_matches(selectors) {
   if (!DEBUG)
     return;
 
-  extension_call(
-    "selectors_for_domain", 
-    { domain: document.domain },
-    function(selectors) {
-      selectors.
-        filter(function(selector) { return $(selector).length > 0; }).
-        forEach(function(selector) {
-          log("Debug: CSS '" + selector + "' hid:");
-          $(selector).each(function(i, el) {
-            log("       " + el.nodeName + "#" + el.id + "." + el.className);
-          });
-        });
+  selectors.
+    filter(function(selector) { return $(selector).length > 0; }).
+    forEach(function(selector) {
+      log("Debug: CSS '" + selector + "' hid:");
+      $(selector).each(function(i, el) {
+        log("       " + el.nodeName + "#" + el.id + "." + el.className);
+      });
     });
 }
 
@@ -150,7 +145,7 @@ function adblock_begin_part_2() {
       beforeLoadHandler(fakeEvent);
     }
 
-    debug_print_selector_matches();
+    debug_print_selector_matches(data.selectors);
   });
 }
 

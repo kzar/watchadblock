@@ -83,6 +83,11 @@ Filter._domainInfo = function(domainText, divider) {
 // given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
 // versa.
 Filter._domainIsInList = function(domain, list) {
+  // TODO speed: background's get_content_script_data calls limitedToDomain
+  // and this function is the bottleneck.  Figure out some way to shortcut
+  // so that we don't have to call this as frequently.  Perhaps each rule
+  // keeps a list of the first letter of each TLD in its domains, and we first
+  // check whether the TLD of domain is in that list, before checking fully.
   for (var i = 0; i < list.length; i++) {
     if (list[i] == domain)
       return true;
@@ -95,14 +100,17 @@ Filter._domainIsInList = function(domain, list) {
 Filter.prototype = {
   __type: "Filter",
 
+  // Returns true if this filter applies on all domains.
+  isGlobal: function() {
+    var posEmpty = this._domains.applied_on.length == 0;
+    var negEmpty = this._domains.not_applied_on.length == 0;
+    return (posEmpty && negEmpty);
+  },
+
   // Returns true if this filter should be run on an element from the given
   // domain.
   appliesToDomain: function(domain) {
-    var posEmpty = this._domains.applied_on.length == 0;
-    var negEmpty = this._domains.not_applied_on.length == 0;
-
-    // short circuit the common case
-    if (posEmpty && negEmpty)
+    if (this.isGlobal())
       return true;
 
     var posMatch = Filter._domainIsInList(domain, this._domains.applied_on);
@@ -112,7 +120,8 @@ Filter.prototype = {
       if (negMatch) return false;
       else return true;
     }
-    else if (!posEmpty) { // some domains applied, but we didn't match
+    else if (this._domains.applied_on.length != 0) {
+      // some domains applied, but we didn't match
       return false;
     }
     else if (negMatch) { // no domains applied, we are excluded
@@ -152,6 +161,11 @@ var PatternFilter = function(text) {
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
   this._rule = data.rule;
+  // Preserve _text for later in Chrome's background page.  Don't do so in
+  // safari or in content scripts, where it's not needed.
+  // TODO once Chrome has a real blocking API, we can get rid of _text.
+  if (document.location.protocol == 'chrome-extension:')
+    this._text = text;
 }
 
 // Return a { rule, domainText, allowedElementTypes } object

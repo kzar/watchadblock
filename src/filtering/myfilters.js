@@ -21,17 +21,19 @@ function MyFilters() {
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
 
   // temp code to normalize non-normalize filters, one time.
-  // Installed 12/13/2010.  Remove after everyone has gotten this update.
+  // had to make a second pass when the [style] ignore was updated.
+  // Installed 12/27/2010.  Remove after everyone has gotten this update.
   (function(that) {
-    if (localStorage['once_normalized_filters'])
+    if (localStorage['twice_normalized_filters'])
       return;
+    delete localStorage['once_normalized_filters'];
     for (var id in that._subscriptions) {
       if (that._subscriptions[id].text) {
         that._subscriptions[id].text = FilterNormalizer.normalizeList(
                                               that._subscriptions[id].text);
       }
     }
-    localStorage['once_normalized_filters'] = 'true';
+    localStorage['twice_normalized_filters'] = 'true';
   })(this);
   // end temp code
 
@@ -69,7 +71,7 @@ MyFilters.prototype.update = function() {
     this._event_handlers.updated[i]();
 }
 
-// Rebuild this.filterset based on the current settings and subscriptions.
+// Rebuild this.[non]global based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
   for (var id in this._subscriptions)
@@ -90,7 +92,13 @@ MyFilters.prototype.rebuild = function() {
 
   var options = utils.get_optional_features({});
   var ignoreGoogleAds = options.show_google_search_text_ads.is_enabled;
-  this.filterset = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds);
+  var filterset_data = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds, true);
+  this.nonglobal = filterset_data.nonglobal;
+  this.global = filterset_data.global;
+  // Chrome needs to send the same data about global filters to content
+  // scripts over and over, so calculate it once and cache it.
+  this.global.cached_getSelectors = this.global.getSelectors();
+  this.global.cached_blockFiltersText = this.global.getBlockFilters().join('\n') + '\n';
 }
 
 // If any subscribed filters are out of date, asynchronously load updated
