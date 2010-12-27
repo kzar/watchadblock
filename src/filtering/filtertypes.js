@@ -157,17 +157,15 @@ var PatternFilter = function(text) {
 
   var data = PatternFilter._parseRule(text);
 
-  // TODO speed ugh, i'm doubling the RAM for block filters in content scripts by doing this.
-  // I could NOT store _text in content scripts via a global or passing in options all the
-  // way down, or I could delete _text after the fact in content scripts... or i could figure
-  // out some other way from background.html to put together the options to send.  can i just
-  // do "/" + rule.source + "/$" + options.join(',') + allowedElementTypes.join(',')?  Test 
-  // the output of this against the original strings.
-  this._text = text;
   this._domains = Filter._domainInfo(data.domainText, '|');
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
   this._rule = data.rule;
+  // Preserve _text for later in Chrome's background page.  Don't do so in
+  // safari or in content scripts, where it's not needed.
+  // TODO once Chrome has a real blocking API, we can get rid of _text.
+  if (document.location.protocol == 'chrome-extension:')
+    this._text = text;
 }
 
 // Return a { rule, domainText, allowedElementTypes } object
