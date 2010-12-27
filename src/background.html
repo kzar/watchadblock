@@ -161,6 +161,11 @@
         // Not whitelisted, and running on adblock_start.  We have two tasks:
         // apply CSS-hiding rules, and send Chrome a filterset.
 
+        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+        // when not cached, it takes about 100ms.  So more caching would be good.  The
+        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+        // should be able to turn up the fifecache size by a lot.  have the fifocache log
+        // how big each new entry is, to verify this.
         var global_hide = _myfilters.global.cached_getSelectors;
         var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
         result.selectors = global_hide.concat(nonglobal_hide);

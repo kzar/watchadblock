@@ -83,6 +83,11 @@ Filter._domainInfo = function(domainText, divider) {
 // given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
 // versa.
 Filter._domainIsInList = function(domain, list) {
+  // TODO speed: background's get_content_script_data calls limitedToDomain
+  // and this function is the bottleneck.  Figure out some way to shortcut
+  // so that we don't have to call this as frequently.  Perhaps each rule
+  // keeps a list of the first letter of each TLD in its domains, and we first
+  // check whether the TLD of domain is in that list, before checking fully.
   for (var i = 0; i < list.length; i++) {
     if (list[i] == domain)
       return true;
