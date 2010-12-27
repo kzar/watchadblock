@@ -103,8 +103,6 @@ function adblock_begin_part_2() {
   var opts = { domain: document.domain };
   if (window == window.top)
     opts.is_top_frame = true;
-  if (DEBUG)
-    opts.include_filters = true;
 
   extension_call('get_content_script_data', opts, function(data) {
     if (data.adblock_is_paused) {

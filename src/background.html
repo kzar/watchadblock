@@ -155,7 +155,11 @@
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: features
         };
-        if (whitelisted || !options.include_filters)
+        if (whitelisted)
+          return result;
+        // If in debug mode, send filters to adblock.js to print css info.
+        // Normally only adblock_start asks to include_filters.
+        if (!options.include_filters && !features.debug_logging.is_enabled)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
