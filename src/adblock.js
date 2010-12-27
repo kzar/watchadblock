@@ -1,19 +1,14 @@
-function debug_print_selector_matches() {
+function debug_print_selector_matches(selectors) {
   if (!DEBUG)
     return;
 
-  extension_call(
-    "selectors_for_domain", 
-    { domain: document.domain },
-    function(selectors) {
-      selectors.
-        filter(function(selector) { return $(selector).length > 0; }).
-        forEach(function(selector) {
-          log("Debug: CSS '" + selector + "' hid:");
-          $(selector).each(function(i, el) {
-            log("       " + el.nodeName + "#" + el.id + "." + el.className);
-          });
-        });
+  selectors.
+    filter(function(selector) { return $(selector).length > 0; }).
+    forEach(function(selector) {
+      log("Debug: CSS '" + selector + "' hid:");
+      $(selector).each(function(i, el) {
+        log("       " + el.nodeName + "#" + el.id + "." + el.className);
+      });
     });
 }
 
@@ -108,6 +103,8 @@ function adblock_begin_part_2() {
   var opts = { domain: document.domain };
   if (window == window.top)
     opts.is_top_frame = true;
+  if (DEBUG)
+    opts.include_filters = true;
 
   extension_call('get_content_script_data', opts, function(data) {
     if (data.adblock_is_paused) {
@@ -150,7 +147,7 @@ function adblock_begin_part_2() {
       beforeLoadHandler(fakeEvent);
     }
 
-    debug_print_selector_matches();
+    debug_print_selector_matches(data.selectors);
   });
 }
 

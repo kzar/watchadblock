@@ -45,7 +45,7 @@ function browser_canLoad(event, data) {
     return safari.self.tab.canLoad(event, data);
   } else {
     // If we haven't yet asynchronously loaded our filters, store for later.
-    if (typeof _limited_to_domain == "undefined") {
+    if (typeof _local_block_filterset == "undefined") {
       if (!(data.elType & ElementTypes.script)) {
         event.mustBePurged = true;
         LOADED_TOO_FAST.push({data:event});
@@ -53,11 +53,7 @@ function browser_canLoad(event, data) {
       return true;
     }
 
-    // every time browser_canLoad is called on this page, the pageDomain will
-    // be the same -- so we can just check _limited_to_domain which we
-    // calculated once.  This takes less memory than storing local_filterset
-    // on the page.
-    var isMatched = data.url && _limited_to_domain.matches(data.url, data.elType);
+    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, document.domain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
     else if (isMatched)
@@ -119,7 +115,7 @@ function adblock_begin() {
 
   var opts = { 
     domain: document.domain, 
-    from_adblock_start: true,
+    include_filters: true,
     is_top_frame: (window == window.top)
   };
   extension_call('get_content_script_data', opts, function(data) {
@@ -134,20 +130,15 @@ function adblock_begin() {
       return;
     }
 
-    // TEMP: until we know how to use insertCSS properly in Chrome,
-    // Chrome needs to manually block CSS just like Safari.
-    // if (SAFARI) // Chrome does this in background.html
     block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
-      var local_filterset = FilterSet.fromText(data.filtertext);
-      _limited_to_domain = local_filterset.limitedToDomain(document.domain);
-
-      // We don't need these locally, so delete them to save memory.
-      delete _limited_to_domain._selectorFilters;
-      delete _limited_to_domain._domainLimitedCache;
+      // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
+      // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
+      // but is much quicker to reparse.
+      _local_block_filterset = FilterSet.fromText(data.block, undefined, false);
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);

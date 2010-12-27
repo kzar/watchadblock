@@ -95,14 +95,17 @@ Filter._domainIsInList = function(domain, list) {
 Filter.prototype = {
   __type: "Filter",
 
+  // Returns true if this filter applies on all domains.
+  isGlobal: function() {
+    var posEmpty = this._domains.applied_on.length == 0;
+    var negEmpty = this._domains.not_applied_on.length == 0;
+    return (posEmpty && negEmpty);
+  },
+
   // Returns true if this filter should be run on an element from the given
   // domain.
   appliesToDomain: function(domain) {
-    var posEmpty = this._domains.applied_on.length == 0;
-    var negEmpty = this._domains.not_applied_on.length == 0;
-
-    // short circuit the common case
-    if (posEmpty && negEmpty)
+    if (this.isGlobal())
       return true;
 
     var posMatch = Filter._domainIsInList(domain, this._domains.applied_on);
@@ -112,7 +115,8 @@ Filter.prototype = {
       if (negMatch) return false;
       else return true;
     }
-    else if (!posEmpty) { // some domains applied, but we didn't match
+    else if (this._domains.applied_on.length != 0) {
+      // some domains applied, but we didn't match
       return false;
     }
     else if (negMatch) { // no domains applied, we are excluded
@@ -148,6 +152,13 @@ var PatternFilter = function(text) {
 
   var data = PatternFilter._parseRule(text);
 
+  // TODO speed ugh, i'm doubling the RAM for block filters in content scripts by doing this.
+  // I could NOT store _text in content scripts via a global or passing in options all the
+  // way down, or I could delete _text after the fact in content scripts... or i could figure
+  // out some other way from background.html to put together the options to send.  can i just
+  // do "/" + rule.source + "/$" + options.join(',') + allowedElementTypes.join(',')?  Test 
+  // the output of this against the original strings.
+  this._text = text;
   this._domains = Filter._domainInfo(data.domainText, '|');
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
