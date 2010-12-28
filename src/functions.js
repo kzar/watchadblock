@@ -58,10 +58,17 @@ function page_is_whitelisted(url, type) {
   if (!type) 
     type = ElementTypes.document;
   var bg = chrome.extension.getBackgroundPage();
-  var whitelist = bg._myfilters.filterset._whitelistFilters;
-  for (var i = 0; i < whitelist.length; i++) {
-    if (whitelist[i].matches(url, type, false))
-      return true;
+  alert("do this before releasing.");
+  // TODO time how long this takes.  Easylist has 400 whitelistfilters.
+  // Almost every matches() just has to do a bitwise AND so it may be really 
+  // fast.
+  var both = { global:1, nonglobal: 1};
+  for (var name in both) {
+    var whitelist = bg._myfilters[name]._whitelistFilters;
+    for (var i = 0; i < whitelist.length; i++) {
+      if (whitelist[i].matches(url, type, false))
+        return true;
+    }
   }
   return false;
 }
