@@ -1,9 +1,12 @@
 ﻿{
-  "description": {
-    "message": "Chrome版的Adblock! 拦截互联网上的所有广告,4.5到5分的优秀用户评价!",
+  "description1": {
+    "message": "用户超150万，最受欢迎的Chrome扩展，可屏蔽整个互联网的广告!",
     "description": "Extension description in manifest"
   },
-
+  "free_description": {
+    "message": "最受欢迎的Chrome扩展 -- 不捐 $1.99 不许安装 :-) （开个玩笑）",
+    "description": "Extension description used in free version manifest"
+  },
   "buttoncancel": {
     "message": "取消",
     "description": "Cancel button"
@@ -32,10 +35,6 @@
   "installisdone": {
     "message": "重新加载所有打开的标签，然后查看广告是否消失",
     "description": "Message on the installation success page"
-  },
-  "donaterequest": {
-    "message": "如果你喜欢Adblock，请<a>捐助</a>这样我就可以支持我的家人! 谢谢:) - 迈克尔",
-    "description": "Donation request on installation success page"
   },
   "setotheroptions": {
     "message": "您可以通过点击扳手-工具-扩展程序-Adblock-选项以设置订阅筛选器列表或其他选项",
@@ -344,10 +343,6 @@
   "filterstabtitle": {
     "message": "订阅到过滤列表",
     "description": "Title of the filter list tab"
-  },
-  "defaultsexplanation": {
-    "message": "默认订阅美国过滤器，其他人可能需要更多或者其他的过滤器",
-    "description": "Explanation of the filter lists"
   },
   "filterlistlink": {
     "message": "不要订阅您不需要的筛选器--每个筛选器都会拖慢您的程序!若需要其他更多的筛选器请点击<a>这里</a>.",
@@ -746,5 +741,29 @@
   "contextmenuexcludedomain": {
     "message": "将本域名添加到白名单...",
     "description": "Context menu entry"
+  },
+  "donaterequest2": {
+    "message": "最近我辞掉了工作，专心开发AdBlock，因而养家就全靠大家的捐款了！希望诸君慷慨解囊，助我维持生活所需，也让我和妻子验证，作此决定绝不疯狂，非常感谢！:)  －迈克",
+    "description": "Donation request on installation success page"
+  },
+  "filecleanerwarning": {
+    "message": "如果您每次启动时都见到此消息，请核实没有其它程序自动清除掉“localStorage”文件。",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
+  "somequicksetup": {
+    "message": "一些快速设置",
+    "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "视频和Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "广告出现在影片中或开头吗？还是在Flash等插件中？",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "Flash或其它插件内部的广告尚不可屏蔽，这需要浏览器本身及Webkit的支持。",
+    "description": "Result of the final ad report question"
   }
 }

@@ -20,11 +20,16 @@ function relativeToAbsoluteUrl(url) {
 // Return the ElementType element type of the given element.
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
-  switch (el.nodeName) {
+  switch (el.nodeName.toUpperCase()) {
+    case 'INPUT': 
     case 'IMG': return ElementTypes.image;
     case 'SCRIPT': return ElementTypes.script;
     case 'OBJECT': 
     case 'EMBED': return ElementTypes.object;
+    case 'VIDEO': 
+    case 'AUDIO': 
+    case 'SOURCE': return ElementTypes.media;
+    case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
@@ -40,7 +45,7 @@ function browser_canLoad(event, data) {
     return safari.self.tab.canLoad(event, data);
   } else {
     // If we haven't yet asynchronously loaded our filters, store for later.
-    if (typeof _limited_to_domain == "undefined") {
+    if (typeof _local_block_filterset == "undefined") {
       if (!(data.elType & ElementTypes.script)) {
         event.mustBePurged = true;
         LOADED_TOO_FAST.push({data:event});
@@ -48,17 +53,27 @@ function browser_canLoad(event, data) {
       return true;
     }
 
-    // every time browser_canLoad is called on this page, the pageDomain will
-    // be the same -- so we can just check _limited_to_domain which we
-    // calculated once.  This takes less memory than storing local_filterset
-    // on the page.
-    var isMatched = data.url && _limited_to_domain.matches(data.url, data.elType);
+    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, document.domain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
     else if (isMatched)
       log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
+}
+
+//Do not make the frame display a white area
+//Not calling .remove(); as this causes some sites to reload continuesly
+function removeFrame(el) {
+  var parentEl = $(el).parent();
+  var cols = (parentEl.attr('cols').indexOf(',') > 0);
+  if (!cols && parentEl.attr('rows').indexOf(',') <= 0)
+    return;
+  cols = (cols ? 'cols' : 'rows');
+  // Convert e.g. '40,20,10,10,10,10' into '40,20,10,0,10,10'
+  var sizes = parentEl.attr(cols).split(',');
+  sizes[$(el).prevAll().length] = 0;
+  parentEl.attr(cols, sizes.join(','));
 }
 
 beforeLoadHandler = function(event) {
@@ -73,7 +88,9 @@ beforeLoadHandler = function(event) {
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    if (elType & ElementTypes.background)
+    if (el.nodeName == "FRAME")
+      removeFrame(el);
+    else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
     else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
       $(el).remove();
@@ -85,7 +102,8 @@ function block_list_via_css(selectors) {
   var d = document.documentElement;
   var css_chunk = document.createElement("style");
   css_chunk.type = "text/css";
-  css_chunk.innerText = css_hide_for_selectors(selectors);
+  css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
+                        + css_hide_for_selectors(selectors);
   d.insertBefore(css_chunk, null);
 }
 
@@ -97,7 +115,7 @@ function adblock_begin() {
 
   var opts = { 
     domain: document.domain, 
-    from_adblock_start: true,
+    include_filters: true,
     is_top_frame: (window == window.top)
   };
   extension_call('get_content_script_data', opts, function(data) {
@@ -112,20 +130,15 @@ function adblock_begin() {
       return;
     }
 
-    // TEMP: until we know how to use insertCSS properly in Chrome,
-    // Chrome needs to manually block CSS just like Safari.
-    // if (SAFARI) // Chrome does this in background.html
     block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
-      var local_filterset = FilterSet.fromText(data.filtertext);
-      _limited_to_domain = local_filterset.limitedToDomain(document.domain);
-
-      // We don't need these locally, so delete them to save memory.
-      delete _limited_to_domain._selectorFilters;
-      delete _limited_to_domain._domainLimitedCache;
+      // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
+      // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
+      // but is much quicker to reparse.
+      _local_block_filterset = FilterSet.fromText(data.block, undefined, false);
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);

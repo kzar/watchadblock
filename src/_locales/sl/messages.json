@@ -1,9 +1,12 @@
 ﻿{
-  "description": {
-    "message": "AdBlock za internetni brskalnik Google Chrome!  Blokira nadležne oglase po vsem spletu.  Naši uporabniki so AdBlock ocenili s 4.5 od 5 zvezdic!",
+  "description1": {
+    "message": "Najbolj popularna razširitev za brskalnik Google Chrome, z več kot 1,5 miljona uporabnikov! Blokira oglase po vsem spletu.",
     "description": "Extension description in manifest"
   },
-
+  "free_description": {
+    "message": "Najbolj popularna razširitev za brskalnik Google Chrome -- toda, prosimo plačajte €1.99 za AdBlock, namesto, da to namestite :)",
+    "description": "Extension description used in free version manifest"
+  },
   "buttoncancel": {
     "message": "Prekliči",
     "description": "Cancel button"
@@ -32,10 +35,6 @@
   "installisdone": {
     "message": "Ponovno naložite zavihke in oglasi bodo izginili.",
     "description": "Message on the installation success page"
-  },
-  "donaterequest": {
-    "message": "Če vam je AdBlock všeč, prosimo <a>donirajte</a>!  Hvala :) - Michael",
-    "description": "Donation request on installation success page"
   },
   "setotheroptions": {
     "message": "Druge nastavitve in kriterije blokiranja oglasov lahko spremenite preko 'Wrench' | Orodja | Razširitve | Nastavitve.",
@@ -237,7 +236,7 @@
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "Želite, da program oglasov pri zadetkih iskanje na Google.si ne blokira?",
+    "message": "Želite, da program oglasov pri zadetkih iskanja na Google.si ne blokira?",
     "description": "Option on first tab page"
   },
   "youtubeads": {
@@ -344,10 +343,6 @@
   "filterstabtitle": {
     "message": "Naročite se na sezname kriterijev za blokiranje",
     "description": "Title of the filter list tab"
-  },
-  "defaultsexplanation": {
-    "message": "Osnovni kriteriji so predvsem za Angleško govoreèe ljudi v ZDA. Ostali se morda želite naročiti na dodatne kriterije za blokiranje oglasov.",
-    "description": "Explanation of the filter lists"
   },
   "filterlistlink": {
     "message": "Ne naročajte več kriterijv za blokiranje oglasov, kot jih potrebujete -- vsak malo upočasni brskanje! Avtorje in druge sezname lahko najdete <a>tukaj</a>.",
@@ -507,7 +502,7 @@
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
-    "message": "Roèno uredite narènine kriterijev za blokiranje oglasov:",
+    "message": "Ročno uredite narčnine kriterijev za blokiranje oglasov:",
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
@@ -747,8 +742,24 @@
     "message": "AdBlock naj ne izvaja blokiranja oglasov na tej domeni...",
     "description": "Context menu entry"
   },
+  "filecleanerwarning": {
+    "message": "Če vidite to sporočilo vsakič, ko zaženeta AdBlock, prosimo poskrbite, da ne uporabljate odstranjevalca datotek, ki izbriše tudi datoteke 'localStorage'.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
   "somequicksetup": {
     "message": "Hitre nastavitve",
     "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "Videi in Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "Ali se oglas prikaže v ali pred videoposnetkom oz. v kakršnemkoli drugem vtičniku? (npr.: Flash igra)",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "Trenutno ni možno blokirati oglasov v Flashu ali v drugih vtičnikih. Čakamo na podporo s strani Googla in Webkita.",
+    "description": "Result of the final ad report question"
   }
 }

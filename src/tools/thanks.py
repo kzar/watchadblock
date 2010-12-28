@@ -1,10 +1,6 @@
 #!/usr/bin/python
 
 #TODO: check for people who donate multiple times.
-#TODO: don't send as soon as I type their name, in case I made a mistake (and
-#it's too slow anyway).  Batch them up and send and mark them whenever I get
-#one with a note, maybe.
-#TODO: show where they're from.
 
 import email
 import imaplib
@@ -47,22 +43,22 @@ def donation_mailbox(readonly=False):
 
 def donation_messages(max_count):
     """
-    Return a generator yielding a message at a time.  It only marks it read
-    when you iterate past it (so if your program crashes, you won't have marked
-    as read a message that you haven't dealt with).
+    Return an iterator containing max_count unread donation messages.
     """
     m = donation_mailbox()
     unseens = m.search(None, 'UNSEEN')[1][0].split()[ :max_count]
     try:
-        for msgid in unseens:
-            # TODO: there is surely a more efficient way to do this.
-            m.select('afc/donations', readonly=True)
-            msg = m.fetch(msgid, '(RFC822)')[1][0][1] # not marked as read
+        # TODO: there is surely a more efficient way to do this.
+        m.select('afc/donations', readonly=True)
+        data = m.fetch(','.join(unseens), '(RFC822)') # not marked as read
+        msgs = [ tup[1] for tup in data[1][::2] ]
+        for i, msg in enumerate(msgs):
+            msgid = unseens[i]
             email_msg = email.message_from_string(msg)
             try:
                 d = Donation(email_msg, msgid=msgid)
                 if d.amount >= 100:
-                    raise ValueError("%s donated %.2f; you need to send them something." 
+                    raise ValueError("%s donated %.2f; you need to send them something."
                                      % (d.name, d.amount))
             except ValueError as ex:
                 print ("*" * 70 + '\n') * 3
@@ -85,7 +81,7 @@ def mark_as_read_and_send(donations):
     for donation in donations:
         print "Sending to %s" % donation.email
         try:
-            send('adblockforchrome@gmail.com', donation.email, 
+            send('adblockforchrome@gmail.com', donation.email,
                  'I got your donation :)', donation.get_response())
         except:
             print "Failed to send -- not marking as read"
@@ -130,7 +126,7 @@ class Donation(object):
         self.nickname = self.name.split(' ')[0].title()
         self.note = re.search('Message: (.*?)=20', self.body, re.DOTALL)
         if not self.note:
-            self.note = re.search('payment: Note: (.*?)Contributor:', 
+            self.note = re.search('payment: Note: (.*?)Contributor:',
                                   self.body, re.DOTALL)
         if self.note:
             self.note = self.note.group(1)
@@ -168,15 +164,21 @@ Paypal
         return """\
 Hi %(nickname)s,
 
-Thanks so much!  I wrote AdBlock in the hope that I could make people's lives a little better, and I consider your donation a confirmation that I'm accomplishing my goal :)  I don't get a lot of donations so I can't support my family with this yet, but it's great to know I'm helping people out.
+I recently took the plunge and am now working on AdBlock as my full time job, supported only by donations.  Not a lot of users donate yet, but I hope to spread the word enough that I can support my family on AdBlock.
+
+So THANK YOU, very much, for donating.  I wrote AdBlock hoping I could make people's lives better, and your donation tells me that I did it :)  It's great to know that I'm helping people out.
 
 - Michael
 
-PS: I'm not really good at marketing and I don't use Facebook much, but I made a Facebook Page to try to spread the word.  Would you mind going to http://%(browser)sadblock.com/like and "Liking" AdBlock?  I'd appreciate it :)
+PS: Word of mouth is my only marketing tool right now.  If you wouldn't mind helping spread the word, would you
+  1) "Like" AdBlock via http://%(browser)sadblock.com/like ,
+  2) post to Facebook/Twitter about %(browser)sadblock.com, and
+  3) in your post, challenge your friends to donate too?
+If you don't use FB/Twitter or just don't feel comfortable asking your friends to donate, don't worry about it :)
 
 %(original)s
-""" % dict(nickname=self.nickname, 
-           original=original, 
+""" % dict(nickname=self.nickname,
+           original=original,
            browser=self.browser.lower())
 
 
@@ -200,7 +202,7 @@ def main(number_to_thank=1000000):
             print "-" * 30
             print
         print " $%.2f (%s): %s (%s)" % (
-                        donation.amount, donation.browser, 
+                        donation.amount, donation.browser,
                         donation.name, donation.email)
         nick = raw_input("'%s' is my nickname guess: press enter or type a correction: " %
                          donation.nickname)

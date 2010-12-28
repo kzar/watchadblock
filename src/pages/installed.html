@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="../options/options.css" />
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
     <script src="../port.js"></script>
-    <script src="../jquery/jquery-1.4.2.min.js"></script>
-    <script src="../jquery/jquery-ui-1.8.custom.min.js"></script>
+    <script src="../jquery/jquery-1.4.4-hacked-up.min.js"></script>
+    <script src="../jquery/jquery-ui-1.8.6.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
       function displayVersionNumber() {
@@ -24,8 +24,6 @@
 
       $(function() {
         displayVersionNumber();
-
-        $(".icon").css("background-image", "url(../img/icon32.png)");
 
         // Check or uncheck each option.
         extension_call('get_optional_features', {}, function(features) {
@@ -112,7 +110,7 @@
       </div>
       <div id="donate_and_link">
         <div style="font-size: large"
-             i18n="donaterequest" i18n_replacement_el="donatelink"></div>
+             i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
         <a target="_new" id="donatelink"></a>
       </div>
       <script>

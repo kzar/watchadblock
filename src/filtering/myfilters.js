@@ -8,19 +8,34 @@
 function MyFilters() {
   this._event_handlers = { 'updated': [] };
 
-  var subscriptions_json = localStorage.getItem('filter_lists');
-  if (subscriptions_json == null)
-    subscriptions_json = "null";
+  var subscriptions_json = localStorage.getItem('filter_lists') || "null";
   var stored_subscriptions = JSON.parse(subscriptions_json);
 
   if (stored_subscriptions == null) {
-    // Brand new user.  Install some filters for them.
-    stored_subscriptions = MyFilters._load_hardcoded_subscriptions();
+    // Brand new user. Install some filters for them.
+    stored_subscriptions = MyFilters._load_default_subscriptions();
   }
 
   // In case a new version of AdBlock has removed or added some
   // subscription options, merge with MyFilters.__subscription_options.
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
+
+  // temp code to normalize non-normalize filters, one time.
+  // had to make a second pass when the [style] ignore was updated.
+  // Installed 12/27/2010.  Remove after everyone has gotten this update.
+  (function(that) {
+    if (localStorage['twice_normalized_filters'])
+      return;
+    delete localStorage['once_normalized_filters'];
+    for (var id in that._subscriptions) {
+      if (that._subscriptions[id].text) {
+        that._subscriptions[id].text = FilterNormalizer.normalizeList(
+                                              that._subscriptions[id].text);
+      }
+    }
+    localStorage['twice_normalized_filters'] = 'true';
+  })(this);
+  // end temp code
 
   this.update();
 
@@ -56,7 +71,7 @@ MyFilters.prototype.update = function() {
     this._event_handlers.updated[i]();
 }
 
-// Rebuild this.filterset based on the current settings and subscriptions.
+// Rebuild this.[non]global based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
   for (var id in this._subscriptions)
@@ -64,7 +79,9 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  texts.push( utils.storage_get({key: 'custom_filters', default_value: ''}) );
+  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''});
+  if (customfilters)
+    texts.push(FilterNormalizer.normalizeList(customfilters));
 
   texts = texts.join('\n').split('\n');
 
@@ -74,12 +91,14 @@ MyFilters.prototype.rebuild = function() {
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
   var options = utils.get_optional_features({});
-  // temp Until Chrome fixes their bug, we ignore certain patterns of
-  // rules.
-  var ignored = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
-  if (options.show_google_search_text_ads.is_enabled)
-    ignored |= Filter.adTypes.GOOGLE_TEXT_AD;
-  this.filterset = FilterSet.fromText(texts.join('\n'), ignored);
+  var ignoreGoogleAds = options.show_google_search_text_ads.is_enabled;
+  var filterset_data = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds, true);
+  this.nonglobal = filterset_data.nonglobal;
+  this.global = filterset_data.global;
+  // Chrome needs to send the same data about global filters to content
+  // scripts over and over, so calculate it once and cache it.
+  this.global.cached_getSelectors = this.global.getSelectors();
+  this.global.cached_blockFiltersText = this.global.getBlockFilters().join('\n') + '\n';
 }
 
 // If any subscribed filters are out of date, asynchronously load updated
@@ -130,25 +149,17 @@ MyFilters.prototype.freshen_async = function(force) {
   }
 }
 
-//Fetch a locally stored subscription!
-function localfetch(real_url, local_url, name) {
-  // jQuery has a bug that keeps $.ajax() from loading local files.
-  // Use plain old XHR.
-  try {
-    var ajax = new XMLHttpRequest();
-    ajax.open("GET", local_url, false);
-    ajax.send();
-    var text = ajax.responseText;
-    return {
-      url: real_url,
-      name: name, 
-      user_submitted: false,
-      subscribed: true,
-      text: text,
-      last_update: 0, // update ASAP
-      expiresAfterHours: 120
-    };
-  } catch(ex) {}
+//Get a default subscription that has to be updated ASAP
+MyFilters.get_default_subscription = function(id) {
+  return {
+    url: MyFilters.__subscription_options[id].url,
+    name: MyFilters.__subscription_options[id].name,
+    user_submitted: false,
+    subscribed: true,
+    text: '',
+    last_update: 0, //update ASAP
+    expiresAfterHours: 120
+  }
 }
 
 // Subscribe to a filter list.
@@ -186,12 +197,9 @@ MyFilters.prototype.subscribe = function(id, text) {
   if (wellKnownId &&
       this._subscriptions[id].name.indexOf(' - additional') == 0 &&
       this._subscriptions['easylist'].subscribed == false) {
-    var easylist_local = localfetch(
-        MyFilters.__subscription_options['easylist'].url,
-        chrome.extension.getURL("filters/easylist.txt"),
-        MyFilters.__subscription_options['easylist'].name);
-    if (easylist_local)
-      this.subscribe('easylist', easylist_local.text);
+    this._subscriptions['easylist'] = MyFilters.get_default_subscription('easylist');
+    this.update();
+    this.freshen_async();
   }
 
   this._updateSubscriptionText(id, text);
@@ -205,14 +213,13 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
   var sub_data = this._subscriptions[subscription_id];
 
   sub_data.subscribed = true;
-  sub_data.text = text;
   sub_data.last_update = new Date().getTime();
 
   // Record how many days until we need to update the subscription text
   sub_data.expiresAfterHours = 120; // The default
+  var checkLines = text.split('\n', 15); //15 lines should be enough
   var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
   var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
-  var checkLines = text.split('\n', 15); //15 lines should be enough
   for (var i = 0; i < checkLines.length; i++) {
     if (!Filter.isComment(checkLines[i]))
       continue;
@@ -227,6 +234,8 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
       sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
     }
   }
+
+  sub_data.text = FilterNormalizer.normalizeList(text);
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
@@ -279,21 +288,49 @@ MyFilters.prototype.get_subscriptions_minus_text = function() {
   return result;
 }
 
-// Return a new subscriptions object containing all available subscriptions,
-// with EasyList and AdBlock custom filters subscribed from disk.
+// If the user wasn't subscribed to any lists, subscribe to
+// EasyList, AdBlock custom and (if any) a localized subscription
 // Inputs: none.
-MyFilters._load_hardcoded_subscriptions = function() {
+MyFilters._load_default_subscriptions = function() {
   var result = {};
 
-  result["adblock_custom"] = localfetch(
-          MyFilters.__subscription_options['adblock_custom'].url,
-          chrome.extension.getURL("filters/adblock_custom.txt"),
-          MyFilters.__subscription_options['adblock_custom'].name);
+  //returns the ID of a list for a given language code
+  function langToList(lang) {
+    switch(lang) {
+      case 'bg': return 'easylist_plus_bulgarian';
+      case 'cs': return 'czech';
+      case 'cu': return 'easylist_plus_bulgarian';
+      case 'da': return 'danish';
+      case 'de': return 'easylist_plus_german';
+      case 'es': return 'easylist_plus_spanish';
+      case 'fi': return 'easylist_plus_finnish';
+      case 'fr': return 'easylist_plus_french';
+      case 'he': return 'israeli';
+      case 'hu': return 'hungarian';
+      case 'it': return 'italian';
+      case 'ja': return 'japanese';
+      case 'ko': return 'easylist_plun_korean';
+      case 'nb': return 'easylist_plus_norwegian';
+      case 'nl': return 'dutch';
+      case 'nn': return 'easylist_plus_norwegian';
+      case 'no': return 'easylist_plus_norwegian';
+      case 'pl': return 'easylist_plus_polish';//sorry for the other polish list
+      case 'ro': return 'easylist_plus_romanian';
+      case 'ru': return 'russian';
+      case 'uk': return 'ukranian';
+      case 'vi': return 'easylist_plus_vietnamese';
+      case 'zh': return 'chinese';
+      default: return '';
+    }
+  }
 
-  result["easylist"] = localfetch(
-          MyFilters.__subscription_options['easylist'].url,
-          chrome.extension.getURL("filters/easylist.txt"),
-          MyFilters.__subscription_options['easylist'].name);
+  //Update will be done immediately after this function returns
+  result["adblock_custom"] = MyFilters.get_default_subscription('adblock_custom');
+  result["easylist"] = MyFilters.get_default_subscription('easylist');
+  var language = navigator.language.match(/^([a-z]+).*/i)[1];
+  var list_for_lang = langToList(language);
+  if (list_for_lang)
+    result[list_for_lang] = MyFilters.get_default_subscription(list_for_lang);
 
   return result;
 }
