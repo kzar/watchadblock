@@ -141,25 +141,19 @@ var FilterNormalizer = {
     function throwError() {
       throw new Error('Invalid CSS selector syntax');
     }
-                                                                                // a[b="c"][d].e#f:g(h):not(i) > j,k
-                                                                                // a[b="c"]X[d].e#f:g(h):not(i) > j,k
-                                                                                // a[b="c][d].e#f:g(h):not(i) > j,k
+
     // Escaped characters are evil for validations.
     // However, almost everywhere an 'x' is allowed, \" is allowed too.
     // So unless we find a false positive, this would be fine
     // Also, for validation, the case doesn't matter.
     selector = selector.replace(/\\./g, 'x').toLowerCase();
-                                                                                // a[b="c"][d].e#f:g(h):not(i) > j,k
-                                                                                // a[b="c"]X[d].e#f:g(h):not(i) > j,k
-                                                                                // a[b="c][d].e#f:g(h):not(i) > j,k
+
     // Get rid of all valid [elemType="something"] selectors. They are valid,
     // and the risk is that their content will disturb further tests. To prevent
     // a[id="abc"]div to be valid, convert it to a[valid]div, which is invalid
     var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|.+?)\]/g;
     selector = selector.replace(test, '[valid]');
-                                                                                // a[valid][d].e#f:g(h):not(i) > j,k
-                                                                                // a[valid]X[d].e#f:g(h):not(i) > j,k
-                                                                                // a[b="c][d].e#f:g(h):not(i) > j,k
+
     // :not may contain every selector except for itself and tree selectors
     // therefore simply put the content of it at the end of the filters
     test = /\:not\(\ *([^\ \)\>\+\~\,]+)\ *\)/g;
@@ -169,9 +163,7 @@ var FilterNormalizer = {
         var content = match[i].substr(5, match[i].length - 6);
         selector = selector.replace(match[i], '[valid]') + ' > ' + content;
       }
-                                                                                // a[valid][d].e#f:g(h)[valid] > j,k > i
-                                                                                // a[valid]X[d].e#f:g(h)[valid] > j,k > i
-                                                                                // a[b="c][d].e#f:g(h)[valid] > j,k > i
+
     // replace :something and :somethingelse(anotherthing). Do not include :not
     // as this has already been handled. If :not still exists, then it must have
     // been due to :not(:not(X)) which is invalid.
@@ -222,9 +214,7 @@ var FilterNormalizer = {
         if (!test.test(content))
           throwError();
       }
-                                                                                // a[valid][d].e#f[valid][valid] > j,k > i
-                                                                                // a[valid]X[d].e#f[valid][valid] > j,k > i
-                                                                                // a[b="c][d].e#f[valid][valid] > j,k > i
+
     // multiple rules can be seperated by commas. Selectors may not start or end
     // with any of these: >+~, . Also they may not follow each other up. By
     // adding > at the start and end and then checking for multiple >+~, , you
@@ -233,32 +223,22 @@ var FilterNormalizer = {
     if (/(\+|\~|\>|\,)\ *(\+|\~|\>|\,)/.test(selector))
       throwError();
     selector = selector.replace(/[\>\~\+\,]/g, ' ');
-                                                                                // a[valid][d].e#f[valid][valid]   j k   i
-                                                                                // a[valid]X[d].e#f[valid][valid]   j k   i
-                                                                                // a[b="c][d].e#f[valid][valid]   j k   i
+
     // Get rid of the nodeName selector.
     selector = selector.replace(/(^|\ )(\*|[a-z0-9_\-]+)/g, '');
-                                                                                // [valid][d].e#f[valid][valid]       
-                                                                                // [valid]X[d].e#f[valid][valid]       
-                                                                                // [b="c][d].e#f[valid][valid]       
+     
     // Get rid of #id selectors
     selector = selector.replace(/\#[a-z_][a-z0-9_\-]*/g, '[valid]');
-                                                                                // [valid][d].e[valid][valid][valid]       
-                                                                                // [valid]X[d].e[valid][valid][valid]       
-                                                                                // [b="c][d].e[valid][valid][valid]   
+  
     // Get rid of valid .class selectors. Possibly more characters are valid,
     // but the current list doesn't contain these
     selector = selector.replace(/\.[a-z0-9\-_]+/g, '[valid]');
-                                                                                // [valid][d][valid][valid][valid][valid]       
-                                                                                // [valid]X[d][valid][valid][valid][valid]       
-                                                                                // [b="c][d][valid][valid][valid][valid]
+
     // If the filter is correct, nothing but [text] selectors are left. 
     // Everything still behind except spaces must be an error.
     selector = selector.replace(/\[[a-z0-9\-_]+\]/g, '');
     selector = selector.trim();
-                                                                                // {empty string} -> valid
-                                                                                // X              -> invalid
-                                                                                // [b="c]         -> invalid
+
     if (selector)
       throwError();
   },
