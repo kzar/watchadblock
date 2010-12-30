@@ -107,7 +107,7 @@ FilterSet.prototype = {
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;
-    if (key in this._matchCache && typeof includeRealRule == "undefined")
+    if (key in this._matchCache && document.location.protocol == 'chrome-extension:')
       return this._matchCache[key];
 
     // TODO: is there a better place to do this?
@@ -119,14 +119,14 @@ FilterSet.prototype = {
       if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
         this._matchCache[key] = false;
-        return (this._whitelistFilters[i]._realRule || false);
+        return (this._whitelistFilters[i]._text || false);
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
       if (this._patternFilters[i].matches(url, elementType, isThirdParty)) {
         log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
         this._matchCache[key] = true;
-        return (this._patternFilters[i]._realRule || true);
+        return (this._patternFilters[i]._text || true);
       }
     }
     this._matchCache[key] = false;

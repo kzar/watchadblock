@@ -210,8 +210,8 @@ var PatternFilter = function(text) {
   this._isRegex = data.isRegex;
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
-  if (typeof includeRealRule != "undefined")
-    this._realRule = text;
+  if (document.location.protocol == 'chrome-extension:')
+    this._text = text;
 
   if (this._isRegex)
     this._rule = new RegExp(data.rule);
