@@ -1,82 +1,107 @@
-﻿{
+{
   "buttoncancel": {
-    "message": "Άκυρο",
+    "message": "取消",
     "description": "Cancel button"
   },
   "buttonok": {
-    "message": "OK!",
+    "message": "確定！",
     "description": "OK button"
   },
   "buttonblockit": {
-    "message": "Μπλοκάρετέ το!",
+    "message": "阻擋！",
     "description": "Block button"
   },
   "buttonedit": {
-    "message": "Επεξεργασία",
+    "message": "編輯",
     "description": "Edit filter manually button"
   },
   "optionstitle": {
-    "message": "Επιλογές του AdBlock",
+    "message": "AdBlock選項",
     "description": "Title for the options page"
   },
 
+  "installedtitle": {
+    "message": "AdBlock已成功安裝！",
+    "description": "Title for the installation success page"
+  },
+  "installisdone": {
+    "message": "您現在可以重新整理已開啟的分頁，看看那些廣告都怎麼了。",
+    "description": "Message on the installation success page"
+  },
+  "setotheroptions": {
+    "message": "您可以經由「扳手圖示 | 工具 | 擴充功能 | AdBlock選項」來設定其他選項或訂閱過濾清單。",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_how_to_disable": {
+    "message": "如果您想要移除工具列按鈕，只需要在其右鍵選單中選擇「解除安裝」即可。此動作僅會移除Browser Button For AdBlock。",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_how_to_enable": {
+    "message": "要開啟工具列按鈕，您必須先安裝<a>這個輔助擴充元件</a>。",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_showoption": {
+    "message": "在工具列上顯示按鈕",
+    "description": "Message on installation success page"
+  },
+
   "youtubevideomessage": {
-    "message": "Δεν βλέπετε κανένα βίντεο; Ανανεώστε την σελίδα. Αν αυτό συνεχιστεί, απενεργοποιείστε το μπλοκάρισμα διαφημήσεων στο Youtube εδώ $link$.",
+    "message": "沒有影像？請試著重新整理頁面。如果這種狀況時常發生，請到$link$中停用YouTube廣告阻擋。",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": " Επιλογές του AdBlock"
+        "example": "AdBlock Options"
       }
     }
   },
 
   "sliderexplanation": {
-    "message": "Σύρετε τον δείκτη ώσπου η διαφήμηση να μπλοκαριστεί σωστά στην σελίδα, και το μπλοκαρισμένο στοιχείο να φαίνεται χρήσιμο.",
+    "message": "移動滑塊直到頁面上的廣告已被正確的隱藏。",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
-    "message": "Βήμα 1ο: Επιλέξτε τι θα μπλοκάρετε",
+    "message": "第一步：找出您要阻擋的目標",
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "Τι νομίζετε ότι θα ισχύει σε αυτήν την διαφήμηση κάθε φορά που θα επισκέπτεστε αυτήν τη σελίδα;",
+    "message": "您認為下列哪個條件會在每次瀏覽此頁面時符合這個廣告？",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Δεν είστε σίγουρος;</b> Απλώς πατήστε 'Μπλοκάρετέ το!' παρακάτω.",
+    "message": "<b>不確定？</b>直接點選下方的「阻擋！」吧。",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
-    "message": "Το φίλτρο, το οποίο μπορεί να αλλαχθεί στη σελίδα επιλογών:",
+    "message": "這是本次產生的過濾器，您稍後仍可在選項中進行修改：",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
-    "message": "Τελευταίο βήμα: Τι κάθιστά αυτό να είναι διαφήμηση;",
+    "message": "最後一步：這廣告是由什麼組成的？",
     "description": "Blacklister options page title"
   },
   "blacklisternofilter": {
-    "message": "Δεν προσδιορίστικε φίλτρο!",
+    "message": "未指定過濾條件！",
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter": {
-    "message": "Παρακαλούμε πληκτρολογήστε σωστά το φίλτρο παρακάτω και πατήστε OK",
+    "message": "請在下面輸入正確的過濾條件，並點選「確定」",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid": {
-    "message": "Το φίλτρο είναι λανθασμένο!",
+    "message": "此過濾條件無效！",
     "description": "Messagebox if the manually edited filter is invalid"
   },
   "blacklisterblockedelement": {
-    "message": "Μπλοκαρισμένο στοιχείο:",
+    "message": "被阻擋的頁面元素：",
     "description": "Tells the user what the blocked element is on the slider page"
   },
   "blacklisterwarningnofilter": {
-    "message": "Προσοχή: Δέν προσδιορίστηκε φίλτρο!",
+    "message": "警告：未指定過濾條件！",
     "description": "Warns the user that no filter was specified"
   },
   "blacklisterblocksalloftype": {
-    "message": "Προσοχή: αυτό το φίλτρο μπλοκάρει όλα τα στοιχεία τύπου $elementtype$ στη σελίδα!",
+    "message": "注意：此條件將阻擋下頁面上所有的$elementtype$元素！",
     "description": "Warns the user that all elements of type X will be blocked",
     "placeholders": {
       "elementtype": {
@@ -86,11 +111,11 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "Αυτό αντιστοιχεί σε μόνο <b>1</b> αντικείμενο στη σελίδα.",
+    "message": "頁面上只有 <b>1</b> 個匹配項目被阻擋。",
     "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
-    "message": "Αυτό αντιστοιχεί σε $matchcount$ αντικείμενα στη σελίδα.",
+    "message": "頁面上有 $matchcount$ 個匹配項目被阻擋。",
     "description": "Tells the user multiple matches were found",
     "placeholders": {
       "matchcount": {
@@ -100,7 +125,7 @@
     }
   },
   "blacklisterattrwillbe": {
-    "message": "$attribute$ θα $value$",
+    "message": "$attribute$ 將為 $value$",
     "description": "Checkbox label",
     "placeholders": {
       "attribute": {
@@ -114,33 +139,33 @@
     }
   },
   "blacklistertype": {
-    "message": "Τύπος",
+    "message": "類型",
     "description": "node name is called 'Type'"
   },
   "buttonlooksgood": {
-    "message": "Φαίνεται εντάξει",
+    "message": "看來不錯",
     "description": "Looks good button"
   },
   "buttonback": {
-    "message": "Πίσω",
+    "message": "返回",
     "description": "Back to previous wizard page button"
   },
 
   "findingads": {
-    "message": "Αναζήτηση διαφημίσεων...<br/><br/><i>Αυτό θα πάρει μερικά δευτερόλεπτα.</i>",
+    "message": "正在尋找廣告...<br/><br/><i>這只需要一下子。</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
-    "message": "Μπλοκάρετε μια διαφήμηση",
+    "message": "阻擋廣告",
     "description": "Title of the first two dialogs of the blacklister"
   },
   "clickthead": {
-    "message": "Κάντε κλικ στη διαφήμηση, και θα σας καθοδηγήσω στο μπλοκάρισμά της.",
+    "message": "點選您想要阻擋的廣告，我會協助您進行設定。",
     "description": "When you have to click the ad to continue"
   },
 
   "whitelistertext": {
-    "message": "Το AdBlock δεν θα είναι ενεργό σε τομεί που τελειώνουν σε:<br/>$domain$.",
+    "message": "AdBlock將不會在網域結尾為<br/>$domain$的網頁上阻擋廣告。",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
@@ -150,29 +175,29 @@
     }
   },
   "whitelistertitle": {
-    "message": "Θέλετε να καταχωρήσετε αυτόν τον τομέα στην άσπρη λίστα;",
+    "message": "確定排除此網域？",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
-    "message": "Ναι, βάλτε τον στην άσπρη λίστα",
+    "message": "排除",
     "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
 
   "subscribingtitle": {
-    "message": "Καταχώρηση στη σελίδα φίλτρων...",
+    "message": "訂閱過濾清單...",
     "description": "abp: link subscriber title"
   },
   "subscribingfinished": {
-    "message": "Ολοκληρώθηκε!",
+    "message": "完成！",
     "description": "abp: link subscriber result"
   },
   "subscribingfailed": {
-    "message": "Παρουσιάστηκε ένα σφάλμα!",
+    "message": "失敗！",
     "description": "abp: link subscriber result"
   },
 
   "optionsversion": {
-    "message": "Έκδοση αριθμός $version$",
+    "message": "版本 $version$",
     "description": "Version number",
     "placeholders": {
       "version": {
@@ -182,57 +207,57 @@
     }
   },
   "optionschangelog": {
-    "message": "Αρχείο αλλαγών στις εκδόσεις",
+    "message": "更新日誌",
     "description": "changelog link"
   },
   "tabgeneral": {
-    "message": "Γενικά",
+    "message": "一般",
     "description": "A tab on the options page"
   },
   "tabfilterlists": {
-    "message": "Λίστες φίλτρων",
+    "message": "過濾清單",
     "description": "A tab on the options page"
   },
   "tabblacklist": {
-    "message": "Μαύρη λίστα",
+    "message": "黑名單",
     "description": "A tab on the options page"
   },
   "tabexcluded": {
-    "message": "Άσπρη λίστα",
+    "message": "已排除網站",
     "description": "A tab on the options page"
   },
 
   "generaloptions": {
-    "message": "Γενικές επιλογές",
+    "message": "一般選項",
     "description": "Title of first tab page"
   },
   "betalabel": {
-    "message": "Δοκιμαστική έκδοση",
+    "message": "測試中",
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "Μου αρέσουν οι διαφημίσεις κειμένου στα αποτελέσματα αναζήτησης Google; εμφάνιζέ τες.",
+    "message": "我想看見Google搜尋結果中的文字廣告，請不要隱藏它們。",
     "description": "Option on first tab page"
   },
   "youtubeads": {
-    "message": "Μπλόκαρε διαφημίσεις μέσα σε βίντεο του YouTube.",
+    "message": "阻擋YouTube影片中的廣告。",
     "description": "Option on first tab page"
   },
   "showcontextmenus": {
-    "message": "Προσθέστε αντικείμενα στο μενού 'του δεξιού κλικ'.",
+    "message": "在右鍵選單中新增選項。",
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "Εμφάνιζε στοιχεία αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί το AdBlock)",
+    "message": "在Console Log中顯示除錯資訊（將會降低AdBlock效能）",
     "description": "Option on first tab page"
   },
 
   "updatedrightnow": {
-    "message": "ανανεώθηκε μόλις τώρα",
+    "message": "剛剛更新",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
-    "message": "ανανεώθηκε πριν $seconds$ δευτερόλεπτα",
+    "message": "$seconds$秒前更新",
     "description": "Label for subscription",
     "placeholders": {
       "seconds": {
@@ -242,7 +267,7 @@
     }
   },
   "updatedminutesago": {
-    "message": "ανανεώθηκε πριν $minutes$ λεπτά",
+    "message": "$minutes$分鐘前更新",
     "description": "Label for subscription",
     "placeholders": {
       "minutes": {
@@ -252,7 +277,7 @@
     }
   },
   "updatedhoursago": {
-    "message": "ανανεώθηκε πρίν $hours$ ώρες",
+    "message": "$hours$小時前更新",
     "description": "Label for subscription",
     "placeholders": {
       "hours": {
@@ -262,7 +287,7 @@
     }
   },
   "updateddaysago": {
-    "message": "ανανεώθηκε πριν $days$ μέρες",
+    "message": "$days$天前更新",
     "description": "Label for subscription",
     "placeholders": {
       "days": {
@@ -272,393 +297,393 @@
     }
   },
   "updatedminuteago": {
-    "message": "ανανεώθηκε πριν 1 λεπτό",
+    "message": "1分鐘前更新",
     "description": "Label for subscription"
   },
   "updatedhourago": {
-    "message": "ανανεώθηκε πριν 1 ώρα",
+    "message": "1小時前更新",
     "description": "Label for subscription"
   },
   "updateddayago": {
-    "message": "ανανεώθηκε πριν 1 μέρα",
+    "message": "1天前更新",
     "description": "Label for subscription"
   },
   "removedlabel": {
-    "message": "Αφαιρέθηκε.",
+    "message": "已移除。",
     "description": "Status label"
   },
   "unsubscribedlabel": {
-    "message": "Δεν είστε τώρα συνδρομητής σε αυτό το φίλτρο.",
+    "message": "已取消訂閱。",
     "description": "Status label"
   },
   "fetchinglabel": {
-    "message": "Καταχώριση... Παρακαλώ περιμένετε.",
+    "message": "獲取清單中...請稍候。",
     "description": "Status label"
   },
   "subscribedlabel": {
-    "message": "Είστε τώρα συνδρομητής σε αυτό το φίλτρο.",
+    "message": "已訂閱。",
     "description": "Status label"
   },
   "nolisturllabel": {
-    "message": "Αυτή δεν είναι μια έκυρη διεύθυνση φίλτρου.",
+    "message": "這不是一個有效的清單網址。",
     "description": "Status label"
   },
   "failedtofetchfilter": {
-    "message": "Παρουσιάστηκε σφάλμα στην καταχώρηση του φίλτρου!",
+    "message": "無法獲取這個過濾清單！",
     "description": "Error messagebox"
   },
   "enterurloflist": {
-    "message": "Please enter the URL of a list of filters to subscribe to.",
+    "message": "請輸入欲訂閱的過濾清單網址。",
     "description": "Error messagebox"
   },
   "removefromlist": {
-    "message": "Αφαίρεση από τη λίστα",
+    "message": "從清單列表中移除",
     "description": "Label to remove a custom filter"
   },
   "filterstabtitle": {
-    "message": "Γίνετε συνδρομητής σε λίστες φίλτρων",
+    "message": "訂閱過濾清單",
     "description": "Title of the filter list tab"
   },
   "filterlistlink": {
-    "message": "Μην είστε συνδρομητής σε περισσότερα φίλτρα από όσα χρειάζεστε, το καθένα σας καθυστερεί και από λίγο! Άλλες λίστες μπορούν να βρεθούν <a>εδώ</a>.",
+    "message": "請避免訂閱過多清單，每新增一個清單都會讓您的速度降低一點！人員名錄與更多過濾清單可在<a>這裡</a>找到。",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "Θα ψάχνω ανανεώσεις για τα φίλτρα αυτόματα, αλλά μπορείτε επίσης να <a>τα ανανεώσετε τώρα</a>.",
+    "message": "AdBlock會自動獲取更新；您也可以要求<a>現在更新</a>。.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
-    "message": "ή εισάγετε μια URL διεύθυνση σελίδας φίλτρων:",
+    "message": "或輸入過濾清單網址：",
     "description": "link for custom subscription"
   },
   "subscribebutton": {
-    "message": "Καταχώριση",
+    "message": "訂閱",
     "description": "subscribe to a list button"
   },
   "subscribetoall": {
-    "message": "Γίνετε συνδρομητής όλων των φίλτρων:",
+    "message": "訂閱所有過濾清單：",
     "description": "option on second tab page"
   },
   "subscribetonone": {
-    "message": "Γίνετε συνδρομητής κανενός φίλτρου:",
+    "message": "取消訂閱所有過濾清單：",
     "description": "option on second tab page"
   },
   "showlinkstolists": {
-    "message": "Εμφάνισε συνδέσμους στις σελίδες φίλτρων:",
+    "message": "顯示過濾清單的網址：",
     "description": "Option on second tab page"
   },
   "labelshow": {
-    "message": "εμφάνιση σελίδας",
+    "message": "顯示",
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "Προσαρμοσμένα φίλτρα του AdBlock (προτείνεται)",
+    "message": "AdBlock自訂過濾清單（推薦）",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
-    "message": "EasyList (προτείνεται)",
+    "message": "EasyList（推薦）",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - πρόσθετα βουλγάρικα φίλτρα",
+    "message": " - 額外的保加利亞過濾清單",
     "description": "A filter list"
   },
   "filterdutch": {
-    "message": " - πρόσθετα ολλανδικά φίλτρα",
+    "message": " - 額外的荷蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_finnish": {
-    "message": " - πρόσθετα φινλανδικά φίλτρα",
+    "message": " - 額外的芬蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_french": {
-    "message": " - πρόσθετα γαλλικά φίλτρα",
+    "message": " - 額外的法國過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_german": {
-    "message": " - πρόσθετα γερμανικά φίλτρα",
+    "message": " - 額外的德國過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_norwegian": {
-    "message": " - πρόσθετα νορβηγικά φίλτρα",
+    "message": " - 額外的挪威過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_polish": {
-    "message": " - πρόσθετα πολανδικά φίλτρα",
+    "message": " - 額外的波蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_romanian": {
-    "message": " - πρόσθετα ρουμάνικα φίλτρα",
+    "message": " - 額外的羅馬尼亞過濾清單",
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": " - πρόσθετα ρώσικα φίλτρα",
+    "message": " - 額外的俄羅斯過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
-    "message": " - πρόσθετα βιετναμέζικα φίλτρα",
+    "message": " - 額外的越南過濾清單",
     "description": "A filter list"
   },
   "filterchinese": {
-    "message": "Κινέζικα φίλτρα",
+    "message": "中文過濾清單",
     "description": "A filter list"
   },
   "filterczech": {
-    "message": "Τσέχικα φίλτρα",
+    "message": "捷克過濾清單",
     "description": "A filter list"
   },
   "filterdanish": {
-    "message": "Δανέζικα φίλτρα",
+    "message": "丹麥過濾清單",
     "description": "A filter list"
   },
   "filterhungarian": {
-    "message": "Ουγγαρικά φίλτρα",
+    "message": "匈牙利過濾清單",
     "description": "A filter list"
   },
   "filterisraeli": {
-    "message": "Ισραηλινά φίλτρα",
+    "message": "以色列過濾清單",
     "description": "A filter list"
   },
   "filteritalian": {
-    "message": "Ιταλικά φίλτρα",
+    "message": "義大利過濾清單",
     "description": "A filter list"
   },
   "filterjapanese": {
-    "message": "Ιαπωνικά φίλτρα",
+    "message": "日本過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plun_korean": {
-    "message": "Κορεάτικα φίλτρα",
+    "message": "韓國過濾清單",
     "description": "A filter list"
   },
   "filterpolish": {
-    "message": "Πολανδικά φίλτρα",
+    "message": "波蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_spanish": {
-    "message": "Ισπανικά φίλτρα",
+    "message": "西班牙過濾清單",
     "description": "A filter list"
   },
   "filterukranian": {
-    "message": "Ουκρανικά φίλτρα",
+    "message": "烏克蘭過濾清單",
     "description": "A filter list"
   },
 
   "blacklistclickmessage": {
-    "message": "Κάντε δεξί κλικ σε μια διαφήμηση για να την μπλοκάρετε -- ή κάντε το εδώ χειρόγραφα.",
+    "message": "右鍵點選頁面上的廣告以隱藏它 ─ 或在此處手動隱藏。",
     "description": "Message at the top of the blacklist options tab"
   },
   "blacklisttabtitle": {
-    "message": "Μπλοκάρετε μια διαφήμηση που τα φίλτρα αγνοούν",
+    "message": "阻擋過濾清單遺漏掉的廣告",
     "description": "Title of the third tab"
   },
   "addnewfilter": {
-    "message": "Προσθέστε ένα νέο φίλτρο:",
+    "message": "新增一個新的過濾條件：",
     "description": "Subtitle on the third tab"
   },
   "linkblockadbyurl": {
-    "message": "Μπλοκάρετε μια διαφήμιση από την URL διεύθυνσή της",
+    "message": "依網址阻擋廣告",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
-    "message": "Αποκρύψτε μια περιοχή μιας ισοσελίδας",
+    "message": "隱藏網頁特定區塊",
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
-    "message": "Μπλοκάρετε URL διευθύνσεις με αυτό το κείμενο",
+    "message": "阻擋包含以下字串的網址",
     "description": "Message of the url-blocking area"
   },
   "csstomatch": {
-    "message": "CSS to match",
+    "message": "符合的CSS條件",
     "description": "Message of the css-hiding area"
   },
   "blockdomain": {
-    "message": "Τομέας της σελίδας για εφαρμογή",
+    "message": "套用在以下網域",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
-    "message": "Επεξεργαστείτε χειρόγραφα τα φίλτρα σας:",
+    "message": "手動編輯您的過濾條件：",
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "ΠΡΟΣΟΧΗ: αν κάνετε ένα λάθος εδώ, πολλά άλλα φίλτρα, συμπεριλαμβανόμενα τα επίσημα, μπορεί να πάθουν ζημιά!<br/>Διαβάστε τις<a>οδηγίες για σύνταξη φίλτρων</a> για να μάθετε πώς να προσθέτετε προχωρημένα μαύρης και άσπρης λίστας φίλτρα.",
+    "message": "請小心：如果這裡的設定不小心出了錯，包含官方過濾集的許多其他清單，也可能會失效！<br/>請參閱<a>過濾條件語法教學</a>來正確地添加進階黑名單、白名單條件。",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
-    "message": "Αποθήκευση",
+    "message": "儲存",
     "description": "Save button"
   },
   "savereminder": {
-    "message": "Μην ξεχάσετε να αποθηκεύσετε!",
+    "message": "別忘了儲存！",
     "description": "Reminder to press save"
   },
   "advanced": {
-    "message": "Για προχωρημένους",
+    "message": "進階",
     "description": "Section label for advanced options"
   },
   "reportanad": {
-    "message": "<a>Αναφέρετε μια διαφήμιση</a> στο AdBlock ή στις επίσημες λίστες φίλτρων.",
+    "message": "<a>回報廣告</a>給AdBlock或過濾清單維護者。",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
   "removelabel": {
-    "message": "Αφαίρεση",
+    "message": "移除",
     "description": "link to remove a excluded site"
   },
   "excludedsitestitle": {
-    "message": "Μην μπλοκάρεις διαφημίσεις σε τομείς που τελειώνουν σε...",
+    "message": "不要在以下字串結尾的網域上阻擋廣告...",
     "description": "title of the 4th tab page"
   },
   "excludedsitesexample": {
-    "message": "Π.χ. , το 'google.com' θα απενεργοποιήσει το μπλοκάρισμα στο google.com, mail.google.com, και www.google.com .",
+    "message": "舉例來說，「google.com」將會在「google.com」、「mail.google.com」，和 「www.google.com」上停用AdBlock。",
     "description": "text on the 4th tab page"
   },
   "addbutton": {
-    "message": "Προσθήκη",
+    "message": "新增",
     "description": "add button"
   },
   "removeallfromlist": {
-    "message": "Αφαίρεσε όλα τα αντικείμενα από τη λίστα:",
+    "message": "移除清單中所有項目：",
     "description": "option on 4th tab page"
   },
   "adblockreportinganad": {
-    "message": "AdBlock - Αναφέροντας μια διαφήμιση",
+    "message": "AdBlock ─ 廣告回報",
     "description": "title of ad report page"
   },
   "adreport1": {
-    "message": "Βρήκατε μια διαφήμηση σε μια ιστοσελίδα; Λοιπόν, θα σας δείξω το σωστό μέρος να την αναφέρετε!<br/> Θυμηθείτε: η αναφορά διαφημήσεων είναι προεραιτική. Αν δε θέλετε να το κάνετε, απλά κλείστε αυτό το παράθυρο και μπλοκάρετέ την μόνο για εσάς προσθέτοντας ένα φίλτρο στην καρτέλα 'Μαύρη λίστα' της σελίδας επιλογών!",
+    "message": "看來您剛剛發現了一隻漏網之魚？嗯，我將幫您找到正確的回報管道！<br/>請記得：回報廣告純屬自願。如果您並不想這麼做，您可以逕行關閉這個視窗，並回到「黑名單」分頁添加過濾條件，讓結果僅套用到您的電腦上。",
     "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
-    "message": "Σιγουρευτείτε πως οι λίστες φίλτρων σας είναι ενημερωμένες",
+    "message": "請確認您的過濾清單都已處在最新狀態",
     "description": "instruction on ad report page"
   },
   "clickupdatefilters": {
-    "message": "Πατήστε εδώ: <a>Ανανέωσε τα φίλτρα μου!</a>",
+    "message": "點選：<a>更新我的過濾清單！</a>",
     "description": "instruction on ad report page"
   },
   "reloadadpage": {
-    "message": "Ανανεώστε τη σελίδα που έχει τη διαφήμηση.",
+    "message": "重新載入您剛剛看到廣告的頁面。",
     "description": "instruction on ad report page"
   },
   "adstillappear": {
-    "message": "Η διαφήμηση συνεχίζει να υπάρχει;",
+    "message": "廣告是否還在？",
     "description": "question on ad reporting page"
   },
   "yes": {
-    "message": "Ναι",
+    "message": "是",
     "description": "A positive response to a question"
   },
   "no": {
-    "message": "Όχι",
+    "message": "否",
     "description": "A negative response to a question"
   },
   "adalreadyblocked": {
-    "message": "Δε σας μένει να κάνετε τίποτα, αφού η διαφήμηση είναι ήδη μπλοκαρισμένη!",
+    "message": "您不用作任何事，因為廣告已被阻擋了",
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "correctfilters": {
-    "message": "Σωστά φίλτρα",
+    "message": "選擇正確的過濾清單",
     "description": "on the ad report page, label describing having the right set of filters"
   },
   "reallyclearlist": {
-    "message": "Είστε σίγουρος/η πως θέλετε να διαγάψετε όλη την λίστα;",
+    "message": "您確定要清空這個列表嗎？",
     "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
-    "message": "Σε τι γλώσσα είναι αυτή η σελίδα;",
+    "message": "將要回報的頁面使用什麼語言？",
     "description": "question on ad report page"
   },
   "lang_english": {
-    "message": "Αγγλικά",
+    "message": "英文",
     "description": "language"
   },
   "lang_bulgarian": {
-    "message": "Βουλγάρικα",
+    "message": "保加利亞文",
     "description": "language"
   },
   "lang_chinese": {
-    "message": "Κινέζικα",
+    "message": "中文",
     "description": "language"
   },
   "lang_czech": {
-    "message": "Τσέχικα",
+    "message": "捷克文",
     "description": "language"
   },
   "lang_danish": {
-    "message": "Δανέζικα",
+    "message": "丹麥文",
     "description": "language"
   },
   "lang_dutch": {
-    "message": "Ολλανδικά",
+    "message": "荷蘭文",
     "description": "language"
   },
   "lang_finnish": {
-    "message": "Φινλανδικά",
+    "message": "芬蘭文",
     "description": "language"
   },
   "lang_french": {
-    "message": "Γαλλικά",
+    "message": "法文",
     "description": "language"
   },
   "lang_german": {
-    "message": "Γερμανικά",
+    "message": "德文",
     "description": "language"
   },
   "lang_hungarian": {
-    "message": "Ουγγαρικά",
+    "message": "匈牙利文",
     "description": "language"
   },
   "lang_israeli": {
-    "message": "Ισραηλίτικα",
+    "message": "以色列文",
     "description": "language"
   },
   "lang_italian": {
-    "message": "Ιταλικά",
+    "message": "義大利文",
     "description": "language"
   },
   "lang_japanese": {
-    "message": "Ιαπωνικά",
+    "message": "日文",
     "description": "language"
   },
   "lang_korean": {
-    "message": "Κορεάτικα",
+    "message": "韓文",
     "description": "language"
   },
   "lang_norwegian": {
-    "message": "Νορβηγικά",
+    "message": "挪威文",
     "description": "language"
   },
   "lang_polish": {
-    "message": "Πολανδικά",
+    "message": "波蘭文",
     "description": "language"
   },
   "lang_romanian": {
-    "message": "Ρουμάνικα",
+    "message": "羅馬尼亞文",
     "description": "language"
   },
   "lang_russian": {
-    "message": "Ρώσικα",
+    "message": "俄文",
     "description": "language"
   },
   "lang_spanish": {
-    "message": "Ισπανικά",
+    "message": "西班牙文",
     "description": "language"
   },
   "lang_ukranian": {
-    "message": "Ουκρανικά",
+    "message": "烏克蘭文",
     "description": "language"
   },
   "lang_vietnamese": {
-    "message": "Βιετναμέζικα",
+    "message": "越南文",
     "description": "language"
   },
   "other": {
-    "message": "Άλλη",
+    "message": "其他",
     "description": "multiple choice option"
   },
   "nodefaultfilter": {
-    "message": "We don't have a default filter list for that language.<br/>Please try to find a suitable list that supports this language $link$ or block this ad for yourself on the Blacklist page.",
+    "message": "我們沒有預設該語言的過濾清單。<br/>請試著找到一個支援此語言的合適清單 $link$ 或自行到「黑名單」頁面加以阻擋。",
     "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
     "placeholders": {
       "link": {
@@ -668,7 +693,7 @@
     }
   },
   "retryaftersubscribe": {
-    "message": "Γίνετε συνδρομητής σε αυτήν τη λίστα φίλτρων, και μετά ξαναπροσπαθήστε: $list_title$",
+    "message": "請先訂閱這個過濾清單，然後重試一次：$list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
     "placeholders": {
       "list_title": {
@@ -678,35 +703,35 @@
     }
   },
   "checkinfirefox": {
-    "message": "Ελέγξτε στον Firefox",
+    "message": "在Firefox中檢查",
     "description": "tell a user to see if a reported ad also appears in firefox"
   },
   "checkinfirefox1": {
-    "message": "Εγκαταστήστε τον Firefox αν δεν τον έχετε.",
+    "message": "如果您沒有Firefox，請先安裝它。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox2": {
-    "message": "Εγκαταστήστε το Adblock Plus for Firefox αν δεν το έχετε.",
+    "message": "如果您沒有Firefox的Adblock Plus，請先安裝它。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox3": {
-    "message": "Στον Firefox, γίνετε συνδρομητής στις λίστες φίλτρων που είστε κι εδώ(εκτός απ'ταπροσαρμοσμένα φίλτρα του AdBlock).",
+    "message": "在Firefox中，訂閱所有和此處相同的過濾清單（AdBlock自訂過濾清單除外）。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox4": {
-    "message": "Στον Firefox, ανοίξτε την σελίδα με την διαφήμηση που αναφέρατε.",
+    "message": "在Firefox中，開啟該廣告所在的頁面。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox5": {
-    "message": "Η διαφήμιση εμφανίζεται στον Firefox?",
+    "message": "廣告是否仍出現在Firefox中？",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "refusetocheck": {
-    "message": "Δεν θέλω να το ελέγξω αυτό",
+    "message": "我不想作這個檢查",
     "description": "user is telling us they don't wish to investigate something for us"
   },
   "reportfilterlistproblem": {
-    "message": "Αυτό είναι ένα πρόβλημα στις λίστες φίλτρων. Αναφέρτε το εδώ: $link$",
+    "message": "這是廣告過濾清單方面的問題。請到這裡回報：$link$",
     "description": "telling the user to report an ad to a filter list maintainer",
     "placeholders": {
       "link": {
@@ -716,31 +741,39 @@
     }
   },
   "reporttous1": {
-    "message": "If you speak English, you can report the ad to us $in_the_issue_tracker_link$.",
+    "message": "如果您可以用英語描述情況，您可以到$in_the_issue_tracker_link$中向我們回報廣告。",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
-        "content": "$1in the issue tracker$2",
+        "content": "$1問題追蹤頁面$2",
         "example": "<a href='issuetracker.html'>in the issue tracker</a>"
       }
     }
   },
   "fixityourself": {
-    "message": "Εντάξει, μπορείτε ακόμα να μπλοκάρετε αυτή τη διαφήμηση μόνο για εσάς στην σελίδα επιλογών. Ευχαριστούμε!",
+    "message": "好吧，您還是可以回到「黑名單」頁面中手動阻擋這個廣告。謝謝使用！",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {
-    "message": "Χρησιμοποιείτε μια προηγούμενη έκδοση του AdBlock. Παρακαλούμε $updatelink$ στην νεότερη έκδοση του AdBlock",
+    "message": "您正在使用舊版本的AdBlock。請先$updatelink$到最新版本",
     "description": "ad report page instruction",
     "placeholders": {
       "updatelink": {
-        "content": "$1ανανεώστε το$2",
+        "content": "$1升級$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
   },
   "cantundo": {
-    "message": "Αυτή η ενέργεια δεν θα μπορεί να αναιρεθεί!",
+    "message": "此動作無法復原！",
     "description": "Warning a user before confirming an action"
+  },
+  "contextmenuexcludedomain": {
+    "message": "不要在此網域執行...",
+    "description": "Context menu entry"
+  },
+  "somequicksetup": {
+    "message": "一些簡單的設置",
+    "description": "Title of the options on the installation succes page"
   }
 }

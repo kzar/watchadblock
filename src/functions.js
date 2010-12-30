@@ -14,21 +14,9 @@ extension_call = function(fn, options, callback) {
 // These are replaced with console.log in adblock_start if the user chooses.
 DEBUG = false;
 log = function() { };
-time_log = function() { };
 
 //Regex to validate a user-created filter.
-//TODO: insert a valid 'domain name regex'-regex, but wait for
-//issue 267 to be fixed first. Until this time any user adding
-//a filter containing multiple '##' will get a broken filter
-var global_filter_validation_regex = /(\#\#|^)(((\*|[A-Za-z0-9]+)|(\*|[A-Za-z0-9]+)?((\[[a-zA-Z0-9\-]+((\~|\^|\$|\*|\|)?\=\".+\")?\])+|\:\:?[a-zA-Z\-]+(\(.+\))?|\.[^\#]+|\#[a-zA-Z0-9_\-\:\.]+)+)\ *((\>|\+|\~)\ *)?)+$/;
-
-//When you click the label after a checkbox, also change
-//the status of the checkbox itself.
-function checkboxlabel_clicked() {
-  $(this).prev('input').
-    click(). //trigger the UI
-    change(); // activate the handler as if a user had clicked it
-}
+var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
 
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
@@ -121,3 +109,15 @@ function getCurrentTabInfo(callback) {
 }
 
 
+// Return the CSS text that will hide elements matching the given 
+// array of selectors.
+function css_hide_for_selectors(selectors) {
+  var result = [];
+  var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
+  for (var i = 0; i < selectors.length; i += GROUPSIZE) {
+    var line = selectors.slice(i, i + GROUPSIZE);
+    var rule = " { visibility:hidden !important; display:none !important; }";
+    result.push(line.join(',') + rule);
+  }
+  return result.join(' ');
+}

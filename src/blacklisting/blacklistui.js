@@ -326,12 +326,12 @@ BlacklistUi.prototype._redrawPage2 = function() {
     if (val == '' || val == null)
       continue;
 
-    var checkboxlabel = $("<span></span>").
-      append(translate("blacklisterattrwillbe", 
+    var checkboxlabel = $("<label></label>").
+      html(translate("blacklisterattrwillbe", 
           ["<b>" + (attr == 'nodeName' ? translate("blacklistertype") : attr) +
           "</b>", "<i>" + val + "</i>"])).
-      css("cursor", "pointer").
-      click(checkboxlabel_clicked);
+      attr("for", "ck" + attr).
+      css("cursor", "pointer");
 
     var checkbox = $("<div></div>").
       append("<input type=checkbox " + ((attr == 'src' || attr == 'href') ? 

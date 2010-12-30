@@ -3,7 +3,7 @@
     <title i18n="resourceblocktitle"></title>
     <link rel="stylesheet" type="text/css" href="../options/options.css" />
     <script src="../port.js" type="text/javascript"></script>
-    <script src="../jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="../jquery/jquery-1.4.4-hacked-up.min.js" type="text/javascript"></script>
     <script src="../jquery/jquery.tablesorter.min.js" type="text/javascript"></script>
     <script src="../functions.js" type="text/javascript"></script>
     <script src="../filtering/filteroptions.js" type="text/javascript"></script>
@@ -92,7 +92,7 @@
 
       function generateTable() {
         //find matching filters
-        var local_filterset = FilterSet.fromText(domaindata.filtertext);
+        var local_filterset = FilterSet.fromText(domaindata.block, false, false);
         var _limited_to_domain = local_filterset.limitedToDomain(domain);
         delete domaindata;
 
@@ -122,7 +122,7 @@
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
           if (!matchingfilter)
-            matchingfilter = _limited_to_domain.matches(i, resources[i].type);
+            matchingfilter = _limited_to_domain.matches(i, resources[i].type, domain);
 
           var type = {sort:3, name:undefined};
           if (matchingfilter)
@@ -382,7 +382,11 @@
           });
         }
 
-        var opts = { domain: domain, include_filters: true, is_top_frame: true };
+        var opts = {
+          domain: domain,
+          include_filters: true,
+          is_top_frame: true
+        };
         if (!domain) {
           alert(translate('nodomainsend'));
           window.close();

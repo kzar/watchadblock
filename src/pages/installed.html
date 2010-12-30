@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="../options/options.css" />
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
     <script src="../port.js"></script>
-    <script src="../jquery/jquery-1.4.2.min.js"></script>
-    <script src="../jquery/jquery-ui-1.8.custom.min.js"></script>
+    <script src="../jquery/jquery-1.4.4-hacked-up.min.js"></script>
+    <script src="../jquery/jquery-ui-1.8.6.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
       function displayVersionNumber() {
@@ -25,8 +25,6 @@
       $(function() {
         displayVersionNumber();
 
-        $(".icon").css("background-image", "url(../img/icon32.png)");
-
         // Check or uncheck each option.
         extension_call('get_optional_features', {}, function(features) {
           for (var name in features) {
@@ -45,9 +43,6 @@
         
         //translation
         localizePage();
-
-        //clicking the checkbox label checks the checkbox
-        $('.optionDescription').click(checkboxlabel_clicked);
       });
     </script>
   </head>
@@ -64,13 +59,11 @@
         <h2 i18n="somequicksetup"></h2>
 
         <div id="chromebutton" style="display:none">
-          <table>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td i18n="chromebutton_showoption"></td>
-              <td><img src="/img/icon_screenshot.png"/></td>
-            </tr>
-          </table>
+          <p>
+            <input type="checkbox" id="show_chrome_button"/>
+            <label for="show_chrome_button" i18n="chromebutton_showoption"></label>
+            <img src="../img/icon_screenshot.png" style="vertical-align:middle;"/>
+          </p>
           <div id="chromebutton_upon_check" style="display:none; font-style: italic" class="info">
             <div i18n="chromebutton_how_to_enable" 
                  i18n_replacement_el="chromebutton_install_link"></div>
@@ -97,7 +90,7 @@
 
         <p>
           <input type="checkbox" class="feature" id="enable_show_google_search_text_ads"/>
-          <span class="optionDescription" i18n="googletextads"></span>
+          <label for="enable_show_google_search_text_ads" i18n="googletextads"></label>
         </p>
         <script>
           // TODO: This is a dumb race condition, and still has a bug where
@@ -113,27 +106,11 @@
           });
         </script>
 
-        <p id="chromeblock" style="display:none">
-          <input type="checkbox" class="feature" id="enable_true_blocking_support" />
-          <span class="optionDescription" i18n="blocknothideoption"></span>
-          <span style='font-style:italic; color:red' i18n="betalabel"></span>
-          <br/>
-          <span style='font-style:italic; font-size: 12px; margin-left: 25px;' i18n="blocknothidewarning">
-          </span>
-        </p>
-        <script>
-          $(function() {
-            if (!SAFARI) {
-              $("#chromeblock").show();
-            }
-          });
-        </script>
-
         <div style="margin-top:2em" i18n="setotheroptions"></div>
       </div>
       <div id="donate_and_link">
         <div style="font-size: large"
-             i18n="donaterequest" i18n_replacement_el="donatelink"></div>
+             i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
         <a target="_new" id="donatelink"></a>
       </div>
       <script>
@@ -144,7 +121,7 @@
           $("#donate_and_link a").attr('href', donate_link);
         });
       </script>
-
+      <div i18n="filecleanerwarning" class="sneaky" style="margin-top:15px;"></div>
     </div>
   </body>
 </html>

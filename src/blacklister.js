@@ -1,5 +1,5 @@
 // Global lock so we can't open more than once on a tab.
-var may_open_blacklist_ui = false;
+var may_open_blacklist_ui = true;
 
 function load_jquery_ui(callback) {
   if (typeof global_have_loaded_jquery_ui != "undefined") {
@@ -15,7 +15,7 @@ function load_jquery_ui(callback) {
     $("head").append(link);
   }
   extension_call('readfile', 
-    {file:"jquery/jquery-ui-1.8.custom.min.js"},
+    {file:"jquery/jquery-ui-1.8.6.custom.min.js"},
     function(result) {
       eval(result); // suck it, Trebek
 

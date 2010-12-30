@@ -1,6 +1,6 @@
 ﻿{
   "buttoncancel": {
-    "message": "Άκυρο",
+    "message": "Cancelar",
     "description": "Cancel button"
   },
   "buttonok": {
@@ -8,75 +8,75 @@
     "description": "OK button"
   },
   "buttonblockit": {
-    "message": "Μπλοκάρετέ το!",
+    "message": "Bloquear!",
     "description": "Block button"
   },
   "buttonedit": {
-    "message": "Επεξεργασία",
+    "message": "Editar",
     "description": "Edit filter manually button"
   },
   "optionstitle": {
-    "message": "Επιλογές του AdBlock",
+    "message": "Opções do Adblock",
     "description": "Title for the options page"
   },
 
   "youtubevideomessage": {
-    "message": "Δεν βλέπετε κανένα βίντεο; Ανανεώστε την σελίδα. Αν αυτό συνεχιστεί, απενεργοποιείστε το μπλοκάρισμα διαφημήσεων στο Youtube εδώ $link$.",
+    "message": "Sem Vídeo? Recarregue a página. Se isto acontecer muitas vezes, desabilite o bloqueio de propagandas do Youtube em $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": " Επιλογές του AdBlock"
+        "example": "AdBlock Options"
       }
     }
   },
 
   "sliderexplanation": {
-    "message": "Σύρετε τον δείκτη ώσπου η διαφήμηση να μπλοκαριστεί σωστά στην σελίδα, και το μπλοκαρισμένο στοιχείο να φαίνεται χρήσιμο.",
+    "message": "Deslize o marcador até que a propaganda esteja bloqueada totalmente na página.",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
-    "message": "Βήμα 1ο: Επιλέξτε τι θα μπλοκάρετε",
+    "message": "Passo 1: Descobrir o que bloquear",
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "Τι νομίζετε ότι θα ισχύει σε αυτήν την διαφήμηση κάθε φορά που θα επισκέπτεστε αυτήν τη σελίδα;",
+    "message": "O que você acha que será comum em todas as vezes que visitar esta página?",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Δεν είστε σίγουρος;</b> Απλώς πατήστε 'Μπλοκάρετέ το!' παρακάτω.",
+    "message": "<b>Não tem certeza?</b> apenas pressione 'Bloquiar!' abaixo.",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
-    "message": "Το φίλτρο, το οποίο μπορεί να αλλαχθεί στη σελίδα επιλογών:",
+    "message": "O filtro, que pode ser mudado na página Opções.:",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
-    "message": "Τελευταίο βήμα: Τι κάθιστά αυτό να είναι διαφήμηση;",
+    "message": "Último passo: O que torna isto uma propaganda?",
     "description": "Blacklister options page title"
   },
   "blacklisternofilter": {
-    "message": "Δεν προσδιορίστικε φίλτρο!",
+    "message": "Nenhum filtro selecionado!",
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter": {
-    "message": "Παρακαλούμε πληκτρολογήστε σωστά το φίλτρο παρακάτω και πατήστε OK",
+    "message": "Entre corretamente com o filtro abaixo e pressione OK!",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid": {
-    "message": "Το φίλτρο είναι λανθασμένο!",
+    "message": "O filtro indicado é inválido!",
     "description": "Messagebox if the manually edited filter is invalid"
   },
   "blacklisterblockedelement": {
-    "message": "Μπλοκαρισμένο στοιχείο:",
+    "message": "Elemento Bloqueado:",
     "description": "Tells the user what the blocked element is on the slider page"
   },
   "blacklisterwarningnofilter": {
-    "message": "Προσοχή: Δέν προσδιορίστηκε φίλτρο!",
+    "message": "Alerta: nenhum filtro especificado!",
     "description": "Warns the user that no filter was specified"
   },
   "blacklisterblocksalloftype": {
-    "message": "Προσοχή: αυτό το φίλτρο μπλοκάρει όλα τα στοιχεία τύπου $elementtype$ στη σελίδα!",
+    "message": "Cuidado: este filtro bloqueia todos os elementos do tipo $elementtype$ na página!",
     "description": "Warns the user that all elements of type X will be blocked",
     "placeholders": {
       "elementtype": {
@@ -86,11 +86,11 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "Αυτό αντιστοιχεί σε μόνο <b>1</b> αντικείμενο στη σελίδα.",
+    "message": "Corresponde a <b>1</b> item nesta página.",
     "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
-    "message": "Αυτό αντιστοιχεί σε $matchcount$ αντικείμενα στη σελίδα.",
+    "message": "Corresponde a $matchcount$ itens nesta página.",
     "description": "Tells the user multiple matches were found",
     "placeholders": {
       "matchcount": {
@@ -100,7 +100,7 @@
     }
   },
   "blacklisterattrwillbe": {
-    "message": "$attribute$ θα $value$",
+    "message": "$attribute$ será $value$",
     "description": "Checkbox label",
     "placeholders": {
       "attribute": {
@@ -114,33 +114,33 @@
     }
   },
   "blacklistertype": {
-    "message": "Τύπος",
+    "message": "Tipo",
     "description": "node name is called 'Type'"
   },
   "buttonlooksgood": {
-    "message": "Φαίνεται εντάξει",
+    "message": "Parece bom!",
     "description": "Looks good button"
   },
   "buttonback": {
-    "message": "Πίσω",
+    "message": "Voltar",
     "description": "Back to previous wizard page button"
   },
 
   "findingads": {
-    "message": "Αναζήτηση διαφημίσεων...<br/><br/><i>Αυτό θα πάρει μερικά δευτερόλεπτα.</i>",
+    "message": "Procurando propagandas<br/><br/><i>Isto irá levar apenas um momento.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
-    "message": "Μπλοκάρετε μια διαφήμηση",
+    "message": "Bloquear uma propaganda",
     "description": "Title of the first two dialogs of the blacklister"
   },
   "clickthead": {
-    "message": "Κάντε κλικ στη διαφήμηση, και θα σας καθοδηγήσω στο μπλοκάρισμά της.",
+    "message": "Clique na propaganda e será guiado para bloqueá-la.",
     "description": "When you have to click the ad to continue"
   },
 
   "whitelistertext": {
-    "message": "Το AdBlock δεν θα είναι ενεργό σε τομεί που τελειώνουν σε:<br/>$domain$.",
+    "message": "AdBlock não será habilitado em domínios <br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
@@ -150,29 +150,29 @@
     }
   },
   "whitelistertitle": {
-    "message": "Θέλετε να καταχωρήσετε αυτόν τον τομέα στην άσπρη λίστα;",
+    "message": "Excluir este domínio?",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
-    "message": "Ναι, βάλτε τον στην άσπρη λίστα",
+    "message": "Excluir",
     "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
   },
 
   "subscribingtitle": {
-    "message": "Καταχώρηση στη σελίδα φίλτρων...",
+    "message": "Inscrevendo na lista de filtros...",
     "description": "abp: link subscriber title"
   },
   "subscribingfinished": {
-    "message": "Ολοκληρώθηκε!",
+    "message": "Terminado!",
     "description": "abp: link subscriber result"
   },
   "subscribingfailed": {
-    "message": "Παρουσιάστηκε ένα σφάλμα!",
+    "message": "Falha!",
     "description": "abp: link subscriber result"
   },
 
   "optionsversion": {
-    "message": "Έκδοση αριθμός $version$",
+    "message": "Versão $version$",
     "description": "Version number",
     "placeholders": {
       "version": {
@@ -182,57 +182,57 @@
     }
   },
   "optionschangelog": {
-    "message": "Αρχείο αλλαγών στις εκδόσεις",
+    "message": "Mudanças(ChangeLog)",
     "description": "changelog link"
   },
   "tabgeneral": {
-    "message": "Γενικά",
+    "message": "Geral",
     "description": "A tab on the options page"
   },
   "tabfilterlists": {
-    "message": "Λίστες φίλτρων",
+    "message": "Listas de Filtros",
     "description": "A tab on the options page"
   },
   "tabblacklist": {
-    "message": "Μαύρη λίστα",
+    "message": "Lista Negra",
     "description": "A tab on the options page"
   },
   "tabexcluded": {
-    "message": "Άσπρη λίστα",
+    "message": "Sites Excluídos",
     "description": "A tab on the options page"
   },
 
   "generaloptions": {
-    "message": "Γενικές επιλογές",
+    "message": "Opções Gerais",
     "description": "Title of first tab page"
   },
   "betalabel": {
-    "message": "Δοκιμαστική έκδοση",
+    "message": "Beta",
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "Μου αρέσουν οι διαφημίσεις κειμένου στα αποτελέσματα αναζήτησης Google; εμφάνιζέ τες.",
+    "message": "Eu gosto dos anúncios nos resultados do Google; mostre-me eles.",
     "description": "Option on first tab page"
   },
   "youtubeads": {
-    "message": "Μπλόκαρε διαφημίσεις μέσα σε βίντεο του YouTube.",
+    "message": "Bloqueie propagandas nos vídeos do Youtube.",
     "description": "Option on first tab page"
   },
   "showcontextmenus": {
-    "message": "Προσθέστε αντικείμενα στο μενού 'του δεξιού κλικ'.",
+    "message": "Mostrar itens no menu do botão direito",
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "Εμφάνιζε στοιχεία αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί το AdBlock)",
+    "message": "Mostrar mensagens de Debug nos Logs do Console (deixará o AdBlock um pouco lento)",
     "description": "Option on first tab page"
   },
 
   "updatedrightnow": {
-    "message": "ανανεώθηκε μόλις τώρα",
+    "message": "Atualizado exatamente agora",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
-    "message": "ανανεώθηκε πριν $seconds$ δευτερόλεπτα",
+    "message": "Atualizado $seconds$ segundos atrás",
     "description": "Label for subscription",
     "placeholders": {
       "seconds": {
@@ -242,7 +242,7 @@
     }
   },
   "updatedminutesago": {
-    "message": "ανανεώθηκε πριν $minutes$ λεπτά",
+    "message": "Atualizado $minutes$ minutos atrás",
     "description": "Label for subscription",
     "placeholders": {
       "minutes": {
@@ -252,7 +252,7 @@
     }
   },
   "updatedhoursago": {
-    "message": "ανανεώθηκε πρίν $hours$ ώρες",
+    "message": "Atualizado $hours$ horas atrás",
     "description": "Label for subscription",
     "placeholders": {
       "hours": {
@@ -262,7 +262,7 @@
     }
   },
   "updateddaysago": {
-    "message": "ανανεώθηκε πριν $days$ μέρες",
+    "message": "Atualizado $days$ dias atrás",
     "description": "Label for subscription",
     "placeholders": {
       "days": {
@@ -272,403 +272,403 @@
     }
   },
   "updatedminuteago": {
-    "message": "ανανεώθηκε πριν 1 λεπτό",
+    "message": "Atualizado 1 minuto atrás",
     "description": "Label for subscription"
   },
   "updatedhourago": {
-    "message": "ανανεώθηκε πριν 1 ώρα",
+    "message": "Atualizado 1 hora atrás",
     "description": "Label for subscription"
   },
   "updateddayago": {
-    "message": "ανανεώθηκε πριν 1 μέρα",
+    "message": "Atualizado 1 dia atrás",
     "description": "Label for subscription"
   },
   "removedlabel": {
-    "message": "Αφαιρέθηκε.",
+    "message": "Removido.",
     "description": "Status label"
   },
   "unsubscribedlabel": {
-    "message": "Δεν είστε τώρα συνδρομητής σε αυτό το φίλτρο.",
+    "message": "Assinatura Cancelada.",
     "description": "Status label"
   },
   "fetchinglabel": {
-    "message": "Καταχώριση... Παρακαλώ περιμένετε.",
+    "message": "Carregando... por favor aguarde.",
     "description": "Status label"
   },
   "subscribedlabel": {
-    "message": "Είστε τώρα συνδρομητής σε αυτό το φίλτρο.",
+    "message": "Assinado!",
     "description": "Status label"
   },
   "nolisturllabel": {
-    "message": "Αυτή δεν είναι μια έκυρη διεύθυνση φίλτρου.",
+    "message": "Este endereço não contém uma lista.",
     "description": "Status label"
   },
   "failedtofetchfilter": {
-    "message": "Παρουσιάστηκε σφάλμα στην καταχώρηση του φίλτρου!",
+    "message": "Falha ao carregar este filtro!",
     "description": "Error messagebox"
   },
   "enterurloflist": {
-    "message": "Please enter the URL of a list of filters to subscribe to.",
+    "message": "Entre com o endereço de uma lista de filtros para realizar a inscrição.",
     "description": "Error messagebox"
   },
   "removefromlist": {
-    "message": "Αφαίρεση από τη λίστα",
+    "message": "Remover da lista",
     "description": "Label to remove a custom filter"
   },
   "filterstabtitle": {
-    "message": "Γίνετε συνδρομητής σε λίστες φίλτρων",
+    "message": "Inscrever na lista de filtros",
     "description": "Title of the filter list tab"
   },
   "filterlistlink": {
-    "message": "Μην είστε συνδρομητής σε περισσότερα φίλτρα από όσα χρειάζεστε, το καθένα σας καθυστερεί και από λίγο! Άλλες λίστες μπορούν να βρεθούν <a>εδώ</a>.",
+    "message": "Não se inscreva em mais listas do que necessita -- cada uma delas o deixa um pouco mais lento! Créditos e mais listas podem ser encontradas <a>aqui</a>.",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "Θα ψάχνω ανανεώσεις για τα φίλτρα αυτόματα, αλλά μπορείτε επίσης να <a>τα ανανεώσετε τώρα</a>.",
+    "message": "Irei realizar atualizações automaticamente; você também pode <a>atualizar agora</a>.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
-    "message": "ή εισάγετε μια URL διεύθυνση σελίδας φίλτρων:",
+    "message": "Ou entre com um endereço:",
     "description": "link for custom subscription"
   },
   "subscribebutton": {
-    "message": "Καταχώριση",
+    "message": "Inscrever-se",
     "description": "subscribe to a list button"
   },
   "subscribetoall": {
-    "message": "Γίνετε συνδρομητής όλων των φίλτρων:",
+    "message": "Inscrever-se em todos os filtros:",
     "description": "option on second tab page"
   },
   "subscribetonone": {
-    "message": "Γίνετε συνδρομητής κανενός φίλτρου:",
+    "message": "Cancelar inscrição em todos os filtros:",
     "description": "option on second tab page"
   },
   "showlinkstolists": {
-    "message": "Εμφάνισε συνδέσμους στις σελίδες φίλτρων:",
+    "message": "Mostrar links para as listas de filtro:",
     "description": "Option on second tab page"
   },
   "labelshow": {
-    "message": "εμφάνιση σελίδας",
+    "message": "mostrar",
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "Προσαρμοσμένα φίλτρα του AdBlock (προτείνεται)",
+    "message": "Filtros personalizados do AdBlock (recomendado)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
-    "message": "EasyList (προτείνεται)",
+    "message": "EasyList (recomendado)",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - πρόσθετα βουλγάρικα φίλτρα",
+    "message": " - Filtros Búlgaros(adicionais)",
     "description": "A filter list"
   },
   "filterdutch": {
-    "message": " - πρόσθετα ολλανδικά φίλτρα",
+    "message": " - Filtros Holandeses(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_finnish": {
-    "message": " - πρόσθετα φινλανδικά φίλτρα",
+    "message": " - Filtros Finlandeses(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_french": {
-    "message": " - πρόσθετα γαλλικά φίλτρα",
+    "message": " - Filtros Franceses(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_german": {
-    "message": " - πρόσθετα γερμανικά φίλτρα",
+    "message": " - Filtros Alemães(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_norwegian": {
-    "message": " - πρόσθετα νορβηγικά φίλτρα",
+    "message": " - Filtros Noruegueses(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_polish": {
-    "message": " - πρόσθετα πολανδικά φίλτρα",
+    "message": " - Filtros Poloneses(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_romanian": {
-    "message": " - πρόσθετα ρουμάνικα φίλτρα",
+    "message": " - Filtros Romenos(adicionais)",
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": " - πρόσθετα ρώσικα φίλτρα",
+    "message": " - Filtros Russos(adicionais)",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
-    "message": " - πρόσθετα βιετναμέζικα φίλτρα",
+    "message": " - Filtros Vietnamitas(adicionais)",
     "description": "A filter list"
   },
   "filterchinese": {
-    "message": "Κινέζικα φίλτρα",
+    "message": "Filtros Chineses",
     "description": "A filter list"
   },
   "filterczech": {
-    "message": "Τσέχικα φίλτρα",
+    "message": "Filtros Tchecos",
     "description": "A filter list"
   },
   "filterdanish": {
-    "message": "Δανέζικα φίλτρα",
+    "message": "Filtros Dinamarqueses",
     "description": "A filter list"
   },
   "filterhungarian": {
-    "message": "Ουγγαρικά φίλτρα",
+    "message": "Filtros Húngaros",
     "description": "A filter list"
   },
   "filterisraeli": {
-    "message": "Ισραηλινά φίλτρα",
+    "message": "Filtros Israelitas",
     "description": "A filter list"
   },
   "filteritalian": {
-    "message": "Ιταλικά φίλτρα",
+    "message": "Filtros Italianos",
     "description": "A filter list"
   },
   "filterjapanese": {
-    "message": "Ιαπωνικά φίλτρα",
+    "message": "Filtros Japoneses",
     "description": "A filter list"
   },
   "filtereasylist_plun_korean": {
-    "message": "Κορεάτικα φίλτρα",
+    "message": "Filtros Coreanos",
     "description": "A filter list"
   },
   "filterpolish": {
-    "message": "Πολανδικά φίλτρα",
+    "message": "Filtros Poloneses",
     "description": "A filter list"
   },
   "filtereasylist_plus_spanish": {
-    "message": "Ισπανικά φίλτρα",
+    "message": "Filtros Espanhóis",
     "description": "A filter list"
   },
   "filterukranian": {
-    "message": "Ουκρανικά φίλτρα",
+    "message": "Filtros Ucranianos",
     "description": "A filter list"
   },
 
   "blacklistclickmessage": {
-    "message": "Κάντε δεξί κλικ σε μια διαφήμηση για να την μπλοκάρετε -- ή κάντε το εδώ χειρόγραφα.",
+    "message": "Clique com o botão direito em uma propaganda para bloquear -- ou bloqueie manualmente aqui.",
     "description": "Message at the top of the blacklist options tab"
   },
   "blacklisttabtitle": {
-    "message": "Μπλοκάρετε μια διαφήμηση που τα φίλτρα αγνοούν",
+    "message": "Bloqueie uma propaganda que não está inclusa no filtro",
     "description": "Title of the third tab"
   },
   "addnewfilter": {
-    "message": "Προσθέστε ένα νέο φίλτρο:",
+    "message": "Adicione um novo filtro:",
     "description": "Subtitle on the third tab"
   },
   "linkblockadbyurl": {
-    "message": "Μπλοκάρετε μια διαφήμιση από την URL διεύθυνσή της",
+    "message": "Bloqueie uma propanga utilizando seu Link",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
-    "message": "Αποκρύψτε μια περιοχή μιας ισοσελίδας",
+    "message": "Ocultar uma parte da página",
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
-    "message": "Μπλοκάρετε URL διευθύνσεις με αυτό το κείμενο",
+    "message": "Bloqueie links contendo este texto",
     "description": "Message of the url-blocking area"
   },
   "csstomatch": {
-    "message": "CSS to match",
+    "message": "Parte do CSS que deseja bloquear",
     "description": "Message of the css-hiding area"
   },
   "blockdomain": {
-    "message": "Τομέας της σελίδας για εφαρμογή",
+    "message": "Domínio da página para aplicar",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
-    "message": "Επεξεργαστείτε χειρόγραφα τα φίλτρα σας:",
+    "message": "Editar seus filtros manualmente:",
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "ΠΡΟΣΟΧΗ: αν κάνετε ένα λάθος εδώ, πολλά άλλα φίλτρα, συμπεριλαμβανόμενα τα επίσημα, μπορεί να πάθουν ζημιά!<br/>Διαβάστε τις<a>οδηγίες για σύνταξη φίλτρων</a> για να μάθετε πώς να προσθέτετε προχωρημένα μαύρης και άσπρης λίστας φίλτρα.",
+    "message": "Tenha cuidado: se você comenter algum erro aqui,os filtros padrões poderão parar de funcionar também!<br/>Reveja o <a>filtro syntax tutorial</a> to learn how to add advanced blacklist and whitelist filters.",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
-    "message": "Αποθήκευση",
+    "message": "Salvar",
     "description": "Save button"
   },
   "savereminder": {
-    "message": "Μην ξεχάσετε να αποθηκεύσετε!",
+    "message": "Não se esqueça de salvar!",
     "description": "Reminder to press save"
   },
   "advanced": {
-    "message": "Για προχωρημένους",
+    "message": "Avançado",
     "description": "Section label for advanced options"
   },
   "reportanad": {
-    "message": "<a>Αναφέρετε μια διαφήμιση</a> στο AdBlock ή στις επίσημες λίστες φίλτρων.",
+    "message": "<a>Reportar uma propaganda</a> para os desenvolvedores de filtros do AdBlock.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
   "removelabel": {
-    "message": "Αφαίρεση",
+    "message": "Remover",
     "description": "link to remove a excluded site"
   },
   "excludedsitestitle": {
-    "message": "Μην μπλοκάρεις διαφημίσεις σε τομείς που τελειώνουν σε...",
+    "message": "Não bloquear propagandas em domínios que terminam em...",
     "description": "title of the 4th tab page"
   },
   "excludedsitesexample": {
-    "message": "Π.χ. , το 'google.com' θα απενεργοποιήσει το μπλοκάρισμα στο google.com, mail.google.com, και www.google.com .",
+    "message": "Por exemplo, 'google.com' irá permitir propagandas em google.com, mail.google.com, e www.google.com.",
     "description": "text on the 4th tab page"
   },
   "addbutton": {
-    "message": "Προσθήκη",
+    "message": "Adicionar",
     "description": "add button"
   },
   "removeallfromlist": {
-    "message": "Αφαίρεσε όλα τα αντικείμενα από τη λίστα:",
+    "message": "Remover todos os itens da lista:",
     "description": "option on 4th tab page"
   },
   "adblockreportinganad": {
-    "message": "AdBlock - Αναφέροντας μια διαφήμιση",
+    "message": "AdBlock - Reportando propaganda",
     "description": "title of ad report page"
   },
   "adreport1": {
-    "message": "Βρήκατε μια διαφήμηση σε μια ιστοσελίδα; Λοιπόν, θα σας δείξω το σωστό μέρος να την αναφέρετε!<br/> Θυμηθείτε: η αναφορά διαφημήσεων είναι προεραιτική. Αν δε θέλετε να το κάνετε, απλά κλείστε αυτό το παράθυρο και μπλοκάρετέ την μόνο για εσάς προσθέτοντας ένα φίλτρο στην καρτέλα 'Μαύρη λίστα' της σελίδας επιλογών!",
+    "message": "Então você encontrou uma propaganda na página? Bem, irei guiá-lo para encontrar o lugar que utilizará para reportá-lo!<br/> Lembre-se: reportar uma propaganda é um ato voluntário. Se você não deseja realizar a denúncia, utilize a página de opções para bloquear manualmente.",
     "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
-    "message": "Σιγουρευτείτε πως οι λίστες φίλτρων σας είναι ενημερωμένες",
+    "message": "Tenha certeza que seus filtros estão atualizados",
     "description": "instruction on ad report page"
   },
   "clickupdatefilters": {
-    "message": "Πατήστε εδώ: <a>Ανανέωσε τα φίλτρα μου!</a>",
+    "message": "Clique aqui: <a>Atualizar os meus filtros!</a>",
     "description": "instruction on ad report page"
   },
   "reloadadpage": {
-    "message": "Ανανεώστε τη σελίδα που έχει τη διαφήμηση.",
+    "message": "Recarregar a página com a propaganda",
     "description": "instruction on ad report page"
   },
   "adstillappear": {
-    "message": "Η διαφήμηση συνεχίζει να υπάρχει;",
+    "message": "A propaganda ainda aparece?",
     "description": "question on ad reporting page"
   },
   "yes": {
-    "message": "Ναι",
+    "message": "Sim",
     "description": "A positive response to a question"
   },
   "no": {
-    "message": "Όχι",
+    "message": "Não",
     "description": "A negative response to a question"
   },
   "adalreadyblocked": {
-    "message": "Δε σας μένει να κάνετε τίποτα, αφού η διαφήμηση είναι ήδη μπλοκαρισμένη!",
+    "message": "Você não precisa fazer nada, pois a propaganda já está bloqueada",
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "correctfilters": {
-    "message": "Σωστά φίλτρα",
+    "message": "Filtros Corretos",
     "description": "on the ad report page, label describing having the right set of filters"
   },
   "reallyclearlist": {
-    "message": "Είστε σίγουρος/η πως θέλετε να διαγάψετε όλη την λίστα;",
+    "message": "Tem certeza que deseja limpar esta lista?",
     "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
-    "message": "Σε τι γλώσσα είναι αυτή η σελίδα;",
+    "message": "Em que língua está página está escrita?",
     "description": "question on ad report page"
   },
   "lang_english": {
-    "message": "Αγγλικά",
+    "message": "English/Inglês",
     "description": "language"
   },
   "lang_bulgarian": {
-    "message": "Βουλγάρικα",
+    "message": "Bulgarian/Búlgaro",
     "description": "language"
   },
   "lang_chinese": {
-    "message": "Κινέζικα",
+    "message": "Chinese/Chinês",
     "description": "language"
   },
   "lang_czech": {
-    "message": "Τσέχικα",
+    "message": "Czech/Tcheco",
     "description": "language"
   },
   "lang_danish": {
-    "message": "Δανέζικα",
+    "message": "Danish/Dinamarquês",
     "description": "language"
   },
   "lang_dutch": {
-    "message": "Ολλανδικά",
+    "message": "Dutch/Holandês",
     "description": "language"
   },
   "lang_finnish": {
-    "message": "Φινλανδικά",
+    "message": "Finnish/Finlandês",
     "description": "language"
   },
   "lang_french": {
-    "message": "Γαλλικά",
+    "message": "French/Francês",
     "description": "language"
   },
   "lang_german": {
-    "message": "Γερμανικά",
+    "message": "German/Alemão",
     "description": "language"
   },
   "lang_hungarian": {
-    "message": "Ουγγαρικά",
+    "message": "Hungarian/Húngaro",
     "description": "language"
   },
   "lang_israeli": {
-    "message": "Ισραηλίτικα",
+    "message": "Israeli/Hebraico",
     "description": "language"
   },
   "lang_italian": {
-    "message": "Ιταλικά",
+    "message": "Italian/Italiano",
     "description": "language"
   },
   "lang_japanese": {
-    "message": "Ιαπωνικά",
+    "message": "Japanese/Japonês",
     "description": "language"
   },
   "lang_korean": {
-    "message": "Κορεάτικα",
+    "message": "Korean/Coreano",
     "description": "language"
   },
   "lang_norwegian": {
-    "message": "Νορβηγικά",
+    "message": "Norwegian/Norueguês",
     "description": "language"
   },
   "lang_polish": {
-    "message": "Πολανδικά",
+    "message": "Polish/Polonês",
     "description": "language"
   },
   "lang_romanian": {
-    "message": "Ρουμάνικα",
+    "message": "Romanian/Romeno",
     "description": "language"
   },
   "lang_russian": {
-    "message": "Ρώσικα",
+    "message": "Russian/Russo",
     "description": "language"
   },
   "lang_spanish": {
-    "message": "Ισπανικά",
+    "message": "Spanish/Espanhol",
     "description": "language"
   },
   "lang_ukranian": {
-    "message": "Ουκρανικά",
+    "message": "Ukranian/Ucraniano",
     "description": "language"
   },
   "lang_vietnamese": {
-    "message": "Βιετναμέζικα",
+    "message": "Vietnamese/Vietnamita",
     "description": "language"
   },
   "other": {
-    "message": "Άλλη",
+    "message": "Other/Outra",
     "description": "multiple choice option"
   },
   "nodefaultfilter": {
-    "message": "We don't have a default filter list for that language.<br/>Please try to find a suitable list that supports this language $link$ or block this ad for yourself on the Blacklist page.",
+    "message": "Não temos uma lista padrão de filtros para esta língua.<br/>Tente localizar uma lista $link$ ou bloqueie manualmente na Lista Negra.",
     "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
     "placeholders": {
       "link": {
-        "content": "$1here$2",
+        "content": "$1aqui$2",
         "example": "<a href='http://abp.org'>here</a>"
       }
     }
   },
   "retryaftersubscribe": {
-    "message": "Γίνετε συνδρομητής σε αυτήν τη λίστα φίλτρων, και μετά ξαναπροσπαθήστε: $list_title$",
+    "message": "Inscreva-se neste filtro e tente novamente: $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
     "placeholders": {
       "list_title": {
@@ -678,35 +678,35 @@
     }
   },
   "checkinfirefox": {
-    "message": "Ελέγξτε στον Firefox",
+    "message": "Verificar no Firefox",
     "description": "tell a user to see if a reported ad also appears in firefox"
   },
   "checkinfirefox1": {
-    "message": "Εγκαταστήστε τον Firefox αν δεν τον έχετε.",
+    "message": "Instale o Firefox caso você não o tenha.",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox2": {
-    "message": "Εγκαταστήστε το Adblock Plus for Firefox αν δεν το έχετε.",
+    "message": "Instale o AdBlock para Firefox caso você não o tenha.",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox3": {
-    "message": "Στον Firefox, γίνετε συνδρομητής στις λίστες φίλτρων που είστε κι εδώ(εκτός απ'ταπροσαρμοσμένα φίλτρα του AdBlock).",
+    "message": "No Firefox, inscreva-se nas mesmas listas de filtro que você utiliza aqui (exceto os filtros customizados do AdBlock).",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox4": {
-    "message": "Στον Firefox, ανοίξτε την σελίδα με την διαφήμηση που αναφέρατε.",
+    "message": "No Firefox, carregue a página com as propagandas.",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox5": {
-    "message": "Η διαφήμιση εμφανίζεται στον Firefox?",
+    "message": "A propaganda aparece no Firefox?",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "refusetocheck": {
-    "message": "Δεν θέλω να το ελέγξω αυτό",
+    "message": "Não desejo realizar esta verificação",
     "description": "user is telling us they don't wish to investigate something for us"
   },
   "reportfilterlistproblem": {
-    "message": "Αυτό είναι ένα πρόβλημα στις λίστες φίλτρων. Αναφέρτε το εδώ: $link$",
+    "message": "Isto é um problema com a lista de filtros. Reporte Aqui: $link$",
     "description": "telling the user to report an ad to a filter list maintainer",
     "placeholders": {
       "link": {
@@ -716,31 +716,35 @@
     }
   },
   "reporttous1": {
-    "message": "If you speak English, you can report the ad to us $in_the_issue_tracker_link$.",
+    "message": "Você pode reporta a propaganda para nós utilizando $in_the_issue_tracker_link$.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
-        "content": "$1in the issue tracker$2",
+        "content": "$1este link de desenvolvimento$2",
         "example": "<a href='issuetracker.html'>in the issue tracker</a>"
       }
     }
   },
   "fixityourself": {
-    "message": "Εντάξει, μπορείτε ακόμα να μπλοκάρετε αυτή τη διαφήμηση μόνο για εσάς στην σελίδα επιλογών. Ευχαριστούμε!",
+    "message": "OK, você também pode bloquear esta propaganda manualmente",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {
-    "message": "Χρησιμοποιείτε μια προηγούμενη έκδοση του AdBlock. Παρακαλούμε $updatelink$ στην νεότερη έκδοση του AdBlock",
+    "message": "Você está usando uma versão antiga do AdBlock. Visite $updatelink$ para atualizar para a versão atual",
     "description": "ad report page instruction",
     "placeholders": {
       "updatelink": {
-        "content": "$1ανανεώστε το$2",
+        "content": "$1este link$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
   },
   "cantundo": {
-    "message": "Αυτή η ενέργεια δεν θα μπορεί να αναιρεθεί!",
+    "message": "Esta ação não pode ser desfeita!",
     "description": "Warning a user before confirming an action"
+  },
+  "contextmenuexcludedomain": {
+    "message": "Não executar neste domínio...",
+    "description": "Context menu entry"
   }
 }

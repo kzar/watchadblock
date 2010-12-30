@@ -1,7 +1,11 @@
 ﻿{
-  "description": {
-    "message": "AdBlock voor Chrome!  Blokkeert advertenties op het internet.  Beoordeeld met 4,5 van de 5 sterren door de gebruikers!",
+  "description1": {
+    "message": "De meest populaire Chrome extensie, met meer dan 1,5 miljoen gebruikers! Blokkeert advertenties op het internet.",
     "description": "Extension description in manifest"
+  },
+  "free_description": {
+    "message": "De meest populaire Chrome extensie, met meer dan 1,5 miljoen gebruikers! Blokkeert advertenties op het internet. Overweeg a.u.b. om de betaalde versie voor $1,99 aan te schaffen.",
+    "description": "Extension description used in free version manifest"
   },
 
   "buttoncancel": {
@@ -215,17 +219,9 @@
     "message": "Algemene opties",
     "description": "Title of first tab page"
   },
-  "blocknothideoption": {
-    "message": "Blokkeer de meeste advertenties, in plaats van ze te verbergen.",
-    "description": "Option on first tab page"
-  },
   "betalabel": {
     "message": "Beta",
     "description": "Option on first tab page"
-  },
-  "blocknothidewarning": {
-    "message": "Let op dat Chrome dit niet volledig ondersteund, dus een paar advertenties zullen toch geladen en daarna pas verborgen worden als je een snelle computer hebt.",
-    "description": "Warning for block instead of hiding option"
   },
   "googletextads": {
     "message": "Ik wil de tekstadvertenties op Google kunnen zien.",
@@ -237,10 +233,6 @@
   },
   "debuginlogoption": {
     "message": "Toon foutopsporingsmeldingen in de console (dit vertraagt AdBlock)",
-    "description": "Option on first tab page"
-  },
-  "timeinlogoption": {
-    "message": "Toon tijdsduurmeldingen in de console (dit vertraagt AdBlock)",
     "description": "Option on first tab page"
   },
 
@@ -336,12 +328,8 @@
     "message": "Aanmelden bij officiële filters",
     "description": "Title of the filter list tab"
   },
-  "defaultsexplanation": {
-    "message": "De standaard lijsten zijn geschikt voor Engels-sprekende gebruikers. Anderen zullen misschien ook andere lijsten willen gebruiken.",
-    "description": "Explanation of the filter lists"
-  },
   "filterlistlink": {
-    "message": "Meld je niet voor meer lijsten dan je nodig hebt aan. Elke lijst zal je iets vertragen! Credits en andere lijsten kunnen <a>hier</a> gevonden worden.",
+    "message": "Meld je niet aan voor meer lijsten dan je nodig hebt. Elke lijst zal je iets vertragen! Credits en andere lijsten kunnen <a>hier</a> gevonden worden.",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
@@ -724,8 +712,8 @@
       }
     }
   },
-  "reporttous": {
-    "message": "Je kunt de advertentie aan ons rapporteren $in_the_issue_tracker_link$ (Engelstalig).<br/>(We weten dat we geen advertenties in films en Flash kunnen blokkeren. We wachten op ondersteuning van WebKit.)",
+  "reporttous1": {
+    "message": "Je kunt de advertentie aan ons rapporteren $in_the_issue_tracker_link$ (Engelstalig).",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
@@ -793,8 +781,8 @@
     "message": "Herlaad alle geopende tabbladen, en de advertenties zullen verdwijnen.",
     "description": "Message on the installation success page"
   },
-  "donaterequest": {
-    "message": "Als je AdBlock prettig vindt, overweeg dan eens om te <a>doneren</a>, zodat ik mijn gezin kan onderhouden! Alvast bedankt! :) - Michael",
+  "donaterequest2": {
+    "message": "Ik werk nu full time aan AdBlock! Hierdoor ben ik afhankelijk van donaties om mijn gezin te onderhouden. <a>Doneer</a> a.u.b. en geef daarmee aan dat mijn vrouw en ik (afgebeeld) niet gek zijn om dit te proberen. Alvast bedankt :) - Michael",
     "description": "Donation request on installation success page"
   },
   "setotheroptions": {
@@ -813,9 +801,25 @@
     "message": "Toon een knop in de taakbalk",
     "description": "Message on installation success page"
   },
+  "filecleanerwarning": {
+    "message": "Als je dit scherm vaker ziet, controleer dan of je geen programma hebt dat automatisch bestanden verwijdert, zoals 'localstorage'.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
   "somequicksetup": {
     "message": "Snelle instellingen",
     "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "Videos en Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "Zie je de advertentie in of voor een film of in een andere plugin, zoals in Flash spelletjes?",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "We kunnen nog geen advertenties in videos, Flash of andere plugins blokkeren. We wachten op ondersteuning van de browser en WebKit.",
+    "description": "Result of the final ad report question"
   },
 
   "typehiding": {

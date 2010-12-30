@@ -1,13 +1,14 @@
 <html>
   <head>
     <script src="port.js"></script>
-    <script src="jquery/jquery-1.4.2.min.js"></script>
+    <script src="jquery/jquery-1.4.4-hacked-up.min.js"></script>
     <script src="functions.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
+    <script src="filtering/filternormalizer.js"></script>
     <script>
       var utils = {};
     </script>
@@ -15,36 +16,6 @@
     <script>
 
       // V3 FILTERING
-
-      // Inputs: elementInfo: list of { url:string, type:ElementType, id } 
-      //                      objects.
-      //         domain: domain of page that requested these elements.
-      // If a url is empty or null, it will be ignored.
-      // Returns: array of ids that are ads.
-      utils.find_ads_in = function(options) {
-        // TODO: replace filter() and map() calls thruout with array ones
-        // when possible -- jquery is unnecessary on arrays
-        var filterset = _myfilters.filterset;
-        // limit to a domain
-        var limited = filterset.limitedToDomain(options.domain);
-        // TODO: timing tests to see if this is much slower than a normal loop
-        return options.elementInfo.
-          filter(function(el) {  
-              return el.url && limited.matches(el.url, el.type); 
-            }).
-          map(function(el) { 
-              return el.id; 
-            });
-      }
-
-      // Inputs: domain: domain of page that requested the selectors.
-      // Returns: the selector strings from all selector filters that should
-      //          apply to the given domain.
-      utils.selectors_for_domain = function(options) {
-        return _myfilters.filterset.
-          limitedToDomain(options.domain).
-          getSelectors();
-      }
 
       // Rebuild the filterset based on the current settings and subscriptions.
       // Inputs: none.
@@ -129,12 +100,10 @@
         });
         var feature_names = [
           "debug_logging",
-          "debug_time_logging",
           "block_youtube",
           "show_youtube_help_msg",
           "show_google_search_text_ads",
-          "show_context_menu_items",
-          "true_blocking_support"
+          "show_context_menu_items"
           ];
         for (var i = 0; i < feature_names.length; i++) {
           var name = feature_names[i];
@@ -144,7 +113,6 @@
               case "block_youtube":
               case "show_youtube_help_msg":
               case "show_context_menu_items":
-              case "true_blocking_support": //if supported
                 features[name].is_enabled = true; // by default
                 break;
               default:
@@ -170,36 +138,49 @@
       //         is_top_frame?:bool true if the caller is the top
       //           level frame.  Subframes use this frame's domain to determine 
       //           if they are whitelisted.
-      //         include_filters?:bool true if selectors and filtertext should
-      //           be sent.  Defaults to false.
+      //         include_filters:bool true if hide and block filters should be
+      //           included
       utils.get_content_script_data = function(options, sender) {
-        var start = new Date();
         if (options.is_top_frame) {
           top_frame_domains[sender.tab.id] = options.domain;
         }
 
+        // TODO speed: i think sender.tab.url is always the TOP FRAME url omg, not the
+        // subframe url.  so we can get rid of top_frame_domains?
         var tfd = top_frame_domains[sender.tab.id];
         var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
-        var selectors = [];
         var features = utils.get_optional_features();
-        if (!whitelisted && options.include_filters)
-          selectors = utils.selectors_for_domain({domain:options.domain});
-
         var result = {
           page_is_whitelisted: whitelisted,
-          selectors: selectors,
-          top_frame_domain: tfd,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: features
         };
+        if (whitelisted)
+          return result;
+        // If in debug mode, send filters to adblock.js to print css info.
+        // Normally only adblock_start asks to include_filters.
+        if (!options.include_filters && !features.debug_logging.is_enabled)
+          return result;
+
+        // Not whitelisted, and running on adblock_start.  We have two tasks:
+        // apply CSS-hiding rules, and send Chrome a filterset.
+
+        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+        // when not cached, it takes about 100ms.  So more caching would be good.  The
+        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+        // should be able to turn up the fifecache size by a lot.  have the fifocache log
+        // how big each new entry is, to verify this.
+        var global_hide = _myfilters.global.cached_getSelectors;
+        var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+        result.selectors = global_hide.concat(nonglobal_hide);
+        // Chrome needs the blocking filters in the content script until a
+        // synchronous background communication API comes along.
         if (!SAFARI) {
-          if (!whitelisted && options.include_filters &&
-              features.true_blocking_support.is_enabled) {
-            result.filtertext = _myfilters.filterset._sourceText;
-          }
+          var global_block = _myfilters.global.cached_blockFiltersText;
+          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
+          result.block = global_block + nonglobal_block.join('\n');
         }
-        var end = new Date();
-        log("time to run: " + (end - start) + " ms || " + options.domain);
+
         return result;
       }
 
@@ -304,12 +285,12 @@
       //Will open the resource blocking tab. Input:
       //   resources: the resource(s)
       //   domain: the tld
-      utils.show_resourceblocker = function(options) {
+      utils.show_resourceblocker = function(options, sender) {
+        var domain = FilterSet._domainFor(sender.tab.url);
         utils.storage_set({
-            key: "resources" + options.domain.replace(/(\.|\-)/g, '_'),
+            key: "resources" + domain.replace(/(\.|\-)/g, '_'),
             value: options.resources});
-        chrome.tabs.create({url: "pages/resourceblock.html?domain=" 
-                            + options.domain});
+        chrome.tabs.create({url: "pages/resourceblock.html?domain=" + domain});
       }
       localStorage.removeItem('last_resources');
       
@@ -424,13 +405,17 @@
           });
         }
 
-        chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-          if (tab.selected && changeInfo.url)
+        //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
+        //Otherwise the extension doesn't work (e.g. doesn't block ads)
+        if (chrome.tabs) {
+          chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+            if (tab.selected && changeInfo.url)
+              updateButtonUIAndContextMenus();
+          });
+          chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
             updateButtonUIAndContextMenus();
-        });
-        chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
-          updateButtonUIAndContextMenus();
-        });
+          });
+        }
       }
 
 
@@ -525,8 +510,9 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var limited = _myfilters.filterset.limitedToDomain(pageDomain);
-          var isMatched = url && limited.matches(url, elType);
+          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
+          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
+                                  limited.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
@@ -554,7 +540,6 @@
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
-
     </script>
   </head>
   <body>

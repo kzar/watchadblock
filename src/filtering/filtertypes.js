@@ -5,17 +5,15 @@ var Filter = function() {
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
+// TODO(gundlach): is the extra memory worth it if we only rebuild the
+// FilterSet upon subscribe/unsubscribe/refresh?
 Filter._cache = {};
 
 // Each filter falls into a specific ad type.
 Filter.adTypes = {
   NONE: 0,
   GENERAL: 1,
-  GOOGLE_TEXT_AD: 2,
-  // temp: We need this until Gmail and Calendar no longer hide Bcc/Cc/
-  // Event Details fields upon click, when rules are on the page of the form
-  // ##anything[style="anything"]
-  STYLE_HIDE_BREAKING_GOOGLE_SERVICES: 4,
+  GOOGLE_TEXT_AD: 2
 }
 
 // Return a Filter instance for the given filter text.
@@ -23,17 +21,18 @@ Filter.fromText = function(text) {
   var cache = Filter._cache;
   if (!(text in cache)) {
 
-    if (Filter.isComment(text))
-      cache[text] = CommentFilter.get_singleton();
-    // old style selector syntax contains a #, then some text, then a (.
-    else if (text.match(/##/) || text.match(/#.*\(/))
+    if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if (text.match(/^@@/))
+    else if (/^@@/.test(text))
       cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
   }
   return cache[text];
+}
+
+Filter.isSelectorFilter = function(text) {
+  return /##/.test(text);
 }
 
 Filter.isComment = function(text) {
@@ -83,6 +82,11 @@ Filter._domainInfo = function(domainText, divider) {
 // given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
 // versa.
 Filter._domainIsInList = function(domain, list) {
+  // TODO speed: background's get_content_script_data calls limitedToDomain
+  // and this function is the bottleneck.  Figure out some way to shortcut
+  // so that we don't have to call this as frequently.  Perhaps each rule
+  // keeps a list of the first letter of each TLD in its domains, and we first
+  // check whether the TLD of domain is in that list, before checking fully.
   for (var i = 0; i < list.length; i++) {
     if (list[i] == domain)
       return true;
@@ -95,14 +99,17 @@ Filter._domainIsInList = function(domain, list) {
 Filter.prototype = {
   __type: "Filter",
 
+  // Returns true if this filter applies on all domains.
+  isGlobal: function() {
+    var posEmpty = this._domains.applied_on.length == 0;
+    var negEmpty = this._domains.not_applied_on.length == 0;
+    return (posEmpty && negEmpty);
+  },
+
   // Returns true if this filter should be run on an element from the given
   // domain.
   appliesToDomain: function(domain) {
-    var posEmpty = this._domains.applied_on.length == 0;
-    var negEmpty = this._domains.not_applied_on.length == 0;
-
-    // short circuit the common case
-    if (posEmpty && negEmpty)
+    if (this.isGlobal())
       return true;
 
     var posMatch = Filter._domainIsInList(domain, this._domains.applied_on);
@@ -112,7 +119,8 @@ Filter.prototype = {
       if (negMatch) return false;
       else return true;
     }
-    else if (!posEmpty) { // some domains applied, but we didn't match
+    else if (this._domains.applied_on.length != 0) {
+      // some domains applied, but we didn't match
       return false;
     }
     else if (negMatch) { // no domains applied, we are excluded
@@ -131,22 +139,6 @@ var SelectorFilter = function(text) {
   if (text.indexOf('~all.google.domains') == 0)
     this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
 
-  if (text.indexOf("##") == -1) {
-    try {
-      text = SelectorFilter._old_style_to_new(text);
-    } catch (e) { // couldn't parse it.
-      log("Found an unparseable selector '" + text + "'");
-      this._domains = Filter._domainInfo('nowhere', ',');
-      this._selector = "MatchesNothing";
-      return;
-    }
-  }
-
-  // WebKit has a bug where style rules aren't parsed properly, so we just
-  // skip them until they fix their bug.
-  if (text.match(/style[\^\$\*]?=/))
-    this._adType = Filter.adTypes.STYLE_HIDE_BREAKING_GOOGLE_SERVICES;
-
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
   this.selector = parts[1];
@@ -157,48 +149,6 @@ SelectorFilter.prototype = {
 
   __type: "SelectorFilter"
 }
-// Convert a deprecated "old-style" filter text to the new style.
-SelectorFilter._old_style_to_new = function(text) {
-  // Old-style is domain#node(attr=value) or domain#node(attr)
-  // domain and node are optional, and there can be many () parts.
-  text = text.replace('#', '##');
-  var parts = text.split('##'); // -> [domain, rule]
-  var domain = parts[0];
-  var rule = parts[1];
-
-  // Make sure the rule has only the following two things:
-  // 1. a node -- this is optional and must be '*' or alphanumeric
-  // 2. a series of ()-delimited arbitrary strings -- also optional
-  //    the ()s can't be empty, and can't start with '='
-  if (rule.length == 0 || 
-      !rule.match(/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i))
-    throw new Error("bad selector filter");
-
-  var first_segment = rule.indexOf('(');
-
-  if (first_segment == -1)
-    return domain + '##' + rule;
-
-  var node = rule.substring(0, first_segment);
-  var segments = rule.substring(first_segment);
-
-  // turn all (foo) groups into [foo]
-  segments = segments.replace(/\((.*?)\)/g, "[$1]");
-  // turn all [foo=bar baz] groups into [foo="bar baz"]
-  // Specifically match:    = then not " then anything till ]
-  segments = segments.replace(/=([^"][^\]]*)/g, '="$1"');
-  // turn all [foo] into .foo, #foo
-  // #div(adblock) means all divs with class or id adblock
-  // class must be a single class, not multiple (not #*(ad listitem))
-  // I haven't ever seen filters like #div(foo)(anotherfoo), so ignore these
-  var resultFilter = node + segments;
-  var match = resultFilter.match(/\[([^\=]*?)\]/);
-  if (match)
-    resultFilter = resultFilter.replace(match[0], "#" + match[1]) +
-     "," + resultFilter.replace(match[0], "." + match[1]);
-
-  return domain + "##" + resultFilter;
-}
 
 // Filters that block by URL regex or substring.
 var PatternFilter = function(text) {
@@ -207,37 +157,23 @@ var PatternFilter = function(text) {
   var data = PatternFilter._parseRule(text);
 
   this._domains = Filter._domainInfo(data.domainText, '|');
-  this._isRegex = data.isRegex;
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
   if (document.location.protocol == 'chrome-extension:')
     this._text = text;
-
-  if (this._isRegex)
-    this._rule = new RegExp(data.rule);
-  else
-    this._rule = data.rule;
-
-  if (data.rule2)
-    this._rule2 = data.rule2;
+  this._rule = data.rule;
+  // Preserve _text for later in Chrome's background page.  Don't do so in
+  // safari or in content scripts, where it's not needed.
+  // TODO once Chrome has a real blocking API, we can get rid of _text.
+  if (document.location.protocol == 'chrome-extension:')
+    this._text = text;
 }
 
-// Return a { rule, rule2?, isRegex, domainText, allowedElementTypes } object
-// for the given filter text.  Works really hard to make patterns substring
-// matches rather than regex matches, because regex matches are the bottleneck
-// in AdBlock.  Even if it causes a few false positives, it's worth it -- we'll
-// add support for AdBlock extras nixing individual rules and replacing them
-// with its own if we must.  If rule2 is specified, it must be checked along
-// with rule.
-//
-// TODO: when we divide out the regex time by the # of regexes, versus divide
-// out the the substring time by the # of substrings, is it that much better?
-// This would be a lot simpler otherwise...
+// Return a { rule, domainText, allowedElementTypes } object
+// for the given filter text.
 PatternFilter._parseRule = function(text) {
 
   var result = {
-    isRegex: false,
-    mustStartAtDomain: false,
     domainText: '',
     allowedElementTypes: ElementTypes.NONE,
     options: FilterOptions.NONE
@@ -293,134 +229,61 @@ PatternFilter._parseRule = function(text) {
   if (result.allowedElementTypes == ElementTypes.NONE)
     result.allowedElementTypes = ElementTypes.ALL;
 
+  // Since ABP 1.3 'image' can also refer to 'background'
+  if (result.allowedElementTypes & ElementTypes.image)
+    result.allowedElementTypes |= ElementTypes.background;
+
   // Some mentioned, who were excluded?  Allow ALL except those mentioned.
   if (invertedElementTypes)
     result.allowedElementTypes = ~result.allowedElementTypes;
 
-
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
-  if (rule.match(/^@@/))
+  if (/^@@/.test(rule))
     rule = rule.substring(2);
 
   // Convert regexy stuff.
-  
+
   // First, check if the rule itself is in regex form.  If so, we're done.
-  if (rule.match(/^\/.+\/$/)) {
+  if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
-    try {
-      new RegExp(result.rule); // Make sure it parses correctly
-      result.isRegex = true;
-      log("Found a true regex rule - " + rule);
-      return result;
-    } catch(e) {
-      log("Found an unparseable regex rule - " + rule);
-      // OK, we thought it was a regex but it's not.  Just discard it.
-      // TODO: let parser throw exceptions which are caught, rather than having
-      // to keep dummy rules.
-      result.rule = 'dummy_rule_matching_nothing';
+    result.rule = new RegExp(result.rule);
       return result;
     }
-  }
 
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
-  // If must start at domain, remember this for later -- we'll handle
-  // two cases to cover it.
-  var mustStartAtDomain = false;
-  if (rule[0] == '|' && rule[1] == '|') {
-    mustStartAtDomain = true;
-    rule = rule.substring(2);
-  }
-
-  if (rule[rule.length - 1] == '|') {
-    rule = rule.replace(/\|$/, '$');
-    result.isRegex = true;
-  }
-
   // If it starts or ends with *, strip that -- it's a no-op.
-  if (rule[0] == '*')
-    rule = rule.substring(1);
-  if (rule[rule.length - 1] == '*')
-    rule = rule.replace(/\*$/, '');
+  rule = rule.replace(/^\*/, '');
+  rule = rule.replace(/\*$/, '');
+  // ^ at the end of a rule should only match a delimiter, but we ignore that
+  // for efficiency's sake.
+  rule = rule.replace(/\^$/, '');
+  //If a rule contains *, replace that by .*
+  rule = rule.replace(/\*/g, '.*');
+  //^ is a separator char in ABP
+  rule = rule.replace(/\^/g, '[^\-.%a-zA-Z0-9]');
+  // ? at the start of a regex means something special; escape it always.
+  rule = rule.replace(/\?/g, '\\?');
+  // . shouldn't mean "match any character" unless it's followed by a * in
+  // which case we were almost certainly the ones who put it there.
+  rule = rule.replace(/\.(?!\*)/g, '\\.');
+  // A + means one or more repetitions in regex. Escape it.
+  rule = rule.replace(/\+/g, '\\+');
+  // Starting with || means it should start at a domain or subdomain name, so
+  // match ://<the rule> or ://some.domains.here.and.then.<the rule>
+  rule = rule.replace(/^\|\|/, '\://([^/]+\\.)*');
+  // Starting with | means it should be at the beginning of the URL.
+  rule = rule.replace(/^\|/, '^');
+  // Rules ending in | means the URL should end there
+  rule = rule.replace(/\|$/, '$');
+  // Any other '|' within a string should really be a pipe.
+  rule = rule.replace(/\|/g, '\\|');
+  // Using escaped characters is faster. Only replace the most common one: /
+  rule = rule.replace(/\//g, '\\/');
 
-  // And then, if it ends with a ^, I frankly don't care that you want
-  // to only match a delimiter.  You should have thought of that before
-  // being slow, hmmmm?
-  if (rule[rule.length - 1] == '^')
-    rule = rule.replace(/\^$/, '');
-
-  // Any other *s are legit.
-  var newRule;
-  newRule = rule.replace(/\*/g, '.*');
-  if (newRule != rule)
-      result.isRegex = true;
-  rule = newRule;
-
-  // TODO we usually forced ^ to mean '/' before -- will this slow us down?
-  // It may be better to special case replace ^ after .com/.org/.net with
-  // '/', and ^ at the end with nothing (and deal with a few false
-  // positives), or something... need to time this.
-  // TODO: a quick test replacing this with '.' (match one character)
-  // didn't show a marked improvement on slashdot.org.
-  // TODO: According to ABP syntax, ^ is supposed to match the end of
-  // an address, but EasyList doesn't make use of that, so I won't either.
-  newRule = rule.replace(/\^/g, '[^-.%a-zA-Z0-9]');
-  if (newRule != rule)
-      result.isRegex = true;
-  rule = newRule;
-
-  // Do this after ^ lest we re-replace ourselves
-  if (rule[0] == '|') {
-    if (rule.indexOf('|http://') == 0 || rule.indexOf('|https://') == 0) {
-      // If your rule starts with http://, I don't care that you want to
-      // make sure you're not in the middle of another URL somewhere.
-      // I'm sure you'll be fine.
-      rule = rule.substring(1);
-    } else {
-      // Otherwise, we should pay attention, lest it be e.g. |ad which
-      // would match overload.com, unless we add the ^.
-      rule = rule.replace('|', '^');
-      result.isRegex = true;
-    }
-  }
-
-  // Escape what might be interpreted as a special character.
-  if (result.isRegex) {
-    // ? at the start of a regex means something special; escape it always.
-    rule = rule.replace(/\?/g, '\\?');
-    // A '|' within a string should really be a pipe.
-    rule = rule.replace(/\|/g, '\\|');
-    // . shouldn't mean "match any character" unless it's followed by a * in
-    // which case we were almost certainly the ones who put it there.
-    rule = rule.replace(/\.(?!\*)/g, '\\.');
-  }
-
-  result.rule = rule;
-
-  if (result.isRegex) {
-    // verify it. TODO copied-and-modified from above.
-    try {
-      new RegExp(result.rule);
-    } catch(e) {
-      log("Found an unparseable regex rule - " + result.rule);
-      // OK, something went wrong.  Just discard it.
-      result.isRegex = false;
-      result.rule = 'dummy_rule_matching_nothing';
-    }
-  }
-
-  if (mustStartAtDomain) {
-    if (result.isRegex) { // check for :// or an actual dot before rule.
-      result.rule = "(://|\\.)" + result.rule;
-    } else {
-      var oldrule = result.rule;
-      result.rule = "://" + oldrule;
-      result.rule2 = "." + oldrule;
-    }
-  }
-
+  result.rule = new RegExp(rule);
   return result;
 }
 
@@ -452,18 +315,7 @@ PatternFilter.prototype = {
     if (!(this._options & FilterOptions.MATCHCASE))
       url = url.toLowerCase();
 
-    if (this._isRegex)
-      return this._rule.test(url);
-
-    if (url.indexOf(this._rule) != -1)
-      return true;
-
-    // When parsing, we may have decided we want to check either of two
-    // rules, to handle the "||" aka must-start-at-domain option.
-    if (this._rule2 && url.indexOf(this._rule2) != -1)
-      return true;
-
-    return false;
+    return this._rule.test(url);
   }
 }
 
@@ -477,18 +329,3 @@ var WhitelistFilter = function(text) {
 // When you call any instance methods on WhitelistFilter, do the same
 // thing as in PatternFilter.
 WhitelistFilter.prototype = PatternFilter.prototype;
-
-// Garbage that we don't care about.
-var CommentFilter = function() {
-  Filter.call(this); // call base constructor.
-}
-CommentFilter._singleton = new CommentFilter();
-CommentFilter.get_singleton = function() {
-  return CommentFilter._singleton;
-}
-CommentFilter.prototype = {
-  // Inherit from Filter.
-  __proto__: Filter.prototype,
-
-  __type: "CommentFilter"
-}

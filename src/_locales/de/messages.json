@@ -1,7 +1,11 @@
 {
-  "description": {
-    "message": "AdBlock für Chrome! Entfernt Werbung im ganzen Internet. Bewertung der Benutzer: 4,5 von 5 Sternen!",
+  "description1": {
+    "message": "Die beliebteste Chrome Extension, mit über 1,5 Millionen Nutzern!  Entfernt Werbung im ganzen Internet.",
     "description": "Extension description in manifest"
+  },
+  "free_description": {
+    "message": "Die beliebteste Chrome Extension -- aber es wäre nett, wenn Sie $1,99 bezahlen würden, anstatt diese kostenlose Version zu installieren :)",
+    "description": "Extension description used in free version manifest"
   },
 
   "buttoncancel": {
@@ -24,7 +28,34 @@
     "message": "AdBlock Einstellungen",
     "description": "Title for the options page"
   },
-
+  "installedtitle": {
+    "message": "AdBlock ist nun installiert!",
+    "description": "Title for the installation success page"
+  },
+  "installisdone": {
+    "message": "Aktualisieren Sie die Tabs und sehen Sie wie die Werbung verschwunden ist.",
+    "description": "Message on the installation success page"
+  },
+  "donaterequest2": {
+    "message": "Vor kurzem kündigte ich meinen Job um voll und ganz an AdBlock arbeiten zu können!  Nun bin ich einzig und allein auf Ihre Spenden angewiesen um meine Familie finanziell zu unterstützen.  Bitte <a>spenden</a> Sie, damit wir unsere Rechnungen bezahlen können -- und um zu beweisen, das meine Frau und ich (s. Foto) nicht verrückt sind, so etwas zu versuchen. Danke! :) - Michael",
+    "description": "Donation request on installation success page"
+  },
+  "setotheroptions": {
+    "message": "Sie können weitere Einstellungen vornehmen und Filterlisten abonnieren, indem Sie auf Schraubenschlüssel | Tools | Erweiterungen | AdBlock Optionen klicken.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_how_to_disable": {
+    "message": "Um den Button zu entfernen klicken Sie mit einem Rechtsklick auf den Button und wählen Sie Deinstallieren. Hierdurch wird nur die AdBlock Browser Button Zusatzerweiterung deinstalliert.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_how_to_enable": {
+    "message": "Um den Button anzuzeigen, müssen Sie <a>diese Zusatzerweiterung</a> installieren.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_showoption": {
+    "message": "Button in der Toolbar anzeigen",
+    "description": "Message on installation success page"
+  },
   "youtubevideomessage": {
     "message": "Kein Video? Aktualisieren Sie die Seite.<br/>Falls dies öfter passiert, deaktivieren Sie das Entfernen von YouTube-Werbung in den $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -211,17 +242,9 @@
     "message": "Allgemeine Einstellungen",
     "description": "Title of first tab page"
   },
-  "blocknothideoption": {
-    "message": "die meiste Werbung nicht herunterladen statt sie nur zu verbergen",
-    "description": "Option on first tab page"
-  },
   "betalabel": {
     "message": "Beta",
     "description": "Option on first tab page"
-  },
-  "blocknothidewarning": {
-    "message": "Anmerkung: Chrome unterstützt diese Funktion nicht vollständig. Auf einem schnellen Computer wird ein kleiner Teil an Werbung <br/> möglicherweise trotzdem heruntergeladen.",
-    "description": "Warning for block instead of hiding option"
   },
   "googletextads": {
     "message": "Textwerbung in den Google-Suchergebnissen anzeigen",
@@ -237,10 +260,6 @@
   },
   "debuginlogoption": {
     "message": "Debug-Berichte in der Konsole anzeigen (verlangsamt AdBlock)",
-    "description": "Option on first tab page"
-  },
-  "timeinlogoption": {
-    "message": "Timing-Berichte in der Konsole anzeigen (verlangsamt AdBlock)",
     "description": "Option on first tab page"
   },
 
@@ -335,10 +354,6 @@
   "filterstabtitle": {
     "message": "Abonnieren Sie Filterlisten",
     "description": "Title of the filter list tab"
-  },
-  "defaultsexplanation": {
-    "message": "Die Standardfilter sind für englischsprachige Nutzer aus den USA optimiert. Für andere Länder können weitere Abonnements die Erkennungsrate erhöhen.",
-    "description": "Explanation of the filter lists"
   },
   "filterlistlink": {
     "message": "Abonnieren Sie nicht mehr Filter als Sie wirklich benötigen - jeder Filter verlangsamt den Browser etwas! <br/> Credits und noch mehr Listen finden Sie <a>hier</a>.",
@@ -736,8 +751,8 @@
       }
     }
   },
-  "reporttous": {
-    "message": "Wenn Sie englisch sprechen, können Sie uns die Werbung $in_the_issue_tracker_link$ melden. (Uns ist bewusst, dass die meiste Werbung in Videos noch nicht entfernt wird. Wir warten auf die Unterstützung durch WebKit.)",
+  "reporttous1": {
+    "message": "Wenn Sie englisch sprechen, können Sie uns die Werbung $in_the_issue_tracker_link$ melden.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
@@ -764,16 +779,28 @@
     "message": "Dieser Vorgang kann nicht rückgängig gemacht werden!",
     "description": "Warning a user before confirming an action"
   },
-  "contextmenuhidethis": {
-    "message": "Diese Werbung entfernen",
-    "description": "Context menu entry"
-  },
-  "contextmenuhideanything": {
-    "message": "Werbung auf dieser Seite entfernen...",
-    "description": "Context menu entry"
-  },
   "contextmenuexcludedomain": {
     "message": "Diese Domain ausschliessen...",
     "description": "Context menu entry"
+  },
+  "filecleanerwarning": {
+    "message": "Wenn Sie diese Nachricht jedesmal sehen, wenn Sie AdBlock starten, vergewissern Sie sich bitte, dass Sie keinen Filecleaner benutzen, der 'localStorage'-Dateien löscht.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
+  "somequicksetup": {
+    "message": "Kurzsetup",
+    "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "Videos und Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "Erscheint die Werbung vor oder in einem Video oder einem anderen Plugin, wie z. B. einem Flashgame?",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "Leider können wir noch keine Werbung in Flash oder anderen Plugins entfernen. Wir warten noch auf die Unterstützung durch den Browser und WebKit.",
+    "description": "Result of the final ad report question"
   }
 }
