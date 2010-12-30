@@ -107,15 +107,15 @@
         }
         function getTypeName(type) {
           switch(type) {
-            case undefined: return translate("typehiding");
-            case ElementTypes.script: return translate("typescript");
-            case ElementTypes.image: return translate("typeimage");
-            case ElementTypes.background: return translate("typeimage");
-            case ElementTypes.stylesheet: return translate("typestylesheet");
-            case ElementTypes.object: return translate("typeobject");
-            case ElementTypes.subdocument: return translate("typeframe");
-            case ElementTypes.media: return translate("typeaudiovideo");
-            default: return translate("typeunknown");
+            case undefined: return "hiding";
+            case ElementTypes.script: return "script";
+            case ElementTypes.image: return "image";
+            case ElementTypes.background: return "image";
+            case ElementTypes.stylesheet: return "stylesheet";
+            case ElementTypes.object: return "object";
+            case ElementTypes.subdocument: return "subdocument";
+            case ElementTypes.media: return "media";
+            default: return "unknown";
           }
         }
         var rows = [];
@@ -139,8 +139,9 @@
                                        ' disabled="disabled"' : '') + "/></td>";
           disabled = (disabled ? '' : ' class="clickableRow"');
           thisrow += "<td" + disabled + " title='" + i + "'>" + truncateI(i) + "</td>";
-          thisrow += "<td" + disabled + " i18n='" + getTypeName(resources[i].type) +
-                                "'>" + getTypeName(resources[i].type) + "</td>";
+          var typeName = getTypeName(resources[i].type);
+          thisrow += "<td" + disabled + " name='" + typeName + "'>"
+                     + translate('type' + typeName) + "</td>";
           thisrow += "<td" + disabled + ">" + (type.name ? "<span class='sorter'>" +
                                                type.sort + "</span>" + matchingfilter :
                                                "<span class='sorter'>3</span>-") + "</td>";
@@ -335,7 +336,7 @@
               });
             $("#domainis").val('domain=' + domain.replace(/^www\./, ''));
             var selectorForFixedType = '[value="~' + 
-                $(".selected td:nth-of-type(3)").attr('i18n') + '"]';
+                $(".selected td:nth-of-type(3)").attr('name') + '"]';
             $(selectorForFixedType).attr('disabled', 'disabled');
 
             //Update the preview filter
@@ -476,9 +477,9 @@
       <b i18n="onlyresourcetypes"></b><br/>
       <div id="types">
         <input type="checkbox" value="~media" checked="checked" id="typemed"/>
-        <label for='typemed' i18n="typeaudiovideo"></label>
+        <label for='typemed' i18n="typemedia"></label>
         <input type="checkbox" value="~subdocument" checked="checked" id="typesub" />
-        <label for='typesub' i18n="typeframe"></label>
+        <label for='typesub' i18n="typesubdocument"></label>
         <input type="checkbox" value="~object" checked="checked" id="typeobj" />
         <label for='typeobj' i18n="typeobject"></label>
         <input type="checkbox" value="~image" checked="checked" id="typeimg"/>
