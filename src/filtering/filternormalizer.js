@@ -9,6 +9,7 @@ var FilterNormalizer = {
   // Returns: filter strings separated by '\n' with invalid filters
   //          removed or modified
   normalizeList: function(text, keepComments) {
+    console.time('validate');
     var lines = text.split('\n');
     delete text;
     var result = [];
@@ -29,6 +30,7 @@ var FilterNormalizer = {
     }
     if (ignoredFilterCount)
       log('Ignoring ' + ignoredFilterCount + ' rule(s)');
+    console.timeEnd('validate')
     return result.join('\n') + '\n';
   },
 
@@ -50,20 +52,16 @@ var FilterNormalizer = {
         return false;
 
     // Convert old-style hiding rules to new-style.
-    if (/#.*\(/.test(filter) && !/##/.test(filter)) {
+    if (/#[^\:]*\(/.test(filter) && !/##/.test(filter)) {
       // Throws exception if unparseable.
       filter = FilterNormalizer._old_style_hiding_to_new(filter);
     }
 
     // If it is a hiding rule...
     if (Filter.isSelectorFilter(filter)) {
-      //Regex to validate a user-created filter.
-      var filter_validation_regex = /^(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
-
       // All specified domains must be valid.
       var parts = filter.split('##');
-      if (!filter_validation_regex.test(parts[1]))
-        throw "Failed filter validation regex";
+      FilterNormalizer._checkCssSelector(parts[1]);
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
 
@@ -137,6 +135,143 @@ var FilterNormalizer = {
        "," + resultFilter.replace(match[0], "." + match[1]);
 
     return domain + "##" + resultFilter;
+  },
+  
+  // Throw an exception if the selector isn't of a valid type.
+  // Input: a CSS selector
+  _checkCssSelector: function(selector) {
+    function throwError() {
+      throw new Error('Invalid CSS selector syntax');
+    }
+                                                                                // a[b="c"][d].e#f:g(h):not(i)  > j,k
+                                                                                // a[b="c"][d].e#f:g(h)X:not(i)  > j,k
+                                                                                // a[b="c][d].e#f:g(h):not(i)  > j,k
+    // Escaped characters are evil for validations.
+    // However, almost everywhere an 'x' is allowed, \" is allowed too.
+    // So unless we find a false positive, this would be fine
+    selector = selector.replace(/\\./g, 'x');
+                                                                                // a[b="c"][d].e#f:g(h):not(i)  > j,k
+                                                                                // a[b="c"][d].e#f:g(h)X:not(i)  > j,k
+                                                                                // a[b="c][d].e#f:g(h):not(i)  > j,k
+    // Get rid of meaningless spaces
+    selector = selector.replace(/\ +/g, " ").trim();
+                                                                                // a[b="c"][d].e#f:g(h):not(i) > j,k
+                                                                                // a[b="c"][d].e#f:g(h)X:not(i) > j,k
+                                                                                // a[b="c][d].e#f:g(h):not(i) > j,k
+    // Get rid of all valid [elemType="something"] selectors. They are valid,
+    // and the risk is that their content will disturb further tests. To prevent
+    // a[id="abc"]div to be valid, convert it to a[valid]div, which is invalid
+    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|.+?)\]/gi;
+    selector = selector.replace(test, '[valid]');
+                                                                                // a[valid][d].e#f:g(h):not(i) > j,k
+                                                                                // a[valid][d].e#f:g(h)X:not(i) > j,k
+                                                                                // a[b="c][d].e#f:g(h):not(i) > j,k
+    // :not may contain every selector except for itself and tree selectors
+    // therefore simply put the content of it at the end of the filters
+    test = /\:not\(([^\ \)\>\+\~]+)\)/g;
+    var match = selector.match(test);
+    if (match)
+      for (var i=0; i<match.length; i++) {
+        var content = match[i].substr(5, match[i].length - 6);
+        selector = selector.replace(match[i], '[valid]') + ' > ' + content;
+      }
+                                                                                // a[valid][d].e#f:g(h)[valid] > j,k i
+                                                                                // a[valid][d].e#f:g(h)X[valid] > j,k i
+                                                                                // a[b="c][d].e#f:g(h)[valid] > j,k i
+    // multiple rules can be seperated by commas. Replace them by ' > ', so that
+    // 'a >, b' would still be invalid. The result rule of a,b would be a > b,
+    // which can be validated. a > ~ + b is invalid, and rules may not start
+    // with one of these. Therefore add a > at the beginning and end of the rule,
+    // so that you would create '> > a', which triggers the error.
+    selector = '> ' + selector.replace(/\ ?\,\ ?/g, ' > ') + ' >';
+    if (/(\+|\~|\>)\ *(\+|\~|\>)/.test(selector))
+      throwError();
+                                                                              // a[valid][d].e#f:g(h)[valid] > j > k i
+                                                                              // a[valid][d].e#f:g(h)X[valid] > j > k i
+                                                                              // a[b="c][d].e#f:g(h)[valid] > j > k i
+    var css = selector.split(' ');
+    for (var j=0; j<css.length; j++) {
+      if (css[j] == '>' || css[j] == '+' || css[j] == '~')
+        continue;
+                                                                              // a[valid][d].e#f:g(h)[valid]    &&    j    &&    k    &&    i
+                                                                              // a[valid][d].e#f:g(h)X[valid]    &&    j    &&    k    &&    i
+                                                                              // a[b="c][d].e#f:g(h)[valid]    &&    j    &&    k    &&    i
+      // Get rid of the nodeName selector.
+      css[j] = css[j].replace(/^\*|^[a-z0-9_\-]+/i, '');
+      if (!css[j]) continue;
+                                                                              // [valid][d].e#f:g(h)[valid]
+                                                                              // [valid][d].e#f:g(h)X[valid]
+                                                                              // [b="c][d].e#f:g(h)[valid]
+      // replace #id selectors
+      css[j] = css[j].replace(/\#[a-z_][a-z0-9_\-]*/gi, '[valid]');
+                                                                              // [valid][d].e[valid]:g(h)[valid]
+                                                                              // [valid][d].e[valid]:g(h)X[valid]
+                                                                              // [b="c][d].e[valid]:g(h)[valid]
+      // replace :something and :somethingelse(anotherthing)
+      test = /\:(\:?[a-y\-]+(\([^\(\)]+\))?)/g;
+      match = css[j].match(test);
+      if (match)
+        for (i=0; i<match.length; i++) {
+          css[j] = css[j].replace(match[i], '[valid]');
+          var pseudo = match[i].replace(/\(.*/, '').substring(1);
+          var content = (match[i].match(/\((.*)\)$/) || [null, ''])[1];
+          switch (pseudo) {
+            case "nth-of-type":
+            case "nth-last-of-type":
+            case "nth-child":
+            case "nth-last-child": test = /^(((\+|\-)?\d*n|(\+|\-)?\d)+|odd|even)$/; break;
+            case "lang": test = /^[a-z0-9\-_]+$/i; break;
+            case "first-child":
+            case "last-child":
+            case "only-child":
+            case "first-of-type":
+            case "last-of-type":
+            case "only-of-type":
+            case "empty":
+            case "link":
+            case "visited":
+            case "active":
+            case "hover":
+            case "focus":
+            case "target":
+            case "enabled":
+            case "disabled":
+            case "checked":
+            case ":first-line":
+            case ":first-letter":
+            case ":before":
+            case ":after":
+            case ":selection":
+            case "root": 
+              if (content)
+                throwError();
+              else
+                continue;
+            default: throwError();
+          }
+          if (!test.test(content))
+            throwError();
+        }
+                                                                              // [valid][d].e[valid][valid][valid]
+                                                                              // [valid][d].e[valid][valid]X[valid]
+                                                                              // [b="c][d].e[valid][valid][valid]
+      // replace .class selectors
+      css[j] = css[j].replace(/\.[^\#\:\[\(]+/g, '[valid]');
+                                                                              // [valid][d][valid][valid][valid][valid]
+                                                                              // [valid][d][valid][valid][valid]X[valid]
+                                                                              // [b="c][d][valid][valid][valid][valid]
+      // In case the filter was like a>a, then the > was remained
+      css[j] = css[j].replace(/(\+|\~|\>)\ ?(\*|[a-z0-9_\-]+)?/gi, '[valid]');
+
+      // if the filter is correct, nothing but [text] selectors are left.
+      // if something is still behind, there must have been an error.
+      css[j] = css[j].replace(/\[[a-z0-9\-_]+\]/gi, '');
+                                                                              // {empty string} -> valid
+                                                                              // X              -> invalid
+                                                                              // [b="c]         -> invalid
+      if (css[j])
+        throwError();
+    }
   },
 
   // Throw an exception if the input contains invalid domains.
