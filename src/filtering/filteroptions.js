@@ -10,6 +10,8 @@ var ElementTypes = {
   'object': 16,
   subdocument: 32,
   media: 128,
+  'document': 16384,
+  elemhide: 32768,
   //BELOW ISN'T SUPPORTED YET
   object_subrequest: 64,
   font: 256,
@@ -17,9 +19,7 @@ var ElementTypes = {
   other: 1024,
   xbl: 2048,
   ping: 4096,
-  xmlhttprequest: 8192,
-  'document': 16384,
-  elemhide: 32768
+  xmlhttprequest: 8192
   // if you add something here, update .ALL below
 }
 ElementTypes.ALL = 65535; // all bits turned on
