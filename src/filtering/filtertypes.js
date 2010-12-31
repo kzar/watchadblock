@@ -226,15 +226,19 @@ PatternFilter._parseRule = function(text) {
 
   // No element types mentioned?  All types are allowed.
   if (result.allowedElementTypes == ElementTypes.NONE)
-    result.allowedElementTypes = ElementTypes.ALL;
+    result.allowedElementTypes = (ElementTypes.ALL & ~ElementTypes.elemhide 
+                                  & ~ElementTypes.document);
 
   // Since ABP 1.3 'image' can also refer to 'background'
   if (result.allowedElementTypes & ElementTypes.image)
     result.allowedElementTypes |= ElementTypes.background;
 
   // Some mentioned, who were excluded?  Allow ALL except those mentioned.
-  if (invertedElementTypes)
+  // $~document and $~elemhide have no effect
+  if (invertedElementTypes) {
+    result.allowedElementTypes |= (ElementTypes.document | ElementTypes.elemhide);
     result.allowedElementTypes = ~result.allowedElementTypes;
+  }
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.

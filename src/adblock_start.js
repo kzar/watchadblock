@@ -130,7 +130,8 @@ function adblock_begin() {
       return;
     }
 
-    block_list_via_css(data.selectors);
+    if (data.selectors)
+      block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them

@@ -1,5 +1,5 @@
 function debug_print_selector_matches(selectors) {
-  if (!DEBUG)
+  if (!DEBUG || !selectors)
     return;
 
   selectors.
