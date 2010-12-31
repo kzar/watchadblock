@@ -79,6 +79,8 @@ var FilterNormalizer = {
                          ElementTypes.dtd | ElementTypes.other |
                          ElementTypes.xbl | ElementTypes.ping |
                          ElementTypes.xmlhttprequest);
+      if (!/^\@\@/.test(parsedFilter._text))
+        unsupported |= (ElementTypes.document | ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
     }
