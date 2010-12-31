@@ -6,6 +6,7 @@ function debug_print_selector_matches(selectors) {
     filter(function(selector) { return $(selector).length > 0; }).
     forEach(function(selector) {
       log("Debug: CSS '" + selector + "' hid:");
+      collect_resources['HIDE:' + selector] = null;
       $(selector).each(function(i, el) {
         log("       " + el.nodeName + "#" + el.id + "." + el.className);
       });
