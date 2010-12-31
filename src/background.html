@@ -28,7 +28,22 @@
       // Inputs: filter:string line of text to add to custom filters.
       utils.add_custom_filter = function(options) {
         var custom_filters = utils.get_custom_filters_text({});
-        custom_filters = custom_filters + '\n' + options.filter;
+        if (custom_filters) custom_filters = custom_filters + '\n';
+        custom_filters = custom_filters + options.filter;
+        utils.set_custom_filters_text({filters: custom_filters });
+      }
+      // Removes a custom filter entry.
+      // Inputs: filter:string line of text to remove from custom filters.
+      utils.remove_custom_filter = function(options) {
+        var custom_filters = utils.get_custom_filters_text({});
+        if (!custom_filters) return;
+        var splitted_custom_filters = custom_filters.split('\n');
+        custom_filters = '';
+        for (var i=0; i<splitted_custom_filters.length; i++)
+          if (options.filter != splitted_custom_filters[i]) {
+            if (custom_filters) custom_filters = custom_filters + '\n';
+            custom_filters = custom_filters + splitted_custom_filters[i];
+          }
         utils.set_custom_filters_text({filters: custom_filters });
       }
 
