@@ -258,16 +258,15 @@
         var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
         return match[0].toLowerCase();
       }
-
       function isValidDomainList(text) {
-        var splitted = text.split('|');
-        var checkregex = /\~?([a-zA-Z0-9\-]+\.)*[a-zA-Z]+/;
-        for (var i in splitted) {
-          var matches = splitted[i].match(checkregex);
-          if (!matches || matches[0] != splitted[i])
-            return false;
+        if (!text)
+          return false;
+        try {
+          FilterNormalizer.normalizeLine('*$domain=' + text);
+          return true;
+        } catch(ex) {
+          return false;
         }
-        return true;
       }
 
       function finally_it_has_loaded_its_stuff() {
@@ -350,9 +349,9 @@
               }).
               keyup(function() {
                 if (isValidDomainList($(this).val().trim().
-                    replace(/[a-z](\ |\,\ |\;\ |\;|\,)[\~a-z0-9]/gi,'a|a'))){
+                    replace(/[a-z](\ |\,\ ?|\;\ ?)\~?[a-z0-9]/gi,'a|a'))){
                   $("#domainis").val('domain=' + 
-                      $(this).val().trim().replace(/\ |\,|\;/g,'|'));
+                      $(this).val().trim().replace(/(\ |\,|\;)+/g,'|'));
                   $("#domainlist").css('color', 'black');
                 } else {
                   $("#domainis").val('');
