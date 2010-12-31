@@ -70,6 +70,7 @@
         background-image: url(../img/delete.gif);
         background-repeat: no-repeat;
         background-position: center left;
+        width: 9px;
       }
       #selectblockableurl input:radio {
         margin-right: 7px;
@@ -98,13 +99,15 @@
       var domaindata;
       var custom_filters = [];
 
+      // Creates the table that shows all blockable items
       function generateTable() {
-        //find matching filters
         var local_filterset = FilterSet.fromText(domaindata.block, false, false);
         var _limited_to_domain = local_filterset.limitedToDomain(domain);
         delete domaindata;
 
-        //Generate the table containing all resources
+        // Trunkates a resource URL if it is too long
+        // Inputs: the string to truncate
+        // Returns the truncated string
         function truncateI(j) {
           if (j.length > 90)
             if (j.indexOf('?') > 43 && j.indexOf('?') <= 85)
@@ -113,6 +116,10 @@
             j = j.substring(0, 86) + '[...]';
           return j;
         }
+        // Converts the ElementTypes number back into an readable string
+        // or hiding or 'unknown' if it wasn't in ElementTypes.
+        // Inputs: One out of ElementTypes or 'undefined'
+        // Returns a string with the element type
         function getTypeName(type) {
           switch(type) {
             case undefined: return "hiding";
@@ -126,6 +133,9 @@
             default: return "unknown";
           }
         }
+        // Checks if the filter is in the custom filters and can be removed
+        // Inputs: the filter that could be in the custom filters
+        // Returns true if the filter was in the custom filters
         function inCustomFilters(filter) {
           if (!filter) return false;
           for (var i=0; i<custom_filters.length; i++)
@@ -133,6 +143,8 @@
               return true;
           return false;
         }
+        
+        // Now create that table row-by-row
         var rows = [];
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
@@ -228,7 +240,8 @@
           "' size='99' title='" + translate("wildcardhint") + "'/>");
       }
 
-      //Create the filter that will be applied
+      // Create the filter that will be applied from the chosen options
+      // Returns the filter
       function createfilter() {
         var isBlocked = ($(".selected").hasClass("blocked"));
         var urlfilter = '';
@@ -249,15 +262,26 @@
         return urlfilter + ((options.length != 0) ? '$' + options.join(',') : '');
       }
 
-      function CheckThirdParty(domain1, domain2) {
-        var match1 = domain1.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain1 ];
-        var match2 = domain2.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain2 ];
-        return (match1[0].toLowerCase() != match2[0].toLowerCase());
-      }
+      // Get the third-party domain
+      // Inputs: the domain of which the third-party-check part is requested
+      // Returns the third-party-check domain
       function GetThirdPartyDomain(domain) {
         var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
         return match[0].toLowerCase();
       }
+
+      // Checks if it is a third-party resource or not
+      // Inputs: the two domains to check
+      // Returns true if third-party, false otherwise
+      function CheckThirdParty(domain1, domain2) {
+        var match1 = GetThirdPartyDomain(domain1);
+        var match2 = GetThirdPartyDomain(domain2);
+        return (match1 != match2);
+      }
+
+      // Checks if the text in the domain list textbox is valid or not
+      // Inputs: the text from the text box
+      // Returns true if the domain list was valid, false otherwise
       function isValidDomainList(text) {
         if (!text)
           return false;
@@ -269,10 +293,13 @@
         }
       }
 
+      // After getting annoyed by the time it takes to get the required data
+      // finally start generating some content for the user, and allowing him to
+      // do some things, instead of looking at 'LOADING'
       function finally_it_has_loaded_its_stuff() {
         if (domaindata.features.debug_logging.is_enabled)
           $(".onlyifdebug").show()
-        //create the table of resources and make it sortable
+        // Create the table of resources and make it sortable
         generateTable();
         $("#resourceslist").tablesorter({
           headers: { 0: {sorter:false}, 4: {sorter:false}},
@@ -291,13 +318,13 @@
             css("border", "none");
         });
 
-        //close the legend
+        // Close the legend
         $("#legend a").click(function(event) {
           event.preventDefault();
           $("#legend").remove();
         });
 
-        //An item has been selected
+        // An item has been selected
         $('.clickableRow, input:enabled', '#resourceslist').click(function() {
           if ($('.selected','#resourceslist').length > 0)
             return; //already selected a resource
@@ -310,17 +337,17 @@
           $('#resourceslist tr').css('border', 'black 1px dotted');
           $('#legend').remove();
           
-          //Show the 'choose url' area
+          // Show the 'choose url' area
           $("#selectblockableurl").show();
           generateFilterSuggestions();
-          //If the user clicks the 'next' button
+          // If the user clicks the 'next' button
           $("#confirmUrl").click(function() {
             if ($('#custom:checked').length == 1 && 
                 $('#customurl').val().trim() == '') {
               alert(translate('novalidurlpattern'));
               return;
             }
-            //Hide unused stuff
+            // Hide unused stuff
             $("#selectblockableurl input:radio:not(:checked)").
                 nextUntil('input').remove();
             $("#selectblockableurl input:radio:not(:checked)").remove();
@@ -328,7 +355,7 @@
             $("#confirmUrl").remove();
             $("#selectblockableurl *:not(br):not(b)").attr("disabled", "disabled");
 
-            //Show the options
+            // Show the options
             $("#chooseoptions").show();
             var domainOfSelectedUrl = $(".selected td:nth-of-type(2)").
                 attr('title').replace(/^[a-z]{0,5}\:\/\//, '').match(/^[^\/]+/)[0];
@@ -364,13 +391,13 @@
                 $(".selected td:nth-of-type(3)").attr('name') + '"]';
             $(selectorForFixedType).attr('disabled', 'disabled');
 
-            //Update the preview filter
+            // Update the preview filter
             $("#chooseoptions *").change(function() {
               $("#filterpreview").text(createfilter());
             });
             $("#filterpreview").text(createfilter());
 
-            //Add the filter
+            // Add the filter
             $("#addthefilter").click(function() {
               extension_call('add_custom_filter', { filter: createfilter() }, 
               function() {
@@ -383,11 +410,11 @@
       }
       
       $(function() {
-        //translation
+        // Translation
         localizePage();
 
         if (window.location.search) {
-          //can be of the forms
+          // Can be of the forms
           //  ?resourcetype=resourceURL&domain=domain
           //  ?domain=domain
           var query = window.location.search.substring(1);
@@ -401,6 +428,7 @@
           }
         }
 
+        // To be able to call location.reload or to press F5
         if (!temp_url) {
           $(window).unload(function() {
             localStorage.setItem('last_resources', JSON.stringify(loaded_resources));
@@ -456,16 +484,17 @@
                 if (!/\#\#/.test(filters[i]))
                   custom_filters.push(filters[i])
             }
-            
 
             finally_it_has_loaded_its_stuff();
-            //if opened by the context menu, this variable exists
+            // If opened by the context menu, this variable exists
             if (temp_url)
               if ($("#resourceslist input").attr("disabled")) {
-                //in case the resource has been whitelisted
-                alert(translate('resourceiswhitelisted'));
-                window.close();
-                return;
+                // In case the resource has been whitelisted and can't be removed
+                if ($(".deleterule").length == 0) {
+                  alert(translate('resourceiswhitelisted'));
+                  window.close();
+                  return;
+                }
               } else
                 $("#resourceslist input").click();
           });
