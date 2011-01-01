@@ -120,7 +120,6 @@ function adblock_begin() {
   };
   extension_call('get_content_script_data', opts, function(data) {
     if (data.features.debug_logging.is_enabled) {
-      DEBUG = true;
       log = function(text) { console.log(text); };
     }
 
