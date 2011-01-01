@@ -93,7 +93,7 @@ function getCurrentTabInfo(callback) {
     var disabled_site = false;
     if (url.scheme != 'http' && url.scheme != 'https')
       disabled_site = true;
-    if (tab.url.match('://chrome.google.com/extensions'))
+    if (/\:\/\/chrome.google.com\/(extensions|webstore)\//.test(tab.url))
       disabled_site = true;
 
     var result = {
