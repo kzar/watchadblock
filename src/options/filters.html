@@ -1,303 +1,308 @@
   <script>
-      var removeFlashMsgTimeout;
-      function flash(message, duration) {
-        $("#subscription_message").text(message);
+    //Used to locally store the subscription info
+    var global_subscriptions_cached_copy = undefined;
 
-        clearTimeout(removeFlashMsgTimeout);
-        removeFlashMsgTimeout = window.setTimeout(function() {
-          $("#subscription_message").text('');
-        }, duration ? duration : 7500);
-      }
+    $(function() {
+      // Build the subscription list
+      setSubscriptionList();
 
-      // Return a string representation of roughly how long ago the 
-      // given ticks were, e.g. "just now" or "2 hours ago".  If ticks is
-      // undefined, return blank.
-      function how_long_ago(duration) {
-        var seconds = Math.round(duration / 1000);
-        if (seconds < 10)
-          return translate("updatedrightnow");
-        if (seconds < 60)
-          return translate("updatedsecondsago", [seconds]);
-        var minutes = Math.round(seconds / 60);
-        if (minutes == 1)
-          return translate("updatedminuteago");
-        if (minutes < 60)
-          return translate("updatedminutesago", [minutes]);
-        var hours = Math.round(minutes / 60);
-        if (hours == 1)
-          return translate("updatedhourago");
-        if (hours < 24)
-          return translate("updatedhoursago", [hours]);
-        var days = Math.round(hours / 24);
-        if (days == 1)
-          return translate("updateddayago");
-        return translate("updateddaysago", [days]);
-      }
+      // Every second, redisplay "last update" times on subscriptions.
+      window.setInterval(function() { 
+        setSubscriptionInfoAll();
+      }, 1000);
 
-
-      // If true, change events won't run.
-      global_refreshing_subscription_view = false;
-      // Cache the fetched subscriptions so we can update their times.
-      global_subscriptions_cached_copy = undefined;
-
-      // Update the "last updated" messages in the subscription view.
-      function redisplay_subscription_update_times() {
-        var subs = global_subscriptions_cached_copy;
-        var lessThanMinute = false;
-        if (subs == undefined)
-          return;
-        $(".subscription").each(function(i,el) {
-          var when_text = "";
-          var id = $("input", el).attr("name");
-          if (subs[id] && subs[id].subscribed && subs[id].last_update) {
-            var timeSinceUpdate = new Date().getTime() - subs[id].last_update;
-            when_text = how_long_ago(timeSinceUpdate);
-            if (timeSinceUpdate < 60000)
-              lessThanMinute = true;
-          }
-
-          $(".update_time", el).text(when_text);
-        });
-
-        // Every so often, redisplay "last update" times on subscriptions.
-        if (typeof lastUpdateInterval != "undefined") 
-          clearInterval(lastUpdateInterval)
-        lastUpdateInterval = window.setInterval(function() { 
-          redisplay_subscription_update_times();
-        }, lessThanMinute ? 1000 : 60000);
-      }
-
-      // Load the latest subscription model object and display it in
-      // the checkboxes.
-      function refresh_subscription_view() {
-        extension_call('get_subscriptions_minus_text', {}, function(subs) {
-          global_refreshing_subscription_view = true;
-
-          $(".subscription").each(function(i,el) {
-            var is_checked = "";
-
-            var id = $("input", el).attr("name");
-            if (subs[id] && subs[id].subscribed)
-              is_checked = "checked";
-
-            $("input", el).attr("checked", is_checked);
-
-            if (subs[id] && subs[id].user_submitted && is_checked == false) {
-              $(this).find(".remove_filter").css("display", "inline");
-              $(this).closest("div").find(".update_time").text("");
-            }
-          });
-          
-          global_refreshing_subscription_view = false;
-
-          // Keep this around to update the "last updated" displays.
-          global_subscriptions_cached_copy = subs;
-          redisplay_subscription_update_times();
-        });
-      }
-
-      register_broadcast_listener('filters_updated', function() {
-        refresh_subscription_view();
+      // If the user presses the update now button, update all subscriptions
+      $("#btnUpdateNow").click(function() {
+        $(this).attr("disabled", "disabled");
+        extension_call("update_subscriptions_now", {});
+        setTimeout(function() {
+          $("#btnUpdateNow").removeAttr("disabled");
+        }, 300000); //re-enable after 5 minutes
       });
 
-      // Unsubscribe from the given filterlist id.
-      // 'del' determines if it should be deleted too
-      function unsubscribe(id, del) {
-        extension_call("unsubscribe", {id:id, del:del}, function() {
-          var message = (del) ? translate("removedlabel")
-                              : translate("unsubscribedlabel");
-          flash(message);
-        });
-      }
-      // Subscribe to the given filterlist id.  id is either a well-known id, or
-      // "url:xyz", where xyz is the URL of a user-specified filter list.
-      // If you can't fetch the latest version of the list, fail.  If 
-      // then_reload is specified and is true, reload the tab upon 
-      // success.  If log_on_success then record a successful subscription.
-      function subscribe(id, then_reload, log_on_success) {
-        var url;
-        if (id in global_subscriptions_cached_copy)
-          url = global_subscriptions_cached_copy[id].url;
-        else
-          url = id.substring(4); // "url:xyz"
-
-        flash(translate("fetchinglabel"), 60000);
-        var onError = function() {
-          alert(translate("failedtofetchfilter"));
-          var myIndex = $("#tabpages").tabs("option", "selected");
-          $("#tabpages").tabs("load", myIndex);
+      // Add a new subscription that is not in the default list
+      $("#btnNewSubscriptionUrl").click(function() {
+        var url = $("#txtNewSubscriptionUrl").val();
+        var abp_regex = /^abp\:.*(\&|\?)location\=([^\&]*)/i;
+        if (abp_regex.test(url)) {
+          url = url.match(abp_regex)[2]; // the part after 'location='
+          url = unescape(url);
         }
-        $.ajax({
-          url: url,
-          cache: false,
-          success: function(text) {
-            if (!text) {
-              onError(); // not sure why we even get here, but we do
-              return;
-            }
-            if (text[0] != '!' && 
-                text[0] != '[' &&
-                text.indexOf('(Adblock') != 0) {
-              alert(translate("enterurloflist"));
-              flash(translate("nolisturllabel"));
-              return;
-            }
-            if (log_on_success) {
-              $.get("http://chromeadblock.com/api/url_subscribe.php",
-                    {url:url});
-            }
-            extension_call(
-              "subscribe", 
-              {id: id, text:text},
-              function() {
-                flash(translate("subscribedlabel"));
-                if (then_reload) {
-                  var myIndex = $("#tabpages").tabs("option", "selected");
-                  $("#tabpages").tabs("load", myIndex);
-                }
-              }
-            );
-          },
-          error: onError
-        });
+        subscribe("url:" + url);
+      });
+
+      // Pressing enter will trigger the button click event
+      $('#txtNewSubscriptionUrl').keypress(function(event) {
+        if (event.keyCode == '13') {
+          event.preventDefault();
+          $("#btnNewSubscriptionUrl").click();
+        }
+      });
+
+      // Translate the page
+      localizePage();
+
+      // If the filters are updated, refresh the list if needed
+      register_broadcast_listener('filters_updated', function() {
+        setSubscriptionList();
+      });
+    });
+
+    // Sets the info label of a subscription to the last time it was updated
+    // or 'Fetching... please wait' if it wasn't updated.
+    // Inputs: id, the id of the list
+    function setSubscriptionInfo(id) {
+      var subscription = global_subscriptions_cached_copy[id];
+      var div = $("[name='" + id + "']");
+      var checked = $("input", div).is(":checked");
+      if (!subscription) {// new subscription
+        $(".subscription_info", div).text(translate("fetchinglabel"));
+        return;
       }
+      if (!subscription.subscribed && !checked)
+        return;
+      if ((!subscription.subscribed) || (subscription.subscribed && subscription.last_update == 0)) {
+        $(".subscription_info", div).text(translate("fetchinglabel"));
+        return;
+      }
+      var expires = (subscription.expiresAfterHours + 1) * 3600000;
+      var timeSinceUpdate = new Date().getTime() - subscription.last_update;
+      var outOfDate = (expires < timeSinceUpdate);
+      var text = (outOfDate ? translate('outofdate') + '; ' : '')
+                  + how_long_ago(timeSinceUpdate);
+      $(".subscription_info", div).text(text);
+    }
 
-      $(function() {
-        extension_call('get_subscriptions_minus_text', {}, 
-                                             function(subscriptions) {
-          //sorting the list
-          //1, 2: AB custom and easylist
-          //3: additional easylist filters
-          //4: other default filters
-          //5: EasyPrivacy
-          //6: custom filter lists
-          var sorted_list = [];
-          for (var id in subscriptions) {
-            var entry = subscriptions[id];
-            if (id == 'adblock_custom')
-              entry.order = "1adblock_custom";
-            else if (id == 'easylist')
-              entry.order = "2easylist";
-            else if (id == 'easyprivacy')
-              entry.order = "5easyprivacy";
-            else if (entry.user_submitted)
-              entry.order = "6" +
-                  (translate("filter" + id) || entry.name).toLowerCase();
-            else if (entry.name.indexOf(" - additional ") == 0)
-              entry.order = "3" +
-                  (translate("filter" + id) || entry.name).toLowerCase();
-            else
-              entry.order = "4" +
-                  (translate("filter" + id) || entry.name).toLowerCase();
-            entry.id = id;
-            entry.name = translate("filter" + id) || entry.name;
-            sorted_list.push(entry);
-          }
-          sorted_list.sort(function(a,b) {
-            return a.order > b.order ? 1 : (a.order == b.order ? 0 : -1);
-          });
+    // Update all subscription info labels.
+    function setSubscriptionInfoAll() {
+      $(".subscription").each(function() {
+        var id = $(this).attr("name");
+        setSubscriptionInfo(id);
+      });
+    }
 
-          // Build subscription checkboxes.
+    // Return a string representation of roughly how long ago the 
+    // given ticks were, e.g. "just now" or "2 hours ago".
+    function how_long_ago(duration) {
+      var seconds = Math.round(duration / 1000);
+      if (seconds < 10)
+        return translate("updatedrightnow");
+      if (seconds < 60)
+        return translate("updatedsecondsago", [seconds]);
+      var minutes = Math.round(seconds / 60);
+      if (minutes == 1)
+        return translate("updatedminuteago");
+      if (minutes < 60)
+        return translate("updatedminutesago", [minutes]);
+      var hours = Math.round(minutes / 60);
+      if (hours == 1)
+        return translate("updatedhourago");
+      if (hours < 24)
+        return translate("updatedhoursago", [hours]);
+      var days = Math.round(hours / 24);
+      if (days == 1)
+        return translate("updateddayago");
+      return translate("updateddaysago", [days]);
+    }
+
+    // Create or update the list with all subscriptions
+    function setSubscriptionList() {
+      extension_call('get_subscriptions_minus_text', {}, 
+                                           function(subscriptions) {
+        global_subscriptions_cached_copy = subscriptions;
+        //sorting the list
+        //1, 2: AB custom and easylist
+        //3: additional easylist filters
+        //4: other default filters
+        //5: EasyPrivacy
+        //6: custom filter lists
+        var sorted_list = [];
+        for (var id in subscriptions) {
+          var entry = subscriptions[id];
+          if (id == 'adblock_custom')
+            entry.order = "1adblock_custom";
+          else if (id == 'easylist')
+            entry.order = "2easylist";
+          else if (id == 'easyprivacy')
+            entry.order = "5easyprivacy";
+          else if (entry.user_submitted)
+            entry.order = "6" +
+                (translate("filter" + id) || entry.name).toLowerCase();
+          else if (entry.name.indexOf(" - additional ") == 0)
+            entry.order = "3" +
+                (translate("filter" + id) || entry.name).toLowerCase();
+          else
+            entry.order = "4" +
+                (translate("filter" + id) || entry.name).toLowerCase();
+          entry.id = id;
+          entry.name = translate("filter" + id) || entry.name;
+          sorted_list.push(entry);
+        }
+        sorted_list.sort(function(a,b) {
+          return a.order > b.order ? 1 : (a.order == b.order ? 0 : -1);
+        });
+
+        // It is impossible to subscribe and unsubscribe something at the same
+        // moment, so simply assume that the list doesn't have to be updated.
+        if (sorted_list.length == $(".subscription").length) {
           for (var i = 0; i < sorted_list.length; i++) {
-            var entry = sorted_list[i];
-            var div = $("<div></div>").
-              addClass("subscription");
+            if (sorted_list[i].subscribed)
+              if (!$("[name='" + sorted_list[i].id + "'] input").is(":checked"))
+                $("[name='" + sorted_list[i].id + "'] input").click();
+          }
+            
+          setSubscriptionInfoAll();
+          return;
+        }
 
-            var checkbox = $('<input type="checkbox" />').
-              attr("name", entry.id).
-              attr("id", "subscription" + i);
+        $("#filter_subscriptions").empty()
+        // Build subscription checkboxes.
+        for (var i = 0; i < sorted_list.length; i++) {
+          var entry = sorted_list[i];
+          var div = $("<div></div>").
+            addClass("subscription").
+            attr("name", entry.id);
 
-            var name = $("<label>").
-              text(entry.name).
-              attr("title", entry.url).
-              attr("for", "subscription" + i);
+          var checkbox = $('<input />').
+            attr("type", "checkbox").
+            attr("id", "checkbox_" + i).
+            attr("checked", entry.subscribed ? 'checked' : null).
+            change(function() {
+              // Subscribe or unsubscribe from a list
+              var parent = $(this).parent();
+              var checked = $(this).is(":checked");
+              $(".remove_filter", parent).
+                css("display", checked ? "none" : "inline");
+              var id = parent.attr("name");
+              if (checked) {
+                subscribe(id);
+                setSubscriptionInfo(id)
+              } else {
+                unsubscribe(id, false);
+                $(".subscription_info", parent).
+                  text(translate("unsubscribedlabel"));
+              }
+            });
 
-            var link_to_list = $("<a>", { target: "_new" }).
-              text(translate('labelshow')).
-              css("margin-left", "6px").
-              css("font-size", "10px").
-              css("display", "none").
-              attr("class", "linkToList").
-              attr("href", entry.url);
-              
+          var name = $("<label>").
+            text(entry.name).
+            attr("title", entry.url).
+            attr("for", "checkbox_" + i);
+
+          var link_to_list = $("<a>").
+            text(translate('labelshow')).
+            css("margin-left", "6px").
+            css("font-size", "10px").
+            css("display", "none").
+            attr("target", "_new").
+            attr("class", "linkToList").
+            attr("href", entry.url);
+
+          var infospan = $("<span></span>").
+            addClass("subscription_info");
+
+          if (entry.user_submitted) {
             var remove_filter_label = $("<a>").
               css("font-size", "10px").
-              css("display", "none").
+              css("display", entry.subscribed ? "none" : "inline").
               attr("href", "#").
               text(translate("removefromlist")).
               addClass("remove_filter").
               click(function(event) {
+                // Remove this filter list from the page. Delay 1 second to show
+                // the 'removed' label.
                 event.preventDefault();
-                unsubscribe($(this).closest("div").children("input").attr("name"), true);
-                $(this).closest("div").remove();
+                var parent = $(this).parent();
+                var id = parent.attr("name");
+                $("input", parent).attr("disabled", "disabled");
+                $(".subscription_info", parent).text(translate("removedlabel"));
+                window.setTimeout(
+                    "unsubscribe('" + id + "', true);", 1000);
+                $(this).remove();
               });
+          } else
+            var remove_filter_label = null;
 
-            div.
-              append(checkbox).
-              append(name).
-              append(link_to_list).
-              append($("<span></span>").addClass("update_time")).
-              append(remove_filter_label);
+          div.
+            append(checkbox).
+            append(name).
+            append(link_to_list).
+            append(infospan).
+            append(remove_filter_label);
 
-            $("#filter_subscriptions").
-              append(div);
-          }
-
-          // Now that it's built, fill it in.
-          refresh_subscription_view();
-
-          // Each subscription checkbox, upon change, should subscribe
-          // or unsubscribe the user and refresh the subscriptions.
-          $('.subscription input:checkbox').change(function() {
-            var checked = $(this).is(":checked");
-            if (checked)
-              $(this).closest("div").find(".remove_filter").css("display", "none");
-              
-            // If it changed in response to a model change event,
-            // don't naively go tell the model about the event.
-            if (global_refreshing_subscription_view) 
-              return;
-            
-            var id = $(this).attr("name");
-            if (!checked)
-              unsubscribe(id, false)
-            else
-              subscribe(id);
-          });
-
-        });
-
-        $("#btnUpdateNow").click(function() {
-          $(this).attr("disabled", "disabled");
-          extension_call("update_subscriptions_now", {});
-          setTimeout(function() {
-            $("#btnUpdateNow").removeAttr("disabled");
-          }, 300000); //re-enable after 5 minutes
-        });
-
-        $("#btnNewSubscriptionUrl").click(function() {
-          var url = $("#txtNewSubscriptionUrl").val();
-          var abp_regex = /^abp.*location=(.*)$/
-          if (abp_regex.test(url)) {
-            url = url.match(abp_regex)[1]; // the part after 'location='
-            if (/&title/.test(url)) // then strip it
-              url = url.substring(0, url.indexOf('&title'));
-            url = unescape(url);
-          }
-          subscribe("url:" + url, true, true);
-        });
-
-        $('#txtNewSubscriptionUrl').keypress(function(event) {
-          if (event.keyCode == '13') {
-            event.preventDefault();
-            $("#btnNewSubscriptionUrl").click();
-          }
-        });
-
-        //translation
-        localizePage();
+          $("#filter_subscriptions").
+            append(div);
+        }
+        setSubscriptionInfoAll();
       });
+    }
 
+    // Unsubscribe from the given filterlist id.
+    // 'del' determines if it should be deleted too
+    function unsubscribe(id, del) {
+      extension_call("unsubscribe", {id:id, del:del}, function() {
+        if (del)
+          $("[name='" + id + "']").remove();
+      });
+    }
+
+    // Subscribe to a filter list with the given id
+    function subscribe(id) {
+      var newSubscription = false;
+      var url;
+
+      // Known IDs will simply be updated. However, unknown IDs have to be added
+      // to the list of subscriptions
+      if (id in global_subscriptions_cached_copy) {
+        url = global_subscriptions_cached_copy[id].url;
+        $("#txtNewSubscriptionUrl").val("");
+        if (!global_subscriptions_cached_copy[id].subscribed)
+          $("[name='" + id + "'] input").click();
+      } else {
+        url = id.substring(4); // "url:xyz"
+        newSubscription = true;
+        $("#txtNewSubscriptionUrl").attr("disabled", "disabled");
+        $("#btnNewSubscriptionUrl").
+          attr("disabled", "disabled").
+          val(translate("fetchinglabel"))
+      }
+
+      var onError = function() {
+        alert(translate("failedtofetchfilter"));
+        setSubscriptionList();
+        $("#txtNewSubscriptionUrl").removeAttr("disabled");
+        $("#btnNewSubscriptionUrl").
+          val(translate("subscribebutton")).
+          removeAttr("disabled");
+      }
+      $.ajax({
+        url: url,
+        cache: false,
+        success: function(text) {
+          if ((!text) || (text[0] != '!' && text[0] != '[' &&
+              text.indexOf('(Adblock') != 0)) {
+            onError();
+            return;
+          }
+          if (newSubscription) {
+            $.get("http://chromeadblock.com/api/url_subscribe.php",
+                  {url:url});
+          }
+          extension_call("subscribe", {id: id, text:text}, function() {
+            setSubscriptionList();
+            if (newSubscription) {
+              $("#txtNewSubscriptionUrl").
+                val("").
+                removeAttr("disabled");
+              $("#btnNewSubscriptionUrl").
+                val(translate("subscribebutton")).
+                removeAttr("disabled");
+            }
+          });
+        },
+        error: onError
+      });
+    }
   </script>
 
   <div class="section">
@@ -308,7 +313,6 @@
     <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>
     <input type="button" id="btnUpdateNow" />
     <div>
-      <div id="subscription_message" class="ok_message"></div>
       <div id="filter_subscriptions" style="padding-left:30px;">
       </div>
       <div style="padding-left:34px;">
@@ -332,17 +336,21 @@
     </p>
     <script>
       $(function() {
+        function subscribeList(id) {
+          
+        }
         $("#btnSubscribeAll").click(function() {
           var inputs = $("input:not(:checked)", ".subscription");
           for (var i=0; i<inputs.length; i++) {
-            window.setTimeout("subscribe('" + inputs[i].name + "')", 1000 * i);
+            var id = $(inputs[i]).parent().attr("name");
+            var command = "subscribe('" + id + "');"// +
+                         // "$(\"[name='" + id + "']\").click();";
+            window.setTimeout(command, 1000 * i);
           }
         });
         $("#btnUnsubscribeAll").click(function() {
-          $("input", ".subscription").each(function(i, el) {
-            if (el.checked == true) {
-              unsubscribe($(el).attr("name"));
-            }
+          $("input:checked", ".subscription").each(function() {
+            $(this).click().change();
           });
         });
 
