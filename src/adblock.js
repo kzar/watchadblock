@@ -1,7 +1,4 @@
 function debug_print_selector_matches(selectors) {
-  if (!DEBUG)
-    return;
-
   selectors.
     filter(function(selector) { return $(selector).length > 0; }).
     forEach(function(selector) {
@@ -145,7 +142,8 @@ function adblock_begin_part_2() {
       beforeLoadHandler(fakeEvent);
     }
 
-    debug_print_selector_matches(data.selectors);
+    if (data.features.debug_logging.is_enabled)
+      debug_print_selector_matches(data.selectors);
   });
 }
 

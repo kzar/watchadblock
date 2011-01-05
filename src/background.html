@@ -129,6 +129,13 @@
         var feature = features[options.name];
         feature.is_enabled = options.is_enabled;
         utils.storage_set({key:'optional_features', value:features});
+        
+        if (options.name == "debug_logging") {
+          if (options.is_enabled)
+            log = function(text) { console.log(text); };
+          else
+            log = function() { };
+        }
       }
   
       top_frame_domains = {};
