@@ -381,7 +381,7 @@ MyFilters.__merge_with_default = function(subscription_data) {
 MyFilters.__make_subscription_options = function() {
   var official_options = {
     "adblock_custom": {
-      url: "http://achromeadblock.com/filters/adblock_custom.txt",
+      url: "http://chromeadblock.com/filters/adblock_custom.txt",
       name: "AdBlock custom filters (recommended)",
     },
     "easylist": {
