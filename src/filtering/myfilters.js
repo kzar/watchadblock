@@ -122,23 +122,31 @@ MyFilters.prototype.freshen_async = function(force) {
       url: url,
       cache: false,
       success: function(text) {
-        log("Fetched " + url);
-        if (!text || text.length == 0) // happens sometimes.  Weird, I know
-          return;
-        if (Filter.isComment(text) == false) // every legit list starts thus
-          return;
-
         // In case the subscription disappeared while we were out
         // (which would happen if they unsubscribed to a user-submitted
         // filter)...
         if (that._subscriptions[filter_id] == undefined)
           return;
 
-        that._updateSubscriptionText(filter_id, text);
+        // Sometimes text is "". Happens sometimes.  Weird, I know.
+        // Every legit list starts with a comment.
+        if (text && text.length != 0 && Filter.isComment(text)) {
+          log("Fetched " + url);
+          that._updateSubscriptionText(filter_id, text);
+        } else {
+          that._subscriptions[filter_id].last_update_failed = true;
+          log("Fetched, but invalid list " + url);
+        }
 
         that.update();
       },
-      error: function() { log("Error fetching " + url); }
+      error: function() {
+        if (that._subscriptions[filter_id]) {
+          that._subscriptions[filter_id].last_update_failed = true;
+          that.update();
+        }
+        log("Error fetching " + url);
+      }
     });
   }
   for (var id in this._subscriptions) {
@@ -214,6 +222,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
 
   sub_data.subscribed = true;
   sub_data.last_update = new Date().getTime();
+  delete sub_data.last_update_failed;
 
   // Record how many days until we need to update the subscription text
   sub_data.expiresAfterHours = 120; // The default
@@ -251,6 +260,7 @@ MyFilters.prototype.unsubscribe = function(id, del) {
   delete this._subscriptions[id].text;
   delete this._subscriptions[id].last_update;
   delete this._subscriptions[id].expiresAfterHours;
+  delete this._subscriptions[id].last_update_failed;
 
   if (!(id in MyFilters.__subscription_options) && del) {
     delete this._subscriptions[id];
@@ -371,7 +381,7 @@ MyFilters.__merge_with_default = function(subscription_data) {
 MyFilters.__make_subscription_options = function() {
   var official_options = {
     "adblock_custom": {
-      url: "http://chromeadblock.com/filters/adblock_custom.txt",
+      url: "http://achromeadblock.com/filters/adblock_custom.txt",
       name: "AdBlock custom filters (recommended)",
     },
     "easylist": {
