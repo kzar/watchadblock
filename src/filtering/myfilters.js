@@ -159,9 +159,13 @@ MyFilters.prototype.freshen_async = function(force) {
 
 //Get a default subscription that has to be updated ASAP
 MyFilters.get_default_subscription = function(id) {
+  var url = (MyFilters.__subscription_options[id] ? 
+             MyFilters.__subscription_options[id].url : id.substring(4));
+  var name = (MyFilters.__subscription_options[id] ? 
+             MyFilters.__subscription_options[id].name : id.substring(4));
   return {
-    url: MyFilters.__subscription_options[id].url,
-    name: MyFilters.__subscription_options[id].name,
+    url: url,
+    name: name,
     user_submitted: false,
     subscribed: true,
     text: '',
@@ -201,13 +205,15 @@ MyFilters.prototype.subscribe = function(id, text) {
     wellKnownId = id;
   }
 
-  //subscribe to EasyList too if the filter was an additional one...
-  if (wellKnownId &&
-      this._subscriptions[id].name.indexOf(' - additional') == 0 &&
-      this._subscriptions['easylist'].subscribed == false) {
-    this._subscriptions['easylist'] = MyFilters.get_default_subscription('easylist');
-    this.update();
-    this.freshen_async();
+  //subscribe to another list too if the filter was an additional one...
+  if (wellKnownId) {
+    var require = this._subscriptions[id].requiresList;
+    if (require && !(this._subscriptions[require] && 
+                     this._subscriptions[require].subscribed)) {
+      this._subscriptions[require] = MyFilters.get_default_subscription(require);
+      this.update();
+      this.freshen_async();
+    }
   }
 
   this._updateSubscriptionText(id, text);
@@ -362,8 +368,12 @@ MyFilters.__merge_with_default = function(subscription_data) {
     // ids, or looks up the answer in the official options.  
     // But for now, make sure that any subscribed filters get their URLs
     // updated with the new address.
-    else
+    else {
       subscription_data[id].url = MyFilters.__subscription_options[id].url;
+      if (MyFilters.__subscription_options[id].requiresList)
+        subscription_data[id].requiresList = 
+                              MyFilters.__subscription_options[id].requiresList;
+    }
   }
   for (var id in MyFilters.__subscription_options) {
     if (subscription_data[id] == undefined) {
@@ -391,42 +401,52 @@ MyFilters.__make_subscription_options = function() {
     "easylist_plus_bulgarian": {
       url: "http://stanev.org/abp/adblock_bg.txt",
       name: " - additional Bulgarian filters",
+      requiresList: "easylist",
     },
     "dutch": { //id must not change!
       url: "http://sites.google.com/site/dutchadblockfilters/AdBlock_Dutch_hide.txt",
       name: " - additional Dutch filters",
+      requiresList: "easylist",
     },
     "easylist_plus_finnish": {
       url: "http://www.wiltteri.net/wiltteri.txt",
       name: " - additional Finnish filters",
+      requiresList: "easylist",
     },
     "easylist_plus_french": {
       url: "http://lian.info.tm/liste_fr.txt",
       name: " - additional French filters",
+      requiresList: "easylist",
     },
     "easylist_plus_german": {
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
       name: " - additional German filters",
+      requiresList: "easylist",
     },
     "easylist_plus_norwegian": {
       url: "http://home.online.no/~mlangsho/adblock.txt",
       name: " - additional Norwegian filters",
+      requiresList: "easylist",
     },
     "easylist_plus_polish": {
       url: "http://adblocklist.org/adblock-pxf-polish.txt",
       name: " - additional Polish filters",
+      requiresList: "easylist",
     },
     "easylist_plus_romanian": {
       url: "http://www.zoso.ro/pages/rolist.txt",
       name: " - additional Romanian filters",
+      requiresList: "easylist",
     },
     "russian": { //id must not change!
       url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
       name: " - additional Russian filters",
+      requiresList: "easylist",
     },
     "easylist_plus_vietnamese": {
       url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
       name: " - additional Vietnamese filters",
+      requiresList: "easylist",
     },
     "chinese": {
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
@@ -485,6 +505,8 @@ MyFilters.__make_subscription_options = function() {
       subscribed: false,
       user_submitted: false
     };
+    if (official_options[id].requiresList)
+      result[id].requiresList = official_options[id].requiresList;
   }
   return result;
 }
