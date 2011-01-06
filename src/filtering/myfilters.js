@@ -179,8 +179,9 @@ MyFilters.get_default_subscription = function(id) {
 //                   where xyz is the URL of a user-specified filterlist.
 //         text:string value of the filter.  It's the caller's job to fetch
 //                     and provide this.
+//         requiresList: id of a the list that is required by the current list
 // Returns: none, upon completion.
-MyFilters.prototype.subscribe = function(id, text) {
+MyFilters.prototype.subscribe = function(id, text, requiresList) {
   var wellKnownId = null;
   if (this._subscriptions[id] == undefined) {
     // New user-submitted filter.
@@ -197,7 +198,8 @@ MyFilters.prototype.subscribe = function(id, text) {
       this._subscriptions[id] = {
         url: id.substring(4), // "url:xyz" -> "xyz"
         name: id.substring(4),
-        user_submitted: true
+        user_submitted: true,
+        requiresList: requiresList
       };
     }
   } else {
@@ -205,20 +207,17 @@ MyFilters.prototype.subscribe = function(id, text) {
     wellKnownId = id;
   }
 
-  //subscribe to another list too if the filter was an additional one...
-  if (wellKnownId) {
-    var require = this._subscriptions[id].requiresList;
-    if (require && !(this._subscriptions[require] && 
-                     this._subscriptions[require].subscribed)) {
-      this._subscriptions[require] = MyFilters.get_default_subscription(require);
-      this.update();
-      this.freshen_async();
-    }
-  }
-
   this._updateSubscriptionText(id, text);
 
   this.update();
+
+  // Subscribe to another list too if the filter was an additional one...
+  var require = this._subscriptions[id].requiresList;
+  if (require && !(this._subscriptions[require] && 
+                   this._subscriptions[require].subscribed)) {
+    this.subscribe(require, '');
+    this.freshen_async();
+  }
 }
 
 // Record that subscription_id is subscribed, was updated now, and has

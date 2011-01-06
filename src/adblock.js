@@ -157,10 +157,12 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
     event.preventDefault();
     var match = $(this).attr('href').
-        match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]*).*$/i);
+        match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]+).*$/i);
     if (match) {
       var url = match[4];
-      extension_call('subscribe_popup', {url:url});
+      match = $(this).attr('href').match(/\&requiresLocation\=([^\&]+)/i);
+      var requiredList = (match ? match[1] : null);
+      extension_call('subscribe_popup', {url:url, requires:requiredList});
     }
   });
 }

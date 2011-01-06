@@ -61,7 +61,14 @@
         }
 
         //Get the URL
-        var list_url = unescape(document.location.search).substring(1);
+        var search = document.location.search;
+        var requiredList;
+        if (/\&requires\=.+/.test(search)) {
+          var match = search.match(/(.+)\&requires\=(.+)/);
+          requiredList = 'url:' + unescape(match[2]);
+          search = match[1];
+        }
+        var list_url = unescape(search).substring(1);
 
         //Set the link to the list
         $('a').
@@ -87,10 +94,10 @@
                  (text[0] == '!' || text[0] == '[' || text[0] == '(')
                ) {
             $.get("http://chromeadblock.com/api/url_subscribe.php", 
-                                                               {url:list_url});
+                                                                {url:list_url});
 
-            extension_call("subscribe", {id: 'url:' + list_url, text:text},
-                                                  function() {finished(true);});
+            extension_call("subscribe", {id: 'url:' + list_url, text:text, 
+                         requires: requiredList}, function() {finished(true);});
             } else finished(false);
           },
           error: function() {finished(false);}

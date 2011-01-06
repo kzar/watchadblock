@@ -227,9 +227,10 @@
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
       //         text: filter text string fetched from that url
+      //         requires: the id of a list if it is a supplementary list
       // Returns: null, upon completion
       utils.subscribe = function(options) {
-        return _myfilters.subscribe(options.id, options.text);
+        return _myfilters.subscribe(options.id, options.text, options.requires);
       }
 
       // Unsubscribes from a filter subscription.
@@ -243,8 +244,12 @@
       // Opens a popup that subscribes to a new list
       // Must be here because other pages cannot open popups...
       // Inputs: url: the URL of the list to subscribe to
+      //         requires: the URL of a required list, if any
       utils.subscribe_popup = function(options) {
-        window.open(chrome.extension.getURL('pages/subscribe.html?' + options.url),
+        var search = options.url;
+        if (options.requires)
+          search += '&requires=' + options.requires;
+        window.open(chrome.extension.getURL('pages/subscribe.html?' + search),
         "_blank", 'scrollbars=0,location=0,resizable=0,width=450,height=140');
       }
 
