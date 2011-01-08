@@ -204,7 +204,11 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
     wellKnownId = id;
   }
 
-  // Subscribe to another list too if the filter was an additional one...
+  // Subscribe to another list too if required.
+
+  // If a user clicks abp:subscribe?location=a&requiresLocation=b, then
+  // even if our stored data about a doesn't mention b as a requiresList,
+  // we should subscribe to it.
   var require = this._subscriptions[id].requiresList || requiresList;
   if (require && !(this._subscriptions[require] && 
                    this._subscriptions[require].subscribed)) {
@@ -212,6 +216,7 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
     this.update();
     this.freshen_async();
   }
+
   this._updateSubscriptionText(id, text);
 
   this.update();
