@@ -257,7 +257,7 @@
           if ($("#btnEditAdvancedFilters").is(":visible"))
             $("#btnEditAdvancedFilters").click();
           var newFilters = FilterNormalizer.normalizeList($("#txtFiltersAdvanced").val(), true);
-          newFilters = newFilters.replace(/(\n)+$/,'\n');
+          newFilters = newFilters.replace(/(\n)+$/,'\n'); // Del trailing \n's
           $("#txtFiltersAdvanced").val(newFilters)
         });
       });
