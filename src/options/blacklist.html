@@ -87,7 +87,7 @@
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
         if (blockDomain == '*')
           blockDomain = '';
-        else if (blockDomain)
+        if (blockDomain)
           blockDomain = '$domain=' + blockDomain;
         var ok = false;
         try {
