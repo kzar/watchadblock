@@ -176,7 +176,7 @@ MyFilters.get_default_subscription = function(id) {
 //                   where xyz is the URL of a user-specified filterlist.
 //         text:string value of the filter.  It's the caller's job to fetch
 //                     and provide this.
-//         requiresList: id of a the list that is required by the current list
+//         requiresList?: id of a list that is required by the current list
 // Returns: none, upon completion.
 MyFilters.prototype.subscribe = function(id, text, requiresList) {
   var wellKnownId = null;
@@ -212,6 +212,8 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
   var require = this._subscriptions[id].requiresList;
   if (require && !(this._subscriptions[require] && 
                    this._subscriptions[require].subscribed)) {
+    // Because we have to run the checks to see if it is a well-known ID again,
+    // simply subscribe to it and then immediately update the list.
     this.subscribe(require, '');
     this.freshen_async();
   }

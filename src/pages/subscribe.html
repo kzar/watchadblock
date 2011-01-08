@@ -61,19 +61,15 @@
         }
 
         //Get the URL
-        var search = document.location.search;
-        var requiredList;
-        if (/\&requires\=.+/.test(search)) {
-          var match = search.match(/(.+)\&requires\=(.+)/);
-          requiredList = 'url:' + unescape(match[2]);
-          search = match[1];
-        }
-        var list_url = unescape(search).substring(1);
+        var queryparts = {};
+        var params = document.location.search.substring(1).split('&');
+        for (var i = 0; i < params.length; i++)
+          queryparts[params[i].split('=')[0]] = unescape(params[i].split('=')[1]);
 
         //Set the link to the list
         $('a').
-          attr('href', list_url).
-          text(shorten_url(list_url));
+          attr('href', queryparts.location).
+          text(shorten_url(queryparts.location));
 
         //after the subscribing is finished...
         function finished(success) {
@@ -87,17 +83,20 @@
 
         //subscribe to a list
         $.ajax({
-          url: list_url,
+          url: queryparts.location,
           cache: false,
           success: function(text) {
             if (text && 
                  (text[0] == '!' || text[0] == '[' || text[0] == '(')
                ) {
             $.get("http://chromeadblock.com/api/url_subscribe.php", 
-                                                                {url:list_url});
+                                                  {url:queryparts.location});
 
-            extension_call("subscribe", {id: 'url:' + list_url, text:text, 
-                         requires: requiredList}, function() {finished(true);});
+            var req = queryparts.requiresLocation ?
+                      "url:" + queryparts.requiresLocation : undefined;
+
+            extension_call("subscribe", {id: 'url:' + queryparts.location,
+                        text:text, requires:req}, function() {finished(true);});
             } else finished(false);
           },
           error: function() {finished(false);}

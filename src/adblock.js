@@ -156,13 +156,8 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
   //subscribe to the list when you click an abp: link
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
     event.preventDefault();
-    var match = $(this).attr('href').
-        match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]+).*$/i);
-    if (match) {
-      var url = match[4];
-      match = $(this).attr('href').match(/\&requiresLocation\=([^\&]+)/i);
-      var requiredList = (match ? match[1] : null);
-      extension_call('subscribe_popup', {url:url, requires:requiredList});
-    }
+    var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
+    if (searchquery)
+      extension_call('subscribe_popup', {searchquery: searchquery});
   });
 }
