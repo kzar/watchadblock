@@ -159,8 +159,6 @@ var PatternFilter = function(text) {
   this._domains = Filter._domainInfo(data.domainText, '|');
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
-  if (document.location.protocol == 'chrome-extension:')
-    this._text = text;
   this._rule = data.rule;
   // Preserve _text for later in Chrome's background page.  Don't do so in
   // safari or in content scripts, where it's not needed.
