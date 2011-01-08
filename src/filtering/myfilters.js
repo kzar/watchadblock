@@ -157,16 +157,13 @@ MyFilters.prototype.freshen_async = function(force) {
   }
 }
 
-//Get a default subscription that has to be updated ASAP
+// Get a subscription with default settings that has to be updated ASAP
 MyFilters.get_default_subscription = function(id) {
-  var url = (MyFilters.__subscription_options[id] ? 
-             MyFilters.__subscription_options[id].url : id.substring(4));
-  var name = (MyFilters.__subscription_options[id] ? 
-             MyFilters.__subscription_options[id].name : id.substring(4));
+  var s_o = MyFilters.__subscription_options;
   return {
-    url: url,
-    name: name,
-    user_submitted: false,
+    url: s_o[id] ? s_o[id].url : id.substring(4),
+    name: s_o[id] ? s_o[id].name : id.substring(4),
+    user_submitted: s_o[id] ? false : true,
     subscribed: true,
     text: '',
     last_update: 0, //update ASAP
@@ -369,8 +366,7 @@ MyFilters.__merge_with_default = function(subscription_data) {
     // updated with the new address.
     else {
       subscription_data[id].url = MyFilters.__subscription_options[id].url;
-      if (MyFilters.__subscription_options[id].requiresList)
-        subscription_data[id].requiresList = 
+      subscription_data[id].requiresList = 
                               MyFilters.__subscription_options[id].requiresList;
     }
   }
@@ -502,10 +498,9 @@ MyFilters.__make_subscription_options = function() {
       url: official_options[id].url,
       name: official_options[id].name,
       subscribed: false,
-      user_submitted: false
+      user_submitted: false,
+      requiresList: official_options[id].requiresList
     };
-    if (official_options[id].requiresList)
-      result[id].requiresList = official_options[id].requiresList;
   }
   return result;
 }
