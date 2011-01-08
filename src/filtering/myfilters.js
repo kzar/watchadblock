@@ -204,19 +204,17 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
     wellKnownId = id;
   }
 
+  // Subscribe to another list too if the filter was an additional one...
+  var require = this._subscriptions[id].requiresList || requiresList;
+  if (require && !(this._subscriptions[require] && 
+                   this._subscriptions[require].subscribed)) {
+    this._subscriptions[require] = MyFilters.get_default_subscription(require);
+    this.update();
+    this.freshen_async();
+  }
   this._updateSubscriptionText(id, text);
 
   this.update();
-
-  // Subscribe to another list too if the filter was an additional one...
-  var require = this._subscriptions[id].requiresList;
-  if (require && !(this._subscriptions[require] && 
-                   this._subscriptions[require].subscribed)) {
-    // Because we have to run the checks to see if it is a well-known ID again,
-    // simply subscribe to it and then immediately update the list.
-    this.subscribe(require, '');
-    this.freshen_async();
-  }
 }
 
 // Record that subscription_id is subscribed, was updated now, and has
