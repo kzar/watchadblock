@@ -85,9 +85,9 @@
       var validateUrlFilter = function() {
         var blockUrl = $("#txtBlockUrl").val().trim();
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
-        if (blockDomain == '*' || !blockDomain)
+        if (blockDomain == '*')
           blockDomain = '';
-        else
+        else if (blockDomain)
           blockDomain = '$domain=' + blockDomain;
         var ok = false;
         try {

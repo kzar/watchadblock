@@ -180,7 +180,7 @@ BlacklistUi.prototype._build_page2 = function() {
         if ($("#summary", that._ui_page2).text().length > 0) {
           var filter = document.domain + "##" + 
                        $("#summary", that._ui_page2).text();
-          extension_call('add_custom_filter', { filter: filter }, function(ex) {
+          extension_call('add_custom_filter', { filter: filter }, function() {
             that._fire('block');
           });
         } else {alert(translate("blacklisternofilter"));}
