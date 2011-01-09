@@ -19,10 +19,11 @@ var ElementTypes = {
   ping: 4096,
   xmlhttprequest: 8192,
   'document': 16384,
-  elemhide: 32768
+  elemhide: 32768,
+  donottrack: 65536
   // if you add something here, update .ALL below
 }
-ElementTypes.ALL = 65535; // all bits turned on
+ElementTypes.ALL = 131071; // all bits turned on
 
 var FilterOptions = {
   NONE: 0,
