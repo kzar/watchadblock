@@ -22,6 +22,7 @@ var ElementTypes = {
   xmlhttprequest: 8192
   // if you add something here, update .ALL below
 }
+ElementTypes.ALLRESOURCETYPES = 16383; //all types that apply to resources
 ElementTypes.ALL = 65535; // all bits turned on
 
 var FilterOptions = {

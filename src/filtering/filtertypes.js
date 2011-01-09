@@ -226,8 +226,7 @@ PatternFilter._parseRule = function(text) {
 
   // No element types mentioned?  All types are allowed.
   if (result.allowedElementTypes == ElementTypes.NONE)
-    result.allowedElementTypes = (ElementTypes.ALL & ~ElementTypes.elemhide 
-                                  & ~ElementTypes.document);
+    result.allowedElementTypes = (ElementTypes.ALLRESOURCETYPES);
 
   // Since ABP 1.3 'image' can also refer to 'background'
   if (result.allowedElementTypes & ElementTypes.image)
