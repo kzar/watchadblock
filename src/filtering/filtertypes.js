@@ -189,7 +189,7 @@ PatternFilter._parseRule = function(text) {
     var options = ( optionsText == "" ? [] : optionsText.split(',') );
   }
 
-  var invertedElementTypes = false;
+  var disallowedElementTypes = ElementTypes.NONE;
 
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
@@ -202,15 +202,10 @@ PatternFilter._parseRule = function(text) {
       option = option.substring(1);
 
     if (option in ElementTypes) { // this option is a known element type
-      if (inverted) {
-        // They explicitly forbade an element type.  Assume all element
-        // types listed are forbidden: we build up the list and then
-        // invert it at the end.  (This won't work if they explicitly
-        // allow some types and disallow other types, but what would that
-        // even mean?  e.g. $image,~object.)
-        invertedElementTypes = true;
-      }
-      result.allowedElementTypes |= ElementTypes[option];
+      if (inverted)
+        disallowedElementTypes |= ElementTypes[option];
+      else
+        result.allowedElementTypes |= ElementTypes[option];
     }
     else if (option == 'third-party') {
       result.options |= 
@@ -223,18 +218,15 @@ PatternFilter._parseRule = function(text) {
 
     // TODO: handle other options.
   }
-
   // No element types mentioned?  All types are allowed.
   if (result.allowedElementTypes == ElementTypes.NONE)
     result.allowedElementTypes = ElementTypes.ALL;
 
+  result.allowedElementTypes &= ~disallowedElementTypes;
+
   // Since ABP 1.3 'image' can also refer to 'background'
   if (result.allowedElementTypes & ElementTypes.image)
     result.allowedElementTypes |= ElementTypes.background;
-
-  // Some mentioned, who were excluded?  Allow ALL except those mentioned.
-  if (invertedElementTypes)
-    result.allowedElementTypes = ~result.allowedElementTypes;
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
