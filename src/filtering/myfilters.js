@@ -22,18 +22,20 @@ function MyFilters() {
 
   // temp code to normalize non-normalize filters, one time.
   // had to make a second pass when the [style] ignore was updated.
-  // Installed 12/27/2010.  Remove after everyone has gotten this update.
+  // and a third one when we started to throw errors on unsupported options
+  // Installed 01/10/2011.  Remove after everyone has gotten this update.
   (function(that) {
-    if (localStorage['twice_normalized_filters'])
+    if (localStorage['three_times_normalized_filters'])
       return;
     delete localStorage['once_normalized_filters'];
+    delete localStorage['twice_normalized_filters'];
     for (var id in that._subscriptions) {
       if (that._subscriptions[id].text) {
         that._subscriptions[id].text = FilterNormalizer.normalizeList(
                                               that._subscriptions[id].text);
       }
     }
-    localStorage['twice_normalized_filters'] = 'true';
+    localStorage['three_times_normalized_filters'] = 'true';
   })(this);
   // end temp code
 
