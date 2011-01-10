@@ -202,17 +202,18 @@ PatternFilter._parseRule = function(text) {
     if (inverted)
       option = option.substring(1);
 
+    option = option.replace(/\-/, '_');
     if (option in ElementTypes) { // this option is a known element type
       if (inverted)
         disallowedElementTypes |= ElementTypes[option];
       else
         result.allowedElementTypes |= ElementTypes[option];
     }
-    else if (option == 'third-party') {
+    else if (option == 'third_party') {
       result.options |= 
           (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
     }
-    else if (option == 'match-case') {
+    else if (option == 'match_case') {
       //doesn't have an inverted function
       result.options |= FilterOptions.MATCHCASE;
     }
