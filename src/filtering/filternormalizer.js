@@ -79,7 +79,7 @@ var FilterNormalizer = {
                          ElementTypes.dtd | ElementTypes.other |
                          ElementTypes.xbl | ElementTypes.ping |
                          ElementTypes.xmlhttprequest | ElementTypes.document |
-                         ElementTypes.elemhide);
+                         ElementTypes.elemhide | ElementTypes.donottrack);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
     }
