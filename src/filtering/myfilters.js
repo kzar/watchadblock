@@ -139,7 +139,7 @@ MyFilters.prototype.freshen_async = function(force) {
         // Every legit list starts with a comment.
         if (text && text.length != 0 && Filter.isComment(text)) {
           log("Fetched " + url);
-          that._updateSubscriptionText(filter_id, text);
+          that.setText(filter_id, text);
         } else {
           that._subscriptions[filter_id].last_update_failed = true;
           log("Fetched, but invalid list " + url);
@@ -224,41 +224,56 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
     this.freshen_async();
   }
 
-  this._updateSubscriptionText(id, text);
+  this._subscriptions[id].subscribed = true;
+  this.setText(id, text);
 
   this._onChange();
 }
 
-// Record that subscription_id is subscribed, was updated now, and has
-// the given text.  Requires that this._subscriptions[subscription_id] exists.
-MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
-  var sub_data = this._subscriptions[subscription_id];
+// Set the text for the given filter list.  Normalizes the text, and possibly 
+// modifies last_update, last_update_failed, expiresAfterHours, and url.
+// Does nothing for unsubscribed filter_list_ids.
+// Inputs:
+//   filter_list_id: id of filter list
+//   dirty_text: full text of filter list, possibly not normalized
+// Returns: undefined
+MyFilters.prototype.setText = function(filter_list_id, dirty_text) {
+  var sub_data = this._subscriptions[filter_list_id];
+  if (!sub_data)
+    return;
 
-  sub_data.subscribed = true;
-  sub_data.last_update = new Date().getTime();
-  delete sub_data.last_update_failed;
-
-  // Record how many days until we need to re-fetch the subscription text
-  sub_data.expiresAfterHours = 120; // The default
-  var checkLines = text.split('\n', 15); //15 lines should be enough
-  var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
-  var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
-  for (var i = 0; i < checkLines.length; i++) {
-    if (!Filter.isComment(checkLines[i]))
-      continue;
-    var match = checkLines[i].match(redirectRegex);
-    if (match) {
-      sub_data.url = match[1]; //assuming the URL is always correct
-      sub_data.last_update = 0; // fetch new text ASAP
+  // Find a match to a regex in first 15 lines of dirty_text
+  function extract(regex) {
+    var checkLines = dirty_text.split('\n', 15); // 15 lines should be enough
+    for (var i = 0; i < checkLines.length; i++) {
+      if (!Filter.isComment(checkLines[i]))
+        continue;
+      var match = checkLines[i].match(regex);
+      if (match)
+        return match;
     }
-    match = checkLines[i].match(expiresRegex);
-    if (match) {
-      var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
-      sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
-    }
+    return null;
   }
 
-  sub_data.text = FilterNormalizer.normalizeList(text);
+  // Parse expires: header: days until we need to re-fetch the filter list text
+  sub_data.expiresAfterHours = 120; // The default
+  var match = extract(/(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i);
+  if (match) {
+    var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
+    sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
+  }
+
+  // Parse redirect: header: the correct URL
+  match = extract(/(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i);
+  if (match) {
+    sub_data.url = match[1]; // assuming the URL is always correct
+    // TODO refactor how to handle this?  Maybe don't refetch till next time?
+    sub_data.last_update = 0; // fetch new text ASAP
+  }
+
+  sub_data.last_update = new Date().getTime();
+  delete sub_data.last_update_failed;
+  sub_data.text = FilterNormalizer.normalizeList(dirty_text);
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
