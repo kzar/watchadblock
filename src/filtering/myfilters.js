@@ -1,6 +1,5 @@
 // Requires jquery.
 
-
 // MyFilters class manages subscriptions and the FilterSet.
 
 // Constructor: merge the stored subscription data and the total possible
@@ -28,9 +27,9 @@ function MyFilters() {
   })(this);
   // end temp code
 
-  this.update();
+  this._onChange();
 
-  // Check for subscriptions to be updated on startup
+  // On startup, fetch new versions of expired filter list text
   this.freshen_async();
 
   var hours = 1;
@@ -58,7 +57,7 @@ MyFilters._buildFilterLists = function() {
 }
 
 
-// Event fired when subscriptions have been updated, after the subscriptions
+// Event fired upon subscribe/unsubscribe/text update, after the subscriptions
 // have been persisted and filterset recalculated.
 // Inputs: callback: fn(void)
 MyFilters.prototype.updated = function(callback) {
@@ -69,10 +68,10 @@ MyFilters.prototype.updated = function(callback) {
 // the "updated" handler.
 // Inputs: none.
 // Returns: null, after completion.
-MyFilters.prototype.update = function() {
+MyFilters.prototype._onChange = function() {
   localStorage.setItem('filter_lists', JSON.stringify(this._subscriptions));
 
-  this.rebuild();
+  this._rebuild();
 
   // Fire updated event
   for (var i = 0; i < this._event_handlers.updated.length; i++)
@@ -80,7 +79,7 @@ MyFilters.prototype.update = function() {
 }
 
 // Rebuild this.[non]global based on the current settings and subscriptions.
-MyFilters.prototype.rebuild = function() {
+MyFilters.prototype._rebuild = function() {
   var texts = [];
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
@@ -109,10 +108,10 @@ MyFilters.prototype.rebuild = function() {
   this.global.cached_blockFiltersText = this.global.getBlockFilters().join('\n') + '\n';
 }
 
-// If any subscribed filters are out of date, asynchronously load updated
-// versions, then call this.update().  Asynchronous.
-// Inputs: force?:bool -- if true, update all subscribed lists even if
-//         they aren't out of date.
+// If any subscribed filter lists have expired, asynchronously fetch latest
+// text, then call this._onChange().  Asynchronous.
+// Inputs: force?:bool -- if true, fetch latest text for all subscribed lists
+//         even if they aren't out of date.
 // Returns: null (asynchronous)
 MyFilters.prototype.freshen_async = function(force) {
   function out_of_date(subscription) {
@@ -121,8 +120,8 @@ MyFilters.prototype.freshen_async = function(force) {
     var millis = new Date().getTime() - subscription.last_update;
     return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
   }
-  // Fetch the latest filter text, put it in this._subscriptions, and update
-  // ourselves.
+  // Fetch the latest filter text, put it in this._subscriptions, and call
+  // _onChange.
   var that = this;
   function fetch_and_update(filter_id) {
     var url = that._subscriptions[filter_id].url;
@@ -146,12 +145,12 @@ MyFilters.prototype.freshen_async = function(force) {
           log("Fetched, but invalid list " + url);
         }
 
-        that.update();
+        that._onChange();
       },
       error: function() {
         if (that._subscriptions[filter_id]) {
           that._subscriptions[filter_id].last_update_failed = true;
-          that.update();
+          that._onChange();
         }
         log("Error fetching " + url);
       }
@@ -174,7 +173,7 @@ MyFilters.get_default_subscription = function(id) {
     user_submitted: s_o[id] ? false : true,
     subscribed: true,
     text: '',
-    last_update: 0, //update ASAP
+    last_update: 0, // fetch latest text ASAP
     expiresAfterHours: 120
   }
 }
@@ -221,13 +220,13 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
   if (require && !(this._subscriptions[require] && 
                    this._subscriptions[require].subscribed)) {
     this._subscriptions[require] = MyFilters.get_default_subscription(require);
-    this.update();
+    this._onChange();
     this.freshen_async();
   }
 
   this._updateSubscriptionText(id, text);
 
-  this.update();
+  this._onChange();
 }
 
 // Record that subscription_id is subscribed, was updated now, and has
@@ -239,7 +238,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
   sub_data.last_update = new Date().getTime();
   delete sub_data.last_update_failed;
 
-  // Record how many days until we need to update the subscription text
+  // Record how many days until we need to re-fetch the subscription text
   sub_data.expiresAfterHours = 120; // The default
   var checkLines = text.split('\n', 15); //15 lines should be enough
   var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
@@ -250,7 +249,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
     var match = checkLines[i].match(redirectRegex);
     if (match) {
       sub_data.url = match[1]; //assuming the URL is always correct
-      sub_data.last_update = 0; //update ASAP
+      sub_data.last_update = 0; // fetch new text ASAP
     }
     match = checkLines[i].match(expiresRegex);
     if (match) {
@@ -280,7 +279,7 @@ MyFilters.prototype.unsubscribe = function(id, del) {
   if (!(id in MyFilters.__subscription_options) && del) {
     delete this._subscriptions[id];
   }
-  this.update();
+  this._onChange();
 }
 
 // Return a map from subscription id to
@@ -290,9 +289,8 @@ MyFilters.prototype.unsubscribe = function(id, del) {
 //   name:string - friendly name of this subscription
 //   user_submitted:bool - true if this is a url typed in by the user
 //   last_update?:number - undefined if unsubscribed.  The ticks at which
-//                         this subscription was last fetched.  0 if it was
-//                         loaded off the hard drive and never successfully
-//                         fetched from the web.
+//                         this filter list's text was last fetched.  0 if it 
+//                         has never been fetched from the web.
 //   expiresAfterHours?:number - if subscribed, the number of hours after 
 //                               which this subscription should be refetched
 // }
@@ -349,7 +347,7 @@ MyFilters._load_default_subscriptions = function() {
     }
   }
 
-  //Update will be done immediately after this function returns
+  // Text for these will be fetched immediately after this function returns
   result["adblock_custom"] = MyFilters.get_default_subscription('adblock_custom');
   result["easylist"] = MyFilters.get_default_subscription('easylist');
   var language = navigator.language.match(/^([a-z]+).*/i)[1];
