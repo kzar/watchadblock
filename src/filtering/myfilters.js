@@ -122,23 +122,31 @@ MyFilters.prototype.freshen_async = function(force) {
       url: url,
       cache: false,
       success: function(text) {
-        log("Fetched " + url);
-        if (!text || text.length == 0) // happens sometimes.  Weird, I know
-          return;
-        if (Filter.isComment(text) == false) // every legit list starts thus
-          return;
-
         // In case the subscription disappeared while we were out
         // (which would happen if they unsubscribed to a user-submitted
         // filter)...
         if (that._subscriptions[filter_id] == undefined)
           return;
 
-        that._updateSubscriptionText(filter_id, text);
+        // Sometimes text is "". Happens sometimes.  Weird, I know.
+        // Every legit list starts with a comment.
+        if (text && text.length != 0 && Filter.isComment(text)) {
+          log("Fetched " + url);
+          that._updateSubscriptionText(filter_id, text);
+        } else {
+          that._subscriptions[filter_id].last_update_failed = true;
+          log("Fetched, but invalid list " + url);
+        }
 
         that.update();
       },
-      error: function() { log("Error fetching " + url); }
+      error: function() {
+        if (that._subscriptions[filter_id]) {
+          that._subscriptions[filter_id].last_update_failed = true;
+          that.update();
+        }
+        log("Error fetching " + url);
+      }
     });
   }
   for (var id in this._subscriptions) {
@@ -149,12 +157,13 @@ MyFilters.prototype.freshen_async = function(force) {
   }
 }
 
-//Get a default subscription that has to be updated ASAP
+// Get a subscription with default settings that has to be updated ASAP
 MyFilters.get_default_subscription = function(id) {
+  var s_o = MyFilters.__subscription_options;
   return {
-    url: MyFilters.__subscription_options[id].url,
-    name: MyFilters.__subscription_options[id].name,
-    user_submitted: false,
+    url: s_o[id] ? s_o[id].url : id.substring(4),
+    name: s_o[id] ? s_o[id].name : id.substring(4),
+    user_submitted: s_o[id] ? false : true,
     subscribed: true,
     text: '',
     last_update: 0, //update ASAP
@@ -167,8 +176,9 @@ MyFilters.get_default_subscription = function(id) {
 //                   where xyz is the URL of a user-specified filterlist.
 //         text:string value of the filter.  It's the caller's job to fetch
 //                     and provide this.
+//         requiresList?: id of a list that is required by the current list
 // Returns: none, upon completion.
-MyFilters.prototype.subscribe = function(id, text) {
+MyFilters.prototype.subscribe = function(id, text, requiresList) {
   var wellKnownId = null;
   if (this._subscriptions[id] == undefined) {
     // New user-submitted filter.
@@ -185,7 +195,8 @@ MyFilters.prototype.subscribe = function(id, text) {
       this._subscriptions[id] = {
         url: id.substring(4), // "url:xyz" -> "xyz"
         name: id.substring(4),
-        user_submitted: true
+        user_submitted: true,
+        requiresList: requiresList
       };
     }
   } else {
@@ -193,11 +204,15 @@ MyFilters.prototype.subscribe = function(id, text) {
     wellKnownId = id;
   }
 
-  //subscribe to EasyList too if the filter was an additional one...
-  if (wellKnownId &&
-      this._subscriptions[id].name.indexOf(' - additional') == 0 &&
-      this._subscriptions['easylist'].subscribed == false) {
-    this._subscriptions['easylist'] = MyFilters.get_default_subscription('easylist');
+  // Subscribe to another list too if required.
+
+  // If a user clicks abp:subscribe?location=a&requiresLocation=b, then
+  // even if our stored data about a doesn't mention b as a requiresList,
+  // we should subscribe to it.
+  var require = this._subscriptions[id].requiresList || requiresList;
+  if (require && !(this._subscriptions[require] && 
+                   this._subscriptions[require].subscribed)) {
+    this._subscriptions[require] = MyFilters.get_default_subscription(require);
     this.update();
     this.freshen_async();
   }
@@ -214,6 +229,7 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
 
   sub_data.subscribed = true;
   sub_data.last_update = new Date().getTime();
+  delete sub_data.last_update_failed;
 
   // Record how many days until we need to update the subscription text
   sub_data.expiresAfterHours = 120; // The default
@@ -251,6 +267,7 @@ MyFilters.prototype.unsubscribe = function(id, del) {
   delete this._subscriptions[id].text;
   delete this._subscriptions[id].last_update;
   delete this._subscriptions[id].expiresAfterHours;
+  delete this._subscriptions[id].last_update_failed;
 
   if (!(id in MyFilters.__subscription_options) && del) {
     delete this._subscriptions[id];
@@ -352,8 +369,11 @@ MyFilters.__merge_with_default = function(subscription_data) {
     // ids, or looks up the answer in the official options.  
     // But for now, make sure that any subscribed filters get their URLs
     // updated with the new address.
-    else
+    else {
       subscription_data[id].url = MyFilters.__subscription_options[id].url;
+      subscription_data[id].requiresList = 
+                              MyFilters.__subscription_options[id].requiresList;
+    }
   }
   for (var id in MyFilters.__subscription_options) {
     if (subscription_data[id] == undefined) {
@@ -381,42 +401,52 @@ MyFilters.__make_subscription_options = function() {
     "easylist_plus_bulgarian": {
       url: "http://stanev.org/abp/adblock_bg.txt",
       name: " - additional Bulgarian filters",
+      requiresList: "easylist",
     },
     "dutch": { //id must not change!
       url: "http://sites.google.com/site/dutchadblockfilters/AdBlock_Dutch_hide.txt",
       name: " - additional Dutch filters",
+      requiresList: "easylist",
     },
     "easylist_plus_finnish": {
       url: "http://www.wiltteri.net/wiltteri.txt",
       name: " - additional Finnish filters",
+      requiresList: "easylist",
     },
     "easylist_plus_french": {
       url: "http://lian.info.tm/liste_fr.txt",
       name: " - additional French filters",
+      requiresList: "easylist",
     },
     "easylist_plus_german": {
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
       name: " - additional German filters",
+      requiresList: "easylist",
     },
     "easylist_plus_norwegian": {
       url: "http://home.online.no/~mlangsho/adblock.txt",
       name: " - additional Norwegian filters",
+      requiresList: "easylist",
     },
     "easylist_plus_polish": {
       url: "http://adblocklist.org/adblock-pxf-polish.txt",
       name: " - additional Polish filters",
+      requiresList: "easylist",
     },
     "easylist_plus_romanian": {
       url: "http://www.zoso.ro/pages/rolist.txt",
       name: " - additional Romanian filters",
+      requiresList: "easylist",
     },
     "russian": { //id must not change!
       url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
       name: " - additional Russian filters",
+      requiresList: "easylist",
     },
     "easylist_plus_vietnamese": {
       url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
       name: " - additional Vietnamese filters",
+      requiresList: "easylist",
     },
     "chinese": {
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
@@ -473,7 +503,8 @@ MyFilters.__make_subscription_options = function() {
       url: official_options[id].url,
       name: official_options[id].name,
       subscribed: false,
-      user_submitted: false
+      user_submitted: false,
+      requiresList: official_options[id].requiresList
     };
   }
   return result;
