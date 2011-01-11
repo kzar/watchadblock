@@ -382,6 +382,7 @@ MyFilters.__merge_with_default = function(subscription_data) {
         url: MyFilters.__subscription_options[id].url,
         name: MyFilters.__subscription_options[id].name,
         user_submitted: false,
+        requiresList: MyFilters.__subscription_options[id].requiresList,
         subscribed: false
       };
     }
