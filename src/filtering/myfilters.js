@@ -1,4 +1,4 @@
-// Requires jquery and 'utils.get_optional_features' method from background
+// Requires jquery.
 
 // MyFilters class manages subscriptions and the FilterSet.
 
@@ -90,7 +90,7 @@ MyFilters.prototype.rebuild = function() {
   delete hash[''];
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
-  var options = utils.get_optional_features({});
+  var options = chrome.extension.getBackgroundPage().utils.get_optional_features({});
   var ignoreGoogleAds = options.show_google_search_text_ads.is_enabled;
   var filterset_data = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds, true);
   this.nonglobal = filterset_data.nonglobal;
