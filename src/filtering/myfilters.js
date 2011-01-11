@@ -167,6 +167,7 @@ MyFilters.get_default_subscription = function(id) {
     subscribed: true,
     text: '',
     last_update: 0, //update ASAP
+    requiresList: s_o[id] ? s_o[id].requiresList : undefined,
     expiresAfterHours: 120
   }
 }
