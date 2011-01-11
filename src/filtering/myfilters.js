@@ -1,5 +1,6 @@
 // Requires jquery.
 
+
 // MyFilters class manages subscriptions and the FilterSet.
 
 // Constructor: merge the stored subscription data and the total possible
@@ -8,17 +9,7 @@
 function MyFilters() {
   this._event_handlers = { 'updated': [] };
 
-  var subscriptions_json = localStorage.getItem('filter_lists') || "null";
-  var stored_subscriptions = JSON.parse(subscriptions_json);
-
-  if (stored_subscriptions == null) {
-    // Brand new user. Install some filters for them.
-    stored_subscriptions = MyFilters._load_default_subscriptions();
-  }
-
-  // In case a new version of AdBlock has removed or added some
-  // subscription options, merge with MyFilters.__subscription_options.
-  this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
+  this._subscriptions = MyFilters._buildFilterLists();
 
   // temp code to normalize non-normalize filters, one time.
   // had to make a second pass when the [style] ignore was updated.
@@ -49,6 +40,23 @@ function MyFilters() {
     hours * 60 * 60 * 1000
   );
 }
+
+// Combine any stored filter list data with the canonical filter list
+// data and return a list of FilterList objects.
+MyFilters._buildFilterLists = function() {
+  var json = localStorage.getItem('filter_lists') || "null";
+  var stored_data = JSON.parse(json);
+
+  if (stored_data == null) {
+    // Brand new user.  Install some filter lists for them.
+    stored_data = MyFilters._load_default_subscriptions();
+  }
+
+  // In case a new version of AdBlock has removed or added some
+  // subscription options, merge with MyFilters.__subscription_options.
+  return MyFilters.__merge_with_default(stored_data);
+}
+
 
 // Event fired when subscriptions have been updated, after the subscriptions
 // have been persisted and filterset recalculated.
