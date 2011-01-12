@@ -236,15 +236,15 @@ MyFilters.prototype.subscribe = function(id, text, requiresList) {
 // Inputs:
 //   filter_list_id: id of filter list
 //   dirty_text: full text of filter list, possibly not normalized
-// Returns: undefined
+// Returns: false if id was unsubscribed; else true.
 MyFilters.prototype.setText = function(filter_list_id, dirty_text) {
   var sub_data = this._subscriptions[filter_list_id];
   if (!sub_data)
-    return;
+    return false; // not subscribed
 
+  var checkLines = dirty_text.split('\n', 15); // 15 lines should be enough
   // Find a match to a regex in first 15 lines of dirty_text
   function extract(regex) {
-    var checkLines = dirty_text.split('\n', 15); // 15 lines should be enough
     for (var i = 0; i < checkLines.length; i++) {
       if (!Filter.isComment(checkLines[i]))
         continue;
@@ -252,7 +252,6 @@ MyFilters.prototype.setText = function(filter_list_id, dirty_text) {
       if (match)
         return match;
     }
-    return null;
   }
 
   // Parse expires: header: days until we need to re-fetch the filter list text
@@ -274,6 +273,8 @@ MyFilters.prototype.setText = function(filter_list_id, dirty_text) {
   sub_data.last_update = new Date().getTime();
   delete sub_data.last_update_failed;
   sub_data.text = FilterNormalizer.normalizeList(dirty_text);
+
+  return true;
 }
 
 // Unsubscribe from a filter list.  If the id is not a well-known list, remove
@@ -285,6 +286,8 @@ MyFilters.prototype.unsubscribe = function(id, del) {
   if (this._subscriptions[id] == undefined)
     return;
 
+  // TODO refactor delete and reload from default data?
+  // TODO refactor change 'del' to 'retain' so default is delete?
   this._subscriptions[id].subscribed = false;
   delete this._subscriptions[id].text;
   delete this._subscriptions[id].last_update;
