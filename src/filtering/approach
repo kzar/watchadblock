@@ -1,0 +1,68 @@
+rework filtering... again... to make it more sensical.
+
+normalization is taken care of by MyFilters: it sanitizes dirty input.
+need to retain dirty input for custom_filters, though, somehow.
+
+FilterList
+  :isValid(text)
+  ctor({id, ...}) -> filled in with defaults
+  clone()?
+
+  
+
+MyFilters
+
+  subscribe(id:id|'url:foo', callback?:function({error:null|string})
+    bail if id == 'custom_filters'
+    start fetch timeout: 5 seconds
+    fetch
+      done before timeout: 
+               setText
+               if (setText failed) callback(error: invalid filters)
+               update _subs.subscribed (why, didn't setText do this?)
+               _onChange
+      timeout:
+               callback({error: timeout})
+  unsubscribe(id:id|'url:foo', callback?:function())
+    bail if id == 'custom_filters'
+    delete if user_submitted, or update _subs
+    _onChange
+    callback
+
+  setText(id:id|'url:foo', dirty_text)
+    bail if !'custom_filters' && unsubscribed
+    bail if !'custom_filters' && invalid text
+    update _subs
+
+DONE  _onChange // called internally on subscribe, unsubscribe, or _freshen
+    // None of these should need to be called from anywhere else.
+    _persist
+    _rebuild
+    fire updated_filters event
+    
+** CHECK THE TODO refactor bits before checking it. **
+    
+
+
+API perspective
+
+_changed
+_rebuild
+_fire_onChange
+
+
+options.filters
+  bg.myfilters.subscribe({id, callback("Subscribed|Invalid URL|Timed out")}) -> null
+    - requiresList is MANUALLY handled.  it's just metadata.
+  bg.myfilters.unsubscribe(id) -> null
+  bg.myfilters.freshenAllExpired() -> null
+  bg.myfilters.getSubscriptionsReadOnly() -> _subs
+  bg.myfilters.updated(function(new filters))
+
+options.blacklist
+  bg.myfilters.setText('custom_filters', dirty_text) -> null
+    // keep_comments=true would let this work...
+  bg.myfilters.updated(function(new filters))
+
+get_content_script_data
+  bg.myfilters.filtersets
