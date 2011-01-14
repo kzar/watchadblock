@@ -23,7 +23,7 @@ Filter.fromText = function(text) {
 
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if (/^@@/.test(text))
+    else if Filter.isWhitelistFilter(text)
       cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
@@ -34,6 +34,10 @@ Filter.fromText = function(text) {
 
 Filter.isSelectorFilter = function(text) {
   return /##/.test(text);
+}
+
+Filter.isWhitelistFilter = function(text) {
+  return /^@@/.test(text);
 }
 
 Filter.isComment = function(text) {

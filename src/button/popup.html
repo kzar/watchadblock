@@ -122,18 +122,21 @@
 
       <div id="div_status_whitelisted" class="menu-entry">
         <span style="font-style:italic">AdBlock is disabled on <span class="domainspan">this site</span></span>.
-        <!--TODO: make this work again; it broke as we now use $document, and it
-        cannot be used for example when you are on a site whitelisted by EasyList
         <a href="#" class="blue">enable</a-->
       </div>
       <script>
         $("#div_status_whitelisted a").click(function() {
           getCurrentTabInfo(function(info) {
-            extension_call("remove_from_whitelist", {domain:info.domain}, 
-                         function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
+            extension_call("try_to_unwhitelist", {url: info.tab.url},
+                         function(success) {
+              if (success) {
+                // Reload the tab
+                chrome.tabs.update(info.tab.id, {url: info.tab.url});
+                window.close();
+              } else {
+                $("#div_status_whitelisted").
+                  replaceWith("Sorry, AdBlock is disabled on this page by one of your filter lists.");
+              }
             });
           })
         });
