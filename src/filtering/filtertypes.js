@@ -23,7 +23,7 @@ Filter.fromText = function(text) {
 
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if Filter.isWhitelistFilter(text)
+    else if (Filter.isWhitelistFilter(text))
       cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
