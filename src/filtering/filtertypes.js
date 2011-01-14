@@ -178,15 +178,14 @@ PatternFilter._parseRule = function(text) {
     options: FilterOptions.NONE
   };
 
-  var lastDollar = text.lastIndexOf('$');
-  if (lastDollar == -1) {
+  var optionsRegex = /\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*$/;
+  var optionsText = text.match(optionsRegex);
+  if (!optionsText) {
     var rule = text;
     var options = [];
-  }
-  else {
-    var rule = text.substr(0, lastDollar);
-    var optionsText = text.substr(lastDollar + 1).toLowerCase();
-    var options = ( optionsText == "" ? [] : optionsText.split(',') );
+  } else {
+    var options = optionsText[0].substring(1).toLowerCase().split(',');
+    var rule = text.replace(optionsText[0], '');
   }
 
   var disallowedElementTypes = ElementTypes.NONE;
@@ -194,29 +193,41 @@ PatternFilter._parseRule = function(text) {
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
 
-    if (option.indexOf('domain=') == 0)
+    if (option.indexOf('domain=') == 0) {
       result.domainText = option.substring(7);
+      continue;
+    }
 
     var inverted = (option[0] == '~');
     if (inverted)
       option = option.substring(1);
 
+    option = option.replace(/\-/, '_');
     if (option in ElementTypes) { // this option is a known element type
       if (inverted)
         disallowedElementTypes |= ElementTypes[option];
       else
         result.allowedElementTypes |= ElementTypes[option];
     }
-    else if (option == 'third-party') {
+    else if (option == 'third_party') {
       result.options |= 
           (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
     }
-    else if (option == 'match-case') {
+    else if (option == 'match_case') {
       //doesn't have an inverted function
       result.options |= FilterOptions.MATCHCASE;
     }
-
-    // TODO: handle other options.
+    else if (option == 'collapse') {
+      // We currently do not support this option. However I've never seen any
+      // reports where this was causing issues. So for now, simply skip this
+      // option, without returning that the filter was invalid.
+    }
+    else {
+      // In case ABP adds a new option, and we do not support it, return an
+      // error. If we don't do this and the new type is an elementtype, the
+      // filter *$newtype will be parsed as '*$', e.g. match everything.
+      throw new Error("Unsupported option: $" + options[i]);
+    }
   }
   // No element types mentioned?  All types are allowed.
   if (result.allowedElementTypes == ElementTypes.NONE)
