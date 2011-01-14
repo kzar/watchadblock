@@ -53,12 +53,12 @@ function localizePage() {
 function page_is_whitelisted(url, type) {
   //special case this one
   if (url == "http://acid3.acidtests.org/") return true;
-  if (url.indexOf('#') != -1)
+  if (/#/.test(url))
     url = url.substr(0, url.indexOf('#'));
   if (!type) 
     type = ElementTypes.document;
   var bg = chrome.extension.getBackgroundPage();
-  var both = { global:1, nonglobal: 1};
+  var both = { global:1, nonglobal: 1 };
   for (var name in both) {
     var whitelist = bg._myfilters[name]._whitelistFilters;
     for (var i = 0; i < whitelist.length; i++) {
