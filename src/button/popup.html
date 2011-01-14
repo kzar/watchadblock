@@ -212,11 +212,8 @@
       <script>
         $("#div_whitelist_page").click(function() {
           getCurrentTabInfo(function(info) {
-            //the urlmatches[2] check is nessecary to prevent 
-            //@@|http://foo.com/$document to match http://foo.com/bar
-            var urlmatches = info.tab.url.match(/^([^\?\#]+\??)(.*)$/);
-            var filter = '@@|' + urlmatches[1] + (urlmatches[2] ? "|" : '')
-                         + '$document';
+            var url_path_only = info.tab.url.match(/^[^\?\#]+\??$/);
+            var filter = '@@|' + url_path_only[0] + '|$document';
             extension_call("add_custom_filter", {filter: filter}, function() {
               // Reload the tab
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
