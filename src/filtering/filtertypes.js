@@ -185,7 +185,7 @@ PatternFilter._parseRule = function(text) {
     var options = [];
   } else {
     var options = optionsText[0].substring(1).toLowerCase().split(',');
-    var rule = text.replace(optionsText, '');
+    var rule = text.replace(optionsText[0], '');
   }
 
   var disallowedElementTypes = ElementTypes.NONE;
