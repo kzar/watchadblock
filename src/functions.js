@@ -11,8 +11,8 @@ extension_call = function(fn, options, callback) {
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
 }
 
-// These are replaced with console.log in adblock_start if the user chooses.
-DEBUG = false;
+// These are replaced with console.log in adblock_start.js and background.html
+// if the user chooses.
 log = function() { };
 
 //Regex to validate a user-created filter.
@@ -105,7 +105,7 @@ function getCurrentTabInfo(callback) {
     var disabled_site = false;
     if (url.scheme != 'http' && url.scheme != 'https')
       disabled_site = true;
-    if (tab.url.match('://chrome.google.com/extensions'))
+    if (/\:\/\/chrome.google.com\/(extensions|webstore)\//.test(tab.url))
       disabled_site = true;
 
     var result = {
