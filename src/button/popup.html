@@ -215,13 +215,15 @@
       <script>
         $("#div_whitelist_page").click(function() {
           getCurrentTabInfo(function(info) {
-            var url_path_only = info.tab.url.replace(/[#\?].*/, '');
-            var escaped_url = url_path_only.replace(/([^A-Za-z0-9:-_])/g, '\\$1');
+            var url_path_only = info.tab.url.replace(/[#\?].*$/, '');
+            var path_no_slash = url_path_only.replace(/\/$/, '');
+            var escaped_url = path_no_slash.replace(/([^A-Za-z0-9:-_])/g, '\\$1');
             // Whitelist 'http://foo.com/bar?baz' as
-            // @@/^http\:\/\/foo\.com\/bar([#?].*)?$/$document
-            // This matches the original URL, ignoring query string or anchors,
-            // but does not match subpaths such as http:?/foo.com/bar/sub.htm .
-            var filter = '@@/^' + escaped_url + '([#?].*)?$/$document';
+            // @@/^http\:\/\/foo\.com\/bar\/?([#?].*)?$/$document
+            // This matches the original URL with or without a trailing slash,
+            // ignoring query string or anchors, but does not match subpaths 
+            // such as http://foo.com/bar/sub.htm .
+            var filter = '@@/^' + escaped_url + '\\/?([#?].*)?$/$document';
             extension_call("add_custom_filter", {filter: filter}, function() {
               // Reload the tab
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
