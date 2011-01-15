@@ -45,6 +45,10 @@ if (SAFARI) {
     })(),
 
     extension: {
+      getBackgroundPage: function() {
+        return safari.extension.globalPage.contentWindow;
+      },
+
       getURL: function(path) { 
         return safari.extension.baseURI + path;
       },
