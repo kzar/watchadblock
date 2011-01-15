@@ -104,7 +104,7 @@ if (SAFARI) {
             var request = messageEvent.message.data;
             var id = chrome.__getTabId(messageEvent.target);
 
-            var sender = { tab: { id: id } };
+            var sender = { tab: { id: id, url: messageEvent.target.url } };
             var sendResponse = function(dataToSend) {
               var responseMessage = { callbackToken: messageEvent.message.callbackToken, data: dataToSend };
               messageEvent.target.page.dispatchMessage("response", responseMessage);
@@ -150,7 +150,7 @@ if (SAFARI) {
 
             var newPort = {
               name: portName,
-              sender: { tab: { id: id } },
+              sender: { tab: { id: id, url: messageEvent.target.url } },
               onDisconnect: { 
                 addListener: function() { 
                   console.log("CHROME PORT LIBRARY: chrome.extension.onConnect.addListener: port.onDisconnect is not implemented, so I'm doing nothing.");
