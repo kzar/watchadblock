@@ -11,8 +11,8 @@ extension_call = function(fn, options, callback) {
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
 }
 
-// These are replaced with console.log in adblock_start if the user chooses.
-DEBUG = false;
+// This is replaced with console.log in adblock_start.js and background.html
+// if the user chooses.
 log = function() { };
 
 //Regex to validate a user-created filter.

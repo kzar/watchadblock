@@ -60,13 +60,13 @@ def donation_messages(max_count):
                 if d.amount >= 100:
                     raise ValueError("%s donated %.2f; you need to send them something."
                                      % (d.name, d.amount))
-            except ValueError as ex:
+            except ValueError, ex:
                 print ("*" * 70 + '\n') * 3
                 print ex.message
             except:
                 print ("*" * 70 + '\n') * 3
                 print "Couldn't parse message from %s; ignoring." % email_msg['from']
-                print ("*" * 70 + '\n') * 3
+                print
             else: # no exception
                 yield d
     except:
@@ -182,12 +182,17 @@ If you don't use FB/Twitter or just don't feel comfortable asking your friends t
            browser=self.browser.lower())
 
 
-def main(number_to_thank=1000000):
+def main(number_to_thank=1000000, notes=None):
     donation_count = donation_message_count(number_to_thank)
     i = 0
     thanked = []
     for donation in donation_messages(number_to_thank):
         i += 1
+        if notes is not None and (not not donation.note) != notes:
+            print "Skipping $%.2f from %s due to %s note" % (
+                    donation.amount, donation.name,
+                    "lack of" if notes else "having a")
+            continue
         print "%d of %d" % (i, donation_count)
         if donation.note:
             print
@@ -201,11 +206,10 @@ def main(number_to_thank=1000000):
             print
             print "-" * 30
             print
-        print " $%.2f (%s): %s (%s)" % (
-                        donation.amount, donation.browser,
-                        donation.name, donation.email)
-        nick = raw_input("'%s' is my nickname guess: press enter or type a correction: " %
-                         donation.nickname)
+        print " $%.2f (%s)" % (donation.amount, donation.browser)
+        print " %s" % donation.email
+        print " %s" % donation.name
+        nick = raw_input("'%s'? [Press Enter or type a nickname correction.] " % donation.nickname)
         if nick:
             donation.nickname = nick
         if donation.note:
@@ -235,6 +239,8 @@ def main(number_to_thank=1000000):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) > 1:
-        main(int(sys.argv[1]))
+        count = int(sys.argv[1])
+        notes = eval(sys.argv[2]) # True: only show notes.  False: show none.
+        main(count, notes)
     else:
         main()

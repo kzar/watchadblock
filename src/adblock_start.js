@@ -119,10 +119,8 @@ function adblock_begin() {
     is_top_frame: (window == window.top)
   };
   extension_call('get_content_script_data', opts, function(data) {
-    if (data.features.debug_logging.is_enabled) {
-      DEBUG = true;
+    if (data.features.debug_logging.is_enabled)
       log = function(text) { console.log(text); };
-    }
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
