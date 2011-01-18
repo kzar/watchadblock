@@ -131,7 +131,7 @@ class Donation(object):
         if self.note:
             self.note = self.note.group(1)
             self.note = self._cleanup(self.note)
-        browser_re = 'Purpose: AdBlock for ([a-zA-Z]+)'
+        browser_re = 'Purpose: AdBlock [fF]or ([a-zA-Z]+)'
         self.browser = re.search(browser_re, self.body).group(1)
         amount = re.search('Total amount: *=24(.*?) USD', self.body).group(1)
         self.amount = float(amount.strip())
