@@ -83,8 +83,7 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    pageDomain: document.domain, 
-    isTopFrame: (window == window.top) 
+    pageDomain: document.domain
   };
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
@@ -115,8 +114,7 @@ function adblock_begin() {
 
   var opts = { 
     domain: document.domain, 
-    include_filters: true,
-    is_top_frame: (window == window.top)
+    include_filters: true
   };
   extension_call('get_content_script_data', opts, function(data) {
     if (data.features.debug_logging.is_enabled)

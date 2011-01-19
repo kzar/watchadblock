@@ -163,22 +163,11 @@
         }
       }
   
-      top_frame_domains = {};
-
       // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
-      //         is_top_frame?:bool true if the caller is the top
-      //           level frame.  Subframes use this frame's domain to determine 
-      //           if they are whitelisted.
       //         include_filters:bool true if hide and block filters should be
       //           included
       utils.get_content_script_data = function(options, sender) {
-        if (options.is_top_frame) {
-          top_frame_domains[sender.tab.id] = options.domain;
-        }
-
-        // TODO speed: i think sender.tab.url is always the TOP FRAME url omg, not the
-        // subframe url.  so we can get rid of top_frame_domains?
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var features = utils.get_optional_features();
         var result = {
@@ -497,12 +486,7 @@
           if (messageEvent.name != "canLoad")
             return;
 
-          var tabid = chrome.__getTabId(messageEvent.target);
-          if (messageEvent.message.isTopFrame) {
-            top_frame_domains[tabid] = messageEvent.message.pageDomain;
-          }
-          var tfd = top_frame_domains[tabid];
-          if (page_is_whitelisted(tfd)) {
+          if (page_is_whitelisted(messageEvent.target.url)) {
             messageEvent.message = true;
             return;
           }
