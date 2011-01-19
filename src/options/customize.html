@@ -1,6 +1,15 @@
   <style>
-    .addControls {
+    h2 {
+      margin-bottom: 10px;
+    }
+    h3 {
+      margin: 10px 0px;
+    }
+    .customizationSection {
       margin-left: 20px;
+    }
+    .addControls {
+      margin-left: 10px;
     }
     .entryTable {
       font-size: 12px;
@@ -38,6 +47,8 @@
       $("#txtBlockUrl").val(".com/flashAd");
       $("#txtBlockUrlDomain").val("*");
 
+      $("#txtUnblock").val('http://sleeplessgeek.blogspot.com/');
+
       $("#btnAddUserFilter").click(function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
         var blockDomain = $("#txtUserFilterDomain").val().trim();
@@ -52,7 +63,7 @@
       });
 
       $("#btnAddExcludeFilter").click(function() {
-        var excludeUrl = $("#txtExcludeUrlorDomain").val().trim();
+        var excludeUrl = $("#txtUnblock").val().trim();
 
         //prevent regexes
         if (/^\/.*\/$/.test(excludeUrl))
@@ -121,7 +132,7 @@
       $("#divCssBlock input:text").keyup(validateCssFilter);
       
       var validateExcludeFilter = function() {
-        var excludeUrl = $("#txtExcludeUrlorDomain").val().trim();
+        var excludeUrl = $("#txtUnblock").val().trim();
         $("#btnAddExcludeFilter").attr("disabled", excludeUrl ? null : "disabled");
       }
       $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
@@ -174,17 +185,18 @@
   </script>
 
   <div class="section">
-    <h2 i18n="blacklisttabtitle"></h2>
+    <h2 i18n="tabcustomizetitle"></h2>
 
-    <div i18n="blacklistclickmessage"></div>
+    <div i18n="filterlistsrock"></div>
 
     <div>
 
       <div id="divAddNewFilter">
-        <h3 i18n="addnewfilter"></h3>
 
-        <div>
-          <a class="controlsLink" id="aUrlBlock" href="#" i18n="linkblockadbyurl"></a>
+        <h3 i18n="blockmoreads"></h3>
+
+        <div class="customizationSection">
+          <a class="controlsLink" href="#" i18n="linkblockadbyurl"></a>
           <div id="divUrlBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
@@ -203,9 +215,10 @@
           </div>
         </div>
 
-        <div>
-          <a class="controlsLink" id="aCssBlock" href="#" i18n="linkhidesection"></a>
+        <div class="customizationSection">
+          <a class="controlsLink" href="#" i18n="linkhidesection"></a>
           <div id="divCssBlock" class="addControls" style="display:none">
+            <div i18n="blacklistclickmessage"></div>
             <table class="entryTable">
               <tr>
                 <td i18n="blockdomain" colspan="2"></td>
@@ -223,8 +236,10 @@
           </div>
         </div>
 
-        <div>
-          <a class="controlsLink" id="aExcludeBlock" href="#" i18n="linkexcludesection"></a>
+        <h3 i18n="unblocksomeads"></h3>
+
+        <div class="customizationSection">
+          <a class="controlsLink" href="#" i18n="linkunblock"></a>
           <div id="divExcludeBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
@@ -235,9 +250,9 @@
               </tr>
               <tr>
                 <td class="guide">@@</td>
-                <td><input id="txtExcludeUrlorDomain" style="width:400px"/></td>
+                <td><input id="txtUnblock" style="width:400px"/></td>
                 <td class="guide">$document</td>
-                <td><input id="btnAddExcludeFilter" type="button" i18n_value="addbutton" disabled="disabled"/></td>
+                <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonunblockit" /></td>
               </tr>
             </table>
           </div>
