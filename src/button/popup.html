@@ -40,6 +40,7 @@
           "div_pause_adblock",
           "div_blacklist",
           "div_whitelist",
+          "div_whitelist_page",
           "separator1",
           "div_options",
           "div_help_disable",
@@ -54,7 +55,7 @@
           } else if (info.whitelisted) {
             show(["div_status_whitelisted", "separator0", "div_pause_adblock", "separator1", "div_options", "div_help_disable"]);
           } else {
-            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "separator1", "div_options", "div_help_disable"]);
+            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "div_whitelist_page", "separator1", "div_options", "div_help_disable"]);
           }
           setDomain(info.domain);
         });
@@ -125,11 +126,16 @@
       <script>
         $("#div_status_whitelisted a").click(function() {
           getCurrentTabInfo(function(info) {
-            extension_call("remove_from_whitelist", {domain:info.domain}, 
-                         function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
+            extension_call("try_to_unwhitelist", {url: info.tab.url},
+                         function(success) {
+              if (success) {
+                // Reload the tab
+                chrome.tabs.update(info.tab.id, {url: info.tab.url});
+                window.close();
+              } else {
+                $("#div_status_whitelisted").
+                  replaceWith("Sorry, AdBlock is disabled on this page by one of your filter lists.");
+              }
             });
           })
         });
@@ -186,12 +192,13 @@
 
 
       <div id="div_whitelist" class="menu-entry">
-        Don't run on <span class="domainspan">this site</span>
+        Don't run on <span class="domainspan">this domain</span>
       </div>
       <script>
         $("#div_whitelist").click(function() {
           getCurrentTabInfo(function(info) {
-            extension_call("add_to_whitelist", {domain:info.domain}, function() {
+            extension_call("add_custom_filter", {filter: '@@||' +
+                           info.domain + '^$document'}, function() {
               // Reload the tab
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
               window.close();
@@ -199,6 +206,28 @@
           })
         });
       </script>
+
+
+      <div id="div_whitelist_page" class="menu-entry">
+        Don't run on this page
+      </div>
+      <script>
+        $("#div_whitelist_page").click(function() {
+          getCurrentTabInfo(function(info) {
+            var url = info.tab.url.replace(/#.*$/, '');  // Remove anchors
+            var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
+            var has_querystring = url_parts[2];
+            var filter = '@@|' + url_parts[1] + 
+              (has_querystring ? '?' : '|') + '$document';
+            extension_call("add_custom_filter", {filter: filter}, function() {
+              // Reload the tab
+              chrome.tabs.update(info.tab.id, {url: info.tab.url});
+              window.close();
+            });
+          })
+        });
+      </script>
+
 
 
       <div id="separator1" class="separator"></div>

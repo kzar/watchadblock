@@ -47,11 +47,23 @@ function localizePage() {
 }
 
 // Returns true if anything in whitelist matches the_domain.
-function page_is_whitelisted(whitelist, the_domain) {
-  if (the_domain == "acid3.acidtests.org") return true;
-  for (var i = 0; i < whitelist.length; i++) {
-    if (the_domain.indexOf(whitelist[i]) != -1)
-      return true;
+//   url: the url of the page
+//   type: one out of ElementTypes, default ElementTypes.document,
+//         to check what the page is whitelisted for: hiding rules or everything
+function page_is_whitelisted(url, type) {
+  //special case this one
+  if (url == "http://acid3.acidtests.org/") return true;
+  url = url.replace(/#.*$/, ''); // Remove anchors
+  if (!type) 
+    type = ElementTypes.document;
+  var bg = chrome.extension.getBackgroundPage();
+  var both = { global:1, nonglobal: 1 };
+  for (var name in both) {
+    var whitelist = bg._myfilters[name]._whitelistFilters;
+    for (var i = 0; i < whitelist.length; i++) {
+      if (whitelist[i].matches(url, type, false))
+        return true;
+    }
   }
   return false;
 }
@@ -84,7 +96,6 @@ function url_parts(url) {
 // Returns: null (asynchronous)
 function getCurrentTabInfo(callback) {
   var utils = chrome.extension.getBackgroundPage().utils;
-  var whitelist = utils.get_whitelist();
   chrome.tabs.getSelected(undefined, function(tab) {
     // TODO: use code from elsewhere to extract domain
 
@@ -102,7 +113,7 @@ function getCurrentTabInfo(callback) {
       domain: url.domain,
     };
     if (!disabled_site)
-      result.whitelisted = page_is_whitelisted(whitelist, url.domain);
+      result.whitelisted = page_is_whitelisted(tab.url);
 
     callback(result);
   });

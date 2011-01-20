@@ -15,6 +15,31 @@
     <script src="button/temporary_background_code.js"></script>
     <script>
 
+      // UNWHITELISTING
+
+      // Look for a custom filter that would whitelist options.url,
+      // and if any exist, remove the first one.
+      // Inputs: url:string - a URL that may be whitelisted by a custom filter
+      // Returns: true if a filter was found and removed; false otherwise.
+      utils.try_to_unwhitelist = function(options) {
+        var url = options.url.replace(/#.*$/, ''); // Whitelist ignores anchors
+        var custom_filters = utils.get_custom_filters_text({}).split('\n');
+        for (var i = 0; i < custom_filters.length; i++) {
+          var text = custom_filters[i];
+          if (!Filter.isWhitelistFilter(text))
+            continue;
+          var filter = new WhitelistFilter(text);
+          if (!filter.matches(url, ElementTypes.document))
+            continue;
+
+          custom_filters.splice(i, 1); // Remove this whitelist filter text
+          var new_text = custom_filters.join('\n');
+          utils.set_custom_filters_text({filters: new_text});
+          return true;
+        }
+        return false;
+      }
+
       // V3 FILTERING
 
       // Rebuild the filterset based on the current settings and subscriptions.
@@ -138,24 +163,12 @@
         }
       }
   
-      top_frame_domains = {};
-
       // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
-      //         is_top_frame?:bool true if the caller is the top
-      //           level frame.  Subframes use this frame's domain to determine 
-      //           if they are whitelisted.
       //         include_filters:bool true if hide and block filters should be
       //           included
       utils.get_content_script_data = function(options, sender) {
-        if (options.is_top_frame) {
-          top_frame_domains[sender.tab.id] = options.domain;
-        }
-
-        // TODO speed: i think sender.tab.url is always the TOP FRAME url omg, not the
-        // subframe url.  so we can get rid of top_frame_domains?
-        var tfd = top_frame_domains[sender.tab.id];
-        var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
+        var whitelisted = page_is_whitelisted(sender.tab.url);
         var features = utils.get_optional_features();
         var result = {
           page_is_whitelisted: whitelisted,
@@ -177,9 +190,11 @@
         // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
         // should be able to turn up the fifecache size by a lot.  have the fifocache log
         // how big each new entry is, to verify this.
-        var global_hide = _myfilters.global.cached_getSelectors;
-        var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
-        result.selectors = global_hide.concat(nonglobal_hide);
+        if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
+          var global_hide = _myfilters.global.cached_getSelectors;
+          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+          result.selectors = global_hide.concat(nonglobal_hide);
+        }
         // Chrome needs the blocking filters in the content script until a
         // synchronous background communication API comes along.
         if (!SAFARI) {
@@ -189,33 +204,6 @@
         }
 
         return result;
-      }
-
-
-      // WHITELIST
-
-      utils.get_whitelist = function(options) {
-        return utils.storage_get({key:'whitelist', default_value:[]});
-      }
-      utils.add_to_whitelist = function(options) {
-        options.domain = options.domain.toLowerCase();
-        var whitelist = utils.get_whitelist();
-        if ($.inArray(options.domain, whitelist) == -1) {
-          whitelist.unshift(options.domain);
-          utils.storage_set({key:'whitelist', value:whitelist});
-          utils.emit_broadcast({fn:'whitelist_updated', options: {}});
-        }
-      }
-      // Inputs: domain:string
-      // Returns: null
-      utils.remove_from_whitelist = function(options) {
-        var whitelist = utils.get_whitelist();
-        var where = whitelist.indexOf(options.domain);
-        if (where == -1)
-          return;
-        whitelist.splice(where, 1);
-        utils.storage_set({key:'whitelist', value:whitelist});
-        utils.emit_broadcast({fn:'whitelist_updated', options: {}});
       }
 
       // NEW FILTERS
@@ -312,8 +300,7 @@
         var showThem = true;
 
         var domain = url_parts(options.url).domain;
-        var whitelist = utils.get_whitelist({});
-        var whitelisted = page_is_whitelisted(whitelist, domain);
+        var whitelisted = page_is_whitelisted(options.url);
         var features = utils.get_optional_features({});
         var disabled = !features.show_context_menu_items.is_enabled;
         var paused = localStorage.getItem('adblock_is_paused');
@@ -499,12 +486,7 @@
           if (messageEvent.name != "canLoad")
             return;
 
-          var tabid = chrome.__getTabId(messageEvent.target);
-          if (messageEvent.message.isTopFrame) {
-            top_frame_domains[tabid] = messageEvent.message.pageDomain;
-          }
-          var tfd = top_frame_domains[tabid];
-          if (page_is_whitelisted(utils.get_whitelist(), tfd)) {
+          if (page_is_whitelisted(messageEvent.target.url)) {
             messageEvent.message = true;
             return;
           }
@@ -542,6 +524,23 @@
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
+      }
+
+
+
+
+      // OLD STYLE WHITELIST
+      //   TODO: Remove this when you are convinced everyone has updated their
+      //   version of AdBlock... Say in March or April
+      if (utils.storage_get({key:'whitelist', default_value:[]})) {
+        var old_style_whitelist = utils.storage_get({key:'whitelist', default_value:[]});
+        for (var i=0; i<old_style_whitelist.length; i++) {
+          var website = old_style_whitelist[i];
+          if (website[0] == '.')
+            website = '*' + website;
+          utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+        }
+        localStorage.removeItem('whitelist')
       }
     </script>
   </head>

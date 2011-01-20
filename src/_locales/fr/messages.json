@@ -193,14 +193,6 @@
     "message": "Liste des filtres",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
-    "message": "Liste noire",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "Sites exclus",
-    "description": "A tab on the options page"
-  },
 
   "generaloptions": {
     "message": "Options générales",
@@ -500,33 +492,13 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  "removelabel": {
-    "message": "Supprimer",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Ne pas bloquer les publicités sur les domaines qui se terminent par...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "Par exemple, avec 'google.com' les publicités seront bloquées sur google.com, mail.google.com, et www.google.com.",
-    "description": "text on the 4th tab page"
-  },
   "addbutton": {
     "message": "Ajouter",
     "description": "add button"
   },
-  "removeallfromlist": {
-    "message": "Retirez tous les éléments de la liste :",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
     "message": "AdBlock - Signaler une publicité",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "Donc, vous venez de trouver une publicité sur une page web ? Ok, je vais vous aider à trouver le bon endroit pour le signaler ! Rappel : signaler une publicité est volontaire. Si vous ne souhaitez pas faire cela, il vous suffit de fermer cette fenêtre et de la bloquer par vous-même en ajoutant le filtre dans l'onglet 'Liste noire' dans la page d'options !",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "Assurez-vous que les listes de filtres sont à jour",
@@ -559,10 +531,6 @@
   "correctfilters": {
     "message": "Corriger les filtres",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Etes-vous sûr de vouloir effacer cette liste ?",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "Dans quelle langue est écrite cette page ?",
@@ -656,16 +624,6 @@
     "message": "Autre",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "Nous n'avons pas de listes de filtres par défaut pour cette langue.<br/>Merci de trouver une liste appropriée qui prend en charge cette langue $link$ ou bloquez cette publicité pour vous-même sur la page de la liste noire.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1ici$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "Abonnez-vous à cette liste de filtres : $list_title$ puis essayez à nouveau",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -737,9 +695,5 @@
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
-  },
-  "cantundo": {
-    "message": "Cette action ne peut pas être annulée !",
-    "description": "Warning a user before confirming an action"
   }
 }

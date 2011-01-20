@@ -131,7 +131,7 @@
 
 
     <!--STEP 0-->
-    <div style="padding-left:5px; margin-bottom:20px" i18n="adreport1"></div>
+    <div style="padding-left:5px; margin-bottom:20px" i18n="adreport2"></div>
 
     <!--STEP 1-->
     <div class="section" id="step1DIV" style="display:block;">
@@ -206,7 +206,7 @@
         var selected = $("#step2_lang option:selected");
         $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
         if (selected.text() == translate("other")) {
-          $("#whattodo").html(translate("nodefaultfilter", 
+          $("#whattodo").html(translate("nodefaultfilter1", 
                                         ["<a href='http://adblockplus.org/en/subscriptions'>", "</a>"]));
           return;
         } else {
