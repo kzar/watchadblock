@@ -33,11 +33,11 @@ Filter.fromText = function(text) {
 }
 
 Filter.isSelectorFilter = function(text) {
-  return /##/.test(text);
+  return /\#\#/.test(text);
 }
 
 Filter.isWhitelistFilter = function(text) {
-  return /^@@/.test(text);
+  return /^\@\@/.test(text);
 }
 
 Filter.isComment = function(text) {
@@ -246,7 +246,7 @@ PatternFilter._parseRule = function(text) {
 
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
-  if (/^@@/.test(rule))
+  if (Filter.isWhitelistFilter(rule))
     rule = rule.substring(2);
 
   // Convert regexy stuff.

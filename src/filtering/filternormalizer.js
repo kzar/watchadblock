@@ -79,7 +79,7 @@ var FilterNormalizer = {
                          ElementTypes.dtd | ElementTypes.other |
                          ElementTypes.xbl | ElementTypes.ping |
                          ElementTypes.xmlhttprequest | ElementTypes.donottrack);
-      if (!/^\@\@/.test(filter))
+      if (!Filter.isWhitelistFilter(filter))
         unsupported |= (ElementTypes.document | ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
