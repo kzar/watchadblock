@@ -25,6 +25,32 @@ if (!SAFARI) {
     localStorage.removeItem('adblock_is_paused');
     updateButtonUIAndContextMenus();
   }
+  
+  utils.get_whitelist = function(options) {
+    var custom_filters = utils.get_custom_filters_text({}).split('\n');
+    // Down-convert custom filters into old whitelist entries
+    var whitelist = custom_filters.map(function(text) {
+      var dot_match = text.match(/^@@\|\|\*\.([a-zA-Z0-9-.]+)\^\$document$/);
+      if (dot_match)
+        return '.' + dot_match[1];
+      var domain_match = text.match(/^@@\|\|([a-zA-Z0-9-.]+)\^\$document$/);
+      if (domain_match)
+        return domain_match[1];
+      else
+        return null; // Not a whitelist entry
+    });
+    // Remove non-whitelist entries
+    return whitelist.filter(function(text) { return text != null; });
+  }
+
+  utils.add_to_whitelist = function(options) {
+    utils.add_custom_filter({filter: '@@||' + options.domain + '^$document'});
+  }
+
+  utils.remove_from_whitelist = function(options) {
+    utils.try_to_unwhitelist({url:"http://" + options.domain});
+  }
+
 
   // Since we've pulled out the browser action temporarily, make API calls noops
   // instead of crashing.
