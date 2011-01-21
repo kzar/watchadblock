@@ -229,7 +229,10 @@
     "message": "Filterlisten",
     "description": "A tab on the options page"
   },
-
+  "tabcustomize": {
+    "message": "Eigene Filter",
+    "description": "A tab on the options page"
+  },
   "generaloptions": {
     "message": "Allgemeine Einstellungen",
     "description": "Title of first tab page"
@@ -476,13 +479,21 @@
     "message": "Rechtsklick auf Werbung - oder die Werbung hier manuell entfernen.",
     "description": "Message at the top of the blacklist options tab"
   },
-  "blacklisttabtitle": {
-    "message": "Werbung blockieren, die nicht in den Filterlisten enthalten ist",
+    "tabcustomizetitle": {
+    "message": "AdBlock anpassen",
     "description": "Title of the third tab"
   },
-  "addnewfilter": {
-    "message": "Neuen Filter hinzufügen:",
-    "description": "Subtitle on the third tab"
+  "filterlistsrock": {
+    "message": "Die Filterlisten entfernen die meiste Werbung im Internet. Außerdem können Sie:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "blockmoreads": {
+    "message": "weitere Werbung entfernen:",
+    "description": "Section header on third tab"
+  },
+  "unblocktitle": {
+    "message": "AdBlock auf einer bestimmten Website deaktivieren:",
+    "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
     "message": "Werbung über ihre URL entfernen",
@@ -492,6 +503,10 @@
     "message": "Teil einer Website entfernen",
     "description": "Link on the third tab"
   },
+  "linkunblock": {
+    "message": "Werbung auf einer Website oder Domain anzeigen",
+    "description": "Link on the third tab"
+  },
   "blockurlwithtext": {
     "message": "URLs mit dieser Adresse blockieren",
     "description": "Message of the url-blocking area"
@@ -499,6 +514,10 @@
   "csstomatch": {
     "message": "CSS, das geblockt werden soll",
     "description": "Message of the css-hiding area"
+  },
+  "excludedomainorurl": {
+    "message": "Die Domain oder URL wo AdBlock nichts entfernen soll",
+    "description": "Message of the exclude area"
   },
   "blockdomain": {
     "message": "Domain der Seite",
@@ -528,10 +547,13 @@
     "message": "Werbung an das AdBlock Entwicklerteam oder die Entwickler der Filterlisten <a>melden</a>.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
-
   "adblockreportinganad": {
     "message": "AdBlock - Werbung melden",
     "description": "title of ad report page"
+  },
+  "adreport2": {
+    "message": "Sie haben Werbung auf einer Website gefunden? Dieser Assistent wird Ihnen helfen, den richtigen Ort zu finden, um diese Werbung zu melden!<br/> Vergessen Sie nicht: Werbung zu melden ist freiwillig. Wenn Sie die Werbung nicht melden wollen, können Sie einfach diese Fenster schließen und die Werbung nur für Sie selbst blocken, indem Sie den Filter für die Werbung in den AdBlock Einstellungen im 'Eigene Filter' Tab hinzufügen!",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "updateyourlists": {
     "message": "Stellen Sie sicher, dass Ihre Filterlisten auf dem neuesten Stand sind",
@@ -656,6 +678,16 @@
   "other": {
     "message": "sonstige",
     "description": "multiple choice option"
+  },
+   "nodefaultfilter1": {
+    "message": "Für diese Sprache wird hier keine Standardfilterliste bereitgestellt.<br/>Versuchen Sie bitte, $link$ eine passende Liste zu finden, die diese Sprache unterstützt oder blocken Sie die Werbung selbst in den AdBlock Einstellungen im 'Eigene Filter' Tab.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1hier$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
   },
   "retryaftersubscribe": {
     "message": "Abonnieren Sie diese Filterliste und versuchen Sie es erneut: $list_title$",
