@@ -231,14 +231,6 @@
 "message": "Списки фильтров",
 "description": "A tab on the options page"
 },
-"tabblacklist": {
-"message": "Черный список",
-"description": "A tab on the options page"
-},
-"tabexcluded": {
-"message": "Сайты-исключения",
-"description": "A tab on the options page"
-},
 
 "generaloptions": {
 "message": "Общие параметры",
@@ -539,33 +531,9 @@
 "description": "A link for users who found an ad somewhere and want to report it"
 },
 
-"removelabel": {
-"message": "Удалить",
-"description": "link to remove a excluded site"
-},
-"excludedsitestitle": {
-"message": "Не блокировать рекламу на доменах, которые заканчиваются... ",
-"description": "title of the 4th tab page"
-},
-"excludedsitesexample": {
-"message": "Например, 'google.com' остановит блокировку рекламы на google.com, mail.google.com, и www.google.com.",
-"description": "text on the 4th tab page"
-},
-"addbutton": {
-"message": "Добавить",
-"description": "add button"
-},
-"removeallfromlist": {
-"message": "Удалить все элементы из списка:",
-"description": "option on 4th tab page"
-},
 "adblockreportinganad": {
 "message": "AdBlock - отчеты о рекламе",
 "description": "title of ad report page"
-},
-"adreport1": {
-"message": "Итак, Вы только что нашли рекламу на веб-странице? Тогда я помогу Вам найти подходящее место, куда сообщить об этом!<br/> Помните: отчет о рекламе является добровольным. Если Вы не хотите это делать, можно просто закрыть это окно и заблокировать её только для себя, добавив фильтр на вкладку 'Черный список' на странице Параметры",
-"description": "Instructions on ad reporting page. 'Blacklist' should be the same text as the 'tabblacklist' message."
 },
 "updateyourlists": {
 "message": "Убедитесь, что списки фильтров обновлены",
@@ -598,10 +566,6 @@
 "correctfilters": {
 "message": "Правильные фильтры",
 "description": "on the ad report page, label describing having the right set of filters"
-},
-"reallyclearlist": {
-"message": "Вы уверены, что хотите очистить фильтры?",
-"description": "confirmation of clearing a list of iteams"
 },
 "pagelanguagecheck": {
 "message": "На каком языке эта страница?",
@@ -695,16 +659,6 @@
 "message": "Другой",
 "description": "multiple choice option"
 },
-"nodefaultfilter": {
-"message": "У нас нет списка фильтров по умолчанию для данного языка. <br/> Пожалуйста, попробуйте найти подходящий список, поддерживающий этот язык $link$ или заблокируйте эту рекламу для себя на странице 'Черный список'.",
-"description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Blacklist' should be the same message as 'tabblacklist'.",
-"placeholders": {
-"link": {
-"content": "$1здесь$2",
-"example": "<a href='http://abp.org'>here</a>"
-}
-}
-},
 "retryaftersubscribe": {
 "message": "Подпишитесь на этот список, а затем попробуйте снова: $list_title$",
 "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -776,10 +730,6 @@
 "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
 }
 }
-},
-"cantundo": {
-"message": "Это действие нельзя отменить!",
-"description": "Warning a user before confirming an action"
 },
 "contextmenuhidethis": {
 "message": "Блокировать эту рекламу",

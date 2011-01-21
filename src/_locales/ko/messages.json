@@ -231,14 +231,6 @@
     "message": "<b>구독 필터</b>",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
-    "message": "<b>사용자 필터</b>",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "<b>허용 사이트</b>",
-    "description": "A tab on the options page"
-  },
 
   "generaloptions": {
     "message": "일반 옵션",
@@ -538,33 +530,9 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  "removelabel": {
-    "message": "제거",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "허용 사이트 목록",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "예를 들어 'google.com'을 추가하면 'google.com'뿐만 아니라<br/>'mail.google.com', 'www.google.com'와 같은 하위 도메인의 광고도 차단하지 않습니다.",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "추가",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "허용 사이트 목록의 모든 항목 제거 : ",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
     "message": "AdBlock - 광고 신고",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "그래서 웹 페이지의 광고가 존재합니까? 미광고를 신고할 수 있도록 도와드립니다!<br/>광고 신고는 선택사항이므로 원하지 않는다면 이 창을 닫고, 사용자 필터에만 필터를 추가하십시오!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "구독 필터 업데이트",
@@ -597,10 +565,6 @@
   "correctfilters": {
     "message": "구독 필터",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "이 구독 필터를 제거하시겠습니까?",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "웹 페이지가 어떤 언어로 작성되었습니까?",
@@ -694,16 +658,6 @@
     "message": "기타",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "이 언어에 대한 기본적인 구독 필터를 현재 지원하지 않습니다.<br/>이 언어를 지원하는 적절한 구독 필터를 찾아보십시오 : $link$<br/>그렇지 않으면 요소 숨김 마법사로 이 광고를 숨기십시오.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1바로가기$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "$list_title$를 구독한 후 웹 페이지를 다시 열어보십시오.",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -775,10 +729,6 @@
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
-  },
-  "cantundo": {
-    "message": "이 명령은 되돌릴 수 없습니다!",
-    "description": "Warning a user before confirming an action"
   },
   "contextmenuhidethis": {
     "message": "광고 숨김",

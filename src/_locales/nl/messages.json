@@ -194,6 +194,20 @@
       }
     }
   },
+  "nodefaultfilter1": {
+    "message": "We hebben geen filter lijst voor deze taal.<br/>Probeer $link$ een geschikte lijst te zoeken of blokkeer deze advertentie zelf in de opties van AdBlock.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1hier$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "adreport2": {
+    "message": "Dus je hebt een advertentie gevonden op een webpagina? We zullen je helpen om de juiste plaats te vinden om het te rapporteren!<br/> Dit is vrijwillig. Als je dit niet wilt, dan kun je de advertentie ook voor jezelf blokkeren in de opties van AdBlock.",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
+  },
   "optionschangelog": {
     "message": "wijzigingen",
     "description": "changelog link"
@@ -202,11 +216,34 @@
     "message": "Algemeen",
     "description": "A tab on the options page"
   },
+  "tabcustomizetitle": {
+    "message": "AdBlock aanpassen",
+    "description": "Title of the third tab"
+  },
+  "unblocktitle": {
+    "message": "AdBlock op een webpagina uitschakelen:",
+    "description": "Section header on third tab"
+  },
+  "filterlistsrock": {
+    "message": "De officiële filters blokkeren het meeste al. Je kunt ook zelf aanpassingen maken:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "blockmoreads": {
+    "message": "Meer blokkeren:",
+    "description": "Section header on third tab"
+  },
+  "linkunblock": {
+    "message": "Toon advertenties op webpagina of domein",
+    "description": "Link on the third tab"
+  },
   "tabfilterlists": {
     "message": "Officiële filters",
     "description": "A tab on the options page"
   },
-
+  "tabcustomize": {
+    "message": "Eigen filters",
+    "description": "A tab on the options page"
+  },
   "generaloptions": {
     "message": "Algemene opties",
     "description": "Title of first tab page"
@@ -461,10 +498,6 @@
     "message": "Verberg een deel van een pagina",
     "description": "Link on the third tab"
   },
-  "linkexcludesection": {
-    "message": "Sluit een webpagina of domein uit",
-    "description": "Link on the third tab"
-  },
   "blockurlwithtext": {
     "message": "Blokkeer URLs die deze tekst bevatten",
     "description": "Message of the url-blocking area"
@@ -498,10 +531,6 @@
     "description": "Reminder to press save"
   },
 
-  "addbutton": {
-    "message": "Voeg toe",
-    "description": "add button"
-  },
   "adblockreportinganad": {
     "message": "AdBlock - Advertentie rapporteren",
     "description": "title of ad report page"
