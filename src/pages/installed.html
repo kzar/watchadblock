@@ -101,7 +101,8 @@
             // Give the optional feature a sec to get saved by the other
             // change handler before recalculating filters.
             window.setTimeout(function() { 
-              extension_call('update_filters', { }); 
+              var bg = chrome.extension.getBackgroundPage();
+              bg.myFilters._onChange(); // TODO don't call private method
             }, 1000);
           });
         </script>

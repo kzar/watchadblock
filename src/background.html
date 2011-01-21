@@ -17,13 +17,6 @@
 
       // V3 FILTERING
 
-      // Rebuild the filterset based on the current settings and subscriptions.
-      // Inputs: none.
-      // Returns: null, upon completion
-      utils.update_filters = function(options) {
-        _myfilters.update();
-      }
-
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
       utils.add_custom_filter = function(options) {
@@ -42,7 +35,7 @@
       // Inputs: filters:string the new filters.
       utils.set_custom_filters_text = function(options) {
         utils.storage_set({key: 'custom_filters', value: options.filters});
-        _myfilters.update();
+        _myfilters._onChange();
       }
 
       // STORAGE
