@@ -1,0 +1,344 @@
+<!--
+   URL:
+   chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/pages/adreport.html
+   ?url={domain_href}
+   &suggested={suggestedfilter}
+-->
+<html>
+  <head>
+    <title i18n="adblockreportinganad"></title>
+    <link rel="stylesheet" href="../options/options.css" />
+    <script src="../port.js" type="text/javascript"></script>
+    <script src="../jquery/jquery-1.4.4-hacked-up.min.js" type="text/javascript"></script>
+    <script src="../functions.js" type="text/javascript"></script>
+    <style type="text/css">
+      .section h2 {
+        font-size: 1.2em;
+        margin-left: 10px;
+      }
+      label {
+        margin-right: 15px;
+      }
+      div.form {
+        margin-left: 15px;
+      }
+      #whattodo {
+        font-weight: bold;
+        color: red;
+        font-size: 15px;
+        margin: 20px;
+      }
+      .answer {
+        color: blue;
+        font-weight: bold;
+      }
+      .section {
+        display:none;
+      }
+    </style>
+    <script type="text/javascript">
+      $(function() {
+        localizePage();
+      });
+
+      //fetching the options...
+      var options = [];
+      var search = document.location.search.substring(1).split('&');
+      for (var item in search) {
+        if (search[item].indexOf('=') == -1) continue;
+        options[search[item].split('=')[0]] = 
+                         unescape(search[item].split('=')[1]);
+      }
+
+      //get the list of subscribed filters and
+      //all unsubscribed default filters
+      var unsubscribed_default_filters = [];
+      var subscribed_filter_names = [];
+      extension_call("get_subscriptions_minus_text", {}, function(subs) {
+        for (var id in subs)
+          if (!subs[id].subscribed && !subs[id].user_submitted)
+            unsubscribed_default_filters[id] = subs[id];
+          else if (subs[id].subscribed)
+            subscribed_filter_names.push(subs[id].name);
+      });
+
+      //generate the URL to the issue tracker
+      function generateReportURL() {
+        var domain = "";
+        if (options['url']) {
+          domain = options['url'].substring(options['url'].indexOf("://")+3);
+          domain = domain.substring(0, domain.indexOf('/'));
+        }
+        var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
+                     "?template=Ad%20report%20from%20user&summary="
+        if (domain) 
+          result = result + escape("Ad report: " + domain);
+        else
+          result = result + escape("Ad report at <enter URL of webpage here>");
+
+        var body = [];
+        body.push("Last step -- point me to the ad so I can fix the bug! " +
+            "Don't leave anything out or I'll probably " +
+            "have to ignore your report. Thanks!");
+        body.push("");
+        if (!options['url']) {
+          body.push("1. Paste the URL of the webpage showing an ad: ");
+          body.push("");
+          body.push("");
+        }
+        body.push("2. Exactly where on that page is the ad? What does it " +
+            "look like? Attach a screenshot, with the ad clearly marked, " +
+            "if you can.");
+        body.push("");
+        body.push("");
+        if (!options['suggested']) {
+          body.push("3. Paste a working filter, if you have one: ");
+          body.push("");
+          body.push("");
+        }
+        body.push("4. Any other information that would be helpful, besides " +
+            "what is listed below: ");
+        body.push("");
+        body.push("");
+        body.push("-------- Please don't touch below this line. ---------");
+        if (options['url']) {
+          body.push("=== URL with ad ===");
+          body.push(options['url']);
+          body.push("");
+        }
+        body.push("=== Subscribed filters ===");
+        body.push(subscribed_filter_names.join('\n'));
+        body.push("");
+        body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
+        body.push(SAFARI ? "Safari " :
+          "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
+        if (AdBlockVersion) 
+          body.push("AdBlock " + AdBlockVersion);
+        if (options['suggested']) {
+          body.push("");
+          body.push("=== The selector created by the user ===");
+          body.push(options['suggested']);
+        }
+
+        result = result + "&comment=" + escape(body.join('\n'));
+
+        return result;
+      }
+    </script>
+  </head>
+  <body>
+    <h1 class="icon">AdBlock</h1>
+
+
+    <!--STEP 0-->
+    <div style="padding-left:5px; margin-bottom:20px" i18n="adreport2"></div>
+
+    <!--STEP 1-->
+    <div class="section" id="step1DIV" style="display:block;">
+      <h2 i18n="updateyourlists"></h2>
+      <ol>
+        <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters">
+        <li i18n="reloadadpage">
+      </ol>
+      <input type="button" value="Update my filters!" id="UpdateFilters" />
+      <span i18n="adstillappear"></span><br/>
+      <div id="step1" class="form">
+        <input type="radio" id="step1_yes" name="step1"/>
+        <label for="step1_yes" i18n="yes"></label>
+        <input type="radio" id="step1_no" name="step1" />
+        <label for="step1_no" i18n="no"></label>
+      </div>
+    </div>
+    <script type="text/javascript">
+      //Updating the users filters
+      $("#UpdateFilters").click(function() {
+        $(this).attr("disabled", "disabled");
+        extension_call("update_subscriptions_now", {});
+      });
+      //if the user clicks a radio button
+      $("#step1_no").click(function() {
+        $("#step1").html("<span class='answer'>" + translate("no") + "</span>");
+        $("#whattodo").text(translate("adalreadyblocked"));
+      });
+      $("#step1_yes").click(function() {
+        $("#step1").html("<span class='answer'>" + translate("yes") + "</span>");
+        $("#step2DIV").css("display", "block");
+      });
+    </script>
+    
+    
+    <!--STEP 2-->
+    <div class="section" id="step2DIV">
+      <h2 i18n="correctfilters"></h2>
+      <span i18n="pagelanguagecheck"></span>
+      <div id="step2" class="form">
+        <select id="step2_lang">
+          <option disabled="disabled"></option>
+          <option value="easylist;http://forums.lanik.us/" i18n="lang_english"></option>
+          <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org" i18n="lang_bulgarian"></option>
+          <option value="chinese;http://code.google.com/p/adblock-chinalist/issues/list" i18n="lang_chinese"></option>
+          <option value="czech;http://adblock.dajbych.net/" i18n="lang_czech"></option>
+          <option value="danish;mailto:henrik at schack.dk" i18n="lang_danish"></option>
+          <option value="easylist;dutch;http://code.google.com/p/dutchadblockfilters/issues/list" i18n="lang_dutch"></option>
+          <option value="easylist;easylist_plus_finnish;http://www.wiltteri.net/?page_id=157/wiltteri-lista/" i18n="lang_finnish"></option>
+          <option value="easylist;easylist_plus_french;http://forums.lanik.us/viewforum.php?f=91" i18n="lang_french"></option>
+          <option value="easylist;easylist_plus_german;http://forums.lanik.us/viewforum.php?f=90" i18n="lang_german"></option>
+          <option value="hungarian;mailto:pete at teamlupus.hu" i18n="lang_hungarian"></option>
+          <option value="israeli;http://code.google.com/p/israellist/issues/list" i18n="lang_israeli"></option>
+          <option value="italian;mailto:giovanni at gfsolone.com" i18n="lang_italian"></option>
+          <option value="japanese;mailto:mp3geek at gmail.com" i18n="lang_japanese"></option>
+          <option value="easylist_plun_korean;http://jinjuhs.cafe24.com/phpBB3/" i18n="lang_korean"></option>
+          <option value="easylist;easylist_plus_norwegian;mailto:mlan76 at gmail.com" i18n="lang_norwegian"></option>
+          <option value="easylist;easylist_plus_polish;polish;mailto:admin at adblocklist.org" i18n="lang_polish"></option>
+          <option value="easylist;easylist_plus_romanian;mailto:mail at zoso.ro" i18n="lang_romanian"></option>
+          <option value="easylist;russian;http://forum.mozilla-russia.org/viewtopic.php?pid=409520" i18n="lang_russian"></option>
+          <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com" i18n="lang_spanish"></option>
+          <option value="ukranian;mailto:adblock.ua at gmail.com" i18n="lang_ukranian"></option>
+          <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list" i18n="lang_vietnamese"></option>
+          <option value="" i18n="other"></option>
+        </select>
+      </div>
+    </div>
+    <script type="text/javascript">
+      //if the user clicks an item
+      var contact = "";
+      $("#step2_lang").change(function() {
+        var selected = $("#step2_lang option:selected");
+        $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
+        if (selected.text() == translate("other")) {
+          $("#whattodo").html(translate("nodefaultfilter1", 
+                                        ["<a href='http://adblockplus.org/en/subscriptions'>", "</a>"]));
+          return;
+        } else {
+          var required_lists = selected.attr('value').split(';');
+          for (var i=0; i < required_lists.length - 1; i++) {
+            if (unsubscribed_default_filters[required_lists[i]]) {
+              $("#whattodo").text(translate("retryaftersubscribe",
+                    translate("filter" + required_lists[i])));
+              return;
+            }
+          }
+        }
+        contact = required_lists[required_lists.length-1];
+        $("#step3DIV").css("display", "block");
+      });
+    </script>
+    
+    
+    <!--STEP 3-->
+    <div class="section" id="step3DIV">
+      <h2 i18n="checkinfirefox"></h2>
+      <ol>
+        <li i18n="checkinfirefox1">
+        <li i18n="checkinfirefox2">
+        <li i18n="checkinfirefox3">
+        <li i18n="checkinfirefox4">
+      </ol>
+      <span i18n="checkinfirefox5"></span>
+      <div class="form" id="step3">
+        <input type="radio" id="step3_yes" name="step3"/>
+        <label for="step3_yes" i18n="yes"></label>
+        <input type="radio" id="step3_no" name="step3" />
+        <label for="step3_no" i18n="no"></label>
+        <input type="radio" id="step3_wontcheck" name="step3" />
+        <label for="step3_wontcheck" i18n="refusetocheck"></label>
+      </div>
+    </div>
+    <script type="text/javascript">
+      //If the user clicks a radio button
+      $("#step3_yes").click(function() {
+        $("#step3").html("<span class='answer'>" + translate("yes") + "</span>");
+        if (contact.indexOf('mailto:') == 0)
+          contact = contact.replace(" at ", "@");
+        var reportLink = "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>";
+        $("#whattodo").html(translate("reportfilterlistproblem", reportLink));
+      });
+      $("#step3_no").click(function() {
+        $("#step4DIV").css("display", "block");
+        $("#step3").html("<span class='answer'>" + translate("no") + "</span>");
+      });
+      $("#step3_wontcheck").click(function() {
+        $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
+        $("#whattodo").html(translate("fixityourself"));
+      });
+    </script>
+    
+    
+    <!--STEP 4-->
+    <div class="section" id="step4DIV">
+      <h2 i18n="flashads"></h2>
+      <span i18n="cantblockflashwarning"></span>
+      <div class="form" id="step4">
+        <input type="radio" id="step4_yes" name="step4"/>
+        <label for="step4_yes" i18n="yes"></label>
+        <input type="radio" id="step4_no" name="step4" />
+        <label for="step4_no" i18n="no"></label>
+      </div>
+    </div>
+    <script type="text/javascript">
+      //If the user clicks a radio button
+      $("#step4_yes").click(function() {
+        $("#step4").html("<span class='answer'>" + translate("yes") + "</span>");
+        $("#whattodo").html(translate("cantblockflash"));
+      });
+      $("#step4_no").click(function() {
+        $("#step4").html("<span class='answer'>" + translate("no") + "</span>");
+        var reportLinkOpen = "<a href='" + generateReportURL() + "'>";
+        var reportLinkClose = "</a>";
+        $("#whattodo").html(translate("reporttous1", [reportLinkOpen, reportLinkClose]));
+      });
+    </script>
+    
+    <div id="whattodo"></div>
+    
+    <!--GENERAL STUFF-->
+    <script type="text/javascript">
+      //check for updates
+      var AdBlockVersion;
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+        xhr.onreadystatechange = function() {
+          if(this.readyState == 4) {
+            //get the current version
+            AdBlockVersion = JSON.parse(this.responseText).version;
+            //check for newer versions
+            var xhr2 = new XMLHttpRequest();
+            var checkURL = "http://clients2.google.com/service/update2/crx?" +
+                "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
+                AdBlockVersion + "%26uc";
+            if (SAFARI) 
+              checkURL = "http://safariadblock.com/update.plist";
+            //fetch the version check file
+            xhr2.open("GET", checkURL, false);
+            xhr2.onreadystatechange = function() {
+              if(this.readyState == 4) {
+                var updateURL;
+                if (!SAFARI) {
+                  var usefultext = this.responseText.match(/\<updatecheck.+status\=\".*\"\/\>/)[0];
+                  if (!usefultext) return;
+                  var status = usefultext.match(/status\=\"([^\"]*)\"/)[1];
+                  if (status == "ok")
+                    updateURL = usefultext.match(/codebase\=\"([^\"]*)\"/)[1];
+                } else {
+                  var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0]
+                  version = version.replace(/\<[^\<]+\>/g,'');
+                  if (version != AdBlockVersion) {
+                    updateURL = this.responseText.match(/http\:\/\/.*\.safariextz/)[0];
+                  }
+                }
+                //new version available
+                if (updateURL) {
+                  $("#whattodo").html(translate("updatefromoldversion", ["<a href='" + updateURL + "'>", "</a>"]));
+                  $("div[id^='step'][id$='DIV']").css('display', 'none');
+                }
+              }
+            };
+            xhr2.send();
+          }
+        };
+        xhr.send();
+      } catch (ex) {}
+    </script>
+  </body>
+</html>
