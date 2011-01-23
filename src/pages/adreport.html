@@ -213,8 +213,7 @@
           var required_lists = selected.attr('value').split(';');
           for (var i=0; i < required_lists.length - 1; i++) {
             if (unsubscribed_default_filters[required_lists[i]]) {
-              $("#whattodo").text(translate("retryaftersubscribe",
-                    translate("filter" + required_lists[i])));
+              $("#whattodo").text(translate("retryaftersubscribe", [translate("filter" + required_lists[i])]));
               return;
             }
           }
