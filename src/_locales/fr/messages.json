@@ -1,0 +1,687 @@
+{
+  "buttoncancel": {
+    "message": "Annuler",
+    "description": "Cancel button"
+  },
+  "buttonok": {
+    "message": "Ok",
+    "description": "OK button"
+  },
+  "buttonblockit": {
+    "message": "Bloquer",
+    "description": "Block button"
+  },
+  "buttonedit": {
+    "message": "Éditer",
+    "description": "Edit filter manually button"
+  },
+  "optionstitle": {
+    "message": "Options d'AdBlock",
+    "description": "Title for the options page"
+  },
+
+  "youtubevideomessage": {
+    "message": "Pas de vidéo ? Actualisez la page. Si cela se reproduit, désactivez le blocage de publicité Youtube ici : $link$.",
+    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "AdBlock Options"
+      }
+    }
+  },
+
+  "sliderexplanation": {
+    "message": "Faites glisser le curseur jusqu'à ce que l'annonce soit bloquée correctement sur la page.",
+    "description": "Blacklister slider page message"
+  },
+  "slidertitle": {
+    "message": "Étape 1 : Indiquer l'élément à bloquer",
+    "description": "Blacklister slider page title"
+  },
+  "blacklisteroptions1": {
+    "message": "Cochez les cases vraies à propos des valeurs de cette publicité.",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisternotsure": {
+    "message": "<b>Pas sur ?</b> Appuyez sur 'Bloquer' en dessous.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
+  },
+  "blacklisterthefilter": {
+    "message": "Le filtre, qui peut être changé sur la page des Options :",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisteroptionstitle": {
+    "message": "Dernière étape : Quelles sont les valeurs correctes de cette publicité ?",
+    "description": "Blacklister options page title"
+  },
+  "blacklisternofilter": {
+    "message": "Pas de filtres spécifiés !",
+    "description": "Warning if the user hasn't specified a filter"
+  },
+  "blacklistereditfilter": {
+    "message": "Merci de taper le filtre correct ci-dessous et pressez 'Ok'",
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
+  },
+  "blacklistereditinvalid": {
+    "message": "Le filtre est invalide !",
+    "description": "Messagebox if the manually edited filter is invalid"
+  },
+  "blacklisterblockedelement": {
+    "message": "Élément bloqué :",
+    "description": "Tells the user what the blocked element is on the slider page"
+  },
+  "blacklisterwarningnofilter": {
+    "message": "Attention : aucun filtre spécifié !",
+    "description": "Warns the user that no filter was specified"
+  },
+  "blacklisterblocksalloftype": {
+    "message": "Attention : Ce filtre bloque tous les éléments '$elementtype$' sur la page !",
+    "description": "Warns the user that all elements of type X will be blocked",
+    "placeholders": {
+      "elementtype": {
+        "content": "$1",
+        "example": "DIV"
+      }
+    }
+  },
+  "blacklistersinglematch": {
+    "message": "Ce qui correspond à <b>1</b> élément sur cette page.",
+    "description": "Tells the user only one match was found"
+  },
+  "blacklistermatches": {
+    "message": "Ce qui correspond à $matchcount$ éléments sur cette page.",
+    "description": "Tells the user multiple matches were found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "blacklisterattrwillbe": {
+    "message": "$attribute$ sera $value$",
+    "description": "Checkbox label",
+    "placeholders": {
+      "attribute": {
+        "content": "$1",
+        "example": "class"
+      },
+      "value": {
+        "content": "$2",
+        "example": "AdBanner"
+      }
+    }
+  },
+  "blacklistertype": {
+    "message": "Type",
+    "description": "node name is called 'Type'"
+  },
+  "buttonlooksgood": {
+    "message": "Bien !",
+    "description": "Looks good button"
+  },
+  "buttonback": {
+    "message": "Retour",
+    "description": "Back to previous wizard page button"
+  },
+
+  "findingads": {
+    "message": "Recherche de la publicité...<br/><br/><i>Cela peut prendre un moment.</i>",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "blockanadtitle": {
+    "message": "Bloquer une publicité",
+    "description": "Title of the first two dialogs of the blacklister"
+  },
+  "clickthead": {
+    "message": "Cliquez sur la publicité, et je vais vous aider pour la bloquer.",
+    "description": "When you have to click the ad to continue"
+  },
+
+  "whitelistertext": {
+    "message": "AdBlock ne fonctionnera pas sur les domaines se terminant par <br/>$domain$.",
+    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
+    "placeholders": {
+      "domain": {
+        "content": "'<i>$1</i>'",
+        "example": "'<i>live.msn.com</i>'"
+      }
+    }
+  },
+  "whitelistertitle": {
+    "message": "Exclure ce domaine ?",
+    "description": "The title of the whitelister dialog"
+  },
+  "buttonexclude": {
+    "message": "Exclure",
+    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+  },
+
+  "subscribingtitle": {
+    "message": "S'abonner à la liste de filtres...",
+    "description": "abp: link subscriber title"
+  },
+  "subscribingfinished": {
+    "message": "Fini !",
+    "description": "abp: link subscriber result"
+  },
+  "subscribingfailed": {
+    "message": "Erreur !",
+    "description": "abp: link subscriber result"
+  },
+
+  "optionsversion": {
+    "message": "Version $version$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.0.9"
+      }
+    }
+  },
+  "optionschangelog": {
+    "message": "Liste des changements",
+    "description": "changelog link"
+  },
+  "tabgeneral": {
+    "message": "Général",
+    "description": "A tab on the options page"
+  },
+  "tabfilterlists": {
+    "message": "Liste des filtres",
+    "description": "A tab on the options page"
+  },
+
+  "generaloptions": {
+    "message": "Options générales",
+    "description": "Title of first tab page"
+  },
+  "betalabel": {
+    "message": "Bêta",
+    "description": "Option on first tab page"
+  },
+  "googletextads": {
+    "message": "J'aime les annonces textuelles sur les résultats de recherche Google, montrez-les moi.",
+    "description": "Option on first tab page"
+  },
+  "youtubeads": {
+    "message": "Bloquer les publicités sur les vidéos YouTube.",
+    "description": "Option on first tab page"
+  },
+  "showcontextmenus": {
+    "message": "Ajouter les éléments AdBlock dans le menu 'clic droit'.",
+    "description": "Option on first tab page"
+  },
+  "debuginlogoption": {
+    "message": "Voir les messages de débogage dans la console (ce qui ralentit AdBlock)",
+    "description": "Option on first tab page"
+  },
+
+  "updatedrightnow": {
+    "message": "mis à jour à l'instant",
+    "description": "Label for subscription"
+  },
+  "updatedsecondsago": {
+    "message": "mis à jour il y a $seconds$ secondes",
+    "description": "Label for subscription",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminutesago": {
+    "message": "mis à jour il y a $minutes$ minutes",
+    "description": "Label for subscription",
+    "placeholders": {
+      "minutes": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedhoursago": {
+    "message": "mis à jour il y a $hours$ heures",
+    "description": "Label for subscription",
+    "placeholders": {
+      "hours": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updateddaysago": {
+    "message": "mis à jour il y a $days$ jours",
+    "description": "Label for subscription",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminuteago": {
+    "message": "mis à jour il y a 1 minute",
+    "description": "Label for subscription"
+  },
+  "updatedhourago": {
+    "message": "mis à jour il y a 1 heure",
+    "description": "Label for subscription"
+  },
+  "updateddayago": {
+    "message": "mis à jour il y a 1 jour",
+    "description": "Label for subscription"
+  },
+  "removedlabel": {
+    "message": "Supprimé.",
+    "description": "Status label"
+  },
+  "unsubscribedlabel": {
+    "message": "Désabonné.",
+    "description": "Status label"
+  },
+  "fetchinglabel": {
+    "message": "Récupération... Patientez s'il vous plait.",
+    "description": "Status label"
+  },
+  "subscribedlabel": {
+    "message": "Abonné.",
+    "description": "Status label"
+  },
+  "nolisturllabel": {
+    "message": "Ce n'était pas une liste d'URL.",
+    "description": "Status label"
+  },
+  "failedtofetchfilter": {
+    "message": "Impossible de récupérer ce filtre !",
+    "description": "Error messagebox"
+  },
+  "enterurloflist": {
+    "message": "Merci d'entrer l'URL d'une liste de filtres pour vous y abonner.",
+    "description": "Error messagebox"
+  },
+  "removefromlist": {
+    "message": "Retirer de la liste",
+    "description": "Label to remove a custom filter"
+  },
+  "filterstabtitle": {
+    "message": "Abonnement aux listes de filtres",
+    "description": "Title of the filter list tab"
+  },
+  "filterlistlink": {
+    "message": "Ne pas souscrire à plus de ce que vous avez besoin, chaque filtre ralentit la navigation un tout petit peu ! Les crédits et plus de listes peuvent être trouvés <a>ici</a>.",
+    "description": "Explanation of the filter lists"
+  },
+  "updatenowmessage": {
+    "message": "Les mises à jour seront installées automatiquement. Vous pouvez également <a>mettre à jour maintenant</a>.",
+    "description": "update filters text + button"
+  },
+  "orenteraurl": {
+    "message": "Ou entrez une URL :",
+    "description": "link for custom subscription"
+  },
+  "subscribebutton": {
+    "message": "S'abonner",
+    "description": "subscribe to a list button"
+  },
+  "subscribetoall": {
+    "message": "S'abonner à tous les filtres :",
+    "description": "option on second tab page"
+  },
+  "subscribetonone": {
+    "message": "Se désabonner de tous les filtres :",
+    "description": "option on second tab page"
+  },
+  "showlinkstolists": {
+    "message": "Voir les liens des listes de filtres :",
+    "description": "Option on second tab page"
+  },
+  "labelshow": {
+    "message": "voir",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
+  "filteradblock_custom": {
+    "message": "Les filtres personnalisés d'AdBlock (recommandé)",
+    "description": "A filter list. Don't translate 'AdBlock'"
+  },
+  "filtereasylist": {
+    "message": "EasyList (recommandé)",
+    "description": "A filter list. Don't translate 'EasyList'"
+  },
+  "filtereasylist_plus_bulgarian": {
+    "message": " - filtres bulgares additionnels",
+    "description": "A filter list"
+  },
+  "filterdutch": {
+    "message": " - filtres néerlandais additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_finnish": {
+    "message": " - filtres finlandais additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_french": {
+    "message": " - filtres français additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_german": {
+    "message": " - filtres allemands additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_norwegian": {
+    "message": " - filtres norvégiens additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_polish": {
+    "message": " - filtres polonais additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_romanian": {
+    "message": " - filtres roumains additionnels",
+    "description": "A filter list"
+  },
+  "filterrussian": {
+    "message": " - filtres russes additionnels",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_vietnamese": {
+    "message": " - filtres vietnamiens additionnels",
+    "description": "A filter list"
+  },
+  "filterchinese": {
+    "message": "Filtres chinois",
+    "description": "A filter list"
+  },
+  "filterczech": {
+    "message": "Filtres tchèques",
+    "description": "A filter list"
+  },
+  "filterdanish": {
+    "message": "Filtres danois",
+    "description": "A filter list"
+  },
+  "filterhungarian": {
+    "message": "Filtres hongrois",
+    "description": "A filter list"
+  },
+  "filterisraeli": {
+    "message": "Filtres israéliens",
+    "description": "A filter list"
+  },
+  "filteritalian": {
+    "message": "Filtres italiens",
+    "description": "A filter list"
+  },
+  "filterjapanese": {
+    "message": "Filtres japonais",
+    "description": "A filter list"
+  },
+  "filtereasylist_plun_korean": {
+    "message": "Filtres coréens",
+    "description": "A filter list"
+  },
+  "filterpolish": {
+    "message": "Filtres polonais",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_spanish": {
+    "message": "Filtres espagnols",
+    "description": "A filter list"
+  },
+  "filterukranian": {
+    "message": "Filtres ukrainiens",
+    "description": "A filter list"
+  },
+  "blacklistclickmessage": {
+    "message": "Cliquez avec le bouton droit sur une publicité sur un site web pour la bloquer -- ou bloquez-là ici manuellement.",
+    "description": "Message at the top of the blacklist options tab"
+  },
+  "linkblockadbyurl": {
+    "message": "Bloquer une publicité par son URL",
+    "description": "Link on the third tab"
+  },
+  "linkhidesection": {
+    "message": "Masquer une section d'une page web",
+    "description": "Link on the third tab"
+  },
+  "blockurlwithtext": {
+    "message": "Bloquer les URL contenant ce texte",
+    "description": "Message of the url-blocking area"
+  },
+  "csstomatch": {
+    "message": "CSS pour correspondre à",
+    "description": "Message of the css-hiding area"
+  },
+  "blockdomain": {
+    "message": "Domaine de la page à appliquer",
+    "description": "Message of the url and css -blocking area"
+  },
+  "manualfilteredit": {
+    "message": "Modifier manuellement vos filtres :",
+    "description": "Subtitle on the third tab"
+  },
+  "filtersavewarning": {
+    "message": "Attention : si vous faites une erreur ici, beaucoup d'autres filtres, y compris les officiels, pourraient causer des erreurs également !<br/>Lisez le <a>tutoriel de syntaxe de filtre</a> pour savoir comment ajouter une liste noire avancée et une liste blanche.",
+    "description": "Warning when blacklisting manually"
+  },
+  "savebutton": {
+    "message": "Enregistrer",
+    "description": "Save button"
+  },
+  "savereminder": {
+    "message": "N'oubliez pas de sauvegarder !",
+    "description": "Reminder to press save"
+  },
+  "advanced": {
+    "message": "Avancé",
+    "description": "Section label for advanced options"
+  },
+  "reportanad": {
+    "message": "<a>Signaler une publicité</a> à AdBlock ou aux créateurs de la liste.",
+    "description": "A link for users who found an ad somewhere and want to report it"
+  },
+
+  "adblockreportinganad": {
+    "message": "AdBlock - Signaler une publicité",
+    "description": "title of ad report page"
+  },
+  "updateyourlists": {
+    "message": "Assurez-vous que les listes de filtres sont à jour",
+    "description": "instruction on ad report page"
+  },
+  "clickupdatefilters": {
+    "message": "Cliquez ici : <a>Mettre à jours mes filtres !</a>",
+    "description": "instruction on ad report page"
+  },
+  "reloadadpage": {
+    "message": "Recharger la page avec la publicité.",
+    "description": "instruction on ad report page"
+  },
+  "adstillappear": {
+    "message": "Est-ce que l'annonce apparait toujours ?",
+    "description": "question on ad reporting page"
+  },
+  "yes": {
+    "message": "Oui",
+    "description": "A positive response to a question"
+  },
+  "no": {
+    "message": "Non",
+    "description": "A negative response to a question"
+  },
+  "adalreadyblocked": {
+    "message": "Vous n'avez rien à faire car la publicité est déjà bloquée.",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "correctfilters": {
+    "message": "Corriger les filtres",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "pagelanguagecheck": {
+    "message": "Dans quelle langue est écrite cette page ?",
+    "description": "question on ad report page"
+  },
+  "lang_english": {
+    "message": "Anglais",
+    "description": "language"
+  },
+  "lang_bulgarian": {
+    "message": "Bulgare",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "Chinois",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "Tchèque",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "Danois",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "Néerlandais",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "Finlandais",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "Français",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "Allemand",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "Hongrois",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "Israélien",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "Italien",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "Japonais",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "Coréen",
+    "description": "language"
+  },
+  "lang_norwegian": {
+    "message": "Norvégien",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "Polonais",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "Roumain",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "Russe",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "Espagnol",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "Ukrainien",
+    "description": "language"
+  },
+  "lang_vietnamese": {
+    "message": "Vietnamien",
+    "description": "language"
+  },
+  "other": {
+    "message": "Autre",
+    "description": "multiple choice option"
+  },
+  "retryaftersubscribe": {
+    "message": "Abonnez-vous à cette liste de filtres : $list_title$ puis essayez à nouveau",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "checkinfirefox": {
+    "message": "Vérifiez sur Firefox",
+    "description": "tell a user to see if a reported ad also appears in firefox"
+  },
+  "checkinfirefox1": {
+    "message": "Installez Firefox si vous ne l'avez pas.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox2": {
+    "message": "Installez AdBlock Plus pour Firefox si vous ne l'avez pas.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox3": {
+    "message": "Sur Firefox, abonnez-vous aux mêmes listes de filtres que vous avez ici (sauf les Filtres personnalisés d'AdBlock).",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox4": {
+    "message": "Sur Firefox, chargez la page avec la publicité.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox5": {
+    "message": "Est-ce que la publicité apparaît avec Firefox ?",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "refusetocheck": {
+    "message": "Je ne veux pas vérifier cela",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reportfilterlistproblem": {
+    "message": "Il s'agit d'un problème avec la liste de filtres. Signalez-le ici : $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reporttous1": {
+    "message": "Vous pouvez nous signaler la publicité dans$in_the_issue_tracker_link$.",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
+    "placeholders": {
+      "in_the_issue_tracker_link": {
+        "content": "$1l'outil de suivi des bugs$2",
+        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+      }
+    }
+  },
+  "fixityourself": {
+    "message": "Ok, vous pouvez toujours bloquer cette publicité pour vous-même sur la page Options. Merci !",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "updatefromoldversion": {
+    "message": "Vous utilisez une ancienne version d'AdBlock. Merci de mettre à $updatelink$ à la dernière version d'AdBlock",
+    "description": "ad report page instruction",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1jour$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+      }
+    }
+  }
+}
