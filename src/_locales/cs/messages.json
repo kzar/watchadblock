@@ -42,7 +42,7 @@
     "description": "Donation request on installation success page"
   },
   "setotheroptions": {
-    "message": "Další možnosti můžete nastavit a přihlásit se k odběru různých seznamů filtrů přes Přizpůsobení | Nástroje | Rozšíření | AdBlock Možnosti.",
+    "message": "Další možnosti můžete nastavit a přihlásit se k odběru různých seznamů filtrů přes 'Klíč' | Nástroje | Rozšíření | AdBlock Možnosti.",
     "description": "Message on installation success page"
   },
   "chromebutton_how_to_disable": {
@@ -229,6 +229,10 @@
   },
   "tabfilterlists": {
     "message": "Seznamy filtrů",
+    "description": "A tab on the options page"
+  },
+  "tabcustomize": {
+    "message": "Přizpůsobení",
     "description": "A tab on the options page"
   },
 
@@ -478,12 +482,32 @@
     "message": "Klikněte pravým tlačítkem myši na reklamu pro její zablokování -- nebo ji zablokujte ručně zde.",
     "description": "Message at the top of the blacklist options tab"
   },
+  "tabcustomizetitle": {
+    "message": "Přizpůsobení AdBlock",
+    "description": "Title of the third tab"
+  },
+  "filterlistsrock": {
+    "message": "Seznamy filtrů blokují většinu reklam na webu. Můžete také:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "blockmoreads": {
+    "message": "Blokovat více reklam:",
+    "description": "Section header on third tab"
+  },
+  "unblocktitle": {
+    "message": "Zakázat AdBlock na určité webové stránce:",
+    "description": "Section header on third tab"
+  },
   "linkblockadbyurl": {
     "message": "Blokovat reklamu dle její URL",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
     "message": "Skrývat část webové stránky",
+    "description": "Link on the third tab"
+  },
+  "linkunblock": {
+    "message": "Zobrazovat reklamy na webové stránce nebo doméně",
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
@@ -493,6 +517,10 @@
   "csstomatch": {
     "message": "CSS obsahuje",
     "description": "Message of the css-hiding area"
+  },
+  "excludedomainorurl": {
+    "message": "Doména nebo url, kde AdBlock nesmí nic blokovat",
+    "description": "Message of the exclude area"
   },
   "blockdomain": {
     "message": "Používat na stránkách domény",
@@ -526,6 +554,10 @@
   "adblockreportinganad": {
     "message": "AdBlock - Nahlášení reklamy",
     "description": "title of ad report page"
+  },
+  "adreport2": {
+    "message": "Našli jste reklamu na webové stránce? Dobrá, pomohu vám najít správné místo, kde ji nahlásit!<br/> Pamatujte: Nahlášení reklamy je dobrovolné. Pokud si ji nepřejete nahlásit, můžete zavřít toto okno a zablokovat ji jen pro sebe tím, že přidáte její filtr na záložce 'Prizpůsobení' na stránce s nastavením!",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "updateyourlists": {
     "message": "Ujistěte se, že seznamy filtrů jsou aktuální",
@@ -650,6 +682,16 @@
   "other": {
     "message": "Jiný",
     "description": "multiple choice option"
+  },
+  "nodefaultfilter1": {
+    "message": "Nemáme výchozí seznam filtrů pro daný jazyk.<br/>Prosím, zkuste najít vhodný seznam pro tento jazyk $link$ nebo si tuto reklamu zablokujte jen pro sebe na záložce 'Přizpůsobení'.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1zde$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
   },
   "retryaftersubscribe": {
     "message": "Přihlaste se k odběru tohoto seznamu filtrů a zkuste to znovu: $list_title$",

@@ -4,7 +4,7 @@
     "description": "Extension description in manifest"
   },
   "free_description": {
-    "message": "Najbolj popularna razširitev za brskalnik Google Chrome -- toda, prosimo plačajte €1.99 za AdBlock, namesto, da to namestite :)",
+    "message": "Najbolj popularna razširitev za brskalnik Google Chrome -- toda, prosimo plačajte €1.99 za AdBlock, namesto, da ga namestite :)",
     "description": "Extension description used in free version manifest"
   },
   "buttoncancel": {
@@ -35,6 +35,10 @@
   "installisdone": {
     "message": "Ponovno naložite zavihke in oglasi bodo izginili.",
     "description": "Message on the installation success page"
+ },
+  "donaterequest2": {
+    "message": "Pred kratkim sem nehal hoditi v službo, z namenom, da ves čas razvijam AdBlock! Zdaj se zanašam zgolj na vaše donacije za podporo moje družine. Prosim <a>darujte</a>, z namenom, da pomagate plačati naše račune -- in dokaz, da moja žena in jaz (prikazano na sliki) nisva nora za takšno početje. Hvala :) - Michael",
+    "description": "Donation request on installation success page"
   },
   "setotheroptions": {
     "message": "Druge nastavitve in kriterije blokiranja oglasov lahko spremenite preko 'Wrench' | Orodja | Razširitve | Nastavitve.",
@@ -470,8 +474,28 @@
   },
 
   "blacklistclickmessage": {
-    "message": "če želite blokirati oglas, kliknite nanj z desno miškino tipko -- ali pa ga ročno blokirajte tukaj.",
+    "message": "Če želite blokirati oglas, kliknite nanj z desno miškino tipko -- ali pa ga ročno blokirajte tukaj.",
     "description": "Message at the top of the blacklist options tab"
+ },
+  "tabcustomizetitle": {
+    "message": "Prilagodite AdBlock",
+    "description": "Title of the third tab"
+  },
+  "filterlistsrock": {
+    "message": "Kriteriji za blokiranje oglasov blokirajo večino oglasov na spletnih straneh. Lahko pa tudi:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "blockmoreads": {
+    "message": "Blokirajte več oglasov:",
+    "description": "Section header on third tab"
+  },
+  "unblocktitle": {
+    "message": "Deaktivirajte AdBlock na določenih spletnih straneh:",
+    "description": "Section header on third tab"
+  },
+  "linkunblock": {
+    "message": "Pokaži oglase na določeni spletni strani ali domeni",
+    "description": "Link on the third tab"
   },
   "linkblockadbyurl": {
     "message": "Blokirajte ta oglas preko URL-ja",
@@ -488,6 +512,10 @@
   "csstomatch": {
     "message": "CSS do zadetka",
     "description": "Message of the css-hiding area"
+  },
+  "excludedomainorurl": {
+    "message": "Domena ali spletni naslov, kjer AdBlock naj ne izvaja blokiranja",
+    "description": "Message of the exclude area"
   },
   "blockdomain": {
     "message": "Domena spletne strani, na kateri želite to uveljaviti",
@@ -521,6 +549,10 @@
   "adblockreportinganad": {
     "message": "AdBlock - Poročanje o oglasu",
     "description": "title of ad report page"
+  },
+  "adreport2": {
+    "message": "Ste pravkar našli oglas na spletni strani? Pomagali vam bomo poiskati mesto, kjer lahko oglas prijavite. <br/> Zapomnite si: poročanje oglasov je prostovoljno. Če tega ne želite storiti, lahko samo zaprete to okno in oglas blakirate le za sebe. To lahko storite z dodajanjem kriterija za blokiranje oglasov v zavihku 'Prilagodi'.",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "updateyourlists": {
     "message": "Poskrbite, da bodo vaši kriteriji posodobljeni",
@@ -645,6 +677,16 @@
   "other": {
     "message": "Drugo",
     "description": "multiple choice option"
+  },
+  "nodefaultfilter1": {
+    "message": "Za ta jezik nimamo privzetih kriterijev za blokiranje oglasov. <br/>Prosimo poskusite najti primerne kriterije, ki podpirajo ta jezik $link$ ali pa blokirajte ta oglas le zase na zavihku 'Prilagodi'.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1here$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
   },
   "retryaftersubscribe": {
     "message": "Naročite se na seznam kriterijev za blokiranje oglasov in nato ponovno poizkusite: $list_title$",
