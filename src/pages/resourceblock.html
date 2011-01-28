@@ -413,13 +413,15 @@
         // Translation
         localizePage();
 
+        var url;
         if (window.location.search) {
           // Can be of the forms
-          //  ?resourcetype=resourceURL&domain=domain
-          //  ?domain=domain
+          //  ?resourcetype=resourceURL&url=url
+          //  ?url=url
           var query = window.location.search.substring(1);
-          domain = unescape(query.match(/(^|\&)domain\=(.*)$/)[2]);
-          query = query.replace(/(^|\&)domain\=(.*)$/, '');
+          url = unescape(query.match(/(^|\&)url\=(.*)$/)[2]);
+          domain = FilterSet._domainFor(url);
+          query = query.replace(/(^|\&)url\=(.*)$/, '');
           var temp_resource = query.match(/^(.+)\=(.+)$/);
           if (temp_resource) {
             var temp_url = unescape(temp_resource[2]);
@@ -428,23 +430,11 @@
           }
         }
 
-        // To be able to call location.reload or to press F5
-        if (!temp_url) {
-          $(window).unload(function() {
-            localStorage.setItem('last_resources', JSON.stringify(loaded_resources));
-          });
-        }
-
         var opts = {
           domain: domain,
           include_filters: true,
           is_top_frame: true
         };
-        if (!domain) {
-          alert(translate('nodomainsend'));
-          window.close();
-          return;          
-        }
         extension_call('get_content_script_data', opts, function(data) {
           delete data.selectors;
           domaindata = data;
@@ -454,16 +444,11 @@
             return;
           }
           if (!temp_url) {
-            var localstoragekey = "resources" + domain.replace(/(\.|\-)/g, '_');
-            loaded_resources = JSON.parse(localStorage.getItem(localstoragekey));
+            loaded_resources = chrome.extension.getBackgroundPage().cached_resources.get(url);
             if (!loaded_resources || loaded_resources.length == 0) {
-              // The page was probably refreshed
-              loaded_resources = JSON.parse(localStorage.getItem('last_resources'));
-              if (!loaded_resources || loaded_resources.length == 0) {
-                alert(translate('noresourcessend'));
-                window.close();
-                return;
-              }
+              alert(translate('noresourcessend'));
+              window.close();
+              return;
             }
             for (var i=0; i<loaded_resources.length; i++) {
               if (/^HIDE\:.+/.test(loaded_resources[i])) {
@@ -474,7 +459,6 @@
                 resources[blockmatches[1]] = {type:Number(blockmatches[0])};
               }
             }
-            localStorage.removeItem(localstoragekey);
           }
           extension_call('get_custom_filters_text', {}, function(filters) {
             filters = FilterNormalizer.normalizeList(filters);

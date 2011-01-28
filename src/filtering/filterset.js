@@ -104,7 +104,7 @@ FilterSet.prototype = {
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;
-    if (key in this._matchCache && document.location.protocol == 'chrome-extension:')
+    if (key in this._matchCache)
       return this._matchCache[key];
 
     // TODO: is there a better place to do this?
@@ -112,6 +112,10 @@ FilterSet.prototype = {
     var LENGTH_CUTOFF = 200;
     url = url.substring(0, LENGTH_CUTOFF);
 
+    // In case it is resourceblock.html requesting if a filter matches: that
+    // page doesn't care about true or false, it only wants the matching filter.
+    // ._text is only stored in Chrome in the background page, and Chrome doesn't
+    // use it for matching purposes, so simply use it to return the filter.
     for (var i = 0; i < this._whitelistFilters.length; i++) {
       if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);

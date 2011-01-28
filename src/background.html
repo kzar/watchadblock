@@ -297,17 +297,15 @@
         );
       };
       
-      //Will open the resource blocking tab. Input:
+      // Will open the resource blocking tab. Input:
       //   resources: the resource(s)
-      //   domain: the tld
       utils.show_resourceblocker = function(options, sender) {
-        var domain = FilterSet._domainFor(sender.tab.url);
-        utils.storage_set({
-            key: "resources" + domain.replace(/(\.|\-)/g, '_'),
-            value: options.resources});
-        chrome.tabs.create({url: "pages/resourceblock.html?domain=" + domain});
+        var url = sender.tab.url.replace(/\#.*/, '');
+        cached_resources.set(url, options.resources);
+        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
       }
-      localStorage.removeItem('last_resources');
+      // This stores resources used by resourceblock.html
+      var cached_resources = new FifoCache(5);
       
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
@@ -380,7 +378,7 @@
           onclick: function(info, tab) {
             var type = (info.mediaType == "image" ? "image" : "media");
             var query = '?' + type + '=' + escape(info.srcUrl);
-            query += '&domain=' + escape(tab.url.match(/\:\/\/([^\/]+)\//)[1]);
+            query += '&url=' + escape(tab.url);
             window.open(chrome.extension.getURL('pages/resourceblock.html' 
                   + query), "_blank", 'location=0,width=1024,height=590');
           }
