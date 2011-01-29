@@ -5,7 +5,7 @@ function relativeToAbsoluteUrl(url) {
     if(!url)
         return url;
     // If URL is already absolute, don't mess with it
-    if(/^http/.test(url))
+    if(/^[a-z\-]+\:\/\//.test(url))
         return url;
     // Leading / means absolute path
     if(url[0] == '/')
@@ -85,6 +85,7 @@ beforeLoadHandler = function(event) {
     elType: elType,
     pageDomain: document.domain
   };
+  console.warn(event.url + '\n\n' + data.url);
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (el.nodeName == "FRAME")
