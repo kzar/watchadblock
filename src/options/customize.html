@@ -116,7 +116,7 @@
           ok = false;
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
-      $("#divUrlBlock input:text").keyup(validateUrlFilter);
+      $("#divUrlBlock input:text").bind("input", validateUrlFilter);
 
       var validateCssFilter = function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
@@ -129,13 +129,13 @@
         }
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
-      $("#divCssBlock input:text").keyup(validateCssFilter);
+      $("#divCssBlock input:text").bind("input", validateCssFilter);
       
       var validateExcludeFilter = function() {
         var excludeUrl = $("#txtUnblock").val().trim();
         $("#btnAddExcludeFilter").attr("disabled", excludeUrl ? null : "disabled");
       }
-      $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
+      $("#divExcludeBlock input:text").bind("input", validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
