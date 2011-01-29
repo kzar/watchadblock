@@ -84,7 +84,13 @@ function main() {
     if [ $1 = "shipit" ]; then shipit
     elif [ $1 = "freeship" ]; then freeship
     elif [ $1 = "filterdiff" ]; then diff -b <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
-    elif [ $1 = "updatefilters" ]; then scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
+    elif [ $1 = "updatefilters" ]; then 
+        sed -i 's%^! Last update: .*$%! Last update: '"$(date)%" filters/adblock_custom.txt
+        head -3 filters/adblock_custom.txt
+        echo -n "Press enter to proceed or Ctrl-C to abort: "
+        read
+        svn ci filters/adblock_custom.txt -m "Shipping AdBlock Custom filter list to deployment" && \
+        scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
     else usage
     fi
 }

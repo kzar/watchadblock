@@ -1,14 +1,23 @@
-{
+﻿{
+  "description1": {
+    "message": "最受歡迎的 Google 瀏覽器擴充功能，擁有超過 150 萬位使用者！阻擋網路上所有的廣告。",
+    "description": "Extension description in manifest"
+  },
+  "free_description": {
+    "message": "最受歡迎的 Google 瀏覽器擴充功能 -- 請支付 $1.99 美金購買 AdBlock",
+    "description": "Extension description used in free version manifest"
+  },
+
   "buttoncancel": {
     "message": "取消",
     "description": "Cancel button"
   },
   "buttonok": {
-    "message": "確定！",
+    "message": "確定",
     "description": "OK button"
   },
   "buttonblockit": {
-    "message": "阻擋！",
+    "message": "阻擋",
     "description": "Block button"
   },
   "buttonedit": {
@@ -16,37 +25,41 @@
     "description": "Edit filter manually button"
   },
   "optionstitle": {
-    "message": "AdBlock選項",
+    "message": "AdBlock 選項",
     "description": "Title for the options page"
   },
 
   "installedtitle": {
-    "message": "AdBlock已成功安裝！",
+    "message": "AdBlock 安裝成功！",
     "description": "Title for the installation success page"
   },
   "installisdone": {
-    "message": "您現在可以重新整理已開啟的分頁，看看那些廣告都怎麼了。",
+    "message": "重新整理已開啟的分頁，看看消失的廣告。",
     "description": "Message on the installation success page"
   },
+  "donaterequest2": {
+    "message": "為了全力投入 AdBlock，Michael 最近辭去了工作！現在完全依靠各位的<a>捐助</a>來支持家庭。",
+    "description": "Donation request on installation success page"
+  },
   "setotheroptions": {
-    "message": "您可以經由「扳手圖示 | 工具 | 擴充功能 | AdBlock選項」來設定其他選項或訂閱過濾清單。",
+    "message": "您可以透過 「扳手圖示 | 工具 | 擴充功能 | AdBlock選項」 設定其他選項或訂閱過濾清單。",
     "description": "Message on installation success page"
   },
   "chromebutton_how_to_disable": {
-    "message": "如果您想要移除工具列按鈕，只需要在其右鍵選單中選擇「解除安裝」即可。此動作僅會移除Browser Button For AdBlock。",
+    "message": "如果要移除此按鈕，右鍵點選 「解除安裝」。此動作僅會移除 Browser Button For AdBlock 擴充功能。",
     "description": "Message on installation success page"
   },
   "chromebutton_how_to_enable": {
-    "message": "要開啟工具列按鈕，您必須先安裝<a>這個輔助擴充元件</a>。",
+    "message": "如果要顯示工具列按鈕，安裝 <a>此擴充功能</a>。",
     "description": "Message on installation success page"
   },
   "chromebutton_showoption": {
-    "message": "在工具列上顯示按鈕",
+    "message": "顯示工具列按鈕",
     "description": "Message on installation success page"
   },
 
   "youtubevideomessage": {
-    "message": "沒有影像？請試著重新整理頁面。如果這種狀況時常發生，請到$link$中停用YouTube廣告阻擋。",
+    "message": "影片沒有畫面？試著重新整理頁面。如果此狀況經常發生，在 $link$ 停用 YouTube 廣告阻擋。",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
@@ -57,39 +70,39 @@
   },
 
   "sliderexplanation": {
-    "message": "移動滑塊直到頁面上的廣告已被正確的隱藏。",
+    "message": "滑動控制器直到頁面上的廣告已被正確地阻擋。",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
-    "message": "第一步：找出您要阻擋的目標",
+    "message": "第一步:找出要阻擋的目標",
     "description": "Blacklister slider page title"
   },
   "blacklisteroptions1": {
-    "message": "您認為下列哪個條件會在每次瀏覽此頁面時符合這個廣告？",
+    "message": "您認為下列哪個規則會在瀏覽頁面時阻擋此廣告？",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>不確定？</b>直接點選下方的「阻擋！」吧。",
+    "message": "<b>不確定？</b>直接點選下方的 「阻擋」。",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
-    "message": "這是本次產生的過濾器，您稍後仍可在選項中進行修改：",
+    "message": "即將套用的規則，仍可在選項中編輯：",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
-    "message": "最後一步：這廣告是由什麼組成的？",
+    "message": "最後一步：此廣告是由什麼組成的？",
     "description": "Blacklister options page title"
   },
   "blacklisternofilter": {
-    "message": "未指定過濾條件！",
+    "message": "未指定過濾規則！",
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter": {
-    "message": "請在下面輸入正確的過濾條件，並點選「確定」",
+    "message": "請在下面輸入正確的過濾規則，並點選 「確定」",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid": {
-    "message": "此過濾條件無效！",
+    "message": "此過濾規則無效！",
     "description": "Messagebox if the manually edited filter is invalid"
   },
   "blacklisterblockedelement": {
@@ -97,11 +110,11 @@
     "description": "Tells the user what the blocked element is on the slider page"
   },
   "blacklisterwarningnofilter": {
-    "message": "警告：未指定過濾條件！",
+    "message": "警告：未指定過濾規則！",
     "description": "Warns the user that no filter was specified"
   },
   "blacklisterblocksalloftype": {
-    "message": "注意：此條件將阻擋下頁面上所有的$elementtype$元素！",
+    "message": "注意：此過濾規則會阻擋頁面上所有的 $elementtype$ 元素！",
     "description": "Warns the user that all elements of type X will be blocked",
     "placeholders": {
       "elementtype": {
@@ -139,7 +152,7 @@
     }
   },
   "blacklistertype": {
-    "message": "類型",
+    "message": "Type",
     "description": "node name is called 'Type'"
   },
   "buttonlooksgood": {
@@ -152,7 +165,7 @@
   },
 
   "findingads": {
-    "message": "正在尋找廣告...<br/><br/><i>這只需要一下子。</i>",
+    "message": "正在尋找廣告...<br/><br/><i>這只需要一點時間。</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
@@ -160,12 +173,12 @@
     "description": "Title of the first two dialogs of the blacklister"
   },
   "clickthead": {
-    "message": "點選您想要阻擋的廣告，我會協助您進行設定。",
+    "message": "點選要阻擋的廣告，AdBlock 會協助您設定。",
     "description": "When you have to click the ad to continue"
   },
 
   "whitelistertext": {
-    "message": "AdBlock將不會在網域結尾為<br/>$domain$的網頁上阻擋廣告。",
+    "message": "AdBlock 將不會在網域結尾為 <br/>$domain$ 的網頁上阻擋廣告。",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
@@ -175,7 +188,7 @@
     }
   },
   "whitelistertitle": {
-    "message": "確定排除此網域？",
+    "message": "排除此網域？",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
@@ -184,20 +197,20 @@
   },
 
   "subscribingtitle": {
-    "message": "訂閱過濾清單...",
+    "message": "正在訂閱過濾清單...",
     "description": "abp: link subscriber title"
   },
   "subscribingfinished": {
-    "message": "完成！",
+    "message": "完成",
     "description": "abp: link subscriber result"
   },
   "subscribingfailed": {
-    "message": "失敗！",
+    "message": "失敗",
     "description": "abp: link subscriber result"
   },
 
   "optionsversion": {
-    "message": "版本 $version$",
+    "message": "Version $version$",
     "description": "Version number",
     "placeholders": {
       "version": {
@@ -207,7 +220,7 @@
     }
   },
   "optionschangelog": {
-    "message": "更新日誌",
+    "message": "changelog",
     "description": "changelog link"
   },
   "tabgeneral": {
@@ -218,29 +231,21 @@
     "message": "過濾清單",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
-    "message": "黑名單",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "已排除網站",
-    "description": "A tab on the options page"
-  },
 
   "generaloptions": {
     "message": "一般選項",
     "description": "Title of first tab page"
   },
   "betalabel": {
-    "message": "測試中",
+    "message": "Beta",
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "我想看見Google搜尋結果中的文字廣告，請不要隱藏它們。",
+    "message": "顯示 Google 搜尋結果中的文字廣告",
     "description": "Option on first tab page"
   },
   "youtubeads": {
-    "message": "阻擋YouTube影片中的廣告。",
+    "message": "阻擋 YouTube 影片中的廣告。",
     "description": "Option on first tab page"
   },
   "showcontextmenus": {
@@ -248,7 +253,7 @@
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "在Console Log中顯示除錯資訊（將會降低AdBlock效能）",
+    "message": "在 Console Log 中顯示除錯資訊（將會降低 AdBlock 效能）",
     "description": "Option on first tab page"
   },
 
@@ -257,7 +262,7 @@
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
-    "message": "$seconds$秒前更新",
+    "message": "$seconds$ 秒前更新",
     "description": "Label for subscription",
     "placeholders": {
       "seconds": {
@@ -267,7 +272,7 @@
     }
   },
   "updatedminutesago": {
-    "message": "$minutes$分鐘前更新",
+    "message": "$minutes$ 分鐘前更新",
     "description": "Label for subscription",
     "placeholders": {
       "minutes": {
@@ -277,7 +282,7 @@
     }
   },
   "updatedhoursago": {
-    "message": "$hours$小時前更新",
+    "message": "$hours$ 小時前更新",
     "description": "Label for subscription",
     "placeholders": {
       "hours": {
@@ -287,7 +292,7 @@
     }
   },
   "updateddaysago": {
-    "message": "$days$天前更新",
+    "message": "$days$ 天前更新",
     "description": "Label for subscription",
     "placeholders": {
       "days": {
@@ -297,15 +302,15 @@
     }
   },
   "updatedminuteago": {
-    "message": "1分鐘前更新",
+    "message": "1 分鐘前更新",
     "description": "Label for subscription"
   },
   "updatedhourago": {
-    "message": "1小時前更新",
+    "message": "1 小時前更新",
     "description": "Label for subscription"
   },
   "updateddayago": {
-    "message": "1天前更新",
+    "message": "1 天前更新",
     "description": "Label for subscription"
   },
   "removedlabel": {
@@ -317,7 +322,7 @@
     "description": "Status label"
   },
   "fetchinglabel": {
-    "message": "獲取清單中...請稍候。",
+    "message": "正在獲取清單...請稍候。",
     "description": "Status label"
   },
   "subscribedlabel": {
@@ -325,15 +330,15 @@
     "description": "Status label"
   },
   "nolisturllabel": {
-    "message": "這不是一個有效的清單網址。",
+    "message": "這不是有效的清單網址。",
     "description": "Status label"
   },
   "failedtofetchfilter": {
-    "message": "無法獲取這個過濾清單！",
+    "message": "無法獲取此過濾清單！",
     "description": "Error messagebox"
   },
   "enterurloflist": {
-    "message": "請輸入欲訂閱的過濾清單網址。",
+    "message": "請輸入要訂閱的過濾清單網址。",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -345,11 +350,11 @@
     "description": "Title of the filter list tab"
   },
   "filterlistlink": {
-    "message": "請避免訂閱過多清單，每新增一個清單都會讓您的速度降低一點！人員名錄與更多過濾清單可在<a>這裡</a>找到。",
+    "message": "請不要訂閱過多清單，每新增一個清單都會讓瀏覽器的速度降低！更多詳細資訊和過濾清單可在<a>這裡</a>找到。",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "AdBlock會自動獲取更新；您也可以要求<a>現在更新</a>。.",
+    "message": "AdBlock會自動獲取更新；您也可以要求<a>現在更新</a>",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -377,51 +382,51 @@
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
-    "message": "AdBlock自訂過濾清單（推薦）",
+    "message": "AdBlock 自訂過濾清單 （推薦）",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filtereasylist": {
-    "message": "EasyList（推薦）",
+    "message": "EasyList （推薦）",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - 額外的保加利亞過濾清單",
+    "message": " - 附加的保加利亞過濾清單",
     "description": "A filter list"
   },
   "filterdutch": {
-    "message": " - 額外的荷蘭過濾清單",
+    "message": " - 附加的荷蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_finnish": {
-    "message": " - 額外的芬蘭過濾清單",
+    "message": " - 附加的芬蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_french": {
-    "message": " - 額外的法國過濾清單",
+    "message": " - 附加的法國過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_german": {
-    "message": " - 額外的德國過濾清單",
+    "message": " - 附加的德國過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_norwegian": {
-    "message": " - 額外的挪威過濾清單",
+    "message": " - 附加的挪威過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_polish": {
-    "message": " - 額外的波蘭過濾清單",
+    "message": " - 附加的波蘭過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_romanian": {
-    "message": " - 額外的羅馬尼亞過濾清單",
+    "message": " - 附加的羅馬尼亞過濾清單",
     "description": "A filter list"
   },
   "filterrussian": {
-    "message": " - 額外的俄羅斯過濾清單",
+    "message": " - 附加的俄羅斯過濾清單",
     "description": "A filter list"
   },
   "filtereasylist_plus_vietnamese": {
-    "message": " - 額外的越南過濾清單",
+    "message": " - 附加的越南過濾清單",
     "description": "A filter list"
   },
   "filterchinese": {
@@ -470,23 +475,15 @@
   },
 
   "blacklistclickmessage": {
-    "message": "右鍵點選頁面上的廣告以隱藏它 ─ 或在此處手動隱藏。",
+    "message": "右鍵點選頁面上的廣告來阻擋它 ─ 或在此處手動阻擋。",
     "description": "Message at the top of the blacklist options tab"
-  },
-  "blacklisttabtitle": {
-    "message": "阻擋過濾清單遺漏掉的廣告",
-    "description": "Title of the third tab"
-  },
-  "addnewfilter": {
-    "message": "新增一個新的過濾條件：",
-    "description": "Subtitle on the third tab"
   },
   "linkblockadbyurl": {
     "message": "依網址阻擋廣告",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
-    "message": "隱藏網頁特定區塊",
+    "message": "隱藏部分頁面",
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
@@ -494,19 +491,19 @@
     "description": "Message of the url-blocking area"
   },
   "csstomatch": {
-    "message": "符合的CSS條件",
+    "message": "符合的CSS",
     "description": "Message of the css-hiding area"
   },
   "blockdomain": {
-    "message": "套用在以下網域",
+    "message": "套用的網域",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
-    "message": "手動編輯您的過濾條件：",
+    "message": "手動編輯您的過濾規則：",
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "請小心：如果這裡的設定不小心出了錯，包含官方過濾集的許多其他清單，也可能會失效！<br/>請參閱<a>過濾條件語法教學</a>來正確地添加進階黑名單、白名單條件。",
+    "message": "小心: 如果在這裡的設定出錯，包含官方的過濾清單，可能會失效！<br/>參閱<a>過濾規則語法教學</a>來正確地添加進階黑名單、白名單規則。",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -522,48 +519,24 @@
     "description": "Section label for advanced options"
   },
   "reportanad": {
-    "message": "<a>回報廣告</a>給AdBlock或過濾清單維護者。",
+    "message": "<a>回報廣告</a>至 AdBlock 或過濾清單維護者。",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  "removelabel": {
-    "message": "移除",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "不要在以下字串結尾的網域上阻擋廣告...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "舉例來說，「google.com」將會在「google.com」、「mail.google.com」，和 「www.google.com」上停用AdBlock。",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "新增",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "移除清單中所有項目：",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
-    "message": "AdBlock ─ 廣告回報",
+    "message": "AdBlock - 廣告回報",
     "description": "title of ad report page"
   },
-  "adreport1": {
-    "message": "看來您剛剛發現了一隻漏網之魚？嗯，我將幫您找到正確的回報管道！<br/>請記得：回報廣告純屬自願。如果您並不想這麼做，您可以逕行關閉這個視窗，並回到「黑名單」分頁添加過濾條件，讓結果僅套用到您的電腦上。",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
-  },
   "updateyourlists": {
-    "message": "請確認您的過濾清單都已處在最新狀態",
+    "message": "確認您的過濾清單都已在最新狀態",
     "description": "instruction on ad report page"
   },
   "clickupdatefilters": {
-    "message": "點選：<a>更新我的過濾清單！</a>",
+    "message": "點選: <a>更新過濾清單！</a>",
     "description": "instruction on ad report page"
   },
   "reloadadpage": {
-    "message": "重新載入您剛剛看到廣告的頁面。",
+    "message": "重新載入出現廣告的頁面。",
     "description": "instruction on ad report page"
   },
   "adstillappear": {
@@ -579,19 +552,15 @@
     "description": "A negative response to a question"
   },
   "adalreadyblocked": {
-    "message": "您不用作任何事，因為廣告已被阻擋了",
+    "message": "您不用做任何事，因為廣告已被阻擋",
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "correctfilters": {
-    "message": "選擇正確的過濾清單",
+    "message": "正確的過濾清單",
     "description": "on the ad report page, label describing having the right set of filters"
   },
-  "reallyclearlist": {
-    "message": "您確定要清空這個列表嗎？",
-    "description": "confirmation of clearing a list of iteams"
-  },
   "pagelanguagecheck": {
-    "message": "將要回報的頁面使用什麼語言？",
+    "message": "此頁面使用什麼語言？",
     "description": "question on ad report page"
   },
   "lang_english": {
@@ -682,18 +651,8 @@
     "message": "其他",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "我們沒有預設該語言的過濾清單。<br/>請試著找到一個支援此語言的合適清單 $link$ 或自行到「黑名單」頁面加以阻擋。",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1here$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
-    "message": "請先訂閱這個過濾清單，然後重試一次：$list_title$",
+    "message": "先訂閱此過濾清單，然後重試一次：$list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
     "placeholders": {
       "list_title": {
@@ -703,35 +662,35 @@
     }
   },
   "checkinfirefox": {
-    "message": "在Firefox中檢查",
+    "message": "在 Firefox 中檢查",
     "description": "tell a user to see if a reported ad also appears in firefox"
   },
   "checkinfirefox1": {
-    "message": "如果您沒有Firefox，請先安裝它。",
+    "message": "如果您沒有 Firefox，先安裝它。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox2": {
-    "message": "如果您沒有Firefox的Adblock Plus，請先安裝它。",
+    "message": "如果您沒有 Firefox 的 Adblock Plus，先安裝它。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox3": {
-    "message": "在Firefox中，訂閱所有和此處相同的過濾清單（AdBlock自訂過濾清單除外）。",
+    "message": "在 Firefox 中，訂閱所有和此處相同的過濾清單 （AdBlock 自訂過濾清單除外）。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox4": {
-    "message": "在Firefox中，開啟該廣告所在的頁面。",
+    "message": "在 Firefox 中，開啟該廣告所在的頁面。",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox5": {
-    "message": "廣告是否仍出現在Firefox中？",
+    "message": "廣告是否出現在 Firefox中？",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "refusetocheck": {
-    "message": "我不想作這個檢查",
+    "message": "我不想檢查這個",
     "description": "user is telling us they don't wish to investigate something for us"
   },
   "reportfilterlistproblem": {
-    "message": "這是廣告過濾清單方面的問題。請到這裡回報：$link$",
+    "message": "這是廣告過濾清單方面的問題。請在這裡回報： $link$",
     "description": "telling the user to report an ad to a filter list maintainer",
     "placeholders": {
       "link": {
@@ -741,7 +700,7 @@
     }
   },
   "reporttous1": {
-    "message": "如果您可以用英語描述情況，您可以到$in_the_issue_tracker_link$中向我們回報廣告。",
+    "message": "您可以在$in_the_issue_tracker_link$回報廣告。",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
@@ -751,37 +710,49 @@
     }
   },
   "fixityourself": {
-    "message": "好吧，您還是可以回到「黑名單」頁面中手動阻擋這個廣告。謝謝使用！",
+    "message": "您還是可以在「黑名單」頁面中手動阻擋此廣告。",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {
-    "message": "您正在使用舊版本的AdBlock。請先$updatelink$到最新版本",
+    "message": "您正在使用舊版本的 AdBlock。請先$updatelink$到最新版本",
     "description": "ad report page instruction",
     "placeholders": {
       "updatelink": {
-        "content": "$1升級$2",
+        "content": "$1更新$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
   },
-  "cantundo": {
-    "message": "此動作無法復原！",
-    "description": "Warning a user before confirming an action"
-  },
   "contextmenuhidethis": {
-    "message": "阻擋這個廣告",
+    "message": "阻擋此廣告",
     "description": "Context menu entry"
   },
   "contextmenuhideanything": {
-    "message": "阻擋此頁廣告...",
+    "message": "阻擋此頁面上的廣告...",
     "description": "Context menu entry"
   },
   "contextmenuexcludedomain": {
     "message": "不要在此網域執行...",
     "description": "Context menu entry"
   },
+  "filecleanerwarning": {
+    "message": "如果您每次開啟 AdBlock 都看到此訊息，請確認您使用的檔案清理程式不會清除 「localStorage」 檔案。",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
   "somequicksetup": {
-    "message": "一些簡單的設置",
+    "message": "快速設定",
     "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "影片和 Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "該廣告是出現在影片或 Flash 遊戲等外掛程式中？",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "目前還無法阻擋在 Flash 或其他外掛程式中的廣告。此功能尚在等待瀏覽器與 WebKit 支援。",
+    "description": "Result of the final ad report question"
   }
 }

@@ -200,6 +200,20 @@
       }
     }
   },
+  "nodefaultfilter1": {
+    "message": "We hebben geen filter lijst voor deze taal.<br/>Probeer $link$ een geschikte lijst te zoeken of blokkeer deze advertentie zelf in de opties van AdBlock.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1hier$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "adreport2": {
+    "message": "Dus je hebt een advertentie gevonden op een webpagina? We zullen je helpen om de juiste plaats te vinden om het te rapporteren!<br/> Dit is vrijwillig. Als je dit niet wilt, dan kun je de advertentie ook voor jezelf blokkeren in de opties van AdBlock.",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
+  },
   "optionschangelog": {
     "message": "wijzigingen",
     "description": "changelog link"
@@ -208,19 +222,34 @@
     "message": "Algemeen",
     "description": "A tab on the options page"
   },
+  "tabcustomizetitle": {
+    "message": "AdBlock aanpassen",
+    "description": "Title of the third tab"
+  },
+  "unblocktitle": {
+    "message": "AdBlock op een webpagina uitschakelen:",
+    "description": "Section header on third tab"
+  },
+  "filterlistsrock": {
+    "message": "De officiële filters blokkeren het meeste al. Je kunt ook zelf aanpassingen maken:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "blockmoreads": {
+    "message": "Meer blokkeren:",
+    "description": "Section header on third tab"
+  },
+  "linkunblock": {
+    "message": "Toon advertenties op webpagina of domein",
+    "description": "Link on the third tab"
+  },
   "tabfilterlists": {
     "message": "Officiële filters",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
+  "tabcustomize": {
     "message": "Eigen filters",
     "description": "A tab on the options page"
   },
-  "tabexcluded": {
-    "message": "Uitgesloten sites",
-    "description": "A tab on the options page"
-  },
-
   "generaloptions": {
     "message": "Algemene opties",
     "description": "Title of first tab page"
@@ -379,7 +408,7 @@
     "description": "A filter list"
   },
   "filterdutch": {
-    "message": " - Nederlandse uitbreiding",
+    "message": " - Nederlandse uitbreiding (aanbevolen)",
     "description": "A filter list"
   },
   "filtereasylist_plus_finnish": {
@@ -459,14 +488,6 @@
     "description": "A filter list"
   },
 
-  "blacklisttabtitle": {
-    "message": "Blokkeer een advertentie die de filters gemist hebben",
-    "description": "Title of the third tab"
-  },
-  "addnewfilter": {
-    "message": "Nieuw filter toevoegen:",
-    "description": "Subtitle on the third tab"
-  },
   "linkblockadbyurl": {
     "message": "Blokkeer een advertentie via zijn URL",
     "description": "Link on the third tab"
@@ -483,8 +504,12 @@
     "message": "CSS regels om te vergelijken",
     "description": "Message of the css-hiding area"
   },
+  "excludedomainorurl": {
+    "message": "Het domein of de url waar AdBlock niets zou moeten blokkeren",
+    "description": "Message of the exclude area"
+  },
   "blockdomain": {
-    "message": "Domein om het filter op toe te passen",
+    "message": "Domein om dit op toe te passen",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
@@ -504,33 +529,9 @@
     "description": "Reminder to press save"
   },
 
-  "removelabel": {
-    "message": "Verwijderen",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Blokkeer geen advertenties op domeinen die eindigen op...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "Bijvoorbeeld, 'google.com' sluit google.com, mail.google.com en www.google.com uit.",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "Voeg toe",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "Verwijder alle items uit deze lijst:",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
     "message": "AdBlock - Advertentie rapporteren",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "Dus je hebt een website met een advertentie gevonden? Ik zal je helpen om de juiste plaats te vinden om dit te rapporteren!<br/>Vergeet niet dat dit vrijwillig is. Als je dit niet wilt doen dan kun je het filter gewoon toevoegen in de optiespagina!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "Zorg ervoor dat je filters bijgewerkt zijn",
@@ -563,10 +564,6 @@
   "correctfilters": {
     "message": "Juiste filters",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Weet je zeker dat je deze lijst wilt wissen?",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "In welke taal is de pagina geschreven?",
@@ -660,16 +657,6 @@
     "message": "Anders",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "We hebben geen standaardlijst voor deze taal.<br/>Probeer aub $link$ een goede lijst te vinden of blokkeer de advertentie alleen voor jezelf via de optiespagina.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1hier$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "Meld je aan voor deze lijst en probeer opnieuw: $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -741,10 +728,6 @@
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
-  },
-  "cantundo": {
-    "message": "Dit kan niet ongedaan gemaakt worden!",
-    "description": "Warning a user before confirming an action"
   },
   "advanced": {
     "message": "Extra",

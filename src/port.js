@@ -45,6 +45,10 @@ if (SAFARI) {
     })(),
 
     extension: {
+      getBackgroundPage: function() {
+        return safari.extension.globalPage.contentWindow;
+      },
+
       getURL: function(path) { 
         return safari.extension.baseURI + path;
       },
@@ -100,7 +104,7 @@ if (SAFARI) {
             var request = messageEvent.message.data;
             var id = chrome.__getTabId(messageEvent.target);
 
-            var sender = { tab: { id: id } };
+            var sender = { tab: { id: id, url: messageEvent.target.url } };
             var sendResponse = function(dataToSend) {
               var responseMessage = { callbackToken: messageEvent.message.callbackToken, data: dataToSend };
               messageEvent.target.page.dispatchMessage("response", responseMessage);
@@ -146,7 +150,7 @@ if (SAFARI) {
 
             var newPort = {
               name: portName,
-              sender: { tab: { id: id } },
+              sender: { tab: { id: id, url: messageEvent.target.url } },
               onDisconnect: { 
                 addListener: function() { 
                   console.log("CHROME PORT LIBRARY: chrome.extension.onConnect.addListener: port.onDisconnect is not implemented, so I'm doing nothing.");
@@ -190,18 +194,6 @@ if (SAFARI) {
         catch (e) {
           // File not found, perhaps
         }
-      }
-
-      // Parse JSON even if it contains comments.
-      function safe_JSON_parse(text) {
-        // Match any char but a colon, then //, then the rest of the line
-        // Replace it with the matched char.
-        // This is to avoid matching the // in "http://foo.com"
-        text = text.replace(/([^:])\/\/[^\n]+/g, '$1');
-        // And match // at the start of the line, since the above forces it
-        // to have a leading character.
-        text = text.replace(/^\/\/[^\n]+/g, '');
-        return JSON.parse(text);
       }
 
       // Insert substitution args into a localized string.
@@ -275,12 +267,9 @@ if (SAFARI) {
           // 2: Perhaps a region-agnostic version of the current locale
           if (navigator.language.length > 2)
             result.locales.push(navigator.language.substring(0, 2));
-          // 3: Default locale
-          syncFetch("manifest.json", function(manifestText) {
-            var defaultLocale = safe_JSON_parse(manifestText).default_locale;
-            if (result.locales.indexOf(defaultLocale) == -1)
-              result.locales.push(defaultLocale);
-          });
+          // 3: Set English 'en' as default locale
+          if (result.locales.indexOf("en") == -1)
+            result.locales.push("en");
 
           // Load all locale files that exist in that list
           result.messages = {};
@@ -289,7 +278,7 @@ if (SAFARI) {
             var file = "_locales/" + locale + "/messages.json";
             // Doesn't call the callback if file doesn't exist
             syncFetch(file, function(text) {
-              result.messages[locale] = safe_JSON_parse(text);
+              result.messages[locale] = JSON.parse(text);
             });
           }
 

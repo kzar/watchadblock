@@ -42,7 +42,7 @@
     "description": "Donation request on installation success page"
   },
   "setotheroptions": {
-    "message": "Další možnosti můžete nastavit a přihlásit se k odběru různých seznamů filtrů přes Přizpůsobení | Nástroje | Rozšíření | AdBlock Možnosti.",
+    "message": "Další možnosti můžete nastavit a přihlásit se k odběru různých seznamů filtrů přes 'Klíč' | Nástroje | Rozšíření | AdBlock Možnosti.",
     "description": "Message on installation success page"
   },
   "chromebutton_how_to_disable": {
@@ -231,12 +231,8 @@
     "message": "Seznamy filtrů",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
-    "message": "Vlastní filtr",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "Vlastní výjimky",
+  "tabcustomize": {
+    "message": "Přizpůsobení",
     "description": "A tab on the options page"
   },
 
@@ -486,13 +482,21 @@
     "message": "Klikněte pravým tlačítkem myši na reklamu pro její zablokování -- nebo ji zablokujte ručně zde.",
     "description": "Message at the top of the blacklist options tab"
   },
-  "blacklisttabtitle": {
-    "message": "Blokování reklamy, která není v seznamech filtrů",
+  "tabcustomizetitle": {
+    "message": "Přizpůsobení AdBlock",
     "description": "Title of the third tab"
   },
-  "addnewfilter": {
-    "message": "Přidání nového filtru:",
-    "description": "Subtitle on the third tab"
+  "filterlistsrock": {
+    "message": "Seznamy filtrů blokují většinu reklam na webu. Můžete také:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "blockmoreads": {
+    "message": "Blokovat více reklam:",
+    "description": "Section header on third tab"
+  },
+  "unblocktitle": {
+    "message": "Zakázat AdBlock na určité webové stránce:",
+    "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
     "message": "Blokovat reklamu dle její URL",
@@ -502,6 +506,10 @@
     "message": "Skrývat část webové stránky",
     "description": "Link on the third tab"
   },
+  "linkunblock": {
+    "message": "Zobrazovat reklamy na webové stránce nebo doméně",
+    "description": "Link on the third tab"
+  },
   "blockurlwithtext": {
     "message": "Blokovat URL obsahující tento text",
     "description": "Message of the url-blocking area"
@@ -509,6 +517,10 @@
   "csstomatch": {
     "message": "CSS obsahuje",
     "description": "Message of the css-hiding area"
+  },
+  "excludedomainorurl": {
+    "message": "Doména nebo url, kde AdBlock nesmí nic blokovat",
+    "description": "Message of the exclude area"
   },
   "blockdomain": {
     "message": "Používat na stránkách domény",
@@ -539,33 +551,13 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  "removelabel": {
-    "message": "Odstranit",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Neblokovat reklamy na doménách končících...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "Například 'google.cz' nebude blokovat reklamy na google.cz, mail.google.cz a www.google.cz.",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "Přidat",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "Odstranit všechny položky ze seznamu:",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
     "message": "AdBlock - Nahlášení reklamy",
     "description": "title of ad report page"
   },
-  "adreport1": {
-    "message": "Našli jste reklamu na webové stránce? Dobrá, pomohu vám najít správné místo kde ji nahlásit!<br/> Pamatujte: Nahlášení reklamy je dobrovolné. Pokud si ji nepřejete nahlásit, můžete zavřít toto okno a zablokovat ji jen pro sebe tím, že přidáte její filtr v Nastavení na záložce Vlastní filtr!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
+  "adreport2": {
+    "message": "Našli jste reklamu na webové stránce? Dobrá, pomohu vám najít správné místo, kde ji nahlásit!<br/> Pamatujte: Nahlášení reklamy je dobrovolné. Pokud si ji nepřejete nahlásit, můžete zavřít toto okno a zablokovat ji jen pro sebe tím, že přidáte její filtr na záložce 'Prizpůsobení' na stránce s nastavením!",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "updateyourlists": {
     "message": "Ujistěte se, že seznamy filtrů jsou aktuální",
@@ -598,10 +590,6 @@
   "correctfilters": {
     "message": "Opravit filtry",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Jste si jisti, že chcete vymazat tento seznam?",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "V jakém jazyce je stránka napsána?",
@@ -695,9 +683,9 @@
     "message": "Jiný",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "Nemáme výchozí seznam filtrů pro daný jazyk.<br/>Prosím, zkuste najít vhodný seznam pro tento jazyk $link$ nebo si tuto reklamu zablokujte jen pro sebe v Nastavení na záložce Vlastní filtr.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
+  "nodefaultfilter1": {
+    "message": "Nemáme výchozí seznam filtrů pro daný jazyk.<br/>Prosím, zkuste najít vhodný seznam pro tento jazyk $link$ nebo si tuto reklamu zablokujte jen pro sebe na záložce 'Přizpůsobení'.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders": {
       "link": {
         "content": "$1zde$2",
@@ -776,10 +764,6 @@
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
-  },
-  "cantundo": {
-    "message": "Tuto akci nelze vrátit zpět!",
-    "description": "Warning a user before confirming an action"
   },
   "contextmenuhidethis": {
     "message": "Blokovat tuto reklamu",

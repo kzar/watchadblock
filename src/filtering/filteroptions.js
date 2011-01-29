@@ -10,6 +10,8 @@ var ElementTypes = {
   'object': 16,
   subdocument: 32,
   media: 128,
+  'document': 16384,
+  elemhide: 32768,
   //BELOW ISN'T SUPPORTED YET
   object_subrequest: 64,
   font: 256,
@@ -18,11 +20,11 @@ var ElementTypes = {
   xbl: 2048,
   ping: 4096,
   xmlhttprequest: 8192,
-  'document': 16384,
-  elemhide: 32768
+  donottrack: 65536
   // if you add something here, update .ALL below
 }
-ElementTypes.ALL = 65535; // all bits turned on
+ElementTypes.ALLRESOURCETYPES = 16383; // all types that apply to resources
+ElementTypes.ALL = 131071; // all bits turned on
 
 var FilterOptions = {
   NONE: 0,

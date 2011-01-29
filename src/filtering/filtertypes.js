@@ -23,7 +23,7 @@ Filter.fromText = function(text) {
 
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if (/^@@/.test(text))
+    else if (Filter.isWhitelistFilter(text))
       cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
@@ -33,7 +33,11 @@ Filter.fromText = function(text) {
 }
 
 Filter.isSelectorFilter = function(text) {
-  return /##/.test(text);
+  return /\#\#/.test(text);
+}
+
+Filter.isWhitelistFilter = function(text) {
+  return /^\@\@/.test(text);
 }
 
 Filter.isComment = function(text) {
@@ -83,6 +87,11 @@ Filter._domainInfo = function(domainText, divider) {
 // given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
 // versa.
 Filter._domainIsInList = function(domain, list) {
+  // TODO speed: background's get_content_script_data calls limitedToDomain
+  // and this function is the bottleneck.  Figure out some way to shortcut
+  // so that we don't have to call this as frequently.  Perhaps each rule
+  // keeps a list of the first letter of each TLD in its domains, and we first
+  // check whether the TLD of domain is in that list, before checking fully.
   for (var i = 0; i < list.length; i++) {
     if (list[i] == domain)
       return true;
@@ -95,14 +104,17 @@ Filter._domainIsInList = function(domain, list) {
 Filter.prototype = {
   __type: "Filter",
 
+  // Returns true if this filter applies on all domains.
+  isGlobal: function() {
+    var posEmpty = this._domains.applied_on.length == 0;
+    var negEmpty = this._domains.not_applied_on.length == 0;
+    return (posEmpty && negEmpty);
+  },
+
   // Returns true if this filter should be run on an element from the given
   // domain.
   appliesToDomain: function(domain) {
-    var posEmpty = this._domains.applied_on.length == 0;
-    var negEmpty = this._domains.not_applied_on.length == 0;
-
-    // short circuit the common case
-    if (posEmpty && negEmpty)
+    if (this.isGlobal())
       return true;
 
     var posMatch = Filter._domainIsInList(domain, this._domains.applied_on);
@@ -112,7 +124,8 @@ Filter.prototype = {
       if (negMatch) return false;
       else return true;
     }
-    else if (!posEmpty) { // some domains applied, but we didn't match
+    else if (this._domains.applied_on.length != 0) {
+      // some domains applied, but we didn't match
       return false;
     }
     else if (negMatch) { // no domains applied, we are excluded
@@ -152,6 +165,11 @@ var PatternFilter = function(text) {
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
   this._rule = data.rule;
+  // Preserve _text for later in Chrome's background page.  Don't do so in
+  // safari or in content scripts, where it's not needed.
+  // TODO once Chrome has a real blocking API, we can get rid of _text.
+  if (document.location.protocol == 'chrome-extension:')
+    this._text = text;
 }
 
 // Return a { rule, domainText, allowedElementTypes } object
@@ -164,67 +182,71 @@ PatternFilter._parseRule = function(text) {
     options: FilterOptions.NONE
   };
 
-  var lastDollar = text.lastIndexOf('$');
-  if (lastDollar == -1) {
+  var optionsRegex = /\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*$/;
+  var optionsText = text.match(optionsRegex);
+  if (!optionsText) {
     var rule = text;
     var options = [];
-  }
-  else {
-    var rule = text.substr(0, lastDollar);
-    var optionsText = text.substr(lastDollar + 1).toLowerCase();
-    var options = ( optionsText == "" ? [] : optionsText.split(',') );
+  } else {
+    var options = optionsText[0].substring(1).toLowerCase().split(',');
+    var rule = text.replace(optionsText[0], '');
   }
 
-  var invertedElementTypes = false;
+  var disallowedElementTypes = ElementTypes.NONE;
 
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
 
-    if (option.indexOf('domain=') == 0)
+    if (option.indexOf('domain=') == 0) {
       result.domainText = option.substring(7);
+      continue;
+    }
 
     var inverted = (option[0] == '~');
     if (inverted)
       option = option.substring(1);
 
+    option = option.replace(/\-/, '_');
     if (option in ElementTypes) { // this option is a known element type
-      if (inverted) {
-        // They explicitly forbade an element type.  Assume all element
-        // types listed are forbidden: we build up the list and then
-        // invert it at the end.  (This won't work if they explicitly
-        // allow some types and disallow other types, but what would that
-        // even mean?  e.g. $image,~object.)
-        invertedElementTypes = true;
-      }
-      result.allowedElementTypes |= ElementTypes[option];
+      if (inverted)
+        disallowedElementTypes |= ElementTypes[option];
+      else
+        result.allowedElementTypes |= ElementTypes[option];
     }
-    else if (option == 'third-party') {
+    else if (option == 'third_party') {
       result.options |= 
           (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
     }
-    else if (option == 'match-case') {
+    else if (option == 'match_case') {
       //doesn't have an inverted function
       result.options |= FilterOptions.MATCHCASE;
     }
-
-    // TODO: handle other options.
+    else if (option == 'collapse') {
+      // We currently do not support this option. However I've never seen any
+      // reports where this was causing issues. So for now, simply skip this
+      // option, without returning that the filter was invalid.
+    }
+    else {
+      // In case ABP adds a new option, and we do not support it, return an
+      // error. If we don't do this and the new type is an elementtype, the
+      // filter *$newtype will be parsed as '*$', e.g. match everything.
+      throw new Error("Unsupported option: $" + options[i]);
+    }
   }
-
   // No element types mentioned?  All types are allowed.
   if (result.allowedElementTypes == ElementTypes.NONE)
-    result.allowedElementTypes = ElementTypes.ALL;
+    result.allowedElementTypes = (ElementTypes.ALLRESOURCETYPES);
+
+  // Extract the disallowed types from the allowed types
+  result.allowedElementTypes &= ~disallowedElementTypes;
 
   // Since ABP 1.3 'image' can also refer to 'background'
   if (result.allowedElementTypes & ElementTypes.image)
     result.allowedElementTypes |= ElementTypes.background;
 
-  // Some mentioned, who were excluded?  Allow ALL except those mentioned.
-  if (invertedElementTypes)
-    result.allowedElementTypes = ~result.allowedElementTypes;
-
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
-  if (/^@@/.test(rule))
+  if (Filter.isWhitelistFilter(rule))
     rule = rule.substring(2);
 
   // Convert regexy stuff.

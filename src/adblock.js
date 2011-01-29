@@ -1,19 +1,11 @@
-function debug_print_selector_matches() {
-  if (!DEBUG)
-    return;
-
-  extension_call(
-    "selectors_for_domain", 
-    { domain: document.domain },
-    function(selectors) {
-      selectors.
-        filter(function(selector) { return $(selector).length > 0; }).
-        forEach(function(selector) {
-          log("Debug: CSS '" + selector + "' hid:");
-          $(selector).each(function(i, el) {
-            log("       " + el.nodeName + "#" + el.id + "." + el.className);
-          });
-        });
+function debug_print_selector_matches(selectors) {
+  selectors.
+    filter(function(selector) { return $(selector).length > 0; }).
+    forEach(function(selector) {
+      log("Debug: CSS '" + selector + "' hid:");
+      $(selector).each(function(i, el) {
+        log("       " + el.nodeName + "#" + el.id + "." + el.className);
+      });
     });
 }
 
@@ -106,8 +98,6 @@ function run_specials(features) {
 
 function adblock_begin_part_2() {
   var opts = { domain: document.domain };
-  if (window == window.top)
-    opts.is_top_frame = true;
 
   extension_call('get_content_script_data', opts, function(data) {
     if (data.adblock_is_paused) {
@@ -150,7 +140,8 @@ function adblock_begin_part_2() {
       beforeLoadHandler(fakeEvent);
     }
 
-    debug_print_selector_matches();
+    if (data.features.debug_logging.is_enabled)
+      debug_print_selector_matches(data.selectors);
   });
 }
 
@@ -161,11 +152,8 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
   //subscribe to the list when you click an abp: link
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
     event.preventDefault();
-    var match = $(this).attr('href').
-        match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]*).*$/i);
-    if (match) {
-      var url = match[4];
-      extension_call('subscribe_popup', {url:url});
-    }
+    var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
+    if (searchquery)
+      extension_call('subscribe_popup', {searchquery: searchquery});
   });
 }

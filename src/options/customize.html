@@ -1,6 +1,15 @@
   <style>
-    .addControls {
+    h2 {
+      margin-bottom: 10px;
+    }
+    h3 {
+      margin: 10px 0px;
+    }
+    .customizationSection {
       margin-left: 20px;
+    }
+    .addControls {
+      margin-left: 10px;
     }
     .entryTable {
       font-size: 12px;
@@ -41,6 +50,8 @@
       $("#txtBlockUrl").val(".com/flashAd");
       $("#txtBlockUrlDomain").val("*");
 
+      $("#txtUnblock").val('http://sleeplessgeek.blogspot.com/');
+
       $("#btnAddUserFilter").click(function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
         var blockDomain = $("#txtUserFilterDomain").val().trim();
@@ -49,6 +60,19 @@
           appendCustomFilter("##" + blockCss);
         else
           appendCustomFilter(blockDomain + "##" + blockCss);
+
+        $(this).closest(".entryTable").find("input:text").val("");
+        $(this).attr("disabled", "disabled");
+      });
+
+      $("#btnAddExcludeFilter").click(function() {
+        var excludeUrl = $("#txtUnblock").val().trim();
+
+        //prevent regexes
+        if (/^\/.*\/$/.test(excludeUrl))
+          excludeUrl = excludeUrl + "*";
+
+        appendCustomFilter('@@' + excludeUrl + '$document');
 
         $(this).closest(".entryTable").find("input:text").val("");
         $(this).attr("disabled", "disabled");
@@ -73,15 +97,6 @@
         $(this).attr("disabled", "disabled");
       });
 
-      function validateDomain(domain) {
-        if (domain == '') return true;
-        var domain_validation_regex = /^(([a-zA-Z0-9\-]+\.)+[0-9a-zA-Z]{1,6})|[a-zA-Z0-9\-\.]*\*[a-zA-Z0-9\-\.\*]*$/;
-        if (!domain_validation_regex.test(domain)) return false;
-        if (domain.indexOf('..') > -1) return false;
-        if (domain.indexOf('**') > -1) return false;
-        return true;
-      }
-
       var validateUrlFilter = function() {
         var blockUrl = $("#txtBlockUrl").val().trim();
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
@@ -93,7 +108,7 @@
         try {
           if (FilterNormalizer.normalizeLine(blockUrl + blockDomain))
             ok = true;
-          if (blockUrl.indexOf('##') != -1)
+          if (Filter.isSelectorFilter(blockUrl))
             ok = false;
         } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
@@ -113,6 +128,19 @@
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#divCssBlock input:text").keyup(validateCssFilter);
+      
+      var validateExcludeFilter = function() {
+        var unblockUrl = $("#txtUnblock").val().trim();
+        var ok = false;
+        try {
+          if (FilterNormalizer.normalizeLine('@@' + unblockUrl + '$document'))
+            ok = true;
+          if (!unblockUrl || Filter.isSelectorFilter(unblockUrl))
+            ok = false;
+        } catch(ex) {}
+        $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
+      }
+      $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
@@ -162,23 +190,23 @@
   </script>
 
   <div class="section">
-    <h2 i18n="blacklisttabtitle"></h2>
+    <h2 i18n="tabcustomizetitle"></h2>
 
-    <div i18n="blacklistclickmessage"></div>
+    <div i18n="filterlistsrock"></div>
 
     <div>
 
       <div id="divAddNewFilter">
-        <h3 i18n="addnewfilter"></h3>
 
-        <div>
-          <a class="controlsLink" id="aUrlBlock" href="#" i18n="linkblockadbyurl"></a>
+        <h3 i18n="blockmoreads"></h3>
+
+        <div class="customizationSection">
+          <a class="controlsLink" href="#" i18n="linkblockadbyurl"></a>
           <div id="divUrlBlock" class="addControls" style="display:none">
             <table class="entryTable">
               <tr>
-                <td i18n="blockurlwithtext"></td>
-                <td></td>
-                <td i18n="blockdomain"></td>
+                <td i18n="blockurlwithtext" colspan="2"></td>
+                <td i18n="blockdomain" colspan="2"></td>
               </tr>
               <tr>
               </tr>
@@ -192,14 +220,14 @@
           </div>
         </div>
 
-        <div>
-          <a class="controlsLink" id="aCssBlock" href="#" i18n="linkhidesection"></a>
+        <div class="customizationSection">
+          <a class="controlsLink" href="#" i18n="linkhidesection"></a>
           <div id="divCssBlock" class="addControls" style="display:none">
+            <div i18n="blacklistclickmessage"></div>
             <table class="entryTable">
               <tr>
-                <td i18n="blockdomain"></td>
-                <td></td>
-                <td i18n="csstomatch"></td>
+                <td i18n="blockdomain" colspan="2"></td>
+                <td i18n="csstomatch" colspan="2"></td>
               </tr>
               <tr>
               </tr>
@@ -208,6 +236,28 @@
                 <td class="guide">##</td>
                 <td><input id="txtUserFilterCss" style="width:300px"/></td>
                 <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit"/></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <h3 i18n="unblocktitle"></h3>
+
+        <div class="customizationSection">
+          <a class="controlsLink" href="#" i18n="linkunblock"></a>
+          <div id="divExcludeBlock" class="addControls" style="display:none">
+            <table class="entryTable">
+              <tr>
+                <td></td>
+                <td colspan="3" i18n="excludedomainorurl"></td>
+              </tr>
+              <tr>
+              </tr>
+              <tr>
+                <td class="guide">@@</td>
+                <td><input id="txtUnblock" style="width:400px"/></td>
+                <td class="guide">$document</td>
+                <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonok" /></td>
               </tr>
             </table>
           </div>
@@ -231,7 +281,7 @@
            class="footnote" style="margin-top: 5px; margin-bottom: 5px"></div>
         <a id="tutorlink" href="http://adblockplus.org/en/filters" 
            target="_new"></a>
-      </div>
+     </div>
 
       <div>
         <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
@@ -245,6 +295,7 @@
 
     </div>
   </div>
+
   <div class="sneaky">
     <p>
     <span i18n="cleanuplist"></span>
