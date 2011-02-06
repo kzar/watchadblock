@@ -216,11 +216,17 @@
       // description of subscription object.
       // Inputs: none
       utils.get_subscriptions_minus_text = function(options) {
-        var lists = _myfilters._subscriptions;
-        for (var id in lists)
-          delete lists[id].text;
-        return lists;
+        var result = {};
+        for (var id in _myfilters._subscriptions) {
+          result[id] = {};
+          for (var attr in _myfilters._subscriptions[id]) {
+            if (attr == "text") continue;
+            result[id][attr] = _myfilters._subscriptions[id][attr];
+          }
+        }
+        return result;
       }
+
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
