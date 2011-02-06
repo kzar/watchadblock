@@ -24,36 +24,6 @@
   <div class="section" class="experiments">
     <h2 i18n="generaloptions"></h2>
 
-    <div id="chromebutton" style="display:none">
-      <p>
-        <input type="checkbox" id="show_chrome_button"/>
-        <label for="show_chrome_button" i18n="chromebutton_showoption"></label>
-        <img src="../img/icon_screenshot.png" style="vertical-align:middle;"/>
-      </p>
-      <div id="chromebutton_upon_check" style="display:none; font-style: italic" class="info">
-        <div i18n="chromebutton_how_to_enable" 
-             i18n_replacement_el="chromebutton_install_link"></div>
-        <a id="chromebutton_install_link" 
-           href="https://clients2.google.com/service/update2/crx?response=redirect&x=id%3Dpicdndbpdnapajibahnnogkjofaeooof%26uc%26lang%3Den-US&prod=chrome"></a>
-        <div i18n="chromebutton_how_to_disable" style="display:none"></div>
-      </div>
-    </div>
-    <script>
-      $(function() {
-        if (SAFARI)
-          return;
-        $("#chromebutton").show();
-        $("#chromebutton input").click(function() {
-          $("#chromebutton_upon_check").show();
-        });
-        chrome.extension.sendRequest(button_extension_id, {}, function() {
-          $("#chromebutton input").attr("checked", true);
-          $('[i18n="chromebutton_how_to_enable"]').hide();
-          $('[i18n="chromebutton_how_to_disable"]').show();
-        });
-      });
-    </script>
-
     <p>
       <input type="checkbox" class="feature" id="enable_show_google_search_text_ads"/>
       <label for="enable_show_google_search_text_ads" i18n="googletextads"></label>

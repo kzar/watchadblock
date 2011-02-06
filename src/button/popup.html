@@ -246,14 +246,9 @@
 
       <div id="div_help_disable">
         <div class="menu-entry">
-          Don't show this button
+          Hide this button
         </div>
-        <div id="help_disable_explanation" class="info" style="display:none">
-          <p>
-            To hide this button, drag it to the right edge of your extension
-            buttons, then click just to the right of the address bar and
-            drag to the right.
-          </p>
+        <div id="help_disable_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none">
         </div>
       </div>
       <script>
@@ -264,181 +259,47 @@
 
       <div class="separator"></div>
 
-
-      <!-- ****************** Donations *************** -->
-
+ 
       <div id="div_donate">
-        <a href="#" class="blue" id="please" style="float:left">Please donate!</a>
-        <div id="donation_wrapper" class="box-wrapper" style="display:none; clear:left">
-          <div id="donation_panel" class="box">
-            <div id="donate_close" style="float:right"><a class="blue" href="#">x</a></div>
-            I'm not a corporation; I'm just a guy.  Please help me pay my bills!
-            <hr/>
-            <table>
-              <tr>
-                <td><span>Donate:</span></td>
-                <td>$</td>
-                <td>
-                  <div id="fixed_donation">
-                    <span id="donation_amount_txt">30</span>
-                    <a href="#" class="blue" id="donation_amount_change">change</a>
-                  </div>
-                  <div id="varied_donation" style="display:none">
-                    <input style="float:left" id="donation_amount_input" maxlength="5" value="30" />
-                    <table>
-                      <tr>
-                        <td>
-                          <div style="width: 200px" id="donate_slider"></div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div style="font-size: x-small; float:right">more</div>
-                          <div style="font-size: x-small;" >less</div>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td><span>Note:</span></td>
-                <td></td>
-                <td colspan="2">
-                  <input type="text" placeholder="I love AdBlock!" id="donate_note" maxlength=200 />
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2"></td>
-                <td colspan="2">
-                  <span style="font-size:x-small">(a donation with a note makes my day!)</span>
-                </td>
-              </tr>
-            </table>
-            <table>
-              <tr>
-                <td><div id="btnDonate" title="via Paypal"><a href="#">Donate</a></div></td>
-                <td><span id="donation_measure"></span></td>
-              </tr>
-            </table>
-          </div>
+        <div id="donate_close" style="float:right; display:none"><a class="blue" href="#">x</a></div>
+        <a href="#" class="blue" id="donate_open">Did you know this is my full-time job?</a>
+        <div id="donation_wrapper" style="display:none; clear:left">
+          <iframe style="border: 1px solid gray; " width="100%" height="100%"></iframe>
         </div>
       </div>
       <script>
-        function update_measure() {
-          var amt = $("#donation_amount_input").val();
-          var msgs = {
-            0: "Thanks!",
-            2.71: "e!",
-            2.73: "Thanks!",
-            3.14: "Pi!",
-            3.15: "Thanks!",
-            10: "Thanks! You'll get an emailed 'thank you' too.",
-            20: "I could pay my water bill with this!",
-            30: "I would really appreciate this!",
-            50: "This would buy my wife and me a nice dinner!",
-            75: "I could pay my phone bill with this!",
-            100: "You're helping me earn a living! I will write you a haiku and email it to you.",
-            150: 'I will call you up to say thank you -- leave your number in your Note!',
-            200: "Wow!  Thank you so much! I will draw and send you a picture -- tell me in the Note what I should draw!",
-            500: 'I will make up a song about you, call you up, and sing it to you!',
-            501: "I'll make up a song about you, call you up, and sing it to you!  And if you want I will put your name on a Funders page!",
-            5000: "I'll make up a song about you, call you up, and sing it to you!  And if you want I will put your name on a Funders page!  And your feature request becomes Pri-Critical in the bug tracker!",
-            10000: "Um, anything above $10,000 and I will contact you about more permanent sponsorship.  Want to hire me? See bit.ly/hirehim :)"
-          };
-          var best = 10000000;
-          var answer = 10;
-          for (var level in msgs) {
-            var score = amt - level; // how much they went over; lower is good
-            if (score < best && score >= 0) {
-              best = score;
-              answer = level;
-            }
-          }
-          $("#donation_measure").text(msgs[answer]);
-        }
         $(function() {
-          // Show the donation div upon momentary mouse hover or upon click.
-          // Once the user closes the div, only a click will re-show it.
-          var STATE = { 
-            UNSEEN_NOT_HOVERED: 1, // div has never been seen
-            UNSEEN_HOVERED: 2,     // user is hovering over "open" link
-            OPEN: 3,               // div is open
-            DISMISSED: 4           // User has seen and closed div
-          };
-          var state = STATE.UNSEEN_NOT_HOVERED;
-          $("#please").mouseenter(function() {
-            if (state != STATE.UNSEEN_NOT_HOVERED)
+          var state = "initial";
+          var bodysize = { width: $("body").width(), height: $("body").height() };
+          $("#donate_open").click(function() {
+            if (state == "initial") {
+              $("#donation_wrapper iframe").
+                attr("src", "http://chromeadblock.com/donate?newtarget");
+            }
+            if (state == "open")
               return;
-            state = STATE.UNSEEN_HOVERED;
-            window.setTimeout(function() {
-              if (state == STATE.UNSEEN_HOVERED)
-                openit();
-            }, 300);
-          });
-          $("#please").mouseleave(function() {
-            if (state == STATE.UNSEEN_HOVERED)
-              state = STATE.UNSEEN_NOT_HOVERED;
-          });
-          $("#please").click(function() {
-            if (state != STATE.OPEN)
-              openit();
+            state = "open";
+            $("#donate_close").show();
+            $("body").animate({width: 780, height: 520}, {queue:false});
+            $("#donation_wrapper").
+              width(0).height(0).show().
+              animate({width: 730, height: 385}, {queue:false});
           });
           $("#donate_close").click(function() {
-            closeit();
-          });
-          function openit() {
-            state = STATE.OPEN;
-            $("#please").css("color", "purple");
-            $("#donation_wrapper").slideDown();
-            $("body, #donation_wrapper, #wrapper").animate({width: "+=200"}, {queue: false});
-          }
-          function closeit() {
-            state = STATE.DISMISSED;
-            $("body, #donation_wrapper, #wrapper").animate({width: "-=200"}, {queue: false});
-            $("#donation_wrapper").slideUp();
-          }
-
-          // Show the slider upon "change" click
-          $("#donation_amount_change").click(function() {
-            $("#fixed_donation, #varied_donation").toggle();
-            $("#donation_amount_input").focus();
-          });
-
-          // Make a slider that moves when they type a number and vice versa
-          $("#donate_slider").height(".5em").slider({
-            min: 10,
-            max: 500,
-            range: "min",
-            value: $("#donation_amount_input").val(),
-            step: 5,
-            slide: function(event, ui) {
-              $("#donation_amount_input").val(ui.value);
-              update_measure();
-            }
-          });
-          $("#donation_amount_input").
-            width(35).
-            keyup(function() { 
-              $("#donate_slider").slider("value", this.value); 
-              update_measure();
-            });
-
-          // Only send them to Paypal if they entered a valid amount
-          $("#btnDonate a").click(function() {
-            var amt = parseFloat($("#donation_amount_input").val());
-            if (isNaN(amt) || amt <= 0.50)
+            if (state != "open")
               return;
-            var url = "https://www.paypal.com/cgi-bin/webscr?form=_xclick&cmd=_donations&business=gundlach.business@gmail.com&currency_code=USD&item_name=AdBlock%20for%20Chrome&no_note=1&custom=cb";
-            if ($("#donate_note").val() != "")
-              url += "&on0=Note&os0=" + escape($("#donate_note").val());
-            url += "&amount=" + amt;
-            // TODO: add an &image_url=[150x50 logo] -- I tried this but
-            // nothing happened.
-            chrome.tabs.create({url: url});
-            window.close();
+            state = "closed";
+            $("body").animate(bodysize, {queue:false});
+            $("#donation_wrapper").animate({width: 0, height: 0}, {queue:false});
+            $("#donate_close").hide();
+            $("#donation_wrapper").slideUp();
           });
-          update_measure();
+        });
+      </script>
+
+      <script>
+        $(function() {
+          localizePage();
         });
       </script>
     </div>
