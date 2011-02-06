@@ -47,10 +47,10 @@ function MyFilters() {
   if (!localStorage['three_times_normalized_filters']) {
     delete localStorage['once_normalized_filters'];
     delete localStorage['twice_normalized_filters'];
-    for (var id in that._subscriptions) {
-      if (that._subscriptions[id].text) {
-        that._subscriptions[id].text = FilterNormalizer.normalizeList(
-                                              that._subscriptions[id].text);
+    for (var id in this._subscriptions) {
+      if (this._subscriptions[id].text) {
+        this._subscriptions[id].text = FilterNormalizer.normalizeList(
+                                              this._subscriptions[id].text);
       }
     }
     localStorage['three_times_normalized_filters'] = 'true';
@@ -114,18 +114,23 @@ MyFilters.prototype.rebuild = function() {
 // Change a property of a subscription or check if it has to be updated
 // Inputs: id: the id of the subscription to change
 //         subData: object containing all data that should be changed
-//         fetch: if the subscriptions have to be fetched again forced
-MyFilters.prototype.changeSubscription = function(id, subData, fetch) {
+//         forceFetch: if the subscriptions have to be fetched again forced
+MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   var subscribeRequiredListToo = false;
 
   // Subscribing to an unknown list: create the list entry
   if (!this._subscriptions[id]) {
-    for (var def in this._official_options)
-      if (def.url == id.substr(4)) {
-        id = def.id;
+    for (var defaultList in this._official_options)
+      if (this._official_options[defaultList].url == id.substr(4)) {
+        id = defaultList;
         break;
       }
-    this._subscriptions[id] = {user_submitted: true};
+    if (/^url\:.*/.test(id))
+      this._subscriptions[id] = {
+        user_submitted: true,
+        name: id.substr(4),
+        url: id.substr(4)
+      };
     subscribeRequiredListToo = true;
   }
 
@@ -138,16 +143,10 @@ MyFilters.prototype.changeSubscription = function(id, subData, fetch) {
     this._subscriptions[id][property] = subData[property]
   }
 
-  // Set the url and name if they didn't exist already
-  if (!this._subscriptions[id].name)
-    this._subscriptions[id].name = id.substr(4); //url:http...
-  if (!this._subscriptions[id].url)
-    this._subscriptions[id].url = id.substr(4); //url:http...
-
   if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
-      if (fetch) return true;
+      if (forceFetch) return true;
       var millis = new Date().getTime() - subscription.last_update;
       return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
     }
@@ -224,7 +223,7 @@ MyFilters.prototype._updateSubscriptionText = function(id, text) {
     var match = checkLines[i].match(redirectRegex);
     if (match) {
       this._subscriptions[id].url = match[1]; //assuming the URL is always correct
-      this._subscriptions[id].last_update = 0; //update ASAP
+      this._subscriptions[id].last_update = 0;
     }
     match = checkLines[i].match(expiresRegex);
     if (match) {
@@ -234,6 +233,10 @@ MyFilters.prototype._updateSubscriptionText = function(id, text) {
   }
 
   this._subscriptions[id].text = FilterNormalizer.normalizeList(text);
+
+  // The url changed. Simply refetch...
+  if (this._subscriptions[id].last_update == 0)
+    this.changeSubscription(id, {});
 }
 
 // Checks if subscriptions have to be updated

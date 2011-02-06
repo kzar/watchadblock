@@ -224,11 +224,13 @@
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
-      //         text: filter text string fetched from that url
       //         requires?: the id of a list if it is a supplementary list
       // Returns: null, upon completion
       utils.subscribe = function(options) {
-        _myfilters.changeSubscription(options.id, {subscribed:true});
+        _myfilters.changeSubscription(options.id, {
+          subscribed:true,
+          requiresList: options.requires
+        });
       }
 
       // Unsubscribes from a filter subscription.
