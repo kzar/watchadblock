@@ -84,11 +84,12 @@
 
         listen_for_broadcasts();
         register_broadcast_listener('filters_updated', function() {
-          var subs = chrome.extension.getBackgroundPage()._myfilters._subscriptions;
+          var bg = chrome.extension.getBackgroundPage();
+          var subs = bg.utils.get_subscriptions_minus_text;
           var sub = subs['url:' + queryparts.location];
-          if (!sub || sub.text) {
-            // It was a well known id, so assume it succeeded, or the .text
-            // property exists, so it succeeded
+          if (!sub || sub.last_update) {
+            // It was a well known id, so assume it succeeded, or the
+            // last_update property exists, so it succeeded
             finished(true);
           } else if (sub.last_update_failed)
             finished(false);
