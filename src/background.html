@@ -240,7 +240,7 @@
       utils.unsubscribe = function(options) {
         _myfilters.changeSubscription(options.id, {
           subscribed: false,
-          deleteMe: options.del
+          deleteMe: (options.del ? true : undefined)
         });
       }
 

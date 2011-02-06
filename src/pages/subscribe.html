@@ -3,6 +3,7 @@
     <title>AdBlock</title>
     <script src="../jquery/jquery-1.4.4-hacked-up.min.js"></script>
     <script src="../functions.js"></script>
+    <script src="../broadcast_channel.js"></script>
     <style type="text/css">
       body {
         font: 14px arial;
@@ -71,7 +72,7 @@
           attr('href', queryparts.location).
           text(shorten_url(queryparts.location));
 
-        //after the subscribing is finished...
+        //After the subscribing is finished...
         function finished(success) {
           $('span#result').text(success ?
             translate("subscribingfinished") :
@@ -81,26 +82,23 @@
           }, success ? 2000 : 3500);
         }
 
-        //subscribe to a list
-        $.ajax({
-          url: queryparts.location,
-          cache: false,
-          success: function(text) {
-            if (text && 
-                 (text[0] == '!' || text[0] == '[' || text[0] == '(')
-               ) {
-            $.get("http://chromeadblock.com/api/url_subscribe.php", 
-                                                  {url:queryparts.location});
-
-            var req = queryparts.requiresLocation ?
-                      "url:" + queryparts.requiresLocation : undefined;
-
-            extension_call("subscribe", {id: 'url:' + queryparts.location,
-                        text:text, requires:req}, function() {finished(true);});
-            } else finished(false);
-          },
-          error: function() {finished(false);}
+        listen_for_broadcasts();
+        register_broadcast_listener('filters_updated', function() {
+          var subs = chrome.extension.getBackgroundPage()._myfilters._subscriptions;
+          var sub = subs['url:' + queryparts.location];
+          if (!sub || sub.text) {
+            // It was a well known id, so assume it succeeded, or the .text
+            // property exists, so it succeeded
+            finished(true);
+          } else if (sub.last_update_failed)
+            finished(false);
         });
+
+        //Subscribe to a list
+        var requiresList = queryparts.requiresLocation ?
+            "url:" + queryparts.requiresLocation : undefined;
+        extension_call("subscribe", 
+            {id: 'url:' + queryparts.location, requires:requiresList});
       });
     </script>
   </head>

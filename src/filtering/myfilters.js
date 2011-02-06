@@ -120,11 +120,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
 
   // Subscribing to an unknown list: create the list entry
   if (!this._subscriptions[id]) {
-    for (var defaultList in this._official_options)
-      if (this._official_options[defaultList].url == id.substr(4)) {
-        id = defaultList;
-        break;
-      }
+    id = this.customToDefaultId(id);
     if (/^url\:.*/.test(id))
       this._subscriptions[id] = {
         user_submitted: true,
@@ -139,9 +135,13 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     subscribeRequiredListToo = true;
 
   // Apply all changes from subData
-  for (var property in subData) {
+  for (var property in subData)
     this._subscriptions[id][property] = subData[property]
-  }
+
+  // Check if the required list is a well known list, but only if it is changed
+  if (subData.requiresList)
+    this._subscriptions[id].requiresList = 
+                   this.customToDefaultId(this._subscriptions[id].requiresList);
 
   if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
@@ -247,6 +247,21 @@ MyFilters.prototype.checkFilterUpdates = function(force) {
       this.changeSubscription(id, {}, force);
     }
   }
+}
+
+// Checks if a custom id is of a known list
+// Inputs: id: the list id to compare
+// Returns the id that should be used
+MyFilters.prototype.customToDefaultId = function(id) {
+  var urlOfCustomList = id.substr(4);
+  for (var defaultList in this._official_options)
+    if (this._official_options[defaultList].url == urlOfCustomList)
+      return defaultList;
+  // We use a mirror of EasyList. However, to prevent users from getting
+  // subscribed to both the mirror as the official one, have this check...
+  if (urlOfCustomList == "https://easylist-downloads.adblockplus.org/easylist.txt")
+    return "easylist";
+  return id;
 }
 
 // If the user wasn't subscribed to any lists, subscribe to
