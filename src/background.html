@@ -46,7 +46,7 @@
       // Inputs: none.
       // Returns: null, upon completion
       utils.update_filters = function(options) {
-        _myfilters.update();
+        _myfilters.rebuild();
       }
 
       // Add a new custom filter entry.
@@ -67,7 +67,7 @@
       // Inputs: filters:string the new filters.
       utils.set_custom_filters_text = function(options) {
         utils.storage_set({key: 'custom_filters', value: options.filters});
-        _myfilters.update();
+        _myfilters.rebuild();
       }
 
       // STORAGE
@@ -210,13 +210,16 @@
 
       // Fetch the latest version of all subscribed lists now.
       utils.update_subscriptions_now = function(options) {
-        _myfilters.freshen_async(true);
+        _myfilters.checkFilterUpdates(true);
       }
       // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.
       // Inputs: none
       utils.get_subscriptions_minus_text = function(options) {
-        return _myfilters.get_subscriptions_minus_text();
+        var lists = _myfilters._subscriptions;
+        for (var id in lists)
+          delete lists[id].text;
+        return lists;
       }
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
@@ -225,7 +228,7 @@
       //         requires?: the id of a list if it is a supplementary list
       // Returns: null, upon completion
       utils.subscribe = function(options) {
-        return _myfilters.subscribe(options.id, options.text, options.requires);
+        _myfilters.changeSubscription(options.id, {subscribed:true});
       }
 
       // Unsubscribes from a filter subscription.
@@ -233,7 +236,10 @@
       //         del: (bool) if the filter should be removed or not
       // Returns: null, upon completion.
       utils.unsubscribe = function(options) {
-        return _myfilters.unsubscribe(options.id, options.del);
+        _myfilters.changeSubscription(options.id, {
+          subscribed: false,
+          deleteMe: options.del
+        });
       }
 
       // Opens a popup that subscribes to a new list
@@ -429,12 +435,6 @@
 
       
       _myfilters = new MyFilters();
-      _myfilters.updated(function() {
-        utils.emit_broadcast({
-          fn: 'filters_updated', 
-          options: {}
-        });
-      });
 
 
       // If the user has just installed, make a note of it.  
