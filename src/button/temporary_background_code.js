@@ -1,12 +1,10 @@
 // To finish converting to a merge button:
 //
 // delete this file
-// ship browser button for adblock update that kills the icon if no response from adblock (search history, it should be in svn)
-//   or can we uninstall it for them, or disable it for them?
+// ship browser button 0.0.13
 // i18n on button
 // one-time message in button for existing users explaining what's going on
 //   detect browser button for adblock.  exists?
-//     yes: tell them to right click and Uninstall the other one.
-//     no : tell them "AdBlock now has a built-in toolbar button, hideable by right clicking and choosing "Hide Button"." or something.
-// remove the new release temp saw_badge_version thing in background
-// display the badge for this button release
+//     yes: "This toolbar button is now built into AdBlock!  Kindly go to chrome://extensions and click 'Browser Button For AdBlock | Uninstall'."
+//     no : "This toolbar button :)  Click 'Hide Button' below to hide it."
+// display the badge for this button release (2.3)
