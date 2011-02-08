@@ -84,8 +84,28 @@
         <div class="box-wrapper">
           <div class = "box">
             <div id="new_release_close" style="float:right"><a class="blue" href="#">x</a></div>
-            <div id="newtitle">New in version 2.2.0:</div>
-            This toolbar button :)
+            <div id="newtitle">New in version 2.3.0:</div>
+            <div id="no_toolbar_button">
+              This toolbar button :)
+            </div>
+            <div id="yes_toolbar_button" style="display:none">
+              <!-- TODO temp: installed 2/2011 -->
+              This browser button is now part of AdBlock.
+              You don't need the "Browser Button For AdBlock" extension anymore.
+            </div>
+            <script>
+              $(function() {
+                // TODO temp while yes_toolbar_button exists
+                chrome.extension.sendRequest("picdndbpdnapajibahnnogkjofaeooof", {}, 
+                  function(data) {
+                    if (data) {
+                      $("#no_toolbar_button").hide();
+                      $("#yes_toolbar_button").show();
+                    }
+                  }
+                );
+              });
+            </script>
           </div>
         </div>
         <div class="separator"></div>
@@ -96,7 +116,7 @@
           // If there was badge text set, informing the user of a new
           // version, clear it.
           chrome.browserAction.setBadgeText({text: ''});
-          chrome.browserAction.setTitle({title: ''});
+          chrome.browserAction.setTitle({title: 'AdBlock Options'});
           localStorage.setItem('saw_badge_version', bg.version_to_notify);
 
           var last_notified = localStorage.getItem('last_notified_version');
@@ -259,6 +279,7 @@
 
       <div class="separator"></div>
 
+      <!-- ******** Donations ********** -->
  
       <div id="div_donate">
         <div id="donate_close" style="float:right; display:none"><a class="blue" href="#">x</a></div>
@@ -279,6 +300,7 @@
             if (state == "open")
               return;
             state = "open";
+            $("#new_release_close").trigger("click"); // To save space so no scroll bars show
             $("#donate_close").show();
             $("body").animate({width: 780, height: 520}, {queue:false});
             $("#donation_wrapper").
