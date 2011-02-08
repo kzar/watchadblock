@@ -85,6 +85,10 @@ MyFilters.prototype.rebuild = function() {
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
+  //Exclude google search results ads if the user has checked that option
+  if (utils.get_optional_features({}).show_google_search_text_ads.is_enabled)
+    texts.push("@@||google.*/search?$elemhide")
+
   texts = texts.join('\n').split('\n');
 
   // Remove duplicates and empties.
@@ -92,9 +96,7 @@ MyFilters.prototype.rebuild = function() {
   delete hash[''];
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
-  var options = utils.get_optional_features({});
-  var ignoreGoogleAds = options.show_google_search_text_ads.is_enabled;
-  var filterset_data = FilterSet.fromText(texts.join('\n'), ignoreGoogleAds, true);
+  var filterset_data = FilterSet.fromText(texts.join('\n'), true);
   this.nonglobal = filterset_data.nonglobal;
   this.global = filterset_data.global;
   // Chrome needs to send the same data about global filters to content
