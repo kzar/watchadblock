@@ -149,7 +149,7 @@
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
           if (!matchingfilter)
-            matchingfilter = _limited_to_domain.matches(i, resources[i].type, domain);
+            matchingfilter = _limited_to_domain.matches(i, resources[i].type, domain, true);
 
           var type = {sort:3, name:undefined};
           if (matchingfilter)

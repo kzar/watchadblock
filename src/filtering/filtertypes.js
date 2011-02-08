@@ -160,9 +160,11 @@ var PatternFilter = function(text) {
   this._allowedElementTypes = data.allowedElementTypes;
   this._options = data.options;
   this._rule = data.rule;
-  // Preserve _text for later in Chrome's background page.  Don't do so in
-  // safari or in content scripts, where it's not needed.
-  // TODO once Chrome has a real blocking API, we can get rid of _text.
+  // Preserve _text for later in Chrome's background page and in
+  // resourceblock.html.  Don't do so in safari or in content scripts, where
+  // it's not needed.
+  // TODO once Chrome has a real blocking API, we can change this to
+  //   if (/resourceblock.html/.test(document.location.href))
   if (document.location.protocol == 'chrome-extension:')
     this._text = text;
 }
