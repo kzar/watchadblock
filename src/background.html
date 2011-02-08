@@ -297,15 +297,17 @@
         );
       };
       
-      // Will open the resource blocking tab. Input:
-      //   resources: the resource(s)
+      // Will open the resource blocking tab. 
+      // Input:
+      //   resources: array of resource strings; 
+      //              see resourceblock.html for format
       utils.show_resourceblocker = function(options, sender) {
         var url = sender.tab.url.replace(/\#.*/, '');
-        cached_resources.set(url, options.resources);
+        utils.show_resourceblocker.cached_resources.set(url, options.resources);
         chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
       }
       // This stores resources used by resourceblock.html
-      var cached_resources = new FifoCache(5);
+      utils.show_resourceblocker.cached_resources = new FifoCache(5);
       
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {

@@ -444,7 +444,9 @@
             return;
           }
           if (!temp_url) {
-            loaded_resources = chrome.extension.getBackgroundPage().cached_resources.get(url);
+            var bg = chrome.extension.getBackgroundPage();
+            var cache = bg.show_resourceblocker.cached_resources;
+            var loaded_resources = cache.get(url);
             if (!loaded_resources || loaded_resources.length == 0) {
               alert(translate('noresourcessend'));
               window.close();
@@ -456,7 +458,7 @@
                 resources[filter] = {filter: filter};
               } else {
                 var blockmatches = loaded_resources[i].split(':|:', 2);
-                resources[blockmatches[1]] = {type:Number(blockmatches[0])};
+                resources[blockmatches[1]] = {type: Number(blockmatches[0])};
               }
             }
           }
