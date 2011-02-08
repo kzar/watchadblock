@@ -27,7 +27,10 @@
           name = name.substring(0, 17) + "..." +
               name.substring(name.length - 5);
         }
-        $(".domainspan").text(name);
+        $("#div_status_whitelisted span").text(
+          translate("adblock_is_disabled_on_domain", [name]));
+        $("#div_whitelist").text(
+          translate("dont_run_on_domain", [name]));
       }
 
       // Set menu entries appropriately for the selected tab.
@@ -43,7 +46,7 @@
           "div_whitelist_page",
           "separator1",
           "div_options",
-          "div_help_disable",
+          "div_help_hide",
         ];
         hide(menu_items);
 
@@ -51,11 +54,11 @@
           if (localStorage.getItem('adblock_is_paused')) {
             show(["div_status_paused", "separator0", "div_options"]);
           } else if (info.disabled_site) {
-            show(["div_status_disabled", "separator0", "div_options", "div_help_disable"]);
+            show(["div_status_disabled", "separator0", "div_options", "div_help_hide"]);
           } else if (info.whitelisted) {
-            show(["div_status_whitelisted", "separator0", "div_pause_adblock", "separator1", "div_options", "div_help_disable"]);
+            show(["div_status_whitelisted", "separator0", "div_pause_adblock", "separator1", "div_options", "div_help_hide"]);
           } else {
-            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "div_whitelist_page", "separator1", "div_options", "div_help_disable"]);
+            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "div_whitelist_page", "separator1", "div_options", "div_help_hide"]);
           }
           setDomain(info.domain);
         });
@@ -84,14 +87,11 @@
         <div class="box-wrapper">
           <div class = "box">
             <div id="new_release_close" style="float:right"><a class="blue" href="#">x</a></div>
-            <div id="newtitle">New in version 2.3.0:</div>
-            <div id="no_toolbar_button">
-              This toolbar button :)
-            </div>
-            <div id="yes_toolbar_button" style="display:none">
+            <div id="newtitle"></div>
+            <script>$("#newtitle").text(translate("newtitle", ["2.3.0"]));</script>
+            <div i18n="this_toolbar_button" id="no_toolbar_button"></div>
+            <div i18n="yes_toolbar_button" id="yes_toolbar_button" style="display:none">
               <!-- TODO temp: installed 2/2011 -->
-              This browser button is now part of AdBlock.
-              You don't need the "Browser Button For AdBlock" extension anymore.
             </div>
             <script>
               $(function() {
@@ -116,7 +116,7 @@
           // If there was badge text set, informing the user of a new
           // version, clear it.
           chrome.browserAction.setBadgeText({text: ''});
-          chrome.browserAction.setTitle({title: 'AdBlock Options'});
+          chrome.browserAction.setTitle({title: ''});
           localStorage.setItem('saw_badge_version', bg.version_to_notify);
 
           var last_notified = localStorage.getItem('last_notified_version');
@@ -140,8 +140,8 @@
       <!-- ************ Standard menu entries *********** -->
 
       <div id="div_status_whitelisted" class="menu-entry">
-        <span style="font-style:italic">AdBlock is disabled on <span class="domainspan">this site</span></span>.
-        <a href="#" class="blue">enable</a>
+        <span style="font-style:italic"><!--Filled with translated text--></span>
+        <a i18n="enable" href="#" class="blue"></a>
       </div>
       <script>
         $("#div_status_whitelisted a").click(function() {
@@ -154,7 +154,7 @@
                 window.close();
               } else {
                 $("#div_status_whitelisted").
-                  replaceWith("Sorry, AdBlock is disabled on this page by one of your filter lists.");
+                  replaceWith(translate("disabled_by_filter_lists"));
               }
             });
           })
@@ -162,19 +162,20 @@
       </script>
 
 
-      <div id="div_status_disabled" style="font-style: italic">
-        AdBlock can not run on this domain.
+      <div i18n="status_disabled" id="div_status_disabled" style="font-style: italic">
       </div>
 
       <div id="div_status_paused" class="menu-entry">
-        <span style="font-style:italic">AdBlock is paused.</span>
-        <a href="#" class="blue">unpause</a>
+        <span i18n="status_paused" style="font-style:italic"></span>
+        <a i18n="unpause" href="#" class="blue"></a>
       </div>
       <script>
-        $("#div_status_paused a").click(function() {
-          localStorage.removeItem('adblock_is_paused');
-          chrome.extension.getBackgroundPage().updateButtonUIAndContextMenus();
-          window.close();
+        $(function() {
+          $("#div_status_paused a").click(function() {
+            localStorage.removeItem('adblock_is_paused');
+            chrome.extension.getBackgroundPage().updateButtonUIAndContextMenus();
+            window.close();
+          });
         });
       </script>
 
@@ -182,8 +183,7 @@
 
       <div id="separator0" class="separator"></div>
 
-      <div id="div_pause_adblock" class="menu-entry">
-        Pause AdBlock
+      <div i18n="pause_adblock" id="div_pause_adblock" class="menu-entry">
       </div>
       <script>
         $("#div_pause_adblock").click(function() {
@@ -195,8 +195,7 @@
       </script>
 
 
-      <div id="div_blacklist" class="menu-entry">
-        Block an ad on this page
+      <div i18n="block_an_ad_on_this_page" id="div_blacklist" class="menu-entry">
       </div>
       <script>
         $("#div_blacklist").click(function() {
@@ -212,7 +211,7 @@
 
 
       <div id="div_whitelist" class="menu-entry">
-        Don't run on <span class="domainspan">this domain</span>
+        <!-- Filled with translated text -->
       </div>
       <script>
         $("#div_whitelist").click(function() {
@@ -228,8 +227,7 @@
       </script>
 
 
-      <div id="div_whitelist_page" class="menu-entry">
-        Don't run on this page
+      <div i18n="dont_run_on_this_page" id="div_whitelist_page" class="menu-entry">
       </div>
       <script>
         $("#div_whitelist_page").click(function() {
@@ -255,8 +253,7 @@
 
       <!-- **************** Extras ************** -->
 
-      <div id="div_options" class="menu-entry">
-        Options
+      <div i18n="options" id="div_options" class="menu-entry">
       </div>
       <script>
         $("#div_options").click(function() {
@@ -264,16 +261,14 @@
         });
       </script>
 
-      <div id="div_help_disable">
-        <div class="menu-entry">
-          Hide this button
-        </div>
-        <div id="help_disable_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none">
+      <div id="div_help_hide">
+        <div i18n="hide_this_button" class="menu-entry"></div>
+        <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none">
         </div>
       </div>
       <script>
-        $("#div_help_disable").click(function() {
-          $("#help_disable_explanation").slideDown();
+        $("#div_help_hide").click(function() {
+          $("#help_hide_explanation").slideDown();
         });
       </script>
 
@@ -283,7 +278,8 @@
  
       <div id="div_donate">
         <div id="donate_close" style="float:right; display:none"><a class="blue" href="#">x</a></div>
-        <a href="#" class="blue" id="donate_open">Did you know this is my full-time job?</a>
+        <a href="#" class="blue" id="donate_open" 
+          i18n="did_you_know_this_is_my_full_time_job"></a>
         <div id="donation_wrapper" style="display:none; clear:left">
           <iframe style="border: 1px solid gray; " width="100%" height="100%"></iframe>
         </div>

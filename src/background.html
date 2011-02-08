@@ -402,7 +402,7 @@
         }
         else if (saw != version_to_notify) {
           // If they haven't seen the latest, show it.
-          chrome.browserAction.setTitle({title:"New version!"});
+          chrome.browserAction.setTitle({title:translate("new_version")});
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
