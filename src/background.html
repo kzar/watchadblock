@@ -51,10 +51,19 @@
 
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
+      // Returns: null if succesfull, otherwise an exception
       utils.add_custom_filter = function(options) {
         var custom_filters = utils.get_custom_filters_text({});
-        custom_filters = custom_filters + '\n' + options.filter;
-        utils.set_custom_filters_text({filters: custom_filters });
+        try {
+          if (FilterNormalizer.normalizeLine(options.filter)) {
+            custom_filters = custom_filters + '\n' + options.filter;
+            utils.set_custom_filters_text({filters: custom_filters });
+            return null;
+          }
+          return "This filter is unsupported";
+        } catch(ex) {
+          return ex;
+        }
       }
 
       // Get the custom filters text as a \n-separated text string.

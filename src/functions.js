@@ -15,9 +15,6 @@ extension_call = function(fn, options, callback) {
 // if the user chooses.
 log = function() { };
 
-//Regex to validate a user-created filter.
-var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
-
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
 }
@@ -53,7 +50,7 @@ function localizePage() {
 function page_is_whitelisted(url, type) {
   //special case this one
   if (url == "http://acid3.acidtests.org/") return true;
-  url = url.replace(/#.*$/, ''); // Remove anchors
+  url = url.replace(/\#.*$/, ''); // Remove anchors
   if (!type) 
     type = ElementTypes.document;
   var bg = chrome.extension.getBackgroundPage();

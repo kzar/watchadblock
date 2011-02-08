@@ -76,9 +76,15 @@
     "message": "Typ aub het juiste filter hieronder in en klik daarna op OK",
     "description": "Text if the user wants to manually edit a filter"
   },
-  "blacklistereditinvalid": {
-    "message": "Dit filter is ongeldig!",
-    "description": "Messagebox if the manually edited filter is invalid"
+  "blacklistereditinvalid1": {
+    "message": "Het filter is ongeldig: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
   },
   "blacklisterblockedelement": {
     "message": "Geblokkeerd element:",
@@ -795,5 +801,9 @@
   "cantblockflash": {
     "message": "We kunnen nog geen advertenties in videos, Flash of andere plugins blokkeren. We wachten op ondersteuning van de browser en WebKit.",
     "description": "Result of the final ad report question"
+  },
+  "cleanuplist": {
+    "message": "Controleer deze filters en ruim ze op indien nodig:",
+    "description": "Option at the bottom of the third options tab"
   }
 }

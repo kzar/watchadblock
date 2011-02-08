@@ -24,6 +24,9 @@
     }
   </style>
 
+  <script type="text/javascript" src="../filtering/filternormalizer.js"></script>
+  <script type="text/javascript" src="../filtering/filtertypes.js"></script>
+  <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
     register_broadcast_listener('filters_updated', function() {
       extension_call('get_custom_filters_text', {}, function(filters) {
@@ -94,26 +97,20 @@
         $(this).attr("disabled", "disabled");
       });
 
-      function validateDomain(domain) {
-        if (domain == '') return true;
-        var domain_validation_regex = /^(([a-zA-Z0-9\-]+\.)+[0-9a-zA-Z]{1,6})|[a-zA-Z0-9\-\.]*\*[a-zA-Z0-9\-\.\*]*$/;
-        if (!domain_validation_regex.test(domain)) return false;
-        if (domain.indexOf('..') > -1) return false;
-        if (domain.indexOf('**') > -1) return false;
-        return true;
-      }
-
       var validateUrlFilter = function() {
         var blockUrl = $("#txtBlockUrl").val().trim();
         var blockDomain = $("#txtBlockUrlDomain").val().trim();
         if (blockDomain == '*')
           blockDomain = '';
-
-        var ok = true;
-        if (!validateDomain(blockDomain))
-          ok = false;
-        if (blockUrl == '')
-          ok = false;
+        if (blockDomain)
+          blockDomain = '$domain=' + blockDomain;
+        var ok = false;
+        try {
+          if (FilterNormalizer.normalizeLine(blockUrl + blockDomain))
+            ok = true;
+          if (Filter.isSelectorFilter(blockUrl))
+            ok = false;
+        } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
       $("#divUrlBlock input:text").keyup(validateUrlFilter);
@@ -121,19 +118,27 @@
       var validateCssFilter = function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
         var blockDomain = $("#txtUserFilterDomain").val().trim();
-        var ok = true;
-        if (!validateDomain(blockDomain))
-          ok = false;
-        if (ok) {
-          ok = global_filter_validation_regex.test(blockCss);
-        }
+        if (blockDomain == '*')
+          blockDomain = '';
+        var ok = false;
+        try {
+          if (FilterNormalizer.normalizeLine(blockDomain + "##" + blockCss))
+            ok = true;
+        } catch(ex) {}
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#divCssBlock input:text").keyup(validateCssFilter);
       
       var validateExcludeFilter = function() {
-        var excludeUrl = $("#txtUnblock").val().trim();
-        $("#btnAddExcludeFilter").attr("disabled", excludeUrl ? null : "disabled");
+        var unblockUrl = $("#txtUnblock").val().trim();
+        var ok = false;
+        try {
+          if (FilterNormalizer.normalizeLine('@@' + unblockUrl + '$document'))
+            ok = true;
+          if (!unblockUrl || Filter.isSelectorFilter(unblockUrl))
+            ok = false;
+        } catch(ex) {}
+        $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
       }
       $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
 
@@ -278,14 +283,34 @@
            target="_new"></a>
      </div>
 
-    <div>
-      <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
-      <br/>
-    </div>
+      <div>
+        <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
+        <br/>
+      </div>
 
-    <div style="padding-top:20px">
-      <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
-      <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
-    </div>
+      <div style="padding-top:20px">
+        <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
+        <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
+      </div>
 
+    </div>
+  </div>
+
+  <div class="sneaky">
+    <p>
+    <span i18n="cleanuplist"></span>
+    <input type="button" id="btnCleanUp" i18n_value="buttonok" />
+    </p>
+    <script>
+      $(function() {
+        $("#btnCleanUp").click(function() {
+          //Don't save immediately, first allow them to review changes
+          if ($("#btnEditAdvancedFilters").is(":visible"))
+            $("#btnEditAdvancedFilters").click();
+          var newFilters = FilterNormalizer.normalizeList($("#txtFiltersAdvanced").val(), true);
+          newFilters = newFilters.replace(/(\n)+$/,'\n'); // Del trailing \n's
+          $("#txtFiltersAdvanced").val(newFilters)
+        });
+      });
+    </script>
   </div>

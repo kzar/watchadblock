@@ -5,9 +5,10 @@ var FilterNormalizer = {
   // Normalize a set of filters.
   // Remove broken filters, useless comments and unsupported things.
   // Input: text:string filter strings separated by '\n'
+  //        keepComments:boolean if true, comments will not be removed
   // Returns: filter strings separated by '\n' with invalid filters
   //          removed or modified
-  normalizeList: function(text) {
+  normalizeList: function(text, keepComments) {
     var lines = text.split('\n');
     delete text;
     var result = [];
@@ -19,6 +20,8 @@ var FilterNormalizer = {
           result.push(newfilter);
         else if (newfilter !== false)
           ignoredFilterCount++;
+        else if (keepComments)
+          result.push(lines[i]);
       } catch (ex) {
         log("Filter '" + lines[i] + "' could not be parsed: " + ex);
         ignoredFilterCount++;
@@ -54,9 +57,12 @@ var FilterNormalizer = {
 
     // If it is a hiding rule...
     if (Filter.isSelectorFilter(filter)) {
+      //Regex to validate a user-created filter.
+      var filter_validation_regex = /^(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
+
       // All specified domains must be valid.
       var parts = filter.split('##');
-      if (!global_filter_validation_regex.test('##' + parts[1]))
+      if (!filter_validation_regex.test(parts[1]))
         throw "Failed filter validation regex";
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
@@ -64,10 +70,6 @@ var FilterNormalizer = {
       // Ignore [style] special case that WebKit parses badly.
       var parsedFilter = new SelectorFilter(filter);
       if (/style([\^\$\*]?=|\])/.test(filter))
-        return null;
-
-      // Ignore another special case unable to be caught by the previous check.
-      if (/^\#\d/.test(parts[1]))
         return null;
 
     } else { // If it is a blocking rule...
