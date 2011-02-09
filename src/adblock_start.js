@@ -86,7 +86,8 @@ beforeLoadHandler = function(event) {
     pageDomain: document.domain, 
     isTopFrame: (window == window.top) 
   };
-  collect_resources[elType + ':|:' + data.url] = null;
+  if (!SAFARI)
+    collect_resources[elType + ':|:' + data.url] = null;
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (el.nodeName == "FRAME")
@@ -109,9 +110,10 @@ function block_list_via_css(selectors) {
 }
 
 function adblock_begin() {
-  collect_resources = [];
-  if (!SAFARI)
+  if (!SAFARI) {
+    collect_resources = [];
     LOADED_TOO_FAST = [];
+  }
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
