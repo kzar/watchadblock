@@ -80,10 +80,12 @@
             $("#chromebutton input").click(function() {
               $("#chromebutton_upon_check").show();
             });
-            chrome.extension.sendRequest(button_extension_id, {}, function() {
-              $("#chromebutton input").attr("checked", true);
-              $('[i18n="chromebutton_how_to_enable"]').hide();
-              $('[i18n="chromebutton_how_to_disable"]').show();
+            chrome.extension.sendRequest(button_extension_id, {}, function(data) {
+              if (data) {
+                $("#chromebutton input").attr("checked", true);
+                $('[i18n="chromebutton_how_to_enable"]').hide();
+                $('[i18n="chromebutton_how_to_disable"]').show();
+              }
             });
           });
         </script>
