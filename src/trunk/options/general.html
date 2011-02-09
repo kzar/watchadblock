@@ -1,0 +1,90 @@
+  <script>
+    $(function() {
+      // Check or uncheck each option.
+      extension_call('get_optional_features', {}, function(features) {
+        for (var name in features) {
+          $("#enable_" + name).
+            attr("checked", features[name].is_enabled);
+        }
+        $("input.feature:checkbox").change(function() {
+          var is_enabled = $(this).is(':checked');
+          var name = this.id.substring(7); // TODO: hack
+          extension_call(
+            'set_optional_feature', 
+            {name:name, is_enabled:is_enabled}
+          );
+        });
+      });
+      
+      //translation
+      localizePage();
+    });
+  </script>
+
+  <div class="section" class="experiments">
+    <h2 i18n="generaloptions"></h2>
+
+    <div id="chromebutton" style="display:none">
+      <p>
+        <input type="checkbox" id="show_chrome_button"/>
+        <label for="show_chrome_button" i18n="chromebutton_showoption"></label>
+        <img src="../img/icon_screenshot.png" style="vertical-align:middle;"/>
+      </p>
+      <div id="chromebutton_upon_check" style="display:none; font-style: italic" class="info">
+        <div i18n="chromebutton_how_to_enable" 
+             i18n_replacement_el="chromebutton_install_link"></div>
+        <a id="chromebutton_install_link" 
+           href="https://clients2.google.com/service/update2/crx?response=redirect&x=id%3Dpicdndbpdnapajibahnnogkjofaeooof%26uc%26lang%3Den-US&prod=chrome"></a>
+        <div i18n="chromebutton_how_to_disable" style="display:none"></div>
+      </div>
+    </div>
+    <script>
+      $(function() {
+        if (SAFARI)
+          return;
+        $("#chromebutton").show();
+        $("#chromebutton input").click(function() {
+          $("#chromebutton_upon_check").show();
+        });
+        chrome.extension.sendRequest(button_extension_id, {}, function() {
+          $("#chromebutton input").attr("checked", true);
+          $('[i18n="chromebutton_how_to_enable"]').hide();
+          $('[i18n="chromebutton_how_to_disable"]').show();
+        });
+      });
+    </script>
+
+    <p>
+      <input type="checkbox" class="feature" id="enable_show_google_search_text_ads"/>
+      <label for="enable_show_google_search_text_ads" i18n="googletextads"></label>
+    </p>
+    <script>
+      // TODO: This is a dumb race condition, and still has a bug where
+      // if the user reloads/closes the options page within a second
+      // of clicking this, the filters aren't rebuilt.  Call this inside
+      // the feature change handler if it's this checkbox being clicked.
+      $("#enable_show_google_search_text_ads").change(function() {
+        // Give the optional feature a sec to get saved by the other
+        // change handler before recalculating filters.
+        window.setTimeout(function() { 
+          extension_call('update_filters', { }); 
+        }, 1000);
+      });
+    </script>
+
+    <p>
+      <input type="checkbox" class="feature" id="enable_show_context_menu_items" />
+      <label for="enable_show_context_menu_items" i18n="showcontextmenus"></label>
+    </p>
+
+    <p>
+      <input type="checkbox" class="feature" id="enable_block_youtube" />
+      <label for="enable_block_youtube" i18n="youtubeads"></label>
+      <span style='font-style:italic; color:red' i18n="betalabel"></span>
+    </p>
+  </div>
+
+  <div class="sneaky">
+    <input type="checkbox" class="feature" id="enable_debug_logging" />
+    <label for="enable_debug_logging" i18n="debuginlogoption"></label>
+  </div>

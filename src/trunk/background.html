@@ -1,0 +1,558 @@
+<html>
+  <head>
+    <script src="port.js"></script>
+    <script src="jquery/jquery-1.4.4-hacked-up.min.js"></script>
+    <script src="functions.js"></script>
+    <script src="filtering/filteroptions.js"></script>
+    <script src="filtering/fifocache.js"></script>
+    <script src="filtering/filtertypes.js"></script>
+    <script src="filtering/filterset.js"></script>
+    <script src="filtering/myfilters.js"></script>
+    <script src="filtering/filternormalizer.js"></script>
+    <script>
+      var utils = {};
+    </script>
+    <script src="button/temporary_background_code.js"></script>
+    <script>
+
+      // UNWHITELISTING
+
+      // Look for a custom filter that would whitelist options.url,
+      // and if any exist, remove the first one.
+      // Inputs: url:string - a URL that may be whitelisted by a custom filter
+      // Returns: true if a filter was found and removed; false otherwise.
+      utils.try_to_unwhitelist = function(options) {
+        var url = options.url.replace(/#.*$/, ''); // Whitelist ignores anchors
+        var custom_filters = utils.get_custom_filters_text({}).split('\n');
+        for (var i = 0; i < custom_filters.length; i++) {
+          var text = custom_filters[i];
+          if (!Filter.isWhitelistFilter(text))
+            continue;
+          var filter = new WhitelistFilter(text);
+          if (!filter.matches(url, ElementTypes.document))
+            continue;
+
+          custom_filters.splice(i, 1); // Remove this whitelist filter text
+          var new_text = custom_filters.join('\n');
+          utils.set_custom_filters_text({filters: new_text});
+          return true;
+        }
+        return false;
+      }
+
+      // V3 FILTERING
+
+      // Rebuild the filterset based on the current settings and subscriptions.
+      // Inputs: none.
+      // Returns: null, upon completion
+      utils.update_filters = function(options) {
+        _myfilters.update();
+      }
+
+      // Add a new custom filter entry.
+      // Inputs: filter:string line of text to add to custom filters.
+      // Returns: null if succesfull, otherwise an exception
+      utils.add_custom_filter = function(options) {
+        var custom_filters = utils.get_custom_filters_text({});
+        try {
+          if (FilterNormalizer.normalizeLine(options.filter)) {
+            custom_filters = custom_filters + '\n' + options.filter;
+            utils.set_custom_filters_text({filters: custom_filters });
+            return null;
+          }
+          return "This filter is unsupported";
+        } catch(ex) {
+          return ex;
+        }
+      }
+
+      // Get the custom filters text as a \n-separated text string.
+      utils.get_custom_filters_text = function(options) {
+        return utils.storage_get({key: 'custom_filters', default_value: ''});
+      }
+
+      // Set the custom filters to the given \n-separated text string, and 
+      // rebuild the filterset.
+      // Inputs: filters:string the new filters.
+      utils.set_custom_filters_text = function(options) {
+        utils.storage_set({key: 'custom_filters', value: options.filters});
+        _myfilters.update();
+      }
+
+      // STORAGE
+
+      // Inputs: key:string, default_value:object. 
+      // Returns value or default_value if not stored.
+      utils.storage_get = function(options) {
+        var json = localStorage.getItem(options.key);
+        if (json == null)
+          return options.default_value;
+        try {
+          return JSON.parse(json);
+        } catch (e) {
+          log("Couldn't parse json for " + options.key);
+          return options.default_value;
+        }
+      }
+      // Inputs: key:string, value:object.
+      // Returns null.
+      utils.storage_set = function(options) {
+        localStorage.setItem(options.key, JSON.stringify(options.value));
+      }
+      // Inputs: key:string.
+      // Returns null.
+      utils.storage_remove = function(options) {
+        localStorage.removeItem(options.key);
+      }
+  
+      // Return the contents of a local file.
+      // Inputs: file:string - the file relative address, eg "js/foo.js".
+      // Returns: the content of the file.
+      utils.readfile = function(options) {
+        // A bug in jquery prevenst local files from being read, so use XHR.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", chrome.extension.getURL(options.file), false);
+        xhr.send();
+        return xhr.responseText;
+      }
+
+      if (SAFARI) {
+        // Return chrome.i18n._getL10nData() for content scripts who cannot
+        // call that function (since it loads extension files from disk.)
+        utils.get_l10n_data = function(options) {
+          return chrome.i18n._getL10nData();
+        }
+      }
+
+
+      // OPTIONAL FEATURES
+
+      utils.get_optional_features = function(options) {
+        var features = utils.storage_get({
+          key:'optional_features', 
+          default_value:{}
+        });
+        var feature_names = [
+          "debug_logging",
+          "block_youtube",
+          "show_youtube_help_msg",
+          "show_google_search_text_ads",
+          "show_context_menu_items"
+          ];
+        for (var i = 0; i < feature_names.length; i++) {
+          var name = feature_names[i];
+          if (!features[name]) {
+            features[name] = { name: name };
+            switch (name) {
+              case "block_youtube":
+              case "show_youtube_help_msg":
+              case "show_context_menu_items":
+                features[name].is_enabled = true; // by default
+                break;
+              default:
+                features[name].is_enabled = false;
+            }
+          }
+        }
+        return features;
+      }
+      utils.set_optional_feature = function(options) {
+        var features = utils.get_optional_features();
+        if (features[options.name] == null)
+          features[options.name] = { name:options.name };
+        var feature = features[options.name];
+        feature.is_enabled = options.is_enabled;
+        utils.storage_set({key:'optional_features', value:features});
+        
+        if (options.name == "debug_logging") {
+          if (options.is_enabled)
+            log = function(text) { console.log(text); };
+          else
+            log = function() { };
+        }
+      }
+  
+      // TODO: make better.
+      // Inputs: domain:string the domain of the calling frame.
+      //         include_filters:bool true if hide and block filters should be
+      //           included
+      utils.get_content_script_data = function(options, sender) {
+        var whitelisted = page_is_whitelisted(sender.tab.url);
+        var features = utils.get_optional_features();
+        var result = {
+          page_is_whitelisted: whitelisted,
+          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
+          features: features
+        };
+        if (whitelisted)
+          return result;
+        // If in debug mode, send filters to adblock.js to print css info.
+        // Normally only adblock_start asks to include_filters.
+        if (!options.include_filters && !features.debug_logging.is_enabled)
+          return result;
+
+        // Not whitelisted, and running on adblock_start.  We have two tasks:
+        // apply CSS-hiding rules, and send Chrome a filterset.
+
+        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+        // when not cached, it takes about 100ms.  So more caching would be good.  The
+        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+        // should be able to turn up the fifecache size by a lot.  have the fifocache log
+        // how big each new entry is, to verify this.
+        if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
+          var global_hide = _myfilters.global.cached_getSelectors;
+          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+          result.selectors = global_hide.concat(nonglobal_hide);
+        }
+        // Chrome needs the blocking filters in the content script until a
+        // synchronous background communication API comes along.
+        if (!SAFARI) {
+          var global_block = _myfilters.global.cached_blockFiltersText;
+          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
+          result.block = global_block + nonglobal_block.join('\n');
+        }
+
+        return result;
+      }
+
+      // NEW FILTERS
+
+      // Fetch the latest version of all subscribed lists now.
+      utils.update_subscriptions_now = function(options) {
+        _myfilters.freshen_async(true);
+      }
+      // Returns map from id to subscription object.  See filters.js for 
+      // description of subscription object.
+      // Inputs: none
+      utils.get_subscriptions_minus_text = function(options) {
+        return _myfilters.get_subscriptions_minus_text();
+      }
+      // Subscribes to a filter subscription.
+      // Inputs: id: id to which to subscribe.  Either a well-known
+      //             id, or "url:xyz" pointing to a user-specified list.
+      //         text: filter text string fetched from that url
+      //         requires?: the id of a list if it is a supplementary list
+      // Returns: null, upon completion
+      utils.subscribe = function(options) {
+        return _myfilters.subscribe(options.id, options.text, options.requires);
+      }
+
+      // Unsubscribes from a filter subscription.
+      // Inputs: id: id from which to unsubscribe.
+      //         del: (bool) if the filter should be removed or not
+      // Returns: null, upon completion.
+      utils.unsubscribe = function(options) {
+        return _myfilters.unsubscribe(options.id, options.del);
+      }
+
+      // Opens a popup that subscribes to a new list
+      // Must be here because other pages cannot open popups...
+      // Inputs: searchquery: the search part of the abp: url
+      utils.subscribe_popup = function(options) {
+        window.open(chrome.extension.getURL('pages/subscribe.html?' +
+                    options.searchquery), "_blank", 
+                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
+      }
+
+      // Called within content scripts, by broadcast_channel.js's 
+      // broadcast(), to bounce messages back to all listeners
+      utils.emit_broadcast = function(request) {
+        log("Broadcasting from background to users " + request.fn);
+        $.each(ports, function(i, port) {
+          port.postMessage(request);
+        });
+      }
+
+      // Called by page_broadcast() to bounce messages back to all 
+      // listeners on the same page as the caller.
+      utils.emit_page_broadcast = function(request, sender) {
+        log("Broadcasting from background (to page " + sender.tab.id +
+            ") to users " + request.fn);
+        $.each(ports, function(i, port) {
+          if (port.sender.tab.id == sender.tab.id)
+            port.postMessage(request);
+        });
+      }
+
+
+      utils.open_blacklist_ui_on_tab = function(options) {
+        // emit_page_broadcast uses sender.tab.id to determine which page
+        // to send to.  Fake it.
+        // TODO we should really make a cleaner system for letting
+        // content scripts default a tabid to "my tab" while letting the
+        // extension button specify the tab id.
+        var sender = { tab: { id: options.tabid } };
+        utils.emit_page_broadcast(
+          {fn:'top_open_blacklist_ui', options:{}},
+          sender
+        );
+      };
+      
+      // Just like open_blacklist_ui
+      utils.open_whitelist_ui_on_tab = function(options) {
+        var sender = { tab: { id: options.tabid } };
+        utils.emit_page_broadcast(
+          {fn:'top_open_whitelist_ui', options:{}},
+          sender
+        );
+      };
+
+      // Turn on or off the context menus in Chrome based on whether the
+      // domain in question is whitelisted, adblock is paused, or the user
+      // has disabled the menus in the Options.
+      // Inputs:
+      //   url:string the url of the tab being right clicked
+      // Returns: null
+      utils.setChromeContextMenus = function(options) {
+        if (SAFARI)
+          return;
+        var showThem = true;
+
+        var domain = url_parts(options.url).domain;
+        var whitelisted = page_is_whitelisted(options.url);
+        var features = utils.get_optional_features({});
+        var disabled = !features.show_context_menu_items.is_enabled;
+        var paused = localStorage.getItem('adblock_is_paused');
+
+        chrome.contextMenus.removeAll();
+
+        if (paused || disabled || whitelisted)
+          return;
+        
+        chrome.contextMenus.create({
+          title: translate("contextmenuhidethis"),
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{info: info}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title: translate("contextmenuhideanything"),
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+              sender
+            );
+          }
+        });
+        chrome.contextMenus.create({
+          title: translate("contextmenuexcludedomain"),
+          contexts:["all"], 
+          onclick: function(info, tab) {
+            var sender = { tab: tab };
+            utils.emit_page_broadcast(
+              {fn:'top_open_whitelist_ui', options:{}},
+              sender
+            );
+          }
+        });
+      }
+
+      if (!SAFARI) {
+        // Set the button image and context menus according to the URL 
+        // of the current tab.
+        // TODO getCurrentTabInfo calculated is_whitelisted and disabled_site
+        // and then we recalculate this in setChromeContextMenus which is
+        // wasteful and unnecessarily complex.  Review exactly what we need to
+        // do on tab change and do it all in one place.
+        function updateButtonUIAndContextMenus() {
+          getCurrentTabInfo(function(info) {
+            utils.setChromeContextMenus({url: info.tab.url});
+
+            if (localStorage.getItem('adblock_is_paused')) {
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (info.disabled_site) {
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (info.whitelisted) {
+              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+            } else {
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
+            }
+          });
+        }
+
+        //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
+        //Otherwise the extension doesn't work (e.g. doesn't block ads)
+        if (chrome.tabs) {
+          chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+            if (tab.selected && changeInfo.url)
+              updateButtonUIAndContextMenus();
+          });
+          chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
+            updateButtonUIAndContextMenus();
+          });
+        }
+      }
+
+
+      // BROWSER ACTION BADGE
+      if (!SAFARI) {
+        // The string to display to the user in the "new version" div.
+        // Update this whenever a release warrants a browser action
+        // badge and an info div in the popup.  Note that it is
+        // not compared with the manifest -- you can set it to whatever
+        // value you want.
+        version_to_notify = '2.2';
+
+        var saw = localStorage.getItem('saw_badge_version');
+        if (saw == null) {
+          // If they've just installed, don't show the badge.
+          localStorage.setItem('saw_badge_version', version_to_notify);
+        }
+        else if (saw != version_to_notify) {
+          // If they haven't seen the latest, show it.
+          chrome.browserAction.setTitle({title:"New version!"});
+          chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
+          chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
+        }
+      }
+
+
+
+      ports = [];
+      chrome.extension.onConnect.addListener(function(port) {
+        port.onDisconnect.addListener(function(disconnected_port) {
+          var where = ports.indexOf(disconnected_port);
+          if (where != -1) {
+            ports.splice(where, 1);
+          }
+        });
+        ports.push(port);
+      });
+
+      if (utils.get_optional_features({}).debug_logging.is_enabled)
+        log = function(text) { console.log(text); };
+
+      chrome.extension.onRequest.addListener(
+        function(request, sender, sendResponse) { 
+          var result = utils[request.fn](request.options, sender);
+          sendResponse(result);
+        }
+      );
+
+      
+      _myfilters = new MyFilters();
+      _myfilters.updated(function() {
+        utils.emit_broadcast({
+          fn: 'filters_updated', 
+          options: {}
+        });
+      });
+
+
+      // If the user has just installed, make a note of it.  
+      function note_install() {
+        if (utils.storage_get({key:'installed_at', default_value:0}) != 0)
+          return;
+        var now = new Date().getTime();
+        utils.storage_set({key:'installed_at', value:now});
+        $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
+        // TODO: open in safari as well
+        if (!SAFARI) {
+          chrome.tabs.create({url: "pages/installed.html"});
+        }
+      }
+      note_install();
+
+      // TODO temp code installed on 1/6/2010
+      // Take a census of filter subscriptions.
+      try {
+        if (localStorage['tookSubscriptionCensus'] == null) {
+          var data = {};
+          data.subscriptions = [];
+          for (var sub_id in _myfilters._subscriptions) {
+            if (_myfilters._subscriptions[sub_id].subscribed) {
+              data.subscriptions.push(sub_id);
+            }
+          }
+          data.subscriptions = data.subscriptions.join(',');
+          data.safari = SAFARI;
+          data.language = navigator.language;
+          data.installed_at = localStorage['installed_at'];
+          data.options_at = localStorage['visited_options_at'];
+          $.get(
+            "http://chromeadblock.com/api/url_census.php", 
+            data,
+            function(result) {
+              if (/OK/.test(result))
+                localStorage['tookSubscriptionCensus'] = true;
+            }
+          );
+        }
+      } catch (ex) { log("Census failed"); log(ex); }
+
+
+      // Safari specific code.
+      if (SAFARI) {
+        // True blocking support.
+        safari.application.addEventListener("message", function(messageEvent) {
+          if (messageEvent.name != "canLoad")
+            return;
+
+          if (page_is_whitelisted(messageEvent.target.url)) {
+            messageEvent.message = true;
+            return;
+          }
+
+          var url = messageEvent.message.url;
+          var elType = messageEvent.message.elType;
+          var pageDomain = messageEvent.message.pageDomain;
+
+          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
+          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
+                                  limited.matches(url, elType, pageDomain));
+          if (isMatched)
+            log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
+          messageEvent.message = !isMatched;
+        }, false);
+
+        safari.application.addEventListener("command", function(commandEvent) {
+          // Open Options page upon Toolbar button click.
+          if (commandEvent.command == "AdBlockOptions") {
+            safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
+          }
+          if (commandEvent.command in 
+              {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
+            safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
+          }
+        }, false);
+
+        // Add context menus
+        safari.application.addEventListener("contextmenu", function(event) {
+          if (!event.userInfo)
+            return;
+          if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
+            return;
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
+          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
+        }, false);
+      }
+
+
+
+
+      // OLD STYLE WHITELIST
+      //   TODO: Remove this when you are convinced everyone has updated their
+      //   version of AdBlock... Say in March or April
+      if (utils.storage_get({key:'whitelist', default_value:[]})) {
+        var old_style_whitelist = utils.storage_get({key:'whitelist', default_value:[]});
+        for (var i=0; i<old_style_whitelist.length; i++) {
+          var website = old_style_whitelist[i];
+          if (website[0] == '.')
+            website = '*' + website;
+          utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+        }
+        localStorage.removeItem('whitelist')
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
