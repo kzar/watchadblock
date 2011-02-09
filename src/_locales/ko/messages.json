@@ -101,6 +101,16 @@
     "message": "필터를 알맞게 입력하면 확인을 누르십시오.",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
+  "blacklistereditinvalid1": {
+    "message": "필터가 올바르지 않습니다. $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
+  },
   "blacklisterblockedelement": {
     "message": "<b>숨길 요소 :</b><br/>",
     "description": "Tells the user what the blocked element is on the slider page"
@@ -785,11 +795,15 @@
     "description": "Title of the final ad report question if the ad didn't appear in FF"
   },
   "cantblockflashwarning": {
-    "message": "영화에서 내부와 시작하기 전의 광고 또는 플래시 게임과 같이 다른 플러그인에 광고가 존재합니까?",
+    "message": "영화의 내부와 시작하기 전의 광고 또는 플래시 게임과 같이 다른 플러그인에 광고가 존재합니까?",
     "description": "Text of the final ad report question"
   },
   "cantblockflash": {
     "message": "플래시나 다른 플러그인의 내부 광고 차단 기능은 아직 지원하지 않습니다. 브라우저와 웹키트에서 그 기능을 지원하기를 기다리고 있습니다.",
     "description": "Result of the final ad report question"
+  },
+  "cleanuplist": {
+    "message": "이 목록을 제거합니다.",
+    "description": "Option at the bottom of the third options tab"
   }
 }
