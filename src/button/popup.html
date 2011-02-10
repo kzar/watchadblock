@@ -120,7 +120,11 @@
           localStorage.setItem('saw_badge_version', bg.version_to_notify);
 
           var last_notified = localStorage.getItem('last_notified_version');
-          if (last_notified != bg.version_to_notify) {
+          if (last_notified == null) {
+            // If the user is brand new, don't show version notices.
+            localStorage.setItem('last_notified_version', bg.version_to_notify);
+          }
+          else if (last_notified != bg.version_to_notify) {
             // If the user hasn't dismissed the latest notice, show it.
             $("#div_new_release").show();
 
