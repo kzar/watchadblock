@@ -112,25 +112,20 @@
       </div>
       <script>
         $(function() {
-          var bg = chrome.extension.getBackgroundPage();
+          var info_ver = chrome.extension.getBackgroundPage().version_to_notify;
           // If there was badge text set, informing the user of a new
           // version, clear it.
           chrome.browserAction.setBadgeText({text: ''});
           chrome.browserAction.setTitle({title: ''});
-          localStorage.setItem('saw_badge_version', bg.version_to_notify);
+          localStorage.setItem('saw_badge_version', info_ver);
 
-          var last_notified = localStorage.getItem('last_notified_version');
-          if (last_notified == null) {
-            // If the user is brand new, don't show version notices.
-            localStorage.setItem('last_notified_version', bg.version_to_notify);
-          }
-          else if (last_notified != bg.version_to_notify) {
+          if (localStorage.getItem('saw_badge_info_version') != info_ver) {
             // If the user hasn't dismissed the latest notice, show it.
             $("#div_new_release").show();
 
             $("#new_release_close").click(function() {
               $("#div_new_release").slideUp();
-              localStorage.setItem('last_notified_version', bg.version_to_notify);
+              localStorage.setItem('saw_badge_info_version', info_ver);
             });
           }
         });
