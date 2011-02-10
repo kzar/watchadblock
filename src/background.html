@@ -387,7 +387,10 @@
 
 
       // BROWSER ACTION BADGE
-      if (!SAFARI) {
+      (function() {
+        if (SAFARI)
+          return;
+
         // The string to display to the user in the "new version" div.
         // Update this whenever a release warrants a browser action
         // badge and an info div in the popup.  Note that it is
@@ -395,18 +398,19 @@
         // value you want.
         version_to_notify = '2.3.0';
 
-        var saw = localStorage.getItem('saw_badge_version');
-        if (saw == null) {
-          // If they've just installed, don't show the badge.
+        // Brand new users don't see badge (or popup's info div).
+        if (!utils.storage_get({key:'installed_at'})) {
           localStorage.setItem('saw_badge_version', version_to_notify);
+          localStorage.setItem('saw_badge_info_version', version_to_notify);
         }
-        else if (saw != version_to_notify) {
+        var saw = localStorage.getItem('saw_badge_version');
+        if (saw != version_to_notify) {
           // If they haven't seen the latest, show it.
           chrome.browserAction.setTitle({title:translate("new_version")});
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
-      }
+      })();
 
 
 
