@@ -11,14 +11,14 @@ function verify_whitelist() {
     may_open_whitelist_ui = false;
 
     var btns = {};
-    btns[translate("buttoncancel")] = function() { page.dialog('close');}
+    btns[translate("buttoncancel")] = function() { page.dialog('close');};
     btns[translate("buttonexclude")] = 
         function() {
           extension_call('add_custom_filter', 
                          {filter: '@@||' + domain + '^$document'}, function() {
             document.location.reload();
           });
-        }
+        };
 
     var page = $("<div>").
       html("<div id='adblockslider'></div>" + translate("whitelistertext", [ domain ])).

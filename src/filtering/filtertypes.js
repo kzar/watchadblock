@@ -1,5 +1,5 @@
 // A single filter rule.
-var Filter = function() {}
+var Filter = function() {};
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
@@ -21,22 +21,22 @@ Filter.fromText = function(text) {
 
   }
   return cache[text];
-}
+};
 
 Filter.isSelectorFilter = function(text) {
   return /\#\#/.test(text);
-}
+};
 
 Filter.isWhitelistFilter = function(text) {
   return /^\@\@/.test(text);
-}
+};
 
 Filter.isComment = function(text) {
   return text.length == 0 ||
          (text[0] == '!') ||
          (text[0] == '[' && text.indexOf('[Adblock') == 0) ||
          (text[0] == '(' && text.indexOf('(Adblock') == 0);
-}
+};
 
 // Given a comma-separated list of domain includes and excludes, return
 // { applied_on:array, not_applied_on:array }.  An empty applied_on array
@@ -72,7 +72,7 @@ Filter._domainInfo = function(domainText, divider) {
   }
 
   return result;
-}
+};
 
 // Return true if any of the domains in list are a complete component of the
 // given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
@@ -90,7 +90,7 @@ Filter._domainIsInList = function(domain, list) {
       return true;
   }
   return false;
-}
+};
 
 Filter.prototype = {
   __type: "Filter",
@@ -126,7 +126,7 @@ Filter.prototype = {
       return true;
     }
   }
-}
+};
 
 // Filters that block by CSS selector.
 var SelectorFilter = function(text) {
@@ -135,13 +135,13 @@ var SelectorFilter = function(text) {
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
   this.selector = parts[1];
-}
+};
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
 
   __type: "SelectorFilter"
-}
+};
 
 // Filters that block by URL regex or substring.
 var PatternFilter = function(text) {
@@ -158,7 +158,7 @@ var PatternFilter = function(text) {
   // TODO once Chrome has a real blocking API, we can get rid of _text.
   if (document.location.protocol == 'chrome-extension:')
     this._text = text;
-}
+};
 
 // Return a { rule, domainText, allowedElementTypes } object
 // for the given filter text.
@@ -280,7 +280,7 @@ PatternFilter._parseRule = function(text) {
 
   result.rule = new RegExp(rule);
   return result;
-}
+};
 
 PatternFilter.prototype = {
   // Inherit from Filter.
@@ -312,7 +312,7 @@ PatternFilter.prototype = {
 
     return this._rule.test(url);
   }
-}
+};
 
 // Filters that specify URL regexes or substrings that should not be blocked.
 var WhitelistFilter = function(text) {
@@ -320,7 +320,7 @@ var WhitelistFilter = function(text) {
 
   // TODO: Really, folks, this just ain't the way to do polymorphism.
   this.__type = "WhitelistFilter";
-}
+};
 // When you call any instance methods on WhitelistFilter, do the same
 // thing as in PatternFilter.
 WhitelistFilter.prototype = PatternFilter.prototype;

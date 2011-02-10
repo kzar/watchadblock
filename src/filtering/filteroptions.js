@@ -22,7 +22,7 @@ var ElementTypes = {
   xmlhttprequest: 8192,
   donottrack: 65536
   // if you add something here, update .ALL below
-}
+};
 ElementTypes.ALLRESOURCETYPES = 16383; // all types that apply to resources
 ElementTypes.ALL = 131071; // all bits turned on
 
@@ -31,4 +31,4 @@ var FilterOptions = {
   THIRDPARTY: 1,
   MATCHCASE: 2,
   FIRSTPARTY: 4
-}
+};

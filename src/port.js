@@ -108,10 +108,10 @@ if (SAFARI) {
             var sendResponse = function(dataToSend) {
               var responseMessage = { callbackToken: messageEvent.message.callbackToken, data: dataToSend };
               messageEvent.target.page.dispatchMessage("response", responseMessage);
-            }
+            };
             handler(request, sender, sendResponse);
           }, false);
-        },
+        }
       },
 
       connect: function(port_data) {

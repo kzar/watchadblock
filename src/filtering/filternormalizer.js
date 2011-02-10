@@ -43,7 +43,7 @@ var FilterNormalizer = {
   normalizeLine: function(filter) {
     // Some rules are separated by \r\n; and hey, some rules may
     // have leading or trailing whitespace for some reason.
-    var filter = filter.replace(/\r$/, '').trim();
+    filter = filter.replace(/\r$/, '').trim();
 
     // Remove comment/empty filters.
     if (Filter.isComment(filter))
@@ -126,7 +126,7 @@ var FilterNormalizer = {
     segments = segments.replace(/\((.*?)\)/g, "[$1]");
     // turn all [foo=bar baz] groups into [foo="bar baz"]
     // Specifically match:    = then not " then anything till ]
-    segments = segments.replace(/=([^"][^\]]*)/g, '="$1"');
+    segments = segments.replace(/\=([^"][^\]]*)/g, '="$1"');
     // turn all [foo] into .foo, #foo
     // #div(adblock) means all divs with class or id adblock
     // class must be a single class, not multiple (not #*(ad listitem))
@@ -151,4 +151,4 @@ var FilterNormalizer = {
       }
     }
   }
-}
+};

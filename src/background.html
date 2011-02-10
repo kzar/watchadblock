@@ -38,7 +38,7 @@
           return true;
         }
         return false;
-      }
+      };
 
       // V3 FILTERING
 
@@ -47,7 +47,7 @@
       // Returns: null, upon completion
       utils.update_filters = function(options) {
         _myfilters.update();
-      }
+      };
 
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
@@ -64,12 +64,12 @@
         } catch(ex) {
           return ex;
         }
-      }
+      };
 
       // Get the custom filters text as a \n-separated text string.
       utils.get_custom_filters_text = function(options) {
         return utils.storage_get({key: 'custom_filters', default_value: ''});
-      }
+      };
 
       // Set the custom filters to the given \n-separated text string, and 
       // rebuild the filterset.
@@ -77,7 +77,7 @@
       utils.set_custom_filters_text = function(options) {
         utils.storage_set({key: 'custom_filters', value: options.filters});
         _myfilters.update();
-      }
+      };
 
       // STORAGE
 
@@ -93,17 +93,17 @@
           log("Couldn't parse json for " + options.key);
           return options.default_value;
         }
-      }
+      };
       // Inputs: key:string, value:object.
       // Returns null.
       utils.storage_set = function(options) {
         localStorage.setItem(options.key, JSON.stringify(options.value));
-      }
+      };
       // Inputs: key:string.
       // Returns null.
       utils.storage_remove = function(options) {
         localStorage.removeItem(options.key);
-      }
+      };
   
       // Return the contents of a local file.
       // Inputs: file:string - the file relative address, eg "js/foo.js".
@@ -114,14 +114,14 @@
         xhr.open("GET", chrome.extension.getURL(options.file), false);
         xhr.send();
         return xhr.responseText;
-      }
+      };
 
       if (SAFARI) {
         // Return chrome.i18n._getL10nData() for content scripts who cannot
         // call that function (since it loads extension files from disk.)
         utils.get_l10n_data = function(options) {
           return chrome.i18n._getL10nData();
-        }
+        };
       }
 
 
@@ -155,7 +155,7 @@
           }
         }
         return features;
-      }
+      };
       utils.set_optional_feature = function(options) {
         var features = utils.get_optional_features();
         if (features[options.name] == null)
@@ -170,7 +170,7 @@
           else
             log = function() { };
         }
-      }
+      };
   
       // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
@@ -213,20 +213,20 @@
         }
 
         return result;
-      }
+      };
 
       // NEW FILTERS
 
       // Fetch the latest version of all subscribed lists now.
       utils.update_subscriptions_now = function(options) {
         _myfilters.freshen_async(true);
-      }
+      };
       // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.
       // Inputs: none
       utils.get_subscriptions_minus_text = function(options) {
         return _myfilters.get_subscriptions_minus_text();
-      }
+      };
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
@@ -235,7 +235,7 @@
       // Returns: null, upon completion
       utils.subscribe = function(options) {
         return _myfilters.subscribe(options.id, options.text, options.requires);
-      }
+      };
 
       // Unsubscribes from a filter subscription.
       // Inputs: id: id from which to unsubscribe.
@@ -243,7 +243,7 @@
       // Returns: null, upon completion.
       utils.unsubscribe = function(options) {
         return _myfilters.unsubscribe(options.id, options.del);
-      }
+      };
 
       // Opens a popup that subscribes to a new list
       // Must be here because other pages cannot open popups...
@@ -252,7 +252,7 @@
         window.open(chrome.extension.getURL('pages/subscribe.html?' +
                     options.searchquery), "_blank", 
                     'scrollbars=0,location=0,resizable=0,width=450,height=140');
-      }
+      };
 
       // Called within content scripts, by broadcast_channel.js's 
       // broadcast(), to bounce messages back to all listeners
@@ -261,7 +261,7 @@
         $.each(ports, function(i, port) {
           port.postMessage(request);
         });
-      }
+      };
 
       // Called by page_broadcast() to bounce messages back to all 
       // listeners on the same page as the caller.
@@ -272,7 +272,7 @@
           if (port.sender.tab.id == sender.tab.id)
             port.postMessage(request);
         });
-      }
+      };
 
 
       utils.open_blacklist_ui_on_tab = function(options) {
@@ -306,9 +306,6 @@
       utils.setChromeContextMenus = function(options) {
         if (SAFARI)
           return;
-        var showThem = true;
-
-        var domain = url_parts(options.url).domain;
         var whitelisted = page_is_whitelisted(options.url);
         var features = utils.get_optional_features({});
         var disabled = !features.show_context_menu_items.is_enabled;
@@ -352,7 +349,7 @@
             );
           }
         });
-      }
+      };
 
       if (!SAFARI) {
         // Set the button image and context menus according to the URL 
@@ -549,7 +546,7 @@
             website = '*' + website;
           utils.add_custom_filter({filter: '@@||' + website + '^$document'});
         }
-        localStorage.removeItem('whitelist')
+        localStorage.removeItem('whitelist');
       }
     </script>
   </head>

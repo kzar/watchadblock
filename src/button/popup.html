@@ -43,7 +43,7 @@
           "div_whitelist_page",
           "separator1",
           "div_options",
-          "div_help_disable",
+          "div_help_disable"
         ];
         hide(menu_items);
 
@@ -80,10 +80,10 @@
 
       <!-- ***************** New release notification **************** -->
 
-      <div id="div_new_release" style="display:none">
+      <div id="div_new_release" style="display:none;">
         <div class="box-wrapper">
           <div class = "box">
-            <div id="new_release_close" style="float:right"><a class="blue" href="#">x</a></div>
+            <div id="new_release_close" style="float:right;"><a class="blue" href="#">x</a></div>
             <div id="newtitle">New in version 2.2.0:</div>
             This toolbar button :)
           </div>
@@ -120,7 +120,7 @@
       <!-- ************ Standard menu entries *********** -->
 
       <div id="div_status_whitelisted" class="menu-entry">
-        <span style="font-style:italic">AdBlock is disabled on <span class="domainspan">this site</span></span>.
+        <span style="font-style:italic;">AdBlock is disabled on <span class="domainspan">this site</span></span>.
         <a href="#" class="blue">enable</a>
       </div>
       <script>
@@ -137,17 +137,17 @@
                   replaceWith("Sorry, AdBlock is disabled on this page by one of your filter lists.");
               }
             });
-          })
+          });
         });
       </script>
 
 
-      <div id="div_status_disabled" style="font-style: italic">
+      <div id="div_status_disabled" style="font-style: italic;">
         AdBlock can not run on this domain.
       </div>
 
       <div id="div_status_paused" class="menu-entry">
-        <span style="font-style:italic">AdBlock is paused.</span>
+        <span style="font-style:italic;">AdBlock is paused.</span>
         <a href="#" class="blue">unpause</a>
       </div>
       <script>
@@ -203,7 +203,7 @@
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
               window.close();
             });
-          })
+          });
         });
       </script>
 
@@ -224,7 +224,7 @@
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
               window.close();
             });
-          })
+          });
         });
       </script>
 
@@ -248,7 +248,7 @@
         <div class="menu-entry">
           Don't show this button
         </div>
-        <div id="help_disable_explanation" class="info" style="display:none">
+        <div id="help_disable_explanation" class="info" style="display:none;">
           <p>
             To hide this button, drag it to the right edge of your extension
             buttons, then click just to the right of the address bar and
@@ -268,10 +268,10 @@
       <!-- ****************** Donations *************** -->
 
       <div id="div_donate">
-        <a href="#" class="blue" id="please" style="float:left">Please donate!</a>
-        <div id="donation_wrapper" class="box-wrapper" style="display:none; clear:left">
+        <a href="#" class="blue" id="please" style="float:left;">Please donate!</a>
+        <div id="donation_wrapper" class="box-wrapper" style="display:none; clear:left;">
           <div id="donation_panel" class="box">
-            <div id="donate_close" style="float:right"><a class="blue" href="#">x</a></div>
+            <div id="donate_close" style="float:right;"><a class="blue" href="#">x</a></div>
             I'm not a corporation; I'm just a guy.  Please help me pay my bills!
             <hr/>
             <table>
@@ -283,17 +283,17 @@
                     <span id="donation_amount_txt">30</span>
                     <a href="#" class="blue" id="donation_amount_change">change</a>
                   </div>
-                  <div id="varied_donation" style="display:none">
-                    <input style="float:left" id="donation_amount_input" maxlength="5" value="30" />
+                  <div id="varied_donation" style="display:none;">
+                    <input style="float:left;" id="donation_amount_input" maxlength="5" value="30" />
                     <table>
                       <tr>
                         <td>
-                          <div style="width: 200px" id="donate_slider"></div>
+                          <div style="width: 200px;" id="donate_slider"></div>
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <div style="font-size: x-small; float:right">more</div>
+                          <div style="font-size: x-small; float:right;">more</div>
                           <div style="font-size: x-small;" >less</div>
                         </td>
                       </tr>

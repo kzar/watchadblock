@@ -70,7 +70,7 @@
           domain = domain.substring(0, domain.indexOf('/'));
         }
         var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
-                     "?template=Ad%20report%20from%20user&summary="
+                     "?template=Ad%20report%20from%20user&summary=";
         if (domain) 
           result = result + escape("Ad report: " + domain);
         else
@@ -131,14 +131,14 @@
 
 
     <!--STEP 0-->
-    <div style="padding-left:5px; margin-bottom:20px" i18n="adreport2"></div>
+    <div style="padding-left:5px; margin-bottom:20px;" i18n="adreport2"></div>
 
     <!--STEP 1-->
     <div class="section" id="step1DIV" style="display:block;">
       <h2 i18n="updateyourlists"></h2>
       <ol>
-        <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters">
-        <li i18n="reloadadpage">
+        <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters"></li>
+        <li i18n="reloadadpage"></li>
       </ol>
       <input type="button" value="Update my filters!" id="UpdateFilters" />
       <span i18n="adstillappear"></span><br/>
@@ -228,10 +228,10 @@
     <div class="section" id="step3DIV">
       <h2 i18n="checkinfirefox"></h2>
       <ol>
-        <li i18n="checkinfirefox1">
-        <li i18n="checkinfirefox2">
-        <li i18n="checkinfirefox3">
-        <li i18n="checkinfirefox4">
+        <li i18n="checkinfirefox1"></li>
+        <li i18n="checkinfirefox2"></li>
+        <li i18n="checkinfirefox3"></li>
+        <li i18n="checkinfirefox4"></li>
       </ol>
       <span i18n="checkinfirefox5"></span>
       <div class="form" id="step3">
@@ -320,7 +320,7 @@
                   if (status == "ok")
                     updateURL = usefultext.match(/codebase\=\"([^\"]*)\"/)[1];
                 } else {
-                  var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0]
+                  var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0];
                   version = version.replace(/\<[^\<]+\>/g,'');
                   if (version != AdBlockVersion) {
                     updateURL = this.responseText.match(/http\:\/\/.*\.safariextz/)[0];

@@ -50,18 +50,18 @@ FilterSet.fromText = function(text, split_out_globals) {
   }
 
   return result;
-}
+};
 
 // Strip third+ level domain names from the domain and return the result.
 FilterSet._secondLevelDomainOnly = function(domain) {
   var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
   return match[0].toLowerCase();
-}
+};
 
 // Given a url, return its domain.
 FilterSet._domainFor = function(url) {
   return (url.match('://(.*?)/') || [ null, "unknown.com" ])[1];
-}
+};
 
 FilterSet.prototype = {
   // Return a new FilterSet containing the subset of this FilterSet's filters
@@ -138,4 +138,4 @@ FilterSet.prototype = {
     var white = this._whitelistFilters.map(function(f) { return f._text; });
     return pat.concat(white);
   }
-}
+};

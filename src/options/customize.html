@@ -112,7 +112,7 @@
             ok = false;
         } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
-      }
+      };
       $("#divUrlBlock input:text").keyup(validateUrlFilter);
 
       var validateCssFilter = function() {
@@ -126,7 +126,7 @@
             ok = true;
         } catch(ex) {}
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
-      }
+      };
       $("#divCssBlock input:text").keyup(validateCssFilter);
       
       var validateExcludeFilter = function() {
@@ -139,7 +139,7 @@
             ok = false;
         } catch(ex) {}
         $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
-      }
+      };
       $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {
@@ -202,7 +202,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="linkblockadbyurl"></a>
-          <div id="divUrlBlock" class="addControls" style="display:none">
+          <div id="divUrlBlock" class="addControls" style="display:none;">
             <table class="entryTable">
               <tr>
                 <td i18n="blockurlwithtext" colspan="2"></td>
@@ -211,7 +211,7 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtBlockUrl" style="width:300px"/></td>
+                <td><input id="txtBlockUrl" style="width:300px;"/></td>
                 <td class="guide">$domain=</td>
                 <td><input id="txtBlockUrlDomain"/></td>
                 <td><input id="btnAddUrlBlock" type="button" i18n_value="buttonblockit" /></td>
@@ -222,7 +222,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="linkhidesection"></a>
-          <div id="divCssBlock" class="addControls" style="display:none">
+          <div id="divCssBlock" class="addControls" style="display:none;">
             <div i18n="blacklistclickmessage"></div>
             <table class="entryTable">
               <tr>
@@ -232,9 +232,9 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtUserFilterDomain" style="width:200px"/></td>
+                <td><input id="txtUserFilterDomain" style="width:200px;"/></td>
                 <td class="guide">##</td>
-                <td><input id="txtUserFilterCss" style="width:300px"/></td>
+                <td><input id="txtUserFilterCss" style="width:300px;"/></td>
                 <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit"/></td>
               </tr>
             </table>
@@ -245,7 +245,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="linkunblock"></a>
-          <div id="divExcludeBlock" class="addControls" style="display:none">
+          <div id="divExcludeBlock" class="addControls" style="display:none;">
             <table class="entryTable">
               <tr>
                 <td></td>
@@ -255,7 +255,7 @@
               </tr>
               <tr>
                 <td class="guide">@@</td>
-                <td><input id="txtUnblock" style="width:400px"/></td>
+                <td><input id="txtUnblock" style="width:400px;"/></td>
                 <td class="guide">$document</td>
                 <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonok" /></td>
               </tr>
@@ -265,20 +265,20 @@
 
       </div>
 
-      <div style="margin-top:15px">
-        <h3 style="display: inline" i18n="manualfilteredit"></h3>
+      <div style="margin-top:15px;">
+        <h3 style="display: inline;" i18n="manualfilteredit"></h3>
         <span>
           <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
-          <span id="spanSaveButton" style="display:none">
+          <span id="spanSaveButton" style="display:none;">
             <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
-            <span style="color:red; font-weight: bold; margin-left:20px" i18n="savereminder"></span>
+            <span style="color:red; font-weight: bold; margin-left:20px;" i18n="savereminder"></span>
           </span>
         </span>
       </div>
 
       <div>
         <div i18n="filtersavewarning" i18n_replacement_el="tutorlink"
-           class="footnote" style="margin-top: 5px; margin-bottom: 5px"></div>
+           class="footnote" style="margin-top: 5px; margin-bottom: 5px;"></div>
         <a id="tutorlink" href="http://adblockplus.org/en/filters" 
            target="_new"></a>
      </div>
@@ -288,7 +288,7 @@
         <br/>
       </div>
 
-      <div style="padding-top:20px">
+      <div style="padding-top:20px;">
         <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
         <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
       </div>
@@ -309,7 +309,7 @@
             $("#btnEditAdvancedFilters").click();
           var newFilters = FilterNormalizer.normalizeList($("#txtFiltersAdvanced").val(), true);
           newFilters = newFilters.replace(/(\n)+$/,'\n'); // Del trailing \n's
-          $("#txtFiltersAdvanced").val(newFilters)
+          $("#txtFiltersAdvanced").val(newFilters);
         });
       });
     </script>

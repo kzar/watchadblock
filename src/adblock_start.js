@@ -94,7 +94,7 @@ beforeLoadHandler = function(event) {
     else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
       $(el).remove();
   }
-}
+};
 
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {

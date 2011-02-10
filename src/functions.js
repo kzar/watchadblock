@@ -9,7 +9,7 @@ if (debug_button)
 extension_call = function(fn, options, callback) {
   if (callback == null) callback = function() {};
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
-}
+};
 
 // These are replaced with console.log in adblock_start.js and background.html
 // if the user chooses.
@@ -92,7 +92,6 @@ function url_parts(url) {
 //   }
 // Returns: null (asynchronous)
 function getCurrentTabInfo(callback) {
-  var utils = chrome.extension.getBackgroundPage().utils;
   chrome.tabs.getSelected(undefined, function(tab) {
     // TODO: use code from elsewhere to extract domain
 
@@ -107,7 +106,7 @@ function getCurrentTabInfo(callback) {
     var result = {
       tab: tab,
       disabled_site: disabled_site,
-      domain: url.domain,
+      domain: url.domain
     };
     if (!disabled_site)
       result.whitelisted = page_is_whitelisted(tab.url);
