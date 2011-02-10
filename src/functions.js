@@ -1,9 +1,3 @@
-// temporary code while we have Browser Button For AdBlock
-button_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
-debug_button = false;
-if (debug_button)
-  button_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
-  
 // Run a function on the background page.
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
@@ -51,9 +45,9 @@ function page_is_whitelisted(url, type) {
   //special case this one
   if (url == "http://acid3.acidtests.org/") return true;
   url = url.replace(/\#.*$/, ''); // Remove anchors
-  if (!type) 
-    type = ElementTypes.document;
   var bg = chrome.extension.getBackgroundPage();
+  if (!type) 
+    type = bg.ElementTypes.document;
   var both = { global:1, nonglobal: 1 };
   for (var name in both) {
     var whitelist = bg._myfilters[name]._whitelistFilters;
