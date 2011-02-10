@@ -101,6 +101,16 @@
     "message": "Prosím, zadejte správný filtr a stiskněte OK",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
+  "blacklistereditinvalid1": {
+    "message": "Tento filtr je neplatný: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
+  },
   "blacklisterblockedelement": {
     "message": "Blokovaný element:",
     "description": "Tells the user what the blocked element is on the slider page"
@@ -391,87 +401,87 @@
   },
   "filtereasylist_plus_bulgarian": {
     "message": " - dodatečné bulharské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdutch": {
     "message": " - dodatečné holandské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_finnish": {
     "message": " - dodatečné finské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_french": {
     "message": " - dodatečné francouzské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_german": {
     "message": " - dodatečné německé filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_norwegian": {
     "message": " - dodatečné norské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_polish": {
     "message": " - dodatečné polské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_romanian": {
     "message": " - dodatečné rumunské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterrussian": {
     "message": " - dodatečné ruské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_vietnamese": {
     "message": " - dodatečné vietnamské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
     "message": "Čínské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
-    "message": "České filtry",
-    "description": "A filter list"
+    "message": "České filtry (doporučeno)",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdanish": {
     "message": "Dánské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterhungarian": {
     "message": "Maďarské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterisraeli": {
     "message": "Izraelské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filteritalian": {
     "message": "Italské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterjapanese": {
     "message": "Japonské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plun_korean": {
     "message": "Korejské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterpolish": {
     "message": "Polské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_spanish": {
     "message": "Španělské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterukranian": {
     "message": "Ukrajinské filtry",
-    "description": "A filter list"
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
 
   "blacklistclickmessage": {
@@ -792,5 +802,9 @@
   "cantblockflash": {
     "message": "Nemůžeme zatím blokovat reklamy uvnitř objektů Flash nebo v jiných doplňcích. Čekáme na podporu od prohlížeče a WebKitu.",
     "description": "Result of the final ad report question"
+  },
+  "cleanuplist": {
+    "message": "Vyčistit tento seznam:",
+    "description": "Option at the bottom of the third options tab"
   }
 }
