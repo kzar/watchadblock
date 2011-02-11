@@ -81,16 +81,8 @@
     <div id="donate_and_link" style="margin: 1em 0px;">
       <div style="font-size: 16px;" 
            i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
-      <a target="_new" id="donatelink"></a>
+      <a target="_new" href="http://chromeadblock.com/donate" id="donatelink"></a>
     </div>
-    <script>
-      $(function() {
-        var donate_link = "http://chromeadblock.com/paypal_donate/donation.php";
-        if (SAFARI)
-          donate_link += "?browser=safari";
-        $("#donate_and_link a").attr('href', donate_link);
-      });
-    </script>
 
     <div id="tabpages">
       <ul>
