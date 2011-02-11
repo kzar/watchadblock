@@ -112,7 +112,7 @@
             ok = false;
         } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
-      };
+      }
       $("#divUrlBlock input:text").keyup(validateUrlFilter);
 
       var validateCssFilter = function() {
@@ -126,7 +126,7 @@
             ok = true;
         } catch(ex) {}
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
-      };
+      }
       $("#divCssBlock input:text").keyup(validateCssFilter);
       
       var validateExcludeFilter = function() {
@@ -139,7 +139,7 @@
             ok = false;
         } catch(ex) {}
         $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
-      };
+      }
       $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {

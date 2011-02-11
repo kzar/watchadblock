@@ -13,14 +13,14 @@ Overlay = function(options) {
   this.click_handler = options.click_handler;
 
   Overlay.instances.push(this);
-};
+}
 Overlay.instances = [];
 Overlay.removeAll = function() {
   $.each(Overlay.instances, function(i,overlay) {
     overlay.image.remove();
   });
   Overlay.instances = [];
-};
+}
 Overlay.prototype.display = function() {
   var that = this;
   this.image.
@@ -29,4 +29,4 @@ Overlay.prototype.display = function() {
       that.click_handler(that.el);
       return false;
     });
-};
+}

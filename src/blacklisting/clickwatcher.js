@@ -8,15 +8,15 @@ function ClickWatcher() {
 }
 ClickWatcher.prototype.cancel = function(callback) {
   this._callbacks.cancel.push(callback);
-};
+}
 ClickWatcher.prototype.click = function(callback) {
   this._callbacks.click.push(callback);
-};
+}
 ClickWatcher.prototype._fire = function(eventName, arg) {
   var callbacks = this._callbacks[eventName];
   for (var i = 0; i < callbacks.length; i++)
     callbacks[i](arg);
-};
+}
 ClickWatcher.prototype.show = function() {
   var that = this;
   var wait = $("<div></div>").
@@ -24,7 +24,7 @@ ClickWatcher.prototype.show = function() {
     css({
       'background': 'white',
       'text-align': 'left',
-      'font-size': '12px'
+      'font-size': '12px',
     }).
     dialog({
       zIndex: 10000000, 
@@ -40,7 +40,7 @@ ClickWatcher.prototype.show = function() {
     wait.remove();
     that._ui.dialog('open');
   }, 10);
-};
+}
 // Called externally to close ClickWatcher.  Doesn't cause any events to
 // fire.
 ClickWatcher.prototype.close = function() {
@@ -49,7 +49,7 @@ ClickWatcher.prototype.close = function() {
   if (this._ui) {
     this._ui.dialog('close');
   }
-};
+}
 // The dialog is closing, either because the user clicked cancel, or the
 // close button, or because they clicked an item.
 ClickWatcher.prototype._onClose = function() {
@@ -60,7 +60,7 @@ ClickWatcher.prototype._onClose = function() {
     // User clicked a page item
     this._fire('click', this._clicked_element);
   }
-};
+}
 ClickWatcher.prototype._build_ui = function() { 
   var that = this;
 
@@ -101,14 +101,14 @@ ClickWatcher.prototype._build_ui = function() {
   });
 
   var btn = {};
-  btn[translate("buttoncancel")] = function() { page.dialog('close'); };
+  btn[translate("buttoncancel")] = function() { page.dialog('close'); }
 
   var page = $("<div></div>").
       append(translate("clickthead")).
       css({
         'background': 'white',
         'text-align': 'left',
-        'font-size': '12px'
+        'font-size': '12px',
       }).
       dialog({
           zIndex:10000000, 
@@ -127,4 +127,4 @@ ClickWatcher.prototype._build_ui = function() {
         });
 
   return page;
-};
+}
