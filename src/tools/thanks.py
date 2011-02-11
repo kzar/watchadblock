@@ -46,7 +46,7 @@ def donation_messages(max_count):
     Return an iterator containing max_count unread donation messages.
     """
     m = donation_mailbox()
-    unseens = m.search(None, 'UNSEEN')[1][0].split()[ :max_count]
+    unseens = m.search(None, '(UNSEEN)')[1][0].split()[ :max_count]
     try:
         # TODO: there is surely a more efficient way to do this.
         m.select('afc/donations', readonly=True)
@@ -122,6 +122,9 @@ class Donation(object):
             self.body = self.message.get_payload()[0].get_payload()
         except AttributeError:
             self.body = self.message.get_payload()
+        if 'Contributor' not in self.body:
+            import base64
+            self.body = base64.decodestring(self.body)
         self.name = re.search('Contributor: (.*)', self.body).group(1).strip()
         self.nickname = self.name.split(' ')[0].title()
         self.note = re.search('Message: (.*?)=20', self.body, re.DOTALL)
@@ -133,7 +136,7 @@ class Donation(object):
             self.note = self._cleanup(self.note)
         browser_re = 'Purpose: AdBlock [fF]or ([a-zA-Z]+)'
         self.browser = re.search(browser_re, self.body).group(1)
-        amount = re.search('Total amount: *=24(.*?) USD', self.body).group(1)
+        amount = re.search('Total amount: *(=24|\$)(.*?) USD', self.body).group(2)
         self.amount = float(amount.strip())
 
     def set_response(self, body):
