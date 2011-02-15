@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
-#TODO: check for people who donate multiple times.
-
+import csv
 import email
 import imaplib
 import getpass
@@ -11,28 +10,6 @@ import smtplib
 
 # see http://www.doughellmann.com/PyMOTW/imaplib/ for an excellent walkthrough
 GLOBAL_password = getpass.getpass("Password for gundlach@gmail.com: ")
-
-def send(from_, to, subject, body):
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login('gundlach@gmail.com', GLOBAL_password)
-    msg = '''\
-From: %s
-To: %s
-Subject: %s
-
-%s''' % (from_, to, subject, body)
-    server.sendmail(from_, to, msg)
-    server.quit()
-
-def donation_message_count(max_count):
-    try:
-        m = donation_mailbox(True)
-        return min(len(m.search(None, 'UNSEEN')[1][0].split()), max_count)
-    finally:
-        m.logout()
 
 def donation_mailbox(readonly=False):
     m = imaplib.IMAP4_SSL('imap.gmail.com', 993)
@@ -56,13 +33,7 @@ def donation_messages(max_count):
             msgid = unseens[i]
             email_msg = email.message_from_string(msg)
             try:
-                d = Donation(email_msg, msgid=msgid)
-                if d.amount >= 100:
-                    raise ValueError("%s donated %.2f; you need to send them something."
-                                     % (d.name, d.amount))
-            except ValueError, ex:
-                print ("*" * 70 + '\n') * 3
-                print ex.message
+                d = Donation(msgid=msgid, message=email_msg)
             except:
                 print ("*" * 70 + '\n') * 3
                 print "Couldn't parse message from %s; ignoring." % email_msg['from']
@@ -76,34 +47,18 @@ def donation_messages(max_count):
     finally:
         m.logout()
 
-def mark_as_read_and_send(donations):
-    m = donation_mailbox()
-    for donation in donations:
-        print "Sending to %s" % donation.email
-        try:
-            send('adblockforchrome@gmail.com', donation.email,
-                 'I got your donation :)', donation.get_response())
-        except:
-            print "Failed to send -- not marking as read"
-            continue
-
-        print "Marking as read %s" % donation.email
-        try:
-            m.select('afc/donations')
-            m.fetch(donation.msgid, '(RFC822)') # marks as read
-        except:
-            print "*" * 40
-            print ("Error -- skipped marking %s" % donation.email)
-    m.logout()
-
-
 
 class Donation(object):
 
-    def __init__(self, email_message, msgid):
-        self.message = email_message
-        self.msgid = msgid
-        self._parse_message()
+    def __init__(self, **kwargs):
+        self.note = self.body = self.message = None
+        # Pull data out of message, if it exists
+        if 'message' in kwargs:
+            self.message = kwargs['message']
+            self._parse_message()
+        # Then override results as specified
+        for k,v in kwargs.iteritems():
+            setattr(self, k, v)
 
     @staticmethod
     def _cleanup(text):
@@ -173,8 +128,9 @@ great!
 
 It has been scary taking a risk, quitting my job, and hoping to support my
 family and fund AdBlock development using only AdBlock donations.  Not a lot
-of users donate yet, which makes your donation even more appreciated.  Did I
-say thank you yet?  Thank you! :D
+of users donate yet, which makes your donation even more appreciated --
+your donation is way above what most users give: zero.  Did I say thank you
+yet?  Thank you! :D
 
 Happy ad blocking,
 - Michael
@@ -190,65 +146,81 @@ as you do.  It would help me IMMENSELY :)
            browser=self.browser.lower())
 
 
-def main(number_to_thank=1000000, notes=None):
-    donation_count = donation_message_count(number_to_thank)
-    i = 0
-    thanked = []
-    for donation in donation_messages(number_to_thank):
-        i += 1
-        if notes is not None and (not not donation.note) != notes:
-            print "Skipping $%.2f from %s due to %s note" % (
-                    donation.amount, donation.name,
-                    "lack of" if notes else "having a")
+def send(from_, to, subject, body):
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login('gundlach@gmail.com', GLOBAL_password)
+    msg = '''\
+From: %s
+To: %s
+Subject: %s
+
+%s''' % (from_, to, subject, body)
+    server.sendmail(from_, to, msg)
+    server.quit()
+
+
+def send_thanks_to(donations):
+    print "Press enter to mark emails as read and send replies."
+    raw_input()
+    m = donation_mailbox()
+    ids = ','.join(d.msgid for d in donations)
+    print "Marking these msgids as read:"
+    print ids
+    # Mark all as read
+    m.store(ids, '+FLAGS.SILENT', '\\Seen')
+    for d in donations:
+        print "Sending to %s ('%s' - %s)" % (d.email, d.nickname, d.name)
+        try:
+            send('adblockforchrome@gmail.com', d.email,
+                 'I got your donation :)', d.get_response())
+        except:
+            print "  %s Failed to send" % ("*" * 40)
             continue
-        print "%d of %d" % (i, donation_count)
-        if donation.note:
-            print
-            print
-            print "-" * 30
-            print "Note attached:"
-            print "-" * 30
-            print
-            print
-            print donation.note
-            print
-            print "-" * 30
-            print
-        print " $%.2f (%s)" % (donation.amount, donation.browser)
-        print " %s" % donation.email
-        print " %s" % donation.name
-        nick = raw_input("'%s'? [Press Enter or type a nickname correction.] " % donation.nickname)
-        if nick:
-            donation.nickname = nick
-        if donation.note:
-            if 'n' != raw_input("Press 'n' to skip composing a custom reply. "):
-                open('/tmp/reply.txt', 'w').write(donation.get_response())
-                os.system('vim /tmp/reply.txt')
-                donation.set_response(open('/tmp/reply.txt').read())
 
-        thanked.append(donation)
-        print
-        print
+def thank_notes(number_to_thank=1000000):
+    donations = [ d for d in donation_messages(number_to_thank) if d.note ]
+    for (i,d) in enumerate(donations):
+        print "Press enter to edit message %d of %d." % (i+1, len(donations))
+        raw_input()
+        open('/tmp/reply.txt', 'w').write(d.get_response())
+        os.system('vim -c "0;0" /tmp/reply.txt')
+        d.set_response(open('/tmp/reply.txt').read())
+    send_thanks_to(donations)
 
-    for k in range(5):
-        print
-    for d in thanked:
-        print "$%2.0f (%s) %s -- %s" % (d.amount, d.browser, d.name, d.note)
-    print
-    chromes = [d.amount for d in thanked if d.browser == 'Chrome']
-    safaris = [d.amount for d in thanked if d.browser != 'Chrome']
-    print "%d Chrome donations totalling $%.2f." % (len(chromes), sum(chromes))
-    print "%d Safari donations totalling $%.2f." % (len(safaris), sum(safaris))
-    print
+def thank_no_notes(number_to_thank=1000000):
+    donations = [ d for d in donation_messages(number_to_thank)
+                   if not d.note ]
+    f = open('/tmp/nicknames.csv', 'w')
+    writer = csv.writer(f, delimiter='\t')
+    for d in donations:
+        writer.writerow([d.nickname,d.name,d.email,d.amount,d.browser,d.msgid])
+    f.close()
+    print "Press enter to edit nicknames.  When you're done, I'll send emails."
+    raw_input()
+    os.system('vim /tmp/nicknames.csv')
+    reader = csv.reader(open('/tmp/nicknames.csv'), delimiter='\t')
+    donations = [ Donation(amount=float(amount), browser=browser, msgid=msgid,
+                           email=email, name=name, nickname=nickname)
+                  for nickname,name,email,amount,browser,msgid in reader ]
+    send_thanks_to(donations)
 
-    mark_as_read_and_send(thanked)
+def usage():
+    print "Usage: thanks.py yes - respond to notes"
+    print "       thanks.py no  - make a csv from non-notes"
+    print "       thanks.py no [csvfile] - respond to non-notes based on csv file"
 
+def main():
+    import sys
+    if len(sys.argv) != 2 or sys.argv[1] not in ['no', 'yes']:
+        usage()
+        return
+    if sys.argv[1] == 'yes':
+        thank_notes()
+    else:
+        thank_no_notes()
 
 if __name__ == '__main__':
-    import sys
-    if len(sys.argv) > 1:
-        count = int(sys.argv[1])
-        notes = eval(sys.argv[2]) # True: only show notes.  False: show none.
-        main(count, notes)
-    else:
-        main()
+    main()
