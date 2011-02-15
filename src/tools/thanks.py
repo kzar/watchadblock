@@ -165,19 +165,24 @@ Paypal
         original = '\n> '.join(original.split('\n'))
 
         return """\
-Hi %(nickname)s,
+Hi %(nickname)s!
 
-I recently took the plunge and am now working on AdBlock as my full time job, supported only by donations.  Not a lot of users donate yet, but I hope to spread the word enough that I can support my family on AdBlock.
+I wrote AdBlock in the hope that I could make people's lives better.  Your
+donation tells me that I did it :)  Thank you very, very much!  You are so
+great!
 
-So THANK YOU, very much, for donating.  I wrote AdBlock hoping I could make people's lives better, and your donation tells me that I did it :)  It's great to know that I'm helping people out.
+It has been scary taking a risk, quitting my job, and hoping to support my
+family and fund AdBlock development using only AdBlock donations.  Not a lot
+of users donate yet, which makes your donation even more appreciated.  Did I
+say thank you yet?  Thank you! :D
 
+Happy ad blocking,
 - Michael
 
-PS: Word of mouth is my only marketing tool right now.  If you wouldn't mind helping spread the word, would you
-  1) "Like" AdBlock via http://%(browser)sadblock.com/like ,
-  2) post to Facebook/Twitter about %(browser)sadblock.com, and
-  3) in your post, challenge your friends to donate too?
-If you don't use FB/Twitter or just don't feel comfortable asking your friends to donate, don't worry about it :)
+PS: If you don't mind, please post to Facebook or Twitter about
+%(browser)sadblock.com, asking your friends to donate if they like it as much
+as you do.  It would help me IMMENSELY :)
+
 
 %(original)s
 """ % dict(nickname=self.nickname,
