@@ -1,4 +1,4 @@
-// Requires jquery and 'utils.get_optional_features' method from background
+// Requires jquery and must be on a page with access to the background page
 
 // MyFilters class manages subscriptions and the FilterSet.
 
@@ -75,15 +75,20 @@ function MyFilters() {
 MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   localStorage.setItem('filter_lists', JSON.stringify(this._subscriptions));
 
+  // The only reasons to (re)build the filter set are
+  // - when AdBlock starts
+  // - when a filter list text is changed (subscribed or updated a list)
   if (rebuild)
     this.rebuild();
 
-  utils.emit_broadcast({fn: 'filters_updated', options: {}});
+  chrome.extension.getBackgroundPage().utils.emit_broadcast(
+                                          {fn: 'filters_updated', options: {}});
 }
 
 // Rebuild this.[non]global based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
+  var utils = chrome.extension.getBackgroundPage().utils;
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
       texts.push(this._subscriptions[id].text);

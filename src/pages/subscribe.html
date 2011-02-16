@@ -85,7 +85,7 @@
         listen_for_broadcasts();
         register_broadcast_listener('filters_updated', function() {
           var bg = chrome.extension.getBackgroundPage();
-          var subs = bg.utils.get_subscriptions_minus_text;
+          var subs = bg.utils.get_subscriptions_minus_text();
           var sub = subs['url:' + queryparts.location];
           if (!sub || sub.last_update) {
             // It was a well known id, so assume it succeeded, or the
