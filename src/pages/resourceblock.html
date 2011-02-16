@@ -445,7 +445,7 @@
           }
           if (!temp_url) {
             var bg = chrome.extension.getBackgroundPage();
-            var cache = bg.show_resourceblocker.cached_resources;
+            var cache = bg.utils.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
             if (!loaded_resources || loaded_resources.length == 0) {
               alert(translate('noresourcessend'));
