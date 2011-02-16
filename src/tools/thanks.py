@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# see http://www.doughellmann.com/PyMOTW/imaplib/ for an excellent walkthrough
+
 import csv
 import email
 import imaplib
@@ -7,9 +9,6 @@ import getpass
 import os
 import re
 import smtplib
-
-# see http://www.doughellmann.com/PyMOTW/imaplib/ for an excellent walkthrough
-GLOBAL_password = getpass.getpass("Password for gundlach@gmail.com: ")
 
 def donation_mailbox(readonly=False):
     m = imaplib.IMAP4_SSL('imap.gmail.com', 993)
@@ -162,7 +161,7 @@ Subject: %s
     server.quit()
 
 
-def send_thanks_to(donations):
+def mark_as_read_and_send(donations):
     print "Press enter to mark emails as read and send replies."
     raw_input()
     m = donation_mailbox()
@@ -171,8 +170,9 @@ def send_thanks_to(donations):
     print ids
     # Mark all as read
     m.store(ids, '+FLAGS.SILENT', '\\Seen')
-    for d in donations:
-        print "Sending to %s ('%s' - %s)" % (d.email, d.nickname, d.name)
+    for (i,d) in enumerate(donations):
+        print "Sending %d of %d to %s ('%s' - %s)" % (i+1, len(donations),
+            d.email, d.nickname, d.name)
         try:
             send('adblockforchrome@gmail.com', d.email,
                  'I got your donation :)', d.get_response())
@@ -180,43 +180,52 @@ def send_thanks_to(donations):
             print "  %s Failed to send" % ("*" * 40)
             continue
 
-def thank_notes(number_to_thank=1000000):
+def with_corrected_nicknames(donations):
+    """
+    Return a list of donations like the input but with nicknames corrected
+    by the user.
+    """
+    f = open('/tmp/nicknames.csv', 'w')
+    writer = csv.writer(f, delimiter='\t')
+    for d in donations:
+        writer.writerow([d.nickname,d.name,d.email,d.amount,
+                         d.browser,d.msgid,d.note.replace("\t", " ")])
+    f.close()
+    print "Press enter to edit nicknames."
+    raw_input()
+    os.system('vim /tmp/nicknames.csv')
+    reader = csv.reader(open('/tmp/nicknames.csv'), delimiter='\t')
+    return [ Donation(amount=float(amount), browser=browser, msgid=msgid,
+                      email=email, name=name, nickname=nickname, note=note)
+             for nickname,name,email,amount,browser,msgid,note in reader ]
+
+def thank_notes(number_to_thank=200):
     donations = [ d for d in donation_messages(number_to_thank) if d.note ]
+    donations = with_corrected_nicknames(donations)
     for (i,d) in enumerate(donations):
         print "Press enter to edit message %d of %d." % (i+1, len(donations))
         raw_input()
         open('/tmp/reply.txt', 'w').write(d.get_response())
         os.system('vim -c "0;0" /tmp/reply.txt')
         d.set_response(open('/tmp/reply.txt').read())
-    send_thanks_to(donations)
+    mark_as_read_and_send(donations)
 
-def thank_no_notes(number_to_thank=1000000):
-    donations = [ d for d in donation_messages(number_to_thank)
-                   if not d.note ]
-    f = open('/tmp/nicknames.csv', 'w')
-    writer = csv.writer(f, delimiter='\t')
-    for d in donations:
-        writer.writerow([d.nickname,d.name,d.email,d.amount,d.browser,d.msgid])
-    f.close()
-    print "Press enter to edit nicknames.  When you're done, I'll send emails."
-    raw_input()
-    os.system('vim /tmp/nicknames.csv')
-    reader = csv.reader(open('/tmp/nicknames.csv'), delimiter='\t')
-    donations = [ Donation(amount=float(amount), browser=browser, msgid=msgid,
-                           email=email, name=name, nickname=nickname)
-                  for nickname,name,email,amount,browser,msgid in reader ]
-    send_thanks_to(donations)
+def thank_no_notes(number_to_thank=200):
+    donations = [ d for d in donation_messages(number_to_thank) if not d.note ]
+    donations = with_corrected_nicknames(donations)
+    mark_as_read_and_send(donations)
 
 def usage():
     print "Usage: thanks.py yes - respond to notes"
-    print "       thanks.py no  - make a csv from non-notes"
-    print "       thanks.py no [csvfile] - respond to non-notes based on csv file"
+    print "       thanks.py no  - respond to non-notes"
 
 def main():
     import sys
     if len(sys.argv) != 2 or sys.argv[1] not in ['no', 'yes']:
         usage()
         return
+    global GLOBAL_password
+    GLOBAL_password = getpass.getpass("Password for gundlach@gmail.com: ")
     if sys.argv[1] == 'yes':
         thank_notes()
     else:
