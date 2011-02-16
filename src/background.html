@@ -12,7 +12,6 @@
     <script>
       var utils = {};
     </script>
-    <script src="button/temporary_background_code.js"></script>
     <script>
 
       // UNWHITELISTING
@@ -51,10 +50,19 @@
 
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
+      // Returns: null if succesfull, otherwise an exception
       utils.add_custom_filter = function(options) {
         var custom_filters = utils.get_custom_filters_text({});
-        custom_filters = custom_filters + '\n' + options.filter;
-        utils.set_custom_filters_text({filters: custom_filters });
+        try {
+          if (FilterNormalizer.normalizeLine(options.filter)) {
+            custom_filters = custom_filters + '\n' + options.filter;
+            utils.set_custom_filters_text({filters: custom_filters });
+            return null;
+          }
+          return "This filter is unsupported";
+        } catch(ex) {
+          return ex;
+        }
       }
 
       // Get the custom filters text as a \n-separated text string.
@@ -311,9 +319,6 @@
       utils.setChromeContextMenus = function(options) {
         if (SAFARI)
           return;
-        var showThem = true;
-
-        var domain = url_parts(options.url).domain;
         var whitelisted = page_is_whitelisted(options.url);
         var features = utils.get_optional_features({});
         var disabled = !features.show_context_menu_items.is_enabled;
@@ -336,7 +341,7 @@
           }
         });
         chrome.contextMenus.create({
-          title: translate("contextmenuhideanything"),
+          title: translate("block_an_ad_on_this_page"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -372,6 +377,11 @@
 
             if (localStorage.getItem('adblock_is_paused')) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
+              // Show non-disabled icon on the installation-success page so it
+              // users see how it will normally look when deciding whether or
+              // not to hide it.
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
             } else if (info.disabled_site) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
             } else if (info.whitelisted) {
@@ -397,26 +407,30 @@
 
 
       // BROWSER ACTION BADGE
-      if (!SAFARI) {
+      (function() {
+        if (SAFARI)
+          return;
+
         // The string to display to the user in the "new version" div.
         // Update this whenever a release warrants a browser action
         // badge and an info div in the popup.  Note that it is
         // not compared with the manifest -- you can set it to whatever
         // value you want.
-        version_to_notify = '2.2';
+        version_to_notify = '2.3.0';
 
-        var saw = localStorage.getItem('saw_badge_version');
-        if (saw == null) {
-          // If they've just installed, don't show the badge.
+        // Brand new users don't see badge (or popup's info div).
+        if (!utils.storage_get({key:'installed_at'})) {
           localStorage.setItem('saw_badge_version', version_to_notify);
+          localStorage.setItem('saw_badge_info_version', version_to_notify);
         }
-        else if (saw != version_to_notify) {
+        var saw = localStorage.getItem('saw_badge_version');
+        if (saw != version_to_notify) {
           // If they haven't seen the latest, show it.
-          chrome.browserAction.setTitle({title:"New version!"});
+          chrome.browserAction.setTitle({title:translate("new_version")});
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
-      }
+      })();
 
 
 
@@ -529,7 +543,7 @@
           if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
             return;
           event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
-          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
@@ -548,7 +562,7 @@
             website = '*' + website;
           utils.add_custom_filter({filter: '@@||' + website + '^$document'});
         }
-        localStorage.removeItem('whitelist')
+        localStorage.removeItem('whitelist');
       }
     </script>
   </head>

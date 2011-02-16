@@ -61,7 +61,7 @@
 
         // Every so often, redisplay "last update" times on subscriptions.
         if (typeof lastUpdateInterval != "undefined") 
-          clearInterval(lastUpdateInterval)
+          clearInterval(lastUpdateInterval);
         lastUpdateInterval = window.setInterval(function() { 
           redisplay_subscription_update_times();
         }, lessThanMinute ? 1000 : 60000);
@@ -260,7 +260,7 @@
             
             var id = $(this).attr("name");
             if (!checked)
-              unsubscribe(id, false)
+              unsubscribe(id, false);
             else
               subscribe(id);
           });
@@ -277,7 +277,7 @@
 
         $("#btnNewSubscriptionUrl").click(function() {
           var url = $("#txtNewSubscriptionUrl").val();
-          var abp_regex = /^abp.*location=(.*)$/
+          var abp_regex = /^abp.*location=(.*)$/;
           if (abp_regex.test(url)) {
             url = url.match(abp_regex)[1]; // the part after 'location='
             if (/&title/.test(url)) // then strip it
@@ -313,7 +313,7 @@
       </div>
       <div style="padding-left:34px;">
         <span i18n="orenteraurl"></span>
-        <input id="txtNewSubscriptionUrl" style="width:300px" />
+        <input id="txtNewSubscriptionUrl" style="width:300px;" />
         <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
       </div>
     </div>

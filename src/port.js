@@ -299,6 +299,8 @@ if (SAFARI) {
             // scripts are supposed to have set l10nData already
             chrome.i18n._setL10nData(chrome.i18n._getL10nData());
           }
+          if (typeof args == "string")
+            args = [args];
           for (var i = 0; i < l10nData.locales.length; i++) {
             var map = l10nData.messages[l10nData.locales[i]];
             // We must have the locale, and the locale must have the message

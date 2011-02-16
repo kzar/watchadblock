@@ -27,4 +27,4 @@ FifoCache.prototype = {
   get: function(key) {
     return this._cache[key];
   }
-}
+};

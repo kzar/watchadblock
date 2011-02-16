@@ -1,9 +1,3 @@
-// temporary code while we have Browser Button For AdBlock
-button_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
-debug_button = false;
-if (debug_button)
-  button_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
-  
 // Run a function on the background page.
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
@@ -14,9 +8,6 @@ extension_call = function(fn, options, callback) {
 // These are replaced with console.log in adblock_start.js and background.html
 // if the user chooses.
 log = function() { };
-
-//Regex to validate a user-created filter.
-var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
 
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
@@ -53,10 +44,10 @@ function localizePage() {
 function page_is_whitelisted(url, type) {
   //special case this one
   if (url == "http://acid3.acidtests.org/") return true;
-  url = url.replace(/#.*$/, ''); // Remove anchors
-  if (!type) 
-    type = ElementTypes.document;
+  url = url.replace(/\#.*$/, ''); // Remove anchors
   var bg = chrome.extension.getBackgroundPage();
+  if (!type) 
+    type = bg.ElementTypes.document;
   var both = { global:1, nonglobal: 1 };
   for (var name in both) {
     var whitelist = bg._myfilters[name]._whitelistFilters;
@@ -95,7 +86,6 @@ function url_parts(url) {
 //   }
 // Returns: null (asynchronous)
 function getCurrentTabInfo(callback) {
-  var utils = chrome.extension.getBackgroundPage().utils;
   chrome.tabs.getSelected(undefined, function(tab) {
     // TODO: use code from elsewhere to extract domain
 

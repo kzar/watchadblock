@@ -49,7 +49,7 @@ function run_specials(features) {
       var replacement = videoplayer.cloneNode(true);
       if (inParam) {
           // Grab new <param> and set its flashvars
-          newParam = replacement.querySelector('param[name="flashvars"]');;
+          newParam = replacement.querySelector('param[name="flashvars"]');
           newParam.setAttribute("value", flashVars);
       } else {
           replacement.setAttribute("flashvars", flashVars);
@@ -136,7 +136,7 @@ function adblock_begin_part_2() {
         mustBePurged: true,
         preventDefault: function(){},
         type: "beforeload"
-      }
+      };
       beforeLoadHandler(fakeEvent);
     }
 

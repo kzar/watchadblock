@@ -1,20 +1,11 @@
 // A single filter rule.
-var Filter = function() {
-  this._adType = Filter.adTypes.GENERAL; // can be overridden by subclasses
-}
+var Filter = function() {}
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
 // TODO(gundlach): is the extra memory worth it if we only rebuild the
 // FilterSet upon subscribe/unsubscribe/refresh?
 Filter._cache = {};
-
-// Each filter falls into a specific ad type.
-Filter.adTypes = {
-  NONE: 0,
-  GENERAL: 1,
-  GOOGLE_TEXT_AD: 2
-}
 
 // Return a Filter instance for the given filter text.
 Filter.fromText = function(text) {
@@ -141,13 +132,10 @@ Filter.prototype = {
 var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
 
-  if (text.indexOf('~all.google.domains') == 0)
-    this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
-
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
   this.selector = parts[1];
-}
+};
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,

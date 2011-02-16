@@ -195,17 +195,15 @@ BlacklistUi.prototype._build_page2 = function() {
         var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
         that._ui_page2.dialog('close');
         custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
-        if (custom_filter.indexOf('##') == -1) 
-          custom_filter = "##" + custom_filter;
-        var valid_filter = global_filter_validation_regex.test(custom_filter);
-        if (valid_filter && custom_filter != null &&
-            custom_filter.indexOf('####') == -1) {
-          extension_call('add_custom_filter', { filter: custom_filter }, function() {
-            that._fire('block');
+        if (custom_filter) {//null => user clicked cancel
+          if (custom_filter.indexOf('##') == -1) 
+            custom_filter = "##" + custom_filter;
+          extension_call('add_custom_filter', { filter: custom_filter }, function(ex) {
+            if (!ex)
+              that._fire('block');
+            else
+              alert(translate("blacklistereditinvalid1", ex));
           });
-        } else {
-          if (custom_filter != null) //null => user clicked cancel
-            alert(translate("blacklistereditinvalid"));
         }
         page.remove();
       }
