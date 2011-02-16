@@ -131,6 +131,7 @@ BlacklistUi.prototype._build_page1 = function() {
       'text-align': 'left',
       'font-size': '12px',
     });
+  page.dialog("widget").css("position", "fixed");
 
   var depth = 0;
   var guy = this._chain.current();

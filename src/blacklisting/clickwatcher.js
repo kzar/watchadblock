@@ -125,6 +125,7 @@ ClickWatcher.prototype._build_ui = function() {
             page.remove();
           }
         });
+        page.dialog("widget").css("position", "fixed");
 
   return page;
 }
