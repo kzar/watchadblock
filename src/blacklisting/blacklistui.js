@@ -96,15 +96,13 @@ BlacklistUi.prototype._build_page1 = function() {
 
   var link_to_block = $("<a>", {
     id: "block_by_url_link",
+    href: "#",
     css: { 
-      "text-decoration": "underline",
-      "color": "blue",
-      "cursor": "pointer",
       "font-size": "smaller !important",
       "display": "none"
     },
     text: translate("block_by_url_instead"),
-    click: function() { 
+    click: function(e) { 
       var el = that._chain.current();
       var isMedia = (el[0].nodeName.toLowerCase() in { 'audio':1, 'video':1 });
       var type = (isMedia ? "media" : "image");
@@ -113,6 +111,8 @@ BlacklistUi.prototype._build_page1 = function() {
       var query = '?' + type + '=' + escape(srcUrl) + '&url=' + escape(tabUrl);
       window.open(chrome.extension.getURL('pages/resourceblock.html' 
             + query), "_blank", 'location=0,width=1024,height=590');
+      e.preventDefault();
+      return false;
     }
   });
 

@@ -114,9 +114,8 @@ ClickWatcher.prototype._build_ui = function() {
       dialog({
           zIndex:10000000, 
           position:[50, 50],
-          height:150,
           width:400,
-          minHeight:50,
+          minHeight:125,
           autoOpen: false,
           title: translate("blockanadtitle"),
           buttons: btn,
@@ -132,17 +131,15 @@ ClickWatcher.prototype._build_ui = function() {
     // TODO: Why do I have to set this to be underline, blue, and pointer?
     // I can't figure out why it doesn't behave as a regular link.
     var link_to_block = $("<a>", {
-      css: { 
-        "text-decoration": "underline",
-        "color": "blue",
-        "cursor": "pointer",
-        "font-size": "smaller !important"
-      },
+      href: "#",
+      css: { "font-size": "smaller !important" },
       text: translate("advanced_show_url_list"),
-      click: function() { 
+      click: function(e) { 
         // collect_resources is global on page, from adblock_start.js
         var resources = Object.keys(collect_resources);
         extension_call("show_resourceblocker", {resources: resources});
+        e.preventDefault();
+        return false;
       }
     });
     page.append(link_to_block);
