@@ -103,27 +103,9 @@ ClickWatcher.prototype._build_ui = function() {
   var btn = {};
   btn[translate("buttoncancel")] = function() { page.dialog('close'); }
 
-  // TODO: Why do I have to set this to be underline, blue, and pointer?
-  // I can't figure out why it doesn't behave as a regular link.
-  var link_to_block = $("<a>", {
-    css: { 
-      "text-decoration": "underline",
-      "color": "blue",
-      "cursor": "pointer",
-      "font-size": "smaller !important"
-    },
-    text: translate("advanced_show_url_list"),
-    click: function() { 
-      // collect_resources is global on page, from adblock_start.js
-      var resources = Object.keys(collect_resources);
-      extension_call("show_resourceblocker", {resources: resources});
-    }
-  });
-
   var page = $("<div></div>").
       append(translate("clickthead")).
       append("<br/><br/>").
-      append(link_to_block).
       css({
         'background': 'white',
         'text-align': 'left',
@@ -145,6 +127,26 @@ ClickWatcher.prototype._build_ui = function() {
             page.remove();
           }
         });
+
+  if (!SAFARI) {
+    // TODO: Why do I have to set this to be underline, blue, and pointer?
+    // I can't figure out why it doesn't behave as a regular link.
+    var link_to_block = $("<a>", {
+      css: { 
+        "text-decoration": "underline",
+        "color": "blue",
+        "cursor": "pointer",
+        "font-size": "smaller !important"
+      },
+      text: translate("advanced_show_url_list"),
+      click: function() { 
+        // collect_resources is global on page, from adblock_start.js
+        var resources = Object.keys(collect_resources);
+        extension_call("show_resourceblocker", {resources: resources});
+      }
+    });
+    page.append(link_to_block);
+  }
 
   return page;
 }
