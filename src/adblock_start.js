@@ -111,7 +111,7 @@ function block_list_via_css(selectors) {
 
 function adblock_begin() {
   if (!SAFARI) {
-    collect_resources = [];
+    collect_resources = {};
     LOADED_TOO_FAST = [];
   }
   document.addEventListener("beforeload", beforeLoadHandler, true);

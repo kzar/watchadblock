@@ -119,13 +119,6 @@ function adblock_begin_part_2() {
     log("==== ADBLOCKING PAGE: " + document.location.href);
     
     listen_for_broadcasts();
-    if (window == window.top)
-      register_broadcast_listener('page_send_resources', function() {
-        var resources_to_send = [];
-        for (var resource in collect_resources)
-          resources_to_send.push(resource);
-        extension_call('show_resourceblocker', {resources: resources_to_send});
-      });
 
     if (SAFARI) {
       // Add entries to right click menu.  Unlike Chrome, we can make

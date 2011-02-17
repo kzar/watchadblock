@@ -113,8 +113,11 @@ ClickWatcher.prototype._build_ui = function() {
       "font-size": "smaller !important"
     },
     text: translate("advanced_show_url_list"),
-    // TODO: no need for the loop anymore
-    click: function() { extension_call("emit_page_broadcast", {fn:'page_send_resources', options:{}}); }
+    click: function() { 
+      // collect_resources is global on page, from adblock_start.js
+      var resources = Object.keys(collect_resources);
+      extension_call("show_resourceblocker", {resources: resources});
+    }
   });
 
   var page = $("<div></div>").
