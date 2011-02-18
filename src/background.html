@@ -382,7 +382,7 @@
         //Otherwise the extension doesn't work (e.g. doesn't block ads)
         if (chrome.tabs) {
           chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-            if (tab.selected && changeInfo.url)
+            if (tab.selected)
               updateButtonUIAndContextMenus();
           });
           chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
