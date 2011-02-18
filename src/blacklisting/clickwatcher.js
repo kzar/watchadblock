@@ -104,39 +104,37 @@ ClickWatcher.prototype._build_ui = function() {
   btn[translate("buttoncancel")] = function() { page.dialog('close'); }
 
   var page = $("<div></div>").
-      append(translate("clickthead")).
-      append("<br/><br/>").
-      css({
-        'background': 'white',
-        'text-align': 'left',
-        'font-size': '12px',
-      }).
-      dialog({
-          zIndex:10000000, 
-          position:[50, 50],
-          width:400,
-          minHeight:125,
-          autoOpen: false,
-          title: translate("blockanadtitle"),
-          buttons: btn,
-          close: function() { 
-            $("*").unbind('click', click_catch_this);
-            Overlay.removeAll();
-            that._onClose();
-            page.remove();
-          }
-        });
+    append(translate("clickthead")).
+    append("<br/><br/>").
+    css({
+      'background': 'white',
+      'text-align': 'left',
+      'font-size': '12px',
+    }).
+    dialog({
+      zIndex:10000000, 
+      position:[50, 50],
+      width:400,
+      minHeight:125,
+      autoOpen: false,
+      title: translate("blockanadtitle"),
+      buttons: btn,
+      close: function() { 
+        $("*").unbind('click', click_catch_this);
+        Overlay.removeAll();
+        that._onClose();
+        page.remove();
+      }
+    });
 
   if (!SAFARI) {
-    // TODO: Why do I have to set this to be underline, blue, and pointer?
-    // I can't figure out why it doesn't behave as a regular link.
     var link_to_block = $("<a>", {
       href: "#",
       css: { "font-size": "smaller !important" },
       text: translate("advanced_show_url_list"),
       click: function(e) { 
-        // collect_resources is global on page, from adblock_start.js
-        var resources = Object.keys(collect_resources);
+        // GLOBAL_collect_resources is created by adblock_start.js
+        var resources = Object.keys(GLOBAL_collect_resources);
         extension_call("show_resourceblocker", {resources: resources});
         e.preventDefault();
         return false;
@@ -144,6 +142,8 @@ ClickWatcher.prototype._build_ui = function() {
     });
     page.append(link_to_block);
   }
+  // Remove yellow box around link. timeout cuz only works after dialog is open.
+  window.setTimeout(function() { page.find("a").blur(); }, 0);
 
   return page;
 }
