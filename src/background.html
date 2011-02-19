@@ -358,18 +358,6 @@
             );
           }
         });
-        // TEMP--move to button, and remove button's automatic whitelister
-        chrome.contextMenus.create({
-          title: translate("contextmenuexcludedomain"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
-              sender
-            );
-          }
-        });
       }
 
       if (!SAFARI) {
