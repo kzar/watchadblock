@@ -143,8 +143,9 @@ ClickWatcher.prototype._build_ui = function() {
     });
     page.append(link_to_block);
   }
-  // Remove yellow box around link. timeout cuz only works after dialog is open.
-  window.setTimeout(function() { page.find("a").blur(); }, 0);
+  // Focus close button, not link, so that 'escape' works. 
+  // timeout because button only exists after the dialog is open.
+  window.setTimeout(function() { page.dialog("widget").find(":button").focus(); }, 0);
 
   return page;
 }

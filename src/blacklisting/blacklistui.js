@@ -115,6 +115,9 @@ BlacklistUi.prototype._build_page1 = function() {
       return false;
     }
   });
+  // Focus close button, not link, so that 'escape' works. 
+  // timeout because button only exists after the dialog is open.
+  window.setTimeout(function() { page.dialog("widget").find(":button").focus(); }, 0);
 
   var page = $("<div>").
     append(translate("sliderexplanation")).
