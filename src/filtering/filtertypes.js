@@ -1,20 +1,11 @@
 // A single filter rule.
-var Filter = function() {
-  this._adType = Filter.adTypes.GENERAL; // can be overridden by subclasses
-}
+var Filter = function() {}
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
 // TODO(gundlach): is the extra memory worth it if we only rebuild the
 // FilterSet upon subscribe/unsubscribe/refresh?
 Filter._cache = {};
-
-// Each filter falls into a specific ad type.
-Filter.adTypes = {
-  NONE: 0,
-  GENERAL: 1,
-  GOOGLE_TEXT_AD: 2
-}
 
 // Return a Filter instance for the given filter text.
 Filter.fromText = function(text) {
@@ -23,7 +14,7 @@ Filter.fromText = function(text) {
 
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if (/^@@/.test(text))
+    else if (Filter.isWhitelistFilter(text))
       cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
@@ -32,7 +23,11 @@ Filter.fromText = function(text) {
 }
 
 Filter.isSelectorFilter = function(text) {
-  return /##/.test(text);
+  return /\#\#/.test(text);
+}
+
+Filter.isWhitelistFilter = function(text) {
+  return /^\@\@/.test(text);
 }
 
 Filter.isComment = function(text) {
@@ -136,13 +131,10 @@ Filter.prototype = {
 var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
 
-  if (text.indexOf('~all.google.domains') == 0)
-    this._adType = Filter.adTypes.GOOGLE_TEXT_AD;
-
   var parts = text.split('##');
   this._domains = Filter._domainInfo(parts[0], ',');
   this.selector = parts[1];
-}
+};
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
@@ -179,67 +171,71 @@ PatternFilter._parseRule = function(text) {
     options: FilterOptions.NONE
   };
 
-  var lastDollar = text.lastIndexOf('$');
-  if (lastDollar == -1) {
+  var optionsRegex = /\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*$/;
+  var optionsText = text.match(optionsRegex);
+  if (!optionsText) {
     var rule = text;
     var options = [];
-  }
-  else {
-    var rule = text.substr(0, lastDollar);
-    var optionsText = text.substr(lastDollar + 1).toLowerCase();
-    var options = ( optionsText == "" ? [] : optionsText.split(',') );
+  } else {
+    var options = optionsText[0].substring(1).toLowerCase().split(',');
+    var rule = text.replace(optionsText[0], '');
   }
 
-  var invertedElementTypes = false;
+  var disallowedElementTypes = ElementTypes.NONE;
 
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
 
-    if (option.indexOf('domain=') == 0)
+    if (option.indexOf('domain=') == 0) {
       result.domainText = option.substring(7);
+      continue;
+    }
 
     var inverted = (option[0] == '~');
     if (inverted)
       option = option.substring(1);
 
+    option = option.replace(/\-/, '_');
     if (option in ElementTypes) { // this option is a known element type
-      if (inverted) {
-        // They explicitly forbade an element type.  Assume all element
-        // types listed are forbidden: we build up the list and then
-        // invert it at the end.  (This won't work if they explicitly
-        // allow some types and disallow other types, but what would that
-        // even mean?  e.g. $image,~object.)
-        invertedElementTypes = true;
-      }
-      result.allowedElementTypes |= ElementTypes[option];
+      if (inverted)
+        disallowedElementTypes |= ElementTypes[option];
+      else
+        result.allowedElementTypes |= ElementTypes[option];
     }
-    else if (option == 'third-party') {
+    else if (option == 'third_party') {
       result.options |= 
           (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
     }
-    else if (option == 'match-case') {
+    else if (option == 'match_case') {
       //doesn't have an inverted function
       result.options |= FilterOptions.MATCHCASE;
     }
-
-    // TODO: handle other options.
+    else if (option == 'collapse') {
+      // We currently do not support this option. However I've never seen any
+      // reports where this was causing issues. So for now, simply skip this
+      // option, without returning that the filter was invalid.
+    }
+    else {
+      // In case ABP adds a new option, and we do not support it, return an
+      // error. If we don't do this and the new type is an elementtype, the
+      // filter *$newtype will be parsed as '*$', e.g. match everything.
+      throw new Error("Unsupported option: $" + options[i]);
+    }
   }
-
   // No element types mentioned?  All types are allowed.
   if (result.allowedElementTypes == ElementTypes.NONE)
-    result.allowedElementTypes = ElementTypes.ALL;
+    result.allowedElementTypes = (ElementTypes.ALLRESOURCETYPES);
+
+  // Extract the disallowed types from the allowed types
+  result.allowedElementTypes &= ~disallowedElementTypes;
 
   // Since ABP 1.3 'image' can also refer to 'background'
   if (result.allowedElementTypes & ElementTypes.image)
     result.allowedElementTypes |= ElementTypes.background;
 
-  // Some mentioned, who were excluded?  Allow ALL except those mentioned.
-  if (invertedElementTypes)
-    result.allowedElementTypes = ~result.allowedElementTypes;
-
   // We parse whitelist rules too on behalf of WhitelistFilter, in which case
   // we already know it's a whitelist rule so can ignore the @@s.
-  if (/^@@/.test(rule))
+  if (Filter.isWhitelistFilter(rule))
     rule = rule.substring(2);
 
   // Convert regexy stuff.
@@ -248,8 +244,8 @@ PatternFilter._parseRule = function(text) {
   if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
     result.rule = new RegExp(result.rule);
-      return result;
-    }
+    return result;
+  }
 
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();

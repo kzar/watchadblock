@@ -5,7 +5,7 @@ function relativeToAbsoluteUrl(url) {
     if(!url)
         return url;
     // If URL is already absolute, don't mess with it
-    if(/^http/.test(url))
+    if(/^[a-z\-]+\:\/\//.test(url))
         return url;
     // Leading / means absolute path
     if(url[0] == '/')
@@ -83,8 +83,7 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    pageDomain: document.domain, 
-    isTopFrame: (window == window.top) 
+    pageDomain: document.domain
   };
   if (!SAFARI)
     GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
@@ -118,14 +117,11 @@ function adblock_begin() {
 
   var opts = { 
     domain: document.domain, 
-    include_filters: true,
-    is_top_frame: (window == window.top)
+    include_filters: true
   };
   extension_call('get_content_script_data', opts, function(data) {
-    if (data.features.debug_logging.is_enabled) {
-      DEBUG = true;
+    if (data.features.debug_logging.is_enabled)
       log = function(text) { console.log(text); };
-    }
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
@@ -134,7 +130,8 @@ function adblock_begin() {
       return;
     }
 
-    block_list_via_css(data.selectors);
+    if (data.selectors)
+      block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them

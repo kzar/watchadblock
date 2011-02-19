@@ -1,9 +1,3 @@
-// temporary code while we have Browser Button For AdBlock
-button_extension_id = "picdndbpdnapajibahnnogkjofaeooof";
-debug_button = false;
-if (debug_button)
-  button_extension_id = "bfcdhbkjcaonafjgnidbaehjmlldbgnc";
-  
 // Run a function on the background page.
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
@@ -11,12 +5,9 @@ extension_call = function(fn, options, callback) {
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
 }
 
-// These are replaced with console.log in adblock_start if the user chooses.
-DEBUG = false;
+// These are replaced with console.log in adblock_start.js and background.html
+// if the user chooses.
 log = function() { };
-
-//Regex to validate a user-created filter.
-var global_filter_validation_regex = /(\#\#|^)(((\*|[a-z0-9]+)|(\*|[a-z0-9]+)?((\[(\\\!)?[a-z0-9\-_]+((\~|\^|\$|\*|\|)?\=((\"|\').+(\"|\')|\w+))?\])+|\:\:?[a-z\-]+(\(.+\))?|\.[^\#\:\[]+|\#[a-z_][a-z0-9_\-\:\.]*)+)\ *((\>|\+|\~)\ *)?\,?)+$/i;
 
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
@@ -47,11 +38,23 @@ function localizePage() {
 }
 
 // Returns true if anything in whitelist matches the_domain.
-function page_is_whitelisted(whitelist, the_domain) {
-  if (the_domain == "acid3.acidtests.org") return true;
-  for (var i = 0; i < whitelist.length; i++) {
-    if (the_domain.indexOf(whitelist[i]) != -1)
-      return true;
+//   url: the url of the page
+//   type: one out of ElementTypes, default ElementTypes.document,
+//         to check what the page is whitelisted for: hiding rules or everything
+function page_is_whitelisted(url, type) {
+  //special case this one
+  if (url == "http://acid3.acidtests.org/") return true;
+  url = url.replace(/\#.*$/, ''); // Remove anchors
+  var bg = chrome.extension.getBackgroundPage();
+  if (!type) 
+    type = bg.ElementTypes.document;
+  var both = { global:1, nonglobal: 1 };
+  for (var name in both) {
+    var whitelist = bg._myfilters[name]._whitelistFilters;
+    for (var i = 0; i < whitelist.length; i++) {
+      if (whitelist[i].matches(url, type, false))
+        return true;
+    }
   }
   return false;
 }
@@ -83,8 +86,6 @@ function url_parts(url) {
 //   }
 // Returns: null (asynchronous)
 function getCurrentTabInfo(callback) {
-  var utils = chrome.extension.getBackgroundPage().utils;
-  var whitelist = utils.get_whitelist();
   chrome.tabs.getSelected(undefined, function(tab) {
     // TODO: use code from elsewhere to extract domain
 
@@ -93,7 +94,7 @@ function getCurrentTabInfo(callback) {
     var disabled_site = false;
     if (url.scheme != 'http' && url.scheme != 'https')
       disabled_site = true;
-    if (tab.url.match('://chrome.google.com/extensions'))
+    if (/\:\/\/chrome.google.com\/(extensions|webstore)\//.test(tab.url))
       disabled_site = true;
 
     var result = {
@@ -102,7 +103,7 @@ function getCurrentTabInfo(callback) {
       domain: url.domain,
     };
     if (!disabled_site)
-      result.whitelisted = page_is_whitelisted(whitelist, url.domain);
+      result.whitelisted = page_is_whitelisted(tab.url);
 
     callback(result);
   });

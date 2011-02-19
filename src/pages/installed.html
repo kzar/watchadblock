@@ -41,6 +41,14 @@
           });
         });
         
+        (function() {
+          // TODO TEMP: OS X stable users can't hide the browser button yet.
+          // This support was added in Chrome 11.  See crbug.com/72746
+          var ua = navigator.userAgent.match(/Chrome\/(\d+)\./i);
+          if (navigator.platform == "MacIntel" && ua[1] < 11)
+            $("#chromebutton_upon_check").attr("i18n", 'chromebutton_hide_macOSX');
+        })();
+
         //translation
         localizePage();
       });
@@ -52,41 +60,11 @@
       (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
     </div>
 
-    <div style="width: 70%; margin:auto">
+    <div style="width: 70%; margin:auto;">
       <h1 class="icon" i18n="installedtitle"></h1>
-      <div style="font-size: large" i18n="installisdone"></div>
+      <div style="font-size: large;" i18n="installisdone"></div>
       <div class="section">
         <h2 i18n="somequicksetup"></h2>
-
-        <div id="chromebutton" style="display:none">
-          <p>
-            <input type="checkbox" id="show_chrome_button"/>
-            <label for="show_chrome_button" i18n="chromebutton_showoption"></label>
-            <img src="../img/icon_screenshot.png" style="vertical-align:middle;"/>
-          </p>
-          <div id="chromebutton_upon_check" style="display:none; font-style: italic" class="info">
-            <div i18n="chromebutton_how_to_enable" 
-                 i18n_replacement_el="chromebutton_install_link"></div>
-            <a id="chromebutton_install_link" 
-               href="https://clients2.google.com/service/update2/crx?response=redirect&x=id%3Dpicdndbpdnapajibahnnogkjofaeooof%26uc%26lang%3Den-US&prod=chrome"></a>
-            <div i18n="chromebutton_how_to_disable" style="display:none"></div>
-          </div>
-        </div>
-        <script>
-          $(function() {
-            if (SAFARI)
-              return;
-            $("#chromebutton").show();
-            $("#chromebutton input").click(function() {
-              $("#chromebutton_upon_check").show();
-            });
-            chrome.extension.sendRequest(button_extension_id, {}, function() {
-              $("#chromebutton input").attr("checked", true);
-              $('[i18n="chromebutton_how_to_enable"]').hide();
-              $('[i18n="chromebutton_how_to_disable"]').show();
-            });
-          });
-        </script>
 
         <p>
           <input type="checkbox" class="feature" id="enable_show_google_search_text_ads"/>
@@ -106,21 +84,31 @@
           });
         </script>
 
-        <div style="margin-top:2em" i18n="setotheroptions"></div>
+        <div id="chromebutton" style="display:none">
+          <p>
+            <input type="checkbox" id="show_chrome_button" checked />
+            <label for="show_chrome_button" i18n="chromebutton_showoption"></label>
+          </p>
+          <div i18n="chromebutton_how_to_hide" id="chromebutton_upon_check" style="display:none; font-style: italic" class="info"></div>
+        </div>
+        <script>
+          $(function() {
+            if (SAFARI)
+              return;
+            $("#chromebutton").show();
+            $("#chromebutton input").click(function() {
+              $("#chromebutton_upon_check").show();
+            });
+          });
+        </script>
+
+        <div style="margin-top:2em;" i18n="setotheroptions"></div>
       </div>
       <div id="donate_and_link">
-        <div style="font-size: large"
+        <div style="font-size: large;"
              i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
-        <a target="_new" id="donatelink"></a>
+        <a target="_new" href="http://chromeadblock.com/donate" id="donatelink"></a>
       </div>
-      <script>
-        $(function() {
-          var donate_link = "http://chromeadblock.com/paypal_donate/donation.php";
-          if (SAFARI)
-            donate_link += "?browser=safari";
-          $("#donate_and_link a").attr('href', donate_link);
-        });
-      </script>
       <div i18n="filecleanerwarning" class="sneaky" style="margin-top:15px;"></div>
     </div>
   </body>

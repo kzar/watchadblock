@@ -1,7 +1,4 @@
 function debug_print_selector_matches(selectors) {
-  if (!DEBUG)
-    return;
-
   selectors.
     filter(function(selector) { return $(selector).length > 0; }).
     forEach(function(selector) {
@@ -54,7 +51,7 @@ function run_specials(features) {
       var replacement = videoplayer.cloneNode(true);
       if (inParam) {
           // Grab new <param> and set its flashvars
-          newParam = replacement.querySelector('param[name="flashvars"]');;
+          newParam = replacement.querySelector('param[name="flashvars"]');
           newParam.setAttribute("value", flashVars);
       } else {
           replacement.setAttribute("flashvars", flashVars);
@@ -103,8 +100,6 @@ function run_specials(features) {
 
 function adblock_begin_part_2() {
   var opts = { domain: document.domain };
-  if (window == window.top)
-    opts.is_top_frame = true;
 
   extension_call('get_content_script_data', opts, function(data) {
     if (data.adblock_is_paused) {
@@ -143,11 +138,12 @@ function adblock_begin_part_2() {
         mustBePurged: true,
         preventDefault: function(){},
         type: "beforeload"
-      }
+      };
       beforeLoadHandler(fakeEvent);
     }
 
-    debug_print_selector_matches(data.selectors);
+    if (data.features.debug_logging.is_enabled)
+      debug_print_selector_matches(data.selectors);
   });
 }
 
@@ -158,11 +154,8 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
   //subscribe to the list when you click an abp: link
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
     event.preventDefault();
-    var match = $(this).attr('href').
-        match(/^abp:(\/\/)?subscribe(\/)?\?(.*\&)?location\=([^\&]*).*$/i);
-    if (match) {
-      var url = match[4];
-      extension_call('subscribe_popup', {url:url});
-    }
+    var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
+    if (searchquery)
+      extension_call('subscribe_popup', {searchquery: searchquery});
   });
 }

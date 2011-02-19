@@ -19,12 +19,10 @@ function FilterSet() {
 
 
 // Builds Filter objects from text.
-// ignoreGoogleAds: true if Google text ads should be shown, false otherwise
-// included in this FilterSet (e.g. because the user likes that type of ads.)
 // split_out_globals: true if return value should be
 //   { globals:FilterSet, nonglobals:FilterSet }
 // or false if return value should be a single unified FilterSet.
-FilterSet.fromText = function(text, ignoreGoogleAds, split_out_globals) {
+FilterSet.fromText = function(text, split_out_globals) {
   if (split_out_globals)
     result = { global: new FilterSet(), nonglobal: new FilterSet() };
   else
@@ -38,8 +36,6 @@ FilterSet.fromText = function(text, ignoreGoogleAds, split_out_globals) {
     if (lines[i].length == 0)
       continue;
     var filter = Filter.fromText(lines[i]);
-    if (ignoreGoogleAds && filter._adType == Filter.adTypes.GOOGLE_TEXT_AD)
-      continue;
     var target = result;
     if (split_out_globals)
       target = result[(filter.isGlobal() ? "global" : "nonglobal")];

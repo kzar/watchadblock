@@ -126,6 +126,7 @@ ClickWatcher.prototype._build_ui = function() {
         page.remove();
       }
     });
+        page.dialog("widget").css("position", "fixed");
 
   if (!SAFARI) {
     var link_to_block = $("<a>", {
