@@ -131,6 +131,7 @@ ClickWatcher.prototype._build_ui = function() {
   if (!SAFARI) {
     var link_to_block = $("<a>", {
       href: "#",
+      tabIndex: -1,
       css: { "font-size": "smaller !important" },
       text: translate("advanced_show_url_list"),
       click: function(e) { 
@@ -143,9 +144,6 @@ ClickWatcher.prototype._build_ui = function() {
     });
     page.append(link_to_block);
   }
-  // Focus close button, not link, so that 'escape' works. 
-  // timeout because button only exists after the dialog is open.
-  window.setTimeout(function() { page.dialog("widget").find(":button").focus(); }, 0);
 
   return page;
 }

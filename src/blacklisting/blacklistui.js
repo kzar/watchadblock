@@ -97,6 +97,7 @@ BlacklistUi.prototype._build_page1 = function() {
   var link_to_block = $("<a>", {
     id: "block_by_url_link",
     href: "#",
+    tabIndex: -1,
     css: { 
       "font-size": "smaller !important",
       "display": "none"
@@ -115,9 +116,6 @@ BlacklistUi.prototype._build_page1 = function() {
       return false;
     }
   });
-  // Focus close button, not link, so that 'escape' works. 
-  // timeout because button only exists after the dialog is open.
-  window.setTimeout(function() { page.dialog("widget").find(":button").focus(); }, 0);
 
   var page = $("<div>").
     append(translate("sliderexplanation")).
