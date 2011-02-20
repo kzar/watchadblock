@@ -105,9 +105,17 @@ BlacklistUi.prototype._build_page1 = function() {
     text: translate("block_by_url_instead"),
     click: function(e) { 
       var el = that._chain.current();
-      var isMedia = (el[0].nodeName.toLowerCase() in { 'audio':1, 'video':1 });
-      var type = (isMedia ? "media" : "image");
-      var srcUrl = el.attr("src");
+      var elType = typeForElement(el[0]);
+      var type = ElementTypes.NONE;
+      if (elType == ElementTypes.image)
+        type = "image";
+      else if (elType == ElementTypes.object)
+        type = "object";
+      else if (elType == ElementTypes.media)
+        type = "media";
+      else if (elType == ElementTypes.subdocument)
+        type = "subdocument";
+      var srcUrl = relativeToAbsoluteUrl(el.attr("src") || el.attr("data"));
       var tabUrl = document.location.href;
       var query = '?' + type + '=' + escape(srcUrl) + '&url=' + escape(tabUrl);
       window.open(chrome.extension.getURL('pages/resourceblock.html' 
@@ -263,7 +271,7 @@ BlacklistUi.prototype._build_page2 = function() {
 }
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
-  var show_link = (!SAFARI && !!el.attr("src"));
+  var show_link = (!SAFARI && (!!el.attr("src") || !!el.attr("data")));
   $("#block_by_url_link", this._ui_page1).toggle(show_link);
   var text = '&lt;' + el[0].nodeName;
   var attrs = ["id", "class", "name", "src", "href"];
