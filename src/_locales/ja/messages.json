@@ -32,14 +32,6 @@
     "message": "レンチのアイコン、ツールメニュー、拡張機能、AdBlockオプションからAdBlockの設定の変更や、フィルターリストを登録できます。",
     "description": "Message on installation success page"
   },
-  "chromebutton_how_to_disable": {
-    "message": "ボタンを消去するときはここを右クリックしてアンインストールをクリックします。AdBlockはアンインストールされません。",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_how_to_enable": {
-    "message": "ボタンを表示したい場合は、&lt;a&gt;this helper extension&lt;/a&gt;を別途インストールしてください。",
-    "description": "Message on installation success page"
-  },
   "chromebutton_showoption": {
     "message": "ツールバーにボタンを表示します。Show a button in the toolbar",
     "description": "Message on installation success page"
@@ -87,10 +79,6 @@
   "blacklistereditfilter": {
     "message": "手動でフィルターを入力して下さい。",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
-  },
-  "blacklistereditinvalid": {
-    "message": "フィルターが無効です。",
-    "description": "Messagebox if the manually edited filter is invalid"
   },
   "blacklisterblockedelement": {
     "message": "以下の要素がブロックされます:",
@@ -216,14 +204,6 @@
   },
   "tabfilterlists": {
     "message": "フィルターリスト",
-    "description": "A tab on the options page"
-  },
-  "tabblacklist": {
-    "message": "ブラックリスト",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "除外するサイト",
     "description": "A tab on the options page"
   },
 
@@ -473,14 +453,6 @@
     "message": "フィルターリストにない要素をブロックする場合はこのページで行います。ウェブページ上で設定することもできます。",
     "description": "Message at the top of the blacklist options tab"
   },
-  "blacklisttabtitle": {
-    "message": "手動フィルターの設定",
-    "description": "Title of the third tab"
-  },
-  "addnewfilter": {
-    "message": "新しいフィルターを追加する:",
-    "description": "Subtitle on the third tab"
-  },
   "linkblockadbyurl": {
     "message": "URLをブロックする",
     "description": "Link on the third tab"
@@ -528,33 +500,11 @@
 
   "removelabel": {
     "message": "消去",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "特定のドメイン上で要素をブロックしない",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "例, 'google.com' を入力した場合、google.com, mail.google.com,  www.google.comこれらのサイトにも適用されます。",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "追加",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "全てのリストを消去する:",
-    "description": "option on 4th tab page"
+    "description": "link to remove a filter"
   },
   "adblockreportinganad": {
     "message": "AdBlock - 消えない要素を報告する前に",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "このチュートリアルは、AdBlock(Chrome)/フィルターリスト 特有の問題か診断を行います。以下の質問に答えてください。&lt;br/&gt;
-注意:報告はボランティアとして行ってください。それができなければ、あなた自身でフィルターを追加するかブラックリストの調整で対処してください。&lt;br/&gt;
-【訳者注】チュートリアルの結果、フィルターリスト作者/AdBlock開発者へ報告の必要があると診断された場合、報告は英語で行う必要があります。訳者はその責を負いません。",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "フィルターリストのアップデートを確認します。",
@@ -587,10 +537,6 @@
   "correctfilters": {
     "message": "Correct filters",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "このリストを消去してもよろしいですか？",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "そのページの言語は？",
@@ -684,16 +630,6 @@
     "message": "Other",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "指定された言語のフィルターリストがありません。&lt;br/&gt;この言語をサポートする適切なリストを。$link$ もしくはこの要素をブロックするようにブラックリストを編集してください。",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1探してください$2",
-        "example": "&lt;a href='http://abp.org'&gt;here&lt;/a&gt;"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "このフィルターリストを適用し、ページを更新して要素が消去できたか確認してください。 $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -765,10 +701,6 @@
         "example": "&lt;a href='http://chrome.com/update_here.ctx'&gt;update&lt;/a&gt;"
       }
     }
-  },
-  "cantundo": {
-    "message": "このアクションはまだ完成していません。",
-    "description": "Warning a user before confirming an action"
   },
   "contextmenuexcludedomain": {
     "message": "このページのドメインを除外...",
