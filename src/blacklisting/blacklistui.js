@@ -94,11 +94,36 @@ BlacklistUi.prototype.show = function() {
 BlacklistUi.prototype._build_page1 = function() {
   var that = this;
 
-  var page = $("<div>" + translate("sliderexplanation") +
-           "<br/><div id='slider'></div>" +
-           "<div id='selected_data' style='font-size:smaller; height:7em'>" +
-           "</div>" +
-           "</div>");
+  var link_to_block = $("<a>", {
+    id: "block_by_url_link",
+    href: "#",
+    tabIndex: -1,
+    css: { 
+      "font-size": "smaller !important",
+      "display": "none"
+    },
+    text: translate("block_by_url_instead"),
+    click: function(e) { 
+      var el = that._chain.current();
+      var isMedia = (el[0].nodeName.toLowerCase() in { 'audio':1, 'video':1 });
+      var type = (isMedia ? "media" : "image");
+      var srcUrl = el.attr("src");
+      var tabUrl = document.location.href;
+      var query = '?' + type + '=' + escape(srcUrl) + '&url=' + escape(tabUrl);
+      window.open(chrome.extension.getURL('pages/resourceblock.html' 
+            + query), "_blank", 'location=0,width=1024,height=590');
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  var page = $("<div>").
+    append(translate("sliderexplanation")).
+    append("<br/>").
+    append("<div id='slider'></div>").
+    append("<div id='selected_data' style='font-size:smaller; height:7em'></div>").
+    append(link_to_block);
+
 
   var btns = {};
   btns[translate("buttonlooksgood")] = 
@@ -238,6 +263,8 @@ BlacklistUi.prototype._build_page2 = function() {
 }
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
+  var show_link = (!SAFARI && !!el.attr("src"));
+  $("#block_by_url_link", this._ui_page1).toggle(show_link);
   var text = '&lt;' + el[0].nodeName;
   var attrs = ["id", "class", "name", "src", "href"];
   for (var i in attrs) {

@@ -205,23 +205,6 @@
       </script>
 
 
-      <div id="div_whitelist" class="menu-entry">
-        <!-- Filled with translated text -->
-      </div>
-      <script>
-        $("#div_whitelist").click(function() {
-          getCurrentTabInfo(function(info) {
-            extension_call("add_custom_filter", {filter: '@@||' +
-                           info.domain + '^$document'}, function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
-            });
-          });
-        });
-      </script>
-
-
       <div i18n="dont_run_on_this_page" id="div_whitelist_page" class="menu-entry">
       </div>
       <script>
@@ -241,6 +224,23 @@
         });
       </script>
 
+
+
+      <div id="div_whitelist" class="menu-entry">
+        <!-- Filled with translated text -->
+      </div>
+      <script>
+        $("#div_whitelist").click(function() {
+          getCurrentTabInfo(function(info) {
+            var bg = chrome.extension.getBackgroundPage(); 
+            bg.utils.emit_page_broadcast(
+              {fn:'top_open_whitelist_ui', options:{}},
+              { tab: info.tab }
+            );
+            window.close();
+          });
+        });
+      </script>
 
 
       <div id="separator1" class="separator"></div>

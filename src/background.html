@@ -64,6 +64,15 @@
           return ex;
         }
       }
+      // Removes a custom filter entry.
+      // Inputs: filter:string line of text to remove from custom filters.
+      utils.remove_custom_filter = function(options) {
+        // Make sure every filter is preceded and followed by at least one \n,
+        // then find and remove the filter.
+        var text = "\n" + utils.get_custom_filters_text({}) + "\n";
+        text = text.replace("\n" + options.filter + "\n", "\n");
+        utils.set_custom_filters_text({filters: text.trim()});
+      }
 
       // Get the custom filters text as a \n-separated text string.
       utils.get_custom_filters_text = function(options) {
@@ -196,7 +205,7 @@
         // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
         // when not cached, it takes about 100ms.  So more caching would be good.  The
         // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-        // should be able to turn up the fifecache size by a lot.  have the fifocache log
+        // should be able to turn up the fifocache size by a lot.  have the fifocache log
         // how big each new entry is, to verify this.
         if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
           var global_hide = _myfilters.global.cached_getSelectors;
@@ -287,6 +296,18 @@
         );
       };
       
+      // Will open the resource blocking tab. 
+      // Input:
+      //   resources: array of resource strings; 
+      //              see resourceblock.html for format
+      utils.show_resourceblocker = function(options, sender) {
+        var url = sender.tab.url.replace(/\#.*/, '');
+        utils.show_resourceblocker.cached_resources.set(url, options.resources);
+        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+      }
+      // This stores resources used by resourceblock.html
+      utils.show_resourceblocker.cached_resources = new FifoCache(5);
+      
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
         var sender = { tab: { id: options.tabid } };
@@ -316,7 +337,7 @@
           return;
         
         chrome.contextMenus.create({
-          title: translate("contextmenuhidethis"),
+          title: translate("block_this_ad"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -333,17 +354,6 @@
             var sender = { tab: tab };
             utils.emit_page_broadcast(
               {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuexcludedomain"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
               sender
             );
           }
@@ -534,12 +544,11 @@
             return;
           if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
-
 
 
 

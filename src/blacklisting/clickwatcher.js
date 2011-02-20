@@ -104,28 +104,46 @@ ClickWatcher.prototype._build_ui = function() {
   btn[translate("buttoncancel")] = function() { page.dialog('close'); }
 
   var page = $("<div></div>").
-      append(translate("clickthead")).
-      css({
-        'background': 'white',
-        'text-align': 'left',
-        'font-size': '12px',
-      }).
-      dialog({
-          zIndex:10000000, 
-          position:[50, 50],
-          height:150,
-          minHeight:50,
-          autoOpen: false,
-          title: translate("blockanadtitle"),
-          buttons: btn,
-          close: function() { 
-            $("*").unbind('click', click_catch_this);
-            Overlay.removeAll();
-            that._onClose();
-            page.remove();
-          }
-        });
+    append(translate("clickthead")).
+    append("<br/><br/>").
+    css({
+      'background': 'white',
+      'text-align': 'left',
+      'font-size': '12px',
+    }).
+    dialog({
+      zIndex:10000000, 
+      position:[50, 50],
+      width:400,
+      minHeight:125,
+      autoOpen: false,
+      title: translate("blockanadtitle"),
+      buttons: btn,
+      close: function() { 
+        $("*").unbind('click', click_catch_this);
+        Overlay.removeAll();
+        that._onClose();
+        page.remove();
+      }
+    });
         page.dialog("widget").css("position", "fixed");
+
+  if (!SAFARI) {
+    var link_to_block = $("<a>", {
+      href: "#",
+      tabIndex: -1,
+      css: { "font-size": "smaller !important" },
+      text: translate("advanced_show_url_list"),
+      click: function(e) { 
+        // GLOBAL_collect_resources is created by adblock_start.js
+        var resources = Object.keys(GLOBAL_collect_resources);
+        extension_call("show_resourceblocker", {resources: resources});
+        e.preventDefault();
+        return false;
+      }
+    });
+    page.append(link_to_block);
+  }
 
   return page;
 }
