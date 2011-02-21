@@ -58,6 +58,14 @@
         top: 25px;
         right: 10px;
         padding: 5px;
+        display: none;
+      }
+      #choosedifferentresource {
+        font-size: 12px;
+        background-color: white;
+        padding-left: 5px;
+        display:none;
+        font-style: italic;
       }
       .hiding {
         color:blue;
@@ -328,6 +336,10 @@
         $('.clickableRow, input:enabled', '#resourceslist').click(function() {
           if ($('.selected','#resourceslist').length > 0)
             return; //already selected a resource
+          $("#choosedifferentresource").show();
+          $("#choosedifferentresource").click(function() {
+            document.location.reload();
+          });
           $(this).parents('tr').addClass('selected');
           $("#resourceslist tr:not(.selected)").remove();
           $("#resourceslist tr input").
@@ -473,7 +485,7 @@
 
             finally_it_has_loaded_its_stuff();
             // If opened by the context menu, this variable exists
-            if (temp_url)
+            if (temp_url) {
               if ($("#resourceslist input").attr("disabled")) {
                 // In case the resource has been whitelisted and can't be removed
                 if ($(".deleterule").length == 0) {
@@ -483,6 +495,9 @@
                 }
               } else
                 $("#resourceslist input").click();
+              $("#choosedifferentresource").remove();
+            } else
+              $("#legend").show();
           });
         });
       });
@@ -491,6 +506,7 @@
   <body>
     <h1 class="icon">AdBlock</h1>
     <b i18n="selectresources"></b>
+    <a href="#" id="choosedifferentresource" i18n="changelabel"></a>
     <table id="resourceslist">
       <thead><tr>
         <th></th>
