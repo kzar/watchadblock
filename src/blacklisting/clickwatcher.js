@@ -132,7 +132,7 @@ ClickWatcher.prototype._build_ui = function() {
     var link_to_block = $("<a>", {
       href: "#",
       tabIndex: -1,
-      css: { "font-size": "smaller !important" },
+      css: { "font-size": "11px !important" },
       text: translate("advanced_show_url_list"),
       click: function(e) { 
         // GLOBAL_collect_resources is created by adblock_start.js
