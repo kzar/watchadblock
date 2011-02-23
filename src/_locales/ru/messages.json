@@ -49,6 +49,10 @@
     "message": "Чтобы скрыть кнопку щелкните её правой кнопкой мыши и выберите Hide Button.  Вы можете показать ее вновь, нажав Ключ | Инструменты | Расширения.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
+  "chromebutton_hide_macOSX": {
+    "message": "Chrome на OS X не будет полностью поддерживать скрытие кнопки еще несколько недель. До этого, выможете переместить кнопку из виду, перетаскивая края адресной строки с правой стороны.",
+    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
+  },
   "chromebutton_showoption": {
     "message": "Показать кнопку на панели инструментов",
     "description": "Message on installation success page"
@@ -68,6 +72,10 @@
   "sliderexplanation": {
     "message": "Сдвигайте ползунок до тех пор, пока реклама не будет заблокирована правильно, а заблокированный элемент выглядит пригодным.",
     "description": "Blacklister slider page message"
+  },
+  "block_by_url_instead": {
+    "message": "Дополнительно: блокировать по URL",
+    "description": "Link on blacklister slider page"
   },
   "slidertitle": {
     "message": "Шаг 1: Выяснить, что нужно заблокировать",
@@ -178,7 +186,10 @@
     "message": "Щелкните по рекламе, и я доведу Вас до ее блокировки.",
     "description": "When you have to click the ad to continue"
   },
-
+  "advanced_show_url_list": {
+    "message": "или выберите URL из списка, чтобы заблокировать (дополнительно)",
+    "description": "Message on link to open resource blocker instead of use blacklister"
+  },
   "whitelistertext": {
     "message": "AdBlock не будет работать на доменах, оканчивающихся на <br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
@@ -771,6 +782,10 @@
     "message": "Блокировать рекламу на этой странице",
     "description": "Toolbar button menu entry and context menu entry"
   },
+  "block_this_ad": {
+    "message": "Блокировать эту рекламу",
+    "description": "Context and popup menu entry"
+  },
   "contextmenuexcludedomain": {
     "message": "Не выполнять на этом домене...",
     "description": "Context menu entry"
@@ -782,6 +797,160 @@
   "somequicksetup": {
     "message": "Некоторые быстрые настройки",
     "description": "Title of the options on the installation succes page"
+  },
+  "typehiding": {
+    "message": "скрытие",
+    "description": "A resource type (lowercase!)"
+  },
+  "typescript": {
+    "message": "сценарий",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeimage": {
+    "message": "изображение",
+    "description": "A resource type (lowercase!)"
+  },
+  "typestylesheet": {
+    "message": "задание стиля",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeobject": {
+    "message": "интерактивный объект",
+    "description": "A resource type (lowercase!)"
+  },
+  "typesubdocument": {
+    "message": "фрейм",
+    "description": "A resource type (lowercase!)"
+  },
+  "typemedia": {
+    "message": "аудио/видео",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeunknown": {
+    "message": "неизвестно",
+    "description": "A resource type (lowercase!)"
+  },
+  "blockeverycontaining": {
+    "message": "Блокировать все ресурсы, содержащие:",
+    "description": "resourceblocking page string"
+  },
+  "whitelisteverycontaining": {
+    "message": "Поместить в белый список ресурсы, содержащие:",
+    "description": "resourceblocking page string"
+  },
+  "wildcardhint": {
+    "message": "Примечание: Вы можете использовать здесь * как знак подстановки",
+    "description": "resourceblocking page string"
+  },
+  "novalidurlpattern": {
+    "message": "Пожалуйста, введите допустимый шаблон URL для сравнения!",
+    "description": "resourceblocking page string"
+  },
+  "thirdpartycheckbox": {
+    "message": "Любой веб-сайт, КРОМЕ веб-сайтов домена $domain$",
+    "description": "resourceblocking page string",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "filterhasbeenadded": {
+    "message": "Фильтр успешно добавлен!\nПерезагрузите страницу, чтобы увидеть результат!",
+    "description": "resourceblocking page string (the 'slash n' is a line break)"
+  },
+  "whitelistedorpausedpage": {
+    "message": "Страница внесена в белый список или AdBlock приостановлен. Поскольку ресурсы не перехвачены, так что эта страница не может быть использована",
+    "description": "resourceblocking page string"
+  },
+  "noresourcessend": {
+    "message": "Что-то пошло не так. Ресурсы не были отправлены. Эта страница будет закрыта.",
+    "description": "resourceblocking page string"
+  },
+  "resourceiswhitelisted": {
+    "message": "Выделенные ресурсы помещены в белый список. Поэтому Вы не можете их блокировать.",
+    "description": "resourceblocking page string"
+  },
+  "selectresources": {
+    "message": "Выберите ресурс, который Вы хотите блокировать или разблокировать",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocktitle": {
+    "message": "Блокировать ресурс",
+    "description": "resourceblocking page string"
+  },
+  "headerresource": {
+    "message": "Ресурс",
+    "description": "resourceblocking page string"
+  },
+  "headertype": {
+    "message": "Тип",
+    "description": "resourceblocking page string"
+  },
+  "headerfilter": {
+    "message": "Согласованный фильтр",
+    "description": "resourceblocking page string"
+  },
+  "close": {
+    "message": "Закрыть",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend1": {
+    "message": "Легенда:",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend2": {
+    "message": "заблокированные ресурсы",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend3": {
+    "message": "ресурсы из белого листа",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend4": {
+    "message": "ресурсы доступные для блокирования",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend5": {
+    "message": "применены правила для скрытия",
+    "description": "resourceblocking page string"
+  },
+  "loading": {
+    "message": "ЗАГРУЗКА...",
+    "description": "resourceblocking page string"
+  },
+  "nextstep": {
+    "message": "Следующий шаг",
+    "description": "resourceblocking page string"
+  },
+  "appliedwhenbrowsing": {
+    "message": "Этот фильтр будет применяться при просмотре страниц:",
+    "description": "resourceblocking page string"
+  },
+  "anysite": {
+    "message": "Любой веб-сайт",
+    "description": "resourceblocking page string"
+  },
+  "onlyondomains": {
+    "message": "ТОЛЬКО страницы на этих доменах: ",
+    "description": "resourceblocking page string"
+  },
+  "multipledomainshint": {
+    "message": "Разделяйте несколько доменов запятыми или пробелами",
+    "description": "resourceblocking page string"
+  },
+  "casesensitive": {
+    "message": "Этот фильтр чувствителен к регистру:",
+    "description": "resourceblocking page string"
+  },
+  "onlyresourcetypes": {
+    "message": "Этот фильтр применяется к ресурсам этих типов:",
+    "description": "resourceblocking page string"
+  },
+  "addthisfilter": {
+    "message": "Добавить этот фильтр",
+    "description": "resourceblocking page string"
   },
   "flashads": {
     "message": "Видео и Флэш",
@@ -880,5 +1049,9 @@
   "did_you_know_this_is_my_full_time_job": {
     "message": "Знаете ли Вы, что это моя основная работа?",
     "description": "Text of a donation link on toolbar button"
+  },
+  "removelabel": {
+    "message": "Удалить",
+    "description": "link to remove a filter"
   }
 }
