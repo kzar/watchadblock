@@ -89,14 +89,12 @@
             if (text && 
                  (text[0] == '!' || text[0] == '[' || text[0] == '(')
                ) {
-            $.get("http://chromeadblock.com/api/url_subscribe.php", 
-                                                  {url:queryparts.location});
+              var req = queryparts.requiresLocation ?
+                        "url:" + queryparts.requiresLocation : undefined;
 
-            var req = queryparts.requiresLocation ?
-                      "url:" + queryparts.requiresLocation : undefined;
-
-            extension_call("subscribe", {id: 'url:' + queryparts.location,
-                        text:text, requires:req}, function() {finished(true);});
+              var id = 'url:' + queryparts.location;
+              extension_call("subscribe", {id: id, text:text, requires:req},
+                             function() {finished(true);});
             } else finished(false);
           },
           error: function() {finished(false);}
