@@ -148,8 +148,22 @@
         var rows = [];
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
-          if (!matchingfilter)
+          if (!matchingfilter && !SAFARI)
             matchingfilter = _limited_to_domain.matches(i, resources[i].type, domain, true);
+          else if (!matchingfilter) {
+            // Safari doesn't have the ._text property in the filter list
+            // So first check if a filter has matched. Undefined is returned if
+            // true, as ._text doesn't exist. If no filter matches, it returns
+            // false, so we don't have to do anything. Then check if it was
+            // blocked or whitelisted by making a normal call.
+            var isFilterMatch = (undefined ==
+                _limited_to_domain.matches(i, resources[i].type, domain, true));
+            if (isFilterMatch && 
+                _limited_to_domain.matches(i, resources[i].type, domain))
+              matchingfilter = "*";
+            else if (isFilterMatch)
+              matchingfilter = "@@*";
+          }
 
           var type = {sort:3, name:undefined};
           if (matchingfilter)
@@ -172,7 +186,7 @@
           thisrow += "<td" + disabled + ">" + (type.name ? "<span class='sorter'>" +
                                                type.sort + "</span>" + matchingfilter :
                                                "<span class='sorter'>3</span>-") + "</td>";
-          if (inCustomFilters(matchingfilter))
+          if (!SAFARI && inCustomFilters(matchingfilter))
             thisrow += "<td class='deleterule' title='" +
                        translate("removelabel") + "'></td>";
           else
@@ -188,6 +202,11 @@
             document.location.reload();
           });
         });
+
+        // Hide the column with the filters. This disables the functionality to
+        // sort the list by filter type, but well, users can press F5 too...
+        if (SAFARI)
+          $("#resourceslist :not(tr):nth-of-type(4)").css("display","none");
       };
 
       //Generate a list of pre-defined url filters
@@ -447,12 +466,15 @@
             var bg = chrome.extension.getBackgroundPage();
             var cache = bg.utils.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
-            if (!loaded_resources || loaded_resources.length == 0) {
+            if (!loaded_resources || loaded_resources.length <= 2) {
+              // There are always two of them: the css stylesheets of the wizard
               alert(translate('noresourcessend'));
               window.close();
               return;
             }
             for (var i=0; i<loaded_resources.length; i++) {
+              if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
+                continue; // Blacklister resources shouldn't be visible
               if (/^HIDE\:.+/.test(loaded_resources[i])) {
                 var filter = "##" + loaded_resources[i].substring(5);
                 resources[filter] = {filter: filter};
