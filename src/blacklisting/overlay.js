@@ -3,10 +3,13 @@ Overlay = function(options) {
   var el = $(options.dom_element);
 
   this.image = $("<div class='adblock-killme-overlay'></div>").
-    css("position", "absolute").
-    css("left", el.position().left).
-    css("top", el.position().top).
-    css("z-index", 1000000).
+    css({
+      "position": "absolute",
+      "left": el.position().left,
+      "top": el.position().top,
+      "z-index": 1000000,
+      "background-color": "transparent !important"
+    }).
     width(el.width()).
     height(el.height());
   this.el = el;
