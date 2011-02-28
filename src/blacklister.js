@@ -15,7 +15,7 @@ function load_jquery_ui(callback) {
     $("head").append(link);
   }
   extension_call('readfile', 
-    {file:"jquery/jquery-ui-1.8.6.custom.min.js"},
+    {file:"jquery/jquery-ui.custom.min.js"},
     function(result) {
       eval(result); // suck it, Trebek
 
