@@ -126,24 +126,22 @@ ClickWatcher.prototype._build_ui = function() {
         page.remove();
       }
     });
-        page.dialog("widget").css("position", "fixed");
+  page.dialog("widget").css("position", "fixed");
 
-  if (!SAFARI) {
-    var link_to_block = $("<a>", {
-      href: "#",
-      tabIndex: -1,
-      css: { "font-size": "smaller !important" },
-      text: translate("advanced_show_url_list"),
-      click: function(e) { 
-        // GLOBAL_collect_resources is created by adblock_start.js
-        var resources = Object.keys(GLOBAL_collect_resources);
-        extension_call("show_resourceblocker", {resources: resources});
-        e.preventDefault();
-        return false;
-      }
-    });
-    page.append(link_to_block);
-  }
+  var link_to_block = $("<a>", {
+    href: "#",
+    tabIndex: -1,
+    css: { "font-size": "smaller !important" },
+    text: translate("advanced_show_url_list"),
+    click: function(e) { 
+      // GLOBAL_collect_resources is created by adblock_start.js
+      var resources = Object.keys(GLOBAL_collect_resources);
+      extension_call("show_resourceblocker", {resources: resources});
+      e.preventDefault();
+      return false;
+    }
+  });
+  page.append(link_to_block);
 
   return page;
 }

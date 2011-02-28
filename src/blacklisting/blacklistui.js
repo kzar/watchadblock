@@ -271,7 +271,7 @@ BlacklistUi.prototype._build_page2 = function() {
 }
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
-  var show_link = (!SAFARI && (!!el.attr("src") || !!el.attr("data")));
+  var show_link = (!!el.attr("src") || !!el.attr("data"));
   $("#block_by_url_link", this._ui_page1).toggle(show_link);
   var text = '&lt;' + el[0].nodeName;
   var attrs = ["id", "class", "name", "src", "href"];
