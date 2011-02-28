@@ -356,8 +356,14 @@ BlacklistUi.prototype._redrawPage2 = function() {
   for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
     var val = BlacklistUi._ellipsis(el.attr(attr));
+    var checked = true;
 
-    if (val == '' || val == null)
+    // Check src and href only by default if no other identifiers are present
+    // except for the nodeName selector.
+    if (attr == 'src' || attr == 'href')
+      checked = $("input", detailsDiv).length == 1;
+
+    if (!val)
       continue;
 
     var checkboxlabel = $("<label></label>").
@@ -368,8 +374,8 @@ BlacklistUi.prototype._redrawPage2 = function() {
       css("cursor", "pointer");
 
     var checkbox = $("<div></div>").
-      append("<input type=checkbox " + ((attr == 'src' || attr == 'href') ? 
-             '': 'checked') + " id=ck" + attr + " /> ").
+      append("<input type=checkbox " + (checked ? 'checked="checked"': '') +
+             " id=ck" + attr + " /> ").
       append(checkboxlabel);
 
     checkbox.find("input").change(function() {
