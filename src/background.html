@@ -475,32 +475,34 @@
       }
       note_install();
 
-      // TODO temp code installed on 1/6/2010
       // Take a census of filter subscriptions.
-      try {
-        if (localStorage['tookSubscriptionCensus'] == null) {
-          var data = {};
-          data.subscriptions = [];
-          for (var sub_id in _myfilters._subscriptions) {
-            if (_myfilters._subscriptions[sub_id].subscribed) {
-              data.subscriptions.push(sub_id);
+      function take_census() {
+        try {
+          if (localStorage['tookSubscriptionCensus'] == null) {
+            var data = {};
+            data.subscriptions = [];
+            for (var sub_id in _myfilters._subscriptions) {
+              if (_myfilters._subscriptions[sub_id].subscribed) {
+                data.subscriptions.push(sub_id);
+              }
             }
+            data.subscriptions = data.subscriptions.join(',');
+            data.safari = SAFARI;
+            data.language = navigator.language;
+            data.installed_at = localStorage['installed_at'];
+            data.options_at = localStorage['visited_options_at'];
+            $.get(
+              "http://chromeadblock.com/api/url_census.php", 
+              data,
+              function(result) {
+                if (/OK/.test(result))
+                  localStorage['tookSubscriptionCensus'] = true;
+              }
+            );
           }
-          data.subscriptions = data.subscriptions.join(',');
-          data.safari = SAFARI;
-          data.language = navigator.language;
-          data.installed_at = localStorage['installed_at'];
-          data.options_at = localStorage['visited_options_at'];
-          $.get(
-            "http://chromeadblock.com/api/url_census.php", 
-            data,
-            function(result) {
-              if (/OK/.test(result))
-                localStorage['tookSubscriptionCensus'] = true;
-            }
-          );
-        }
-      } catch (ex) { log("Census failed"); log(ex); }
+        } catch (ex) { log("Census failed"); log(ex); }
+      }
+      // take_census(); uncomment when you want another census.
 
 
       // Safari specific code.
