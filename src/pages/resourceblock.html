@@ -95,7 +95,7 @@
     </style>
     <script type="text/javascript">
       var domain = '';
-      var resources = [];
+      var resources = {};
       var domaindata;
       var custom_filters = [];
 
@@ -130,6 +130,8 @@
             case ElementTypes.object: return "object";
             case ElementTypes.subdocument: return "subdocument";
             case ElementTypes.media: return "media";
+            case ElementTypes.document:
+            case ElementTypes.elemhide: return "page";
             default: return "unknown";
           }
         }
@@ -444,22 +446,31 @@
             return;
           }
           if (!temp_url) {
+            // Show elemhide rules that match on the page
+            var noHideRule = page_is_whitelisted(url, ElementTypes.elemhide, true);
+            if (noHideRule)
+              resources[url] = {type: ElementTypes.elemhide,
+                                filter: SAFARI ? "@@elemhiderule" : noHideRule};
+            
+            // Load all stored resources
             var bg = chrome.extension.getBackgroundPage();
             var cache = bg.utils.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
-            if (!loaded_resources || loaded_resources.length == 0) {
+            // Convert all resources to the object type
+            if (loaded_resources)
+              for (var i = 0; i < loaded_resources.length || 0; i++) {
+                if (/^HIDE\:.+/.test(loaded_resources[i])) {
+                  var filter = "##" + loaded_resources[i].substring(5);
+                  resources[filter] = {filter: filter};
+                } else {
+                  var blockmatches = loaded_resources[i].split(':|:', 2);
+                  resources[blockmatches[1]] = {type: Number(blockmatches[0])};
+                }
+              }
+            if (Object.keys(resources).length == 0) {
               alert(translate('noresourcessend'));
               window.close();
               return;
-            }
-            for (var i=0; i<loaded_resources.length; i++) {
-              if (/^HIDE\:.+/.test(loaded_resources[i])) {
-                var filter = "##" + loaded_resources[i].substring(5);
-                resources[filter] = {filter: filter};
-              } else {
-                var blockmatches = loaded_resources[i].split(':|:', 2);
-                resources[blockmatches[1]] = {type: Number(blockmatches[0])};
-              }
             }
           }
           extension_call('get_custom_filters_text', {}, function(filters) {
