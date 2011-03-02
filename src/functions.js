@@ -41,19 +41,20 @@ function localizePage() {
 //   url: the url of the page
 //   type: one out of ElementTypes, default ElementTypes.document,
 //         to check what the page is whitelisted for: hiding rules or everything
-function page_is_whitelisted(url, type) {
+//   returnFilter: if the filter that whitelisted the page should be returned
+function page_is_whitelisted(url, type, returnFilter) {
   //special case this one
   if (url == "http://acid3.acidtests.org/") return true;
   url = url.replace(/\#.*$/, ''); // Remove anchors
   var bg = chrome.extension.getBackgroundPage();
-  if (!type) 
+  if (!type)
     type = bg.ElementTypes.document;
   var both = { global:1, nonglobal: 1 };
   for (var name in both) {
     var whitelist = bg._myfilters[name]._whitelistFilters;
     for (var i = 0; i < whitelist.length; i++) {
       if (whitelist[i].matches(url, type, false))
-        return true;
+        return returnFilter ? whitelist[i]._text : true;
     }
   }
   return false;

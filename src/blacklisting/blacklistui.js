@@ -99,7 +99,7 @@ BlacklistUi.prototype._build_page1 = function() {
     href: "#",
     tabIndex: -1,
     css: { 
-      "font-size": "smaller !important",
+      "font-size": "11px !important",
       "display": "none"
     },
     text: translate("block_by_url_instead"),
@@ -218,6 +218,7 @@ BlacklistUi.prototype._build_page2 = function() {
           extension_call('add_custom_filter', { filter: filter }, function() {
             that._fire('block');
           });
+          that._ui_page2.dialog('close');
         } else {alert(translate("blacklisternofilter"));}
       }
   btns[translate("buttoncancel")] =

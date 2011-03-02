@@ -58,6 +58,14 @@
         top: 25px;
         right: 10px;
         padding: 5px;
+        display: none;
+      }
+      #choosedifferentresource {
+        font-size: 12px;
+        background-color: white;
+        padding-left: 5px;
+        display:none;
+        font-style: italic;
       }
       .hiding {
         color:blue;
@@ -95,7 +103,7 @@
     </style>
     <script type="text/javascript">
       var domain = '';
-      var resources = [];
+      var resources = {};
       var domaindata;
       var custom_filters = [];
 
@@ -130,6 +138,8 @@
             case ElementTypes.object: return "object";
             case ElementTypes.subdocument: return "subdocument";
             case ElementTypes.media: return "media";
+            case ElementTypes.document:
+            case ElementTypes.elemhide: return "page";
             default: return "unknown";
           }
         }
@@ -328,6 +338,10 @@
         $('.clickableRow, input:enabled', '#resourceslist').click(function() {
           if ($('.selected','#resourceslist').length > 0)
             return; //already selected a resource
+          $("#choosedifferentresource").show();
+          $("#choosedifferentresource").click(function() {
+            document.location.reload();
+          });
           $(this).parents('tr').addClass('selected');
           $("#resourceslist tr:not(.selected)").remove();
           $("#resourceslist tr input").
@@ -444,24 +458,33 @@
             return;
           }
           if (!temp_url) {
+            // Show elemhide rules that match on the page
+            var noHideRule = page_is_whitelisted(url, ElementTypes.elemhide, true);
+            if (noHideRule)
+              resources[url] = {type: ElementTypes.elemhide,
+                                filter: SAFARI ? "@@elemhiderule" : noHideRule};
+            
+            // Load all stored resources
             var bg = chrome.extension.getBackgroundPage();
             var cache = bg.utils.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
-            if (!loaded_resources || loaded_resources.length == 0) {
+            // Convert all resources to the object type
+            if (loaded_resources)
+              for (var i = 0; i < loaded_resources.length || 0; i++) {
+                if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
+                  continue; // Blacklister resources shouldn't be visible
+                if (/^HIDE\:.+/.test(loaded_resources[i])) {
+                  var filter = "##" + loaded_resources[i].substring(5);
+                  resources[filter] = {filter: filter};
+                } else {
+                  var blockmatches = loaded_resources[i].split(':|:', 2);
+                  resources[blockmatches[1]] = {type: Number(blockmatches[0])};
+                }
+              }
+            if (Object.keys(resources).length == 0) {
               alert(translate('noresourcessend'));
               window.close();
               return;
-            }
-            for (var i=0; i<loaded_resources.length; i++) {
-              if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
-                continue; // Blacklister resources shouldn't be visible
-              if (/^HIDE\:.+/.test(loaded_resources[i])) {
-                var filter = "##" + loaded_resources[i].substring(5);
-                resources[filter] = {filter: filter};
-              } else {
-                var blockmatches = loaded_resources[i].split(':|:', 2);
-                resources[blockmatches[1]] = {type: Number(blockmatches[0])};
-              }
             }
           }
           extension_call('get_custom_filters_text', {}, function(filters) {
@@ -475,7 +498,7 @@
 
             finally_it_has_loaded_its_stuff();
             // If opened by the context menu, this variable exists
-            if (temp_url)
+            if (temp_url) {
               if ($("#resourceslist input").attr("disabled")) {
                 // In case the resource has been whitelisted and can't be removed
                 if ($(".deleterule").length == 0) {
@@ -485,6 +508,9 @@
                 }
               } else
                 $("#resourceslist input").click();
+              $("#choosedifferentresource").remove();
+            } else
+              $("#legend").show();
           });
         });
       });
@@ -493,6 +519,7 @@
   <body>
     <h1 class="icon">AdBlock</h1>
     <b i18n="selectresources"></b>
+    <a href="#" id="choosedifferentresource" i18n="changelabel"></a>
     <table id="resourceslist">
       <thead><tr>
         <th></th>
