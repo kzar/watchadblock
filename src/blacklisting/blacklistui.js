@@ -217,6 +217,7 @@ BlacklistUi.prototype._build_page2 = function() {
           extension_call('add_custom_filter', { filter: filter }, function() {
             that._fire('block');
           });
+          that._ui_page2.dialog('close');
         } else {alert(translate("blacklisternofilter"));}
       }
   btns[translate("buttoncancel")] =
