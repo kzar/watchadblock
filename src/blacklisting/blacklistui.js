@@ -99,7 +99,7 @@ BlacklistUi.prototype._build_page1 = function() {
     href: "#",
     tabIndex: -1,
     css: { 
-      "font-size": "smaller !important",
+      "font-size": "11px !important",
       "display": "none"
     },
     text: translate("block_by_url_instead"),
