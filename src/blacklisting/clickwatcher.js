@@ -220,6 +220,7 @@ ClickWatcher.prototype._build_ui = function() {
         var resources = Object.keys(GLOBAL_collect_resources);
         extension_call("show_resourceblocker", {resources: resources});
         e.preventDefault();
+        that._ui.dialog('close');
         return false;
       }
     });

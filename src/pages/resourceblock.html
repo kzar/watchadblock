@@ -471,6 +471,8 @@
             // Convert all resources to the object type
             if (loaded_resources)
               for (var i = 0; i < loaded_resources.length || 0; i++) {
+                if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
+                  continue; // Blacklister resources shouldn't be visible
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
                   var filter = "##" + loaded_resources[i].substring(5);
                   resources[filter] = {filter: filter};

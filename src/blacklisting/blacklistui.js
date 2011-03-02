@@ -103,7 +103,7 @@ BlacklistUi.prototype._build_page1 = function() {
       "display": "none"
     },
     text: translate("block_by_url_instead"),
-    click: function(e) { 
+    click: function(e) {
       var el = that._chain.current();
       var elType = typeForElement(el[0]);
       var type = ElementTypes.NONE;
@@ -121,6 +121,7 @@ BlacklistUi.prototype._build_page1 = function() {
       window.open(chrome.extension.getURL('pages/resourceblock.html' 
             + query), "_blank", 'location=0,width=1024,height=590');
       e.preventDefault();
+      that._ui_page1.dialog('close');
       return false;
     }
   });
