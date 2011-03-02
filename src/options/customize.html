@@ -118,7 +118,7 @@
         } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
-      $("#divUrlBlock input:text").keyup(validateUrlFilter);
+      $("#divUrlBlock input:text").bind("input", validateUrlFilter);
 
       var validateCssFilter = function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
@@ -132,7 +132,7 @@
         } catch(ex) {}
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
-      $("#divCssBlock input:text").keyup(validateCssFilter);
+      $("#divCssBlock input:text").bind("input", validateCssFilter);
       
       var validateExcludeFilter = function() {
         var unblockUrl = $("#txtUnblock").val().trim();
@@ -145,7 +145,7 @@
         } catch(ex) {}
         $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
       }
-      $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
+      $("#divExcludeBlock input:text").bind("input", validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
