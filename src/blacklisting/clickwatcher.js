@@ -15,16 +15,6 @@ function Highlighter() {
     display: "none"
   }).appendTo("body");
   
-//  var fmtcss = (function() {
-//    var p = /\{\d+\}/g;
-//    return function() {
-//      var a = arguments;
-//      return "{0}{1}{2}{3}".replace(p, function(c) {
-//        return a[c.match(/\d+/)] + "px !important;";
-//      });
-//    };
-//  })();
-
   function handler(e) {
     var offset, el = e.target;
     var now = +new Date();
@@ -43,7 +33,7 @@ function Highlighter() {
     target = $(el);
     offset = target.offset();
     box.css({
-      zIndex: (parseInt(target.css("z-index")) || 1) + " !important", // this okay?
+      zIndex: (parseInt(target.css("z-index")) || 1) + " !important",
       height: target.outerHeight(), 
       width: target.outerWidth(), 
       left: offset.left, 
