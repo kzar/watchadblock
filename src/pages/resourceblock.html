@@ -453,6 +453,8 @@
               return;
             }
             for (var i=0; i<loaded_resources.length; i++) {
+              if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
+                continue; // Blacklister resources shouldn't be visible
               if (/^HIDE\:.+/.test(loaded_resources[i])) {
                 var filter = "##" + loaded_resources[i].substring(5);
                 resources[filter] = {filter: filter};
