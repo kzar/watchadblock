@@ -101,7 +101,18 @@
 
       // Creates the table that shows all blockable items
       function generateTable() {
-        var local_filterset = FilterSet.fromText(domaindata.block, false, false);
+        if (!SAFARI) {
+          var local_filterset = FilterSet.fromText(domaindata.block, false, false);
+        } else {
+          // Safari doesn't store it's filter texts in the background page.
+          // Therefore, simply create a filterset here from the _myfilters data
+          var myfilters = chrome.extension.getBackgroundPage()._myfilters;
+          var local_filterset = new FilterSet();
+          local_filterset._patternFilters = myfilters.global._patternFilters.
+              concat(myfilters.nonglobal._patternFilters);
+          local_filterset._whitelistFilters = myfilters.global._whitelistFilters.
+              concat(myfilters.nonglobal._whitelistFilters);
+        }
         var _limited_to_domain = local_filterset.limitedToDomain(domain);
         delete domaindata;
 
@@ -143,7 +154,7 @@
               return true;
           return false;
         }
-        
+
         // Now create that table row-by-row
         var rows = [];
         for (var i in resources) {
@@ -158,7 +169,7 @@
             // blocked or whitelisted by making a normal call.
             var isFilterMatch = (undefined ==
                 _limited_to_domain.matches(i, resources[i].type, domain, true));
-            if (isFilterMatch && 
+            if (isFilterMatch &&
                 _limited_to_domain.matches(i, resources[i].type, domain))
               matchingfilter = "*";
             else if (isFilterMatch)
@@ -176,7 +187,7 @@
 
           var thisrow = "<tr" + (type.name ? ' class="' + type.name + '"' : '') + ">";
           var disabled = (type.name == 'whitelisted' || type.name == 'hiding');
-          thisrow += "<td><input type='checkbox'" + (disabled ? 
+          thisrow += "<td><input type='checkbox'" + (disabled ?
                                        ' disabled="disabled"' : '') + "/></td>";
           disabled = (disabled ? '' : ' class="clickableRow"');
           thisrow += "<td" + disabled + " title='" + i + "'>" + truncateI(i) + "</td>";
@@ -221,7 +232,7 @@
           strippedUrl = strippedUrl.replace(/(\?|\#).*/, '');
           blocksuggestions.push(strippedUrl);
         }
-        if (strippedUrl.indexOf("/") > 0 && 
+        if (strippedUrl.indexOf("/") > 0 &&
             strippedUrl.lastIndexOf('/') != strippedUrl.indexOf('/')) {
           strippedUrl = strippedUrl.substr(0, strippedUrl.lastIndexOf('/') + 1);
           blocksuggestions.push(strippedUrl);
@@ -240,7 +251,7 @@
         var suggestions = [];
         for (var i in blocksuggestions) {
           suggestions.push("<input type='radio' name='urloption' id='suggest_" +
-                           i + "' value='" + (isBlocked ? '@@||' : '||') + 
+                           i + "' value='" + (isBlocked ? '@@||' : '||') +
                            blocksuggestions[i] + "'/>" + "<label for='suggest_" +
                            i + "'> " + blocksuggestions[i] + "</label><br/>");
         }
@@ -249,13 +260,13 @@
           $($("#suggestions").children('input')[1]).attr('checked', 'checked');
         else
           $("#suggestions").find('input:first-child').attr('checked', 'checked');
-        
+
         if (!isBlocked)
           $("#selectblockableurl b").text(translate("blockeverycontaining"));
         else
           $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
         $("#custom + label").
-          html("Custom: <input type='text' id='customurl' value='" + url + 
+          html("Custom: <input type='text' id='customurl' value='" + url +
           "' size='99' title='" + translate("wildcardhint") + "'/>");
       }
 
@@ -355,13 +366,13 @@
           $('.clickableRow').removeClass('clickableRow');
           $('#resourceslist tr').css('border', 'black 1px dotted');
           $('#legend').remove();
-          
+
           // Show the 'choose url' area
           $("#selectblockableurl").show();
           generateFilterSuggestions();
           // If the user clicks the 'next' button
           $("#confirmUrl").click(function() {
-            if ($('#custom:checked').length == 1 && 
+            if ($('#custom:checked').length == 1 &&
                 $('#customurl').val().trim() == '') {
               alert(translate('novalidurlpattern'));
               return;
@@ -384,7 +395,7 @@
               $("#thirdparty + *").remove();
               $("#thirdparty").remove();
             } else
-              $("#thirdparty + label").html(translate("thirdpartycheckbox", "<i>" + 
+              $("#thirdparty + label").html(translate("thirdpartycheckbox", "<i>" +
                 GetThirdPartyDomain(domainOfSelectedUrl) + "</i>"));
             $("#domainlist").
               val(domain.replace(/^www\./, '')).
@@ -396,7 +407,7 @@
               keyup(function() {
                 if (isValidDomainList($(this).val().trim().
                     replace(/[a-z](\ |\,\ ?|\;\ ?)\~?[a-z0-9]/gi,'a|a'))){
-                  $("#domainis").val('domain=' + 
+                  $("#domainis").val('domain=' +
                       $(this).val().trim().replace(/(\ |\,|\;)+/g,'|'));
                   $("#domainlist").css('color', 'black');
                 } else {
@@ -406,7 +417,7 @@
                 $("#filterpreview").text(createfilter());
               });
             $("#domainis").val('domain=' + domain.replace(/^www\./, ''));
-            var selectorForFixedType = '[value="~' + 
+            var selectorForFixedType = '[value="~' +
                 $(".selected td:nth-of-type(3)").attr('name') + '"]';
             $(selectorForFixedType).attr('disabled', 'disabled');
 
@@ -418,7 +429,7 @@
 
             // Add the filter
             $("#addthefilter").click(function() {
-              extension_call('add_custom_filter', { filter: createfilter() }, 
+              extension_call('add_custom_filter', { filter: createfilter() },
               function() {
                 alert(translate("filterhasbeenadded"));
                 window.close();
@@ -427,7 +438,7 @@
           });
         });
       }
-      
+
       $(function() {
         // Translation
         localizePage();
@@ -524,10 +535,10 @@
       <tbody><tr id="loading"><td colspan="4" i18n="loading"></td></tr></tbody>
     </table>
 
-    <div id="legend"><b i18n="resourceblocklegend1"></b> 
-    <i style='color:red' i18n="resourceblocklegend2"></i>, 
-    <i style='color:green' i18n="resourceblocklegend3"></i> &amp; 
-    <i i18n="resourceblocklegend4"></i><span class='onlyifdebug'>; 
+    <div id="legend"><b i18n="resourceblocklegend1"></b>
+    <i style='color:red' i18n="resourceblocklegend2"></i>,
+    <i style='color:green' i18n="resourceblocklegend3"></i> &amp;
+    <i i18n="resourceblocklegend4"></i><span class='onlyifdebug'>;
     <i style='color:blue' i18n="resourceblocklegend5"></i></span>.&nbsp;&nbsp;
     <a href='#' i18n_title="close">(x)</a></div>
 
@@ -550,7 +561,7 @@
       <input type="text" size="30" id="domainlist" i18n_title="multipledomainshint"/><br/><br/>
       <b i18n="casesensitive"></b><br/>
       <input type="radio" name="caseoption" value="match-case" id='matchcaseYes'/>
-      <label for="matchcaseYes" i18n="yes"></label> 
+      <label for="matchcaseYes" i18n="yes"></label>
       <input type="radio" name="caseoption" value="" checked="checked" id='matchcaseNo'/>
       <label for="matchcaseNo" i18n="no"></label><br/><br/>
       <b i18n="onlyresourcetypes"></b><br/>
@@ -568,7 +579,7 @@
         <input type="checkbox" value="~stylesheet" checked="checked" id='typesty'/>
         <label for='typesty' i18n="typestylesheet"></label><br/><br/>
       </div>
-      <input type="button" id="addthefilter" i18n_value="addthisfilter"/> 
+      <input type="button" id="addthefilter" i18n_value="addthisfilter"/>
       <span id="filterpreview"></span>
     </form>
   </body>
