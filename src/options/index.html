@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="options.css" />
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
     <script src="../port.js"></script>
-    <script src="../jquery/jquery-1.4.4-hacked-up.min.js"></script>
+    <script src="../jquery/jquery.min.js"></script>
     <script src="../jquery/jquery.cookie.js"></script>
-    <script src="../jquery/jquery-ui-1.8.6.custom.min.js"></script>
+    <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script src="../broadcast_channel.js"></script>
     <script>
@@ -78,26 +78,17 @@
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 
-    <div id="donate_and_link" style="margin: 1em 0px">
-      <div style="font-size: 16px" 
+    <div id="donate_and_link" style="margin: 1em 0px;">
+      <div style="font-size: 16px;" 
            i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
-      <a target="_new" id="donatelink"></a>
+      <a target="_new" href="http://chromeadblock.com/donate" id="donatelink"></a>
     </div>
-    <script>
-      $(function() {
-        var donate_link = "http://chromeadblock.com/paypal_donate/donation.php";
-        if (SAFARI)
-          donate_link += "?browser=safari";
-        $("#donate_and_link a").attr('href', donate_link);
-      });
-    </script>
 
     <div id="tabpages">
       <ul>
         <li><a href="general.html"><span i18n="tabgeneral"></span></a></li>
         <li><a href="filters.html"><span i18n="tabfilterlists"></span></a></li>
-        <li><a href="blacklist.html"><span i18n="tabblacklist"></span></a></li>
-        <li><a href="whitelist.html"><span i18n="tabexcluded"></span></a></li>
+        <li><a href="customize.html"><span i18n="tabcustomize"></span></a></li>
       </ul>
     </div>
   </body>

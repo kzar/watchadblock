@@ -43,7 +43,7 @@ var FilterNormalizer = {
   normalizeLine: function(filter) {
     // Some rules are separated by \r\n; and hey, some rules may
     // have leading or trailing whitespace for some reason.
-    var filter = filter.replace(/\r$/, '').trim();
+    filter = filter.replace(/\r$/, '').trim();
 
     // Remove comment/empty filters.
     if (Filter.isComment(filter))
@@ -57,15 +57,16 @@ var FilterNormalizer = {
 
     // If it is a hiding rule...
     if (Filter.isSelectorFilter(filter)) {
-      // All specified domains must be valid.
+      // The filter must be of a correct syntax
       var parts = filter.split('##');
       FilterNormalizer._checkCssSelector(parts[1]);
+
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
 
       // Ignore [style] special case that WebKit parses badly.
       var parsedFilter = new SelectorFilter(filter);
-      if (/style[\^\$\*]?=/.test(filter))
+      if (/style([\^\$\*]?=|\])/.test(filter))
         return null;
 
     } else { // If it is a blocking rule...
@@ -76,8 +77,9 @@ var FilterNormalizer = {
       var unsupported = (ElementTypes.object_subrequest | ElementTypes.font |
                          ElementTypes.dtd | ElementTypes.other |
                          ElementTypes.xbl | ElementTypes.ping |
-                         ElementTypes.xmlhttprequest | ElementTypes.document |
-                         ElementTypes.elemhide);
+                         ElementTypes.xmlhttprequest | ElementTypes.donottrack);
+      if (!Filter.isWhitelistFilter(filter))
+        unsupported |= (ElementTypes.document | ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
     }
@@ -121,7 +123,7 @@ var FilterNormalizer = {
     segments = segments.replace(/\((.*?)\)/g, "[$1]");
     // turn all [foo=bar baz] groups into [foo="bar baz"]
     // Specifically match:    = then not " then anything till ]
-    segments = segments.replace(/=([^"][^\]]*)/g, '="$1"');
+    segments = segments.replace(/\=([^"][^\]]*)/g, '="$1"');
     // turn all [foo] into .foo, #foo
     // #div(adblock) means all divs with class or id adblock
     // class must be a single class, not multiple (not #*(ad listitem))
@@ -151,7 +153,7 @@ var FilterNormalizer = {
     // Get rid of all valid [elemType="something"] selectors. They are valid,
     // and the risk is that their content will disturb further tests. To prevent
     // a[id="abc"]div to be valid, convert it to a[valid]div, which is invalid
-    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|.+?)\]/g;
+    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|\w+?)\]/g;
     selector = selector.replace(test, '[valid]');
 
     // :not may contain every selector except for itself and tree selectors

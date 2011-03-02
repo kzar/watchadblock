@@ -1,4 +1,4 @@
-﻿{
+{
   "buttoncancel": {
     "message": "Cancel",
     "description": "Cancel button"
@@ -30,14 +30,6 @@
   },
   "setotheroptions": {
     "message": "レンチのアイコン、ツールメニュー、拡張機能、AdBlockオプションからAdBlockの設定の変更や、フィルターリストを登録できます。",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_how_to_disable": {
-    "message": "ボタンを消去するときはここを右クリックしてアンインストールをクリックします。AdBlockはアンインストールされません。",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_how_to_enable": {
-    "message": "ボタンを表示したい場合は、<a>this helper extension</a>を別途インストールしてください。",
     "description": "Message on installation success page"
   },
   "chromebutton_showoption": {
@@ -88,10 +80,6 @@
     "message": "手動でフィルターを入力して下さい。",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
-  "blacklistereditinvalid": {
-    "message": "フィルターが無効です。",
-    "description": "Messagebox if the manually edited filter is invalid"
-  },
   "blacklisterblockedelement": {
     "message": "以下の要素がブロックされます:",
     "description": "Tells the user what the blocked element is on the slider page"
@@ -111,7 +99,7 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "<b>1</b> 個のアイテムを発見しました。",
+    "message": "&lt;b&gt;1&lt;/b&gt; 個のアイテムを発見しました。",
     "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
@@ -152,7 +140,7 @@
   },
 
   "findingads": {
-    "message": "要素を探しています...<br/><br/><i>すぐ終わります。</i>",
+    "message": "要素を探しています...&lt;br/&gt;&lt;br/&gt;&lt;i&gt;すぐ終わります。&lt;/i&gt;",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
@@ -165,12 +153,12 @@
   },
 
   "whitelistertext": {
-    "message": "以下のドメインでAdBlockの動作を停止しますか？<br/>$domain$.",
+    "message": "以下のドメインでAdBlockの動作を停止しますか？&lt;br/&gt;$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
+        "content": "'&lt;i&gt;$1&lt;/i&gt;'",
+        "example": "'&lt;i&gt;live.msn.com&lt;/i&gt;'"
       }
     }
   },
@@ -216,14 +204,6 @@
   },
   "tabfilterlists": {
     "message": "フィルターリスト",
-    "description": "A tab on the options page"
-  },
-  "tabblacklist": {
-    "message": "ブラックリスト",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "除外するサイト",
     "description": "A tab on the options page"
   },
 
@@ -345,11 +325,11 @@
     "description": "Title of the filter list tab"
   },
   "filterlistlink": {
-    "message": "大量に登録をすると、動作が重くなります。必要以上に登録しないで下さい。リストの作成者、その他のリストは<a>こちら</a>.",
+    "message": "大量に登録をすると、動作が重くなります。必要以上に登録しないで下さい。リストの作成者、その他のリストは&lt;a&gt;こちら&lt;/a&gt;.",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "登録済みのリストは自動でアップデートされます。<a>今すぐアップデート</a>.",
+    "message": "登録済みのリストは自動でアップデートされます。&lt;a&gt;今すぐアップデート&lt;/a&gt;.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -473,14 +453,6 @@
     "message": "フィルターリストにない要素をブロックする場合はこのページで行います。ウェブページ上で設定することもできます。",
     "description": "Message at the top of the blacklist options tab"
   },
-  "blacklisttabtitle": {
-    "message": "手動フィルターの設定",
-    "description": "Title of the third tab"
-  },
-  "addnewfilter": {
-    "message": "新しいフィルターを追加する:",
-    "description": "Subtitle on the third tab"
-  },
   "linkblockadbyurl": {
     "message": "URLをブロックする",
     "description": "Link on the third tab"
@@ -506,7 +478,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "警告: ここで作成したフィルターに問題がある場合、公式フィルターを含む他のフィルターが破損する場合があります。<br/>ブラックリスト、ホワイトリストの詳細な記法は<a>このリンク先にあります。</a>（英語）。",
+    "message": "警告: ここで作成したフィルターに問題がある場合、公式フィルターを含む他のフィルターが破損する場合があります。&lt;br/&gt;ブラックリスト、ホワイトリストの詳細な記法は&lt;a&gt;このリンク先にあります。&lt;/a&gt;（英語）。",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -522,46 +494,24 @@
     "description": "Section label for advanced options"
   },
   "reportanad": {
-    "message": "フィルターリスト及びブラックリストで設定しても消えない要素がある場合、リンク先のチュートリアルを<a>試してください。</a>",
+    "message": "フィルターリスト及びブラックリストで設定しても消えない要素がある場合、リンク先のチュートリアルを&lt;a&gt;試してください。&lt;/a&gt;",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
   "removelabel": {
     "message": "消去",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "特定のドメイン上で要素をブロックしない",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "例, 'google.com' を入力した場合、google.com, mail.google.com,  www.google.comこれらのサイトにも適用されます。",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "追加",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "全てのリストを消去する:",
-    "description": "option on 4th tab page"
+    "description": "link to remove a filter"
   },
   "adblockreportinganad": {
     "message": "AdBlock - 消えない要素を報告する前に",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "このチュートリアルは、AdBlock(Chrome)/フィルターリスト 特有の問題か診断を行います。以下の質問に答えてください。<br/>
-注意:報告はボランティアとして行ってください。それができなければ、あなた自身でフィルターを追加するかブラックリストの調整で対処してください。<br/>
-【訳者注】チュートリアルの結果、フィルターリスト作者/AdBlock開発者へ報告の必要があると診断された場合、報告は英語で行う必要があります。訳者はその責を負いません。",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "フィルターリストのアップデートを確認します。",
     "description": "instruction on ad report page"
   },
   "clickupdatefilters": {
-    "message": "フィルターのアップデート: <a>Update my filters!</a>",
+    "message": "フィルターのアップデート: &lt;a&gt;Update my filters!&lt;/a&gt;",
     "description": "instruction on ad report page"
   },
   "reloadadpage": {
@@ -587,10 +537,6 @@
   "correctfilters": {
     "message": "Correct filters",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "このリストを消去してもよろしいですか？",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "そのページの言語は？",
@@ -684,16 +630,6 @@
     "message": "Other",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "指定された言語のフィルターリストがありません。<br/>この言語をサポートする適切なリストを。$link$ もしくはこの要素をブロックするようにブラックリストを編集してください。",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1探してください$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "このフィルターリストを適用し、ページを更新して要素が消去できたか確認してください。 $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -738,7 +674,7 @@
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+        "example": "EXAMPLE 1: &lt;a href='mailto:someguy@list.com'&gt;John Doe&lt;/a&gt;  EXAMPLE 2: &lt;a href='http://easylist.org'&gt;EasyList forums&lt;/a&gt;"
       }
     }
   },
@@ -748,7 +684,7 @@
     "placeholders": {
       "in_the_issue_tracker_link": {
         "content": "$1in the issue tracker$2",
-        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+        "example": "&lt;a href='issuetracker.html'&gt;in the issue tracker&lt;/a&gt;"
       }
     }
   },
@@ -762,21 +698,9 @@
     "placeholders": {
       "updatelink": {
         "content": "$1アップデート$2",
-        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+        "example": "&lt;a href='http://chrome.com/update_here.ctx'&gt;update&lt;/a&gt;"
       }
     }
-  },
-  "cantundo": {
-    "message": "このアクションはまだ完成していません。",
-    "description": "Warning a user before confirming an action"
-  },
-  "contextmenuhidethis": {
-    "message": "この要素をブロック...",
-    "description": "Context menu entry"
-  },
-  "contextmenuhideanything": {
-    "message": "ブロックする要素を指定する...",
-    "description": "Context menu entry"
   },
   "contextmenuexcludedomain": {
     "message": "このページのドメインを除外...",

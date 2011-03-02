@@ -32,14 +32,6 @@
     "message": "Du kan forandre andre innstillinger og abonnere på filtre via Skiftenøkelen | Verktøy | Utvidelser | AdBlock Innstillinger.",
     "description": "Message on installation success page"
   },
-  "chromebutton_how_to_disable": {
-    "message": "For å fjerne ikonet, høyre klikk den og velg avinstaller. Dette avinstaller bare nettleserknappen for AdBlock's hjelpeutvidelse.",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_how_to_enable": {
-    "message": "For å vise ikonet, Installer <a>Denne hjelpeutvidelsen</a>.",
-    "description": "Message on installation success page"
-  },
   "chromebutton_showoption": {
     "message": "Vis et ikon på verktøylinjen.",
     "description": "Message on installation success page"
@@ -87,10 +79,6 @@
   "blacklistereditfilter": {
     "message": "Venligst skriv det korrekte filteret nedenfor og klikk OK",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
-  },
-  "blacklistereditinvalid": {
-    "message": "Filteret er ugyldig!",
-    "description": "Messagebox if the manually edited filter is invalid"
   },
   "blacklisterblockedelement": {
     "message": "Blokkert element:",
@@ -216,14 +204,6 @@
   },
   "tabfilterlists": {
     "message": "Filter lister",
-    "description": "A tab on the options page"
-  },
-  "tabblacklist": {
-    "message": "Svarteliste",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "Hviteliste",
     "description": "A tab on the options page"
   },
 
@@ -473,14 +453,6 @@
     "message": "Høyreklikk et reklamebanner på en side for å blokkere den -- eller blokk den manuelt her.",
     "description": "Message at the top of the blacklist options tab"
   },
-  "blacklisttabtitle": {
-    "message": "Blokker et Reklamebanner som filterlisten ikke fant.",
-    "description": "Title of the third tab"
-  },
-  "addnewfilter": {
-    "message": "Legg til et nytt filter:",
-    "description": "Subtitle on the third tab"
-  },
   "linkblockadbyurl": {
     "message": "Blokker et reklamebanner med en URL",
     "description": "Link on the third tab"
@@ -528,31 +500,11 @@
 
   "removelabel": {
     "message": "Fjern",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Ikke blokker reklame på sider som ender med...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "For eksempel, 'google.com' vil ikke blokkere reklame på google.com, mail.google.com, og www.google.com.",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "Legg til",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "Fjern alle elementer fra listen:",
-    "description": "option on 4th tab page"
+    "description": "link to remove a filter"
   },
   "adblockreportinganad": {
     "message": "AdBlock - Rapporter raklame",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "Fant du reklame på en internettside? Da skal jeg hjelpe deg med å finne det rette stedet å rapportere det!<br/> Husk: Rapportering av reklame er frivillig. Om du ikke ønsker å gjøre det kan du bare lukke vinduet og blokkere den selv ved å legge den til et filter i Svarteliste fanen under instillinger!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "Sørg for at filter listene dine er oppdatert. ",
@@ -585,10 +537,6 @@
   "correctfilters": {
     "message": "Riktige filtere",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Er du sikker på at du vil stryke ut alt?",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "Hvilket språk er siden skrevet på?",
@@ -682,16 +630,6 @@
     "message": "Annet",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "Vi har ikke standard filter lister for det språket.<br/>Venligst prøv å finne en egnet liste som støtter dette språket $link$ eller blokker denne reklamen selv på Svartelisten.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1her$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "Abboner på denne filterlisten, og prøv igjen: $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -764,16 +702,8 @@
       }
     }
   },
-  "cantundo": {
-    "message": "Denne endringen er permanent og kan ikke gjøres om!",
-    "description": "Warning a user before confirming an action"
-  },
-  "contextmenuhidethis": {
-    "message": "Blokker reklamen",
-    "description": "Context menu entry"
-  },
-  "contextmenuhideanything": {
-    "message": "Blokker en reklame på denne siden...",
+  "block_an_ad_on_this_page": {
+    "message": "Blokker en reklame på denne siden",
     "description": "Context menu entry"
   },
   "contextmenuexcludedomain": {

@@ -14,7 +14,8 @@ function verify_whitelist() {
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
     btns[translate("buttonexclude")] = 
         function() {
-          extension_call('add_to_whitelist', {domain:domain}, function() {
+          extension_call('add_custom_filter', 
+                         {filter: '@@||' + domain + '^$document'}, function() {
             document.location.reload();
           });
         }

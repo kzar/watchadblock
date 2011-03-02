@@ -1,4 +1,13 @@
 ﻿{
+  "description1": {
+    "message": "Η πιο δημοφιλής επέκταση για τον Chrome, με πάνω από 1,5 εκατομμύριο χρήστες!  Μπλοκάρει διαφημίσεις σε όλον τον ιστό.",
+    "description": "Extension description in manifest"
+  },
+  "free_description": {
+    "message": "Η πιο δημοφιλής επέκταση για τον Chrome -- αλλά παρακαλούμε δώστε $1.99 για το AdBlock αντί απλώς να το εγκαταστήσετε :)",
+    "description": "Extension description used in free version manifest"
+  },
+
   "buttoncancel": {
     "message": "Άκυρο",
     "description": "Cancel button"
@@ -18,6 +27,28 @@
   "optionstitle": {
     "message": "Επιλογές του AdBlock",
     "description": "Title for the options page"
+  },
+
+  "installedtitle": {
+    "message": "Το AdBlock έχει εγκατασταθεί!",
+    "description": "Title for the installation success page"
+  },
+
+  "installisdone": {
+    "message": "Ανανεώστε τις καρτέλες, και δείτε τις διαφημίσεις να εξαφανίζονται.",
+    "description": "Message on the installation success page"
+  },
+  "donaterequest2": {
+    "message": "Πρόσφατα παραιτήθηκα από τη δουλειά μου για να αφιερώσω όλο μου τον χρόνο στο AdBlock!  Τώρα βασίζομαι στις δωρεές σας για να υποστηρίξω την οικογένειά μου. Παρακαλώ <a>δωρίστε</a> για να μας βοηθήσετ με τα έξοδα -- και να είστε σίγουροι πως η γυναίκα μου κι εγώ (στην εικονα) θα ξετρελαθούμε.  Ευχαριστώ :) - Michael",
+    "description": "Donation request on installation success page"
+  },
+  "setotheroptions": {
+    "message": "Μπορείτε να αλλάξετε κι άλλες επιλογές ή να γίνετε συνδρομητής σε λίστες φίλτρων πατώντας Επιλογές | Εργαλεία | Επεκτάσεις | Επιλογές AdBlock.",
+    "description": "Message on installation success page"
+  },
+  "chromebutton_showoption": {
+    "message": "Εμφάνιση κουμπιού στη γραμμή εργαλείων",
+    "description": "Message on installation success page"
   },
 
   "youtubevideomessage": {
@@ -63,10 +94,6 @@
     "message": "Παρακαλούμε πληκτρολογήστε σωστά το φίλτρο παρακάτω και πατήστε OK",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
-  "blacklistereditinvalid": {
-    "message": "Το φίλτρο είναι λανθασμένο!",
-    "description": "Messagebox if the manually edited filter is invalid"
-  },
   "blacklisterblockedelement": {
     "message": "Μπλοκαρισμένο στοιχείο:",
     "description": "Tells the user what the blocked element is on the slider page"
@@ -100,7 +127,7 @@
     }
   },
   "blacklisterattrwillbe": {
-    "message": "$attribute$ θα $value$",
+    "message": "$attribute$ θα είναι $value$",
     "description": "Checkbox label",
     "placeholders": {
       "attribute": {
@@ -140,7 +167,7 @@
   },
 
   "whitelistertext": {
-    "message": "Το AdBlock δεν θα είναι ενεργό σε τομεί που τελειώνουν σε:<br/>$domain$.",
+    "message": "Το AdBlock δεν θα είναι ενεργό σε τομείς που τελειώνουν σε:<br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
     "placeholders": {
       "domain": {
@@ -185,20 +212,19 @@
     "message": "Αρχείο αλλαγών στις εκδόσεις",
     "description": "changelog link"
   },
+
   "tabgeneral": {
     "message": "Γενικά",
     "description": "A tab on the options page"
   },
+
   "tabfilterlists": {
     "message": "Λίστες φίλτρων",
     "description": "A tab on the options page"
   },
-  "tabblacklist": {
-    "message": "Μαύρη λίστα",
-    "description": "A tab on the options page"
-  },
-  "tabexcluded": {
-    "message": "Άσπρη λίστα",
+
+  "tabcustomize": {
+    "message": "Προσαρμογή",
     "description": "A tab on the options page"
   },
 
@@ -206,10 +232,12 @@
     "message": "Γενικές επιλογές",
     "description": "Title of first tab page"
   },
+
   "betalabel": {
     "message": "Δοκιμαστική έκδοση",
     "description": "Option on first tab page"
   },
+
   "googletextads": {
     "message": "Μου αρέσουν οι διαφημίσεις κειμένου στα αποτελέσματα αναζήτησης Google; εμφάνιζέ τες.",
     "description": "Option on first tab page"
@@ -222,6 +250,7 @@
     "message": "Προσθέστε αντικείμενα στο μενού 'του δεξιού κλικ'.",
     "description": "Option on first tab page"
   },
+
   "debuginlogoption": {
     "message": "Εμφάνιζε στοιχεία αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί το AdBlock)",
     "description": "Option on first tab page"
@@ -308,7 +337,7 @@
     "description": "Error messagebox"
   },
   "enterurloflist": {
-    "message": "Please enter the URL of a list of filters to subscribe to.",
+    "message": "Παρακαλούμε εισάγετε τη διεύθυνση μιας λίστας φίλτρων της οποίας θέλετε να γίνετε συνδρομητής.",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -319,6 +348,7 @@
     "message": "Γίνετε συνδρομητής σε λίστες φίλτρων",
     "description": "Title of the filter list tab"
   },
+
   "filterlistlink": {
     "message": "Μην είστε συνδρομητής σε περισσότερα φίλτρα από όσα χρειάζεστε, το καθένα σας καθυστερεί και από λίγο! Άλλες λίστες μπορούν να βρεθούν <a>εδώ</a>.",
     "description": "Explanation of the filter lists"
@@ -445,17 +475,27 @@
   },
 
   "blacklistclickmessage": {
-    "message": "Κάντε δεξί κλικ σε μια διαφήμηση για να την μπλοκάρετε -- ή κάντε το εδώ χειρόγραφα.",
+    "message": "Κάντε δεξί κλικ σε μια διαφήμηση για να την μπλοκάρετε -- ή κάντε το εδώ χειροκίνητα.",
     "description": "Message at the top of the blacklist options tab"
   },
-  "blacklisttabtitle": {
-    "message": "Μπλοκάρετε μια διαφήμηση που τα φίλτρα αγνοούν",
+
+  "tabcustomizetitle": {
+    "message": "Προσαρμόστε το AdBlock",
     "description": "Title of the third tab"
   },
-  "addnewfilter": {
-    "message": "Προσθέστε ένα νέο φίλτρο:",
-    "description": "Subtitle on the third tab"
+  "filterlistsrock": {
+    "message": "Οι λίστες φίλτρων μπλοκάρουν τις περισσότερες διαφημήσεις στον ιστό. Μπορείτε επίσης:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "blockmoreads": {
+    "message": "Να μπλοκάρετε κι άλλες διαφημήσεις:",
+    "description": "Section header on third tab"
+  },
+  "unblocktitle": {
+    "message": "Να απενεργοποιήσετε το AdBlock σε μια ιστοσελίδα:",
+    "description": "Section header on third tab"
+  },
+
   "linkblockadbyurl": {
     "message": "Μπλοκάρετε μια διαφήμιση από την URL διεύθυνσή της",
     "description": "Link on the third tab"
@@ -472,6 +512,12 @@
     "message": "CSS to match",
     "description": "Message of the css-hiding area"
   },
+
+  "excludedomainorurl": {
+    "message": "Ο τομέας ή η URL διεύθυνση όπου το AdBlock δε θα μπλοκάρει τίποτα",
+    "description": "Message of the exclude area"
+  },
+
   "blockdomain": {
     "message": "Τομέας της σελίδας για εφαρμογή",
     "description": "Message of the url and css -blocking area"
@@ -501,33 +547,9 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
-  "removelabel": {
-    "message": "Αφαίρεση",
-    "description": "link to remove a excluded site"
-  },
-  "excludedsitestitle": {
-    "message": "Μην μπλοκάρεις διαφημίσεις σε τομείς που τελειώνουν σε...",
-    "description": "title of the 4th tab page"
-  },
-  "excludedsitesexample": {
-    "message": "Π.χ. , το 'google.com' θα απενεργοποιήσει το μπλοκάρισμα στο google.com, mail.google.com, και www.google.com .",
-    "description": "text on the 4th tab page"
-  },
-  "addbutton": {
-    "message": "Προσθήκη",
-    "description": "add button"
-  },
-  "removeallfromlist": {
-    "message": "Αφαίρεσε όλα τα αντικείμενα από τη λίστα:",
-    "description": "option on 4th tab page"
-  },
   "adblockreportinganad": {
     "message": "AdBlock - Αναφέροντας μια διαφήμιση",
     "description": "title of ad report page"
-  },
-  "adreport1": {
-    "message": "Βρήκατε μια διαφήμηση σε μια ιστοσελίδα; Λοιπόν, θα σας δείξω το σωστό μέρος να την αναφέρετε!<br/> Θυμηθείτε: η αναφορά διαφημήσεων είναι προεραιτική. Αν δε θέλετε να το κάνετε, απλά κλείστε αυτό το παράθυρο και μπλοκάρετέ την μόνο για εσάς προσθέτοντας ένα φίλτρο στην καρτέλα 'Μαύρη λίστα' της σελίδας επιλογών!",
-    "description": "Instructions on ad reporting page.  'Blacklist' should be the same text as the 'tabblacklist' message."
   },
   "updateyourlists": {
     "message": "Σιγουρευτείτε πως οι λίστες φίλτρων σας είναι ενημερωμένες",
@@ -560,10 +582,6 @@
   "correctfilters": {
     "message": "Σωστά φίλτρα",
     "description": "on the ad report page, label describing having the right set of filters"
-  },
-  "reallyclearlist": {
-    "message": "Είστε σίγουρος/η πως θέλετε να διαγάψετε όλη την λίστα;",
-    "description": "confirmation of clearing a list of iteams"
   },
   "pagelanguagecheck": {
     "message": "Σε τι γλώσσα είναι αυτή η σελίδα;",
@@ -657,16 +675,6 @@
     "message": "Άλλη",
     "description": "multiple choice option"
   },
-  "nodefaultfilter": {
-    "message": "We don't have a default filter list for that language.<br/>Please try to find a suitable list that supports this language $link$ or block this ad for yourself on the Blacklist page.",
-    "description": "instructions on ad report page pointing users to EasyList subscriptions list.  'Blacklist' should be the same message as 'tabblacklist'.",
-    "placeholders": {
-      "link": {
-        "content": "$1here$2",
-        "example": "<a href='http://abp.org'>here</a>"
-      }
-    }
-  },
   "retryaftersubscribe": {
     "message": "Γίνετε συνδρομητής σε αυτήν τη λίστα φίλτρων, και μετά ξαναπροσπαθήστε: $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
@@ -690,7 +698,7 @@
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox3": {
-    "message": "Στον Firefox, γίνετε συνδρομητής στις λίστες φίλτρων που είστε κι εδώ(εκτός απ'ταπροσαρμοσμένα φίλτρα του AdBlock).",
+    "message": "Στον Firefox, γίνετε συνδρομητής στις λίστες φίλτρων που είστε κι εδώ(εκτός απ'τα προσαρμοσμένα φίλτρα του AdBlock).",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox4": {
@@ -716,7 +724,7 @@
     }
   },
   "reporttous1": {
-    "message": "If you speak English, you can report the ad to us $in_the_issue_tracker_link$.",
+    "message": "If you speak English, you can report the ad to us $in_the_issue_tracker_link$. (Ήδη ξέρουμε πως δεν μπλοκάρουμε τις διαφημίσεις στα περισσότερα βίντεο, περιμένουμε υποστήριξη από την WebKit.)",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
@@ -739,8 +747,32 @@
       }
     }
   },
-  "cantundo": {
-    "message": "Αυτή η ενέργεια δεν θα μπορεί να αναιρεθεί!",
-    "description": "Warning a user before confirming an action"
+  "block_an_ad_on_this_page": {
+    "message": "Μπλοκάρετε μια διαφήμηση σε αυτή τη σελίδα",
+    "description": "Context menu entry"
+  },
+  "contextmenuexcludedomain": {
+    "message": "Μην δουλεύεις σε αυτό τον τομέα...",
+    "description": "Context menu entry"
+  },
+  "filecleanerwarning": {
+    "message": "Αν βλέπετε αυτό το μύνημα κάθε φορά που ανοίγετε το AdBlock, σιγουρευτείτε ότι δεν χρησιμοποιείτε έναν καθαριστή αρχείων που επίσης διαγράφει τα 'localStorage' αρχεία.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
+  "somequicksetup": {
+    "message": "Γρήγορη ρύθμιση",
+    "description": "Title of the options on the installation succes page"
+  },
+  "flashads": {
+    "message": "Βίντεο και Flash",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "cantblockflashwarning": {
+    "message": "Εμφανίζεται η διαφήμηση πριν ή κατά τη διάρκεια ενός βίντο ή άλλου παιχνιδιού Flash;",
+    "description": "Text of the final ad report question"
+  },
+  "cantblockflash": {
+    "message": "We can't block ads inside Flash and other plugins yet. We are awaiting support from the browser and WebKit.",
+    "description": "Result of the final ad report question"
   }
 }

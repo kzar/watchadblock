@@ -61,7 +61,7 @@
 
         // Every so often, redisplay "last update" times on subscriptions.
         if (typeof lastUpdateInterval != "undefined") 
-          clearInterval(lastUpdateInterval)
+          clearInterval(lastUpdateInterval);
         lastUpdateInterval = window.setInterval(function() { 
           redisplay_subscription_update_times();
         }, lessThanMinute ? 1000 : 60000);
@@ -113,8 +113,8 @@
       // "url:xyz", where xyz is the URL of a user-specified filter list.
       // If you can't fetch the latest version of the list, fail.  If 
       // then_reload is specified and is true, reload the tab upon 
-      // success.  If log_on_success then record a successful subscription.
-      function subscribe(id, then_reload, log_on_success) {
+      // success.
+      function subscribe(id, then_reload) {
         var url;
         if (id in global_subscriptions_cached_copy)
           url = global_subscriptions_cached_copy[id].url;
@@ -141,10 +141,6 @@
               alert(translate("enterurloflist"));
               flash(translate("nolisturllabel"));
               return;
-            }
-            if (log_on_success) {
-              $.get("http://chromeadblock.com/api/url_subscribe.php",
-                    {url:url});
             }
             extension_call(
               "subscribe", 
@@ -260,7 +256,7 @@
             
             var id = $(this).attr("name");
             if (!checked)
-              unsubscribe(id, false)
+              unsubscribe(id, false);
             else
               subscribe(id);
           });
@@ -277,14 +273,14 @@
 
         $("#btnNewSubscriptionUrl").click(function() {
           var url = $("#txtNewSubscriptionUrl").val();
-          var abp_regex = /^abp.*location=(.*)$/
+          var abp_regex = /^abp.*location=(.*)$/;
           if (abp_regex.test(url)) {
             url = url.match(abp_regex)[1]; // the part after 'location='
             if (/&title/.test(url)) // then strip it
               url = url.substring(0, url.indexOf('&title'));
             url = unescape(url);
           }
-          subscribe("url:" + url, true, true);
+          subscribe("url:" + url, true);
         });
 
         $('#txtNewSubscriptionUrl').keypress(function(event) {
@@ -313,7 +309,7 @@
       </div>
       <div style="padding-left:34px;">
         <span i18n="orenteraurl"></span>
-        <input id="txtNewSubscriptionUrl" style="width:300px" />
+        <input id="txtNewSubscriptionUrl" style="width:300px;" type="text" />
         <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
       </div>
     </div>

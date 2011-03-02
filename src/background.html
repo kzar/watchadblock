@@ -1,7 +1,7 @@
 <html>
   <head>
     <script src="port.js"></script>
-    <script src="jquery/jquery-1.4.4-hacked-up.min.js"></script>
+    <script src="jquery/jquery.min.js"></script>
     <script src="functions.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
@@ -12,19 +12,34 @@
     <script>
       var utils = {};
     </script>
-    <script src="button/temporary_background_code.js"></script>
     <script>
 
-      // V3 FILTERING
+      // UNWHITELISTING
 
-      // Inputs: domain: domain of page that requested the selectors.
-      // Returns: the selector strings from all selector filters that should
-      //          apply to the given domain.
-      utils.selectors_for_domain = function(options) {
-        return _myfilters.filterset.
-          limitedToDomain(options.domain).
-          getSelectors();
+      // Look for a custom filter that would whitelist options.url,
+      // and if any exist, remove the first one.
+      // Inputs: url:string - a URL that may be whitelisted by a custom filter
+      // Returns: true if a filter was found and removed; false otherwise.
+      utils.try_to_unwhitelist = function(options) {
+        var url = options.url.replace(/#.*$/, ''); // Whitelist ignores anchors
+        var custom_filters = utils.get_custom_filters_text({}).split('\n');
+        for (var i = 0; i < custom_filters.length; i++) {
+          var text = custom_filters[i];
+          if (!Filter.isWhitelistFilter(text))
+            continue;
+          var filter = new WhitelistFilter(text);
+          if (!filter.matches(url, ElementTypes.document))
+            continue;
+
+          custom_filters.splice(i, 1); // Remove this whitelist filter text
+          var new_text = custom_filters.join('\n');
+          utils.set_custom_filters_text({filters: new_text});
+          return true;
+        }
+        return false;
       }
+
+      // V3 FILTERING
 
       // Rebuild the filterset based on the current settings and subscriptions.
       // Inputs: none.
@@ -48,6 +63,15 @@
         } catch(ex) {
           return ex;
         }
+      }
+      // Removes a custom filter entry.
+      // Inputs: filter:string line of text to remove from custom filters.
+      utils.remove_custom_filter = function(options) {
+        // Make sure every filter is preceded and followed by at least one \n,
+        // then find and remove the filter.
+        var text = "\n" + utils.get_custom_filters_text({}) + "\n";
+        text = text.replace("\n" + options.filter + "\n", "\n");
+        utils.set_custom_filters_text({filters: text.trim()});
       }
 
       // Get the custom filters text as a \n-separated text string.
@@ -147,92 +171,56 @@
         var feature = features[options.name];
         feature.is_enabled = options.is_enabled;
         utils.storage_set({key:'optional_features', value:features});
+        
+        if (options.name == "debug_logging") {
+          if (options.is_enabled)
+            log = function(text) { console.log(text); };
+          else
+            log = function() { };
+        }
       }
   
-      top_frame_domains = {};
-
       // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
-      //         is_top_frame?:bool true if the caller is the top
-      //           level frame.  Subframes use this frame's domain to determine 
-      //           if they are whitelisted.
-      //         from_adblock_start:bool true if called from adblock_start.js,
-      //           false if from adblock.js.
+      //         include_filters:bool true if hide and block filters should be
+      //           included
       utils.get_content_script_data = function(options, sender) {
-        if (options.is_top_frame) {
-          top_frame_domains[sender.tab.id] = options.domain;
-        }
-
-        var tfd = top_frame_domains[sender.tab.id];
-        var whitelisted = page_is_whitelisted(utils.get_whitelist(), tfd);
+        var whitelisted = page_is_whitelisted(sender.tab.url);
         var features = utils.get_optional_features();
         var result = {
           page_is_whitelisted: whitelisted,
-          selectors: [],
-          top_frame_domain: tfd,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
           features: features
         };
-        if (whitelisted || !options.from_adblock_start)
+        if (whitelisted)
+          return result;
+        // If in debug mode, send filters to adblock.js to print css info.
+        // Normally only adblock_start asks to include_filters.
+        if (!options.include_filters && !features.debug_logging.is_enabled)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
         // apply CSS-hiding rules, and send Chrome a filterset.
 
-        var selectors = utils.selectors_for_domain({domain:options.domain});
-        if (SAFARI) {
-          // Safari applies CSS rules directly on the page rather
-          // than using their wacked-out addContentStyleSheet.
-          result.selectors = selectors;
-        } else {
-          /* temp commenting out until I am sure how to use this.
-             how do i handle a.com loading iframes from b.com?
-             they need to run different CSS, but the only way to
-             inject CSS onto the b.com subframe using insertCSS() 
-             is to use the allFrames:true option -- which would put
-             a.com's, not b.com's, CSS onto the frame.
-            // Chrome inserts CSS using an extension API.
-            chrome.tabs.insertCSS(
-            sender.tab.id,
-            { code: css_hide_for_selectors(selectors) }
-          );*/
-          // Until we know how to use insertCSS, we've got to
-          // do manual CSS injection instead, just like Safari.
-          result.selectors = selectors;
+        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+        // when not cached, it takes about 100ms.  So more caching would be good.  The
+        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+        // should be able to turn up the fifocache size by a lot.  have the fifocache log
+        // how big each new entry is, to verify this.
+        if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
+          var global_hide = _myfilters.global.cached_getSelectors;
+          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+          result.selectors = global_hide.concat(nonglobal_hide);
         }
-        // Chrome needs filtertext to hack true blocking until a real
-        // blocking API comes along.
-        if (!SAFARI)
-          result.filtertext = _myfilters.filterset._sourceText;
+        // Chrome needs the blocking filters in the content script until a
+        // synchronous background communication API comes along.
+        if (!SAFARI) {
+          var global_block = _myfilters.global.cached_blockFiltersText;
+          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
+          result.block = global_block + nonglobal_block.join('\n');
+        }
 
         return result;
-      }
-
-
-      // WHITELIST
-
-      utils.get_whitelist = function(options) {
-        return utils.storage_get({key:'whitelist', default_value:[]});
-      }
-      utils.add_to_whitelist = function(options) {
-        options.domain = options.domain.toLowerCase();
-        var whitelist = utils.get_whitelist();
-        if ($.inArray(options.domain, whitelist) == -1) {
-          whitelist.unshift(options.domain);
-          utils.storage_set({key:'whitelist', value:whitelist});
-          utils.emit_broadcast({fn:'whitelist_updated', options: {}});
-        }
-      }
-      // Inputs: domain:string
-      // Returns: null
-      utils.remove_from_whitelist = function(options) {
-        var whitelist = utils.get_whitelist();
-        var where = whitelist.indexOf(options.domain);
-        if (where == -1)
-          return;
-        whitelist.splice(where, 1);
-        utils.storage_set({key:'whitelist', value:whitelist});
-        utils.emit_broadcast({fn:'whitelist_updated', options: {}});
       }
 
       // NEW FILTERS
@@ -251,9 +239,10 @@
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
       //         text: filter text string fetched from that url
+      //         requires?: the id of a list if it is a supplementary list
       // Returns: null, upon completion
       utils.subscribe = function(options) {
-        return _myfilters.subscribe(options.id, options.text);
+        return _myfilters.subscribe(options.id, options.text, options.requires);
       }
 
       // Unsubscribes from a filter subscription.
@@ -266,10 +255,11 @@
 
       // Opens a popup that subscribes to a new list
       // Must be here because other pages cannot open popups...
-      // Inputs: url: the URL of the list to subscribe to
+      // Inputs: searchquery: the search part of the abp: url
       utils.subscribe_popup = function(options) {
-        window.open(chrome.extension.getURL('pages/subscribe.html?' + options.url),
-        "_blank", 'scrollbars=0,location=0,resizable=0,width=450,height=140');
+        window.open(chrome.extension.getURL('pages/subscribe.html?' +
+                    options.searchquery), "_blank", 
+                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
       }
 
       // Called within content scripts, by broadcast_channel.js's 
@@ -306,6 +296,18 @@
         );
       };
       
+      // Will open the resource blocking tab. 
+      // Input:
+      //   resources: array of resource strings; 
+      //              see resourceblock.html for format
+      utils.show_resourceblocker = function(options, sender) {
+        var url = sender.tab.url.replace(/\#.*/, '');
+        utils.show_resourceblocker.cached_resources.set(url, options.resources);
+        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+      }
+      // This stores resources used by resourceblock.html
+      utils.show_resourceblocker.cached_resources = new FifoCache(5);
+      
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
         var sender = { tab: { id: options.tabid } };
@@ -324,11 +326,7 @@
       utils.setChromeContextMenus = function(options) {
         if (SAFARI)
           return;
-        var showThem = true;
-
-        var domain = url_parts(options.url).domain;
-        var whitelist = utils.get_whitelist({});
-        var whitelisted = page_is_whitelisted(whitelist, domain);
+        var whitelisted = page_is_whitelisted(options.url);
         var features = utils.get_optional_features({});
         var disabled = !features.show_context_menu_items.is_enabled;
         var paused = localStorage.getItem('adblock_is_paused');
@@ -339,7 +337,7 @@
           return;
         
         chrome.contextMenus.create({
-          title: translate("contextmenuhidethis"),
+          title: translate("block_this_ad"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
@@ -350,23 +348,12 @@
           }
         });
         chrome.contextMenus.create({
-          title: translate("contextmenuhideanything"),
+          title: translate("block_an_ad_on_this_page"),
           contexts:["all"], 
           onclick: function(info, tab) {
             var sender = { tab: tab };
             utils.emit_page_broadcast(
               {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuexcludedomain"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
               sender
             );
           }
@@ -386,6 +373,11 @@
 
             if (localStorage.getItem('adblock_is_paused')) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
+              // Show non-disabled icon on the installation-success page so it
+              // users see how it will normally look when deciding whether or
+              // not to hide it.
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
             } else if (info.disabled_site) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
             } else if (info.whitelisted) {
@@ -400,7 +392,7 @@
         //Otherwise the extension doesn't work (e.g. doesn't block ads)
         if (chrome.tabs) {
           chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-            if (tab.selected && changeInfo.url)
+            if (tab.selected)
               updateButtonUIAndContextMenus();
           });
           chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
@@ -411,26 +403,30 @@
 
 
       // BROWSER ACTION BADGE
-      if (!SAFARI) {
+      (function() {
+        if (SAFARI)
+          return;
+
         // The string to display to the user in the "new version" div.
         // Update this whenever a release warrants a browser action
         // badge and an info div in the popup.  Note that it is
         // not compared with the manifest -- you can set it to whatever
         // value you want.
-        version_to_notify = '2.2';
+        version_to_notify = '2.3.0';
 
-        var saw = localStorage.getItem('saw_badge_version');
-        if (saw == null) {
-          // If they've just installed, don't show the badge.
+        // Brand new users don't see badge (or popup's info div).
+        if (!utils.storage_get({key:'installed_at'})) {
           localStorage.setItem('saw_badge_version', version_to_notify);
+          localStorage.setItem('saw_badge_info_version', version_to_notify);
         }
-        else if (saw != version_to_notify) {
+        var saw = localStorage.getItem('saw_badge_version');
+        if (saw != version_to_notify) {
           // If they haven't seen the latest, show it.
-          chrome.browserAction.setTitle({title:"New version!"});
+          chrome.browserAction.setTitle({title:translate("new_version")});
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
-      }
+      })();
 
 
 
@@ -479,6 +475,35 @@
       }
       note_install();
 
+      // Take a census of filter subscriptions.
+      function take_census() {
+        try {
+          if (localStorage['tookSubscriptionCensus'] == null) {
+            var data = {};
+            data.subscriptions = [];
+            for (var sub_id in _myfilters._subscriptions) {
+              if (_myfilters._subscriptions[sub_id].subscribed) {
+                data.subscriptions.push(sub_id);
+              }
+            }
+            data.subscriptions = data.subscriptions.join(',');
+            data.safari = SAFARI;
+            data.language = navigator.language;
+            data.installed_at = localStorage['installed_at'];
+            data.options_at = localStorage['visited_options_at'];
+            $.get(
+              "http://chromeadblock.com/api/url_census.php", 
+              data,
+              function(result) {
+                if (/OK/.test(result))
+                  localStorage['tookSubscriptionCensus'] = true;
+              }
+            );
+          }
+        } catch (ex) { log("Census failed"); log(ex); }
+      }
+      // take_census(); uncomment when you want another census.
+
 
       // Safari specific code.
       if (SAFARI) {
@@ -487,12 +512,7 @@
           if (messageEvent.name != "canLoad")
             return;
 
-          var tabid = chrome.__getTabId(messageEvent.target);
-          if (messageEvent.message.isTopFrame) {
-            top_frame_domains[tabid] = messageEvent.message.pageDomain;
-          }
-          var tfd = top_frame_domains[tabid];
-          if (page_is_whitelisted(utils.get_whitelist(), tfd)) {
+          if (page_is_whitelisted(messageEvent.target.url)) {
             messageEvent.message = true;
             return;
           }
@@ -501,8 +521,9 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var limited = _myfilters.filterset.limitedToDomain(pageDomain);
-          var isMatched = url && limited.matches(url, elType);
+          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
+          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
+                                  limited.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
@@ -525,10 +546,26 @@
             return;
           if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
-          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("contextmenuhideanything"));
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
+      }
+
+
+
+      // OLD STYLE WHITELIST
+      //   TODO: Remove this when you are convinced everyone has updated their
+      //   version of AdBlock... Say in March or April
+      if (utils.storage_get({key:'whitelist', default_value:[]})) {
+        var old_style_whitelist = utils.storage_get({key:'whitelist', default_value:[]});
+        for (var i=0; i<old_style_whitelist.length; i++) {
+          var website = old_style_whitelist[i];
+          if (website[0] == '.')
+            website = '*' + website;
+          utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+        }
+        localStorage.removeItem('whitelist');
       }
     </script>
   </head>
