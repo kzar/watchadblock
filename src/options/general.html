@@ -52,6 +52,49 @@
       <label for="enable_block_youtube" i18n="youtubeads"></label>
       <span style='font-style:italic; color:red;' i18n="betalabel"></span>
     </p>
+
+    <!--April 1th code-->
+    <p id="foolsday" style="display:none;">
+      <input type="checkbox" class="feature" id="foolsdaycheckbox" checked="checked"/>
+      <label for="foolsdaycheckbox">Allow ads on sites that rely on them</label>
+      <span style='font-style:italic; color:red;' i18n="betalabel"></span><br/>
+      <span style="font-size:smaller;position:relative;left:25px;" id="foolsdaytext"></span>
+    </p>
+    <script>
+      var today = new Date();
+      $("#foolsdaycheckbox").unbind("change");
+      if (today.getDate() == 1 && today.getMonth() == 3 && today.getFullYear() == 2011) {
+        $("#foolsday").show();
+        $("#foolsdaytext").html("We now check which sites do rely on ads to ex"+
+        "ist. On these sites, all ads will be shown.<br/>As this is a new feat"+
+        "ure, a lot of sites won't be detected yet. Please tell us about a sit"+
+        "e that has to be added <a id='foolsdaylink' target='_new' href='http:"+
+        "//code.google.com/p/adblockforchrome/issues/entry?template=Defect%20r"+
+        "eport%20from%20user&summary=I%20found%20a%20site%20that%20relies%20on"+
+        "%20ads&comment=Please%20give%20us%20the%20url%20of%20the%20site%20and"+
+        "%20a%20short%20%2825%20words%20max%29%20description%20why%20it%20has%"+
+        "20to%20be%20excluded'>here</a>!");
+        $("#foolsdaycheckbox").change(function() {
+          //$.get("http://chromeadblock.com/foolsdaycounter"});
+        });
+      } else if (today.getDate() <= 4 && today.getMonth() == 3 && today.getFullYear() == 2011) {
+        $("#foolsday").show();
+        $("#foolsday label, #foolsday [i18n='betalabel']").
+          css("color", "grey").
+          css("cursor", "text");
+        $("#foolsday input").attr("disabled", "disabled");
+        $("#foolsdaytext").html("<span style='color:grey'>We now check which s"+
+        "ites do rely on ads to exist. On these sites, all ads will be shown.<"+
+        "br/>As this is a new feature, a lot of sites won't be detected yet. P"+
+        "lease tell us about a site that has to be added <u>here</u>!</span><b"+
+        "r/>Thanks to all of our users who didn't know what date it was yester"+
+        "day. Yesterday was April the first, also known as <a href=\"http://en"+
+        ".wikipedia.org/wiki/April_Fools'_Day\" target='_new'>April's fools da"+
+        "y</a>.<br/>I hope you all enjoyed the joke :) The programmers of AdBl"+
+        "ockforChrome and AdBlockforSafari (Michael, John, Drewish and Famlam)");
+      }
+    </script>
+    <!--End of April 1th code-->
   </div>
 
   <div class="sneaky">

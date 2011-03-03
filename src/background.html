@@ -426,6 +426,18 @@
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
+
+        // April 1th, 2011
+        // Just like above, but easier to delete afterwards.
+        var today = new Date();
+        if (today.getDate() == 1 && today.getMonth() == 3 && today.getFullYear() == 2011) {
+          if (!utils.storage_get({key:'saw_foolsday2011'})) {
+            chrome.browserAction.setTitle({title:translate("new_version")});
+            chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
+            chrome.browserAction.setBadgeText({text:"\u2022"});
+          }
+        } else localStorage.removeItem("saw_foolsday2011");
+        // <End of April 1th code>
       })();
 
 

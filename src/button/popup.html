@@ -89,9 +89,14 @@
             <div id="new_release_close" style="float:right;"><a class="blue" href="#">x</a></div>
             <div id="newtitle"></div>
             <script>$("#newtitle").text(translate("newtitle", ["2.3.0"]));</script>
-            <div i18n="this_toolbar_button" id="no_toolbar_button"></div>
-            <div i18n="yes_toolbar_button" id="yes_toolbar_button" style="display:none">
-              <!-- TODO temp: installed 2/2011 -->
+            <div id="newversioninfo">
+              <div i18n="this_toolbar_button" id="no_toolbar_button"></div>
+              <div i18n="yes_toolbar_button" id="yes_toolbar_button" style="display:none;">
+                <!-- TODO temp: installed 2/2011 -->
+              </div>
+              <!-- No need to perform i18n here if you ask me, as most users 
+              will see this message before only one translation has been updated.
+              Simply place the text with the new version info here -->
             </div>
             <script>
               $(function() {
@@ -128,6 +133,25 @@
               localStorage.setItem('saw_badge_info_version', info_ver);
             });
           }
+          
+          
+          // April 1th 2011
+          // The few users who update to a new major version on this day won't
+          // see what's new in that release that day, but that isn't so bad.
+          // No i18n for this, as it will only exist one day
+          var today = new Date();
+          if (today.getDate() == 1 && today.getMonth() == 3 && today.getFullYear() == 2011) {
+            $("#newtitle").text("New: showing fair ads");
+            $("#no_toolbar_button").hide();
+            $("#yes_toolbar_button").hide();
+            $("#newversioninfo").text("We now check which sites do rely on ads to exist. On these sites, all ads will be shown. You can disable this setting or tell us about other fair sites via the options page.");
+            $("#div_new_release").show();
+            $("#new_release_close").click(function() {
+              $("#div_new_release").slideUp();
+              localStorage.setItem('saw_foolsday2011', true);
+            });
+          }
+          // <End of April 1th code>
         });
       </script>
 
