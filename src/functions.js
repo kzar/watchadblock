@@ -11,6 +11,8 @@ extension_call = function(fn, options, callback) {
   chrome.extension.sendRequest({fn:fn, options:options}, callback);
 }
 
+// Test edit
+
 // These are replaced with console.log in adblock_start if the user chooses.
 DEBUG = false;
 log = function() { };
