@@ -1,78 +1,10 @@
 // Requires overlay.js and jquery
 
-// Highlight DOM elements with an overlayed box, similar to Webkit's inspector.
-// Creates an absolute-positioned div that is translated & scaled following
-// mousemove events. Holds a pointer to target DOM element.
-function Highlighter() {
-  var target = null;
-  var enabled = false;
-  var then = +new Date();
-  var box = $("<div class='adblock-highlight-node'></div>").css({
-    backgroundColor: "rgba(130, 180, 230, 0.5) !important",
-    outline: "solid 1px #0F4D9A !important",
-    boxSizing: "border-box !important",
-    position: "absolute !important", 
-    display: "none"
-  }).appendTo("body");
-  
-  function handler(e) {
-    var offset, el = e.target;
-    var now = +new Date();
-    if (now - then < 25) {
-      return;
-    }
-    then = now;
-    if (el === document.body || el.className === "adblock-killme-overlay") {
-        box.hide(); 
-        return;
-    }
-    else if (el === box[0]) {
-      box.hide();
-      el = document.elementFromPoint(e.clientX, e.clientY);
-    }
-    target = $(el);
-    offset = target.offset();
-    box.css({
-      zIndex: (parseInt(target.css("z-index")) || 1) + " !important",
-      height: target.outerHeight(), 
-      width: target.outerWidth(), 
-      left: offset.left, 
-      top: offset.top 
-    });
-    box.show(); 
-  }
-  
-  this.getCurrentNode = function(el) {
-    return el === box[0] ? target : el;
-  };
-  this.enable = function() {
-    if (box && !enabled) {
-      $("body").bind("mousemove", handler);
-    }
-    enabled = true;
-  };
-  this.disable = function() {
-    if (box && enabled) {
-      box.hide();
-      $("body").unbind("mousemove", handler);
-    }
-    enabled = false;
-  };
-  this.destroy = function() {
-    this.disable();
-    if (box) {
-      box.remove();
-      delete box;
-    }
-  };
-}
-
 // Class that watches the whole page for a click, including iframes and
 // objects.  Shows a modal while doing so.
 function ClickWatcher() {
   this._callbacks = { 'cancel': [], 'click': [] };
   this._clicked_element = null;
-  this._highlighter = new Highlighter();
 }
 ClickWatcher.prototype.cancel = function(callback) {
   this._callbacks.cancel.push(callback);
@@ -107,7 +39,6 @@ ClickWatcher.prototype.show = function() {
     wait.dialog('close');
     wait.remove();
     that._ui.dialog('open');
-    that._highlighter.enable();
   }, 10);
 }
 // Called externally to close ClickWatcher.  Doesn't cause any events to
@@ -129,7 +60,6 @@ ClickWatcher.prototype._onClose = function() {
     // User clicked a page item
     this._fire('click', this._clicked_element);
   }
-  this._highlighter.destroy();
 }
 ClickWatcher.prototype._build_ui = function() { 
   var that = this;
@@ -139,18 +69,23 @@ ClickWatcher.prototype._build_ui = function() {
   }
 
   function click_catch(element) {
-    that._clicked_element = that._highlighter.getCurrentNode(element);
-    //that._clicked_element = element;
+    that._clicked_element = element;
     that._ui.dialog('close');
     return false;
   }
 
 
   // Most things can be blacklisted with a simple click handler.
-  $("*").
-    not("body,html").         // Don't remove the body that the UI lives on!
-    not("embed,object").      // Dealt with separately below
-    click(click_catch_this);  // Everybody else, blacklist upon click
+  // deprecated in r1921
+  //$("*").
+  //  not("body,html").         // Don't remove the body that the UI lives on!
+  //  not("embed,object").      // Dealt with separately below
+  //  click(click_catch_this);  // Everybody else, blacklist upon click
+  var body_overlay = new Overlay({
+    dom_element: $("body"),
+    click_handler: click_catch
+  });
+  body_overlay.enable();
 
   // Send all objects and embeds to the background, and send any z-index
   // crazies to a lower z-index.  I'd do it here, but objects within iframes
@@ -162,14 +97,15 @@ ClickWatcher.prototype._build_ui = function() {
   // ad, and I *really* don't want to figure out inter-frame communication
   // so that the blacklist UI's slider works between multiple layers of 
   // iframes... just overlay iframes and treat them as a giant object.
-  $("object,embed,iframe,[onclick]:empty").
-      each(function(i, dom_element) {
-    var killme_overlay = new Overlay({
-      dom_element: dom_element,
-      click_handler: click_catch
-    });
-    killme_overlay.display();
-  });
+  // deprecated in r1921
+  //$("object,embed,iframe,[onclick]:empty").
+  //    each(function(i, dom_element) {
+  //  var killme_overlay = new Overlay({
+  //    dom_element: dom_element,
+  //    click_handler: click_catch
+  //  });
+  //  killme_overlay.display();
+  //});
 
   var btn = {};
   btn[translate("buttoncancel")] = function() { page.dialog('close'); }
@@ -191,22 +127,22 @@ ClickWatcher.prototype._build_ui = function() {
       title: translate("blockanadtitle"),
       buttons: btn,
       close: function() { 
-        $("*").unbind('click', click_catch_this);
+        //$("*").unbind('click', click_catch_this);
         Overlay.removeAll();
         that._onClose();
         page.remove();
       },
       drag: function() {
-        that._highlighter.disable();
+        body_overlay.disable();
       }
     });
     page.dialog("widget").
       css("position", "fixed").
       bind("mouseenter",function() {
-        that._highlighter.disable();
+        body_overlay.disable();
       }).
       bind("mouseleave",function() {
-        that._highlighter.enable();
+        body_overlay.enable();
       });
 
   if (!SAFARI) {
