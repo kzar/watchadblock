@@ -134,15 +134,15 @@ yet?  Thank you! :D
 Happy ad blocking,
 - Michael
 
-PS: If you don't mind, please post to Facebook or Twitter about
-%(browser)sadblock.com, asking your friends to donate if they like it as much
-as you do.  It would help me IMMENSELY :)
+PS: If you don't mind, would you go to http://chromeadblock.com/donate/thanks/
+and help me spread the word?  I tried setting it up so PayPal would show you
+that automatically after you donated, but I couldn't figure it out!  Anyway, it
+would help me IMMENSELY :)
 
 
 %(original)s
 """ % dict(nickname=self.nickname,
-           original=original,
-           browser=self.browser.lower())
+           original=original)
 
 
 def send(from_, to, subject, body):
@@ -164,20 +164,35 @@ Subject: %s
 def mark_as_read_and_send(donations):
     print "Press enter to mark emails as read and send replies."
     raw_input()
-    m = donation_mailbox()
+    mailbox = donation_mailbox()
+    while donations:
+        print
+        print "%d remaining." % len(donations)
+        print
+        mark_as_read_and_send_batch(mailbox, donations[:20])
+        donations = donations[20:]
+
+def mark_as_read_and_send_batch(m, donations):
     ids = ','.join(d.msgid for d in donations)
     print "Marking these msgids as read:"
     print ids
     # Mark all as read
     m.store(ids, '+FLAGS.SILENT', '\\Seen')
+    sending_errors = 0
     for (i,d) in enumerate(donations):
         print "Sending %d of %d to %s ('%s' - %s)" % (i+1, len(donations),
             d.email, d.nickname, d.name)
         try:
             send('adblockforchrome@gmail.com', d.email,
                  'I got your donation :)', d.get_response())
+            sending_errors = 0
         except:
             print "  %s Failed to send" % ("*" * 40)
+            sending_errors += 1
+            if sending_errors == 3:
+                print "Aborting!"
+                import sys
+                sys.exit(1)
             continue
 
 def with_corrected_nicknames(donations):
@@ -188,8 +203,9 @@ def with_corrected_nicknames(donations):
     f = open('/tmp/nicknames.csv', 'w')
     writer = csv.writer(f, delimiter='\t')
     for d in donations:
+        note = d.note or ""
         writer.writerow([d.nickname,d.name,d.email,d.amount,
-                         d.browser,d.msgid,d.note.replace("\t", " ")])
+                         d.browser,d.msgid,note.replace("\t", " ")])
     f.close()
     print "Press enter to edit nicknames."
     raw_input()
@@ -206,7 +222,7 @@ def thank_notes(number_to_thank=200):
         print "Press enter to edit message %d of %d." % (i+1, len(donations))
         raw_input()
         open('/tmp/reply.txt', 'w').write(d.get_response())
-        os.system('vim -c "0;0" /tmp/reply.txt')
+        os.system('vim -c "normal 1Gw" /tmp/reply.txt')
         d.set_response(open('/tmp/reply.txt').read())
     mark_as_read_and_send(donations)
 
