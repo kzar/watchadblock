@@ -83,6 +83,7 @@ ClickWatcher.prototype._build_ui = function() {
   //  click(click_catch_this);  // Everybody else, blacklist upon click
   var body_overlay = new Overlay({
     dom_element: $("body"),
+    placeholders: "iframe,embed,object",
     click_handler: click_catch
   });
   body_overlay.enable();
