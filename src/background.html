@@ -92,46 +92,9 @@
         localStorage.setItem(key, JSON.stringify(value));
       }
   
-      // Add a new custom filter entry.
-      // Inputs: filter:string line of text to add to custom filters.
-      // Returns: null if succesfull, otherwise an exception
-      utils.add_custom_filter = function(options) {
-        var custom_filters = get_custom_filters_text();
-        try {
-          if (FilterNormalizer.normalizeLine(options.filter)) {
-            custom_filters = custom_filters + '\n' + options.filter;
-            set_custom_filters_text(custom_filters);
-            return null;
-          }
-          return "This filter is unsupported";
-        } catch(ex) {
-          return ex;
-        }
-      }
-
-      // Return the contents of a local file.
-      // Inputs: file:string - the file relative address, eg "js/foo.js".
-      // Returns: the content of the file.
-      utils.readfile = function(options) {
-        // A bug in jquery prevenst local files from being read, so use XHR.
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", chrome.extension.getURL(options.file), false);
-        xhr.send();
-        return xhr.responseText;
-      }
-
-      if (SAFARI) {
-        // Return chrome.i18n._getL10nData() for content scripts who cannot
-        // call that function (since it loads extension files from disk.)
-        utils.get_l10n_data = function(options) {
-          return chrome.i18n._getL10nData();
-        }
-      }
-
-
       // OPTIONAL FEATURES
 
-      utils.get_optional_features = function(options) {
+      get_optional_features = function() {
         var features = storage_get('optional_features', {});
         var feature_names = [
           "debug_logging",
@@ -157,8 +120,46 @@
         }
         return features;
       }
+
+      // Add a new custom filter entry.
+      // Inputs: filter:string line of text to add to custom filters.
+      // Returns: null if succesfull, otherwise an exception
+      utils.add_custom_filter = function(options) {
+        var custom_filters = get_custom_filters_text();
+        try {
+          if (FilterNormalizer.normalizeLine(options.filter)) {
+            custom_filters = custom_filters + '\n' + options.filter;
+            set_custom_filters_text(custom_filters);
+            return null;
+          }
+          return "This filter is unsupported";
+        } catch(ex) {
+          return ex;
+        }
+      }
+
+      // Return the contents of a local file.
+      // Inputs: file:string - the file relative address, eg "js/foo.js".
+      // Returns: the content of the file.
+      utils.readfile = function(options) {
+        // A bug in jquery prevents local files from being read, so use XHR.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", chrome.extension.getURL(options.file), false);
+        xhr.send();
+        return xhr.responseText;
+      }
+
+      if (SAFARI) {
+        // Return chrome.i18n._getL10nData() for content scripts who cannot
+        // call that function (since it loads extension files from disk.)
+        utils.get_l10n_data = function(options) {
+          return chrome.i18n._getL10nData();
+        }
+      }
+
+
       utils.set_optional_feature = function(options) {
-        var features = utils.get_optional_features();
+        var features = get_optional_features();
         if (features[options.name] == null)
           features[options.name] = { name:options.name };
         var feature = features[options.name];
@@ -179,7 +180,7 @@
       //           included
       utils.get_content_script_data = function(options, sender) {
         var whitelisted = page_is_whitelisted(sender.tab.url);
-        var features = utils.get_optional_features();
+        var features = get_optional_features();
         var result = {
           page_is_whitelisted: whitelisted,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
@@ -317,7 +318,7 @@
         function updateButtonUIAndContextMenus() {
           getCurrentTabInfo(function(info) {
 
-            var features = utils.get_optional_features({});
+            var features = get_optional_features();
             var context_disabled = !features.show_context_menu_items.is_enabled;
             var paused = localStorage.getItem('adblock_is_paused');
 
@@ -419,7 +420,7 @@
         ports.push(port);
       });
 
-      if (utils.get_optional_features({}).debug_logging.is_enabled)
+      if (get_optional_features().debug_logging.is_enabled)
         log = function(text) { console.log(text); };
 
       chrome.extension.onRequest.addListener(
@@ -522,7 +523,7 @@
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
-          if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
+          if (!get_optional_features().show_context_menu_items.is_enabled)
             return;
           event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
