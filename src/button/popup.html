@@ -52,7 +52,7 @@
         ];
         hide(menu_items);
 
-        getCurrentTabInfo(function(info) {
+        BG.getCurrentTabInfo(function(info) {
           if (localStorage.getItem('adblock_is_paused')) {
             show(["div_status_paused", "separator0", "div_options"]);
           } else if (info.disabled_site) {
@@ -142,7 +142,7 @@
       </div>
       <script>
         $("#div_status_whitelisted a").click(function() {
-          getCurrentTabInfo(function(info) {
+          BG.getCurrentTabInfo(function(info) {
             if (BG.try_to_unwhitelist(info.tab.url)) {
               // Reload the tab
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
@@ -193,7 +193,7 @@
       </div>
       <script>
         $("#div_blacklist").click(function() {
-          getCurrentTabInfo(function(info) {
+          BG.getCurrentTabInfo(function(info) {
             BG.utils.emit_page_broadcast(
               {fn:'top_open_blacklist_ui', options:{}},
               { tab: info.tab } // fake sender to determine target page
@@ -208,7 +208,7 @@
       </div>
       <script>
         $("#div_whitelist_page").click(function() {
-          getCurrentTabInfo(function(info) {
+          BG.getCurrentTabInfo(function(info) {
             var url = info.tab.url.replace(/#.*$/, '');  // Remove anchors
             var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
             var has_querystring = url_parts[2];
@@ -230,7 +230,7 @@
       </div>
       <script>
         $("#div_whitelist").click(function() {
-          getCurrentTabInfo(function(info) {
+          BG.getCurrentTabInfo(function(info) {
             BG.utils.emit_page_broadcast(
               {fn:'top_open_whitelist_ui', options:{}},
               { tab: info.tab } // fake sender to determine target page

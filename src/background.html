@@ -167,6 +167,48 @@
       }
 
 
+      // Get interesting information about the current tab.
+      // Inputs:
+      //   url: string
+      //   callback: function(info).
+      //   info object passed to callback: {
+      //     tab: Tab object
+      //     whitelisted: bool - whether the current tab's URL is whitelisted.
+      //     domain: string
+      //     disabled_site: bool - true if the url is e.g. about:blank or the 
+      //                           Extension Gallery, where extensions don't run.
+      //   }
+      // Returns: null (asynchronous)
+      function getCurrentTabInfo(callback) {
+        chrome.tabs.getSelected(undefined, function(tab) {
+          // TODO: use code from elsewhere to extract domain
+
+          var url = url_parts(tab.url);
+
+          var disabled_site = false;
+          if (url.scheme != 'http' && url.scheme != 'https')
+            disabled_site = true;
+          if (/\:\/\/chrome.google.com\/(extensions|webstore)\//.test(tab.url))
+            disabled_site = true;
+
+          var result = {
+            tab: tab,
+            disabled_site: disabled_site,
+            domain: url.domain,
+          };
+          if (!disabled_site)
+            result.whitelisted = page_is_whitelisted(tab.url);
+
+          callback(result);
+        });
+      }
+
+
+
+
+
+
+
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
       // Returns: null if succesfull, otherwise an exception
