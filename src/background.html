@@ -179,7 +179,7 @@
       //                           Extension Gallery, where extensions don't run.
       //   }
       // Returns: null (asynchronous)
-      function getCurrentTabInfo(callback) {
+      getCurrentTabInfo = function(callback) {
         chrome.tabs.getSelected(undefined, function(tab) {
           // TODO: use code from elsewhere to extract domain
 
@@ -203,6 +203,28 @@
         });
       }
 
+
+      // Returns true if anything in whitelist matches the_domain.
+      //   url: the url of the page
+      //   type: one out of ElementTypes, default ElementTypes.document,
+      //         to check what the page is whitelisted for: hiding rules or everything
+      //   returnFilter: if the filter that whitelisted the page should be returned
+      page_is_whitelisted = function(url, type, returnFilter) {
+        //special case this one
+        if (url == "http://acid3.acidtests.org/") return true;
+        url = url.replace(/\#.*$/, ''); // Remove anchors
+        if (!type)
+          type = ElementTypes.document;
+        var both = { global:1, nonglobal: 1 };
+        for (var name in both) {
+          var whitelist = _myfilters[name]._whitelistFilters;
+          for (var i = 0; i < whitelist.length; i++) {
+            if (whitelist[i].matches(url, type, false))
+              return returnFilter ? whitelist[i]._text : true;
+          }
+        }
+        return false;
+      }
 
 
 

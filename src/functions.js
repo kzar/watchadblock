@@ -37,29 +37,6 @@ function localizePage() {
   });
 }
 
-// Returns true if anything in whitelist matches the_domain.
-//   url: the url of the page
-//   type: one out of ElementTypes, default ElementTypes.document,
-//         to check what the page is whitelisted for: hiding rules or everything
-//   returnFilter: if the filter that whitelisted the page should be returned
-function page_is_whitelisted(url, type, returnFilter) {
-  //special case this one
-  if (url == "http://acid3.acidtests.org/") return true;
-  url = url.replace(/\#.*$/, ''); // Remove anchors
-  var bg = chrome.extension.getBackgroundPage();
-  if (!type)
-    type = bg.ElementTypes.document;
-  var both = { global:1, nonglobal: 1 };
-  for (var name in both) {
-    var whitelist = bg._myfilters[name]._whitelistFilters;
-    for (var i = 0; i < whitelist.length; i++) {
-      if (whitelist[i].matches(url, type, false))
-        return returnFilter ? whitelist[i]._text : true;
-    }
-  }
-  return false;
-}
-
 // Returns a data object for a url containing scheme and domain.
 function url_parts(url) {
   var parts = url.match("(.*?)://(..*?)/");

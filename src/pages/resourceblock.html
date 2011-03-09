@@ -460,7 +460,7 @@
           }
           if (!temp_url) {
             // Show elemhide rules that match on the page
-            var noHideRule = page_is_whitelisted(url, ElementTypes.elemhide, true);
+            var noHideRule = BG.page_is_whitelisted(url, ElementTypes.elemhide, true);
             if (noHideRule)
               resources[url] = {type: ElementTypes.elemhide,
                                 filter: SAFARI ? "@@elemhiderule" : noHideRule};
