@@ -162,8 +162,8 @@
       // Inputs: id: id from which to unsubscribe.
       //         del: (bool) if the filter should be removed or not
       // Returns: null, upon completion.
-      utils.unsubscribe = function(options) {
-        return _myfilters.unsubscribe(options.id, options.del);
+      unsubscribe = function(id, del) {
+        _myfilters.unsubscribe(id, del);
       }
 
       utils.open_blacklist_ui_on_tab = function(options) {

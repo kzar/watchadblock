@@ -102,11 +102,10 @@
       // Unsubscribe from the given filterlist id.
       // 'del' determines if it should be deleted too
       function unsubscribe(id, del) {
-        extension_call("unsubscribe", {id:id, del:del}, function() {
-          var message = (del) ? translate("removedlabel")
-                              : translate("unsubscribedlabel");
-          flash(message);
-        });
+        BG.unsubscribe(id, del);
+        var message = (del) ? translate("removedlabel")
+                            : translate("unsubscribedlabel");
+        flash(message);
       }
       // Subscribe to the given filterlist id.  id is either a well-known id, or
       // "url:xyz", where xyz is the URL of a user-specified filter list.
