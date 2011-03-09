@@ -1,4 +1,4 @@
-// Requires jquery and 'utils.get_optional_features' method from background
+// Requires jquery
 
 // MyFilters class manages subscriptions and the FilterSet.
 
@@ -81,7 +81,8 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''});
+  var BG = chrome.extension.getBackgroundPage();
+  var customfilters = BG.get_custom_filters_text();
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 

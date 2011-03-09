@@ -49,14 +49,14 @@
 
       // Get the custom filters text as a \n-separated text string.
       get_custom_filters_text = function() {
-        return utils.storage_get({key: 'custom_filters', default_value: ''});
+        return storage_get('custom_filters', '');
       }
 
       // Set the custom filters to the given \n-separated text string, and 
       // rebuild the filterset.
       // Inputs: filters:string the new filters.
       set_custom_filters_text = function(filters) {
-        utils.storage_set({key: 'custom_filters', value: filters});
+        storage_set('custom_filters', filters);
         _myfilters.update();
       }
 
@@ -70,6 +70,28 @@
         set_custom_filters_text(text.trim());
       }
 
+      // STORAGE
+
+      // Inputs: key:string, default_value:object. 
+      // Returns value or default_value if not stored.
+      storage_get = function(key, default_value) {
+        var json = localStorage.getItem(key);
+        if (json == null)
+          return default_value;
+        try {
+          return JSON.parse(json);
+        } catch (e) {
+          log("Couldn't parse json for " + key);
+          return default_value;
+        }
+      }
+
+      // Inputs: key:string, value:object.
+      // Returns null.
+      storage_set = function(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+  
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
       // Returns: null if succesfull, otherwise an exception
@@ -87,32 +109,6 @@
         }
       }
 
-      // STORAGE
-
-      // Inputs: key:string, default_value:object. 
-      // Returns value or default_value if not stored.
-      utils.storage_get = function(options) {
-        var json = localStorage.getItem(options.key);
-        if (json == null)
-          return options.default_value;
-        try {
-          return JSON.parse(json);
-        } catch (e) {
-          log("Couldn't parse json for " + options.key);
-          return options.default_value;
-        }
-      }
-      // Inputs: key:string, value:object.
-      // Returns null.
-      utils.storage_set = function(options) {
-        localStorage.setItem(options.key, JSON.stringify(options.value));
-      }
-      // Inputs: key:string.
-      // Returns null.
-      utils.storage_remove = function(options) {
-        localStorage.removeItem(options.key);
-      }
-  
       // Return the contents of a local file.
       // Inputs: file:string - the file relative address, eg "js/foo.js".
       // Returns: the content of the file.
@@ -136,10 +132,7 @@
       // OPTIONAL FEATURES
 
       utils.get_optional_features = function(options) {
-        var features = utils.storage_get({
-          key:'optional_features', 
-          default_value:{}
-        });
+        var features = storage_get('optional_features', {});
         var feature_names = [
           "debug_logging",
           "block_youtube",
@@ -170,7 +163,7 @@
           features[options.name] = { name:options.name };
         var feature = features[options.name];
         feature.is_enabled = options.is_enabled;
-        utils.storage_set({key:'optional_features', value:features});
+        storage_set('optional_features', features);
         
         if (options.name == "debug_logging") {
           if (options.is_enabled)
@@ -400,7 +393,7 @@
         version_to_notify = '2.3.0';
 
         // Brand new users don't see badge (or popup's info div).
-        if (!utils.storage_get({key:'installed_at'})) {
+        if (!storage_get('installed_at')) {
           localStorage.setItem('saw_badge_version', version_to_notify);
           localStorage.setItem('saw_badge_info_version', version_to_notify);
         }
@@ -448,10 +441,10 @@
 
       // If the user has just installed, make a note of it.  
       function note_install() {
-        if (utils.storage_get({key:'installed_at', default_value:0}) != 0)
+        if (storage_get('installed_at', 0) != 0)
           return;
         var now = new Date().getTime();
-        utils.storage_set({key:'installed_at', value:now});
+        storage_set('installed_at', now);
         $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
         // TODO: open in safari as well
         if (!SAFARI) {
@@ -542,8 +535,8 @@
       // OLD STYLE WHITELIST
       //   TODO: Remove this when you are convinced everyone has updated their
       //   version of AdBlock... Say in March or April
-      if (utils.storage_get({key:'whitelist', default_value:[]})) {
-        var old_style_whitelist = utils.storage_get({key:'whitelist', default_value:[]});
+      if (storage_get('whitelist')) {
+        var old_style_whitelist = storage_get('whitelist', []);
         for (var i=0; i<old_style_whitelist.length; i++) {
           var website = old_style_whitelist[i];
           if (website[0] == '.')
