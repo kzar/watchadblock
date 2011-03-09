@@ -47,8 +47,9 @@ function shipit() {
       exit 1
     }
 
+    v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     echo Zipping...
-    rm -f ../paid_adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r paid_adblockforchrome.zip trunk/ >/dev/null )
+    rm -f ../adblockforchrome-*.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "adblockforchrome-$v.zip" trunk/ >/dev/null )
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
@@ -79,7 +80,7 @@ function shipit() {
       svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
     }
 
-    echo "Last step: go push the new paid_adblockforchrome.zip up to the Store, and ship Safari if you want."
+    echo "Last step: go push the new adblockforchrome-$v.zip up to the Store, and ship Safari if you want."
 }
 
 function bump() {
