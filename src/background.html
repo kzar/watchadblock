@@ -220,7 +220,51 @@
         return result;
       }
 
+      // Called within content scripts, by broadcast_channel.js's 
+      // broadcast(), to bounce messages back to all listeners
+      utils.emit_broadcast = function(request) {
+        log("Broadcasting from background to users " + request.fn);
+        $.each(ports, function(i, port) {
+          port.postMessage(request);
+        });
+      }
+
+      // Called by page_broadcast() to bounce messages back to all 
+      // listeners on the same page as the caller.
+      utils.emit_page_broadcast = function(request, sender) {
+        log("Broadcasting from background (to page " + sender.tab.id +
+            ") to users " + request.fn);
+        $.each(ports, function(i, port) {
+          if (port.sender.tab.id == sender.tab.id)
+            port.postMessage(request);
+        });
+      }
+
+      // Will open the resource blocking tab. 
+      // Input:
+      //   resources: array of resource strings; 
+      //              see resourceblock.html for format
+      utils.show_resourceblocker = function(options, sender) {
+        var url = sender.tab.url.replace(/\#.*/, '');
+        utils.show_resourceblocker.cached_resources.set(url, options.resources);
+        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+      }
+      // This stores resources used by resourceblock.html
+      utils.show_resourceblocker.cached_resources = new FifoCache(5);
+
       // NEW FILTERS
+
+      // Opens a popup that subscribes to a new list
+      // Must be here because other pages cannot open popups...
+      // Inputs: searchquery: the search part of the abp: url
+      utils.subscribe_popup = function(options) {
+        window.open(chrome.extension.getURL('pages/subscribe.html?' +
+                    options.searchquery), "_blank", 
+                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
+      }
+
+
+
 
       // Fetch the latest version of all subscribed lists now.
       utils.update_subscriptions_now = function(options) {
@@ -250,36 +294,6 @@
         return _myfilters.unsubscribe(options.id, options.del);
       }
 
-      // Opens a popup that subscribes to a new list
-      // Must be here because other pages cannot open popups...
-      // Inputs: searchquery: the search part of the abp: url
-      utils.subscribe_popup = function(options) {
-        window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                    options.searchquery), "_blank", 
-                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
-      }
-
-      // Called within content scripts, by broadcast_channel.js's 
-      // broadcast(), to bounce messages back to all listeners
-      utils.emit_broadcast = function(request) {
-        log("Broadcasting from background to users " + request.fn);
-        $.each(ports, function(i, port) {
-          port.postMessage(request);
-        });
-      }
-
-      // Called by page_broadcast() to bounce messages back to all 
-      // listeners on the same page as the caller.
-      utils.emit_page_broadcast = function(request, sender) {
-        log("Broadcasting from background (to page " + sender.tab.id +
-            ") to users " + request.fn);
-        $.each(ports, function(i, port) {
-          if (port.sender.tab.id == sender.tab.id)
-            port.postMessage(request);
-        });
-      }
-
-
       utils.open_blacklist_ui_on_tab = function(options) {
         // emit_page_broadcast uses sender.tab.id to determine which page
         // to send to.  Fake it.
@@ -293,17 +307,6 @@
         );
       };
       
-      // Will open the resource blocking tab. 
-      // Input:
-      //   resources: array of resource strings; 
-      //              see resourceblock.html for format
-      utils.show_resourceblocker = function(options, sender) {
-        var url = sender.tab.url.replace(/\#.*/, '');
-        utils.show_resourceblocker.cached_resources.set(url, options.resources);
-        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
-      }
-      // This stores resources used by resourceblock.html
-      utils.show_resourceblocker.cached_resources = new FifoCache(5);
       
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
