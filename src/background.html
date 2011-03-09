@@ -317,61 +317,46 @@
         );
       };
 
-      // Turn on or off the context menus in Chrome based on whether the
-      // domain in question is whitelisted, adblock is paused, or the user
-      // has disabled the menus in the Options.
-      // Inputs:
-      //   url:string the url of the tab being right clicked
-      // Returns: null
-      utils.setChromeContextMenus = function(options) {
-        if (SAFARI)
-          return;
-        var whitelisted = page_is_whitelisted(options.url);
-        var features = utils.get_optional_features({});
-        var disabled = !features.show_context_menu_items.is_enabled;
-        var paused = localStorage.getItem('adblock_is_paused');
-
-        chrome.contextMenus.removeAll();
-
-        if (paused || disabled || whitelisted)
-          return;
-        
-        chrome.contextMenus.create({
-          title: translate("block_this_ad"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{info: info}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("block_an_ad_on_this_page"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-      }
 
       if (!SAFARI) {
         // Set the button image and context menus according to the URL 
         // of the current tab.
-        // TODO getCurrentTabInfo calculated is_whitelisted and disabled_site
-        // and then we recalculate this in setChromeContextMenus which is
-        // wasteful and unnecessarily complex.  Review exactly what we need to
-        // do on tab change and do it all in one place.
         function updateButtonUIAndContextMenus() {
           getCurrentTabInfo(function(info) {
-            utils.setChromeContextMenus({url: info.tab.url});
 
-            if (localStorage.getItem('adblock_is_paused')) {
+            var features = utils.get_optional_features({});
+            var context_disabled = !features.show_context_menu_items.is_enabled;
+            var paused = localStorage.getItem('adblock_is_paused');
+
+            chrome.contextMenus.removeAll();
+
+            if (!(paused || context_disabled || 
+                  info.whitelisted || info.disabled_site)) {
+              chrome.contextMenus.create({
+                title: translate("block_this_ad"),
+                contexts:["all"], 
+                onclick: function(info, tab) {
+                  var sender = { tab: tab };
+                  utils.emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{info: info}},
+                    sender
+                  );
+                }
+              });
+              chrome.contextMenus.create({
+                title: translate("block_an_ad_on_this_page"),
+                contexts:["all"], 
+                onclick: function(info, tab) {
+                  var sender = { tab: tab };
+                  utils.emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                    sender
+                  );
+                }
+              });
+            }
+
+            if (paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
             } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
