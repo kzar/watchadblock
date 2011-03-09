@@ -265,7 +265,7 @@
 
         $("#btnUpdateNow").click(function() {
           $(this).attr("disabled", "disabled");
-          extension_call("update_subscriptions_now", {});
+          BG.update_subscriptions_now();
           setTimeout(function() {
             $("#btnUpdateNow").removeAttr("disabled");
           }, 300000); //re-enable after 5 minutes

@@ -153,7 +153,7 @@
       //Updating the users filters
       $("#UpdateFilters").click(function() {
         $(this).attr("disabled", "disabled");
-        extension_call("update_subscriptions_now", {});
+        BG.update_subscriptions_now();
       });
       //if the user clicks a radio button
       $("#step1_no").click(function() {

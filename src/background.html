@@ -140,7 +140,7 @@
 
 
       // Fetch the latest version of all subscribed lists now.
-      utils.update_subscriptions_now = function(options) {
+      update_subscriptions_now = function() {
         _myfilters.freshen_async(true);
       }
       // Returns map from id to subscription object.  See filters.js for 
