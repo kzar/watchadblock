@@ -8,6 +8,8 @@
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
+      var BG = chrome.extension.getBackgroundPage();
+
       function displayVersionNumber() {
         try {
           var xhr = new XMLHttpRequest();
@@ -79,7 +81,7 @@
             // Give the optional feature a sec to get saved by the other
             // change handler before recalculating filters.
             window.setTimeout(function() { 
-              extension_call('update_filters', { }); 
+              BG.update_filters();
             }, 1000);
           });
         </script>

@@ -40,12 +40,10 @@
         return false;
       }
 
-      // V3 FILTERING
+      // FILTERING
 
       // Rebuild the filterset based on the current settings and subscriptions.
-      // Inputs: none.
-      // Returns: null, upon completion
-      utils.update_filters = function(options) {
+      update_filters = function() {
         _myfilters.update();
       }
 

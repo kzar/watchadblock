@@ -37,7 +37,7 @@
         // Give the optional feature a sec to get saved by the other
         // change handler before recalculating filters.
         window.setTimeout(function() { 
-          extension_call('update_filters', { }); 
+          BG.update_filters();
         }, 1000);
       });
     </script>
