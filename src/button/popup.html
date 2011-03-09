@@ -194,11 +194,11 @@
       <script>
         $("#div_blacklist").click(function() {
           getCurrentTabInfo(function(info) {
-            extension_call(
-              'open_blacklist_ui_on_tab',
-              {tabid:info.tab.id},
-              function() { window.close(); }
+            BG.utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options:{}},
+              { tab: info.tab } // fake sender to determine target page
             );
+            window.close();
           });
         });
       </script>
