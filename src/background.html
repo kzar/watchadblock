@@ -182,8 +182,18 @@
       getCurrentTabInfo = function(callback) {
         chrome.tabs.getSelected(undefined, function(tab) {
           // TODO: use code from elsewhere to extract domain
-
-          var url = url_parts(tab.url);
+          function url_parts() {
+            var parts = tab.url.match("(.*?)://(..*?)/");
+            if (!parts) // may be "about:blank" or similar
+              parts = tab.url.match("(.*?):(.*)");
+            var scheme = parts[1];
+            var domain = parts[2];
+            return {
+              scheme: scheme,
+              domain: domain
+            };
+          }
+          var url = url_parts();
 
           var disabled_site = false;
           if (url.scheme != 'http' && url.scheme != 'https')
@@ -202,6 +212,9 @@
           callback(result);
         });
       }
+
+
+
 
 
       // Returns true if anything in whitelist matches the_domain.

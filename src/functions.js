@@ -37,20 +37,6 @@ function localizePage() {
   });
 }
 
-// Returns a data object for a url containing scheme and domain.
-function url_parts(url) {
-  var parts = url.match("(.*?)://(..*?)/");
-  if (!parts) // may be "about:blank" or similar
-    parts = url.match("(.*?):(.*)");
-  var scheme = parts[1];
-  var domain = parts[2];
-  return {
-    scheme: scheme,
-    domain: domain
-  };
-}
-
-
 // Return the CSS text that will hide elements matching the given 
 // array of selectors.
 function css_hide_for_selectors(selectors) {
