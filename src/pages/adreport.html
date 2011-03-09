@@ -37,6 +37,8 @@
       }
     </style>
     <script type="text/javascript">
+      var BG = chrome.extension.getBackgroundPage();
+
       $(function() {
         localizePage();
       });
@@ -54,13 +56,12 @@
       //all unsubscribed default filters
       var unsubscribed_default_filters = [];
       var subscribed_filter_names = [];
-      extension_call("get_subscriptions_minus_text", {}, function(subs) {
-        for (var id in subs)
-          if (!subs[id].subscribed && !subs[id].user_submitted)
-            unsubscribed_default_filters[id] = subs[id];
-          else if (subs[id].subscribed)
-            subscribed_filter_names.push(subs[id].name);
-      });
+      var subs = BG.get_subscriptions_minus_text();
+      for (var id in subs)
+        if (!subs[id].subscribed && !subs[id].user_submitted)
+          unsubscribed_default_filters[id] = subs[id];
+        else if (subs[id].subscribed)
+          subscribed_filter_names.push(subs[id].name);
 
       //generate the URL to the issue tracker
       function generateReportURL() {

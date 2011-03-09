@@ -145,8 +145,7 @@
       }
       // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.
-      // Inputs: none
-      utils.get_subscriptions_minus_text = function(options) {
+      get_subscriptions_minus_text = function() {
         return _myfilters.get_subscriptions_minus_text();
       }
       // Subscribes to a filter subscription.
@@ -155,8 +154,8 @@
       //         text: filter text string fetched from that url
       //         requires?: the id of a list if it is a supplementary list
       // Returns: null, upon completion
-      utils.subscribe = function(options) {
-        return _myfilters.subscribe(options.id, options.text, options.requires);
+      subscribe = function(id, text, requires) {
+        _myfilters.subscribe(id, text, requires);
       }
 
       // Unsubscribes from a filter subscription.
