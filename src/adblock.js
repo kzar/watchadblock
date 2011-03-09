@@ -72,10 +72,7 @@ function run_specials(features) {
           text("[x]").
           click(function() {
             message.remove();
-            extension_call(
-              "set_optional_feature",
-              {name: "show_youtube_help_msg", is_enabled: false}
-            );
+            extension_call("do_not_show_youtube_help_msg", {});
           });
         message.append(closer);
         $("#movie_player").before(message);

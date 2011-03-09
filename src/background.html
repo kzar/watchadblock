@@ -121,6 +121,22 @@
         return features;
       }
 
+      set_optional_feature = function(name, is_enabled) {
+        var features = get_optional_features();
+        if (features[name] == null)
+          features[name] = { name: name };
+        var feature = features[name];
+        feature.is_enabled = is_enabled;
+        storage_set('optional_features', features);
+        
+        if (name == "debug_logging") {
+          if (is_enabled)
+            log = function(text) { console.log(text); };
+          else
+            log = function() { };
+        }
+      }
+  
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
       // Returns: null if succesfull, otherwise an exception
@@ -157,23 +173,10 @@
         }
       }
 
-
-      utils.set_optional_feature = function(options) {
-        var features = get_optional_features();
-        if (features[options.name] == null)
-          features[options.name] = { name:options.name };
-        var feature = features[options.name];
-        feature.is_enabled = options.is_enabled;
-        storage_set('optional_features', features);
-        
-        if (options.name == "debug_logging") {
-          if (options.is_enabled)
-            log = function(text) { console.log(text); };
-          else
-            log = function() { };
-        }
+      utils.do_not_show_youtube_help_msg = function(options) {
+        set_optional_feature("show_youtube_help_msg", false);
       }
-  
+
       // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
       //         include_filters:bool true if hide and block filters should be

@@ -52,10 +52,7 @@
         $("input.feature:checkbox").change(function() {
           var is_enabled = $(this).is(':checked');
           var name = this.id.substring(7); // TODO: hack
-          extension_call(
-            'set_optional_feature', 
-            {name:name, is_enabled:is_enabled}
-          );
+          BG.set_optional_feature(name, is_enabled);
         });
       }
 
