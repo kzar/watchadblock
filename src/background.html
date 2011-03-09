@@ -23,7 +23,7 @@
       // Returns: true if a filter was found and removed; false otherwise.
       try_to_unwhitelist = function(url) {
         url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
-        var custom_filters = utils.get_custom_filters_text({}).split('\n');
+        var custom_filters = get_custom_filters_text().split('\n');
         for (var i = 0; i < custom_filters.length; i++) {
           var text = custom_filters[i];
           if (!Filter.isWhitelistFilter(text))
@@ -47,12 +47,17 @@
         _myfilters.update();
       }
 
+      // Get the custom filters text as a \n-separated text string.
+      get_custom_filters_text = function() {
+        return utils.storage_get({key: 'custom_filters', default_value: ''});
+      }
+
       // Removes a custom filter entry.
       // Inputs: filter:string line of text to remove from custom filters.
       remove_custom_filter = function(filter) {
         // Make sure every filter is preceded and followed by at least one \n,
         // then find and remove the filter.
-        var text = "\n" + utils.get_custom_filters_text({}) + "\n";
+        var text = "\n" + get_custom_filters_text() + "\n";
         text = text.replace("\n" + filter + "\n", "\n");
         utils.set_custom_filters_text({filters: text.trim()});
       }
@@ -61,7 +66,7 @@
       // Inputs: filter:string line of text to add to custom filters.
       // Returns: null if succesfull, otherwise an exception
       utils.add_custom_filter = function(options) {
-        var custom_filters = utils.get_custom_filters_text({});
+        var custom_filters = get_custom_filters_text();
         try {
           if (FilterNormalizer.normalizeLine(options.filter)) {
             custom_filters = custom_filters + '\n' + options.filter;
@@ -72,10 +77,6 @@
         } catch(ex) {
           return ex;
         }
-      }
-      // Get the custom filters text as a \n-separated text string.
-      utils.get_custom_filters_text = function(options) {
-        return utils.storage_get({key: 'custom_filters', default_value: ''});
       }
 
       // Set the custom filters to the given \n-separated text string, and 

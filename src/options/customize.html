@@ -34,11 +34,9 @@
   <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
     register_broadcast_listener('filters_updated', function() {
-      extension_call('get_custom_filters_text', {}, function(filters) {
-        if ($("#txtFiltersAdvanced").attr("disabled") == false)
-          return;
-        $("#txtFiltersAdvanced").val(filters);
-      });
+      if ($("#txtFiltersAdvanced").attr("disabled") == false)
+        return;
+      $("#txtFiltersAdvanced").val(BG.get_custom_filters_text());
     });
 
     $(function() {
@@ -183,9 +181,7 @@
       }
       $("#btnSaveAdvancedFilters").click(saveFilters);
 
-      extension_call('get_custom_filters_text', {}, function(text) {
-        $("#txtFiltersAdvanced").val(text);
-      });
+      $("#txtFiltersAdvanced").val(BG.get_custom_filters_text());
 
       //translation
       localizePage();
