@@ -166,19 +166,6 @@
         _myfilters.unsubscribe(id, del);
       }
 
-      // Just like open_blacklist_ui
-      utils.open_whitelist_ui_on_tab = function(options) {
-        var sender = { tab: { id: options.tabid } };
-        utils.emit_page_broadcast(
-          {fn:'top_open_whitelist_ui', options:{}},
-          sender
-        );
-      };
-
-
-
-
-
 
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.

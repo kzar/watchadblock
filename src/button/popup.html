@@ -231,10 +231,9 @@
       <script>
         $("#div_whitelist").click(function() {
           getCurrentTabInfo(function(info) {
-            var bg = chrome.extension.getBackgroundPage(); 
-            bg.utils.emit_page_broadcast(
+            BG.utils.emit_page_broadcast(
               {fn:'top_open_whitelist_ui', options:{}},
-              { tab: info.tab }
+              { tab: info.tab } // fake sender to determine target page
             );
             window.close();
           });
