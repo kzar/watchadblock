@@ -7,6 +7,8 @@
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
+      var BG = chrome.extension.getBackgroundPage();
+
       // Show each DOM id in the list.
       function show(list) {
         for (var i = 0; i < list.length; i++) {
@@ -141,17 +143,14 @@
       <script>
         $("#div_status_whitelisted a").click(function() {
           getCurrentTabInfo(function(info) {
-            extension_call("try_to_unwhitelist", {url: info.tab.url},
-                         function(success) {
-              if (success) {
-                // Reload the tab
-                chrome.tabs.update(info.tab.id, {url: info.tab.url});
-                window.close();
-              } else {
-                $("#div_status_whitelisted").
-                  replaceWith(translate("disabled_by_filter_lists"));
-              }
-            });
+            if (BG.try_to_unwhitelist(info.tab.url)) {
+              // Reload the tab
+              chrome.tabs.update(info.tab.id, {url: info.tab.url});
+              window.close();
+            } else {
+              $("#div_status_whitelisted").
+                replaceWith(translate("disabled_by_filter_lists"));
+            }
           });
         });
       </script>
