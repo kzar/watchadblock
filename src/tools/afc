@@ -47,7 +47,8 @@ function shipit() {
       exit 1
     }
 
-    rm -f ../paid_adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r paid_adblockforchrome.zip trunk/)
+    echo Zipping...
+    rm -f ../paid_adblockforchrome.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r paid_adblockforchrome.zip trunk/ >/dev/null )
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
