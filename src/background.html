@@ -47,6 +47,16 @@
         _myfilters.update();
       }
 
+      // Removes a custom filter entry.
+      // Inputs: filter:string line of text to remove from custom filters.
+      remove_custom_filter = function(filter) {
+        // Make sure every filter is preceded and followed by at least one \n,
+        // then find and remove the filter.
+        var text = "\n" + utils.get_custom_filters_text({}) + "\n";
+        text = text.replace("\n" + filter + "\n", "\n");
+        utils.set_custom_filters_text({filters: text.trim()});
+      }
+
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
       // Returns: null if succesfull, otherwise an exception
@@ -63,16 +73,6 @@
           return ex;
         }
       }
-      // Removes a custom filter entry.
-      // Inputs: filter:string line of text to remove from custom filters.
-      utils.remove_custom_filter = function(options) {
-        // Make sure every filter is preceded and followed by at least one \n,
-        // then find and remove the filter.
-        var text = "\n" + utils.get_custom_filters_text({}) + "\n";
-        text = text.replace("\n" + options.filter + "\n", "\n");
-        utils.set_custom_filters_text({filters: text.trim()});
-      }
-
       // Get the custom filters text as a \n-separated text string.
       utils.get_custom_filters_text = function(options) {
         return utils.storage_get({key: 'custom_filters', default_value: ''});

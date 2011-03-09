@@ -102,6 +102,8 @@
       }
     </style>
     <script type="text/javascript">
+      var BG = chrome.extension.getBackgroundPage();
+
       var domain = '';
       var resources = {};
       var domaindata;
@@ -194,9 +196,8 @@
         $("#resourceslist tbody").append(rows.join(''));
         $(".deleterule").click(function() {
           var filter = $(this).prev().text().substring(1);
-          extension_call('remove_custom_filter', {filter: filter}, function() {
-            document.location.reload();
-          });
+          BG.remove_custom_filter(filter);
+          document.location.reload();
         });
       };
 
@@ -465,8 +466,7 @@
                                 filter: SAFARI ? "@@elemhiderule" : noHideRule};
             
             // Load all stored resources
-            var bg = chrome.extension.getBackgroundPage();
-            var cache = bg.utils.show_resourceblocker.cached_resources;
+            var cache = BG.utils.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
             // Convert all resources to the object type
             if (loaded_resources)
