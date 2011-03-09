@@ -171,8 +171,7 @@
       });
 
       function saveFilters() {
-        var text = $("#txtFiltersAdvanced").val();
-        extension_call("set_custom_filters_text", { filters: text });
+        BG.set_custom_filters_text($("#txtFiltersAdvanced").val());
 
         $("#divAddNewFilter").slideDown();
         $("#txtFiltersAdvanced").attr("disabled", "disabled");

@@ -34,7 +34,7 @@
 
           custom_filters.splice(i, 1); // Remove this whitelist filter text
           var new_text = custom_filters.join('\n');
-          utils.set_custom_filters_text({filters: new_text});
+          set_custom_filters_text(new_text);
           return true;
         }
         return false;
@@ -52,6 +52,14 @@
         return utils.storage_get({key: 'custom_filters', default_value: ''});
       }
 
+      // Set the custom filters to the given \n-separated text string, and 
+      // rebuild the filterset.
+      // Inputs: filters:string the new filters.
+      set_custom_filters_text = function(filters) {
+        utils.storage_set({key: 'custom_filters', value: filters});
+        _myfilters.update();
+      }
+
       // Removes a custom filter entry.
       // Inputs: filter:string line of text to remove from custom filters.
       remove_custom_filter = function(filter) {
@@ -59,7 +67,7 @@
         // then find and remove the filter.
         var text = "\n" + get_custom_filters_text() + "\n";
         text = text.replace("\n" + filter + "\n", "\n");
-        utils.set_custom_filters_text({filters: text.trim()});
+        set_custom_filters_text(text.trim());
       }
 
       // Add a new custom filter entry.
@@ -70,21 +78,13 @@
         try {
           if (FilterNormalizer.normalizeLine(options.filter)) {
             custom_filters = custom_filters + '\n' + options.filter;
-            utils.set_custom_filters_text({filters: custom_filters });
+            set_custom_filters_text(custom_filters);
             return null;
           }
           return "This filter is unsupported";
         } catch(ex) {
           return ex;
         }
-      }
-
-      // Set the custom filters to the given \n-separated text string, and 
-      // rebuild the filterset.
-      // Inputs: filters:string the new filters.
-      utils.set_custom_filters_text = function(options) {
-        utils.storage_set({key: 'custom_filters', value: options.filters});
-        _myfilters.update();
       }
 
       // STORAGE
