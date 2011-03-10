@@ -10,10 +10,6 @@
     <script src="filtering/myfilters.js"></script>
     <script src="filtering/filternormalizer.js"></script>
     <script>
-      var utils = {};
-    </script>
-    <script>
-
 
       // UNWHITELISTING
 
@@ -137,17 +133,17 @@
         }
       }
   
-
-
       // Fetch the latest version of all subscribed lists now.
       update_subscriptions_now = function() {
         _myfilters.freshen_async(true);
       }
+
       // Returns map from id to subscription object.  See filters.js for 
       // description of subscription object.
       get_subscriptions_minus_text = function() {
         return _myfilters.get_subscriptions_minus_text();
       }
+
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
@@ -165,7 +161,6 @@
       unsubscribe = function(id, del) {
         _myfilters.unsubscribe(id, del);
       }
-
 
       // Get interesting information about the current tab.
       // Inputs:
@@ -213,10 +208,6 @@
         });
       }
 
-
-
-
-
       // Returns true if anything in whitelist matches the_domain.
       //   url: the url of the page
       //   type: one out of ElementTypes, default ElementTypes.document,
@@ -239,10 +230,66 @@
         return false;
       }
 
+      if (!SAFARI) {
+        // Set the button image and context menus according to the URL 
+        // of the current tab.
+        updateButtonUIAndContextMenus = function() {
+          getCurrentTabInfo(function(info) {
+
+            var features = get_optional_features();
+            var context_disabled = !features.show_context_menu_items.is_enabled;
+            var paused = localStorage.getItem('adblock_is_paused');
+
+            chrome.contextMenus.removeAll();
+
+            if (!(paused || context_disabled || 
+                  info.whitelisted || info.disabled_site)) {
+              chrome.contextMenus.create({
+                title: translate("block_this_ad"),
+                contexts:["all"], 
+                onclick: function(info, tab) {
+                  var sender = { tab: tab };
+                  utils.emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{info: info}},
+                    sender
+                  );
+                }
+              });
+              chrome.contextMenus.create({
+                title: translate("block_an_ad_on_this_page"),
+                contexts:["all"], 
+                onclick: function(info, tab) {
+                  var sender = { tab: tab };
+                  utils.emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                    sender
+                  );
+                }
+              });
+            }
+
+            if (paused) {
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
+              // Show non-disabled icon on the installation-success page so it
+              // users see how it will normally look when deciding whether or
+              // not to hide it.
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
+            } else if (info.disabled_site) {
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+            } else if (info.whitelisted) {
+              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+            } else {
+              chrome.browserAction.setIcon({path:"img/icon19.png"});
+            }
+          });
+        }
+      }
 
 
+      // UTILS
 
-
+      var utils = {};
 
       // Add a new custom filter entry.
       // Inputs: filter:string line of text to add to custom filters.
@@ -372,61 +419,10 @@
 
 
 
-
-      if (!SAFARI) {
-        // Set the button image and context menus according to the URL 
-        // of the current tab.
-        function updateButtonUIAndContextMenus() {
-          getCurrentTabInfo(function(info) {
-
-            var features = get_optional_features();
-            var context_disabled = !features.show_context_menu_items.is_enabled;
-            var paused = localStorage.getItem('adblock_is_paused');
-
-            chrome.contextMenus.removeAll();
-
-            if (!(paused || context_disabled || 
-                  info.whitelisted || info.disabled_site)) {
-              chrome.contextMenus.create({
-                title: translate("block_this_ad"),
-                contexts:["all"], 
-                onclick: function(info, tab) {
-                  var sender = { tab: tab };
-                  utils.emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{info: info}},
-                    sender
-                  );
-                }
-              });
-              chrome.contextMenus.create({
-                title: translate("block_an_ad_on_this_page"),
-                contexts:["all"], 
-                onclick: function(info, tab) {
-                  var sender = { tab: tab };
-                  utils.emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-                    sender
-                  );
-                }
-              });
-            }
-
-            if (paused) {
-              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
-            } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
-              // Show non-disabled icon on the installation-success page so it
-              // users see how it will normally look when deciding whether or
-              // not to hide it.
-              chrome.browserAction.setIcon({path:"img/icon19.png"});
-            } else if (info.disabled_site) {
-              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
-            } else if (info.whitelisted) {
-              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
-            } else {
-              chrome.browserAction.setIcon({path:"img/icon19.png"});
-            }
-          });
-        }
+      // BROWSER ACTION AND CONTEXT MENU UPDATES
+      (function() {
+        if (SAFARI)
+          return;
 
         //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
         //Otherwise the extension doesn't work (e.g. doesn't block ads)
@@ -439,8 +435,7 @@
             updateButtonUIAndContextMenus();
           });
         }
-      }
-
+      })();
 
       // BROWSER ACTION BADGE
       (function() {
