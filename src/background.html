@@ -287,37 +287,128 @@
       }
 
 
-      // UTILS
+      // These functions are usually only called by content scripts, via
+      // extension_call().
+      var utils = {
 
-      var utils = {};
-
-      // Add a new custom filter entry.
-      // Inputs: filter:string line of text to add to custom filters.
-      // Returns: null if succesfull, otherwise an exception
-      utils.add_custom_filter = function(options) {
-        var custom_filters = get_custom_filters_text();
-        try {
-          if (FilterNormalizer.normalizeLine(options.filter)) {
-            custom_filters = custom_filters + '\n' + options.filter;
-            set_custom_filters_text(custom_filters);
-            return null;
+        // Add a new custom filter entry.
+        // Inputs: filter:string line of text to add to custom filters.
+        // Returns: null if succesfull, otherwise an exception
+        add_custom_filter: function(options) {
+          var custom_filters = get_custom_filters_text();
+          try {
+            if (FilterNormalizer.normalizeLine(options.filter)) {
+              custom_filters = custom_filters + '\n' + options.filter;
+              set_custom_filters_text(custom_filters);
+              return null;
+            }
+            return "This filter is unsupported";
+          } catch(ex) {
+            return ex;
           }
-          return "This filter is unsupported";
-        } catch(ex) {
-          return ex;
-        }
-      }
+        },
 
-      // Return the contents of a local file.
-      // Inputs: file:string - the file relative address, eg "js/foo.js".
-      // Returns: the content of the file.
-      utils.readfile = function(options) {
-        // A bug in jquery prevents local files from being read, so use XHR.
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", chrome.extension.getURL(options.file), false);
-        xhr.send();
-        return xhr.responseText;
-      }
+        // Return the contents of a local file.
+        // Inputs: file:string - the file relative address, eg "js/foo.js".
+        // Returns: the content of the file.
+        readfile: function(options) {
+          // A bug in jquery prevents local files from being read, so use XHR.
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", chrome.extension.getURL(options.file), false);
+          xhr.send();
+          return xhr.responseText;
+        },
+
+        do_not_show_youtube_help_msg: function(options) {
+          set_optional_feature("show_youtube_help_msg", false);
+        },
+
+        // TODO: make better.
+        // Inputs: domain:string the domain of the calling frame.
+        //         include_filters:bool true if hide and block filters should be
+        //           included
+        get_content_script_data: function(options, sender) {
+          var whitelisted = page_is_whitelisted(sender.tab.url);
+          var features = get_optional_features();
+          var result = {
+            page_is_whitelisted: whitelisted,
+            adblock_is_paused: localStorage.getItem('adblock_is_paused'),
+            features: features
+          };
+          if (whitelisted)
+            return result;
+          // If in debug mode, send filters to adblock.js to print css info.
+          // Normally only adblock_start asks to include_filters.
+          if (!options.include_filters && !features.debug_logging.is_enabled)
+            return result;
+
+          // Not whitelisted, and running on adblock_start.  We have two tasks:
+          // apply CSS-hiding rules, and send Chrome a filterset.
+
+          // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+          // when not cached, it takes about 100ms.  So more caching would be good.  The
+          // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+          // should be able to turn up the fifocache size by a lot.  have the fifocache log
+          // how big each new entry is, to verify this.
+          if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
+            var global_hide = _myfilters.global.cached_getSelectors;
+            var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+            result.selectors = global_hide.concat(nonglobal_hide);
+          }
+          // Chrome needs the blocking filters in the content script until a
+          // synchronous background communication API comes along.
+          if (!SAFARI) {
+            var global_block = _myfilters.global.cached_blockFiltersText;
+            var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
+            result.block = global_block + nonglobal_block.join('\n');
+          }
+
+          return result;
+        },
+
+        // Called within content scripts, by broadcast_channel.js's 
+        // broadcast(), to bounce messages back to all listeners
+        emit_broadcast: function(request) {
+          log("Broadcasting from background to users " + request.fn);
+          $.each(ports, function(i, port) {
+            port.postMessage(request);
+          });
+        },
+
+        // Called by page_broadcast() to bounce messages back to all 
+        // listeners on the same page as the caller.
+        emit_page_broadcast: function(request, sender) {
+          log("Broadcasting from background (to page " + sender.tab.id +
+              ") to users " + request.fn);
+          $.each(ports, function(i, port) {
+            if (port.sender.tab.id == sender.tab.id)
+              port.postMessage(request);
+          });
+        },
+
+        // Will open the resource blocking tab. 
+        // Input:
+        //   resources: array of resource strings; 
+        //              see resourceblock.html for format
+        show_resourceblocker: function(options, sender) {
+          var url = sender.tab.url.replace(/\#.*/, '');
+          utils.show_resourceblocker.cached_resources.set(url, options.resources);
+          chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+        },
+
+        // Opens a popup that subscribes to a new list
+        // Must be here because other pages cannot open popups...
+        // Inputs: searchquery: the search part of the abp: url
+        subscribe_popup: function(options) {
+          window.open(chrome.extension.getURL('pages/subscribe.html?' +
+                      options.searchquery), "_blank", 
+                      'scrollbars=0,location=0,resizable=0,width=450,height=140');
+        }
+
+      }; // var utils
+
+      // This stores resources used by resourceblock.html
+      utils.show_resourceblocker.cached_resources = new FifoCache(5);
 
       if (SAFARI) {
         // Return chrome.i18n._getL10nData() for content scripts who cannot
@@ -327,95 +418,19 @@
         }
       }
 
-      utils.do_not_show_youtube_help_msg = function(options) {
-        set_optional_feature("show_youtube_help_msg", false);
-      }
-
-      // TODO: make better.
-      // Inputs: domain:string the domain of the calling frame.
-      //         include_filters:bool true if hide and block filters should be
-      //           included
-      utils.get_content_script_data = function(options, sender) {
-        var whitelisted = page_is_whitelisted(sender.tab.url);
-        var features = get_optional_features();
-        var result = {
-          page_is_whitelisted: whitelisted,
-          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-          features: features
-        };
-        if (whitelisted)
-          return result;
-        // If in debug mode, send filters to adblock.js to print css info.
-        // Normally only adblock_start asks to include_filters.
-        if (!options.include_filters && !features.debug_logging.is_enabled)
-          return result;
-
-        // Not whitelisted, and running on adblock_start.  We have two tasks:
-        // apply CSS-hiding rules, and send Chrome a filterset.
-
-        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
-        // when not cached, it takes about 100ms.  So more caching would be good.  The
-        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-        // should be able to turn up the fifocache size by a lot.  have the fifocache log
-        // how big each new entry is, to verify this.
-        if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-          var global_hide = _myfilters.global.cached_getSelectors;
-          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
-          result.selectors = global_hide.concat(nonglobal_hide);
-        }
-        // Chrome needs the blocking filters in the content script until a
-        // synchronous background communication API comes along.
-        if (!SAFARI) {
-          var global_block = _myfilters.global.cached_blockFiltersText;
-          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
-          result.block = global_block + nonglobal_block.join('\n');
-        }
-
-        return result;
-      }
-
-      // Called within content scripts, by broadcast_channel.js's 
-      // broadcast(), to bounce messages back to all listeners
-      utils.emit_broadcast = function(request) {
-        log("Broadcasting from background to users " + request.fn);
-        $.each(ports, function(i, port) {
-          port.postMessage(request);
+      // Broadcast ports for utils.emit_[page_]broadcast
+      (function() {
+        ports = [];
+        chrome.extension.onConnect.addListener(function(port) {
+          port.onDisconnect.addListener(function(disconnected_port) {
+            var where = ports.indexOf(disconnected_port);
+            if (where != -1) {
+              ports.splice(where, 1);
+            }
+          });
+          ports.push(port);
         });
-      }
-
-      // Called by page_broadcast() to bounce messages back to all 
-      // listeners on the same page as the caller.
-      utils.emit_page_broadcast = function(request, sender) {
-        log("Broadcasting from background (to page " + sender.tab.id +
-            ") to users " + request.fn);
-        $.each(ports, function(i, port) {
-          if (port.sender.tab.id == sender.tab.id)
-            port.postMessage(request);
-        });
-      }
-
-      // Will open the resource blocking tab. 
-      // Input:
-      //   resources: array of resource strings; 
-      //              see resourceblock.html for format
-      utils.show_resourceblocker = function(options, sender) {
-        var url = sender.tab.url.replace(/\#.*/, '');
-        utils.show_resourceblocker.cached_resources.set(url, options.resources);
-        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
-      }
-      // This stores resources used by resourceblock.html
-      utils.show_resourceblocker.cached_resources = new FifoCache(5);
-
-      // NEW FILTERS
-
-      // Opens a popup that subscribes to a new list
-      // Must be here because other pages cannot open popups...
-      // Inputs: searchquery: the search part of the abp: url
-      utils.subscribe_popup = function(options) {
-        window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                    options.searchquery), "_blank", 
-                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
-      }
+      })();
 
       // UTILS DISPATCH
       (function() {
@@ -471,21 +486,6 @@
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
       })();
-
-      // PORTS FOR BROADCASTS
-      (function() {
-        ports = [];
-        chrome.extension.onConnect.addListener(function(port) {
-          port.onDisconnect.addListener(function(disconnected_port) {
-            var where = ports.indexOf(disconnected_port);
-            if (where != -1) {
-              ports.splice(where, 1);
-            }
-          });
-          ports.push(port);
-        });
-      })();
-
 
       if (get_optional_features().debug_logging.is_enabled)
         log = function(text) { console.log(text); };
