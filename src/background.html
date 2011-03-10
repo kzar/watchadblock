@@ -417,6 +417,15 @@
                     'scrollbars=0,location=0,resizable=0,width=450,height=140');
       }
 
+      // UTILS DISPATCH
+      (function() {
+        chrome.extension.onRequest.addListener(
+          function(request, sender, sendResponse) { 
+            var result = utils[request.fn](request.options, sender);
+            sendResponse(result);
+          }
+        );
+      })();
 
 
       // BROWSER ACTION AND CONTEXT MENU UPDATES
@@ -463,29 +472,23 @@
         }
       })();
 
-
-
-      ports = [];
-      chrome.extension.onConnect.addListener(function(port) {
-        port.onDisconnect.addListener(function(disconnected_port) {
-          var where = ports.indexOf(disconnected_port);
-          if (where != -1) {
-            ports.splice(where, 1);
-          }
+      // PORTS FOR BROADCASTS
+      (function() {
+        ports = [];
+        chrome.extension.onConnect.addListener(function(port) {
+          port.onDisconnect.addListener(function(disconnected_port) {
+            var where = ports.indexOf(disconnected_port);
+            if (where != -1) {
+              ports.splice(where, 1);
+            }
+          });
+          ports.push(port);
         });
-        ports.push(port);
-      });
+      })();
+
 
       if (get_optional_features().debug_logging.is_enabled)
         log = function(text) { console.log(text); };
-
-      chrome.extension.onRequest.addListener(
-        function(request, sender, sendResponse) { 
-          var result = utils[request.fn](request.options, sender);
-          sendResponse(result);
-        }
-      );
-
       
       _myfilters = new MyFilters();
       _myfilters.updated(function() {
@@ -587,21 +590,21 @@
         }, false);
       }
 
-
-
-      // OLD STYLE WHITELIST
-      //   TODO: Remove this when you are convinced everyone has updated their
-      //   version of AdBlock... Say in March or April
-      if (storage_get('whitelist')) {
-        var old_style_whitelist = storage_get('whitelist', []);
-        for (var i=0; i<old_style_whitelist.length; i++) {
-          var website = old_style_whitelist[i];
-          if (website[0] == '.')
-            website = '*' + website;
-          utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+      // TEMP: OLD STYLE WHITELIST
+      (function() {
+        //   TODO: Remove this when you are convinced everyone has updated their
+        //   version of AdBlock... Say in March or April
+        if (storage_get('whitelist')) {
+          var old_style_whitelist = storage_get('whitelist', []);
+          for (var i=0; i<old_style_whitelist.length; i++) {
+            var website = old_style_whitelist[i];
+            if (website[0] == '.')
+              website = '*' + website;
+            utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+          }
+          localStorage.removeItem('whitelist');
         }
-        localStorage.removeItem('whitelist');
-      }
+      })();
     </script>
   </head>
   <body>
