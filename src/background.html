@@ -387,14 +387,21 @@
         },
 
         // Will open the resource blocking tab. 
-        // Input:
-        //   resources: array of resource strings; 
-        //              see resourceblock.html for format
-        show_resourceblocker: function(options, sender) {
-          var url = sender.tab.url.replace(/\#.*/, '');
-          utils.show_resourceblocker.cached_resources.set(url, options.resources);
-          chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
-        },
+        // Input: resources: array of resource strings; 
+        //                   see resourceblock.html for format
+        show_resourceblocker: (function() {
+          // Stores resources used by resourceblock.html
+          var _cached_resources = new FifoCache(5);
+
+          var theFunction = function(options, sender) {
+            var url = sender.tab.url.replace(/\#.*/, '');
+            _cached_resources.set(url, options.resources);
+            chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+          };
+          theFunction.cached_resources = _cached_resources; // make it public
+
+          return theFunction;
+        })(),
 
         // Opens a popup that subscribes to a new list
         // Must be here because other pages cannot open popups...
@@ -406,9 +413,6 @@
         }
 
       }; // var utils
-
-      // This stores resources used by resourceblock.html
-      utils.show_resourceblocker.cached_resources = new FifoCache(5);
 
       if (SAFARI) {
         // Return chrome.i18n._getL10nData() for content scripts who cannot
