@@ -24,11 +24,7 @@ function register_broadcast_listener(function_name, listener) {
   dispatcher[function_name] = listener;
 }
 
-function broadcast(fn, options) {
-  extension_call('emit_broadcast', {fn:fn, options:options});
-}
-
-// Like broadcast, but only send to content scripts on our tab.
+// Broadcast to content scripts on our tab.
 function page_broadcast(fn, options) {
   extension_call('emit_page_broadcast', {fn:fn, options:options});
 }

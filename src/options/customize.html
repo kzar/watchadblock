@@ -33,7 +33,7 @@
   <script type="text/javascript" src="../filtering/filtertypes.js"></script>
   <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
-    register_broadcast_listener('filters_updated', function() {
+    BG.on_filters_updated(function() {
       if ($("#txtFiltersAdvanced").attr("disabled") == false)
         return;
       $("#txtFiltersAdvanced").val(BG.get_custom_filters_text());

@@ -43,6 +43,11 @@
         _myfilters.update();
       }
 
+      // Whenever filters are updated, call callback().
+      on_filters_updated = function(callback) {
+        _myfilters.updated(callback);
+      }
+
       // Get the custom filters text as a \n-separated text string.
       get_custom_filters_text = function() {
         return storage_get('custom_filters', '');
@@ -366,15 +371,6 @@
           return result;
         },
 
-        // Called within content scripts, by broadcast_channel.js's 
-        // broadcast(), to bounce messages back to all listeners
-        emit_broadcast: function(request) {
-          log("Broadcasting from background to users " + request.fn);
-          $.each(ports, function(i, port) {
-            port.postMessage(request);
-          });
-        },
-
         // Called by page_broadcast() to bounce messages back to all 
         // listeners on the same page as the caller.
         emit_page_broadcast: function(request, sender) {
@@ -495,13 +491,6 @@
         log = function(text) { console.log(text); };
       
       _myfilters = new MyFilters();
-      _myfilters.updated(function() {
-        utils.emit_broadcast({
-          fn: 'filters_updated', 
-          options: {}
-        });
-      });
-
 
       // If the user has just installed, make a note of it.  
       function note_install() {

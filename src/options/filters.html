@@ -95,7 +95,7 @@
         redisplay_subscription_update_times();
       }
 
-      register_broadcast_listener('filters_updated', function() {
+      BG.on_filters_updated(function() {
         refresh_subscription_view();
       });
 
