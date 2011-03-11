@@ -373,14 +373,30 @@
 
         // Called by page_broadcast() to bounce messages back to all 
         // listeners on the same page as the caller.
-        emit_page_broadcast: function(request, sender) {
-          log("Broadcasting from background (to page " + sender.tab.id +
-              ") to users " + request.fn);
-          $.each(ports, function(i, port) {
-            if (port.sender.tab.id == sender.tab.id)
-              port.postMessage(request);
+        emit_page_broadcast: (function() {
+          // Private list of connected ports for emit_page_broadcast()
+          var broadcast_ports = [];
+          chrome.extension.onConnect.addListener(function(port) {
+            port.onDisconnect.addListener(function(disconnected_port) {
+              var where = broadcast_ports.indexOf(disconnected_port);
+              if (where != -1) {
+                broadcast_ports.splice(where, 1);
+              }
+            });
+            broadcast_ports.push(port);
           });
-        },
+
+          // The emit_page_broadcast() function
+          var theFunction = function(request, sender) {
+            log("Broadcasting from background (to page " + sender.tab.id +
+                ") to users " + request.fn);
+            $.each(broadcast_ports, function(i, port) {
+              if (port.sender.tab.id == sender.tab.id)
+                port.postMessage(request);
+            });
+          };
+          return theFunction;
+        })(),
 
         // Will open the resource blocking tab. 
         // Input: resources: array of resource strings; 
@@ -417,20 +433,6 @@
           return chrome.i18n._getL10nData();
         }
       }
-
-      // Broadcast ports for utils.emit_[page_]broadcast
-      (function() {
-        ports = [];
-        chrome.extension.onConnect.addListener(function(port) {
-          port.onDisconnect.addListener(function(disconnected_port) {
-            var where = ports.indexOf(disconnected_port);
-            if (where != -1) {
-              ports.splice(where, 1);
-            }
-          });
-          ports.push(port);
-        });
-      })();
 
       // UTILS DISPATCH
       (function() {
