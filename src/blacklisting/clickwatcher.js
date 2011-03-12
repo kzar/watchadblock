@@ -27,7 +27,7 @@ ClickWatcher.prototype.show = function() {
       'font-size': '12px',
     }).
     dialog({
-      zIndex: 10000000, 
+      zIndex: 10000000,
       position: [50, 50],
       height: 120,
       minHeight: 50,
@@ -61,7 +61,7 @@ ClickWatcher.prototype._onClose = function() {
     this._fire('click', this._clicked_element);
   }
 }
-ClickWatcher.prototype._build_ui = function() { 
+ClickWatcher.prototype._build_ui = function() {
   var that = this;
 
   function click_catch_this() {
@@ -75,38 +75,25 @@ ClickWatcher.prototype._build_ui = function() {
   }
 
 
-  // Most things can be blacklisted with a simple click handler.
-  // deprecated in r1921
-  //$("*").
-  //  not("body,html").         // Don't remove the body that the UI lives on!
-  //  not("embed,object").      // Dealt with separately below
-  //  click(click_catch_this);  // Everybody else, blacklist upon click
-  var body_overlay = new Overlay({
-    dom_element: $("body"),
-    placeholders: "iframe,embed,object",
-    click_handler: click_catch
-  });
-  body_overlay.enable();
-
   // Send all objects and embeds to the background, and send any z-index
   // crazies to a lower z-index.  I'd do it here, but objects within iframes
   // will still block our click catchers over the iframes, so we have to tell
   // all subframes to do it too.
-  page_broadcast('send_content_to_back', {});
+  var opts = {
+    selectors: ':not(#ui-adblock-clickwatcher)'
+  };
+  page_broadcast('send_content_to_back', opts);
 
   // Since iframes that will get clicked will almost always be an entire
   // ad, and I *really* don't want to figure out inter-frame communication
-  // so that the blacklist UI's slider works between multiple layers of 
+  // so that the blacklist UI's slider works between multiple layers of
   // iframes... just overlay iframes and treat them as a giant object.
-  // deprecated in r1921
-  //$("object,embed,iframe,[onclick]:empty").
-  //    each(function(i, dom_element) {
-  //  var killme_overlay = new Overlay({
-  //    dom_element: dom_element,
-  //    click_handler: click_catch
-  //  });
-  //  killme_overlay.display();
-  //});
+  var body_overlay = new Overlay({
+    dom_element: $("body"),
+    placeholders: "iframe,embed,object:not(:has(object)|:has(embed)),[onclick]:empty",
+    click_handler: click_catch
+  });
+  body_overlay.enable();
 
   var btn = {};
   btn[translate("buttoncancel")] = function() { page.dialog('close'); }
@@ -120,15 +107,14 @@ ClickWatcher.prototype._build_ui = function() {
       'font-size': '12px',
     }).
     dialog({
-      zIndex:10000000, 
+      zIndex:10000000,
       position:[50, 50],
       width:400,
       minHeight:125,
       autoOpen: false,
       title: translate("blockanadtitle"),
       buttons: btn,
-      close: function() { 
-        //$("*").unbind('click', click_catch_this);
+      close: function() {
         Overlay.removeAll();
         that._onClose();
         page.remove();
@@ -138,6 +124,7 @@ ClickWatcher.prototype._build_ui = function() {
       }
     });
     page.dialog("widget").
+      attr("id", "ui-adblock-clickwatcher").
       css("position", "fixed").
       bind("mouseenter",function() {
         body_overlay.disable();
@@ -152,7 +139,7 @@ ClickWatcher.prototype._build_ui = function() {
       tabIndex: -1,
       css: { "font-size": "smaller !important" },
       text: translate("advanced_show_url_list"),
-      click: function(e) { 
+      click: function(e) {
         // GLOBAL_collect_resources is created by adblock_start.js
         var resources = Object.keys(GLOBAL_collect_resources);
         extension_call("show_resourceblocker", {resources: resources});

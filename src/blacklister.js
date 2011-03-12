@@ -108,7 +108,7 @@ register_broadcast_listener('send_content_to_back', function(options) {
 
   // Also, anybody with a z-index over 1 million is going to get in our
   // way.  Decrease it.
-  $('[style*="z-index"]').
+  $(options.selectors || '[style*="z-index"]').
     filter(function(i) {
         return $(this).css('z-index') >= 1000000;
       }).
