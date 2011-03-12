@@ -726,5 +726,31 @@
             "example": "AdBlock Options"
          }
       }
-   }
+   },
+   "pause_adblock": {
+    "message": "暂停AdBlock",
+    "description": "Menu entry to pause AdBlock."
+  },
+  "dont_run_on_this_page": {
+    "message": "不在本页上运行AdBlock",
+    "description": "Menu entry to whitelist a page"
+  },
+  "dont_run_on_domain": {
+    "message": "不在$domain$上运行AdBlock",
+    "description": "Menu entry whitelisting the domain of the current tab.",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "www.google.com"
+      }
+    }
+  },
+  "options": {
+    "message": "选项",
+    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+  },
+  "hide_this_button": {
+    "message": "隐藏此按钮",
+    "description": "Toolbar button menu entry to hide the AdBlock button"
+  }
 }
