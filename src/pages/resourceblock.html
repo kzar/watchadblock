@@ -110,7 +110,6 @@
       // Creates the table that shows all blockable items
       function generateTable() {
         var local_filterset = FilterSet.fromText(domaindata.block, false, false);
-        var _limited_to_domain = local_filterset.limitedToDomain(domain);
         delete domaindata;
 
         // Trunkates a resource URL if it is too long
@@ -159,7 +158,7 @@
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
           if (!matchingfilter)
-            matchingfilter = _limited_to_domain.matches(i, resources[i].type, domain, true);
+            matchingfilter = local_filterset.matches(i, resources[i].type, domain, true);
 
           var type = {sort:3, name:undefined};
           if (matchingfilter)
@@ -308,7 +307,7 @@
       // do some things, instead of looking at 'LOADING'
       function finally_it_has_loaded_its_stuff() {
         if (domaindata.features.debug_logging.is_enabled)
-          $(".onlyifdebug").show()
+          $(".onlyifdebug").show();
         // Create the table of resources and make it sortable
         generateTable();
         $("#resourceslist").tablesorter({
@@ -446,8 +445,7 @@
 
         var opts = {
           domain: domain,
-          include_filters: true,
-          is_top_frame: true
+          include_filters: true
         };
         extension_call('get_content_script_data', opts, function(data) {
           delete data.selectors;
