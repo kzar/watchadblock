@@ -411,6 +411,24 @@
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
+
+        (function() {
+          // April 1th, 2011
+          // Just like above, but easier to delete afterwards.
+          var today = new Date();
+          if (today.getDate() == 1 && today.getMonth() == 3 && today.getFullYear() == 2011) {
+            if (!localStorage.getItem('saw_foolsday2011')) {
+              chrome.browserAction.setTitle({title:"Just released: AdBlock Freedom!  Click for more info."});
+              chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
+              chrome.browserAction.setBadgeText({text:"\u2022"});
+            }
+          } 
+          else {
+            // Pre 4/1 this does nothing; post 4/1 this tidies up
+            localStorage.removeItem("saw_foolsday2011");
+          }
+          // <End of April 1th code>
+        })();
       })();
 
 
