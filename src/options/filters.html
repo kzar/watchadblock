@@ -1,5 +1,27 @@
+  <style type="text/css">
+    #subscriptionlist {
+      margin-top: 10px;
+    }
+    #subscriptionlist b {
+      margin-left: 20px;
+      margin-top: 13px;
+      display: block;
+    }
+    #subscriptionlist list:not(:empty) {
+      display: block;
+    }
+    .listgroup i {
+      font-size: 12px;
+    }
+    select {
+      width: 100px;
+    }
+    select + select, select + select + input {
+      display: none;
+    }
+  </style>
   <script>
-      var removeFlashMsgTimeout;
+/*      var removeFlashMsgTimeout;
       function flash(message, duration) {
         $("#subscription_message").text(message);
 
@@ -293,9 +315,129 @@
         //translation
         localizePage();
       });
-
+*/
   </script>
+  
+  <script>
+    $(function() {
+      var bg = chrome.extension.getBackgroundPage();
+      var subscriptions = bg.utils.get_subscriptions_minus_text();
+      var lists = {
+        "russian": {
+          url: subscriptions["russian"].url,
+          name: subscriptions["russian"].name,
+          language: "ru",
+          requires: subscriptions["russian"].requiresList
+        },
+        "easylist_plus_spanish": {
+          url: subscriptions["easylist_plus_spanish"].url,
+          name: subscriptions["easylist_plus_spanish"].name,
+          language: "es",
+          requires: subscriptions["easylist_plus_spanish"].requiresList
+        },
+        "easylist_plus_french": {
+          url: subscriptions["easylist_plus_french"].url,
+          name: subscriptions["easylist_plus_french"].name,
+          language: "fr",
+          requires: subscriptions["easylist_plus_french"].requiresList
+        },
+        "easylist_plus_german": {
+          url: subscriptions["easylist_plus_german"].url,
+          name: subscriptions["easylist_plus_german"].name,
+          language: "de",
+          requires: subscriptions["easylist_plus_german"].requiresList
+        },
+        "italian": {
+          url: subscriptions["italian"].url,
+          name: subscriptions["italian"].name,
+          language: "it",
+          requires: subscriptions["italian"].requiresList
+        },
+        "japanese": {
+          url: subscriptions["japanese"].url,
+          name: subscriptions["japanese"].name,
+          language: "ja",
+          requires: subscriptions["japanese"].requiresList
+        },
+        "easylist_plun_korean": {
+          url: subscriptions["easylist_plun_korean"].url,
+          name: subscriptions["easylist_plun_korean"].name,
+          language: "ko",
+          requires: subscriptions["easylist_plun_korean"].requiresList
+        },
+        "dutch": {
+          url: subscriptions["dutch"].url,
+          name: subscriptions["dutch"].name,
+          language: "nl",
+          requires: subscriptions["dutch"].requiresList
+        },
+        "easylist_plus_polish": {
+          url: subscriptions["easylist_plus_polish"].url,
+          name: subscriptions["easylist_plus_polish"].name,
+          language: "pl",
+          requires: subscriptions["easylist_plus_polish"].requiresList
+        },
+        "chinese": {
+          url: subscriptions["chinese"].url,
+          name: subscriptions["chinese"].name,
+          language: "zh",
+          requires: subscriptions["chinese"].requiresList
+        },
+      };//TODO: ADD MORE
 
+      
+      var language = navigator.language.match(/^([a-z]+).*/i)[1];
+      if (language == "en") language = undefined;
+      for (var list in lists) {
+        // Set the language_specific list
+        if (lists[list].language == language)
+          $("#easylist").after("<list id='" + list + "'></list>");
+      }
+
+      resetLanguageLists();
+      resetPrivacyetceteraLists();
+      resetCustomLists();
+      
+      
+      // Set the properties of the language specific section
+      function resetLanguageLists() {
+        $("#new_language").append("<option disabled='disabled'></option>");
+        for (var list in lists) {
+          if (lists[list].language == undefined)
+            return;
+          if (subscriptions[list] && subscriptions[list].subscribed)
+            $("#language").append("<list id='" + list + "'></list>");
+          else
+            $("#new_language").append("<option>" + lists[list].language + "</option>");
+        }
+      }
+      // Set the properties of the section with privacy and other non-
+      // adblocking lists
+      function resetPrivacyetceteraLists() {
+        $("#new_type").append("<option disabled='disabled'></option>");
+        for (var list in lists) {
+          if (lists[list].type == undefined)
+            return;
+          if (subscriptions[list] && subscriptions[list].subscribed)
+            $("#privacyetcetera").append("<list id='" + list + "'></list>");
+          else
+            $("#new_type").append("<option>" + lists[list].language + "</option>");
+        }
+      }
+      // Set the properties of the section with custom lists
+      function resetCustomLists() {
+        for (var list in lists) {
+          if (lists[list].type || lists[list].language)
+            return;
+          if (subscriptions[list] && subscriptions[list].subscribed)
+            $("#customlists").append("<list id='" + list + "'></list>");
+        }
+      }
+
+      // Translate the page
+      localizePage();
+    });
+  </script>
   <div class="section">
     <h2 i18n="filterstabtitle"></h2>
     <p class="footnote" i18n="filterlistlink" i18n_replacement_el="footnotelink"></p>
@@ -303,23 +445,33 @@
        target="_new"></a>
     <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>
     <input type="button" id="btnUpdateNow" />
-    <div>
-      <div id="subscription_message" class="ok_message"></div>
-      <div id="filter_subscriptions" style="padding-left:30px;">
-      </div>
-      <div style="padding-left:34px;">
-        <span i18n="orenteraurl"></span>
-        <input id="txtNewSubscriptionUrl" style="width:300px;" type="text" />
-        <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
-      </div>
+    <div id="subscriptionlist">
+      <b>Recommended lists</b>
+      <list id="adblock_custom"></list>
+      <list id="easylist"></list>
+
+      <b>Other ad blocking lists for languages</b>
+      <div class="listgroup" id="language"></div>
+      Select one here: <select id="new_language"></select>
+      <select id="new_list_for_language"></select>
+      <input type="button" id="add_new_language" i18n_value="subscribebutton" />
+
+      <b>Lists intended for blocking other things than ads</b>
+      <div class="listgroup" id="privacyetcetera"></div>
+      Select one here: <select id="new_type"></select>
+      <select id="new_list_for_type"></select>
+      <input type="button" id="add_new_type" i18n_value="subscribebutton" />
+
+      <b>My own personal favorites</b>
+      <div class="listgroup" id="customlists"></div>
+      Enter one here: <input id="new_custom" style="width:300px;" type="text" />
+      <input type="button" id="add_new_custom" i18n_value="subscribebutton" />
     </div>
   </div>
-
+  
+  
   <div class="sneaky">
     <p>
-    <span i18n="subscribetoall"></span>
-    <input type="button" id="btnSubscribeAll" i18n_value="buttonok" />
-    <br/>
     <span i18n="subscribetonone"></span>
     <input type="button" id="btnUnsubscribeAll" i18n_value="buttonok" />
     <br/>
@@ -328,12 +480,6 @@
     </p>
     <script>
       $(function() {
-        $("#btnSubscribeAll").click(function() {
-          var inputs = $("input:not(:checked)", ".subscription");
-          for (var i=0; i<inputs.length; i++) {
-            window.setTimeout("subscribe('" + inputs[i].name + "')", 1000 * i);
-          }
-        });
         $("#btnUnsubscribeAll").click(function() {
           $("input", ".subscription").each(function(i, el) {
             if (el.checked == true) {
