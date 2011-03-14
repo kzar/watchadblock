@@ -40,7 +40,7 @@
 
       // Get the custom filters text as a \n-separated text string.
       get_custom_filters_text = function() {
-        return storage_get('custom_filters', '');
+        return storage_get('custom_filters') || '';
       }
 
       // Set the custom filters to the given \n-separated text string, and 
@@ -63,22 +63,22 @@
 
       // STORAGE
 
-      // Inputs: key:string, default_value:object. 
-      // Returns value or default_value if not stored.
-      storage_get = function(key, default_value) {
+      // Inputs: key:string.
+      // Returns value if key exists, else undefined.
+      storage_get = function(key) {
         var json = localStorage.getItem(key);
         if (json == null)
-          return default_value;
+          return undefined;
         try {
           return JSON.parse(json);
         } catch (e) {
           log("Couldn't parse json for " + key);
-          return default_value;
+          return undefined;
         }
       }
 
       // Inputs: key:string, value:object.
-      // Returns null.
+      // Returns undefined.
       storage_set = function(key, value) {
         localStorage.setItem(key, JSON.stringify(value));
       }
@@ -86,7 +86,7 @@
       // OPTIONAL FEATURES
 
       get_optional_features = function() {
-        var features = storage_get('optional_features', {});
+        var features = storage_get('optional_features') || {};
         var feature_names = [
           "debug_logging",
           "block_youtube",
@@ -498,7 +498,7 @@
 
       // If the user has just installed, make a note of it.  
       function note_install() {
-        if (storage_get('installed_at', 0) != 0)
+        if (storage_get('installed_at'))
           return;
         var now = new Date().getTime();
         storage_set('installed_at', now);
@@ -592,7 +592,7 @@
         //   TODO: Remove this when you are convinced everyone has updated their
         //   version of AdBlock... Say in March or April
         if (storage_get('whitelist')) {
-          var old_style_whitelist = storage_get('whitelist', []);
+          var old_style_whitelist = storage_get('whitelist') || [];
           for (var i=0; i<old_style_whitelist.length; i++) {
             var website = old_style_whitelist[i];
             if (website[0] == '.')
