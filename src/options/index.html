@@ -40,22 +40,6 @@
         } catch (ex) {} // silently fail
       }
 
-      // Check or uncheck each loaded DOM option checkbox according to the 
-      // user's saved settings.
-      function load_options() {
-        // Check or uncheck each option.
-        var features = BG.get_optional_features();
-        for (var name in features) {
-          $("#enable_" + name).
-            attr("checked", features[name].is_enabled);
-        }
-        $("input.feature:checkbox").change(function() {
-          var is_enabled = $(this).is(':checked');
-          var name = this.id.substring(7); // TODO: hack
-          BG.set_optional_feature(name, is_enabled);
-        });
-      }
-
       $(function() {
         $("#tabpages").tabs({ spinner: "", cache: true, cookie: {}  });
 
@@ -65,7 +49,6 @@
         
         //translation
         localizePage();
-
       });
     </script>
   </head>
