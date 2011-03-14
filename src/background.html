@@ -83,42 +83,39 @@
         localStorage.setItem(key, JSON.stringify(value));
       }
   
-      // OPTIONAL FEATURES
+      // OPTIONAL SETTINGS
 
-      get_optional_features = function() {
-        var features = storage_get('optional_features') || {};
-        var feature_names = [
-          "debug_logging",
-          "block_youtube",
-          "show_youtube_help_msg",
-          "show_google_search_text_ads",
-          "show_context_menu_items"
-          ];
-        for (var i = 0; i < feature_names.length; i++) {
-          var name = feature_names[i];
-          if (!features[name]) {
-            features[name] = { name: name };
-            switch (name) {
-              case "block_youtube":
-              case "show_youtube_help_msg":
-              case "show_context_menu_items":
-                features[name].is_enabled = true; // by default
-                break;
-              default:
-                features[name].is_enabled = false;
+      get_settings = function() {
+        (function() {
+          // temp code to convert to simpler options storage, installed 3/11
+          try {
+            if (!storage_get('optional_features'))
+              return;
+            var old_options = storage_get('optional_features');
+            var settings = {};
+            for (var name in old_options) {
+              settings[name] = old_options[name].is_enabled;
             }
-          }
-        }
-        return features;
+            storage_set('settings', settings);
+          } catch(ex) {}
+          localStorage.removeItem('optional_features');
+        })();
+
+        var defaults = {
+          debug_logging: false,
+          block_youtube: true,
+          show_youtube_help_msg: true,
+          show_google_search_text_ads: false,
+          show_context_menu_items: true
+        };
+        var settings = storage_get('settings') || {};
+        return $.extend(defaults, settings);
       }
 
-      set_optional_feature = function(name, is_enabled) {
-        var features = get_optional_features();
-        if (features[name] == null)
-          features[name] = { name: name };
-        var feature = features[name];
-        feature.is_enabled = is_enabled;
-        storage_set('optional_features', features);
+      set_setting = function(name, is_enabled) {
+        var settings = get_settings();
+        settings[name] = is_enabled;
+        storage_set('settings', settings);
         
         if (name == "debug_logging") {
           if (is_enabled)
@@ -245,8 +242,8 @@
         updateButtonUIAndContextMenus = function() {
           getCurrentTabInfo(function(info) {
 
-            var features = get_optional_features();
-            var context_disabled = !features.show_context_menu_items.is_enabled;
+            var settings = get_settings();
+            var context_disabled = !settings.show_context_menu_items;
             var paused = localStorage.getItem('adblock_is_paused');
 
             chrome.contextMenus.removeAll();
@@ -329,7 +326,7 @@
         },
 
         do_not_show_youtube_help_msg: function(options) {
-          set_optional_feature("show_youtube_help_msg", false);
+          set_setting("show_youtube_help_msg", false);
         },
 
         // TODO: make better.
@@ -338,17 +335,17 @@
         //           included
         get_content_script_data: function(options, sender) {
           var whitelisted = page_is_whitelisted(sender.tab.url);
-          var features = get_optional_features();
+          var settings = get_settings();
           var result = {
             page_is_whitelisted: whitelisted,
             adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-            features: features
+            settings: settings
           };
           if (whitelisted)
             return result;
           // If in debug mode, send filters to adblock.js to print css info.
           // Normally only adblock_start asks to include_filters.
-          if (!options.include_filters && !features.debug_logging.is_enabled)
+          if (!options.include_filters && !settings.debug_logging)
             return result;
 
           // Not whitelisted, and running on adblock_start.  We have two tasks:
@@ -491,7 +488,7 @@
         }
       })();
 
-      if (get_optional_features().debug_logging.is_enabled)
+      if (get_settings().debug_logging)
         log = function(text) { console.log(text); };
       
       _myfilters = new MyFilters();
@@ -579,7 +576,7 @@
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
             return;
-          if (!get_optional_features().show_context_menu_items.is_enabled)
+          if (!get_settings().show_context_menu_items)
             return;
           event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));

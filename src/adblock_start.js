@@ -133,7 +133,7 @@ function adblock_begin() {
     include_filters: true
   };
   extension_call('get_content_script_data', opts, function(data) {
-    if (data.features.debug_logging.is_enabled)
+    if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {

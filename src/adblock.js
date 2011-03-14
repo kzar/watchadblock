@@ -12,7 +12,7 @@ function debug_print_selector_matches(selectors) {
 }
 
 // Run special site-specific code.
-function run_specials(features) {
+function run_specials(settings) {
   if (document.location.host.indexOf('mail.live.com') != -1) {
     //removing the space remaining in Hotmail/WLMail
     $(".Unmanaged .WithSkyscraper #MainContent").
@@ -27,7 +27,7 @@ function run_specials(features) {
       css("margin", "0px");
   }
 
-  if (/youtube/.test(document.domain) && features.block_youtube.is_enabled) {
+  if (/youtube/.test(document.domain) && settings.block_youtube) {
     function blockYoutubeAds(videoplayer) {
       var flashVars = $(videoplayer).attr('flashvars');
       var inParam = false;
@@ -58,7 +58,7 @@ function run_specials(features) {
       }
       videoplayer.parentNode.replaceChild(replacement, videoplayer);
 
-      if (features.show_youtube_help_msg.is_enabled) {
+      if (settings.show_youtube_help_msg) {
         var disable_url = chrome.extension.getURL("options/index.html");
         var message = $("<div>").
           css({"font-size": "x-small", "font-style": "italic",
@@ -120,7 +120,7 @@ function adblock_begin_part_2() {
       }, false);
     }
 
-    run_specials(data.features);
+    run_specials(data.settings);
 
     //Neither Chrome nor Safari blocks background images. So remove them
     //TODO: Remove background images for elements other than <body>
@@ -139,7 +139,7 @@ function adblock_begin_part_2() {
       beforeLoadHandler(fakeEvent);
     }
 
-    if (data.features.debug_logging.is_enabled)
+    if (data.settings.debug_logging)
       debug_print_selector_matches(data.selectors);
   });
 }

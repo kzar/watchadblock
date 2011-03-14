@@ -87,7 +87,7 @@ MyFilters.prototype.rebuild = function() {
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (get_optional_features().show_google_search_text_ads.is_enabled)
+  if (BG.get_settings().show_google_search_text_ads)
     texts.push("@@||google.*/search?$elemhide")
 
   texts = texts.join('\n').split('\n');

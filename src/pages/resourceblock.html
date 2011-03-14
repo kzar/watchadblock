@@ -308,7 +308,7 @@
       // finally start generating some content for the user, and allowing him to
       // do some things, instead of looking at 'LOADING'
       function finally_it_has_loaded_its_stuff() {
-        if (domaindata.features.debug_logging.is_enabled)
+        if (domaindata.settings.debug_logging)
           $(".onlyifdebug").show()
         // Create the table of resources and make it sortable
         generateTable();
