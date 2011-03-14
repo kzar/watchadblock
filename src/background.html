@@ -36,17 +36,7 @@
         return false;
       }
 
-      // FILTERING
-
-      // Rebuild the filterset based on the current settings and subscriptions.
-      update_filters = function() {
-        _myfilters.update();
-      }
-
-      // Whenever filters are updated, call callback().
-      on_filters_updated = function(callback) {
-        _myfilters.updated(callback);
-      }
+      // CUSTOM FILTERS
 
       // Get the custom filters text as a \n-separated text string.
       get_custom_filters_text = function() {
@@ -138,6 +128,18 @@
         }
       }
   
+      // MYFILTERS PASSTHROUGHS
+
+      // Rebuild the filterset based on the current settings and subscriptions.
+      update_filters = function() {
+        _myfilters.update();
+      }
+
+      // Whenever filters are updated, call callback().
+      on_filters_updated = function(callback) {
+        _myfilters.updated(callback);
+      }
+
       // Fetch the latest version of all subscribed lists now.
       update_subscriptions_now = function() {
         _myfilters.freshen_async(true);
@@ -166,6 +168,8 @@
       unsubscribe = function(id, del) {
         _myfilters.unsubscribe(id, del);
       }
+
+      // INFO ABOUT CURRENT PAGE
 
       // Get interesting information about the current tab.
       // Inputs:
@@ -422,17 +426,15 @@
           window.open(chrome.extension.getURL('pages/subscribe.html?' +
                       options.searchquery), "_blank", 
                       'scrollbars=0,location=0,resizable=0,width=450,height=140');
-        }
+        },
+
+        // Return chrome.i18n._getL10nData() for content scripts who cannot
+        // call that function (since it loads extension files from disk.)
+        // Only defined in Safari.
+        get_l10n_data: (SAFARI ? chrome.i18n._getL10nData : undefined)
 
       }; // var utils
 
-      if (SAFARI) {
-        // Return chrome.i18n._getL10nData() for content scripts who cannot
-        // call that function (since it loads extension files from disk.)
-        utils.get_l10n_data = function(options) {
-          return chrome.i18n._getL10nData();
-        }
-      }
 
       // UTILS DISPATCH
       (function() {
