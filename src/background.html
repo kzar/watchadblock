@@ -412,7 +412,7 @@
           var theFunction = function(options, sender) {
             var url = sender.tab.url.replace(/\#.*/, '');
             _cached_resources.set(url, options.resources);
-            chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+            chrome.tabs.create({url: "pages/resourceblock.html?url=" + escape(url)});
           };
           theFunction.cached_resources = _cached_resources; // make it public
 

@@ -28,7 +28,7 @@
         displayVersionNumber();
 
         // Check or uncheck each option.
-        var features = get_optional_features();
+        var features = BG.get_optional_features();
         for (var name in features) {
           $("#enable_" + name).
             attr("checked", features[name].is_enabled);
