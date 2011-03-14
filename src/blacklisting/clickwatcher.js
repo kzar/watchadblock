@@ -1,10 +1,78 @@
 // Requires overlay.js and jquery
 
+// Highlight DOM elements with an overlayed box, similar to Webkit's inspector.
+// Creates an absolute-positioned div that is translated & scaled following
+// mousemove events. Holds a pointer to target DOM element.
+function Highlighter() {
+  var target = null;
+  var enabled = false;
+  var then = +new Date();
+  var box = $("<div class='adblock-highlight-node'></div>").css({
+    backgroundColor: "rgba(130, 180, 230, 0.5) !important",
+    outline: "solid 1px #0F4D9A !important",
+    boxSizing: "border-box !important",
+    position: "absolute !important", 
+    display: "none"
+  }).appendTo("body");
+  
+  function handler(e) {
+    var offset, el = e.target;
+    var now = +new Date();
+    if (now - then < 25) {
+      return;
+    }
+    then = now;
+    if (el === document.body || el.className === "adblock-killme-overlay") {
+        box.hide(); 
+        return;
+    }
+    else if (el === box[0]) {
+      box.hide();
+      el = document.elementFromPoint(e.clientX, e.clientY);
+    }
+    target = $(el);
+    offset = target.offset();
+    box.css({
+      zIndex: (parseInt(target.css("z-index")) || 1) + " !important",
+      height: target.outerHeight(), 
+      width: target.outerWidth(), 
+      left: offset.left, 
+      top: offset.top 
+    });
+    box.show(); 
+  }
+  
+  this.getCurrentNode = function(el) {
+    return el === box[0] ? target : el;
+  };
+  this.enable = function() {
+    if (box && !enabled) {
+      $("body").bind("mousemove", handler);
+    }
+    enabled = true;
+  };
+  this.disable = function() {
+    if (box && enabled) {
+      box.hide();
+      $("body").unbind("mousemove", handler);
+    }
+    enabled = false;
+  };
+  this.destroy = function() {
+    this.disable();
+    if (box) {
+      box.remove();
+      delete box;
+    }
+  };
+}
+
 // Class that watches the whole page for a click, including iframes and
 // objects.  Shows a modal while doing so.
 function ClickWatcher() {
   this._callbacks = { 'cancel': [], 'click': [] };
   this._clicked_element = null;
+  this._highlighter = new Highlighter();
 }
 ClickWatcher.prototype.cancel = function(callback) {
   this._callbacks.cancel.push(callback);
@@ -39,6 +107,7 @@ ClickWatcher.prototype.show = function() {
     wait.dialog('close');
     wait.remove();
     that._ui.dialog('open');
+    that._highlighter.enable();
   }, 10);
 }
 // Called externally to close ClickWatcher.  Doesn't cause any events to
@@ -60,6 +129,7 @@ ClickWatcher.prototype._onClose = function() {
     // User clicked a page item
     this._fire('click', this._clicked_element);
   }
+  this._highlighter.destroy();
 }
 ClickWatcher.prototype._build_ui = function() { 
   var that = this;
@@ -69,7 +139,8 @@ ClickWatcher.prototype._build_ui = function() {
   }
 
   function click_catch(element) {
-    that._clicked_element = element;
+    that._clicked_element = that._highlighter.getCurrentNode(element);
+    //that._clicked_element = element;
     that._ui.dialog('close');
     return false;
   }
@@ -104,27 +175,57 @@ ClickWatcher.prototype._build_ui = function() {
   btn[translate("buttoncancel")] = function() { page.dialog('close'); }
 
   var page = $("<div></div>").
-      append(translate("clickthead")).
-      css({
-        'background': 'white',
-        'text-align': 'left',
-        'font-size': '12px',
+    append(translate("clickthead")).
+    append("<br/><br/>").
+    css({
+      'background': 'white',
+      'text-align': 'left',
+      'font-size': '12px',
+    }).
+    dialog({
+      zIndex:10000000, 
+      position:[50, 50],
+      width:400,
+      minHeight:125,
+      autoOpen: false,
+      title: translate("blockanadtitle"),
+      buttons: btn,
+      close: function() { 
+        $("*").unbind('click', click_catch_this);
+        Overlay.removeAll();
+        that._onClose();
+        page.remove();
+      },
+      drag: function() {
+        that._highlighter.disable();
+      }
+    });
+    page.dialog("widget").
+      css("position", "fixed").
+      bind("mouseenter",function() {
+        that._highlighter.disable();
       }).
-      dialog({
-          zIndex:10000000, 
-          position:[50, 50],
-          height:150,
-          minHeight:50,
-          autoOpen: false,
-          title: translate("blockanadtitle"),
-          buttons: btn,
-          close: function() { 
-            $("*").unbind('click', click_catch_this);
-            Overlay.removeAll();
-            that._onClose();
-            page.remove();
-          }
-        });
+      bind("mouseleave",function() {
+        that._highlighter.enable();
+      });
+
+  if (!SAFARI) {
+    var link_to_block = $("<a>", {
+      href: "#",
+      tabIndex: -1,
+      css: { "font-size": "11px !important" },
+      text: translate("advanced_show_url_list"),
+      click: function(e) { 
+        // GLOBAL_collect_resources is created by adblock_start.js
+        var resources = Object.keys(GLOBAL_collect_resources);
+        extension_call("show_resourceblocker", {resources: resources});
+        e.preventDefault();
+        that._ui.dialog('close');
+        return false;
+      }
+    });
+    page.append(link_to_block);
+  }
 
   return page;
 }

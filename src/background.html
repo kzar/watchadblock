@@ -1,7 +1,7 @@
 <html>
   <head>
     <script src="port.js"></script>
-    <script src="jquery/jquery-1.4.4-hacked-up.min.js"></script>
+    <script src="jquery/jquery.min.js"></script>
     <script src="functions.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
@@ -63,6 +63,15 @@
         } catch(ex) {
           return ex;
         }
+      }
+      // Removes a custom filter entry.
+      // Inputs: filter:string line of text to remove from custom filters.
+      utils.remove_custom_filter = function(options) {
+        // Make sure every filter is preceded and followed by at least one \n,
+        // then find and remove the filter.
+        var text = "\n" + utils.get_custom_filters_text({}) + "\n";
+        text = text.replace("\n" + options.filter + "\n", "\n");
+        utils.set_custom_filters_text({filters: text.trim()});
       }
 
       // Get the custom filters text as a \n-separated text string.
@@ -196,7 +205,7 @@
         // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
         // when not cached, it takes about 100ms.  So more caching would be good.  The
         // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-        // should be able to turn up the fifecache size by a lot.  have the fifocache log
+        // should be able to turn up the fifocache size by a lot.  have the fifocache log
         // how big each new entry is, to verify this.
         if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
           var global_hide = _myfilters.global.cached_getSelectors;
@@ -301,6 +310,18 @@
         );
       };
       
+      // Will open the resource blocking tab. 
+      // Input:
+      //   resources: array of resource strings; 
+      //              see resourceblock.html for format
+      utils.show_resourceblocker = function(options, sender) {
+        var url = sender.tab.url.replace(/\#.*/, '');
+        utils.show_resourceblocker.cached_resources.set(url, options.resources);
+        chrome.tabs.create({url: "pages/resourceblock.html?url=" + url});
+      }
+      // This stores resources used by resourceblock.html
+      utils.show_resourceblocker.cached_resources = new FifoCache(5);
+      
       // Just like open_blacklist_ui
       utils.open_whitelist_ui_on_tab = function(options) {
         var sender = { tab: { id: options.tabid } };
@@ -310,72 +331,46 @@
         );
       };
 
-      // Turn on or off the context menus in Chrome based on whether the
-      // domain in question is whitelisted, adblock is paused, or the user
-      // has disabled the menus in the Options.
-      // Inputs:
-      //   url:string the url of the tab being right clicked
-      // Returns: null
-      utils.setChromeContextMenus = function(options) {
-        if (SAFARI)
-          return;
-        var whitelisted = page_is_whitelisted(options.url);
-        var features = utils.get_optional_features({});
-        var disabled = !features.show_context_menu_items.is_enabled;
-        var paused = localStorage.getItem('adblock_is_paused');
-
-        chrome.contextMenus.removeAll();
-
-        if (paused || disabled || whitelisted)
-          return;
-        
-        chrome.contextMenus.create({
-          title: translate("contextmenuhidethis"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{info: info}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("block_an_ad_on_this_page"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-              sender
-            );
-          }
-        });
-        chrome.contextMenus.create({
-          title: translate("contextmenuexcludedomain"),
-          contexts:["all"], 
-          onclick: function(info, tab) {
-            var sender = { tab: tab };
-            utils.emit_page_broadcast(
-              {fn:'top_open_whitelist_ui', options:{}},
-              sender
-            );
-          }
-        });
-      }
 
       if (!SAFARI) {
         // Set the button image and context menus according to the URL 
         // of the current tab.
-        // TODO getCurrentTabInfo calculated is_whitelisted and disabled_site
-        // and then we recalculate this in setChromeContextMenus which is
-        // wasteful and unnecessarily complex.  Review exactly what we need to
-        // do on tab change and do it all in one place.
         function updateButtonUIAndContextMenus() {
           getCurrentTabInfo(function(info) {
-            utils.setChromeContextMenus({url: info.tab.url});
 
-            if (localStorage.getItem('adblock_is_paused')) {
+            var features = utils.get_optional_features({});
+            var context_disabled = !features.show_context_menu_items.is_enabled;
+            var paused = localStorage.getItem('adblock_is_paused');
+
+            chrome.contextMenus.removeAll();
+
+            if (!(paused || context_disabled || 
+                  info.whitelisted || info.disabled_site)) {
+              chrome.contextMenus.create({
+                title: translate("block_this_ad"),
+                contexts:["all"], 
+                onclick: function(info, tab) {
+                  var sender = { tab: tab };
+                  utils.emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{info: info}},
+                    sender
+                  );
+                }
+              });
+              chrome.contextMenus.create({
+                title: translate("block_an_ad_on_this_page"),
+                contexts:["all"], 
+                onclick: function(info, tab) {
+                  var sender = { tab: tab };
+                  utils.emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                    sender
+                  );
+                }
+              });
+            }
+
+            if (paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
             } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
@@ -396,7 +391,7 @@
         //Otherwise the extension doesn't work (e.g. doesn't block ads)
         if (chrome.tabs) {
           chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-            if (tab.selected && changeInfo.url)
+            if (tab.selected)
               updateButtonUIAndContextMenus();
           });
           chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
@@ -430,6 +425,26 @@
           chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
           chrome.browserAction.setBadgeText({text:"\u2022"}); // bullet
         }
+
+      })();
+
+      (function() {
+        // April 1th, 2011
+        // Just like above, but easier to delete afterwards.
+        var today = new Date();
+        if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011) {
+          // Pre 4/1 this does nothing; post 4/1 this tidies up
+          localStorage.removeItem("saw_foolsday2011");
+          return;
+        }
+        if (SAFARI)
+          return;
+        if (!localStorage.getItem('saw_foolsday2011')) {
+          chrome.browserAction.setTitle({title:"Just released: AdBlock Freedom!  Click for more info."});
+          chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
+          chrome.browserAction.setBadgeText({text:"\u2022"});
+        }
+        // <End of April 1th code>
       })();
 
 
@@ -473,32 +488,34 @@
       }
       note_install();
 
-      // TODO temp code installed on 1/6/2010
       // Take a census of filter subscriptions.
-      try {
-        if (localStorage['tookSubscriptionCensus'] == null) {
-          var data = {};
-          data.subscriptions = [];
-          for (var sub_id in _myfilters._subscriptions) {
-            if (_myfilters._subscriptions[sub_id].subscribed) {
-              data.subscriptions.push(sub_id);
+      function take_census() {
+        try {
+          if (localStorage['tookSubscriptionCensus'] == null) {
+            var data = {};
+            data.subscriptions = [];
+            for (var sub_id in _myfilters._subscriptions) {
+              if (_myfilters._subscriptions[sub_id].subscribed) {
+                data.subscriptions.push(sub_id);
+              }
             }
+            data.subscriptions = data.subscriptions.join(',');
+            data.safari = SAFARI;
+            data.language = navigator.language;
+            data.installed_at = localStorage['installed_at'];
+            data.options_at = localStorage['visited_options_at'];
+            $.get(
+              "http://chromeadblock.com/api/url_census.php", 
+              data,
+              function(result) {
+                if (/OK/.test(result))
+                  localStorage['tookSubscriptionCensus'] = true;
+              }
+            );
           }
-          data.subscriptions = data.subscriptions.join(',');
-          data.safari = SAFARI;
-          data.language = navigator.language;
-          data.installed_at = localStorage['installed_at'];
-          data.options_at = localStorage['visited_options_at'];
-          $.get(
-            "http://chromeadblock.com/api/url_census.php", 
-            data,
-            function(result) {
-              if (/OK/.test(result))
-                localStorage['tookSubscriptionCensus'] = true;
-            }
-          );
-        }
-      } catch (ex) { log("Census failed"); log(ex); }
+        } catch (ex) { log("Census failed"); log(ex); }
+      }
+      // take_census(); uncomment when you want another census.
 
 
       // Safari specific code.
@@ -542,12 +559,11 @@
             return;
           if (!utils.get_optional_features({}).show_context_menu_items.is_enabled)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("contextmenuhidethis"));
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
           event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
-
 
 
 

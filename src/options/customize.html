@@ -22,6 +22,11 @@
       font-style: italic;
       color: grey;
     }
+    #txtFiltersAdvanced {
+      font-size: 12px;
+      max-width: 100%;
+      white-space: nowrap;
+    }
   </style>
 
   <script type="text/javascript" src="../filtering/filternormalizer.js"></script>
@@ -113,7 +118,7 @@
         } catch(ex) {}
         $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
       }
-      $("#divUrlBlock input:text").keyup(validateUrlFilter);
+      $("#divUrlBlock input:text").bind("input", validateUrlFilter);
 
       var validateCssFilter = function() {
         var blockCss = $("#txtUserFilterCss").val().trim();
@@ -127,7 +132,7 @@
         } catch(ex) {}
         $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
       }
-      $("#divCssBlock input:text").keyup(validateCssFilter);
+      $("#divCssBlock input:text").bind("input", validateCssFilter);
       
       var validateExcludeFilter = function() {
         var unblockUrl = $("#txtUnblock").val().trim();
@@ -140,7 +145,7 @@
         } catch(ex) {}
         $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
       }
-      $("#divExcludeBlock input:text").keyup(validateExcludeFilter);
+      $("#divExcludeBlock input:text").bind("input", validateExcludeFilter);
 
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
@@ -211,9 +216,9 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtBlockUrl" style="width:300px;"/></td>
+                <td><input id="txtBlockUrl" type="text" style="width:300px;"/></td>
                 <td class="guide">$domain=</td>
-                <td><input id="txtBlockUrlDomain"/></td>
+                <td><input id="txtBlockUrlDomain" type="text"/></td>
                 <td><input id="btnAddUrlBlock" type="button" i18n_value="buttonblockit" /></td>
               </tr>
             </table>
@@ -232,9 +237,9 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtUserFilterDomain" style="width:200px;"/></td>
+                <td><input id="txtUserFilterDomain" type="text" style="width:200px;"/></td>
                 <td class="guide">##</td>
-                <td><input id="txtUserFilterCss" style="width:300px;"/></td>
+                <td><input id="txtUserFilterCss" type="text" style="width:300px;"/></td>
                 <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit"/></td>
               </tr>
             </table>
@@ -255,7 +260,7 @@
               </tr>
               <tr>
                 <td class="guide">@@</td>
-                <td><input id="txtUnblock" style="width:400px;"/></td>
+                <td><input id="txtUnblock" type="text" style="width:400px;"/></td>
                 <td class="guide">$document</td>
                 <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonok" /></td>
               </tr>
@@ -281,10 +286,10 @@
            class="footnote" style="margin-top: 5px; margin-bottom: 5px;"></div>
         <a id="tutorlink" href="http://adblockplus.org/en/filters" 
            target="_new"></a>
-     </div>
+      </div>
 
       <div>
-        <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
+        <textarea id="txtFiltersAdvanced" cols="112" rows="15" disabled></textarea>
         <br/>
       </div>
 

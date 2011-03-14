@@ -37,7 +37,7 @@
     "message": "Reîncarcă orice filele deschise, și priveste cum anunțurile/publicitățile dispar.",
     "description": "Message on the installation success page"
   },
-  "donaterequest2": {
+    "donaterequest2": {
     "message": "Recent am renunțat la slujba mea pentru a-mi devota tot timpul pentru AdBlock! Acum mă bazez doar pe donațile voastre pentru a-mi sprijini familia. Te rog <a>donează</a> a mă ajuta să platesc facturile noastre -- și să dovedesc faptul ca eu și soția mea (fotografie) nu suntem nebuni pentru că încercam acest lucru.  Mulțumesc :) - Michael",
     "description": "Donation request on installation success page"
   },
@@ -511,6 +511,10 @@
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
+  "removelabel": {
+    "message": "Elimină",
+    "description": "link to remove a excluded site"
+  },
   "adblockreportinganad": {
     "message": "AdBlock - Raportarea un anunţ",
     "description": "title of ad report page"
@@ -711,14 +715,6 @@
       }
     }
   },
-  "contextmenuhidethis": {
-    "message": "Blochează acest anunț",
-    "description": "Context menu entry"
-  },
-  "block_an_ad_on_this_page": {
-    "message": "Blochează un anunț pe această pagină",
-    "description": "Context menu entry"
-  },
   "contextmenuexcludedomain": {
     "message": "Nu rula pe acest domeniu...",
     "description": "Context menu entry"
@@ -742,5 +738,329 @@
   "cantblockflash": {
     "message": "Noi nu putem bloca anunţurile în interiorul plugin-uri Flash şi alte încă. Suntem în aşteptare de sprijin pentru browser şi WebKit.",
     "description": "Result of the final ad report question"
+  },
+  "adblock_is_disabled_on_domain": {
+    "message": "AdBlock este dezactivat pe $domain$.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "www.google.com"
+      }
+    }
+  },
+  "addthisfilter": {
+    "message": "Adaugă acest filtru",
+    "description": "resourceblocking page string"
+  },
+  "adreport2": {
+    "message": "Ai gasit un anunț pe o pagină web? Bun, eu am să te ajut să găsești locul corect unde să il raportezi!<br/> Reține: raportarea anunțuri este voluntar. Dacă nu dorești să îl raportezi închide această fereastră și blochează-l pentru tine adaugând filtrul în tabul 'Personalizează' în pagina de opțiuni!",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
+  },
+  "advanced_show_url_list": {
+    "message": "sau alege URL să îl blochezi dintr-o listă (avansat)",
+    "description": "Message on link to open resource blocker instead of use blacklister"
+  },
+  "anysite": {
+    "message": "Orice website",
+    "description": "resourceblocking page string"
+  },
+  "appliedwhenbrowsing": {
+    "message": "Acest filtru va fi aplicat când vei naviga:",
+    "description": "resourceblocking page string"
+  },
+  "blacklistereditinvalid1": {
+    "message": "Filtrul este invalid: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
+  },
+  "block_by_url_instead": {
+    "message": "Avansat: blochează acest URL",
+    "description": "Link on blacklister slider page"
+  },
+  "block_this_ad": {
+    "message": "Blochează acest anunț",
+    "description": "Context and popup menu entry"
+  },
+  "blockeverycontaining": {
+    "message": "Blochează orice resursă care conține:",
+    "description": "resourceblocking page string"
+  },
+  "blockmoreads": {
+    "message": "Bloachează mai multe anunțuri:",
+    "description": "Section header on third tab"
+  },
+  "casesensitive": {
+    "message": "Acest filtru este case sensitive:",
+    "description": "resourceblocking page string"
+  },
+  "changelabel": {
+    "message": "schimbare",
+    "description": "link to change resources on the resourceblock page"
+  },
+  "chromebutton_hide_macOSX": {
+    "message": "Chrome pe OS X nu suportă ascunderea butoanelor de câteva săptamâni. Până atunci, poți să muți butonul din linia de vedere prin a glisa marginea bări la dreapta.",
+    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
+  },
+  "chromebutton_how_to_hide": {
+    "message": "Pentru a ascunde butonul, click dreapta pe el și alege ascunde buton.  Îl poți arăta din nou mergând la Unelte | Instrumente | Extensi.",
+    "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
+  "cleanuplist": {
+    "message": "Optimizaţi filtrele în această listă:",
+    "description": "Option at the bottom of the third options tab"
+  },
+  "close": {
+    "message": "Închide",
+    "description": "resourceblocking page string"
+  },
+  "did_you_know_this_is_my_full_time_job": {
+    "message": "Ştiaţi că aceasta este slujba meu full-time?",
+    "description": "Text of a donation link on toolbar button"
+  },
+  "disabled_by_filter_lists": {
+    "message": "Scuze, AdBlock este dezactivat pe această pagină de una din listele tale filtru.",
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
+  },
+  "dont_run_on_domain": {
+    "message": "Nu rula pe $domain$",
+    "description": "Menu entry whitelisting the domain of the current tab.",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "www.google.com"
+      }
+    }
+  },
+  "dont_run_on_this_page": {
+    "message": "Nu rula pe această pagină",
+    "description": "Menu entry to whitelist a page"
+  },
+  "enable": {
+    "message": "permite",
+    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+  },
+   "excludedomainorurl": {
+    "message": "Domeniul sau url unde AdBlock nu trebuie să blocheze nimic",
+    "description": "Message of the exclude area"
+  },
+  "filterhasbeenadded": {
+    "message": "Filtrul a fost adăugat cu succes!\nReîncărcaţi pagina pentru a vedea rezultatul!",
+    "description": "resourceblocking page string (the 'slash n' is a line break)"
+  },
+  "filterlistsrock": {
+    "message": "Lista de filtre blochează majoritatea anunțurilor pe internet.  Tu poți:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "headerfilter": {
+    "message": "Potrivire filtru",
+    "description": "resourceblocking page string"
+  },
+  "headerresource": {
+    "message": "Resurse",
+    "description": "resourceblocking page string"
+  },
+  "headertype": {
+    "message": "Tip",
+    "description": "resourceblocking page string"
+  },
+  "hide_this_button": {
+    "message": "Ascunde acest buton",
+    "description": "Toolbar button menu entry to hide the AdBlock button"
+  },
+   "linkunblock": {
+    "message": "Arată anunțuri pe o pagină web sau domeniu",
+    "description": "Link on the third tab"
+  },
+   "loading": {
+    "message": "ÎNCĂRCARE...",
+    "description": "resourceblocking page string"
+  },
+  "multipledomainshint": {
+    "message": "Separă domeni multiple cu virgulă sau spațiu",
+    "description": "resourceblocking page string"
+  },
+   "new_version": {
+    "message": "Versiune nouă!",
+    "description": "Tooltip on toolbar button when a significant new version is released"
+  },
+  "newtitle": {
+    "message": "Versiune nouă $version$:",
+    "description": "Message in popup button telling users about new features",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.3.0"
+      }
+    }
+  },
+  "nextstep": {
+    "message": "Pasul următor",
+    "description": "resourceblocking page string"
+  },
+  "nodefaultfilter1": {
+    "message": "Nu avem o listă filtru impliciă pentru acea limbă.<br/>Te rog să găsești o listă adegvată care suportă această limba $link$ sau blochează acest anunț în tabul 'Personalizează'.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1here$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "noresourcessend": {
+    "message": "Ceva a mers rău. Nici o resursă nu a fost trimisă. Această pagină se va închide.",
+    "description": "resourceblocking page string"
+  },
+  "novalidurlpattern": {
+    "message": "Te rog introduce un model URL valid pentru a se potrivi!",
+    "description": "resourceblocking page string"
+  },
+  "onlyondomains": {
+    "message": "DOAR pagini pe aceste domeni: ",
+    "description": "resourceblocking page string"
+  },
+  "onlyresourcetypes": {
+    "message": "Acest filtru se aplică resurselor de acest tip:",
+    "description": "resourceblocking page string"
+  },
+  "options": {
+    "message": "Opțiuni",
+    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+  },
+  "pause_adblock": {
+    "message": "Pauză AdBlock",
+    "description": "Menu entry to pause AdBlock."
+  },
+  "resourceblocklegend1": {
+    "message": "Legenda:",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend2": {
+    "message": "resurse blocate",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend3": {
+    "message": "resurse permise",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend4": {
+    "message": "resurse blocabile",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend5": {
+    "message": "Ascunderea resurselor aplicată",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocktitle": {
+    "message": "Blochează o resursă",
+    "description": "resourceblocking page string"
+  },
+  "resourceiswhitelisted": {
+    "message": "Resursa selectată a fost permisă (Lista albă). Prin urmare nu se poate bloca.",
+    "description": "resourceblocking page string"
+  },
+  "selectresources": {
+    "message": "Selectează resursa care vrei să o blochezi sau să o deblochezi",
+    "description": "resourceblocking page string"
+  },
+  "status_disabled": {
+    "message": "AdBlock nu poate să ruleze pe acest domeniu.",
+    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
+  },
+  "status_paused": {
+    "message": "AdBlock este în pauză.",
+    "description": "Message shown in toolbar button when AdBlock is paused."
+  },
+  "tabcustomize": {
+    "message": "Personalizează",
+    "description": "A tab on the options page"
+  },
+  "tabcustomizetitle": {
+    "message": "Personalizează AdBlock",
+    "description": "Title of the third tab"
+  },
+  "thirdpartycheckbox": {
+    "message": "Orice pagină web cu EXCEPTIA paginilor pe domeniu $domain$",
+    "description": "resourceblocking page string",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "this_toolbar_button": {
+    "message": "Buton pentru bara de instrumente :)",
+    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
+  },
+  "typehiding": {
+    "message": "ascunde",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeimage": {
+    "message": "imagine",
+    "description": "A resource type (lowercase!)"
+  },
+  "typemedia": {
+    "message": "audio/video",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeobject": {
+    "message": "obiect interactiv",
+    "description": "A resource type (lowercase!)"
+  },
+  "typepage": {
+    "message": "pagină",
+    "description": "A resource type (lowercase!)"
+  },
+  "typescript": {
+    "message": "script",
+    "description": "A resource type (lowercase!)"
+  },
+  "typestylesheet": {
+    "message": "stil definiție",
+    "description": "A resource type (lowercase!)"
+  },
+  "typesubdocument": {
+    "message": "cadru",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeunknown": {
+    "message": "necunoscut",
+    "description": "A resource type (lowercase!)"
+  },
+  "unblocktitle": {
+    "message": "Dezactivează AdBlock pe o pagină web anume:",
+    "description": "Section header on third tab"
+  },
+  "unpause": {
+    "message": "anulați",
+    "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "whitelistedorpausedpage": {
+    "message": "Această pagină este in lista albă sau AdBlock este întrerupt. Prin urmare nici o resursă nu a fost prinsă, acestă pagină nu poate fi folosită",
+    "description": "resourceblocking page string"
+  },
+  "whitelisteverycontaining": {
+    "message": "Adaugă în lista albă toate resursele conținând:",
+    "description": "resourceblocking page string"
+  },
+  "wildcardhint": {
+    "message": "Notă: poți să folosești * ca wildcard aici",
+    "description": "resourceblocking page string"
+  },
+  "yes_toolbar_button": {
+    "message": "Acest buton face parte din AdBlock. Nu mai ai nevoie de extensia 'Browser Button For AdBlock'.",
+    "description": "Description of what is new in version 2.3.0, which is shown to users who have the 'Browser Button For AdBlock' extension installed instead of the 'this_toolbar_button' message.  You should not translate the words 'Browser Button For AdBlock'."
+  },
+    "block_an_ad_on_this_page": {
+    "message": "Blochează un anunț pe această pagină",
+    "description": "Toolbar button menu entry and context menu entry"
   }
 }

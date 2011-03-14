@@ -3,8 +3,8 @@
   <head>
     <link rel="stylesheet" href="popup.css"/>
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css"/>
-    <script src="../jquery/jquery-1.4.4-hacked-up.min.js"></script>
-    <script src="../jquery/jquery-ui-1.8.6.custom.min.js"></script>
+    <script src="../jquery/jquery.min.js"></script>
+    <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
       // Show each DOM id in the list.
@@ -89,9 +89,11 @@
             <div id="new_release_close" style="float:right;"><a class="blue" href="#">x</a></div>
             <div id="newtitle"></div>
             <script>$("#newtitle").text(translate("newtitle", ["2.3.0"]));</script>
-            <div i18n="this_toolbar_button" id="no_toolbar_button"></div>
-            <div i18n="yes_toolbar_button" id="yes_toolbar_button" style="display:none">
-              <!-- TODO temp: installed 2/2011 -->
+            <div id="newversioninfo">
+              <div i18n="this_toolbar_button" id="no_toolbar_button"></div>
+              <div i18n="yes_toolbar_button" id="yes_toolbar_button" style="display:none">
+                <!-- TODO temp: installed 2/2011 -->
+              </div>
             </div>
             <script>
               $(function() {
@@ -128,6 +130,29 @@
               localStorage.setItem('saw_badge_info_version', info_ver);
             });
           }
+          
+          
+          (function() {
+            // April 1th 2011
+            // The few users who update to a new major version on this day won't
+            // see what's new in that release that day, but that isn't so bad.
+            var today = new Date();
+            if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011)
+              return;
+            if (localStorage.getItem('saw_foolsday2011') == "closed")
+              return;
+            localStorage.setItem('saw_foolsday2011', true); // disable badge
+            $("#newtitle").html('Just released:<br/>AdBlock Freedom! (beta)');
+            $("#no_toolbar_button").hide();
+            $("#yes_toolbar_button").hide();
+            $("#newversioninfo").html('Get the new <a href="http://bit.ly/AdBlockEyewear" target="_new" class="blue">AdBlock Freedom</a> augmented reality eyewear, and block billboards and magazine ads in realtime!');
+            $("#div_new_release").show();
+            $("#new_release_close").click(function() {
+              $("#div_new_release").slideUp();
+              localStorage.setItem('saw_foolsday2011', "closed"); // disable badge and info div
+            });
+            // <End of April 1th code>
+          })();
         });
       </script>
 
@@ -205,23 +230,6 @@
       </script>
 
 
-      <div id="div_whitelist" class="menu-entry">
-        <!-- Filled with translated text -->
-      </div>
-      <script>
-        $("#div_whitelist").click(function() {
-          getCurrentTabInfo(function(info) {
-            extension_call("add_custom_filter", {filter: '@@||' +
-                           info.domain + '^$document'}, function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
-            });
-          });
-        });
-      </script>
-
-
       <div i18n="dont_run_on_this_page" id="div_whitelist_page" class="menu-entry">
       </div>
       <script>
@@ -243,6 +251,23 @@
 
 
 
+      <div id="div_whitelist" class="menu-entry">
+        <!-- Filled with translated text -->
+      </div>
+      <script>
+        $("#div_whitelist").click(function() {
+          getCurrentTabInfo(function(info) {
+            var bg = chrome.extension.getBackgroundPage(); 
+            bg.utils.emit_page_broadcast(
+              {fn:'top_open_whitelist_ui', options:{}},
+              { tab: info.tab }
+            );
+            window.close();
+          });
+        });
+      </script>
+
+
       <div id="separator1" class="separator"></div>
 
 
@@ -258,13 +283,20 @@
 
       <div id="div_help_hide">
         <div i18n="hide_this_button" class="menu-entry"></div>
-        <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none">
+        <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none;">
         </div>
       </div>
       <script>
         $("#div_help_hide").click(function() {
           $("#help_hide_explanation").slideDown();
         });
+        (function() {
+          // TODO TEMP: OS X stable users can't hide the browser button yet.
+          // This support was added in Chrome 11.  See crbug.com/72746
+          var ua = navigator.userAgent.match(/Chrome\/(\d+)\./i);
+          if (navigator.platform == "MacIntel" && ua[1] < 11)
+            $("#help_hide_explanation").attr("i18n", 'chromebutton_hide_macOSX');
+        })();
       </script>
 
       <div class="separator"></div>

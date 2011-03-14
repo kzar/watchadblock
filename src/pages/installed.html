@@ -4,8 +4,8 @@
     <link rel="stylesheet" href="../options/options.css" />
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
     <script src="../port.js"></script>
-    <script src="../jquery/jquery-1.4.4-hacked-up.min.js"></script>
-    <script src="../jquery/jquery-ui-1.8.6.custom.min.js"></script>
+    <script src="../jquery/jquery.min.js"></script>
+    <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
       function displayVersionNumber() {
@@ -41,6 +41,14 @@
           });
         });
         
+        (function() {
+          // TODO TEMP: OS X stable users can't hide the browser button yet.
+          // This support was added in Chrome 11.  See crbug.com/72746
+          var ua = navigator.userAgent.match(/Chrome\/(\d+)\./i);
+          if (navigator.platform == "MacIntel" && ua[1] < 11)
+            $("#chromebutton_upon_check").attr("i18n", 'chromebutton_hide_macOSX');
+        })();
+
         //translation
         localizePage();
       });

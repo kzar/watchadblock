@@ -49,6 +49,10 @@
     "message": "To hide the button, right click it and choose Hide Button.  You can show it again under Wrench | Tools | Extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
+  "chromebutton_hide_macOSX": {
+    "message": "Chrome on OS X doesn't fully support hiding buttons for another few weeks.  Until then, you can move the button out of your sight by dragging the edge of the address bar to the right.",
+    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
+  },
   "chromebutton_showoption": {
     "message": "Put an AdBlock button next to the wrench",
     "description": "Message on installation success page"
@@ -68,6 +72,10 @@
   "sliderexplanation": {
     "message": "Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
     "description": "Blacklister slider page message"
+  },
+  "block_by_url_instead": {
+    "message": "Advanced: block by URL instead",
+    "description": "Link on blacklister slider page"
   },
   "slidertitle": {
     "message": "Step 1: Figure out what to block",
@@ -177,6 +185,10 @@
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.",
     "description": "When you have to click the ad to continue"
+  },
+  "advanced_show_url_list": {
+    "message": "or choose the URL to block from a list (advanced)",
+    "description": "Message on link to open resource blocker instead of use blacklister"
   },
 
   "whitelistertext": {
@@ -767,13 +779,13 @@
       }
     }
   },
-  "contextmenuhidethis": {
-    "message": "Block this ad",
-    "description": "Context menu entry"
-  },
   "block_an_ad_on_this_page": {
     "message": "Block an ad on this page",
     "description": "Toolbar button menu entry and context menu entry"
+  },
+  "block_this_ad": {
+    "message": "Block this ad",
+    "description": "Context and popup menu entry"
   },
   "contextmenuexcludedomain": {
     "message": "Don't run on this domain...",
@@ -786,6 +798,165 @@
   "somequicksetup": {
     "message": "Some quick setup",
     "description": "Title of the options on the installation succes page"
+  },
+
+  "typehiding": {
+    "message": "hiding",
+    "description": "A resource type (lowercase!)"
+  },
+  "typescript": {
+    "message": "script",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeimage": {
+    "message": "image",
+    "description": "A resource type (lowercase!)"
+  },
+  "typestylesheet": {
+    "message": "style definition",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeobject": {
+    "message": "interactive object",
+    "description": "A resource type (lowercase!)"
+  },
+  "typesubdocument": {
+    "message": "frame",
+    "description": "A resource type (lowercase!)"
+  },
+  "typemedia": {
+    "message": "audio/video",
+    "description": "A resource type (lowercase!)"
+  },
+  "typepage": {
+    "message": "page",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeunknown": {
+    "message": "unknown",
+    "description": "A resource type (lowercase!)"
+  },
+  "blockeverycontaining": {
+    "message": "Block every resource containing:",
+    "description": "resourceblocking page string"
+  },
+  "whitelisteverycontaining": {
+    "message": "Whitelist every resource containing:",
+    "description": "resourceblocking page string"
+  },
+  "wildcardhint": {
+    "message": "Note: you can use * as wildcard here",
+    "description": "resourceblocking page string"
+  },
+  "novalidurlpattern": {
+    "message": "Please enter a valid URL pattern to match!",
+    "description": "resourceblocking page string"
+  },
+  "thirdpartycheckbox": {
+    "message": "Any website EXCEPT websites on domain $domain$",
+    "description": "resourceblocking page string",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "filterhasbeenadded": {
+    "message": "The filter was succesfully added!\nReload the page to see the result!",
+    "description": "resourceblocking page string (the 'slash n' is a line break)"
+  },
+  "whitelistedorpausedpage": {
+    "message": "This page is whitelisted or AdBlock is paused. Therefore no resources are caught, so this page cannot be used",
+    "description": "resourceblocking page string"
+  },
+  "noresourcessend": {
+    "message": "Something went wrong. No resources have been sent through. This page will now close.",
+    "description": "resourceblocking page string"
+  },
+  "resourceiswhitelisted": {
+    "message": "The selected resource has been whitelisted. Therefore you cannot block it.",
+    "description": "resourceblocking page string"
+  },
+  "selectresources": {
+    "message": "Select the resource you would like to block or unblock",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocktitle": {
+    "message": "Block a resource",
+    "description": "resourceblocking page string"
+  },
+  "headerresource": {
+    "message": "Resource",
+    "description": "resourceblocking page string"
+  },
+  "headertype": {
+    "message": "Type",
+    "description": "resourceblocking page string"
+  },
+  "headerfilter": {
+    "message": "Matched filter",
+    "description": "resourceblocking page string"
+  },
+  "close": {
+    "message": "Close",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend1": {
+    "message": "Legend:",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend2": {
+    "message": "blocked resources",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend3": {
+    "message": "whitelisted resources",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend4": {
+    "message": "blockable resources",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend5": {
+    "message": "hiding rules applied",
+    "description": "resourceblocking page string"
+  },
+  "loading": {
+    "message": "LOADING...",
+    "description": "resourceblocking page string"
+  },
+  "nextstep": {
+    "message": "Next step",
+    "description": "resourceblocking page string"
+  },
+  "appliedwhenbrowsing": {
+    "message": "This filter will be applied when you are browsing:",
+    "description": "resourceblocking page string"
+  },
+  "anysite": {
+    "message": "Any website",
+    "description": "resourceblocking page string"
+  },
+  "onlyondomains": {
+    "message": "ONLY pages on these domains: ",
+    "description": "resourceblocking page string"
+  },
+  "multipledomainshint": {
+    "message": "Seperate multiple domains with commas or spaces",
+    "description": "resourceblocking page string"
+  },
+  "casesensitive": {
+    "message": "This filter is case sensitive:",
+    "description": "resourceblocking page string"
+  },
+  "onlyresourcetypes": {
+    "message": "This filter applies to resources of these types:",
+    "description": "resourceblocking page string"
+  },
+  "addthisfilter": {
+    "message": "Add this filter",
+    "description": "resourceblocking page string"
   },
   "flashads": {
     "message": "Videos and Flash",
@@ -884,5 +1055,13 @@
   "did_you_know_this_is_my_full_time_job": {
     "message": "Did you know this is my full-time job?",
     "description": "Text of a donation link on toolbar button"
+  },
+  "removelabel": {
+    "message": "Remove",
+    "description": "link to remove a filter"
+  },
+  "changelabel": {
+    "message": "change",
+    "description": "link to change resources on the resourceblock page"
   }
 }

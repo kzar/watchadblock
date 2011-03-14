@@ -2,15 +2,26 @@ Overlay = function(options) {
 
   var el = $(options.dom_element);
 
-  this.image = $("<div></div>").
-    css("position", "absolute").
-    css("left", el.position().left).
-    css("top", el.position().top).
-    css("z-index", 1000000).
+  this.image = $("<div class='adblock-killme-overlay'></div>").
+    css({
+      "position": "absolute",
+      "left": el.position().left,
+      "top": el.position().top,
+      "z-index": 1000000,
+      "background-color": "transparent !important"
+    }).
     width(el.width()).
     height(el.height());
   this.el = el;
   this.click_handler = options.click_handler;
+  
+  this.image.
+    bind("mouseenter",function() {
+      $(this).css("background-color", "rgba(130, 180, 230, 0.5) !important");
+    }).
+    bind("mouseleave",function() {
+      $(this).css("background-color", "transparent !important");
+    })
 
   Overlay.instances.push(this);
 }

@@ -85,6 +85,8 @@ beforeLoadHandler = function(event) {
     elType: elType,
     pageDomain: document.domain
   };
+  if (!SAFARI)
+    GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (el.nodeName == "FRAME")
@@ -107,9 +109,10 @@ function block_list_via_css(selectors) {
 }
 
 function adblock_begin() {
-  if (!SAFARI)
+  if (!SAFARI) {
+    GLOBAL_collect_resources = {};
     LOADED_TOO_FAST = [];
-
+  }
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
@@ -123,6 +126,7 @@ function adblock_begin() {
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
       delete LOADED_TOO_FAST;
+      delete GLOBAL_collect_resources;
       return;
     }
 

@@ -85,13 +85,20 @@ FilterSet.prototype = {
     return this._domainLimitedCache.get(domain);
   },
 
-  // True if the given url requested by the given type of element is matched 
-  // by this filterset, taking whitelist and pattern rules into account.  
-  // Does not test selector filters.
-  matches: function(url, elementType, pageDomain) {
-    // TODO: This is probably imperfect third-party testing, but it works
-    // better than nothing, and I haven't gotten to looking into ABP's
-    // internals for the exact specification.
+  // True if the url is blocked by this filterset, taking whitelist and pattern
+  // rules into account.  Does not test selector filters.
+  // Inputs:
+  //   url:string - The URL of the resource to possibly block
+  //   elementType:ElementType - the type of element that is requesting the 
+  //                             resource
+  //   pageDomain:string - domain of the page on which the element resides
+  //   returnFilter?:bool - see Returns
+  // Returns:
+  //   if returnFilter is true:
+  //       text of matching pattern/whitelist filter, null if no match
+  //   if returnFilter is false:
+  //       true if the resource should be blocked, false otherwise
+  matches: function(url, elementType, pageDomain, returnFilter) {
     // TODO: rework so urlOrigin and docOrigin don't get recalculated over
     // and over; it's always the same answer.
     var urlOrigin = FilterSet._secondLevelDomainOnly(FilterSet._domainFor(url));
@@ -112,14 +119,14 @@ FilterSet.prototype = {
       if (this._whitelistFilters[i].matches(url, elementType, isThirdParty)) {
         log("Whitelisted: '" + this._whitelistFilters[i]._rule + "' -> " +url);
         this._matchCache[key] = false;
-        return false;
+        return (returnFilter ? this._whitelistFilters[i]._text : false);
       }
     }
     for (var i = 0; i < this._patternFilters.length; i++) {
       if (this._patternFilters[i].matches(url, elementType, isThirdParty)) {
         log("Matched: '" + this._patternFilters[i]._rule + "' -> " + url);
         this._matchCache[key] = true;
-        return true;
+        return (returnFilter ? this._patternFilters[i]._text : true);
       }
     }
     this._matchCache[key] = false;
