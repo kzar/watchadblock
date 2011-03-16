@@ -358,12 +358,11 @@
 
             if (paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
-            } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
+            } else if (info.disabled_site && 
+                !/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
               // users see how it will normally look when deciding whether or
-              // not to hide it.
-              chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
-            } else if (info.disabled_site) {
+              // not to hide it. All other disabled pages will have the gray one
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.whitelisted) {
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
