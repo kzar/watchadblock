@@ -357,18 +357,18 @@
             }
 
             if (paused) {
-              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
               // users see how it will normally look when deciding whether or
               // not to hide it.
-              chrome.browserAction.setIcon({path:"img/icon19.png"});
+              chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
             } else if (info.disabled_site) {
-              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png"});
+              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.whitelisted) {
-              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png"});
+              chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
             } else {
-              chrome.browserAction.setIcon({path:"img/icon19.png"});
+              chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
             }
           });
         }
