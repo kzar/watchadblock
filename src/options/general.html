@@ -35,7 +35,7 @@
       // of clicking this, the filters aren't rebuilt.  Call this inside
       // the feature change handler if it's this checkbox being clicked.
       $("#enable_show_google_search_text_ads").change(function() {
-        // Give the optional feature a sec to get saved by the other
+        // Give the setting a sec to get saved by the other
         // change handler before recalculating filters.
         window.setTimeout(function() { 
           BG.update_filters();
