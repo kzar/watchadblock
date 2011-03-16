@@ -3,7 +3,6 @@
       margin-top: 10px;
     }
     #subscriptionlist b {
-      margin-left: 20px;
       margin-top: 13px;
       display: block;
     }
@@ -12,12 +11,25 @@
     }
     .listgroup i {
       font-size: 12px;
+      margin-left: 20px;
     }
     select {
       width: 100px;
     }
     select + select, select + select + input {
       display: none;
+    }
+    .linkToList {
+      margin-left: 6px;
+      font-size: 11px;
+      display: none;
+    }
+    .remove_filter {
+      font-size: 11px;
+      display: none;
+    }
+    list {
+      margin-left: 20px;
     }
   </style>
   <script>
@@ -320,9 +332,9 @@
   
   <script>
     $(function() {
-      var bg = chrome.extension.getBackgroundPage();
-      var subscriptions = bg.utils.get_subscriptions_minus_text();
-      var lists = {
+      var lists = generateSubscriptionInfo;
+      
+      /*var lists = {
         "russian": {
           url: subscriptions["russian"].url,
           name: subscriptions["russian"].name,
@@ -383,29 +395,28 @@
           language: "zh",
           requires: subscriptions["chinese"].requiresList
         },
-      };//TODO: ADD MORE
-
+      };//TODO: ADD MORE*/
       
       var language = navigator.language.match(/^([a-z]+).*/i)[1];
-      if (language == "en") language = undefined;
       for (var list in lists) {
         // Set the language_specific list
-        if (lists[list].language == language)
+        if (lists[list].language == language && language != "en")
           $("#easylist").after("<list id='" + list + "'></list>");
       }
 
       resetLanguageLists();
       resetPrivacyetceteraLists();
       resetCustomLists();
-      
-      
+      createListDetails();
+
       // Set the properties of the language specific section
       function resetLanguageLists() {
+        $("#new_language,#language").empty();
         $("#new_language").append("<option disabled='disabled'></option>");
         for (var list in lists) {
-          if (lists[list].language == undefined)
+          if (lists[list].language == undefined || $("list#"+list).length != 0)
             return;
-          if (subscriptions[list] && subscriptions[list].subscribed)
+          if (lists[list].subscribed)
             $("#language").append("<list id='" + list + "'></list>");
           else
             $("#new_language").append("<option>" + lists[list].language + "</option>");
@@ -414,26 +425,88 @@
       // Set the properties of the section with privacy and other non-
       // adblocking lists
       function resetPrivacyetceteraLists() {
+        $("#new_type,#privacyetcetera").empty();
         $("#new_type").append("<option disabled='disabled'></option>");
         for (var list in lists) {
           if (lists[list].type == undefined)
             return;
-          if (subscriptions[list] && subscriptions[list].subscribed)
+          if (lists[list].subscribed)
             $("#privacyetcetera").append("<list id='" + list + "'></list>");
           else
-            $("#new_type").append("<option>" + lists[list].language + "</option>");
+            $("#new_type").append("<option>" + lists[list].type + "</option>");
         }
       }
       // Set the properties of the section with custom lists
       function resetCustomLists() {
+        $("#customlists").empty();
         for (var list in lists) {
-          if (lists[list].type || lists[list].language)
+          if (lists[list].type || lists[list].language || list == "adblock_custom")
             return;
-          if (subscriptions[list] && subscriptions[list].subscribed)
+          if (/url\:/.test(list))
             $("#customlists").append("<list id='" + list + "'></list>");
         }
       }
+      // Fill all <list> entries with their checkboxes etcetera
+      function createListDetails() {
+        $("list[id]:empty").each(function() {
+          var id = $(this).attr("id");
+          var list = lists[id];
 
+          var checkbox = $('<input type="checkbox" />').
+            attr("id", "subscription" + id);
+
+          var name = $("<label>").
+            text(list.name).
+            attr("title", list.url).
+            attr("for", "subscription" + id);
+
+          var link_to_list = $("<a>").
+            attr("target", "_new").
+            text(translate('labelshow')).
+            addClass("linkToList").
+            attr("href", list.url);
+            
+          var remove_filter_label = $("<a>").
+            attr("href", "#").
+            text(translate("removefromlist")).
+            addClass("remove_filter").
+            click(function(event) {
+              //...
+            });
+
+          $(this).
+            append(checkbox).
+            append(name).
+            append(link_to_list).
+            append($("<span></span>").addClass("update_time")).
+            append(remove_filter_label);
+        });
+        
+        $(".listgroup:empty").html("<i>You are not subscribed to any lists in this section at the moment</i>");
+      }
+      // Return a list with all (possible) subscription data
+      function generateSubscriptionInfo() {
+        var bg = chrome.extension.getBackgroundPage();
+        var lists = bg.utils.get_subscriptions_minus_text();
+        // Add the language property to default language based lists
+        lists.russian.language = "ru";
+        lists.easylist_plus_spanish.language = "es";
+        lists.easylist_plus_french.language = "fr";
+        lists.easylist_plus_german.language = "de";
+        lists.italian.language = "it";
+        lists.japanese.language = "ja";
+        lists.easylist_plun_korean.language = "ko";
+        lists.dutch.language = "nl";
+        lists.easylist_plus_polish.language = "pl";
+        lists.chinese.language = "zh";
+        lists.easylist.language = "en";
+        // Add the type property to easylist
+        lists.easyprivacy.type = "privacyprotection";
+        // Add the other 28 subscriptions that were in the top 40
+        // ...
+        return lists;
+      }
+      
       // Translate the page
       localizePage();
     });
