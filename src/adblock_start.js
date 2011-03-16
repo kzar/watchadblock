@@ -98,6 +98,19 @@ beforeLoadHandler = function(event) {
   }
 }
 
+// Return the CSS text that will hide elements matching the given 
+// array of selectors.
+function css_hide_for_selectors(selectors) {
+  var result = [];
+  var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
+  for (var i = 0; i < selectors.length; i += GROUPSIZE) {
+    var line = selectors.slice(i, i + GROUPSIZE);
+    var rule = " { visibility:hidden !important; display:none !important; }";
+    result.push(line.join(',') + rule);
+  }
+  return result.join(' ');
+}
+
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {
   var d = document.documentElement;
@@ -120,7 +133,7 @@ function adblock_begin() {
     include_filters: true
   };
   extension_call('get_content_script_data', opts, function(data) {
-    if (data.features.debug_logging.is_enabled)
+    if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {

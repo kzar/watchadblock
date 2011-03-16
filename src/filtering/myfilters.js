@@ -1,4 +1,4 @@
-// Requires jquery and 'utils.get_optional_features' method from background
+// Requires jquery
 
 // MyFilters class manages subscriptions and the FilterSet.
 
@@ -81,12 +81,13 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''});
+  var BG = chrome.extension.getBackgroundPage();
+  var customfilters = BG.get_custom_filters_text();
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (utils.get_optional_features({}).show_google_search_text_ads.is_enabled)
+  if (BG.get_settings().show_google_search_text_ads)
     texts.push("@@||google.*/search?$elemhide")
 
   texts = texts.join('\n').split('\n');
