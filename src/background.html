@@ -291,7 +291,7 @@
         // extension button specify the tab id.
         var sender = { tab: { id: options.tabid } };
         utils.emit_page_broadcast(
-          {fn:'top_open_blacklist_ui', options:{}},
+          {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
           sender
         );
       };
