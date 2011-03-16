@@ -242,8 +242,7 @@
         updateButtonUIAndContextMenus = function() {
           getCurrentTabInfo(function(info) {
 
-            var settings = get_settings();
-            var context_disabled = !settings.show_context_menu_items;
+            var context_disabled = !get_settings().show_context_menu_items;
             var paused = localStorage.getItem('adblock_is_paused');
 
             chrome.contextMenus.removeAll();
