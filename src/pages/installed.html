@@ -28,7 +28,7 @@
         displayVersionNumber();
 
         // Check or uncheck each option.
-        var settings = BG.get_setting();
+        var settings = BG.get_settings();
         for (var name in settings) {
           $("#enable_" + name).
             attr("checked", settings[name]);
