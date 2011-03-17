@@ -34,6 +34,8 @@
       }
     </style>
     <script type="text/javascript">
+      var BG = chrome.extension.getBackgroundPage();
+
       $(function() {
         //translation
         localizePage();
@@ -93,8 +95,8 @@
                         "url:" + queryparts.requiresLocation : undefined;
 
               var id = 'url:' + queryparts.location;
-              extension_call("subscribe", {id: id, text:text, requires:req},
-                             function() {finished(true);});
+              BG.subscribe(id, text, req);
+              finished(true);
             } else finished(false);
           },
           error: function() {finished(false);}

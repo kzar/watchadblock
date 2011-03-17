@@ -7,6 +7,8 @@
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
+      var BG = chrome.extension.getBackgroundPage();
+
       // Show each DOM id in the list.
       function show(list) {
         for (var i = 0; i < list.length; i++) {
@@ -50,7 +52,7 @@
         ];
         hide(menu_items);
 
-        getCurrentTabInfo(function(info) {
+        BG.getCurrentTabInfo(function(info) {
           if (localStorage.getItem('adblock_is_paused')) {
             show(["div_status_paused", "separator0", "div_options"]);
           } else if (info.disabled_site) {
@@ -165,18 +167,15 @@
       </div>
       <script>
         $("#div_status_whitelisted a").click(function() {
-          getCurrentTabInfo(function(info) {
-            extension_call("try_to_unwhitelist", {url: info.tab.url},
-                         function(success) {
-              if (success) {
-                // Reload the tab
-                chrome.tabs.update(info.tab.id, {url: info.tab.url});
-                window.close();
-              } else {
-                $("#div_status_whitelisted").
-                  replaceWith(translate("disabled_by_filter_lists"));
-              }
-            });
+          BG.getCurrentTabInfo(function(info) {
+            if (BG.try_to_unwhitelist(info.tab.url)) {
+              // Reload the tab
+              chrome.tabs.update(info.tab.id, {url: info.tab.url});
+              window.close();
+            } else {
+              $("#div_status_whitelisted").
+                replaceWith(translate("disabled_by_filter_lists"));
+            }
           });
         });
       </script>
@@ -193,7 +192,7 @@
         $(function() {
           $("#div_status_paused a").click(function() {
             localStorage.removeItem('adblock_is_paused');
-            chrome.extension.getBackgroundPage().updateButtonUIAndContextMenus();
+            BG.updateButtonUIAndContextMenus();
             window.close();
           });
         });
@@ -208,7 +207,7 @@
       <script>
         $("#div_pause_adblock").click(function() {
           localStorage.setItem('adblock_is_paused', true);
-          chrome.extension.getBackgroundPage().updateButtonUIAndContextMenus();
+          BG.updateButtonUIAndContextMenus();
           chrome.contextMenus.removeAll();
           window.close();
         });
@@ -219,12 +218,12 @@
       </div>
       <script>
         $("#div_blacklist").click(function() {
-          getCurrentTabInfo(function(info) {
-            extension_call(
-              'open_blacklist_ui_on_tab',
-              {tabid:info.tab.id},
-              function() { window.close(); }
+          BG.getCurrentTabInfo(function(info) {
+            BG.utils.emit_page_broadcast(
+              {fn:'top_open_blacklist_ui', options: { nothing_clicked: true }},
+              { tab: info.tab } // fake sender to determine target page
             );
+            window.close();
           });
         });
       </script>
@@ -234,7 +233,7 @@
       </div>
       <script>
         $("#div_whitelist_page").click(function() {
-          getCurrentTabInfo(function(info) {
+          BG.getCurrentTabInfo(function(info) {
             var url = info.tab.url.replace(/#.*$/, '');  // Remove anchors
             var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
             var has_querystring = url_parts[2];
@@ -256,11 +255,10 @@
       </div>
       <script>
         $("#div_whitelist").click(function() {
-          getCurrentTabInfo(function(info) {
-            var bg = chrome.extension.getBackgroundPage(); 
-            bg.utils.emit_page_broadcast(
+          BG.getCurrentTabInfo(function(info) {
+            BG.utils.emit_page_broadcast(
               {fn:'top_open_whitelist_ui', options:{}},
-              { tab: info.tab }
+              { tab: info.tab } // fake sender to determine target page
             );
             window.close();
           });
