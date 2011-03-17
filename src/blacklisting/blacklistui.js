@@ -102,7 +102,7 @@ BlacklistUi.prototype._build_page1 = function() {
       "font-size": "11px !important",
       "display": "none"
     },
-    text: translate("block_by_url_instead"),
+    text: translate("choose_a_resource"),
     click: function(e) {
       var el = that._chain.current();
       var elType = typeForElement(el[0]);
