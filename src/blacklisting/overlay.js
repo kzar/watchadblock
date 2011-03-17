@@ -9,12 +9,10 @@
 Overlay = function(options) {
   Overlay.instances.push(this);
   this._then = +new Date();
-  this._defaultZIndex = 1e6;
   this._enabled = false;
   this._tooltip = null;
   this._target = null;
   this._box = null;
-  this._delay = 25;
   this._child_overlays = [];
   this._placeholder_target_names = options.placeholders;
   this._click_handler = options.click_handler;
@@ -47,7 +45,7 @@ Overlay.prototype._init = function() {
       textShadow: "none !important",
       lineHeight: "18px !important",
       padding: "0px 3px !important",
-      cursor: "inherit !important",
+      cursor: "default !important",
       color: "#000 !important"
     });
 
@@ -73,7 +71,7 @@ Overlay.prototype._init = function() {
         position = el.css("position");
         overlay = $("<div class='adblock-killme-overlay'></div>").
           css({
-            zIndex: (parseInt(el.css("z-index")) || that._defaultZIndex) + " !important",
+            zIndex: (parseInt(el.css("z-index")) || Overlay.defaultZIndex) + " !important",
             position: (position === "fixed" ? position : "absolute") + " !important",
             backgroundColor: "transparent !important",
             height: el.height(),
@@ -96,7 +94,7 @@ Overlay.prototype._mouseclick_handler = function(e) {
 // and sets tooltip info.
 Overlay.prototype._mousemove_handler = function(e) {
   var now = +new Date();
-  if (now - this._then < this._delay)
+  if (now - this._then < 25)
     return;
   this._then = now;
 
@@ -122,7 +120,7 @@ Overlay.prototype._mousemove_handler = function(e) {
   var height = el.outerHeight();
   var width = el.outerWidth();
   this._box.css({
-    zIndex: (parseInt(el.css("z-index")) || this._defaultZIndex) + 1 + " !important",
+    zIndex: (parseInt(el.css("z-index")) || Overlay.defaultZIndex) + 1 + " !important",
     left: offset.left,
     top: offset.top,
     height: height,
@@ -193,6 +191,8 @@ Overlay.prototype.remove = function() {
   this.disable();
   if (this._box) {
     this._box.remove();
+    this._tooltip = null;
+    this._box = null;
     $.each(this._child_overlays, function(i, overlay) {
       overlay.remove();
     });
@@ -200,6 +200,7 @@ Overlay.prototype.remove = function() {
   }
 }
 
+Overlay.defaultZIndex = 1e6;
 Overlay.instances = [];
 Overlay.prototype.display = Overlay.prototype.enable;
 Overlay.removeAll = function() {

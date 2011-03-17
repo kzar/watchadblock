@@ -90,7 +90,7 @@ ClickWatcher.prototype._build_ui = function() {
   // iframes... just overlay iframes and treat them as a giant object.
   var body_overlay = new Overlay({
     dom_element: $("body"),
-    placeholders: "iframe,embed,object:not(:has(object)|:has(embed)),[onclick]:empty",
+    placeholders: "iframe,embed,object:not(:has(object)|:has(embed)),[onclick]:not(td,li):empty",
     click_handler: click_catch
   });
   body_overlay.enable();
