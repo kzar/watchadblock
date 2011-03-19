@@ -39,9 +39,13 @@ function verify_whitelist() {
           domainparts[domainparts.length - 1];
       domainparts.splice(domainparts.length - 2, 2, newTLD);
     }
+    // Don't show the slider on 
+    // - sites without a third level domain name (e.g. foo.com)
+    // - sites with an ip domain (e.g. 1.2.3.4)
+    var showSlider = !(domainparts.length == 2 || /^(\d+\.){3}\d+$/.test(domain));
     $("#adblockslider", page).
       css('margin', 10).
-      css('display', (domainparts.length == 2) ? "none" : "block").
+      css('display', showSlider ? "block" : "none").
       slider({
         min:0,
         max:Math.max(domainparts.length - 2, 1),
