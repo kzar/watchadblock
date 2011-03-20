@@ -4,7 +4,7 @@ var may_open_whitelist_ui = true;
 function verify_whitelist() {
   if (!may_open_whitelist_ui)
     return;
-  var domain = document.domain;
+  var domain = document.location.hostname;
 
   // defined in blacklister.js
   load_jquery_ui(function() {
@@ -12,9 +12,9 @@ function verify_whitelist() {
 
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
-    btns[translate("buttonexclude")] = 
+    btns[translate("buttonexclude")] =
         function() {
-          extension_call('add_custom_filter', 
+          extension_call('add_custom_filter',
                          {filter: '@@||' + domain + '^$document'}, function() {
             document.location.reload();
           });
@@ -47,7 +47,7 @@ function verify_whitelist() {
         max:Math.max(domainparts.length - 2, 1),
         slide: function(event, ui) {
           domain = '';
-          for (var i = ui.value; i<=(domainparts.length - 2); i++) 
+          for (var i = ui.value; i<=(domainparts.length - 2); i++)
             domain += domainparts[i] + '.';
           domain += domainparts[domainparts.length - 1];
           $("i", page).text(domain);
