@@ -2,7 +2,7 @@
 var may_open_whitelist_ui = true;
 
 function verify_whitelist() {
-  if (!may_open_whitelist_ui)
+  if (!may_open_blacklist_ui || !may_open_whitelist_ui)
     return;
   var domain = document.domain;
 

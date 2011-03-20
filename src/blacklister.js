@@ -49,7 +49,7 @@ $("body").bind("contextmenu", function(e) {
 });
 if (window == window.top) {
   register_broadcast_listener('top_open_blacklist_ui', function(options) {
-    if (!may_open_blacklist_ui)
+    if (!may_open_whitelist_ui || !may_open_blacklist_ui)
       return;
 
     may_open_blacklist_ui = false;
