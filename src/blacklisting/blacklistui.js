@@ -48,6 +48,8 @@ BlacklistUi.prototype._fire = function(eventName, arg) {
 }
 BlacklistUi.prototype._onClose = function() {
   if (this._cancelled == true) {
+    this._ui_page1.empty().remove();
+    this._ui_page2.empty().remove();
     this._chain.current().show();
     this._fire('cancel');
   }
@@ -147,7 +149,6 @@ BlacklistUi.prototype._build_page1 = function() {
   btns[translate("buttoncancel")] = 
       function() {
         that._ui_page1.dialog('close');
-        page.remove();
       }
 
   page.dialog({
@@ -224,7 +225,6 @@ BlacklistUi.prototype._build_page2 = function() {
   btns[translate("buttoncancel")] =
       function() {
         that._ui_page2.dialog('close');
-        page.remove();
       }
   btns[translate("buttonedit")] =
       function() {
@@ -241,7 +241,6 @@ BlacklistUi.prototype._build_page2 = function() {
               alert(translate("blacklistereditinvalid1", ex));
           });
         }
-        page.remove();
       }
   btns[translate("buttonback")] = 
       function() {
