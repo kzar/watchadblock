@@ -1,14 +1,15 @@
 // Global lock so we can't open more than once on a tab.
-var may_open_whitelist_ui = true;
+if (typeof may_open_dialog_ui === "undefined")
+    may_open_dialog_ui = true;
 
 function verify_whitelist() {
-  if (!may_open_whitelist_ui)
+  if (!may_open_dialog_ui)
     return;
   var domain = document.domain;
 
   // defined in blacklister.js
   load_jquery_ui(function() {
-    may_open_whitelist_ui = false;
+    may_open_dialog_ui = false;
 
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
@@ -28,7 +29,7 @@ function verify_whitelist() {
         minHeight: 50,
         buttons: btns,
         close: function() {
-          may_open_whitelist_ui = true;
+          may_open_dialog_ui = true;
           page.remove();
         }
       });
