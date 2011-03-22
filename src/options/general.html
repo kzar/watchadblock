@@ -4,15 +4,16 @@
       // user's saved settings.
       function load_options() {
         // Check or uncheck each option.
-        var settings = BG.get_settings();
-        for (var name in settings) {
-          $("#enable_" + name).
-            attr("checked", settings[name]);
-        }
-        $("input.feature:checkbox").change(function() {
-          var is_enabled = $(this).is(':checked');
-          var name = this.id.substring(7); // TODO: hack
-          BG.set_setting(name, is_enabled);
+        BGcall("get_settings", function(settings) {
+          for (var name in settings) {
+            $("#enable_" + name).
+              attr("checked", settings[name]);
+          }
+          $("input.feature:checkbox").change(function() {
+            var is_enabled = $(this).is(':checked');
+            var name = this.id.substring(7); // TODO: hack
+            BGcall("set_setting", name, is_enabled);
+          });
         });
       }
       load_options();
@@ -38,7 +39,7 @@
         // Give the setting a sec to get saved by the other
         // change handler before recalculating filters.
         window.setTimeout(function() { 
-          BG.update_filters();
+          BGcall("update_filters");
         }, 1000);
       });
     </script>

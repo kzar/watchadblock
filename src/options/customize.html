@@ -33,10 +33,12 @@
   <script type="text/javascript" src="../filtering/filtertypes.js"></script>
   <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
-    BG.on_filters_updated(function() {
+    register_broadcast_listener("filters_updated", function() {
       if ($("#txtFiltersAdvanced").attr("disabled") == false)
         return;
-      $("#txtFiltersAdvanced").val(BG.get_custom_filters_text());
+      BGcall("get_custom_filters_text", function(text) {
+        $("#txtFiltersAdvanced").val(text);
+      });
     });
 
     $(function() {
@@ -171,7 +173,7 @@
       });
 
       function saveFilters() {
-        BG.set_custom_filters_text($("#txtFiltersAdvanced").val());
+        BGcall("set_custom_filters_text", $("#txtFiltersAdvanced").val());
 
         $("#divAddNewFilter").slideDown();
         $("#txtFiltersAdvanced").attr("disabled", "disabled");
@@ -180,7 +182,9 @@
       }
       $("#btnSaveAdvancedFilters").click(saveFilters);
 
-      $("#txtFiltersAdvanced").val(BG.get_custom_filters_text());
+      BGcall("get_custom_filters_text", function(text) {
+        $("#txtFiltersAdvanced").val(text);
+      });
 
       //translation
       localizePage();

@@ -62,10 +62,8 @@ function verify_whitelist() {
 }
 
 
-if (window == window.top) {
-  listen_for_broadcasts();
+if (window == window.top)
   register_broadcast_listener('top_open_whitelist_ui', verify_whitelist);
-}
 
 // Safari context menu support, until we unify Chrome & Safari
 // support via port.js

@@ -81,13 +81,12 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  var BG = chrome.extension.getBackgroundPage();
-  var customfilters = BG.get_custom_filters_text();
+  var customfilters = get_custom_filters_text(); // from background
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (BG.get_settings().show_google_search_text_ads) {
+  if (get_settings().show_google_search_text_ads) { // from background
     texts.push("@@||google.*/search?$elemhide"); // standard search
     texts.push("@@||www.google.*/|$elemhide");   // Google Instant
   }

@@ -2,7 +2,17 @@
 // Inputs: fn:string, options:object, callback?:function(return_value:any).
 extension_call = function(fn, options, callback) {
   if (callback == null) callback = function() {};
-  chrome.extension.sendRequest({fn:fn, options:options}, callback);
+  chrome.extension.sendRequest({command: "utils", fn:fn, options:options}, callback);
+}
+
+BGcall = function() {
+  var args = [];
+  for (var i=0; i < arguments.length; i++)
+    args.push(arguments[i]);
+  var fn = args.shift();
+  var has_callback = (typeof args[args.length - 1] == "function");
+  var callback = (has_callback ? args.pop() : function() {});
+  chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
 }
 
 // These are replaced with console.log in adblock_start.js and background.html

@@ -110,8 +110,6 @@ function adblock_begin_part_2() {
 
     log("==== ADBLOCKING PAGE: " + document.location.href);
     
-    listen_for_broadcasts();
-
     if (SAFARI) {
       // Add entries to right click menu.  Unlike Chrome, we can make
       // the menu items only appear on non-whitelisted pages.
