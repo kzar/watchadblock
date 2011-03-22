@@ -91,7 +91,7 @@
         </div>
         <script>
           $(function() {
-            if (SAFARI)
+            if (SAFARI || BG.ADBLOCK.isApp)
               return;
             $("#chromebutton").show();
             $("#chromebutton input").click(function() {
@@ -100,7 +100,14 @@
           });
         </script>
 
-        <div style="margin-top:2em;" i18n="setotheroptions"></div>
+        <div id="setotheroptions" style="margin-top:2em;"></div>
+        <script>
+          $(function() {
+            var msg = (SAFARI ? "setotheroptions1" : "setotheroptions2");
+            if (BG.ADBLOCK.isApp) msg = "setotheroptions3";
+            $("#setotheroptions").html(translate(msg));
+          });
+        </script>
       </div>
       <div id="donate_and_link">
         <div style="font-size: large;"

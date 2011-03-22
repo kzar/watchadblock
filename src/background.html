@@ -1,7 +1,11 @@
 <html>
   <head>
+    <script>
+      ADBLOCK = {};
+    </script>
     <script src="port.js"></script>
     <script src="jquery/jquery.min.js"></script>
+    <script src="app/app.js"></script>
     <script src="functions.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
@@ -240,40 +244,85 @@
         // Set the button image and context menus according to the URL 
         // of the current tab.
         updateButtonUIAndContextMenus = function() {
-          getCurrentTabInfo(function(info) {
 
-            var context_disabled = !get_settings().show_context_menu_items;
-            var paused = localStorage.getItem('adblock_is_paused');
-
+          function setContextMenus(info) {
             chrome.contextMenus.removeAll();
+            if (!get_settings().show_context_menu_items)
+              return;
 
-            if (!(paused || context_disabled || 
-                  info.whitelisted || info.disabled_site)) {
+            function addMenu(title, callback) {
               chrome.contextMenus.create({
-                title: translate("block_this_ad"),
-                contexts:["all"], 
-                onclick: function(info, tab) {
-                  var sender = { tab: tab };
-                  utils.emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{info: info}},
-                    sender
-                  );
-                }
-              });
-              chrome.contextMenus.create({
-                title: translate("block_an_ad_on_this_page"),
-                contexts:["all"], 
-                onclick: function(info, tab) {
-                  var sender = { tab: tab };
-                  utils.emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-                    sender
-                  );
-                }
+                title: title,
+                contexts: ["all"],
+                onclick: function(clickdata, tab) { callback(tab, clickdata); }
               });
             }
 
-            if (paused) {
+            if (ADBLOCK.isApp) {
+              if (localStorage.adblock_is_paused) {
+                addMenu(translate("unpause_adblock"), function(tab) {
+                  localStorage.removeItem('adblock_is_paused');
+                  setContextMenus(info);
+                });
+              }
+
+              if (info.whitelisted) {
+                var message = translate("adblock_is_disabled_on_domain", [info.domain]) +
+                              " " + translate("undo");
+                addMenu(message, function(tab) {
+                  if (try_to_unwhitelist(tab.url))
+                    chrome.tabs.update(tab.id, {url: tab.url}); // Reload tab
+                  // else, silently fail.
+                });
+              }
+            }
+
+            if (localStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
+              return;
+
+            if (ADBLOCK.isApp) {
+              // TODO: these 3 are copy-and-modified from button/popup.html
+              addMenu(translate("pause_adblock"), function(tab) {
+                localStorage.adblock_is_paused = true;
+                setContextMenus(info);
+              });
+
+              addMenu(translate("dont_run_on_this_page"), function(tab) {
+                var url = tab.url.replace(/#.*$/, '');  // Remove anchors
+                var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
+                var has_querystring = url_parts[2];
+                var filter = '@@|' + url_parts[1] + 
+                  (has_querystring ? '?' : '|') + '$document';
+                utils.add_custom_filter({filter: filter});
+                // Reload the tab
+                chrome.tabs.update(tab.id, {url: tab.url});
+              });
+
+              addMenu(translate("dont_run_on_domain", [info.domain]), function(tab) {
+                utils.emit_page_broadcast(
+                  {fn:'top_open_whitelist_ui', options:{}},
+                  {tab: tab} // fake sender to determine target page
+                );
+              });
+            }
+
+            addMenu(translate("block_this_ad"), function(tab, clickdata) {
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{info: clickdata}},
+                {tab: tab}
+              );
+            });
+
+            addMenu(translate("block_an_ad_on_this_page"), function(tab) {
+              utils.emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                {tab: tab}
+              );
+            });
+          }
+
+          function setBrowserButton(info) {
+            if (localStorage.adblock_is_paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.disabled_site && 
                 !/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
@@ -286,6 +335,11 @@
             } else {
               chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
             }
+          }
+
+          getCurrentTabInfo(function(info) {
+            setContextMenus(info);
+            setBrowserButton(info);
           });
         }
       }
@@ -516,13 +570,15 @@
       function note_install() {
         if (storage_get('installed_at'))
           return;
+
         var now = new Date().getTime();
         storage_set('installed_at', now);
-        $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
-        // TODO: open in safari as well
-        if (!SAFARI) {
-          chrome.tabs.create({url: "pages/installed.html"});
-        }
+        var flavor = (SAFARI ? "safari" : "chrome_ext");
+        if (ADBLOCK.isApp) flavor = "chrome_app";
+        var data = { installed_at: now, flavor: flavor };
+        $.get("http://chromeadblock.com/api/visit.php", data);
+
+        chrome.tabs.create({url: "pages/installed.html"});
       }
       note_install();
 
@@ -582,9 +638,8 @@
 
         safari.application.addEventListener("command", function(commandEvent) {
           // Open Options page upon Toolbar button click.
-          if (commandEvent.command == "AdBlockOptions") {
-            safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
-          }
+          if (commandEvent.command == "AdBlockOptions")
+            chrome.tabs.create({url: "options/index.html"});
           if (commandEvent.command in 
               {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);

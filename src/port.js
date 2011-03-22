@@ -312,7 +312,15 @@ if (SAFARI) {
       };
 
       return theI18nObject;
-    })()
+    })(),
+
+    tabs: {
+      create: function(options) {
+        var window = safari.application.activeBrowserWindow;
+        var urlToOpen = chrome.extension.getUrl(options.url);
+        window.openTab("foreground").url = urlToOpen;
+      }
+    }
   };
 }
 
