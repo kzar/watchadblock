@@ -87,8 +87,10 @@ MyFilters.prototype.rebuild = function() {
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (BG.get_settings().show_google_search_text_ads)
-    texts.push("@@||google.*/search?$elemhide")
+  if (BG.get_settings().show_google_search_text_ads) {
+    texts.push("@@||google.*/search?$elemhide"); // standard search
+    texts.push("@@||www.google.*/|$elemhide");   // Google Instant
+  }
 
   texts = texts.join('\n').split('\n');
 
