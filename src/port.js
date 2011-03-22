@@ -317,7 +317,7 @@ if (SAFARI) {
     tabs: {
       create: function(options) {
         var window = safari.application.activeBrowserWindow;
-        var urlToOpen = chrome.extension.getUrl(options.url);
+        var urlToOpen = chrome.extension.getURL(options.url);
         window.openTab("foreground").url = urlToOpen;
       }
     }
