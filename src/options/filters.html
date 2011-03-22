@@ -96,7 +96,9 @@
         });
       }
 
-      register_broadcast_listener("filters_updated", function() {
+      chrome.extension.onRequest.addListener(function(request) {
+        if (request.command != "filters_updated") 
+          return;
         refresh_subscription_view();
       });
 

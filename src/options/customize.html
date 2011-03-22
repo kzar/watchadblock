@@ -33,7 +33,9 @@
   <script type="text/javascript" src="../filtering/filtertypes.js"></script>
   <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
-    register_broadcast_listener("filters_updated", function() {
+    chrome.extension.onRequest.addListener(function(request) {
+      if (request.command != "filters_updated")
+        return;
       if ($("#txtFiltersAdvanced").attr("disabled") == false)
         return;
       BGcall("get_custom_filters_text", function(text) {

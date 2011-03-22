@@ -366,8 +366,8 @@
         },
 
         // Bounce messages back to register_broadcast_listener() callers.
-        emit_broadcast: (function() {
-          // Private list of connected ports for emit_broadcast()
+        emit_page_broadcast: (function() {
+          // Private list of connected ports for emit_page_broadcast()
           var broadcast_ports = [];
           chrome.extension.onConnect.addListener(function(port) {
             port.onDisconnect.addListener(function(disconnected_port) {
@@ -379,20 +379,15 @@
             broadcast_ports.push(port);
           });
 
-          // The emit_broadcast() function
-          var theFunction = function(request, sender, limit_to_page) {
+          // The emit_page_broadcast() function
+          var theFunction = function(request, sender) {
             $.each(broadcast_ports, function(i, port) {
-              if (!limit_to_page || port.sender.tab.id == sender.tab.id)
+              if (port.sender.tab.id == sender.tab.id)
                 port.postMessage(request);
             });
           };
           return theFunction;
         })(),
-
-        // Like emit_broadcast, but only sends to listeners on the same page.
-        emit_page_broadcast: function(request, sender) {
-          utils.emit_broadcast(request, sender, true);
-        },
 
         // Will open the resource blocking tab. 
         // Input: resources: array of resource strings; 
@@ -442,8 +437,7 @@
               sendResponse(result);
             }
             else {
-              log("Invalid command");
-              log(request);
+              // Not for us
             }
           }
         );
@@ -519,9 +513,6 @@
         log = function(text) { console.log(text); };
       
       _myfilters = new MyFilters();
-      _myfilters.updated(function() {
-        utils.emit_broadcast({fn: "filters_updated", options: {}});
-      });
 
       // If the user has just installed, make a note of it.  
       function note_install() {

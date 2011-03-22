@@ -6,8 +6,6 @@
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
 function MyFilters() {
-  this._event_handlers = { 'updated': [] };
-
   var subscriptions_json = localStorage.getItem('filter_lists') || "null";
   var stored_subscriptions = JSON.parse(subscriptions_json);
 
@@ -52,13 +50,6 @@ function MyFilters() {
   );
 }
 
-// Event fired when subscriptions have been updated, after the subscriptions
-// have been persisted and filterset recalculated.
-// Inputs: callback: fn(void)
-MyFilters.prototype.updated = function(callback) {
-  this._event_handlers.updated.push(callback);
-}
-
 // Save this._subscriptions to disk, create a new FilterSet instance, and fire 
 // the "updated" handler.
 // Inputs: none.
@@ -68,9 +59,7 @@ MyFilters.prototype.update = function() {
 
   this.rebuild();
 
-  // Fire updated event
-  for (var i = 0; i < this._event_handlers.updated.length; i++)
-    this._event_handlers.updated[i]();
+  chrome.extension.sendRequest({command: "filters_updated"});
 }
 
 // Rebuild this.[non]global based on the current settings and subscriptions.
