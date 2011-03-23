@@ -6,8 +6,6 @@
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
 function MyFilters() {
-  this._event_handlers = { 'updated': [] };
-
   var subscriptions_json = localStorage.getItem('filter_lists') || "null";
   var stored_subscriptions = JSON.parse(subscriptions_json);
 
@@ -52,13 +50,6 @@ function MyFilters() {
   );
 }
 
-// Event fired when subscriptions have been updated, after the subscriptions
-// have been persisted and filterset recalculated.
-// Inputs: callback: fn(void)
-MyFilters.prototype.updated = function(callback) {
-  this._event_handlers.updated.push(callback);
-}
-
 // Save this._subscriptions to disk, create a new FilterSet instance, and fire 
 // the "updated" handler.
 // Inputs: none.
@@ -68,9 +59,7 @@ MyFilters.prototype.update = function() {
 
   this.rebuild();
 
-  // Fire updated event
-  for (var i = 0; i < this._event_handlers.updated.length; i++)
-    this._event_handlers.updated[i]();
+  chrome.extension.sendRequest({command: "filters_updated"});
 }
 
 // Rebuild this.[non]global based on the current settings and subscriptions.
@@ -81,13 +70,12 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  var BG = chrome.extension.getBackgroundPage();
-  var customfilters = BG.get_custom_filters_text();
+  var customfilters = get_custom_filters_text(); // from background
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (BG.get_settings().show_google_search_text_ads) {
+  if (get_settings().show_google_search_text_ads) { // from background
     texts.push("@@||google.*/search?$elemhide"); // standard search
     texts.push("@@||www.google.*/|$elemhide");   // Google Instant
   }

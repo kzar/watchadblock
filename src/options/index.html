@@ -10,10 +10,6 @@
     <script src="../functions.js"></script>
     <script src="../broadcast_channel.js"></script>
     <script>
-      var BG = chrome.extension.getBackgroundPage();
-
-      listen_for_broadcasts();
-
       function note_visit() {
         if (localStorage.getItem('visited_options_at') != null)
           return;

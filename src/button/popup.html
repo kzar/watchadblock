@@ -219,7 +219,7 @@
       <script>
         $("#div_blacklist").click(function() {
           BG.getCurrentTabInfo(function(info) {
-            BG.utils.emit_page_broadcast(
+            BG.emit_page_broadcast(
               {fn:'top_open_blacklist_ui', options: { nothing_clicked: true }},
               { tab: info.tab } // fake sender to determine target page
             );
@@ -239,11 +239,10 @@
             var has_querystring = url_parts[2];
             var filter = '@@|' + url_parts[1] + 
               (has_querystring ? '?' : '|') + '$document';
-            extension_call("add_custom_filter", {filter: filter}, function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
-            });
+            BG.add_custom_filter(filter);
+            // Reload the tab
+            chrome.tabs.update(info.tab.id, {url: info.tab.url});
+            window.close();
           });
         });
       </script>
@@ -256,7 +255,7 @@
       <script>
         $("#div_whitelist").click(function() {
           BG.getCurrentTabInfo(function(info) {
-            BG.utils.emit_page_broadcast(
+            BG.emit_page_broadcast(
               {fn:'top_open_whitelist_ui', options:{}},
               { tab: info.tab } // fake sender to determine target page
             );

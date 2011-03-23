@@ -15,11 +15,20 @@
 // unchanged in Chrome.
 
 if (typeof SAFARI == "undefined") {
+(function() {
 
 // True in Safari, false in Chrome.
 SAFARI = (typeof safari !== "undefined");
 
 if (SAFARI) {
+
+  addListener = function(handler) {
+    var x = safari.self;
+    if (!x.addEventListener)
+      x = safari.application;
+    x.addEventListener("message", handler, false);
+  };
+
   // Replace the 'chrome' object with a Safari adapter.
   chrome = {
     // Track tabs that make requests to the global page, assigning them
@@ -61,7 +70,8 @@ if (SAFARI) {
           // Listen for a response for our specific request token.
           addOneTimeResponseListener(callbackToken, callback);
 
-          safari.self.tab.dispatchMessage("request", {
+          var x = safari.self.tab || safari.application.activeBrowserWindow.activeTab.page;
+          x.dispatchMessage("request", {
             data: data,
             callbackToken: callbackToken
           });
@@ -88,7 +98,7 @@ if (SAFARI) {
             }, 0);
           };
 
-          safari.self.addEventListener("message", responseHandler, false);
+          addListener(responseHandler);
         }
 
         return theFunction;
@@ -96,7 +106,7 @@ if (SAFARI) {
 
       onRequest: {
         addListener: function(handler) {
-          safari.application.addEventListener("message", function(messageEvent) {
+          addListener(function(messageEvent) {
             // Only listen for "sendRequest" messages
             if (messageEvent.name != "request")
               return;
@@ -110,19 +120,20 @@ if (SAFARI) {
               messageEvent.target.page.dispatchMessage("response", responseMessage);
             }
             handler(request, sender, sendResponse);
-          }, false);
+          });
         },
       },
 
       connect: function(port_data) {
         var portUuid = "portUuid" + Math.random();
-        safari.self.tab.dispatchMessage("port-create", {name: port_data.name, uuid: portUuid});
+        var x = safari.self.tab || safari.application.activeBrowserWindow.activeTab.page;
+        x.dispatchMessage("port-create", {name: port_data.name, uuid: portUuid});
 
         var newPort = {
           name: port_data.name,
           onMessage: { 
             addListener: function(listener) {
-              safari.self.addEventListener("message", function(messageEvent) {
+              addListener(function(messageEvent) {
                 // If the message was a port.postMessage to our port, notify our listener.
                 if (messageEvent.name != "port-postMessage") 
                   return;
@@ -139,7 +150,7 @@ if (SAFARI) {
       onConnect: {
         addListener: function(handler) {
           // Listen for port creations
-          safari.application.addEventListener("message", function(messageEvent) {
+          addListener(function(messageEvent) {
             if (messageEvent.name != "port-create")
               return;
 
@@ -316,4 +327,4 @@ if (SAFARI) {
   };
 }
 
-} // end if (typeof SAFARI == "undefined")
+})(); } // end if (typeof SAFARI == "undefined") { (function() {

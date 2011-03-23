@@ -132,7 +132,7 @@ function adblock_begin() {
     domain: document.domain, 
     include_filters: true
   };
-  extension_call('get_content_script_data', opts, function(data) {
+  BGcall('get_content_script_data', opts, function(data) {
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
 

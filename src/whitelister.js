@@ -15,8 +15,8 @@ function verify_whitelist() {
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
     btns[translate("buttonexclude")] = 
         function() {
-          extension_call('add_custom_filter', 
-                         {filter: '@@||' + domain + '^$document'}, function() {
+          var filter = '@@||' + domain + '^$document';
+          BGcall('add_custom_filter', filter, function() {
             document.location.reload();
           });
         }
@@ -62,10 +62,8 @@ function verify_whitelist() {
 }
 
 
-if (window == window.top) {
-  listen_for_broadcasts();
+if (window == window.top)
   register_broadcast_listener('top_open_whitelist_ui', verify_whitelist);
-}
 
 // Safari context menu support, until we unify Chrome & Safari
 // support via port.js

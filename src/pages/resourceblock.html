@@ -413,8 +413,7 @@
 
             // Add the filter
             $("#addthefilter").click(function() {
-              extension_call('add_custom_filter', { filter: createfilter() }, 
-              function() {
+              BGcall('add_custom_filter', createfilter(), function() {
                 alert(translate("filterhasbeenadded"));
                 window.close();
               });
@@ -448,7 +447,7 @@
           domain: domain,
           include_filters: true
         };
-        extension_call('get_content_script_data', opts, function(data) {
+        BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
           domaindata = data;
           if (data.page_is_whitelisted || data.adblock_is_paused) {
@@ -464,7 +463,7 @@
                                 filter: SAFARI ? "@@elemhiderule" : noHideRule};
             
             // Load all stored resources
-            var cache = BG.utils.show_resourceblocker.cached_resources;
+            var cache = BG.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
             // Convert all resources to the object type
             if (loaded_resources)
