@@ -147,7 +147,8 @@
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
       //         text: filter text string fetched from that url
-      //         requires?: the id of a list if it is a supplementary list
+      //         requires: the id of a list if it is a supplementary list,
+      //                   or null if nothing required
       // Returns: null, upon completion
       subscribe = function(id, text, requires) {
         _myfilters.subscribe(id, text, requires);
