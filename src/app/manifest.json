@@ -1,0 +1,57 @@
+{
+  "name": "AdBlock",
+  "version": "2.3.15",
+  "description": "__MSG_description1__",
+  "icons": {
+    "16": "img/icon16.png",
+    "128": "img/icon128.png"
+  },
+  "permissions": [
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "notifications"
+  ],
+  "minimum_chrome_version": "6",
+  "background_page": "background.html",
+  "options_page": "options/index.html",
+  "app": {
+    "launch": {
+      "local_path": "options/index.html"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "port.js",
+        "jquery/jquery.min.js", 
+        "functions.js", 
+        "broadcast_channel.js", 
+
+      
+        "filtering/filteroptions.js",
+        "filtering/fifocache.js",
+        "filtering/filtertypes.js",
+        "filtering/filterset.js",
+
+
+        "adblock_start.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "blacklisting/overlay.js", 
+        "blacklisting/clickwatcher.js",
+        "blacklisting/elementchain.js",
+        "blacklisting/blacklistui.js",
+        "blacklister.js", 
+        "whitelister.js", 
+        "adblock.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "default_locale": "en"
+}

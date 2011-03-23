@@ -8,6 +8,9 @@
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
+      var flavor = document.location.search.substring(1) || "chrome_ext";
+    </script>
+    <script>
       function displayVersionNumber() {
         try {
           var xhr = new XMLHttpRequest();
@@ -90,16 +93,23 @@
         </div>
         <script>
           $(function() {
-            if (SAFARI)
-              return;
-            $("#chromebutton").show();
-            $("#chromebutton input").click(function() {
-              $("#chromebutton_upon_check").show();
-            });
+            if (flavor == "chrome_ext") {
+              $("#chromebutton").show();
+              $("#chromebutton input").click(function() {
+                $("#chromebutton_upon_check").show();
+              });
+            }
           });
         </script>
 
-        <div style="margin-top:2em;" i18n="setotheroptions"></div>
+        <div id="setotheroptions" style="margin-top:2em;"></div>
+        <script>
+          $(function() {
+            var flavormap = { "safari": 1, "chrome_ext": 2, "chrome_app": 3};
+            var msg = "setotheroptions" + flavormap[flavor];
+            $("#setotheroptions").html(translate(msg));
+          });
+        </script>
       </div>
       <div id="donate_and_link">
         <div style="font-size: large;"
