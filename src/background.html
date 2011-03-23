@@ -578,7 +578,7 @@
         var data = { installed_at: now, flavor: flavor };
         $.get("http://chromeadblock.com/api/visit.php", data);
 
-        chrome.tabs.create({url: "pages/installed.html"});
+        chrome.tabs.create({url: "pages/installed.html?" + flavor});
       }
       note_install();
 

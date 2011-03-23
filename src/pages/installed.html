@@ -10,6 +10,9 @@
     <script>
       var BG = chrome.extension.getBackgroundPage();
 
+      var flavor = document.location.search.substring(1) || "chrome_ext";
+    </script>
+    <script>
       function displayVersionNumber() {
         try {
           var xhr = new XMLHttpRequest();
@@ -91,20 +94,20 @@
         </div>
         <script>
           $(function() {
-            if (SAFARI || BG.ADBLOCK.isApp)
-              return;
-            $("#chromebutton").show();
-            $("#chromebutton input").click(function() {
-              $("#chromebutton_upon_check").show();
-            });
+            if (flavor == "chrome_ext") {
+              $("#chromebutton").show();
+              $("#chromebutton input").click(function() {
+                $("#chromebutton_upon_check").show();
+              });
+            }
           });
         </script>
 
         <div id="setotheroptions" style="margin-top:2em;"></div>
         <script>
           $(function() {
-            var msg = (SAFARI ? "setotheroptions1" : "setotheroptions2");
-            if (BG.ADBLOCK.isApp) msg = "setotheroptions3";
+            var flavormap = { "safari": 1, "chrome_ext": 2, "chrome_app": 3};
+            var msg = "setotheroptions" + flavormap[flavor];
             $("#setotheroptions").html(translate(msg));
           });
         </script>
