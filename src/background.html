@@ -249,7 +249,7 @@
                 contexts:["all"], 
                 onclick: function(info, tab) {
                   var sender = { tab: tab };
-                  utils.emit_page_broadcast(
+                  emit_page_broadcast(
                     {fn:'top_open_blacklist_ui', options:{info: info}},
                     sender
                   );
@@ -260,7 +260,7 @@
                 contexts:["all"], 
                 onclick: function(info, tab) {
                   var sender = { tab: tab };
-                  utils.emit_page_broadcast(
+                  emit_page_broadcast(
                     {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
                     sender
                   );
@@ -286,141 +286,137 @@
       }
 
 
-      // These functions are usually only called by content scripts, via
-      // extension_call().
-      var utils = {
+      // These functions are usually only called by content scripts.
 
-        // Add a new custom filter entry.
-        // Inputs: filter:string line of text to add to custom filters.
-        // Returns: null if succesfull, otherwise an exception
-        add_custom_filter: function(options) {
-          var custom_filters = get_custom_filters_text();
-          try {
-            if (FilterNormalizer.normalizeLine(options.filter)) {
-              custom_filters = custom_filters + '\n' + options.filter;
-              set_custom_filters_text(custom_filters);
-              return null;
-            }
-            return "This filter is unsupported";
-          } catch(ex) {
-            return ex;
+      // Add a new custom filter entry.
+      // Inputs: filter:string line of text to add to custom filters.
+      // Returns: null if succesfull, otherwise an exception
+      add_custom_filter = function(options) {
+        var custom_filters = get_custom_filters_text();
+        try {
+          if (FilterNormalizer.normalizeLine(options.filter)) {
+            custom_filters = custom_filters + '\n' + options.filter;
+            set_custom_filters_text(custom_filters);
+            return null;
           }
-        },
+          return "This filter is unsupported";
+        } catch(ex) {
+          return ex;
+        }
+      };
 
-        // Return the contents of a local file.
-        // Inputs: file:string - the file relative address, eg "js/foo.js".
-        // Returns: the content of the file.
-        readfile: function(options) {
-          // A bug in jquery prevents local files from being read, so use XHR.
-          var xhr = new XMLHttpRequest();
-          xhr.open("GET", chrome.extension.getURL(options.file), false);
-          xhr.send();
-          return xhr.responseText;
-        },
+      // Return the contents of a local file.
+      // Inputs: file:string - the file relative address, eg "js/foo.js".
+      // Returns: the content of the file.
+      readfile = function(options) {
+        // A bug in jquery prevents local files from being read, so use XHR.
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", chrome.extension.getURL(options.file), false);
+        xhr.send();
+        return xhr.responseText;
+      };
 
-        do_not_show_youtube_help_msg: function(options) {
-          set_setting("show_youtube_help_msg", false);
-        },
+      do_not_show_youtube_help_msg = function(options) {
+        set_setting("show_youtube_help_msg", false);
+      };
 
-        // TODO: make better.
-        // Inputs: domain:string the domain of the calling frame.
-        //         include_filters:bool true if hide and block filters should be
-        //           included
-        get_content_script_data: function(options, sender) {
-          var whitelisted = page_is_whitelisted(sender.tab.url);
-          var settings = get_settings();
-          var result = {
-            page_is_whitelisted: whitelisted,
-            adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-            settings: settings
-          };
-          if (whitelisted)
-            return result;
-          // If in debug mode, send filters to adblock.js to print css info.
-          // Normally only adblock_start asks to include_filters.
-          if (!options.include_filters && !settings.debug_logging)
-            return result;
-
-          // Not whitelisted, and running on adblock_start.  We have two tasks:
-          // apply CSS-hiding rules, and send Chrome a filterset.
-
-          // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
-          // when not cached, it takes about 100ms.  So more caching would be good.  The
-          // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-          // should be able to turn up the fifocache size by a lot.  have the fifocache log
-          // how big each new entry is, to verify this.
-          if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-            var global_hide = _myfilters.global.cached_getSelectors;
-            var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
-            result.selectors = global_hide.concat(nonglobal_hide);
-          }
-          // Chrome needs the blocking filters in the content script until a
-          // synchronous background communication API comes along.
-          if (!SAFARI) {
-            var global_block = _myfilters.global.cached_blockFiltersText;
-            var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
-            result.block = global_block + nonglobal_block.join('\n');
-          }
-
+      // TODO: make better.
+      // Inputs: domain:string the domain of the calling frame.
+      //         include_filters:bool true if hide and block filters should be
+      //           included
+      get_content_script_data = function(options, sender) {
+        var whitelisted = page_is_whitelisted(sender.tab.url);
+        var settings = get_settings();
+        var result = {
+          page_is_whitelisted: whitelisted,
+          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
+          settings: settings
+        };
+        if (whitelisted)
           return result;
-        },
+        // If in debug mode, send filters to adblock.js to print css info.
+        // Normally only adblock_start asks to include_filters.
+        if (!options.include_filters && !settings.debug_logging)
+          return result;
 
-        // Bounce messages back to register_broadcast_listener() callers.
-        emit_page_broadcast: (function() {
-          // Private list of connected ports for emit_page_broadcast()
-          var broadcast_ports = [];
-          chrome.extension.onConnect.addListener(function(port) {
-            port.onDisconnect.addListener(function(disconnected_port) {
-              var where = broadcast_ports.indexOf(disconnected_port);
-              if (where != -1) {
-                broadcast_ports.splice(where, 1);
-              }
-            });
-            broadcast_ports.push(port);
+        // Not whitelisted, and running on adblock_start.  We have two tasks:
+        // apply CSS-hiding rules, and send Chrome a filterset.
+
+        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
+        // when not cached, it takes about 100ms.  So more caching would be good.  The
+        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
+        // should be able to turn up the fifocache size by a lot.  have the fifocache log
+        // how big each new entry is, to verify this.
+        if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
+          var global_hide = _myfilters.global.cached_getSelectors;
+          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+          result.selectors = global_hide.concat(nonglobal_hide);
+        }
+        // Chrome needs the blocking filters in the content script until a
+        // synchronous background communication API comes along.
+        if (!SAFARI) {
+          var global_block = _myfilters.global.cached_blockFiltersText;
+          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
+          result.block = global_block + nonglobal_block.join('\n');
+        }
+
+        return result;
+      };
+
+      // Bounce messages back to register_broadcast_listener() callers.
+      emit_page_broadcast = (function() {
+        // Private list of connected ports for emit_page_broadcast()
+        var broadcast_ports = [];
+        chrome.extension.onConnect.addListener(function(port) {
+          port.onDisconnect.addListener(function(disconnected_port) {
+            var where = broadcast_ports.indexOf(disconnected_port);
+            if (where != -1) {
+              broadcast_ports.splice(where, 1);
+            }
           });
+          broadcast_ports.push(port);
+        });
 
-          // The emit_page_broadcast() function
-          var theFunction = function(request, sender) {
-            $.each(broadcast_ports, function(i, port) {
-              if (port.sender.tab.id == sender.tab.id)
-                port.postMessage(request);
-            });
-          };
-          return theFunction;
-        })(),
+        // The emit_page_broadcast() function
+        var theFunction = function(request, sender) {
+          $.each(broadcast_ports, function(i, port) {
+            if (port.sender.tab.id == sender.tab.id)
+              port.postMessage(request);
+          });
+        };
+        return theFunction;
+      })();
 
-        // Will open the resource blocking tab. 
-        // Input: resources: array of resource strings; 
-        //                   see resourceblock.html for format
-        show_resourceblocker: (function() {
-          // Stores resources used by resourceblock.html
-          var _cached_resources = new FifoCache(5);
+      // Will open the resource blocking tab. 
+      // Input: resources: array of resource strings; 
+      //                   see resourceblock.html for format
+      show_resourceblocker = (function() {
+        // Stores resources used by resourceblock.html
+        var _cached_resources = new FifoCache(5);
 
-          var theFunction = function(options, sender) {
-            var url = sender.tab.url.replace(/\#.*/, '');
-            _cached_resources.set(url, options.resources);
-            chrome.tabs.create({url: "pages/resourceblock.html?url=" + escape(url)});
-          };
-          theFunction.cached_resources = _cached_resources; // make it public
+        var theFunction = function(options, sender) {
+          var url = sender.tab.url.replace(/\#.*/, '');
+          _cached_resources.set(url, options.resources);
+          chrome.tabs.create({url: "pages/resourceblock.html?url=" + escape(url)});
+        };
+        theFunction.cached_resources = _cached_resources; // make it public
 
-          return theFunction;
-        })(),
+        return theFunction;
+      })();
 
-        // Opens a popup that subscribes to a new list
-        // Must be here because other pages cannot open popups...
-        // Inputs: searchquery: the search part of the abp: url
-        subscribe_popup: function(options) {
-          window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                      options.searchquery), "_blank", 
-                      'scrollbars=0,location=0,resizable=0,width=450,height=140');
-        },
+      // Opens a popup that subscribes to a new list
+      // Must be here because other pages cannot open popups...
+      // Inputs: searchquery: the search part of the abp: url
+      subscribe_popup = function(options) {
+        window.open(chrome.extension.getURL('pages/subscribe.html?' +
+                    options.searchquery), "_blank", 
+                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
+      };
 
-        // Return chrome.i18n._getL10nData() for content scripts who cannot
-        // call that function (since it loads extension files from disk.)
-        // Only defined in Safari.
-        get_l10n_data: (SAFARI ? chrome.i18n._getL10nData : undefined)
-
-      }; // var utils
+      // Return chrome.i18n._getL10nData() for content scripts who cannot
+      // call that function (since it loads extension files from disk.)
+      // Only defined in Safari.
+      get_l10n_data = (SAFARI ? chrome.i18n._getL10nData : undefined);
 
 
       // REQUEST DISPATCH
@@ -428,7 +424,8 @@
         chrome.extension.onRequest.addListener(
           function(request, sender, sendResponse) { 
             if (request.command == "utils") { // extension_call
-              var result = utils[request.fn](request.options, sender);
+              var fn = window[request.fn];
+              var result = fn(request.options, sender);
               sendResponse(result);
             }
             else if (request.command == "call") { // BGcall
@@ -615,7 +612,7 @@
             var website = old_style_whitelist[i];
             if (website[0] == '.')
               website = '*' + website;
-            utils.add_custom_filter({filter: '@@||' + website + '^$document'});
+            add_custom_filter({filter: '@@||' + website + '^$document'});
           }
           localStorage.removeItem('whitelist');
         }
