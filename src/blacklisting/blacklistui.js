@@ -232,7 +232,7 @@ BlacklistUi.prototype._build_page2 = function() {
         that._ui_page2.dialog('close');
         custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
         if (custom_filter) {//null => user clicked cancel
-          if (custom_filter.indexOf('##') == -1) 
+          if (!/\#\#/.test(custom_filter)) 
             custom_filter = "##" + custom_filter;
           BGcall('add_custom_filter', custom_filter, function(ex) {
             if (!ex)

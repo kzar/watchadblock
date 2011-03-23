@@ -32,9 +32,9 @@ Filter.isWhitelistFilter = function(text) {
 
 Filter.isComment = function(text) {
   return text.length == 0 ||
-         (text[0] == '!') ||
-         (text[0] == '[' && text.indexOf('[Adblock') == 0) ||
-         (text[0] == '(' && text.indexOf('(Adblock') == 0);
+         text[0] == '!' ||
+         (text[0] == '[' && /^\[adblock/i.test(text)) ||
+         (text[0] == '(' && /^\(adblock/i.test(text));
 }
 
 // Given a comma-separated list of domain includes and excludes, return
@@ -186,7 +186,7 @@ PatternFilter._parseRule = function(text) {
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
 
-    if (option.indexOf('domain=') == 0) {
+    if (/^domain\=/.test(option)) {
       result.domainText = option.substring(7);
       continue;
     }

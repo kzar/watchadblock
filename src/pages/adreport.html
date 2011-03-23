@@ -45,7 +45,7 @@
       var options = [];
       var search = document.location.search.substring(1).split('&');
       for (var item in search) {
-        if (search[item].indexOf('=') == -1) continue;
+        if (!/\=/.test(search[item])) continue;
         options[search[item].split('=')[0]] = 
                          unescape(search[item].split('=')[1]);
       }
@@ -61,6 +61,21 @@
           else if (subs[id].subscribed)
             subscribed_filter_names.push(subs[id].name);
 
+<<<<<<< .mine
+      //generate the URL to the issue tracker
+      function generateReportURL() {
+        var domain = "";
+        if (options['url']) {
+          domain = options['url'].substring(options['url'].indexOf("://") + 3);
+          domain = domain.substring(0, domain.indexOf('/'));
+        }
+        var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
+                     "?template=Ad%20report%20from%20user&summary=";
+        if (domain) 
+          result = result + escape("Ad report: " + domain);
+        else
+          result = result + escape("Ad report at <enter URL of webpage here>");
+=======
         //generate the URL to the issue tracker
         function generateReportURL() {
           var domain = "";
@@ -74,6 +89,7 @@
             result = result + escape("Ad report: " + domain);
           else
             result = result + escape("Ad report at <enter URL of webpage here>");
+>>>>>>> .r2066
 
           var body = [];
           body.push("Last step -- point me to the ad so I can fix the bug! " +
@@ -247,7 +263,7 @@
       //If the user clicks a radio button
       $("#step3_yes").click(function() {
         $("#step3").html("<span class='answer'>" + translate("yes") + "</span>");
-        if (contact.indexOf('mailto:') == 0)
+        if (/^mailto\:/.test(contact))
           contact = contact.replace(" at ", "@");
         var reportLink = "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>";
         $("#whattodo").html(translate("reportfilterlistproblem", [reportLink]));

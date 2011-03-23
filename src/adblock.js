@@ -13,7 +13,7 @@ function debug_print_selector_matches(selectors) {
 
 // Run special site-specific code.
 function run_specials(settings) {
-  if (document.location.host.indexOf('mail.live.com') != -1) {
+  if (/mail\.live\.com/.test(document.location.host)) {
     //removing the space remaining in Hotmail/WLMail
     $(".Unmanaged .WithSkyscraper #MainContent").
       css("margin-right", "1px");
