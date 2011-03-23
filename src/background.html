@@ -321,7 +321,7 @@
             if (localStorage.adblock_is_paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.disabled_site && 
-                !/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
+                !/^chrome-extension:.*pages\/installed.html/.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
               // users see how it will normally look when deciding whether or
               // not to hide it. All other disabled pages will have the gray one
