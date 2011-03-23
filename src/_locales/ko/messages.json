@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "200만명 이상의 사용자와 함께 하는 가장 인기 있는 크롬 확장 프로그램. 인터넷 광고 차단!",
     "description": "Extension description in manifest"
@@ -72,10 +72,6 @@
   "sliderexplanation": {
     "message": "웹 페이지의 광고가 숨겨질 때까지 슬라이더를 움직이십시오.<br/>",
     "description": "Blacklister slider page message"
-  },
-    "block_by_url_instead": {
-    "message": "고급 : 차단 필터 작성(URL에 기반한 요청 차단)",
-    "description": "Link on blacklister slider page"
   },
   "slidertitle": {
     "message": "1단계 : 숨기려는 요소 선택",
@@ -837,23 +833,23 @@
   },
   "blockeverycontaining": {
     "message": "차단 패턴",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "whitelisteverycontaining": {
     "message": "허용 패턴",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "wildcardhint": {
     "message": "참고 : 와일드 카드 문자(*)를 사용할 수 있습니다.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "novalidurlpattern": {
     "message": "올바른 URL 패턴을 입력하십시오!",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "thirdpartycheckbox": {
     "message": "다음 도메인을 제외한 모든 도메인에 적용 : $domain$",
-    "description": "resourceblocking page string",
+    "description": "resourcelist page string",
     "placeholders": {
       "domain": {
         "content": "$1",
@@ -863,99 +859,95 @@
   },
   "filterhasbeenadded": {
     "message": "필터가 추가되었습니다!\n필터의 적용 효과를 보려면 페이지를 새로고치십시오.",
-    "description": "resourceblocking page string (the 'slash n' is a line break)"
+    "description": "resourcelist page string (the 'slash n' is a line break)"
   },
   "whitelistedorpausedpage": {
     "message": "현재 페이지는 허용되거나 애드블록의 사용이 중지되었습니다. 그러므로 주소를 인식하지 못 하며, 차단 가능 목록 페이지를 열 수 없습니다.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "noresourcessend": {
     "message": "주소를 불러오는 중에 문제가 발생했습니다. 이 페이지는 닫힐 것입니다.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceiswhitelisted": {
     "message": "선택한 주소는 허용되었습니다. 그러므로 차단할 수 없습니다.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "selectresources": {
     "message": "차단 가능 목록에서 차단/허용하려는 주소를 선택하십시오.",
-    "description": "resourceblocking page string"
-  },
-  "resourceblocktitle": {
-    "message": "주소 차단",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerresource": {
     "message": "주소",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headertype": {
     "message": "형식",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerfilter": {
     "message": "필터",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "close": {
     "message": "닫기",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend1": {
     "message": "설명 :",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend2": {
     "message": "차단된 주소",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend3": {
     "message": "허용된 주소",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend4": {
     "message": "차단 가능한 주소",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend5": {
     "message": "hiding rules applied",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "loading": {
     "message": "로딩 중...",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "nextstep": {
     "message": "다음 단계",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "appliedwhenbrowsing": {
     "message": "도메인 지정",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "anysite": {
     "message": "모든 도메인에 적용",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyondomains": {
     "message": "다음 도메인에만 적용 : ",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "multipledomainshint": {
     "message": "여러 도메인을 지정하려면 콤마 또는 스페이스 기호를 사용하십시오.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "casesensitive": {
     "message": "대/소문자 구분",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyresourcetypes": {
     "message": "적용 형식",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "addthisfilter": {
     "message": "필터 추가",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "flashads": {
     "message": "비디오와 플래시",

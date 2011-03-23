@@ -73,10 +73,6 @@
     "message": "Сдвигайте ползунок до тех пор, пока реклама не будет заблокирована правильно, а заблокированный элемент выглядит пригодным.",
     "description": "Blacklister slider page message"
   },
-  "block_by_url_instead": {
-    "message": "Дополнительно: блокировать по URL",
-    "description": "Link on blacklister slider page"
-  },
   "slidertitle": {
     "message": "Шаг 1: Выяснить, что нужно заблокировать",
     "description": "Blacklister slider page title"
@@ -836,23 +832,23 @@
   },
   "blockeverycontaining": {
     "message": "Блокировать все ресурсы, содержащие:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "whitelisteverycontaining": {
     "message": "Поместить в белый список ресурсы, содержащие:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "wildcardhint": {
     "message": "Примечание: Вы можете использовать здесь * как знак подстановки",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "novalidurlpattern": {
     "message": "Пожалуйста, введите допустимый шаблон URL для сравнения!",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "thirdpartycheckbox": {
     "message": "Любой веб-сайт, КРОМЕ веб-сайтов домена $domain$",
-    "description": "resourceblocking page string",
+    "description": "resourcelist page string",
     "placeholders": {
       "domain": {
         "content": "$1",
@@ -862,99 +858,95 @@
   },
   "filterhasbeenadded": {
     "message": "Фильтр успешно добавлен!\nПерезагрузите страницу, чтобы увидеть результат!",
-    "description": "resourceblocking page string (the 'slash n' is a line break)"
+    "description": "resourcelist page string (the 'slash n' is a line break)"
   },
   "whitelistedorpausedpage": {
     "message": "Страница внесена в белый список или AdBlock приостановлен. Поскольку ресурсы не перехвачены, так что эта страница не может быть использована",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "noresourcessend": {
     "message": "Что-то пошло не так. Ресурсы не были отправлены. Эта страница будет закрыта.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceiswhitelisted": {
     "message": "Выделенные ресурсы помещены в белый список. Поэтому Вы не можете их блокировать.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "selectresources": {
     "message": "Выберите ресурс, который Вы хотите блокировать или разблокировать",
-    "description": "resourceblocking page string"
-  },
-  "resourceblocktitle": {
-    "message": "Блокировать ресурс",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerresource": {
     "message": "Ресурс",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headertype": {
     "message": "Тип",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerfilter": {
     "message": "Согласованный фильтр",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "close": {
     "message": "Закрыть",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend1": {
     "message": "Легенда:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend2": {
     "message": "заблокированные ресурсы",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend3": {
     "message": "ресурсы из белого листа",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend4": {
     "message": "ресурсы доступные для блокирования",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend5": {
     "message": "применены правила для скрытия",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "loading": {
     "message": "ЗАГРУЗКА...",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "nextstep": {
     "message": "Следующий шаг",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "appliedwhenbrowsing": {
     "message": "Этот фильтр будет применяться при просмотре страниц:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "anysite": {
     "message": "Любой веб-сайт",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyondomains": {
     "message": "ТОЛЬКО страницы на этих доменах: ",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "multipledomainshint": {
     "message": "Разделяйте несколько доменов запятыми или пробелами",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "casesensitive": {
     "message": "Этот фильтр чувствителен к регистру:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyresourcetypes": {
     "message": "Этот фильтр применяется к ресурсам этих типов:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "addthisfilter": {
     "message": "Добавить этот фильтр",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "flashads": {
     "message": "Видео и Флэш",

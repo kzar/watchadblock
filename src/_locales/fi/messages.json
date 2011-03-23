@@ -73,10 +73,6 @@
     "message": "Raahaa säädintä oikealle niin kauan, että mainos häviää näkyvistä ja sivu näyttää hyvältä.",
     "description": "Blacklister slider page message"
   },
-  "block_by_url_instead": {
-    "message": "Kehittyneet käyttäjät: estä osoitteen avulla",
-    "description": "Link on blacklister slider page"
-  },
   "slidertitle": {
     "message": "Vaihe 1: määritä, mitä estetään",
     "description": "Blacklister slider page title"
@@ -186,11 +182,6 @@
     "message": "Napsauta mainosta estääksesi sen.",
     "description": "When you have to click the ad to continue"
   },
-  "advanced_show_url_list": {
-    "message": "tai valitse estettävä osoite listalta (edistyneille käyttäjille)",
-    "description": "Message on link to open resource blocker instead of use blacklister"
-  },
-
   "whitelistertext": {
     "message": "AdBlock ei ole käytössä osoitteissa, jotka päättyvät<br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
@@ -834,23 +825,23 @@
   },
   "blockeverycontaining": {
     "message": "Estä kaikki kohteet, jotka sisältävät:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "whitelisteverycontaining": {
     "message": "Näytä kaikki kohteet, jotka sisältävät:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "wildcardhint": {
     "message": "Huomautus: voit käyttää * jokerimerkkinä",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "novalidurlpattern": {
     "message": "Syötä kelvollinen osoitemalli!",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "thirdpartycheckbox": {
     "message": "Mikä tahansa verkkosivusto PAITSI verkkosivustot verkkotunnuksessa $domain$",
-    "description": "resourceblocking page string",
+    "description": "resourcelist page string",
     "placeholders": {
       "domain": {
         "content": "$1",
@@ -860,99 +851,95 @@
   },
   "filterhasbeenadded": {
     "message": "Suodatin lisättiin onnistuneesti!\nPäivitä sivu nähdäksesi tuloksen!",
-    "description": "resourceblocking page string (the 'slash n' is a line break)"
+    "description": "resourcelist page string (the 'slash n' is a line break)"
   },
   "whitelistedorpausedpage": {
     "message": "Tämä sivu on sallittu tai AdBlock on poistettu käytöstä. Tästä syystä kohteita ei piiloteta, joten tätä sivua ei voida käyttää",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "noresourcessend": {
     "message": "Jotain meni vikaan. Kohteita ei lähetetty. Tämä sivu sulkeutuu nyt.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceiswhitelisted": {
     "message": "Valittu kohde on sallittu. Tämän takia et voi estää sitä.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "selectresources": {
     "message": "Valitse kohde, jonka haluat estää tai sallia",
-    "description": "resourceblocking page string"
-  },
-  "resourceblocktitle": {
-    "message": "Estä kohde",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerresource": {
     "message": "Kohde",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headertype": {
     "message": "Tyyppi",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerfilter": {
     "message": "Vastaava suodatin",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "close": {
     "message": "Sulje",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend1": {
     "message": "Selite:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend2": {
     "message": "estetyt kohteet",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend3": {
     "message": "sallitut kohteet",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend4": {
     "message": "estettävät kohteet",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend5": {
     "message": "piilotussäännöt käytetty",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "loading": {
     "message": "LADATAAN...",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "nextstep": {
     "message": "Seuraava vaihe",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "appliedwhenbrowsing": {
     "message": "Tämä suodatin otetaan käyttöön kun selaat:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "anysite": {
     "message": "Mikä tahansa verkkosivusto",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyondomains": {
     "message": "VAIN näiden verkkotunnuksien sivut: ",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "multipledomainshint": {
     "message": "Erottele useat verkkotunnukset pilkuilla tai välilyönneillä",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "casesensitive": {
     "message": "Tämä suodatin on kirjainten koosta riippuvainen:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyresourcetypes": {
     "message": "Tämä suodatin vaikuttaa tämäntyyppisiin kohteisiin:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "addthisfilter": {
     "message": "Lisää tämä suodatin",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "flashads": {
     "message": "Videot ja Flash",

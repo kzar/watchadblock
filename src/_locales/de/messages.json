@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "Die beliebteste Chrome-Erweiterung, mit über 2 Millionen Nutzern!  Entfernt Werbung im ganzen Internet.",
     "description": "Extension description in manifest"
@@ -72,10 +72,6 @@
   "sliderexplanation": {
     "message": "Verschieben Sie den Regler so lange nach rechts, bis die Werbung komplett entfernt ist und der restliche Teil der Seite noch normal aussieht.",
     "description": "Blacklister slider page message"
-  },
-  "block_by_url_instead": {
-    "message": "Für erfahrene Nutzer: Werbung über ihre Adresse entfernen",
-    "description": "Link on blacklister slider page"
   },
   "slidertitle": {
     "message": "Schritt 1: Herausfinden, was entfernt werden soll",
@@ -186,11 +182,6 @@
     "message": "Klicken Sie auf die Werbung und dieser Assistent wird Ihnen dabei helfen die Werbung zu entfernen.",
     "description": "When you have to click the ad to continue"
   },
-  "advanced_show_url_list": {
-    "message": "oder wählen Sie die Adresse der Werbung, die entfernt werden soll, aus einer Liste aus (für erfahrene Nutzer)",
-    "description": "Message on link to open resource blocker instead of use blacklister"
-  },
-
   "whitelistertext": {
     "message": "AdBlock wird nicht ausgeführt auf Adressen die enden auf:<br/>$domain$.",
     "description": "The message of the whitelister dialog, putting the domain name on a separate line",
@@ -838,23 +829,23 @@
   },
   "blockeverycontaining": {
     "message": "Jedes Element entfernen, das folgendes enthält:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "whitelisteverycontaining": {
     "message": "Ausnahmeregel für jedes Element hinzufügen, das folgendes enthält:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "wildcardhint": {
     "message": "Hinweis: Sie können * als Wildcard benutzen",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "novalidurlpattern": {
     "message": "Bitte geben Sie eine zutreffende und korrekte URL-Struktur ein!",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "thirdpartycheckbox": {
     "message": "auf jeder Seite AUSSER Seiten mit der Domain $domain$",
-    "description": "resourceblocking page string",
+    "description": "resourcelist page string",
     "placeholders": {
       "domain": {
         "content": "$1",
@@ -864,99 +855,95 @@
   },
   "filterhasbeenadded": {
     "message": "Der Filter wurde hinzugefügt!\nAktualisieren Sie die Seite um das Ergebnis zu sehen!",
-    "description": "resourceblocking page string (the 'slash n' is a line break)"
+    "description": "resourcelist page string (the 'slash n' is a line break)"
   },
   "whitelistedorpausedpage": {
     "message": "Diese Seite besitzt eine Ausnahmeregel oder AdBlock ist pausiert. Dadurch können keine Elemente aufgelistet werden",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "noresourcessend": {
     "message": "Es ist ein Fehler aufgetreten. Keine Elemente wurden übermittelt. Diese Seite wird nun geschlossen.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceiswhitelisted": {
     "message": "Das ausgewählte Element wurde zu den Ausnahmen hinzugefügt. Sie können es deshalb nicht entfernen.",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "selectresources": {
     "message": "Wählen Sie das Element, das entfernt oder eine Aunahme werden soll",
-    "description": "resourceblocking page string"
-  },
-  "resourceblocktitle": {
-    "message": "Element entfernen",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerresource": {
     "message": "Element",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headertype": {
     "message": "Typ",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "headerfilter": {
     "message": "Zutreffender Filter",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "close": {
     "message": "Schließen",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend1": {
     "message": "Legende:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend2": {
     "message": "entferntes Element",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend3": {
     "message": "Element mit Ausnahmeregel",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend4": {
     "message": "entfernbares Element",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "resourceblocklegend5": {
     "message": "Regeln zum Verbergen treffen zu",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "loading": {
     "message": "LÄDT...",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "nextstep": {
     "message": "Nächster Schritt",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "appliedwhenbrowsing": {
     "message": "Dieser Filter wird angewendet, sobald Sie im Internet surfen:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "anysite": {
     "message": "auf jeder Seite",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyondomains": {
     "message": "nur auf Seiten dieser Domain: ",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "multipledomainshint": {
     "message": "Trennen Sie mehrere Adressen mit Kommas oder Leerzeichen",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "casesensitive": {
     "message": "Dieser Filter soll Groß- und Kleinschreibung beachten:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "onlyresourcetypes": {
     "message": "Dieser Filter trifft auf folgende Elementtypen zu:",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "addthisfilter": {
     "message": "Diesen Filter hinzufügen",
-    "description": "resourceblocking page string"
+    "description": "resourcelist page string"
   },
   "flashads": {
     "message": "Videos und Flash",
