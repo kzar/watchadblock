@@ -143,7 +143,7 @@
               flash(translate("nolisturllabel"));
               return;
             }
-            BGcall("subscribe", id, text);
+            BGcall("subscribe", id, text, null);
             flash(translate("subscribedlabel"));
             if (then_reload) {
               var myIndex = $("#tabpages").tabs("option", "selected");

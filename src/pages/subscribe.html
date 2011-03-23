@@ -89,7 +89,7 @@
                  (text[0] == '!' || text[0] == '[' || text[0] == '(')
                ) {
               var req = queryparts.requiresLocation ?
-                        "url:" + queryparts.requiresLocation : undefined;
+                        "url:" + queryparts.requiresLocation : null;
 
               var id = 'url:' + queryparts.location;
               BGcall("subscribe", id, text, req);
