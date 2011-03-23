@@ -239,11 +239,10 @@
             var has_querystring = url_parts[2];
             var filter = '@@|' + url_parts[1] + 
               (has_querystring ? '?' : '|') + '$document';
-            BGcall("add_custom_filter", filter, function() {
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
-            });
+            BG.add_custom_filter(filter);
+            // Reload the tab
+            chrome.tabs.update(info.tab.id, {url: info.tab.url});
+            window.close();
           });
         });
       </script>
