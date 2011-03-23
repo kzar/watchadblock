@@ -218,7 +218,7 @@ ClickWatcher.prototype._build_ui = function() {
       click: function(e) { 
         // GLOBAL_collect_resources is created by adblock_start.js
         var resources = Object.keys(GLOBAL_collect_resources);
-        extension_call("show_resourceblocker", {resources: resources});
+        BGcall("show_resourceblocker", resources);
         e.preventDefault();
         that._ui.dialog('close');
         return false;

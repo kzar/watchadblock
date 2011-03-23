@@ -26,5 +26,5 @@ register_broadcast_listener = (function() {
 
 // Broadcast to content scripts on our tab.
 function page_broadcast(fn, options) {
-  extension_call('emit_page_broadcast', {fn:fn, options:options});
+  BGcall('emit_page_broadcast', {fn:fn, options:options});
 }

@@ -239,7 +239,7 @@
             var has_querystring = url_parts[2];
             var filter = '@@|' + url_parts[1] + 
               (has_querystring ? '?' : '|') + '$document';
-            extension_call("add_custom_filter", {filter: filter}, function() {
+            BGcall("add_custom_filter", filter, function() {
               // Reload the tab
               chrome.tabs.update(info.tab.id, {url: info.tab.url});
               window.close();

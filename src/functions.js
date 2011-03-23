@@ -1,10 +1,8 @@
 // Run a function on the background page.
-// Inputs: fn:string, options:object, callback?:function(return_value:any).
-extension_call = function(fn, options, callback) {
-  if (callback == null) callback = function() {};
-  chrome.extension.sendRequest({command: "utils", fn:fn, options:options}, callback);
-}
-
+// Inputs (positional):
+//   first, a string - the name of the function to call
+//   then, any arguments to pass to the function (optional)
+//   then, a callback:function(return_value:any) (optional)
 BGcall = function() {
   var args = [];
   for (var i=0; i < arguments.length; i++)

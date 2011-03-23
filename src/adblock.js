@@ -72,7 +72,7 @@ function run_specials(settings) {
           text("[x]").
           click(function() {
             message.remove();
-            extension_call("do_not_show_youtube_help_msg", {});
+            BGcall("do_not_show_youtube_help_msg");
           });
         message.append(closer);
         $("#movie_player").before(message);
@@ -98,7 +98,7 @@ function run_specials(settings) {
 function adblock_begin_part_2() {
   var opts = { domain: document.domain };
 
-  extension_call('get_content_script_data', opts, function(data) {
+  BGcall('get_content_script_data', opts, function(data) {
     if (data.adblock_is_paused) {
       return;
     }
@@ -151,6 +151,6 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
     event.preventDefault();
     var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
     if (searchquery)
-      extension_call('subscribe_popup', {searchquery: searchquery});
+      BGcall('subscribe_popup', searchquery);
   });
 }

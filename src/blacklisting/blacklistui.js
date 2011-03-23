@@ -216,7 +216,7 @@ BlacklistUi.prototype._build_page2 = function() {
         if ($("#summary", that._ui_page2).text().length > 0) {
           var filter = document.domain + "##" + 
                        $("#summary", that._ui_page2).text();
-          extension_call('add_custom_filter', { filter: filter }, function() {
+          BGcall('add_custom_filter', filter, function() {
             that._fire('block');
           });
           that._ui_page2.dialog('close');
@@ -234,7 +234,7 @@ BlacklistUi.prototype._build_page2 = function() {
         if (custom_filter) {//null => user clicked cancel
           if (custom_filter.indexOf('##') == -1) 
             custom_filter = "##" + custom_filter;
-          extension_call('add_custom_filter', { filter: custom_filter }, function(ex) {
+          BGcall('add_custom_filter', custom_filter, function(ex) {
             if (!ex)
               that._fire('block');
             else
