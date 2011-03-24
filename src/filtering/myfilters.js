@@ -59,7 +59,8 @@ MyFilters.prototype.update = function() {
 
   this.rebuild();
 
-  chrome.extension.sendRequest({command: "filters_updated"});
+  if (!SAFARI) // TODO: because of Issue 5384
+    chrome.extension.sendRequest({command: "filters_updated"});
 }
 
 // Rebuild this.[non]global based on the current settings and subscriptions.
