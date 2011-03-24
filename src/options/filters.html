@@ -283,6 +283,16 @@
             }
           });
 
+          // Hide advanced stuff if it is a non-advanced user who managed to find
+          // this page somehow.
+          if (!optionalSettings.show_advanced_options) {
+            $(".advanced").each(function() {
+              if ($(this).is(":checked"))
+                $(this).click().change();
+              $(this).parent().remove();
+            });
+          }
+
           //translation
           localizePage();
         });
@@ -312,13 +322,13 @@
   <div class="sneaky">
     <p>
     <span i18n="subscribetoall"></span>
-    <input type="button" id="btnSubscribeAll" i18n_value="buttonok" />
+    <input type="button" id="btnSubscribeAll" class="advanced" i18n_value="buttonok" />
     <br/>
     <span i18n="subscribetonone"></span>
-    <input type="button" id="btnUnsubscribeAll" i18n_value="buttonok" />
+    <input type="button" id="btnUnsubscribeAll" class="advanced" i18n_value="buttonok" />
     <br/>
     <span i18n="showlinkstolists"></span> 
-    <input type="button" id="btnShowLinks" i18n_value="buttonok" />
+    <input type="button" id="btnShowLinks" class="advanced" i18n_value="buttonok" />
     </p>
     <script>
       $(function() {

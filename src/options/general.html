@@ -4,20 +4,28 @@
       // user's saved settings.
       function load_options() {
         // Check or uncheck each option.
-        BGcall("get_settings", function(settings) {
-          for (var name in settings) {
-            $("#enable_" + name).
-              attr("checked", settings[name]);
-          }
-          $("input.feature:checkbox").change(function() {
-            var is_enabled = $(this).is(':checked');
-            var name = this.id.substring(7); // TODO: hack
-            BGcall("set_setting", name, is_enabled);
-          });
+        for (var name in optionalSettings) {
+          $("#enable_" + name).
+            attr("checked", optionalSettings[name]);
+        }
+        $("input.feature:checkbox").change(function() {
+          var is_enabled = $(this).is(':checked');
+          var name = this.id.substring(7); // TODO: hack
+          BGcall("set_setting", name, is_enabled);
         });
       }
       load_options();
       
+      // Hide advanced stuff if it is a non-advanced user who managed to find
+      // this page somehow.
+      if (!optionalSettings.show_advanced_options) {
+        $(".advanced").each(function() {
+          if ($(this).is(":checked"))
+            $(this).click().change();
+          $(this).parent().remove();
+        });
+      }
+
       //translation
       localizePage();
     });
@@ -54,9 +62,22 @@
       <label for="enable_block_youtube" i18n="youtubeads"></label>
       <span style='font-style:italic; color:red;' i18n="betalabel"></span>
     </p>
+
+    <p>
+      <input type="checkbox" class="feature" id="enable_show_advanced_options" />
+      <label for="enable_show_advanced_options">I'm an advanced user, show me advanced options</label>
+      <script>
+        $("#enable_show_advanced_options").change(function() {
+          window.setTimeout(function() {
+            // To show or hide the advanced options on the options page
+            window.location.reload();
+          }, 50);
+        });
+      </script>
+    </p>
   </div>
 
   <div class="sneaky">
-    <input type="checkbox" class="feature" id="enable_debug_logging" />
+    <input type="checkbox" class="feature advanced" id="enable_debug_logging" />
     <label for="enable_debug_logging" i18n="debuginlogoption"></label>
   </div>

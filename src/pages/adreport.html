@@ -60,6 +60,7 @@
             unsubscribed_default_filters[id] = subs[id];
           else if (subs[id].subscribed)
             subscribed_filter_names.push(subs[id].name);
+      });
 
       //generate the URL to the issue tracker
       function generateReportURL() {
@@ -75,55 +76,58 @@
         else
           result = result + escape("Ad report at <enter URL of webpage here>");
 
-          var body = [];
-          body.push("Last step -- point me to the ad so I can fix the bug! " +
-              "Don't leave anything out or I'll probably " +
-              "have to ignore your report. Thanks!");
-          body.push("");
-          if (!options['url']) {
-            body.push("1. Paste the URL of the webpage showing an ad: ");
-            body.push("");
-            body.push("");
-          }
-          body.push("2. Exactly where on that page is the ad? What does it " +
-              "look like? Attach a screenshot, with the ad clearly marked, " +
-              "if you can.");
+        var body = [];
+        var count = 1;
+        body.push("Last step -- point me to the ad so I can fix the bug! " +
+            "Don't leave anything out or I'll probably " +
+            "have to ignore your report. Thanks!");
+        body.push("");
+        if (!options['url']) {
+          body.push(count + ". Paste the URL of the webpage showing an ad: ");
           body.push("");
           body.push("");
-          if (!options['suggested']) {
-            body.push("3. Paste a working filter, if you have one: ");
-            body.push("");
-            body.push("");
-          }
-          body.push("4. Any other information that would be helpful, besides " +
-              "what is listed below: ");
-          body.push("");
-          body.push("");
-          body.push("-------- Please don't touch below this line. ---------");
-          if (options['url']) {
-            body.push("=== URL with ad ===");
-            body.push(options['url']);
-            body.push("");
-          }
-          body.push("=== Subscribed filters ===");
-          body.push(subscribed_filter_names.join('\n'));
-          body.push("");
-          body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
-          body.push(SAFARI ? "Safari " :
-            "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
-          if (AdBlockVersion) 
-            body.push("AdBlock " + AdBlockVersion);
-          if (options['suggested']) {
-            body.push("");
-            body.push("=== The selector created by the user ===");
-            body.push(options['suggested']);
-          }
-
-          result = result + "&comment=" + escape(body.join('\n'));
-
-          return result;
+          count++;
         }
-      });
+        body.push(count + ". Exactly where on that page is the ad? What does it " +
+            "look like? Attach a screenshot, with the ad clearly marked, " +
+            "if you can.");
+        body.push("");
+        body.push("");
+        count++;
+        if (!options['suggested']) {
+          body.push(count + ". Paste a working filter, if you have one: ");
+          body.push("");
+          body.push("");
+          count++;
+        }
+        body.push(count + ". Any other information that would be helpful, besides " +
+            "what is listed below: ");
+        body.push("");
+        body.push("");
+        body.push("-------- Please don't touch below this line. ---------");
+        if (options['url']) {
+          body.push("=== URL with ad ===");
+          body.push(options['url']);
+          body.push("");
+        }
+        body.push("=== Subscribed filters ===");
+        body.push(subscribed_filter_names.join('\n'));
+        body.push("");
+        body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
+        body.push(SAFARI ? "Safari " :
+          "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
+        if (AdBlockVersion) 
+          body.push("AdBlock " + AdBlockVersion);
+        if (options['suggested']) {
+          body.push("");
+          body.push("=== The selector created by the user ===");
+          body.push(options['suggested']);
+        }
+
+        result = result + "&comment=" + escape(body.join('\n'));
+
+        return result;
+      }
     </script>
   </head>
   <body>

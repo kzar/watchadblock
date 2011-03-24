@@ -48,20 +48,25 @@
           "div_whitelist_page",
           "separator1",
           "div_options",
-          "div_help_hide"
+          "div_help_hide",
+          "div_show_resourcelist",
         ];
         hide(menu_items);
 
         BG.getCurrentTabInfo(function(info) {
+          var shown = [];
           if (localStorage.getItem('adblock_is_paused')) {
-            show(["div_status_paused", "separator0", "div_options"]);
+            shown = ["div_status_paused", "separator0", "div_options"];
           } else if (info.disabled_site) {
-            show(["div_status_disabled", "separator0", "div_options", "div_help_hide"]);
+            shown = ["div_status_disabled", "separator0", "div_options", "div_help_hide"];
           } else if (info.whitelisted) {
-            show(["div_status_whitelisted", "separator0", "div_pause_adblock", "separator1", "div_options", "div_help_hide"]);
+            shown = ["div_status_whitelisted", "div_show_resourcelist", "separator0", "div_pause_adblock", "separator1", "div_options", "div_help_hide"];
           } else {
-            show(["div_pause_adblock", "div_blacklist", "div_whitelist", "div_whitelist_page", "separator1", "div_options", "div_help_hide"]);
+            shown = ["div_pause_adblock", "div_blacklist", "div_whitelist", "div_whitelist_page", "div_show_resourcelist", "div_report_an_ad", "separator1", "div_options", "div_help_hide"];
           }
+          if (!BG.get_settings().show_advanced_options)
+            shown.splice(shown.indexOf("div_show_resourcelist"), 1);
+          show(shown);
           setDomain(info.domain);
         });
       }
@@ -260,6 +265,33 @@
               { tab: info.tab } // fake sender to determine target page
             );
             window.close();
+          });
+        });
+      </script>
+      
+      <div id="div_show_resourcelist" class="menu-entry">
+        Resource list
+      </div>
+      <script>
+        $("#div_show_resourcelist").click(function() {
+          BG.getCurrentTabInfo(function(info) {
+            BG.emit_page_broadcast(
+              {fn:'open_resourcelist', options: {}},
+              { tab: info.tab } // fake sender to determine target page
+            );
+          });
+        });
+      </script>
+      
+      <div id="div_report_an_ad" class="menu-entry">
+        Report an ad on this page
+      </div>
+      <script>
+        $("#div_report_an_ad").click(function() {
+          BG.getCurrentTabInfo(function(info) {
+            var url = chrome.extension.getURL("pages/adreport.html") +
+                      "?url=" + escape(info.tab.url);
+            chrome.tabs.create({url: url});
           });
         });
       </script>

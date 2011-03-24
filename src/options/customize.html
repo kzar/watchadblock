@@ -292,10 +292,14 @@
         <br/>
       </div>
 
-      <div style="padding-top:20px;">
+      <div style="padding-top:20px;" id="adreportarea">
         <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
         <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
       </div>
+      <script>
+        if (!SAFARI)
+          $("#adreportarea").remove();
+      </script>
 
     </div>
   </div>

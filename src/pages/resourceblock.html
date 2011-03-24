@@ -196,7 +196,11 @@
         $(".deleterule").click(function() {
           var filter = $(this).prev().text().substring(1);
           BG.remove_custom_filter(filter);
-          document.location.reload();
+          if ($(this).prev().prev().attr("name") == "page") {
+            alert("The filter was removed. Please reload the original page to generate the list with resources");
+            window.close();
+          } else
+            document.location.reload();
         });
       };
 
@@ -450,18 +454,22 @@
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
           domaindata = data;
-          if (data.page_is_whitelisted || data.adblock_is_paused) {
-            alert(translate("whitelistedorpausedpage"));
+          if (data.adblock_is_paused) {
+            alert("AdBlock is paused. Therefore no resources are caught, so this page cannot be used");
             window.close();
             return;
           }
           if (!temp_url) {
-            // Show elemhide rules that match on the page
-            var noHideRule = BG.page_is_whitelisted(url, ElementTypes.elemhide, true);
-            if (noHideRule)
-              resources[url] = {type: ElementTypes.elemhide,
-                                filter: SAFARI ? "@@elemhiderule" : noHideRule};
-            
+            // Show $elemhide and $document rules that match on the page
+            var excludeRule = BG.page_is_whitelisted(url, ElementTypes.document, true);
+            if (excludeRule)
+              resources[url] = {type: ElementTypes.document, filter: excludeRule};
+            else {
+              excludeRule = BG.page_is_whitelisted(url, ElementTypes.elemhide, true);
+              if (excludeRule)
+                resources[url] = {type: ElementTypes.elemhide, filter: excludeRule};
+            }
+
             // Load all stored resources
             var cache = BG.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);

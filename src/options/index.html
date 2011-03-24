@@ -10,6 +10,18 @@
     <script src="../functions.js"></script>
     <script src="../broadcast_channel.js"></script>
     <script>
+      function load_options() {
+        // Check or uncheck each option.
+        BGcall("get_settings", function(settings) {
+          optionalSettings = settings;
+          $("#tabpages").
+            tabs({ spinner: "", cache: true, cookie: {} }).
+            show();
+        });
+      }
+      var optionalSettings = {};
+      load_options();
+
       function note_visit() {
         if (localStorage.getItem('visited_options_at') != null)
           return;
@@ -37,8 +49,6 @@
       }
 
       $(function() {
-        $("#tabpages").tabs({ spinner: "", cache: true, cookie: {}  });
-
         displayVersionNumber();
 
         note_visit();

@@ -154,3 +154,11 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
       BGcall('subscribe_popup', searchquery);
   });
 }
+// To open the list with the resources, even if whitelisted
+if (window == window.top)
+  register_broadcast_listener('open_resourcelist', function(options) {
+    var resources = {};
+    if (typeof GLOBAL_collect_resources != "undefined") 
+      resources = Object.keys(GLOBAL_collect_resources);
+    BGcall("show_resourceblocker", resources);
+  });
