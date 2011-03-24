@@ -35,9 +35,9 @@ if (typeof "ADBLOCK" == "undefined")
   if (SAFARI)
     return;
 
-  var production = false;
-  var app_id = (production ? 'unknown yet' : 'okodokljmbnoedmhhkjpendaeednelhk');
-  var extension_id = (production ? 'gighmmpiobklfepjocnamgkkbiglidom' : 'bacmpgbiehhieclfkfoegbchelpmcgeg');
+  var production = true;
+  var app_id = (production ? 'eefkobgceabjladaefihncnghgdiilge' : 'aifkfjaklpofldkeigmbmimpjcaibjpn');
+  var extension_id = (production ? 'gighmmpiobklfepjocnamgkkbiglidom' : 'kmgdmlmhfaihljjdpbbfhcephhafgdlf');
   var other_id = (ADBLOCK.isApp ? extension_id : app_id);
 
   var have_warned = false;
