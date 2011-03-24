@@ -187,9 +187,6 @@
       BGcall("get_custom_filters_text", function(text) {
         $("#txtFiltersAdvanced").val(text);
       });
-
-      //translation
-      localizePage();
     });
   </script>
 
@@ -307,7 +304,7 @@
   <div class="sneaky">
     <p>
     <span i18n="cleanuplist"></span>
-    <input type="button" id="btnCleanUp" i18n_value="buttonok" />
+    <input type="button" id="btnCleanUp" class="advanced" i18n_value="buttonok" />
     </p>
     <script>
       $(function() {
