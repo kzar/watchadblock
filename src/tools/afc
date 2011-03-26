@@ -32,10 +32,9 @@ function shipit() {
       (cd ..; zip -x '*/app/manifest.json' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "extension-version-$v.zip" trunk/ >/dev/null )
 
     # Zip the app (same thing, but swap out the manifest))
-    # Temp: drop nb _locale
     rm -f ../APP-VERSION-*.zip && (
       mv manifest.json manifest.json.tmp && mv app/manifest.json manifest.json && mv manifest.json.tmp app/manifest.json && \
-      (cd ..; zip -x '*/app/manifest.json' -x '*/_locales/nb/*' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "APP-VERSION-$v.zip"      trunk/ >/dev/null ) && \
+      (cd ..; zip -x '*/app/manifest.json' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "APP-VERSION-$v.zip"      trunk/ >/dev/null ) && \
       mv manifest.json manifest.json.tmp && mv app/manifest.json manifest.json && mv manifest.json.tmp app/manifest.json
     )
     echo
