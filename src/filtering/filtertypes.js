@@ -219,7 +219,7 @@ PatternFilter._parseRule = function(text) {
       // In case ABP adds a new option, and we do not support it, return an
       // error. If we don't do this and the new type is an elementtype, the
       // filter *$newtype will be parsed as '*$', e.g. match everything.
-      throw new Error("Unsupported option: $" + options[i]);
+      throw "Unsupported option: $" + options[i];
     }
   }
   // No element types mentioned?  All types are allowed.

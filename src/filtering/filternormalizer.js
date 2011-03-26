@@ -109,7 +109,7 @@ var FilterNormalizer = {
     //    the ()s can't be empty, and can't start with '='
     if (rule.length == 0 || 
         !/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i.test(rule))
-      throw new Error("bad selector filter");
+      throw "bad selector filter";
 
     var first_segment = rule.indexOf('(');
 
@@ -141,7 +141,7 @@ var FilterNormalizer = {
   // Input: a CSS selector
   _checkCssSelector: function(selector) {
     function throwError() {
-      throw new Error('Invalid CSS selector syntax');
+      throw 'Invalid CSS selector syntax';
     }
 
     // Escaped characters are evil for validations.
