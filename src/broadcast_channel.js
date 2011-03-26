@@ -8,11 +8,8 @@ register_broadcast_listener = (function() {
     broadcaster_is_listening = true;
     var port = chrome.extension.connect({name: "Broadcast receiver"});
     port.onMessage.addListener(function(request) {
-      if (dispatcher[request.fn] == null) {
-        log("No dispatch function '" + request.fn + "'");
-      } else {
+      if (dispatcher[request.fn])
         dispatcher[request.fn](request.options);
-      }
     });
   }
 
