@@ -28,8 +28,8 @@ function shipit() {
     v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     echo Zipping...
     # Zip the extension
-    rm -f ../adblockforchrome-*.zip && \
-      (cd ..; zip -x '*/app/manifest.json' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "adblockforchrome-$v.zip" trunk/ >/dev/null )
+    rm -f ../extension-version-*.zip && \
+      (cd ..; zip -x '*/app/manifest.json' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "extension-version-$v.zip" trunk/ >/dev/null )
     # Zip the app (same thing, but swap out the manifest))
     rm -f ../APP-VERSION-*.zip && (
       mv manifest.json manifest.json.tmp && mv app/manifest.json manifest.json && mv manifest.json.tmp app/manifest.json && \
@@ -66,7 +66,7 @@ function shipit() {
       svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
     }
 
-    echo "Last step: push adblockforchrome-$v.zip and APP-VERSION-$v.zip to the Store, and ship Safari if you want."
+    echo "Last step: push extension-version-$v.zip and APP-VERSION-$v.zip to the Store, and ship Safari if you want."
 }
 
 function bump() {
