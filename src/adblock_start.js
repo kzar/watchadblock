@@ -125,6 +125,10 @@ function block_list_via_css(selectors) {
 // in this optional function. When the option is the default, put this back in 
 // the beforeloadHandler
 removeAdRemains = function(el, event) {
+  if (!removeAdRemains.hide) {
+    $(el).remove()
+    return;
+  }
   if (event.mustBePurged) {
     var replacement = document.createElement(el.nodeName);
     replacement.id = el.id;
@@ -167,12 +171,8 @@ function adblock_begin() {
       return;
     }
     
-    if (!data.settings.hide_instead_of_remove) {
-      // If it isn't enabled, simply call .remove() on it, like we used to do
-      removeAdRemains = function(el) {
-        $(el).remove();
-      }
-    }
+    if (data.settings.hide_instead_of_remove)
+      removeAdRemains.hide = true;
 
     if (data.selectors)
       block_list_via_css(data.selectors);
