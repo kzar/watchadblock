@@ -57,7 +57,17 @@
     <p>
       <input type="checkbox" class="feature" id="enable_hide_instead_of_remove" />
       <label for="enable_hide_instead_of_remove" i18n="brokensite_beta_option"></label>
-      <span i18n="betalabel"></span>
+      <span i18n="betalabel"></span><br/>
+      <span i18n="brokensite_beta_description" i18n_replacement_el="bugtracker" 
+            class="footnote" style="display:none"></span>
+      <a id="bugtracker" target="_blank" href="http://chromeadblock.com/bugs/?new"></a>
+      <script>
+        $("#enable_hide_instead_of_remove").
+          change(function() {
+            $('[i18n="brokensite_beta_description"]').toggle(this.checked);
+          }).
+          trigger("change");
+      </script>
     </p>
   </div>
 
