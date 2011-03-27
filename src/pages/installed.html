@@ -9,8 +9,7 @@
     <script src="../functions.js"></script>
     <script>
       var flavor = document.location.search.substring(1) || "chrome_ext";
-    </script>
-    <script>
+
       function displayVersionNumber() {
         try {
           var xhr = new XMLHttpRequest();
@@ -105,8 +104,7 @@
         <div id="setotheroptions" style="margin-top:2em;"></div>
         <script>
           $(function() {
-            var flavormap = { "safari": 1, "chrome_ext": 2, "chrome_app": 3};
-            var msg = "setotheroptions" + flavormap[flavor];
+            var msg = "setotheroptions_" + flavor;
             $("#setotheroptions").html(translate(msg));
           });
         </script>
