@@ -39,6 +39,18 @@
       "all_frames": true
     },
     {
+      "matches": [
+        "*://*.mail.live.com/*",
+        "*://*.hk-pub.com/forum/thread-*",
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "bandaids.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
         "blacklisting/overlay.js", 
