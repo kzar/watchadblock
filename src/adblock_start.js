@@ -1,3 +1,37 @@
+GLOBAL_contentScriptData = (function() {
+  // The data
+  var _data = undefined;
+  // How many times will onReady be called?
+  var _uses_left = 2;
+  // Holds onReady callers before setData() is called
+  var _callbacks = [];
+  var _notify_callback = function(callback) {
+    console.warn("" + _uses_left + " callbacks left.  Notifying one.");
+    callback(_data);
+    _uses_left -= 1;
+    if (_uses_left == 0) {
+      console.warn("All callbacks called; deleting content script data");
+      delete _data;
+    }
+  }
+  return {
+    // When the data is set, we notify interested parties asynchronously.
+    setData: function(value) { 
+      _data = value;
+      for (var i = 0; i < _callbacks.length; i++) {
+        window.setTimeout(function() { _notify_callback(_callbacks[i]) }, 0);
+      }
+    },
+    // Takes a function(data) to call when data is available (maybe immediately)
+    onReady: function(callback) {
+      if (_data)
+        _notify_callback(callback);
+      else
+        _callbacks.push(callback);
+    }
+  };
+})();
+
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
     // Author: Tom Joseph of AdThwart
@@ -133,13 +167,7 @@ function adblock_begin() {
     include_filters: true
   };
   BGcall('get_content_script_data', opts, function(data) {
-    // Store the data for adblock.js
-    GLOBAL_contentScriptData = data;
-    if (typeof adblock_js_is_already_loaded_send_me_my_data_please != "undefined") {
-      adblock_begin_part_2();
-      delete adblock_js_is_already_loaded_send_me_my_data_please;
-      console.warn("I WAS LATE THIS MORNING");
-    } else console.warn("I GOT UP EARLY");
+    GLOBAL_contentScriptData.setData(data);
 
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
@@ -166,9 +194,7 @@ function adblock_begin() {
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
       delete LOADED_TOO_FAST;
     }
-
   });
-
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.

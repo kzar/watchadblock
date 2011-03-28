@@ -1,16 +1,4 @@
 (function() {
-  // Run special site-specific code.  These "bandaids" are defined below.
-  run_specials = function(settings) {
-    for (var name in test_whether_to_apply) {
-      if (test_whether_to_apply[name](settings)) {
-        console.log("Running bandaid " + name);
-        bandaids[name](settings);
-      }
-    }
-    // We are the last to run using GLOBAL_contentScriptData, so delete it.
-    delete GLOBAL_contentScriptData;
-  }
-
   // Tests to determine whether a particular bandaid should be applied
   var test_whether_to_apply = {
     hotmail: function() { return /mail\.live\.com/.test(document.location.host); },
@@ -102,8 +90,16 @@
 
   }; // end bandaids
 
-  // If we were loaded after adblock.js finished, we call ourselves.
-  if (typeof GLOBAL_contentScriptData != "undefined")
-    run_specials(GLOBAL_contentScriptData.settings);
+  // Once content script data is available, run special site-specific code.
+  GLOBAL_contentScriptData.onReady(function(data) {
+    console.warn("Running onReady for bandaids.");
+    var settings = data.settings;
+    for (var name in test_whether_to_apply) {
+      if (test_whether_to_apply[name](settings)) {
+        console.warn("Running bandaid " + name);
+        bandaids[name](settings);
+      }
+    }
+  });
 
 })();
