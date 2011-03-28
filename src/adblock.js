@@ -16,14 +16,14 @@ function adblock_begin_part_2() {
   if (data.adblock_is_paused) {
     return;
   }
-  
+
   if (data.page_is_whitelisted) {
     log("==== EXCLUDED PAGE: " + document.location.href);
     return;
   }
 
   log("==== ADBLOCKING PAGE: " + document.location.href);
-  
+
   if (SAFARI) {
     // Add entries to right click menu.  Unlike Chrome, we can make
     // the menu items only appear on non-whitelisted pages.
@@ -55,6 +55,8 @@ function adblock_begin_part_2() {
 
   if (data.settings.debug_logging)
     debug_print_selector_matches(data.selectors);
+
+  delete GLOBAL_contentScriptData;
 }
 
 // until crbug.com/63397 is fixed, ignore SVG images
