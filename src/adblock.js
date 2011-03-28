@@ -55,8 +55,6 @@ function adblock_begin_part_2() {
 
   if (data.settings.debug_logging)
     debug_print_selector_matches(data.selectors);
-
-  delete GLOBAL_contentScriptData;
 }
 
 // until crbug.com/63397 is fixed, ignore SVG images
