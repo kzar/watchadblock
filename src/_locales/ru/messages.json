@@ -1,8 +1,13 @@
 ﻿{
   "description1": {
-    "message": "Наиболее популярное расширение Chrome с 2 миллионами пользователей! Блокирует рекламу по всему Интернету.",
+    "message": "Наиболее популярное расширение Chrome с более чем 2 миллионами пользователей! Блокирует рекламу по всему Интернету.",
     "description": "Extension description in manifest"
   },
+  "app_description1": {
+    "message": "Блокирует рекламу по всему Интернету!  Любимо миллионами пользователей Chrome и Safari!",
+    "description": "App description used in app version manifest"
+  },
+
   "buttoncancel": {
     "message": "Отмена",
     "description": "Cancel button"
@@ -35,6 +40,30 @@
   "donaterequest2": {
     "message": "Я недавно оставил свою работу, чтобы посвятить все свое время AdBlock! Сейчас я полностью полагаюсь на Ваши пожертвования для поддержки моей семьи. Окажите <a>поддержку</a>, чтобы помочь оплатить наши счета - и доказать, что я и моя жена (на фото) не сумасшедшие из-за этой попытки. Спасибо:) - Michael",
     "description": "Donation request on installation success page"
+  },
+  "setotheroptions_safari": {
+    "message": "Вы можете задать другие параметры, нажав кнопку на панели инструментов.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "Вы можете управлять AdBlock и установкой других параметров, нажав на кнопку панели инструментов.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "Щелкните правой кнопкой мыши на веб-странице (кроме этой) для управления AdBlock и установки других параметров.",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Предупреждение: AdBlock установлен дважды",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "AdBlock-приложение и AdBlock-расширение установлены оба.  Это замедляет Chrome.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "Чтобы исправить это, удалите расширение Adblock из <a>Ваших расширений</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "Чтобы скрыть кнопку щелкните её правой кнопкой мыши и выберите Hide Button.  Вы можете показать ее вновь, нажав Ключ | Инструменты | Расширения.",
@@ -1013,6 +1042,10 @@
       }
     }
   },
+  "undo": {
+    "message": "Отмена",
+    "description": "Button text to undo an action."
+  },
   "enable": {
     "message": "включить",
     "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
@@ -1024,6 +1057,10 @@
   "unpause": {
     "message": "возобновить",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unpause_adblock": {
+    "message": "Возобновить AdBlock",
+    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Приостановить AdBlock",
