@@ -143,9 +143,9 @@ function adblock_begin() {
       return;
     }
 
-    if (data.selectors && data.selectors.length != 0) {
+    if (data.selectors && data.selectors.length != 0)
       block_list_via_css(data.selectors);
-}
+
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
