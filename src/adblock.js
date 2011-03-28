@@ -96,9 +96,7 @@ function run_specials(settings) {
 
 
 function adblock_begin_part_2() {
-  var opts = { domain: document.domain };
-
-  BGcall('get_content_script_data', opts, function(data) {
+    var data = GLOBAL_contentScriptData;
     if (data.adblock_is_paused) {
       return;
     }
@@ -139,12 +137,14 @@ function adblock_begin_part_2() {
 
     if (data.settings.debug_logging)
       debug_print_selector_matches(data.selectors);
-  });
 }
 
 // until crbug.com/63397 is fixed, ignore SVG images
 if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) {
-  adblock_begin_part_2();
+  if (typeof GLOBAL_contentScriptData != "undefined")
+    adblock_begin_part_2();
+  else
+    adblock_js_is_already_loaded_send_me_my_data_please = true;
 
   //subscribe to the list when you click an abp: link
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {

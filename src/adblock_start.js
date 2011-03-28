@@ -133,6 +133,14 @@ function adblock_begin() {
     include_filters: true
   };
   BGcall('get_content_script_data', opts, function(data) {
+    // Store the data for adblock.js
+    GLOBAL_contentScriptData = data;
+    if (typeof adblock_js_is_already_loaded_send_me_my_data_please != "undefined") {
+      adblock_begin_part_2();
+      delete adblock_js_is_already_loaded_send_me_my_data_please;
+      console.warn("I WAS LATE THIS MORNING");
+    } else console.warn("I GOT UP EARLY");
+
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
 
