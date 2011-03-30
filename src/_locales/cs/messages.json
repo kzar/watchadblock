@@ -3,6 +3,11 @@
     "message": "Nejoblíbenější rozšíření pro Chrome s více než 2 miliony uživatelů! Blokuje reklamy na celém webu.",
     "description": "Extension description in manifest"
   },
+  "app_description1": {
+    "message": "Blokuje reklamy na celém webu! Je milován miliony uživatelů prohlížečů Chrome a Safari!",
+    "description": "App description used in app version manifest"
+  },
+
   "buttoncancel": {
     "message": "Storno",
     "description": "Cancel button"
@@ -35,6 +40,30 @@
   "donaterequest2": {
     "message": "Nedávno jsem opustil své zaměstnání, abych se mohl plně věnovat AdBlock! Nyní se spoléhám výhradně na Vaše dary pro moji rodinu. Prosím, <a>pošlete finanční dar</a> na placení našich účtů -- a dokažte, že moje žena i já nejsme blázni, když se o toto snažíme. Díky :) - Michael",
     "description": "Donation request on installation success page"
+  },
+  "setotheroptions_safari": {
+    "message": "Další možnosti můžete nastavit klepnutím na tlačítko na panelu nástrojů.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "Můžete ovládat AdBlock a nastavit další možnosti klepnutím na tlačítko na panelu nástrojů.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "Klikněte pravým tlačítkem myši na webové stránce (kromě této) pro ovládání AdBlock a nastavení dalších možností.",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Upozornění: AdBlock je nainstalován dvakrát",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "Jak AdBlock aplikace, tak AdBlock rozšíření jsou nainstalovány společně. To činí Chrome pomalejším.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "Chcete-li to napravit, odinstalujte rozšíření Adblock z <a>vašich rozšíření</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "Chcete-li skrýt tlačítko, klikněte na něj pravým tlačítkem myši a vyberte příkaz Skrýt tlačítko. Můžete jej opět zobrazit kliknutím na 'Klíč' | Nástroje | Rozšíření.",
@@ -153,7 +182,7 @@
     }
   },
   "blacklistertype": {
-    "message": "Type",
+    "message": "Typ",
     "description": "node name is called 'Type'"
   },
   "buttonlooksgood": {
@@ -1015,6 +1044,10 @@
       }
     }
   },
+  "undo": {
+    "message": "Zpět",
+    "description": "Button text to undo an action."
+  },
   "enable": {
     "message": "povolit",
     "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
@@ -1026,6 +1059,10 @@
   "unpause": {
     "message": "spustit",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unpause_adblock": {
+    "message": "Spustit AdBlock",
+    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Pozastavit AdBlock",
