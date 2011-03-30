@@ -111,9 +111,10 @@
 
       // Creates the table that shows all blockable items
       function generateTable() {
+        console.log("Set...")
         var local_filterset = FilterSet.fromText(domaindata.block, false, false);
         delete domaindata;
-
+console.log("Go...")
         // Trunkates a resource URL if it is too long
         // Inputs: the string to truncate
         // Returns the truncated string
@@ -311,6 +312,7 @@
           $(".onlyifdebug").show();
         // Create the table of resources and make it sortable
         generateTable();
+        console.log("They're heading towards the finish...")
         $("#resourceslist").tablesorter({
           headers: { 0: {sorter:false}, 4: {sorter:false}},
           cancelSelection: true,
@@ -420,6 +422,7 @@
             });
           });
         });
+        console.log("And they're finished! Famlam beats Safari!")
       }
       
       $(function() {
@@ -449,6 +452,9 @@
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
+          // Safari doesn't send the filter list
+          if (SAFARI)
+            data.block = "";
           domaindata = data;
           if (data.page_is_whitelisted || data.adblock_is_paused) {
             alert(translate("whitelistedorpausedpage"));
@@ -484,15 +490,17 @@
               return;
             }
           }
-          var filters = BG.get_custom_filters_text();
-          filters = FilterNormalizer.normalizeList(filters);
-          if (filters.replace('\n').length != 0) {
-            filters = filters.split('\n');
-            for (var i=0; i<filters.length; i++)
-              if (!/\#\#/.test(filters[i]))
-                custom_filters.push(filters[i])
+          if (!SAFARI) {
+            var filters = BG.get_custom_filters_text();
+            filters = FilterNormalizer.normalizeList(filters);
+            if (filters.replace('\n').length != 0) {
+              filters = filters.split('\n');
+              for (var i=0; i<filters.length; i++)
+                if (!/\#\#/.test(filters[i]))
+                  custom_filters.push(filters[i])
+            }
           }
-
+console.log("Ready...")
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
           if (temp_url) {
