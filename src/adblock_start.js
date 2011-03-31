@@ -94,7 +94,7 @@ beforeLoadHandler = function(event) {
     else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
     else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
-      $(el).remove();
+      removeAdRemains(el, event);
   }
 }
 
@@ -121,6 +121,34 @@ function block_list_via_css(selectors) {
   d.insertBefore(css_chunk, null);
 }
 
+// As long as the new way to get rid of ads is optional, we have to keep it
+// in this optional function. When the option is the default, put this back in 
+// the beforeloadHandler
+removeAdRemains = function(el, event) {
+  if (!removeAdRemains.hide) {
+    $(el).remove()
+    return;
+  }
+  if (event.mustBePurged) {
+    var replacement = document.createElement(el.nodeName);
+    replacement.id = el.id;
+    replacement.className = el.className;
+    replacement.name = el.name;
+    replacement.style = "display: none !important; visibility: hidden !important; opacity: 0 !important";
+    $(el).replaceWith(replacement);
+  } else {
+    // There probably won't be many sites that modify all of these.
+    // However, if we get issues, we might get to setting the location
+    // (css: position, left, top), and/or the width/height (el.width = 0)
+    // The latter will maybe even work when the page uses element.style = "";
+    $(el).css({
+      "display": "none !important",
+      "visibility": "hidden !important",
+      "opacity": "0 !important",
+    });
+  }
+}
+
 function adblock_begin() {
   if (!SAFARI) {
     GLOBAL_collect_resources = {};
@@ -142,6 +170,9 @@ function adblock_begin() {
       delete GLOBAL_collect_resources;
       return;
     }
+    
+    if (data.settings.hide_instead_of_remove)
+      removeAdRemains.hide = true;
 
     if (data.selectors)
       block_list_via_css(data.selectors);

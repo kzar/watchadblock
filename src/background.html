@@ -110,7 +110,8 @@
           block_youtube: true,
           show_youtube_help_msg: true,
           show_google_search_text_ads: false,
-          show_context_menu_items: true
+          show_context_menu_items: true,
+          hide_instead_of_remove: false
         };
         var settings = storage_get('settings') || {};
         return $.extend(defaults, settings);
