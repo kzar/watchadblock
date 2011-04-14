@@ -9,11 +9,12 @@ import getpass
 import os
 import re
 import smtplib
+import tempfile
 
 def donation_mailbox(readonly=False):
     m = imaplib.IMAP4_SSL('imap.gmail.com', 993)
-    m.login('gundlach@gmail.com', GLOBAL_password)
-    m.select('afc/donations', readonly) # if readonly=False, fetching will mark as read
+    m.login('adblockforchrome@gmail.com', GLOBAL_password)
+    m.select('donations', readonly) # if readonly=False, fetching will mark as read
     # http://tools.ietf.org/html/rfc3501.html has all the things you can search with
     return m
 
@@ -25,7 +26,7 @@ def donation_messages(max_count):
     unseens = m.search(None, '(UNSEEN)')[1][0].split()[ :max_count]
     try:
         # TODO: there is surely a more efficient way to do this.
-        m.select('afc/donations', readonly=True)
+        m.select('donations', readonly=True)
         data = m.fetch(','.join(unseens), '(RFC822)') # not marked as read
         msgs = [ tup[1] for tup in data[1][::2] ]
         for i, msg in enumerate(msgs):
@@ -154,7 +155,7 @@ def send(from_, to, subject, body):
     server.ehlo()
     server.starttls()
     server.ehlo()
-    server.login('adblockforchrome@gmail.com', GLOBAL_afc_password)
+    server.login('adblockforchrome@gmail.com', GLOBAL_password)
     msg = '''\
 From: %s
 To: %s
@@ -204,7 +205,8 @@ def with_corrected_nicknames(donations):
     Return a list of donations like the input but with nicknames corrected
     by the user.
     """
-    f = open('/tmp/nicknames.csv', 'w')
+    f, fname = tempfile.mkstemp()
+    f = os.fdopen(f, 'w')
     writer = csv.writer(f, delimiter='\t')
     for d in donations:
         note = d.note or ""
@@ -213,11 +215,13 @@ def with_corrected_nicknames(donations):
     f.close()
     print "Press enter to edit nicknames."
     raw_input()
-    os.system('vim -c "set nowrap" -c "set tabstop=20" /tmp/nicknames.csv')
-    reader = csv.reader(open('/tmp/nicknames.csv'), delimiter='\t')
-    return [ Donation(amount=float(amount), browser=browser, msgid=msgid,
-                      email=email, name=name, nickname=nickname, note=note)
-             for nickname,name,email,amount,browser,msgid,note in reader ]
+    os.system('vim -c "set nowrap" -c "set tabstop=20" %s' % fname)
+    reader = csv.reader(open(fname), delimiter='\t')
+    result = [ Donation(amount=float(amount), browser=browser, msgid=msgid,
+                        email=email, name=name, nickname=nickname, note=note)
+               for nickname,name,email,amount,browser,msgid,note in reader ]
+    os.remove(fname)
+    return result
 
 def thank_notes(number_to_thank=200):
     donations = [ d for d in donation_messages(number_to_thank) if d.note ]
@@ -245,9 +249,7 @@ def main():
         usage()
         return
     global GLOBAL_password
-    GLOBAL_password = getpass.getpass("Password for gundlach@gmail.com: ")
-    global GLOBAL_afc_password
-    GLOBAL_afc_password = getpass.getpass("Password for adblockforchrome@gmail.com: ")
+    GLOBAL_password = getpass.getpass("Password for adblockforchrome@gmail.com: ")
     if sys.argv[1] == 'yes':
         thank_notes()
     else:
