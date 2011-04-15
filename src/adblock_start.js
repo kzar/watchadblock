@@ -174,7 +174,7 @@ function adblock_begin() {
     if (data.settings.hide_instead_of_remove)
       removeAdRemains.hide = true;
 
-    if (data.selectors)
+    if (data.selectors.length != 0)
       block_list_via_css(data.selectors);
 
     //Chrome can't block resources immediately. Therefore all resources

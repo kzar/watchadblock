@@ -387,7 +387,8 @@
         var result = {
           page_is_whitelisted: whitelisted,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-          settings: settings
+          settings: settings,
+          selectors: []
         };
         if (whitelisted)
           return result;
