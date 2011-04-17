@@ -1,10 +1,12 @@
-(function() {
+var run_bandaids = function(settings) {
   // Tests to determine whether a particular bandaid should be applied
-  var test_whether_to_apply = {
-    hotmail: function() { return /mail\.live\.com/.test(document.location.host); },
-    hkpub:   function() { return /\.hk-pub\.com\/forum\/thread\-/.test(document.location.href); },
-    youtube: function(settings) { return /youtube/.test(document.domain) && settings.block_youtube; }
-  };
+  var apply_bandaid_for = "";
+  if (/mail\.live\.com/.test(document.location.host))
+    apply_bandaid_for = "hotmail";
+  else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
+    apply_bandaid_for = "hkpub";
+  else if (/youtube/.test(document.domain))
+    apply_bandaid_for = "youtube";
 
   var bandaids = {
     hotmail: function() {
@@ -22,7 +24,7 @@
         css("margin", "0px");
     },
 
-    youtube: function(settings) {
+    youtube: function() {
       function blockYoutubeAds(videoplayer) {
         var flashVars = $(videoplayer).attr('flashvars');
         var inParam = false;
@@ -90,16 +92,8 @@
 
   }; // end bandaids
 
-  // Once content script data is available, run special site-specific code.
-  GLOBAL_contentScriptData.onReady(function(data) {
-    console.warn("Running onReady for bandaids.");
-    var settings = data.settings;
-    for (var name in test_whether_to_apply) {
-      if (test_whether_to_apply[name](settings)) {
-        console.warn("Running bandaid " + name);
-        bandaids[name](settings);
-      }
-    }
-  });
-
-})();
+  if (apply_bandaid_for) {
+    log("Running bandaid for " + apply_bandaid_for);
+    bandaids[apply_bandaid_for]();
+  }
+}

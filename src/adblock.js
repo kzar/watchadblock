@@ -11,11 +11,12 @@ function debug_print_selector_matches(selectors) {
     });
 }
 
-function adblock_begin_part_2(data) {
-  console.warn("If you see this first, adblock.js was late.");
-  if (data.adblock_is_paused) {
+function adblock_begin_part_2() {
+  var data = GLOBAL_contentScriptData.data;
+  delete GLOBAL_contentScriptData;
+
+  if (data.adblock_is_paused)
     return;
-  }
 
   if (data.page_is_whitelisted) {
     log("==== EXCLUDED PAGE: " + document.location.href);
@@ -31,6 +32,10 @@ function adblock_begin_part_2(data) {
       safari.self.tab.setContextMenuEventUserInfo(event, true);
     }, false);
   }
+
+  // Run site-specific code to fix some errors, but only if the site has them		
+  if (typeof run_bandaids == "function")
+    run_bandaids(data.settings);
 
   //Neither Chrome nor Safari blocks background images. So remove them
   //TODO: Remove background images for elements other than <body>
@@ -56,8 +61,10 @@ function adblock_begin_part_2(data) {
 // until crbug.com/63397 is fixed, ignore SVG images
 if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) {
 
-  GLOBAL_contentScriptData.onReady(adblock_begin_part_2);
-  console.warn("If you see this first, adblock.js was early.");
+  if (GLOBAL_contentScriptData.data)
+    adblock_begin_part_2();
+  else
+    GLOBAL_contentScriptData.run_after_data_is_set = adblock_begin_part_2;
 
   //subscribe to the list when you click an abp: link
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {

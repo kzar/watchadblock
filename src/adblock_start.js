@@ -1,36 +1,11 @@
-GLOBAL_contentScriptData = (function() {
-  // The data
-  var _data = undefined;
-  // How many times will onReady be called?
-  var _uses_left = 2;
-  // Holds onReady callers before setData() is called
-  var _callbacks = [];
-  var _notify_callback = function(callback) {
-    console.warn("" + _uses_left + " callbacks left.  Notifying one.");
-    callback(_data);
-    _uses_left -= 1;
-    if (_uses_left == 0) {
-      console.warn("All callbacks called; deleting content script data");
-      delete _data;
-    }
-  }
-  return {
-    // When the data is set, we notify interested parties asynchronously.
-    setData: function(value) { 
-      _data = value;
-      for (var i = 0; i < _callbacks.length; i++) {
-        window.setTimeout(function() { _notify_callback(_callbacks[i]) }, 0);
-      }
-    },
-    // Takes a function(data) to call when data is available (maybe immediately)
-    onReady: function(callback) {
-      if (_data)
-        _notify_callback(callback);
-      else
-        _callbacks.push(callback);
-    }
-  };
-})();
+// Store the data that content scripts need
+// This variable is deleted in adblock.js
+// run_after_data_is_set can contain a function to run after the data was set,
+// (only likely function: adblock_begin_part_2() from adblock.js)
+GLOBAL_contentScriptData = {
+  data: undefined,
+  run_after_data_is_set: function() {},
+}
 
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
@@ -195,7 +170,9 @@ function adblock_begin() {
     include_filters: true
   };
   BGcall('get_content_script_data', opts, function(data) {
-    GLOBAL_contentScriptData.setData(data);
+    // Store the data for adblock.js
+    GLOBAL_contentScriptData.data = data;
+    GLOBAL_contentScriptData.run_after_data_is_set();
 
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
