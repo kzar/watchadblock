@@ -172,7 +172,10 @@ function adblock_begin() {
   BGcall('get_content_script_data', opts, function(data) {
     // Store the data for adblock.js
     GLOBAL_contentScriptData.data = data;
-    GLOBAL_contentScriptData.run_after_data_is_set();
+    // If adblock.js already installed its code, run it after we're done.
+    window.setTimeout(function() { 
+      GLOBAL_contentScriptData.run_after_data_is_set(); 
+    }, 0);
 
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
