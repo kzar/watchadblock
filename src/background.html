@@ -622,6 +622,13 @@
           }
         }, false);
 
+        // Open Options page upon settings checkbox click.
+        safari.extension.settings.openAdBlockOptions = false;
+        safari.extension.settings.addEventListener("change", function(e) { 
+          if (e.key == 'openAdBlockOptions')
+            chrome.tabs.create({url: "options/index.html"});
+        }, false);
+
         // Add context menus
         safari.application.addEventListener("contextmenu", function(event) {
           if (!event.userInfo)
