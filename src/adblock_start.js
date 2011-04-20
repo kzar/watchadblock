@@ -1,3 +1,12 @@
+// Store the data that content scripts need
+// This variable is deleted in adblock.js
+// run_after_data_is_set can contain a function to run after the data was set,
+// (only likely function: adblock_begin_part_2() from adblock.js)
+GLOBAL_contentScriptData = {
+  data: undefined,
+  run_after_data_is_set: function() {},
+}
+
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
     // Author: Tom Joseph of AdThwart
@@ -161,6 +170,13 @@ function adblock_begin() {
     include_filters: true
   };
   BGcall('get_content_script_data', opts, function(data) {
+    // Store the data for adblock.js
+    GLOBAL_contentScriptData.data = data;
+    // If adblock.js already installed its code, run it after we're done.
+    window.setTimeout(function() { 
+      GLOBAL_contentScriptData.run_after_data_is_set(); 
+    }, 0);
+
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
 
@@ -189,9 +205,7 @@ function adblock_begin() {
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
       delete LOADED_TOO_FAST;
     }
-
   });
-
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
