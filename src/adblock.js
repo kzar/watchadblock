@@ -33,7 +33,7 @@ function adblock_begin_part_2() {
     }, false);
   }
 
-  // Run site-specific code to fix some errors, but only if the site has them		
+  // Run site-specific code to fix some errors, but only if the site has them
   if (typeof run_bandaids == "function")
     run_bandaids(data.settings);
 
