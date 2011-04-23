@@ -237,6 +237,16 @@
         return false;
       }
 
+      String.prototype.toContextMenuSyntax = function() {
+        // On OS X, Chrome and Safari seem to have capitalized context menu
+        // entries, so convert Hello world to Hello World for them.
+        if (navigator.platform != "MacIntel")
+          return this;
+        return this.replace(/(^|\s)([a-z])/g , function(m,p1,p2){
+          return p1+p2.toUpperCase();
+        });
+      };
+
       if (!SAFARI) {
         // Set the button image and context menus according to the URL 
         // of the current tab.
@@ -249,7 +259,7 @@
 
             function addMenu(title, callback) {
               chrome.contextMenus.create({
-                title: title,
+                title: title.toContextMenuSyntax(),
                 contexts: ["all"],
                 onclick: function(clickdata, tab) { callback(tab, clickdata); }
               });
@@ -635,9 +645,12 @@
             return;
           if (!get_settings().show_context_menu_items)
             return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
-          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
-          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
+          event.contextMenu.appendContextMenuItem("show-blacklist-wizard",
+                   translate("block_this_ad").toContextMenuSyntax());
+          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui",
+                   translate("block_an_ad_on_this_page").toContextMenuSyntax());
+          event.contextMenu.appendContextMenuItem("show-whitelist-wizard",
+                   translate("contextmenuexcludedomain").toContextMenuSyntax());
         }, false);
       }
 
