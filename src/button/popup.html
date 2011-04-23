@@ -132,29 +132,6 @@
               localStorage.setItem('saw_badge_info_version', info_ver);
             });
           }
-          
-          
-          (function() {
-            // April 1th 2011
-            // The few users who update to a new major version on this day won't
-            // see what's new in that release that day, but that isn't so bad.
-            var today = new Date();
-            if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011)
-              return;
-            if (localStorage.getItem('saw_foolsday2011') == "closed")
-              return;
-            localStorage.setItem('saw_foolsday2011', true); // disable badge
-            $("#newtitle").html('Just released:<br/>AdBlock Freedom! (beta)');
-            $("#no_toolbar_button").hide();
-            $("#yes_toolbar_button").hide();
-            $("#newversioninfo").html('Get the new <a href="http://bit.ly/AdBlockEyewear" target="_new" class="blue">AdBlock Freedom</a> augmented reality eyewear, and block billboards and magazine ads in realtime!');
-            $("#div_new_release").show();
-            $("#new_release_close").click(function() {
-              $("#div_new_release").slideUp();
-              localStorage.setItem('saw_foolsday2011', "closed"); // disable badge and info div
-            });
-            // <End of April 1th code>
-          })();
         });
       </script>
 

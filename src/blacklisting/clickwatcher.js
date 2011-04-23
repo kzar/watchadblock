@@ -22,13 +22,13 @@ function Highlighter() {
       return;
     }
     then = now;
-    if (el === document.body || el.className === "adblock-killme-overlay") {
-        box.hide(); 
-        return;
-    }
-    else if (el === box[0]) {
+    if (el === box[0]) {
       box.hide();
       el = document.elementFromPoint(e.clientX, e.clientY);
+    }
+    if (el === document.body || el.className === "adblock-killme-overlay") {
+      box.hide(); 
+      return;
     }
     target = $(el);
     offset = target.offset();

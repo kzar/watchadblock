@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.3.26",
+  "version": "2.3.30",
   "description": "__MSG_app_description1__",
   "icons": {
     "16": "img/icon16.png",
@@ -12,6 +12,7 @@
   "minimum_chrome_version": "6",
   "background_page": "background.html",
   "options_page": "options/index.html",
+  "incognito": "spanning",
   "app": {
     "launch": {
       "local_path": "options/index.html"
@@ -36,6 +37,18 @@
         "adblock_start.js"
       ],
       "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.mail.live.com/*",
+        "*://*.hk-pub.com/forum/thread-*",
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "bandaids.js"
+      ],
+      "run_at": "document_end",
       "all_frames": true
     },
     {

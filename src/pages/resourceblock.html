@@ -102,7 +102,7 @@
       }
     </style>
     <script type="text/javascript">
-      var BG = chrome.extension.getBackgroundPage();
+      var BG = (SAFARI ? null : chrome.extension.getBackgroundPage());
 
       var domain = '';
       var resources = {};

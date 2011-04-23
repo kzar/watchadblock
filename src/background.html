@@ -110,7 +110,8 @@
           block_youtube: true,
           show_youtube_help_msg: true,
           show_google_search_text_ads: false,
-          show_context_menu_items: true
+          show_context_menu_items: true,
+          hide_instead_of_remove: false
         };
         var settings = storage_get('settings') || {};
         return $.extend(defaults, settings);
@@ -386,7 +387,8 @@
         var result = {
           page_is_whitelisted: whitelisted,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-          settings: settings
+          settings: settings,
+          selectors: []
         };
         if (whitelisted)
           return result;
@@ -535,26 +537,6 @@
 
       })();
 
-      (function() {
-        // April 1th, 2011
-        // Just like above, but easier to delete afterwards.
-        var today = new Date();
-        if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011) {
-          // Pre 4/1 this does nothing; post 4/1 this tidies up
-          localStorage.removeItem("saw_foolsday2011");
-          return;
-        }
-        if (SAFARI)
-          return;
-        if (!localStorage.getItem('saw_foolsday2011')) {
-          chrome.browserAction.setTitle({title:"Just released: AdBlock Freedom!  Click for more info."});
-          chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
-          chrome.browserAction.setBadgeText({text:"\u2022"});
-        }
-        // <End of April 1th code>
-      })();
-
-
       if (get_settings().debug_logging)
         log = function(text) { console.log(text); };
       
@@ -638,6 +620,13 @@
               {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
           }
+        }, false);
+
+        // Open Options page upon settings checkbox click.
+        safari.extension.settings.openAdBlockOptions = false;
+        safari.extension.settings.addEventListener("change", function(e) { 
+          if (e.key == 'openAdBlockOptions')
+            chrome.tabs.create({url: "options/index.html"});
         }, false);
 
         // Add context menus
