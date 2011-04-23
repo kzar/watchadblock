@@ -186,12 +186,16 @@ function adblock_begin() {
       delete GLOBAL_collect_resources;
       return;
     }
-    
+
     if (data.settings.hide_instead_of_remove)
       removeAdRemains.hide = true;
 
     if (data.selectors.length != 0)
       block_list_via_css(data.selectors);
+
+    // Block XHR requests on some domains
+    if (typeof block_xhr_requests == "function") 
+      block_xhr_requests(data.settings.debug_logging);
 
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them

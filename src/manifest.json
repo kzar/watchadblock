@@ -21,6 +21,16 @@
   },
   "content_scripts": [
     {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "xhr_block.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
         "port.js",
@@ -28,7 +38,7 @@
         "functions.js", 
         "broadcast_channel.js", 
 
-      
+
         "filtering/filteroptions.js",
         "filtering/fifocache.js",
         "filtering/filtertypes.js",
