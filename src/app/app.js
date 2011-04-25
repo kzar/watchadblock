@@ -1,25 +1,25 @@
 if (typeof "ADBLOCK" == "undefined")
   ADBLOCK = {};
 
+ADBLOCK.manifest = (function() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+  var theManifest;
+  xhr.onreadystatechange = function() {
+    if(this.readyState == 4) {
+      theManifest = JSON.parse(this.responseText);
+    }
+  };
+  xhr.send();
+  return theManifest;
+})();
+
 (function() {
 
   if (SAFARI)
     return;
 
-  function getManifest() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
-    var theManifest;
-    xhr.onreadystatechange = function() {
-      if(this.readyState == 4) {
-        theManifest = JSON.parse(this.responseText);
-      }
-    };
-    xhr.send();
-    return theManifest;
-  }
-
-  ADBLOCK.isApp = (getManifest().app != undefined);
+  ADBLOCK.isApp = (ADBLOCK.manifest.app != undefined);
 
   if (ADBLOCK.isApp) {
     chrome.browserAction.setIcon = function() {};
