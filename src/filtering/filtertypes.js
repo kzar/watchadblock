@@ -250,6 +250,16 @@ PatternFilter._parseRule = function(text) {
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
+  if (!result.domainText && ((result.options & FilterOptions.FIRSTPARTY) || 
+      (result.allowedElementTypes == ElementTypes.document) ||
+      (result.allowedElementTypes == ElementTypes.elemhide))) {
+    // ||domain.com^$document will not match on example.com, so only use it on
+    // domain.com. Same for ||domain.com^$~third-party and $elemhide
+    var match = rule.match(/\|(\||[a-z\-]+\:\/\/)([\w\-]+\.)*?(([\w\-]+\.)?(co\.)?[a-z]+)(\/|\^)/i);
+    if (match)
+      result.domainText = match[3];
+  }
+
   // If it starts or ends with *, strip that -- it's a no-op.
   rule = rule.replace(/^\*/, '');
   rule = rule.replace(/\*$/, '');

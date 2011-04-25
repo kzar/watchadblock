@@ -38,7 +38,7 @@ FilterSet.fromText = function(text, split_out_globals) {
     var filter = Filter.fromText(lines[i]);
     var target = result;
     if (split_out_globals)
-      target = result[(filter.isGlobal() ? "global" : "nonglobal")];
+      target = result[(filter._domains.applied_on.length == 0 ? "global" : "nonglobal")];
 
     // What's the right way to do this?
     if (filter.__type == "SelectorFilter")
