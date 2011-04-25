@@ -251,7 +251,7 @@ var FilterNormalizer = {
   _verifyDomains: function(domainInfo) {
     for (var name in { "applied_on":1, "not_applied_on":1 }) {
       for (var i = 0; i < domainInfo[name].length; i++) {
-        if (/^([a-z0-9\-_à-ÿ]+\.)*[a-z0-9]+$/i.test(domainInfo[name][i]) == false)
+        if (/^([a-z0-9\-_\xE3-\xFF]+\.)*[a-z0-9]+$/i.test(domainInfo[name][i]) == false)
           throw "Invalid domain: " + domainInfo[name][i];
       }
     }
