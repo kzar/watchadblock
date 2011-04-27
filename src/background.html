@@ -587,6 +587,63 @@
       }
       // take_census(); uncomment when you want another census.
 
+      // Info about tabs we're going to block.
+      // Maps tab IDs to url info
+      // TODO closure
+      _tabInfo = {
+        add: function(tabId, url) {
+          _tabInfo[tabId] = {
+            url: url,
+            domain: url.match(/:\/\/([^:\/]*)/)[1], // TODO reuse something else for this
+            whitelisted: null // unknown
+          };
+        }
+      };
+
+      // Returns true if the given absolute url for the given elType should be blocked on
+      // the given entry in _tabInfo.
+      function shouldBlock(tabId, url, elType, details) {
+        if (!details) details = {}; // TODO temp for testing -- delete details as a param
+        var tab = _tabInfo[tabId];
+        if (tab.whitelisted === null)
+          tab.whitelisted = page_is_whitelisted(tab.url); // cache for subsequent requests
+        if (tab.whitelisted)
+          return false;
+
+        var limited = _myfilters.nonglobal.limitedToDomain(tab.domain);
+        var isMatched = url && (_myfilters.global.matches(url, elType, tab.domain) ||
+                                limited.matches(url, elType, tab.domain));
+        console.log(isMatched + "\t" + elType + "\t" + details.type + "\t" + url.substring(0, 50) + "..." + url.substring(url.length - 50));
+
+        return isMatched;
+      }
+
+      // Chrome specific code.
+      if (!SAFARI) {
+        chrome.tabs.onRemoved.addListener(function(tabId) { delete _tabInfo[tabId]; });
+
+        chrome.experimental.webRequest.onBeforeRequest.addListener(function(details) {
+          // Ignore requests outside of regular tabs
+          if (details.tabId < 0) return { cancel: false };
+
+          if (details.type == 'main_frame')
+            _tabInfo.add(details.tabId, details.url);
+
+          // TODO move this into ElementTypes.fromChromeBeforeRequestType(), and/or rework the 
+          // mapping to be more Chrome-specific
+          var typeMap = {
+            'main_frame': 'document',
+            'sub_frame': 'subdocument',
+            // TODO not sure what to do here since 'object' can mean the initial load or a subrequest
+            'object': 'object_subrequest',
+            // TODO also not sure if this should be 'xmlhttprequest' or what, since 'other' covers several things
+            'other': 'other'
+          };
+          var elType = ElementTypes[typeMap[details.type] || details.type];
+
+          return { cancel: shouldBlock(details.tabId, details.url, elType, details) };
+        }, { urls: ["http://*/*", "https://*/*"] }, ["blocking"]);
+      }
 
       // Safari specific code.
       if (SAFARI) {
@@ -594,22 +651,21 @@
         safari.application.addEventListener("message", function(messageEvent) {
           if (messageEvent.name != "canLoad")
             return;
-
-          if (page_is_whitelisted(messageEvent.target.url)) {
-            messageEvent.message = true;
-            return;
+          var tabId = chrome.__getTabId(messageEvent.target);
+          // If we're on a newly navigated tab, record its data
+          if (!_tabInfo[tabId] || _tabInfo[tabId].url != messageEvent.target.url) {
+            _tabInfo.add(tabId, messageEvent.target.url);
+            // There's no onClosed event in Safari, so track open tabs and clean them
+            // up when a new tab is opened.
+            _tabInfo[tabId]._tab = messageEvent.target;
+            for (var k in _tabInfo) {
+              if (_tabInfo[k]._tab && !_tabInfo[k]._tab.browserWindow)
+                delete _tabInfo[k];
+            }
           }
-
-          var url = messageEvent.message.url;
-          var elType = messageEvent.message.elType;
-          var pageDomain = messageEvent.message.pageDomain;
-
-          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
-          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
-                                  limited.matches(url, elType, pageDomain));
-          if (isMatched)
-            log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
-          messageEvent.message = !isMatched;
+          // TODO maybe send details.type keys instead of elType keys (Safari conforms to Chrome API)
+          // and then move typeMap to shared area
+          messageEvent.message = !shouldBlock(tabId, messageEvent.message.url, messageEvent.message.elType);
         }, false);
 
         safari.application.addEventListener("command", function(commandEvent) {
