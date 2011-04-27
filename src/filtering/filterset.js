@@ -24,9 +24,9 @@ function FilterSet() {
 // or false if return value should be a single unified FilterSet.
 FilterSet.fromText = function(text, split_out_globals) {
   if (split_out_globals)
-    result = { global: new FilterSet(), nonglobal: new FilterSet() };
+    var result = { global: new FilterSet(), nonglobal: new FilterSet() };
   else
-    result = new FilterSet();
+    var result = new FilterSet();
 
   var lines = text.split('\n');
   for (var i = 0; i < lines.length; i++) {
