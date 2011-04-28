@@ -376,17 +376,17 @@
         set_setting("show_youtube_help_msg", false);
       };
 
-      // TODO: make better.
       // Inputs: domain:string the domain of the calling frame.
       get_content_script_data = function(domain, sender) {
-        // TODO resourceblock is now broken because include_filters doesn't exist.
+        // TODO resourceblock is now broken because include_filters doesn't exist
+        // and GLOBAL_collect_resources isn't being populated.
+        // TODO can't I use _tabInfo for whitelisting info?
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
         var result = {
           page_is_whitelisted: whitelisted,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-          settings: settings,
-          selectors: []
+          settings: settings
         };
         if (whitelisted)
           return result;
@@ -647,9 +647,9 @@
             var tabId = chrome.__getTabId(tab);
             if (!_tabInfo[tabId] || _tabInfo[tabId].url != tab.url) // just opened/navigated
               _tabInfo.add(tabId, tab.url, tab);
-            var elType = ElementTypes.forNodeName(messageEvent.message.nodeName);
+            var elType = messageEvent.message.elType;
             var blockIt = shouldBlock(tabId, messageEvent.message.url, elType);
-            messageEvent.message = { blockIt: blockIt, elType: elType };
+            messageEvent.message = { blocked: blockIt, url: messageEvent.message.url, elType: elType };
           }, false);
 
         }

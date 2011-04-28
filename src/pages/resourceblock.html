@@ -104,6 +104,30 @@
     <script type="text/javascript">
       var BG = chrome.extension.getBackgroundPage();
 
+
+      // If url is relative, convert to absolute.
+      function relativeToAbsoluteUrl(url, pageUrl) {
+        // TODO: rely on pageUrl instead of document.location and document.baseURI.
+        //       Right now this is broken.
+        // Author: Tom Joseph of AdThwart
+        
+        if(!url)
+            return url;
+        // If URL is already absolute, don't mess with it
+        if(/^[a-z\-]+\:\/\//.test(url))
+            return url;
+        // Leading / means absolute path
+        if(url[0] == '/')
+            return document.location.protocol + "//" + document.location.host + url;
+
+        // Remove filename and add relative URL to it
+        var base = document.baseURI.match(/.+\//);
+        if(!base) return document.baseURI + "/" + url;
+        return base[0] + url;
+      }
+
+
+
       var domain = '';
       var resources = {};
       var domaindata;
@@ -438,6 +462,7 @@
           var temp_resource = query.match(/^(.+)\=(.+)$/);
           if (temp_resource) {
             var temp_url = unescape(temp_resource[2]);
+            temp_url = relativeToAbsoluteUrl(temp_url, url); // TODO implement this properly 
             var temp_type = temp_resource[1];
             resources[temp_url] = {type:ElementTypes[temp_type]};
           }

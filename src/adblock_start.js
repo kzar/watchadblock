@@ -7,25 +7,6 @@ GLOBAL_contentScriptData = {
   run_after_data_is_set: function() {},
 }
 
-// If url is relative, convert to absolute.
-function relativeToAbsoluteUrl(url) {
-    // Author: Tom Joseph of AdThwart
-    
-    if(!url)
-        return url;
-    // If URL is already absolute, don't mess with it
-    if(/^[a-z\-]+\:\/\//.test(url))
-        return url;
-    // Leading / means absolute path
-    if(url[0] == '/')
-        return document.location.protocol + "//" + document.location.host + url;
-
-    // Remove filename and add relative URL to it
-    var base = document.baseURI.match(/.+\//);
-    if(!base) return document.baseURI + "/" + url;
-    return base[0] + url;
-}
-
 //Do not make the frame display a white area
 //Not calling .remove(); as this causes some sites to reload continuesly
 function removeFrame(el) {
@@ -40,54 +21,56 @@ function removeFrame(el) {
   parentEl.attr(cols, sizes.join(','));
 }
 
+// Elements that, if blocked, should be removed from the page.
+var mightRemove = {
+  // Add an element that we'll later decide to remove from the page (or not).
+  // Inputs: elType:ElementType of el: an element. 
+  //         url: the full URL of the resource el wants to load.
+  add: function(elType, el, url) {
+    var key = elType + " " + url;
+    if (mightRemove[key] == undefined)
+      mightRemove[key] = [ el ];
+    else
+      mightRemove[key].push(el);
+  },
+  // If the element matching url+elType was blocked, remove from the page.
+  // Inputs: elType:ElementType.  url: as in .add().  blocked:bool.
+  process: function(elType, url, blocked) {
+    var key = elType + " " + url;
+    if (mightRemove[key]) {
+      if (blocked)
+        mightRemove[key].forEach(function(el) { destroyElement(el, elType); });
+      delete mightRemove[key];
+    }
+  }
+};
+
 if (!SAFARI) {
-  // TODO I hate that I'm storing pointers to all these DOM elements.  Can this
-  // be avoided?
-  _loaded = {}; // maps urls to DOM elements that should be removed if blocked
   beforeLoadHandler = function(event) {
     var elType = ElementTypes.forNodeName(event.target.nodeName);
-    if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
-      return;
-    var key = elType + " " + event.url;
-    if (_loaded[key] == undefined)
-      _loaded[key] = [ event.target ];
-    else
-      _loaded[key].push(event.target);
+    if (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
+      mightRemove.add(elType, event.target, event.url);
   };
-
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if (request.command != 'block-result')
-      return;
-    var key = request.elType + " " + request.url;
-    if (_loaded[key]) {
-      if (request.blocked)
-        _loaded[key].forEach(function(el) { destroyElement(el, request.elType); });
-      delete _loaded[key];
-    }
+    if (request.command == 'block-result')
+      mightRemove.process(request.elType, request.url, request.blocked);
   });
-
 }
 
 if (SAFARI) {
   beforeLoadHandler = function(event) {
-    var el = event.target;
-    // Cancel the load if canLoad is false.
-    var data = { 
-      url: relativeToAbsoluteUrl(event.url),
-      nodeName: el.nodeName,
-      pageDomain: document.domain
-    };
-    // if (!SAFARI) // TODO move to background
-      // GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
-    // TODO checking data.url here because we used to check it in
+    // TODO checking url here because we used to check it in
     // background before running .matches().  Why do we need this?
-    if (!data.url)
+    if (!event.url)
       return;
-    var result = safari.self.tab.canLoad(event, data);
-    if (result.blockIt) {
+    var elType = ElementTypes.forNodeName(event.target.nodeName);
+    mightRemove.add(elType, event.target, event.url);
+    var result = safari.self.tab.canLoad(event, {
+      url: event.url, elType: elType, pageDomain: document.domain
+    });
+    if (result.blocked)
       event.preventDefault();
-      destroyElement(el, result.elType);
-    }
+    mightRemove.process(result.elType, result.url, result.blocked);
   }
 }
 
@@ -153,6 +136,7 @@ removeAdRemains = function(el, event) {
   }
 }
 
+
 function adblock_begin() {
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
@@ -175,8 +159,19 @@ function adblock_begin() {
     if (data.settings.hide_instead_of_remove)
       removeAdRemains.hide = true;
 
-    if (data.selectors.length != 0)
+    if (data.selectors.length != 0) {
       block_list_via_css(data.selectors);
+      if (data.settings.debug_logging) {
+        data.selectors.
+          filter(function(selector) { return $(selector).length > 0; }).
+          forEach(function(selector) {
+            log("Debug: CSS '" + selector + "' hid:");
+            $(selector).each(function(i, el) {
+              log("       " + el.nodeName + "#" + el.id + "." + el.className);
+            });
+          });
+      }
+    }
   });
 }
 

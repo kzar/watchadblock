@@ -117,7 +117,7 @@ BlacklistUi.prototype._build_page1 = function() {
         type = "media";
       else if (elType == ElementTypes.subdocument)
         type = "subdocument";
-      var srcUrl = relativeToAbsoluteUrl(el.attr("src") || el.attr("data"));
+      var srcUrl = el.attr("src") || el.attr("data");
       var tabUrl = document.location.href;
       var query = '?' + type + '=' + escape(srcUrl) + '&url=' + escape(tabUrl);
       window.open(chrome.extension.getURL('pages/resourceblock.html' 

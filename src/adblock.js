@@ -1,13 +1,3 @@
-function debug_print_selector_matches(selectors) {
-  selectors.
-    filter(function(selector) { return $(selector).length > 0; }).
-    forEach(function(selector) {
-      log("Debug: CSS '" + selector + "' hid:");
-      $(selector).each(function(i, el) {
-        log("       " + el.nodeName + "#" + el.id + "." + el.className);
-      });
-    });
-}
 
 function adblock_begin_part_2() {
   var data = GLOBAL_contentScriptData.data;
@@ -54,8 +44,6 @@ function adblock_begin_part_2() {
     }
   }
 
-  if (data.settings.debug_logging)
-    debug_print_selector_matches(data.selectors);
 }
 
 // until crbug.com/63397 is fixed, ignore SVG images
