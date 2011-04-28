@@ -88,7 +88,6 @@ var FilterNormalizer = {
         var protocol = filter.match(/^(\@\@)?\|([a-z\-]+)\:\/\//);
         if (protocol && !/^https?$/.test(protocol[2]))
           return null;
-        else console.warn(filter)
       }
     }
 
