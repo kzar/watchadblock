@@ -443,11 +443,7 @@
           }
         }
 
-        var opts = {
-          domain: domain,
-          include_filters: true
-        };
-        BGcall('get_content_script_data', opts, function(data) {
+        BGcall('get_content_script_data', domain, function(data) {
           delete data.selectors;
           domaindata = data;
           if (data.page_is_whitelisted || data.adblock_is_paused) {

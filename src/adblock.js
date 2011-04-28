@@ -37,21 +37,23 @@ function adblock_begin_part_2() {
   if (typeof run_bandaids == "function")
     run_bandaids(data.settings);
 
-  //Neither Chrome nor Safari blocks background images. So remove them
+  //Safari can't block background images. So remove them
   //TODO: Remove background images for elements other than <body>
-  var bgImage = $("body").css('background-image');
-  var match = bgImage.match(/^url\((.*)\)$/);
-  if (match)
-    bgImage = match[1];
-  if (bgImage && bgImage != "none") {
-    var fakeEvent = {
-      target: $("body")[0],
-      url: bgImage,
-      mustBePurged: true,
-      preventDefault: function(){},
-      type: "beforeload"
-    };
-    beforeLoadHandler(fakeEvent);
+  if (SAFARI) {
+    var bgImage = $("body").css('background-image');
+    var match = bgImage.match(/^url\((.*)\)$/);
+    if (match)
+      bgImage = match[1];
+    if (bgImage && bgImage != "none") {
+      var fakeEvent = {
+        target: $("body")[0],
+        url: bgImage,
+        mustBePurged: true,
+        preventDefault: function(){},
+        type: "beforeload"
+      };
+      beforeLoadHandler(fakeEvent);
+    }
   }
 
   if (data.settings.debug_logging)

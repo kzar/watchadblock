@@ -107,7 +107,7 @@ BlacklistUi.prototype._build_page1 = function() {
     text: translate("block_by_url_instead"),
     click: function(e) {
       var el = that._chain.current();
-      var elType = typeForElement(el[0]);
+      var elType = ElementTypes.forNodeName(el[0].nodeName);
       var type = ElementTypes.NONE;
       if (elType == ElementTypes.image)
         type = "image";

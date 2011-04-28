@@ -377,11 +377,9 @@
       };
 
       // TODO: make better.
-      // Inputs: options object containing:
-      //           domain:string the domain of the calling frame.
-      //           include_filters:bool true if hide and block filters should
-      //                                be included
-      get_content_script_data = function(options, sender) {
+      // Inputs: domain:string the domain of the calling frame.
+      get_content_script_data = function(domain, sender) {
+        // TODO resourceblock is now broken because include_filters doesn't exist.
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
         var result = {
@@ -392,13 +390,6 @@
         };
         if (whitelisted)
           return result;
-        // If in debug mode, send filters to adblock.js to print css info.
-        // Normally only adblock_start asks to include_filters.
-        if (!options.include_filters && !settings.debug_logging)
-          return result;
-
-        // Not whitelisted, and running on adblock_start.  We have two tasks:
-        // apply CSS-hiding rules, and send Chrome a filterset.
 
         // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
         // when not cached, it takes about 100ms.  So more caching would be good.  The
@@ -407,15 +398,8 @@
         // how big each new entry is, to verify this.
         if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
           var global_hide = _myfilters.global.cached_getSelectors;
-          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
+          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(domain).getSelectors();
           result.selectors = global_hide.concat(nonglobal_hide);
-        }
-        // Chrome needs the blocking filters in the content script until a
-        // synchronous background communication API comes along.
-        if (!SAFARI) {
-          var global_block = _myfilters.global.cached_blockFiltersText;
-          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
-          result.block = global_block + nonglobal_block.join('\n');
         }
 
         return result;
@@ -587,87 +571,89 @@
       }
       // take_census(); uncomment when you want another census.
 
-      // Info about tabs we're going to block.
-      // Maps tab IDs to url info
-      // TODO closure
-      _tabInfo = {
-        add: function(tabId, url) {
-          _tabInfo[tabId] = {
-            url: url,
-            domain: url.match(/:\/\/([^:\/]*)/)[1], // TODO reuse something else for this
-            whitelisted: null // unknown
-          };
-        }
-      };
-
-      // Returns true if the given absolute url for the given elType should be blocked on
-      // the given entry in _tabInfo.
-      function shouldBlock(tabId, url, elType, details) {
-        if (!details) details = {}; // TODO temp for testing -- delete details as a param
-        var tab = _tabInfo[tabId];
-        if (tab.whitelisted === null)
-          tab.whitelisted = page_is_whitelisted(tab.url); // cache for subsequent requests
-        if (tab.whitelisted)
-          return false;
-
-        var limited = _myfilters.nonglobal.limitedToDomain(tab.domain);
-        var isMatched = url && (_myfilters.global.matches(url, elType, tab.domain) ||
-                                limited.matches(url, elType, tab.domain));
-        console.log(isMatched + "\t" + elType + "\t" + details.type + "\t" + url.substring(0, 50) + "..." + url.substring(url.length - 50));
-
-        return isMatched;
-      }
-
-      // Chrome specific code.
-      if (!SAFARI) {
-        chrome.tabs.onRemoved.addListener(function(tabId) { delete _tabInfo[tabId]; });
-
-        chrome.experimental.webRequest.onBeforeRequest.addListener(function(details) {
-          // Ignore requests outside of regular tabs
-          if (details.tabId < 0) return { cancel: false };
-
-          if (details.type == 'main_frame')
-            _tabInfo.add(details.tabId, details.url);
-
-          // TODO move this into ElementTypes.fromChromeBeforeRequestType(), and/or rework the 
-          // mapping to be more Chrome-specific
-          var typeMap = {
-            'main_frame': 'document',
-            'sub_frame': 'subdocument',
-            // TODO not sure what to do here since 'object' can mean the initial load or a subrequest
-            'object': 'object_subrequest',
-            // TODO also not sure if this should be 'xmlhttprequest' or what, since 'other' covers several things
-            'other': 'other'
-          };
-          var elType = ElementTypes[typeMap[details.type] || details.type];
-
-          return { cancel: shouldBlock(details.tabId, details.url, elType, details) };
-        }, { urls: ["http://*/*", "https://*/*"] }, ["blocking"]);
-      }
-
-      // Safari specific code.
-      if (SAFARI) {
-        // True blocking support.
-        safari.application.addEventListener("message", function(messageEvent) {
-          if (messageEvent.name != "canLoad")
-            return;
-          var tabId = chrome.__getTabId(messageEvent.target);
-          // If we're on a newly navigated tab, record its data
-          if (!_tabInfo[tabId] || _tabInfo[tabId].url != messageEvent.target.url) {
-            _tabInfo.add(tabId, messageEvent.target.url);
-            // There's no onClosed event in Safari, so track open tabs and clean them
-            // up when a new tab is opened.
-            _tabInfo[tabId]._tab = messageEvent.target;
-            for (var k in _tabInfo) {
-              if (_tabInfo[k]._tab && !_tabInfo[k]._tab.browserWindow)
-                delete _tabInfo[k];
+      // Resource blocking.
+      (function() {
+        // Info about tabs we're going to block.
+        // Maps tab IDs to url info
+        var _tabInfo = {
+          // Add info about a newly navigated tab.
+          // Inputs: tabId:int, url:string
+          //         tab?:Tab object, used by Safari to track when to remove _tabInfo entries
+          add: function(tabId, url, tab) {
+            _tabInfo[tabId] = {
+              url: url,
+              domain: url.match(/:\/\/([^:\/]*)/)[1], // TODO reuse something else for this
+              // TODO reset upon whitelist change
+              whitelisted: null // unknown
+            };
+            if (tab) {
+              // In Safari, manually delete closed tabs periodically because
+              // there's no tabs.onRemoved event.
+              _tabInfo[tabId]._tab = tab; 
+              for (var k in _tabInfo) {
+                if (_tabInfo[k]._tab && !_tabInfo[k]._tab.browserWindow)
+                  delete _tabInfo[k];
+              }
             }
           }
-          // TODO maybe send details.type keys instead of elType keys (Safari conforms to Chrome API)
-          // and then move typeMap to shared area
-          messageEvent.message = !shouldBlock(tabId, messageEvent.message.url, messageEvent.message.elType);
-        }, false);
+        };
 
+        // Returns true if a resource with the given absolute url and element
+        // type should be blocked on the given tab id.
+        function shouldBlock(tabId, url, elType) {
+          var tab = _tabInfo[tabId];
+          if (tab.whitelisted === null)
+            tab.whitelisted = page_is_whitelisted(tab.url); // cache for subsequent requests
+          if (tab.whitelisted)
+            return false;
+
+          var limited = _myfilters.nonglobal.limitedToDomain(tab.domain);
+          var isMatched = (_myfilters.global.matches(url, elType, tab.domain) ||
+                           limited.matches(url, elType, tab.domain));
+          // TODO temp
+          console.log(isMatched + "\t" + elType + "\t" + 
+                      url.substring(0, 50) + "..." + url.substring(url.length - 50));
+
+          return isMatched;
+        }
+
+        // Browser-specific event handlers.
+        if (!SAFARI) {
+
+          chrome.tabs.onRemoved.addListener(function(tabId) { delete _tabInfo[tabId]; });
+
+          chrome.experimental.webRequest.onBeforeRequest.addListener(function(details) {
+            if (details.tabId < 0) 
+              return { cancel: false }; // Ignore requests outside regular tabs
+            if (details.type == 'main_frame') // just opened/navigated
+              _tabInfo.add(details.tabId, details.url);
+            var elType = ElementTypes.forChromeRequestType(details.type);
+            var blockIt = shouldBlock(details.tabId, details.url, elType);
+            if (blockIt && elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
+              chrome.tabs.sendRequest(details.tabId, { command: 'block-notice', url: details.url, elType: elType });
+            return { cancel: blockIt };
+          }, { urls: ["http://*/*", "https://*/*"] }, ["blocking"]);
+
+        } else { // Safari
+
+          safari.application.addEventListener("message", function(messageEvent) {
+            if (messageEvent.name != "canLoad")
+              return;
+            var tab = messageEvent.target;
+            var tabId = chrome.__getTabId(tab);
+            if (!_tabInfo[tabId] || _tabInfo[tabId].url != tab.url) // just opened/navigated
+              _tabInfo.add(tabId, tab.url, tab);
+            var elType = ElementTypes.forNodeName(messageEvent.message.nodeName);
+            var blockIt = shouldBlock(tabId, messageEvent.message.url, elType);
+            messageEvent.message = { blockIt: blockIt, elType: elType };
+          }, false);
+
+        }
+      })();
+
+
+      // Safari specfic code.
+      if (SAFARI) {
         safari.application.addEventListener("command", function(commandEvent) {
           // Open Options page upon Toolbar button click.
           if (commandEvent.command == "AdBlockOptions")

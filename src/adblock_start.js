@@ -26,51 +26,6 @@ function relativeToAbsoluteUrl(url) {
     return base[0] + url;
 }
 
-// Return the ElementType element type of the given element.
-function typeForElement(el) {
-  // TODO: handle background images that aren't just the BODY.
-  switch (el.nodeName.toUpperCase()) {
-    case 'INPUT': 
-    case 'IMG': return ElementTypes.image;
-    case 'SCRIPT': return ElementTypes.script;
-    case 'OBJECT': 
-    case 'EMBED': return ElementTypes.object;
-    case 'VIDEO': 
-    case 'AUDIO': 
-    case 'SOURCE': return ElementTypes.media;
-    case 'FRAME': 
-    case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': return ElementTypes.stylesheet;
-    case 'BODY': return ElementTypes.background;
-    default: return ElementTypes.NONE;
-  }
-}
-
-// Browser-agnostic canLoad function.
-// Returns false if data.url, data.elType, and data.pageDomain together
-// should not be blocked.
-function browser_canLoad(event, data) {
-  if (SAFARI) {
-    return safari.self.tab.canLoad(event, data);
-  } else {
-    // If we haven't yet asynchronously loaded our filters, store for later.
-    if (typeof _local_block_filterset == "undefined") {
-      if (!(data.elType & ElementTypes.script)) {
-        event.mustBePurged = true;
-        LOADED_TOO_FAST.push({data:event});
-      }
-      return true;
-    }
-
-    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, document.domain);
-    if (isMatched && event.mustBePurged)
-      log("Purging if possible " + data.url);
-    else if (isMatched)
-      log("CHROME TRUE BLOCK " + data.url);
-    return !isMatched;
-  }
-}
-
 //Do not make the frame display a white area
 //Not calling .remove(); as this causes some sites to reload continuesly
 function removeFrame(el) {
@@ -85,26 +40,65 @@ function removeFrame(el) {
   parentEl.attr(cols, sizes.join(','));
 }
 
-beforeLoadHandler = function(event) {
-  var el = event.target;
-  // Cancel the load if canLoad is false.
-  var elType = typeForElement(el);
-  var data = { 
-    url: relativeToAbsoluteUrl(event.url),
-    elType: elType,
-    pageDomain: document.domain
+if (!SAFARI) {
+  // TODO I hate that I'm storing pointers to all these DOM elements.  Can this
+  // be avoided?
+  _loaded = {}; // maps urls to DOM elements that should be removed if blocked
+  beforeLoadHandler = function(event) {
+    var elType = ElementTypes.forNodeName(event.target.nodeName);
+    if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
+      return;
+    var key = elType + " " + event.url;
+    if (_loaded[key] == undefined)
+      _loaded[key] = [ event.target ];
+    else
+      _loaded[key].push(event.target);
   };
-  if (!SAFARI)
-    GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
-  if (false == browser_canLoad(event, data)) {
-    event.preventDefault();
-    if (el.nodeName == "FRAME")
-      removeFrame(el);
-    else if (elType & ElementTypes.background)
-      $(el).css("background-image", "none !important");
-    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
-      removeAdRemains(el, event);
+
+  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    if (request.command != 'block-notice')
+      return;
+    var key = request.elType + " " + request.url;
+    if (_loaded[key]) {
+      _loaded[key].forEach(function(el) { destroyElement(el, request.elType); });
+      delete _loaded[key];
+    }
+  });
+
+}
+
+if (SAFARI) {
+  beforeLoadHandler = function(event) {
+    var el = event.target;
+    // Cancel the load if canLoad is false.
+    var data = { 
+      url: relativeToAbsoluteUrl(event.url),
+      nodeName: el.nodeName,
+      pageDomain: document.domain
+    };
+    // if (!SAFARI) // TODO move to background
+      // GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
+    // TODO checking data.url here because we used to check it in
+    // background before running .matches().  Why do we need this?
+    if (!data.url)
+      return;
+    var result = safari.self.tab.canLoad(event, data);
+    if (result.blockIt) {
+      event.preventDefault();
+      destroyElement(el, result.elType);
+    }
   }
+}
+
+// TODO roll all this into removeAdRemains once the hide vs no-hide option
+// has disappeared
+function destroyElement(el, elType) {
+  if (el.nodeName == "FRAME")
+    removeFrame(el);
+  else if (elType & ElementTypes.background)
+    $(el).css("background-image", "none !important");
+  else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
+    removeAdRemains(el, event);
 }
 
 // Return the CSS text that will hide elements matching the given 
@@ -159,17 +153,9 @@ removeAdRemains = function(el, event) {
 }
 
 function adblock_begin() {
-  if (!SAFARI) {
-    GLOBAL_collect_resources = {};
-    LOADED_TOO_FAST = [];
-  }
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
-  var opts = { 
-    domain: document.domain, 
-    include_filters: true
-  };
-  BGcall('get_content_script_data', opts, function(data) {
+  BGcall('get_content_script_data', document.domain, function(data) {
     // Store the data for adblock.js
     // If adblock.js already installed its code, run it after we're done.
     window.setTimeout(function() { 
@@ -182,8 +168,6 @@ function adblock_begin() {
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
-      delete LOADED_TOO_FAST;
-      delete GLOBAL_collect_resources;
       return;
     }
     
@@ -192,19 +176,6 @@ function adblock_begin() {
 
     if (data.selectors.length != 0)
       block_list_via_css(data.selectors);
-
-    //Chrome can't block resources immediately. Therefore all resources
-    //are cached first. Once the filters are loaded, simply remove them
-    if (!SAFARI) {
-      // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
-      // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
-      // but is much quicker to reparse.
-      _local_block_filterset = FilterSet.fromText(data.block, undefined, false);
-
-      for (var i=0; i < LOADED_TOO_FAST.length; i++)
-        beforeLoadHandler(LOADED_TOO_FAST[i].data);
-      delete LOADED_TOO_FAST;
-    }
   });
 }
 
