@@ -25,25 +25,9 @@ function adblock_begin_part_2() {
   if (typeof run_bandaids == "function")
     run_bandaids(data.settings);
 
-  //Safari can't block background images. So remove them
-  //TODO: Remove background images for elements other than <body>
-  if (SAFARI) {
-    var bgImage = $("body").css('background-image');
-    var match = bgImage.match(/^url\((.*)\)$/);
-    if (match)
-      bgImage = match[1];
-    if (bgImage && bgImage != "none") {
-      var fakeEvent = {
-        target: $("body")[0],
-        url: bgImage,
-        mustBePurged: true,
-        preventDefault: function(){},
-        type: "beforeload"
-      };
-      beforeLoadHandler(fakeEvent);
-    }
-  }
-
+  // TODO: To block Safari background images in <body>,
+  // do BGcall("shouldBlock") and if true then call 
+  // $(el).css("background-image", "none !important");
 }
 
 // until crbug.com/63397 is fixed, ignore SVG images
