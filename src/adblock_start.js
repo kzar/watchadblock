@@ -56,11 +56,12 @@ if (!SAFARI) {
   };
 
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if (request.command != 'block-notice')
+    if (request.command != 'block-result')
       return;
     var key = request.elType + " " + request.url;
     if (_loaded[key]) {
-      _loaded[key].forEach(function(el) { destroyElement(el, request.elType); });
+      if (request.blocked)
+        _loaded[key].forEach(function(el) { destroyElement(el, request.elType); });
       delete _loaded[key];
     }
   });

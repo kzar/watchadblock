@@ -629,8 +629,12 @@
               _tabInfo.add(details.tabId, details.url);
             var elType = ElementTypes.forChromeRequestType(details.type);
             var blockIt = shouldBlock(details.tabId, details.url, elType);
-            if (blockIt && elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
-              chrome.tabs.sendRequest(details.tabId, { command: 'block-notice', url: details.url, elType: elType });
+            // TODO make sure sending a msg every time isn't horribly slow.  we could send only for
+            // blocked resources, but then adblock_start:_loaded would grow over time on long-running tabs.
+            if (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)) {
+              var result_data = { command: 'block-result', blocked: blockIt, url: details.url, elType: elType };
+              chrome.tabs.sendRequest(details.tabId, result_data);
+            }
             return { cancel: blockIt };
           }, { urls: ["http://*/*", "https://*/*"] }, ["blocking"]);
 
