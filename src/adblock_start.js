@@ -1,12 +1,3 @@
-// Store the data that content scripts need
-// This variable is deleted in adblock.js
-// run_after_data_is_set can contain a function to run after the data was set,
-// (only likely function: adblock_begin_part_2() from adblock.js)
-GLOBAL_contentScriptData = {
-  data: undefined,
-  run_after_data_is_set: function() {},
-}
-
 //Do not make the frame display a white area
 //Not calling .remove(); as this causes some sites to reload continuesly
 function removeFrame(el) {
@@ -119,20 +110,16 @@ function adblock_begin() {
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   BGcall('get_content_script_data', document.domain, function(data) {
-    // Store the data for adblock.js
-    // If adblock.js already installed its code, run it after we're done.
-    window.setTimeout(function() { 
-      GLOBAL_contentScriptData.data = data;
-      GLOBAL_contentScriptData.run_after_data_is_set(); 
-    }, 0);
-
     if (data.settings.debug_logging)
       log = function(text) { console.log(text); };
 
-    if (data.page_is_whitelisted || data.adblock_is_paused) {
+    if (!data.enabled) {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
+      log("==== EXCLUDED PAGE: " + document.location.href);
       return;
     }
+
+    log("==== ADBLOCKING PAGE: " + document.location.href);
     
     if (data.selectors.length != 0) {
       block_list_via_css(data.selectors);
@@ -146,6 +133,14 @@ function adblock_begin() {
             });
           });
       }
+    }
+
+    if (SAFARI) {
+      // Add entries to right click menu.  Unlike Chrome, we can make
+      // the menu items only appear on non-whitelisted pages.
+      window.addEventListener("contextmenu", function(event) {
+        safari.self.tab.setContextMenuEventUserInfo(event, true);
+      }, false);
     }
   });
 }

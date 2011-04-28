@@ -1,5 +1,7 @@
-var run_bandaids = function(settings) {
+BGcall("get_settings_and_enabled_state", function(data) {
   // Tests to determine whether a particular bandaid should be applied
+  if (!data.enabled)
+    return;
   var apply_bandaid_for = "";
   if (/mail\.live\.com/.test(document.location.host))
     apply_bandaid_for = "hotmail";
@@ -28,4 +30,4 @@ var run_bandaids = function(settings) {
     log("Running bandaid for " + apply_bandaid_for);
     bandaids[apply_bandaid_for]();
   }
-}
+});

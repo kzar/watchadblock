@@ -375,19 +375,23 @@
         set_setting("show_youtube_help_msg", false);
       };
 
+      get_settings_and_enabled_state = function(sender) {
+        // TODO can't I use _tabInfo for whitelisting info?
+        var whitelisted = page_is_whitelisted(sender.tab.url);
+        var paused = localStorage.getItem('adblock_is_paused');
+        return {
+          enabled: !whitelisted && !paused,
+          settings: get_settings()
+        };
+      };
+
       // Inputs: domain:string the domain of the calling frame.
       get_content_script_data = function(domain, sender) {
         // TODO resourceblock is now broken because include_filters doesn't exist
         // and GLOBAL_collect_resources isn't being populated.
-        // TODO can't I use _tabInfo for whitelisting info?
-        var whitelisted = page_is_whitelisted(sender.tab.url);
-        var settings = get_settings();
-        var result = {
-          page_is_whitelisted: whitelisted,
-          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-          settings: settings
-        };
-        if (whitelisted)
+        // TODO won't _tabInfo have the domain already in it?  I could just use that.
+        var result = get_settings_and_enabled_state(sender);
+        if (!result.enabled)
           return result;
 
         // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
@@ -399,6 +403,8 @@
           var global_hide = _myfilters.global.cached_getSelectors;
           var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(domain).getSelectors();
           result.selectors = global_hide.concat(nonglobal_hide);
+        } else {
+          result.selectors = [];
         }
 
         return result;

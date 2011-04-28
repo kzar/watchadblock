@@ -471,7 +471,7 @@
         BGcall('get_content_script_data', domain, function(data) {
           delete data.selectors;
           domaindata = data;
-          if (data.page_is_whitelisted || data.adblock_is_paused) {
+          if (!data.enabled) {
             alert(translate("whitelistedorpausedpage"));
             window.close();
             return;
