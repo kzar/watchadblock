@@ -82,6 +82,14 @@ var FilterNormalizer = {
         unsupported |= (ElementTypes.document | ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
+
+      // Chrome only supports http/https, so filter out other protocols
+      if (!SAFARI && parsedFilter._rule.source[0] == "^") {
+        var protocol = filter.match(/^(\@\@)?\|([a-z\-]+)\:\/\//);
+        if (protocol && !/^https?$/.test(protocol[2]))
+          return null;
+        else console.warn(filter)
+      }
     }
 
     // Ignore filters whose domains aren't formatted properly.
