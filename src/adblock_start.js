@@ -124,14 +124,16 @@ function adblock_begin() {
     if (data.selectors.length != 0) {
       block_list_via_css(data.selectors);
       if (data.settings.debug_logging) {
-        data.selectors.
-          filter(function(selector) { return $(selector).length > 0; }).
-          forEach(function(selector) {
-            log("Debug: CSS '" + selector + "' hid:");
-            $(selector).each(function(i, el) {
-              log("       " + el.nodeName + "#" + el.id + "." + el.className);
+        $(function() { // Wait for page to load so we find matches
+          data.selectors.
+            filter(function(selector) { return $(selector).length > 0; }).
+            forEach(function(selector) {
+              log("Debug: CSS '" + selector + "' hid:");
+              $(selector).each(function(i, el) {
+                log("       " + el.nodeName + "#" + el.id + "." + el.className);
+              });
             });
-          });
+        });
       }
     }
 
