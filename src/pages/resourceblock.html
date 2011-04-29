@@ -111,7 +111,7 @@
 
       // Creates the table that shows all blockable items
       function generateTable() {
-        var local_filterset = FilterSet.fromText(domaindata.block, false, false);
+        var local_filterset = FilterSet.fromText(domaindata.block);
         delete domaindata;
 
         // Trunkates a resource URL if it is too long

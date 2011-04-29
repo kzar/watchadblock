@@ -76,7 +76,7 @@ MyFilters.prototype.update = function() {
     chrome.extension.sendRequest({command: "filters_updated"});
 }
 
-// Rebuild this.[non]global based on the current settings and subscriptions.
+// Rebuild filters based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
   for (var id in this._subscriptions)
@@ -101,13 +101,21 @@ MyFilters.prototype.rebuild = function() {
   delete hash[''];
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
-  var filterset_data = FilterSet.fromText(texts.join('\n'), true);
-  this.nonglobal = filterset_data.nonglobal;
-  this.global = filterset_data.global;
-  // Chrome needs to send the same data about global filters to content
-  // scripts over and over, so calculate it once and cache it.
-  this.global.cached_getSelectors = this.global.getSelectors();
-  this.global.cached_blockFiltersText = this.global.getBlockFilters().join('\n') + '\n';
+  var hidingText = [];
+  var whitelistText = [];
+  var patternText = [];
+  for (var i = 0; i < texts.length; i++) {
+    if (Filter.isSelectorFilter(texts[i]))
+      hidingText.push(texts[i]);
+    else if (Filter.isWhitelistFilter(texts[i]))
+      whitelistText.push(texts[i]);
+    else
+      patternText.push(texts[i]);
+  }
+  this.hiding = FilterSet.fromTexts(hidingText);
+  this.blocking = new BlockingFilterSet(
+    FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
+  );
 }
 
 // If any subscribed filters are out of date, asynchronously load updated

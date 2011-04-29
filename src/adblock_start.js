@@ -158,6 +158,29 @@ removeAdRemains = function(el, event) {
   }
 }
 
+// Simplified FilterSet object that relies on all input filter texts being
+// definitely applicable to the current domain.
+// TODO do timing tests either way and make sure this buys anything.
+function FakeFilterSet(lines) {};
+FakeFilterSet.fromTexts = function(lines) {
+  this.page2LD = FilterSet._secondLevelDomainOnly(document.domain);
+  this.filters = [];
+  for (var i = 0; i < lines.length; i++) {
+    this.filters.push(Filter.fromText(lines[i]));
+  }
+};
+FakeFilterSet.prototype = {
+  matches: function(url, elementType, pageDomain) {
+    var urlOrigin = FilterSet._secondLevelDomainOnly(FilterSet._domainFor(url));
+    var isThirdParty = (urlOrigin != this.page2LD);
+    for (var i = 0; i < this.filters.length; i++) {
+      if (this.filters[i].matches(url, elementType, isThirdParty))
+        return true;
+    }
+    return false;
+  }
+}
+
 function adblock_begin() {
   if (!SAFARI) {
     GLOBAL_collect_resources = {};
@@ -199,7 +222,10 @@ function adblock_begin() {
       // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
       // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
       // but is much quicker to reparse.
-      _local_block_filterset = FilterSet.fromText(data.block, undefined, false);
+      _local_block_filterset = new BlockingFilterSet(
+        FakeFilterSet.fromTexts(data.pattern),
+        FakeFilterSet.fromTexts(data.whitelist)
+      );
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);

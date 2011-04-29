@@ -28,7 +28,7 @@
           var text = custom_filters[i];
           if (!Filter.isWhitelistFilter(text))
             continue;
-          var filter = new WhitelistFilter(text);
+          var filter = new PatternFilter(text);
           if (!filter.matches(url, ElementTypes.document))
             continue;
 
@@ -226,13 +226,10 @@
         url = url.replace(/\#.*$/, ''); // Remove anchors
         if (!type)
           type = ElementTypes.document;
-        var both = { global:1, nonglobal: 1 };
-        for (var name in both) {
-          var whitelist = _myfilters[name]._whitelistFilters;
-          for (var i = 0; i < whitelist.length; i++) {
-            if (whitelist[i].matches(url, type, false))
-              return returnFilter ? whitelist[i]._text : true;
-          }
+        var whitelist = _myfilters.blocking.whitelist;
+        for (var i = 0; i < whitelist.length; i++) {
+          if (whitelist[i].matches(url, type, false))
+            return returnFilter ? whitelist[i]._text : true;
         }
         return false;
       }
@@ -400,22 +397,17 @@
         // Not whitelisted, and running on adblock_start.  We have two tasks:
         // apply CSS-hiding rules, and send Chrome a filterset.
 
-        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
-        // when not cached, it takes about 100ms.  So more caching would be good.  The
-        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-        // should be able to turn up the fifocache size by a lot.  have the fifocache log
-        // how big each new entry is, to verify this.
         if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-          var global_hide = _myfilters.global.cached_getSelectors;
-          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
-          result.selectors = global_hide.concat(nonglobal_hide);
+          result.selectors = _myfilters.hiding.
+            filtersFor(options.domain, function(f) { return f.selector; });
         }
         // Chrome needs the blocking filters in the content script until a
         // synchronous background communication API comes along.
         if (!SAFARI) {
-          var global_block = _myfilters.global.cached_blockFiltersText;
-          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
-          result.block = global_block + nonglobal_block.join('\n');
+          result.pattern = _myfilters.blocking.pattern.
+            filtersFor(options.domain, function(f) { return f._text; });
+          result.whitelist = _myfilters.blocking.whitelist.
+            filtersFor(options.domain, function(f) { return f._text; });
         }
 
         return result;
@@ -604,9 +596,7 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
-          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
-                                  limited.matches(url, elType, pageDomain));
+          var isMatched = url && (_myfilters.block.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;

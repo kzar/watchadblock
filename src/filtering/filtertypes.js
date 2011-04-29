@@ -1,5 +1,8 @@
 // A single filter rule.
-var Filter = function() {}
+var Filter = function() {
+  this.id = ++Filter._lastId;
+};
+Filter._lastId = 0;
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
@@ -14,8 +17,6 @@ Filter.fromText = function(text) {
 
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if (Filter.isWhitelistFilter(text))
-      cache[text] = new WhitelistFilter(text);
     else
       cache[text] = new PatternFilter(text);
   }
@@ -73,58 +74,8 @@ Filter._domainInfo = function(domainText, divider) {
   return result;
 }
 
-// Return true if any of the domains in list are a complete component of the
-// given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
-// versa.
-Filter._domainIsInList = function(domain, list) {
-  // TODO speed: background's get_content_script_data calls limitedToDomain
-  // and this function is the bottleneck.  Figure out some way to shortcut
-  // so that we don't have to call this as frequently.  Perhaps each rule
-  // keeps a list of the first letter of each TLD in its domains, and we first
-  // check whether the TLD of domain is in that list, before checking fully.
-  for (var i = 0; i < list.length; i++) {
-    if (list[i] == domain)
-      return true;
-    if (domain.match("\\." + list[i] + "$")) // ends w/ a period + list[i]?
-      return true;
-  }
-  return false;
-}
-
 Filter.prototype = {
   __type: "Filter",
-
-  // Returns true if this filter applies on all domains.
-  isGlobal: function() {
-    var posEmpty = this._domains.applied_on.length == 0;
-    var negEmpty = this._domains.not_applied_on.length == 0;
-    return (posEmpty && negEmpty);
-  },
-
-  // Returns true if this filter should be run on an element from the given
-  // domain.
-  appliesToDomain: function(domain) {
-    if (this.isGlobal())
-      return true;
-
-    var posMatch = Filter._domainIsInList(domain, this._domains.applied_on);
-    var negMatch = Filter._domainIsInList(domain, this._domains.not_applied_on);
-
-    if (posMatch) {
-      if (negMatch) return false;
-      else return true;
-    }
-    else if (this._domains.applied_on.length != 0) {
-      // some domains applied, but we didn't match
-      return false;
-    }
-    else if (negMatch) { // no domains applied, we are excluded
-      return false;
-    }
-    else { // no domains applied, we are not excluded
-      return true;
-    }
-  }
 }
 
 // Filters that block by CSS selector.
@@ -138,8 +89,6 @@ var SelectorFilter = function(text) {
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
-
-  __type: "SelectorFilter"
 }
 
 // Filters that block by URL regex or substring.
@@ -233,8 +182,8 @@ PatternFilter._parseRule = function(text) {
   if (result.allowedElementTypes & ElementTypes.image)
     result.allowedElementTypes |= ElementTypes.background;
 
-  // We parse whitelist rules too on behalf of WhitelistFilter, in which case
-  // we already know it's a whitelist rule so can ignore the @@s.
+  // We parse whitelist rules too, in which case we already know it's a
+  // whitelist rule so can ignore the @@s.
   if (Filter.isWhitelistFilter(rule))
     rule = rule.substring(2);
 
@@ -283,11 +232,10 @@ PatternFilter._parseRule = function(text) {
   return result;
 }
 
+// Blocking and whitelist rules both become PatternFilters.
 PatternFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
-
-  __type: "PatternFilter",
 
   // Returns true if an element of the given type loaded from the given URL 
   // would be matched by this filter.
@@ -314,14 +262,3 @@ PatternFilter.prototype = {
     return this._rule.test(url);
   }
 }
-
-// Filters that specify URL regexes or substrings that should not be blocked.
-var WhitelistFilter = function(text) {
-  PatternFilter.call(this, text); // call base constructor.
-
-  // TODO: Really, folks, this just ain't the way to do polymorphism.
-  this.__type = "WhitelistFilter";
-}
-// When you call any instance methods on WhitelistFilter, do the same
-// thing as in PatternFilter.
-WhitelistFilter.prototype = PatternFilter.prototype;
