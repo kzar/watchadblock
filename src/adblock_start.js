@@ -140,10 +140,10 @@ removeAdRemains = function(el, event) {
   }
   if (event.mustBePurged) {
     var replacement = document.createElement(el.nodeName);
-    replacement.id = el.id;
-    replacement.className = el.className;
-    replacement.name = el.name;
-    replacement.style = "display: none !important; visibility: hidden !important; opacity: 0 !important";
+    if (el.id) replacement.id = el.id;
+    if (el.className) replacement.className = el.className;
+    if (el.name) replacement.name = el.name;
+    replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
     $(el).replaceWith(replacement);
   } else {
     // There probably won't be many sites that modify all of these.
