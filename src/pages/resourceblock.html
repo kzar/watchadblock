@@ -433,7 +433,7 @@
           //  ?url=url
           var query = window.location.search.substring(1);
           url = unescape(query.match(/(^|\&)url\=(.*)$/)[2]);
-          domain = FilterSet._domainFor(url);
+          domain = BlockingFilterSet._domainFor(url);
           query = query.replace(/(^|\&)url\=(.*)$/, '');
           var temp_resource = query.match(/^(.+)\=(.+)$/);
           if (temp_resource) {

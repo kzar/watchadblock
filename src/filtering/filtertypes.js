@@ -243,7 +243,7 @@ PatternFilter.prototype = {
   //   elementType:ElementTypes the type of DOM element.
   //   isThirdParty: true if the request for url was from a page of a
   //       different origin
-  matches: function(url, elementType, isThirdParty) {
+  matches: function(url, loweredUrl, elementType, isThirdParty) {
     if (!(elementType & this._allowedElementTypes))
       return false;
 
@@ -257,7 +257,7 @@ PatternFilter.prototype = {
       return false;
 
     if (!(this._options & FilterOptions.MATCHCASE))
-      url = url.toLowerCase();
+      url = loweredUrl;
 
     return this._rule.test(url);
   }

@@ -164,7 +164,6 @@ removeAdRemains = function(el, event) {
 function FakeFilterSet() {};
 FakeFilterSet.fromTexts = function(lines) {
   var result = new FakeFilterSet();
-  result.page2LD = FilterSet._secondLevelDomainOnly(document.domain);
   var filters = [];
   for (var i = 0; i < lines.length; i++) {
     filters.push(Filter.fromText(lines[i]));
@@ -173,11 +172,9 @@ FakeFilterSet.fromTexts = function(lines) {
   return result;
 };
 FakeFilterSet.prototype = {
-  matches: function(url, elementType, pageDomain) {
-    var urlOrigin = FilterSet._secondLevelDomainOnly(FilterSet._domainFor(url));
-    var isThirdParty = (urlOrigin != this.page2LD);
+  matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
     for (var i = 0; i < this.filters.length; i++) {
-      if (this.filters[i].matches(url, elementType, isThirdParty))
+      if (this.filters[i].matches(url, loweredUrl, elementType, isThirdParty))
         return true;
     }
     return false;

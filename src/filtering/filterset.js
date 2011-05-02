@@ -15,9 +15,6 @@ function FilterSet() {
   //   /f/$domain=foo.com,~sub.foo.com would appear in
   //     items['foo.com'], excludes['sub.foo.com']
   this.exclude = {};
-
-  // Caches results for this.matches() 
-  this._matchCache = {};
 }
 
 
@@ -48,17 +45,6 @@ FilterSet.fromTexts = function(lines) {
   }
 
   return result;
-}
-
-// Strip third+ level domain names from the domain and return the result.
-FilterSet._secondLevelDomainOnly = function(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
-  return match[0].toLowerCase();
-}
-
-// Given a url, return its domain.
-FilterSet._domainFor = function(url) {
-  return (url.match('://(.*?)/') || [ null, "unknown.com" ])[1];
 }
 
 FilterSet.prototype = {
@@ -110,24 +96,13 @@ FilterSet.prototype = {
   // Return the filter that matches this url+elementType on this pageDomain:
   // the filter in a relevant entry in this.items who is not also in a 
   // relevant entry in this.exclude.
-  matches: function(url, elementType, pageDomain, returnFilter) {
-    // TODO: rework so urlOrigin and docOrigin don't get recalculated over
-    // and over; it's always the same answer.
-    var urlOrigin = FilterSet._secondLevelDomainOnly(FilterSet._domainFor(url));
-    var docOrigin = FilterSet._secondLevelDomainOnly(pageDomain);
-    var isThirdParty = (urlOrigin != docOrigin);
-
-    // matchCache approach taken from ABP
-    var key = url + " " + elementType + " " + isThirdParty;
-    if (key in this._matchCache)
-      return this._matchCache[key];
-
+  matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
     var limited = this._viewFor(pageDomain);
     for (var k in limited.items) {
       var entry = limited.items[k];
       for (var i = 0; i < entry.length; i++) {
         var filter = entry[i];
-        if (!filter.matches(url, elementType, isThirdParty))
+        if (!filter.matches(url, loweredUrl, elementType, isThirdParty))
           continue; // no match
         // Maybe filter shouldn't match because it is excluded on our domain?
         var excluded = false;
@@ -137,14 +112,11 @@ FilterSet.prototype = {
             break;
           }
         }
-        if (!excluded) {
-          this._matchCache[key] = filter;
+        if (!excluded)
           return filter;
-        }
       }
     }
 
-    delete this._matchCache[key];
     return null;
   }
 };
@@ -153,7 +125,29 @@ FilterSet.prototype = {
 BlockingFilterSet = function(patternFilterSet, whitelistFilterSet) {
   this.pattern = patternFilterSet;
   this.whitelist = whitelistFilterSet;
+
+  // Caches results for this.matches() 
+  this._matchCache = {};
 }
+
+total = 0;
+count = 0;
+report = function(time) {
+  total += time;
+  count += 1;
+  console.log(count + "\t" + time + "\t" + total / count);
+}
+// Strip third+ level domain names from the domain and return the result.
+BlockingFilterSet._secondLevelDomainOnly = function(domain) {
+  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
+  return match[0].toLowerCase();
+}
+
+// Given a url, return its domain.
+BlockingFilterSet._domainFor = function(url) {
+  return (url.match('://(.*?)/') || [ null, "unknown.com" ])[1];
+}
+
 
 BlockingFilterSet.prototype = {
   // True if the url is blocked by this filterset.
@@ -169,21 +163,41 @@ BlockingFilterSet.prototype = {
   //   if returnFilter is false:
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, pageDomain, returnFilter) {
+    var start = new Date();
+    var urlDomain = BlockingFilterSet._domainFor(url);
+    var urlOrigin = BlockingFilterSet._secondLevelDomainOnly(urlDomain);
+    var docOrigin = BlockingFilterSet._secondLevelDomainOnly(pageDomain);
+    var isThirdParty = (urlOrigin != docOrigin);
+
+    // matchCache approach taken from ABP
+    var key = url + " " + elementType + " " + isThirdParty;
+    if (key in this._matchCache) {
+      report(new Date() - start);
+      return this._matchCache[key];
+    }
+
     // TODO: is there a better place to do this?
     // Limiting length of URL to avoid painful regexes.
     var LENGTH_CUTOFF = 200;
     url = url.substring(0, LENGTH_CUTOFF);
+    var loweredUrl = url.toLowerCase();
 
-    var match = this.whitelist.matches(url, elementType, pageDomain);
+    var match = this.whitelist.matches(url, loweredUrl, elementType, pageDomain, isThirdParty);
     if (match) {
       log("Whitelisted: '" + match._rule + "' -> " + url);
-      return (returnFilter ? match._text : false);
+      this._matchCache[key] = (returnFilter ? match._text : false);
+      report(new Date() - start);
+      return this._matchCache[key];
     }
-    match = this.pattern.matches(url, elementType, pageDomain);
+    match = this.pattern.matches(url, loweredUrl, elementType, pageDomain, isThirdParty);
     if (match) {
       log("Matched: '" + match._rule + "' -> " + url);
-      return (returnFilter ? match._text: true);
+      this._matchCache[key] = (returnFilter ? match._text: true);
+      report(new Date() - start);
+      return this._matchCache[key];
     }
-    return false;
+    this._matchCache[key] = false;
+    report(new Date() - start);
+    return this._matchCache[key];
   },
 }

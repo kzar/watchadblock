@@ -188,6 +188,11 @@
             var parts = tab.url.match("(.*?)://(..*?)/");
             if (!parts) // may be "about:blank" or similar
               parts = tab.url.match("(.*?):(.*)");
+            if (!parts) {
+              console.log(tab);
+              console.log(tab.url);
+              alert("Oops. " + tab.url);
+            }
             var scheme = parts[1];
             var domain = parts[2];
             return {
@@ -224,11 +229,12 @@
         //special case this one
         if (url == "http://acid3.acidtests.org/") return true;
         url = url.replace(/\#.*$/, ''); // Remove anchors
+        var loweredUrl = url.toLowerCase();
         if (!type)
           type = ElementTypes.document;
         var whitelist = _myfilters.blocking.whitelist;
         for (var i = 0; i < whitelist.length; i++) {
-          if (whitelist[i].matches(url, type, false))
+          if (whitelist[i].matches(url, loweredUrl, type, false))
             return returnFilter ? whitelist[i]._text : true;
         }
         return false;
