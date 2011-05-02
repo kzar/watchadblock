@@ -165,10 +165,11 @@ function FakeFilterSet() {};
 FakeFilterSet.fromTexts = function(lines) {
   var result = new FakeFilterSet();
   result.page2LD = FilterSet._secondLevelDomainOnly(document.domain);
-  result.filters = [];
+  var filters = [];
   for (var i = 0; i < lines.length; i++) {
-    result.filters.push(Filter.fromText(lines[i]));
+    filters.push(Filter.fromText(lines[i]));
   }
+  result.filters = filters;
   return result;
 };
 FakeFilterSet.prototype = {
