@@ -161,13 +161,15 @@ removeAdRemains = function(el, event) {
 // Simplified FilterSet object that relies on all input filter texts being
 // definitely applicable to the current domain.
 // TODO do timing tests either way and make sure this buys anything.
-function FakeFilterSet(lines) {};
+function FakeFilterSet() {};
 FakeFilterSet.fromTexts = function(lines) {
-  this.page2LD = FilterSet._secondLevelDomainOnly(document.domain);
-  this.filters = [];
+  var result = new FakeFilterSet();
+  result.page2LD = FilterSet._secondLevelDomainOnly(document.domain);
+  result.filters = [];
   for (var i = 0; i < lines.length; i++) {
-    this.filters.push(Filter.fromText(lines[i]));
+    result.filters.push(Filter.fromText(lines[i]));
   }
+  return result;
 };
 FakeFilterSet.prototype = {
   matches: function(url, elementType, pageDomain) {
