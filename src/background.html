@@ -188,11 +188,6 @@
             var parts = tab.url.match("(.*?)://(..*?)/");
             if (!parts) // may be "about:blank" or similar
               parts = tab.url.match("(.*?):(.*)");
-            if (!parts) {
-              console.log(tab);
-              console.log(tab.url);
-              alert("Oops. " + tab.url);
-            }
             var scheme = parts[1];
             var domain = parts[2];
             return {

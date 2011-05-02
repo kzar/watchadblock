@@ -175,9 +175,9 @@ FakeFilterSet.prototype = {
   matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
     for (var i = 0; i < this.filters.length; i++) {
       if (this.filters[i].matches(url, loweredUrl, elementType, isThirdParty))
-        return true;
+        return this.filters[i];
     }
-    return false;
+    return null;
   }
 }
 

@@ -130,13 +130,6 @@ BlockingFilterSet = function(patternFilterSet, whitelistFilterSet) {
   this._matchCache = {};
 }
 
-total = 0;
-count = 0;
-report = function(time) {
-  total += time;
-  count += 1;
-  console.log(count + "\t" + time + "\t" + total / count);
-}
 // Strip third+ level domain names from the domain and return the result.
 BlockingFilterSet._secondLevelDomainOnly = function(domain) {
   var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
@@ -171,10 +164,8 @@ BlockingFilterSet.prototype = {
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;
-    if (key in this._matchCache) {
-      report(new Date() - start);
+    if (key in this._matchCache)
       return this._matchCache[key];
-    }
 
     // TODO: is there a better place to do this?
     // Limiting length of URL to avoid painful regexes.
@@ -186,18 +177,15 @@ BlockingFilterSet.prototype = {
     if (match) {
       log("Whitelisted: '" + match._rule + "' -> " + url);
       this._matchCache[key] = (returnFilter ? match._text : false);
-      report(new Date() - start);
       return this._matchCache[key];
     }
     match = this.pattern.matches(url, loweredUrl, elementType, pageDomain, isThirdParty);
     if (match) {
       log("Matched: '" + match._rule + "' -> " + url);
       this._matchCache[key] = (returnFilter ? match._text: true);
-      report(new Date() - start);
       return this._matchCache[key];
     }
     this._matchCache[key] = false;
-    report(new Date() - start);
     return this._matchCache[key];
   },
 }
