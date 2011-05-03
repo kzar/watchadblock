@@ -186,8 +186,7 @@ function adblock_begin() {
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
-    domain: document.domain, 
-    include_filters: true
+    domain: document.domain
   };
   BGcall('get_content_script_data', opts, function(data) {
     // Store the data for adblock.js

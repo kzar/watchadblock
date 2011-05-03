@@ -380,8 +380,6 @@
       // TODO: make better.
       // Inputs: options object containing:
       //           domain:string the domain of the calling frame.
-      //           include_filters:bool true if hide and block filters should
-      //                                be included
       //           include_texts?:bool true if PatternFilter._text should be
       //                               appended to block filters.
       get_content_script_data = function(options, sender) {
@@ -394,10 +392,6 @@
           selectors: []
         };
         if (whitelisted)
-          return result;
-        // If in debug mode, send filters to adblock.js to print css info.
-        // Normally only adblock_start asks to include_filters.
-        if (!options.include_filters && !settings.debug_logging)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
