@@ -219,13 +219,10 @@ function adblock_begin() {
       // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
       // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
       // but is much quicker to reparse.
-      var start=new Date();
       _local_block_filterset = new BlockingFilterSet(
         new FakeFilterSet(data.patternSerialized),
         new FakeFilterSet(data.whitelistSerialized)
       );
-      var end = new Date();
-      console.log("BUILD: " + (end-start));
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
