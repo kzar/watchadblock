@@ -604,7 +604,7 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var isMatched = url && (_myfilters.block.matches(url, elType, pageDomain));
+          var isMatched = url && (_myfilters.blocking.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
