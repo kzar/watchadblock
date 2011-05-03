@@ -109,9 +109,33 @@
       var domaindata;
       var custom_filters = [];
 
+      // TODO Copy-and-modified from adblock_start.js
+      function FakeFilterSet(serializedFilters) {
+        var filters = [];
+        for (var i = 0; i < serializedFilters.length; i++) {
+          filters.push(PatternFilter.fromData(serializedFilters[i]));
+          filters[i]._text = serializedFilters[i][3];
+        }
+        this.filters = filters;
+      };
+      FakeFilterSet.prototype = {
+        matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+          var f = this.filters, len = f.length;
+          for (var i = 0; i < len; i++) {
+            if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
+              return f[i];
+          }
+          return null;
+        }
+      }
+      // TODO end copied part
+
       // Creates the table that shows all blockable items
       function generateTable() {
-        var local_filterset = FilterSet.fromText(domaindata.block);
+        var local_filterset = new BlockingFilterSet(
+          new FakeFilterSet(domaindata.patternSerialized),
+          new FakeFilterSet(domaindata.whitelistSerialized)
+        );
         delete domaindata;
 
         // Trunkates a resource URL if it is too long
@@ -445,7 +469,8 @@
 
         var opts = {
           domain: domain,
-          include_filters: true
+          include_filters: true,
+          include_texts: true
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;

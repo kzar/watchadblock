@@ -382,6 +382,8 @@
       //           domain:string the domain of the calling frame.
       //           include_filters:bool true if hide and block filters should
       //                                be included
+      //           include_texts?:bool true if PatternFilter._text should be
+      //                               appended to block filters.
       get_content_script_data = function(options, sender) {
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
@@ -410,6 +412,14 @@
         if (!SAFARI) {
           function packed(filter) {
             return [filter._rule.source, filter._allowedElementTypes, filter._options];
+          }
+          if (options.include_texts) {
+            var old_packed = packed;
+            packed = function(filter) {
+              var result = old_packed(filter);
+              result.push(filter._text);
+              return result;
+            }
           }
           result.patternSerialized = _myfilters.blocking.pattern.
             filtersFor(options.domain, packed);
