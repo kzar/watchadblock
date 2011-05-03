@@ -71,7 +71,7 @@ var FilterNormalizer = {
 
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
-      var parsedFilter = new PatternFilter(filter);
+      var parsedFilter = PatternFilter.fromText(filter);
 
       // Remove rules that only apply to unsupported resource types.
       var unsupported = (ElementTypes.object_subrequest | ElementTypes.font |

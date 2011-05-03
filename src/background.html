@@ -23,13 +23,14 @@
       // Returns: true if a filter was found and removed; false otherwise.
       try_to_unwhitelist = function(url) {
         url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
+        var loweredUrl = url.toLowerCase();
         var custom_filters = get_custom_filters_text().split('\n');
         for (var i = 0; i < custom_filters.length; i++) {
           var text = custom_filters[i];
           if (!Filter.isWhitelistFilter(text))
             continue;
-          var filter = new WhitelistFilter(text);
-          if (!filter.matches(url, ElementTypes.document))
+          var filter = PatternFilter.fromText(text);
+          if (!filter.matches(url, loweredUrl, ElementTypes.document, false))
             continue;
 
           custom_filters.splice(i, 1); // Remove this whitelist filter text
@@ -167,11 +168,26 @@
         _myfilters.unsubscribe(id, del);
       }
 
+      // Return the scheme and domain for the given url.
+      // TODO I have code in a few places that extracts domains, I think.
+      // Deduplicate it.
+      url_parts = function(url) {
+        var parts = url.match("(.*?)://(..*?)/");
+        if (!parts) // may be "about:blank" or similar
+          parts = url.match("(.*?):(.*)");
+        // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
+        // impact users visibly so I'm letting it break.
+        var scheme = parts[1];
+        var domain = parts[2];
+        return {
+          scheme: scheme,
+          domain: domain
+        };
+      }
       // INFO ABOUT CURRENT PAGE
 
       // Get interesting information about the current tab.
       // Inputs:
-      //   url: string
       //   callback: function(info).
       //   info object passed to callback: {
       //     tab: Tab object
@@ -183,19 +199,7 @@
       // Returns: null (asynchronous)
       getCurrentTabInfo = function(callback) {
         chrome.tabs.getSelected(undefined, function(tab) {
-          // TODO: use code from elsewhere to extract domain
-          function url_parts() {
-            var parts = tab.url.match("(.*?)://(..*?)/");
-            if (!parts) // may be "about:blank" or similar
-              parts = tab.url.match("(.*?):(.*)");
-            var scheme = parts[1];
-            var domain = parts[2];
-            return {
-              scheme: scheme,
-              domain: domain
-            };
-          }
-          var url = url_parts();
+          var url = url_parts(tab.url);
 
           var disabled_site = false;
           if (url.scheme != 'http' && url.scheme != 'https')
@@ -224,16 +228,13 @@
         //special case this one
         if (url == "http://acid3.acidtests.org/") return true;
         url = url.replace(/\#.*$/, ''); // Remove anchors
+        var loweredUrl = url.toLowerCase();
         if (!type)
           type = ElementTypes.document;
-        var both = { global:1, nonglobal: 1 };
-        for (var name in both) {
-          var whitelist = _myfilters[name]._whitelistFilters;
-          for (var i = 0; i < whitelist.length; i++) {
-            if (whitelist[i].matches(url, type, false))
-              return returnFilter ? whitelist[i]._text : true;
-          }
-        }
+        var whitelist = _myfilters.blocking.whitelist;
+        var match = whitelist.matches(url, loweredUrl, type, url_parts(url).domain, false);
+        if (match)
+          return returnFilter ? match._text : true;
         return false;
       }
 
@@ -379,8 +380,8 @@
       // TODO: make better.
       // Inputs: options object containing:
       //           domain:string the domain of the calling frame.
-      //           include_filters:bool true if hide and block filters should
-      //                                be included
+      //           include_texts?:bool true if PatternFilter._text should be
+      //                               appended to block filters.
       get_content_script_data = function(options, sender) {
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
@@ -392,30 +393,29 @@
         };
         if (whitelisted)
           return result;
-        // If in debug mode, send filters to adblock.js to print css info.
-        // Normally only adblock_start asks to include_filters.
-        if (!options.include_filters && !settings.debug_logging)
-          return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
         // apply CSS-hiding rules, and send Chrome a filterset.
 
-        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
-        // when not cached, it takes about 100ms.  So more caching would be good.  The
-        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-        // should be able to turn up the fifocache size by a lot.  have the fifocache log
-        // how big each new entry is, to verify this.
         if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-          var global_hide = _myfilters.global.cached_getSelectors;
-          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
-          result.selectors = global_hide.concat(nonglobal_hide);
+          result.selectors = _myfilters.hiding.
+            filtersFor(options.domain, function(f) { return f.selector; });
         }
         // Chrome needs the blocking filters in the content script until a
         // synchronous background communication API comes along.
         if (!SAFARI) {
-          var global_block = _myfilters.global.cached_blockFiltersText;
-          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
-          result.block = global_block + nonglobal_block.join('\n');
+          function packed(filter) {
+            return [filter._rule.source, filter._allowedElementTypes, filter._options];
+          }
+          if (options.include_texts) {
+            packed = function(filter) {
+              return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
+            }
+          }
+          result.patternSerialized = _myfilters.blocking.pattern.
+            filtersFor(options.domain, packed);
+          result.whitelistSerialized = _myfilters.blocking.whitelist.
+            filtersFor(options.domain, packed);
         }
 
         return result;
@@ -604,9 +604,7 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
-          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
-                                  limited.matches(url, elType, pageDomain));
+          var isMatched = url && (_myfilters.blocking.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
