@@ -14,6 +14,7 @@
         background-color: #f8faff;
       }
       a {
+        display:block;
         font-size: small;
         font-style: italic;
         margin-left: 10px;
@@ -38,37 +39,19 @@
         //translation
         localizePage();
 
-        //shorten long URLs
-        function shorten_url(value) {
-          if (!/\:\/\//.test(value)) return value;
-
-          var size = 64;
-          if (value.length <= size) return value;
-
-          if (value.length > size)
-            value = value.substring(value.indexOf("://") + 3);
-
-          if (value.length <= size) return value;
-
-          var domain = value.substring(0, value.indexOf('/'));
-          var file = value.substring(value.lastIndexOf('/'));
-          if (domain.length + 4 + file.length <= size)
-            return (domain + '/...' + file);
-
-          return (value.substring(0, size / 2 - 2) + "..." + 
-                   value.substring(value.length - size / 2 - 2));
-        }
-
         //Get the URL
         var queryparts = {};
         var params = document.location.search.substring(1).split('&');
         for (var i = 0; i < params.length; i++)
           queryparts[params[i].split('=')[0]] = unescape(params[i].split('=')[1]);
 
-        //Set the link to the list
+        if (queryparts.location.test(/^javascript\:/i))
+          return; // don't reflect arbitrary scripts back to the user
+
+        //Set the link to the list.  If it's really long, make it wrap nicely.
         $('a').
           attr('href', queryparts.location).
-          text(shorten_url(queryparts.location));
+          text(queryparts.location.replace(/(.{64})/g, '$1 '));
 
         //after the subscribing is finished...
         function finished(success) {
