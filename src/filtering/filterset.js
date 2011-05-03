@@ -1,5 +1,3 @@
-// Requires fifocache.js.
-
 // Filter objects representing the given filter text.
 function FilterSet() {
   // Map from domain (e.g. 'mail.google.com', 'google.com', or special-case
@@ -11,9 +9,9 @@ function FilterSet() {
   // Each filter will also appear in this.items at least once.
   // Examples:
   //   /f/$domain=~foo.com,~bar.com would appear in
-  //     items['global'], excludes['foo.com'], excludes['bar.com']
+  //     items['global'], exclude['foo.com'], exclude['bar.com']
   //   /f/$domain=foo.com,~sub.foo.com would appear in
-  //     items['foo.com'], excludes['sub.foo.com']
+  //     items['foo.com'], exclude['sub.foo.com']
   this.exclude = {};
 }
 

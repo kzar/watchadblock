@@ -160,16 +160,21 @@ removeAdRemains = function(el, event) {
 
 // Simplified FilterSet object that relies on all input filter texts being
 // definitely applicable to the current domain.
-// TODO do timing tests either way and make sure this buys anything.
-function FakeFilterSet() {};
-FakeFilterSet.fromTexts = function(lines) {
-  var result = new FakeFilterSet();
+function FakeFilterSet(serializedFilters) {
+  var domains_singleton = { applied_on: [], not_applied_on: [] };
   var filters = [];
-  for (var i = 0; i < lines.length; i++) {
-    filters.push(Filter.fromText(lines[i]));
+  for (var i = 0; i < serializedFilters.length; i++) {
+    // Deserialize each entry into a fully formed PatternFilter
+    var serializedFilter = serializedFilters[i];
+    filters.push({
+      _rule: new RegExp(serializedFilter[0]),
+      _allowedElementTypes: serializedFilter[1],
+      options: serializedFilter[2],
+      _domains: domains_singleton,
+      __proto__: PatternFilter.prototype
+    });
   }
-  result.filters = filters;
-  return result;
+  this.filters = filters;
 };
 FakeFilterSet.prototype = {
   matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
@@ -223,8 +228,8 @@ function adblock_begin() {
       // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
       // but is much quicker to reparse.
       _local_block_filterset = new BlockingFilterSet(
-        FakeFilterSet.fromTexts(data.pattern),
-        FakeFilterSet.fromTexts(data.whitelist)
+        new FakeFilterSet(data.patternSerialized),
+        new FakeFilterSet(data.whitelistSerialized)
       );
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)

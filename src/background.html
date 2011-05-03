@@ -171,7 +171,6 @@
 
       // Get interesting information about the current tab.
       // Inputs:
-      //   url: string
       //   callback: function(info).
       //   info object passed to callback: {
       //     tab: Tab object
@@ -188,6 +187,8 @@
             var parts = tab.url.match("(.*?)://(..*?)/");
             if (!parts) // may be "about:blank" or similar
               parts = tab.url.match("(.*?):(.*)");
+            // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
+            // impact users visibly so I'm letting it break.
             var scheme = parts[1];
             var domain = parts[2];
             return {
@@ -405,10 +406,13 @@
         // Chrome needs the blocking filters in the content script until a
         // synchronous background communication API comes along.
         if (!SAFARI) {
-          result.pattern = _myfilters.blocking.pattern.
-            filtersFor(options.domain, function(f) { return f._text; });
-          result.whitelist = _myfilters.blocking.whitelist.
-            filtersFor(options.domain, function(f) { return f._text; });
+          function packed(filter) {
+            return [filter._rule.source, filter._allowedElementTypes, filter._options];
+          }
+          result.patternSerialized = _myfilters.blocking.pattern.
+            filtersFor(options.domain, packed);
+          result.whitelistSerialized = _myfilters.blocking.whitelist.
+            filtersFor(options.domain, packed);
         }
 
         return result;

@@ -74,10 +74,6 @@ Filter._domainInfo = function(domainText, divider) {
   return result;
 }
 
-Filter.prototype = {
-  __type: "Filter",
-}
-
 // Filters that block by CSS selector.
 var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
