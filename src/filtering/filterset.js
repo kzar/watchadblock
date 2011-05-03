@@ -154,7 +154,6 @@ BlockingFilterSet.prototype = {
   //   if returnFilter is false:
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, pageDomain, returnFilter) {
-    var start = new Date();
     var urlDomain = BlockingFilterSet._domainFor(url);
     var urlOrigin = BlockingFilterSet._secondLevelDomainOnly(urlDomain);
     var docOrigin = BlockingFilterSet._secondLevelDomainOnly(pageDomain);

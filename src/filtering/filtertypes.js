@@ -18,7 +18,7 @@ Filter.fromText = function(text) {
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
     else
-      cache[text] = new PatternFilter(text);
+      cache[text] = PatternFilter.fromText(text);
   }
   return cache[text];
 }
@@ -88,22 +88,35 @@ SelectorFilter.prototype = {
 }
 
 // Filters that block by URL regex or substring.
-var PatternFilter = function(text) {
+var PatternFilter = function() {
   Filter.call(this); // call base constructor
-
+};
+// Data is [rule text, allowed element types, options].
+PatternFilter.fromData = function(data) {
+  var result = new PatternFilter();
+  result._rule = new RegExp(data[0]);
+  result._allowedElementTypes = data[1];
+  result._options = data[2];
+  result._domains = { applied_on: [], not_applied_on: [] };
+  return result;
+}
+// Text is the original filter text of a blocking or whitelist filter.
+PatternFilter.fromText = function(text) {
   var data = PatternFilter._parseRule(text);
 
-  this._domains = Filter._domainInfo(data.domainText, '|');
-  this._allowedElementTypes = data.allowedElementTypes;
-  this._options = data.options;
-  this._rule = data.rule;
+  var result = new PatternFilter();
+  result._domains = Filter._domainInfo(data.domainText, '|');
+  result._allowedElementTypes = data.allowedElementTypes;
+  result._options = data.options;
+  result._rule = data.rule;
   // Preserve _text for later in Chrome's background page and in
   // resourceblock.html.  Don't do so in safari or in content scripts, where
   // it's not needed.
   // TODO once Chrome has a real blocking API, we can change this to
   //   if (/resourceblock.html/.test(document.location.href))
   if (document.location.protocol == 'chrome-extension:')
-    this._text = text;
+    result._text = text;
+  return result;
 }
 
 // Return a { rule, domainText, allowedElementTypes } object

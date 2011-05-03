@@ -161,26 +161,18 @@ removeAdRemains = function(el, event) {
 // Simplified FilterSet object that relies on all input filter texts being
 // definitely applicable to the current domain.
 function FakeFilterSet(serializedFilters) {
-  var domains_singleton = { applied_on: [], not_applied_on: [] };
   var filters = [];
   for (var i = 0; i < serializedFilters.length; i++) {
-    // Deserialize each entry into a fully formed PatternFilter
-    var serializedFilter = serializedFilters[i];
-    filters.push({
-      _rule: new RegExp(serializedFilter[0]),
-      _allowedElementTypes: serializedFilter[1],
-      options: serializedFilter[2],
-      _domains: domains_singleton,
-      __proto__: PatternFilter.prototype
-    });
+    filters.push(PatternFilter.fromData(serializedFilters[i]));
   }
   this.filters = filters;
 };
 FakeFilterSet.prototype = {
   matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
-    for (var i = 0; i < this.filters.length; i++) {
-      if (this.filters[i].matches(url, loweredUrl, elementType, isThirdParty))
-        return this.filters[i];
+    var f = this.filters, len = f.length;
+    for (var i = 0; i < len; i++) {
+      if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
+        return f[i];
     }
     return null;
   }
@@ -227,10 +219,13 @@ function adblock_begin() {
       // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
       // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
       // but is much quicker to reparse.
+      var start=new Date();
       _local_block_filterset = new BlockingFilterSet(
         new FakeFilterSet(data.patternSerialized),
         new FakeFilterSet(data.whitelistSerialized)
       );
+      var end = new Date();
+      console.log("BUILD: " + (end-start));
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);

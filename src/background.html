@@ -28,7 +28,7 @@
           var text = custom_filters[i];
           if (!Filter.isWhitelistFilter(text))
             continue;
-          var filter = new PatternFilter(text);
+          var filter = PatternFilter.fromText(text);
           if (!filter.matches(url, ElementTypes.document))
             continue;
 
