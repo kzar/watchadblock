@@ -408,11 +408,8 @@
             return [filter._rule.source, filter._allowedElementTypes, filter._options];
           }
           if (options.include_texts) {
-            var old_packed = packed;
             packed = function(filter) {
-              var result = old_packed(filter);
-              result.push(filter._text);
-              return result;
+              return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
             }
           }
           result.patternSerialized = _myfilters.blocking.pattern.
