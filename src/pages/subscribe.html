@@ -45,8 +45,8 @@
         for (var i = 0; i < params.length; i++)
           queryparts[params[i].split('=')[0]] = unescape(params[i].split('=')[1]);
 
-        if (/^javascript\:/i.test(queryparts.location))
-          return; // don't reflect arbitrary scripts back to the user
+        if (!/https?\:\/\//i.test(queryparts.location))
+          return; // only should run on http/s pages
 
         //Set the link to the list.  If it's really long, make it wrap nicely.
         $('a').
