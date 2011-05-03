@@ -45,7 +45,7 @@
         for (var i = 0; i < params.length; i++)
           queryparts[params[i].split('=')[0]] = unescape(params[i].split('=')[1]);
 
-        if (queryparts.location.test(/^javascript\:/i))
+        if (/^javascript\:/i.test(queryparts.location))
           return; // don't reflect arbitrary scripts back to the user
 
         //Set the link to the list.  If it's really long, make it wrap nicely.
