@@ -167,6 +167,22 @@
         _myfilters.unsubscribe(id, del);
       }
 
+      // Return the scheme and domain for the given url.
+      // TODO I have code in a few places that extracts domains, I think.
+      // Deduplicate it.
+      url_parts = function(url) {
+        var parts = url.match("(.*?)://(..*?)/");
+        if (!parts) // may be "about:blank" or similar
+          parts = url.match("(.*?):(.*)");
+        // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
+        // impact users visibly so I'm letting it break.
+        var scheme = parts[1];
+        var domain = parts[2];
+        return {
+          scheme: scheme,
+          domain: domain
+        };
+      }
       // INFO ABOUT CURRENT PAGE
 
       // Get interesting information about the current tab.
@@ -182,21 +198,7 @@
       // Returns: null (asynchronous)
       getCurrentTabInfo = function(callback) {
         chrome.tabs.getSelected(undefined, function(tab) {
-          // TODO: use code from elsewhere to extract domain
-          function url_parts() {
-            var parts = tab.url.match("(.*?)://(..*?)/");
-            if (!parts) // may be "about:blank" or similar
-              parts = tab.url.match("(.*?):(.*)");
-            // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
-            // impact users visibly so I'm letting it break.
-            var scheme = parts[1];
-            var domain = parts[2];
-            return {
-              scheme: scheme,
-              domain: domain
-            };
-          }
-          var url = url_parts();
+          var url = url_parts(tab.url);
 
           var disabled_site = false;
           if (url.scheme != 'http' && url.scheme != 'https')
@@ -229,10 +231,9 @@
         if (!type)
           type = ElementTypes.document;
         var whitelist = _myfilters.blocking.whitelist;
-        for (var i = 0; i < whitelist.length; i++) {
-          if (whitelist[i].matches(url, loweredUrl, type, false))
-            return returnFilter ? whitelist[i]._text : true;
-        }
+        var match = whitelist.matches(url, loweredUrl, type, url_parts(url).domain, false);
+        if (match)
+          return returnFilter ? match._text : true;
         return false;
       }
 
