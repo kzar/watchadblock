@@ -438,6 +438,10 @@
         // The emit_page_broadcast() function
         var theFunction = function(request, sender) {
           $.each(broadcast_ports, function(i, port) {
+            if (!port.sender.tab) {
+              console.error("Issue 5416 occured :(");
+              return;
+            };
             if (port.sender.tab.id == sender.tab.id)
               port.postMessage(request);
           });
