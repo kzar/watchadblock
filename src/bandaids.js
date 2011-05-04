@@ -5,7 +5,7 @@ var run_bandaids = function(settings) {
     apply_bandaid_for = "hotmail";
   else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
     apply_bandaid_for = "hkpub";
-  else if (/youtube/.test(document.domain))
+  else if (/youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
 
   var bandaids = {

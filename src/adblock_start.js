@@ -62,7 +62,7 @@ function browser_canLoad(event, data) {
       return true;
     }
 
-    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, document.domain);
+    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.pageDomain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
     else if (isMatched)
@@ -92,7 +92,7 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    pageDomain: document.domain
+    pageDomain: document.location.hostname
   };
   if (!SAFARI)
     GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
@@ -186,7 +186,7 @@ function adblock_begin() {
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
-    domain: document.domain
+    domain: document.location.hostname
   };
   BGcall('get_content_script_data', opts, function(data) {
     // Store the data for adblock.js
