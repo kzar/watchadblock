@@ -5,7 +5,7 @@ if (typeof may_open_dialog_ui === "undefined")
 function verify_whitelist() {
   if (!may_open_dialog_ui)
     return;
-  var domain = document.domain;
+  var domain = document.location.hostname;
 
   // defined in blacklister.js
   load_jquery_ui(function() {
