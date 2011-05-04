@@ -26,8 +26,6 @@
         "port.js",
         "jquery/jquery.min.js", 
         "functions.js", 
-        "broadcast_channel.js", 
-
       
         "filtering/filteroptions.js",
         "filtering/filtertypes.js",
@@ -54,12 +52,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "blacklisting/overlay.js", 
-        "blacklisting/clickwatcher.js",
-        "blacklisting/elementchain.js",
-        "blacklisting/blacklistui.js",
-        "blacklister.js", 
-        "whitelister.js", 
+        "uiscripts/blacklisting/rightclick_hook.js",
         "adblock.js"
       ],
       "run_at": "document_end",

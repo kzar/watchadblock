@@ -422,32 +422,94 @@
       };
 
       // Bounce messages back to register_broadcast_listener() callers.
-      emit_page_broadcast = (function() {
-        // Private list of connected ports for emit_page_broadcast()
-        var broadcast_ports = [];
-        chrome.extension.onConnect.addListener(function(port) {
-          port.onDisconnect.addListener(function(disconnected_port) {
-            var where = broadcast_ports.indexOf(disconnected_port);
-            if (where != -1) {
-              broadcast_ports.splice(where, 1);
+      if (!SAFARI) {
+        emit_page_broadcast = (function() {
+          var injectMap = {
+            'top_open_whitelist_ui': {
+              allFrames: false,
+              include: [
+                "uiscripts/load_jquery_ui.js",
+                "uiscripts/top_open_whitelist_ui.js"
+                ]
+            },
+            'top_open_blacklist_ui': {
+              allFrames: false,
+              include: [
+                "uiscripts/load_jquery_ui.js",
+                "uiscripts/blacklisting/overlay.js", 
+                "uiscripts/blacklisting/clickwatcher.js",
+                "uiscripts/blacklisting/elementchain.js",
+                "uiscripts/blacklisting/blacklistui.js",
+                "uiscripts/top_open_blacklist_ui.js"
+                ]
+            },
+            'send_content_to_back': {
+              allFrames: true,
+              include: [ 
+                'uiscripts/blacklisting/send_content_to_back.js' 
+                ]
             }
-          });
-          broadcast_ports.push(port);
-        });
+          };
+          // Inject the required scripts to execute fn_name(parameter) in
+          // the current tab.
+          // Inputs: fn_name:string name of function to execute on tab.
+          //         fn_name must exist in injectMap above.
+          //         parameter:object to pass to fn_name.  Must be JSON.stringify()able.
+          //         injectedSoFar?:int used to recursively inject required scripts.
+          var executeOnTab = function(fn_name, parameter, injectedSoFar) {
+            injectedSoFar = injectedSoFar || 0;
+            var data = injectMap[fn_name];
+            var details = { allFrames: data.allFrames };
+            // If there's anything to inject, inject the next item and recurse.
+            if (data.include.length > injectedSoFar) {
+              details.file = data.include[injectedSoFar];
+              chrome.tabs.executeScript(undefined, details, function() {
+                executeOnTab(fn_name, parameter, injectedSoFar + 1);
+              });
+            } 
+            // Nothing left to inject, so execute the function.
+            else {
+              var param = JSON.stringify(parameter);
+              details.code = fn_name + "(" + param + ");";
+              chrome.tabs.executeScript(undefined, details);
+            }
+          };
 
-        // The emit_page_broadcast() function
-        var theFunction = function(request, sender) {
-          $.each(broadcast_ports, function(i, port) {
-            if (!port.sender.tab) {
-              console.error("Issue 5416 occured :(");
-              return;
-            };
-            if (port.sender.tab.id == sender.tab.id)
-              port.postMessage(request);
+          // The emit_page_broadcast() function
+          var theFunction = function(request) {
+            executeOnTab(request.fn, request.options);
+          };
+          return theFunction;
+        })();
+      }
+      if (SAFARI) {
+        emit_page_broadcast = (function() {
+          // Private list of connected ports for emit_page_broadcast()
+          var broadcast_ports = [];
+          chrome.extension.onConnect.addListener(function(port) {
+            port.onDisconnect.addListener(function(disconnected_port) {
+              var where = broadcast_ports.indexOf(disconnected_port);
+              if (where != -1) {
+                broadcast_ports.splice(where, 1);
+              }
+            });
+            broadcast_ports.push(port);
           });
-        };
-        return theFunction;
-      })();
+
+          // The emit_page_broadcast() function
+          var theFunction = function(request, sender) {
+            $.each(broadcast_ports, function(i, port) {
+              if (!port.sender.tab) {
+                console.error("Issue 5416 occured :(");
+                return;
+              };
+              if (port.sender.tab.id == sender.tab.id)
+                port.postMessage(request);
+            });
+          };
+          return theFunction;
+        })();
+      }
 
       // Will open the resource blocking tab. 
       // Input: resources: array of resource strings; 
