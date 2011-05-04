@@ -83,10 +83,10 @@ var FilterNormalizer = {
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
 
-      // Chrome only supports http/https, so filter out other protocols
+      // Chrome doesn't support the safari-extension: protocol
       if (!SAFARI && parsedFilter._rule.source[0] == "^") {
         var protocol = filter.match(/^(\@\@)?\|([a-z\-]+)\:\/\//);
-        if (protocol && !/^https?$/.test(protocol[2]))
+        if (protocol && /^safari-extension$/.test(protocol[2]))
           return null;
       }
     }
