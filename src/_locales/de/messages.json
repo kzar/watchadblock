@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "Die beliebteste Chrome-Erweiterung, mit über 2 Millionen Nutzern!  Entfernt Werbung im ganzen Internet.",
     "description": "Extension description in manifest"
@@ -886,6 +886,14 @@
     "message": "Der Filter wurde hinzugefügt!\nAktualisieren Sie die Seite um das Ergebnis zu sehen!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
+  "adblock_is_paused": {
+    "message": "AdBlock ist pausiert. Deshalb können keine Elemente aufgelistet werden. Starten Sie zuerst AdBlock wieder und versuchen Sie es erneut.",
+    "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Der Filter wurde entfernt. Bitte aktualisieren Sie die Seite, damit eine Liste mit Elementen erstellt werden kann.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
+  },
   "noresourcessend": {
     "message": "Es ist ein Fehler aufgetreten. Keine Elemente wurden übermittelt. Diese Seite wird nun geschlossen.",
     "description": "resourceblocking page string"
@@ -1097,7 +1105,7 @@
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
 "translator_credit": {
-  "message": "Credit for translation goes to: $translator_names$",
+  "message": "Deutsche Übersetzung von: $translator_names$",
   "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
