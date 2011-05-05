@@ -421,7 +421,7 @@
         return result;
       };
 
-      // Bounce messages back to register_broadcast_listener() callers.
+      // Bounce messages back to content scripts.
       if (!SAFARI) {
         emit_page_broadcast = (function() {
           var injectMap = {
