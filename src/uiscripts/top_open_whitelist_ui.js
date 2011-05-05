@@ -2,7 +2,7 @@
 if (typeof may_open_dialog_ui === "undefined")
     may_open_dialog_ui = true;
 
-function verify_whitelist() {
+function top_open_whitelist_ui() {
   if (!may_open_dialog_ui)
     return;
   var domain = document.location.hostname;
@@ -60,19 +60,3 @@ function verify_whitelist() {
       });
   });
 }
-
-
-if (window == window.top)
-  register_broadcast_listener('top_open_whitelist_ui', verify_whitelist);
-
-// Safari context menu support, until we unify Chrome & Safari
-// support via port.js
-if (SAFARI) {
-  // Handle right click menu item click
-  safari.self.addEventListener("message", function(event) {
-    if (event.name != "show-whitelist-wizard")
-      return;
-    page_broadcast('top_open_whitelist_ui', {});
-  }, false);
-}
-
