@@ -518,14 +518,14 @@
           function validateUrl(url) {
             if (!/^https?:\/\//.test(url)) {
               console.warn("Invalid URL in query param: " + url);
-              // window.close(); TODO
+              window.close();
               return;
             }
           }
           function validateItemType(itemType) {
             if (!ElementTypes[itemType]) {
               console.warn("Invalid ElementType in query param: " + itemType);
-              // window.close(); TODO
+              window.close();
               return;
             }
           }
