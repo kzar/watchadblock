@@ -138,7 +138,8 @@
         );
         delete domaindata;
 
-        // Trunkates a resource URL if it is too long
+        // Trunkates a resource URL if it is too long. Also escapes some
+        // characters when they have a special meaning in HTML.
         // Inputs: the string to truncate
         // Returns the truncated string
         function truncateI(j) {
@@ -147,6 +148,9 @@
               j = j.substring(0, j.indexOf('?') + 1) + '[...]';
           if (j.length > 90)
             j = j.substring(0, 86) + '[...]';
+
+          j = j.replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
+                replace(/\>/g, '&gt;').replace(/\"/g, '&quot;')
           return j;
         }
         // Converts the ElementTypes number back into an readable string
@@ -234,7 +238,8 @@
         url = url.replace(/\W{5}\(.*\)$/, '').replace(/\#.*$/, '');
         var isBlocked = ($(".selected").hasClass("blocked"));
         var blocksuggestions = [];
-        var strippedUrl = url.replace(/^[a-z]{0,5}\:\/\/(www\.)?/, '');
+        var strippedUrl = url.replace(/^[a-z\-]+\:\/\/(www\.)?/, '');
+        if (/\<script/.test(strippedUrl)) return;
         blocksuggestions.push(strippedUrl);
         if (strippedUrl.indexOf("?") > 0 || strippedUrl.indexOf("#") > 0) {
           strippedUrl = strippedUrl.replace(/(\?|\#).*/, '');
@@ -502,6 +507,8 @@
               for (var i = 0; i < loaded_resources.length || 0; i++) {
                 if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
                   continue; // Blacklister resources shouldn't be visible
+                if (/\<script/.test(loaded_resources[i]))
+                  continue;
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
                   var filter = "##" + loaded_resources[i].substring(5);
                   resources[filter] = {filter: filter};

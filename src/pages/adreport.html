@@ -2,7 +2,6 @@
    URL:
    chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/pages/adreport.html
    ?url={domain_href}
-   &suggested={suggestedfilter}
 -->
 <html>
   <head>
@@ -94,12 +93,10 @@
         body.push("");
         body.push("");
         count++;
-        if (!options['suggested']) {
-          body.push(count + ". Paste a working filter, if you have one: ");
-          body.push("");
-          body.push("");
-          count++;
-        }
+        body.push(count + ". Paste a working filter, if you have one: ");
+        body.push("");
+        body.push("");
+        count++;
         body.push(count + ". Any other information that would be helpful, besides " +
             "what is listed below: ");
         body.push("");
@@ -118,11 +115,6 @@
           "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
         if (AdBlockVersion) 
           body.push("AdBlock " + AdBlockVersion);
-        if (options['suggested']) {
-          body.push("");
-          body.push("=== The selector created by the user ===");
-          body.push(options['suggested']);
-        }
 
         result = result + "&comment=" + escape(body.join('\n'));
 
