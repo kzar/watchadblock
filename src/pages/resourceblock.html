@@ -204,7 +204,7 @@
           thisrow += "<td><input type='checkbox'" + (disabled ? 
                                        ' disabled="disabled"' : '') + "/></td>";
           disabled = (disabled ? '' : ' class="clickableRow"');
-          thisrow += "<td" + disabled + " title='" + i + "'>" + truncateI(i) + "</td>";
+          thisrow += "<td" + disabled + ' title="' + i + '">' + truncateI(i) + "</td>";
           var typeName = getTypeName(resources[i].type);
           thisrow += "<td" + disabled + " name='" + typeName + "'>"
                      + translate('type' + typeName) + "</td>";
@@ -472,7 +472,7 @@
             var temp_url = unescape(temp_resource[2]);
             var temp_type = temp_resource[1];
             resources[temp_url] = {type:ElementTypes[temp_type]};
-            if (/\<\s*script/.test(temp_url)) {
+            if (/\<|\"/.test(temp_url)) {
               alert(translate('noresourcessend'));
               window.close();
               return;
@@ -511,7 +511,7 @@
               for (var i = 0; i < loaded_resources.length || 0; i++) {
                 if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
                   continue; // Blacklister resources shouldn't be visible
-                if (/\<\s*script/.test(loaded_resources[i]))
+                if (/\<|\"/.test(loaded_resources[i]))
                   continue;
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
                   var filter = "##" + loaded_resources[i].substring(5);
