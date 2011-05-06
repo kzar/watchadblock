@@ -280,7 +280,9 @@
           suggestions.push(label);
           suggestions.push("<br/>");
         }
-        $("#suggestions").text("").append(suggestions);
+        $("#suggestions").text("");
+        for (var i = 0; i < suggestions.length; i++)
+          $("#suggestions").append(suggestions[i]);
         if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
           $($("#suggestions").children('input')[1]).attr('checked', 'checked');
         else
