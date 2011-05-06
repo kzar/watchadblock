@@ -239,7 +239,6 @@
         var isBlocked = ($(".selected").hasClass("blocked"));
         var blocksuggestions = [];
         var strippedUrl = url.replace(/^[a-z\-]+\:\/\/(www\.)?/, '');
-        if (/\<script/.test(strippedUrl)) return;
         blocksuggestions.push(strippedUrl);
         if (strippedUrl.indexOf("?") > 0 || strippedUrl.indexOf("#") > 0) {
           strippedUrl = strippedUrl.replace(/(\?|\#).*/, '');
@@ -473,6 +472,11 @@
             var temp_url = unescape(temp_resource[2]);
             var temp_type = temp_resource[1];
             resources[temp_url] = {type:ElementTypes[temp_type]};
+            if (/\<script/.test(temp_url)) {
+              alert(translate('noresourcessend'));
+              window.close();
+              return;
+            }
           }
         }
 
