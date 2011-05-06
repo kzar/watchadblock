@@ -138,6 +138,12 @@
         );
         delete domaindata;
 
+        function htmlEscape(unsafe) {
+          var safe = unsafe.
+            replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
+            replace(/\>/g, '&gt;').replace(/\"/g, '&quot;');
+          return safe;
+        }
         // Trunkates a resource URL if it is too long. Also escapes some
         // characters when they have a special meaning in HTML.
         // Inputs: the string to truncate
@@ -149,9 +155,7 @@
           if (j.length > 90)
             j = j.substring(0, 86) + '[...]';
 
-          j = j.replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
-                replace(/\>/g, '&gt;').replace(/\"/g, '&quot;')
-          return j;
+          return htmlEscape(j);
         }
         // Converts the ElementTypes number back into an readable string
         // or hiding or 'unknown' if it wasn't in ElementTypes.
@@ -262,12 +266,21 @@
 
         var suggestions = [];
         for (var i in blocksuggestions) {
-          suggestions.push("<input type='radio' name='urloption' id='suggest_" +
-                           i + "' value='" + (isBlocked ? '@@||' : '||') + 
-                           blocksuggestions[i] + "'/>" + "<label for='suggest_" +
-                           i + "'> " + blocksuggestions[i] + "</label><br/>");
+          var inputBox = $("<input>", {
+            type: "radio",
+            name: "urloption",
+            id: "suggest_" + i,
+            value: (isBlocked ? "@@||" : "||") + blocksuggestions[i]
+          });
+          var label = $("<label>", {
+            "for": "suggest_" + i,
+            text: blocksuggestions[i]
+          });
+          suggestions.push(inputBox);
+          suggestions.push(label);
+          suggestions.push("<br/>");
         }
-        $("#suggestions").html(suggestions.join(''));
+        $("#suggestions").text("").append(suggestions);
         if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
           $($("#suggestions").children('input')[1]).attr('checked', 'checked');
         else
@@ -277,9 +290,14 @@
           $("#selectblockableurl b").text(translate("blockeverycontaining"));
         else
           $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
-        $("#custom + label").
-          html('Custom: <input type="text" id="customurl" value="' + url + 
-          '" size="99" title="' + translate("wildcardhint") + '"/>');
+        var inputBox = $('<input>', {
+          type: "text",
+          id: "customurl",
+          size: "99",
+          value: url,
+          title: translate("wildcardhint")
+        });
+        $("#custom + label").text('Custom: ').append(inputBox);
       }
 
       // Create the filter that will be applied from the chosen options
@@ -411,8 +429,10 @@
               $("#thirdparty + *").remove();
               $("#thirdparty").remove();
             } else
-              $("#thirdparty + label").html(translate("thirdpartycheckbox", "<i>" + 
-                GetThirdPartyDomain(domainOfSelectedUrl) + "</i>"));
+              // Use .find().text() so data from query string isn't injected as HTML
+              $("#thirdparty + label").
+                html(translate("thirdpartycheckbox", "<i></i>")).
+                find("i").text(GetThirdPartyDomain(domainOfSelectedUrl));
             $("#domainlist").
               val(domain.replace(/^www\./, '')).
               click(function() {
@@ -499,9 +519,6 @@
 
             resources[itemUrl] = {type:ElementTypes[qps.itemType]};
           }
-
-          // unsafe: url, domain, resources[everything]
-          // if (/\<|\"/.test(temp_url)) {
         }
 
         var opts = {
