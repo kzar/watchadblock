@@ -203,28 +203,49 @@
             else
               type = {sort:1, name:'blocked'};
 
-          var thisrow = "<tr" + (type.name ? ' class="' + type.name + '"' : '') + ">";
           var disabled = (type.name == 'whitelisted' || type.name == 'hiding');
-          thisrow += "<td><input type='checkbox'" + (disabled ? 
-                                       ' disabled="disabled"' : '') + "/></td>";
-          disabled = (disabled ? '' : ' class="clickableRow"');
-          thisrow += "<td" + disabled + ' title="' + i + '">' + truncateI(i) + "</td>";
+
+          var row = $("<tr>");
+          if (type.name) row.addClass(type.name);
+
+          // Cell 1: Checkbox
+          var cell = $("<td><input type='checkbox'/></td>");
+          if (disabled) cell.find("input").attr("disabled", "disabled");
+          row.append(cell);
+
+          // Cell 2: URL
+          $("<td>", { title: i, text: truncateI(i) }).appendTo(row);
+
+          // Cell 3: Type
           var typeName = getTypeName(resources[i].type);
-          thisrow += "<td" + disabled + " name='" + typeName + "'>"
-                     + translate('type' + typeName) + "</td>";
-          thisrow += "<td" + disabled + ">" + (type.name ? "<span class='sorter'>" +
-                                               type.sort + "</span>" + matchingfilter :
-                                               "<span class='sorter'>3</span>-") + "</td>";
+          $("<td>", { name: typeName, text: translate('type' + typeName) }).appendTo(row);
+
+          // Cell 4: hidden sorting field
+          cell = $("<td>");
+          var span = $("<span>", { "class": "sorter", text: "3" }).appendTo(cell);
+          if (type.name) {
+            span.text(type.sort);
+            cell.append(matchingfilter);
+          }
+          row.append(cell);
+
+          // Cells 2-4 may get class=clickableRow
+          if (!disabled)
+            row.find("td:not(:first-child)").addClass("clickableRow");
+
+          // Cell 5: Matched filter
           if (inCustomFilters(matchingfilter))
-            thisrow += "<td class='deleterule' title='" +
-                       translate("removelabel") + "'></td>";
+            $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
           else
-            thisrow += "<td></td>";
-          thisrow += "</tr>";
-          rows.push(thisrow);
+            $("<td>").appendTo(row);
+
+          rows.push(row);
         }
         $("#loading").remove();
-        $("#resourceslist tbody").append(rows.join(''));
+        $("#resourceslist tbody").text("");
+        for (var i = 0; i < rows.length; i++) {
+          $("#resourceslist tbody").append(rows[i]);
+        }
         $(".deleterule").click(function() {
           var filter = $(this).prev().text().substring(1);
           BG.remove_custom_filter(filter);
