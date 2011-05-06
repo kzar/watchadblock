@@ -461,23 +461,47 @@
         var url;
         if (window.location.search) {
           // Can be of the forms
-          //  ?resourcetype=resourceURL&url=url
-          //  ?url=url
+          //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
+          //  ?url=(page url)
           var query = window.location.search.substring(1);
-          url = unescape(query.match(/(^|\&)url\=(.*)$/)[2]);
-          domain = BlockingFilterSet._domainFor(url);
-          query = query.replace(/(^|\&)url\=(.*)$/, '');
-          var temp_resource = query.match(/^(.+)\=(.+)$/);
-          if (temp_resource) {
-            var temp_url = unescape(temp_resource[2]);
-            var temp_type = temp_resource[1];
-            resources[temp_url] = {type:ElementTypes[temp_type]};
-            if (/\<|\"/.test(temp_url)) {
-              alert(translate('noresourcessend'));
-              window.close();
+          var parts = query.split('&');
+          var qps = {};
+          for (var i = 0; i < parts.length; i++) {
+            var matchKeyAndValue = parts[i].match(/(.*?)=(.*)/);
+            if (!matchKeyAndValue) continue;
+            qps[matchKeyAndValue[1]] = matchKeyAndValue[2];
+          }
+          console.log(qps);
+          function validateUrl(url) {
+            if (!/^https?:\/\//.test(url)) {
+              console.warn("Invalid URL in query param: " + url);
+              // window.close(); TODO
               return;
             }
           }
+          function validateItemType(itemType) {
+            if (!ElementTypes[itemType]) {
+              console.warn("Invalid ElementType in query param: " + itemType);
+              // window.close(); TODO
+              return;
+            }
+          }
+          if (qps.url) {
+            url = unescape(qps.url);
+            validateUrl(url);
+
+            domain = BlockingFilterSet._domainFor(url);
+          }
+          if (qps.itemType) {
+            var itemUrl = unescape(qps.itemUrl);
+            validateUrl(itemUrl);
+            validateItemType(qps.itemType);
+
+            resources[itemUrl] = {type:ElementTypes[qps.itemType]};
+          }
+
+          // unsafe: url, domain, resources[everything]
+          // if (/\<|\"/.test(temp_url)) {
         }
 
         var opts = {
@@ -492,7 +516,7 @@
             window.close();
             return;
           }
-          if (!temp_url) {
+          if (!qps.itemUrl) {
             // Show $elemhide and $document rules that match on the page
             var excludeRule = BG.page_is_whitelisted(url, ElementTypes.document, true);
             if (excludeRule)
@@ -538,7 +562,7 @@
 
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
-          if (temp_url) {
+          if (qps.itemUrl) {
             if ($("#resourceslist input").attr("disabled")) {
               // In case the resource has been whitelisted and can't be removed
               if ($(".deleterule").length == 0) {
