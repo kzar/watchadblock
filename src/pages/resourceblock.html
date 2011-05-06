@@ -235,7 +235,7 @@
       //Generate a list of pre-defined url filters
       function generateFilterSuggestions() {
         var url = $(".selected td:nth-of-type(2)").attr('title');
-        url = url.replace(/\W{5}\(.*\)$/, '').replace(/\#.*$/, '');
+        url = url.replace(/\s{5}\(.*\)$/, '').replace(/\#.*$/, '');
         var isBlocked = ($(".selected").hasClass("blocked"));
         var blocksuggestions = [];
         var strippedUrl = url.replace(/^[a-z\-]+\:\/\/(www\.)?/, '');
@@ -472,7 +472,7 @@
             var temp_url = unescape(temp_resource[2]);
             var temp_type = temp_resource[1];
             resources[temp_url] = {type:ElementTypes[temp_type]};
-            if (/\<script/.test(temp_url)) {
+            if (/\<\s*script/.test(temp_url)) {
               alert(translate('noresourcessend'));
               window.close();
               return;
@@ -511,7 +511,7 @@
               for (var i = 0; i < loaded_resources.length || 0; i++) {
                 if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
                   continue; // Blacklister resources shouldn't be visible
-                if (/\<script/.test(loaded_resources[i]))
+                if (/\<\s*script/.test(loaded_resources[i]))
                   continue;
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
                   var filter = "##" + loaded_resources[i].substring(5);
