@@ -38,7 +38,7 @@
     "description": "Message on the installation success page"
   },
   "donaterequest2": {
-    "message": "Nedávno jsem opustil své zaměstnání, abych se mohl plně věnovat AdBlock! Nyní se spoléhám výhradně na Vaše dary pro moji rodinu. Prosím, <a>pošlete finanční dar</a> na placení našich účtů -- a dokažte, že moje žena i já nejsme blázni, když se o toto snažíme. Díky :) - Michael",
+    "message": "Nedávno jsem opustil své zaměstnání, abych se mohl plně věnovat projektu AdBlock! Nyní se spoléhám výhradně na Vaše dary pro moji rodinu. Prosím, <a>pošlete finanční dar</a> na placení našich účtů -- a dokažte, že moje žena i já (na obrázku) nejsme přeci úplní blázni. Díky :) - Michael",
     "description": "Donation request on installation success page"
   },
   "setotheroptions_safari": {
@@ -46,7 +46,7 @@
     "description": "Message on Safari installation success page for extension"
   },
   "setotheroptions_chrome_ext": {
-    "message": "Můžete ovládat AdBlock a nastavit další možnosti klepnutím na tlačítko na panelu nástrojů.",
+    "message": "AdBlock můžete ovládat a nastavovat další možnosti klepnutím na tlačítko na panelu nástrojů.",
     "description": "Message on Chrome extension installation success page for extension"
   },
   "setotheroptions_chrome_app": {
@@ -886,6 +886,14 @@
     "message": "Filtr byl úspěšně přidán!\nNačtěte znovu stránku pro zobrazení výsledku!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
+  "adblock_is_paused": {
+    "message": "AdBlock je pozastaven. Protože nebyly zachyceny žádné prvky, není možné tuto stránku použít. Nejprve spusťte AdBlock a pak to zkuste znovu.",
+    "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Filtr byl odstraněn. Prosím, obnovte původní stránku pro vytvoření seznamu prvků.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
+  },
   "noresourcessend": {
     "message": "Někde nastala chyba. Žádné prvky nebyly přeposlány. Tato stránka bude nyní zavřena.",
     "description": "resourceblocking page string"
@@ -1097,11 +1105,11 @@
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
 "translator_credit": {
-  "message": "Credit for translation goes to: $translator_names$",
+  "message": "Autorem překladu do češtiny je: $translator_names$",
   "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
-        "content": "petr.c",
+        "content": "Petr Cízl",
         "example": "Michael G, Drew R"
       }
     }
