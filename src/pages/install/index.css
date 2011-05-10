@@ -1,0 +1,135 @@
+html {
+  height: 100%
+}
+body {
+  font-family: verdana, sans-serif;
+  width: 800px;
+  margin: auto;
+  background: -webkit-gradient(linear, left top, left bottom, from(#bbf), to(#fff), color-stop(.5, #fff))
+              no-repeat;
+}
+#header {
+  display: none; /* shown after loading completes */
+  margin: 50px 0;
+  background: url('../../img/icon48.png') no-repeat;
+  padding-top: 5px;
+  padding-left: 55px;
+  z-index: 10;
+}
+h1 {
+  margin: 0;
+  padding-bottom: 5px;
+}
+h2 {
+  margin-top: 0px;
+}
+.card {
+  /* works in Safari (Windows at least) */
+  background: -webkit-gradient(radial, 15% 25%, 20, 15% 25%, 700, from(#fff), to(#ddf));
+  /* even better in Chrome, get 100% spread instead of a fixed pixel value */
+  background: -webkit-radial-gradient(15% 25%, circle, #fff 20px, #ddf 100%);
+  position: absolute; /* so it can slide */
+  padding: 20px 40px;
+  border-radius: 30px;
+  border: 1px solid white;
+  -webkit-box-shadow: 2px 2px 5px gray;
+  display: none; /* we show each one as it arrives */
+}
+.nav {
+  float: right;
+  clear:both;
+  margin: 5px auto;
+}
+.nav a {
+  border: 1px solid gray;
+  border-radius: 15px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccf));
+  -webkit-box-shadow: 1px 1px 5px #AAA;
+  padding: 5px 10px;
+  float:left;
+  margin-left: 45px;
+  font-size: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: Georgia;
+  color: #33D;
+}
+.nav a:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddf));
+}
+.nav a:active {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#aad));
+}
+#loading-wrapper {
+  top: 50px; /* not in same place as other cards */
+  left: 170px;
+  position: relative;
+}
+#loading-wrapper #cleaner-warning {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+#loading-wrapper #cleaner-warning a {
+  font-size: small;
+  color: #999;
+  font-style: italic;
+}
+#loading.card {
+  display: block; /* unlike other cards, this one is shown */
+  position: static;
+  width: 280px;
+}
+#loading.card progress {
+  width: 100%;
+}
+#start-safari.card {
+  width: 530px;
+}
+#start-chrome.card {
+  width: 600px;
+}
+#autoupdate-howto.card {
+  width: 700px;
+}
+#autoupdate-howto.card ol li {
+  margin-bottom: 1.5em;
+}
+#howto.card {
+  width: 500px;
+}
+#howto.card img {
+  vertical-align: bottom;
+}
+.donate-choice {
+  float:left;
+  width: 145px;
+  height: 145px;
+  padding: 5px;
+  margin: 15px;
+  border-radius: 10px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#bbf));
+  text-align: center;
+  border: 1px solid #66a;
+  box-shadow: 5px 5px 5px rgb(128,128,128,128);
+  -webkit-transition: .25s;
+}
+.donate-choice:hover {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eef));
+}
+.donate-choice .imgwrap {
+  height: 75px;
+  margin: 10px 0;
+}
+.donate-choice img {
+}
+.donate-choice .amt {
+  font-size: x-large;
+  color: #0a0;
+}
+.donate-choice .amt input {
+  width: 60px;
+  vertical-align: bottom;
+  color: green;
+  font-size: large;
+  font-family: verdana;
+}
