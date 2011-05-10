@@ -3,9 +3,6 @@ if (typeof "ADBLOCK" == "undefined")
 
 (function() {
 
-  if (SAFARI)
-    return;
-
   function getManifest() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
@@ -21,8 +18,12 @@ if (typeof "ADBLOCK" == "undefined")
 
   var manifest = getManifest();
 
-  ADBLOCK.isApp = (manifest.app != undefined);
   ADBLOCK.version = manifest.version;
+
+  if (SAFARI)
+    return;
+
+  ADBLOCK.isApp = (manifest.app != undefined);
 
   if (ADBLOCK.isApp) {
     chrome.browserAction.setIcon = function() {};
