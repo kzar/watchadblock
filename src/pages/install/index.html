@@ -8,6 +8,8 @@
     <script src="../../jquery/jquery.min.js"></script>
     <script src="../../functions.js"></script>
     <script>
+      var installPageVersion = 1;
+      localStorage['saw_install_page'] = installPageVersion;
       $(function() {
         // Slide cards upon nav link click
         $(".nav a").click(function() {
@@ -75,14 +77,25 @@
         installation page if it flashes up the instant they install.
         So we delay 3 seconds while they get their bearings.
       -->
-      <div class="card" id="loading">
-        <i>Installing AdBlock...</i>
-        <strong><i id="done" style="display:none">done.</i></strong>
-        <br/><br/>
-        <progress id="chrome-loading-progress" value=0 max=1>
-          <span id="safari-loading-progress"></span>%
-        </progress>
-        <span></span>
+      <div id="loading-wrapper">
+        <div class="card" id="loading">
+          <i>Installing AdBlock...</i>
+          <strong><i id="done" style="display:none">done.</i></strong>
+          <br/><br/>
+          <progress id="chrome-loading-progress" value=0 max=1>
+            <span id="safari-loading-progress"></span>%
+          </progress>
+        </div>
+        <div id="cleaner-warning">
+          <a href="#">Seeing this every time you start your browser?</a>
+        </div>
+        <script>
+          $(function() {
+            $("#cleaner-warning a").click(function() {
+              alert(translate("filecleanerwarning"));
+            });
+          });
+        </script>
       </div>
       <script>
         var start = new Date();
@@ -110,7 +123,7 @@
 
           window.setTimeout(function() {
             // Loaded
-            $("#loading.card").
+            $("#loading-wrapper").
               find("#done").fadeIn().end().
               delay(1800).
               fadeOut(function() {
@@ -122,7 +135,7 @@
 
       <div class="card" id="start-chrome">
         <h2>Set up AdBlock</h2>
-        Please fill out AdBlock's one-question setup (don't get overwhelmed):<br/><br/>
+        Please fill out AdBlock's one-question setup:<br/><br/>
         <input type="checkbox" id="showads" />
         <label for="showads">I like Google's text ads; don't block those.</label>
         <div class="nav">
@@ -131,7 +144,9 @@
       </div>
       <script>
         $("#start-chrome.card input").change(function() {
-          BGcall("set_setting", "show_google_search_text_ads", this.checked);
+          BGcall("set_setting", "show_google_search_text_ads", this.checked, function() {
+            BGcall("update_filters");
+          });
         });
       </script>
 

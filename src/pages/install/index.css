@@ -60,12 +60,24 @@ h2 {
 .nav a:active {
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#aad));
 }
+#loading-wrapper {
+  top: 50px; /* not in same place as other cards */
+  left: 170px;
+  position: relative;
+}
+#loading-wrapper #cleaner-warning {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+#loading-wrapper #cleaner-warning a {
+  font-size: small;
+  color: #999;
+  font-style: italic;
+}
 #loading.card {
   display: block; /* unlike other cards, this one is shown */
-  top: 50px; /* not in same place as other cards, either */
-  left: 170px;
+  position: static;
   width: 280px;
-  position: relative;
 }
 #loading.card progress {
   width: 100%;
