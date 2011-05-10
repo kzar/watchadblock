@@ -617,7 +617,7 @@
         storage_set('installed_at', now);
         var flavor = (SAFARI ? "safari" : "chrome_ext");
         if (ADBLOCK.isApp) flavor = "chrome_app";
-        var data = { installed_at: now, flavor: flavor };
+        var data = { installed_at: now, flavor: flavor, version: ADBLOCK.version };
         $.get("http://chromeadblock.com/api/visit.php", data);
 
         if (Math.random() < .5) {

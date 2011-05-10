@@ -19,7 +19,10 @@ if (typeof "ADBLOCK" == "undefined")
     return theManifest;
   }
 
-  ADBLOCK.isApp = (getManifest().app != undefined);
+  var manifest = getManifest();
+
+  ADBLOCK.isApp = (manifest.app != undefined);
+  ADBLOCK.version = manifest.version;
 
   if (ADBLOCK.isApp) {
     chrome.browserAction.setIcon = function() {};
