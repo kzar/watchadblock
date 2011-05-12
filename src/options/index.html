@@ -42,16 +42,11 @@
 
         note_visit();
         
+  	if (navigator.language.substring(0, 2) != "en")
+    	  $("#translation_credits").text(translate("translator_credit"));
+
         //translation
         localizePage();
-      });
-      $(function() {
-        if (navigator.language.substring(0, 2) != "en")
-          $("#translation_credits").show();
-      });
-      $(function() {
-  	if (navigator.language.substring(0, 2) != "en")
-    	  $("#translation_credits").text(translate("translator_credit")));
       });
     </script>
   </head>
