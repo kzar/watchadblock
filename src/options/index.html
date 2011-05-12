@@ -45,11 +45,13 @@
         //translation
         localizePage();
       });
-    </script>
-    <script>
       $(function() {
         if (navigator.language.substring(0, 2) != "en")
           $("#translation_credits").show();
+      });
+      $(function() {
+  	if (navigator.language.substring(0, 2) != "en")
+    	  $("#translation_credits").text(translate("translator_credit")));
       });
     </script>
   </head>
@@ -58,7 +60,7 @@
       <span id="version_number"></span>
       (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
     <br />
-    <span style="display:none;" id="translation_credits" i18n="translator_credit"></span>
+    <span id="translation_credits"></span>
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 
