@@ -323,10 +323,10 @@
             if (localStorage.adblock_is_paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.disabled_site && 
-                !/^chrome-extension:.*pages\/installed.html/.test(info.tab.url)) {
+                !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
-              // users see how it will normally look when deciding whether or
-              // not to hide it. All other disabled pages will have the gray one
+              // users see how it will normally look. All other disabled pages
+              // will have the gray one
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.whitelisted) {
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
@@ -617,15 +617,10 @@
         storage_set('installed_at', now);
         var flavor = (SAFARI ? "safari" : "chrome_ext");
         if (ADBLOCK.isApp) flavor = "chrome_app";
-        var data = { installed_at: now, flavor: flavor, version: ADBLOCK.version };
+        var data = { installed_at: now, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
         $.get("http://chromeadblock.com/api/visit.php", data);
 
-        if (Math.random() < .5) {
-          chrome.tabs.create({url: "pages/install/index.html?" + flavor});
-        }
-        else {
-          chrome.tabs.create({url: "pages/installed.html?" + flavor});
-        }
+        chrome.tabs.create({url: "pages/install/index.html?" + $.param(data)});
       }
       note_install();
 
