@@ -1,7 +1,7 @@
 import urllib2
 from xml.dom import minidom
 
-execfile('../../google_credentials')
+execfile('../../../google_credentials')
 
 def get(node, childName):
     return node.getElementsByTagName(childName)[0]
@@ -13,21 +13,14 @@ def text(node):
             rc.append(child.data)
     return ''.join(rc)
 
-class OrderParser(object):
-    """
-    Abstract.  Returns a standard order info dictionaries for each order id.
-    """
-    def from(orderid_list):
+class GoogleOrderParser(object):
+
+    @staticmethod
+    def parse(orderid_list):
         """
-        Return a bunch of order dicts from the list of order ids.
+        Return order data dictionaries for each order number in the array.
         Dicts contain id, date, item_number, email, name, amount.
         """
-
-class GoogleOrderParser(OrderParser):
-    def from(orderid_list):
-
-        """Return order data dictionaries for each order number in the
-        array."""
 
         url = "https://checkout.google.com/api/checkout/v2/reports/Merchant/%s"  % google_merchant_id
         headers = {
@@ -48,20 +41,16 @@ class GoogleOrderParser(OrderParser):
         req = urllib2.Request(url, data, headers)
         dom = minidom.parseString(urllib2.urlopen(req).read())
         notifications = dom.getElementsByTagName('charge-amount-notification')
-        return [ self.createOrderFrom(n) for n in notifications ]
+        return [ GoogleOrderParser.createOrderFrom(n) for n in notifications ]
 
-    def createOrderFrom(self, cn):
+    @staticmethod
+    def createOrderFrom(cn):
         """cn: charge-amount-notification minidom node"""
         return {
             'id': text(get(cn, 'google-order-number')),
             'date': text(get(cn, 'purchase-date')),
-            'item_number': text(get(cn, 'merchant-private-data')),
+            'tracking': text(get(cn, 'merchant-private-data')),
             'email': text(get(cn, 'email')),
             'name': text(get(cn, 'contact-name')),
             'amount': text(get(cn, 'latest-charge-amount')),
         }
-
-# TODO
-class PaypalOrderParser(OrderParser):
-    def from(confirmationid_list):
-        return [{}]
