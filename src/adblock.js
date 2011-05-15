@@ -3,8 +3,7 @@ function debug_print_selector_matches(selectors) {
     filter(function(selector) { return $(selector).length > 0; }).
     forEach(function(selector) {
       log("Debug: CSS '" + selector + "' hid:");
-      if (!SAFARI)
-        GLOBAL_collect_resources['HIDE:' + selector] = null;
+      addResourceToList('HIDE:' + selector);
       $(selector).each(function(i, el) {
         log("       " + el.nodeName + "#" + el.id + "." + el.className);
       });
@@ -76,7 +75,9 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
 }
 // To open the list with the resources, even if whitelisted
 if (window == window.top)
-  register_broadcast_listener('open_resourcelist', function(options) {
+  chrome.extension.onRequest.addListener(function(request) {
+    if (request != "open_resourcelist")
+      return;
     var resources = {};
     if (typeof GLOBAL_collect_resources != "undefined") 
       resources = Object.keys(GLOBAL_collect_resources);

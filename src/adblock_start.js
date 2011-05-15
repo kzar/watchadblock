@@ -94,8 +94,7 @@ beforeLoadHandler = function(event) {
     elType: elType,
     pageDomain: document.location.hostname
   };
-  if (!SAFARI)
-    GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
+  addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (el.nodeName == "FRAME")
@@ -179,9 +178,11 @@ FakeFilterSet.prototype = {
 }
 
 function adblock_begin() {
-  if (!SAFARI) {
-    GLOBAL_collect_resources = {};
+  if (!SAFARI)
     LOADED_TOO_FAST = [];
+  GLOBAL_collect_resources = {};
+  addResourceToList = function(resource) {
+    GLOBAL_collect_resources[resource] = null;
   }
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
@@ -205,7 +206,14 @@ function adblock_begin() {
       delete GLOBAL_collect_resources;
       return;
     }
-    
+
+    // Safari users and Chrome users without the option to show advanced options
+    // and subframes are not able to open resourceblock for the list of resources    
+    if (!data.settings.show_advanced_options || window != window.top || SAFARI) {
+      addResourceToList = function() {};
+      delete GLOBAL_collect_resources;
+    }
+
     if (data.settings.hide_instead_of_remove)
       removeAdRemains.hide = true;
 
