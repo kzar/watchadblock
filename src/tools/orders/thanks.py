@@ -24,7 +24,7 @@ def unread_emails(max_count):
     be set to the IMAP msgid.
     """
     m = order_mailbox()
-    unseen_ids = m.search(None, '(UNSEEN)')[1][0].split()[ :max_count]
+    unseen_ids = m.search(None, '(UNSEEN SINCE "14-May-2011")')[1][0].split()[ :max_count]
     try:
         m.select('donations', readonly=True)
         data = m.fetch(','.join(unseen_ids), '(RFC822)') # not marked as read
@@ -56,6 +56,7 @@ def order_messages(max_count):
             print
             raise # TODO temp
     # Google needs all of its data at once so we can bulk-request info.
+    # This also removes order emails whose orders failed to go through.
     GoogleOrder.flesh_out(orders)
     return orders
 
@@ -159,23 +160,29 @@ class GoogleOrder(Order):
         """
         Fill in details of the GoogleOrders among the given Orders.
         """
-        ordermap = dict( (o.google_order_number, o)
-                         for o in orders
-                         if isinstance(o, GoogleOrder) )
+        google_order_map = dict( (o.google_order_number, o)
+                                 for o in orders
+                                 if isinstance(o, GoogleOrder) )
         import orderparsing, math
-        orderids = ordermap.keys()
+        orderids = google_order_map.keys()
         numgroups = int(math.ceil(len(orderids) / 16.0))
         # Split into groups of 16
         groups = [orderids[i::numgroups] for i in range(numgroups)]
         for group in groups:
             for datadict in orderparsing.GoogleOrderParser.parse(group):
-                order = ordermap[datadict.id]
-                order.email = datadict.email
-                order.name = datadict.name
-                order._parse_tracking(datadict.tracking)
+                google_order_number = datadict['id']
+                order = google_order_map[google_order_number]
+                order.email = datadict['email']
+                order.name = datadict['name']
+                order.nickname = order.name.split(' ')[0].title()
+                order._parse_tracking(datadict['tracking'])
+        # Some Google orders never complete and should be removed
+        bad_orders = [ o for o in google_order_map.values() if not o.email ]
+        for o in bad_orders:
+            orders.remove(o)
 
     def _parse_body(self, body):
-        match = re.search('Total: (=24|\$)(.*)$', body)
+        match = re.search('Total: (=24|\$)(.*)', body)
         self.amount = float(match.group(2).strip())
         match = re.search('Google order number: ([0-9]*)', body)
         self.google_order_number = match.group(1)
