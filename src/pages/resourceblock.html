@@ -109,12 +109,43 @@
       var domaindata;
       var custom_filters = [];
 
+      // TODO Copy-and-modified from adblock_start.js
+      function FakeFilterSet(serializedFilters) {
+        var filters = [];
+        for (var i = 0; i < serializedFilters.length; i++) {
+          filters.push(PatternFilter.fromData(serializedFilters[i]));
+          filters[i]._text = serializedFilters[i][3];
+        }
+        this.filters = filters;
+      };
+      FakeFilterSet.prototype = {
+        matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+          var f = this.filters, len = f.length;
+          for (var i = 0; i < len; i++) {
+            if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
+              return f[i];
+          }
+          return null;
+        }
+      }
+      // TODO end copied part
+
       // Creates the table that shows all blockable items
       function generateTable() {
-        var local_filterset = FilterSet.fromText(domaindata.block, false, false);
+        var local_filterset = new BlockingFilterSet(
+          new FakeFilterSet(domaindata.patternSerialized),
+          new FakeFilterSet(domaindata.whitelistSerialized)
+        );
         delete domaindata;
 
-        // Trunkates a resource URL if it is too long
+        function htmlEscape(unsafe) {
+          var safe = unsafe.
+            replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
+            replace(/\>/g, '&gt;').replace(/\"/g, '&quot;');
+          return safe;
+        }
+        // Trunkates a resource URL if it is too long. Also escapes some
+        // characters when they have a special meaning in HTML.
         // Inputs: the string to truncate
         // Returns the truncated string
         function truncateI(j) {
@@ -123,7 +154,8 @@
               j = j.substring(0, j.indexOf('?') + 1) + '[...]';
           if (j.length > 90)
             j = j.substring(0, 86) + '[...]';
-          return j;
+
+          return htmlEscape(j);
         }
         // Converts the ElementTypes number back into an readable string
         // or hiding or 'unknown' if it wasn't in ElementTypes.
@@ -171,33 +203,54 @@
             else
               type = {sort:1, name:'blocked'};
 
-          var thisrow = "<tr" + (type.name ? ' class="' + type.name + '"' : '') + ">";
           var disabled = (type.name == 'whitelisted' || type.name == 'hiding');
-          thisrow += "<td><input type='checkbox'" + (disabled ? 
-                                       ' disabled="disabled"' : '') + "/></td>";
-          disabled = (disabled ? '' : ' class="clickableRow"');
-          thisrow += "<td" + disabled + " title='" + i + "'>" + truncateI(i) + "</td>";
+
+          var row = $("<tr>");
+          if (type.name) row.addClass(type.name);
+
+          // Cell 1: Checkbox
+          var cell = $("<td><input type='checkbox'/></td>");
+          if (disabled) cell.find("input").attr("disabled", "disabled");
+          row.append(cell);
+
+          // Cell 2: URL
+          $("<td>", { title: i, text: truncateI(i) }).appendTo(row);
+
+          // Cell 3: Type
           var typeName = getTypeName(resources[i].type);
-          thisrow += "<td" + disabled + " name='" + typeName + "'>"
-                     + translate('type' + typeName) + "</td>";
-          thisrow += "<td" + disabled + ">" + (type.name ? "<span class='sorter'>" +
-                                               type.sort + "</span>" + matchingfilter :
-                                               "<span class='sorter'>3</span>-") + "</td>";
+          $("<td>", { name: typeName, text: translate('type' + typeName) }).appendTo(row);
+
+          // Cell 4: hidden sorting field
+          cell = $("<td>");
+          var span = $("<span>", { "class": "sorter", text: "3" }).appendTo(cell);
+          if (type.name) {
+            span.text(type.sort);
+            cell.append(matchingfilter);
+          }
+          row.append(cell);
+
+          // Cells 2-4 may get class=clickableRow
+          if (!disabled)
+            row.find("td:not(:first-child)").addClass("clickableRow");
+
+          // Cell 5: Matched filter
           if (inCustomFilters(matchingfilter))
-            thisrow += "<td class='deleterule' title='" +
-                       translate("removelabel") + "'></td>";
+            $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
           else
-            thisrow += "<td></td>";
-          thisrow += "</tr>";
-          rows.push(thisrow);
+            $("<td>").appendTo(row);
+
+          rows.push(row);
         }
         $("#loading").remove();
-        $("#resourceslist tbody").append(rows.join(''));
+        $("#resourceslist tbody").text("");
+        for (var i = 0; i < rows.length; i++) {
+          $("#resourceslist tbody").append(rows[i]);
+        }
         $(".deleterule").click(function() {
           var filter = $(this).prev().text().substring(1);
           BG.remove_custom_filter(filter);
           if ($(this).prev().prev().attr("name") == "page") {
-            alert("The filter was removed. Please reload the original page to generate the list with resources");
+            alert(translate("excludefilterremoved"));
             window.close();
           } else
             document.location.reload();
@@ -207,10 +260,10 @@
       //Generate a list of pre-defined url filters
       function generateFilterSuggestions() {
         var url = $(".selected td:nth-of-type(2)").attr('title');
-        url = url.replace(/\W{5}\(.*\)$/, '').replace(/\#.*$/, '');
+        url = url.replace(/\s{5}\(.*\)$/, '').replace(/\#.*$/, '');
         var isBlocked = ($(".selected").hasClass("blocked"));
         var blocksuggestions = [];
-        var strippedUrl = url.replace(/^[a-z]{0,5}\:\/\/(www\.)?/, '');
+        var strippedUrl = url.replace(/^[a-z\-]+\:\/\/(www\.)?/, '');
         blocksuggestions.push(strippedUrl);
         if (strippedUrl.indexOf("?") > 0 || strippedUrl.indexOf("#") > 0) {
           strippedUrl = strippedUrl.replace(/(\?|\#).*/, '');
@@ -234,12 +287,23 @@
 
         var suggestions = [];
         for (var i in blocksuggestions) {
-          suggestions.push("<input type='radio' name='urloption' id='suggest_" +
-                           i + "' value='" + (isBlocked ? '@@||' : '||') + 
-                           blocksuggestions[i] + "'/>" + "<label for='suggest_" +
-                           i + "'> " + blocksuggestions[i] + "</label><br/>");
+          var inputBox = $("<input>", {
+            type: "radio",
+            name: "urloption",
+            id: "suggest_" + i,
+            value: (isBlocked ? "@@||" : "||") + blocksuggestions[i]
+          });
+          var label = $("<label>", {
+            "for": "suggest_" + i,
+            text: blocksuggestions[i]
+          });
+          suggestions.push(inputBox);
+          suggestions.push(label);
+          suggestions.push("<br/>");
         }
-        $("#suggestions").html(suggestions.join(''));
+        $("#suggestions").text("");
+        for (var i = 0; i < suggestions.length; i++)
+          $("#suggestions").append(suggestions[i]);
         if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
           $($("#suggestions").children('input')[1]).attr('checked', 'checked');
         else
@@ -249,9 +313,14 @@
           $("#selectblockableurl b").text(translate("blockeverycontaining"));
         else
           $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
-        $("#custom + label").
-          html("Custom: <input type='text' id='customurl' value='" + url + 
-          "' size='99' title='" + translate("wildcardhint") + "'/>");
+        var inputBox = $('<input>', {
+          type: "text",
+          id: "customurl",
+          size: "99",
+          value: url,
+          title: translate("wildcardhint")
+        });
+        $("#custom + label").text('Custom: ').append(inputBox);
       }
 
       // Create the filter that will be applied from the chosen options
@@ -383,8 +452,10 @@
               $("#thirdparty + *").remove();
               $("#thirdparty").remove();
             } else
-              $("#thirdparty + label").html(translate("thirdpartycheckbox", "<i>" + 
-                GetThirdPartyDomain(domainOfSelectedUrl) + "</i>"));
+              // Use .find().text() so data from query string isn't injected as HTML
+              $("#thirdparty + label").
+                html(translate("thirdpartycheckbox", "<i></i>")).
+                find("i").text(GetThirdPartyDomain(domainOfSelectedUrl));
             $("#domainlist").
               val(domain.replace(/^www\./, '')).
               click(function() {
@@ -433,33 +504,59 @@
         var url;
         if (window.location.search) {
           // Can be of the forms
-          //  ?resourcetype=resourceURL&url=url
-          //  ?url=url
+          //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
+          //  ?url=(page url)
           var query = window.location.search.substring(1);
-          url = unescape(query.match(/(^|\&)url\=(.*)$/)[2]);
-          domain = FilterSet._domainFor(url);
-          query = query.replace(/(^|\&)url\=(.*)$/, '');
-          var temp_resource = query.match(/^(.+)\=(.+)$/);
-          if (temp_resource) {
-            var temp_url = unescape(temp_resource[2]);
-            var temp_type = temp_resource[1];
-            resources[temp_url] = {type:ElementTypes[temp_type]};
+          var parts = query.split('&');
+          var qps = {};
+          for (var i = 0; i < parts.length; i++) {
+            var matchKeyAndValue = parts[i].match(/(.*?)=(.*)/);
+            if (!matchKeyAndValue) continue;
+            qps[matchKeyAndValue[1]] = matchKeyAndValue[2];
+          }
+          console.log(qps);
+          function validateUrl(url) {
+            if (!/^https?:\/\//.test(url)) {
+              console.warn("Invalid URL in query param: " + url);
+              window.close();
+              return;
+        }
+          }
+          function validateItemType(itemType) {
+            if (!ElementTypes[itemType]) {
+              console.warn("Invalid ElementType in query param: " + itemType);
+              window.close();
+              return;
+            }
+          }
+          if (qps.url) {
+            url = unescape(qps.url);
+            validateUrl(url);
+
+            domain = BlockingFilterSet._domainFor(url);
+          }
+          if (qps.itemType) {
+            var itemUrl = unescape(qps.itemUrl);
+            validateUrl(itemUrl);
+            validateItemType(qps.itemType);
+
+            resources[itemUrl] = {type:ElementTypes[qps.itemType]};
           }
         }
 
         var opts = {
           domain: domain,
-          include_filters: true
+          include_texts: true
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
           domaindata = data;
           if (data.adblock_is_paused) {
-            alert("AdBlock is paused. Therefore no resources are caught, so this page cannot be used");
+            alert(translate("adblock_is_paused"));
             window.close();
             return;
           }
-          if (!temp_url) {
+          if (!qps.itemUrl) {
             // Show $elemhide and $document rules that match on the page
             var excludeRule = BG.page_is_whitelisted(url, ElementTypes.document, true);
             if (excludeRule)
@@ -478,6 +575,8 @@
               for (var i = 0; i < loaded_resources.length || 0; i++) {
                 if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
                   continue; // Blacklister resources shouldn't be visible
+                if (/\<|\"/.test(loaded_resources[i]))
+                  continue;
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
                   var filter = "##" + loaded_resources[i].substring(5);
                   resources[filter] = {filter: filter};
@@ -503,7 +602,7 @@
 
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
-          if (temp_url) {
+          if (qps.itemUrl) {
             if ($("#resourceslist input").attr("disabled")) {
               // In case the resource has been whitelisted and can't be removed
               if ($(".deleterule").length == 0) {

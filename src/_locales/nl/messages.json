@@ -3,11 +3,42 @@
     "message": "De meest populaire Chrome extensie, met meer dan 2 miljoen gebruikers! Blokkeert advertenties op het internet.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "De meest populaire Chrome extensie, met meer dan 2 miljoen gebruikers! Blokkeert advertenties op het internet. Overweeg a.u.b. om de betaalde versie voor $1,99 aan te schaffen.",
-    "description": "Extension description used in free version manifest"
+  "app_description1": {
+    "message": "Blokkeert advertenties op het web. Miljoenen gebruiken het in Chrome en Safari",
+    "description": "App description used in app version manifest"
   },
-
+  "setotheroptions_safari": {
+    "message": "Andere instellingen kunnen worden gewijzigd via de opties pagina die je vindt als je op de knop in de werkbalk klikt.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "Andere instellingen kunnen worden gewijzigd als je op de knop in de werkbalk klikt, of via de pagina met opties.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "Andere instellingen kunnen worden gewijzigd in de opties pagina, welke je vindt als je met de rechtermuisknop op een webpagina klikt",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Let op: AdBlock is twee maal geïnstalleerd!",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "Zowel de extensie als de app zijn geïnstalleerd. Slechts één is nodig. De ander zal je alleen maar vertragen.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "Om dit op te lossen, verwijder de extensie van <a>je extensies</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
+  },
+  "unpause_adblock": {
+    "message": "AdBlock niet meer pauzeren",
+    "description": "Context menu entry unpause AdBlock."
+  },
+  "undo": {
+    "message": "Ongedaan maken",
+    "description": "Button text to undo an action."
+  },
   "buttoncancel": {
     "message": "Annuleren",
     "description": "Cancel button"
@@ -758,10 +789,6 @@
     "message": "Ik werk nu full time aan AdBlock! Hierdoor ben ik afhankelijk van donaties om mijn gezin te onderhouden. <a>Doneer</a> a.u.b. en geef daarmee aan dat mijn vrouw en ik (afgebeeld) niet gek zijn om dit te proberen. Alvast bedankt :) - Michael",
     "description": "Donation request on installation success page"
   },
-  "setotheroptions": {
-    "message": "Meer opties kun je vinden in het gereedschap menu > Extra > Extensies > AdBlock Opties.",
-    "description": "Message on installation success page"
-  },
   "chromebutton_showoption": {
     "message": "Toon een knop in de taakbalk",
     "description": "Message on installation success page"
@@ -966,9 +993,13 @@
     "message": "Het filter is succesvol toegevoegd!\nHerlaad de pagina om het resultaat te zien!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "De pagina is uitgesloten of AdBlock is gepauzeerd. Daarom is er niet bijgehouden wat er geladen is. Deze pagina zal nu sluiten.",
+  "adblock_is_paused": {
+    "message": "AdBlock is gepauzeerd. Daarom is er niet bijgehouden wat er geladen is. Deze pagina zal nu sluiten.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Het filter is verwijderd. Herlaadt de pagina om de lijst met geladen items te genereren.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "Er is iets fout gegaan. De geladen items op de pagina zijn niet doorgestuurd. Deze pagina zal nu sluiten.",
@@ -1061,5 +1092,23 @@
   "changelabel": {
     "message": "wijzig",
     "description": "link to change resources on the resourceblock page"
+  },
+  "brokensite_beta_option": {
+    "message": "Probeer enkele problemen waar de paginainhoud niet goed werkt op te lossen.",
+    "description": "option on the first options page"
+  },
+  "brokensite_beta_description": {
+    "message": "Als je advertenties ziet die je niet ziet wanneer je deze optie uitzet, <a>rapporteer</a> dat dan aub!",
+    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+  "translator_credit": {
+    "message": "Vertaling door $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Famlam",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

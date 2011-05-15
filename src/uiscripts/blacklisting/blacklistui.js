@@ -119,7 +119,8 @@ BlacklistUi.prototype._build_page1 = function() {
         type = "subdocument";
       var srcUrl = relativeToAbsoluteUrl(el.attr("src") || el.attr("data"));
       var tabUrl = document.location.href;
-      var query = '?' + type + '=' + escape(srcUrl) + '&url=' + escape(tabUrl);
+      var query = '?itemType=' + type + '&itemUrl=' + escape(srcUrl) + 
+                  '&url=' + escape(tabUrl);
       window.open(chrome.extension.getURL('pages/resourceblock.html' 
             + query), "_blank", 'location=0,width=1024,height=590');
       e.preventDefault();
@@ -214,7 +215,7 @@ BlacklistUi.prototype._build_page2 = function() {
   btns[translate("buttonblockit")] =
       function() {
         if ($("#summary", that._ui_page2).text().length > 0) {
-          var filter = document.domain + "##" + 
+          var filter = document.location.hostname + "##" + 
                        $("#summary", that._ui_page2).text();
           BGcall('add_custom_filter', filter, function() {
             that._fire('block');
@@ -228,7 +229,7 @@ BlacklistUi.prototype._build_page2 = function() {
       }
   btns[translate("buttonedit")] =
       function() {
-        var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
+        var custom_filter = document.location.hostname + '##' + $("#summary", that._ui_page2).text();
         that._ui_page2.dialog('close');
         custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
         if (custom_filter) {//null => user clicked cancel

@@ -71,7 +71,7 @@ var FilterNormalizer = {
 
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
-      var parsedFilter = new PatternFilter(filter);
+      var parsedFilter = PatternFilter.fromText(filter);
 
       // Remove rules that only apply to unsupported resource types.
       var unsupported = (ElementTypes.object_subrequest | ElementTypes.font |
@@ -109,7 +109,7 @@ var FilterNormalizer = {
     //    the ()s can't be empty, and can't start with '='
     if (rule.length == 0 || 
         !/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i.test(rule))
-      throw new Error("bad selector filter");
+      throw "bad selector filter";
 
     var first_segment = rule.indexOf('(');
 
@@ -141,7 +141,7 @@ var FilterNormalizer = {
   // Input: a CSS selector
   _checkCssSelector: function(selector) {
     function throwError() {
-      throw new Error('Invalid CSS selector syntax');
+      throw 'Invalid CSS selector syntax';
     }
 
     // Escaped characters are evil for validations.
@@ -251,7 +251,7 @@ var FilterNormalizer = {
   _verifyDomains: function(domainInfo) {
     for (var name in { "applied_on":1, "not_applied_on":1 }) {
       for (var i = 0; i < domainInfo[name].length; i++) {
-        if (/^([a-z0-9\-_à-ÿ]+\.)*[a-z0-9]+$/i.test(domainInfo[name][i]) == false)
+        if (/^([a-z0-9\-_\xE3-\xFF]+\.)*[a-z0-9]+$/i.test(domainInfo[name][i]) == false)
           throw "Invalid domain: " + domainInfo[name][i];
       }
     }

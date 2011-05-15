@@ -3,11 +3,6 @@
     "message": "Chromen suosituin lisäosa. Sitä käyttää yli kaksi miljoonaa käyttäjää! Estää kaikki mainokset.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "Chromen suosituin lisäosa -- harkitse myös 1.99 dollarin maksamista AdBlockille sen sijaan, että asentaisit tämän :)",
-    "description": "Extension description used in free version manifest"
-  },
-
   "buttoncancel": {
     "message": "Peruuta",
     "description": "Cancel button"
@@ -40,10 +35,6 @@
   "donaterequest2": {
     "message": "Lopetin jonkin aikaa sitten työni käyttääkseni kaikki aikani AdBlockille!  Nyt luotan täysin lahjoituksiisi.  Auta perhettäni <a>lahjoittamalla</a> auttaaksesi meitä maksamaan laskunne -- todista, että vaimoni ja minä (kuvassa) emme ole hulluja yrittäessämme tätä.  Kiitos :) - Michael",
     "description": "Donation request on installation success page"
-  },
-  "setotheroptions": {
-    "message": "Voit asettaa lisäasetuksia ja ottaa suodatinlistoja käyttöön siirtymällä Jakoavain-kuvake | Työkalut | Laajennukset | AdBlock | Asetukset.",
-    "description": "Message on installation success page"
   },
   "chromebutton_how_to_hide": {
     "message": "Piilottaaksesi painikkeen, napsauta sitä hiiren oikealla näppäimellä ja valitse Piilota painike. Voit ottaa painikkeen käyttöön uudestaan siirtymällä Jakoavain-kuvake | Työkalut | Lisäosat.",
@@ -862,10 +853,6 @@
     "message": "Suodatin lisättiin onnistuneesti!\nPäivitä sivu nähdäksesi tuloksen!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "Tämä sivu on sallittu tai AdBlock on poistettu käytöstä. Tästä syystä kohteita ei piiloteta, joten tätä sivua ei voida käyttää",
-    "description": "resourceblocking page string"
-  },
   "noresourcessend": {
     "message": "Jotain meni vikaan. Kohteita ei lähetetty. Tämä sivu sulkeutuu nyt.",
     "description": "resourceblocking page string"
@@ -1063,5 +1050,15 @@
   "typepage": {
     "message": "sivu",
     "description": "A resource type (lowercase!)"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "ollinpos",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

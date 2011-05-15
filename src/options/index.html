@@ -8,7 +8,6 @@
     <script src="../jquery/jquery.cookie.js"></script>
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
-    <script src="../broadcast_channel.js"></script>
     <script>
       function load_options() {
         // Check or uncheck each option.
@@ -73,28 +72,12 @@
         
         //translation
         localizePage();
-        (function() {
-          // April 1, 2011 (not Chrome-specific like the toolbar button is)
-          var today = new Date();
-          if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011)
-            return;
-          if (localStorage.getItem('saw_foolsday2011') == "closed")
-            return;
-          var div = $("<div>").
-            addClass("info").
-            css("margin-left", 0);
-          var x = $("<a>", { href: "#", text: "x", css: { float: "right" } }).
-            click(function() {
-              div.slideUp();
-              localStorage.setItem('saw_foolsday2011', "closed");
-            });
-          div.
-            html($('<div style="float:right">').append(x)).
-            append('<div style="font-weight:bold;font-size:1.1em;margin-bottom:5px">Just released: AdBlock Freedom! (beta)</div>').
-            append('Get the new <a href="http://bit.ly/AdBlockEyewear" target="_new">AdBlock Freedom</a> augmented reality eyewear, and block billboards and magazine ads in realtime!');
-          $("#donate_and_link").before(div);
-        })();
-
+      });
+    </script>
+    <script>
+      $(function() {
+        if (navigator.language.substring(0, 2) != "en")
+          $("#translation_credits").show();
       });
     </script>
   </head>
@@ -102,6 +85,8 @@
     <div style="float:right;"> 
       <span id="version_number"></span>
       (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
+    <br />
+    <span style="display:none;" id="translation_credits" i18n="translator_credit"></span>
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 

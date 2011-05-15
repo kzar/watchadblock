@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.3.18",
+  "version": "2.4.4",
   "description": "__MSG_description1__",
   "icons": {
     "16": "img/icon16.png",
@@ -13,6 +13,7 @@
   "minimum_chrome_version": "6",
   "background_page": "background.html",
   "options_page": "options/index.html",
+  "incognito": "spanning",
   "browser_action": {
     "default_icon": "img/icon19.png",
     "default_title": "__MSG_optionstitle__",
@@ -25,11 +26,8 @@
         "port.js",
         "jquery/jquery.min.js", 
         "functions.js", 
-        "broadcast_channel.js", 
-
       
         "filtering/filteroptions.js",
-        "filtering/fifocache.js",
         "filtering/filtertypes.js",
         "filtering/filterset.js",
 
@@ -40,14 +38,21 @@
       "all_frames": true
     },
     {
+      "matches": [
+        "*://*.mail.live.com/*",
+        "*://*.hk-pub.com/forum/thread-*",
+        "*://*.youtube.com/*"
+      ],
+      "js": [
+        "bandaids.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "blacklisting/overlay.js", 
-        "blacklisting/clickwatcher.js",
-        "blacklisting/elementchain.js",
-        "blacklisting/blacklistui.js",
-        "blacklister.js", 
-        "whitelister.js", 
+        "uiscripts/blacklisting/rightclick_hook.js",
         "adblock.js"
       ],
       "run_at": "document_end",

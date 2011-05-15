@@ -3,11 +3,11 @@
     "message": "Die beliebteste Chrome-Erweiterung, mit über 2 Millionen Nutzern!  Entfernt Werbung im ganzen Internet.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "Die beliebteste Chrome-Erweiterung -- aber es wäre nett, wenn Sie 1,99€ für AdBlock bezahlen würden anstatt diese Version zu installieren :)",
-    "description": "Extension description used in free version manifest"
+  "app_description1": {
+    "message": "Entfernt Werbung im ganzen Internet!  Geliebt von Millionen Chrome- und Safari-Nutzern!",
+    "description": "App description used in app version manifest"
   },
-
+  
   "buttoncancel": {
     "message": "Abbrechen",
     "description": "Cancel button"
@@ -41,9 +41,29 @@
     "message": "Vor Kurzem kündigte ich meinen Job um mich voll und ganz AdBlock widmen zu können!  Ich bin nun ausschließlich auf Ihre Spenden angewiesen um meine Familie finanziell unterstützen zu können.  Bitte <a>spenden</a> Sie, damit auch wir unsere Rechnungen bezahlen können -- und um meiner Frau und mir (siehe Foto) zu beweisen, dass es möglich ist so etwas zu wagen. Danke! - Michael",
     "description": "Donation request on installation success page"
   },
-  "setotheroptions": {
-    "message": "Sie können weitere Einstellungen vornehmen und weitere Filterlisten abonnieren, indem Sie auf Schraubenschlüssel | Tools | Erweiterungen | AdBlock Optionen klicken.",
-    "description": "Message on installation success page"
+  "setotheroptions_safari": {
+    "message": "Sie können weitere Einstellungen vornehmen, indem Sie auf den Toolbar Button klicken.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "Sie können AdBlock steuern und weitere Einstellungen vornehmen, indem Sie auf den Toolbar Button klicken.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "Mit einem Rechtsklick auf Seiten (außer dieser) können Sie AdBlock steuern und weitere Einstellungen vornehmen.",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Achtung: AdBlock ist doppelt installiert",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "Es sind die AdBlock App und die AdBlock Erweiterung installiert.  Dadurch wird Chrome verlangsamt.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "Um dieses Problem zu beheben, entfernen Sie die AdBlock Erweiterung von <a>Ihren Erweiterungen</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "Um den Toolbar Button auszublenden, klicken Sie mit einem Rechtsklick auf den Button und wählen Sie 'Schaltfläche ausblenden'.  Um den Button wieder anzuzeigen, klicken Sie auf Schraubenschlüssel | Tools | Erweiterungen.",
@@ -525,7 +545,7 @@
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
-    "message": "Adressen mit diesem Text blockieren",
+    "message": "URLs mit diesem Text blockieren",
     "description": "Message of the url-blocking area"
   },
   "csstomatch": {
@@ -792,7 +812,7 @@
     "description": "Context menu entry"
   },
   "filecleanerwarning": {
-    "message": "Falls Sie diese Nachricht jedemal sehen wenn Sie Ihren Browser starten, überprüfen Sie bitte, ob Sie einen Filecleaner benutzen, der auch 'localStorage'-Dateien löscht.",
+    "message": "Falls Sie diese Nachricht jedesmal sehen wenn Sie Ihren Browser starten, überprüfen Sie bitte, ob Sie einen Filecleaner benutzen, der auch 'localStorage'-Dateien löscht.",
     "description": "Help for users who use hyperactive file cleaners"
   },
   "somequicksetup": {
@@ -866,9 +886,13 @@
     "message": "Der Filter wurde hinzugefügt!\nAktualisieren Sie die Seite um das Ergebnis zu sehen!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "Diese Seite besitzt eine Ausnahmeregel oder AdBlock ist pausiert. Dadurch können keine Elemente aufgelistet werden",
+  "adblock_is_paused": {
+    "message": "AdBlock ist pausiert. Deshalb können keine Elemente aufgelistet werden. Starten Sie zuerst AdBlock wieder und versuchen Sie es erneut.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Der Filter wurde entfernt. Bitte aktualisieren Sie die Seite, damit eine Liste mit Elementen erstellt werden kann.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "Es ist ein Fehler aufgetreten. Keine Elemente wurden übermittelt. Diese Seite wird nun geschlossen.",
@@ -1024,6 +1048,10 @@
       }
     }
   },
+  "undo": {
+    "message": "Widerrufen",
+    "description": "Button text to undo an action."
+  },
   "enable": {
     "message": "aktivieren",
     "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
@@ -1035,6 +1063,10 @@
   "unpause": {
     "message": "AdBlock wieder starten",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unpause_adblock": {
+    "message": "AdBlock wieder starten",
+    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "AdBlock pausieren",
@@ -1063,5 +1095,23 @@
   "changelabel": {
     "message": "anderes Element auswählen",
     "description": "link to change resources on the resourceblock page"
-  }
+  },
+  "brokensite_beta_option": {
+    "message": "Helfen Sie dabei, einen neuen Weg Werbung zu entfernen zu testen.",
+    "description": "option on the first options page"
+  },
+  "brokensite_beta_description": {
+    "message": "Falls Sie Werbung sehen, die nur erscheint, wenn diese Option aktiviert ist, <a>melden Sie bitte den Fehler</a>!",
+    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+"translator_credit": {
+  "message": "Übersetzung von: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "John Rey",
+        "example": "Michael G, Drew R"
+      }
+    }
+}
 }

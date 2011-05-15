@@ -322,7 +322,10 @@
         $("#btnSubscribeAll").click(function() {
           var inputs = $("input:not(:checked)", ".subscription");
           for (var i=0; i<inputs.length; i++) {
-            window.setTimeout("subscribe('" + inputs[i].name + "')", 1000 * i);
+            window.setTimeout((function() { // Catch i in closure
+              var name = inputs[i].name;
+              return (function() { subscribe(name); });
+            })(), 1000 * i);
           }
         });
         $("#btnUnsubscribeAll").click(function() {

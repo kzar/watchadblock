@@ -3,9 +3,9 @@
     "message": "The most popular Chrome extension, with over 2 million users!  Blocks ads all over the web.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "The most popular Chrome extension -- but please pay $1.99 for AdBlock instead of installing this :)",
-    "description": "Extension description used in free version manifest"
+  "app_description1": {
+    "message": "Blocks ads all over the web!  Loved by millions of Chrome and Safari users!",
+    "description": "App description used in app version manifest"
   },
 
   "buttoncancel": {
@@ -41,9 +41,29 @@
     "message": "I recently quit my job to devote full time to AdBlock!  I now rely solely on your donations to support my family.  Please <a>donate</a> to help pay our bills -- and prove that my wife and I (pictured) aren't crazy for trying this.  Thanks :) - Michael",
     "description": "Donation request on installation success page"
   },
-  "setotheroptions": {
-    "message": "You can set other options and subscribe to filter lists via Wrench | Tools | Extensions | AdBlock Options.",
-    "description": "Message on installation success page"
+  "setotheroptions_safari": {
+    "message": "You can set other options by clicking the toolbar button.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "You can control AdBlock and set other options by clicking the toolbar button.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "Right click web pages (except this one) to control AdBlock and set other options.",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Warning: AdBlock is installed twice",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "AdBlock the app and AdBlock the extension are both installed.  This makes Chrome slower.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "To fix this, uninstall the Adblock extension from <a>your extensions</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "To hide the button, right click it and choose Hide Button.  You can show it again under Wrench | Tools | Extensions.",
@@ -866,9 +886,13 @@
     "message": "The filter was succesfully added!\nReload the page to see the result!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "This page is whitelisted or AdBlock is paused. Therefore no resources are caught, so this page cannot be used",
+  "adblock_is_paused": {
+    "message": "AdBlock is paused. Therefore no resources are caught, so this page cannot be used. Unpause AdBlock first and try again.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "The filter was removed. Please reload the original page to generate the list with resources.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "Something went wrong. No resources have been sent through. This page will now close.",
@@ -1024,6 +1048,10 @@
       }
     }
   },
+  "undo": {
+    "message": "Undo",
+    "description": "Button text to undo an action."
+  },
   "enable": {
     "message": "enable",
     "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
@@ -1035,6 +1063,10 @@
   "unpause": {
     "message": "unpause",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unpause_adblock": {
+    "message": "Unpause AdBlock",
+    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Pause AdBlock",
@@ -1063,5 +1095,23 @@
   "changelabel": {
     "message": "change",
     "description": "link to change resources on the resourceblock page"
+  },
+  "brokensite_beta_option": {
+    "message": "Help test a new way to remove ads.",
+    "description": "option on the first options page"
+  },
+  "brokensite_beta_description": {
+    "message": "If you find any ads that only appear when using this option, please <a>file a bug report</a>!",
+    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Your Name",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

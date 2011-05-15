@@ -3,9 +3,9 @@
     "message": "200만명 이상의 사용자와 함께 하는 가장 인기 있는 크롬 확장 프로그램. 인터넷 광고 차단!",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "가장 인기 있는 크롬 확장 프로그램 -- AdBlock을 설치하는 대신에 1.99달러를 지불해주십시오.",
-    "description": "Extension description used in free version manifest"
+  "app_description1": {
+    "message": "인터넷 광고를 차단하십시오! 수만 명의 크롬/사파리 사용자가 즐겨 사용합니다!",
+    "description": "App description used in app version manifest"
   },
 
   "buttoncancel": {
@@ -34,16 +34,36 @@
     "description": "Title for the installation success page"
   },
   "installisdone": {
-    "message": "불편을 주는 인터넷 광고를 차단하여 쾌적한 인터넷을 이용하십시오.",
+    "message": "콘텐츠 이용을 방해하고 불건전한 인터넷 광고를 차단하십시오.",
     "description": "Message on the installation success page"
   },
   "donaterequest2": {
     "message": "저는 애드블록 개발에 전념하기 위해 최근에 직장을 그만 두었습니다.<br/>현재 가족을 부양하기 위해 오직 기부에만 의존하고 있습니다. 돈에 집착하지는 않지만 <br/>기본 생활비를 충당할 수 있도록 <b><a>기부</a></b>를 부탁합니다.  - 마이클 건락",
     "description": "Donation request on installation success page"
   },
-  "setotheroptions": {
-    "message": "옵션과 국가별 구독 필터 설정 : 렌치 아이콘 > 도구 > 확장 프로그램 > 애드블록 옵션",
-    "description": "Message on installation success page"
+  "setotheroptions_safari": {
+    "message": "툴바 버튼을 클릭하여 옵션을 설정합니다.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "툴바 버튼을 클릭하여 애드블록을 사용하고 옵션을 설정하십시오.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "웹 페이지의 문맥 메뉴를 이용함으로써 애드블록을 사용하고 옵션을 설정합니다.",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "경고 : 애드블록이 중복 설치되었습니다.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "애드블록의 앱 버전과 데스크톱 버전이 모두 설치되었습니다. 이것은 크롬을 더 느리게 합니다.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "이 문제를 해결하려면 <a>설치된 확장 프로그램</a>에서 애드블록 확장 프로그램을 제거하십시오.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
     "chromebutton_how_to_hide": {
     "message": "툴바 버튼을 숨기려면 오른쪽 마우스 메뉴에서 툴바 버튼 숨기기 항목을 선택하십시오. 툴바 버튼을 다시 사용하려면 렌치 아이콘 > 도구 > 확장 프로그램에서 설정하시시오.",
@@ -59,7 +79,7 @@
   },
 
   "youtubevideomessage": {
-    "message": "비디오가 보이지 않습니까? 웹 페이지를 새로 고치십시오. 만약 이와 같은 상황이 자주 발생하면 $link$에서 '유튜브 비디오 내부의 광고 차단' 옵션을 사용하지 마십시오.",
+    "message": "비디오가 보이지 않습니까? 웹 페이지를 새로 고치십시오. 만약 이와 같은 상황이 자주 발생하면 $link$에서 '유튜브 비디오의 내부 광고 차단' 옵션을 사용하지 마십시오.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
     "placeholders": {
       "link": {
@@ -263,7 +283,7 @@
     "description": "Option on first tab page"
   },
   "youtubeads": {
-    "message": "유튜브 비디오 내부의 광고 차단",
+    "message": "유튜브 비디오의 내부 광고 차단",
     "description": "Option on first tab page"
   },
   "showcontextmenus": {
@@ -755,7 +775,7 @@
     }
   },
   "reporttous1": {
-    "message": "AdBlock의 $in_the_issue_tracker_link$에 광고를 신고할 수 있습니다.",
+    "message": "애드블록의 $in_the_issue_tracker_link$에 광고를 신고할 수 있습니다.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
@@ -865,9 +885,13 @@
     "message": "필터가 추가되었습니다!\n필터의 적용 효과를 보려면 페이지를 새로고치십시오.",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "현재 페이지는 허용되거나 애드블록의 사용이 중지되었습니다. 그러므로 주소를 인식하지 못 하며, 차단 가능 목록 페이지를 열 수 없습니다.",
+    "adblock_is_paused": {
+    "message": "애드블록은 사용 중지되어 차단 가능 목록을 생성할 수 없습니다. 애드블록을 다시 사용한 후 다시 시도하십시오.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "필터가 제거되었습니다. 차단 가능 목록을 생성하기 위해 페이지를 새로고치십시오.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "주소를 불러오는 중에 문제가 발생했습니다. 이 페이지는 닫힐 것입니다.",
@@ -1023,6 +1047,10 @@
       }
     }
   },
+  "undo": {
+    "message": "되돌리기",
+    "description": "Button text to undo an action."
+  },
   "enable": {
     "message": "<br/>다시 차단",
     "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
@@ -1034,6 +1062,10 @@
   "unpause": {
     "message": "애드블록 사용",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+    "unpause_adblock": {
+    "message": "애드블록 사용 중지",
+    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "애드블록 사용 중지",
@@ -1062,5 +1094,23 @@
   "changelabel": {
     "message": "변경",
     "description": "link to change resources on the resourceblock page"
+  },
+  "brokensite_beta_option": {
+    "message": "광고를 차단하기 위한 새로운 방식에 대한 테스트를 도와주십시오.",
+    "description": "option on the first options page"
+  },
+  "brokensite_beta_description": {
+    "message": "이 옵션을 사용할 때 광고가 노출되면 <a>버그 보고</a>를 해주십시오!",
+    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+  "translator_credit": {
+    "message": "한국어 번역 공헌자 : $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "메이비(Maybee)",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

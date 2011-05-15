@@ -1,7 +1,11 @@
 <html>
   <head>
+    <script>
+      ADBLOCK = {};
+    </script>
     <script src="port.js"></script>
     <script src="jquery/jquery.min.js"></script>
+    <script src="app/app.js"></script>
     <script src="functions.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
@@ -19,13 +23,14 @@
       // Returns: true if a filter was found and removed; false otherwise.
       try_to_unwhitelist = function(url) {
         url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
+        var loweredUrl = url.toLowerCase();
         var custom_filters = get_custom_filters_text().split('\n');
         for (var i = 0; i < custom_filters.length; i++) {
           var text = custom_filters[i];
           if (!Filter.isWhitelistFilter(text))
             continue;
-          var filter = new WhitelistFilter(text);
-          if (!filter.matches(url, ElementTypes.document))
+          var filter = PatternFilter.fromText(text);
+          if (!filter.matches(url, loweredUrl, ElementTypes.document, false))
             continue;
 
           custom_filters.splice(i, 1); // Remove this whitelist filter text
@@ -107,7 +112,8 @@
           show_youtube_help_msg: true,
           show_google_search_text_ads: false,
           show_context_menu_items: true,
-          show_advanced_options: false,
+          hide_instead_of_remove: false,
+          show_advanced_options: false
         };
         var settings = storage_get('settings') || {};
         return $.extend(defaults, settings);
@@ -163,11 +169,26 @@
         _myfilters.unsubscribe(id, del);
       }
 
+      // Return the scheme and domain for the given url.
+      // TODO I have code in a few places that extracts domains, I think.
+      // Deduplicate it.
+      url_parts = function(url) {
+        var parts = url.match("(.*?)://(..*?)/");
+        if (!parts) // may be "about:blank" or similar
+          parts = url.match("(.*?):(.*)");
+        // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
+        // impact users visibly so I'm letting it break.
+        var scheme = parts[1];
+        var domain = parts[2];
+        return {
+          scheme: scheme,
+          domain: domain
+        };
+      }
       // INFO ABOUT CURRENT PAGE
 
       // Get interesting information about the current tab.
       // Inputs:
-      //   url: string
       //   callback: function(info).
       //   info object passed to callback: {
       //     tab: Tab object
@@ -179,24 +200,12 @@
       // Returns: null (asynchronous)
       getCurrentTabInfo = function(callback) {
         chrome.tabs.getSelected(undefined, function(tab) {
-          // TODO: use code from elsewhere to extract domain
-          function url_parts() {
-            var parts = tab.url.match("(.*?)://(..*?)/");
-            if (!parts) // may be "about:blank" or similar
-              parts = tab.url.match("(.*?):(.*)");
-            var scheme = parts[1];
-            var domain = parts[2];
-            return {
-              scheme: scheme,
-              domain: domain
-            };
-          }
-          var url = url_parts();
+          var url = url_parts(tab.url);
 
           var disabled_site = false;
           if (url.scheme != 'http' && url.scheme != 'https')
             disabled_site = true;
-          if (/\:\/\/chrome.google.com\/(extensions|webstore)\//.test(tab.url))
+          if (/\:\/\/chrome.google.com\/webstore\//.test(tab.url))
             disabled_site = true;
 
           var result = {
@@ -220,16 +229,13 @@
         //special case this one
         if (url == "http://acid3.acidtests.org/") return true;
         url = url.replace(/\#.*$/, ''); // Remove anchors
+        var loweredUrl = url.toLowerCase();
         if (!type)
           type = ElementTypes.document;
-        var both = { global:1, nonglobal: 1 };
-        for (var name in both) {
-          var whitelist = _myfilters[name]._whitelistFilters;
-          for (var i = 0; i < whitelist.length; i++) {
-            if (whitelist[i].matches(url, type, false))
-              return returnFilter ? whitelist[i]._text : true;
-          }
-        }
+        var whitelist = _myfilters.blocking.whitelist;
+        var match = whitelist.matches(url, loweredUrl, type, url_parts(url).domain, false);
+        if (match)
+          return returnFilter ? match._text : true;
         return false;
       }
 
@@ -237,52 +243,102 @@
         // Set the button image and context menus according to the URL 
         // of the current tab.
         updateButtonUIAndContextMenus = function() {
-          getCurrentTabInfo(function(info) {
 
-            var context_disabled = !get_settings().show_context_menu_items;
-            var paused = localStorage.getItem('adblock_is_paused');
-
+          function setContextMenus(info) {
             chrome.contextMenus.removeAll();
+            if (!get_settings().show_context_menu_items)
+              return;
 
-            if (!(paused || context_disabled || 
-                  info.whitelisted || info.disabled_site)) {
+            function addMenu(title, callback) {
               chrome.contextMenus.create({
-                title: translate("block_this_ad"),
-                contexts:["all"], 
-                onclick: function(info, tab) {
-                  var sender = { tab: tab };
-                  emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{info: info}},
-                    sender
-                  );
-                }
-              });
-              chrome.contextMenus.create({
-                title: translate("block_an_ad_on_this_page"),
-                contexts:["all"], 
-                onclick: function(info, tab) {
-                  var sender = { tab: tab };
-                  emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
-                    sender
-                  );
-                }
+                title: title,
+                contexts: ["all"],
+                onclick: function(clickdata, tab) { callback(tab, clickdata); }
               });
             }
 
-            if (paused) {
+            if (ADBLOCK.isApp) {
+              if (localStorage.adblock_is_paused) {
+                addMenu(translate("unpause_adblock"), function(tab) {
+                  localStorage.removeItem('adblock_is_paused');
+                  setContextMenus(info);
+                });
+              }
+
+              if (info.whitelisted) {
+                var message = translate("adblock_is_disabled_on_domain", [info.domain]) +
+                              " " + translate("undo");
+                addMenu(message, function(tab) {
+                  if (try_to_unwhitelist(tab.url))
+                    chrome.tabs.update(tab.id, {url: tab.url}); // Reload tab
+                  // else, silently fail.
+                });
+              }
+            }
+
+            if (localStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
+              return;
+
+            if (ADBLOCK.isApp) {
+              // TODO: these 3 are copy-and-modified from button/popup.html
+              addMenu(translate("pause_adblock"), function(tab) {
+                localStorage.adblock_is_paused = true;
+                setContextMenus(info);
+              });
+
+              addMenu(translate("dont_run_on_this_page"), function(tab) {
+                var url = tab.url.replace(/#.*$/, '');  // Remove anchors
+                var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
+                var has_querystring = url_parts[2];
+                var filter = '@@|' + url_parts[1] + 
+                  (has_querystring ? '?' : '|') + '$document';
+                add_custom_filter({filter: filter});
+                // Reload the tab
+                chrome.tabs.update(tab.id, {url: tab.url});
+              });
+
+              addMenu(translate("dont_run_on_domain", [info.domain]), function(tab) {
+                  emit_page_broadcast(
+                  {fn:'top_open_whitelist_ui', options:{}},
+                  {tab: tab} // fake sender to determine target page
+                  );
+              });
+                }
+
+            addMenu(translate("block_this_ad"), function(tab, clickdata) {
+              emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{info: clickdata}},
+                {tab: tab}
+              );
+              });
+
+            addMenu(translate("block_an_ad_on_this_page"), function(tab) {
+                  emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                {tab: tab}
+                  );
+              });
+            }
+
+          function setBrowserButton(info) {
+            if (localStorage.adblock_is_paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.disabled_site && 
-                !/^chrome-extension:.*pages\/installed.html$/.test(info.tab.url)) {
+                !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
               // Show non-disabled icon on the installation-success page so it
-              // users see how it will normally look when deciding whether or
-              // not to hide it. All other disabled pages will have the gray one
+              // users see how it will normally look. All other disabled pages
+              // will have the gray one
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.whitelisted) {
               chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
             } else {
               chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
             }
+          }
+
+          getCurrentTabInfo(function(info) {
+            setContextMenus(info);
+            setBrowserButton(info);
           });
         }
       }
@@ -325,49 +381,110 @@
       // TODO: make better.
       // Inputs: options object containing:
       //           domain:string the domain of the calling frame.
-      //           include_filters:bool true if hide and block filters should
-      //                                be included
+      //           include_texts?:bool true if PatternFilter._text should be
+      //                               appended to block filters.
       get_content_script_data = function(options, sender) {
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
         var result = {
           page_is_whitelisted: whitelisted,
           adblock_is_paused: localStorage.getItem('adblock_is_paused'),
-          settings: settings
+          settings: settings,
+          selectors: []
         };
         if (whitelisted)
-          return result;
-        // If in debug mode, send filters to adblock.js to print css info.
-        // Normally only adblock_start asks to include_filters.
-        if (!options.include_filters && !settings.debug_logging)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
         // apply CSS-hiding rules, and send Chrome a filterset.
 
-        // TODO speed: when limitedToDomain is cached, get_content_script_Data takes 1ms.
-        // when not cached, it takes about 100ms.  So more caching would be good.  The
-        // result of limitedToDomain, now that it's nonglobal only, will be tiny -- so we
-        // should be able to turn up the fifocache size by a lot.  have the fifocache log
-        // how big each new entry is, to verify this.
         if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-          var global_hide = _myfilters.global.cached_getSelectors;
-          var nonglobal_hide = _myfilters.nonglobal.limitedToDomain(options.domain).getSelectors();
-          result.selectors = global_hide.concat(nonglobal_hide);
+          result.selectors = _myfilters.hiding.
+            filtersFor(options.domain, function(f) { return f.selector; });
         }
         // Chrome needs the blocking filters in the content script until a
         // synchronous background communication API comes along.
         if (!SAFARI) {
-          var global_block = _myfilters.global.cached_blockFiltersText;
-          var nonglobal_block = _myfilters.nonglobal.limitedToDomain(options.domain).getBlockFilters();
-          result.block = global_block + nonglobal_block.join('\n');
+          function packed(filter) {
+            return [filter._rule.source, filter._allowedElementTypes, filter._options];
+        }
+          if (options.include_texts) {
+            packed = function(filter) {
+              return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
+            }
+          }
+          result.patternSerialized = _myfilters.blocking.pattern.
+            filtersFor(options.domain, packed);
+          result.whitelistSerialized = _myfilters.blocking.whitelist.
+            filtersFor(options.domain, packed);
         }
 
         return result;
       };
 
-      // Bounce messages back to register_broadcast_listener() callers.
+      // Bounce messages back to content scripts.
+      if (!SAFARI) {
       emit_page_broadcast = (function() {
+          var injectMap = {
+            'top_open_whitelist_ui': {
+              allFrames: false,
+              include: [
+                "uiscripts/load_jquery_ui.js",
+                "uiscripts/top_open_whitelist_ui.js"
+                ]
+            },
+            'top_open_blacklist_ui': {
+              allFrames: false,
+              include: [
+                "uiscripts/load_jquery_ui.js",
+                "uiscripts/blacklisting/overlay.js", 
+                "uiscripts/blacklisting/clickwatcher.js",
+                "uiscripts/blacklisting/elementchain.js",
+                "uiscripts/blacklisting/blacklistui.js",
+                "uiscripts/top_open_blacklist_ui.js"
+                ]
+            },
+            'send_content_to_back': {
+              allFrames: true,
+              include: [ 
+                'uiscripts/blacklisting/send_content_to_back.js' 
+                ]
+            }
+          };
+          // Inject the required scripts to execute fn_name(parameter) in
+          // the current tab.
+          // Inputs: fn_name:string name of function to execute on tab.
+          //         fn_name must exist in injectMap above.
+          //         parameter:object to pass to fn_name.  Must be JSON.stringify()able.
+          //         injectedSoFar?:int used to recursively inject required scripts.
+          var executeOnTab = function(fn_name, parameter, injectedSoFar) {
+            injectedSoFar = injectedSoFar || 0;
+            var data = injectMap[fn_name];
+            var details = { allFrames: data.allFrames };
+            // If there's anything to inject, inject the next item and recurse.
+            if (data.include.length > injectedSoFar) {
+              details.file = data.include[injectedSoFar];
+              chrome.tabs.executeScript(undefined, details, function() {
+                executeOnTab(fn_name, parameter, injectedSoFar + 1);
+              });
+            } 
+            // Nothing left to inject, so execute the function.
+            else {
+              var param = JSON.stringify(parameter);
+              details.code = fn_name + "(" + param + ");";
+              chrome.tabs.executeScript(undefined, details);
+            }
+          };
+
+          // The emit_page_broadcast() function
+          var theFunction = function(request) {
+            executeOnTab(request.fn, request.options);
+          };
+          return theFunction;
+        })();
+      }
+      if (SAFARI) {
+        emit_page_broadcast = (function() {
         // Private list of connected ports for emit_page_broadcast()
         var broadcast_ports = [];
         chrome.extension.onConnect.addListener(function(port) {
@@ -383,12 +500,17 @@
         // The emit_page_broadcast() function
         var theFunction = function(request, sender) {
           $.each(broadcast_ports, function(i, port) {
+              // issue 5416, fixed in Chrome and probably never happens in
+              // Safari: port.sender.tab could be null for an unknown reason.
+              if (!port.sender.tab)
+                return;
             if (port.sender.tab.id == sender.tab.id)
               port.postMessage(request);
           });
         };
         return theFunction;
       })();
+      }
 
       // Will open the resource blocking tab. 
       // Input: resources: array of resource strings; 
@@ -482,26 +604,6 @@
 
       })();
 
-      (function() {
-        // April 1th, 2011
-        // Just like above, but easier to delete afterwards.
-        var today = new Date();
-        if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011) {
-          // Pre 4/1 this does nothing; post 4/1 this tidies up
-          localStorage.removeItem("saw_foolsday2011");
-          return;
-        }
-        if (SAFARI)
-          return;
-        if (!localStorage.getItem('saw_foolsday2011')) {
-          chrome.browserAction.setTitle({title:"Just released: AdBlock Freedom!  Click for more info."});
-          chrome.browserAction.setBadgeBackgroundColor({color:[40,255,40,255]});
-          chrome.browserAction.setBadgeText({text:"\u2022"});
-        }
-        // <End of April 1th code>
-      })();
-
-
       if (get_settings().debug_logging)
         log = function(text) { console.log(text); };
       
@@ -511,14 +613,16 @@
       function note_install() {
         if (storage_get('installed_at'))
           return;
+
         var now = new Date().getTime();
         storage_set('installed_at', now);
-        $.get("http://chromeadblock.com/api/visit.php", {installed_at:now});
-        // TODO: open in safari as well
-        if (!SAFARI) {
-          chrome.tabs.create({url: "pages/installed.html"});
+        var flavor = (SAFARI ? "safari" : "chrome_ext");
+        if (ADBLOCK.isApp) flavor = "chrome_app";
+        var data = { installed_at: now, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
+        $.get("http://chromeadblock.com/api/visit.php", data);
+
+        chrome.tabs.create({url: "pages/install/index.html?" + $.param(data)});
         }
-      }
       note_install();
 
       // Take a census of filter subscriptions.
@@ -567,9 +671,7 @@
           var elType = messageEvent.message.elType;
           var pageDomain = messageEvent.message.pageDomain;
 
-          var limited = _myfilters.nonglobal.limitedToDomain(pageDomain);
-          var isMatched = url && (_myfilters.global.matches(url, elType, pageDomain) ||
-                                  limited.matches(url, elType, pageDomain));
+          var isMatched = url && (_myfilters.blocking.matches(url, elType, pageDomain));
           if (isMatched)
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
           messageEvent.message = !isMatched;
@@ -577,13 +679,19 @@
 
         safari.application.addEventListener("command", function(commandEvent) {
           // Open Options page upon Toolbar button click.
-          if (commandEvent.command == "AdBlockOptions") {
-            safari.application.activeBrowserWindow.openTab("foreground").url = chrome.extension.getURL("options/index.html");
-          }
+          if (commandEvent.command == "AdBlockOptions")
+            chrome.tabs.create({url: "options/index.html"});
           if (commandEvent.command in 
               {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
           }
+        }, false);
+
+        // Open Options page upon settings checkbox click.
+        safari.extension.settings.openAdBlockOptions = false;
+        safari.extension.settings.addEventListener("change", function(e) { 
+          if (e.key == 'openAdBlockOptions')
+            chrome.tabs.create({url: "options/index.html"});
         }, false);
 
         // Add context menus
