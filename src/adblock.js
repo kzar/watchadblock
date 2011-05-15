@@ -17,6 +17,27 @@ function adblock_begin_part_2() {
   if (data.adblock_is_paused)
     return;
 
+  if (data.settings.show_advanced_options) {
+    // Subscribe to the list when you click an abp: link
+    $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
+      event.preventDefault();
+      var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
+      if (searchquery)
+        BGcall('subscribe_popup', searchquery);
+    });
+
+    // To open the list with the resources, even if whitelisted
+    if (window == window.top)
+      chrome.extension.onRequest.addListener(function(request) {
+        if (request != "open_resourcelist")
+          return;
+        var resources = {};
+        if (typeof GLOBAL_collect_resources != "undefined") 
+          resources = Object.keys(GLOBAL_collect_resources);
+        BGcall("show_resourceblocker", resources);
+      });
+  }
+
   if (data.page_is_whitelisted) {
     log("==== EXCLUDED PAGE: " + document.location.href);
     return;
@@ -59,27 +80,8 @@ function adblock_begin_part_2() {
 
 // until crbug.com/63397 is fixed, ignore SVG images
 if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) {
-
   if (GLOBAL_contentScriptData.data)
     adblock_begin_part_2();
   else
     GLOBAL_contentScriptData.run_after_data_is_set = adblock_begin_part_2;
-
-  //subscribe to the list when you click an abp: link
-  $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
-    event.preventDefault();
-    var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
-    if (searchquery)
-      BGcall('subscribe_popup', searchquery);
-  });
 }
-// To open the list with the resources, even if whitelisted
-if (window == window.top)
-  chrome.extension.onRequest.addListener(function(request) {
-    if (request != "open_resourcelist")
-      return;
-    var resources = {};
-    if (typeof GLOBAL_collect_resources != "undefined") 
-      resources = Object.keys(GLOBAL_collect_resources);
-    BGcall("show_resourceblocker", resources);
-  });
