@@ -51,7 +51,20 @@
     </p>
 
     <p>
-      <input type="checkbox" class="feature" id="enable_hide_instead_of_remove" />
+      <input type="checkbox" class="feature" id="enable_show_advanced_options" />
+      <label for="enable_show_advanced_options">I'm an advanced user, show me advanced options</label>
+      <script>
+        $("#enable_show_advanced_options").change(function() {
+          window.setTimeout(function() {
+            // To show or hide the advanced options on the options page
+            window.location.reload();
+          }, 50);
+        });
+      </script>
+    </p>
+
+    <p>
+      <input type="checkbox" class="feature advanced" id="enable_hide_instead_of_remove" />
       <label for="enable_hide_instead_of_remove" i18n="brokensite_beta_option"></label>
       <span i18n="betalabel"></span><br/>
       <span i18n="brokensite_beta_description" i18n_replacement_el="bugtracker" 
@@ -66,21 +79,8 @@
       </script>
     </p>
 
-    <p>
-      <input type="checkbox" class="feature" id="enable_show_advanced_options" />
-      <label for="enable_show_advanced_options">I'm an advanced user, show me advanced options</label>
-      <script>
-        $("#enable_show_advanced_options").change(function() {
-          window.setTimeout(function() {
-            // To show or hide the advanced options on the options page
-            window.location.reload();
-          }, 50);
-        });
-      </script>
+    <p class="forDebug">
+      <input type="checkbox" class="feature advanced" id="enable_debug_logging" />
+      <label for="enable_debug_logging" i18n="debuginlogoption"></label>
     </p>
-  </div>
-
-  <div class="sneaky">
-    <input type="checkbox" class="feature advanced" id="enable_debug_logging" />
-    <label for="enable_debug_logging" i18n="debuginlogoption"></label>
   </div>

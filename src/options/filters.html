@@ -304,18 +304,15 @@
         <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
       </div>
     </div>
-  </div>
-
-  <div class="sneaky">
-    <p>
-    <span i18n="subscribetoall"></span>
-    <input type="button" id="btnSubscribeAll" class="advanced" i18n_value="buttonok" />
-    <br/>
-    <span i18n="subscribetonone"></span>
-    <input type="button" id="btnUnsubscribeAll" class="advanced" i18n_value="buttonok" />
-    <br/>
-    <span i18n="showlinkstolists"></span> 
-    <input type="button" id="btnShowLinks" class="advanced" i18n_value="buttonok" />
+    
+    <p style="margin-bottom:0px;">
+      <span i18n="showlinkstolists"></span>
+      <input type="button" id="btnShowLinks" class="advanced" i18n_value="buttonok" />
+    </p>
+    <p class="forDebug" style="margin-top:0px;">
+      <a href="#" id="btnSubscribeAll" class="advanced">Subscribe</a> to or
+      <a href="#" type="button" id="btnUnsubscribeAll" class="advanced" >
+      unsubscribe</a> from every list.
     </p>
     <script>
       $(function() {
