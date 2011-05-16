@@ -26,23 +26,9 @@
         $(".menu-entry, .separator").hide();
       
         BG.getCurrentTabInfo(function(info) {
-          //var shown = {
-            //div_status_whitelisted: false,
-            //div_status_disabled: false,
-            //div_status_paused: false,
-            //separator0: false,
-            //div_pause_adblock: false,
-            //div_blacklist: false,
-            //div_whitelist: false,
-            //div_whitelist_page: false,
-            //separator1: false,
-            //div_options: true,
-            //div_help_hide: false,
-            //div_show_resourcelist: false,
-            //div_report_an_ad: false
-          //};
           var shown = {
-            div_options: true
+            div_options: true,
+            separator2: true
           };
           if (localStorage.getItem('adblock_is_paused')) {
             shown.div_status_paused = true;
@@ -52,7 +38,7 @@
             shown.div_status_disabled = true;
             shown.separator0 = true;
             shown.div_options = true;
-            shown.div_help_hide = true;
+            shown.div_help_hide_start = true;
           } else if (info.whitelisted) {
             shown.div_status_whitelisted = true;
             shown.div_show_resourcelist = true;
@@ -60,7 +46,7 @@
             shown.div_pause_adblock = true;
             shown.separator1 = true;
             shown.div_options = true;
-            shown.div_help_hide = true;
+            shown.div_help_hide_start = true;
           } else {
             shown.div_pause_adblock = true;
             shown.div_blacklist = true;
@@ -70,7 +56,7 @@
             shown.div_report_an_ad = true;
             shown.separator1 = true;
             shown.div_options = true;
-            shown.div_help_hide = true;
+            shown.div_help_hide_start = true;
           }
           if (!BG.get_settings().show_advanced_options) {
             shown.div_show_resourcelist = false;
@@ -299,7 +285,7 @@
       </script>
 
       <div id="div_help_hide">
-        <div i18n="hide_this_button" class="menu-entry"></div>
+        <div id="div_help_hide_start" i18n="hide_this_button" class="menu-entry"></div>
         <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none;">
         </div>
       </div>
@@ -316,7 +302,7 @@
         })();
       </script>
 
-      <div class="separator"></div>
+      <div class="separator" id="separator2"></div>
 
       <!-- ******** Donations ********** -->
  
