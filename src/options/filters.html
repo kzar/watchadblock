@@ -309,14 +309,12 @@
       <span i18n="showlinkstolists"></span>
       <input type="button" id="btnShowLinks" class="advanced" i18n_value="buttonok" />
     </p>
-    <p class="forDebug" style="margin-top:0px;">
-      <a href="#" id="btnSubscribeAll" class="advanced">Subscribe</a> to or
-      <a href="#" type="button" id="btnUnsubscribeAll" class="advanced" >
-      unsubscribe</a> from every list.
+
+    <p class="forDebug" style="margin-top:0px;" i18n="subscribe_unsubscribe_all">
     </p>
     <script>
       $(function() {
-        $("#btnSubscribeAll").click(function() {
+        $("#subscribeAll").live("click", function(e) {
           var inputs = $("input:not(:checked)", ".subscription");
           for (var i=0; i<inputs.length; i++) {
             window.setTimeout((function() { // Catch i in closure
@@ -324,13 +322,15 @@
               return (function() { subscribe(name); });
             })(), 1000 * i);
           }
+          e.preventDefault();
         });
-        $("#btnUnsubscribeAll").click(function() {
+        $("#unsubscribeAll").live("click", function(e) {
           $("input", ".subscription").each(function(i, el) {
             if (el.checked == true) {
               unsubscribe($(el).attr("name"));
             }
           });
+          e.preventDefault();
         });
 
         $("#btnShowLinks").click(function() {

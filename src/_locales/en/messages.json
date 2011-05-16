@@ -206,10 +206,6 @@
     "message": "Click the ad, and I'll walk you through blocking it.",
     "description": "When you have to click the ad to continue"
   },
-  "advanced_show_url_list": {
-    "message": "or choose the URL to block from a list (advanced)",
-    "description": "Message on link to open resource blocker instead of use blacklister"
-  },
 
   "whitelistertext": {
     "message": "AdBlock won't run on domains ending in<br/>$domain$.",
@@ -402,14 +398,6 @@
   "subscribebutton": {
     "message": "Subscribe",
     "description": "subscribe to a list button"
-  },
-  "subscribetoall": {
-    "message": "Subscribe to all filters:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Unsubscribe from all filters:",
-    "description": "option on second tab page"
   },
   "showlinkstolists": {
     "message": "Show links to the filter lists:",
@@ -1104,13 +1092,39 @@
     "message": "If you find any ads that only appear when using this option, please <a>file a bug report</a>!",
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
-"translator_credit": {
-  "message": "Credit for translation goes to: $translator_names$",
-  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+  "translator_credit": {
+    "message": "Credit for translation goes to: $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
         "content": "Your Name",
         "example": "Michael G, Drew R"
+      }
+    }
+  },
+  "report_ad_on_page": {
+    "message": "Report an ad on this page",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Show the resource list",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "I'm an advanced user, show me advanced options",
+    "description": "Link in the button"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ to or $unsubscribe$ from every list.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll' class='advanced'>Subscribe</a>",
+        "example": "<a href='#' id='subscribeAll' class='advanced'>Subscribe</a>. Do only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll' class='advanced'>unsubscribe</a>",
+        "example": "<a href='#' id='unsubscribeAll' class='advanced'>unsubscribe</a>. Do only translate between the > and then <"
       }
     }
   }
