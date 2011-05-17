@@ -6,7 +6,15 @@ execfile('../../../google_credentials')
 def get(node, childName):
     return node.getElementsByTagName(childName)[0]
 
-def text(node):
+def text(node, childName):
+    """
+    Return the text of the child node within node, or "" if it doesn't
+    exist.
+    """
+    try:
+        node = get(node, childName)
+    except:
+        return ""
     rc = []
     for child in node.childNodes:
         if child.nodeType == node.TEXT_NODE:
@@ -47,10 +55,10 @@ class GoogleOrderParser(object):
     def createOrderFrom(cn):
         """cn: charge-amount-notification minidom node"""
         return {
-            'id': text(get(cn, 'google-order-number')),
-            'date': text(get(cn, 'purchase-date')),
-            'tracking': text(get(cn, 'merchant-private-data')),
-            'email': text(get(cn, 'email')),
-            'name': text(get(cn, 'contact-name')),
-            'amount': text(get(cn, 'latest-charge-amount')),
+            'id': text(cn, 'google-order-number'),
+            'date': text(cn, 'purchase-date'),
+            'tracking': text(cn, 'merchant-private-data'),
+            'email': text(cn, 'email'),
+            'name': text(cn, 'contact-name'),
+            'amount': text(cn, 'latest-charge-amount'),
         }

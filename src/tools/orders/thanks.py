@@ -7,15 +7,17 @@ import email
 import imaplib
 import getpass
 import os
+import quopri
 import re
 import smtplib
 import tempfile
 
+
 def order_mailbox(readonly=False):
     m = imaplib.IMAP4_SSL('imap.gmail.com', 993)
     m.login('adblockforchrome@gmail.com', GLOBAL_password)
-    m.select('donations', readonly) # if readonly=False, fetching will mark as read
-    # http://tools.ietf.org/html/rfc3501.html has all the things you can search with
+    m.select('orders', readonly) # if readonly=False, fetching marks as read
+    # http://tools.ietf.org/html/rfc3501.html has all you can search with
     return m
 
 def unread_emails(max_count):
@@ -24,9 +26,9 @@ def unread_emails(max_count):
     be set to the IMAP msgid.
     """
     m = order_mailbox()
-    unseen_ids = m.search(None, '(UNSEEN SINCE "14-May-2011")')[1][0].split()[ :max_count]
+    unseen_ids = m.search(None, '(UNSEEN)')[1][0].split()[ :max_count]
     try:
-        m.select('donations', readonly=True)
+        m.select('orders', readonly=True)
         data = m.fetch(','.join(unseen_ids), '(RFC822)') # not marked as read
         message_data = [ tup[1] for tup in data[1][::2] ]
         messages = [ email.message_from_string(msg) for msg in message_data ]
@@ -54,7 +56,6 @@ def order_messages(max_count):
             print ("*" * 70 + '\n') * 3
             print "Ignoring non-order email from %s." % email['from']
             print
-            raise # TODO temp
     # Google needs all of its data at once so we can bulk-request info.
     # This also removes order emails whose orders failed to go through.
     GoogleOrder.flesh_out(orders)
@@ -92,10 +93,57 @@ even more appreciated -- as it's way above what most users pay (zero!)
 In any case, Katie and I have decided that it's important enough work that I
 should keep doing it whether or not we can live off of our users' goodwill,
 until we start running out of savings.  You just tipped our scales a little
-further away from going broke... did I say thank you yet?  Thank you!  :D
+further away from going broke... did I say thank you yet?  Thank you!  :D"""
 
-Happy ad blocking,
-- Michael"""
+    def _build_rewards(self):
+        if self.amount < 30:
+            return ""
+        if self.amount < 50:
+            return """
+
+Lastly, here is your haiku, as promised:
+
+   AdBlock salutes you
+   for joining in the good fight:
+   Open source hero."""
+        if self.amount < 100:
+            return """
+
+Lastly, I owe you a haiku because you are so freaking amazing; what should it
+be about?  I apologize in advance that it will be pretty bad poetry."""
+        if self.amount < 200:
+            return """
+
+Lastly, I owe you some tangible goods because you are so freaking amazing!  Let
+me know what your haiku should be about, and what you want a drawing of.  The
+haiku will be awful.  The drawing will be pretty bad if I draw it, or pretty
+great if Katie draws it, so let us know from whom you'd prefer the drawing."""
+        if self.amount < 300:
+            return """
+
+Lastly, I owe you a whole pile of tangible goods because you are so freaking
+amazing!  This is basically a form letter, but give me your number and I'll
+call you up, and we can figure out the details of the haiku and drawing.  Also,
+I sing a lot in addition to coding, so let me know a topic if you'd like a
+silly song prepared in advance for you :) Thank you for giving me the
+opportunity to do stuff like this!"""
+        if self.amount < 400:
+            return """
+
+Lastly, I owe you a whole pile of tangible goods because you are so freaking
+amazing!  This is basically a form letter, but give me your number and I'll
+call you up, and we can figure out the details of the haiku/drawing/email
+account.  Also, I sing a lot in addition to coding, so let me know a topic if
+you'd like a silly song prepared in advance for you :) Thank you for giving me
+the opportunity to do stuff like this!"""
+        return """
+
+Lastly, I owe you a whole pile of tangible goods because you are so freaking
+amazing!  This is basically a form letter, but give me your number and I'll
+call you up, and we can figure out the details of the drawing / haiku / wall
+art / email account.  Also, I sing a lot in addition to coding, so let me know
+a topic if you'd like a silly song prepared in advance for you :) Thank you for
+giving me the opportunity to do stuff like this!"""
 
 
     @staticmethod
@@ -107,7 +155,13 @@ Happy ad blocking,
         if 'AdBlock' not in body:
             import base64
             body = base64.decodestring(body)
-
+        body = quopri.decodestring(body)
+        for codec in ['ascii', 'utf-8', 'latin-1']:
+            try:
+                body = body.decode(codec)
+                break
+            except:
+                pass
         _from = re.search('<(.*?)>', message['from']).group(1)
         if _from == 'noreply@checkout.google.com':
             order = GoogleOrder()
@@ -139,7 +193,11 @@ Happy ad blocking,
         f = os.fdopen(f, 'w')
         writer = csv.writer(f, delimiter='\t')
         for o in orders:
-            writer.writerow([o.nickname,o.name,o.email,o.msgid])
+            writer.writerow([
+                o.nickname.encode('utf-8'),
+                o.name.encode('utf-8'),
+                o.email.encode('utf-8'),
+                o.msgid])
         f.close()
         print "Press enter to edit nicknames."
         raw_input()
@@ -147,9 +205,9 @@ Happy ad blocking,
         dmap = dict((o.msgid, o) for o in orders)
         reader = csv.reader(open(fname), delimiter='\t')
         for nickname, name, email, msgid in reader:
-            dmap[msgid].nickname = nickname
-            dmap[msgid].name = name
-            dmap[msgid].email = email
+            dmap[msgid].nickname = nickname.decode('utf-8')
+            dmap[msgid].name = name.decode('utf-8')
+            dmap[msgid].email = email.decode('utf-8')
         os.remove(fname)
 
 
@@ -203,17 +261,19 @@ Google Checkout
         return """\
 Hi %(nickname)s!
 
-%(main_thankyou_note)s
+%(main_thankyou_note)s%(rewards)s
+
+Happy ad blocking,
+- Michael
 
 PS: Word of mouth is the only marketing AdBlock uses.  If you don't mind, would
 you go to http://chromeadblock.com/thanks/ and help me spread the word?  It
 would help me IMMENSELY :)
-
-
 %(original)s
 """ % dict(nickname=self.nickname,
            main_thankyou_note = self.main_thankyou_note,
-           original=original)
+           original=original,
+           rewards=self._build_rewards())
 
 
 class PayPalOrder(Order):
@@ -232,7 +292,7 @@ class PayPalOrder(Order):
         self.nickname = self.name.split(' ')[0].title()
         match = re.search('Total amount: *(=24|\$)(.*?) USD', body)
         self.amount = float(match.group(2).strip())
-        match = re.search('Message: (.*?)=20', body, re.DOTALL)
+        match = re.search('Message: (.*?)-----------', body, re.DOTALL)
         if not match:
             match = re.search('payment: Note: (.*?)Contributor:',
                                   body, re.DOTALL)
@@ -245,10 +305,10 @@ class PayPalOrder(Order):
 
 Hello Michael Gundlach,
 
-This email confirms that you have received a donation of $%(amount).2f USD
+This email confirms that you have received a payment of $%(amount).2f USD
 from %(name)s (%(email)s).
 
-Donation details:
+Payment details:
   Total amount: $%(amount).2f
   Currency: U.S. Dollars
   Purpose: AdBlock
@@ -263,18 +323,20 @@ Paypal
         return """\
 Hi %(nickname)s!
 
-%(main_thankyou_note)s
+%(main_thankyou_note)s%(rewards)s
+
+Happy ad blocking,
+- Michael
 
 PS: If you don't mind, would you go to http://chromeadblock.com/donate/thanks/
 and help me spread the word?  I tried setting it up so PayPal would show you
 that automatically after you donated, but it doesn't seem to work reliably.
 Anyway, it would help me IMMENSELY :)
-
-
 %(original)s
 """ % dict(nickname=self.nickname,
            main_thankyou_note = self.main_thankyou_note,
-           original=original)
+           original=original,
+           rewards=self._build_rewards())
 
 
 def send(from_, to, subject, body):
@@ -288,32 +350,23 @@ From: %s
 To: %s
 Subject: %s
 
-%s''' % (from_, to, subject, body)
+%s''' % (from_, to.encode('utf-8'), subject, body.encode('utf-8'))
     server.sendmail(from_, to, msg)
     server.quit()
 
 
-def mark_as_read_and_send(orders):
-    #TODO temp
-    print "Here are the emails I'd have marked read and sent (press Enter to see each):"
-    for o in orders:
-        print "(%s)\n%s\n\n" % (o.email, o.get_response())
-    return
-    #TODO end temp
-
-
-    print "Press enter to mark emails as read and send replies."
-    raw_input()
+def mark_as_done_and_send(orders):
     mailbox = order_mailbox()
     while orders:
         print
         print "%d remaining." % len(orders)
         print
-        mark_as_read_and_send_batch(mailbox, orders[:20])
+        mark_as_done_and_send_batch(mailbox, orders[:20])
         orders = orders[20:]
 
-def mark_as_read_and_send_batch(m, orders):
+def mark_as_done_and_send_batch(m, orders):
     ids = ','.join(o.msgid for o in orders)
+    reward_ids = ','.join(o.msgid for o in orders if o.amount >= 50)
     print "Marking these msgids as read:"
     print ids
     # Mark all as read
@@ -321,13 +374,16 @@ def mark_as_read_and_send_batch(m, orders):
     sending_errors = 0
     for (i,o) in enumerate(orders):
         print "Sending %d of %d to %s ('%s' - %s)" % (i+1, len(orders),
-            o.email, o.nickname, o.name)
+            o.email.encode('utf-8'), o.nickname.encode('utf-8'),
+            o.name.encode('utf-8'))
         try:
+            subj = 'Thank you :)' if o.amount < 50 else 'Thank you so much! :D'
             send('adblockforchrome@gmail.com', o.email,
-                 'I got your donation :)', o.get_response())
+                 subj, o.get_response())
             sending_errors = 0
         except:
             print "  %s Failed to send" % ("*" * 40)
+            raise
             sending_errors += 1
             if sending_errors == 3:
                 print "Aborting!"
@@ -335,21 +391,42 @@ def mark_as_read_and_send_batch(m, orders):
                 sys.exit(1)
             continue
 
-def thank_notes(number_to_thank=200):
-    orders = [ o for o in order_messages(number_to_thank) if o.note ]
-    Order.correct_nicknames(orders)
+def edit_responses(orders):
     for (i,o) in enumerate(orders):
         print "Press enter to edit message %d of %d." % (i+1, len(orders))
         raw_input()
-        open('/tmp/reply.txt', 'w').write(o.get_response())
+        open('/tmp/reply.txt', 'w').write(o.get_response().encode('utf-8'))
         os.system('vim -c "normal 1Gw" /tmp/reply.txt')
-        o.set_response(open('/tmp/reply.txt').read())
-    mark_as_read_and_send(orders)
+        o.set_response(open('/tmp/reply.txt').read().decode('utf-8'))
+
+def thank(orders, edit_every_response):
+    Order.correct_nicknames(orders)
+    manual = [ o for o in orders if o.amount >= 50 ]
+    auto =   [ o for o in orders if o.amount < 50 ]
+    if manual:
+        print "Editing %d of %d emails that need followup." % (
+                len(manual), len(orders))
+        edit_responses(manual)
+    if edit_every_response and auto:
+        print "Editing %d of %d regular emails." %\
+                (len(auto), len(orders))
+        edit_responses(auto)
+    print "Press enter to mark emails as read and send replies."
+    raw_input()
+    print "Sending %d to be followed up." % len(manual)
+    if manual:
+        mark_as_done_and_send(manual)
+    print "Sending %d needing no followup." % len(auto)
+    if auto:
+        mark_as_done_and_send(auto)
+
+def thank_notes(number_to_thank=200):
+    orders = [ o for o in order_messages(number_to_thank) if o.note ]
+    thank(orders, edit_every_response=True)
 
 def thank_no_notes(number_to_thank=200):
     orders = [ o for o in order_messages(number_to_thank) if not o.note ]
-    Order.correct_nicknames(orders)
-    mark_as_read_and_send(orders)
+    thank(orders, edit_every_response=False)
 
 def usage():
     print "Usage: thanks.py yes - respond to notes"
