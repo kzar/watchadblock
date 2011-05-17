@@ -21,16 +21,6 @@
               load: function() {
                 //translation
                 localizePage();
-
-                // Hide advanced stuff if it is a non-advanced user who managed
-                // to find this page somehow.
-                if (!optionalSettings.show_advanced_options) {
-                  $(".advanced").each(function() {
-                    if ($(this).is(":checked"))
-                      $(this).click().change();
-                    $(this).parent().remove();
-                  });
-                }
               },
             }).
             show();

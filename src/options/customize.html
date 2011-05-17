@@ -288,13 +288,13 @@
         <br/>
       </div>
 
-      <div style="padding-top:20px;" id="adreportarea">
+      <div style="padding-top:20px; display:none" id="adreportarea">
         <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
         <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
       </div>
       <script>
-        if (!SAFARI)
-          $("#adreportarea").remove();
+        // Chrome puts link in button; Safari puts it here.
+        $(function() { $("#adreportarea").toggle(SAFARI); });
       </script>
 
     </div>
