@@ -186,13 +186,10 @@
       BGcall("get_custom_filters_text", function(text) {
         $("#txtFiltersAdvanced").val(text);
       });
-
-      //translation
-      localizePage();
     });
   </script>
 
-  <div class="section">
+  <div>
     <h2 i18n="tabcustomizetitle"></h2>
 
     <div i18n="filterlistsrock"></div>
@@ -291,18 +288,20 @@
         <br/>
       </div>
 
-      <div style="padding-top:20px;">
+      <div style="padding-top:20px; display:none" id="adreportarea">
         <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
         <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
       </div>
+      <script>
+        // Chrome puts link in button; Safari puts it here.
+        $(function() { $("#adreportarea").toggle(SAFARI); });
+      </script>
 
     </div>
-  </div>
 
-  <div class="sneaky">
-    <p>
-    <span i18n="cleanuplist"></span>
-    <input type="button" id="btnCleanUp" i18n_value="buttonok" />
+    <p style="margin:0px;" class="advanced">
+      <span i18n="cleanuplist"></span>
+      <input type="button" id="btnCleanUp" i18n_value="buttonok" />
     </p>
     <script>
       $(function() {

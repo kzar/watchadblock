@@ -209,23 +209,5 @@ ClickWatcher.prototype._build_ui = function() {
         that._highlighter.enable();
       });
 
-  if (!SAFARI) {
-    var link_to_block = $("<a>", {
-      href: "#",
-      tabIndex: -1,
-      css: { "font-size": "11px !important" },
-      text: translate("advanced_show_url_list"),
-      click: function(e) { 
-        // GLOBAL_collect_resources is created by adblock_start.js
-        var resources = Object.keys(GLOBAL_collect_resources);
-        BGcall("show_resourceblocker", resources);
-        e.preventDefault();
-        that._ui.dialog('close');
-        return false;
-      }
-    });
-    page.append(link_to_block);
-  }
-
   return page;
 }

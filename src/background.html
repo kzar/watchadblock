@@ -112,7 +112,8 @@
           show_youtube_help_msg: true,
           show_google_search_text_ads: false,
           show_context_menu_items: true,
-          hide_instead_of_remove: false
+          hide_instead_of_remove: false,
+          show_advanced_options: false
         };
         var settings = storage_get('settings') || {};
         return $.extend(defaults, settings);
@@ -297,27 +298,27 @@
               });
 
               addMenu(translate("dont_run_on_domain", [info.domain]), function(tab) {
-                emit_page_broadcast(
+                  emit_page_broadcast(
                   {fn:'top_open_whitelist_ui', options:{}},
                   {tab: tab} // fake sender to determine target page
-                );
+                  );
               });
-            }
+                }
 
             addMenu(translate("block_this_ad"), function(tab, clickdata) {
               emit_page_broadcast(
                 {fn:'top_open_blacklist_ui', options:{info: clickdata}},
                 {tab: tab}
               );
-            });
+              });
 
             addMenu(translate("block_an_ad_on_this_page"), function(tab) {
-              emit_page_broadcast(
-                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+                  emit_page_broadcast(
+                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
                 {tab: tab}
-              );
-            });
-          }
+                  );
+              });
+            }
 
           function setBrowserButton(info) {
             if (localStorage.adblock_is_paused) {
@@ -406,7 +407,7 @@
         if (!SAFARI) {
           function packed(filter) {
             return [filter._rule.source, filter._allowedElementTypes, filter._options];
-          }
+        }
           if (options.include_texts) {
             packed = function(filter) {
               return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
@@ -423,7 +424,7 @@
 
       // Bounce messages back to content scripts.
       if (!SAFARI) {
-        emit_page_broadcast = (function() {
+      emit_page_broadcast = (function() {
           var injectMap = {
             'top_open_whitelist_ui': {
               allFrames: false,
@@ -484,31 +485,31 @@
       }
       if (SAFARI) {
         emit_page_broadcast = (function() {
-          // Private list of connected ports for emit_page_broadcast()
-          var broadcast_ports = [];
-          chrome.extension.onConnect.addListener(function(port) {
-            port.onDisconnect.addListener(function(disconnected_port) {
-              var where = broadcast_ports.indexOf(disconnected_port);
-              if (where != -1) {
-                broadcast_ports.splice(where, 1);
-              }
-            });
-            broadcast_ports.push(port);
+        // Private list of connected ports for emit_page_broadcast()
+        var broadcast_ports = [];
+        chrome.extension.onConnect.addListener(function(port) {
+          port.onDisconnect.addListener(function(disconnected_port) {
+            var where = broadcast_ports.indexOf(disconnected_port);
+            if (where != -1) {
+              broadcast_ports.splice(where, 1);
+            }
           });
+          broadcast_ports.push(port);
+        });
 
-          // The emit_page_broadcast() function
-          var theFunction = function(request, sender) {
-            $.each(broadcast_ports, function(i, port) {
+        // The emit_page_broadcast() function
+        var theFunction = function(request, sender) {
+          $.each(broadcast_ports, function(i, port) {
               // issue 5416, fixed in Chrome and probably never happens in
               // Safari: port.sender.tab could be null for an unknown reason.
               if (!port.sender.tab)
                 return;
-              if (port.sender.tab.id == sender.tab.id)
-                port.postMessage(request);
-            });
-          };
-          return theFunction;
-        })();
+            if (port.sender.tab.id == sender.tab.id)
+              port.postMessage(request);
+          });
+        };
+        return theFunction;
+      })();
       }
 
       // Will open the resource blocking tab. 
@@ -621,7 +622,7 @@
         $.get("http://chromeadblock.com/api/visit.php", data);
 
         chrome.tabs.create({url: "pages/install/index.html?" + $.param(data)});
-      }
+        }
       note_install();
 
       // Take a census of filter subscriptions.

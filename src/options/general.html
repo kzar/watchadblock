@@ -4,26 +4,21 @@
       // user's saved settings.
       function load_options() {
         // Check or uncheck each option.
-        BGcall("get_settings", function(settings) {
-          for (var name in settings) {
-            $("#enable_" + name).
-              attr("checked", settings[name]);
-          }
-          $("input.feature:checkbox").change(function() {
-            var is_enabled = $(this).is(':checked');
-            var name = this.id.substring(7); // TODO: hack
-            BGcall("set_setting", name, is_enabled);
-          });
+        for (var name in optionalSettings) {
+          $("#enable_" + name).
+            attr("checked", optionalSettings[name]);
+        }
+        $("input.feature:checkbox").change(function() {
+          var is_enabled = $(this).is(':checked');
+          var name = this.id.substring(7); // TODO: hack
+          BGcall("set_setting", name, is_enabled);
         });
       }
       load_options();
-      
-      //translation
-      localizePage();
     });
   </script>
 
-  <div class="section">
+  <div>
     <h2 i18n="generaloptions"></h2>
 
     <p>
@@ -56,6 +51,19 @@
     </p>
 
     <p>
+      <input type="checkbox" class="feature" id="enable_show_advanced_options" />
+      <label for="enable_show_advanced_options" i18n="advanced_options"></label>
+      <script>
+        $("#enable_show_advanced_options").change(function() {
+          window.setTimeout(function() {
+            // To show or hide the advanced options on the options page
+            window.location.reload();
+          }, 50);
+        });
+      </script>
+    </p>
+
+    <p class="advanced">
       <input type="checkbox" class="feature" id="enable_hide_instead_of_remove" />
       <label for="enable_hide_instead_of_remove" i18n="brokensite_beta_option"></label>
       <span i18n="betalabel"></span><br/>
@@ -70,9 +78,9 @@
           trigger("change");
       </script>
     </p>
-  </div>
 
-  <div class="sneaky">
-    <input type="checkbox" class="feature" id="enable_debug_logging" />
-    <label for="enable_debug_logging" i18n="debuginlogoption"></label>
+    <p class="forDebug advanced">
+      <input type="checkbox" class="feature" id="enable_debug_logging" />
+      <label for="enable_debug_logging" i18n="debuginlogoption"></label>
+    </p>
   </div>

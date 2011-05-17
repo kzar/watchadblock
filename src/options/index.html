@@ -9,6 +9,28 @@
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script>
+      function load_options() {
+        // Check or uncheck each option.
+        BGcall("get_settings", function(settings) {
+          optionalSettings = settings;
+          $("#tabpages").
+            tabs({ 
+              spinner: "",
+              cache: true,
+              cookie: {},
+              load: function() {
+                //translation
+                localizePage();
+
+                $(".advanced").toggle(optionalSettings.show_advanced_options);
+              },
+            }).
+            show();
+        });
+      }
+      var optionalSettings = {};
+      load_options();
+
       function note_visit() {
         if (localStorage.getItem('visited_options_at') != null)
           return;
@@ -36,8 +58,6 @@
       }
 
       $(function() {
-        $("#tabpages").tabs({ spinner: "", cache: true, cookie: {}  });
-
         displayVersionNumber();
 
         note_visit();
