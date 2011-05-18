@@ -1,9 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>AdBlock is now installed!</title>
+    <title i18n="installedtitle"></title>
     <link rel="stylesheet" href="index.css"/>
     <script src="../../jquery/jquery.min.js"></script>
     <script src="../../port.js"></script>
@@ -78,8 +78,9 @@
   </head>
   <body>
     <div id="header">
-      <h1>Now you have AdBlock!  Hooray!</h1>
-      Any new tabs you open will be automatically ad-free.
+      <h1 i18n="installeddone">Now you have AdBlock!  Hooray!</h1>
+      <div i18n="installedmessage">Any new tabs you open will be automatically ad-free.
+</div>
     </div>
 
     <div id="wrapper"> <!-- Cards slide within this guy. -->
@@ -91,16 +92,14 @@
       -->
       <div id="loading-wrapper">
         <div class="card" id="loading">
-          <i>Installing AdBlock...</i>
-          <strong><i id="done" style="display:none">done.</i></strong>
+          <i 18n="installloading></i>
+          <strong><i i18n="installdone" style="display:none"></i></strong>
           <br/><br/>
           <progress id="chrome-loading-progress" value=0 max=1>
             <span id="safari-loading-progress"></span>%
           </progress>
         </div>
-        <div id="cleaner-warning">
-          <a href="#">Seeing this every time you start your browser?</a>
-        </div>
+        <div id="cleanerwarning" i18n="filecleanerwarning></div>
         <script>
           $(function() {
             $("#cleaner-warning a").click(function() {
@@ -149,9 +148,9 @@
         <h2>Set up AdBlock</h2>
         Please fill out AdBlock's one-question setup:<br/><br/>
         <input type="checkbox" id="showads" />
-        <label for="showads">I like Google's text ads; don't block those.</label>
+        <label for="showads" i18n="showads">I like Google's text ads; don't block those.</label>
         <div class="nav">
-          <a href="#" name="howto" class="left">That was easy &gt;&gt;</a>
+          <a href="#" name="howto" class="left" i18n="installnavbutton">&gt;&gt;</a>
         </div>
       </div>
       <script>
@@ -163,13 +162,12 @@
       </script>
 
       <div class="card" id="start-safari">
-        <h2>Let's get you set up!</h2>
-        <p>
+        <h2 i18n="safariinstalltitle">Let's get you set up!</h2>
+        <p 18n="safariautoupdate1">
         First, you should <b>turn on autoupdate</b> under Safari Preferences, so you get bugfixes and 
         new features as I write them.
         </p>
-        <p>
-          Turning on autoupdate is <strong>really important!</strong>
+        <p 18n="safariautoupdate2">
         </p>
         <div class="nav">
           <a href="#" name="autoupdate-howto" class="down">Show me how</a>
