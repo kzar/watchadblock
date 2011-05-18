@@ -1,4 +1,4 @@
-﻿{
+﻿ {
   "description1": {
     "message": "Najpopularnije Chrome proširenje, sa preko 2 milijuna korisnika! Blokira reklame na cijelom internetu.",
     "description": "Extension description in manifest"
@@ -1100,5 +1100,31 @@
   "excludefilterremoved": {
     "message": "Filter je uklonjen. Molim Vas da ponovno pokrenete originalnu stranicu za generiranje liste resursa.",
     "description": "Warning when a page exclusion rule was removed in resourceblock.html"
+    },
+  "report_ad_on_page": {
+    "message": "Prijavi reklamu na ovoj stranici",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Prikaži listu resursa",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Ja sam napredni korisnik, prikaži mi napredne postavke",
+    "description": "Link in the button"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ se ili $unsubscribe$ iz svih lista.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Prijavi</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>odjavi</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
   }
  }
