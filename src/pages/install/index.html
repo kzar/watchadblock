@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>AdBlock is now installed!</title>
+    <title i18n="adblock_is_now_installed"></title>
     <link rel="stylesheet" href="index.css"/>
     <script src="../../jquery/jquery.min.js"></script>
     <script src="../../port.js"></script>
@@ -23,6 +23,8 @@
       var installPageVersion = 1;
       localStorage['saw_install_page'] = installPageVersion;
       $(function() {
+        localizePage();
+
         // Slide cards upon nav link click
         $(".nav a").click(function() {
           var pad = 100; // Make darn sure elements slide offscreen
@@ -78,8 +80,8 @@
   </head>
   <body>
     <div id="header">
-      <h1>Now you have AdBlock!  Hooray!</h1>
-      Any new tabs you open will be automatically ad-free.
+      <h1 i18n="now_you_have_adblock_hooray"></h1>
+      <span i18n="any_new_tabs_you_open_Will_be_automatically_ad_free"></span>
     </div>
 
     <div id="wrapper"> <!-- Cards slide within this guy. -->
@@ -91,15 +93,15 @@
       -->
       <div id="loading-wrapper">
         <div class="card" id="loading">
-          <i>Installing AdBlock...</i>
-          <strong><i id="done" style="display:none">done.</i></strong>
+          <i i18n="installing_adblock"></i>
+          <strong><i id="done" i18n="done" style="display:none"></i></strong>
           <br/><br/>
           <progress id="chrome-loading-progress" value=0 max=1>
             <span id="safari-loading-progress"></span>%
           </progress>
         </div>
         <div id="cleaner-warning">
-          <a href="#">Seeing this every time you start your browser?</a>
+          <a href="#" i18n="seeing_this_every_time_you_start_your_browser"></a>
         </div>
         <script>
           $(function() {
@@ -146,12 +148,12 @@
       </script>
 
       <div class="card" id="start-chrome">
-        <h2>Set up AdBlock</h2>
-        Please fill out AdBlock's one-question setup:<br/><br/>
+        <h2 i18n="set_up_adblock"></h2>
+        <span i18n="please_fill_out_adblocks_one_question_setup"></span><br/><br/>
         <input type="checkbox" id="showads" />
-        <label for="showads">I like Google's text ads; don't block those.</label>
+        <label for="showads" i18n="i_like_googles_text_ads_dont_block_those"></label>
         <div class="nav">
-          <a href="#" name="howto" class="left">That was easy &gt;&gt;</a>
+          <a href="#" name="howto" class="left"><span i18n="that_was_easy"></span> &gt;&gt;</a>
         </div>
       </div>
       <script>
@@ -163,51 +165,43 @@
       </script>
 
       <div class="card" id="start-safari">
-        <h2>Let's get you set up!</h2>
-        <p>
-        First, you should <b>turn on autoupdate</b> under Safari Preferences, so you get bugfixes and 
-        new features as I write them.
-        </p>
-        <p>
-          Turning on autoupdate is <strong>really important!</strong>
-        </p>
+        <h2 i18n="lets_get_you_set_up"></h2>
+        <p i18n="first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them"></p>
+        <p i18n="turning_on_autoupdate_is_really_important"></p>
         <div class="nav">
-          <a href="#" name="autoupdate-howto" class="down">Show me how</a>
-          <a href="#" name="howto" class="left">OK, autoupdate is on &gt;&gt;</a>
+          <a href="#" name="autoupdate-howto" class="down" i18n="show_me_how"></a>
+          <a href="#" name="howto" class="left"><span i18n="ok_autoupdate_is_on"></span> &gt;&gt;</a>
         </div>
       </div>
 
       <div class="card" id="autoupdate-howto">
         <img src="autoupdate.png" style="float:right; margin-left: 20px; margin-bottom: 30px;">
-        <h2>To turn on autoupdate:</h2>
+        <h2 i18n="to_turn_on_autoupdate"></h2>
         <ol>
-          <li>Click <b>Safari -&gt; Preferences</b>.</li>
-          <li>Click <b>Extensions</b> near the top right.</li>
-          <li>At the bottom left, click <b>Updates</b>.</li>
-          <li>Click the <b>Install Updates Automatically</b> checkbox.</li>
+          <li i18n="click_safari_prefs"></li>
+          <li i18n="click_extensions"></li>
+          <li i18n="click_updates"></li>
+          <li i18n="click_install_update_automatically"></li>
         </ol>
         <br/>
         <div class="nav">
-          <a href="#" name="howto" class="left">OK, autoupdate is on &gt;&gt;</a>
+          <a href="#" name="howto" class="left"><span i18n="ok_autoupdate_is_on"></span> &gt;&gt;</a>
         </div>
       </div>
 
       <div class="card" id="howto">
-        <h2>How to use AdBlock:</h2>
-        <p>
-          AdBlock automatically removes ads.  That's all there is to it.
-        </p>
-        <p>
-          For more options, you can right click web pages or click the 
-          <img src="../../img/icon19.png"/> toolbar button.
-        </p>
+        <h2 i18n="how_to_use_adblock"></h2>
+        <p i18n="adblock_auto_removes_ads_thats_all"></p>
+        <p i18n="for_more_options_right_click"></p>
         <div class="nav">
-          <a class="left" name="last-step" href="#">OK, now what? &gt;&gt;</a>
+          <a class="left" name="last-step" href="#"><span i18n="ok_now_what"></span> &gt;&gt;</a>
         </div>
       </div>
 
       <div class="card" id="last-step">
-        <!-- Default data that will be replaced upon successful AJAX request. -->
+        <!-- Default data that will be replaced upon successful AJAX request;
+        not l10n'd because hopefully it will never be seen (and the data that
+        replaces it won't be l10n'd either.)-->
         <style>
           #last-step.card { width: 400px; margin-top: 50px; }
         </style>

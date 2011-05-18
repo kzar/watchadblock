@@ -278,6 +278,10 @@
     "message": "I like the text ads on Google search results; show me those.",
     "description": "Option on first tab page"
   },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "I like Google's text ads; don't block those.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
+  },
   "youtubeads": {
     "message": "Block ads inside YouTube videos.",
     "description": "Option on first tab page"
@@ -1123,5 +1127,103 @@
         "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
       }
     }
+  },
+  "adblock_is_now_installed": {
+    "message": "AdBlock is now installed!",
+    "description": "Title of install page"
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Now you have AdBlock!  Hooray!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Any new tabs you open will be automatically ad-free.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "Installing AdBlock...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "done.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Seeing this every time you start your browser?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Set up AdBlock",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Please fill out AdBlock's one-question setup:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "That was easy",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "Let's get you set up!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "First, you should <b>turn on autoupdate</b> under Safari Preferences, so you get bugfixes and new features as I write them.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Turning on autoupdate is <b>really important!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Show me how",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, autoupdate is on ",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "To turn on autoupdate:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Click <b>Safari -&gt; Preferences</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Click <b>Extensions</b> near the top right.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "At the bottom left, click <b>Updates</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Click the <b>Install Updates Automatically</b> checkbox.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "How to use AdBlock:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": " AdBlock automatically removes ads.  That's all there is to it.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "For more options, you can right click web pages or click the $img$ toolbar button.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, now what? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   }
 }
