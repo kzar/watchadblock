@@ -7,6 +7,8 @@ import os
 import tempfile
 
 import emails
+import orderparsing
+execfile('../../../google_credentials', orderparsing.__dict__)
 
 
 def correct_nicknames(orders):
@@ -205,7 +207,7 @@ def mark_as_done_and_send_batch(m, orders):
     print "Marking these msgids as read:"
     print ids
     # Mark all as read
-    # TODO temp m.store(ids, '+FLAGS.SILENT', '\\Seen')
+    m.store(ids, '+FLAGS.SILENT', '\\Seen')
     sending_errors = 0
     for (i,o) in enumerate(orders):
         print "Sending %d of %d to %s ('%s' - %s)" % (i+1, len(orders),

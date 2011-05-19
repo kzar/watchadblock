@@ -11,24 +11,27 @@ import quopri
 import re
 import smtplib
 
-def init():
+def _get_password():
+    if hasattr(globals(), 'GLOBAL_password'):
+        return
     global GLOBAL_password
     GLOBAL_password = getpass.getpass("Password for adblockforchrome@gmail.com: ")
 
 def order_mailbox(readonly=False):
+    _get_password()
     m = imaplib.IMAP4_SSL('imap.gmail.com', 993)
     m.login('adblockforchrome@gmail.com', GLOBAL_password)
     m.select('orders', readonly) # if readonly=False, fetching marks as read
     # http://tools.ietf.org/html/rfc3501.html has all you can search with
     return m
 
-def unread_emails(max_count):
+def unread_emails(max_count, query):
     """
     Return Messages list, max max_count entries.  Message.msgid will
     be set to the IMAP msgid.
     """
     m = order_mailbox()
-    unseen_ids = m.search(None, '(UNSEEN)')[1][0].split()[ :max_count]
+    unseen_ids = m.search(None, query)[1][0].split()[ :max_count]
     try:
         m.select('orders', readonly=True)
         data = m.fetch(','.join(unseen_ids), '(RFC822)') # not marked as read
@@ -45,11 +48,11 @@ def unread_emails(max_count):
     finally:
         m.logout()
 
-def order_messages(max_count):
+def order_messages(max_count, query='(UNSEEN)'):
     """
     Return an iterator containing max_count unread Orders.
     """
-    emails = unread_emails(max_count)
+    emails = unread_emails(max_count, query)
     orders = []
     for email in emails:
         try:
@@ -112,6 +115,8 @@ class Order(object):
         match = re.search(tracking_re, text)
         (self.experiment, self.group,
          self.flavor, self.os, self.source) = match.groups()
+        self.experiment = int(self.experiment)
+        self.group = int(self.group)
 
 
 class GoogleOrder(Order):
@@ -175,11 +180,7 @@ class PayPalOrder(Order):
 
 
 def send(from_, to, subject, body):
-    print "SENDING" # TODO temp
-    print to.encode('utf-8')
-    print body.encode('utf-8')
-    print
-    return # TODO temp
+    _get_password()
     server = smtplib.SMTP('smtp.gmail.com:587')
     server.ehlo()
     server.starttls()

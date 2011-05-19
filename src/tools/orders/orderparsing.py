@@ -1,7 +1,8 @@
 import urllib2
 from xml.dom import minidom
 
-execfile('../../../google_credentials')
+GOOGLE_MERCHANT_ID = None # set this before using the module
+GOOGLE_MERCHANT_HASH = None # same here
 
 def get(node, childName):
     return node.getElementsByTagName(childName)[0]
@@ -30,11 +31,11 @@ class GoogleOrderParser(object):
         Dicts contain id, date, item_number, email, name, amount.
         """
 
-        url = "https://checkout.google.com/api/checkout/v2/reports/Merchant/%s"  % google_merchant_id
+        url = "https://checkout.google.com/api/checkout/v2/reports/Merchant/%s"  % GOOGLE_MERCHANT_ID
         headers = {
             "Content-Type": "application/xml; charset=UTF-8",
             "Accept": "application/xml; charset=UTF8",
-            "Authorization": "Basic %s" % google_hash
+            "Authorization": "Basic %s" % GOOGLE_MERCHANT_HASH
             }
         template = '<google-order-number>%s</google-order-number>'
         order_xml = ''.join(template % oid for oid in orderid_list)
