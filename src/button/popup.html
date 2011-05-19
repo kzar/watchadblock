@@ -296,13 +296,13 @@
         <div class="separator" id="separator2"></div>
       </div> <!-- menu-items-->
 
-      <div id="div_donate">
+      <div id="div_pay">
         <div style="margin: 5px 0">
-          <div id="donate_close" style="float:right; display:none;"><a class="blue" href="#">x</a></div>
-          <a href="#" class="blue" id="donate_open"
+          <div id="pay_close" style="float:right; display:none;"><a class="blue" href="#">x</a></div>
+          <a href="#" class="blue" id="pay_open"
             i18n="did_you_know_this_is_my_full_time_job"></a>
         </div>
-        <div id="donation_wrapper" style="display:none; clear:left;">
+        <div id="payment_wrapper" style="display:none; clear:left;">
           <iframe width="100%" height="100%" frameBorder=0></iframe>
         </div>
       </div>
@@ -310,30 +310,30 @@
         $(function() {
           var state = "initial";
           var bodysize = { width: $("body").width(), height: $("body").height() };
-          $("#donate_open").click(function() {
+          $("#pay_open").click(function() {
             if (state == "initial") {
-              $("#donation_wrapper iframe").
+              $("#payment_wrapper iframe").
                 attr("src", "http://chromeadblock.com/donate/?src=chromepopup");
             }
             if (state == "open")
               return;
             state = "open";
-            $("#donate_close").show();
+            $("#pay_close").show();
             $("body").animate({width: 780, height: 490}, {queue:false});
             $("#menu-items").slideUp();
-            $("#donation_wrapper").
+            $("#payment_wrapper").
               width(0).height(0).show().
               animate({width: 730, height: 450}, {queue:false});
           });
-          $("#donate_close").click(function() {
+          $("#pay_close").click(function() {
             if (state != "open")
               return;
             state = "closed";
             $("body").animate(bodysize, {queue:false});
             $("#menu-items").slideDown();
-            $("#donation_wrapper").animate({width: 0, height: 0}, {queue:false});
-            $("#donate_close").hide();
-            $("#donation_wrapper").slideUp();
+            $("#payment_wrapper").animate({width: 0, height: 0}, {queue:false});
+            $("#pay_close").hide();
+            $("#payment_wrapper").slideUp();
           });
         });
       </script>
