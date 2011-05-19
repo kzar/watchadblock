@@ -4,7 +4,8 @@
 
 # see http://www.doughellmann.com/PyMOTW/imaplib/ for an excellent walkthrough
 
-import email
+import datetime
+import email.utils
 import imaplib
 import getpass
 import quopri
@@ -107,6 +108,8 @@ class Order(object):
             order = PayPalOrder()
             order.email = _from
         order.msgid = message.msgid
+        date_tuple = email.utils.parsedate(message['date'])[:6]
+        order.date = datetime.datetime(*date_tuple)
         order._parse_body(body)
         return order
 
