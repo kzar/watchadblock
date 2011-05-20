@@ -1,13 +1,12 @@
-﻿{
+{
   "description1": {
-    "message": "200만명 이상의 사용자와 함께 하는 가장 인기 있는 크롬 확장 프로그램. 인터넷 광고 차단!",
+    "message": "애드블록, 200만명 이상의 사용자와 함께 하는 가장 인기 있는 크롬 확장 프로그램. 인터넷 광고 차단!",
     "description": "Extension description in manifest"
   },
   "app_description1": {
     "message": "인터넷 광고를 차단하십시오! 수만 명의 크롬/사파리 사용자가 즐겨 사용합니다!",
     "description": "App description used in app version manifest"
   },
-
   "buttoncancel": {
     "message": "취소",
     "description": "Cancel button"
@@ -27,7 +26,7 @@
   "optionstitle": {
     "message": "AdBlock - 애드블록 옵션",
     "description": "Title for the options page"
-   },
+  },
 
   "installedtitle": {
     "message": "애드블록 설치 완료!",
@@ -268,6 +267,10 @@
   "googletextads": {
     "message": "구글 검색 결과에 텍스트 광고 보이기",
     "description": "Option on first tab page"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "구글의 텍스트 광고는 차단하지 않음.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
   "youtubeads": {
     "message": "유튜브 비디오의 내부 광고 차단",
@@ -1066,11 +1069,11 @@
     "description": "link to change resources on the resourceblock page"
   },
   "brokensite_beta_option": {
-    "message": "광고를 차단하기 위한 새로운 방식에 대한 테스트를 도와주십시오.",
+    "message": "새로운 광고 차단 방식에 대한 피드백",
     "description": "option on the first options page"
   },
   "brokensite_beta_description": {
-    "message": "이 옵션을 사용할 때 광고가 노출되면 <a>버그 보고</a>를 해주십시오!",
+    "message": "이 옵션을 사용할 때 웹 페이지에 광고가 노출되면 <a>버그 보고</a>를 해주십시오!",
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
   "translator_credit": {
@@ -1082,5 +1085,125 @@
         "example": "Michael G, Drew R"
       }
     }
+  },
+  "report_ad_on_page": {
+    "message": "Report an ad on this page",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Show the resource list",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "고급 옵션 보이기",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "모든 구독 필터를 $subscribe$ 또는 $unsubscribe$",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>구독</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>구독 중지</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "애드블록 설치 완료!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "콘텐츠 이용을 방해하고 불건전한 광고를 자동으로 차단합니다.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "애드블록 설치 중...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "완료.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "브라우저를 실행할 때마다 이 페이지가 보입니까?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "애드블록 설정",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "애드블록을 사용하기 전에 필요한 설정이며, 옵션 페이지에서 변경할 수 있습니다.",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "다음 단계",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "설정하기!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "사파리의 기본 설정에서 확장 프로그램을 <b>자동으로 업데이트 설치</b>되도록 하십시오. 그러면 버그가 고쳐지고 새로운 기능이 추가된 버전을 만날 수 있습니다. ",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "확장 프로그램의 자동 업데이트는 <b>매우 중요합니다!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "확장 프로그램의 자동 업데이트 방법",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "자동으로 업데이트 설치",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "자동 업데이트 설치 기능을 활성화",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "<b>사파리 -&gt; 기본 설정</b>을 클릭하십시오.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "<b>확장 프로그램</b>을 클릭하십시오.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "왼쪽 하단에 있는 <b>업데이트</b>를 클릭하십시오.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "<b>자동으로 업데이트 설치</b> 체크박스를 클릭하십시오.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "애드블록 사용 방법",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": "애드블록은 <b>구독 필터</b>를 이용해 광고를 자동으로 차단합니다.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "다양한 옵션을 설정하려면 웹 페이지에서 마우스 오른쪽 버튼을 눌러 문맥 메뉴를 이용하거나 툴바 버튼 $img$을 클릭하십시오.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "다음 단계",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   }
 }
