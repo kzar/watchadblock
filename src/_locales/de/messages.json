@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "Die beliebteste Chrome-Erweiterung, mit über 2 Millionen Nutzern!  Entfernt Werbung im ganzen Internet.",
     "description": "Extension description in manifest"
@@ -268,6 +268,10 @@
   "googletextads": {
     "message": "Textanzeigen in den Google-Suchergebnissen anzeigen",
     "description": "Option on first tab page"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "Textanzeigen in den Google-Suchergebnissen anzeigen",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
   "youtubeads": {
     "message": "Werbung in YouTube Videos entfernen",
@@ -1067,21 +1071,141 @@
     "description": "link to change resources on the resourceblock page"
   },
   "brokensite_beta_option": {
-    "message": "Helfen Sie dabei, einen neuen Weg Werbung zu entfernen zu testen.",
+    "message": "Helfen Sie dabei, einen neuen Weg Werbung zu entfernen zu testen",
     "description": "option on the first options page"
   },
   "brokensite_beta_description": {
     "message": "Falls Sie Werbung sehen, die nur erscheint, wenn diese Option aktiviert ist, <a>melden Sie bitte den Fehler</a>!",
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
-"translator_credit": {
-  "message": "Übersetzung von: $translator_names$",
-  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+  "translator_credit": {
+    "message": "Übersetzung von: $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
         "content": "John Rey",
         "example": "Michael G, Drew R"
       }
     }
-}
+  },
+  "report_ad_on_page": {
+    "message": "Werbung auf dieser Seite melden",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Entfernbare Elemente anzeigen",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Erweiterte Einstellungen anzeigen (für erfahrene Nutzer)",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ oder $unsubscribe$ Sie alle Filterlistenabonnements.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Abonnieren</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>beenden</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "AdBlock ist nun installiert!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Jeden Tab den Sie nun öffnen wird frei von Werbung sein.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "AdBlock wird installiert...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "fertig.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Sehen Sie diesen Tab jedesmal wenn Sie Ihren Browser öffnen?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "AdBlock einrichten",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Richten Sie bitten in diesem kurzen Setup AdBlock so ein wie es Ihnen gefällt:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "Das war einfach",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "AdBlock einrichten",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Als erstes sollten Sie in den Safari Einstellungen die <b>automatischen Updates für Erweiterungen aktivieren</b>, damit Sie Fehlerbehebungen und neue Features schnellstmöglich erhalten.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Automatische Updates zu aktivieren ist <b>sehr wichtig!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Zeigen, wie man die automatischen Updates aktiviert",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "Automatische Updates sind nun aktiviert",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "So aktivieren Sie die automatischen Updates:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Klicken Sie auf <b>Safari -&gt; Einstellungen</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Klicken Sie rechts oben auf <b>Erweiterungen</b>.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "Klicken Sie unten links auf <b>Updates</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Klicken Sie auf die <b>Updates automatisch installieren</b> Checkbox.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "AdBlock benutzen:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": "AdBlock entfernt die Werbung automatisch. Es muss nichts weiter getan werden.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "Um weitere Einstellungen anzuzeigen klicken Sie mit einem Rechtsklick auf Webseiten oder klicken Sie auf den $img$ Toolbar Button.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, und jetzt? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  }
 }
