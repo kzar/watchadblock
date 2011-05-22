@@ -7,7 +7,6 @@
     "message": "Blockerar reklamtillägg över hela webben!  Älskad av miljoner Chrome- och Safari-användare!",
     "description": "App description used in app version manifest"
   },
-
   "buttoncancel": {
     "message": "Avbryt",
     "description": "Cancel button"
@@ -79,7 +78,6 @@
       }
     }
   },
-
   "sliderexplanation": {
     "message": "Dra i skjutreglaget tills reklamen är korrekt blockerad, och sidan förövrigt ser använbar ut.",
     "description": "Blacklister slider page message"
@@ -269,6 +267,10 @@
     "message": "Jag gillar texttilläggen i Googles sökresultat... tillåt dom!",
     "description": "Option on first tab page"
   },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "Jag gillar Google's texttillägg; blockera dom inte.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
+  },
   "youtubeads": {
     "message": "Blockera inbäddad reklam i YouTube-videor.",
     "description": "Option on first tab page"
@@ -407,87 +409,87 @@
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": " - additional Bulgarian filters",
+    "message": " - Bulgarisk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdutch": {
-    "message": " - additional Dutch filters",
+    "message": " - Nederländsk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_finnish": {
-    "message": " - additional Finnish filters",
+    "message": " - Finsk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_french": {
-    "message": " - additional French filters",
+    "message": " - Fransk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_german": {
-    "message": " - additional German filters",
+    "message": " - Tysk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_norwegian": {
-    "message": " - additional Norwegian filters",
+    "message": " - Norsk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_polish": {
-    "message": " - additional Polish filters",
+    "message": " - Polsk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_romanian": {
-    "message": " - additional Romanian filters",
+    "message": " - Rumänsk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterrussian": {
-    "message": " - additional Russian filters",
+    "message": " - Rysk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_vietnamese": {
-    "message": " - additional Vietnamese filters",
+    "message": " - Vietnamesisk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "Chinese filters",
+    "message": "Kinesiska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
-    "message": "Czech filters",
+    "message": "Tjeckiska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdanish": {
-    "message": "Danish filters",
+    "message": "Danska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterhungarian": {
-    "message": "Hungarian filters",
+    "message": "Ungerska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterisraeli": {
-    "message": "Israeli filters",
+    "message": "Israeliska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filteritalian": {
-    "message": "Italian filters",
+    "message": "Italienska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterjapanese": {
-    "message": "Japanese filters",
+    "message": "Japanska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plun_korean": {
-    "message": "Korean filters",
+    "message": "Koreanska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterpolish": {
-    "message": "Polish filters",
+    "message": "Polska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_spanish": {
-    "message": "Spanish filters",
+    "message": "Spanska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterukranian": {
-    "message": "Ukranian filters",
+    "message": "Ukrainska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
 
@@ -856,6 +858,14 @@
     "message": "Filtret blev korrekt aktiverat!\nUppdatera sidan för att se resultatet!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
+  "adblock_is_paused": {
+    "message": "AdBlock är pausad. Därför visas inga resurser, så den här sidan kan inte användas. Starta AdBlock och försök igen.",
+    "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Filtret togs bort. Uppdatera originalsidan för att generera lista med resurser.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
+  },
   "noresourcessend": {
     "message": "Något gick fel. Inga resurser slapp igenom. Sidan kommer att stängas.",
     "description": "resourceblocking page string"
@@ -1067,7 +1077,7 @@
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
   "translator_credit": {
-    "message": "Översättning till Svenska av: $translator_names$",
+    "message": "Översättning till Svenska: $translator_names$",
     "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
@@ -1075,5 +1085,125 @@
         "example": "Michael G, Drew R"
       }
     }
+  },
+  "report_ad_on_page": {
+    "message": "Rapportera ett tillägg på den här sidan",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Visa resurslistan",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Jag är avancerad användare, visa avancerade alternativ.",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ på, eller $unsubscribe$ på varje lista.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Prenumerera</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>avsluta prenumeration</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Nu har du AdBlock!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Alla nya flikar kommer automatiskt att vara reklamfria.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "Installerar AdBlock...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "klar.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Ser du detta varje gång du startar webbläsaren?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Installera AdBlock",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Verkställ AdBlocks enfråge-installation:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "Det var ju lätt!",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "Då installerar vi!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Först bör du <b>aktivera auto-uppdatering</b> under Safari Inställningar, så att du får bug-fixar och nya funktioner efter hand som dom skrivs.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Att aktivera auto-uppdateringen är <b>verkligen viktigt!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Visa mig hur",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, auto-uppdateringen är på ",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "Att aktivera auto-uppdatering:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Klicka på <b>Safari -&gt; Inställningar</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Klicka på <b>Tillägg</b> nära toppen, till höger.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "Längst ner till vänster, klicka på <b>Uppdateringar</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "bocka i <b>Installera uppdateringar automatiskt</b>.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "Att använda AdBlock:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": " AdBlock tar automatiskt bort webbsidetillägg.  Så är det bara.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "För fler alternativ, högerklicka på webbsidorna eller klicka på $img$ knappen i verktygsfältet.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, nu då? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   }
 }
