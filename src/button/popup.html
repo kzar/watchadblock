@@ -9,18 +9,6 @@
     <script>
       var BG = chrome.extension.getBackgroundPage();
 
-      // Set the domain name throughout the popup, ellipsifying if necessary.
-      function setDomain(name) {
-        if (name.length > 25) {
-          name = name.substring(0, 17) + "..." +
-              name.substring(name.length - 5);
-        }
-        $("#div_status_whitelisted span").text(
-          translate("adblock_is_disabled_on_domain", [name]));
-        $("#div_whitelist").text(
-          translate("dont_run_on_domain", [name]));
-      }
-
       // Set menu entries appropriately for the selected tab.
       function customize_for_this_tab() {
         $(".menu-entry, .separator").hide();
@@ -52,8 +40,6 @@
           for (var div in shown)
             if (shown[div]) 
               $('#' + div).show();
-
-          setDomain(info.domain);
         });
       }
 
@@ -131,7 +117,7 @@
         <!-- ************ Standard menu entries *********** -->
 
         <div id="div_status_whitelisted" class="menu-entry">
-          <span style="font-style:italic;"><!--Filled with translated text--></span>
+          <span style="font-style:italic;" i18n="disabled_on_this_page"></span>
           <a i18n="enable" href="#" class="blue"></a>
         </div>
         <script>
@@ -218,8 +204,7 @@
 
 
 
-        <div id="div_whitelist" class="menu-entry">
-          <!-- Filled with translated text -->
+        <div id="div_whitelist" class="menu-entry" i18n="dont_run_on_pages_on_domain">
         </div>
         <script>
           $("#div_whitelist").click(function() {

@@ -266,7 +266,7 @@
               }
 
               if (info.whitelisted) {
-                var message = translate("adblock_is_disabled_on_domain", [info.domain]) +
+                var message = translate("disabled_on_this_page") +
                               " " + translate("undo");
                 addMenu(message, function(tab) {
                   if (try_to_unwhitelist(tab.url))
@@ -297,7 +297,7 @@
                 chrome.tabs.update(tab.id, {url: tab.url});
               });
 
-              addMenu(translate("dont_run_on_domain", [info.domain]), function(tab) {
+              addMenu(translate("dont_run_on_pages_on_domain"), function(tab) {
                   emit_page_broadcast(
                   {fn:'top_open_whitelist_ui', options:{}},
                   {tab: tab} // fake sender to determine target page

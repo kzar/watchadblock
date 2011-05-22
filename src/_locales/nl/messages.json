@@ -189,15 +189,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock zal niets blokkeren op domein<br/>$domain$.",
-    "description": "The message of the whitelister dialog",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
+  "whitelistertext1": {
+    "message": "AdBlock zal niets blokkeren op deze pagina:",
+    "description": "The message of the whitelister dialog, putting the URL on a separate line"
   },
   "whitelistertitle": {
     "message": "Dit domein uitsluiten?",
@@ -827,29 +821,17 @@
     "message": "AdBlock is niet actief op deze pagina.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Blokkeer niets op $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "dont_run_on_pages_on_domain": {
+    "message": "Blokkeer niets op pagina's op dit domein",
+    "description": "Menu entry to open the whitelist wizard."
   },
-  "adblock_is_disabled_on_domain": {
-    "message": "$domain$ is uitgesloten van het blokkeren van advertenties.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "disabled_on_this_page": {
+    "message": "Deze pagina is uitgesloten van het blokkeren van advertenties.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "enable": {
     "message": "opnieuw inschakelen",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "block_an_ad_on_this_page": {
     "message": "Blokkeer een advertentie op de pagina",
@@ -1206,5 +1188,13 @@
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Ik wil de tekstadvertenties op Google kunnen zien.",
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
+  },
+  "modifydomain": {
+    "message": "Specificeer het domein:",
+    "description": "whitelist wizard: modify the domain part of an URL"
+  },
+  "modifylocation": {
+    "message": "Specificeer de locatie van de pagina:",
+    "description": "whitelist wizard: modify the location part of an URL"
   }
 }

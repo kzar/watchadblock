@@ -132,10 +132,9 @@ BlacklistUi.prototype._build_page1 = function() {
   var page = $("<div>").
     append(translate("sliderexplanation")).
     append("<br/>").
-    append("<div id='slider'></div>").
+    append("<input id='slider' type='range' min='0' value='0'/>").
     append("<div id='selected_data' style='font-size:smaller; height:7em'></div>").
     append(link_to_block);
-
 
   var btns = {};
   btns[translate("buttonlooksgood")] = 
@@ -176,13 +175,10 @@ BlacklistUi.prototype._build_page1 = function() {
     depth++;
   }
   $("#slider", page).
-    css('margin', 10).
-    slider({
-      min:0, 
-      max:Math.max(depth - 1, 1),
-      slide: function(event, ui) {
-        that._chain.moveTo(ui.value);
-      }
+    css('width', '364px').
+    attr("max", Math.max(depth - 1, 1)).
+    change(function() {
+      that._chain.moveTo(this.valueAsNumber);
     });
 
   return page;

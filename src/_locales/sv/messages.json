@@ -198,16 +198,6 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock vitlistar domäner som slutar med<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
   "whitelistertitle": {
     "message": "Undanta den här domänen?",
     "description": "The title of the whitelister dialog"
@@ -990,33 +980,13 @@
     "message": "AdBlock fungerar inte på den här domänen.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Undanta $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock är inaktiverat på $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
   "undo": {
     "message": "Ångra",
     "description": "Button text to undo an action."
   },
   "enable": {
     "message": "Aktivera",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused": {
     "message": "AdBlock är pausad.",
