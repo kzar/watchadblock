@@ -13,7 +13,7 @@ import re
 import smtplib
 
 def _get_password():
-    if hasattr(globals(), 'GLOBAL_password'):
+    if 'GLOBAL_password' in globals():
         return
     global GLOBAL_password
     GLOBAL_password = getpass.getpass("Password for adblockforchrome@gmail.com: ")
