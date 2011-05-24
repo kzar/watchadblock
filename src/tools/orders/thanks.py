@@ -204,8 +204,8 @@ def mark_as_done_and_send(orders):
 def mark_as_done_and_send_batch(m, orders):
     ids = ','.join(o.msgid for o in orders)
     reward_ids = ','.join(o.msgid for o in orders if o.amount >= 50)
-    print "Marking these msgids as read:"
-    print ids
+    print "Marking emails from these addresses as read:"
+    print ', '.join(o.email for o in orders)
     # Mark all as read
     m.store(ids, '+FLAGS.SILENT', '\\Seen')
     sending_errors = 0
@@ -220,7 +220,6 @@ def mark_as_done_and_send_batch(m, orders):
             sending_errors = 0
         except:
             print "  %s Failed to send" % ("*" * 40)
-            raise
             sending_errors += 1
             if sending_errors == 3:
                 print "Aborting!"
