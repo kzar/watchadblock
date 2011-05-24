@@ -263,11 +263,11 @@ def thank(orders, edit_every_response):
     if auto:
         mark_as_done_and_send(auto)
 
-def thank_notes(number_to_thank=80):
+def thank_notes(number_to_thank=200):
     orders = [ o for o in emails.order_messages(number_to_thank) if o.note ]
     thank(orders, edit_every_response=True)
 
-def thank_no_notes(number_to_thank=80):
+def thank_no_notes(number_to_thank=200):
     orders = [ o for o in emails.order_messages(number_to_thank) if not o.note ]
     thank(orders, edit_every_response=False)
 
@@ -280,7 +280,6 @@ def main():
     if len(sys.argv) != 2 or sys.argv[1] not in ['no', 'yes']:
         usage()
         return
-    emails.init()
     if sys.argv[1] == 'yes':
         thank_notes()
     else:
