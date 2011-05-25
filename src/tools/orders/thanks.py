@@ -5,6 +5,8 @@
 import csv
 import os
 import tempfile
+import traceback
+import sys
 
 import emails
 import orderparsing
@@ -220,6 +222,7 @@ def mark_as_done_and_send_batch(m, orders):
             sending_errors = 0
         except:
             print "  %s Failed to send" % ("*" * 40)
+            print traceback.format_tb(sys.exc_info()[2])
             sending_errors += 1
             if sending_errors == 3:
                 print "Aborting!"
