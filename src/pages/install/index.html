@@ -9,17 +9,6 @@
     <script src="../../port.js"></script>
     <script src="../../functions.js"></script>
     <script>
-      // Sanitize query params
-      var QPS = (function() {
-        var result = {};
-        var parts = document.location.search.split('&');
-        for (var i = 0; i < parts.length; i++) {
-          var kv = parts[i].match(/([a-zA-Z_]+)=([a-zA-Z_0-9\.]*)/);
-          if (!kv) continue;
-          result[kv[1]] = kv[2];
-        }
-        return result;
-      })();
       var installPageVersion = 1;
       localStorage['saw_install_page'] = installPageVersion;
       $(function() {
@@ -199,20 +188,23 @@
       </div>
 
       <div class="card" id="last-step">
-        <!-- Default data that will be replaced upon successful AJAX request;
-        not l10n'd because hopefully it will never be seen (and the data that
-        replaces it won't be l10n'd either.)-->
-        <style>
-          #last-step.card { width: 400px; margin-top: 50px; }
-        </style>
-        <h2>Last thing</h2>
-        You only pay for AdBlock if you want to.  Please do 
-        <a href="http://chromeadblock.com/donate?install=done">pay for AdBlock</a> to 
-        fund its development.  Thanks!
-
+        <div id="iframe-slot">
+          <!-- Replaced by an iframe if it loads. -->
+          <h2>Last thing</h2>
+          You can pay whatever you want for AdBlock, including not paying anything.  
+          Would you mind <a href="http://chromeadblock.com/pay/">paying</a> to fund 
+          its development?  Thanks!
+        </div>
         <script>
           $(function() {
-            $("#last-step").load("http://chromeadblock.com/donate/install/index.php", $.param(QPS));
+            BGcall("get_statistics", function(stats) {
+              var iframe = $("<iframe>", {
+                src: "http://chromeadblock.com/pay/?source=I&header=install&" + $.param(stats), 
+                width: 750, height: 450, 
+                frameBorder: 0, scrolling: "no" 
+              });
+              $("#iframe-slot").html(iframe);
+            });
           });
         </script>
 

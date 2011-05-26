@@ -538,6 +538,14 @@
                     'scrollbars=0,location=0,resizable=0,width=450,height=140');
       };
 
+      // Return some general statistics.
+      get_statistics = function() {
+        var flavor = (SAFARI ? "S" : "E");
+        if (ADBLOCK.isApp) flavor = "A";
+        var installed_at = storage_get('installed_at');
+        return { installed_at: installed_at, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
+      }
+
       // Return chrome.i18n._getL10nData() for content scripts who cannot
       // call that function (since it loads extension files from disk.)
       // Only defined in Safari.
@@ -616,13 +624,12 @@
 
         var now = new Date().getTime();
         storage_set('installed_at', now);
-        var flavor = (SAFARI ? "safari" : "chrome_ext");
-        if (ADBLOCK.isApp) flavor = "chrome_app";
-        var data = { installed_at: now, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
+
+        var data = get_statistics();
         $.get("http://chromeadblock.com/api/visit.php", data);
 
         chrome.tabs.create({url: "pages/install/index.html?" + $.param(data)});
-        }
+      }
       note_install();
 
       // Take a census of filter subscriptions.

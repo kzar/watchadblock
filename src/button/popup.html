@@ -310,10 +310,13 @@
         $(function() {
           var state = "initial";
           var bodysize = { width: $("body").width(), height: $("body").height() };
+          var payHref = "http://chromeadblock.com/pay/?source=P&small=true";
+          BGcall("get_statistics", function(stats) {
+            payHref = payHref + "&" + $.param(stats);
+          });
           $("#pay_open").click(function() {
             if (state == "initial") {
-              $("#payment_wrapper iframe").
-                attr("src", "http://chromeadblock.com/donate/?src=chromepopup");
+              $("#payment_wrapper iframe").attr("src", payHref);
             }
             if (state == "open")
               return;
