@@ -183,10 +183,9 @@ Hi %(nickname)s!
 Happy ad blocking,
 - Michael
 
-PS: If you don't mind, would you go to http://chromeadblock.com/donate/thanks/
-and help me spread the word?  I tried setting it up so PayPal would show you
-that automatically after you donated, but it doesn't seem to work reliably.
-Anyway, it would help me IMMENSELY :)
+PS: If you didn't get sent to http://chromeadblock.com/pay/thanks/
+automatically by PayPal, would you mind going there and helping me spread the
+word?  It would help me IMMENSELY :)
 %(original)s
 """ % dict(nickname=self.order.nickname,
            main_thankyou_note = self.main_thankyou_note,

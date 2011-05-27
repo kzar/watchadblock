@@ -82,14 +82,14 @@
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 
-    <div id="donate_and_link" style="margin: 1em 0px;">
+    <div id="payment_and_link" style="margin: 1em 0px;">
       <div style="font-size: 16px;" 
-           i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
-      <a target="_new" href="http://chromeadblock.com/pay/" id="donatelink"></a>
+           i18n="paymentrequest" i18n_replacement_el="paymentlink"></div>
+      <a target="_new" href="http://chromeadblock.com/pay/" id="paymentlink"></a>
       <script>
         $(function() {
           BGcall("get_statistics", function(stats) {
-            $("#donatelink").attr("href", "http://chromeadblock.com/pay/?source=O&" + $.param(stats));
+            $("#paymentlink").attr("href", "http://chromeadblock.com/pay/?source=O&" + $.param(stats));
           });
         });
       </script>
