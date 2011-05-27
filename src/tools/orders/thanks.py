@@ -216,8 +216,8 @@ def mark_as_done_and_send_batch(m, orders):
             o.name.encode('utf-8'))
         try:
             subj = 'Thank you :)' if o.amount < 50 else 'Thank you so much! :D'
-            emails.send('adblockforchrome@gmail.com', o.email,
-                 subj, o.email_responder.get_response())
+            sender = 'adblockforchrome+safari' if o.flavor == 'safari' else 'adblockforchrome'
+            emails.send(sender, o.email, subj, o.email_responder.get_response())
             sending_errors = 0
         except:
             print "  %s Failed to send" % ("*" * 40)
