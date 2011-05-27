@@ -217,8 +217,9 @@ def mark_as_done_and_send_batch(m, orders):
         try:
             subj = 'Thank you :)' if o.amount < 50 else 'Thank you so much! :D'
             sender_suffix = '+safari' if o.flavor == safari else ''
-            sender = 'adblockforchrome%s@gmail.com' % sender_suffix
-            emails.send(sender, o.email, subj, o.email_responder.get_response())
+            _from = '"Michael Gundlach" <adblockforchrome%s@gmail.com>' % sender_suffix
+            to = '"%s" <%s>' % (o.name, o.email)
+            emails.send(_from, to, subj, o.email_responder.get_response())
             sending_errors = 0
         except:
             print "  %s Failed to send" % ("*" * 40)
