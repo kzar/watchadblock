@@ -82,14 +82,16 @@
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 
-    <div id="payment_and_link" style="margin: 1em 0px;">
-      <div style="font-size: 16px;" 
-           i18n="paymentrequest" i18n_replacement_el="paymentlink"></div>
-      <a target="_new" href="http://chromeadblock.com/pay/" id="paymentlink"></a>
+    <div style="margin: 1em 0px; font-size: 16px">
+      <a href="http://chromeadblock.com/pay/" target="_new" id="paymentlink"
+        i18n="did_you_know_this_is_my_full_time_job"></a>
       <script>
         $(function() {
           BGcall("get_statistics", function(stats) {
-            $("#paymentlink").attr("href", "http://chromeadblock.com/pay/?source=O&" + $.param(stats));
+            $('#paymentlink').click(function() {
+              var data = $.param(stats);
+              this.href = "http://chromeadblock.com/pay/?source=O&" + data;
+            });
           });
         });
       </script>
