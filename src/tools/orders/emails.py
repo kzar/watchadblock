@@ -111,6 +111,7 @@ class Order(object):
         date_tuple = email.utils.parsedate(message['date'])[:6]
         order.date = datetime.datetime(*date_tuple)
         order._parse_body(body)
+        order.body = body
         return order
 
     def _parse_tracking(self, text):
@@ -159,27 +160,40 @@ class GoogleOrder(Order):
 
 class PayPalOrder(Order):
     def _cleanup(self, text):
-        """Unescape =XX strings and remove \r lines."""
-        def replacer(match):
-            return chr(int(match.group(1), 16))
-        text = re.sub('=([0-9]{2})', replacer, text)
+        """Remove \r lines from a note."""
         text = text.replace('=\r\n', '')
         text = '\n'.join(text.split('\r\n'))
         text = text.strip()
         return text
 
     def _parse_body(self, body):
-        self.name = re.search('Contributor: (.*)', body).group(1).strip()
+        if 'You received a payment' in body:
+            self._parse_body_new(body)
+        else:
+            self._parse_body_old(body)
         self.nickname = self.name.split(' ')[0].title()
+        self._parse_tracking(body)
+
+    def _parse_body_old(self, body):
+        """Parse pre-(xclick/PPDG) emails."""
+        self.name = re.search('Contributor: (.*)', body).group(1).strip()
         match = re.search('Total amount: *(=24|\$)(.*?) USD', body)
-        self.amount = float(match.group(2).strip())
+        self.amount = float(match.group(2))
         match = re.search('Message: (.*?)-----------', body, re.DOTALL)
         if not match:
             match = re.search('payment: Note: (.*?)Contributor:',
                                   body, re.DOTALL)
         if match:
             self.note = self._cleanup(match.group(1))
-        self._parse_tracking(body)
+
+    def _parse_body_new(self, body):
+        """Parse xclick/PPDG emails."""
+        regex = 'Buyer(?: information)?:\r?\n(.*)'
+        self.name = re.search(regex, body, re.MULTILINE).group(1).strip()
+        match = re.search('Total: \$(.*?) USD', body)
+        self.amount = float(match.group(1))
+        # If a note existed, it would be 'Instructions to merchant' or
+        # 'Instructions from buyer'
 
 
 def send(from_, to, subject, body):
