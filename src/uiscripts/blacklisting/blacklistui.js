@@ -313,11 +313,7 @@ BlacklistUi.prototype._makeFilter = function() {
   }
   var attrs = [ 'id', 'class', 'name', 'src', 'href' ];
   function fixStr(str) {
-    var q;
-    if (str.indexOf('"') != -1)
-        q = "'";
-    else 
-        q = '"';
+    var q = str.indexOf('"') != -1 ? "'" : '"';
     return q + str + q;
   }
   for (var i in attrs) {
