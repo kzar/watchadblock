@@ -312,9 +312,10 @@ BlacklistUi.prototype._makeFilter = function() {
     }
   }
   var attrs = [ 'id', 'class', 'name', 'src', 'href' ];
+  var rx = /"/g;
   for (var i in attrs) {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
-      result.push('[' + attrs[i] + '="' + el.attr(attrs[i]) + '"]');
+      result.push('[' + attrs[i] + '="' + el.attr(attrs[i]).replace(rx, "'") + '"]');
   }
 
   var warningMessage;
