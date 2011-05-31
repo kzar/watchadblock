@@ -52,11 +52,18 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "uiscripts/blacklisting/rightclick_hook.js",
         "adblock.js"
       ],
       "run_at": "document_end",
       "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "uiscripts/blacklisting/rightclick_hook.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
     }
   ],
   "default_locale": "en"
