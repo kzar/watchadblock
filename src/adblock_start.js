@@ -10,19 +10,27 @@ GLOBAL_contentScriptData = {
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
     // Author: Tom Joseph of AdThwart
-    
-    if(!url)
-        return url;
+
+    if (!url)
+      return url;
+
     // If URL is already absolute, don't mess with it
-    if(/^[a-z\-]+\:\/\//.test(url))
-        return url;
-    // Leading / means absolute path
-    if(url[0] == '/')
-        return document.location.protocol + "//" + document.location.host + url;
+    if (/^[a-z\-]+\:\/\//.test(url))
+      return url;
+
+    if (url[0] == '/') {
+      // Leading // means only the protocol is missing
+      if (url[1] && url[1] == "/")
+        return document.location.protocol + url;
+
+      // Leading / means absolute path
+      return document.location.protocol + "//" + document.location.host + url;
+    }
 
     // Remove filename and add relative URL to it
     var base = document.baseURI.match(/.+\//);
-    if(!base) return document.baseURI + "/" + url;
+    if (!base) 
+      return document.baseURI + "/" + url;
     return base[0] + url;
 }
 
