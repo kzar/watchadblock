@@ -188,15 +188,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock won't run on domains ending in<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
+  "whitelistertext1": {
+    "message": "AdBlock won't run on this page:",
+    "description": "The message of the whitelister dialog, putting the URL on a separate line"
   },
   "whitelistertitle": {
     "message": "Exclude this domain?",
@@ -992,25 +986,13 @@
     "message": "AdBlock can not run on this domain.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Don't run on $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "dont_run_on_pages_on_domain": {
+    "message": "Don't run on pages on this domain",
+    "description": "Menu entry to open the whitelist wizard."
   },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock is disabled on $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "disabled_on_this_page": {
+    "message": "AdBlock is disabled on this page.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "undo": {
     "message": "Undo",
@@ -1018,7 +1000,7 @@
   },
   "enable": {
     "message": "enable",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused": {
     "message": "AdBlock is paused.",
@@ -1197,5 +1179,13 @@
   "ok_now_what": {
     "message": "OK, now what? ",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Specify the domain:",
+    "description": "whitelist wizard: modify the domain part of an URL"
+  },
+  "modifylocation": {
+    "message": "Specify the page location:",
+    "description": "whitelist wizard: modify the location part of an URL"
   }
 }

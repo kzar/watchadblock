@@ -143,16 +143,6 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock nu va rula pe domenii care se termină în<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
   "whitelistertitle": {
     "message": "Exclude acest domeniu?",
     "description": "The title of the whitelister dialog"
@@ -701,16 +691,6 @@
     "message": "Noi nu putem bloca anunţurile în interiorul plugin-uri Flash şi alte încă. Suntem în aşteptare de sprijin pentru browser şi WebKit.",
     "description": "Result of the final ad report question"
   },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock este dezactivat pe $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
   "addthisfilter": {
     "message": "Adaugă acest filtru",
     "description": "resourceblocking page string"
@@ -781,23 +761,13 @@
     "message": "Scuze, AdBlock este dezactivat pe această pagină de una din listele tale filtru.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
   },
-  "dont_run_on_domain": {
-    "message": "Nu rula pe $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
   "dont_run_on_this_page": {
     "message": "Nu rula pe această pagină",
     "description": "Menu entry to whitelist a page"
   },
   "enable": {
     "message": "permite",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
    "excludedomainorurl": {
     "message": "Domeniul sau url unde AdBlock nu trebuie să blocheze nimic",
