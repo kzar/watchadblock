@@ -188,12 +188,24 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext1": {
-    "message": "AdBlock won't run on this page:",
-    "description": "The message of the whitelister dialog, putting the URL on a separate line"
+  "adblock_wont_run_anywhere_on_this_website": {
+    "message": "AdBlock won't run anywhere on this website:",
+    "description": "Message displayed when the whitelister dialog will whitelist an entire website.  The URL will appear on the next line."
   },
-  "whitelistertitle": {
-    "message": "Exclude this domain?",
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock won't run on pages matching:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblock_wont_run_on_this_page": {
+    "message": "AdBlock won't run on this page:",
+    "description": "Message displayed when the whitelister dialog will whitelist a single webpage.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "You can slide below to change exactly what pages AdBlock won't run on.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Don't run AdBlock on...",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
@@ -1181,11 +1193,11 @@
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   },
   "modifydomain": {
-    "message": "Specify the domain:",
-    "description": "whitelist wizard: modify the domain part of an URL"
+    "message": "Site:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
   },
-  "modifylocation": {
-    "message": "Specify the page location:",
-    "description": "whitelist wizard: modify the location part of an URL"
+  "modifypath": {
+    "message": "Page:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }
