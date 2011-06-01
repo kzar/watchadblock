@@ -331,6 +331,12 @@ if (SAFARI) {
         var urlToOpen = chrome.extension.getURL(options.url);
         window.openTab("foreground").url = urlToOpen;
       }
+    },
+
+    browserAction: {
+      setTitle: function() { },
+      setBadgeBackgroundColor: function() { },
+      setBadgeText: function() { }
     }
   };
 }

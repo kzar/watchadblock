@@ -544,7 +544,16 @@
         if (ADBLOCK.isApp) flavor = "A";
         var installed_at = storage_get('installed_at');
         return { installed_at: installed_at, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
-      }
+      };
+
+      // The string to display to the user in the "new version" div.
+      // Update this whenever a release warrants a browser action
+      // badge and an info div in the popup.  Note that it is
+      // not compared with the manifest/Info.plist -- you can set it to
+      // whatever value you want.
+      get_version_to_notify = function() {
+        return '2.3.0';
+      };
 
       // Return chrome.i18n._getL10nData() for content scripts who cannot
       // call that function (since it loads extension files from disk.)
@@ -587,15 +596,7 @@
 
       // BROWSER ACTION BADGE
       (function() {
-        if (SAFARI)
-          return;
-
-        // The string to display to the user in the "new version" div.
-        // Update this whenever a release warrants a browser action
-        // badge and an info div in the popup.  Note that it is
-        // not compared with the manifest -- you can set it to whatever
-        // value you want.
-        version_to_notify = '2.3.0';
+        var version_to_notify = get_version_to_notify();
 
         // Brand new users don't see badge (or popup's info div).
         if (!storage_get('installed_at')) {
@@ -685,9 +686,9 @@
         }, false);
 
         safari.application.addEventListener("command", function(commandEvent) {
-          // Open Options page upon Toolbar button click.
-          if (commandEvent.command == "AdBlockOptions")
-            chrome.tabs.create({url: "options/index.html"});
+          // Open popup upon toolbar button click.
+          if (commandEvent.command == "ToolbarButtonClick")
+            window.open(chrome.extension.getURL("button/safari.html", "popup", 'width=300,height=400,location=0,status=0,scrollbars=0');
           if (commandEvent.command in 
               {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
             safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
