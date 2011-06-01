@@ -308,9 +308,13 @@ BlacklistUi.prototype._makeFilter = function() {
     }
   }
   var attrs = [ 'id', 'class', 'name', 'src', 'href' ];
+  function fixStr(str) {
+    var q = str.indexOf('"') != -1 ? "'" : '"';
+    return q + str + q;
+  }
   for (var i in attrs) {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
-      result.push('[' + attrs[i] + '="' + el.attr(attrs[i]) + '"]');
+      result.push('[' + attrs[i] + '=' + fixStr(el.attr(attrs[i])) + ']');
   }
 
   var warningMessage;
