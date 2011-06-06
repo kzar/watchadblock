@@ -7,7 +7,6 @@
     "message": "Блокирует рекламу по всему Интернету!  Любимо миллионами пользователей Chrome и Safari!",
     "description": "App description used in app version manifest"
   },
-
   "buttoncancel": {
     "message": "Отмена",
     "description": "Cancel button"
@@ -189,13 +188,30 @@
     "message": "Щелкните по рекламе, и я доведу Вас до ее блокировки.",
     "description": "When you have to click the ad to continue"
   },
-  "whitelistertitle": {
-    "message": "Исключить этот домен?",
+
+  "adblock_wont_run_anywhere_on_this_website": {
+    "message": "AdBlock не будет работать ни где на этом сайте:",
+    "description": "Message displayed when the whitelister dialog will whitelist an entire website.  The URL will appear on the next line."
+  },
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock не будет работать на соответствующих страницах:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblock_wont_run_on_this_page": {
+    "message": "AdBlock не будет работать на этой странице:",
+    "description": "Message displayed when the whitelister dialog will whitelist a single webpage.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Вы можете сдвинуться ниже, чтобы изменить именно те страницы, на которых AdBlock не будет работать.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Не запускать AdBlock на...",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
     "message": "Исключить",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -983,6 +999,14 @@
     "message": "AdBlock не работает на этом домене.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
+  "dont_run_on_pages_on_domain": {
+    "message": "Не запускайте на страницах этого домена",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock отключен на этой странице.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
   "undo": {
     "message": "Отмена",
     "description": "Button text to undo an action."
@@ -1168,5 +1192,13 @@
   "ok_now_what": {
     "message": "OK, что теперь? ",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Сайт:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Стр.:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }

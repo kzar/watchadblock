@@ -60,10 +60,6 @@
     "message": "За да скриете бутона, щракнете с десен по него и посочете Скрий бутона. Можете да го покажете отново от Ключ | Инструменти | Разширения.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "chromebutton_hide_macOSX": {
-    "message": "Chrome за OS X няма да поддържа напълно скриването на бутони още няколко седмици. Дотогава можете да преместите бутона извън вашето полезрение като влачите ръба на адресната лента надясно.",
-    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
-  },
   "youtubevideomessage": {
     "message": "Нямате картина? Презаредете страницата. Ако се случва често, забранете блокирането на реклами в YouTube от $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -192,23 +188,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock няма да се изпълнява за домейни, завършващи на<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Изключване на домейна?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Изключи",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -995,26 +977,6 @@
   "status_disabled": {
     "message": "Изпълнение на AdBlock за домейна е невъзможно.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
-  },
-  "dont_run_on_domain": {
-    "message": "Не изпълнявай за $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock е забранено за $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
   },
   "undo": {
     "message": "Отмени",
