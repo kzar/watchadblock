@@ -156,14 +156,15 @@ removeAdRemains = function(el, event) {
     $(el).replaceWith(replacement);
   } else {
     // There probably won't be many sites that modify all of these.
-    // However, if we get issues, we might get to setting the location
-    // (css: position, left, top), and/or the width/height (el.width = 0)
-    // The latter will maybe even work when the page uses element.style = "";
+    // However, if we get issues, we might get to setting the location and size
+    // (css: position, left, top, width, height)
     $(el).css({
       "display": "none !important",
       "visibility": "hidden !important",
       "opacity": "0 !important",
-    });
+    }).
+    attr("width", "0px").
+    attr("height", "0px");
   }
 }
 
