@@ -132,6 +132,8 @@ function block_list_via_css(selectors) {
   var d = document.documentElement;
   var css_chunk = document.createElement("style");
   css_chunk.type = "text/css";
+  // Handle issue 5643
+  css_chunk.style.display = "none !important";
   css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
                         + css_hide_for_selectors(selectors);
   d.insertBefore(css_chunk, null);
