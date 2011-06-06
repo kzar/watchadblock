@@ -3,11 +3,6 @@
     "message": "Chromen suosituin lisäosa. Sitä käyttää yli kaksi miljoonaa käyttäjää! Estää kaikki mainokset.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "Chromen suosituin lisäosa -- harkitse myös 1.99 dollarin maksamista AdBlockille sen sijaan, että asentaisit tämän :)",
-    "description": "Extension description used in free version manifest"
-  },
-
   "buttoncancel": {
     "message": "Peruuta",
     "description": "Cancel button"
@@ -33,31 +28,10 @@
     "message": "AdBlock on nyt asennettu!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Päivitä avoimet välilehdet ja näet mainosten katoavan.",
-    "description": "Message on the installation success page"
-  },
-  "donaterequest2": {
-    "message": "Lopetin jonkin aikaa sitten työni käyttääkseni kaikki aikani AdBlockille!  Nyt luotan täysin lahjoituksiisi.  Auta perhettäni <a>lahjoittamalla</a> auttaaksesi meitä maksamaan laskunne -- todista, että vaimoni ja minä (kuvassa) emme ole hulluja yrittäessämme tätä.  Kiitos :) - Michael",
-    "description": "Donation request on installation success page"
-  },
-  "setotheroptions": {
-    "message": "Voit asettaa lisäasetuksia ja ottaa suodatinlistoja käyttöön siirtymällä Jakoavain-kuvake | Työkalut | Laajennukset | AdBlock | Asetukset.",
-    "description": "Message on installation success page"
-  },
   "chromebutton_how_to_hide": {
     "message": "Piilottaaksesi painikkeen, napsauta sitä hiiren oikealla näppäimellä ja valitse Piilota painike. Voit ottaa painikkeen käyttöön uudestaan siirtymällä Jakoavain-kuvake | Työkalut | Lisäosat.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "chromebutton_hide_macOSX": {
-    "message": "OS X:n Chrome ei tue täysin painikkeiden piilotusta (väliaikaisesti).  Voit kuitenkin siirtää painikkeen pois tieltä vetämällä osoitepalkin kulmasta oikealle.",
-    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
-  },
-  "chromebutton_showoption": {
-    "message": "Lisää AdBlock-painike jakoavaimen viereen",
-    "description": "Message on installation success page"
-  },
-
   "youtubevideomessage": {
     "message": "Etkö näe videota? Lataa sivu. Jos tätä tapahtuu usein, poista YouTube-mainosten esto käytöstä kohdassa $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -186,28 +160,10 @@
     "message": "Napsauta mainosta estääksesi sen.",
     "description": "When you have to click the ad to continue"
   },
-  "advanced_show_url_list": {
-    "message": "tai valitse estettävä osoite listalta (edistyneille käyttäjille)",
-    "description": "Message on link to open resource blocker instead of use blacklister"
-  },
 
-  "whitelistertext": {
-    "message": "AdBlock ei ole käytössä osoitteissa, jotka päättyvät<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Poista käytöstä tässä osoitteessa?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Poista käytöstä",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -383,14 +339,6 @@
     "message": "Ota käyttöön",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Ota kaikki suodattimet käyttöön:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Poista kaikki suodattimet käytöstä:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Näytä linkit suodatinlistoille:",
     "description": "Option on second tab page"
@@ -555,10 +503,6 @@
   "savereminder": {
     "message": "Muista tallentaa!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Kehittyneet asetukset",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Ilmoita mainos</a> AdBlockille tai suodatinlistojen ylläpitäjille.",
@@ -795,11 +739,6 @@
     "message": "Jos näet tämän viestin joka kerta käynnistäessäsi AdBlockin, varmista, että et käytä tiedostojen poisto-ohjelmaa, joka poistaa myös 'localStorage' -tiedostot.",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "Pika-asetuksia",
-    "description": "Title of the options on the installation succes page"
-  },
-
   "typehiding": {
     "message": "piilottaminen",
     "description": "A resource type (lowercase!)"
@@ -861,10 +800,6 @@
   "filterhasbeenadded": {
     "message": "Suodatin lisättiin onnistuneesti!\nPäivitä sivu nähdäksesi tuloksen!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
-  },
-  "whitelistedorpausedpage": {
-    "message": "Tämä sivu on sallittu tai AdBlock on poistettu käytöstä. Tästä syystä kohteita ei piiloteta, joten tätä sivua ei voida käyttää",
-    "description": "resourceblocking page string"
   },
   "noresourcessend": {
     "message": "Jotain meni vikaan. Kohteita ei lähetetty. Tämä sivu sulkeutuu nyt.",
@@ -1000,29 +935,9 @@
     "message": "AdBlock ei voi toimia tässä verkkotunnuksessa.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Ei käytössä verkkotunnuksessa $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock on pois käytöstä verkkotunnuksessa $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
   "enable": {
     "message": "ota käyttöön",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused": {
     "message": "AdBlock on pysäytetty.",
@@ -1050,7 +965,7 @@
   },
   "did_you_know_this_is_my_full_time_job": {
     "message": "Tiesitkö, että tämä on kokopäivätyöni?",
-    "description": "Text of a donation link on toolbar button"
+    "description": "Text of a payment request link"
   },
   "removelabel": {
     "message": "Poista",
@@ -1063,5 +978,15 @@
   "typepage": {
     "message": "sivu",
     "description": "A resource type (lowercase!)"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "ollinpos",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

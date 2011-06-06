@@ -13,6 +13,19 @@ function MyFilters() {
   if (!this._subscriptions) {
     // Brand new user. Install some filters for them.
     this._subscriptions = this._load_default_subscriptions();
+  } 
+  else if (!storage_get("subscribed_list_for_language") && 
+          storage_get("installed_at") <= new Date().setFullYear(2010, 11, 3) &&
+          !/^en/.test(navigator.language) && !storage_get("visited_options_at")) {
+    // TEMP: installed April 2011. Users from before we started autosubscribing
+    // do not have the language-specific lists. Subscribe them to it.
+    // When removing this code, make sure to remove the localStorage entry
+    storage_set("subscribed_list_for_language", true);
+    var recommended = MyFilters._load_default_subscriptions();
+    for (var list in recommended) {
+      if (stored_subscriptions[list].subscribed) continue;
+      stored_subscriptions[list] = recommended[list];
+    }
   }
 
   for (var id in this._subscriptions) {
@@ -81,11 +94,10 @@ MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   if (rebuild)
     this.rebuild();
 
-  chrome.extension.getBackgroundPage().utils.emit_broadcast(
-                                          {fn: 'filters_updated', options: {}});
+  chrome.extension.sendRequest({command: "filters_updated"});
 }
 
-// Rebuild this.[non]global based on the current settings and subscriptions.
+// Rebuild filters based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
   var utils = chrome.extension.getBackgroundPage().utils;
@@ -94,13 +106,15 @@ MyFilters.prototype.rebuild = function() {
       texts.push(this._subscriptions[id].text);
 
   // Include custom filters.
-  var customfilters = utils.storage_get({key: 'custom_filters', default_value: ''});
+  var customfilters = get_custom_filters_text(); // from background
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (utils.get_optional_features({}).show_google_search_text_ads.is_enabled)
-    texts.push("@@||google.*/search?$elemhide");
+  if (get_settings().show_google_search_text_ads) {
+    texts.push("@@||google.*/search?$elemhide"); // standard search
+    texts.push("@@||www.google.*/|$elemhide");   // Google Instant
+  }
 
   texts = texts.join('\n').split('\n');
 
@@ -109,13 +123,21 @@ MyFilters.prototype.rebuild = function() {
   delete hash[''];
   texts = []; for (var unique_text in hash) texts.push(unique_text);
 
-  var filterset_data = FilterSet.fromText(texts.join('\n'), true);
-  this.nonglobal = filterset_data.nonglobal;
-  this.global = filterset_data.global;
-  // Chrome needs to send the same data about global filters to content
-  // scripts over and over, so calculate it once and cache it.
-  this.global.cached_getSelectors = this.global.getSelectors();
-  this.global.cached_blockFiltersText = this.global.getBlockFilters().join('\n') + '\n';
+  var hidingText = [];
+  var whitelistText = [];
+  var patternText = [];
+  for (var i = 0; i < texts.length; i++) {
+    if (Filter.isSelectorFilter(texts[i]))
+      hidingText.push(texts[i]);
+    else if (Filter.isWhitelistFilter(texts[i]))
+      whitelistText.push(texts[i]);
+    else
+      patternText.push(texts[i]);
+  }
+  this.hiding = FilterSet.fromTexts(hidingText);
+  this.blocking = new BlockingFilterSet(
+    FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
+  );
 }
 
 // Change a property of a subscription or check if it has to be updated

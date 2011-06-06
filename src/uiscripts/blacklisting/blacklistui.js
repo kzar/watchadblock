@@ -48,6 +48,8 @@ BlacklistUi.prototype._fire = function(eventName, arg) {
 }
 BlacklistUi.prototype._onClose = function() {
   if (this._cancelled == true) {
+    this._ui_page1.empty().remove();
+    this._ui_page2.empty().remove();
     this._chain.current().show();
     this._fire('cancel');
   }
@@ -117,7 +119,8 @@ BlacklistUi.prototype._build_page1 = function() {
         type = "subdocument";
       var srcUrl = relativeToAbsoluteUrl(el.attr("src") || el.attr("data"));
       var tabUrl = document.location.href;
-      var query = '?' + type + '=' + escape(srcUrl) + '&url=' + escape(tabUrl);
+      var query = '?itemType=' + type + '&itemUrl=' + escape(srcUrl) + 
+                  '&url=' + escape(tabUrl);
       window.open(chrome.extension.getURL('pages/resourceblock.html' 
             + query), "_blank", 'location=0,width=1024,height=590');
       e.preventDefault();
@@ -129,10 +132,9 @@ BlacklistUi.prototype._build_page1 = function() {
   var page = $("<div>").
     append(translate("sliderexplanation")).
     append("<br/>").
-    append("<div id='slider'></div>").
+    append("<input id='slider' type='range' min='0' value='0'/>").
     append("<div id='selected_data' style='font-size:smaller; height:7em'></div>").
     append(link_to_block);
-
 
   var btns = {};
   btns[translate("buttonlooksgood")] = 
@@ -147,7 +149,6 @@ BlacklistUi.prototype._build_page1 = function() {
   btns[translate("buttoncancel")] = 
       function() {
         that._ui_page1.dialog('close');
-        page.remove();
       }
 
   page.dialog({
@@ -174,13 +175,10 @@ BlacklistUi.prototype._build_page1 = function() {
     depth++;
   }
   $("#slider", page).
-    css('margin', 10).
-    slider({
-      min:0, 
-      max:Math.max(depth - 1, 1),
-      slide: function(event, ui) {
-        that._chain.moveTo(ui.value);
-      }
+    css('width', '364px').
+    attr("max", Math.max(depth - 1, 1)).
+    change(function() {
+      that._chain.moveTo(this.valueAsNumber);
     });
 
   return page;
@@ -213,9 +211,9 @@ BlacklistUi.prototype._build_page2 = function() {
   btns[translate("buttonblockit")] =
       function() {
         if ($("#summary", that._ui_page2).text().length > 0) {
-          var filter = document.domain + "##" + 
+          var filter = document.location.hostname + "##" + 
                        $("#summary", that._ui_page2).text();
-          extension_call('add_custom_filter', { filter: filter }, function() {
+          BGcall('add_custom_filter', filter, function() {
             that._fire('block');
           });
           that._ui_page2.dialog('close');
@@ -224,24 +222,22 @@ BlacklistUi.prototype._build_page2 = function() {
   btns[translate("buttoncancel")] =
       function() {
         that._ui_page2.dialog('close');
-        page.remove();
       }
   btns[translate("buttonedit")] =
       function() {
-        var custom_filter = document.domain + '##' + $("#summary", that._ui_page2).text();
+        var custom_filter = document.location.hostname + '##' + $("#summary", that._ui_page2).text();
         that._ui_page2.dialog('close');
         custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
         if (custom_filter) {//null => user clicked cancel
-          if (custom_filter.indexOf('##') == -1) 
+          if (!/\#\#/.test(custom_filter)) 
             custom_filter = "##" + custom_filter;
-          extension_call('add_custom_filter', { filter: custom_filter }, function(ex) {
+          BGcall('add_custom_filter', custom_filter, function(ex) {
             if (!ex)
               that._fire('block');
             else
               alert(translate("blacklistereditinvalid1", ex));
           });
         }
-        page.remove();
       }
   btns[translate("buttonback")] = 
       function() {
@@ -312,9 +308,13 @@ BlacklistUi.prototype._makeFilter = function() {
     }
   }
   var attrs = [ 'id', 'class', 'name', 'src', 'href' ];
+  function fixStr(str) {
+    var q = str.indexOf('"') != -1 ? "'" : '"';
+    return q + str + q;
+  }
   for (var i in attrs) {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
-      result.push('[' + attrs[i] + '="' + el.attr(attrs[i]) + '"]');
+      result.push('[' + attrs[i] + '=' + fixStr(el.attr(attrs[i])) + ']');
   }
 
   var warningMessage;

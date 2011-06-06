@@ -3,11 +3,42 @@
     "message": "De meest populaire Chrome extensie, met meer dan 2 miljoen gebruikers! Blokkeert advertenties op het internet.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "De meest populaire Chrome extensie, met meer dan 2 miljoen gebruikers! Blokkeert advertenties op het internet. Overweeg a.u.b. om de betaalde versie voor $1,99 aan te schaffen.",
-    "description": "Extension description used in free version manifest"
+  "app_description1": {
+    "message": "Blokkeert advertenties op het web. Miljoenen gebruiken het in Chrome en Safari",
+    "description": "App description used in app version manifest"
   },
-
+  "setotheroptions_safari": {
+    "message": "Andere instellingen kunnen worden gewijzigd via de opties pagina die je vindt als je op de knop in de werkbalk klikt.",
+    "description": "Message on Safari installation success page for extension"
+  },
+  "setotheroptions_chrome_ext": {
+    "message": "Andere instellingen kunnen worden gewijzigd als je op de knop in de werkbalk klikt, of via de pagina met opties.",
+    "description": "Message on Chrome extension installation success page for extension"
+  },
+  "setotheroptions_chrome_app": {
+    "message": "Andere instellingen kunnen worden gewijzigd in de opties pagina, welke je vindt als je met de rechtermuisknop op een webpagina klikt",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Let op: AdBlock is twee maal geïnstalleerd!",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "Zowel de extensie als de app zijn geïnstalleerd. Slechts één is nodig. De ander zal je alleen maar vertragen.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "Om dit op te lossen, verwijder de extensie van <a>je extensies</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
+  },
+  "unpause_adblock": {
+    "message": "AdBlock niet meer pauzeren",
+    "description": "Context menu entry unpause AdBlock."
+  },
+  "undo": {
+    "message": "Ongedaan maken",
+    "description": "Button text to undo an action."
+  },
   "buttoncancel": {
     "message": "Annuleren",
     "description": "Cancel button"
@@ -158,23 +189,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock zal niets blokkeren op domein<br/>$domain$.",
-    "description": "The message of the whitelister dialog",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Dit domein uitsluiten?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Uitsluiten!",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -378,14 +395,6 @@
   "subscribebutton": {
     "message": "Aanmelden",
     "description": "subscribe to a list button"
-  },
-  "subscribetoall": {
-    "message": "Bij alle lijsten aanmelden:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Bij alle lijsten afmelden:",
-    "description": "option on second tab page"
   },
   "showlinkstolists": {
     "message": "Toon links naar de lijsten:",
@@ -729,10 +738,6 @@
       }
     }
   },
-  "advanced": {
-    "message": "Extra",
-    "description": "Section label for advanced options"
-  },
   "reportanad": {
     "message": "<a>rapporteer een advertentie</a> aan de beheerders van de filter lijsten.",
     "description": "A link for users who found an ad somewhere and want to report it"
@@ -750,29 +755,9 @@
     "message": "AdBlock is nu geïnstalleerd!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Herlaad alle geopende tabbladen, en de advertenties zullen verdwijnen.",
-    "description": "Message on the installation success page"
-  },
-  "donaterequest2": {
-    "message": "Ik werk nu full time aan AdBlock! Hierdoor ben ik afhankelijk van donaties om mijn gezin te onderhouden. <a>Doneer</a> a.u.b. en geef daarmee aan dat mijn vrouw en ik (afgebeeld) niet gek zijn om dit te proberen. Alvast bedankt :) - Michael",
-    "description": "Donation request on installation success page"
-  },
-  "setotheroptions": {
-    "message": "Meer opties kun je vinden in het gereedschap menu > Extra > Extensies > AdBlock Opties.",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "Toon een knop in de taakbalk",
-    "description": "Message on installation success page"
-  },
   "filecleanerwarning": {
     "message": "Als je dit scherm vaker ziet, controleer dan of je geen programma hebt dat automatisch bestanden verwijdert, zoals 'localstorage'.",
     "description": "Help for users who use hyperactive file cleaners"
-  },
-  "somequicksetup": {
-    "message": "Snelle instellingen",
-    "description": "Title of the options on the installation succes page"
   },
   "flashads": {
     "message": "Videos en Flash",
@@ -789,10 +774,6 @@
   "cleanuplist": {
     "message": "Controleer deze filters en ruim ze op indien nodig:",
     "description": "Option at the bottom of the third options tab"
-  },
-  "chromebutton_hide_macOSX": {
-    "message": "Chrome staat Mac OSX gebruikers nog niet toe de knop volledig te verbergen. Je kunt het uit het zicht plaatsen door de rechterkant van de adresbalk naar rechts te slepen.",
-    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
   },
   "new_version": {
     "message": "Nieuwe versie!",
@@ -821,32 +802,20 @@
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
   },
   "status_disabled": {
-    "message": "AdBlock kan op deze pagina niet actief zijn.",
+    "message": "AdBlock is niet actief op deze pagina.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Blokkeer niets op $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "dont_run_on_pages_on_domain": {
+    "message": "Blokkeer niets op pagina's op dit domein",
+    "description": "Menu entry to open the whitelist wizard."
   },
-  "adblock_is_disabled_on_domain": {
-    "message": "$domain$ is uitgesloten van het blokkeren van advertenties.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "disabled_on_this_page": {
+    "message": "Deze pagina is uitgesloten van het blokkeren van advertenties.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "enable": {
     "message": "opnieuw inschakelen",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "block_an_ad_on_this_page": {
     "message": "Blokkeer een advertentie op de pagina",
@@ -882,7 +851,7 @@
   },
   "did_you_know_this_is_my_full_time_job": {
     "message": "Wist je dat dit mijn full-time werk is?",
-    "description": "Text of a donation link on toolbar button"
+    "description": "Text of a payment request link"
   },
     "removelabel": {
     "message": "Verwijderen",
@@ -924,10 +893,6 @@
     "message": "onbekend",
     "description": "A resource type (lowercase!)"
   },
-  "advanced_show_url_list": {
-    "message": "of zoek een te blokkeren URL in de lijst met geladen items",
-    "description": "Message on link to open resource blocker instead of use blacklister"
-  },
   "block_by_url_instead": {
     "message": "of blokkeer dit item in plaats van het te verbergen",
     "description": "Link on blacklister slider page"
@@ -966,9 +931,13 @@
     "message": "Het filter is succesvol toegevoegd!\nHerlaad de pagina om het resultaat te zien!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "De pagina is uitgesloten of AdBlock is gepauzeerd. Daarom is er niet bijgehouden wat er geladen is. Deze pagina zal nu sluiten.",
+  "adblock_is_paused": {
+    "message": "AdBlock is gepauzeerd. Daarom is er niet bijgehouden wat er geladen is. Deze pagina zal nu sluiten.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Het filter is verwijderd. Herlaadt de pagina om de lijst met geladen items te genereren.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "Er is iets fout gegaan. De geladen items op de pagina zijn niet doorgestuurd. Deze pagina zal nu sluiten.",
@@ -1061,5 +1030,175 @@
   "changelabel": {
     "message": "wijzig",
     "description": "link to change resources on the resourceblock page"
+  },
+  "brokensite_beta_option": {
+    "message": "Probeer enkele problemen waar de paginainhoud niet goed werkt op te lossen.",
+    "description": "option on the first options page"
+  },
+  "brokensite_beta_description": {
+    "message": "Als je advertenties ziet die je niet ziet wanneer je deze optie uitzet, <a>rapporteer</a> dat dan aub!",
+    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+  "translator_credit": {
+    "message": "Vertaling door $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Famlam",
+        "example": "Michael G, Drew R"
+      }
+    }
+  },
+  "report_ad_on_page": {
+    "message": "Rapporteer een advertentie",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Toon de lijst met geladen items",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Ik ben een gevorderd gebruiker. Toon me gevorderde opties.",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "Bij alle lijsten $subscribe$ / $unsubscribe$.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>aanmelden</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>afmelden</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Je hebt AdBlock! Hoera!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Nieuwe pagina's die je opent zijn vanaf nu advertentievrij.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "AdBlock installeren...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "klaar.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Zie je dit elke keer dat je je browser start?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "AdBlock instellen",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Maak de installatie af door de volgende vraag te beantwoorden:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "Dat was gemakkelijk!",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "AdBlock instellen!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Eerst moet je <b>automatische updates inschakelen</b>, zodat fouten zo snel mogelijk verholpen kunnen worden.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Automatische updates zijn <b>belangrijk!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Hoe?",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, automatische updates zijn ingeschakeld",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "Om automatische updates aan te zetten:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Klik op de <b>knop rechtsbovenaan -&gt; Voorkeuren</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Klik <b>Extensies</b> aan de bovenkant.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "Linksonder, klik op <b>Updates</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Klik op de <b>Installeer updates automatisch</b> optie.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "Hoe kan ik AdBlock gebruiken:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": "AdBlock blokkeert advertenties automatisch. U hoeft niets te doen.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "Voor meer opties, klik met de rechtermuisknop op een pagina of klik op de $img$ knop.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, en nu? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "Ik wil de tekstadvertenties op Google kunnen zien.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
+  },
+  "adblock_wont_run_anywhere_on_this_website": {
+    "message": "AdBlock zal niets doen op deze website:",
+    "description": "Message displayed when the whitelister dialog will whitelist an entire website.  The URL will appear on the next line."
+  },
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock zal niets doen op pagina's die voldoen aan:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblock_wont_run_on_this_page": {
+    "message": "AdBlock zal niets doen op deze pagina:",
+    "description": "Message displayed when the whitelister dialog will whitelist a single webpage.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Beweeg de balken beneden om aan te geven waar precies AdBlock niets moet doen.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Doe niets op...",
+    "description": "The title of the whitelister dialog"
+  },
+  "modifydomain": {
+    "message": "Domein:",
+    "description": "whitelist wizard: modify the domain part of an URL"
+  },
+  "modifypath": {
+    "message": "pad:",
+    "description": "whitelist wizard: modify the domain part of an URL"
   }
 }

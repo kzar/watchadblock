@@ -3,11 +3,6 @@
     "message": "1.5 milyon kullanıcıyla en popüler Chrome eklentisi!  İnternetteki çoğu reklamı engeller.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "En popüler Chrome eklentisi -- fakat lütfen bunu kurmak yerine AdBlock için $1.99 bağışlayın :)",
-    "description": "Extension description used in free version manifest"
-  },
-
   "buttoncancel": {
     "message": "İptal",
     "description": "Cancel button"
@@ -33,19 +28,6 @@
     "message": "AdBlock kuruldu!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Açık olan sekmelerden birini yeniden yükleyin ve reklamlardan kurtulun.",
-    "description": "Message on the installation success page"
-  },
-  "setotheroptions": {
-    "message": "Farklı ayarlar ve filtreler için İngiliz Anahtarı | Araçlar | Uzantılar | AdBlock Ayarları menülerini takip edin.",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "Araç çubuğunda buton göster",
-    "description": "Message on installation success page"
-  },
-
   "youtubevideomessage": {
     "message": "Video yok mu? Sayfayı yenileyin. Eğer bu çok oluyorsa YouTube reklamları engelini $link$ kısmından kaldırın.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -161,23 +143,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "$domain$ <br/> adresleriyle biten sayfalardaki reklamlar engellenmez.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Bu adresi istanalara ekle?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "İstisnalar",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -349,14 +317,6 @@
     "message": "Abone ol",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Tüm filtrelere abone ol:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Tüm filtre aboneliklerinden çık:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Filtre listelerine bağlantı göster:",
     "description": "Option on second tab page"
@@ -497,10 +457,6 @@
   "savereminder": {
     "message": "Kaydetmeyi unutmayın!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Gelişmiş",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "AdBlock'a veya filtre hazırlayanlara <a>reklam bildir</a>.",
@@ -723,10 +679,6 @@
     "message": "Eğer AdBlock her başladığında bu mesajı görüyorsanız, 'localStorage' klasöründeki dosyaları silen bir temizleyici kullanmadığınızı kontrol edin.",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "Birkaç hızlı ayar",
-    "description": "Title of the options on the installation succes page"
-  },
   "flashads": {
     "message": "Videolar ve Flash",
     "description": "Title of the final ad report question if the ad didn't appear in FF"
@@ -738,5 +690,15 @@
   "cantblockflash": {
     "message": "Flash ve diğer eklenti içerisindeki reklamları şimdilik engelleyemiyoruz. WebKit ve tarayıcı desteği bekleniyor.",
     "description": "Result of the final ad report question"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Theaob",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

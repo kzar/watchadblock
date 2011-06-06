@@ -25,7 +25,6 @@
     #txtFiltersAdvanced {
       font-size: 12px;
       max-width: 100%;
-      white-space: nowrap;
     }
   </style>
 
@@ -33,11 +32,13 @@
   <script type="text/javascript" src="../filtering/filtertypes.js"></script>
   <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
-    register_broadcast_listener('filters_updated', function() {
-      extension_call('get_custom_filters_text', {}, function(filters) {
-        if ($("#txtFiltersAdvanced").attr("disabled") == false)
-          return;
-        $("#txtFiltersAdvanced").val(filters);
+    chrome.extension.onRequest.addListener(function(request) {
+      if (request.command != "filters_updated")
+        return;
+      if ($("#txtFiltersAdvanced").attr("disabled") == false)
+        return;
+      BGcall("get_custom_filters_text", function(text) {
+        $("#txtFiltersAdvanced").val(text);
       });
     });
 
@@ -173,8 +174,7 @@
       });
 
       function saveFilters() {
-        var text = $("#txtFiltersAdvanced").val();
-        extension_call("set_custom_filters_text", { filters: text });
+        BGcall("set_custom_filters_text", $("#txtFiltersAdvanced").val());
 
         $("#divAddNewFilter").slideDown();
         $("#txtFiltersAdvanced").attr("disabled", "disabled");
@@ -183,18 +183,13 @@
       }
       $("#btnSaveAdvancedFilters").click(saveFilters);
 
-      extension_call('get_custom_filters_text', {}, function(text) {
+      BGcall("get_custom_filters_text", function(text) {
         $("#txtFiltersAdvanced").val(text);
       });
-
-      //translation
-      localizePage();
-
-      load_options();
     });
   </script>
 
-  <div class="section">
+  <div>
     <h2 i18n="tabcustomizetitle"></h2>
 
     <div i18n="filterlistsrock"></div>
@@ -289,33 +284,38 @@
       </div>
 
       <div>
-        <textarea id="txtFiltersAdvanced" cols="112" rows="15" disabled></textarea>
+        <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
         <br/>
       </div>
 
-      <div style="padding-top:20px;">
-        <b i18n="advanced"></b>: <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
+    </div>
+
+    <div class="advanced" class="padding-top: 20px">
+      <div>
+        <span i18n="cleanuplist"></span>
+        <input type="button" id="btnCleanUp" i18n_value="buttonok" />
+      </div>
+      <script>
+        $(function() {
+          $("#btnCleanUp").click(function() {
+            //Don't save immediately, first allow them to review changes
+            if ($("#btnEditAdvancedFilters").is(":visible"))
+              $("#btnEditAdvancedFilters").click();
+            var newFilters = FilterNormalizer.normalizeList($("#txtFiltersAdvanced").val(), true);
+            newFilters = newFilters.replace(/(\n)+$/,'\n'); // Del trailing \n's
+            $("#txtFiltersAdvanced").val(newFilters);
+          });
+        });
+      </script>
+
+      <div id="adreportarea">
+        <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
         <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
       </div>
-
+      <script>
+        // Chrome puts link in button; Safari puts it here.
+        $(function() { $("#adreportarea").toggle(SAFARI); });
+      </script>
     </div>
-  </div>
 
-  <div class="sneaky">
-    <p>
-    <span i18n="cleanuplist"></span>
-    <input type="button" id="btnCleanUp" i18n_value="buttonok" />
-    </p>
-    <script>
-      $(function() {
-        $("#btnCleanUp").click(function() {
-          //Don't save immediately, first allow them to review changes
-          if ($("#btnEditAdvancedFilters").is(":visible"))
-            $("#btnEditAdvancedFilters").click();
-          var newFilters = FilterNormalizer.normalizeList($("#txtFiltersAdvanced").val(), true);
-          newFilters = newFilters.replace(/(\n)+$/,'\n'); // Del trailing \n's
-          $("#txtFiltersAdvanced").val(newFilters);
-        });
-      });
-    </script>
   </div>

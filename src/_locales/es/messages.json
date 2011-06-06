@@ -131,23 +131,9 @@
       "message": "Haz clic en el anuncio, y te guiaré para bloquearlo.",
       "description": "When you have to click the ad to continue" 
   },
-  "whitelistertext": {
-      "message": "Adblock no funcionará en dominios acabados en: <br/>$domain$.",
-      "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-      "placeholders": {
-          "domain": {
-              "content": "'<i>$1</i>'",
-              "example": "'<i>live.msn.com</i>'" 
-          } 
-      } 
-  },
-  "whitelistertitle": {
-      "message": "¿Excluir este dominio?",
-      "description": "The title of the whitelister dialog" 
-  },
   "buttonexclude": {
       "message": "Excluir",
-      "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)" 
+      "description": "Button for excluding a domain in the whitelister dialog" 
   },
   "subscribingtitle": {
       "message": "Subscribiéndose a la lista de filtros...",
@@ -316,14 +302,6 @@
       "message": "Suscribirse",
       "description": "subscribe to a list button" 
   },
-  "subscribetoall": {
-      "message": "Suscribirse a todos los filtros: ",
-      "description": "option on second tab page" 
-  },
-  "subscribetonone": {
-      "message": "Desactivar todas las suscripciones: ",
-      "description": "option on second tab page" 
-  },
   "showlinkstolists": {
       "message": "Mostar enlace a las listas de filtros: ",
       "description": "Option on second tab page" 
@@ -463,10 +441,6 @@
   "savereminder": {
       "message": "¡No te olvides de guardar!",
       "description": "Reminder to press save" 
-  },
-  "advanced": {
-      "message": "Avanzado",
-      "description": "Section label for advanced options" 
   },
   "reportanad": {
       "message": "<a>Reporta un anuncio</a> a Ablock o los mantenedores de los filtros de anuncios.",
@@ -684,20 +658,14 @@
     "message": "¡Adblock se ha instalado!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Recarga cualquier pestaña abierta, y observa los anuncios desaparecer.",
-        "description": "Message on the installation success page"
-  },
-  "setotheroptions": {
-    "message": "Puedes cambiar otras opciones y suscribirte a más filtros en 'llave inglesa' | Herramientas | Extensiones | Opciones de Adblock.",
-    "description": "Message on installation success page"
-  },
-  "somequicksetup": {
-    "message": "Un poco de configuración rápida",
-    "description": "Title of the options on the installation succes page"
-  },
-  "chromebutton_showoption": {
-    "message": "Mostrar un botón en la barra de herramientas",
-    "description": "Message on installation success page"
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Danileon95",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

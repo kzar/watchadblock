@@ -3,11 +3,6 @@
     "message": "最受歡迎的 Google 瀏覽器擴充功能，擁有超過 150 萬位使用者！阻擋網路上所有的廣告。",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "最受歡迎的 Google 瀏覽器擴充功能 -- 請支付 $1.99 美金購買 AdBlock",
-    "description": "Extension description used in free version manifest"
-  },
-
   "buttoncancel": {
     "message": "取消",
     "description": "Cancel button"
@@ -33,23 +28,6 @@
     "message": "AdBlock 安裝成功！",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "重新整理已開啟的分頁，看看消失的廣告。",
-    "description": "Message on the installation success page"
-  },
-  "donaterequest2": {
-    "message": "為了全力投入 AdBlock，Michael 最近辭去了工作！現在完全依靠各位的<a>捐助</a>來支持家庭。",
-    "description": "Donation request on installation success page"
-  },
-  "setotheroptions": {
-    "message": "您可以透過 「扳手圖示 | 工具 | 擴充功能 | AdBlock選項」 設定其他選項或訂閱過濾清單。",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "顯示工具列按鈕",
-    "description": "Message on installation success page"
-  },
-
   "youtubevideomessage": {
     "message": "影片沒有畫面？試著重新整理頁面。如果此狀況經常發生，在 $link$ 停用 YouTube 廣告阻擋。",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -165,23 +143,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock 將不會在網域結尾為 <br/>$domain$ 的網頁上阻擋廣告。",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "排除此網域？",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "排除",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -353,14 +317,6 @@
     "message": "訂閱",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "訂閱所有過濾清單：",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "取消訂閱所有過濾清單：",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "顯示過濾清單的網址：",
     "description": "Option on second tab page"
@@ -501,10 +457,6 @@
   "savereminder": {
     "message": "別忘了儲存！",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "進階",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>回報廣告</a>至 AdBlock 或過濾清單維護者。",
@@ -727,10 +679,6 @@
     "message": "如果您每次開啟 AdBlock 都看到此訊息，請確認您使用的檔案清理程式不會清除 「localStorage」 檔案。",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "快速設定",
-    "description": "Title of the options on the installation succes page"
-  },
   "flashads": {
     "message": "影片和 Flash",
     "description": "Title of the final ad report question if the ad didn't appear in FF"
@@ -742,5 +690,15 @@
   "cantblockflash": {
     "message": "目前還無法阻擋在 Flash 或其他外掛程式中的廣告。此功能尚在等待瀏覽器與 WebKit 支援。",
     "description": "Result of the final ad report question"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Illusion, Tailinchu",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

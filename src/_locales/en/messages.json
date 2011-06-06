@@ -1,13 +1,12 @@
-﻿{
+{
   "description1": {
     "message": "The most popular Chrome extension, with over 2 million users!  Blocks ads all over the web.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "The most popular Chrome extension -- but please pay $1.99 for AdBlock instead of installing this :)",
-    "description": "Extension description used in free version manifest"
+  "app_description1": {
+    "message": "Blocks ads all over the web!  Loved by millions of Chrome and Safari users!",
+    "description": "App description used in app version manifest"
   },
-
   "buttoncancel": {
     "message": "Cancel",
     "description": "Cancel button"
@@ -33,31 +32,34 @@
     "message": "AdBlock is now installed!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Reload any open tabs, and watch the ads disappear.",
-    "description": "Message on the installation success page"
+  "setotheroptions_safari": {
+    "message": "You can set other options by clicking the toolbar button.",
+    "description": "Message on Safari installation success page for extension"
   },
-  "donaterequest2": {
-    "message": "I recently quit my job to devote full time to AdBlock!  I now rely solely on your donations to support my family.  Please <a>donate</a> to help pay our bills -- and prove that my wife and I (pictured) aren't crazy for trying this.  Thanks :) - Michael",
-    "description": "Donation request on installation success page"
+  "setotheroptions_chrome_ext": {
+    "message": "You can control AdBlock and set other options by clicking the toolbar button.",
+    "description": "Message on Chrome extension installation success page for extension"
   },
-  "setotheroptions": {
-    "message": "You can set other options and subscribe to filter lists via Wrench | Tools | Extensions | AdBlock Options.",
-    "description": "Message on installation success page"
+  "setotheroptions_chrome_app": {
+    "message": "Right click web pages (except this one) to control AdBlock and set other options.",
+    "description": "Message on Chrome app installation success page for extension"
+  },
+  "warning_adblock_is_installed_twice": {
+    "message": "Warning: AdBlock is installed twice",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "both_are_installed_this_makes_chrome_slower": {
+    "message": "AdBlock the app and AdBlock the extension are both installed.  This makes Chrome slower.",
+    "description": "Message displayed if AdBlock app and extension are both installed"
+  },
+  "to_fix_both_installed": {
+    "message": "To fix this, uninstall the Adblock extension from <a>your extensions</a>.",
+    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "To hide the button, right click it and choose Hide Button.  You can show it again under Wrench | Tools | Extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "chromebutton_hide_macOSX": {
-    "message": "Chrome on OS X doesn't fully support hiding buttons for another few weeks.  Until then, you can move the button out of your sight by dragging the edge of the address bar to the right.",
-    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
-  },
-  "chromebutton_showoption": {
-    "message": "Put an AdBlock button next to the wrench",
-    "description": "Message on installation success page"
-  },
-
   "youtubevideomessage": {
     "message": "No video? Reload the page. If this happens a lot, disable YouTube ad blocking under $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -68,7 +70,6 @@
       }
     }
   },
-
   "sliderexplanation": {
     "message": "Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
     "description": "Blacklister slider page message"
@@ -186,28 +187,30 @@
     "message": "Click the ad, and I'll walk you through blocking it.",
     "description": "When you have to click the ad to continue"
   },
-  "advanced_show_url_list": {
-    "message": "or choose the URL to block from a list (advanced)",
-    "description": "Message on link to open resource blocker instead of use blacklister"
-  },
 
-  "whitelistertext": {
-    "message": "AdBlock won't run on domains ending in<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
+  "adblock_wont_run_anywhere_on_this_website": {
+    "message": "AdBlock won't run anywhere on this website:",
+    "description": "Message displayed when the whitelister dialog will whitelist an entire website.  The URL will appear on the next line."
   },
-  "whitelistertitle": {
-    "message": "Exclude this domain?",
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock won't run on pages matching:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblock_wont_run_on_this_page": {
+    "message": "AdBlock won't run on this page:",
+    "description": "Message displayed when the whitelister dialog will whitelist a single webpage.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "You can slide below to change exactly what pages AdBlock won't run on.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Don't run AdBlock on...",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
     "message": "Exclude",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -261,6 +264,10 @@
   "googletextads": {
     "message": "I like the text ads on Google search results; show me those.",
     "description": "Option on first tab page"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "I like Google's text ads; don't block those.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
   "youtubeads": {
     "message": "Block ads inside YouTube videos.",
@@ -382,14 +389,6 @@
   "subscribebutton": {
     "message": "Subscribe",
     "description": "subscribe to a list button"
-  },
-  "subscribetoall": {
-    "message": "Subscribe to all filters:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Unsubscribe from all filters:",
-    "description": "option on second tab page"
   },
   "showlinkstolists": {
     "message": "Show links to the filter lists:",
@@ -555,10 +554,6 @@
   "savereminder": {
     "message": "Don't forget to save!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Advanced",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Report an ad</a> to AdBlock or to filter list maintainers.",
@@ -795,12 +790,7 @@
     "message": "If you see this message every time you start AdBlock, please make sure you are not using a file cleaner that also cleans 'localStorage' files.",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "Some quick setup",
-    "description": "Title of the options on the installation succes page"
-  },
-
-  "typehiding": {
+ "typehiding": {
     "message": "hiding",
     "description": "A resource type (lowercase!)"
   },
@@ -866,9 +856,13 @@
     "message": "The filter was succesfully added!\nReload the page to see the result!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "This page is whitelisted or AdBlock is paused. Therefore no resources are caught, so this page cannot be used",
+  "adblock_is_paused": {
+    "message": "AdBlock is paused. Therefore no resources are caught, so this page cannot be used. Unpause AdBlock first and try again.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "The filter was removed. Please reload the original page to generate the list with resources.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "Something went wrong. No resources have been sent through. This page will now close.",
@@ -971,7 +965,7 @@
     "description": "Result of the final ad report question"
   },
   "cleanuplist": {
-    "message": "Optimize filters in this list:",
+    "message": "Clean up this list:",
     "description": "Option at the bottom of the third options tab"
   },
   "new_version": {
@@ -1004,29 +998,21 @@
     "message": "AdBlock can not run on this domain.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Don't run on $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "dont_run_on_pages_on_domain": {
+    "message": "Don't run on pages on this domain",
+    "description": "Menu entry to open the whitelist wizard."
   },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock is disabled on $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "disabled_on_this_page": {
+    "message": "AdBlock is disabled on this page.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "undo": {
+    "message": "Undo",
+    "description": "Button text to undo an action."
   },
   "enable": {
     "message": "enable",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused": {
     "message": "AdBlock is paused.",
@@ -1035,6 +1021,10 @@
   "unpause": {
     "message": "unpause",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unpause_adblock": {
+    "message": "Unpause AdBlock",
+    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Pause AdBlock",
@@ -1054,7 +1044,7 @@
   },
   "did_you_know_this_is_my_full_time_job": {
     "message": "Did you know this is my full-time job?",
-    "description": "Text of a donation link on toolbar button"
+    "description": "Text of a payment request link"
   },
   "removelabel": {
     "message": "Remove",
@@ -1063,5 +1053,151 @@
   "changelabel": {
     "message": "change",
     "description": "link to change resources on the resourceblock page"
+  },
+  "brokensite_beta_option": {
+    "message": "Help test a new way to remove ads.",
+    "description": "option on the first options page"
+  },
+  "brokensite_beta_description": {
+    "message": "If you find any ads that only appear when using this option, please <a>file a bug report</a>!",
+    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+  "translator_credit": {
+    "message": "Credit for translation goes to: $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Your Name",
+        "example": "Michael G, Drew R"
+      }
+    }
+  },
+  "report_ad_on_page": {
+    "message": "Report an ad on this page",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Show the resource list",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "I'm an advanced user, show me advanced options.",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ to or $unsubscribe$ from every list.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Subscribe</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>unsubscribe</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Now you have AdBlock!  Hooray!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Any new tabs you open will be automatically ad-free.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "Installing AdBlock...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "done.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Seeing this every time you start your browser?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Set up AdBlock",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Please fill out AdBlock's one-question setup:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "That was easy",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "Let's get you set up!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "First, you should <b>turn on autoupdate</b> under Safari Preferences, so you get bugfixes and new features as I write them.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Turning on autoupdate is <b>really important!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Show me how",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, autoupdate is on ",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "To turn on autoupdate:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Click <b>Safari -&gt; Preferences</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Click <b>Extensions</b> near the top right.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "At the bottom left, click <b>Updates</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Click the <b>Install Updates Automatically</b> checkbox.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "How to use AdBlock:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": " AdBlock automatically removes ads.  That's all there is to it.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "For more options, you can right click web pages or click the $img$ toolbar button.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, now what? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Site:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Page:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }

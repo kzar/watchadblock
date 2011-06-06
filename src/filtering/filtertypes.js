@@ -1,5 +1,8 @@
 // A single filter rule.
-var Filter = function() {}
+var Filter = function() {
+  this.id = ++Filter._lastId;
+};
+Filter._lastId = 0;
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
@@ -14,10 +17,8 @@ Filter.fromText = function(text) {
 
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-    else if (Filter.isWhitelistFilter(text))
-      cache[text] = new WhitelistFilter(text);
     else
-      cache[text] = new PatternFilter(text);
+      cache[text] = PatternFilter.fromText(text);
   }
   return cache[text];
 }
@@ -32,9 +33,9 @@ Filter.isWhitelistFilter = function(text) {
 
 Filter.isComment = function(text) {
   return text.length == 0 ||
-         (text[0] == '!') ||
-         (text[0] == '[' && text.indexOf('[Adblock') == 0) ||
-         (text[0] == '(' && text.indexOf('(Adblock') == 0);
+         text[0] == '!' ||
+         (text[0] == '[' && /^\[adblock/i.test(text)) ||
+         (text[0] == '(' && /^\(adblock/i.test(text));
 }
 
 // Given a comma-separated list of domain includes and excludes, return
@@ -73,60 +74,6 @@ Filter._domainInfo = function(domainText, divider) {
   return result;
 }
 
-// Return true if any of the domains in list are a complete component of the
-// given domain.  So list [ "a.com" ] matches domain "sub.a.com", but not vice
-// versa.
-Filter._domainIsInList = function(domain, list) {
-  // TODO speed: background's get_content_script_data calls limitedToDomain
-  // and this function is the bottleneck.  Figure out some way to shortcut
-  // so that we don't have to call this as frequently.  Perhaps each rule
-  // keeps a list of the first letter of each TLD in its domains, and we first
-  // check whether the TLD of domain is in that list, before checking fully.
-  for (var i = 0; i < list.length; i++) {
-    if (list[i] == domain)
-      return true;
-    if (domain.match("\\." + list[i] + "$")) // ends w/ a period + list[i]?
-      return true;
-  }
-  return false;
-}
-
-Filter.prototype = {
-  __type: "Filter",
-
-  // Returns true if this filter applies on all domains.
-  isGlobal: function() {
-    var posEmpty = this._domains.applied_on.length == 0;
-    var negEmpty = this._domains.not_applied_on.length == 0;
-    return (posEmpty && negEmpty);
-  },
-
-  // Returns true if this filter should be run on an element from the given
-  // domain.
-  appliesToDomain: function(domain) {
-    if (this.isGlobal())
-      return true;
-
-    var posMatch = Filter._domainIsInList(domain, this._domains.applied_on);
-    var negMatch = Filter._domainIsInList(domain, this._domains.not_applied_on);
-
-    if (posMatch) {
-      if (negMatch) return false;
-      else return true;
-    }
-    else if (this._domains.applied_on.length != 0) {
-      // some domains applied, but we didn't match
-      return false;
-    }
-    else if (negMatch) { // no domains applied, we are excluded
-      return false;
-    }
-    else { // no domains applied, we are not excluded
-      return true;
-    }
-  }
-}
-
 // Filters that block by CSS selector.
 var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
@@ -138,27 +85,38 @@ var SelectorFilter = function(text) {
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
-
-  __type: "SelectorFilter"
 }
 
 // Filters that block by URL regex or substring.
-var PatternFilter = function(text) {
+var PatternFilter = function() {
   Filter.call(this); // call base constructor
-
+};
+// Data is [rule text, allowed element types, options].
+PatternFilter.fromData = function(data) {
+  var result = new PatternFilter();
+  result._rule = new RegExp(data[0]);
+  result._allowedElementTypes = data[1];
+  result._options = data[2];
+  result._domains = { applied_on: [], not_applied_on: [] };
+  return result;
+}
+// Text is the original filter text of a blocking or whitelist filter.
+PatternFilter.fromText = function(text) {
   var data = PatternFilter._parseRule(text);
 
-  this._domains = Filter._domainInfo(data.domainText, '|');
-  this._allowedElementTypes = data.allowedElementTypes;
-  this._options = data.options;
-  this._rule = data.rule;
+  var result = new PatternFilter();
+  result._domains = Filter._domainInfo(data.domainText, '|');
+  result._allowedElementTypes = data.allowedElementTypes;
+  result._options = data.options;
+  result._rule = data.rule;
   // Preserve _text for later in Chrome's background page and in
   // resourceblock.html.  Don't do so in safari or in content scripts, where
   // it's not needed.
   // TODO once Chrome has a real blocking API, we can change this to
   //   if (/resourceblock.html/.test(document.location.href))
   if (document.location.protocol == 'chrome-extension:')
-    this._text = text;
+    result._text = text;
+  return result;
 }
 
 // Return a { rule, domainText, allowedElementTypes } object
@@ -186,7 +144,7 @@ PatternFilter._parseRule = function(text) {
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
 
-    if (option.indexOf('domain=') == 0) {
+    if (/^domain\=/.test(option)) {
       result.domainText = option.substring(7);
       continue;
     }
@@ -219,7 +177,7 @@ PatternFilter._parseRule = function(text) {
       // In case ABP adds a new option, and we do not support it, return an
       // error. If we don't do this and the new type is an elementtype, the
       // filter *$newtype will be parsed as '*$', e.g. match everything.
-      throw new Error("Unsupported option: $" + options[i]);
+      throw "Unsupported option: $" + options[i];
     }
   }
   // No element types mentioned?  All types are allowed.
@@ -233,8 +191,8 @@ PatternFilter._parseRule = function(text) {
   if (result.allowedElementTypes & ElementTypes.image)
     result.allowedElementTypes |= ElementTypes.background;
 
-  // We parse whitelist rules too on behalf of WhitelistFilter, in which case
-  // we already know it's a whitelist rule so can ignore the @@s.
+  // We parse whitelist rules too, in which case we already know it's a
+  // whitelist rule so can ignore the @@s.
   if (Filter.isWhitelistFilter(rule))
     rule = rule.substring(2);
 
@@ -269,7 +227,7 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/\+/g, '\\+');
   // Starting with || means it should start at a domain or subdomain name, so
   // match ://<the rule> or ://some.domains.here.and.then.<the rule>
-  rule = rule.replace(/^\|\|/, '\://([^/]+\\.)*');
+  rule = rule.replace(/^\|\|/, '\://([^/]+\\.)?');
   // Starting with | means it should be at the beginning of the URL.
   rule = rule.replace(/^\|/, '^');
   // Rules ending in | means the URL should end there
@@ -283,11 +241,10 @@ PatternFilter._parseRule = function(text) {
   return result;
 }
 
+// Blocking and whitelist rules both become PatternFilters.
 PatternFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
-
-  __type: "PatternFilter",
 
   // Returns true if an element of the given type loaded from the given URL 
   // would be matched by this filter.
@@ -295,7 +252,7 @@ PatternFilter.prototype = {
   //   elementType:ElementTypes the type of DOM element.
   //   isThirdParty: true if the request for url was from a page of a
   //       different origin
-  matches: function(url, elementType, isThirdParty) {
+  matches: function(url, loweredUrl, elementType, isThirdParty) {
     if (!(elementType & this._allowedElementTypes))
       return false;
 
@@ -309,19 +266,8 @@ PatternFilter.prototype = {
       return false;
 
     if (!(this._options & FilterOptions.MATCHCASE))
-      url = url.toLowerCase();
+      url = loweredUrl;
 
     return this._rule.test(url);
   }
 }
-
-// Filters that specify URL regexes or substrings that should not be blocked.
-var WhitelistFilter = function(text) {
-  PatternFilter.call(this, text); // call base constructor.
-
-  // TODO: Really, folks, this just ain't the way to do polymorphism.
-  this.__type = "WhitelistFilter";
-}
-// When you call any instance methods on WhitelistFilter, do the same
-// thing as in PatternFilter.
-WhitelistFilter.prototype = PatternFilter.prototype;

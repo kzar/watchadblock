@@ -8,9 +8,28 @@
     <script src="../jquery/jquery.cookie.js"></script>
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
-    <script src="../broadcast_channel.js"></script>
     <script>
-      listen_for_broadcasts();
+      function load_options() {
+        // Check or uncheck each option.
+        BGcall("get_settings", function(settings) {
+          optionalSettings = settings;
+          $("#tabpages").
+            tabs({ 
+              spinner: "",
+              cache: true,
+              cookie: {},
+              load: function() {
+                //translation
+                localizePage();
+
+                $(".advanced").toggle(optionalSettings.show_advanced_options);
+              },
+            }).
+            show();
+        });
+      }
+      var optionalSettings = {};
+      load_options();
 
       function note_visit() {
         if (localStorage.getItem('visited_options_at') != null)
@@ -38,58 +57,16 @@
         } catch (ex) {} // silently fail
       }
 
-      // Check or uncheck each loaded DOM option checkbox according to the 
-      // user's saved settings.
-      function load_options() {
-        // Check or uncheck each option.
-        extension_call('get_optional_features', {}, function(features) {
-          for (var name in features) {
-            $("#enable_" + name).
-              attr("checked", features[name].is_enabled);
-          }
-          $("input.feature:checkbox").change(function() {
-            var is_enabled = $(this).is(':checked');
-            var name = this.id.substring(7); // TODO: hack
-            extension_call(
-              'set_optional_feature', 
-              {name:name, is_enabled:is_enabled}
-            );
-          });
-        });
-      }
-
       $(function() {
-        $("#tabpages").tabs({ spinner: "", cache: true, cookie: {}  });
-
         displayVersionNumber();
 
         note_visit();
         
+        if (navigator.language.substring(0, 2) != "en")
+          $("#translation_credits").text(translate("translator_credit"));
+
         //translation
         localizePage();
-
-        (function() {
-          // April 1, 2011 (not Chrome-specific like the toolbar button is)
-          var today = new Date();
-          if (today.getDate() != 1 || today.getMonth() != 3 || today.getFullYear() != 2011)
-            return;
-          if (localStorage.getItem('saw_foolsday2011') == "closed")
-            return;
-          var div = $("<div>").
-            addClass("info").
-            css("margin-left", 0);
-          var x = $("<a>", { href: "#", text: "x", css: { float: "right" } }).
-            click(function() {
-              div.slideUp();
-              localStorage.setItem('saw_foolsday2011', "closed");
-            });
-          div.
-            html($('<div style="float:right">').append(x)).
-            append('<div style="font-weight:bold;font-size:1.1em;margin-bottom:5px">Just released: AdBlock Freedom! (beta)</div>').
-            append('Get the new <a href="http://bit.ly/AdBlockEyewear" target="_new">AdBlock Freedom</a> augmented reality eyewear, and block billboards and magazine ads in realtime!');
-          $("#donate_and_link").before(div);
-        })();
-
       });
     </script>
   </head>
@@ -97,13 +74,30 @@
     <div style="float:right;"> 
       <span id="version_number"></span>
       (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
+    <br />
+    <span id="translation_credits"></span>
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 
-    <div id="donate_and_link" style="margin: 1em 0px;">
-      <div style="font-size: 16px;" 
-           i18n="donaterequest2" i18n_replacement_el="donatelink"></div>
-      <a target="_new" href="http://chromeadblock.com/donate" id="donatelink"></a>
+    <div style="margin: 1em 0px; font-size: 16px">
+      <div class="link" id="paymentlink" i18n="did_you_know_this_is_my_full_time_job"></div>
+      <script>
+        $(function() {
+          BGcall("get_statistics", function(stats) {
+            $('#paymentlink').click(function() {
+              var href = "http://chromeadblock.com/pay/?source=O&" + $.param(stats);
+              if (SAFARI) {
+                // Safari target=_new opens a new window by default, so we have to force its
+                // height to be correct.
+                window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
+              } else {
+                chrome.tabs.create({url: href});
+              }
+              return false;
+            });
+          });
+        });
+      </script>
     </div>
 
     <div id="tabpages">

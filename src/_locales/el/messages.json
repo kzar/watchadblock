@@ -3,11 +3,6 @@
     "message": "Η πιο δημοφιλής επέκταση για τον Chrome, με πάνω από 1,5 εκατομμύριο χρήστες!  Μπλοκάρει διαφημίσεις σε όλον τον ιστό.",
     "description": "Extension description in manifest"
   },
-  "free_description": {
-    "message": "Η πιο δημοφιλής επέκταση για τον Chrome -- αλλά παρακαλούμε δώστε $1.99 για το AdBlock αντί απλώς να το εγκαταστήσετε :)",
-    "description": "Extension description used in free version manifest"
-  },
-
   "buttoncancel": {
     "message": "Άκυρο",
     "description": "Cancel button"
@@ -33,24 +28,6 @@
     "message": "Το AdBlock έχει εγκατασταθεί!",
     "description": "Title for the installation success page"
   },
-
-  "installisdone": {
-    "message": "Ανανεώστε τις καρτέλες, και δείτε τις διαφημίσεις να εξαφανίζονται.",
-    "description": "Message on the installation success page"
-  },
-  "donaterequest2": {
-    "message": "Πρόσφατα παραιτήθηκα από τη δουλειά μου για να αφιερώσω όλο μου τον χρόνο στο AdBlock!  Τώρα βασίζομαι στις δωρεές σας για να υποστηρίξω την οικογένειά μου. Παρακαλώ <a>δωρίστε</a> για να μας βοηθήσετ με τα έξοδα -- και να είστε σίγουροι πως η γυναίκα μου κι εγώ (στην εικονα) θα ξετρελαθούμε.  Ευχαριστώ :) - Michael",
-    "description": "Donation request on installation success page"
-  },
-  "setotheroptions": {
-    "message": "Μπορείτε να αλλάξετε κι άλλες επιλογές ή να γίνετε συνδρομητής σε λίστες φίλτρων πατώντας Επιλογές | Εργαλεία | Επεκτάσεις | Επιλογές AdBlock.",
-    "description": "Message on installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "Εμφάνιση κουμπιού στη γραμμή εργαλείων",
-    "description": "Message on installation success page"
-  },
-
   "youtubevideomessage": {
     "message": "Δεν βλέπετε κανένα βίντεο; Ανανεώστε την σελίδα. Αν αυτό συνεχιστεί, απενεργοποιείστε το μπλοκάρισμα διαφημήσεων στο Youtube εδώ $link$.",
     "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
@@ -166,23 +143,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "Το AdBlock δεν θα είναι ενεργό σε τομείς που τελειώνουν σε:<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Θέλετε να καταχωρήσετε αυτόν τον τομέα στην άσπρη λίστα;",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Ναι, βάλτε τον στην άσπρη λίστα",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -365,14 +328,6 @@
     "message": "Καταχώριση",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Γίνετε συνδρομητής όλων των φίλτρων:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Γίνετε συνδρομητής κανενός φίλτρου:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Εμφάνισε συνδέσμους στις σελίδες φίλτρων:",
     "description": "Option on second tab page"
@@ -537,10 +492,6 @@
   "savereminder": {
     "message": "Μην ξεχάσετε να αποθηκεύσετε!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Για προχωρημένους",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Αναφέρετε μια διαφήμιση</a> στο AdBlock ή στις επίσημες λίστες φίλτρων.",
@@ -759,10 +710,6 @@
     "message": "Αν βλέπετε αυτό το μύνημα κάθε φορά που ανοίγετε το AdBlock, σιγουρευτείτε ότι δεν χρησιμοποιείτε έναν καθαριστή αρχείων που επίσης διαγράφει τα 'localStorage' αρχεία.",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "Γρήγορη ρύθμιση",
-    "description": "Title of the options on the installation succes page"
-  },
   "flashads": {
     "message": "Βίντεο και Flash",
     "description": "Title of the final ad report question if the ad didn't appear in FF"
@@ -774,5 +721,15 @@
   "cantblockflash": {
     "message": "We can't block ads inside Flash and other plugins yet. We are awaiting support from the browser and WebKit.",
     "description": "Result of the final ad report question"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "v.anes",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

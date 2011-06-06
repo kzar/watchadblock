@@ -2,7 +2,6 @@
    URL:
    chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/pages/adreport.html
    ?url={domain_href}
-   &suggested={suggestedfilter}
 -->
 <html>
   <head>
@@ -45,7 +44,7 @@
       var options = [];
       var search = document.location.search.substring(1).split('&');
       for (var item in search) {
-        if (search[item].indexOf('=') == -1) continue;
+        if (!/\=/.test(search[item])) continue;
         options[search[item].split('=')[0]] = 
                          unescape(search[item].split('=')[1]);
       }
@@ -54,7 +53,7 @@
       //all unsubscribed default filters
       var unsubscribed_default_filters = [];
       var subscribed_filter_names = [];
-      extension_call("get_subscriptions_minus_text", {}, function(subs) {
+      BGcall("get_subscriptions_minus_text", function(subs) {
         for (var id in subs)
           if (!subs[id].subscribed && !subs[id].user_submitted)
             unsubscribed_default_filters[id] = subs[id];
@@ -66,7 +65,7 @@
       function generateReportURL() {
         var domain = "";
         if (options['url']) {
-          domain = options['url'].substring(options['url'].indexOf("://")+3);
+          domain = options['url'].substring(options['url'].indexOf("://") + 3);
           domain = domain.substring(0, domain.indexOf('/'));
         }
         var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
@@ -77,26 +76,28 @@
           result = result + escape("Ad report at <enter URL of webpage here>");
 
         var body = [];
+        var count = 1;
         body.push("Last step -- point me to the ad so I can fix the bug! " +
             "Don't leave anything out or I'll probably " +
             "have to ignore your report. Thanks!");
         body.push("");
         if (!options['url']) {
-          body.push("1. Paste the URL of the webpage showing an ad: ");
+          body.push(count + ". Paste the URL of the webpage showing an ad: ");
           body.push("");
           body.push("");
+          count++;
         }
-        body.push("2. Exactly where on that page is the ad? What does it " +
+        body.push(count + ". Exactly where on that page is the ad? What does it " +
             "look like? Attach a screenshot, with the ad clearly marked, " +
             "if you can.");
         body.push("");
         body.push("");
-        if (!options['suggested']) {
-          body.push("3. Paste a working filter, if you have one: ");
-          body.push("");
-          body.push("");
-        }
-        body.push("4. Any other information that would be helpful, besides " +
+        count++;
+        body.push(count + ". Paste a working filter, if you have one: ");
+        body.push("");
+        body.push("");
+        count++;
+        body.push(count + ". Any other information that would be helpful, besides " +
             "what is listed below: ");
         body.push("");
         body.push("");
@@ -114,11 +115,6 @@
           "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
         if (AdBlockVersion) 
           body.push("AdBlock " + AdBlockVersion);
-        if (options['suggested']) {
-          body.push("");
-          body.push("=== The selector created by the user ===");
-          body.push(options['suggested']);
-        }
 
         result = result + "&comment=" + escape(body.join('\n'));
 
@@ -153,7 +149,7 @@
       //Updating the users filters
       $("#UpdateFilters").click(function() {
         $(this).attr("disabled", "disabled");
-        extension_call("update_subscriptions_now", {});
+        BGcall("update_subscriptions_now");
       });
       //if the user clicks a radio button
       $("#step1_no").click(function() {
@@ -247,7 +243,7 @@
       //If the user clicks a radio button
       $("#step3_yes").click(function() {
         $("#step3").html("<span class='answer'>" + translate("yes") + "</span>");
-        if (contact.indexOf('mailto:') == 0)
+        if (/^mailto\:/.test(contact))
           contact = contact.replace(" at ", "@");
         var reportLink = "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>";
         $("#whattodo").html(translate("reportfilterlistproblem", [reportLink]));
