@@ -22,7 +22,8 @@ function top_open_whitelist_ui() {
         }
 
     var page = $("<div>").
-      append('<span id="whitelister_caption">').
+      append('<span>' + translate("adblock_wont_run_on_pages_matching") + 
+             '</span>').
       append('<br/><br/><i id="domainpart"></i><i id="pathpart"></i>').
       append("<br/><br/><br/><span id='whitelister_dirs'>" + 
              translate('you_can_slide_to_change') + "</span>").
@@ -76,25 +77,8 @@ function top_open_whitelist_ui() {
 
     function onSliderChange() {
       generateUrl(true);
-      updateCaption();
     }
     onSliderChange();
-
-    // Set the caption based on how much we are offering to whitelist
-    function updateCaption() {
-      var dS = $("#domainslider", page)[0];
-      var pS = $("#pathslider", page)[0];
-
-      var msg;
-      if (dS.value == dS.min && pS.value == pS.min)
-        msg = "adblock_wont_run_anywhere_on_this_website";
-      else if (dS.value == dS.min && pS.value == pS.max)
-        msg = "adblock_wont_run_on_this_page";
-      else
-        msg = "adblock_wont_run_on_pages_matching";
-
-      $("#whitelister_caption", page).text(translate(msg));
-    }
 
     // Generate the URL. If forDisplay is true, then it will truncate long URLs
     function generateUrl(forDisplay) {
