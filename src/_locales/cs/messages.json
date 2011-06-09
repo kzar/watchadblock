@@ -7,7 +7,6 @@
     "message": "Blokuje reklamy na celém webu! Je milován miliony uživatelů prohlížečů Chrome a Safari!",
     "description": "App description used in app version manifest"
   },
-
   "buttoncancel": {
     "message": "Storno",
     "description": "Cancel button"
@@ -71,9 +70,8 @@
       }
     }
   },
-
   "sliderexplanation": {
-    "message": "Nastavte posuvník tak, aby reklama na stránce byla blokována a zablokovaný element vypadal uspokojivě.",
+    "message": "Nastavte posuvník tak, aby reklama na stránce byla blokována a zbytek stránky stále vypadal uspokojivě.",
     "description": "Blacklister slider page message"
   },
   "block_by_url_instead": {
@@ -190,6 +188,18 @@
     "description": "When you have to click the ad to continue"
   },
 
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock se nebude spouštět na žádné stránce odpovídající:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Nastavením posuvníku níže vyberte přesně ty stránky, kde se AdBlock nebude spouštět.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Nespouštět AdBlock na...",
+    "description": "The title of the whitelister dialog"
+  },
   "buttonexclude": {
     "message": "Uložit",
     "description": "Button for excluding a domain in the whitelister dialog"
@@ -246,6 +256,10 @@
   "googletextads": {
     "message": "Líbí se mi textové reklamy ve výsledcích vyhledávání Google, zobrazuj je.",
     "description": "Option on first tab page"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "Líbí se mi textové reklamy Google, neblokuj je.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
   "youtubeads": {
     "message": "Blokovat reklamy uvnitř videí na YouTube.",
@@ -976,6 +990,14 @@
     "message": "AdBlock nelze spustit na této doméně.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
+  "dont_run_on_pages_on_domain": {
+    "message": "Nespouštět na stránkách na této doméně",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock je zakázán na této stránce.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
   "undo": {
     "message": "Zpět",
     "description": "Button text to undo an action."
@@ -1033,7 +1055,7 @@
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
 "translator_credit": {
-  "message": "Autorem překladu do češtiny je: $translator_names$",
+  "message": "Autorem překladu je: $translator_names$",
   "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
@@ -1041,5 +1063,133 @@
         "example": "Michael G, Drew R"
       }
     }
+  },
+  "report_ad_on_page": {
+    "message": "Nahlásit reklamu na této stránce",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Zobrazit seznam prvků",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Jsem zkušený uživatel, ukaž mi pokročilé možnosti.",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ nebo $unsubscribe$ všechny seznamy.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Přihlásit</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>odhlásit</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Nyní máte AdBlock!  Hurááá!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Jakékoliv nově otevřené záložky budou automaticky bez reklam.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "Instaluji AdBlock...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "hotovo.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Vidíte tohle při každém spuštění prohlížeče?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Nastavte AdBlock",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Prosím, dokončete jednoduché nastavení AdBlock:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "To bylo jednoduché",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "Pojďme na nastavení!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Nejprve byste měli <b>zapnout automatické aktualizace</b> v Safari Preferences. Tak dostanete opravy a nové funkce, jakmile budou vydány.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Zapnutí automatických aktualizací je <b>skutečně důležité!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Ukaž mi, jak na to",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, automatické aktualizace jsou zapnuty",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "Chcete-li zapnout automatickou aktualizaci:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Klikněte na <b>Safari -&gt; Preferences</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Klikněte na <b>Extensions</b> poblíž pravého horního rohu.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "V levém dolním rohu, klepněte na <b>Updates</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Zaklikněte políčko <b>Install Updates Automatically</b>.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "Jak používat AdBlock:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": "AdBlock automaticky odstraňuje reklamy. To je vše, k čemu slouží.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "Pro více možností, klikněte pravým tlačítkem na webové stránce nebo klikněte na $img$ tlačítko na panelu nástrojů.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, a co teď? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Doména:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Stránka:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }
