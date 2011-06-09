@@ -63,7 +63,7 @@
         //Set the link to the list.  If it's really long, make it wrap nicely.
         $('a').
           attr('href', queryparts.location).
-          text(queryparts.location.replace(/(.{64})/g, '$1 '));
+          text(queryparts.location.replace(/(.{48,64}\W)/g, '$1 '));
 
         //subscribe to a list
         $.ajax({
