@@ -13,19 +13,6 @@ function MyFilters() {
   if (!this._subscriptions) {
     // Brand new user. Install some filters for them.
     this._subscriptions = this._load_default_subscriptions();
-  } 
-  else if (!storage_get("subscribed_list_for_language") && 
-          storage_get("installed_at") <= new Date().setFullYear(2010, 11, 3) &&
-          !/^en/.test(navigator.language) && !storage_get("visited_options_at")) {
-    // TEMP: installed April 2011. Users from before we started autosubscribing
-    // do not have the language-specific lists. Subscribe them to it.
-    // When removing this code, make sure to remove the localStorage entry
-    storage_set("subscribed_list_for_language", true);
-    var recommended = MyFilters._load_default_subscriptions();
-    for (var list in recommended) {
-      if (stored_subscriptions[list].subscribed) continue;
-      stored_subscriptions[list] = recommended[list];
-    }
   }
 
   for (var id in this._subscriptions) {
@@ -90,7 +77,7 @@ MyFilters.prototype._onSubscriptionChange = function(rebuild) {
 
   // The only reasons to (re)build the filter set are
   // - when AdBlock starts
-  // - when a filter list text is changed (subscribed or updated a list)
+  // - when a filter list text is changed ([un]subscribed or updated a list)
   if (rebuild)
     this.rebuild();
 
@@ -165,7 +152,8 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
 
   // Apply all changes from subData
   for (var property in subData)
-    this._subscriptions[id][property] = subData[property]
+    if (subData[property] != undefined)
+      this._subscriptions[id][property] = subData[property];
 
   // Check if the required list is a well known list, but only if it is changed
   if (subData.requiresList)
@@ -193,7 +181,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
       delete this._subscriptions[id];
   }
 
-  this._onSubscriptionChange();
+  this._onSubscriptionChange(subData.subscribed == false);
 
   // Subscribe to a required list if nessecary
   if (subscribeRequiredListToo && this._subscriptions[id].requiresList)

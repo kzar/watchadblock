@@ -50,7 +50,7 @@ function adblock_begin_part_2() {
 
   //Neither Chrome nor Safari blocks background images. So remove them
   //TODO: Remove background images for elements other than <body>
-  var bgImage = $("body").css('background-image');
+  var bgImage = $("body").css('background-image') || "";
   var match = bgImage.match(/^url\((.*)\)$/);
   if (match)
     bgImage = match[1];

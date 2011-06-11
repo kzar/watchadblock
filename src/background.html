@@ -166,7 +166,7 @@
       // Returns: null, upon completion
       subscribe = function(options) {
         _myfilters.changeSubscription(options.id, {
-          subscribed:true,
+          subscribed: true,
           requiresList: options.requires
         });
       }
@@ -741,6 +741,8 @@
         localStorage.removeItem('whitelist');
       }
       })();
+      // Remnants from issue 5382
+      localStorage.removeItem('subscribed_list_for_language');
     </script>
   </head>
   <body>
