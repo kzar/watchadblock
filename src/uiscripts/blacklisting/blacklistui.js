@@ -223,7 +223,8 @@ BlacklistUi.prototype._build_page2 = function() {
       function() {
         that._ui_page2.dialog('close');
       }
-  btns[translate("buttonedit")] =
+  if (advanced_user)
+    btns[translate("buttonedit")] =
       function() {
         var custom_filter = document.location.hostname + '##' + $("#summary", that._ui_page2).text();
         that._ui_page2.dialog('close');
@@ -269,7 +270,9 @@ BlacklistUi.prototype._build_page2 = function() {
 }
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
-  var show_link = (!SAFARI && (!!el.attr("src") || !!el.attr("data")));
+  var show_link = (!SAFARI && advanced_user &&
+      ((!!el.attr("src") && /^https?\:\/\//.test(el.attr("src"))) ||
+      (!!el.attr("data") && /^https?\:\/\//.test(el.attr("data")))));
   $("#block_by_url_link", this._ui_page1).toggle(show_link);
   var text = '&lt;' + el[0].nodeName;
   var attrs = ["id", "class", "name", "src", "href"];

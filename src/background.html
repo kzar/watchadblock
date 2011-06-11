@@ -470,6 +470,7 @@
             } 
             // Nothing left to inject, so execute the function.
             else {
+              parameter.advancedUser = get_settings().show_advanced_options;
               var param = JSON.stringify(parameter);
               details.code = fn_name + "(" + param + ");";
               chrome.tabs.executeScript(undefined, details);
@@ -528,15 +529,6 @@
 
         return theFunction;
       })();
-
-      // Opens a popup that subscribes to a new list
-      // Must be here because other pages cannot open popups...
-      // Inputs: searchquery: the search part of the abp: url
-      subscribe_popup = function(searchquery) {
-        window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                    searchquery), "_blank", 
-                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
-      };
 
       // Return some general statistics.
       get_statistics = function() {

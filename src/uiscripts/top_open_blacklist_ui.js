@@ -1,12 +1,15 @@
 // Global lock so we can't open more than once on a tab.
 if (typeof may_open_dialog_ui === "undefined")
-    may_open_dialog_ui = true;
+  may_open_dialog_ui = true;
+var advanced_user = false;
 
 function top_open_blacklist_ui(options) {
   if (!may_open_dialog_ui)
     return;
 
   may_open_dialog_ui = false;
+
+  advanced_user = options.advancedUser;
 
   load_jquery_ui(function() {
     // If they chose "Block an ad on this page..." ask them to click the ad
