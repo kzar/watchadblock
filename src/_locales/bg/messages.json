@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "Най-популярното разширение за Chrome с над 2 милиона потребители! Блокира реклами в цялата мрежа.",
     "description": "Extension description in manifest"
@@ -87,7 +87,7 @@
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisternotsure": {
-    "message": "<b>Не сте сигурен?</b> — натиснете „Блокирай!“ по-долу.",
+    "message": "<b>Не сте сигурен?</b> — натиснете „Блокирай!“ по-долу.",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
@@ -183,6 +183,19 @@
     "message": "Блокиране на реклама",
     "description": "Title of the first two dialogs of the blacklister"
   },
+
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock не се изпълнява в страници, съвпадащи с:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Движете плъзгача, за да промените страниците, за които AdBlock не се изпълнява.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Изключване на AdBlock за...",
+    "description": "The title of the whitelister dialog"
+  },
   "clickthead": {
     "message": "Щракнете по реклама, за да изминете пътя до нейното блокиране.",
     "description": "When you have to click the ad to continue"
@@ -242,7 +255,7 @@
     "description": "Option on first tab page"
   },
   "googletextads": {
-    "message": "Показвай текстови реклами към резултатите от търсене с Google (харесват ми)",
+    "message": "Показвай текстови реклами към резултатите от Google (харесват ми)",
     "description": "Option on first tab page"
   },
   "i_like_googles_text_ads_dont_block_those": {
@@ -250,7 +263,7 @@
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
   "youtubeads": {
-    "message": "Блокирай вградените реклами във видеоклиповете на YouTube",
+    "message": "Блокирай вградените реклами към клиповете от YouTube",
     "description": "Option on first tab page"
   },
   "showcontextmenus": {
@@ -359,7 +372,7 @@
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "Обновяванията ще се извличат автоматично, но бихте могли да <a>обновите</a> и сега.",
+    "message": "Обновяванията се извличат автоматично, но бихте могли да ги <a>обновите</a> и сега.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -504,19 +517,19 @@
     "description": "Link on the third tab"
   },
   "blockurlwithtext": {
-    "message": "Блокиране на адреси, съдържащи текста",
+    "message": "Блокиране на адреси, съдържащи текста:",
     "description": "Message of the url-blocking area"
   },
   "csstomatch": {
-    "message": "Съвпадаща CSS",
+    "message": "Съвпадащ каскаден лист със стилове [CSS]:",
     "description": "Message of the css-hiding area"
   },
   "excludedomainorurl": {
-    "message": "Домейн или адрес, където AdBlock не блокира нищо",
+    "message": "Домейн или адрес, за които AdBlock не блокира нищо:",
     "description": "Message of the exclude area"
   },
   "blockdomain": {
-    "message": "Домейн на страницата, за която важи",
+    "message": "Домейн на страницата:",
     "description": "Message of the url and css -blocking area"
   },
   "manualfilteredit": {
@@ -933,7 +946,7 @@
     "description": "resourceblocking page string"
   },
   "flashads": {
-    "message": "Видеоклипове и флаш",
+    "message": "Клипове и флаш",
     "description": "Title of the final ad report question if the ad didn't appear in FF"
   },
   "cantblockflashwarning": {
@@ -977,6 +990,14 @@
   "status_disabled": {
     "message": "Изпълнение на AdBlock за домейна е невъзможно.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
+  },
+  "dont_run_on_pages_on_domain": {
+    "message": "Не изпълнявай за страници от домейна",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock е забранено за страницата.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "undo": {
     "message": "Отмени",
@@ -1053,7 +1074,7 @@
     "description": "Link in the button"
   },
   "advanced_options": {
-    "message": "Аз съм опитен потребител, покажи ми разширените настройки.",
+    "message": "Покажи разширените настройки (аз съм опитен потребител)",
     "description": "Options page checkbox"
   },
   "subscribe_unsubscribe_all": {
@@ -1163,5 +1184,13 @@
   "ok_now_what": {
     "message": "Добре, и сега какво?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Сайт:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Страница:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }
