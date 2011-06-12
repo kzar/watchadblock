@@ -187,7 +187,18 @@
     "message": "Clica no anúncio e eu vou-te ajudar a bloqueá-lo.",
     "description": "When you have to click the ad to continue"
   },
-
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock não corre nas seguintes páginas:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Você pode deslizar abaixo para alterar as páginas que o AdBlock não será executado.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Não correr o AdBlock em...",
+    "description": "The title of the whitelister dialog"
+  },
   "buttonexclude": {
     "message": "Excluir",
     "description": "Button for excluding a domain in the whitelister dialog"
@@ -258,12 +269,12 @@
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "Mostar as operações na Consola de Logs  (que torna o AdBlock lento)",
+    "message": "Mostar as operações na Consola de Logs (torna o AdBlock lento)",
     "description": "Option on first tab page"
   },
 
   "updatedrightnow": {
-    "message": "actualizado mesmo agora",
+    "message": "actualizado agora mesmo",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
@@ -978,6 +989,10 @@
     "message": "AdBlock não funciona neste domínio.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
+  "dont_run_on_pages_on_domain": {
+    "message": "Não correr em páginas deste site",
+    "description": "Menu entry to open the whitelist wizard."
+  },
   "undo": {
     "message": "Desfazer",
     "description": "Button text to undo an action."
@@ -1005,6 +1020,10 @@
   "dont_run_on_this_page": {
     "message": "Não correr nesta página",
     "description": "Menu entry to whitelist a page"
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock está desactivado neste site.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "options": {
     "message": "Opções",
@@ -1127,7 +1146,7 @@
     "description": "Install page: title of section with a list of steps to take"
   },
   "click_safari_prefs": {
-    "message": "Clica <b>Safari -&gt; Preferences</b>.",
+    "message": "Clica <b>Safari -&gt; Preferências</b>.",
     "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
   },
   "click_extensions": {
@@ -1163,5 +1182,13 @@
   "ok_now_what": {
     "message": "OK, e agora? ",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Site:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Página:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }
