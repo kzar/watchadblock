@@ -130,7 +130,7 @@ BlacklistUi.prototype._build_page1 = function() {
   });
 
   var page = $("<div>").
-    append(translate("sliderexplanation")).
+    append(translate("slidearexplanation")).
     append("<br/>").
     append("<input id='slider' type='range' min='0' value='0'/>").
     append("<div id='selected_data' style='font-size:smaller; height:7em'></div>").
@@ -156,7 +156,7 @@ BlacklistUi.prototype._build_page1 = function() {
       position: [50, 50],
       width: 410,
       autoOpen: false,
-      title: translate("slidertitle"),
+      title: translate("slidaertitle"),
       buttons: btns,
       close: function() {
         that._onClose();
