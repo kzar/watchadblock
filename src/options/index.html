@@ -50,7 +50,7 @@
           xhr.onreadystatechange = function() {
             if(this.readyState == 4) {
               var theManifest = JSON.parse(this.responseText);
-              $("#version_number").text(translate("optionsversion", [theManifest.version]));
+              $("#version_number").text(translate("abc", [theManifest.version]));
             }
           };
           xhr.send();
