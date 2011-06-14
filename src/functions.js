@@ -44,3 +44,25 @@ function localizePage() {
     $(this).addClass("i18n-replaced");
   });
 }
+
+// Should not be used in content scripts.
+// Inputs: key:string.
+// Returns value if key exists, else undefined.
+storage_get = function(key) {
+  var json = localStorage.getItem(key);
+  if (json == null)
+    return undefined;
+  try {
+    return JSON.parse(json);
+  } catch (e) {
+    log("Couldn't parse json for " + key);
+    return undefined;
+  }
+}
+
+// Should not be used in content scripts.
+// Inputs: key:string, value:object.
+// Returns undefined.
+storage_set = function(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}

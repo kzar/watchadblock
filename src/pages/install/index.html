@@ -8,9 +8,13 @@
     <script src="../../jquery/jquery.min.js"></script>
     <script src="../../port.js"></script>
     <script src="../../functions.js"></script>
+    <!-- TODO temp x5 - only for STATS.msg -->
+    <script src="../../stats.js"></script>
     <script>
-      var installPageVersion = 1;
+      var installPageVersion = 2;
       localStorage['saw_install_page'] = installPageVersion;
+      // TODO temp x5
+      GROUP = (/g=1/.test(document.location.search) ? 1 : 2);
       $(function() {
         localizePage();
 
@@ -28,11 +32,15 @@
 
           // Put target card in place offscreen.
           var target = $("#" + this.name);
+      // TODO temp if statement wrapper is for experiment x5
+      // Intentionally dedented to keep track of it.
+      if (GROUP == 1) {
           // Give the payment card more room.
           if (this.name == 'last-step') {
             marker.top -= 90;
             $("#header").animate({"margin-bottom": 5, "margin-top": 5});
           }
+      }
           target.css(marker);
           target.css(edge, $(document)[diameterFn]() + pad);
           target.show();
@@ -53,6 +61,8 @@
             if (that.name == "last-step")
               $("#last-step #payment-types").each(function(el) { this.scrollIntoView(true); });
           });
+          // TODO temp x5
+          STATS.msg("x5g" + GROUP + " " + target.attr("id"));
 
           return false;
         });
@@ -64,6 +74,8 @@
         $("#header").fadeIn();
         var startCard = (SAFARI ? "#start-safari": "#start-chrome");
         $(startCard).css($("#wrapper").position()).fadeIn();
+        // TODO temp x5
+        STATS.msg("x5g" + GROUP + " start");
       }
     </script>
   </head>
@@ -190,21 +202,24 @@
       <div class="card" id="last-step">
         <div id="iframe-slot">
           <!-- Replaced by an iframe if it loads. -->
-          <h2>Last thing</h2>
-          You can pay whatever you want for AdBlock, including not paying anything.  
-          Would you mind <a href="http://chromeadblock.com/pay/">paying</a> to fund 
-          its development?  Thanks!
+          <div style="width: 500px">
+            <h2>That's it!</h2>
+            You can close this tab and begin browsing ad-free.  Have fun!
+          </div>
         </div>
         <script>
           $(function() {
-            BGcall("get_statistics", function(stats) {
-              var iframe = $("<iframe>", {
-                src: "http://chromeadblock.com/pay/?source=I&header=install&" + $.param(stats), 
-                width: 750, height: 450, 
-                frameBorder: 0, scrolling: "no" 
-              });
-              $("#iframe-slot").html(iframe);
+            // TODO temp x5
+            if (GROUP == 2)
+              return;
+            // TODO end temp
+            var userId = storage_get("user_id");
+            var iframe = $("<iframe>", {
+              src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
+              width: 750, height: 450, 
+              frameBorder: 0, scrolling: "no" 
             });
+            $("#iframe-slot").html(iframe);
           });
         </script>
 
