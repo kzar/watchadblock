@@ -11,24 +11,6 @@
     <!-- TODO temp x5 - only for STATS.msg -->
     <script src="../../stats.js"></script>
     <script>
-      // TODO temp x5 -- offer storage_get and storage_set for stats.js
-      // which requires them.  Delete these copies after x5!
-      storage_get = function(key) {
-        var json = localStorage.getItem(key);
-        if (json == null)
-          return undefined;
-        try {
-          return JSON.parse(json);
-        } catch (e) {
-          log("Couldn't parse json for " + key);
-          return undefined;
-        }
-      }
-      storage_set = function(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
-      }
-    </script>
-    <script>
       var installPageVersion = 2;
       localStorage['saw_install_page'] = installPageVersion;
       // TODO temp x5
@@ -231,9 +213,9 @@
             if (GROUP == 2)
               return;
             // TODO end temp
-            var flavor = (SAFARI ? "S" : "E");
+            var userId = storage_get("user_id");
             var iframe = $("<iframe>", {
-              src: "http://chromeadblock.com/pay/?source=I&header=install&flavor=" + flavor,
+              src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
               width: 750, height: 450, 
               frameBorder: 0, scrolling: "no" 
             });

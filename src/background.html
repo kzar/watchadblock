@@ -6,8 +6,8 @@
     <script src="port.js"></script>
     <script src="jquery/jquery.min.js"></script>
     <script src="app/app.js"></script>
-    <script src="stats.js"></script>
     <script src="functions.js"></script>
+    <script src="stats.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
@@ -67,28 +67,6 @@
         set_custom_filters_text(text.trim());
       }
 
-      // STORAGE
-
-      // Inputs: key:string.
-      // Returns value if key exists, else undefined.
-      storage_get = function(key) {
-        var json = localStorage.getItem(key);
-        if (json == null)
-          return undefined;
-        try {
-          return JSON.parse(json);
-        } catch (e) {
-          log("Couldn't parse json for " + key);
-          return undefined;
-        }
-      }
-
-      // Inputs: key:string, value:object.
-      // Returns undefined.
-      storage_set = function(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
-      }
-  
       // OPTIONAL SETTINGS
 
       get_settings = function() {

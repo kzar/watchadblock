@@ -3,35 +3,37 @@
 // Allows interaction with the server to track install rate
 // and log messages.
 STATS = (function() {
-
   var stats_url = "http://chromeadblock.com/api/stats.php";
 
-  // Return a random new user ID.
-  var newUserId = function() {
-    var alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    var result = [];
-    for (var i = 0; i < 16; i++) {
-      var choice = Math.floor(Math.random() * alphabet.length);
-      result.push(alphabet[choice]);
-    }
-    return result.join('');
-  };
+  var firstRun = (function() {
+    if (localStorage.user_id)
+      return false;
+    // TODO temp
+    if (localStorage.installed_at)
+      return false;
+    // end temp
+    return true;
+  })();
 
-  // Return the user's ID, creating one if necessary.
-  var userId = function() {
-    var result = storage_get("user_id");
-    if (!result) {
-      result = newUserId();
-      storage_set("user_id", result);
+  // Give the user a userid if they don't have one yet.
+  var userId = (function() {
+    if (!storage_get("user_id")) {
+      var alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+      var result = [];
+      for (var i = 0; i < 16; i++) {
+        var choice = Math.floor(Math.random() * alphabet.length);
+        result.push(alphabet[choice]);
+      }
+      storage_set("user_id", result.join(''));
     }
-    return result;
-  }
+    return storage_get("user_id");
+  })();
 
   // Tell the server we exist.
   var pingNow = function() {
     var data = {
       cmd: "ping",
-      u: userId(),
+      u: userId,
       v: ADBLOCK.version,
       f: SAFARI ? "S": "E",
       o: ADBLOCK.os
@@ -79,15 +81,10 @@ STATS = (function() {
 
   return {
     // True if AdBlock was just installed.
-    firstRun: (function() {
-      if (localStorage.user_id)
-        return false;
-      // TODO temp
-      if (localStorage.installed_at)
-        return false;
-      // end temp
-      return true;
-    })(),
+    firstRun: firstRun,
+
+    // The unique ID of this user.
+    userId: userId,
 
     // Ping the server when necessary.
     startPinging: function() {
@@ -109,7 +106,7 @@ STATS = (function() {
     msg: function(message) {
       var data = {
         cmd: "msg",
-        u: userId(),
+        u: userId,
         m: message
       };
       $.post(stats_url, data);
