@@ -1,0 +1,119 @@
+// Requires ADBLOCK variable and storage_get/set
+
+// Allows interaction with the server to track install rate
+// and log messages.
+STATS = (function() {
+
+  var stats_url = "http://chromeadblock.com/api/stats.php";
+
+  // Return a random new user ID.
+  var newUserId = function() {
+    var alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var result = [];
+    for (var i = 0; i < 16; i++) {
+      var choice = Math.floor(Math.random() * alphabet.length);
+      result.push(alphabet[choice]);
+    }
+    return result.join('');
+  };
+
+  // Return the user's ID, creating one if necessary.
+  var userId = function() {
+    var result = storage_get("user_id");
+    if (!result) {
+      result = newUserId();
+      storage_set("user_id", result);
+    }
+    return result;
+  }
+
+  // Tell the server we exist.
+  var pingNow = function() {
+    var data = {
+      cmd: "ping",
+      u: userId(),
+      v: ADBLOCK.version,
+      f: SAFARI ? "S": "E",
+      o: ADBLOCK.os
+    };
+    // TODO temp
+    var installed_at = storage_get("installed_at");
+    if (installed_at)
+      data.installed_at = installed_at;
+    // end temp
+
+    $.post(stats_url, data, function(response) {
+      // TODO temp until most installed_at users have done this.  Installed
+      // 6/2011.  Delete the other installed_at-related TODO temps in here
+      // when you delete this.
+      delete localStorage.installed_at;
+    });
+  };
+
+  // Called just after we ping the server, to schedule our next ping.
+  var scheduleNextPing = function() {
+    var total_pings = storage_get("total_pings") || 0;
+    total_pings += 1;
+    storage_set("total_pings", total_pings);
+
+    var delay_hours;
+    if (total_pings == 1)      // Ping one hour after install
+      delay_hours = 1;
+    else if (total_pings < 9)  // Then every day for a week
+      delay_hours = 24;
+    else                       // Then weekly forever
+      delay_hours = 24 * 7;
+
+    var millis = 1000 * 60 * 60 * delay_hours;
+    storage_set("next_ping_time", +new Date() + millis);
+  };
+
+  // Return the number of milliseconds until the next scheduled ping.
+  var millisTillNextPing = function() {
+    var next_ping_time = storage_get("next_ping_time");
+    if (!next_ping_time)
+      return 0;
+    else
+      return Math.max(0, next_ping_time - new Date());
+  };
+
+  return {
+    // True if AdBlock was just installed.
+    firstRun: (function() {
+      if (localStorage.user_id)
+        return false;
+      // TODO temp
+      if (localStorage.installed_at)
+        return false;
+      // end temp
+      return true;
+    })(),
+
+    // Ping the server when necessary.
+    startPinging: function() {
+      function sleepThenPing() {
+        var delay = millisTillNextPing();
+        console.log("Sleeping " + delay + " ms until next ping");
+        window.setTimeout(function() { 
+          pingNow();
+          scheduleNextPing();
+          sleepThenPing();
+        }, delay );
+      };
+      // This will sleep, then ping, then schedule a new ping, then
+      // call itself to start the process over again.
+      sleepThenPing();
+    },
+
+    // Record some data.
+    msg: function(message) {
+      var data = {
+        cmd: "msg",
+        u: userId(),
+        m: message
+      };
+      $.post(stats_url, data);
+    }
+  };
+
+})();

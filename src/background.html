@@ -6,6 +6,7 @@
     <script src="port.js"></script>
     <script src="jquery/jquery.min.js"></script>
     <script src="app/app.js"></script>
+    <script src="stats.js"></script>
     <script src="functions.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
@@ -91,21 +92,6 @@
       // OPTIONAL SETTINGS
 
       get_settings = function() {
-        (function() {
-          // temp code to convert to simpler options storage, installed 3/11
-          try {
-            if (!storage_get('optional_features'))
-              return;
-            var old_options = storage_get('optional_features');
-            var settings = {};
-            for (var name in old_options) {
-              settings[name] = old_options[name].is_enabled;
-            }
-            storage_set('settings', settings);
-          } catch(ex) {}
-          localStorage.removeItem('optional_features');
-        })();
-
         var defaults = {
           debug_logging: false,
           block_youtube: true,
@@ -538,14 +524,6 @@
                     'scrollbars=0,location=0,resizable=0,width=450,height=140');
       };
 
-      // Return some general statistics.
-      get_statistics = function() {
-        var flavor = (SAFARI ? "S" : "E");
-        if (ADBLOCK.isApp) flavor = "A";
-        var installed_at = storage_get('installed_at');
-        return { installed_at: installed_at, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
-      }
-
       // Return chrome.i18n._getL10nData() for content scripts who cannot
       // call that function (since it loads extension files from disk.)
       // Only defined in Safari.
@@ -598,7 +576,7 @@
         version_to_notify = '2.3.0';
 
         // Brand new users don't see badge (or popup's info div).
-        if (!storage_get('installed_at')) {
+        if (STATS.firstRun) {
           localStorage.setItem('saw_badge_version', version_to_notify);
           localStorage.setItem('saw_badge_info_version', version_to_notify);
         }
@@ -617,50 +595,22 @@
       
       _myfilters = new MyFilters();
 
-      // If the user has just installed, make a note of it.  
-      function note_install() {
-        if (storage_get('installed_at'))
+      // Record that we exist.
+      STATS.startPinging();
+
+      // If the user has just installed, show the walkthrough.
+      function first_run_walkthrough() {
+        if (!STATS.firstRun)
           return;
 
-        var now = new Date().getTime();
-        storage_set('installed_at', now);
+        // TODO temp experiment code to measure uninstall rate
+        // at each stage of walkthrough
+        var group = (Math.random() < .5 ? 1 : 2);
+        STATS.msg("X5G" + group);
 
-        var data = get_statistics();
-        $.get("http://chromeadblock.com/api/visit.php", data);
-
-        chrome.tabs.create({url: "pages/install/index.html?" + $.param(data)});
+        chrome.tabs.create({url: "pages/install/index.html?g=" + group});
       }
-      note_install();
-
-      // Take a census of filter subscriptions.
-      function take_census() {
-        try {
-          if (localStorage['tookSubscriptionCensus'] == null) {
-            var data = {};
-            data.subscriptions = [];
-            for (var sub_id in _myfilters._subscriptions) {
-              if (_myfilters._subscriptions[sub_id].subscribed) {
-                data.subscriptions.push(sub_id);
-              }
-            }
-            data.subscriptions = data.subscriptions.join(',');
-            data.safari = SAFARI;
-            data.language = navigator.language;
-            data.installed_at = localStorage['installed_at'];
-            data.options_at = localStorage['visited_options_at'];
-            $.get(
-              "http://chromeadblock.com/api/url_census.php", 
-              data,
-              function(result) {
-                if (/OK/.test(result))
-                  localStorage['tookSubscriptionCensus'] = true;
-              }
-            );
-          }
-        } catch (ex) { log("Census failed"); log(ex); }
-      }
-      // take_census(); uncomment when you want another census.
-
+      first_run_walkthrough();
 
       // Safari specific code.
       if (SAFARI) {

@@ -31,18 +31,6 @@
       var optionalSettings = {};
       load_options();
 
-      function note_visit() {
-        if (localStorage.getItem('visited_options_at') != null)
-          return;
-        var now = new Date().getTime();
-        localStorage.setItem('visited_options_at', now);
-        var installed_at = localStorage.getItem('installed_at', 0);
-        if (installed_at == null)
-          installed_at = 2; // aka "we don't know"
-        $.get("http://chromeadblock.com/api/visit.php", 
-              {options_at:now, installed_at:installed_at});
-      }
-
       function displayVersionNumber() {
         try {
           var xhr = new XMLHttpRequest();
@@ -60,8 +48,6 @@
       $(function() {
         displayVersionNumber();
 
-        note_visit();
-        
         if (navigator.language.substring(0, 2) != "en")
           $("#translation_credits").text(translate("translator_credit"));
 
@@ -83,18 +69,17 @@
       <div class="link" id="paymentlink" i18n="did_you_know_this_is_my_full_time_job"></div>
       <script>
         $(function() {
-          BGcall("get_statistics", function(stats) {
-            $('#paymentlink').click(function() {
-              var href = "http://chromeadblock.com/pay/?source=O&" + $.param(stats);
-              if (SAFARI) {
-                // Safari target=_new opens a new window by default, so we have to force its
-                // height to be correct.
-                window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
-              } else {
-                chrome.tabs.create({url: href});
-              }
-              return false;
-            });
+          $('#paymentlink').click(function() {
+            var flavor = (SAFARI ? "S" : "E");
+            var href = "http://chromeadblock.com/pay/?source=O&flavor=" + flavor;
+            if (SAFARI) {
+              // Safari target=_new opens a new window by default, so we have to force its
+              // height to be correct.
+              window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
+            } else {
+              chrome.tabs.create({url: href});
+            }
+            return false;
           });
         });
       </script>

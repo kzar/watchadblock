@@ -20,9 +20,10 @@ if (typeof "ADBLOCK" == "undefined")
 
   ADBLOCK.version = manifest.version;
 
+  ADBLOCK.os = "Unknown";
   ['CrOS', 'Windows', 'Mac', 'Linux'].forEach(function(os) {
     if (navigator.appVersion.match(os))
-      ADBLOCK.os = os.toLowerCase();
+      ADBLOCK.os = os;
   });
 
   if (SAFARI)
