@@ -6,27 +6,42 @@ STATS = (function() {
   var stats_url = "http://chromeadblock.com/api/stats.php";
 
   var firstRun = (function() {
-    if (localStorage.user_id)
+    // All of these have represented the user existing at one point or
+    // another.  Lest we accidentally show the install page to a user
+    // just because he took forever in updating, let's not remove any
+    // of these.
+    if (localStorage.userid || localStorage.user_id || localStorage.installed_at)
       return false;
-    // TODO temp
-    if (localStorage.installed_at)
-      return false;
-    // end temp
     return true;
   })();
 
   // Give the user a userid if they don't have one yet.
   var userId = (function() {
-    if (!storage_get("user_id")) {
+    var time_suffix = (+new Date()) % 1e8; // 8 digits from end of timestamp
+
+    // TODO temp: convert user_id to userid, as user_id was not
+    // random enough.  6/14/2011, affected < 100k users.
+    if (storage_get("user_id")) { // oops, this value was broken; replace it.
+      var user_id = storage_get("user_id").substring(0, 8) + time_suffix;
+      storage_set("userid", user_id);
+      console.log("Converted user id " + localStorage.user_id + " to " + user_id);
+      delete localStorage.user_id; // delete the old
+    }
+    // TODO end temp
+
+    if (!storage_get("userid")) {
       var alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
       var result = [];
-      for (var i = 0; i < 16; i++) {
+      for (var i = 0; i < 8; i++) {
         var choice = Math.floor(Math.random() * alphabet.length);
         result.push(alphabet[choice]);
       }
-      storage_set("user_id", result.join(''));
+      var theId = result.join('') + time_suffix;
+
+      storage_set("userid", theId);
     }
-    return storage_get("user_id");
+
+    return storage_get("userid");
   })();
 
   // Tell the server we exist.
@@ -42,13 +57,16 @@ STATS = (function() {
     var installed_at = storage_get("installed_at");
     if (installed_at)
       data.installed_at = installed_at;
+    console.log(data);
     // end temp
 
     $.post(stats_url, data, function(response) {
       // TODO temp until most installed_at users have done this.  Installed
       // 6/2011.  Delete the other installed_at-related TODO temps in here
       // when you delete this.
+      console.log("DELETING " + localStorage.installed_at);
       delete localStorage.installed_at;
+      console.log("DELETING " + localStorage.installed_at);
     });
   };
 

@@ -70,7 +70,7 @@
       <script>
         $(function() {
           $('#paymentlink').click(function() {
-            var userId = storage_get("user_id");
+            var userId = storage_get("userid");
             var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
             if (SAFARI) {
               // Safari target=_new opens a new window by default, so we have to force its
