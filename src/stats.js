@@ -87,7 +87,6 @@ STATS = (function() {
     startPinging: function() {
       function sleepThenPing() {
         var delay = millisTillNextPing();
-        console.log("Sleeping " + delay + " ms until next ping");
         window.setTimeout(function() { 
           pingNow();
           scheduleNextPing();
