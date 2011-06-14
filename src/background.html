@@ -73,7 +73,6 @@
         var defaults = {
           debug_logging: false,
           block_youtube: true,
-          show_youtube_help_msg: true,
           show_google_search_text_ads: false,
           show_context_menu_items: true,
           hide_instead_of_remove: false,
@@ -336,10 +335,6 @@
         xhr.open("GET", chrome.extension.getURL(file), false);
         xhr.send();
         return xhr.responseText;
-      };
-
-      do_not_show_youtube_help_msg = function() {
-        set_setting("show_youtube_help_msg", false);
       };
 
       // TODO: make better.
