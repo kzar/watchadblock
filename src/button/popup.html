@@ -288,7 +288,8 @@
         $(function() {
           var state = "initial";
           var bodysize = { width: $("body").width(), height: $("body").height() };
-          var payHref = "http://chromeadblock.com/pay/?source=P&small=true&u=" + BG.STATS.userId;
+          var userId = storage_get("user_id");
+          var payHref = "http://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
           $("#pay_open").click(function() {
             if (state == "initial") {
               $("#payment_wrapper iframe").attr("src", payHref);

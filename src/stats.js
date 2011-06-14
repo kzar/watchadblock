@@ -83,9 +83,6 @@ STATS = (function() {
     // True if AdBlock was just installed.
     firstRun: firstRun,
 
-    // The unique ID of this user.
-    userId: userId,
-
     // Ping the server when necessary.
     startPinging: function() {
       function sleepThenPing() {
