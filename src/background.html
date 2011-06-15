@@ -470,7 +470,6 @@
             } 
             // Nothing left to inject, so execute the function.
             else {
-              parameter.advancedUser = get_settings().show_advanced_options;
               var param = JSON.stringify(parameter);
               details.code = fn_name + "(" + param + ");";
               chrome.tabs.executeScript(undefined, details);

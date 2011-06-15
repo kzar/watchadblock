@@ -24,7 +24,9 @@ function preview(selector) {
 
 // Wizard that walks the user through selecting an element and choosing
 // properties to block.
-function BlacklistUi(clicked_item) {
+// clicked_item: the element that was right clicked, if any.
+// advanced_user:bool
+function BlacklistUi(clicked_item, advanced_user) {
   // If a dialog is ever closed without setting this to false, the
   // object fires a cancel event.
   this._cancelled = true;
@@ -32,6 +34,7 @@ function BlacklistUi(clicked_item) {
   this._callbacks = { 'cancel': [], 'block': [] };
 
   this._clicked_item = clicked_item;
+  this._advanced_user = advanced_user;
 }
 
 // TODO: same event framework as ClickWatcher
@@ -223,7 +226,7 @@ BlacklistUi.prototype._build_page2 = function() {
       function() {
         that._ui_page2.dialog('close');
       }
-  if (advanced_user)
+  if (that._advanced_user)
     btns[translate("buttonedit")] =
       function() {
         var custom_filter = document.location.hostname + '##' + $("#summary", that._ui_page2).text();
@@ -270,7 +273,7 @@ BlacklistUi.prototype._build_page2 = function() {
 }
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
-  var show_link = (!SAFARI && advanced_user &&
+  var show_link = (!SAFARI && this._advanced_user &&
       ((!!el.attr("src") && /^https?\:\/\//.test(el.attr("src"))) ||
       (!!el.attr("data") && /^https?\:\/\//.test(el.attr("data")))));
   $("#block_by_url_link", this._ui_page1).toggle(show_link);

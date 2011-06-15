@@ -1,15 +1,12 @@
 // Global lock so we can't open more than once on a tab.
 if (typeof may_open_dialog_ui === "undefined")
   may_open_dialog_ui = true;
-var advanced_user = false;
 
 function top_open_blacklist_ui(options) {
   if (!may_open_dialog_ui)
     return;
 
   may_open_dialog_ui = false;
-
-  advanced_user = options.advancedUser;
 
   load_jquery_ui(function() {
     // If they chose "Block an ad on this page..." ask them to click the ad
@@ -26,15 +23,18 @@ function top_open_blacklist_ui(options) {
     }
     if (rightclicked_item && rightclicked_item.nodeName == "BODY")
       rightclicked_item = null;
-    var blacklist_ui = new BlacklistUi(rightclicked_item);
-    blacklist_ui.cancel(function() {
-      may_open_dialog_ui = true;
+    BGcall("get_settings", function(settings) {
+      var advanced_user = settings.show_advanced_options;
+      var blacklist_ui = new BlacklistUi(rightclicked_item, advanced_user);
+      blacklist_ui.cancel(function() {
+        may_open_dialog_ui = true;
+      });
+      blacklist_ui.block(function() {
+        may_open_dialog_ui = true; // no-op, actually, since we now reload
+        document.location.reload();
+      });
+      blacklist_ui.show();
     });
-    blacklist_ui.block(function() {
-      may_open_dialog_ui = true; // no-op, actually, since we now reload
-      document.location.reload();
-    });
-    blacklist_ui.show();
 
   });
 }
