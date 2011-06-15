@@ -75,12 +75,14 @@ if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) 
     adblock_begin_part_2();
   else
     GLOBAL_contentScriptData.run_after_data_is_set = adblock_begin_part_2;
-    
+
   // Subscribe to the list when you click an abp: link
   $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
     event.preventDefault();
     var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
     if (searchquery)
-      BGcall('subscribe_popup', searchquery);
+      window.open(chrome.extension.getURL('pages/subscribe.html?' +
+                  searchquery), "_blank",
+                  'scrollbars=0,location=0,resizable=0,width=450,height=140');
   });
 }
