@@ -178,6 +178,18 @@
     "description": "When you have to click the ad to continue"
   },
 
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock avaktiveras på alla sidor som matchar:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Du kan dra i skjutreglaget för att ändra mer exakt, på vilka sidor AdBlock skall avaktiveras.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Avaktivera AdBlock på...",
+    "description": "The title of the whitelister dialog"
+  },
   "buttonexclude": {
     "message": "Undanta",
     "description": "Button for excluding a domain in the whitelister dialog"
@@ -968,6 +980,14 @@
     "message": "AdBlock fungerar inte på den här domänen.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
+  "dont_run_on_pages_on_domain": {
+    "message": "Undanta denna domän",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock är inaktiverad på denna sida.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
   "undo": {
     "message": "Ångra",
     "description": "Button text to undo an action."
@@ -1153,5 +1173,13 @@
   "ok_now_what": {
     "message": "OK, nu då? ",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Domän:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Sida:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }
