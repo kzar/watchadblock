@@ -1,4 +1,4 @@
-﻿{
+{
   "buttoncancel": {
     "message": "Lukk",
     "description": "Cancel button"
@@ -24,26 +24,6 @@
     "message": "AdBlock er nå installert!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Oppdater dine faner, og se reklamen forsvinne!",
-    "description": "Message on the installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "Vis et ikon på verktøylinjen.",
-    "description": "Message on installation success page"
-  },
-
-  "youtubevideomessage": {
-    "message": "Ingen video? Oppdater siden. Hvis dette skjer ofte, skru av YouTube reklame blokkering under $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Instillinger"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "Dra ned slideren til reklamen blir blokkert riktig på siden, og det blokkerte elementet ser brukbart ut.",
     "description": "Blacklister slider page message"
@@ -148,23 +128,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock kan ikke kjøre på sider som ender med<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Hviteliste dette domenet?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Hvitelist",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -336,14 +302,6 @@
     "message": "Abboner",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Abboner på alle filtere:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Avslutt abonnement på alle filtere:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Vis linker til filter listene:",
     "description": "Option on second tab page"
@@ -484,10 +442,6 @@
   "savereminder": {
     "message": "Ikke glem å lagre!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Avansert",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Rapporter en reklame</a> til AdBlock eller til filter vedlikeholdere.",
@@ -706,8 +660,14 @@
     "message": "Ikke kjør på dette domenet...",
     "description": "Context menu entry"
   },
-  "somequicksetup": {
-    "message": "Noen kjappe instillinger",
-    "description": "Title of the options on the installation succes page"
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Martin H",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

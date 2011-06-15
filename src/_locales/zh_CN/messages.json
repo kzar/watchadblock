@@ -1,4 +1,4 @@
-﻿{
+{
    "adalreadyblocked": {
       "description": "on the ad report page, telling a user there is nothing to do",
       "message": "广告已经被拦截,你什么都不用做了!"
@@ -10,10 +10,6 @@
    "adstillappear": {
       "description": "question on ad reporting page",
       "message": "广告依然显示吗?"
-   },
-   "advanced": {
-      "description": "Section label for advanced options",
-      "message": "高级选项"
    },
    "betalabel": {
       "description": "Option on first tab page",
@@ -126,7 +122,7 @@
       "message": "编辑"
    },
    "buttonexclude": {
-      "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)",
+      "description": "Button for excluding a domain in the whitelister dialog",
       "message": "排除"
    },
    "buttonlooksgood": {
@@ -169,10 +165,6 @@
       "description": "instruction for how to check Firefox for a reported ad",
       "message": "在Firefox中,广告依然显示吗?"
    },
-   "chromebutton_showoption": {
-      "description": "Message on installation success page",
-      "message": "在工具栏上显示按钮"
-   },
    "clickthead": {
       "description": "When you have to click the ad to continue",
       "message": "点击广告，我会带着你拦截它."
@@ -204,10 +196,6 @@
    "description1": {
       "message": "最受欢迎的Google 浏览器扩充功能，拥有超过150 万位使用者！阻挡网路上所有的广告。",
       "description": "Extension description in manifest"
-   },
-   "donaterequest2": { 
-      "message": "为了全力投入AdBlock，Michael 最近辞去了工作！现在完全依靠各位的<a>捐助</a>来支持家庭。", 
-      "description": "Donation request on installation success page" 
    },
    "enterurloflist": {
       "description": "Error messagebox",
@@ -352,10 +340,6 @@
    "installedtitle": {
       "description": "Title for the installation success page",
       "message": "你现在已经成功安装了 Adblock!"
-   },
-   "installisdone": {
-      "description": "Message on the installation success page",
-      "message": "重新加载(刷新)所有打开的标签，然后看看广告是不是已经消失了呢?"
    },
    "labelshow": {
       "description": "The label when you click the 'show links to filter lists' option",
@@ -569,10 +553,6 @@
       "description": "Blacklister slider page title",
       "message": "第一步:找出要拦截的广告"
    },
-   "somequicksetup": {
-      "description": "Title of the options on the installation succes page",
-      "message": "快速设置"
-   },
    "subscribebutton": {
       "description": "subscribe to a list button",
       "message": "订阅"
@@ -580,14 +560,6 @@
    "subscribedlabel": {
       "description": "Status label",
       "message": "订阅成功"
-   },
-   "subscribetoall": {
-      "description": "option on second tab page",
-      "message": "订阅所有的过滤器:"
-   },
-   "subscribetonone": {
-      "description": "option on second tab page",
-      "message": "取消订阅所有的过滤器:"
    },
    "subscribingfailed": {
       "description": "abp: link subscriber result",
@@ -687,20 +659,6 @@
       "description": "instruction on ad report page",
       "message": "请确保您的广告过滤器已经是最新版本"
    },
-   "whitelistertext": {
-      "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-      "message": "Adblock 将不会拦截此域名上的广告:<br/>$domain$",
-      "placeholders": {
-         "domain": {
-            "content": "'<i>$1</i>'",
-            "example": "'<i>live.msn.com</i>'"
-         }
-      }
-   },
-   "whitelistertitle": {
-      "description": "The title of the whitelister dialog",
-      "message": "将此域名添加到白名单?"
-   },
    "yes": {
       "description": "A positive response to a question",
       "message": "是"
@@ -708,16 +666,6 @@
    "youtubeads": {
       "description": "Option on first tab page",
       "message": "拦截YouTube视频中的广告"
-   },
-   "youtubevideomessage": {
-      "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-      "message": "没有视频?试着重新加载(刷新)页面看看。若此情况经常发生,请在 $link$ 里停用YouTube广告拦截.",
-      "placeholders": {
-         "link": {
-            "content": "$1",
-            "example": "AdBlock Options"
-         }
-      }
    },
    "pause_adblock": {
     "message": "暂停AdBlock",
@@ -727,16 +675,6 @@
     "message": "不在本页上运行AdBlock",
     "description": "Menu entry to whitelist a page"
   },
-  "dont_run_on_domain": {
-    "message": "不在$domain$上运行AdBlock",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
-  },
   "options": {
     "message": "选项",
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
@@ -744,5 +682,15 @@
   "hide_this_button": {
     "message": "隐藏此按钮",
     "description": "Toolbar button menu entry to hide the AdBlock button"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Gaosong2, Gli, Chenxiao",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

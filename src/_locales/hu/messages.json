@@ -11,10 +11,6 @@
       "description": "question on ad reporting page",
       "message": "A rekl\u00E1m m\u00E9g mindig megjelenik?"
    },
-   "advanced": {
-      "description": "Section label for advanced options",
-      "message": "Halad\u00F3"
-   },
    "betalabel": {
       "description": "Option on first tab page",
       "message": "B\u00E9ta"
@@ -126,7 +122,7 @@
       "message": "Szerkeszt\u00E9s"
    },
    "buttonexclude": {
-      "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)",
+      "description": "Button for excluding a domain in the whitelister dialog",
       "message": "Kiz\u00E1r\u00E1s"
    },
    "buttonlooksgood": {
@@ -533,14 +529,6 @@
       "description": "Status label",
       "message": "Feliratkozva."
    },
-   "subscribetoall": {
-      "description": "option on second tab page",
-      "message": "Feliratkoz\u00E1s az \u00F6sszes sz\u0171r\u0151re:"
-   },
-   "subscribetonone": {
-      "description": "option on second tab page",
-      "message": "Leiratkoz\u00E1s az \u00F6sszes sz\u0171r\u0151r\u0151l:"
-   },
    "subscribingfailed": {
       "description": "abp: link subscriber result",
       "message": "Hiba!"
@@ -639,20 +627,6 @@
       "description": "instruction on ad report page",
       "message": "Gy\u0151z\u0151dj\u00F6n meg r\u00F3la, hogy a sz\u0171r\u0151 list\u00E1i naprak\u00E9szek"
    },
-   "whitelistertext": {
-      "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-      "message": "Az AdBlock nem fog futni az al\u00E1bbi v\u00E9gz\u0151d\u00E9s\u0171 domain-eken:\u003Cbr/\u003E$domain$.",
-      "placeholders": {
-         "domain": {
-            "content": "'\u003Ci\u003E$1\u003C/i\u003E'",
-            "example": "'\u003Ci\u003Elive.msn.com\u003C/i\u003E'"
-         }
-      }
-   },
-   "whitelistertitle": {
-      "description": "The title of the whitelister dialog",
-      "message": "Kiz\u00E1rja ezt a domain-t?"
-   },
    "yes": {
       "description": "A positive response to a question",
       "message": "Igen"
@@ -661,16 +635,6 @@
       "description": "Option on first tab page",
       "message": "Rekl\u00E1mok blokkol\u00E1sa a Yotube vide\u00F3kban."
    },
-   "youtubevideomessage": {
-      "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-      "message": "Nincs vide\u00F3? T\u00F6ltse \u00FAjra az oldalt. Ha ez sokszor el\u0151fordul, kapcsolja ki a Youtube rekl\u00E1mblokkol\u00E1st az $link$ban.",
-      "placeholders": {
-         "link": {
-            "content": "$1",
-            "example": "AdBlock Options"
-         }
-      }
-   },
   "block_an_ad_on_this_page": {
     "message": "Egy rekl\u00E1m blokkol\u00E1sa az oldalon",
     "description": "Context menu entry"
@@ -678,5 +642,15 @@
   "contextmenuexcludedomain": {
     "message": "Ne blokkoljon ezen a domain-en...",
     "description": "Context menu entry"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Ofalvai",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

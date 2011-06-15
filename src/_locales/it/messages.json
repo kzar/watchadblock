@@ -1,4 +1,4 @@
-﻿{
+{
     "buttoncancel": {
         "message": "Cancella",
         "description": "Cancel button" 
@@ -18,16 +18,6 @@
     "optionstitle": {
         "message": "Opzioni di AdBlock",
         "description": "Title for the options page" 
-    },
-    "youtubevideomessage": {
-        "message": "Problemi con il video? Prova a ricaricare la pagina. Se succede spesso disattiva AdBlock per YouTube sulla pagina $link$.",
-        "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-        "placeholders": {
-            "link": {
-                "content": "$1",
-                "example": "AdBlock Options" 
-            } 
-        } 
     },
     "sliderexplanation": {
         "message": "Sposta la barra di scorrimento fino a bloccare correttamente l'elemento selezionato e a dare alla pagina l'aspetto desiderato.",
@@ -131,23 +121,9 @@
         "message": "Clicca quello che vuoi bloccare e ti guiderò nell'operazione.",
         "description": "When you have to click the ad to continue" 
     },
-    "whitelistertext": {
-        "message": "AdBlock non funzionerà sui domini che finiscono per<br/>$domain$.",
-        "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-        "placeholders": {
-            "domain": {
-                "content": "'<i>$1</i>'",
-                "example": "'<i>live.msn.com</i>'" 
-            } 
-        } 
-    },
-    "whitelistertitle": {
-        "message": "Escludere questo dominio?",
-        "description": "The title of the whitelister dialog" 
-    },
     "buttonexclude": {
         "message": "Escludi",
-        "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)" 
+        "description": "Button for excluding a domain in the whitelister dialog" 
     },
     "subscribingtitle": {
         "message": "Mi sto abbonando alla lista filtri...",
@@ -315,14 +291,6 @@
         "message": "Abbonati",
         "description": "subscribe to a list button" 
     },
-    "subscribetoall": {
-        "message": "Abbonati a tutti i filtri:",
-        "description": "option on second tab page" 
-    },
-    "subscribetonone": {
-        "message": "Disabbonati da tutti i filtri:",
-        "description": "option on second tab page" 
-    },
     "showlinkstolists": {
         "message": "Mostra i collegamenti alle liste filtri:",
         "description": "Option on second tab page" 
@@ -462,10 +430,6 @@
     "savereminder": {
         "message": "Non dimenticare di salvare!",
         "description": "Reminder to press save" 
-    },
-    "advanced": {
-        "message": "Avanzate",
-        "description": "Section label for advanced options" 
     },
     "reportanad": {
         "message": "<a>Segnala una pubblicità</a> ad AdBlock o al responsabile della lista.",
@@ -670,5 +634,15 @@
                 "example": "<a href='http://chrome.com/update_here.ctx'>update</a>" 
             } 
         } 
+    },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Giordano",
+        "example": "Michael G, Drew R"
+      }
     }
+  }
 }

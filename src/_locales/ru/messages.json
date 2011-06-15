@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "Наиболее популярное расширение Chrome с более чем 2 миллионами пользователей! Блокирует рекламу по всему Интернету.",
     "description": "Extension description in manifest"
@@ -7,7 +7,6 @@
     "message": "Блокирует рекламу по всему Интернету!  Любимо миллионами пользователей Chrome и Safari!",
     "description": "App description used in app version manifest"
   },
-
   "buttoncancel": {
     "message": "Отмена",
     "description": "Cancel button"
@@ -32,14 +31,6 @@
   "installedtitle": {
     "message": "AdBlock установлен!",
     "description": "Title for the installation success page"
-  },
-  "installisdone": {
-    "message": "Перезагрузите любую открытую вкладку, и посмотрите исчезла ли реклама.",
-    "description": "Message on the installation success page"
-  },
-  "donaterequest2": {
-    "message": "Я недавно оставил свою работу, чтобы посвятить все свое время AdBlock! Сейчас я полностью полагаюсь на Ваши пожертвования для поддержки моей семьи. Окажите <a>поддержку</a>, чтобы помочь оплатить наши счета - и доказать, что я и моя жена (на фото) не сумасшедшие из-за этой попытки. Спасибо:) - Michael",
-    "description": "Donation request on installation success page"
   },
   "setotheroptions_safari": {
     "message": "Вы можете задать другие параметры, нажав кнопку на панели инструментов.",
@@ -69,26 +60,6 @@
     "message": "Чтобы скрыть кнопку щелкните её правой кнопкой мыши и выберите Hide Button.  Вы можете показать ее вновь, нажав Ключ | Инструменты | Расширения.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "chromebutton_hide_macOSX": {
-    "message": "Chrome на OS X не будет полностью поддерживать скрытие кнопки еще несколько недель. До этого, выможете переместить кнопку из виду, перетаскивая края адресной строки с правой стороны.",
-    "description": "Message explaining how to hide the AdBlock toolbar button for OS X users."
-  },
-  "chromebutton_showoption": {
-    "message": "Показать кнопку на панели инструментов",
-    "description": "Message on installation success page"
-  },
-
-  "youtubevideomessage": {
-    "message": "Нет видео? Перезагрузите страницу. Если это повторится, отключите блокировку рекламы YouTube в $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "Сдвигайте ползунок до тех пор, пока реклама не будет заблокирована правильно, а заблокированный элемент выглядит пригодным.",
     "description": "Blacklister slider page message"
@@ -206,27 +177,21 @@
     "message": "Щелкните по рекламе, и я доведу Вас до ее блокировки.",
     "description": "When you have to click the ad to continue"
   },
-  "advanced_show_url_list": {
-    "message": "или выберите URL из списка, чтобы заблокировать (дополнительно)",
-    "description": "Message on link to open resource blocker instead of use blacklister"
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock не будет работать на соответствующих страницах:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   },
-  "whitelistertext": {
-    "message": "AdBlock не будет работать на доменах, оканчивающихся на <br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
+  "you_can_slide_to_change": {
+    "message": "Вы можете сдвинуться ниже, чтобы изменить именно те страницы, на которых AdBlock не будет работать.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
-  "whitelistertitle": {
-    "message": "Исключить этот домен?",
+  "whitelistertitle2": {
+    "message": "Не запускать AdBlock на...",
     "description": "The title of the whitelister dialog"
   },
   "buttonexclude": {
     "message": "Исключить",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -280,6 +245,10 @@
   "googletextads": {
     "message": "Мне нравится текстовая реклама в результатах поиска Google; показывать мне её.",
     "description": "Option on first tab page"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "Мне нравится текстовая реклама Google; не блокировать её.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
   "youtubeads": {
     "message": "Блокировать рекламу внутри видео YouTube.",
@@ -401,14 +370,6 @@
   "subscribebutton": {
     "message": "Подписаться",
     "description": "subscribe to a list button"
-  },
-  "subscribetoall": {
-    "message": "Подписаться на все фильтры:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Отписаться от всех фильтров:",
-    "description": "option on second tab page"
   },
   "showlinkstolists": {
     "message": "Показать ссылки на списки фильтров:",
@@ -574,10 +535,6 @@
   "savereminder": {
     "message": "Не забудьте сохранить!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Дополнительно",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Отчет о рекламе</a> в AdBlock или в сопровождение списков фильтров.",
@@ -814,11 +771,7 @@
     "message": "Если вы видите это сообщение, каждый раз при запуске AdBlock, пожалуйста, убедитесь, что Вы не используете уборщик файлов, который также удаляет файлы 'localStorage'.",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "Некоторые быстрые настройки",
-    "description": "Title of the options on the installation succes page"
-  },
-  "typehiding": {
+ "typehiding": {
     "message": "скрытие",
     "description": "A resource type (lowercase!)"
   },
@@ -884,9 +837,13 @@
     "message": "Фильтр успешно добавлен!\nПерезагрузите страницу, чтобы увидеть результат!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
-  "whitelistedorpausedpage": {
-    "message": "Страница внесена в белый список или AdBlock приостановлен. Поскольку ресурсы не перехвачены, так что эта страница не может быть использована",
+  "adblock_is_paused": {
+    "message": "AdBlock приостановлен. В связи с тем, что ресурсы не перехватываются, эта страница не может использоваться. Возобновите работу AdBlock и повторите попытку.",
     "description": "resourceblocking page string"
+  },
+  "excludefilterremoved": {
+    "message": "Фильтр удален. Перезагрузите исходную страницу для генерации списка ресурсов.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend": {
     "message": "Что-то пошло не так. Ресурсы не были отправлены. Эта страница будет закрыта.",
@@ -1022,25 +979,13 @@
     "message": "AdBlock не работает на этом домене.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
-  "dont_run_on_domain": {
-    "message": "Не запускать на $domain$",
-    "description": "Menu entry whitelisting the domain of the current tab.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "dont_run_on_pages_on_domain": {
+    "message": "Не запускайте на страницах этого домена",
+    "description": "Menu entry to open the whitelist wizard."
   },
-  "adblock_is_disabled_on_domain": {
-    "message": "AdBlock отключен на $domain$.",
-    "description": "Message shown in toolbar button on web pages that have been whitelisted.",
-    "placeholders": {
-      "domain": {
-        "content": "$1",
-        "example": "www.google.com"
-      }
-    }
+  "disabled_on_this_page": {
+    "message": "AdBlock отключен на этой странице.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "undo": {
     "message": "Отмена",
@@ -1048,7 +993,7 @@
   },
   "enable": {
     "message": "включить",
-    "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused": {
     "message": "AdBlock приостановлен.",
@@ -1080,7 +1025,7 @@
   },
   "did_you_know_this_is_my_full_time_job": {
     "message": "Знаете ли Вы, что это моя основная работа?",
-    "description": "Text of a donation link on toolbar button"
+    "description": "Text of a payment request link"
   },
   "removelabel": {
     "message": "Удалить",
@@ -1091,11 +1036,149 @@
     "description": "link to change resources on the resourceblock page"
   },
   "brokensite_beta_option": {
-    "message": "Help test a new way to remove ads.",
+    "message": "Помощь в тестировании нового способа удаления рекламы.",
     "description": "option on the first options page"
   },
   "brokensite_beta_description": {
-    "message": "If you find any ads that only appear when using this option, please <a>file a bug report</a>!",
+    "message": "Если Вы обнаружите рекламу, которая появляется только при использовании этой опции, пришлите <a>отчет об ошибках</a>!",
     "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
+  },
+  "translator_credit": {
+    "message": "Благодарите за перевод: $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Вадим Богайсков",
+        "example": "Michael G, Drew R"
+      }
+    }
+  },
+  "report_ad_on_page": {
+    "message": "Сообщить о рекламе на этой странице",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Показать список ресурсов",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Я продвинутый пользователь, покажите мне дополнительные опции.",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ или $unsubscribe$ от каждого списка.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Подписаться</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>отписаться</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Теперь у вас есть AdBlock! Ура!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Любые новые вкладки будут открываться автоматически без рекламы.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "Установка AdBlock...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "готово.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Видеть это каждый раз при запуске браузера?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Настройка AdBlock",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Пожалуйста, ответьте на один вопрос в настройках AdBlock:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "Это было легко",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "Настройте!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Вы должны <b>включить автообновление</b> в настройках Safari, чтобы получать исправления и новые функции, по мере того как я их пишу.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Включение автообновления <b>действительно важно!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Показать как",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, автообновление включено ",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "Включить автообновление:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Нажмите <b>Настройки Safari</b>.",
+    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Нажмите <b>Расширения</b> в верхнем правом углу.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "В нижнем левом углу, нажмите <b>Обновление</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Установите флажок <b>Устанавливать обновления автоматически</b>.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "Как использовать AdBlock:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": " AdBlock автоматически удаляет рекламу.  Вот и все, что нужно сделать.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "Чтобы настроить дополнительные опции, нажмите правой кнопкой мыши на веб-странице или нажмите кнопку $img$ на панели инструментов.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, что теперь? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Сайт:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Стр.:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }

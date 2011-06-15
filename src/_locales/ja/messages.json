@@ -1,4 +1,4 @@
-﻿{
+{
   "buttoncancel": {
     "message": "Cancel",
     "description": "Cancel button"
@@ -24,26 +24,6 @@
     "message": "AdBlockのインストールが完了しました。",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Reload any open tabs, and watch the ads disappear.",
-    "description": "Message on the installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "ツールバーにボタンを表示します。Show a button in the toolbar",
-    "description": "Message on installation success page"
-  },
-
-  "youtubevideomessage": {
-    "message": "動画が表示されない場合はページを更新してください。頻繁に発生する場合はYoutubeの広告を消去する設定をオフにして下さい。 $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "目的の要素が見えなくなるまでスライダーを動かしてください。",
     "description": "Blacklister slider page message"
@@ -95,7 +75,7 @@
     }
   },
   "blacklistersinglematch": {
-    "message": "&lt;b&gt;1&lt;/b&gt; 個のアイテムを発見しました。",
+    "message": "<b>1</b> 個のアイテムを発見しました。",
     "description": "Tells the user only one match was found"
   },
   "blacklistermatches": {
@@ -136,7 +116,7 @@
   },
 
   "findingads": {
-    "message": "要素を探しています...&lt;br/&gt;&lt;br/&gt;&lt;i&gt;すぐ終わります。&lt;/i&gt;",
+    "message": "要素を探しています...<br/><br/><i>すぐ終わります。</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
@@ -148,23 +128,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "以下のドメインでAdBlockの動作を停止しますか？&lt;br/&gt;$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'&lt;i&gt;$1&lt;/i&gt;'",
-        "example": "'&lt;i&gt;live.msn.com&lt;/i&gt;'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "ドメインを除外する",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "OK",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -321,11 +287,11 @@
     "description": "Title of the filter list tab"
   },
   "filterlistlink": {
-    "message": "大量に登録をすると、動作が重くなります。必要以上に登録しないで下さい。リストの作成者、その他のリストは&lt;a&gt;こちら&lt;/a&gt;.",
+    "message": "大量に登録をすると、動作が重くなります。必要以上に登録しないで下さい。リストの作成者、その他のリストは<a>こちら</a>.",
     "description": "Explanation of the filter lists"
   },
   "updatenowmessage": {
-    "message": "登録済みのリストは自動でアップデートされます。&lt;a&gt;今すぐアップデート&lt;/a&gt;.",
+    "message": "登録済みのリストは自動でアップデートされます。<a>今すぐアップデート</a>.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -335,14 +301,6 @@
   "subscribebutton": {
     "message": "登録",
     "description": "subscribe to a list button"
-  },
-  "subscribetoall": {
-    "message": "全てのリストを有効にする:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "全てのリストを無効にする:",
-    "description": "option on second tab page"
   },
   "showlinkstolists": {
     "message": "各リストのURLを表示する:",
@@ -474,7 +432,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "警告: ここで作成したフィルターに問題がある場合、公式フィルターを含む他のフィルターが破損する場合があります。&lt;br/&gt;ブラックリスト、ホワイトリストの詳細な記法は&lt;a&gt;このリンク先にあります。&lt;/a&gt;（英語）。",
+    "message": "警告: ここで作成したフィルターに問題がある場合、公式フィルターを含む他のフィルターが破損する場合があります。<br/>ブラックリスト、ホワイトリストの詳細な記法は<a>このリンク先にあります。</a>（英語）。",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -485,12 +443,8 @@
     "message": "必ず保存してください。",
     "description": "Reminder to press save"
   },
-  "advanced": {
-    "message": "それでも要素が消えない",
-    "description": "Section label for advanced options"
-  },
   "reportanad": {
-    "message": "フィルターリスト及びブラックリストで設定しても消えない要素がある場合、リンク先のチュートリアルを&lt;a&gt;試してください。&lt;/a&gt;",
+    "message": "フィルターリスト及びブラックリストで設定しても消えない要素がある場合、リンク先のチュートリアルを<a>試してください。</a>",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
@@ -507,7 +461,7 @@
     "description": "instruction on ad report page"
   },
   "clickupdatefilters": {
-    "message": "フィルターのアップデート: &lt;a&gt;Update my filters!&lt;/a&gt;",
+    "message": "フィルターのアップデート: <a>Update my filters!</a>",
     "description": "instruction on ad report page"
   },
   "reloadadpage": {
@@ -670,7 +624,7 @@
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": "EXAMPLE 1: &lt;a href='mailto:someguy@list.com'&gt;John Doe&lt;/a&gt;  EXAMPLE 2: &lt;a href='http://easylist.org'&gt;EasyList forums&lt;/a&gt;"
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
       }
     }
   },
@@ -680,7 +634,7 @@
     "placeholders": {
       "in_the_issue_tracker_link": {
         "content": "$1in the issue tracker$2",
-        "example": "&lt;a href='issuetracker.html'&gt;in the issue tracker&lt;/a&gt;"
+        "example": "<a href='issuetracker.html'>in the issue tracker</a>"
       }
     }
   },
@@ -694,7 +648,7 @@
     "placeholders": {
       "updatelink": {
         "content": "$1アップデート$2",
-        "example": "&lt;a href='http://chrome.com/update_here.ctx'&gt;update&lt;/a&gt;"
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
   },
@@ -702,8 +656,15 @@
     "message": "このページのドメインを除外...",
     "description": "Context menu entry"
   },
-  "somequicksetup": {
-    "message": "クイック設定",
-    "description": "Title of the options on the installation succes page"
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Minami1",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
+
 }

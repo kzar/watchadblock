@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.3.30",
+  "version": "2.4.12",
   "description": "__MSG_app_description1__",
   "icons": {
     "16": "img/icon16.png",
@@ -25,11 +25,8 @@
         "port.js",
         "jquery/jquery.min.js", 
         "functions.js", 
-        "broadcast_channel.js", 
-
       
         "filtering/filteroptions.js",
-        "filtering/fifocache.js",
         "filtering/filtertypes.js",
         "filtering/filterset.js",
 
@@ -54,16 +51,18 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "blacklisting/overlay.js", 
-        "blacklisting/clickwatcher.js",
-        "blacklisting/elementchain.js",
-        "blacklisting/blacklistui.js",
-        "blacklister.js", 
-        "whitelister.js", 
         "adblock.js"
       ],
       "run_at": "document_end",
       "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "uiscripts/blacklisting/rightclick_hook.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
     }
   ],
   "default_locale": "en"

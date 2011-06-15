@@ -1,4 +1,4 @@
-﻿{
+{
   "buttoncancel": {
     "message": "Anuluj",
     "description": "Cancel button"
@@ -24,26 +24,6 @@
     "message": "AdBlock jest już zainstalowany!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Odśwież otwarte karty i podziwiaj strony bez reklam.",
-    "description": "Message on the installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "Pokaż guzik w pasku narzędzi.",
-    "description": "Message on installation success page"
-  },
-  
-  "youtubevideomessage": {
-    "message": "Nie widzisz filmu? Odśwież stronę. Jeśli to się często zdarza, wyłącz blokowanie reklam w filmach YouTube tu: $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "Przeciągaj suwak dopóki reklama nie zostanie właściwie zablokowana, a inne elementy witryny pozostaną nienaruszone.",
     "description": "Blacklister slider page message"
@@ -148,23 +128,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock nie będzie działać w domenach kończących się na<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Dodać tę domenę do białej listy?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Dodaj",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -336,14 +302,6 @@
     "message": "Uzyskaj subskrypcję",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Uzyskaj subskrypcję wszystkich filtrów:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Wycofaj subskrypcję wszystkich filtrów:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Pokaż linki prowadzące do list filtrów:",
     "description": "Option on second tab page"
@@ -484,10 +442,6 @@
   "savereminder": {
     "message": "Nie zapomnij zachować!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Zaawansowane",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Zgłoś reklamę</a> do AdBlock lub do opiekunów listy filtrów.",
@@ -702,8 +656,71 @@
     "message": "Wyłącz AdBlock w tej domenie...",
     "description": "Context menu entry"
   },
-  "somequicksetup": {
-    "message": "Szybkie ustawienia niektórych opcji.",
-    "description": "Title of the options on the installation succes page"
+  "addthisfilter": {
+    "message": "Dodaj ten filtr",
+    "description": "resourceblocking page string"
+  },
+  "this_toolbar_button": {
+    "message": "Ten przycisk paska narzędzi :)",
+    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
+  },
+  "removelabel": {
+    "message": "Usuń",
+    "description": "link to remove a filter"
+  },
+  "changelabel": {
+    "message": "zmień",
+    "description": "link to change resources on the resourceblock page"
+  },
+  "undo": {
+    "message": "Cofnij",
+    "description": "Button text to undo an action."
+  },
+  "enable": {
+    "message": "włącz",
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
+  },
+  "status_paused": {
+    "message": "Praca AdBlock wstrzymana.",
+    "description": "Message shown in toolbar button when AdBlock is paused."
+  },
+  "unpause": {
+    "message": "uruchom",
+    "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unpause_adblock": {
+    "message": "Wznów pracę AdBlock",
+    "description": "Context menu entry unpause AdBlock."
+  },
+  "pause_adblock": {
+    "message": "Wstrzymaj pracę AdBlock",
+    "description": "Menu entry to pause AdBlock."
+  },
+  "dont_run_on_this_page": {
+    "message": "Wstrzymaj blokowanie na tej stronie",
+    "description": "Menu entry to whitelist a page"
+  },
+  "options": {
+    "message": "Opcje",
+    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+  },
+  "hide_this_button": {
+    "message": "Ukryj ten przycisk",
+    "description": "Toolbar button menu entry to hide the AdBlock button"
+  },
+  "did_you_know_this_is_my_full_time_job": {
+    "message": "Czy wiesz że to moja praca na pełen etat?",
+    "description": "Text of a payment request link"
+  },
+
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "lukasz.h, JakubR",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

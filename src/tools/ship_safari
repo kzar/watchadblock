@@ -16,6 +16,7 @@ read answer
 
 rm -rf $sdir
 cp -R $dir $sdir
+rm -rf $sdir/tools/
 find $sdir -name .svn | xargs rm -rf
 clear
 echo Load $sdir into Safari and build safaribuild.safariextz.

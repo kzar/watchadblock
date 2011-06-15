@@ -5,7 +5,7 @@ var run_bandaids = function(settings) {
     apply_bandaid_for = "hotmail";
   else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
     apply_bandaid_for = "hkpub";
-  else if (/youtube/.test(document.domain))
+  else if (/youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
 
   var bandaids = {
@@ -54,26 +54,6 @@ var run_bandaids = function(settings) {
             replacement.setAttribute("flashvars", flashVars);
         }
         videoplayer.parentNode.replaceChild(replacement, videoplayer);
-
-        if (settings.show_youtube_help_msg) {
-          var disable_url = chrome.extension.getURL("options/index.html");
-          var message = $("<div>").
-            css({"font-size": "x-small", "font-style": "italic",
-                 "text-align": "center", "color": "black",
-                 "font-weight": "normal", "background-color": "white"}).
-            append("<span>" + translate("youtubevideomessage", 
-                ["<a target='_new' href='" + disable_url + "'>" + 
-                translate("optionstitle") + "</a>"]) + "</span>");
-          var closer = $("<a>", {href:"#"}).
-            css({"font-style":"normal", "margin-left":"20px"}).
-            text("[x]").
-            click(function() {
-              message.remove();
-              BGcall("do_not_show_youtube_help_msg");
-            });
-          message.append(closer);
-          $("#movie_player").before(message);
-        }
       }
       
       if ($("#movie_player").length > 0) {

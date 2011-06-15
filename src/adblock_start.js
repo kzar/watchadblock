@@ -10,19 +10,27 @@ GLOBAL_contentScriptData = {
 // If url is relative, convert to absolute.
 function relativeToAbsoluteUrl(url) {
     // Author: Tom Joseph of AdThwart
-    
-    if(!url)
-        return url;
+
+    if (!url)
+      return url;
+
     // If URL is already absolute, don't mess with it
-    if(/^[a-z\-]+\:\/\//.test(url))
-        return url;
-    // Leading / means absolute path
-    if(url[0] == '/')
-        return document.location.protocol + "//" + document.location.host + url;
+    if (/^[a-z\-]+\:\/\//.test(url))
+      return url;
+
+    if (url[0] == '/') {
+      // Leading // means only the protocol is missing
+      if (url[1] && url[1] == "/")
+        return document.location.protocol + url;
+
+      // Leading / means absolute path
+      return document.location.protocol + "//" + document.location.host + url;
+    }
 
     // Remove filename and add relative URL to it
     var base = document.baseURI.match(/.+\//);
-    if(!base) return document.baseURI + "/" + url;
+    if (!base) 
+      return document.baseURI + "/" + url;
     return base[0] + url;
 }
 
@@ -62,7 +70,7 @@ function browser_canLoad(event, data) {
       return true;
     }
 
-    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, document.domain);
+    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.pageDomain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
     else if (isMatched)
@@ -92,10 +100,9 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    pageDomain: document.domain
+    pageDomain: document.location.hostname
   };
-  if (!SAFARI)
-    GLOBAL_collect_resources[elType + ':|:' + data.url] = null;
+  addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
     if (el.nodeName == "FRAME")
@@ -125,6 +132,8 @@ function block_list_via_css(selectors) {
   var d = document.documentElement;
   var css_chunk = document.createElement("style");
   css_chunk.type = "text/css";
+  // Handle issue 5643
+  css_chunk.style.display = "none !important";
   css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
                         + css_hide_for_selectors(selectors);
   d.insertBefore(css_chunk, null);
@@ -140,34 +149,56 @@ removeAdRemains = function(el, event) {
   }
   if (event.mustBePurged) {
     var replacement = document.createElement(el.nodeName);
-    replacement.id = el.id;
-    replacement.className = el.className;
-    replacement.name = el.name;
-    replacement.style = "display: none !important; visibility: hidden !important; opacity: 0 !important";
+    if (el.id) replacement.id = el.id;
+    if (el.className) replacement.className = el.className;
+    if (el.name) replacement.name = el.name;
+    replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
     $(el).replaceWith(replacement);
   } else {
     // There probably won't be many sites that modify all of these.
-    // However, if we get issues, we might get to setting the location
-    // (css: position, left, top), and/or the width/height (el.width = 0)
-    // The latter will maybe even work when the page uses element.style = "";
+    // However, if we get issues, we might get to setting the location and size
+    // (css: position, left, top, width, height)
     $(el).css({
       "display": "none !important",
       "visibility": "hidden !important",
       "opacity": "0 !important",
-    });
+    }).
+    attr("width", "0px").
+    attr("height", "0px");
+  }
+}
+
+// Simplified FilterSet object that relies on all input filter texts being
+// definitely applicable to the current domain.
+function FakeFilterSet(serializedFilters) {
+  var filters = [];
+  for (var i = 0; i < serializedFilters.length; i++) {
+    filters.push(PatternFilter.fromData(serializedFilters[i]));
+  }
+  this.filters = filters;
+};
+FakeFilterSet.prototype = {
+  matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+    var f = this.filters, len = f.length;
+    for (var i = 0; i < len; i++) {
+      if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
+        return f[i];
+    }
+    return null;
   }
 }
 
 function adblock_begin() {
-  if (!SAFARI) {
-    GLOBAL_collect_resources = {};
+  if (!SAFARI)
     LOADED_TOO_FAST = [];
+  GLOBAL_collect_resources = {};
+  addResourceToList = function(resource) {
+    GLOBAL_collect_resources[resource] = null;
   }
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
-    domain: document.domain, 
-    include_filters: true
+    domain: document.location.hostname
   };
   BGcall('get_content_script_data', opts, function(data) {
     // Store the data for adblock.js
@@ -186,7 +217,14 @@ function adblock_begin() {
       delete GLOBAL_collect_resources;
       return;
     }
-    
+
+    // Safari users and Chrome users without the option to show advanced options
+    // and subframes are not able to open resourceblock for the list of resources    
+    if (!data.settings.show_advanced_options || window != window.top || SAFARI) {
+      addResourceToList = function() {};
+      delete GLOBAL_collect_resources;
+    }
+
     if (data.settings.hide_instead_of_remove)
       removeAdRemains.hide = true;
 
@@ -199,7 +237,10 @@ function adblock_begin() {
       // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
       // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
       // but is much quicker to reparse.
-      _local_block_filterset = FilterSet.fromText(data.block, undefined, false);
+      _local_block_filterset = new BlockingFilterSet(
+        new FakeFilterSet(data.patternSerialized),
+        new FakeFilterSet(data.whitelistSerialized)
+      );
 
       for (var i=0; i < LOADED_TOO_FAST.length; i++)
         beforeLoadHandler(LOADED_TOO_FAST[i].data);

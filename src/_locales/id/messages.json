@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "Ekstensi Crhome paling populer, dengan lebih dari 1.5 juta pengguna!  Blokir iklan di seluruh web.",
     "description": "Extension description in manifest"
@@ -28,30 +28,6 @@
     "message": "AdBlock sekarang sudah terpasang!",
     "description": "Title for the installation success page"
   },
-  "installisdone": {
-    "message": "Muat ulang semua tab yang terbuka, dan saksikan iklan-iklannya menghilang.",
-    "description": "Message on the installation success page"
-  },
-  "donaterequest2": {
-    "message": "Saya baru saja keluar dari pekerjaanku untuk mencurahkan waktu saya sepenuhnya kepada AdBlock!  Saya sekarang hanya mengandalkan sumbangan anda untuk membantu keluarga saya.  Silahkan <a>donate</a> untuk membantu membayar tagihan kami -- dan membuktikan bahwa istri saya dan saya sendiri (ada dalam gambar) tidak gila dengan mencoba hal ini.  Terima kasih :) - Michael",
-    "description": "Donation request on installation success page"
-  },
-  "chromebutton_showoption": {
-    "message": "Perlihatkan tombol pada toolbar",
-    "description": "Message on installation success page"
-  },
-
-  "youtubevideomessage": {
-    "message": "Tidak ada video? Muat ulang halamannya. Jika hal ini sering terjadi, matikan blokir iklan YouTube dibawah $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "Geser pengatur hingga iklan terblokir dengan benar pada halaman, dan elemen yang terblokir terlihat berguna.",
     "description": "Blacklister slider page message"
@@ -156,23 +132,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock tidak akan berjalan pada domain yang berakhir pada<br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Jangan sertakan domain ini?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Jangan sertakan",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -344,14 +306,6 @@
     "message": "Berlangganan",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Berlangganan pada semua filter:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Berhenti berlangganan dari semua filter:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Perlihatkan link ke daftar filter:",
     "description": "Option on second tab page"
@@ -492,10 +446,6 @@
   "savereminder": {
     "message": "Jangan lupa untuk menyimpan!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Advanced",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Laporkan sebuah iklan</a> ke AdBlock atau pada pengurus daftar filter.",
@@ -714,10 +664,6 @@
     "message": "Jika anda melihat pesan ini setiap kali anda memulai AdBlock, pastikan anda tidak menggunakan sebuah pembersih file yang juga membersihkan file file di 'localStorage'.",
     "description": "Help for users who use hyperactive file cleaners"
   },
-  "somequicksetup": {
-    "message": "Pengaturan cepat",
-    "description": "Title of the options on the installation succes page"
-  },
   "flashads": {
     "message": "Video dan Flash",
     "description": "Title of the final ad report question if the ad didn't appear in FF"
@@ -729,5 +675,15 @@
   "cantblockflash": {
     "message": "Kami belum bisa memblokir iklan iklan didalam Flash dan plugin lainnya. Kami menunggu dukungan dari browser dan WebKit.",
     "description": "Result of the final ad report question"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Ghie21o",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

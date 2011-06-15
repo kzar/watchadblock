@@ -1,4 +1,4 @@
-﻿{
+{
   "buttoncancel": {
     "message": "Cancelar",
     "description": "Cancel button"
@@ -18,17 +18,6 @@
   "optionstitle": {
     "message": "Opções do Adblock",
     "description": "Title for the options page"
-  },
-
-  "youtubevideomessage": {
-    "message": "Sem Vídeo? Recarregue a página. Se isto acontecer muitas vezes, desabilite o bloqueio de propagandas do Youtube em $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
   },
 
   "sliderexplanation": {
@@ -135,23 +124,9 @@
     "description": "When you have to click the ad to continue"
   },
 
-  "whitelistertext": {
-    "message": "AdBlock não será habilitado em domínios <br/>$domain$.",
-    "description": "The message of the whitelister dialog, putting the domain name on a separate line",
-    "placeholders": {
-      "domain": {
-        "content": "'<i>$1</i>'",
-        "example": "'<i>live.msn.com</i>'"
-      }
-    }
-  },
-  "whitelistertitle": {
-    "message": "Excluir este domínio?",
-    "description": "The title of the whitelister dialog"
-  },
   "buttonexclude": {
     "message": "Excluir",
-    "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)"
+    "description": "Button for excluding a domain in the whitelister dialog"
   },
 
   "subscribingtitle": {
@@ -323,14 +298,6 @@
     "message": "Inscrever-se",
     "description": "subscribe to a list button"
   },
-  "subscribetoall": {
-    "message": "Inscrever-se em todos os filtros:",
-    "description": "option on second tab page"
-  },
-  "subscribetonone": {
-    "message": "Cancelar inscrição em todos os filtros:",
-    "description": "option on second tab page"
-  },
   "showlinkstolists": {
     "message": "Mostrar links para as listas de filtro:",
     "description": "Option on second tab page"
@@ -471,10 +438,6 @@
   "savereminder": {
     "message": "Não se esqueça de salvar!",
     "description": "Reminder to press save"
-  },
-  "advanced": {
-    "message": "Avançado",
-    "description": "Section label for advanced options"
   },
   "reportanad": {
     "message": "<a>Reportar uma propaganda</a> para os desenvolvedores de filtros do AdBlock.",
@@ -692,5 +655,15 @@
   "contextmenuexcludedomain": {
     "message": "Não executar neste domínio...",
     "description": "Context menu entry"
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Facchin",
+        "example": "Michael G, Drew R"
+      }
+    }
   }
 }

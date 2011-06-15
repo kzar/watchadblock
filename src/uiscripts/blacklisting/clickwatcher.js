@@ -156,7 +156,7 @@ ClickWatcher.prototype._build_ui = function() {
   // crazies to a lower z-index.  I'd do it here, but objects within iframes
   // will still block our click catchers over the iframes, so we have to tell
   // all subframes to do it too.
-  page_broadcast('send_content_to_back', {});
+  BGcall('emit_page_broadcast', {fn:'send_content_to_back', options:{}});
 
   // Since iframes that will get clicked will almost always be an entire
   // ad, and I *really* don't want to figure out inter-frame communication
@@ -208,24 +208,6 @@ ClickWatcher.prototype._build_ui = function() {
       bind("mouseleave",function() {
         that._highlighter.enable();
       });
-
-  if (!SAFARI) {
-    var link_to_block = $("<a>", {
-      href: "#",
-      tabIndex: -1,
-      css: { "font-size": "11px !important" },
-      text: translate("advanced_show_url_list"),
-      click: function(e) { 
-        // GLOBAL_collect_resources is created by adblock_start.js
-        var resources = Object.keys(GLOBAL_collect_resources);
-        BGcall("show_resourceblocker", resources);
-        e.preventDefault();
-        that._ui.dialog('close');
-        return false;
-      }
-    });
-    page.append(link_to_block);
-  }
 
   return page;
 }
