@@ -216,7 +216,7 @@ def mark_as_done_and_send_batch(m, orders):
             o.name.encode('utf-8'))
         try:
             subj = 'Thank you :)' if o.amount < 50 else 'Thank you so much! :D'
-            sender_suffix = '+safari' if o.flavor == 'safari' else ''
+            sender_suffix = '+safari' if o.flavor == 'S' else ''
             _from = '"Michael Gundlach" <adblockforchrome%s@gmail.com>' % sender_suffix
             to = '"%s" <%s>' % (o.name, o.email)
             emails.send(_from, to, subj, o.email_responder.get_response())

@@ -79,9 +79,9 @@ class Order(object):
         self.name = None
         self.nickname = None
         self.experiment = None
-        self.flavor = None   # chrome_ext chrome_app safari unknown
-        self.os = None       # windows linux mac unknown
-        self.source = None   # install chromepopup unknown
+        self.flavor = None   # EASU chrome_ext chrome_app safari unknown
+        self.os = None       # WLMCU windows linux mac cros unknown
+        self.source = None   # IPO install chromepopup options unknown
         self.amount = None
         self.note = None
 
