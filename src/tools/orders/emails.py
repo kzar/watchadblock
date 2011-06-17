@@ -65,6 +65,8 @@ def order_messages(max_count, query='(UNSEEN)'):
     # Google needs all of its data at once so we can bulk-request info.
     # This also removes order emails whose orders failed to go through.
     GoogleOrder.flesh_out(orders)
+    # For those who sent a userid rather than explicit tracking info
+    orderparsing.Tracking.fill_from_database(o for o in orders if o.userid)
     return orders
 
 
@@ -79,11 +81,13 @@ class Order(object):
         self.name = None
         self.nickname = None
         self.experiment = None
-        self.flavor = None   # EASU chrome_ext chrome_app safari unknown
-        self.os = None       # WLMCU windows linux mac cros unknown
-        self.source = None   # IPO install chromepopup options unknown
+        self.group = None
+        self.flavor = "U"    # EASU chrome_ext chrome_app safari unknown
+        self.os = "U"        # WLMCU windows linux mac cros unknown
+        self.source = "U"    # IPO install chromepopup options unknown
         self.amount = None
         self.note = None
+        self.userid = None
 
     @staticmethod
     def parse(message):
@@ -115,12 +119,22 @@ class Order(object):
         return order
 
     def _parse_tracking(self, text):
-        tracking_re = 'X([0-9]+)G(.) F(.)O(.)S(.)'
+        """
+        Fill in as much tracking info as is available from the text.
+        We may have to go to the database later to get the details.
+        """
+        opt1 = '(?:F(.)O(.)S(.))' # Either F.O.S. should be there...
+        opt2 = '(?:S(.) ([a-z0-9]{16}))' # or S. USERID
+        tracking_re = 'X([0-9]+)G(.) (?:%s|%s)' % (opt1, opt2)
         match = re.search(tracking_re, text)
-        (self.experiment, self.group,
-         self.flavor, self.os, self.source) = match.groups()
-        self.experiment = int(self.experiment)
-        self.group = int(self.group)
+        groups = match.groups()
+        self.experiment = int(groups[0])
+        self.group = int(groups[1])
+        if groups[2]: # F+O+S was filled
+            self.flavor, self.os, self.source = groups[2:5]
+        elif groups[5]: # S+userid was filled
+            self.source, self.userid = groups[5: ]
+        # Some may have neither, and they'll keep their default data
 
 
 class GoogleOrder(Order):

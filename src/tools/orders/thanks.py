@@ -10,7 +10,7 @@ import sys
 
 import emails
 import orderparsing
-execfile('../../../google_credentials', orderparsing.__dict__)
+orderparsing.init('../../../orderparsing_info')
 
 
 def correct_nicknames(orders):
