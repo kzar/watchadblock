@@ -3,10 +3,11 @@ from xml.dom import minidom
 import MySQLdb
 import pickle
 
+DATA = None
 def init(info_filename):
     """Call this before using the module."""
     global DATA
-    pickle.load(DATA, open(info_file))
+    DATA = pickle.load(open(info_filename))
 
 
 def get(node, childName):
@@ -73,17 +74,6 @@ class Tracking(object):
     """Extracts tracking info for orders."""
 
     @staticmethod
-    def load_from_text(order, text):
-        """Given a chunk of text that contains tracking info for the
-        given Order, fill in the Order with tracking information."""
-        tracking_re = 'X([0-9]+)G(.) F(.)O(.)S(.)'
-        match = re.search(tracking_re, text)
-        (order.experiment, order.group,
-         order.flavor, order.os, order.source) = match.groups()
-        order.experiment = int(order.experiment)
-        order.group = int(order.group)
-
-    @staticmethod
     def load_from_database(orders):
         """
         Load tracking info from the database, if available, for each Order.
@@ -93,36 +83,34 @@ class Tracking(object):
         db_msg_table = raw_input('Enter db message table name: ')
 
         order_map = dict( (o.userid, o) for o in orders )
-        userids = ','.join(order_map.iterkeys())
+        userids = ','.join("'%s'" % u for u in order_map.iterkeys())
 
         conn = MySQLdb.connect(host="chromeadblock.com",
                                user=DATA['db_user'],
                                passwd=DATA['db_pass'],
                                db=DATA['db_name'])
         cursor = conn.cursor(MySQLdb.cursors.DictCursor)
-        #cursor.execute("SELECT * FROM %s WHERE userid in '%s'" %
-        #               DATA['db_user_table'], userids)
+        #query = ("SELECT * FROM %s WHERE userid in (%s)" %
+        #               (DATA['db_users_table'], userids))
 
         # TODO Temp for X5
-        cursor.execute("SELECT * FROM %(t1)s t1 LEFT JOIN %(t2)s t2 ON t1.id = t2.%(t1)s_id WHERE userid in '%(userids)s' and length(t2.message) = 4 and t2.message like 'X5G?'" %
-                dict(t1=DATA['db_user_table'],
+        query = ("SELECT * FROM %(t1)s t1 LEFT JOIN %(t2)s t2 ON t1.id = t2.%(t1)s_id WHERE t1.id in (%(userids)s) AND (t2.id is null OR (length(t2.message) = 4 AND t2.message like 'X5G_'))" %
+                dict(t1=DATA['db_users_table'],
                      t2=db_msg_table,
-                     userids=userids)
+                     userids=userids))
+
+        cursor.execute(query)
         result_set = cursor.fetchall()
         cursor.close()
         conn.close()
 
-        print "Rows fetched: %d.  Users with ids: %d." % \
-              (result_set.rowcount, len(orders))
         for row in result_set:
-            print row
-            userid = row['t1.id']
+            userid = row['id']
             order = order_map[userid]
-            order.flavor = row['t1.flavor']
-            order.os = row['t1.os']
+            order.flavor = row['flavor']
+            order.os = row['os']
 
             # TODO Temp for X5
-            if row['t2.message']:
+            if row['message']:
               order.experiment = 5
-              order.group = int(row['t2.message'][3]) # 'X5G2' -> '2'
-            print order.experiment, order.group
+              order.group = int(row['message'][3]) # 'X5G2' -> '2'
