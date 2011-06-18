@@ -79,9 +79,6 @@ class Tracking(object):
         Load tracking info from the database, if available, for each Order.
         Orders should have a userid.
         """
-        # TODO Temp for X5
-        db_msg_table = raw_input('Enter db message table name: ')
-
         order_map = dict( (o.userid, o) for o in orders )
         userids = ','.join("'%s'" % u for u in order_map.iterkeys())
 
@@ -90,14 +87,8 @@ class Tracking(object):
                                passwd=DATA['db_pass'],
                                db=DATA['db_name'])
         cursor = conn.cursor(MySQLdb.cursors.DictCursor)
-        #query = ("SELECT * FROM %s WHERE userid in (%s)" %
-        #               (DATA['db_users_table'], userids))
-
-        # TODO Temp for X5
-        query = ("SELECT * FROM %(t1)s t1 LEFT JOIN %(t2)s t2 ON t1.id = t2.%(t1)s_id WHERE t1.id in (%(userids)s) AND (t2.id is null OR (length(t2.message) = 4 AND t2.message like 'X5G_'))" %
-                dict(t1=DATA['db_users_table'],
-                     t2=db_msg_table,
-                     userids=userids))
+        query = ("SELECT * FROM %s WHERE userid in (%s)" %
+                       (DATA['db_users_table'], userids))
 
         cursor.execute(query)
         result_set = cursor.fetchall()
@@ -109,8 +100,3 @@ class Tracking(object):
             order = order_map[userid]
             order.flavor = row['flavor']
             order.os = row['os']
-
-            # TODO Temp for X5
-            if row['message']:
-              order.experiment = 5
-              order.group = int(row['message'][3]) # 'X5G2' -> '2'
