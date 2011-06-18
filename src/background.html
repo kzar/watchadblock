@@ -562,19 +562,8 @@
       // Record that we exist.
       STATS.startPinging();
 
-      // If the user has just installed, show the walkthrough.
-      function first_run_walkthrough() {
-        if (!STATS.firstRun)
-          return;
-
-        // TODO temp experiment code to measure uninstall rate
-        // at each stage of walkthrough
-        var group = (Math.random() < .5 ? 1 : 2);
-        STATS.msg("X5G" + group);
-
-        chrome.tabs.create({url: "pages/install/index.html?g=" + group});
-      }
-      first_run_walkthrough();
+      if (STATS.firstRun) // show the walkthrough
+        chrome.tabs.create({url: "pages/install/index.html"});
 
       // Safari specific code.
       if (SAFARI) {
