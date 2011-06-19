@@ -1,9 +1,27 @@
-// Requires ADBLOCK variable and storage_get/set
-
 // Allows interaction with the server to track install rate
 // and log messages.
 STATS = (function() {
   var stats_url = "http://chromeadblock.com/api/stats.php";
+  var ADBLOCK = {};
+
+  //Get some information about the extension and os
+  function getManifest() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+    var theManifest;
+    xhr.onreadystatechange = function() {
+      if(this.readyState == 4) {
+        theManifest = JSON.parse(this.responseText);
+      }
+    };
+    xhr.send();
+    return theManifest;
+  }
+
+  var manifest = getManifest();
+  ADBLOCK.version = manifest.version;
+  var osMatch = navigator.appVersion.match(/(CrOS|Windows|Mac|Linux)/i);
+  ADBLOCK.os = osMatch ? osMatch[1] : "Unknown";
 
   var firstRun = (function() {
     // All of these have represented the user existing at one point or
