@@ -57,15 +57,15 @@
         $("#enable_show_advanced_options").change(function() {
           // Reload the page to show or hide the advanced options on the
           // options page -- after a moment so we have time to save the option.
-          function waitASecThenReload() {
-            window.setTimeout(function() {
-              window.location.reload();
-            }, 50);
-          }
-          if (!this.checked) // Make sure debugging wasn't left on by accident
-            BGcall("set_setting", "debug_logging", false, waitASecThenReload);
-          else
-            waitASecThenReload();
+          // Also, disable all advanced options, so that non-advanced users will
+          // not end up with debug/beta/test options enabled.
+          if (!this.checked)
+            $(".advanced :checkbox:checked").each(function() {
+              BGcall("set_setting", this.id.substr(7), false);
+            });
+          window.setTimeout(function() {
+            window.location.reload();
+          }, 50);
         });
       </script>
     </p>
