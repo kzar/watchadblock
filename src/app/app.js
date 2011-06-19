@@ -1,5 +1,5 @@
 (function() {
-  if (SAFARI || /eefkobgceabjladaefihncnghgdiilge/.test(chrome.extension.getURL('')))
+  if (SAFARI || !/eefkobgceabjladaefihncnghgdiilge/.test(chrome.extension.getURL('')))
     return;
 
   chrome.browserAction.setIcon = function() {};
