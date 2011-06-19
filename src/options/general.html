@@ -55,10 +55,17 @@
       <label for="enable_show_advanced_options" i18n="advanced_options"></label>
       <script>
         $("#enable_show_advanced_options").change(function() {
-          window.setTimeout(function() {
-            // To show or hide the advanced options on the options page
-            window.location.reload();
-          }, 50);
+          // Reload the page to show or hide the advanced options on the
+          // options page -- after a moment so we have time to save the option.
+          function waitASecThenReload() {
+            window.setTimeout(function() {
+              window.location.reload();
+            }, 50);
+          }
+          if (!this.checked) // Make sure debugging wasn't left on by accident
+            BGcall("set_setting", "debug_logging", false, waitASecThenReload);
+          else
+            waitASecThenReload();
         });
       </script>
     </p>

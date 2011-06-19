@@ -12,6 +12,8 @@ import quopri
 import re
 import smtplib
 
+import orderparsing
+
 def _get_password():
     if 'GLOBAL_password' in globals():
         return
@@ -65,6 +67,8 @@ def order_messages(max_count, query='(UNSEEN)'):
     # Google needs all of its data at once so we can bulk-request info.
     # This also removes order emails whose orders failed to go through.
     GoogleOrder.flesh_out(orders)
+    # For those who sent a userid rather than explicit tracking info
+    orderparsing.Tracking.load_from_database(o for o in orders if o.userid)
     return orders
 
 
@@ -79,11 +83,13 @@ class Order(object):
         self.name = None
         self.nickname = None
         self.experiment = None
-        self.flavor = None   # chrome_ext chrome_app safari unknown
-        self.os = None       # windows linux mac unknown
-        self.source = None   # install chromepopup unknown
+        self.group = None
+        self.flavor = "U"    # EASU chrome_ext chrome_app safari unknown
+        self.os = "U"        # WLMCU windows linux mac cros unknown
+        self.source = "U"    # IPOU install chromepopup options unknown
         self.amount = None
         self.note = None
+        self.userid = None
 
     @staticmethod
     def parse(message):
@@ -115,12 +121,20 @@ class Order(object):
         return order
 
     def _parse_tracking(self, text):
-        tracking_re = 'X([0-9]+)G(.) F(.)O(.)S(.)'
+        """
+        Fill in as much tracking info as is available from the text.
+        We may have to go to the database later to get the details.
+        """
+        tracking_re = 'X([0-9]+)G(.) (?:F(.))?(?:O(.))?(?:S(.))?(?: ([a-z0-9]{16}))?'
         match = re.search(tracking_re, text)
-        (self.experiment, self.group,
-         self.flavor, self.os, self.source) = match.groups()
-        self.experiment = int(self.experiment)
-        self.group = int(self.group)
+        groups = match.groups()
+        self.experiment = int(groups[0])
+        self.group = int(groups[1])
+        # Fill in those that are supplied to us.
+        self.flavor = groups[2] or self.flavor
+        self.os = groups[3] or self.os
+        self.source = groups[4] or self.source
+        self.userid = groups[5] or self.userid
 
 
 class GoogleOrder(Order):
@@ -133,7 +147,7 @@ class GoogleOrder(Order):
         google_order_map = dict( (o.google_order_number, o)
                                  for o in orders
                                  if isinstance(o, GoogleOrder) )
-        import orderparsing, math
+        import math
         orderids = google_order_map.keys()
         numgroups = int(math.ceil(len(orderids) / 16.0))
         # Split into groups of 16

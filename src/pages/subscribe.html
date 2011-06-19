@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>AdBlock</title>
+    <script src="../port.js" type="text/javascript"></script>
     <script src="../jquery/jquery.min.js"></script>
     <script src="../functions.js"></script>
     <style type="text/css">
@@ -63,7 +64,7 @@
         //Set the link to the list.  If it's really long, make it wrap nicely.
         $('a').
           attr('href', queryparts.location).
-          text(queryparts.location.replace(/(.{64})/g, '$1 '));
+          text(queryparts.location.replace(/(.{48,64}\W)/g, '$1 '));
 
         //After the subscribing is finished...
         function finished(success) {

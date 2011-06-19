@@ -61,17 +61,6 @@
     "message": "Um den Toolbar Button auszublenden, klicken Sie mit einem Rechtsklick auf den Button und wählen Sie 'Schaltfläche ausblenden'.  Um den Button wieder anzuzeigen, klicken Sie auf Schraubenschlüssel | Tools | Erweiterungen.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "youtubevideomessage": {
-    "message": "Kein Video? Aktualisieren Sie die Seite. Falls dies öfters passiert, deaktivieren Sie das Entfernen von Werbung in YouTube Videos in den $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "Verschieben Sie den Regler so lange nach rechts, bis die Werbung komplett entfernt ist und der restliche Teil der Seite noch normal aussieht.",
     "description": "Blacklister slider page message"
@@ -180,6 +169,18 @@
     "description": "When you have to click the ad to continue"
   },
 
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock wird deaktiviert auf allen Seiten die auf dies zutreffen:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Sie können hier genau einstellen auf welchen Seiten AdBlock deaktiviert sein soll.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "AdBlock deaktivieren auf...",
+    "description": "The title of the whitelister dialog"
+  },
   "buttonexclude": {
     "message": "Ausnahme hinzufügen",
     "description": "Button for excluding a domain in the whitelister dialog"
@@ -970,6 +971,14 @@
     "message": "AdBlock kann auf dieser Domain nicht ausgeführt werden.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
+  "dont_run_on_pages_on_domain": {
+    "message": "AdBlock auf Seiten dieser Domain deaktivieren",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock ist auf dieser Seite deaktiviert.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
   "undo": {
     "message": "Widerrufen",
     "description": "Button text to undo an action."
@@ -1119,8 +1128,8 @@
     "description": "Install page: title of section with a list of steps to take"
   },
   "click_safari_prefs": {
-    "message": "Klicken Sie auf <b>Safari -&gt; Einstellungen</b>.",
-    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+    "message": "Klicken Sie auf <b>Safari &rArr; Einstellungen</b>.",
+    "description": "First step to turn on autoupdate.  &rArr; makes a right arrow (->)."
   },
   "click_extensions": {
     "message": "Klicken Sie rechts oben auf <b>Erweiterungen</b>.",
@@ -1155,5 +1164,13 @@
   "ok_now_what": {
     "message": "OK, und jetzt? ",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Domain:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Seite:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }
 }

@@ -1,8 +1,14 @@
 import urllib2
 from xml.dom import minidom
+import MySQLdb
+import pickle
 
-GOOGLE_MERCHANT_ID = None # set this before using the module
-GOOGLE_MERCHANT_HASH = None # same here
+DATA = None
+def init(info_filename):
+    """Call this before using the module."""
+    global DATA
+    DATA = pickle.load(open(info_filename))
+
 
 def get(node, childName):
     return node.getElementsByTagName(childName)[0]
@@ -31,11 +37,11 @@ class GoogleOrderParser(object):
         Dicts contain id, date, item_number, email, name, amount.
         """
 
-        url = "https://checkout.google.com/api/checkout/v2/reports/Merchant/%s"  % GOOGLE_MERCHANT_ID
+        url = "https://checkout.google.com/api/checkout/v2/reports/Merchant/%s"  % DATA['google_merchant_id']
         headers = {
             "Content-Type": "application/xml; charset=UTF-8",
             "Accept": "application/xml; charset=UTF8",
-            "Authorization": "Basic %s" % GOOGLE_MERCHANT_HASH
+            "Authorization": "Basic %s" % DATA['google_merchant_hash']
             }
         template = '<google-order-number>%s</google-order-number>'
         order_xml = ''.join(template % oid for oid in orderid_list)
@@ -63,3 +69,34 @@ class GoogleOrderParser(object):
             'name': text(cn, 'contact-name'),
             'amount': text(cn, 'latest-charge-amount'),
         }
+
+class Tracking(object):
+    """Extracts tracking info for orders."""
+
+    @staticmethod
+    def load_from_database(orders):
+        """
+        Load tracking info from the database, if available, for each Order.
+        Orders should have a userid.
+        """
+        order_map = dict( (o.userid, o) for o in orders )
+        userids = ','.join("'%s'" % u for u in order_map.iterkeys())
+
+        conn = MySQLdb.connect(host="chromeadblock.com",
+                               user=DATA['db_user'],
+                               passwd=DATA['db_pass'],
+                               db=DATA['db_name'])
+        cursor = conn.cursor(MySQLdb.cursors.DictCursor)
+        query = ("SELECT * FROM %s WHERE userid in (%s)" %
+                       (DATA['db_users_table'], userids))
+
+        cursor.execute(query)
+        result_set = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        for row in result_set:
+            userid = row['id']
+            order = order_map[userid]
+            order.flavor = row['flavor']
+            order.os = row['os']

@@ -9,7 +9,7 @@
     <script src="../../port.js"></script>
     <script src="../../functions.js"></script>
     <script>
-      var installPageVersion = 1;
+      var installPageVersion = 2;
       localStorage['saw_install_page'] = installPageVersion;
       $(function() {
         localizePage();
@@ -60,7 +60,6 @@
 
       // Called after progress bar finishes
       function begin() {
-        var SAFARI = (!/chrome/i.test(navigator.userAgent) && /safari/i.test(navigator.userAgent));
         $("#header").fadeIn();
         var startCard = (SAFARI ? "#start-safari": "#start-chrome");
         $(startCard).css($("#wrapper").position()).fadeIn();
@@ -190,21 +189,20 @@
       <div class="card" id="last-step">
         <div id="iframe-slot">
           <!-- Replaced by an iframe if it loads. -->
-          <h2>Last thing</h2>
-          You can pay whatever you want for AdBlock, including not paying anything.  
-          Would you mind <a href="http://chromeadblock.com/pay/">paying</a> to fund 
-          its development?  Thanks!
+          <div style="width: 500px">
+            <h2>That's it!</h2>
+            You can close this tab and begin browsing ad-free.  Have fun!
+          </div>
         </div>
         <script>
           $(function() {
-            BGcall("get_statistics", function(stats) {
-              var iframe = $("<iframe>", {
-                src: "http://chromeadblock.com/pay/?source=I&header=install&" + $.param(stats), 
-                width: 750, height: 450, 
-                frameBorder: 0, scrolling: "no" 
-              });
-              $("#iframe-slot").html(iframe);
+            var userId = storage_get("userid");
+            var iframe = $("<iframe>", {
+              src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
+              width: 750, height: 450, 
+              frameBorder: 0, scrolling: "no" 
             });
+            $("#iframe-slot").html(iframe);
           });
         </script>
 

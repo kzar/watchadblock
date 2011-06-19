@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "La plus populaire des extensions Chrome, avec plus de 2 millions d'utilisateurs ! Bloque les publicités sur Internet.",
     "description": "Extension description in manifest"
@@ -61,17 +61,6 @@
     "message": "Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Cacher ce bouton'. Pour l'afficher à nouveau, allez dans Clé à molette | Outils | Extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "youtubevideomessage": {
-    "message": "Pas de vidéo ? Actualisez la page. Si cela se reproduit, désactivez le blocage de pubs YouTube dans les $link$.",
-    "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
-    "placeholders": {
-      "link": {
-        "content": "$1",
-        "example": "AdBlock Options"
-      }
-    }
-  },
-
   "sliderexplanation": {
     "message": "Faites glisser le curseur jusqu'à ce que la pub disparaisse.",
     "description": "Blacklister slider page message"
@@ -188,6 +177,19 @@
   "clickthead": {
     "message": "Cliquez sur la pub, et nous allons la bloquer.",
     "description": "When you have to click the ad to continue"
+  },
+
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock ne s'exécutera pas sur les pages correspondantes à :",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "you_can_slide_to_change": {
+    "message": "Faites glisser les curseurs ci-dessous pour choisir les pages sur lesquelles AdBlock ne devra rien faire.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "whitelistertitle2": {
+    "message": "Ne pas exécuter AdBlock sur...",
+    "description": "The title of the whitelister dialog"
   },
 
   "buttonexclude": {
@@ -980,6 +982,14 @@
     "message": "AdBlock ne peut pas fonctionner sur ce domaine.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
+  "dont_run_on_pages_on_domain": {
+    "message": "Ne rien bloquer sur les pages de ce domaine",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock est désactivé pour cette page.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
   "undo": {
     "message": "Annuler",
     "description": "Button text to undo an action."
@@ -1129,8 +1139,8 @@
     "description": "Install page: title of section with a list of steps to take"
   },
   "click_safari_prefs": {
-    "message": "Cliquez sur <b>Safari -&gt; Préférences</b>.",
-    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+    "message": "Cliquez sur <b>Safari &rArr; Préférences</b>.",
+    "description": "First step to turn on autoupdate.  &rArr; makes a right arrow (->)."
   },
   "click_extensions": {
     "message": "Cliquez sur <b>Extensions</b> en haut de la fenêtre.",

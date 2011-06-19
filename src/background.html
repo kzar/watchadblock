@@ -7,6 +7,7 @@
     <script src="jquery/jquery.min.js"></script>
     <script src="app/app.js"></script>
     <script src="functions.js"></script>
+    <script src="stats.js"></script>
     <script src="filtering/filteroptions.js"></script>
     <script src="filtering/fifocache.js"></script>
     <script src="filtering/filtertypes.js"></script>
@@ -66,50 +67,12 @@
         set_custom_filters_text(text.trim());
       }
 
-      // STORAGE
-
-      // Inputs: key:string.
-      // Returns value if key exists, else undefined.
-      storage_get = function(key) {
-        var json = localStorage.getItem(key);
-        if (json == null)
-          return undefined;
-        try {
-          return JSON.parse(json);
-        } catch (e) {
-          log("Couldn't parse json for " + key);
-          return undefined;
-        }
-      }
-
-      // Inputs: key:string, value:object.
-      // Returns undefined.
-      storage_set = function(key, value) {
-        localStorage.setItem(key, JSON.stringify(value));
-      }
-  
       // OPTIONAL SETTINGS
 
       get_settings = function() {
-        (function() {
-          // temp code to convert to simpler options storage, installed 3/11
-          try {
-            if (!storage_get('optional_features'))
-              return;
-            var old_options = storage_get('optional_features');
-            var settings = {};
-            for (var name in old_options) {
-              settings[name] = old_options[name].is_enabled;
-      }
-            storage_set('settings', settings);
-          } catch(ex) {}
-          localStorage.removeItem('optional_features');
-        })();
-
         var defaults = {
           debug_logging: false,
           block_youtube: true,
-          show_youtube_help_msg: true,
           show_google_search_text_ads: false,
           show_context_menu_items: true,
           hide_instead_of_remove: false,
@@ -136,7 +99,7 @@
 
       // Rebuild the filterset based on the current settings and subscriptions.
       update_filters = function() {
-        _myfilters.update();
+        _myfilters.rebuild();
         }
 
       // Fetch the latest version of all subscribed lists now.
@@ -387,10 +350,6 @@
         return xhr.responseText;
       };
 
-      do_not_show_youtube_help_msg = function() {
-        set_setting("show_youtube_help_msg", false);
-      };
-
       // TODO: make better.
       // Inputs: options object containing:
       //           domain:string the domain of the calling frame.
@@ -542,23 +501,6 @@
         return theFunction;
       })();
 
-      // Opens a popup that subscribes to a new list
-      // Must be here because other pages cannot open popups...
-      // Inputs: searchquery: the search part of the abp: url
-      subscribe_popup = function(searchquery) {
-        window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                    searchquery), "_blank", 
-                    'scrollbars=0,location=0,resizable=0,width=450,height=140');
-      };
-
-      // Return some general statistics.
-      get_statistics = function() {
-        var flavor = (SAFARI ? "S" : "E");
-        if (ADBLOCK.isApp) flavor = "A";
-        var installed_at = storage_get('installed_at');
-        return { installed_at: installed_at, flavor: flavor, version: ADBLOCK.version, os: ADBLOCK.os };
-      }
-
       // Return chrome.i18n._getL10nData() for content scripts who cannot
       // call that function (since it loads extension files from disk.)
       // Only defined in Safari.
@@ -611,7 +553,7 @@
         version_to_notify = '2.3.0';
 
         // Brand new users don't see badge (or popup's info div).
-        if (!storage_get('installed_at')) {
+        if (STATS.firstRun) {
           localStorage.setItem('saw_badge_version', version_to_notify);
           localStorage.setItem('saw_badge_info_version', version_to_notify);
         }
@@ -630,50 +572,11 @@
       
       _myfilters = new MyFilters();
 
-      // If the user has just installed, make a note of it.  
-      function note_install() {
-        if (storage_get('installed_at'))
-          return;
+      // Record that we exist.
+      STATS.startPinging();
 
-        var now = new Date().getTime();
-        storage_set('installed_at', now);
-
-        var data = get_statistics();
-        $.get("http://chromeadblock.com/api/visit.php", data);
-
-        chrome.tabs.create({url: "pages/install/index.html?" + $.param(data)});
-        }
-      note_install();
-
-      // Take a census of filter subscriptions.
-      function take_census() {
-        try {
-          if (localStorage['tookSubscriptionCensus'] == null) {
-            var data = {};
-            data.subscriptions = [];
-            for (var sub_id in _myfilters._subscriptions) {
-              if (_myfilters._subscriptions[sub_id].subscribed) {
-                data.subscriptions.push(sub_id);
-              }
-            }
-            data.subscriptions = data.subscriptions.join(',');
-            data.safari = SAFARI;
-            data.language = navigator.language;
-            data.installed_at = localStorage['installed_at'];
-            data.options_at = localStorage['visited_options_at'];
-            $.get(
-              "http://chromeadblock.com/api/url_census.php", 
-              data,
-              function(result) {
-                if (/OK/.test(result))
-                  localStorage['tookSubscriptionCensus'] = true;
-              }
-            );
-          }
-        } catch (ex) { log("Census failed"); log(ex); }
-      }
-      // take_census(); uncomment when you want another census.
-
+      if (STATS.firstRun) // show the walkthrough
+        chrome.tabs.create({url: "pages/install/index.html"});
 
       // Safari specific code.
       if (SAFARI) {
