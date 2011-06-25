@@ -48,7 +48,10 @@ function typeForElement(el) {
     case 'SOURCE': return ElementTypes.media;
     case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': return ElementTypes.stylesheet;
+    case 'LINK': 
+      if (el == document.querySelector('[rel~="icon"]'))
+        return ElementTypes.image;
+      return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
     default: return ElementTypes.NONE;
   }
@@ -109,7 +112,7 @@ beforeLoadHandler = function(event) {
       removeFrame(el);
     else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
-    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
+    else if (!(elType & ElementTypes.script))
       removeAdRemains(el, event);
   }
 }
