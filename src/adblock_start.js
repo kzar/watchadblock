@@ -109,7 +109,7 @@ beforeLoadHandler = function(event) {
       removeFrame(el);
     else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
-    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
+    else if (!(elType & ElementTypes.script))
       removeAdRemains(el, event);
   }
 }
