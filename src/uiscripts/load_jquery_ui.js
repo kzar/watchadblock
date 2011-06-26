@@ -11,24 +11,25 @@ function load_jquery_ui(callback) {
       attr('href', url);
     $("head").append(link);
   }
-  BGcall('readfile', "jquery/jquery-ui.custom.min.js", function(result) {
-    eval(result); // suck it, Trebek
+  $.ajax({
+    url: chrome.extension.getURL("jquery/jquery-ui.custom.min.js"),
+    success: function(result) {
+      eval(result); // suck it, Trebek
 
-    load_css("jquery/css/custom-theme/jquery-ui-1.8.custom.css");
-    load_css("jquery/css/override-page.css");
+      load_css("jquery/css/custom-theme/jquery-ui-1.8.custom.css");
+      load_css("jquery/css/override-page.css");
 
-    if (SAFARI) {
-      // chrome.i18n.getMessage() lazily loads a file from disk using xhr,
-      // but the page itself doesn't have access to extension resources.
-      // Since we'll be using getMessage(), we have to ask the background
-      // page for the data.
-      BGcall('get_l10n_data', function(data) {
-        chrome.i18n._setL10nData(data);
+      if (SAFARI) {
+        // chrome.i18n.getMessage() lazily loads a file from disk using xhr,
+        // but the page itself doesn't have access to extension resources.
+        // Since we'll be using getMessage(), we have to ask the background
+        // page for the data.
+        BGcall('get_l10n_data', function(data) {
+          chrome.i18n._setL10nData(data);
+          callback();
+        });
+      } else
         callback();
-      });
-    }
-    else {
-      callback();
     }
   });
 }

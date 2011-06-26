@@ -326,17 +326,6 @@
         }
       };
 
-      // Return the contents of a local file.
-      // Inputs: file:string - the file relative address, eg "js/foo.js".
-      // Returns: the content of the file.
-      readfile = function(file) {
-        // A bug in jquery prevents local files from being read, so use XHR.
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", chrome.extension.getURL(file), false);
-        xhr.send();
-        return xhr.responseText;
-      };
-
       // TODO: make better.
       // Inputs: options object containing:
       //           domain:string the domain of the calling frame.
