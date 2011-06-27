@@ -49,7 +49,7 @@ function typeForElement(el) {
     case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': 
-      if (el == document.querySelector('[rel~="icon"]'))
+      if (/(^|\s)icon($|\s)/i.test(el.rel))
         return ElementTypes.image;
       return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
