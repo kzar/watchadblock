@@ -70,7 +70,7 @@ function adblock_begin_part_2() {
 }
 
 // until crbug.com/63397 is fixed, ignore SVG images
-if (window.location != 'about:blank' && !/\.svg$/.test(document.location.href)) {
+if (window.location != 'about:blank' && typeof $ != "undefined") {
   if (GLOBAL_contentScriptData.data)
     adblock_begin_part_2();
   else
