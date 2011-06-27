@@ -69,7 +69,7 @@ function adblock_begin_part_2() {
     debug_print_selector_matches(data.selectors);
 }
 
-// until crbug.com/63397 is fixed, ignore SVG images
+// If $ (jquery) is undefined, we're on a xml or svg page and can't run
 if (window.location != 'about:blank' && typeof $ != "undefined") {
   if (GLOBAL_contentScriptData.data)
     adblock_begin_part_2();
