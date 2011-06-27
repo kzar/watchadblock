@@ -75,11 +75,16 @@ MyFilters.prototype.rebuild = function() {
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
+  var settings = get_settings();
   //Exclude google search results ads if the user has checked that option
-  if (get_settings().show_google_search_text_ads) { // from background
+  if (settings.show_google_search_text_ads) { // from background
     texts.push("@@||google.*/search?$elemhide"); // standard search
     texts.push("@@||www.google.*/|$elemhide");   // Google Instant
   }
+
+  // Apply the blacklist mode setting
+  if (settings.blacklist_mode)
+    texts.push("@@*$document" + (storage_get("blacklisted_domains") || ""));
 
   texts = texts.join('\n').split('\n');
 
