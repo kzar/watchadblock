@@ -7,5 +7,5 @@
   chrome.browserAction.setBadgeText = function() {};
   chrome.browserAction.setBadgeBackgroundColor = function() {};
 
-  chrome.windows.create({url:"app/app_EOL.html", type:"popup", width:400, height: 200});
+  chrome.windows.create({url:"app/app_EOL.html", type:"popup", width:600, height: 350, left: 200, top: 100});
 })();
