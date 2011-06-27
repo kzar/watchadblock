@@ -318,7 +318,7 @@
                 } else {
                   var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0];
                   version = version.replace(/\<[^\<]+\>/g,'');
-                  if (version != AdBlockVersion) {
+                  if (isNewerVersion(AdBlockVersion, version)) {
                     updateURL = this.responseText.match(/http\:\/\/.*\.safariextz/)[0];
                   }
                 }
@@ -334,6 +334,21 @@
         };
         xhr.send();
       } catch (ex) {}
+      // Check if newVersion is newer than thisVersion
+      function isNewerVersion(thisVersion, newVersion) {
+        var versionRegex = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/;
+        var current = thisVersion.match(versionRegex);
+        var notCurrent = newVersion.match(versionRegex);
+        if (!current || !notCurrent) 
+          return false;
+        for (var i=1; i<=4; i++) {
+          if (current[i] < notCurrent[i]) 
+            return true;
+          if (current[i] > notCurrent[i])
+            return false;
+        }      
+        return false;
+      }
     </script>
   </body>
 </html>
