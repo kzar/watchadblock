@@ -189,8 +189,6 @@
       //         to check what the page is whitelisted for: hiding rules or everything
       //   returnFilter: if the filter that whitelisted the page should be returned
       page_is_whitelisted = function(url, type, returnFilter) {
-        //special case this one
-        if (url == "http://acid3.acidtests.org/") return true;
         url = url.replace(/\#.*$/, ''); // Remove anchors
         var loweredUrl = url.toLowerCase();
         if (!type)
