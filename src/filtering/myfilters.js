@@ -340,7 +340,6 @@ MyFilters._load_default_subscriptions = function() {
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
       case 'uk': return 'ukranian';
-      case 'vi': return 'easylist_plus_vietnamese';
       case 'zh': return 'chinese';
       default: return '';
     }
@@ -447,11 +446,6 @@ MyFilters.__make_subscription_options = function() {
     "russian": { //id must not change!
       url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
       name: " - additional Russian filters",
-      requiresList: "easylist",
-    },
-    "easylist_plus_vietnamese": {
-      url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
-      name: " - additional Vietnamese filters",
       requiresList: "easylist",
     },
     "chinese": {
