@@ -60,7 +60,8 @@ FilterSet.prototype = {
         result.items[nextDomain] = this.items[nextDomain];
       if (this.exclude[nextDomain])
         result.exclude[nextDomain] = this.exclude[nextDomain];
-      nextDomain = parts[i - 1] + '.' + nextDomain;
+      if (i > 0)
+        nextDomain = parts[i - 1] + '.' + nextDomain;
     }
     return result;
   },
