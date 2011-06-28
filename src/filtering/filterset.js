@@ -55,12 +55,13 @@ FilterSet.prototype = {
     result.items['global'] = this.items['global'];
     var parts = domain.split('.');
     var nextDomain = parts[parts.length -1];
-    for (var i = parts.length-2; i >=0; i--) {
-      nextDomain = parts[i] + '.' + nextDomain;
+    for (var i = parts.length-1; i >=0; i--) {
       if (this.items[nextDomain])
         result.items[nextDomain] = this.items[nextDomain];
       if (this.exclude[nextDomain])
         result.exclude[nextDomain] = this.exclude[nextDomain];
+      if (i > 0)
+        nextDomain = parts[i - 1] + '.' + nextDomain;
     }
     return result;
   },
