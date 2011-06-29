@@ -16,13 +16,6 @@
       }
       load_options();
     });
-    rebuild_filters = function() {
-      // Give the setting a sec to get saved by the other
-      // change handler before recalculating filters.
-      window.setTimeout(function() { 
-        BGcall("update_filters");
-      }, 1000);
-    };
   </script>
 
   <div>
@@ -37,7 +30,13 @@
       // if the user reloads/closes the options page within a second
       // of clicking this, the filters aren't rebuilt.  Call this inside
       // the feature change handler if it's this checkbox being clicked.
-      $("#enable_show_google_search_text_ads").change(rebuild_filters);
+      $("#enable_show_google_search_text_ads").change(function() {
+        // Give the setting a sec to get saved by the other
+        // change handler before recalculating filters.
+        window.setTimeout(function() { 
+          BGcall("update_filters");
+        }, 1000);
+      };
     </script>
 
     <p>
@@ -49,67 +48,6 @@
       <input type="checkbox" class="feature" id="enable_block_youtube" />
       <label for="enable_block_youtube" i18n="youtubeads"></label>
       <span i18n="betalabel"></span>
-    </p>
-
-    <p>
-      <input type="checkbox" class="feature" id="enable_blacklist_mode" />
-      <label for="enable_blacklist_mode" i18n="blacklist_mode"></label><br/>
-      <p id="blacklist_enabled" style="margin:-10px 0 0 20px;">
-        <span class="footnote" i18n="blacklist_mode_exclude"></span><br/>
-        <b class="footnote" style="color:red;" i18n="blacklist_mode_warning"></b><br/>
-        <input id="blacklist_domains" style="margin-left:10px; font-size:10px; max-width:80%; width:640px;" i18n_title="multipledomainshint"/>
-        <input type="button" id="save_blacklist" i18n_value="savebutton" disabled="disabled"/>
-      </p>
-      <script>
-        $(function() {
-          $("#enable_blacklist_mode").change(function() {
-            // Enable the text box when the option is enabled
-            $("#blacklist_enabled").toggle(this.checked);
-            rebuild_filters();
-          });
-
-          $("#blacklist_domains").bind("input", function() {
-            // Enable the save button only when a valid filter can be generated
-            var domainString = "~" + $(this).val().trim().
-                             replace(/(\,\s?|\;\s?|\|\s?|\s)/g, "|~");
-            try {
-              FilterNormalizer.normalizeLine("*$domain=" + domainString);
-              var isValid = true;
-            } catch(ex) {
-              var isValid = ($(this).val().trim() == "");
-            }
-            $("#save_blacklist").attr("disabled", isValid ? null : "disabled");
-            $("#blacklist_enabled b span").toggle($(this).val().trim() != "");
-          });
-
-          $('#blacklist_domains').keypress(function(e) {
-            // Pressing 'enter' is equal to pressing the save button
-            if (e.keyCode == '13' && $("#save_blacklist").attr("disabled") == false) {
-              e.preventDefault();
-              $("#save_blacklist").click();
-            }
-          });
-
-          $("#save_blacklist").click(function() {
-            // Save the list with domains on a way that it can simply be appended
-            // to '@@*$document' when the filters are generated.
-            var domainString = ",domain=~" + $("#blacklist_domains").val().trim().
-                               replace(/(\,\s?|\;\s?|\|\s?|\s)/g, "|~");
-            if ($("#blacklist_domains").val().trim() == "")
-              domainString = "";
-            storage_set("blacklisted_domains", domainString);
-            $(this).attr("disabled", "disabled");
-            rebuild_filters();
-          });
-
-          // Set the text when loaded
-          $("#blacklist_enabled").toggle($("#enable_blacklist_mode").is(":checked"));
-          var domainString = storage_get("blacklisted_domains") || "";
-          domainString = domainString.replace(/\|~/g, ", ").replace(/^\,domain\=~/,"");
-          $("#blacklist_domains").val(domainString);
-          $("#blacklist_enabled b span").toggle(domainString != "");
-        });
-      </script>
     </p>
 
     <p>
