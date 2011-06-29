@@ -28,6 +28,9 @@
     }
   </style>
 
+  <script type="text/javascript" src="../filtering/filternormalizer.js"></script>
+  <script type="text/javascript" src="../filtering/filtertypes.js"></script>
+  <script type="text/javascript" src="../filtering/filteroptions.js"></script>
   <script>
     chrome.extension.onRequest.addListener(function(request) {
       if (request.command != "filters_updated")
