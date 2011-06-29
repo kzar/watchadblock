@@ -80,6 +80,8 @@ class Tracking(object):
         Orders should have a userid.
         """
         order_map = dict( (o.userid, o) for o in orders )
+        if not order_map:
+            return
         userids = ','.join("'%s'" % u for u in order_map.iterkeys())
 
         conn = MySQLdb.connect(host="chromeadblock.com",
@@ -87,7 +89,7 @@ class Tracking(object):
                                passwd=DATA['db_pass'],
                                db=DATA['db_name'])
         cursor = conn.cursor(MySQLdb.cursors.DictCursor)
-        query = ("SELECT * FROM %s WHERE userid in (%s)" %
+        query = ("SELECT * FROM %s WHERE id in (%s)" %
                        (DATA['db_users_table'], userids))
 
         cursor.execute(query)

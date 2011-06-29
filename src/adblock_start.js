@@ -109,7 +109,7 @@ beforeLoadHandler = function(event) {
       removeFrame(el);
     else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
-    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
+    else if (!(elType & ElementTypes.script))
       removeAdRemains(el, event);
   }
 }
@@ -250,6 +250,6 @@ function adblock_begin() {
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
-// until crbug.com/63397 is fixed, ignore SVG images
-if (document.location != 'about:blank' && !/\.svg$/.test(document.location.href))
+// If $ (jquery) is undefined, we're on a xml or svg page and can't run
+if (document.location != 'about:blank' && typeof $ != "undefined")
   adblock_begin();
