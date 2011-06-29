@@ -48,7 +48,10 @@ function typeForElement(el) {
     case 'SOURCE': return ElementTypes.media;
     case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': return ElementTypes.stylesheet;
+    case 'LINK': 
+      if (/(^|\s)icon($|\s)/i.test(el.rel))
+        return ElementTypes.image;
+      return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
     default: return ElementTypes.NONE;
   }
