@@ -373,19 +373,13 @@
         });
       </script>
 
-      <div id="adreportarea" style="display:none;">
+      <div id="adreportarea">
         <span i18n="reportanad" i18n_replacement_el="adreportlink"></span>
         <a id="adreportlink" target="_new" href="../pages/adreport.html"></a>
       </div>
       <script>
         // Chrome puts link in button; Safari puts it here.
-        $(function() { 
-          if (SAFARI)
-            BGcall("get_settings", function(settings) {
-              if (!settings.blacklist_mode)
-                $("#adreportarea").show(); 
-            });
-        });
+        $(function() { $("#adreportarea").toggle(SAFARI); });
       </script>
     </div>
 
