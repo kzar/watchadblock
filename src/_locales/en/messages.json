@@ -489,8 +489,8 @@
     "message": "Block more ads:",
     "description": "Section header on third tab"
   },
-  "unblocktitle": {
-    "message": "Disable AdBlock on a certain webpage:",
+  "stop_blocking_ads": {
+    "message": "Stop blocking ads:",
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
@@ -1182,16 +1182,24 @@
     "message": "Page:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
-  "blacklist_mode": {
-    "message": "Run AdBlock in blacklist mode",
-    "description": "Option on the first tab of the options page"
+  "show_ads_everywhere_except_for_these_domains": {
+    "message": "Show ads EVERYWHERE except for these domains...",
+    "description": "Section title for blacklisting section of Customize tab"
   },
-  "blacklist_mode_exclude": {
-    "message": "AdBlock will only run on the domains in the following list:",
-    "description": "Message on the first tab of the options page, when blacklist mode is enabled"
+  "only_block_ads_on_these_sites": {
+    "message": "Only block ads on these sites:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
   },
-  "blacklist_mode_warning": {
-    "message": "Warning: on all <span>other</span> pages you will see ads!",
-    "description": "Message on the first tab of the options page, when blacklist mode is enabled"
+  "format_site1_site2_site3": {
+    "message": "Format: ~site1.com|~site2.com|~news.site3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab.  You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_on_all_other_sites_you_will_see_ads_this_overrules_all_other_filters": {
+    "message": "Warning: on all other sites you will see ads!<br>This overrules all other filters.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "sites_to_block_must_be_of_the_form": {
+    "message": "The sites to block must be of the form ~site1.com|~site2.com|~site3.com",
+    "description": "Error message displayed when user tries to blacklist sites using an incorrect format."
   }
 }
