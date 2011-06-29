@@ -56,6 +56,7 @@
       <label for="enable_blacklist_mode" i18n="blacklist_mode"></label><br/>
       <p id="blacklist_enabled" style="margin:-10px 0 0 20px;">
         <span class="footnote" i18n="blacklist_mode_exclude"></span><br/>
+        <b class="footnote" style="color:red;"></b><br/>
         <input id="blacklist_domains" style="margin-left:10px; font-size:10px; max-width:80%; width:640px;" i18n_title="multipledomainshint"/>
         <input type="button" id="save_blacklist" i18n_value="savebutton" disabled="disabled"/>
       </p>
@@ -74,9 +75,10 @@
             FilterNormalizer.normalizeLine("*$domain=" + domainString);
             var isValid = true;
           } catch(ex) {
-            var isValid = ($(this).val() == "");
+            var isValid = ($(this).val().trim() == "");
           }
           $("#save_blacklist").attr("disabled", isValid ? null : "disabled");
+          $("#blacklist_enabled b span").toggle($(this).val().trim() != "");
         });
 
         $('#blacklist_domains').keypress(function(e) {
@@ -105,6 +107,8 @@
           var domainString = storage_get("blacklisted_domains") || "";
           domainString = domainString.replace(/\|~/g, ", ").replace(/^\,domain\=~/,"");
           $("#blacklist_domains").val(domainString);
+          $("#blacklist_enabled b").html(translate("blacklist_mode_warning"));
+          $("#blacklist_enabled b span").toggle(domainString != "");
         });
       </script>
     </p>
@@ -116,15 +120,15 @@
         $("#enable_show_advanced_options").change(function() {
           // Reload the page to show or hide the advanced options on the
           // options page -- after a moment so we have time to save the option.
-          function waitASecThenReload() {
-            window.setTimeout(function() {
-              window.location.reload();
-            }, 50);
-          }
-          if (!this.checked) // Make sure debugging wasn't left on by accident
-            BGcall("set_setting", "debug_logging", false, waitASecThenReload);
-          else
-            waitASecThenReload();
+          // Also, disable all advanced options, so that non-advanced users will
+          // not end up with debug/beta/test options enabled.
+          if (!this.checked)
+            $(".advanced :checkbox:checked").each(function() {
+              BGcall("set_setting", this.id.substr(7), false);
+            });
+          window.setTimeout(function() {
+            window.location.reload();
+          }, 50);
         });
       </script>
     </p>
