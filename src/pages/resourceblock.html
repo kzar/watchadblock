@@ -429,11 +429,12 @@
           generateFilterSuggestions();
           // If the user clicks the 'next' button
           $("#confirmUrl").click(function() {
-            if ($('#custom:checked').length == 1 && 
+            if ($('#custom').is(':checked') && 
                 $('#customurl').val().trim() == '') {
               alert(translate('novalidurlpattern'));
               return;
             }
+
             // Hide unused stuff
             $("#selectblockableurl input:radio:not(:checked)").
                 nextUntil('input').remove();
