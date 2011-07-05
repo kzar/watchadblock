@@ -52,7 +52,7 @@
 
       // Convert a messy list of domains to ~domain1.com|~domain2.com format
       function toTildePipeFormat(domainList) {
-        domainList = domainList.replace(/[\ \,\;\|]+\~?/g, "|~");
+        domainList = domainList.trim().replace(/[\ \,\;\|]+\~?/g, "|~");
         if (domainList && domainList[0] != "~")
           domainList = "~" + domainList;
         return domainList;
@@ -104,7 +104,7 @@
       });
 
       $("#btnAddBlacklist").click(function() {
-        var blacklist = toTildePipeFormat($("#txtBlacklist").val().trim());
+        var blacklist = toTildePipeFormat($("#txtBlacklist").val());
 
         var filters = $("#txtFiltersAdvanced").val().trim() + '\n';
         // Delete the first likely line
@@ -113,6 +113,8 @@
         // Add our line in its place, or if it was empty, remove the filter
         if (blacklist)
           appendCustomFilter("@@*$document,domain=" + blacklist);
+        else
+          saveFilters(); // just record the deletion
         $("#btnAddBlacklist").attr("disabled", "disabled");
       });
 
@@ -137,7 +139,7 @@
 
       // The validation functions
       $("#txtBlacklist").bind("input", function() {
-        var blacklist = toTildePipeFormat($("#txtBlacklist").val().trim());
+        var blacklist = toTildePipeFormat($("#txtBlacklist").val());
 
         if (blacklist)
           blacklist = "@@*$document,domain=" + blacklist;
