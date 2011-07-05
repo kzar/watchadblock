@@ -50,6 +50,14 @@
         saveFilters();
       }
 
+      // Convert a messy list of domains to ~domain1.com|~domain2.com format
+      function toTildePipeFormat(domainList) {
+        domainList = domainList.replace(/[\ \,\;\|]+\~?/g, "|~");
+        if (domainList && domainList[0] != "~")
+          domainList = "~" + domainList;
+        return domainList;
+      }
+
       // Set the default values
       $("#txtUserFilterCss").val('div[class*="exampleClass"][id="someBigAd"]');
       $("#txtUserFilterDomain").val('*');
@@ -96,11 +104,7 @@
       });
 
       $("#btnAddBlacklist").click(function() {
-        var blacklist = $("#txtBlacklist").val().trim();
-        // Convert them to ~domain1.com|~domain2.com format
-        blacklist = blacklist.replace(/[\ \,\;\|]+\~?/g, "|~");
-        if (blacklist && blacklist[0] != "~")
-          blacklist = "~" + blacklist;
+        var blacklist = toTildePipeFormat($("#txtBlacklist").val().trim());
 
         var filters = $("#txtFiltersAdvanced").val().trim() + '\n';
         // Delete the first likely line
@@ -133,11 +137,7 @@
 
       // The validation functions
       $("#txtBlacklist").bind("input", function() {
-        var blacklist = $("#txtBlacklist").val().trim();
-        // For validation, convert them to ~domain1.com|~domain2.com format
-        blacklist = blacklist.replace(/[\ \,\;\|]+\~?/g, "|~");
-        if (blacklist && blacklist[0] != "~")
-          blacklist = "~" + blacklist;
+        var blacklist = toTildePipeFormat($("#txtBlacklist").val().trim());
 
         if (blacklist)
           blacklist = "@@*$document,domain=" + blacklist;
@@ -192,7 +192,7 @@
         $("#btnAddExcludeFilter").attr("disabled", ok ? null : "disabled");
       });
 
-      // When one presses 'Enter', pretent it was a click on the 'add' button
+      // When one presses 'Enter', pretend it was a click on the 'add' button
       $('.entryTable input:text').keypress(function(event) {
         var submitButton = $(this).closest(".entryTable").find(":button");
         if (event.keyCode == '13' && submitButton.attr("disabled") == false) {
