@@ -2,26 +2,17 @@
 // and log messages.
 STATS = (function() {
   var stats_url = "http://chromeadblock.com/api/stats.php";
-  var ADBLOCK = {};
 
-  //Get some information about the extension and os
-  function getManifest() {
+  //Get some information about the version and os
+  var version = (function() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
-    var theManifest;
-    xhr.onreadystatechange = function() {
-      if(this.readyState == 4) {
-        theManifest = JSON.parse(this.responseText);
-      }
-    };
     xhr.send();
-    return theManifest;
-  }
-
-  var manifest = getManifest();
-  ADBLOCK.version = manifest.version;
+    var manifest = JSON.parse(xhr.responseText);
+    return manifest.version;
+  })();
   var osMatch = navigator.appVersion.match(/(CrOS|Windows|Mac|Linux)/i);
-  ADBLOCK.os = osMatch ? osMatch[1] : "Unknown";
+  var os = osMatch ? osMatch[1] : "Unknown";
 
   var firstRun = (function() {
     // All of these have represented the user existing at one point or
@@ -67,9 +58,9 @@ STATS = (function() {
     var data = {
       cmd: "ping",
       u: userId,
-      v: ADBLOCK.version,
+      v: version,
       f: SAFARI ? "S": "E",
-      o: ADBLOCK.os
+      o: os
     };
     // TODO temp
     var installed_at = storage_get("installed_at");
