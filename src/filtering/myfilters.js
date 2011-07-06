@@ -21,9 +21,7 @@ function MyFilters() {
   // Issue 5748: temp code to unsubscribe over-subscribed users, because Chrome
   // crashes on heavy pages when every list is subscribed to.  Installed
   // 7/2011.  Remove after most users have gotten this update.
-  console.log("Running?");
   (function(that) {
-    console.log("RUNNING");
     function isDefault(id) {
       return that._subscriptions[id].user_submitted == false;
     }
@@ -36,7 +34,6 @@ function MyFilters() {
       if (isDefault(id) && that._subscriptions[id].subscribed)
         numDefaultsSubscribed++;
     }
-    console.log(numDefaultsSubscribed);
     if (numDefaultsSubscribed < 10)
       return;
 
@@ -46,9 +43,7 @@ function MyFilters() {
     for (var id in that._subscriptions) {
       var mayDiscard = (keep.indexOf(id) == -1);
       if (isDefault(id) && mayDiscard)
-        {       that._subscriptions[id].subscribed = false;
-      console.log("Unsubscribed " + id);
-    }
+        that._subscriptions[id].subscribed = false;
     }
   })(this);
   // end temp code

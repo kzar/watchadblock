@@ -116,6 +116,15 @@
       // then_reload is specified and is true, reload the tab upon 
       // success.
       function subscribe(id, then_reload) {
+        var reloadTab = function() {
+          var myIndex = $("#tabpages").tabs("option", "selected");
+          $("#tabpages").tabs("load", myIndex);
+        }
+        // Avoid over-subscription
+        if (!validateOverSubscription()) {
+          reloadTab();
+          return;
+        }
         var url;
         if (id in global_subscriptions_cached_copy)
           url = global_subscriptions_cached_copy[id].url;
@@ -145,13 +154,20 @@
             }
             BGcall("subscribe", id, text, null);
             flash(translate("subscribedlabel"));
-            if (then_reload) {
-              var myIndex = $("#tabpages").tabs("option", "selected");
-              $("#tabpages").tabs("load", myIndex);
-            }
+            if (then_reload)
+              reloadTab();
           },
           error: onError
         });
+      }
+
+      // If the user is about to subscribe to too many filters, make
+      // them agree that they know what they're doing.
+      // Returns true if validated.
+      function validateOverSubscription() {
+        if ($(":checked").length <= 6)
+          return true;
+        return confirm(translate("you_know_thats_a_bad_idea_right"));
       }
 
       $(function() {
