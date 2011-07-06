@@ -51,6 +51,7 @@ function MyFilters() {
 
     // Don't prune more than once
     localStorage["pruned_oversubscription"] = "true";
+    STATS.msg("pruned_oversubscription");
   })(this);
   // end temp code
 
