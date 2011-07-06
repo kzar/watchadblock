@@ -71,7 +71,7 @@ function MyFilters() {
 }
 
 // When a subscription property changes, this function stores it
-// Inputs: rebuild? boolean, true if the filterset should be rebuilded
+// Inputs: rebuild? boolean, true if the filterset should be rebuilt
 MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   localStorage.setItem('filter_lists', JSON.stringify(this._subscriptions));
 
@@ -87,7 +87,6 @@ MyFilters.prototype._onSubscriptionChange = function(rebuild) {
 // Rebuild filters based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
-  var utils = chrome.extension.getBackgroundPage().utils;
   for (var id in this._subscriptions)
     if (this._subscriptions[id].subscribed)
       texts.push(this._subscriptions[id].text);
@@ -134,7 +133,7 @@ MyFilters.prototype.rebuild = function() {
 MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   var subscribeRequiredListToo = false;
 
-  // Subscribing to an unknown list: create the list entry
+  // Working with an unknown list: create the list entry
   if (!this._subscriptions[id]) {
     id = this.customToDefaultId(id);
     if (/^url\:.*/.test(id))
@@ -152,7 +151,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
 
   // Apply all changes from subData
   for (var property in subData)
-    if (subData[property] != undefined)
+    if (subData[property] !== undefined)
       this._subscriptions[id][property] = subData[property];
 
   // Check if the required list is a well known list, but only if it is changed
@@ -181,6 +180,8 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
       delete this._subscriptions[id];
   }
 
+  // Notify of change.  If we subscribed, we rebuilt above; so we
+  // only force a rebuild if we unsubscribed.
   this._onSubscriptionChange(subData.subscribed == false);
 
   // Subscribe to a required list if nessecary
