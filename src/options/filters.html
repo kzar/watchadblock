@@ -306,6 +306,22 @@
   <div>
     <h2 i18n="filterstabtitle"></h2>
     <p class="footnote" i18n="filterlistlink" i18n_replacement_el="footnotelink"></p>
+    <!-- TODO temp issue 5748 -->
+    <div id="prune_notification" style="display:none; padding: 5px; margin: 5px; border: 1px solid #88f; background: #ff8">
+      <div style="float:right; cursor: pointer; font-weight: bold">x</div>
+      <p i18n="i_pruned_your_subscriptions"></p>
+    </div>
+    <script>
+      $(function() {
+        if (localStorage["pruned_oversubscription"] && !localStorage["saw_prune_note"])
+          $("#prune_notification").show();
+        $("#prune_notification div").click(function() {
+          localStorage["saw_prune_note"] = "true";
+          $("#prune_notification").hide();
+        });
+      });
+    </script>
+    <!-- TODO end temp -->
     <a id="footnotelink" href="http://adblockplus.org/en/subscriptions" 
        target="_new"></a>
     <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>

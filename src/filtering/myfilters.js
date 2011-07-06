@@ -18,7 +18,7 @@ function MyFilters() {
   // subscription options, merge with MyFilters.__subscription_options.
   this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
 
-  // Issue 5748: temp code to unsubscribe over-subscribed users, because Chrome
+  // TODO temp issue 5748: unsubscribe over-subscribed users, because Chrome
   // crashes on heavy pages when every list is subscribed to.  Installed
   // 7/2011.  Remove after most users have gotten this update.
   (function(that) {
