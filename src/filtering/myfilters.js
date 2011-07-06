@@ -22,6 +22,9 @@ function MyFilters() {
   // crashes on heavy pages when every list is subscribed to.  Installed
   // 7/2011.  Remove after most users have gotten this update.
   (function(that) {
+    if (localStorage["pruned_oversubscription"])
+      return;
+
     function isDefault(id) {
       return that._subscriptions[id].user_submitted == false;
     }
@@ -45,6 +48,9 @@ function MyFilters() {
       if (isDefault(id) && mayDiscard)
         that._subscriptions[id].subscribed = false;
     }
+
+    // Don't prune more than once
+    localStorage["pruned_oversubscription"] = "true";
   })(this);
   // end temp code
 
