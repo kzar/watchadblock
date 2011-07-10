@@ -214,7 +214,7 @@
           row.append(cell);
 
           // Cell 2: URL
-          $("<td>", { title: i, text: truncateI(i) }).appendTo(row);
+          $("<td>", { title: i, html: truncateI(i) }).appendTo(row);
 
           // Cell 3: Type
           var typeName = getTypeName(resources[i].type);
