@@ -32,30 +32,6 @@
     "message": "AdBlock е инсталирано!",
     "description": "Title for the installation success page"
   },
-  "setotheroptions_safari": {
-    "message": "Можете да зададете други настройки, като щракнете по бутона в лентата.",
-    "description": "Message on Safari installation success page for extension"
-  },
-  "setotheroptions_chrome_ext": {
-    "message": "Можете да контролирате AdBlock и да зададете други настройки, като щракнете по бутона в лентата.",
-    "description": "Message on Chrome extension installation success page for extension"
-  },
-  "setotheroptions_chrome_app": {
-    "message": "Щракнете с десен бутон в уебстраница (с изключение на тази), за да контролирате AdBlock, и за да зададете други настройки.",
-    "description": "Message on Chrome app installation success page for extension"
-  },
-  "warning_adblock_is_installed_twice": {
-    "message": "Внимание: двойно инсталиране на AdBlock",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "both_are_installed_this_makes_chrome_slower": {
-    "message": "Приложението AdBlock и разширението AdBlock са инсталирани заедно. Това забавя Chrome.",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "to_fix_both_installed": {
-    "message": "За да го поправите, премахнете разширението Adblock от <a>вашите разширения</a>.",
-    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
-  },
   "chromebutton_how_to_hide": {
     "message": "За да скриете бутона, щракнете с десен по него и посочете Скрий бутона. Можете да го покажете отново от Ключ | Инструменти | Разширения.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -105,6 +81,14 @@
         "example": "This filter is not supported"
       }
     }
+  },
+  "undo": {
+    "message": "Отмени",
+    "description": "Button text to undo an action."
+  },
+  "unpause_adblock": {
+    "message": "Освободи AdBlock",
+    "description": "Context menu entry unpause AdBlock."
   },
   "blacklisterblockedelement": {
     "message": "Блокиран елемент:",
@@ -981,10 +965,6 @@
     "message": "AdBlock е забранено за страницата.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
-  "undo": {
-    "message": "Отмени",
-    "description": "Button text to undo an action."
-  },
   "enable": {
     "message": "разреши",
     "description": "Link text to un-whitelist a page, displayed immediately after 'adblock_is_disabled_on_domain'."
@@ -996,10 +976,6 @@
   "unpause": {
     "message": "освободено",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
-  },
-  "unpause_adblock": {
-    "message": "Освободи AdBlock",
-    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Задръж AdBlock",
