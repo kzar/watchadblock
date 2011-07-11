@@ -116,13 +116,9 @@
       // then_reload is specified and is true, reload the tab upon 
       // success.
       function subscribe(id, then_reload) {
-        var reloadTab = function() {
-          var myIndex = $("#tabpages").tabs("option", "selected");
-          $("#tabpages").tabs("load", myIndex);
-        }
         // Avoid over-subscription
         if (!validateOverSubscription()) {
-          reloadTab();
+          window.location.reload();
           return;
         }
         var url;
@@ -155,7 +151,7 @@
             BGcall("subscribe", id, text, null);
             flash(translate("subscribedlabel"));
             if (then_reload)
-              reloadTab();
+              window.location.reload();
           },
           error: onError
         });
