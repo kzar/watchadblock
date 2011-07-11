@@ -57,16 +57,13 @@ STATS = (function() {
     var installed_at = storage_get("installed_at");
     if (installed_at)
       data.installed_at = installed_at;
-    console.log(data);
     // end temp
 
     $.post(stats_url, data, function(response) {
       // TODO temp until most installed_at users have done this.  Installed
       // 6/2011.  Delete the other installed_at-related TODO temps in here
       // when you delete this.
-      console.log("DELETING " + localStorage.installed_at);
       delete localStorage.installed_at;
-      console.log("DELETING " + localStorage.installed_at);
     });
   };
 
