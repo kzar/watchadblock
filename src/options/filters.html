@@ -169,7 +169,7 @@
       //                 filters are subscribed.
       // Returns true if validated.
       function validateOverSubscription(force) {
-        if (!force && $(":checked").length <= 6)
+        if (!force && $(":checked", "#filter_subscriptions").length <= 6)
           return true;
         return confirm(translate("you_know_thats_a_bad_idea_right"));
       }
