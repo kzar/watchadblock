@@ -571,8 +571,6 @@
             // Convert all resources to the object type
             if (loaded_resources)
               for (var i = 0; i < loaded_resources.length || 0; i++) {
-                if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
-                  continue; // Blacklister resources shouldn't be visible
                 if (/\<|\"/.test(loaded_resources[i]))
                   continue;
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
@@ -580,6 +578,10 @@
                   resources[filter] = {filter: filter};
                 } else {
                   var blockmatches = loaded_resources[i].split(':|:', 2);
+                  if (blockmatches[1].indexOf(chrome.extension.getURL("")) == 0)
+                    continue; // Blacklister resources shouldn't be visible
+                  if (!/[a-z\-]+\:\/\//.test(blockmatches[1]))
+                    continue; // Ignore about: and data: urls
                   resources[blockmatches[1]] = {type: Number(blockmatches[0])};
                 }
               }
