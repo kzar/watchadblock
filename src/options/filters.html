@@ -117,11 +117,9 @@
       //   id: either a well-known id, or "url:xyz", where xyz is the URL 
       //       of a user-specified filter list.
       //   then_reload:bool - if true, reload the tab upon success.
-      //   skip_validation?:bool - optional.  If true, do not warn the user
-      //       when they try to subscribe to too many filters.
-      function subscribe(id, then_reload, skip_validation) {
+      function subscribe(id, then_reload) {
         // Avoid over-subscription
-        if (!skip_validation && !validateOverSubscription()) {
+        if (!validateOverSubscription()) {
           window.location.reload();
           return;
         }
@@ -163,13 +161,18 @@
 
       // If the user is about to subscribe to too many filters, make
       // them agree that they know what they're doing.
-      //
-      // Inputs:
-      //   force?:bool - if true, show the prompt no matter how many
-      //                 filters are subscribed.
       // Returns true if validated.
-      function validateOverSubscription(force) {
-        if (!force && $(":checked").length <= 6)
+      function validateOverSubscription() {
+        if (optionalSettings.show_advanced_options) {
+          // In case of an advanced user, only warn once every 30 minutes, even
+          // if the options page wasn't open all the time. 30 minutes = 1/48 day
+          if ($.cookie('noOversubscriptionWarning'))
+            return true;
+          else {
+            $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
+          }
+        }
+        if ($(":checked").length <= 6)
           return true;
         return confirm(translate("you_know_thats_a_bad_idea_right"));
       }
@@ -268,12 +271,12 @@
             // don't naively go tell the model about the event.
             if (global_refreshing_subscription_view) 
               return;
-            
+
             var id = $(this).attr("name");
             if (!checked)
               unsubscribe(id, false);
             else
-              subscribe(id, false);
+              subscribe(id);
           });
 
           $("#btnUpdateNow").click(function() {
@@ -351,14 +354,11 @@
     <script>
       $(function() {
         $("#subscribeAll").live("click", function(e) {
-          if (!validateOverSubscription(true)) // force prompt
-            return;
           var inputs = $("input:not(:checked)", ".subscription");
           for (var i=0; i<inputs.length; i++) {
             window.setTimeout((function() { // Catch i in closure
               var name = inputs[i].name;
-              // Subscribe, skipping over-subscription validation
-              return (function() { subscribe(name, false, true); });
+              return (function() { subscribe(name); });
             })(), 1000 * i);
           }
           e.preventDefault();
