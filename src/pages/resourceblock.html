@@ -580,7 +580,7 @@
                   var blockmatches = loaded_resources[i].split(':|:', 2);
                   if (blockmatches[1].indexOf(chrome.extension.getURL("")) == 0)
                     continue; // Blacklister resources shouldn't be visible
-                  if (!/[a-z\-]+\:\/\//.test(blockmatches[1]))
+                  if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
                     continue; // Ignore about: and data: urls
                   resources[blockmatches[1]] = {type: Number(blockmatches[0])};
                 }
