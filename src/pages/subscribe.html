@@ -79,15 +79,15 @@
         chrome.extension.onRequest.addListener(function(request) {
           if (request.command != "filters_updated") 
             return;
-          var bg = chrome.extension.getBackgroundPage();
-          var subs = bg.get_subscriptions_minus_text();
-          var sub = subs['url:' + queryparts.location];
-          if (!sub || sub.last_update) {
-            // It was a well known id, so assume it succeeded, or the
-            // last_update property exists, so it succeeded
-            finished(true);
-          } else if (sub.last_update_failed)
-            finished(false);
+          BGcall('get_subscriptions_minus_text', function(subs) {
+            var sub = subs['url:' + queryparts.location];
+            if (!sub || sub.last_update) {
+              // It was a well known id, so assume it succeeded, or the
+              // last_update property exists, so it succeeded
+              finished(true);
+            } else if (sub.last_update_failed)
+              finished(false);
+          });
         });
 
         //Subscribe to a list
