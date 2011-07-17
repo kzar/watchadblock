@@ -10,7 +10,7 @@
           var checkbox = $('.subscription[name="' + id + '"] input');
           if (checkbox.length == 1) {
             // The subscription already exists. Just update it
-            checkbox.checked = sub.subscribed;
+            checkbox[0].checked = sub.subscribed;
           } else {
             // new subscription, or the list didn't exist yet. (Re)build it.
             $("#filter_subscriptions").empty()
@@ -263,17 +263,16 @@
           var inputs = $("input:not(:checked)", ".subscription");
           for (var i=0; i<inputs.length; i++) {
             window.setTimeout((function() { // Catch i in closure
-              var name = inputs[i].name;
-              return (function() { subscribe(name); });
+              var input = $(inputs[i]);
+              return (function() { input.click().change(); });
             })(), 1000 * i);
           }
           e.preventDefault();
         });
         $("#unsubscribeAll").live("click", function(e) {
           $("input", ".subscription").each(function(i, el) {
-            if (el.checked == true) {
-              unsubscribe($(el).attr("name"));
-            }
+            if (el.checked)
+              $(el).click().change();
           });
           e.preventDefault();
         });
