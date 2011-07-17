@@ -1,10 +1,12 @@
   <script>
     var global_cached_subscriptions;
 
+    // Update the list with all subscriptions. If new lists are added, refresh
+    // the full list.
     function updateSubscriptionList() {
       BGcall('get_subscriptions_minus_text', function(subs) {
         global_cached_subscriptions = subs;
-        
+
         for (var id in subs) {
           var sub = subs[id];
           var checkbox = $('.subscription[name="' + id + '"] input');
@@ -13,7 +15,7 @@
             checkbox[0].checked = sub.subscribed;
           } else {
             // new subscription, or the list didn't exist yet. (Re)build it.
-            $("#filter_subscriptions").empty()
+            $("#filter_subscriptions").empty();
             setSubscriptionList(subs);
             break;
           }
@@ -21,7 +23,9 @@
         updateSubscriptionInfoAll();
       });
     }
-    
+
+    // Creates the full list with subscriptions.
+    // Inputs: subscriptions: the list with all subscriptions and their properties
     function setSubscriptionList(subscriptions) {
       //sorting the list
       //1, 2: AB custom and easylist
@@ -130,6 +134,7 @@
       }
     }
 
+    // Update the infolabel from all subscriptions (last update time etcetera)
     function updateSubscriptionInfoAll() {
       for (var id in global_cached_subscriptions) {
         var div = $("[name='" + id + "']");
@@ -172,13 +177,14 @@
         infoLabel.text(text);
       }
     }
-    
+
     // Unsubscribe from the given filterlist id.
     // 'del' determines if it should be deleted too
     function unsubscribe(id, del) {
       BGcall("unsubscribe", {id:id, del:del});
     }
 
+    // Subscribe to the given filterlist id, and a required list if it exists.
     function subscribe(id) {
         var parameters = {id: id};
         if (global_cached_subscriptions[id] && global_cached_subscriptions[id].requiresList)
@@ -186,7 +192,7 @@
 
         BGcall("subscribe", parameters);
       }
-    
+
     $(function() {
       // Build the subscription list
       updateSubscriptionList();
@@ -205,6 +211,7 @@
         }, 300000); //re-enable after 5 minutes
       });
 
+      // Add a new subscription URL
       $("#btnNewSubscriptionUrl").click(function() {
         var url = $("#txtNewSubscriptionUrl").val();
         var abp_regex = /^abp.*location=(.*)$/;
@@ -217,15 +224,18 @@
         subscribe("url:" + url);
       });
 
+      // Pressing enter will add the list too
       $('#txtNewSubscriptionUrl').keypress(function(event) {
         if (event.keyCode == '13') {
           event.preventDefault();
           $("#btnNewSubscriptionUrl").click();
         }
       });
-      
+
+      // In case a subscription changed (updated or subscribed via subscribe.html)
+      // then update the subscription list.
       chrome.extension.onRequest.addListener(function(request) {
-        if (request.command != "filters_updated") 
+        if (request.command != "filters_updated")
           return;
         updateSubscriptionList();
       });
@@ -235,7 +245,7 @@
   <div>
     <h2 i18n="filterstabtitle"></h2>
     <p class="footnote" i18n="filterlistlink" i18n_replacement_el="footnotelink"></p>
-    <a id="footnotelink" href="http://adblockplus.org/en/subscriptions" 
+    <a id="footnotelink" href="http://adblockplus.org/en/subscriptions"
        target="_new"></a>
     <span i18n="updatenowmessage" i18n_replacement_el="btnUpdateNow"></span>
     <input type="button" id="btnUpdateNow" />
@@ -249,7 +259,7 @@
         <input type="button" id="btnNewSubscriptionUrl" i18n_value="subscribebutton" />
       </div>
     </div>
-    
+
     <p style="margin-bottom:0px;" class="advanced">
       <span i18n="showlinkstolists"></span>
       <input type="button" id="btnShowLinks" i18n_value="buttonok" />
