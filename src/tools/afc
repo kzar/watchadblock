@@ -19,7 +19,7 @@ function zipit() {
     (
       name="$1"
       cd ..
-      zip -x '*/app/manifest.json' -x 'Icon.png' -x '*.plist' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "$name" trunk/ >/dev/null
+      zip -x 'Icon.png' -x '*.plist' -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "$name" trunk/ >/dev/null
     )
 }
 
@@ -36,16 +36,11 @@ function shipit() {
 
     v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     echo Zipping...
+
     # Zip the extension
     rm -f ../extension-version-*.zip && \
       zipit "extension-version-$v.zip"
 
-    # Zip the app (same thing, but swap out the manifest))
-    rm -f ../APP-VERSION-*.zip && (
-      mv manifest.json manifest.json.tmp && mv app/manifest.json manifest.json && mv manifest.json.tmp app/manifest.json && \
-      zipit "APP-VERSION-$v.zip" && \
-      mv manifest.json manifest.json.tmp && mv app/manifest.json manifest.json && mv manifest.json.tmp app/manifest.json
-    )
     echo
 
     version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
@@ -76,19 +71,19 @@ function shipit() {
       svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
     }
 
-    echo "Last step: push extension-version-$v.zip and APP-VERSION-$v.zip to the Store, and ship Safari if you want."
+    echo "Last step: push extension-version-$v.zip to the Store, and ship Safari if you want."
 }
 
 function bump() {
     v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     [ -z "$v" ] && { echo "No version found."; exit 1; }
     nextv=$(echo $v | cut -d '.' -f 1,2).$(( $(echo $v | cut -d . -f 3) + 1 ))
-    sed -i "s/$v/$nextv/g" manifest.json app/manifest.json Info.plist
+    sed -i "s/$v/$nextv/g" manifest.json Info.plist
     echo "Before and after:"
     echo
-    svn diff manifest.json app/manifest.json Info.plist | egrep '^ *[-+]'
+    svn diff manifest.json Info.plist | egrep '^ *[-+]'
     echo
-    echo "svn revert -R manifest.json app/manifest.json Info.plist # if you aren't happy."
+    echo "svn revert -R manifest.json Info.plist # if you aren't happy."
     echo
 }
 
