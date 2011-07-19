@@ -2,7 +2,6 @@
   <head>
     <script src="port.js"></script>
     <script src="jquery/jquery.min.js"></script>
-    <script src="app/app.js"></script>
     <script src="functions.js"></script>
     <script src="stats.js"></script>
     <script src="filtering/filteroptions.js"></script>
@@ -207,58 +206,14 @@
             if (!get_settings().show_context_menu_items)
               return;
 
+            if (localStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
+              return;
+
             function addMenu(title, callback) {
               chrome.contextMenus.create({
                 title: title,
                 contexts: ["all"],
                 onclick: function(clickdata, tab) { callback(tab, clickdata); }
-              });
-            }
-            if (isApp) {
-              if (localStorage.adblock_is_paused) {
-                addMenu(translate("unpause_adblock"), function(tab) {
-                  localStorage.removeItem('adblock_is_paused');
-                  setContextMenus(info);
-                });
-              }
-
-              if (info.whitelisted) {
-                var message = translate("disabled_on_this_page") +
-                              " " + translate("undo");
-                addMenu(message, function(tab) {
-                  if (try_to_unwhitelist(tab.url))
-                    chrome.tabs.update(tab.id, {url: tab.url}); // Reload tab
-                  // else, silently fail.
-                });
-              }
-            }
-
-            if (localStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
-              return;
-
-            if (isApp) {
-              // TODO: these 3 are copy-and-modified from button/popup.html
-              addMenu(translate("pause_adblock"), function(tab) {
-                localStorage.adblock_is_paused = true;
-                setContextMenus(info);
-              });
-
-              addMenu(translate("dont_run_on_this_page"), function(tab) {
-                var url = tab.url.replace(/#.*$/, '');  // Remove anchors
-                var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
-                var has_querystring = url_parts[2];
-                var filter = '@@|' + url_parts[1] +
-                  (has_querystring ? '?' : '|') + '$document';
-                add_custom_filter({filter: filter});
-                // Reload the tab
-                chrome.tabs.update(tab.id, {url: tab.url});
-              });
-
-              addMenu(translate("dont_run_on_pages_on_domain"), function(tab) {
-                  emit_page_broadcast(
-                  {fn:'top_open_whitelist_ui', options:{}},
-                  {tab: tab} // fake sender to determine target page
-                  );
               });
             }
 
@@ -270,12 +225,12 @@
             });
 
             addMenu(translate("block_an_ad_on_this_page"), function(tab) {
-                  emit_page_broadcast(
-                    {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
+              emit_page_broadcast(
+                {fn:'top_open_blacklist_ui', options:{nothing_clicked: true}},
                 {tab: tab}
-                  );
-              });
-            }
+              );
+            });
+          }
 
           function setBrowserButton(info) {
             if (localStorage.adblock_is_paused) {
