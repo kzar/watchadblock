@@ -336,7 +336,7 @@
         var notCurrent = newVersion.match(versionRegex);
         if (!current || !notCurrent)
           return false;
-        for (var i=1; i<=4; i++) {
+        for (var i=1; i<4; i++) {
           if (current[i] < notCurrent[i])
             return true;
           if (current[i] > notCurrent[i])
