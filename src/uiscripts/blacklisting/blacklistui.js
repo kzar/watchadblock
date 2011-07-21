@@ -347,7 +347,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
   function updateFilter() {
     var theFilter = that._makeFilter();
 
-    summary.html(theFilter);
+    summary.text(theFilter);
 
     var matchCount = $(theFilter).not(".ui-dialog").not(".ui-dialog *").length;
 
@@ -358,7 +358,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
           + "</center>");
   }
 
-  detailsDiv.html("");
+  detailsDiv.empty();
   var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href'];
   for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];

@@ -323,6 +323,10 @@
   "removefromlist": {
     "message": "Ta bort från listan",
     "description": "Label to remove a custom filter"
+	  },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Ju fler filterlistor du använder, dessto långsammare arbetar AdBlock.  För många listor kan även få din webbläsare att krascha på vissa sidor.  Tryck 'OK' för att prenumerera i alla fall.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists.  The user will have two options: OK and Cancel."
   },
   "filterstabtitle": {
     "message": "Prenumerera på filterlistor",
@@ -331,6 +335,10 @@
   "filterlistlink": {
     "message": "Prenumerera inte på mer än du behöver -- Varje lista gör Chrome en liten aning långsammare! Listornas ursprung, och fler listor hittas <a>här</a>.",
     "description": "Explanation of the filter lists"
+	  },
+  "i_pruned_your_subscriptions": {
+    "message": "OBS! Du behöver bara prenumerera på listor för de språk du talar. Du prenumererade på så många listor, att din webbläsare blev instabil.<br><br>De flesta prenumerationer avslutades, men du kan återprenumerera på de du verkligen behöver.",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
   },
   "updatenowmessage": {
     "message": "Uppdateringar hämtas automatiskt. Du kan också <a>uppdatera nu</a>.",
@@ -455,6 +463,10 @@
   },
   "blockmoreads": {
     "message": "Blockera fler reklamtillägg:",
+    "description": "Section header on third tab"
+  },
+  "stop_blocking_ads": {
+    "message": "Sluta blockera reklamtillägg:",
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
@@ -1134,8 +1146,25 @@
     "message": "Domän:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
   },
+  "format_site1_site2_site3": {
+    "message": "Format: ~sida1.com|~sida2.se|~nyheter.sida3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab.  You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
   "modifypath": {
     "message": "Sida:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+	  },
+  "show_ads_except_for": {
+    "message": "Visa reklamtillägg <i>överallt</i> utom på dessa domäner...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Blockera reklamtillägg, endast på dessa sidor:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "warning_overrules_filters": {
+    "message": "Varning: Du kommer att se tillägg på alla andra sidor!<br>
+	Det här åsidosätter också alla andra filter för dessa sidor .",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   }
 }
