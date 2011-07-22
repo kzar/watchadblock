@@ -190,7 +190,6 @@
           <option value="easylist;russian;http://forum.mozilla-russia.org/viewtopic.php?pid=409520" i18n="lang_russian"></option>
           <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com" i18n="lang_spanish"></option>
           <option value="ukranian;mailto:adblock.ua at gmail.com" i18n="lang_ukranian"></option>
-          <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list" i18n="lang_vietnamese"></option>
           <option value="" i18n="other"></option>
         </select>
       </div>
@@ -254,7 +253,7 @@
       });
       $("#step3_wontcheck").click(function() {
         $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
-        $("#whattodo").html(translate("fixityourself"));
+        $("#whattodo").text(translate("fixityourself"));
       });
     </script>
 
@@ -274,7 +273,7 @@
       //If the user clicks a radio button
       $("#step4_yes").click(function() {
         $("#step4").html("<span class='answer'>" + translate("yes") + "</span>");
-        $("#whattodo").html(translate("cantblockflash"));
+        $("#whattodo").text(translate("cantblockflash"));
       });
       $("#step4_no").click(function() {
         $("#step4").html("<span class='answer'>" + translate("no") + "</span>");

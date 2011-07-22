@@ -242,7 +242,7 @@
           rows.push(row);
         }
         $("#loading").remove();
-        $("#resourceslist tbody").text("");
+        $("#resourceslist tbody").empty();
         for (var i = 0; i < rows.length; i++) {
           $("#resourceslist tbody").append(rows[i]);
         }
@@ -301,7 +301,7 @@
           suggestions.push(label);
           suggestions.push("<br/>");
         }
-        $("#suggestions").text("");
+        $("#suggestions").empty();
         for (var i = 0; i < suggestions.length; i++)
           $("#suggestions").append(suggestions[i]);
         if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
