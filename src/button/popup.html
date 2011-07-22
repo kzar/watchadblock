@@ -69,25 +69,7 @@
               <div id="new_release_close" style="float:right;"><a class="blue" href="#">x</a></div>
               <div id="newtitle"></div>
               <script>$("#newtitle").text(translate("newtitle", ["2.3.0"]));</script>
-              <div id="newversioninfo">
-                <div i18n="this_toolbar_button" id="no_toolbar_button"></div>
-                <div i18n="yes_toolbar_button" id="yes_toolbar_button" style="display:none">
-                  <!-- TODO temp: installed 2/2011 -->
-                </div>
-              </div>
-              <script>
-                $(function() {
-                  // TODO temp while yes_toolbar_button exists
-                  chrome.extension.sendRequest("picdndbpdnapajibahnnogkjofaeooof", {}, 
-                    function(data) {
-                      if (data) {
-                        $("#no_toolbar_button").hide();
-                        $("#yes_toolbar_button").show();
-                      }
-                    }
-                  );
-                });
-              </script>
+              <div id="newversioninfo" i18n="this_toolbar_button"></div>
             </div>
           </div>
           <div class="separator"></div>
