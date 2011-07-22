@@ -163,6 +163,8 @@
       // them agree that they know what they're doing.
       // Returns true if validated.
       function validateOverSubscription() {
+        if ($(":checked", "#filter_subscriptions").length <= 6)
+          return true;
         if (optionalSettings.show_advanced_options) {
           // In case of an advanced user, only warn once every 30 minutes, even
           // if the options page wasn't open all the time. 30 minutes = 1/48 day
@@ -172,8 +174,6 @@
             $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
           }
         }
-        if ($(":checked", "#filter_subscriptions").length <= 6)
-          return true;
         return confirm(translate("you_know_thats_a_bad_idea_right"));
       }
 
