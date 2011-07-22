@@ -376,14 +376,14 @@ BlacklistUi.prototype._redrawPage2 = function() {
     if (attr == 'src' || attr == 'href')
       checked = $("input", detailsDiv).length == 1;
 
-    var bold = $("<b></b>").text(attr == 'nodeName' ? translate("blacklistertype") : attr);
     var italic = $("<i></i>").text(val);
     var checkboxlabel = $("<label></label>").
-      html(translate("blacklisterattrwillbe", ["<b></b>", "<i></i>"])).
+      html(translate("blacklisterattrwillbe", 
+           ["<b>" + (attr == 'nodeName' ? translate("blacklistertype") : attr) +
+           "</b>", "<i></i>"])).
       attr("for", "ck" + attr).
       css("cursor", "pointer");
     $('i', checkboxlabel).replaceWith(italic);
-    $('b', checkboxlabel).replaceWith(bold);
 
     var checkbox = $("<div></div>").
       append("<input type=checkbox " + (checked ? 'checked="checked"': '') +
