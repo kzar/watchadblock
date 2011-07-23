@@ -214,28 +214,24 @@ PatternFilter._parseRule = function(text) {
   // ^ at the end of a rule should only match a delimiter, but we ignore that
   // for efficiency's sake.
   rule = rule.replace(/\^$/, '');
+  // Some chars in regexes mean something special; escape it always.
+  // Escaped characters are also faster. 
+  // - Do not escape a-z A-Z 0-9 and _ because they can't be escaped
+  // - Do not escape | ^ and * because they are handled below.
+  rule = rule.replace(/([^a-zA-Z0-9_\|\^\*])/g, '\\$1');
+  //^ is a separator char in ABP
+  rule = rule.replace(/\^/g, '[^\\-\\.\\%a-zA-Z0-9]');
   //If a rule contains *, replace that by .*
   rule = rule.replace(/\*/g, '.*');
-  //^ is a separator char in ABP
-  rule = rule.replace(/\^/g, '[^\-.%a-zA-Z0-9]');
-  // ? at the start of a regex means something special; escape it always.
-  rule = rule.replace(/\?/g, '\\?');
-  // . shouldn't mean "match any character" unless it's followed by a * in
-  // which case we were almost certainly the ones who put it there.
-  rule = rule.replace(/\.(?!\*)/g, '\\.');
-  // A + means one or more repetitions in regex. Escape it.
-  rule = rule.replace(/\+/g, '\\+');
   // Starting with || means it should start at a domain or subdomain name, so
   // match ://<the rule> or ://some.domains.here.and.then.<the rule>
-  rule = rule.replace(/^\|\|/, '\://([^/]+\\.)?');
+  rule = rule.replace(/^\|\|/, '\\:\\/\\/([^\\/]+\\.)?');
   // Starting with | means it should be at the beginning of the URL.
   rule = rule.replace(/^\|/, '^');
   // Rules ending in | means the URL should end there
   rule = rule.replace(/\|$/, '$');
   // Any other '|' within a string should really be a pipe.
   rule = rule.replace(/\|/g, '\\|');
-  // Using escaped characters is faster. Only replace the most common one: /
-  rule = rule.replace(/\//g, '\\/');
 
   result.rule = new RegExp(rule);
   return result;
