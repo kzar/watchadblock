@@ -45,7 +45,7 @@
         else if (entry.user_submitted)
           entry.order = "6" +
               (translate("filter" + id) || entry.name).toLowerCase();
-        else if (entry.name.indexOf(" - additional ") == 0)
+        else if (entry.requiresList)
           entry.order = "3" +
               (translate("filter" + id) || entry.name).toLowerCase();
         else
@@ -96,7 +96,7 @@
           text(translate('labelshow')).
           css("margin-left", "6px").
           css("font-size", "10px").
-          css("display", "none").
+          css("display", $("#btnShowLinks").attr("disabled") ? "inline" : "none").
           attr("target", "_new").
           attr("class", "linkToList").
           attr("href", entry.url);
@@ -238,14 +238,16 @@
       // Add a new subscription URL
       $("#btnNewSubscriptionUrl").click(function() {
         var url = $("#txtNewSubscriptionUrl").val();
-        var abp_regex = /^abp.*location=(.*)$/;
+        var abp_regex = /^abp.*\Wlocation=([^\&]+)/i;
         if (abp_regex.test(url)) {
           url = url.match(abp_regex)[1]; // the part after 'location='
-          if (/&title/.test(url)) // then strip it
-            url = url.substring(0, url.indexOf('&title'));
           url = unescape(url);
         }
-        subscribe("url:" + url);
+        if (/^https?\:\/\/[^\<]+$/.test(url)) {
+          subscribe("url:" + url);
+          $("#txtNewSubscriptionUrl").val("");
+        } else
+          alert(translate("failedtofetchfilter"));
       });
 
       // Pressing enter will add the list too
