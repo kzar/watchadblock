@@ -466,9 +466,10 @@ MyFilters.__make_subscription_options = function() {
       name: " - additional Russian filters",
       requiresList: "easylist",
     },
-    "chinese": {
+    "chinese": { //id must not change!
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
-      name: "Chinese filters",
+      name: " - additional Chinese filters",
+      requiresList: "easylist",
     },
     "czech": {
       url: "http://adblock.dajbych.net/adblock.txt",
