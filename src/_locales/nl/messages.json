@@ -3,42 +3,6 @@
     "message": "De meest populaire Chrome extensie, met meer dan 2 miljoen gebruikers! Blokkeert advertenties op het internet.",
     "description": "Extension description in manifest"
   },
-  "app_description1": {
-    "message": "Blokkeert advertenties op het web. Miljoenen gebruiken het in Chrome en Safari",
-    "description": "App description used in app version manifest"
-  },
-  "setotheroptions_safari": {
-    "message": "Andere instellingen kunnen worden gewijzigd via de opties pagina die je vindt als je op de knop in de werkbalk klikt.",
-    "description": "Message on Safari installation success page for extension"
-  },
-  "setotheroptions_chrome_ext": {
-    "message": "Andere instellingen kunnen worden gewijzigd als je op de knop in de werkbalk klikt, of via de pagina met opties.",
-    "description": "Message on Chrome extension installation success page for extension"
-  },
-  "setotheroptions_chrome_app": {
-    "message": "Andere instellingen kunnen worden gewijzigd in de opties pagina, welke je vindt als je met de rechtermuisknop op een webpagina klikt",
-    "description": "Message on Chrome app installation success page for extension"
-  },
-  "warning_adblock_is_installed_twice": {
-    "message": "Let op: AdBlock is twee maal geïnstalleerd!",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "both_are_installed_this_makes_chrome_slower": {
-    "message": "Zowel de extensie als de app zijn geïnstalleerd. Slechts één is nodig. De ander zal je alleen maar vertragen.",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "to_fix_both_installed": {
-    "message": "Om dit op te lossen, verwijder de extensie van <a>je extensies</a>.",
-    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
-  },
-  "unpause_adblock": {
-    "message": "AdBlock niet meer pauzeren",
-    "description": "Context menu entry unpause AdBlock."
-  },
-  "undo": {
-    "message": "Ongedaan maken",
-    "description": "Button text to undo an action."
-  },
   "buttoncancel": {
     "message": "Annuleren",
     "description": "Cancel button"
@@ -232,10 +196,6 @@
     "message": "AdBlock aanpassen",
     "description": "Title of the third tab"
   },
-  "unblocktitle": {
-    "message": "AdBlock op een webpagina uitschakelen:",
-    "description": "Section header on third tab"
-  },
   "filterlistsrock": {
     "message": "De officiële filters blokkeren het meeste al. Je kunt ook zelf aanpassingen maken:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
@@ -245,7 +205,7 @@
     "description": "Section header on third tab"
   },
   "linkunblock": {
-    "message": "Toon advertenties op webpagina of domein",
+    "message": "Toon advertenties op een webpagina of domein",
     "description": "Link on the third tab"
   },
   "tabfilterlists": {
@@ -435,10 +395,6 @@
   },
   "filterrussian": {
     "message": " - Russische uitbreiding",
-    "description": "A filter list"
-  },
-  "filtereasylist_plus_vietnamese": {
-    "message": " - Vietnamese uitbreiding",
     "description": "A filter list"
   },
   "filterchinese": {
@@ -647,10 +603,6 @@
     "message": "Oekraïens",
     "description": "language"
   },
-  "lang_vietnamese": {
-    "message": "Vietnamees",
-    "description": "language"
-  },
   "other": {
     "message": "Anders",
     "description": "multiple choice option"
@@ -728,7 +680,7 @@
     }
   },
   "reportanad": {
-    "message": "<a>rapporteer een advertentie</a> aan de beheerders van de filter lijsten.",
+    "message": "<a>Rapporteer een advertentie</a> aan de beheerders van de filter lijsten.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
   "showcontextmenus": {
@@ -781,10 +733,6 @@
   "this_toolbar_button": {
     "message": "Deze knop :)",
     "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
-  },
-  "yes_toolbar_button": {
-    "message": "Deze knop is nu een onderdeel van AdBlock. Er is geen aparte extensie meer voor nodig.",
-    "description": "Description of what is new in version 2.3.0, which is shown to users who have the 'Browser Button For AdBlock' extension installed instead of the 'this_toolbar_button' message.  You should not translate the words 'Browser Button For AdBlock'."
   },
   "disabled_by_filter_lists": {
     "message": "Sorry, AdBlock is op deze site uitgeschakeld door een van uw filter lijsten.",
@@ -1020,14 +968,6 @@
     "message": "wijzig",
     "description": "link to change resources on the resourceblock page"
   },
-  "brokensite_beta_option": {
-    "message": "Probeer enkele problemen waar de paginainhoud niet goed werkt op te lossen.",
-    "description": "option on the first options page"
-  },
-  "brokensite_beta_description": {
-    "message": "Als je advertenties ziet die je niet ziet wanneer je deze optie uitzet, <a>rapporteer</a> dat dan aub!",
-    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
-  },
   "translator_credit": {
     "message": "Vertaling door $translator_names$",
     "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
@@ -1185,5 +1125,33 @@
   "last_update_failed": {
     "message": "Laatste update niet gelukt; ",
     "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
+  "show_ads_except_for": {
+    "message": "Toon <i>overal</i> advertenties, behalve op bepaalde domeinen",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "stop_blocking_ads": {
+    "message": "Blokkeer hier geen advertenties:",
+    "description": "Section header on third tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Blokkeer alleen advertenties op deze sites:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "format_site1_site2_site3": {
+    "message": "Opbouw: ~site1.com|~site2.com|~nieuws.site3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab.  You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_overrules_filters": {
+    "message": "Waarschuwing: op alle andere sites zul je advertenties zien!<br>Dit negeert andere filters for die sites.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "i_pruned_your_subscriptions": {
+    "message": "Let op: je moet je alleen aanmelden voor talen die je spreekt. Je had je aangemeldt bij zoveel lijsten, dat je browser onstabiel kon worden.<br><br>Ik heb je voor de meesten afgemeld, je kunt je weer voor meer lijsten aanmelden als het echt nodig is.",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
+  },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Hoe meer lijsten je gebruikt, hoe langzamer AdBlock wordt. Te veel lijsten kunnen zelfs je browser laten crashen. Klik op OK om je toch aan te melden voor deze lijst.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
   }
 }

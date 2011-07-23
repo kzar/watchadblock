@@ -236,7 +236,7 @@ if (SAFARI) {
         // Fill in $N in message
         var message = safesub(msgData.message, $n_re, $n_subber);
         // Fill in $Place_Holder1$ in message
-        message = safesub(message, /\$([a-zA-Z0-9_]+?)\$/g, function(full, name) {
+        message = safesub(message, /\$(\w+?)\$/g, function(full, name) {
           var lowered = name.toLowerCase();
           if (lowered in placeholders)
             return placeholders[lowered];

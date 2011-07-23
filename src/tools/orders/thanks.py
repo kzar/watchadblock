@@ -5,12 +5,13 @@
 import csv
 import os
 import tempfile
+import time
 import traceback
 import sys
 
 import emails
 import orderparsing
-orderparsing.init('../../../orderparsing_info')
+orderparsing.init('/home/nathanlong/michael/orderparsing_info')
 
 
 def correct_nicknames(orders):
@@ -204,31 +205,36 @@ def mark_as_done_and_send(orders):
 
 def mark_as_done_and_send_batch(m, orders):
     ids = ','.join(o.msgid for o in orders)
-    reward_ids = ','.join(o.msgid for o in orders if o.amount >= 50)
     print "Marking emails from these addresses as read:"
     print ', '.join(o.email for o in orders)
-    # Mark all as read
-    m.store(ids, '+FLAGS.SILENT', '\\Seen')
-    sending_errors = 0
+    m.store(ids, '+FLAGS.SILENT', '\\Seen') # Mark all as read
+    sent_ids = []
     for (i,o) in enumerate(orders):
-        print "Sending %d of %d to %s ('%s' - %s)" % (i+1, len(orders),
-            o.email.encode('utf-8'), o.nickname.encode('utf-8'),
-            o.name.encode('utf-8'))
-        try:
+        sending_errors = 0
+        while o.msgid not in sent_ids:
+            print "Sending %d of %d to %s ('%s' - %s)" % (i+1, len(orders),
+                o.email.encode('utf-8'), o.nickname.encode('utf-8'),
+                o.name.encode('utf-8'))
             subj = 'Thank you :)' if o.amount < 50 else 'Thank you so much! :D'
             sender_suffix = '+safari' if o.flavor == 'S' else ''
             _from = '"Michael Gundlach" <adblockforchrome%s@gmail.com>' % sender_suffix
             to = '"%s" <%s>' % (o.name, o.email)
-            emails.send(_from, to, subj, o.email_responder.get_response())
-            sending_errors = 0
-        except:
-            print "  %s Failed to send" % ("*" * 40)
-            print traceback.format_tb(sys.exc_info()[2])
-            sending_errors += 1
-            if sending_errors == 3:
-                print "Aborting!"
-                sys.exit(1)
-            continue
+            try:
+                emails.send(_from, to, subj, o.email_responder.get_response())
+            except:
+                print "  %s Failed to send" % ("*" * 40)
+                print traceback.format_tb(sys.exc_info()[2])
+                sending_errors += 1
+                if sending_errors == 5:
+                    print "Aborting!  Marking unhandled emails as unread:"
+                    unhandled = [o for o in orders if o.msgid not in sent_ids]
+                    print ', '.join(o.email for o in unhandled)
+                    unhandled_ids = ','.join(o.msgid for o in unhandled)
+                    m.store(unhandled_ids, '-FLAGS.SILENT', '\\Seen') # Mark as unread
+                    sys.exit(1)
+                time.sleep(60)
+            else:
+                sent_ids.append(o.msgid) # breaks out of while loop
 
 def edit_responses(orders):
     for (i,o) in enumerate(orders):
@@ -239,6 +245,7 @@ def edit_responses(orders):
         os.system('vim -c "normal 1Gw" /tmp/reply.txt')
         new_resp = open('/tmp/reply.txt').read().decode('utf-8')
         o.email_responder.set_response(new_resp)
+        os.remove('/tmp/reply.txt')
 
 def thank(orders, edit_every_response):
     for o in orders:

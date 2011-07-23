@@ -144,7 +144,7 @@
             replace(/\>/g, '&gt;').replace(/\"/g, '&quot;');
           return safe;
         }
-        // Trunkates a resource URL if it is too long. Also escapes some
+        // Truncates a resource URL if it is too long. Also escapes some
         // characters when they have a special meaning in HTML.
         // Inputs: the string to truncate
         // Returns the truncated string
@@ -214,7 +214,7 @@
           row.append(cell);
 
           // Cell 2: URL
-          $("<td>", { title: i, text: truncateI(i) }).appendTo(row);
+          $("<td>", { title: i, html: truncateI(i) }).appendTo(row);
 
           // Cell 3: Type
           var typeName = getTypeName(resources[i].type);
@@ -242,7 +242,7 @@
           rows.push(row);
         }
         $("#loading").remove();
-        $("#resourceslist tbody").text("");
+        $("#resourceslist tbody").empty();
         for (var i = 0; i < rows.length; i++) {
           $("#resourceslist tbody").append(rows[i]);
         }
@@ -301,7 +301,7 @@
           suggestions.push(label);
           suggestions.push("<br/>");
         }
-        $("#suggestions").text("");
+        $("#suggestions").empty();
         for (var i = 0; i < suggestions.length; i++)
           $("#suggestions").append(suggestions[i]);
         if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
@@ -429,11 +429,12 @@
           generateFilterSuggestions();
           // If the user clicks the 'next' button
           $("#confirmUrl").click(function() {
-            if ($('#custom:checked').length == 1 && 
+            if ($('#custom').is(':checked') && 
                 $('#customurl').val().trim() == '') {
               alert(translate('novalidurlpattern'));
               return;
             }
+
             // Hide unused stuff
             $("#selectblockableurl input:radio:not(:checked)").
                 nextUntil('input').remove();
@@ -570,8 +571,6 @@
             // Convert all resources to the object type
             if (loaded_resources)
               for (var i = 0; i < loaded_resources.length || 0; i++) {
-                if (loaded_resources[i].indexOf(chrome.extension.getURL("")) == 4)
-                  continue; // Blacklister resources shouldn't be visible
                 if (/\<|\"/.test(loaded_resources[i]))
                   continue;
                 if (/^HIDE\:.+/.test(loaded_resources[i])) {
@@ -579,6 +578,10 @@
                   resources[filter] = {filter: filter};
                 } else {
                   var blockmatches = loaded_resources[i].split(':|:', 2);
+                  if (blockmatches[1].indexOf(chrome.extension.getURL("")) == 0)
+                    continue; // Blacklister resources shouldn't be visible
+                  if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
+                    continue; // Ignore about: and data: urls
                   resources[blockmatches[1]] = {type: Number(blockmatches[0])};
                 }
               }

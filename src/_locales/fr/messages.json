@@ -3,11 +3,6 @@
     "message": "La plus populaire des extensions Chrome, avec plus de 2 millions d'utilisateurs ! Bloque les publicités sur Internet.",
     "description": "Extension description in manifest"
   },
-  "app_description1": {
-    "message": "Bloque les publicités sur le web! Des millions d'utilisateurs Safari et Chrome l'aiment !",
-    "description": "App description used in app version manifest"
-  },
-
   "buttoncancel": {
     "message": "Annuler",
     "description": "Cancel button"
@@ -32,30 +27,6 @@
   "installedtitle": {
     "message": "AdBlock est maintenant installé!",
     "description": "Title for the installation success page"
-  },
-  "setotheroptions_safari": {
-    "message": "Pour définir d'autres options, cliquez sur le bouton de la barre d'outils.",
-    "description": "Message on Safari installation success page for extension"
-  },
-  "setotheroptions_chrome_ext": {
-    "message": "Pour configurer AdBlock, cliquez sur le bouton de la barre d'outils.",
-    "description": "Message on Chrome extension installation success page for extension"
-  },
-  "setotheroptions_chrome_app": {
-    "message": "Faites un clic droit sur les pages web (sauf celle-ci) pour configurer AdBlock.",
-    "description": "Message on Chrome app installation success page for extension"
-  },
-  "warning_adblock_is_installed_twice": {
-    "message": "Attention : AdBlock est installé en double",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "both_are_installed_this_makes_chrome_slower": {
-    "message": "L'application et l'extension AdBlock sont toutes les deux installées. Cela Chrome plus lent.",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "to_fix_both_installed": {
-    "message": "Pour corriger cela, désinstallez l'extension AdBlock depuis <a>vos extensions</a>.",
-    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Cacher ce bouton'. Pour l'afficher à nouveau, allez dans Clé à molette | Outils | Extensions.",
@@ -426,10 +397,6 @@
     "message": " - filtres russes additionnels",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-  "filtereasylist_plus_vietnamese": {
-    "message": " - filtres vietnamiens additionnels",
-    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
-  },
   "filterchinese": {
     "message": "Filtres chinois",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -489,10 +456,6 @@
   },
   "blockmoreads": {
     "message": "Bloquer plus de publicités :",
-    "description": "Section header on third tab"
-  },
-  "unblocktitle": {
-    "message": "Désactiver AdBlock sur une page particulière :",
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
@@ -666,10 +629,6 @@
   },
   "lang_ukranian": {
     "message": "Ukrainien",
-    "description": "language"
-  },
-  "lang_vietnamese": {
-    "message": "Vietnamien",
     "description": "language"
   },
   "other": {
@@ -970,10 +929,6 @@
     "message": "Ce bouton de la barre d'outils",
     "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
-  "yes_toolbar_button": {
-    "message": "Ce bouton du navigateur fait maintenant partie d'AdBlock. L'extension 'Browser Button for AdBlock' est maintenant inutile.",
-    "description": "Description of what is new in version 2.3.0, which is shown to users who have the 'Browser Button For AdBlock' extension installed instead of the 'this_toolbar_button' message.  You should not translate the words 'Browser Button For AdBlock'."
-  },
   "disabled_by_filter_lists": {
     "message": "Désolé, AdBlock est désactivé sur cette page par un ou plusieurs de vos filtres.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -990,10 +945,6 @@
     "message": "AdBlock est désactivé pour cette page.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
-  "undo": {
-    "message": "Annuler",
-    "description": "Button text to undo an action."
-  },
   "enable": {
     "message": "Activer",
     "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
@@ -1005,10 +956,6 @@
   "unpause": {
     "message": "Réactiver",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
-  },
-  "unpause_adblock": {
-    "message": "Réactiver AdBlock",
-    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Désactiver AdBlock",
@@ -1037,14 +984,6 @@
   "changelabel": {
     "message": "Changer",
     "description": "link to change resources on the resourceblock page"
-  },
-  "brokensite_beta_option": {
-    "message": "Tester une nouvelle façon de retirer les publicités",
-    "description": "option on the first options page"
-  },
-  "brokensite_beta_description": {
-    "message": "Si vous découvrez des publicités qui n'apparaissent que lorsque vous utilisez cette option, merci de remplir <a>un rapport de bug</a>!",
-    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
 "translator_credit": {
   "message": "Traduction par $translator_names$",
@@ -1183,5 +1122,21 @@
   "modifypath": {
     "message": "Page :",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "show_ads_except_for": {
+    "message": "Afficher les pubs <i>partout</i> sauf sur ces domaines...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Bloquer les pubs uniquement sur ces sites :",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "format_site1_site2_site3": {
+    "message": "Format : ~site1.com|~site2.com|~news.site3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab.  You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_overrules_filters": {
+    "message": "Attention : vous verrez les pubs sur tous les autres sites !<br>Ceci annule tous les autres filtres pour ces sites.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   }
 }

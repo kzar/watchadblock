@@ -40,23 +40,9 @@ function MyFilters() {
           this._subscriptions[id].subscribed || false;
   }
 
-  // temp code to normalize non-normalized filters, one time.
-  // had to make a second pass when the [style] ignore was updated.
-  // and a third one when we started to throw errors on unsupported options
-  // Installed 01/14/2011.  Remove after everyone has gotten this update.
-  if (!localStorage['three_times_normalized_filters']) {
-    delete localStorage['once_normalized_filters'];
-    delete localStorage['twice_normalized_filters'];
-    for (var id in this._subscriptions) {
-      if (this._subscriptions[id].text) {
-        this._subscriptions[id].text = FilterNormalizer.normalizeList(
-                                              this._subscriptions[id].text);
-      }
-    }
-    localStorage['three_times_normalized_filters'] = 'true';
-  }
-  // end temp code
-  
+  // Temp: remove an old localStorage entry
+  delete localStorage['three_times_normalized_filters'];
+
   // Build the filter list
   this._onSubscriptionChange(true);
 
@@ -289,9 +275,10 @@ MyFilters.prototype.customToDefaultId = function(id) {
 MyFilters.prototype._load_default_subscriptions = function() {
   var result = {};
 
-  //returns the ID of a list for a given language code
-  function langToList(lang) {
-    switch(lang) {
+  // Returns the ID of the list appropriate for the user's locale, or ''
+  function listIdForThisLocale() {
+    var language = navigator.language.match(/^([a-z]+).*/i)[1];
+    switch(language) {
       case 'bg': return 'easylist_plus_bulgarian';
       case 'cs': return 'czech';
       case 'cu': return 'easylist_plus_bulgarian';
@@ -313,7 +300,6 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
       case 'uk': return 'ukranian';
-      case 'vi': return 'easylist_plus_vietnamese';
       case 'zh': return 'chinese';
       default: return '';
     }
@@ -323,8 +309,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
   result["adblock_custom"] = { subscribed: true };
   result["easylist"] = { subscribed: true };
   
-  var language = navigator.language.match(/^([a-z]+).*/i)[1];
-  var list_for_lang = langToList(language);
+  var list_for_lang = listIdForThisLocale();
   if (list_for_lang)
     result[list_for_lang] = { subscribed: true };
 
@@ -389,14 +374,10 @@ MyFilters.prototype._make_subscription_options = function() {
       name: " - additional Russian filters",
       requiresList: "easylist",
     },
-    "easylist_plus_vietnamese": {
-      url: "http://adblockplus-vietnam.googlecode.com/svn/trunk/abpvn.txt",
-      name: " - additional Vietnamese filters",
-      requiresList: "easylist",
-    },
-    "chinese": {
+    "chinese": { //id must not change!
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
-      name: "Chinese filters",
+      name: " - additional Chinese filters",
+      requiresList: "easylist",
     },
     "czech": {
       url: "http://adblock.dajbych.net/adblock.txt",

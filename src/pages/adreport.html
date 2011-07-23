@@ -45,7 +45,7 @@
       var search = document.location.search.substring(1).split('&');
       for (var item in search) {
         if (!/\=/.test(search[item])) continue;
-        options[search[item].split('=')[0]] = 
+        options[search[item].split('=')[0]] =
                          unescape(search[item].split('=')[1]);
       }
 
@@ -70,7 +70,7 @@
         }
         var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
                      "?template=Ad%20report%20from%20user&summary=";
-        if (domain) 
+        if (domain)
           result = result + escape("Ad report: " + domain);
         else
           result = result + escape("Ad report at <enter URL of webpage here>");
@@ -113,7 +113,7 @@
         body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
         body.push(SAFARI ? "Safari " :
           "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
-        if (AdBlockVersion) 
+        if (AdBlockVersion)
           body.push("AdBlock " + AdBlockVersion);
 
         result = result + "&comment=" + escape(body.join('\n'));
@@ -161,8 +161,8 @@
         $("#step2DIV").css("display", "block");
       });
     </script>
-    
-    
+
+
     <!--STEP 2-->
     <div class="section" id="step2DIV">
       <h2 i18n="correctfilters"></h2>
@@ -190,7 +190,6 @@
           <option value="easylist;russian;http://forum.mozilla-russia.org/viewtopic.php?pid=409520" i18n="lang_russian"></option>
           <option value="easylist_plus_spanish;mailto:nauscopio at gmail.com" i18n="lang_spanish"></option>
           <option value="ukranian;mailto:adblock.ua at gmail.com" i18n="lang_ukranian"></option>
-          <option value="easylist;easylist_plus_vietnamese;http://code.google.com/p/adblockplus-vietnam/issues/list" i18n="lang_vietnamese"></option>
           <option value="" i18n="other"></option>
         </select>
       </div>
@@ -202,7 +201,7 @@
         var selected = $("#step2_lang option:selected");
         $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
         if (selected.text() == translate("other")) {
-          $("#whattodo").html(translate("nodefaultfilter1", 
+          $("#whattodo").html(translate("nodefaultfilter1",
                                         ["<a href='http://adblockplus.org/en/subscriptions'>", "</a>"]));
           return;
         } else {
@@ -218,8 +217,8 @@
         $("#step3DIV").css("display", "block");
       });
     </script>
-    
-    
+
+
     <!--STEP 3-->
     <div class="section" id="step3DIV">
       <h2 i18n="checkinfirefox"></h2>
@@ -254,11 +253,11 @@
       });
       $("#step3_wontcheck").click(function() {
         $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
-        $("#whattodo").html(translate("fixityourself"));
+        $("#whattodo").text(translate("fixityourself"));
       });
     </script>
-    
-    
+
+
     <!--STEP 4-->
     <div class="section" id="step4DIV">
       <h2 i18n="flashads"></h2>
@@ -274,7 +273,7 @@
       //If the user clicks a radio button
       $("#step4_yes").click(function() {
         $("#step4").html("<span class='answer'>" + translate("yes") + "</span>");
-        $("#whattodo").html(translate("cantblockflash"));
+        $("#whattodo").text(translate("cantblockflash"));
       });
       $("#step4_no").click(function() {
         $("#step4").html("<span class='answer'>" + translate("no") + "</span>");
@@ -283,9 +282,9 @@
         $("#whattodo").html(translate("reporttous1", [reportLinkOpen, reportLinkClose]));
       });
     </script>
-    
+
     <div id="whattodo"></div>
-    
+
     <!--GENERAL STUFF-->
     <script type="text/javascript">
       //check for updates
@@ -298,28 +297,24 @@
             //get the current version
             AdBlockVersion = JSON.parse(this.responseText).version;
             //check for newer versions
-            var xhr2 = new XMLHttpRequest();
             var checkURL = "http://clients2.google.com/service/update2/crx?" +
                 "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
                 AdBlockVersion + "%26uc";
-            if (SAFARI) 
+            if (SAFARI)
               checkURL = "http://safariadblock.com/update.plist";
             //fetch the version check file
-            xhr2.open("GET", checkURL, false);
-            xhr2.onreadystatechange = function() {
-              if(this.readyState == 4) {
+            $.ajax({
+              cache: false,
+              datatype: (SAFARI ? "text" : "xml"),
+              url: checkURL,
+              success: function(response) {
                 var updateURL;
                 if (!SAFARI) {
-                  var usefultext = this.responseText.match(/\<updatecheck.+status\=\".*\"\/\>/)[0];
-                  if (!usefultext) return;
-                  var status = usefultext.match(/status\=\"([^\"]*)\"/)[1];
-                  if (status == "ok")
-                    updateURL = usefultext.match(/codebase\=\"([^\"]*)\"/)[1];
+                  updateURL = $("updatecheck[status='ok'][codebase]", response).attr('codebase');
                 } else {
-                  var version = this.responseText.match(/\<string\>\d+\.\d+\.\d+\<\/string\>/)[0];
-                  version = version.replace(/\<[^\<]+\>/g,'');
-                  if (version != AdBlockVersion) {
-                    updateURL = this.responseText.match(/http\:\/\/.*\.safariextz/)[0];
+                  var version = response.match(/\<string\>(\d+\.\d+\.\d+)\<\/string\>/)[1];
+                  if (isNewerVersion(version)) {
+                    updateURL = response.match(/http\:\/\/.*\.safariextz/)[0];
                   }
                 }
                 //new version available
@@ -328,12 +323,26 @@
                   $("div[id^='step'][id$='DIV']").css('display', 'none');
                 }
               }
-            };
-            xhr2.send();
+            });
           }
         };
         xhr.send();
       } catch (ex) {}
+      // Check if newVersion is newer than AdBlockVersion
+      function isNewerVersion(newVersion) {
+        var versionRegex = /^(\d+)\.(\d+)\.(\d+)$/;
+        var current = AdBlockVersion.match(versionRegex);
+        var notCurrent = newVersion.match(versionRegex);
+        if (!current || !notCurrent)
+          return false;
+        for (var i=1; i<4; i++) {
+          if (current[i] < notCurrent[i])
+            return true;
+          if (current[i] > notCurrent[i])
+            return false;
+        }
+        return false;
+      }
     </script>
   </body>
 </html>

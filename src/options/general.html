@@ -57,32 +57,16 @@
         $("#enable_show_advanced_options").change(function() {
           // Reload the page to show or hide the advanced options on the
           // options page -- after a moment so we have time to save the option.
-          function waitASecThenReload() {
-            window.setTimeout(function() {
-              window.location.reload();
-            }, 50);
-          }
-          if (!this.checked) // Make sure debugging wasn't left on by accident
-            BGcall("set_setting", "debug_logging", false, waitASecThenReload);
-          else
-            waitASecThenReload();
+          // Also, disable all advanced options, so that non-advanced users will
+          // not end up with debug/beta/test options enabled.
+          if (!this.checked)
+            $(".advanced :checkbox:checked").each(function() {
+              BGcall("set_setting", this.id.substr(7), false);
+            });
+          window.setTimeout(function() {
+            window.location.reload();
+          }, 50);
         });
-      </script>
-    </p>
-
-    <p class="advanced">
-      <input type="checkbox" class="feature" id="enable_hide_instead_of_remove" />
-      <label for="enable_hide_instead_of_remove" i18n="brokensite_beta_option"></label>
-      <span i18n="betalabel"></span><br/>
-      <span i18n="brokensite_beta_description" i18n_replacement_el="bugtracker" 
-            class="footnote" style="display:none"></span>
-      <a id="bugtracker" target="_blank" href="http://chromeadblock.com/bugs/?new"></a>
-      <script>
-        $("#enable_hide_instead_of_remove").
-          change(function() {
-            $('[i18n="brokensite_beta_description"]').toggle(this.checked);
-          }).
-          trigger("change");
       </script>
     </p>
 

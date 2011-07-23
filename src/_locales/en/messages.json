@@ -3,10 +3,6 @@
     "message": "The most popular Chrome extension, with over 2 million users!  Blocks ads all over the web.",
     "description": "Extension description in manifest"
   },
-  "app_description1": {
-    "message": "Blocks ads all over the web!  Loved by millions of Chrome and Safari users!",
-    "description": "App description used in app version manifest"
-  },
   "buttoncancel": {
     "message": "Cancel",
     "description": "Cancel button"
@@ -31,30 +27,6 @@
   "installedtitle": {
     "message": "AdBlock is now installed!",
     "description": "Title for the installation success page"
-  },
-  "setotheroptions_safari": {
-    "message": "You can set other options by clicking the toolbar button.",
-    "description": "Message on Safari installation success page for extension"
-  },
-  "setotheroptions_chrome_ext": {
-    "message": "You can control AdBlock and set other options by clicking the toolbar button.",
-    "description": "Message on Chrome extension installation success page for extension"
-  },
-  "setotheroptions_chrome_app": {
-    "message": "Right click web pages (except this one) to control AdBlock and set other options.",
-    "description": "Message on Chrome app installation success page for extension"
-  },
-  "warning_adblock_is_installed_twice": {
-    "message": "Warning: AdBlock is installed twice",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "both_are_installed_this_makes_chrome_slower": {
-    "message": "AdBlock the app and AdBlock the extension are both installed.  This makes Chrome slower.",
-    "description": "Message displayed if AdBlock app and extension are both installed"
-  },
-  "to_fix_both_installed": {
-    "message": "To fix this, uninstall the Adblock extension from <a>your extensions</a>.",
-    "description": "Message displayed if AdBlock app and extension are both installed.  The link will go to chrome://extensions."
   },
   "chromebutton_how_to_hide": {
     "message": "To hide the button, right click it and choose Hide Button.  You can show it again under Wrench | Tools | Extensions.",
@@ -352,6 +324,10 @@
     "message": "Remove from list",
     "description": "Label to remove a custom filter"
   },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "The more filter lists you use, the slower AdBlock runs. Using too many lists can even crash your browser on some websites. Press OK to subscribe to this list anyway.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  },
   "filterstabtitle": {
     "message": "Subscribe to filter lists",
     "description": "Title of the filter list tab"
@@ -359,6 +335,10 @@
   "filterlistlink": {
     "message": "Don't subscribe to more than you need -- every one slows you down a tiny bit! Credits and more lists can be found <a>here</a>.",
     "description": "Explanation of the filter lists"
+  },
+  "i_pruned_your_subscriptions": {
+    "message": "NOTE: You only need to subscribe to lists for the languages you speak. You subscribed to so many that your browser was unstable.<br><br>I unsubscribed you from most of them, but you can re-subscribe if you really want to.",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
   },
   "updatenowmessage": {
     "message": "I will fetch updates automatically; you can also <a>update now</a>.",
@@ -424,10 +404,6 @@
     "message": " - additional Russian filters",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-  "filtereasylist_plus_vietnamese": {
-    "message": " - additional Vietnamese filters",
-    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
-  },
   "filterchinese": {
     "message": "Chinese filters",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -489,8 +465,8 @@
     "message": "Block more ads:",
     "description": "Section header on third tab"
   },
-  "unblocktitle": {
-    "message": "Disable AdBlock on a certain webpage:",
+  "stop_blocking_ads": {
+    "message": "Stop blocking ads:",
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
@@ -664,10 +640,6 @@
   },
   "lang_ukranian": {
     "message": "Ukranian",
-    "description": "language"
-  },
-  "lang_vietnamese": {
-    "message": "Vietnamese",
     "description": "language"
   },
   "other": {
@@ -968,10 +940,6 @@
     "message": "This toolbar button :)",
     "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
-  "yes_toolbar_button": {
-    "message": "This browser button is now part of AdBlock.  You don't need the separate 'Browser Button For AdBlock' extension anymore.",
-    "description": "Description of what is new in version 2.3.0, which is shown to users who have the 'Browser Button For AdBlock' extension installed instead of the 'this_toolbar_button' message.  You should not translate the words 'Browser Button For AdBlock'."
-  },
   "disabled_by_filter_lists": {
     "message": "Sorry, AdBlock is disabled on this page by one of your filter lists.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -988,10 +956,6 @@
     "message": "AdBlock is disabled on this page.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
-  "undo": {
-    "message": "Undo",
-    "description": "Button text to undo an action."
-  },
   "enable": {
     "message": "enable",
     "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
@@ -1003,10 +967,6 @@
   "unpause": {
     "message": "unpause",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
-  },
-  "unpause_adblock": {
-    "message": "Unpause AdBlock",
-    "description": "Context menu entry unpause AdBlock."
   },
   "pause_adblock": {
     "message": "Pause AdBlock",
@@ -1035,14 +995,6 @@
   "changelabel": {
     "message": "change",
     "description": "link to change resources on the resourceblock page"
-  },
-  "brokensite_beta_option": {
-    "message": "Help test a new way to remove ads.",
-    "description": "option on the first options page"
-  },
-  "brokensite_beta_description": {
-    "message": "If you find any ads that only appear when using this option, please <a>file a bug report</a>!",
-    "description": "description of the brokensite_beta_option.  The link goes to the bug tracker."
   },
   "translator_credit": {
     "message": "Credit for translation goes to: $translator_names$",
@@ -1185,5 +1137,21 @@
   "last_update_failed": {
     "message": "Last update failed; ",
     "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
+  "show_ads_except_for": {
+    "message": "Show ads <i>everywhere</i> except for these domains...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Only block ads on these sites:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "format_site1_site2_site3": {
+    "message": "Format: ~site1.com|~site2.com|~news.site3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_overrules_filters": {
+    "message": "Warning: on all other sites you will see ads!<br>This overrules all other filters for those sites.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   }
 }

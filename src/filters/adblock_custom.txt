@@ -1,5 +1,5 @@
 ! Chrome AdBlock auxiliarly filters
-! Last update: Mon May  9 21:59:59 EDT 2011
+! Last update: Thu Jul 21 17:09:49 EDT 2011
 ###RadAd_Skyscraper
 ###bbccom_leaderboard
 ###center_banner
@@ -49,6 +49,7 @@
 ##ispan#ab_pointer
 ##object#flashad
 ##object#ve_threesixty_swf[name="ve_threesixty_swf"]
+##script[src="//pagead2.googleadservices.com/pagead/show_ads.js"] + ins > ins > iframe
 ##script[src="http://pagead2.googlesyndication.com/pagead/show_ads.js"] + ins > ins > iframe
 ##table[cellpadding="0"][width="100%"] > * > * > * > div[id^="tpa"]
 01net.com##div#gAfc4
@@ -688,6 +689,7 @@ macblog.sk##DIV.ads_banner_logos
 macnews.de##a[href^="http://clk.macnews.de/delivery/ck.php?"]
 mail.google.com##a[href^="http://pagead2.googlesyndication.com/aclk?"]
 mail.google.com##div.oM
+mail.google.com##DIV.mq.nH.oy8Mbf
 mail.terra.com.br##div.ad
 mail.yandex.ru##DIV[class*="banner"]
 maisfutebol.iol.pt##DIV#mrec.pub
@@ -1186,6 +1188,7 @@ wiki.answers.com##div[id^="ga_"]
 wikihow.com##DIV.wh_ad
 wikilearning.com##div[id^="adsense"]
 wikio.com##div.adsInNews
+winfuture.de##BODY DIV DIV A[href^="javascript:"][href$="();"] IMG[src^="http://i.wfcdn.de/"]
 winfuture.de##DIV#frnBanner
 winfuture.de##div[id^="ad_replace_div_"]
 wired.com##div#job_thread
@@ -1285,6 +1288,7 @@ valueclick.net
 ||lux-bn.com.ua^$third-party
 ||medyaklik.com^$third-party
 ||memorix.sdv.fr^$third-party
+||muagi.vn/banner/
 ||negeriads.com^$third-party
 ||nspmotion.com^$third-party
 ||pressan.is/img/banners/

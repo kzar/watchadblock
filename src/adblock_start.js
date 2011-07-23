@@ -15,7 +15,7 @@ function relativeToAbsoluteUrl(url) {
       return url;
 
     // If URL is already absolute, don't mess with it
-    if (/^[a-z\-]+\:\/\//.test(url))
+    if (/^[a-z\-]+\:/.test(url))
       return url;
 
     if (url[0] == '/') {
@@ -48,7 +48,10 @@ function typeForElement(el) {
     case 'SOURCE': return ElementTypes.media;
     case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': return ElementTypes.stylesheet;
+    case 'LINK': 
+      if (/(^|\s)icon($|\s)/i.test(el.rel))
+        return ElementTypes.image;
+      return ElementTypes.stylesheet;
     case 'BODY': return ElementTypes.background;
     default: return ElementTypes.NONE;
   }
@@ -109,8 +112,27 @@ beforeLoadHandler = function(event) {
       removeFrame(el);
     else if (elType & ElementTypes.background)
       $(el).css("background-image", "none !important");
-    else if (!(elType & (ElementTypes.script | ElementTypes.stylesheet)))
-      removeAdRemains(el, event);
+    else if (!(elType & ElementTypes.script)) {
+      if (event.mustBePurged) {
+        var replacement = document.createElement(el.nodeName);
+        if (el.id) replacement.id = el.id;
+        if (el.className) replacement.className = el.className;
+        if (el.name) replacement.name = el.name;
+        replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
+        $(el).replaceWith(replacement);
+      } else {
+        // There probably won't be many sites that modify all of these.
+        // However, if we get issues, we might have to set the location and size
+        // via the css properties position, left, top, width and height
+        $(el).css({
+          "display": "none !important",
+          "visibility": "hidden !important",
+          "opacity": "0 !important",
+        }).
+        attr("width", "0px").
+        attr("height", "0px");
+      }
+    }
   }
 }
 
@@ -137,35 +159,6 @@ function block_list_via_css(selectors) {
   css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
                         + css_hide_for_selectors(selectors);
   d.insertBefore(css_chunk, null);
-}
-
-// As long as the new way to get rid of ads is optional, we have to keep it
-// in this optional function. When the option is the default, put this back in 
-// the beforeloadHandler
-removeAdRemains = function(el, event) {
-  if (!removeAdRemains.hide) {
-    $(el).remove()
-    return;
-  }
-  if (event.mustBePurged) {
-    var replacement = document.createElement(el.nodeName);
-    if (el.id) replacement.id = el.id;
-    if (el.className) replacement.className = el.className;
-    if (el.name) replacement.name = el.name;
-    replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
-    $(el).replaceWith(replacement);
-  } else {
-    // There probably won't be many sites that modify all of these.
-    // However, if we get issues, we might get to setting the location and size
-    // (css: position, left, top, width, height)
-    $(el).css({
-      "display": "none !important",
-      "visibility": "hidden !important",
-      "opacity": "0 !important",
-    }).
-    attr("width", "0px").
-    attr("height", "0px");
-  }
 }
 
 // Simplified FilterSet object that relies on all input filter texts being
@@ -225,9 +218,6 @@ function adblock_begin() {
       delete GLOBAL_collect_resources;
     }
 
-    if (data.settings.hide_instead_of_remove)
-      removeAdRemains.hide = true;
-
     if (data.selectors.length != 0)
       block_list_via_css(data.selectors);
 
@@ -250,6 +240,6 @@ function adblock_begin() {
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
-// until crbug.com/63397 is fixed, ignore SVG images
-if (document.location != 'about:blank' && !/\.svg$/.test(document.location.href))
+// If $ (jquery) is undefined, we're on a xml or svg page and can't run
+if (document.location != 'about:blank' && typeof $ != "undefined")
   adblock_begin();
