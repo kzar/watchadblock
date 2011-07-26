@@ -324,6 +324,10 @@
     "message": "aus Liste entfernen",
     "description": "Label to remove a custom filter"
   },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Umso mehr Filterlisten Sie abonnieren, desto langsamer läuft AdBlock. Zuviele Filterlistenabonnements können sogar zum Browsercrash auf einigen Seiten führen. Klicken Sie auf OK um diese Liste trotzdem zu abonnieren.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  },
   "filterstabtitle": {
     "message": "Filterlisten abonnieren",
     "description": "Title of the filter list tab"
@@ -331,6 +335,10 @@
   "filterlistlink": {
     "message": "Abonnieren Sie nicht mehr Filterlisten, als Sie wirklich benötigen -- jede weitere Filterliste verlangsamt den Browser etwas! Credits und weitere Filterlisten finden Sie <a>hier</a>.",
     "description": "Explanation of the filter lists"
+  },
+  "i_pruned_your_subscriptions": {
+    "message": "Hinweis: Sie sollten nur die Filterlisten der Sprachen abonnieren, die Sie auch sprechen. Sie haben zuviele Filterlisten abonniert und Ihr Browser wurde instabil. <br><br>Die meisten Filterlistenabonnements wurden automatisch beendet, aber Sie können sie wieder abonnieren wenn Sie möchten.",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
   },
   "updatenowmessage": {
     "message": "Aktualisierungen werden automatisch abgerufen. Außerdem können Sie auch <a>jetzt aktualisieren</a>.",
@@ -455,6 +463,10 @@
   },
   "blockmoreads": {
     "message": "Weitere Werbung entfernen:",
+    "description": "Section header on third tab"
+  },
+  "stop_blocking_ads": {
+    "message": "AdBlock auf Seiten deaktivieren:",
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
@@ -1121,5 +1133,21 @@
   "modifypath": {
     "message": "Seite:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "show_ads_except_for": {
+    "message": "Werbung auf <i>allen</i> Seiten anzeigen, außer auf diesen Domains...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Werbung nur auf diesen Seiten entfernen:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "format_site1_site2_site3": {
+    "message": "Format: ~seite1.de|~seite2.com|~news.seite3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_overrules_filters": {
+    "message": "Achtung: Sie werden auf allen anderen Seiten Werbung sehen!<br>Dieser Filter überschreibt alle anderen Filter für diese Seiten.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   }
 }
