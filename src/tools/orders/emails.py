@@ -190,8 +190,9 @@ class PayPalOrder(Order):
 
     def _parse_body_old(self, body):
         """Parse pre-(xclick/PPDG) emails."""
-        self.name = re.search('Contributor: (.*)', body).group(1).strip()
-        match = re.search('Total amount: *(=24|\$)(.*?) USD', body)
+        match = re.search('(?:Buyer|Contributor): (.*)', body)
+        self.name = match.group(1).strip()
+        match = re.search('Total Amount: *(=24|\$)(.*?) USD', body)
         self.amount = float(match.group(2))
         match = re.search('Message: (.*?)-----------', body, re.DOTALL)
         if not match:
@@ -210,20 +211,54 @@ class PayPalOrder(Order):
         # 'Instructions from buyer'
 
 
-def send(from_, to, subject, body):
-    _get_password()
-    server = smtplib.SMTP('smtp.gmail.com:587')
-    server.ehlo()
-    server.starttls()
-    server.ehlo()
-    server.login('adblockforchrome@gmail.com', GLOBAL_password)
-    msg = '''\
+class Mailer(object):
+
+    """Sends multiple emails via a persistent connection."""
+
+    def __init__(self):
+        self.server = None # if not None, we think we're logged in
+
+    def _login(self, force=False):
+        """
+        Log into the mail server.
+        force: if True, re-login even if we think we're logged in.
+        """
+        if self.server and not force:
+            return
+        if self.server:
+            try:
+                self.server.quit()
+            except:
+                pass
+            self.server = None
+        _get_password()
+        print "Logging in...",
+        self.server = smtplib.SMTP('smtp.gmail.com:587')
+        self.server.ehlo()
+        self.server.starttls()
+        self.server.ehlo()
+        self.server.login('adblockforchrome@gmail.com', GLOBAL_password)
+        print " success."
+
+    def send(self, from_, to, subject, body, _is_second_attempt=False):
+        """
+        Send an email.  Log in if we're not logged in.  If logging in fails,
+        raise.  If sending fails, re-login and reattempt.  If the reattempt
+        fails, raise.
+        """
+        msg = '''\
 From: %s
 To: %s
 Subject: %s
 
 %s''' % (from_, to.encode('utf-8'), subject, body.encode('utf-8'))
-    server.sendmail(from_, to, msg)
-    server.quit()
-
-
+        _get_password()
+        self._login(force=False) # no-op if already logged in
+        try:
+            self.server.sendmail(from_, to, msg)
+        except Exception, e:
+            if _is_second_attempt:
+                raise
+            else:
+                self._login(force=True)
+                self.send(from_, to, subject, body, _is_second_attempt=True)

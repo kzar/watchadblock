@@ -13,6 +13,7 @@ import emails
 import orderparsing
 orderparsing.init('/home/nathanlong/michael/orderparsing_info')
 
+GLOBAL_emailer = emails.Mailer()
 
 def correct_nicknames(orders):
     """Modify each input order to have a correct nickname."""
@@ -220,7 +221,7 @@ def mark_as_done_and_send_batch(m, orders):
             _from = '"Michael Gundlach" <adblockforchrome%s@gmail.com>' % sender_suffix
             to = '"%s" <%s>' % (o.name, o.email)
             try:
-                emails.send(_from, to, subj, o.email_responder.get_response())
+                GLOBAL_emailer.send(_from, to, subj, o.email_responder.get_response())
             except:
                 print "  %s Failed to send" % ("*" * 40)
                 print traceback.format_tb(sys.exc_info()[2])
