@@ -957,9 +957,153 @@
     "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
-        "content": "ollinpos",
+        "content": "Jesse Järvi sekä ollinpos",
         "example": "Michael G, Drew R"
       }
     }
+  },
+  "report_ad_on_page": {
+    "message": "Raportoi mainoksesta tällä sivulla",
+    "description": "Link in the button"
+  },
+  "show_resourcelist": {
+    "message": "Näytä lähdelista",
+    "description": "Link in the button"
+  },
+  "advanced_options": {
+    "message": "Olen edistynyt käyttäjä, näytä edistyneet asetukset.",
+    "description": "Options page checkbox"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ tai $unsubscribe$ jokainen lista.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Tilaa</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>irtisano</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Nyt sinulla on AdBlock! Hurraa!",
+    "description": "Install page title. 'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Jokainen uusi välilehti jonka avaat on automaattisesti mainosvapaa.",
+    "description": "Install page subtitle"
+  },
+  "installing_adblock": {
+    "message": "Asennetaan AdBlockia...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "done": {
+    "message": "Valmis!",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Näetkö tämän joka kerta kun avaat selaimesi?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Asenna AdBlock",
+    "description": "Install page: section title"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Täytä AdBlockin yhden kentän asennus:",
+    "description": "Install page instructions. The one question is a checkbox."
+  },
+  "that_was_easy": {
+    "message": "Se oli helppoa",
+    "description": "Install page: button text at end of setup section to proceed to the next section. The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "lets_get_you_set_up": {
+    "message": "Aloitetaan!",
+    "description": "Install page: section header for Safari users. These users do not see the section with the 'set_up_adblock' message. The tone should be friendly."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Ensimmäiseksi, sinun täytyisi <b>ottaa automaattinen päivitys päälle</b> Safarin asetuksista, jotta saat bugikorjaukset ja uudet ominaisuudet kunhan koodaan ne.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Automaattisten päivityksien päälle laittaminen on <b>erittäin tärkeää!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "show_me_how": {
+    "message": "Näytä minulle miten",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "ok_autoupdate_is_on": {
+    "message": "OK, automaattiset päivitykset ovat päällä. ",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "to_turn_on_autoupdate": {
+    "message": "Ottaaksesi automaattiset päivitykset käyttöön:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "click_safari_prefs": {
+    "message": "Klikkaa <b>Safari &rArr; Asetukset</b>.",
+    "description": "First step to turn on autoupdate. &rArr; makes a right arrow (->)."
+  },
+  "click_extensions": {
+    "message": "Klikkaa <b>Laajennukset</b> lähellä oikeaa yläkulmaa.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_updates": {
+    "message": "Alavaemmalla, klikkaa <b>Päivitykset</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "click_install_update_automatically": {
+    "message": "Klikkaa <b>Asenna päivitykset automaattisesti</b> checkbox.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "how_to_use_adblock": {
+    "message": "Kuinka käyttää AdBlockia:",
+    "description": "Install page section title"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": " AdBlock estää kaikki mainokset automaattisesti. Siinä kaikki.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "for_more_options_right_click": {
+    "message": "Lisäasetuksia varten, voit klikata oikeaa nappia nettisivuissa tai klikata $img$ -nappia työkalurivistä.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button. Do not translate."
+      }
+    }
+  },
+  "ok_now_what": {
+    "message": "OK, mitä sitten? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "modifydomain": {
+    "message": "Sivusto:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Sivu:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "show_ads_except_for": {
+    "message": "Näytä mainokset <i>kaikkialla</i> paitsi näissä domaineissa...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Estä mainokset vain näillä sivuilla:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "format_site1_site2_site3": {
+    "message": "Muoto: ~sivu1.com|~sivu2.com|~uutiset.sivu3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_overrules_filters": {
+    "message": "Varoitus: näet kaikissa muissa sivustoissa mainoksia!<br>Tämä ohittaa kaikki filtterit muissa sivustoissa.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   }
 }
