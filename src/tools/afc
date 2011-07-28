@@ -56,8 +56,8 @@ function shipit() {
     if [ "$skip_changelog" != 1 ]; then
         echo -n "Changelog entry: *$version*: "
         read description
-        sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
-        sed -i "s/\(\*Latest Chrome version\*: *\)\([0-9.]\+\)/\1$version/" ../wiki/Changelog.wiki
+        sed -i "s#\(<wiki:comment>NEW VERSIONS GO HERE</wiki:comment>\)#\1\n\n*$version*: $description#" ../wiki/Changelog.wiki
+        sed -i "s/\(\*Latest Chrome version\*:\) *\([0-9.]\+\)/\1 $version/" ../wiki/Changelog.wiki
         svn diff ../wiki/Changelog.wiki
     else
         grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
@@ -80,6 +80,7 @@ function shipit() {
 function bump() {
     v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     [ -z "$v" ] && { echo "No version found."; exit 1; }
+    clear
     nextv=$(echo $v | cut -d '.' -f 1,2).$(( $(echo $v | cut -d . -f 3) + 1 ))
     sed -i "s/$v/$nextv/g" manifest.json Info.plist
     echo "Before and after:"
