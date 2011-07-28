@@ -213,13 +213,14 @@ BlacklistUi.prototype._build_page2 = function() {
   var btns = {};
   btns[translate("buttonblockit")] =
       function() {
-        if ($("#summary", that._ui_page2).text().length > 0) {
-          var filter = document.location.hostname + "##" + 
-                       $("#summary", that._ui_page2).text();
+        var rule = $("#summary", that._ui_page2).text();
+        if (rule.length > 0) {
+          var filter = document.location.hostname + "##" + rule;
           BGcall('add_custom_filter', filter, function() {
+            block_list_via_css([rule]);
+            that._ui_page2.dialog('close');
             that._fire('block');
           });
-          that._ui_page2.dialog('close');
         } else {alert(translate("blacklisternofilter"));}
       }
   btns[translate("buttoncancel")] =
@@ -236,9 +237,10 @@ BlacklistUi.prototype._build_page2 = function() {
           if (!/\#\#/.test(custom_filter)) 
             custom_filter = "##" + custom_filter;
           BGcall('add_custom_filter', custom_filter, function(ex) {
-            if (!ex)
+            if (!ex) {
+              block_list_via_css([custom_filter.substr(custom_filter.indexOf('##') + 2)]);
               that._fire('block');
-            else
+            } else
               alert(translate("blacklistereditinvalid1", ex));
           });
         }

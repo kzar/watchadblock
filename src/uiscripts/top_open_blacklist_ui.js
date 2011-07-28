@@ -30,8 +30,10 @@ function top_open_blacklist_ui(options) {
         may_open_dialog_ui = true;
       });
       blacklist_ui.block(function() {
-        may_open_dialog_ui = true; // no-op, actually, since we now reload
-        document.location.reload();
+        may_open_dialog_ui = true;
+        // In case of frames, reload, as the frame might contain matches too.
+        if ($("iframe, frameset, frame").filter(":visible").length > 0)
+          document.location.reload();
       });
       blacklist_ui.show();
     });
