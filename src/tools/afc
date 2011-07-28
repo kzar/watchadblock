@@ -56,8 +56,8 @@ function shipit() {
     if [ "$skip_changelog" != 1 ]; then
         echo -n "Changelog entry: *$version*: "
         read description
-        sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
-        sed -i "s/\(\*Latest Chrome version\*: *\)\([0-9.]\+\)/\1$version/" ../wiki/Changelog.wiki
+        sed -i "s#\(<wiki:comment>NEW VERSIONS GO HERE</wiki:comment>\)#\1\n\n*$version*: $description#" ../wiki/Changelog.wiki
+        sed -i "s/\(\*Latest Chrome version\*:\) *\([0-9.]\+\)/\1 $version/" ../wiki/Changelog.wiki
         svn diff ../wiki/Changelog.wiki
     else
         grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
