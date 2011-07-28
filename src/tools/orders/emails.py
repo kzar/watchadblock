@@ -114,11 +114,18 @@ class Order(object):
             order = PayPalOrder()
             order.email = _from
         order.msgid = message.msgid
-        date_tuple = email.utils.parsedate(message['date'])[:6]
-        order.date = datetime.datetime(*date_tuple)
+        order.date = Order._to_datetime(message['date'])
         order._parse_body(body)
         order.body = body
         return order
+
+    @staticmethod
+    def _to_datetime(rfc822date):
+        """Convert 'Mon, 20 Nov 1995 19:12:08 -0500' to a datetime in UTC."""
+        date_tuple = email.utils.parsedate_tz(rfc822date)
+        local_date = datetime.datetime(*date_tuple[:6])
+        tz_offset = datetime.timedelta(seconds=date_tuple[-1])
+        return local_date - tz_offset
 
     def _parse_tracking(self, text):
         """
