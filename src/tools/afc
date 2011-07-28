@@ -80,6 +80,7 @@ function shipit() {
 function bump() {
     v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
     [ -z "$v" ] && { echo "No version found."; exit 1; }
+    clear
     nextv=$(echo $v | cut -d '.' -f 1,2).$(( $(echo $v | cut -d . -f 3) + 1 ))
     sed -i "s/$v/$nextv/g" manifest.json Info.plist
     echo "Before and after:"
