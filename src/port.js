@@ -164,7 +164,7 @@ if (SAFARI) {
               sender: { tab: { id: id, url: messageEvent.target.url } },
               onDisconnect: { 
                 addListener: function() { 
-                  console.log("CHROME PORT LIBRARY: chrome.extension.onConnect.addListener: port.onDisconnect is not implemented, so I'm doing nothing.");
+                  // CHROME PORT LIBRARY: chrome.extension.onConnect.addListener: port.onDisconnect is not implemented, so I'm doing nothing.
                 }
               },
               postMessage: function(data) {
@@ -184,7 +184,7 @@ if (SAFARI) {
 
       onRequestExternal: {
         addListener: function() {
-          console.log("CHROME PORT LIBRARY: onRequestExternal not supported.");
+          // CHROME PORT LIBRARY: onRequestExternal not supported.
         }
       }
     },
