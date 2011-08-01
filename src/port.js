@@ -285,7 +285,7 @@ if (SAFARI) {
           // Load all locale files that exist in that list
           result.messages = {};
           for (var i = 0; i < result.locales.length; i++) {
-            locale = result.locales[i];
+            var locale = result.locales[i];
             var file = "_locales/" + locale + "/messages.json";
             // Doesn't call the callback if file doesn't exist
             syncFetch(file, function(text) {
