@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function update_version_in_changelog() {
-  version=$2
+  version=$1
   file=wiki/Changelog.wiki
   svn up $file >/dev/null 2>&1
   sed -i "s/\(\*Latest Safari version\*:\) *\([0-9.]\+\)/\1 $version/" $file
