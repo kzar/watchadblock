@@ -87,7 +87,7 @@ function bump() {
     echo
     svn diff manifest.json Info.plist | egrep '^ *[-+]'
     echo
-    echo "svn revert -R manifest.json Info.plist # if you aren't happy."
+    echo "svn revert manifest.json Info.plist # if you aren't happy."
     echo
 }
 
