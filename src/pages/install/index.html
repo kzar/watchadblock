@@ -196,7 +196,7 @@
         </div>
         <script>
           $(function() {
-            var userId = storage_get("userid");
+            var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
             var iframe = $("<iframe>", {
               src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
               width: 750, height: 450, 
