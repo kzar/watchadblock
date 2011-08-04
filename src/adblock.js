@@ -55,14 +55,29 @@ function adblock_begin_part_2() {
   if (match)
     bgImage = match[1];
   if (bgImage && bgImage != "none") {
-    var fakeEvent = {
-      target: $("body")[0],
-      url: bgImage,
-      mustBePurged: true,
-      preventDefault: function(){},
-      type: "beforeload"
-    };
-    beforeLoadHandler(fakeEvent);
+    if (!SAFARI) {
+      var fakeEvent = {
+        target: document.body,
+        url: bgImage,
+        mustBePurged: true,
+        preventDefault: function(){},
+        type: "beforeload"
+      };
+      beforeLoadHandler(fakeEvent);
+    } else {
+      var hiddenImage = $("<img>").
+        attr("src", bgImage).
+        attr("width", "0").
+        attr("height", "0").
+        css("display", "none !important").
+        css("visibility", "hidden !important");
+      $(document.body).append(hiddenImage);
+      window.setTimeout(function() {
+        if ($(hiddenImage).css("opacity") == 0)
+          $(document.body).css("background-image", "none !important");
+        $(hiddenImage).remove();
+      }, 1);
+    }
   }
 
   if (data.settings.debug_logging)
