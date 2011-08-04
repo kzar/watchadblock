@@ -254,14 +254,42 @@
         </script>
 
         <div class="separator" id="separator2"></div>
+
+        <br/><b i18n="did_you_know_this_is_my_full_time_job"></b><br/><br/>
       </div> <!-- menu-items-->
 
-      <div id="div_pay">
-        <div style="margin: 5px 0">
+      <div id="support_wrapper">
+        <div id="support">
           <div id="pay_close" style="float:right; display:none;"><a class="blue" href="#">x</a></div>
-          <a href="#" class="blue" id="pay_open"
-            i18n="did_you_know_this_is_my_full_time_job"></a>
+
+          <div id="support_sentence_holder"></div>
+          <!-- This is injected into #support_sentence_holder above -->
+          <span id="plusone_button">
+            <!-- +1 -->
+            <g:plusone size="small" count="false" href="https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom"></g:plusone>
+            <script type="text/javascript">
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+            <!-- end +1 -->
+          </span>
+          <!-- This is injected into #support_sentence_holder above -->
+          <a href="#" class="blue" id="pay_open"></a>
+          <script>
+            // support_sentence_holder is complicated, so we do l10n manually.
+            $(function() {
+              var s = $("#support_sentence_holder");
+              s.html(translate("support_sentence"));
+              var s_link = s.find("a");
+              $("#pay_open").text(s_link.text()).replaceAll(s_link);
+              $("#plusone_button").replaceAll(s.find("img"));
+            });
+          </script>
         </div>
+
         <div id="payment_wrapper" style="display:none; clear:left;">
           <iframe width="100%" height="100%" frameBorder=0></iframe>
         </div>
@@ -298,12 +326,12 @@
           });
         });
       </script>
+    </div> <! -- wrapper -->
 
-      <script>
-        $(function() {
-          localizePage();
-        });
-      </script>
-    </div>
+    <script>
+      $(function() {
+        localizePage();
+      });
+    </script>
   </body>
 </html>
