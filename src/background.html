@@ -523,8 +523,11 @@
       // Record that we exist.
       STATS.startPinging();
 
-      if (STATS.firstRun) // show the walkthrough
-        chrome.tabs.create({url: "pages/install/index.html"});
+      if (STATS.firstRun) { // show the walkthrough
+        // Safari has race condition where userId may not be available inside
+        // index.html, so pass it in explicitly.
+        chrome.tabs.create({url: "pages/install/index.html?u=" + STATS.userId});
+      }
 
       // Safari specific code.
       if (SAFARI) {

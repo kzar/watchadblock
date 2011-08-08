@@ -1,3 +1,20 @@
+#!/bin/bash
+
+function update_version_in_changelog() {
+  version=$1
+  file=wiki/Changelog.wiki
+  svn up $file >/dev/null 2>&1
+  sed -i "s/\(\*Latest Safari version\*:\) *\([0-9.]\+\)/\1 $version/" $file
+  echo
+  svn diff $file
+  echo
+  echo -n "Updating Safari latest version in Changelog.  Does this look right (y/n)? "
+  read answer
+  [ "$answer" = y ] && {
+    echo svn ci $file -m "Update Safari latest version in Changelog to $version"
+  }
+}
+
 sdir=safaribuild_tempdir.safariextension
 cd $(dirname $0)
 cd ..
@@ -50,4 +67,7 @@ scp safaribuild_tempdir.safariextz $user@safariadblock.com:$rdir/versions/$vd/Ad
 rm -rf safaribuild_tempdir.safariext*
 
 $ssh "$rdir/point_to_version $vd"
+
+update_version_in_changelog $vd
+
 echo "Last step: update update.plist on the server to notify users."

@@ -65,7 +65,7 @@
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter": {
-    "message": "Моля, въведете правилния филтър по-долу и натиснете ДА",
+    "message": "Моля, въведете правилния филтър по-долу и натиснете ДА:",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid1": {
@@ -147,7 +147,7 @@
   },
 
   "adblock_wont_run_on_pages_matching": {
-    "message": "AdBlock не се изпълнява в страници, съвпадащи с:",
+    "message": "AdBlock не се изпълнява в страници, съвпадащи с:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   },
   "you_can_slide_to_change": {
@@ -233,7 +233,7 @@
     "description": "Option on first tab page"
   },
   "debuginlogoption": {
-    "message": "Показвай изявленията при предпроверка към дневника в Конзола (води до забавяне на AdBlock)",
+    "message": "Показвай декларациите при предпроверка към дневника на Конзола (води до забавяне на AdBlock)",
     "description": "Option on first tab page"
   },
 
@@ -325,6 +325,10 @@
     "message": "Премахни от списъка",
     "description": "Label to remove a custom filter"
   },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Колкото повече списъци с филтри ползвате, толкова по бавно ще работи AdBlock. Ползването на твърде много списъци може да предизвика забиване на браузъра в определени сайтове. Натиснете ДА за абониране за списъка въпреки всичко.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  },
   "filterstabtitle": {
     "message": "Абониране за списъци с филтри",
     "description": "Title of the filter list tab"
@@ -332,6 +336,10 @@
   "filterlistlink": {
     "message": "Не се абонирайте за повече, отколкото са ви необходими — всеки нов ще ви забавя малко повече! Признания и допълнителни списъци можете да намерите <a>тук</a>.",
     "description": "Explanation of the filter lists"
+  },
+  "i_pruned_your_subscriptions": {
+    "message": "ЗАБЕЛЕЖКА: абонирайте се само за списъци на езици, които говорите. Абонирал сте се за толкова много, че вашият браузър е нестабилен.<br><br>Прекратихме повечето абонаменти, но можете да се абонирите повторно, ако наистина го желаете.",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
   },
   "updatenowmessage": {
     "message": "Обновяванията се извличат автоматично, но бихте могли да ги <a>обновите</a> и сега.",
@@ -458,6 +466,10 @@
     "message": "Да блокирате още реклами:",
     "description": "Section header on third tab"
   },
+  "stop_blocking_ads": {
+    "message": "Да спрете блокирането на реклами:",
+    "description": "Section header on third tab"
+  },
   "linkblockadbyurl": {
     "message": "Блокиране на реклама по адрес",
     "description": "Link on the third tab"
@@ -491,7 +503,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "Внимание: ако допуснете грешка много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!<br/>Прочетете <a>ръководството по синтаксис на филтрите</a> за да научите как се добавят разширени филтри за черни и бели списъци.",
+    "message": "Внимание: ако допуснете грешка много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!<br/>Прочетете <a>ръководството по синтаксис на филтрите</a>, за да научите как да добавяте разширени черни и бели филтри.",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -503,7 +515,7 @@
     "description": "Reminder to press save"
   },
   "reportanad": {
-    "message": "<a>Доклад за реклама</a> пред AdBlock или пред поддръжници на списък с филтри.",
+    "message": "<a>Докладване на реклама</a> пред AdBlock или пред поддръжници на списък с филтри.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
 
@@ -908,7 +920,7 @@
     "description": "Result of the final ad report question"
   },
   "cleanuplist": {
-    "message": "Оптимизирай филтрите в списъка:",
+    "message": "Оптимизиране на филтрите в списъка:",
     "description": "Option at the bottom of the third options tab"
   },
   "new_version": {
@@ -1122,5 +1134,21 @@
   "modifypath": {
     "message": "Страница:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "show_ads_except_for": {
+    "message": "Показване на реклами <i>навсякъде</i> без домейните...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Блокиране на реклами само за сайтовете:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "format_site1_site2_site3": {
+    "message": "Формат: ~сайт1.бг|~сайт2.бг|~новини.сайт3.бг",
+    "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "warning_overrules_filters": {
+    "message": "Внимание: във всички други сайтове ще виждате реклами!<br>Настройката изключва всички останали филтри за сайтовете.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   }
 }

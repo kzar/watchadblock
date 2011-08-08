@@ -325,6 +325,10 @@
     "message": "Retirer de la liste",
     "description": "Label to remove a custom filter"
   },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Plus vous utilisez de listes, plus AdBlock sera lent. Utiliser trop de listes peut même faire planter votre navigateur. Appuyez sur OK si vous êtes certain de vouloir s'abonner à cette liste.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  },
   "filterstabtitle": {
     "message": "Abonnement aux listes de filtres",
     "description": "Title of the filter list tab"
@@ -332,6 +336,10 @@
   "filterlistlink": {
     "message": "Trop de filtres activés ralentissent la navigation, choisissez donc uniquement ceux qui vous sont utiles !<br/>Les crédits et autres listes se trouvent <a>ici</a>.",
     "description": "Explanation of the filter lists"
+  },
+  "i_pruned_your_subscriptions": {
+    "message": "Note: Il faut uniquement s'abonner aux listes recommandées. S'abonner à trop de listes rend votre navigateur instable.<br><br>Je vous ai désabonné de certaines listes, mais vous pouvez vous y réabonner si vous le voulez vraiment.",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
   },
   "updatenowmessage": {
     "message": "Les listes seront mises à jour automatiquement. Vous pouvez aussi les <a>mettre à jour maintenant</a>.",
@@ -456,6 +464,10 @@
   },
   "blockmoreads": {
     "message": "Bloquer plus de publicités :",
+    "description": "Section header on third tab"
+  },
+  "stop_blocking_ads": {
+    "message": "Ne pas bloquer les publicités :",
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
@@ -694,7 +706,7 @@
     }
   },
   "reporttous1": {
-    "message": "Si vous savez parler anglais, vous pouvez nous rapporter cette publicité dans le $in_the_issue_tracker_link$.",
+    "message": "Si vous parlez anglais, vous pouvez nous rapporter cette publicité dans le $in_the_issue_tracker_link$.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'",
     "placeholders": {
       "in_the_issue_tracker_link": {
@@ -973,8 +985,12 @@
     "message": "Cacher ce bouton",
     "description": "Toolbar button menu entry to hide the AdBlock button"
   },
+  "support_sentence": {
+    "message": "Plussoyez si vous aimez AdBlock <img/> et pensez à <a>supporter son développement</a> !",
+    "description": "Sentence in popup menu.  The <img/> tag will be replaced by a Google +1 button, so you should put '<img/>' in your sentence wherever '+1' would make sense as part of the sentence.  The <a></a> tag links to a payment screen."
+  },
   "did_you_know_this_is_my_full_time_job": {
-    "message": "Saviez-vous que ceci est mon travail à plein temps ?",
+    "message": "Saviez-vous que ceci est mon travail à temps plein ?",
     "description": "Text of a payment request link"
   },
   "removelabel": {
@@ -990,7 +1006,7 @@
   "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
-        "content": "Cash, Matthieu, Antoine Boegler",
+        "content": "Cash, Matthieu, Neelfyn",
         "example": "Michael G, Drew R"
       }
     }
@@ -1124,7 +1140,7 @@
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
   "show_ads_except_for": {
-    "message": "Afficher les pubs <i>partout</i> sauf sur ces domaines...",
+    "message": "Afficher les publicités <i>partout</i> sauf sur ces domaines...",
     "description": "Section title for blacklisting section of Customize tab"
   },
   "only_block_ads_on_these_sites": {
