@@ -102,7 +102,7 @@
       }
     </style>
     <script type="text/javascript">
-      var BG = chrome.extension.getBackgroundPage();
+      var BG = (SAFARI ? null : chrome.extension.getBackgroundPage());
 
       var domain = '';
       var resources = {};
@@ -137,7 +137,7 @@
           new FakeFilterSet(domaindata.whitelistSerialized)
         );
         delete domaindata;
-
+console.log("Go...")
         function htmlEscape(unsafe) {
           var safe = unsafe.
             replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
@@ -384,6 +384,7 @@
           $(".onlyifdebug").show();
         // Create the table of resources and make it sortable
         generateTable();
+        console.log("They're heading towards the finish...")
         $("#resourceslist").tablesorter({
           headers: { 0: {sorter:false}, 4: {sorter:false}},
           cancelSelection: true,
@@ -496,6 +497,7 @@
             });
           });
         });
+        console.log("And they're finished! Famlam beats Safari!")
       }
       
       $(function() {
@@ -548,6 +550,9 @@
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
+          // Safari doesn't send the filter list
+          if (SAFARI)
+            data.block = "";
           domaindata = data;
           if (data.adblock_is_paused) {
             alert(translate("adblock_is_paused"));
@@ -591,15 +596,17 @@
               return;
             }
           }
-          var filters = BG.get_custom_filters_text();
-          filters = FilterNormalizer.normalizeList(filters);
-          if (filters.replace('\n').length != 0) {
-            filters = filters.split('\n');
-            for (var i=0; i<filters.length; i++)
-              if (!/\#\#/.test(filters[i]))
-                custom_filters.push(filters[i])
+          if (!SAFARI) {
+            var filters = BG.get_custom_filters_text();
+            filters = FilterNormalizer.normalizeList(filters);
+            if (filters.replace('\n').length != 0) {
+              filters = filters.split('\n');
+              for (var i=0; i<filters.length; i++)
+                if (!/\#\#/.test(filters[i]))
+                  custom_filters.push(filters[i])
+            }
           }
-
+console.log("Ready...")
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
           if (qps.itemUrl) {
