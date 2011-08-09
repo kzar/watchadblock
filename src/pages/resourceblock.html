@@ -13,7 +13,7 @@
     <script src="../filtering/filternormalizer.js" type="text/javascript"></script>
     <style type="text/css">
       .icon {
-        background-image:url('../img/icon32.png')
+        background-image:url('../img/icon32.png');
       }
       input:disabled + label {
         cursor:default;
@@ -102,7 +102,7 @@
       }
     </style>
     <script type="text/javascript">
-      var BG = chrome.extension.getBackgroundPage();
+      var BG = (SAFARI ? null : chrome.extension.getBackgroundPage());
 
       var domain = '';
       var resources = {};
@@ -132,12 +132,23 @@
 
       // Creates the table that shows all blockable items
       function generateTable() {
-        var local_filterset = new BlockingFilterSet(
-          new FakeFilterSet(domaindata.patternSerialized),
-          new FakeFilterSet(domaindata.whitelistSerialized)
-        );
+        if (!SAFARI) {
+          var local_filterset = new BlockingFilterSet(
+            new FakeFilterSet(domaindata.patternSerialized),
+            new FakeFilterSet(domaindata.whitelistSerialized)
+          );
+        } else {
+          var local_filterset = {
+            _matchCache: {},
+            pattern: {
+              filters: [],
+            },
+            whitelist: {
+              filters: [],
+            },
+          }
+        }
         delete domaindata;
-
         function htmlEscape(unsafe) {
           var safe = unsafe.
             replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
@@ -191,7 +202,7 @@
         var rows = [];
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
-          if (!matchingfilter)
+          if (!matchingfilter && !SAFARI)
             matchingfilter = local_filterset.matches(i, resources[i].type, domain, true);
 
           var type = {sort:3, name:undefined};
@@ -548,6 +559,7 @@
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
+          // Safari doesn't send the filter list
           domaindata = data;
           if (data.adblock_is_paused) {
             alert(translate("adblock_is_paused"));
@@ -591,15 +603,16 @@
               return;
             }
           }
-          var filters = BG.get_custom_filters_text();
-          filters = FilterNormalizer.normalizeList(filters);
-          if (filters.replace('\n').length != 0) {
-            filters = filters.split('\n');
-            for (var i=0; i<filters.length; i++)
-              if (!/\#\#/.test(filters[i]))
-                custom_filters.push(filters[i])
+          if (!SAFARI) {
+            var filters = BG.get_custom_filters_text();
+            filters = FilterNormalizer.normalizeList(filters);
+            if (filters.replace('\n').length != 0) {
+              filters = filters.split('\n');
+              for (var i=0; i<filters.length; i++)
+                if (!/\#\#/.test(filters[i]))
+                  custom_filters.push(filters[i])
+            }
           }
-
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
           if (qps.itemUrl) {
