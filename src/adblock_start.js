@@ -143,7 +143,7 @@ function css_hide_for_selectors(selectors) {
   var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
   for (var i = 0; i < selectors.length; i += GROUPSIZE) {
     var line = selectors.slice(i, i + GROUPSIZE);
-    var rule = " { visibility:hidden !important; display:none !important; }";
+    var rule = " { display:none !important; }";
     result.push(line.join(',') + rule);
   }
   return result.join(' ');
