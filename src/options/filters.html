@@ -20,6 +20,18 @@
             break;
           }
         }
+
+        // In case they subscribed to an invalid list, it will be deleted
+        // automatically in the background. However, allow them to copy the url
+        // so they can modify it, before it's permanently removed.
+        var removedSubs = $('.subscription[name]').filter(function() {
+          return !subs[$(this).attr("name")];
+        });
+        if (removedSubs.length > 0) {
+          $(".subscription_info", removedSubs[0]).text(translate("invalidListUrl"));
+          $("input", removedSubs[0]).attr("disabled", "disabled");
+        }
+
         updateSubscriptionInfoAll();
       });
     }

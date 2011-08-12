@@ -118,16 +118,19 @@ MyFilters.prototype.rebuild = function() {
 //         forceFetch: if the subscriptions have to be fetched again forced
 MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   var subscribeRequiredListToo = false;
+  var listDidntExistBefore = false;
 
   // Working with an unknown list: create the list entry
   if (!this._subscriptions[id]) {
     id = this.customToDefaultId(id);
-    if (/^url\:.*/.test(id))
+    if (/^url\:.*/.test(id)) {
+      listDidntExistBefore = true;
       this._subscriptions[id] = {
         user_submitted: true,
         name: id.substr(4),
         url: id.substr(4)
       };
+    }
     subscribeRequiredListToo = true;
   }
 
@@ -154,7 +157,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     }
 
     if (!this._subscriptions[id].text || out_of_date(this._subscriptions[id]))
-      this.fetch_and_update(id);
+      this.fetch_and_update(id, listDidntExistBefore);
 
   } else {
     // If unsubscribed, remove some properties
@@ -176,9 +179,25 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
 }
 
 // Fetch a filter list and parse it
-MyFilters.prototype.fetch_and_update = function(id) {
+// id:        the id of the list
+// isNewList: true when the list is completely new and must succeed or 
+//            otherwise it'll be deleted.
+MyFilters.prototype.fetch_and_update = function(id, isNewList) {
   var url = this._subscriptions[id].url;
   var that = this;
+  function onError() {
+    that._subscriptions[id].last_update_failed = true;
+    that._onSubscriptionChange();
+    if (isNewList) {
+      // Delete the list. The user subscribed to an invalid list URL.
+      // Delay it a bit, so subscribe.html can first finish it's async call to
+      // see if the subscription succeeded or not. Otherwise it assumes it was
+      // a well-known subscription and will report a succesfull fetch
+      window.setTimeout(function() {
+        that.changeSubscription(id, {subscribed: false, deleteMe: true});
+      }, 500);
+    }
+  }
   $.ajax({
     url: url,
     cache: false,
@@ -195,16 +214,13 @@ MyFilters.prototype.fetch_and_update = function(id) {
         that._updateSubscriptionText(id, text);
         that._onSubscriptionChange(true);
       } else {
-        that._subscriptions[id].last_update_failed = true;
         log("Fetched, but invalid list " + url);
-        that._onSubscriptionChange();
+        onError();
       }
     },
     error: function() {
-      if (that._subscriptions[id]) {
-        that._subscriptions[id].last_update_failed = true;
-        that._onSubscriptionChange();
-      }
+      if (that._subscriptions[id])
+        onError();
       log("Error fetching " + url);
     }
   });
