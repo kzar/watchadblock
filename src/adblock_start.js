@@ -173,26 +173,6 @@ function debug_print_selector_matches(selectors) {
     });
 }
 
-// Simplified FilterSet object that relies on all input filter texts being
-// definitely applicable to the current domain.
-function FakeFilterSet(serializedFilters) {
-  var filters = [];
-  for (var i = 0; i < serializedFilters.length; i++) {
-    filters.push(PatternFilter.fromData(serializedFilters[i]));
-  }
-  this.filters = filters;
-};
-FakeFilterSet.prototype = {
-  matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
-    var f = this.filters, len = f.length;
-    for (var i = 0; i < len; i++) {
-      if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
-        return f[i];
-    }
-    return null;
-  }
-}
-
 function adblock_begin() {
   if (!SAFARI)
     LOADED_TOO_FAST = [];
@@ -236,9 +216,27 @@ function adblock_begin() {
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
-      // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
-      // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
-      // but is much quicker to reparse.
+
+      // Simplified FilterSet object that relies on all input filter texts being
+      // definitely applicable to the current domain.
+      function FakeFilterSet(serializedFilters) {
+        var filters = [];
+        for (var i = 0; i < serializedFilters.length; i++) {
+          filters.push(PatternFilter.fromData(serializedFilters[i]));
+        }
+        this.filters = filters;
+      };
+      FakeFilterSet.prototype = {
+        matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+          var f = this.filters, len = f.length;
+          for (var i = 0; i < len; i++) {
+            if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
+              return f[i];
+          }
+          return null;
+        }
+      }
+
       _local_block_filterset = new BlockingFilterSet(
         new FakeFilterSet(data.patternSerialized),
         new FakeFilterSet(data.whitelistSerialized)
