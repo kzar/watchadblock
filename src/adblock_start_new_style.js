@@ -24,8 +24,7 @@ var mightRemove = {
 
 // Record each element that loads a resource, in case it must be destroyed
 function trackElements(event) {
-  // TODO: needs ElementTypes.forNodeName
-  var elType = ElementTypes.forNodeName(event.target.nodeName);
+  var elType = typeForElement(event.target);
   if (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
     mightRemove.add(elType, event.target, event.url);
 };

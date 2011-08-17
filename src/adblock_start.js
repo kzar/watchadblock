@@ -34,29 +34,6 @@ function relativeToAbsoluteUrl(url) {
     return base[0] + url;
 }
 
-// Return the ElementType element type of the given element.
-function typeForElement(el) {
-  // TODO: handle background images that aren't just the BODY.
-  switch (el.nodeName.toUpperCase()) {
-    case 'INPUT': 
-    case 'IMG': return ElementTypes.image;
-    case 'SCRIPT': return ElementTypes.script;
-    case 'OBJECT': 
-    case 'EMBED': return ElementTypes.object;
-    case 'VIDEO': 
-    case 'AUDIO': 
-    case 'SOURCE': return ElementTypes.media;
-    case 'FRAME': 
-    case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': 
-      if (/(^|\s)icon($|\s)/i.test(el.rel))
-        return ElementTypes.image;
-      return ElementTypes.stylesheet;
-    case 'BODY': return ElementTypes.background;
-    default: return ElementTypes.NONE;
-  }
-}
-
 // Browser-agnostic canLoad function.
 // Returns false if data.url, data.elType, and data.pageDomain together
 // should not be blocked.
