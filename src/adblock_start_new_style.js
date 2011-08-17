@@ -10,34 +10,33 @@ var mightRemove = {
     else
       mightRemove[key].push(el);
   },
-  // If the element matching url+elType was blocked, remove from the page.
-  // Inputs: elType:ElementType.  url: as in .add().  blocked:bool.
-  process: function(elType, url, blocked) {
-    var key = elType + " " + url;
+
+  // Record each element that loads a resource, in case it must be destroyed
+  trackElement: function(event) {
+    var elType = typeForElement(event.target);
+    if (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
+      mightRemove.add(elType, event.target, event.url);
+  },
+
+  // If the element matching request.url+request.elType was blocked,
+  // remove from the page.
+  blockResultsHandler: function(request, sender, sendResponse) {
+    // TODO: needs code in background.html
+    if (request.command != 'block-result')
+      return;
+    var key = request.elType + " " + request.url;
     if (mightRemove[key]) {
-      if (blocked)
-        mightRemove[key].forEach(function(el) { destroyElement(el, elType); });
+      if (request.blocked)
+        mightRemove[key].forEach(function(el) { destroyElement(el, request.elType); });
       delete mightRemove[key];
     }
-  }
+  },
 };
 
-// Record each element that loads a resource, in case it must be destroyed
-function trackElements(event) {
-  var elType = typeForElement(event.target);
-  if (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
-    mightRemove.add(elType, event.target, event.url);
-};
 
-// Destroy elements when we learn they are blocked
-function blockResultsHandler(request, sender, sendResponse) {
-  // TODO: needs code in background.html
-  if (request.command == 'block-result')
-    mightRemove.process(request.elType, request.url, request.blocked);
-}
 
-document.addEventListener("beforeload", trackElements, true);
-chrome.extension.onRequest.addListener(blockResultsHandler);
+document.addEventListener("beforeload", mightRemove.trackElement, true);
+chrome.extension.onRequest.addListener(mightRemove.blockResultsHandler);
 
 function adblock_begin_new_style() {
   var opts = { 
@@ -47,8 +46,8 @@ function adblock_begin_new_style() {
   BGcall('get_content_script_data', opts, function(data) {
     if (data.abort || data.page_is_whitelisted || data.adblock_is_paused) {
       // Our services aren't needed.  Stop all content script activity.
-      document.removeEventListener("beforeload", trackElements, true);
-      chrome.extension.onRequest.removeListener(blockResultsHandler);
+      document.removeEventListener("beforeload", mightRemove.trackElement, true);
+      chrome.extension.onRequest.removeListener(mightRemove.blockResultsHandler);
       delete mightRemove;
       return;
     }
