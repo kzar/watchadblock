@@ -12,8 +12,34 @@
     <script src="filtering/filternormalizer.js"></script>
     <script>
 
-      // TODO: if Chrome+webRequest, make this "new".
-      GLOBAL_block_style = "old";
+      GLOBAL_block_style = "new";
+      // Determine whether GLOBAL_block_style should be "old"
+      (function() {
+        function shouldDegrade() {
+          if (SAFARI)
+            return true;
+          // TEMP while webRequest is experimental, pretend it has graduated
+          if (chrome.experimental && chrome.experimental.webRequest &&
+              !chrome.webRequest)
+            chrome.webRequest = chrome.experimental.webRequest;
+          try {
+            // Quick test that the API exists and that we may access it.
+            function x() { return { cancel: false }; }
+            chrome.webRequest.onBeforeRequest.addListener(x, undefined, ["blocking"]);
+            chrome.webRequest.onBeforeRequest.removeListener(x);
+          }
+          catch (ex) {
+            console.log(ex);
+            return true;
+          }
+          // We must assume the API will work; if it fails later, we'll catch
+          // it and gracefully degrade.
+          return false;
+        }
+        if (shouldDegrade()) {
+          GLOBAL_block_style = "old";
+        }
+      })();
 
       // UNWHITELISTING
 
