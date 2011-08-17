@@ -51,6 +51,30 @@
         var frameData = {
           // TODO: the rest of this
 
+          // Return the data object for the given tabId and frameId, creating
+          // it if necessary.
+          get: function(tabId, frameId) {
+            if (!frameData[tabId]) frameData[tabId] = {};
+            if (!frameData[tabId][frameId]) frameData[tabId][frameId] = {};
+            return frameData[tabId][frameId];
+          },
+
+          // Watch for requests for new tabs and frames, and track their URLs.
+          // Inputs: details: object from onBeforeRequest callback
+          track: function(details) {
+            var tabId = details.tabId;
+            var frameId = details.frameId;
+            if (details.type != "main_frame" && details.type != "sub_frame")
+              return;
+            // The tab or its frame has navigated.  Update its information.
+            if (frameData[tabId])
+              delete frameData[tabId][frameId]; // The frame is changing
+            if (frameId == 0) // == the tab's main document frame
+              delete frameData[tabId]; // The whole tab is changing
+            // Record the new frame's stats.
+            frameData.get(tabId, frameId).url = details.url;
+          },
+
           // When filters are updated, clear the cached whitelisting data.
           onFiltersUpdatedHandler: function(request) {
             if (request.command != "filters_updated")
@@ -59,17 +83,15 @@
           },
 
           // When a tab is closed, delete all its data
-          onTabClosedHandler: function() {
+          onTabClosedHandler: function(tabId) {
+            delete frameData[tabId];
           }
         };
 
         // When a request starts, perhaps block it.
-        function onBeforeRequestHandler() {
+        function onBeforeRequestHandler(details) {
           try {
-            // For testing that AdBlock gracefully degrades
-            // to old-style blocking, just throw an error for now.
-            throw { message: "This should cause an abort" };
-
+            frameData.track(details);
             // TODO: this
           }
           catch(ex) {
