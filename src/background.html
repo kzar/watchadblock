@@ -12,6 +12,9 @@
     <script src="filtering/filternormalizer.js"></script>
     <script>
 
+      // TODO: if Chrome+webRequest, make this "new".
+      GLOBAL_block_style = "old";
+
       // UNWHITELISTING
 
       // Look for a custom filter that would whitelist options.url,
@@ -286,10 +289,15 @@
 
       // TODO: make better.
       // Inputs: options object containing:
+      //           style: "new" or "old" -- webRequest API content script
+      //                  sends "new", Safari/Chrome-old-style send "old".
       //           domain:string the domain of the calling frame.
       //           include_texts?:bool true if PatternFilter._text should be
       //                               appended to block filters.
       get_content_script_data = function(options, sender) {
+        if (options.style != GLOBAL_block_style) {
+          return { abort: true };
+        }
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
         var result = {

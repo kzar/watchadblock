@@ -136,9 +136,21 @@ function adblock_begin() {
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
-    domain: document.location.hostname
+    domain: document.location.hostname,
+    style: "old"
   };
   BGcall('get_content_script_data', opts, function(data) {
+    // Stops all content script activity that we have started.
+    function abort() {
+      document.removeEventListener("beforeload", beforeLoadHandler, true);
+      delete LOADED_TOO_FAST;
+      delete GLOBAL_collect_resources;
+    }
+
+    if (data.abort) { // We're using the webRequest API in Chrome.
+      abort();
+      return;
+    }
     // Store the data for adblock.js
     // If adblock.js already installed its code, run it after we're done.
     window.setTimeout(function() { 
@@ -150,9 +162,7 @@ function adblock_begin() {
       log = function(text) { console.log(text); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
-      document.removeEventListener("beforeload", beforeLoadHandler, true);
-      delete LOADED_TOO_FAST;
-      delete GLOBAL_collect_resources;
+      abort();
       return;
     }
 

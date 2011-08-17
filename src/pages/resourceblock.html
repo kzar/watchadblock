@@ -555,7 +555,8 @@
 
         var opts = {
           domain: domain,
-          include_texts: true
+          include_texts: true,
+          style: "old"
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
