@@ -29,8 +29,7 @@ function MyFilters() {
       this._subscriptions[id] = {};
     this._subscriptions[id].url =
           this._subscriptions[id].url || this._official_options[id].url;
-    this._subscriptions[id].name =
-          this._subscriptions[id].name || this._official_options[id].name;
+    this._subscriptions[id].name = this._subscriptions[id].name;
     this._subscriptions[id].user_submitted =
           this._subscriptions[id].user_submitted || false;
     this._subscriptions[id].requiresList =
@@ -333,122 +332,91 @@ MyFilters.prototype._load_default_subscriptions = function() {
 }
 
 // Used to create the list of default subscriptions
-// Called when MyFilters is created, afterwards it gets deleted...
+// Called when MyFilters is created.
 // Returns: that list
 MyFilters.prototype._make_subscription_options = function() {
-  var official_options = {
-    "adblock_custom": {
+  // When modifying a list, IDs mustn't change!
+  return {
+    "adblock_custom": { // AdBlock custom filters
       url: "http://chromeadblock.com/filters/adblock_custom.txt",
-      name: "AdBlock custom filters (recommended)",
     },
-    "easylist": {
-      url: "http://adblockplus.mozdev.org/easylist/easylist.txt",
-      name: "EasyList (recommended)",
+    "easylist": { // EasyList
+      url: "http://adblockplus.mozdev.org/easylist/easylist.txt"
     },
-    "easylist_plus_bulgarian": {
+    "easylist_plus_bulgarian": { // Additional Bulgarian filters
       url: "http://stanev.org/abp/adblock_bg.txt",
-      name: " - additional Bulgarian filters",
       requiresList: "easylist",
     },
-    "dutch": { //id must not change!
+    "dutch": { // Additional Dutch filters
       url: "http://sites.google.com/site/dutchadblockfilters/AdBlock_Dutch_hide.txt",
-      name: " - additional Dutch filters",
       requiresList: "easylist",
     },
-    "easylist_plus_finnish": {
+    "easylist_plus_finnish": { // Additional Finnish filters
       url: "http://www.wiltteri.net/wiltteri.txt",
-      name: " - additional Finnish filters",
       requiresList: "easylist",
     },
-    "easylist_plus_french": {
+    "easylist_plus_french": { // Additional French filters
       url: "http://lian.info.tm/liste_fr.txt",
-      name: " - additional French filters",
       requiresList: "easylist",
     },
-    "easylist_plus_german": {
+    "easylist_plus_german": { // Additional German filters
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
-      name: " - additional German filters",
       requiresList: "easylist",
     },
-    "easylist_plus_norwegian": {
+    "easylist_plus_norwegian": { // Additional Norwegian filters
       url: "http://home.online.no/~mlangsho/adblock.txt",
-      name: " - additional Norwegian filters",
       requiresList: "easylist",
     },
-    "easylist_plus_polish": {
+    "easylist_plus_polish": { // Additional Polish filters
       url: "http://adblocklist.org/adblock-pxf-polish.txt",
-      name: " - additional Polish filters",
       requiresList: "easylist",
     },
-    "easylist_plus_romanian": {
+    "easylist_plus_romanian": { // Additional Romanian filters
       url: "http://www.zoso.ro/pages/rolist.txt",
-      name: " - additional Romanian filters",
       requiresList: "easylist",
     },
-    "russian": { //id must not change!
+    "russian": { // Additional Russian filters
       url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
-      name: " - additional Russian filters",
       requiresList: "easylist",
     },
-    "chinese": { //id must not change!
+    "chinese": { // Additional Chinese filters
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
-      name: " - additional Chinese filters",
       requiresList: "easylist",
     },
-    "czech": {
+    "czech": { // Czech filters
       url: "http://adblock.dajbych.net/adblock.txt",
-      name: "Czech filters",
     },
-    "danish": {
+    "danish": { // Danish filters
       url: "http://adblock.schack.dk/block.txt",
-      name: "Danish filters",
     },
-    "hungarian": {
+    "hungarian": { // Hungarian filters
       url: "http://pete.teamlupus.hu/hufilter.txt",
-      name: "Hungarian filters",
     },
-    "israeli": {
+    "israeli": { // Israeli filters
       url: "https://secure.fanboy.co.nz/israelilist/IsraelList.txt",
-      name: "Israeli filters",
     },
-    "italian": {
+    "italian": { // Italian filters
       url: "http://mozilla.gfsolone.com/filtri.txt",
-      name: "Italian filters",
     },
-    "japanese": {
+    "japanese": { // Japanese filters
       url: "https://secure.fanboy.co.nz/fanboy-japanese.txt",
-      name: "Japanese filters",
     },
-    "easylist_plun_korean": { // no longer w/ easylist, but ids mustn't change
+    "easylist_plun_korean": {  // Korean filters
       url: "http://abp-corset.googlecode.com/hg/corset.txt",
-      name: "Korean filters",
     },
-    "polish": {
+    "polish": { // Polish filters
       url: "http://www.niecko.pl/adblock/adblock.txt",
-      name: "Polish filters",
     },
-    "easylist_plus_spanish": { //id must not change!
+    "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
-      name: "Spanish filters",
     },
-    "ukranian": {
+    "ukranian": { // Ukranian filters
       url: "http://adblock.oasis.org.ua/banlist.txt",
-      name: "Ukranian filters",
     },
-    "easyprivacy": {
+    "easyprivacy": { // EasyPrivacy
       url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
-      name: "EasyPrivacy",
     },
   };
-  var result = {};
-  for (var id in official_options) {
-    result[id] = {
-      url: official_options[id].url,
-      name: official_options[id].name,
-      requiresList: official_options[id].requiresList
-    };
-  }
-  return result;
 }
 
 /* subscription properties:
