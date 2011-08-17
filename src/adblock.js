@@ -1,15 +1,3 @@
-function debug_print_selector_matches(selectors) {
-  selectors.
-    filter(function(selector) { return $(selector).length > 0; }).
-    forEach(function(selector) {
-      log("Debug: CSS '" + selector + "' hid:");
-      addResourceToList('HIDE:' + selector);
-      $(selector).each(function(i, el) {
-        log("       " + el.nodeName + "#" + el.id + "." + el.className);
-      });
-    });
-}
-
 function adblock_begin_part_2() {
   var data = GLOBAL_contentScriptData.data;
   delete GLOBAL_contentScriptData;
@@ -76,8 +64,6 @@ function adblock_begin_part_2() {
     }
   }
 
-  if (data.settings.debug_logging)
-    debug_print_selector_matches(data.selectors);
 }
 
 // If $ (jquery) is undefined, we're on a xml or svg page and can't run

@@ -161,6 +161,18 @@ function block_list_via_css(selectors) {
   d.insertBefore(css_chunk, null);
 }
 
+function debug_print_selector_matches(selectors) {
+  selectors.
+    filter(function(selector) { return $(selector).length > 0; }).
+    forEach(function(selector) {
+      log("Debug: CSS '" + selector + "' hid:");
+      addResourceToList('HIDE:' + selector);
+      $(selector).each(function(i, el) {
+        log("       " + el.nodeName + "#" + el.id + "." + el.className);
+      });
+    });
+}
+
 // Simplified FilterSet object that relies on all input filter texts being
 // definitely applicable to the current domain.
 function FakeFilterSet(serializedFilters) {
@@ -236,6 +248,9 @@ function adblock_begin() {
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
       delete LOADED_TOO_FAST;
     }
+
+    if (data.settings.debug_logging)
+      debug_print_selector_matches(data.selectors);
   });
 }
 

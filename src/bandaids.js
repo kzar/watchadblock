@@ -8,6 +8,9 @@ var run_bandaids = function() {
   else if (/youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
 
+  // TODO: once old-style Chrome blocking is dead, move youtube into 
+  // Safari-specific file.
+
   var bandaids = {
     hotmail: function() {
       //removing the space remaining in Hotmail/WLMail
