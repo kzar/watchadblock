@@ -35,10 +35,10 @@ var mightRemove = {
 
 
 
-document.addEventListener("beforeload", mightRemove.trackElement, true);
-chrome.extension.onRequest.addListener(mightRemove.blockResultsHandler);
-
 function adblock_begin_new_style() {
+  document.addEventListener("beforeload", mightRemove.trackElement, true);
+  chrome.extension.onRequest.addListener(mightRemove.blockResultsHandler);
+
   var opts = { 
     domain: document.location.hostname,
     style: "new"
