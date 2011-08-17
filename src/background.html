@@ -332,7 +332,7 @@
           settings: settings,
           selectors: []
         };
-        if (whitelisted)
+        if (whitelisted || result.adblock_is_paused)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
@@ -342,9 +342,9 @@
           result.selectors = _myfilters.hiding.
             filtersFor(options.domain, function(f) { return f.selector; });
         }
-        // Chrome needs the blocking filters in the content script until a
-        // synchronous background communication API comes along.
-        if (!SAFARI) {
+        // Chrome without the webRequest API needs the blocking filters in the
+        // content script.
+        if (!SAFARI && options.style == "old") {
           function packed(filter) {
             return [filter._rule.source, filter._allowedElementTypes, filter._options];
           }
