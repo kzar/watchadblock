@@ -96,31 +96,52 @@ function removeFrame(el) {
   parentEl.attr(cols, sizes.join(','));
 }
 
-function destroyElement(el, elType, mustBePurged) {
-  if (el.nodeName == "FRAME")
-    removeFrame(el);
-  else if (elType & ElementTypes.background)
+// Remove background images and purged elements.
+// Return true if the element has been handled.
+function weakDestroyElement(el, elType, mustBePurged) {
+  if (elType & ElementTypes.background) {
     $(el).css("background-image", "none !important");
-  else if (!(elType & ElementTypes.script)) {
-    if (mustBePurged) {
-      var replacement = document.createElement(el.nodeName);
-      if (el.id) replacement.id = el.id;
-      if (el.className) replacement.className = el.className;
-      if (el.name) replacement.name = el.name;
-      replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
-      $(el).replaceWith(replacement);
-    } else {
-      // There probably won't be many sites that modify all of these.
-      // However, if we get issues, we might have to set the location and size
-      // via the css properties position, left, top, width and height
-      $(el).css({
+    return true;
+  }
+  else if (elType == ElementTypes.script) {
+    return true; // nothing to do
+  }
+  else if (el.nodeName == "FRAME") {
+    return false; // can't handle frames
+  }
+  else if (mustBePurged) {
+    var replacement = document.createElement(el.nodeName);
+    if (el.id) replacement.id = el.id;
+    if (el.className) replacement.className = el.className;
+    if (el.name) replacement.name = el.name;
+    replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
+    $(el).replaceWith(replacement);
+    return true;
+  }
+  else {
+    return false; // not handled by this function
+  }
+};
+
+// Remove an element from the page.
+function destroyElement(el, elType, mustBePurged) {
+  if (weakDestroyElement(el, elType, mustBePurged)
+    return;
+
+  if (el.nodeName == "FRAME") {
+    removeFrame(el);
+  }
+  else if (elType != ElementTypes.script) {
+    // There probably won't be many sites that modify all of these.
+    // However, if we get issues, we might have to set the location and size
+    // via the css properties position, left, top, width and height
+    $(el).css({
         "display": "none !important",
         "visibility": "hidden !important",
         "opacity": "0 !important",
       }).
       attr("width", "0px").
       attr("height", "0px");
-    }
   }
 }
 
