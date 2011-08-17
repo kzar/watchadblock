@@ -29,7 +29,6 @@ function MyFilters() {
       this._subscriptions[id] = {};
     this._subscriptions[id].url =
           this._subscriptions[id].url || this._official_options[id].url;
-    this._subscriptions[id].name = this._subscriptions[id].name;
     this._subscriptions[id].user_submitted =
           this._subscriptions[id].user_submitted || false;
     this._subscriptions[id].requiresList =
