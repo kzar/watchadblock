@@ -124,10 +124,7 @@ function weakDestroyElement(el, elType, mustBePurged) {
 };
 
 // Remove an element from the page.
-function destroyElement(el, elType, mustBePurged) {
-  if (weakDestroyElement(el, elType, mustBePurged)
-    return;
-
+function destroyElement(el, elType) {
   if (el.nodeName == "FRAME") {
     removeFrame(el);
   }
@@ -157,7 +154,8 @@ beforeLoadHandler = function(event) {
   addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
     event.preventDefault();
-    destroyElement(el, elType, event.mustBePurged);
+    if (!weakDestroyElement(el, elType, event.mustBePurged))
+      destroyElement(el, elType);
   }
 }
 
