@@ -249,8 +249,11 @@ function adblock_begin() {
       delete LOADED_TOO_FAST;
     }
 
-    if (data.settings.debug_logging)
-      debug_print_selector_matches(data.selectors);
+    if (data.settings.debug_logging) {
+      $(function() { 
+        debug_print_selector_matches(data.selectors);
+      });
+    }
   });
 }
 
