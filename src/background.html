@@ -41,6 +41,72 @@
         }
       })();
 
+
+      // Implement blocking via the Chrome webRequest API.
+      (function() {
+        if (SAFARI || GLOBAL_block_style == "old")
+          return;
+
+        // Stores url, whitelisting, and blocking info for a tabid+frameid
+        var frameData = {
+          // TODO: the rest of this
+
+          // When filters are updated, clear the cached whitelisting data.
+          onFiltersUpdatedHandler: function(request) {
+            if (request.command != "filters_updated")
+              return;
+            // TODO: this
+          },
+
+          // When a tab is closed, delete all its data
+          onTabClosedHandler: function() {
+          }
+        };
+
+        // When a request starts, perhaps block it.
+        function onBeforeRequestHandler() {
+          try {
+            // For testing that AdBlock gracefully degrades
+            // to old-style blocking, just throw an error for now.
+            throw { message: "This should cause an abort" };
+
+            // TODO: this
+          }
+          catch(ex) {
+            abortNewStyle(ex);
+            return { cancel: false };
+          }
+        }
+
+        // Upon error in webRequest API, gracefully degrade to old style
+        // Inputs: ex: an exception that was thrown and caused the abort
+        function abortNewStyle(ex) {
+          GLOBAL_block_style = "old";
+          try {
+            console.log("Falling back to old-style blocking.  Error message:");
+            console.log(ex.message);
+            STATS.msg("webRequest fail: " + ex.message);
+            chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
+            chrome.tabs.onRemoved.removeListener(frameData.onTabClosedHandler);
+            chrome.extension.onRequest.removeListener(frameData.onFiltersUpdatedHandler)
+          }
+          catch(ex) {
+          }
+        }
+
+        // Register to use webRequest API
+        try {
+          chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, undefined, ["blocking"]);
+          chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
+          chrome.extension.onRequest.addListener(frameData.onFiltersUpdatedHandler)
+        }
+        catch(ex) {
+          abortNewStyle(ex);
+        }
+
+
+      })();
+
       // UNWHITELISTING
 
       // Look for a custom filter that would whitelist options.url,
