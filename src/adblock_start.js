@@ -120,6 +120,7 @@ function adblock_begin() {
     // Stops all content script activity that we have started.
     function abort() {
       document.removeEventListener("beforeload", beforeLoadHandler, true);
+      addResourceToList = function() { };
       delete LOADED_TOO_FAST;
       delete GLOBAL_collect_resources;
     }
