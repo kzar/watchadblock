@@ -34,7 +34,6 @@ var mightRemove = {
 };
 
 
-
 function adblock_begin_new_style() {
   document.addEventListener("beforeload", mightRemove.trackElement, true);
   chrome.extension.onRequest.addListener(mightRemove.blockResultsHandler);
