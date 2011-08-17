@@ -44,10 +44,6 @@ function adblock_begin_part_2() {
     }, false);
   }
 
-  // Run site-specific code to fix some errors, but only if the site has them
-  if (typeof run_bandaids == "function")
-    run_bandaids(data.settings);
-
   //Neither Chrome nor Safari blocks background images. So remove them
   //TODO: Remove background images for elements other than <body>
   var bgImage = $("body").css('background-image') || "";

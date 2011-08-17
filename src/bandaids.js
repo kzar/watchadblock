@@ -1,4 +1,4 @@
-var run_bandaids = function(settings) {
+var run_bandaids = function() {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
   if (/mail\.live\.com/.test(document.location.host))
