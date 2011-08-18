@@ -26,6 +26,20 @@ var ElementTypes = {
 ElementTypes.ALLRESOURCETYPES = 16383; // all types that apply to resources
 ElementTypes.ALL = 131071; // all bits turned on
 
+// Convert a webRequest.onBeforeRequest type to an ElementType.
+ElementTypes.fromOnBeforeRequestType = function(type) {
+  switch (type) {
+    case 'main_frame': return ElementTypes.document;
+    case 'sub_frame': return ElementTypes.subdocument;
+    // TODO what does 'other' cover exactly?
+    case 'other': return ElementTypes.other;
+    // TODO: note that 'object' can mean an OBJECT or an object subrequest.
+    // We just treat subrequests as 'object', which we can revisit if
+    // Chrome decides to separate these.
+    default: return ElementTypes[type];
+  }
+}
+
 var FilterOptions = {
   NONE: 0,
   THIRDPARTY: 1,

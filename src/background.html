@@ -76,6 +76,17 @@
             console.log("Tracking:", tabId, frameId);
           },
 
+          // Returns the domain of the URL of the specified tab+frame.
+          domainOfFrame: function(tabId, frameId) {
+            var frame = frameData.get(tabId, frameId);
+            // Cache the answer, since all requests from this frame need this
+            if (frame.domain === undefined) {
+              frame.domain = url_parts(frame.url).domain;
+              console.log("Caching domain:", frame.domain, "->", frame.url.substring(0, 100));
+            }
+            return frame.domain;
+          },
+
           // True if the given request details represent a request sent by
           // a whitelisted page.
           isOnWhitelistedPage: function(details) {
@@ -116,8 +127,16 @@
               console.log("Not blocking tab", tabId, "request", details.url.substring(0, 100), "on whitelisted tab");
               return { cancel: false };
             }
-            console.log("TODO: block/allow", tabId, frameId, details.url.substring(0, 100));
-            // TODO: this
+            var elType = ElementTypes.fromOnBeforeRequestType(details.type);
+            var frameDomain = frameData.domainOfFrame(tabId, frameId);
+            // TODO: rename matches()'s pageDomain to frameDomain, because $third-party and $domain
+            // are relative to the frame, not the page.  E.g. s1.com loads iframe s2.com loads
+            // resource s1.com/foo.jpg: this is a third-party request on domain=s2.com.
+            var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
+            console.log("Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
+            return { cancel: blocked };
+            // TODO: make object_subrequest equal to object
+            // TODO: don't run youtube bandaid in "new" mode
           }
           catch(ex) {
             abortNewStyle(ex);
