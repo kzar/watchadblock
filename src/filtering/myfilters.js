@@ -28,12 +28,18 @@ function MyFilters() {
       this._subscriptions[id] = {};
     this._subscriptions[id].url =
           this._subscriptions[id].url || this._official_options[id].url;
-    this._subscriptions[id].user_submitted =
-          this._subscriptions[id].user_submitted || false;
+    this._subscriptions[id].initialUrl =
+          this._subscriptions[id].initialUrl || this._official_options[id].url;
+    if (this._official_options[id].url != this._subscriptions[id].initialUrl) {
+      // The hardcoded URL was changed. Use it. In case of a redirect, this
+      // doesn't happen as only .url is changed then.
+      this._subscriptions[id].initialUrl = this._official_options[id].url;
+      this._subscriptions[id].url = this._official_options[id].url;
+    }
     this._subscriptions[id].requiresList =
           this._subscriptions[id].requiresList || 
           this._official_options[id].requiresList;
-    this._subscriptions[id].subscribed = 
+    this._subscriptions[id].subscribed =
           this._subscriptions[id].subscribed || false;
   }
 
