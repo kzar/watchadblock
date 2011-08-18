@@ -17,9 +17,8 @@ function MyFilters() {
 
   for (var id in this._subscriptions) {
     // In case a default subscription was removed from the default list,
-    // change it to a user submitted list
-    if (!this._official_options[id])
-      this._subscriptions[id].user_submitted = true;
+    // change it to a user submitted list and vice versa
+    this._subscriptions[id].user_submitted = !this._official_options[id];
   }
 
   // Use the stored properties, and only add any new properties and/or lists
@@ -420,6 +419,7 @@ MyFilters.prototype._make_subscription_options = function() {
 
 /* subscription properties:
 url: url of subscription
+initialUrl: the hardcoded url. Same as .url except when redirected
 name: name to display for subscription
 user_submitted (bool): submitted by the user or not
 requiresList: id of a list required for this list
