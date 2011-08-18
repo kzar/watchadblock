@@ -36,9 +36,7 @@ function MyFilters() {
       this._subscriptions[id].initialUrl = this._official_options[id].url;
       this._subscriptions[id].url = this._official_options[id].url;
     }
-    this._subscriptions[id].requiresList =
-          this._subscriptions[id].requiresList || 
-          this._official_options[id].requiresList;
+    this._subscriptions[id].requiresList = this._official_options[id].requiresList;
     this._subscriptions[id].subscribed =
           this._subscriptions[id].subscribed || false;
   }
