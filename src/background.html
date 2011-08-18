@@ -73,25 +73,50 @@
               delete frameData[tabId]; // The whole tab is changing
             // Record the new frame's stats.
             frameData.get(tabId, frameId).url = details.url;
+            console.log("Tracking:", tabId, frameId);
           },
 
-          // When filters are updated, clear the cached whitelisting data.
-          onFiltersUpdatedHandler: function(request) {
-            if (request.command != "filters_updated")
-              return;
-            // TODO: this
+          // True if the given request details represent a request sent by
+          // a whitelisted page.
+          isOnWhitelistedPage: function(details) {
+            var sourcePage = frameData.get(details.tabId, 0);
+            // Cache the answer, since the page will generate many requests.
+            if (sourcePage.whitelisted === undefined) {
+              console.log("Caching whitelist data for", sourcePage.url);
+              sourcePage.whitelisted = page_is_whitelisted(sourcePage.url);
+            }
+            return sourcePage.whitelisted;
           },
 
           // When a tab is closed, delete all its data
           onTabClosedHandler: function(tabId) {
             delete frameData[tabId];
+            console.log("Closing tab", tabId, "leaving", Object.keys(frameData).filter(function(k) { return !isNaN(k); }));
           }
         };
 
         // When a request starts, perhaps block it.
         function onBeforeRequestHandler(details) {
           try {
+            var tabId = details.tabId, frameId = details.frameId;
+            // I'm not sure whether the API will let us access requests that
+            // aren't from tabs, but if so we don't want them.
+            if (tabId == -1 || tabId == null) { // TODO: should eventually only use null, not -1: see chromium:93373
+              console.log("Ignoring non-tab-related request to", details.url);
+              return { cancel: false };
+            }
             frameData.track(details);
+            // If we aren't tracking the tab, it was open when AdBlock was
+            // started.  Ignore and don't store data for the tab.
+            if (!frameData[tabId] || !frameData[tabId][frameId]) {
+              console.log("Ignoring unknown tab+frame", tabId, frameId);
+              return { cancel: false };
+            }
+            if (frameData.isOnWhitelistedPage(details)) {
+              console.log("Not blocking tab", tabId, "request", details.url.substring(0, 100), "on whitelisted tab");
+              return { cancel: false };
+            }
+            console.log("TODO: block/allow", tabId, frameId, details.url.substring(0, 100));
             // TODO: this
           }
           catch(ex) {
@@ -107,10 +132,10 @@
           try {
             console.log("Falling back to old-style blocking.  Error message:");
             console.log(ex.message);
+            console.trace();
             STATS.msg("webRequest fail: " + ex.message);
             chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
             chrome.tabs.onRemoved.removeListener(frameData.onTabClosedHandler);
-            chrome.extension.onRequest.removeListener(frameData.onFiltersUpdatedHandler)
           }
           catch(ex) {
           }
@@ -120,7 +145,6 @@
         try {
           chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, undefined, ["blocking"]);
           chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
-          chrome.extension.onRequest.addListener(frameData.onFiltersUpdatedHandler)
         }
         catch(ex) {
           abortNewStyle(ex);
@@ -569,6 +593,10 @@
           function(request, sender, sendResponse) {
             if (request.command != "call")
               return; // not for us
+            // +1 button in browser action popup loads a frame which
+            // runs content scripts.  Ignore their cries for ad blocking.
+            if (sender.tab == null)
+              return;
             var fn = window[request.fn];
             request.args.push(sender);
             var result = fn.apply(window, request.args);
