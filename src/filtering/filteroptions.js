@@ -8,18 +8,22 @@ var ElementTypes = {
   background: 4,
   stylesheet: 8,
   'object': 16,
+  // See chromium:93542: 'object' can mean an object or an object
+  // subrequest.  So we apply filters of either type to 'object'
+  // requests, by pretending object_subrequest is a synonym for
+  // object.
+  object_subrequest: 16,
   subdocument: 32,
   media: 128,
+  other: 1024,
+  xmlhttprequest: 8192,
   'document': 16384,
   elemhide: 32768,
   //BELOW ISN'T SUPPORTED YET
-  object_subrequest: 64,
   font: 256,
   dtd: 512,
-  other: 1024,
   xbl: 2048,
   ping: 4096,
-  xmlhttprequest: 8192,
   donottrack: 65536
   // if you add something here, update .ALL below
 };
@@ -31,11 +35,9 @@ ElementTypes.fromOnBeforeRequestType = function(type) {
   switch (type) {
     case 'main_frame': return ElementTypes.document;
     case 'sub_frame': return ElementTypes.subdocument;
+    // See chromium:93542: object subrequests are called 'object'.
     // TODO what does 'other' cover exactly?
     case 'other': return ElementTypes.other;
-    // TODO: note that 'object' can mean an OBJECT or an object subrequest.
-    // We just treat subrequests as 'object', which we can revisit if
-    // Chrome decides to separate these.
     default: return ElementTypes[type];
   }
 }
