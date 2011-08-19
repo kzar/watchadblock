@@ -110,15 +110,18 @@
         function onBeforeRequestHandler(details) {
           try {
             var tabId = details.tabId, frameId = details.frameId;
+            if (localStorage.adblock_is_paused)
+              return { cancel: false };
             // I'm not sure whether the API will let us access requests that
             // aren't from tabs, but if so we don't want them.
             if (tabId == -1 || tabId == null) { // TODO: should eventually only use null, not -1: see chromium:93373
               console.log("Ignoring non-tab-related request to", details.url);
               return { cancel: false };
             }
+            // In case it's a document load, track the URL of the frame.
             frameData.track(details);
-            // If we aren't tracking the tab, it was open when AdBlock was
-            // started.  Ignore and don't store data for the tab.
+            // If we aren't tracking the frame, it was open when AdBlock was
+            // started.  Ignore and don't store data for the frame.
             if (!frameData[tabId] || !frameData[tabId][frameId]) {
               console.log("Ignoring unknown tab+frame", tabId, frameId);
               return { cancel: false };
