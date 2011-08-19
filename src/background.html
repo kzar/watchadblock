@@ -29,7 +29,6 @@
             chrome.webRequest.onBeforeRequest.removeListener(x);
           }
           catch (ex) {
-            console.log(ex);
             return true;
           }
           // We must assume the API will work; if it fails later, we'll catch
@@ -73,17 +72,15 @@
               delete frameData[tabId]; // The whole tab is changing
             // Record the new frame's stats.
             frameData.get(tabId, frameId).url = details.url;
-            console.log("Tracking:", tabId, frameId);
+            log("=========== Tracking frame", tabId, frameId, details.url);
           },
 
           // Returns the domain of the URL of the specified tab+frame.
           domainOfFrame: function(tabId, frameId) {
             var frame = frameData.get(tabId, frameId);
             // Cache the answer, since all requests from this frame need this
-            if (frame.domain === undefined) {
+            if (frame.domain === undefined)
               frame.domain = url_parts(frame.url).domain;
-              console.log("Caching domain:", frame.domain, "->", frame.url.substring(0, 100));
-            }
             return frame.domain;
           },
 
@@ -92,10 +89,8 @@
           isOnWhitelistedPage: function(details) {
             var sourcePage = frameData.get(details.tabId, 0);
             // Cache the answer, since the page will generate many requests.
-            if (sourcePage.whitelisted === undefined) {
-              console.log("Caching whitelist data for", sourcePage.url);
+            if (sourcePage.whitelisted === undefined)
               sourcePage.whitelisted = page_is_whitelisted(sourcePage.url);
-            }
             return sourcePage.whitelisted;
           },
 
@@ -131,8 +126,8 @@
 
           // When a tab is closed, delete all its data
           onTabClosedHandler: function(tabId) {
+            log("----------- Closing tab", tabId);
             delete frameData[tabId];
-            console.log("Closing tab", tabId, "leaving", Object.keys(frameData).filter(function(k) { return !isNaN(k); }));
           }
         };
 
@@ -145,7 +140,7 @@
             // I'm not sure whether the API will let us access requests that
             // aren't from tabs, but if so we don't want them.
             if (tabId == -1 || tabId == null) { // TODO: should eventually only use null, not -1: see chromium:93373
-              console.log("Ignoring non-tab-related request to", details.url);
+              log("Ignoring non-tab-related request to", details.url);
               return { cancel: false };
             }
             // In case it's a document load, track the URL of the frame.
@@ -153,11 +148,11 @@
             // If we aren't tracking the frame, it was open when AdBlock was
             // started.  Ignore and don't store data for the frame.
             if (!frameData[tabId] || !frameData[tabId][frameId]) {
-              console.log("Ignoring unknown tab+frame", tabId, frameId);
+              log("Ignoring unknown tab+frame", tabId, frameId);
               return { cancel: false };
             }
             if (frameData.isOnWhitelistedPage(details)) {
-              console.log("Not blocking tab", tabId, "request", details.url.substring(0, 100), "on whitelisted tab");
+              log("Tab", tabId, "is whitelisted, ignoring", details.url.substring(0, 100));
               return { cancel: false };
             }
             var elType = ElementTypes.fromOnBeforeRequestType(details.type);
@@ -171,7 +166,7 @@
             // results to the tab -- one was blocked, or there are many results
             if (results)
               chrome.tabs.sendRequest(tabId, { command: "block-results", results: results });
-            console.log("Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
+            log("Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
             return { cancel: blocked };
           }
           catch(ex) {
@@ -279,7 +274,7 @@
 
         if (name == "debug_logging") {
           if (is_enabled)
-            log = function(text) { console.log(text); };
+            log = function() { console.log.apply(console, arguments); };
           else
             log = function() { };
         }
@@ -707,7 +702,7 @@
       })();
 
       if (get_settings().debug_logging)
-        log = function(text) { console.log(text); };
+        log = function() { console.log.apply(console, arguments); };
 
       _myfilters = new MyFilters();
 

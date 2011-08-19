@@ -30,7 +30,7 @@ var mightRemove = {
       var elType = result[0], url = result[1], blocked = result[2];
       var key = elType + " " + url;
       if (mightRemove[key]) {
-        console.log("Got block result", blocked, "for", key);
+        log("Got block result", blocked, "for", key);
         if (blocked)
           mightRemove[key].forEach(function(el) { destroyElement(el, elType); });
         delete mightRemove[key];
@@ -59,7 +59,7 @@ function adblock_begin_new_style() {
     }
 
     if (data.settings.debug_logging)
-      log = function(text) { console.log(text); };
+      log = function() { console.log.apply(console, arguments); };
 
     if (data.selectors.length != 0)
       block_list_via_css(data.selectors);

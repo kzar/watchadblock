@@ -33,7 +33,6 @@ var run_bandaids = function() {
 // TODO: once 'old'-style Chrome blocking is dead, move to
 // Safari-specific file
 function runYoutubeHack() {
-  console.log("RUNNING YOUTUBE HACK");
   function blockYoutubeAds(videoplayer) {
     var flashVars = $(videoplayer).attr('flashvars');
     var inParam = false;
