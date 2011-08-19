@@ -99,6 +99,36 @@
             return sourcePage.whitelisted;
           },
 
+          // Record that a url+elType was or was not blocked on the given tab.
+          // We don't record the frame because there's no way to message a
+          // specific frame, so our results will be broadcast to every frame
+          // on the tab anyway.
+          //
+          // This only stores elTypes that actually need removing in the
+          // content script.
+          //
+          // Returns an array of [elType, url, blocked] stored results if
+          // it decides it's time for the tab to know about them.
+          storeBlockResults: function(tabId, url, elType, blocked) {
+            var worthStoring = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
+            if (!worthStoring)
+              return null;
+            var data = frameData.get(tabId, 0);
+            if (data.blockResults === undefined)
+              data.blockResults = [];
+            var blockData = data.blockResults;
+            blockData.push([elType, url, blocked]);
+            // Increasing this number sends fewer messages but leaves more
+            // unblocked items' keys (elType+" "+url) in tab memory
+            // and background memory after a tab is done loading
+            if (blocked || blockData.length > 20) {
+              delete data.blockResults;
+              return blockData;
+            } else {
+              return null;
+            }
+          },
+
           // When a tab is closed, delete all its data
           onTabClosedHandler: function(tabId) {
             delete frameData[tabId];
@@ -136,10 +166,13 @@
             // are relative to the frame, not the page.  E.g. s1.com loads iframe s2.com loads
             // resource s1.com/foo.jpg: this is a third-party request on domain=s2.com.
             var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
+            var results = frameData.storeBlockResults(tabId, details.url, elType, blocked);
+            // Non-null results means there's a good reason to send a batch of
+            // results to the tab -- one was blocked, or there are many results
+            if (results)
+              chrome.tabs.sendRequest(tabId, { command: "block-results", results: results });
             console.log("Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
             return { cancel: blocked };
-            // TODO: make object_subrequest equal to object
-            // TODO: don't run youtube bandaid in "new" mode
           }
           catch(ex) {
             abortNewStyle(ex);

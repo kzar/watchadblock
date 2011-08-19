@@ -18,18 +18,25 @@ var mightRemove = {
       mightRemove.add(elType, event.target, event.url);
   },
 
-  // If the element matching request.url+request.elType was blocked,
-  // remove from the page.
+  // When the background sends us the block results for some elements, remove
+  // the blocked ones.
+  // Inputs:
+  //   request: { results: array of [elType, url, blocked:bool] triples }
   blockResultsHandler: function(request, sender, sendResponse) {
-    // TODO: needs code in background.html
-    if (request.command != 'block-result')
+    if (request.command != 'block-results')
       return;
-    var key = request.elType + " " + request.url;
-    if (mightRemove[key]) {
-      if (request.blocked)
-        mightRemove[key].forEach(function(el) { destroyElement(el, request.elType); });
-      delete mightRemove[key];
+    for (var i = 0; i < request.results.length; i++) {
+      var result = request.results[i];
+      var elType = result[0], url = result[1], blocked = result[2];
+      var key = elType + " " + url;
+      if (mightRemove[key]) {
+        console.log("Got block result", blocked, "for", key);
+        if (blocked)
+          mightRemove[key].forEach(function(el) { destroyElement(el, elType); });
+        delete mightRemove[key];
+      }
     }
+    // TODO: waiting on chromium-extensions to tell me who should call sendResponse
   },
 };
 
