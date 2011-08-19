@@ -36,7 +36,7 @@ var mightRemove = {
         delete mightRemove[key];
       }
     }
-    // TODO: waiting on chromium-extensions to tell me who should call sendResponse
+    sendResponse({});
   },
 };
 
