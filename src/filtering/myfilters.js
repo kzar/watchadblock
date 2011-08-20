@@ -210,7 +210,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
 
       // Sometimes text is "". Happens sometimes.  Weird, I know.
       // Every legit list starts with a comment.
-      if (text && text.length != 0 && Filter.isComment(text)) {
+      if (text && text.length != 0 && Filter.isComment(text.trim())) {
         log("Fetched " + url);
         that._updateSubscriptionText(id, text);
         that._onSubscriptionChange(true);
