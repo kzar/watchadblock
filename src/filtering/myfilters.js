@@ -26,19 +26,19 @@ function MyFilters() {
   for (var id in this._official_options) {
     if (!this._subscriptions[id])
       this._subscriptions[id] = {};
-    this._subscriptions[id].url =
-          this._subscriptions[id].url || this._official_options[id].url;
-    this._subscriptions[id].initialUrl =
-          this._subscriptions[id].initialUrl || this._official_options[id].url;
-    if (this._official_options[id].url != this._subscriptions[id].initialUrl) {
-      // The hardcoded URL was changed. Use it. In case of a redirect, this
-      // doesn't happen as only .url is changed then.
-      this._subscriptions[id].initialUrl = this._official_options[id].url;
-      this._subscriptions[id].url = this._official_options[id].url;
+    var sub = this._subscriptions[id];
+    var official = this._official_options[id];
+
+    sub.initialUrl = sub.initialUrl || official.url;
+    sub.url = sub.url || official.url;
+    if (sub.initialUrl != official.url) {
+      // The official URL was changed. Use it. In case of a redirect, this
+      // doesn't happen as only sub.url is changed, not sub.initialUrl.
+      sub.initialUrl = official.url;
+      sub.url = official.url;
     }
-    this._subscriptions[id].requiresList = this._official_options[id].requiresList;
-    this._subscriptions[id].subscribed =
-          this._subscriptions[id].subscribed || false;
+    sub.requiresList = official.requiresList;
+    sub.subscribed = sub.subscribed || false;
   }
 
   // Temp: remove an old localStorage entry
