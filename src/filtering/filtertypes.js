@@ -11,6 +11,7 @@ Filter._lastId = 0;
 Filter._cache = {};
 
 // Return a Filter instance for the given filter text.
+// Throw an exception if the filter is invalid.
 Filter.fromText = function(text) {
   var cache = Filter._cache;
   if (!(text in cache)) {
@@ -101,6 +102,7 @@ PatternFilter.fromData = function(data) {
   return result;
 }
 // Text is the original filter text of a blocking or whitelist filter.
+// Throws an exception if the rule is invalid.
 PatternFilter.fromText = function(text) {
   var data = PatternFilter._parseRule(text);
 
