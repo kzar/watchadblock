@@ -61,21 +61,33 @@
           // Watch for requests for new tabs and frames, and track their URLs.
           // Inputs: details: object from onBeforeRequest callback
           track: function(details) {
-            var tabId = details.tabId;
-            var frameId = details.frameId;
-            if (details.type != "main_frame" && details.type != "sub_frame")
+            var tabId = details.tabId, frameId = details.frameId;
+            var fd = frameData;
+
+            if (details.type != "main_frame" && details.type != "sub_frame") {
+              // Usually, we just pay attention to main_frame and sub_frame
+              // requests.  However, if the main frame uses Javascript to
+              // create an empty iframe and inject a script tag into it (Youtube
+              // does this, for example), treat the frame as the same URL as
+              // the tab.
+              if (fd[tabId] && fd[tabId][0] && !fd[tabId][frameId]) {
+                fd.get(tabId, frameId).url = fd.get(tabId, 0).url;
+                log("Null frame", frameId, "found; giving it the tab's URL.");
+              }
               return;
+            }
+
             // The tab or its frame has navigated.  Update its information.
-            if (frameData[tabId])
-              delete frameData[tabId][frameId]; // The frame is changing
+            if (fd[tabId])
+              delete fd[tabId][frameId]; // The frame is changing
             if (frameId == 0) // == the tab's main document frame
-              delete frameData[tabId]; // The whole tab is changing
+              delete fd[tabId]; // The whole tab is changing
             // Don't record subframes on tabs that we aren't tracking (e.g. a
             // chrome:// tab that loads an http:// frame)
-            if (frameId != 0 && !frameData[tabId])
+            if (frameId != 0 && !fd[tabId])
               return;
             // Record the new frame's stats.
-            frameData.get(tabId, frameId).url = details.url;
+            fd.get(tabId, frameId).url = details.url;
             log("=========== Tracking frame", tabId, frameId, details.url);
           },
 
