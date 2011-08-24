@@ -8,27 +8,19 @@ var ElementTypes = {
   background: 4,
   stylesheet: 8,
   'object': 16,
-  // See chromium:93542: 'object' can mean an object or an object
-  // subrequest.  So we apply filters of either type to 'object'
-  // requests, by pretending object_subrequest is a synonym for
-  // object.
-  object_subrequest: 16,
   subdocument: 32,
+  object_subrequest: 64,
   media: 128,
-  other: 1024,
-  xmlhttprequest: 8192,
-  'document': 16384,
-  elemhide: 32768,
-  //BELOW ISN'T SUPPORTED YET
-  font: 256,
-  dtd: 512,
-  xbl: 2048,
-  ping: 4096,
-  donottrack: 65536
-  // if you add something here, update .ALL below
+  other: 256,
+  xmlhttprequest: 512,
+  'document': 1024,
+  elemhide: 2048
+  // If you add something here, update .ALLRESOURCES below.
 };
-ElementTypes.ALLRESOURCETYPES = 16383; // all types that apply to resources
-ElementTypes.ALL = 131071; // all bits turned on
+ElementTypes.ALLRESOURCETYPES = 1023; // all types that apply to resources
+// Any unknown options on filters will be converted to $UNSUPPORTED,
+// which no resource will match.
+ElementTypes.UNSUPPORTED = 65536;
 
 // Convert a webRequest.onBeforeRequest type to an ElementType.
 ElementTypes.fromOnBeforeRequestType = function(type) {
@@ -36,7 +28,8 @@ ElementTypes.fromOnBeforeRequestType = function(type) {
     case 'main_frame': return ElementTypes.document;
     case 'sub_frame': return ElementTypes.subdocument;
     // See chromium:93542: object subrequests are called 'object'.
-    // TODO what does 'other' cover exactly?
+    // See http://src.chromium.org/viewvc/chrome/trunk/src/webkit/glue/resource_type.h?view=markup
+    // for what 'other' includes
     case 'other': return ElementTypes.other;
     default: return ElementTypes[type];
   }
