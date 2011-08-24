@@ -194,12 +194,9 @@ function adblock_begin() {
       });
     }
 
-    // Only run the Youtube bandaid in 'old' style blocking mode.
-    if (/youtube/.test(document.location.hostname)) {
-      $(function() {
-        runYoutubeHack();
-      });
-    }
+    // Run site-specific code to fix some errors, but only if the site has them
+    if (typeof run_bandaids == "function")
+      $(function() { run_bandaids("old"); });
   });
 }
 

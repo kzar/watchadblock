@@ -95,10 +95,6 @@ function debug_print_selector_matches(selectors) {
 // If $ (jquery) is undefined, we're on a xml or svg page and can't run
 if (document.location != 'about:blank' && typeof $ != "undefined") {
   $(function() {
-    // Run site-specific code to fix some errors, but only if the site has them
-    if (typeof run_bandaids == "function")
-      run_bandaids();
-
     // Subscribe to the list when you click an abp: link
     $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
       event.preventDefault();

@@ -69,6 +69,10 @@ function adblock_begin_new_style() {
         debug_print_selector_matches(data.selectors);
       });
     }
+
+    // Run site-specific code to fix some errors, but only if the site has them
+    if (typeof run_bandaids == "function")
+      $(function() { run_bandaids("new"); });
   });
 }
 
