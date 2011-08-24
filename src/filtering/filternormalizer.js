@@ -74,9 +74,11 @@ var FilterNormalizer = {
       var parsedFilter = PatternFilter.fromText(filter);
 
       // Remove rules that only apply to unsupported resource types.
-      var unsupported = (ElementTypes.font | ElementTypes.dtd |
-                         ElementTypes.xbl | ElementTypes.ping |
-                         ElementTypes.donottrack);
+      // It won't break if we left them in, but this speeds things up.
+      var unsupported = ElementTypes.UNSUPPORTED;
+      if (SAFARI)
+        unsupported |= (ElementTypes.object_subrequest | ElementTypes.other |
+                        ElementTypes.xmlhttprequest);
       if (!Filter.isWhitelistFilter(filter))
         unsupported |= (ElementTypes.document | ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
