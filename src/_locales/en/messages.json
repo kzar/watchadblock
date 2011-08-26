@@ -1,6 +1,6 @@
 {
   "description1": {
-    "message": "The most popular Chrome extension, with over 2 million users! Blocks ads all over the web.",
+    "message": "The most popular Chrome extension, with over 2 million users!  Blocks ads all over the web.",
     "description": "Extension description in manifest"
   },
   "buttoncancel": {
@@ -29,8 +29,8 @@
     "description": "Title for the installation success page"
   },
   "chromebutton_how_to_hide": {
-    "message": "To hide the button, right click it and choose Hide Button. You can show it again under Wrench | Tools | Extensions.",
-    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+    "message": "To hide the button, right click it and choose Hide Button.  You can show it again under Wrench | Tools | Extensions.",
+    "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "sliderexplanation": {
     "message": "Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
@@ -50,7 +50,7 @@
   },
   "blacklisternotsure": {
     "message": "<b>Not sure?</b> just press 'Block it!' below.",
-    "description": "Blacklister attribute choosing page message. 'Block it!' must be the same as the text of the 'buttonblockit' message."
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
     "message": "The filter, which can be changed on the Options page:",
@@ -66,7 +66,7 @@
   },
   "blacklistereditfilter": {
     "message": "Please type the correct filter below and press OK",
-    "description": "Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid1": {
     "message": "The filter is invalid: $exception$",
@@ -152,11 +152,11 @@
 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock won't run on any page matching:",
-    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'. The URL will appear on the next line."
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   },
   "you_can_slide_to_change": {
     "message": "You can slide below to change exactly what pages AdBlock won't run on.",
-    "description": "Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "whitelistertitle2": {
     "message": "Don't run AdBlock on...",
@@ -304,9 +304,9 @@
     "message": "Subscribed.",
     "description": "Status label"
   },
-  "nolisturllabel": {
-    "message": "That wasn't a list URL.",
-    "description": "Status label"
+  "invalidListUrl": {
+    "message": "Invalid list URL. It'll be deleted.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Failed to fetch this filter!",
@@ -401,7 +401,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "Chinese filters",
+    "message": " - additional Chinese filters",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -444,6 +444,10 @@
     "message": "Ukranian filters",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy",
+    "description": "A filter list. Don't translate 'EasyPrivacy', it's just here so you can add something like (privacy protection) or such to it."
+  },
 
   "blacklistclickmessage": {
     "message": "Right click an ad on a page to block it -- or block it here manually.",
@@ -454,8 +458,8 @@
     "description": "Title of the third tab"
   },
   "filterlistsrock": {
-    "message": "The filter lists block most ads on the web. You can also:",
-    "description": "Header text on the Customize tab. 'Filter lists' should be the same text as the tabfilterlists message."
+    "message": "The filter lists block most ads on the web.  You can also:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
   "blockmoreads": {
     "message": "Block more ads:",
@@ -696,7 +700,7 @@
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a> EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
       }
     }
   },
@@ -915,7 +919,7 @@
     "description": "Result of the final ad report question"
   },
   "cleanuplist": {
-    "message": "Optimize filters in this list:",
+    "message": "Clean up this list:",
     "description": "Option at the bottom of the third options tab"
   },
   "new_version": {
@@ -1045,8 +1049,8 @@
     }
   },
   "now_you_have_adblock_hooray": {
-    "message": "Now you have AdBlock! Hooray!",
-    "description": "Install page title. 'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+    "message": "Now you have AdBlock!  Hooray!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
   },
   "any_new_tabs_you_open_Will_be_automatically_ad_free": {
     "message": "Any new tabs you open will be automatically ad-free.",
@@ -1070,15 +1074,15 @@
   },
   "please_fill_out_adblocks_one_question_setup": {
     "message": "Please fill out AdBlock's one-question setup:",
-    "description": "Install page instructions. The one question is a checkbox."
+    "description": "Install page instructions.  The one question is a checkbox."
   },
   "that_was_easy": {
     "message": "That was easy",
-    "description": "Install page: button text at end of setup section to proceed to the next section. The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
   "lets_get_you_set_up": {
     "message": "Let's get you set up!",
-    "description": "Install page: section header for Safari users. These users do not see the section with the 'set_up_adblock' message. The tone should be friendly."
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
   },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "First, you should <b>turn on autoupdate</b> under Safari Preferences, so you get bugfixes and new features as I write them.",
@@ -1102,7 +1106,7 @@
   },
   "click_safari_prefs": {
     "message": "Click <b>Safari &rArr; Preferences</b>.",
-    "description": "First step to turn on autoupdate. &rArr; makes a right arrow (->)."
+    "description": "First step to turn on autoupdate.  &rArr; makes a right arrow (->)."
   },
   "click_extensions": {
     "message": "Click <b>Extensions</b> near the top right.",
@@ -1121,7 +1125,7 @@
     "description": "Install page section title"
   },
   "adblock_auto_removes_ads_thats_all": {
-    "message": " AdBlock automatically removes ads. That's all there is to it.",
+    "message": " AdBlock automatically removes ads.  That's all there is to it.",
     "description": "Install page: explaining how to use adblock."
   },
   "for_more_options_right_click": {
@@ -1130,7 +1134,7 @@
     "placeholders": {
       "img": {
         "content": "<img src=\"../../img/icon19.png\"/>",
-        "example": "A small picture of the toolbar button. Do not translate."
+        "example": "A small picture of the toolbar button.  Do not translate."
       }
     }
   },
@@ -1145,6 +1149,10 @@
   "modifypath": {
     "message": "Page:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "last_update_failed": {
+    "message": "Last update failed; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "show_ads_except_for": {
     "message": "Show ads <i>everywhere</i> except for these domains...",

@@ -50,7 +50,7 @@
       // Inputs: filters:string the new filters.
       set_custom_filters_text = function(filters) {
         storage_set('custom_filters', filters);
-        _myfilters.update();
+        _myfilters.rebuild();
       }
 
       // Removes a custom filter entry.
@@ -74,7 +74,7 @@
         };
         var settings = storage_get('settings') || {};
         return $.extend(defaults, settings);
-      }
+        }
 
       set_setting = function(name, is_enabled) {
         var settings = get_settings();
@@ -93,37 +93,50 @@
 
       // Rebuild the filterset based on the current settings and subscriptions.
       update_filters = function() {
-        _myfilters.update();
-      }
+        _myfilters.rebuild();
+        }
 
       // Fetch the latest version of all subscribed lists now.
       update_subscriptions_now = function() {
-        _myfilters.freshen_async(true);
+        _myfilters.checkFilterUpdates(true);
       }
 
       // Returns map from id to subscription object.  See filters.js for
       // description of subscription object.
       get_subscriptions_minus_text = function() {
-        return _myfilters.get_subscriptions_minus_text();
+        var result = {};
+        for (var id in _myfilters._subscriptions) {
+          result[id] = {};
+          for (var attr in _myfilters._subscriptions[id]) {
+            if (attr == "text") continue;
+            result[id][attr] = _myfilters._subscriptions[id][attr];
+          }
+        }
+        return result;
       }
 
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
-      //         text: filter text string fetched from that url
       //         requires: the id of a list if it is a supplementary list,
       //                   or null if nothing required
       // Returns: null, upon completion
-      subscribe = function(id, text, requires) {
-        _myfilters.subscribe(id, text, requires);
+      subscribe = function(options) {
+        _myfilters.changeSubscription(options.id, {
+          subscribed: true,
+          requiresList: options.requires
+        });
       }
 
       // Unsubscribes from a filter subscription.
       // Inputs: id: id from which to unsubscribe.
       //         del: (bool) if the filter should be removed or not
       // Returns: null, upon completion.
-      unsubscribe = function(id, del) {
-        _myfilters.unsubscribe(id, del);
+      unsubscribe = function(options) {
+        _myfilters.changeSubscription(options.id, {
+          subscribed: false,
+          deleteMe: (options.del ? true : undefined)
+        });
       }
 
       // Return the scheme and domain for the given url.
@@ -568,18 +581,18 @@
 
       // TEMP: OLD STYLE WHITELIST
       (function() {
-        //   TODO: Remove this when you are convinced everyone has updated their
-        //   version of AdBlock... Say in March or April
+      //   TODO: Remove this when you are convinced everyone has updated their
+      //   version of AdBlock... Say in March or April
         if (storage_get('whitelist')) {
           var old_style_whitelist = storage_get('whitelist') || [];
-          for (var i=0; i<old_style_whitelist.length; i++) {
-            var website = old_style_whitelist[i];
-            if (website[0] == '.')
-              website = '*' + website;
+        for (var i=0; i<old_style_whitelist.length; i++) {
+          var website = old_style_whitelist[i];
+          if (website[0] == '.')
+            website = '*' + website;
             add_custom_filter('@@||' + website + '^$document');
-          }
-          localStorage.removeItem('whitelist');
         }
+        localStorage.removeItem('whitelist');
+      }
       })();
       // Remnants from issue 5382
       localStorage.removeItem('subscribed_list_for_language');

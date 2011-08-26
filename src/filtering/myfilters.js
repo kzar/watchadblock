@@ -1,4 +1,4 @@
-// Requires jquery
+// Requires jquery and must be on a page with access to the background page
 
 // MyFilters class manages subscriptions and the FilterSet.
 
@@ -7,78 +7,68 @@
 // Inputs: none.
 function MyFilters() {
   var subscriptions_json = localStorage.getItem('filter_lists') || "null";
-  var stored_subscriptions = JSON.parse(subscriptions_json);
+  this._subscriptions = JSON.parse(subscriptions_json);
+  this._official_options = this._make_subscription_options();
 
-  if (stored_subscriptions == null) {
+  if (!this._subscriptions) {
     // Brand new user. Install some filters for them.
-    stored_subscriptions = MyFilters._load_default_subscriptions();
+    this._subscriptions = this._load_default_subscriptions();
   }
 
-  // In case a new version of AdBlock has removed or added some
-  // subscription options, merge with MyFilters.__subscription_options.
-  this._subscriptions = MyFilters.__merge_with_default(stored_subscriptions);
+  for (var id in this._subscriptions) {
+    // In case a default subscription was removed from the default list,
+    // change it to a user submitted list and vice versa
+    this._subscriptions[id].user_submitted = !this._official_options[id];
+  }
 
-  // TODO temp issue 5748: unsubscribe over-subscribed users, because Chrome
-  // crashes on heavy pages when every list is subscribed to.  Installed
-  // 7/2011.  Remove after most users have gotten this update.
-  (function(that) {
-    if (localStorage["pruned_oversubscription"])
-      return;
+  // Use the stored properties, and only add any new properties and/or lists
+  // if they didn't exist in this._subscriptions
+  for (var id in this._official_options) {
+    if (!this._subscriptions[id])
+      this._subscriptions[id] = {};
+    var sub = this._subscriptions[id];
+    var official = this._official_options[id];
 
-    function isDefault(id) {
-      return that._subscriptions[id].user_submitted == false;
+    sub.initialUrl = sub.initialUrl || official.url;
+    sub.url = sub.url || official.url;
+    if (sub.initialUrl != official.url) {
+      // The official URL was changed. Use it. In case of a redirect, this
+      // doesn't happen as only sub.url is changed, not sub.initialUrl.
+      sub.initialUrl = official.url;
+      sub.url = official.url;
     }
-    var numDefaultsSubscribed = 0;
-    // We consider them oversubscribed if they have at least 10 of the
-    // default lists subscribed (5 or 6 should be all anyone ever needs:
-    // AdBlock, EasyList, EasyPrivacy, the locale-specific one, and one or
-    // two others for polyglots.)
-    for (var id in that._subscriptions) {
-      if (isDefault(id) && that._subscriptions[id].subscribed)
-        numDefaultsSubscribed++;
-    }
-    if (numDefaultsSubscribed < 10)
-      return;
+    sub.requiresList = official.requiresList;
+    sub.subscribed = sub.subscribed || false;
+  }
 
-    // Whittle them down to at most 4
-    var keep = [ "easylist", "easyprivacy", "adblock_custom",
-      MyFilters._listIdForThisLocale() ];
-    for (var id in that._subscriptions) {
-      var mayDiscard = (keep.indexOf(id) == -1);
-      if (isDefault(id) && mayDiscard)
-        that._subscriptions[id].subscribed = false;
-    }
+  // Temp: remove an old localStorage entry
+  delete localStorage['three_times_normalized_filters'];
 
-    // Don't prune more than once
-    localStorage["pruned_oversubscription"] = "true";
-    STATS.msg("pruned_oversubscription");
-  })(this);
-  // end temp code
+  // Build the filter list
+  this._onSubscriptionChange(true);
 
-  this.update();
-
-  // Check for subscriptions to be updated on startup
-  this.freshen_async();
-
-  var hours = 1;
+  // On startup and then every hour, check if a list is out of date and has to
+  // be updated
+  this.checkFilterUpdates();
   var that = this;
   window.setInterval(
-    function() { that.freshen_async(); }, 
-    hours * 60 * 60 * 1000
+    function() { that.checkFilterUpdates(); }, 
+    60 * 60 * 1000
   );
 }
 
-// Save this._subscriptions to disk, create a new FilterSet instance, and fire 
-// the "updated" handler.
-// Inputs: none.
-// Returns: null, after completion.
-MyFilters.prototype.update = function() {
+// When a subscription property changes, this function stores it
+// Inputs: rebuild? boolean, true if the filterset should be rebuilt
+MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   localStorage.setItem('filter_lists', JSON.stringify(this._subscriptions));
 
-  this.rebuild();
+  // The only reasons to (re)build the filter set are
+  // - when AdBlock starts
+  // - when a filter list text is changed ([un]subscribed or updated a list)
+  if (rebuild)
+    this.rebuild();
 
-  if (!SAFARI) // TODO: because of Issue 5384
-    chrome.extension.sendRequest({command: "filters_updated"});
+  chrome.extension.sendRequest({command: "filters_updated"});
 }
 
 // Rebuild filters based on the current settings and subscriptions.
@@ -94,7 +84,7 @@ MyFilters.prototype.rebuild = function() {
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
   //Exclude google search results ads if the user has checked that option
-  if (get_settings().show_google_search_text_ads) { // from background
+  if (get_settings().show_google_search_text_ads) {
     texts.push("@@||google.*/search?$elemhide"); // standard search
     texts.push("@@||www.google.*/|$elemhide");   // Google Instant
   }
@@ -123,139 +113,128 @@ MyFilters.prototype.rebuild = function() {
   );
 }
 
-// If any subscribed filters are out of date, asynchronously load updated
-// versions, then call this.update().  Asynchronous.
-// Inputs: force?:bool -- if true, update all subscribed lists even if
-//         they aren't out of date.
-// Returns: null (asynchronous)
-MyFilters.prototype.freshen_async = function(force) {
-  function out_of_date(subscription) {
-    if (force) return true;
+// Change a property of a subscription or check if it has to be updated
+// Inputs: id: the id of the subscription to change
+//         subData: object containing all data that should be changed
+//         forceFetch: if the subscriptions have to be fetched again forced
+MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
+  var subscribeRequiredListToo = false;
+  var listDidntExistBefore = false;
 
-    var millis = new Date().getTime() - subscription.last_update;
-    return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
-  }
-  // Fetch the latest filter text, put it in this._subscriptions, and update
-  // ourselves.
-  var that = this;
-  function fetch_and_update(filter_id) {
-    var url = that._subscriptions[filter_id].url;
-    $.ajax({
-      url: url,
-      cache: false,
-      success: function(text) {
-        // In case the subscription disappeared while we were out
-        // (which would happen if they unsubscribed to a user-submitted
-        // filter)...
-        if (that._subscriptions[filter_id] == undefined)
-          return;
-
-        // Sometimes text is "". Happens sometimes.  Weird, I know.
-        // Every legit list starts with a comment.
-        if (text && text.length != 0 && Filter.isComment(text)) {
-          log("Fetched " + url);
-          that._updateSubscriptionText(filter_id, text);
-        } else {
-          that._subscriptions[filter_id].last_update_failed = true;
-          log("Fetched, but invalid list " + url);
-        }
-
-        that.update();
-      },
-      error: function() {
-        if (that._subscriptions[filter_id]) {
-          that._subscriptions[filter_id].last_update_failed = true;
-          that.update();
-        }
-        log("Error fetching " + url);
-      }
-    });
-  }
-  for (var id in this._subscriptions) {
-    if (this._subscriptions[id].subscribed &&
-        out_of_date(this._subscriptions[id])) {
-      fetch_and_update(id);
-    }
-  }
-}
-
-// Get a subscription with default settings that has to be updated ASAP
-MyFilters.get_default_subscription = function(id) {
-  var s_o = MyFilters.__subscription_options;
-  return {
-    url: s_o[id] ? s_o[id].url : id.substring(4),
-    name: s_o[id] ? s_o[id].name : id.substring(4),
-    user_submitted: s_o[id] ? false : true,
-    subscribed: true,
-    text: '',
-    last_update: 0, //update ASAP
-    requiresList: s_o[id] ? s_o[id].requiresList : undefined,
-    expiresAfterHours: 120
-  };
-}
-
-// Subscribe to a filter list.
-// Inputs: id:string id of this filter -- either a well-known id, or "url:xyz",
-//                   where xyz is the URL of a user-specified filterlist.
-//         text:string value of the filter.  It's the caller's job to fetch
-//                     and provide this.
-//         requiresList?: id of a list that is required by the current list
-// Returns: none, upon completion.
-MyFilters.prototype.subscribe = function(id, text, requiresList) {
-  var wellKnownId = null;
-  if (this._subscriptions[id] == undefined) {
-    // New user-submitted filter.
-    if (id.substring(0,4) != "url:")
-      return; // dunno what went wrong, but let's quietly ignore it.
-    // See if they accidentally subscribed to a URL that is already well-known.
-    for (var existingId in this._subscriptions) {
-      if (id == 'url:' + this._subscriptions[existingId].url)
-        wellKnownId = existingId;
-    }
-    if (wellKnownId) {
-      id = wellKnownId;
-    } else {
+  // Working with an unknown list: create the list entry
+  if (!this._subscriptions[id]) {
+    id = this.customToDefaultId(id);
+    if (/^url\:.*/.test(id)) {
+      listDidntExistBefore = true;
       this._subscriptions[id] = {
-        url: id.substring(4), // "url:xyz" -> "xyz"
-        name: id.substring(4),
         user_submitted: true,
-        requiresList: requiresList
+        name: id.substr(4),
+        url: id.substr(4)
       };
     }
+    subscribeRequiredListToo = true;
+  }
+
+  // Subscribing to a well known list should also subscribe to a required list
+  if (!this._subscriptions[id].subscribed && subData.subscribed)
+    subscribeRequiredListToo = true;
+
+  // Apply all changes from subData
+  for (var property in subData)
+    if (subData[property] !== undefined)
+      this._subscriptions[id][property] = subData[property];
+
+  // Check if the required list is a well known list, but only if it is changed
+  if (subData.requiresList)
+    this._subscriptions[id].requiresList = 
+                   this.customToDefaultId(this._subscriptions[id].requiresList);
+
+  if (this._subscriptions[id].subscribed) {
+    // Check if the list has to be updated
+    function out_of_date(subscription) {
+      if (forceFetch) return true;
+      var millis = new Date().getTime() - subscription.last_update;
+      return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
+    }
+
+    if (!this._subscriptions[id].text || out_of_date(this._subscriptions[id]))
+      this.fetch_and_update(id, listDidntExistBefore);
+
   } else {
-    //default filter
-    wellKnownId = id;
+    // If unsubscribed, remove some properties
+    delete this._subscriptions[id].text;
+    delete this._subscriptions[id].last_update;
+    delete this._subscriptions[id].expiresAfterHours;
+    delete this._subscriptions[id].last_update_failed;
+    if (this._subscriptions[id].deleteMe)
+      delete this._subscriptions[id];
   }
 
-  // Subscribe to another list too if required.
+  // Notify of change.  If we subscribed, we rebuilt above; so we
+  // only force a rebuild if we unsubscribed.
+  this._onSubscriptionChange(subData.subscribed == false);
 
-  // If a user clicks abp:subscribe?location=a&requiresLocation=b, then
-  // even if our stored data about a doesn't mention b as a requiresList,
-  // we should subscribe to it.
-  var require = this._subscriptions[id].requiresList || requiresList;
-  if (require && !(this._subscriptions[require] && 
-                   this._subscriptions[require].subscribed)) {
-    this._subscriptions[require] = MyFilters.get_default_subscription(require);
-    this.update();
-    this.freshen_async();
+  // Subscribe to a required list if nessecary
+  if (subscribeRequiredListToo && this._subscriptions[id].requiresList)
+    this.changeSubscription(this._subscriptions[id].requiresList, {subscribed:true});
+}
+
+// Fetch a filter list and parse it
+// id:        the id of the list
+// isNewList: true when the list is completely new and must succeed or 
+//            otherwise it'll be deleted.
+MyFilters.prototype.fetch_and_update = function(id, isNewList) {
+  var url = this._subscriptions[id].url;
+  var that = this;
+  function onError() {
+    that._subscriptions[id].last_update_failed = true;
+    that._onSubscriptionChange();
+    if (isNewList) {
+      // Delete the list. The user subscribed to an invalid list URL.
+      // Delay it a bit, so subscribe.html can first finish it's async call to
+      // see if the subscription succeeded or not. Otherwise it assumes it was
+      // a well-known subscription and will report a succesfull fetch
+      window.setTimeout(function() {
+        that.changeSubscription(id, {subscribed: false, deleteMe: true});
+      }, 500);
+    }
   }
+  $.ajax({
+    url: url,
+    cache: false,
+    success: function(text) {
+      // In case the subscription disappeared while we were out
+      if (!that._subscriptions[id] || 
+          !that._subscriptions[id].subscribed)
+        return;
 
-  this._updateSubscriptionText(id, text);
-
-  this.update();
+      // Sometimes text is "". Happens sometimes.  Weird, I know.
+      // Every legit list starts with a comment.
+      if (text && text.length != 0 && Filter.isComment(text.trim())) {
+        log("Fetched " + url);
+        that._updateSubscriptionText(id, text);
+        that._onSubscriptionChange(true);
+      } else {
+        log("Fetched, but invalid list " + url);
+        onError();
+      }
+    },
+    error: function() {
+      if (that._subscriptions[id])
+        onError();
+      log("Error fetching " + url);
+    }
+  });
 }
 
 // Record that subscription_id is subscribed, was updated now, and has
 // the given text.  Requires that this._subscriptions[subscription_id] exists.
-MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
-  var sub_data = this._subscriptions[subscription_id];
-
-  sub_data.subscribed = true;
-  sub_data.last_update = new Date().getTime();
-  delete sub_data.last_update_failed;
+MyFilters.prototype._updateSubscriptionText = function(id, text) {
+  this._subscriptions[id].last_update = new Date().getTime();
+  delete this._subscriptions[id].last_update_failed;
 
   // Record how many days until we need to update the subscription text
-  sub_data.expiresAfterHours = 120; // The default
+  this._subscriptions[id].expiresAfterHours = 120; // The default
   var checkLines = text.split('\n', 15); //15 lines should be enough
   var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
   var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
@@ -264,268 +243,194 @@ MyFilters.prototype._updateSubscriptionText = function(subscription_id, text) {
       continue;
     var match = checkLines[i].match(redirectRegex);
     if (match) {
-      sub_data.url = match[1]; //assuming the URL is always correct
-      sub_data.last_update = 0; //update ASAP
+      this._subscriptions[id].url = match[1]; //assuming the URL is always correct
+      this._subscriptions[id].last_update = 0;
     }
     match = checkLines[i].match(expiresRegex);
     if (match) {
       var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
-      sub_data.expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
+      this._subscriptions[id].expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
     }
   }
 
-  sub_data.text = FilterNormalizer.normalizeList(text);
+  this._subscriptions[id].text = FilterNormalizer.normalizeList(text);
+
+  // The url changed. Simply refetch...
+  if (this._subscriptions[id].last_update == 0)
+    this.changeSubscription(id, {});
 }
 
-// Unsubscribe from a filter list.  If the id is not a well-known list, remove
-// it from _subscriptions completely.
-// Inputs: id:string of filter list from which to unsubscribe.
-//         del: (bool) if the filter should be removed or not
-// Returns: none, upon completion.
-MyFilters.prototype.unsubscribe = function(id, del) {
-  if (this._subscriptions[id] == undefined)
-    return;
-
-  this._subscriptions[id].subscribed = false;
-  delete this._subscriptions[id].text;
-  delete this._subscriptions[id].last_update;
-  delete this._subscriptions[id].expiresAfterHours;
-  delete this._subscriptions[id].last_update_failed;
-
-  if (!(id in MyFilters.__subscription_options) && del) {
-    delete this._subscriptions[id];
-  }
-  this.update();
-}
-
-// Return a map from subscription id to
-// {
-//   subscribed:bool - whether user is subscribed to this subscription
-//   url:string - url of this subscription
-//   name:string - friendly name of this subscription
-//   user_submitted:bool - true if this is a url typed in by the user
-//   last_update?:number - undefined if unsubscribed.  The ticks at which
-//                         this subscription was last fetched.  0 if it was
-//                         loaded off the hard drive and never successfully
-//                         fetched from the web.
-//   expiresAfterHours?:number - if subscribed, the number of hours after 
-//                               which this subscription should be refetched
-// }
-MyFilters.prototype.get_subscriptions_minus_text = function() {
-  var result = {};
+// Checks if subscriptions have to be updated
+// Inputs: force? (boolean), true if every filter has to be updated
+MyFilters.prototype.checkFilterUpdates = function(force) {
   for (var id in this._subscriptions) {
-    result[id] = {
-      url: this._subscriptions[id].url,
-      subscribed: this._subscriptions[id].subscribed,
-      user_submitted: this._subscriptions[id].user_submitted,
-      name: ((MyFilters.__subscription_options[id] == undefined) ?
-                   this._subscriptions[id].name :
-                   MyFilters.__subscription_options[id].name),
-      last_update: this._subscriptions[id].last_update,
-      expiresAfterHours: this._subscriptions[id].expiresAfterHours
+    if (this._subscriptions[id].subscribed) {
+      this.changeSubscription(id, {}, force);
     };
   }
-  return result;
 }
 
-// Returns the ID of the list appropriate for the user's locale, or ''
-MyFilters._listIdForThisLocale = function() {
-  var language = navigator.language.match(/^([a-z]+).*/i)[1];
-  switch(language) {
-    case 'bg': return 'easylist_plus_bulgarian';
-    case 'cs': return 'czech';
-    case 'cu': return 'easylist_plus_bulgarian';
-    case 'da': return 'danish';
-    case 'de': return 'easylist_plus_german';
-    case 'es': return 'easylist_plus_spanish';
-    case 'fi': return 'easylist_plus_finnish';
-    case 'fr': return 'easylist_plus_french';
-    case 'he': return 'israeli';
-    case 'hu': return 'hungarian';
-    case 'it': return 'italian';
-    case 'ja': return 'japanese';
-    case 'ko': return 'easylist_plun_korean';
-    case 'nb': return 'easylist_plus_norwegian';
-    case 'nl': return 'dutch';
-    case 'nn': return 'easylist_plus_norwegian';
-    case 'no': return 'easylist_plus_norwegian';
-    case 'pl': return 'easylist_plus_polish';//sorry for the other polish list
-    case 'ro': return 'easylist_plus_romanian';
-    case 'ru': return 'russian';
-    case 'uk': return 'ukranian';
-    case 'zh': return 'chinese';
-    default: return '';
-  }
+// Checks if a custom id is of a known list
+// Inputs: id: the list id to compare
+// Returns the id that should be used
+MyFilters.prototype.customToDefaultId = function(id) {
+  var urlOfCustomList = id.substr(4);
+  for (var defaultList in this._official_options)
+    if (this._official_options[defaultList].url == urlOfCustomList)
+      return defaultList;
+  // We use a mirror of EasyList. However, to prevent users from getting
+  // subscribed to both the mirror as the official one, have this check...
+  if (urlOfCustomList == "https://easylist-downloads.adblockplus.org/easylist.txt")
+    return "easylist";
+  return id;
 }
 
 // If the user wasn't subscribed to any lists, subscribe to
 // EasyList, AdBlock custom and (if any) a localized subscription
 // Inputs: none.
-MyFilters._load_default_subscriptions = function() {
+// Returns an object containing the subscribed lists
+MyFilters.prototype._load_default_subscriptions = function() {
   var result = {};
+
+  // Returns the ID of the list appropriate for the user's locale, or ''
+  function listIdForThisLocale() {
+    var language = navigator.language.match(/^([a-z]+).*/i)[1];
+    switch(language) {
+      case 'bg': return 'easylist_plus_bulgarian';
+      case 'cs': return 'czech';
+      case 'cu': return 'easylist_plus_bulgarian';
+      case 'da': return 'danish';
+      case 'de': return 'easylist_plus_german';
+      case 'es': return 'easylist_plus_spanish';
+      case 'fi': return 'easylist_plus_finnish';
+      case 'fr': return 'easylist_plus_french';
+      case 'he': return 'israeli';
+      case 'hu': return 'hungarian';
+      case 'it': return 'italian';
+      case 'ja': return 'japanese';
+      case 'ko': return 'easylist_plun_korean';
+      case 'nb': return 'easylist_plus_norwegian';
+      case 'nl': return 'dutch';
+      case 'nn': return 'easylist_plus_norwegian';
+      case 'no': return 'easylist_plus_norwegian';
+      case 'pl': return 'easylist_plus_polish';//sorry for the other Polish list
+      case 'ro': return 'easylist_plus_romanian';
+      case 'ru': return 'russian';
+      case 'uk': return 'ukranian';
+      case 'zh': return 'chinese';
+      default: return '';
+    }
+  }
 
   //Update will be done immediately after this function returns
-  result["adblock_custom"] = MyFilters.get_default_subscription('adblock_custom');
-  result["easylist"] = MyFilters.get_default_subscription('easylist');
-  var list_for_lang = MyFilters._listIdForThisLocale();
+  result["adblock_custom"] = { subscribed: true };
+  result["easylist"] = { subscribed: true };
+  
+  var list_for_lang = listIdForThisLocale();
   if (list_for_lang)
-    result[list_for_lang] = MyFilters.get_default_subscription(list_for_lang);
+    result[list_for_lang] = { subscribed: true };
 
   return result;
 }
 
-// Merge the given list of subscription data with the default list.  Any
-// items marked as "user_submitted=false" in the data which is not in the
-// default list are converted to user_submitted; any items in the default
-// list that aren't in the user data are added as unsubscribed.
-// Input: subscription_data:subscription object loaded from storage
-// Returns: subscription_data object modified to be merged with the
-// default subscription list.
-MyFilters.__merge_with_default = function(subscription_data) {
-  for (var id in subscription_data) {
-    if (MyFilters.__subscription_options[id] == undefined)
-      subscription_data[id].user_submitted = true; // maybe already was
-    // TODO: since the URLs in the official options are always canonical for
-    // well-known lists, stop storing the url as a property in local storage,
-    // and start calling MyFilters.urlForId(id), which parses url:xyz style
-    // ids, or looks up the answer in the official options.  
-    // But for now, make sure that any subscribed filters get their URLs
-    // updated with the new address.
-    else {
-      subscription_data[id].url = MyFilters.__subscription_options[id].url;
-      subscription_data[id].requiresList = 
-                              MyFilters.__subscription_options[id].requiresList;
-    }
-  }
-  for (var id in MyFilters.__subscription_options) {
-    if (subscription_data[id] == undefined) {
-      subscription_data[id] = {
-        url: MyFilters.__subscription_options[id].url,
-        name: MyFilters.__subscription_options[id].name,
-        user_submitted: false,
-        requiresList: MyFilters.__subscription_options[id].requiresList,
-        subscribed: false
-      };
-    }
-  }
-  return subscription_data;
-}
-// Called below to fill MyFilters.__subscription_options.
-MyFilters.__make_subscription_options = function() {
-  var official_options = {
-    "adblock_custom": {
+// Used to create the list of default subscriptions
+// Called when MyFilters is created.
+// Returns: that list
+MyFilters.prototype._make_subscription_options = function() {
+  // When modifying a list, IDs mustn't change!
+  return {
+    "adblock_custom": { // AdBlock custom filters
       url: "http://chromeadblock.com/filters/adblock_custom.txt",
-      name: "AdBlock custom filters (recommended)",
     },
-    "easylist": {
-      url: "http://adblockplus.mozdev.org/easylist/easylist.txt",
-      name: "EasyList (recommended)",
+    "easylist": { // EasyList
+      url: "http://adblockplus.mozdev.org/easylist/easylist.txt"
     },
-    "easylist_plus_bulgarian": {
+    "easylist_plus_bulgarian": { // Additional Bulgarian filters
       url: "http://stanev.org/abp/adblock_bg.txt",
-      name: " - additional Bulgarian filters",
       requiresList: "easylist",
     },
-    "dutch": { //id must not change!
+    "dutch": { // Additional Dutch filters
       url: "http://sites.google.com/site/dutchadblockfilters/AdBlock_Dutch_hide.txt",
-      name: " - additional Dutch filters",
       requiresList: "easylist",
     },
-    "easylist_plus_finnish": {
+    "easylist_plus_finnish": { // Additional Finnish filters
       url: "http://www.wiltteri.net/wiltteri.txt",
-      name: " - additional Finnish filters",
       requiresList: "easylist",
     },
-    "easylist_plus_french": {
+    "easylist_plus_french": { // Additional French filters
       url: "http://lian.info.tm/liste_fr.txt",
-      name: " - additional French filters",
       requiresList: "easylist",
     },
-    "easylist_plus_german": {
+    "easylist_plus_german": { // Additional German filters
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
-      name: " - additional German filters",
       requiresList: "easylist",
     },
-    "easylist_plus_norwegian": {
+    "easylist_plus_norwegian": { // Additional Norwegian filters
       url: "http://home.online.no/~mlangsho/adblock.txt",
-      name: " - additional Norwegian filters",
       requiresList: "easylist",
     },
-    "easylist_plus_polish": {
+    "easylist_plus_polish": { // Additional Polish filters
       url: "http://adblocklist.org/adblock-pxf-polish.txt",
-      name: " - additional Polish filters",
       requiresList: "easylist",
     },
-    "easylist_plus_romanian": {
+    "easylist_plus_romanian": { // Additional Romanian filters
       url: "http://www.zoso.ro/pages/rolist.txt",
-      name: " - additional Romanian filters",
       requiresList: "easylist",
     },
-    "russian": { //id must not change!
+    "russian": { // Additional Russian filters
       url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
-      name: " - additional Russian filters",
       requiresList: "easylist",
     },
-    "chinese": {
+    "chinese": { // Additional Chinese filters
       url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
-      name: "Chinese filters",
+      requiresList: "easylist",
     },
-    "czech": {
+    "czech": { // Czech filters
       url: "http://adblock.dajbych.net/adblock.txt",
-      name: "Czech filters",
     },
-    "danish": {
+    "danish": { // Danish filters
       url: "http://adblock.schack.dk/block.txt",
-      name: "Danish filters",
     },
-    "hungarian": {
+    "hungarian": { // Hungarian filters
       url: "http://pete.teamlupus.hu/hufilter.txt",
-      name: "Hungarian filters",
     },
-    "israeli": {
+    "israeli": { // Israeli filters
       url: "https://secure.fanboy.co.nz/israelilist/IsraelList.txt",
-      name: "Israeli filters",
     },
-    "italian": {
+    "italian": { // Italian filters
       url: "http://mozilla.gfsolone.com/filtri.txt",
-      name: "Italian filters",
     },
-    "japanese": {
+    "japanese": { // Japanese filters
       url: "https://secure.fanboy.co.nz/fanboy-japanese.txt",
-      name: "Japanese filters",
     },
-    "easylist_plun_korean": { // no longer w/ easylist, but ids mustn't change
+    "easylist_plun_korean": {  // Korean filters
       url: "http://abp-corset.googlecode.com/hg/corset.txt",
-      name: "Korean filters",
     },
-    "polish": {
+    "polish": { // Polish filters
       url: "http://www.niecko.pl/adblock/adblock.txt",
-      name: "Polish filters",
     },
-    "easylist_plus_spanish": { //id must not change!
+    "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
-      name: "Spanish filters",
     },
-    "ukranian": {
+    "ukranian": { // Ukranian filters
       url: "http://adblock.oasis.org.ua/banlist.txt",
-      name: "Ukranian filters",
     },
-    "easyprivacy": {
+    "easyprivacy": { // EasyPrivacy
       url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
-      name: "EasyPrivacy",
     },
   };
-  var result = {};
-  for (var id in official_options) {
-    result[id] = {
-      url: official_options[id].url,
-      name: official_options[id].name,
-      subscribed: false,
-      user_submitted: false,
-      requiresList: official_options[id].requiresList
-    };
-  }
-  return result;
 }
-// The list of official subscription options.
-MyFilters.__subscription_options = MyFilters.__make_subscription_options();
+
+/* subscription properties:
+url: url of subscription
+initialUrl: the hardcoded url. Same as .url except when redirected
+name: name to display for subscription
+user_submitted (bool): submitted by the user or not
+requiresList: id of a list required for this list
+subscribed (bool): if you are subscribed to the list or not
+last_update (date): time of the last succesfull update
+last_update_failed (bool): true if the last update attempt failed
+text: the filters of the subscription
+expiresAfterHours (int): the time after which the subscription expires
+deleteMe (bool): if the subscription has to be deleted
+*/
