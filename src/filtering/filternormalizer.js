@@ -158,7 +158,7 @@ var FilterNormalizer = {
 
     // :not may contain every selector except for itself and tree selectors
     // therefore simply put the content of it at the end of the filters
-    test = /\:not\(\ *([^\ \)\>\+\~\,]+)\ *\)/g;
+    test = /\:not\(\ *([^\ \)\>\+\~\,]+\)?)\ *\)/g;
     var match = selector.match(test);
     if (match)
       for (var i=0; i<match.length; i++) {
