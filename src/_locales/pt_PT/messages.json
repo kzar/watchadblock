@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "A extensão mais popular para o Chrome, com mais de 2 milhões de utilizadores! Bloqueia anúncios por todo o lado na Web.",
     "description": "Extension description in manifest"
@@ -294,6 +294,10 @@
   "fetchinglabel": {
     "message": "Actualizando... por favor aguarde.",
     "description": "Status label"
+  },
+  "invalidListUrl": {
+    "message": "Lista URL inválida. Vai ser apagada.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Falhou a inscrição deste filtro!",
@@ -626,7 +630,7 @@
     "description": "multiple choice option"
   },
   "nodefaultfilter1": {
-    "message": "Nós não temos uma lista padrão de filtros para esse idioma.<br/> Por favor tente encontrar uma lista apropriada que suporte esse idioma $link$ ou bloqueir o anúncio só para si em 'Personalizar'.",
+    "message": "Nós não temos uma lista padrão de filtros para esse idioma.<br/> Por favor tente encontrar uma lista apropriada que suporte esse idioma $link$ ou bloqueie o anúncio só para si em 'Personalizar'.",
     "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders": {
       "link": {
@@ -998,7 +1002,7 @@
     "description": "Text of link to a page with fixes to common problems and a list of known issues"
   },
   "faq": {
-    "message": "FAQ (Questões Frequentemente Respondidas)",
+    "message": "FAQ (Questões Frequentementes)",
     "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
   },
   "report_ad_on_page": {
@@ -1128,6 +1132,10 @@
   "modifypath": {
     "message": "Página:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "last_update_failed": {
+    "message": "A última actualização falhou; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "show_ads_except_for": {
     "message": "Mostrar anúncios <i>em todo o lado</i> excepto para estes sites...",
