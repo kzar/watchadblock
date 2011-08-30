@@ -155,7 +155,7 @@
               return { cancel: false };
             // I'm not sure whether the API will let us access requests that
             // aren't from tabs, but if so we don't want them.
-            if (tabId == -1 || tabId == null) { // TODO: should eventually only use null, not -1: see chromium:93373
+            if (tabId == -1) {
               log("Ignoring non-tab-related request to", details.url);
               return { cancel: false };
             }
