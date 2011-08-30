@@ -29,6 +29,86 @@ if (SAFARI) {
     x.addEventListener("message", handler, false);
   };
 
+  // chrome.extension.sendRequest must be implemented differently
+  // on the global page compared to other pages or content scripts.
+  // This is the version to use when not on the global page.
+  var nonGlobalSendRequest = (function() {
+    // The function we'll return at the end of all this
+    function theFunction(data, callback) {
+      var callbackToken = "callback" + Math.random();
+
+      // Listen for a response for our specific request token.
+      addOneTimeResponseListener(callbackToken, callback);
+
+      var x = safari.self.tab || safari.application.activeBrowserWindow.activeTab.page;
+      x.dispatchMessage("request", {
+        data: data,
+        callbackToken: callbackToken
+      });
+    }
+
+    // Make a listener that, when it hears sendResponse for the given 
+    // callbackToken, calls callback(resultData) and deregisters the 
+    // listener.
+    function addOneTimeResponseListener(callbackToken, callback) {
+
+      var responseHandler = function(messageEvent) {
+        if (messageEvent.name != "response")
+          return;
+        if (messageEvent.message.callbackToken != callbackToken)
+          return;
+
+        callback(messageEvent.message.data);
+        // Change to calling in 0-ms setTimeout, as Safari team thinks
+        // this will work around their crashing until they can release
+        // a fix.
+        // safari.self.removeEventListener("message", responseHandler, false);
+        window.setTimeout(function() {
+          safari.self.removeEventListener("message", responseHandler, false);
+        }, 0);
+      };
+
+      addListener(responseHandler);
+    }
+
+    return theFunction;
+  })();
+
+  // chrome.extension.sendRequest must be implemented differently
+  // on the global page compared to other pages or content scripts.
+  // This is the version to use when on the global page.
+  var globalSendRequest = (function() {
+    // TODO
+  })();
+
+  // chrome.extension.onRequest must be implemented differently
+  // on the global page compared to other pages or content scripts.
+  // This is the version to use when on the global page.
+  var globalOnRequestListener = function(handler) {
+    addListener(function(messageEvent) {
+      // Only listen for "sendRequest" messages
+      if (messageEvent.name != "request")
+        return;
+
+      var request = messageEvent.message.data;
+      var id = chrome.__getTabId(messageEvent.target);
+
+      var sender = { tab: { id: id, url: messageEvent.target.url } };
+      var sendResponse = function(dataToSend) {
+        var responseMessage = { callbackToken: messageEvent.message.callbackToken, data: dataToSend };
+        messageEvent.target.page.dispatchMessage("response", responseMessage);
+      }
+      handler(request, sender, sendResponse);
+    });
+  };
+
+  // chrome.extension.onRequest must be implemented differently
+  // on the global page compared to other pages or content scripts.
+  // This is the version to use when not on the global page.
+  var nonGlobalOnRequestListener = function(handler) {
+    // TODO
+  };
+
   // Replace the 'chrome' object with a Safari adapter.
   chrome = {
     // Track tabs that make requests to the global page, assigning them
@@ -62,66 +142,9 @@ if (SAFARI) {
         return safari.extension.baseURI + path;
       },
 
-      sendRequest: (function() {
-        // The function we'll return at the end of all this
-        function theFunction(data, callback) {
-          var callbackToken = "callback" + Math.random();
-
-          // Listen for a response for our specific request token.
-          addOneTimeResponseListener(callbackToken, callback);
-
-          var x = safari.self.tab || safari.application.activeBrowserWindow.activeTab.page;
-          x.dispatchMessage("request", {
-            data: data,
-            callbackToken: callbackToken
-          });
-        }
-
-        // Make a listener that, when it hears sendResponse for the given 
-        // callbackToken, calls callback(resultData) and deregisters the 
-        // listener.
-        function addOneTimeResponseListener(callbackToken, callback) {
-
-          var responseHandler = function(messageEvent) {
-            if (messageEvent.name != "response")
-              return;
-            if (messageEvent.message.callbackToken != callbackToken)
-              return;
-
-            callback(messageEvent.message.data);
-            // Change to calling in 0-ms setTimeout, as Safari team thinks
-            // this will work around their crashing until they can release
-            // a fix.
-            // safari.self.removeEventListener("message", responseHandler, false);
-            window.setTimeout(function() {
-              safari.self.removeEventListener("message", responseHandler, false);
-            }, 0);
-          };
-
-          addListener(responseHandler);
-        }
-
-        return theFunction;
-      })(),
-
+      sendRequest: nonGlobalSendRequest,
       onRequest: {
-        addListener: function(handler) {
-          addListener(function(messageEvent) {
-            // Only listen for "sendRequest" messages
-            if (messageEvent.name != "request")
-              return;
-
-            var request = messageEvent.message.data;
-            var id = chrome.__getTabId(messageEvent.target);
-
-            var sender = { tab: { id: id, url: messageEvent.target.url } };
-            var sendResponse = function(dataToSend) {
-              var responseMessage = { callbackToken: messageEvent.message.callbackToken, data: dataToSend };
-              messageEvent.target.page.dispatchMessage("response", responseMessage);
-            }
-            handler(request, sender, sendResponse);
-          });
-        },
+        addListener: globalOnRequestListener
       },
 
       connect: function(port_data) {
