@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "Наиболее популярное расширение Chrome с более чем 2 миллионами пользователей! Блокирует рекламу по всему Интернету.",
     "description": "Extension description in manifest"
@@ -30,7 +30,7 @@
   },
   "chromebutton_how_to_hide": {
     "message": "Чтобы скрыть кнопку щелкните её правой кнопкой мыши и выберите Hide Button.  Вы можете показать ее вновь, нажав Ключ | Инструменты | Расширения.",
-    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+    "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "sliderexplanation": {
     "message": "Сдвигайте ползунок до тех пор, пока реклама не будет заблокирована правильно, а заблокированный элемент выглядит пригодным.",
@@ -50,7 +50,7 @@
   },
   "blacklisternotsure": {
     "message": "<b>Не уверены?</b> Тогда нажмите кнопку 'Блокировать!'.",
-    "description": "Blacklister attribute choosing page message. 'Block it!' must be the same as the text of the 'buttonblockit' message."
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisterthefilter": {
     "message": "Фильтры, которые могут быть изменены на странице Параметры:",
@@ -66,7 +66,17 @@
   },
   "blacklistereditfilter": {
     "message": "Введите правильный фильтр и нажмите OK",
-    "description": "Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
+  },
+  "blacklistereditinvalid1": {
+    "message": "Недопустимый фильтр: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
   },
   "blacklisterblockedelement": {
     "message": "Блокируемый элемент:",
@@ -142,11 +152,11 @@
 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock не будет работать на соответствующих страницах:",
-    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'. The URL will appear on the next line."
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   },
   "you_can_slide_to_change": {
     "message": "Вы можете сдвинуться ниже, чтобы изменить именно те страницы, на которых AdBlock не будет работать.",
-    "description": "Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "whitelistertitle2": {
     "message": "Не запускать AdBlock на...",
@@ -286,6 +296,10 @@
     "message": "Получение... подождите.",
     "description": "Status label"
   },
+  "invalidListUrl": {
+    "message": "Недопустимый список URL. Будет удален.",
+    "description": "Message when you subscribe to a non-list URL"
+  },
   "failedtofetchfilter": {
     "message": "Не удалось извлечь этот фильтр!",
     "description": "Error messagebox"
@@ -418,7 +432,10 @@
     "message": "Украинские фильтры (рекомендуется)",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy",
+    "description": "A filter list. Don't translate 'EasyPrivacy', it's just here so you can add something like (privacy protection) or such to it."
+  },
   "blacklistclickmessage": {
     "message": "Щелкните правой кнопкой мыши рекламу на странице, чтобы заблокировать её - или заблокируйте здесь вручную.",
     "description": "Message at the top of the blacklist options tab"
@@ -429,7 +446,7 @@
   },
   "filterlistsrock": {
     "message": "Списки фильтров блокируют большинство рекламы в Интернете. Вы также можете:",
-    "description": "Header text on the Customize tab. 'Filter lists' should be the same text as the tabfilterlists message."
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
   "blockmoreads": {
     "message": "Блокировать больше рекламы:",
@@ -1020,7 +1037,7 @@
   },
   "now_you_have_adblock_hooray": {
     "message": "Теперь у вас есть AdBlock! Ура!",
-    "description": "Install page title. 'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
   },
   "any_new_tabs_you_open_Will_be_automatically_ad_free": {
     "message": "Любые новые вкладки будут открываться автоматически без рекламы.",
@@ -1044,11 +1061,11 @@
   },
   "please_fill_out_adblocks_one_question_setup": {
     "message": "Пожалуйста, ответьте на один вопрос в настройках AdBlock:",
-    "description": "Install page instructions. The one question is a checkbox."
+    "description": "Install page instructions.  The one question is a checkbox."
   },
   "that_was_easy": {
     "message": "Это было легко",
-    "description": "Install page: button text at end of setup section to proceed to the next section. The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
   "lets_get_you_set_up": {
     "message": "Настройте!",
@@ -1076,7 +1093,7 @@
   },
   "click_safari_prefs": {
     "message": "Нажмите <b>Настройки Safari</b>.",
-    "description": "First step to turn on autoupdate.  -&gt; makes a right arrow (->)."
+    "description": "First step to turn on autoupdate.  &rArr; makes a right arrow (->)."
   },
   "click_extensions": {
     "message": "Нажмите <b>Расширения</b> в верхнем правом углу.",
@@ -1119,6 +1136,10 @@
   "modifypath": {
     "message": "Стр.:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "last_update_failed": {
+    "message": "Последнее обновление потерпело неудачу; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "show_ads_except_for": {
     "message": "Показывать рекламу <i>везде</i>, кроме этих доменов...",
