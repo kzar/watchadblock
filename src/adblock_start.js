@@ -107,7 +107,17 @@ beforeLoadHandler = function(event) {
   };
   addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
-    event.preventDefault();
+
+    // Work around bugs.webkit.org/show_bug.cgi?id=65412
+    // Allow the resource to load, but hide it afterwards.
+    // Probably a normal site will never reach 250.
+    beforeLoadHandler.blockCount++;
+    if (beforeLoadHandler.blockCount > 250) {
+      log("ABORTING: blocked over 250 requests, probably an infinite loading loop");
+      beforeLoadHandler.blockCount = 0;
+    } else
+      event.preventDefault();
+
     if (el.nodeName == "FRAME")
       removeFrame(el);
     else if (elType & ElementTypes.background)
@@ -135,6 +145,7 @@ beforeLoadHandler = function(event) {
     }
   }
 }
+beforeLoadHandler.blockCount = 0;
 
 // Return the CSS text that will hide elements matching the given 
 // array of selectors.
