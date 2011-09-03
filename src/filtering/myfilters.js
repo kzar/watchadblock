@@ -129,7 +129,6 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
       listDidntExistBefore = true;
       this._subscriptions[id] = {
         user_submitted: true,
-        name: id.substr(4),
         url: id.substr(4)
       };
     }
@@ -425,7 +424,6 @@ MyFilters.prototype._make_subscription_options = function() {
 /* subscription properties:
 url: url of subscription
 initialUrl: the hardcoded url. Same as .url except when redirected
-name: name to display for subscription
 user_submitted (bool): submitted by the user or not
 requiresList: id of a list required for this list
 subscribed (bool): if you are subscribed to the list or not

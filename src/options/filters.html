@@ -56,15 +56,15 @@
           entry.order = "5easyprivacy";
         else if (entry.user_submitted)
           entry.order = "6" +
-              (translate("filter" + id) || entry.name).toLowerCase();
+              (translate("filter" + id) || entry.url).toLowerCase();
         else if (entry.requiresList)
           entry.order = "3" +
-              (translate("filter" + id) || entry.name).toLowerCase();
+              (translate("filter" + id) || entry.url).toLowerCase();
         else
           entry.order = "4" +
-              (translate("filter" + id) || entry.name).toLowerCase();
+              (translate("filter" + id) || entry.url).toLowerCase();
         entry.id = id;
-        entry.name = translate("filter" + id) || entry.name;
+        entry.name = translate("filter" + id) || entry.url;
         sorted_list.push(entry);
       }
       sorted_list.sort(function(a,b) {
