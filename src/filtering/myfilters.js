@@ -16,15 +16,16 @@ function MyFilters() {
   }
 
   for (var id in this._subscriptions) {
-    // In case a default subscription was removed from the default list,
-    // change it to a user submitted list and vice versa
+    // Delete unsubscribed ex-official lists.
     if (!this._official_options[id] && !this._subscriptions[id].user_submitted
         && !this._subscriptions[id].subscribed) {
-      // It used to be an official option, but it has been removed from the 
-      // defaults. Remove it if the user didn't subscribe.
       delete this._subscriptions[id];
-    } else
+    } 
+    // Convert subscribed ex-official lists into user-submitted lists.
+    // Convert subscribed ex-user-submitted lists into official lists.
+    else {
       this._subscriptions[id].user_submitted = !this._official_options[id];
+    }
   }
 
   // Use the stored properties, and only add any new properties and/or lists
