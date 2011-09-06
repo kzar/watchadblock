@@ -26,6 +26,9 @@
       font-size: 12px;
       max-width: 100%;
     }
+    ::-webkit-input-placeholder {
+      color: #345;
+    }
   </style>
 
   <script type="text/javascript" src="../filtering/filternormalizer.js"></script>
@@ -48,6 +51,7 @@
         var customFilterText = $("#txtFiltersAdvanced").val();
         $("#txtFiltersAdvanced").val(filter + "\n" + customFilterText);
         saveFilters();
+        $(".addControls").slideUp();
       }
 
       // Convert a messy list of domains to ~domain1.com|~domain2.com format
@@ -57,15 +61,6 @@
           domainList = "~" + domainList;
         return domainList;
       }
-
-      // Set the default values
-      $("#txtUserFilterCss").val('div[class*="exampleClass"][id="someBigAd"]');
-      $("#txtUserFilterDomain").val('*');
-
-      $("#txtBlockUrl").val(".com/flashAd");
-      $("#txtBlockUrlDomain").val("*");
-
-      $("#txtUnblock").val('http://sleeplessgeek.blogspot.com/');
 
       $("#txtBlacklist").focus(function() {
         // Find the blacklist entry in the user's filters, and put it
@@ -207,8 +202,7 @@
         event.preventDefault();
         var myControls = $(this).closest("div").find(".addControls");
         $(".addControls").not(myControls).slideUp();
-        myControls.slideDown();
-        $('input:text:not([id*="Domain"])', myControls).select();
+        myControls.slideToggle();
       });
 
       $("#btnEditAdvancedFilters").click(function() {
@@ -258,10 +252,10 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtBlockUrl" type="text" style="width:300px;"/></td>
+                <td><input id="txtBlockUrl" type="text" style="width:300px;" placeholder=".com/flashAd" /></td>
                 <td class="guide">$domain=</td>
-                <td><input id="txtBlockUrlDomain" type="text"/></td>
-                <td><input id="btnAddUrlBlock" type="button" i18n_value="buttonblockit" /></td>
+                <td><input id="txtBlockUrlDomain" placeholder="*" type="text"/></td>
+                <td><input id="btnAddUrlBlock" type="button" i18n_value="buttonblockit" disabled="disabled"/></td>
               </tr>
             </table>
           </div>
@@ -279,10 +273,11 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtUserFilterDomain" type="text" style="width:200px;"/></td>
+                <td><input id="txtUserFilterDomain" type="text" placeholder="*" style="width:200px;"/></td>
                 <td class="guide">##</td>
-                <td><input id="txtUserFilterCss" type="text" style="width:300px;"/></td>
-                <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit"/></td>
+                <td><input id="txtUserFilterCss" type="text" style="width:300px;"
+                     placeholder='div[class*="exampleClass"][id="someBigAd"]'/></td>
+                <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit" disabled="disabled"/></td>
               </tr>
             </table>
           </div>
@@ -302,9 +297,10 @@
               </tr>
               <tr>
                 <td class="guide">@@</td>
-                <td><input id="txtUnblock" type="text" style="width:400px;"/></td>
+                <td><input id="txtUnblock" type="text" style="width:400px;"
+                         placeholder="http://sleeplessgeek.blogspot.com/"/></td>
                 <td class="guide">$document</td>
-                <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonok" /></td>
+                <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonok" disabled="disabled"/></td>
               </tr>
             </table>
           </div>
