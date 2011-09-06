@@ -64,7 +64,6 @@
           entry.order = "4" +
               (translate("filter" + id) || entry.url).toLowerCase();
         entry.id = id;
-        entry.name = translate("filter" + id) || entry.url;
         sorted_list.push(entry);
       }
       sorted_list.sort(function(a,b) {
@@ -100,7 +99,7 @@
           });
 
         var name = $("<label>").
-          text(entry.name).
+          text(translate("filter" + entry.id) || entry.url).
           attr("title", entry.url).
           attr("for", "checkbox_" + i);
 
