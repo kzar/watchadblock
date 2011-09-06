@@ -411,7 +411,7 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://secure.fanboy.co.nz/fanboy-japanese.txt",
     },
     "easylist_plun_korean": {  // Korean filters
-      url: "http://abp-corset.googlecode.com/hg/corset.txt",
+      url: "https://secure.fanboy.co.nz/fanboy-korean.txt",
     },
     "polish": { // Polish filters
       url: "http://www.niecko.pl/adblock/adblock.txt",
