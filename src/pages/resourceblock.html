@@ -500,8 +500,11 @@
 
             // Add the filter
             $("#addthefilter").click(function() {
-              BGcall('add_custom_filter', createfilter(), function() {
-                alert(translate("filterhasbeenadded"));
+              BGcall('add_custom_filter', createfilter(), function(ex) {
+                if (!ex)
+                  alert(translate("filterhasbeenadded"));
+                else
+                  alert(translate("blacklistereditinvalid1", ex));
                 window.close();
               });
             });
