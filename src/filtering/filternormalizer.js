@@ -64,10 +64,15 @@ var FilterNormalizer = {
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
 
-      // Ignore [style] special case that WebKit parses badly.
+      // On a few sites, we have to ignore [style] rules due to crbug 68705.
+      // Doesn't happen in Safari.
+      if (!SAFARI && /style([\^\$\*]?=|\])/.test(filter)) {
+        var ignoreStyleRulesOnTheseSites = "~mail.google.com,~mail.yahoo.com";
+        if (filter[0] != "#") ignoreStyleRulesOnTheseSites += ",";
+        filter = ignoreStyleRulesOnTheseSites + filter;
+      }
+
       var parsedFilter = new SelectorFilter(filter);
-      if (/style([\^\$\*]?=|\])/.test(filter))
-        return null;
 
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
