@@ -72,6 +72,11 @@ var FilterNormalizer = {
         filter = ignoreStyleRulesOnTheseSites + filter;
       }
 
+      // This was a filter which only worked in older Gecko browsers (FF3)
+      // They'll never match in WebKit browsers.
+      if (/\~pregecko2.*\#\#/.test(filter))
+        return null;
+
       var parsedFilter = new SelectorFilter(filter);
 
     } else { // If it is a blocking rule...
