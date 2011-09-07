@@ -64,8 +64,9 @@ var FilterNormalizer = {
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
 
-      // On a few sites, we have to ignore [style] rules due to crbug 68705
-      if (/style([\^\$\*]?=|\])/.test(filter)) {
+      // On a few sites, we have to ignore [style] rules due to crbug 68705.
+      // Doesn't happen in Safari.
+      if (!SAFARI && /style([\^\$\*]?=|\])/.test(filter)) {
         var ignoreStyleRulesOnTheseSites = "~mail.google.com,~mail.yahoo.com";
         if (filter[0] != "#") ignoreStyleRulesOnTheseSites += ",";
         filter = ignoreStyleRulesOnTheseSites + filter;
