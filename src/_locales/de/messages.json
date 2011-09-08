@@ -68,6 +68,16 @@
     "message": "Bitte geben Sie einen korrekten Filter ein und bestätigen Sie mit OK",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
+  "blacklistereditinvalid1": {
+    "message": "Der Filter ist ungültig: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
+  },
   "blacklisterblockedelement": {
     "message": "Entferntes Element:",
     "description": "Tells the user what the blocked element is on the slider page"
@@ -286,6 +296,10 @@
     "message": "Abrufen... bitte warten.",
     "description": "Status label"
   },
+  "invalidListUrl": {
+    "message": "Ungültige Filterlistenadresse. Dieser Filterlisteneintrag wird gelöscht.",
+    "description": "Message when you subscribe to a non-list URL"
+  },
   "failedtofetchfilter": {
     "message": "Filterlistenabruf fehlgeschlagen!",
     "description": "Error messagebox"
@@ -372,6 +386,10 @@
   },
   "filterrussian": {
     "message": " - zusätzliche russische Filter",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterchinese": {
+    "message": " - zusätzliche chinesische Filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -976,6 +994,18 @@
       }
     }
   },
+  "project_home": {
+    "message": "Projektseite",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Hilfe",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "FAQ",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
   "report_ad_on_page": {
     "message": "Werbung auf dieser Seite melden",
     "description": "Link in the button"
@@ -1103,6 +1133,10 @@
   "modifypath": {
     "message": "Seite:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "last_update_failed": {
+    "message": "Das letzte Update schlug fehl; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "show_ads_except_for": {
     "message": "Werbung auf <i>allen</i> Seiten anzeigen, außer auf diesen Domains...",
