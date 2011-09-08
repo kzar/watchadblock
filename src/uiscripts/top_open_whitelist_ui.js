@@ -122,3 +122,5 @@ function top_open_whitelist_ui() {
     }
   });
 }
+
+//@ sourceURL=/uiscripts/top_open_whitelist_ui.js

@@ -41,3 +41,5 @@ Overlay.prototype.display = function() {
       return false;
     });
 }
+
+//@ sourceURL=/uiscripts/blacklisting/overlay.js
