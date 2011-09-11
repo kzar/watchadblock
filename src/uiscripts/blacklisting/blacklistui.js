@@ -305,14 +305,14 @@ BlacklistUi.prototype._makeFilter = function() {
   var detailsDiv = $("#adblock-details", this._ui_page2);
 
   if ($("input:checkbox#cknodeName", detailsDiv).is(':checked')) {
-    result.push(el.attr('nodeName'));
+    result.push(el.prop('nodeName'));
     // Some iframed ads are in a bland iframe.  If so, at least try to
     // be more specific by walking the chain from the body to the iframe
     // in the CSS selector.
-    if (el.attr('nodeName') == 'IFRAME' && el.attr('id') == '') {
+    if (el.prop('nodeName') == 'IFRAME' && el.attr('id') == '') {
       var cur = el.parent();
-      while (cur.attr('nodeName') != 'BODY') {
-        result.unshift(cur.attr('nodeName') + " ");
+      while (cur.prop('nodeName') != 'BODY') {
+        result.unshift(cur.prop('nodeName') + " ");
         cur = cur.parent();
       }
     }
@@ -367,7 +367,8 @@ BlacklistUi.prototype._redrawPage2 = function() {
   var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href'];
   for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
-    var val = BlacklistUi._ellipsis(el.attr(attr));
+    var longVal = attr == "nodeName" ? el.prop("nodeName") : el.attr(attr);
+    var val = BlacklistUi._ellipsis(longVal);
 
     if (!val)
       continue;
