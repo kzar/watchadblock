@@ -211,3 +211,5 @@ ClickWatcher.prototype._build_ui = function() {
 
   return page;
 }
+
+//@ sourceURL=/uiscripts/blacklisting/clickwatcher.js

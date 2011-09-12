@@ -40,3 +40,5 @@ function top_open_blacklist_ui(options) {
 
   });
 }
+
+//@ sourceURL=/uiscripts/top_open_blacklist_ui.js

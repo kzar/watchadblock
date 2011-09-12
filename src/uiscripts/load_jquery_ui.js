@@ -32,3 +32,5 @@ function load_jquery_ui(callback) {
     }
   });
 }
+
+//@ sourceURL=/uiscripts/load_jquery_ui.js
