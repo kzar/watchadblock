@@ -68,6 +68,16 @@
     "message": "Prosím, zadejte správný filtr a stiskněte OK",
     "description": "Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
   },
+  "blacklistereditinvalid1": {
+    "message": "Tento filtr je neplatný: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
+  },
   "blacklisterblockedelement": {
     "message": "Blokovaný element:",
     "description": "Tells the user what the blocked element is on the slider page"
@@ -286,6 +296,10 @@
     "message": "Načítám... Prosím, čekejte.",
     "description": "Status label"
   },
+  "invalidListUrl": {
+    "message": "Neplatný seznam URL. Bude smazán.",
+    "description": "Message when you subscribe to a non-list URL"
+  },
   "failedtofetchfilter": {
     "message": "Nepodařilo se načíst tento filtr!",
     "description": "Error messagebox"
@@ -374,6 +388,10 @@
     "message": " - dodatečné ruské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filterchinese": {
+    "message": " - dodatečné čínské filtry",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filterczech": {
     "message": "České filtry (doporučeno)",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -413,6 +431,10 @@
   "filterukranian": {
     "message": "Ukrajinské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (ochrana soukromí)",
+    "description": "A filter list. Don't translate 'EasyPrivacy', it's just here so you can add something like (privacy protection) or such to it."
   },
 
   "blacklistclickmessage": {
@@ -1116,6 +1138,10 @@
     "message": "Stránka:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
 },
+  "last_update_failed": {
+    "message": "Poslední aktualizace se nezdařila; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
     "message": "Zobrazovat reklamy <i>všude</i> kromě těchto domén...",
     "description": "Section title for blacklisting section of Customize tab"
