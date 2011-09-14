@@ -271,10 +271,11 @@
 
       // In case a subscription changed (updated or subscribed via subscribe.html)
       // then update the subscription list.
-      chrome.extension.onRequest.addListener(function(request) {
+      chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
         if (request.command != "filters_updated")
           return;
         updateSubscriptionList();
+        sendResponse({});
       });
     });
   </script>

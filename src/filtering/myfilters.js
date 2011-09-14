@@ -75,8 +75,7 @@ MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   if (rebuild)
     this.rebuild();
 
-  if (!SAFARI) // see Issue 5384, avoid Safari crashes
-    chrome.extension.sendRequest({command: "filters_updated"});
+  chrome.extension.sendRequest({command: "filters_updated"});
 }
 
 // Rebuild filters based on the current settings and subscriptions.
