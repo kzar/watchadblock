@@ -367,7 +367,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
   var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href'];
   for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
-    var longVal = attr == "nodeName" ? el.prop("nodeName") : el.attr(attr);
+    var longVal = (attr == "nodeName" ? el.prop("nodeName") : el.attr(attr));
     var val = BlacklistUi._ellipsis(longVal);
 
     if (!val)
