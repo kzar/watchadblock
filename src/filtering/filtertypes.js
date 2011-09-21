@@ -161,6 +161,10 @@ PatternFilter._parseRule = function(text) {
     if (option == 'object_subrequest')
       option = 'object';
 
+    // 'background' is a synonym for 'image'.
+    if (option == 'background')
+      option = 'image';
+    
     if (option in ElementTypes) { // this option is a known element type
       if (inverted)
         disallowedElementTypes |= ElementTypes[option];
@@ -194,10 +198,6 @@ PatternFilter._parseRule = function(text) {
 
   // Extract the disallowed types from the allowed types
   result.allowedElementTypes &= ~disallowedElementTypes;
-
-  // Since ABP 1.3 'image' can also refer to 'background'
-  if (result.allowedElementTypes & ElementTypes.image)
-    result.allowedElementTypes |= ElementTypes.background;
 
   // We parse whitelist rules too, in which case we already know it's a
   // whitelist rule so can ignore the @@s.
