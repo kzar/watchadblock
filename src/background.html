@@ -172,6 +172,12 @@
               return { cancel: false };
             }
             var elType = ElementTypes.fromOnBeforeRequestType(details.type);
+            // details.frameId is the id of the frame that loaded the resource,
+            // BUT when details.type == 'sub_frame' it's the id of the
+            // loaded resource (a frame) itself, so we want the parent frame's
+            // id.  We guess that's the tab itself since we can't detect
+            // subframes loading subsubframes.
+            frameId = (elType == ElementTypes.subdocument ? 0 : frameId);
             var frameDomain = frameData.domainOfFrame(tabId, frameId);
             // TODO: rename matches()'s pageDomain to frameDomain, because $third-party and $domain
             // are relative to the frame, not the page.  E.g. s1.com loads iframe s2.com loads
