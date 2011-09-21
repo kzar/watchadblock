@@ -60,6 +60,7 @@
 
           // Watch for requests for new tabs and frames, and track their URLs.
           // Inputs: details: object from onBeforeRequest callback
+          // Returns false if this request's tab+frame are not trackable.
           track: function(details) {
             var tabId = details.tabId, frameId = details.frameId;
             var fd = frameData;
@@ -74,7 +75,7 @@
                 fd.get(tabId, frameId).url = fd.get(tabId, 0).url;
                 log("Null frame", frameId, "found; giving it the tab's URL.");
               }
-              return;
+              return (fd[tabId] && fd[tabId][frameId]);
             }
 
             // The tab or its frame has navigated.  Update its information.
@@ -85,10 +86,11 @@
             // Don't record subframes on tabs that we aren't tracking (e.g. a
             // chrome:// tab that loads an http:// frame)
             if (frameId != 0 && !fd[tabId])
-              return;
+              return false;
             // Record the new frame's stats.
             fd.get(tabId, frameId).url = details.url;
             log("=========== Tracking frame", tabId, frameId, details.url);
+            return true;
           },
 
           // Returns the domain of the URL of the specified tab+frame.
@@ -100,14 +102,13 @@
             return frame.domain;
           },
 
-          // True if the given request details represent a request sent by
-          // a whitelisted page.
-          isOnWhitelistedPage: function(details) {
-            var sourcePage = frameData.get(details.tabId, 0);
+          // True if the given tabId is whitelisted.
+          isOnWhitelistedTab: function(tabId) {
+            var sourceTab = frameData.get(tabId, 0);
             // Cache the answer, since the page will generate many requests.
-            if (sourcePage.whitelisted === undefined)
-              sourcePage.whitelisted = page_is_whitelisted(sourcePage.url);
-            return sourcePage.whitelisted;
+            if (sourceTab.whitelisted === undefined)
+              sourceTab.whitelisted = page_is_whitelisted(sourceTab.url);
+            return sourceTab.whitelisted;
           },
 
           // Record that a url+elType was or was not blocked on the given tab.
@@ -160,14 +161,13 @@
               return { cancel: false };
             }
             // In case it's a document load, track the URL of the frame.
-            frameData.track(details);
             // If we aren't tracking the frame, it was open when AdBlock was
             // started.  Ignore and don't store data for the frame.
-            if (!frameData[tabId] || !frameData[tabId][frameId]) {
+            if (!frameData.track(details)) {
               log("Ignoring unknown tab+frame", tabId, frameId);
               return { cancel: false };
             }
-            if (frameData.isOnWhitelistedPage(details)) {
+            if (frameData.isOnWhitelistedTab(tabId)) {
               log("Tab", tabId, "is whitelisted, ignoring", details.url.substring(0, 100));
               return { cancel: false };
             }
