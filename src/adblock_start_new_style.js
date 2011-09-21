@@ -1,10 +1,12 @@
 // Elements that, if blocked, should be removed from the page.
 var mightRemove = {
+  // Maps key (elType + url) -> { blocked, count_of_times_key_was_sent_early }
+  // See issue chromium:97392
+  sentEarly: {},
+
   // Add an element that we'll later decide to remove from the page (or not).
-  // Inputs: elType:ElementType of el: an element. 
-  //         url: the full URL of the resource el wants to load.
-  add: function(elType, el, url) {
-    var key = elType + " " + url;
+  // Inputs: key: how to find the element when block results arrive
+  add: function(key, el) { 
     if (mightRemove[key] == undefined)
       mightRemove[key] = [ el ];
     else
@@ -13,9 +15,27 @@ var mightRemove = {
 
   // Record each element that loads a resource, in case it must be destroyed
   trackElement: function(event) {
+    if (event.url == 'about:blank')
+      return;
+
     var elType = typeForElement(event.target);
-    if (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))
-      mightRemove.add(elType, event.target, event.url);
+    if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
+      return;
+
+    var key = elType + " " + event.url;
+    var early = mightRemove.sentEarly[key];
+    if (early) {
+      log("Processed early block result:", key, early.blocked);
+      early.count -= 1;
+      if (early.count == 0) {
+        delete mightRemove.sentEarly[key];
+        log("Deleted early block result key", key);
+      }
+      destroyElement(event.target, elType);
+    }
+    else {
+      mightRemove.add(key, event.target);
+    }
   },
 
   // When the background sends us the block results for some elements, remove
@@ -25,6 +45,11 @@ var mightRemove = {
   blockResultsHandler: function(request, sender, sendResponse) {
     if (request.command != 'block-results')
       return;
+    var myFrame = document.location.href.replace(/#.*$/, "");
+    if (request.frameUrl != myFrame) {
+      log("My frame is", myFrame, "so I'm ignoring block results for", request.frameUrl);
+      return;
+    }
     for (var i = 0; i < request.results.length; i++) {
       var result = request.results[i];
       var elType = result[0], url = result[1], blocked = result[2];
@@ -35,6 +60,14 @@ var mightRemove = {
           mightRemove[key].forEach(function(el) { destroyElement(el, elType); });
         delete mightRemove[key];
       }
+      else {
+        // See issue chromium:97392
+        log("Received early block result:", key, blocked);
+        if (mightRemove.sentEarly[key] == undefined)
+          mightRemove.sentEarly[key] = { blocked: blocked, count: 0};
+        mightRemove.sentEarly[key].count += 1;
+      }
+
     }
     sendResponse({});
   },
