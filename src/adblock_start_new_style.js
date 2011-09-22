@@ -31,7 +31,8 @@ var mightRemove = {
         delete mightRemove.sentEarly[key];
         log("Deleted early block result key", key);
       }
-      destroyElement(event.target, elType);
+      if (early.blocked)
+        destroyElement(event.target, elType);
     }
     else {
       mightRemove.add(key, event.target);
