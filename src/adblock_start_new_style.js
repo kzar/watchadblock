@@ -1,20 +1,26 @@
-// Elements that, if blocked, should be removed from the page.
-var mightRemove = {
-  // Maps key (elType + url) -> { blocked, count_of_times_key_was_sent_early }
-  // See issue chromium:97392
-  sentEarly: {},
+// We track two events:
+//   A: beforeload -- an element has loaded which we should remove if blocked
+//   B: block-results -- sent by onBeforeRequest telling us which URLs
+//      were blocked and which were not.
+//
+// Because they can come in any order, and multiple As can come in for one B,
+// and multiple identical Bs may come in for different groups of As, we must
+// do the following:
+//
+//   When A arrives, store the element.  If we have both A and B, process them.
+//   When B arrives, store the verdict.  If we have both A and B, process them.
+//   function processMatch:
+//       Unstore all A elements and one B verdict.
+//       If verdict is 'blocked', remove the A elements from the DOM.
+//
+//   Running processMatch is actually deferred, so that if 5 As come after 1 B,
+//   the first A gives the other 4 As a chance to store their elements before
+//   processing their matching B.
+//
+// See issue chromium:97392 for more details.
 
-  // Add an element that we'll later decide to remove from the page (or not).
-  // Inputs: key: how to find the element when block results arrive
-  add: function(key, el) { 
-    if (mightRemove[key] == undefined)
-      mightRemove[key] = [ el ];
-    else
-      mightRemove[key].push(el);
-  },
-
-  // Record each element that loads a resource, in case it must be destroyed
-  trackElement: function(event) {
+var elementTracker = {
+  onBeforeload: function(event) {
     if (event.url == 'about:blank')
       return;
 
@@ -22,62 +28,67 @@ var mightRemove = {
     if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
       return;
 
-    var key = elType + " " + event.url;
-    var early = mightRemove.sentEarly[key];
-    if (early) {
-      log("Processed early block result:", key, early.blocked);
-      early.count -= 1;
-      if (early.count == 0) {
-        delete mightRemove.sentEarly[key];
-        log("Deleted early block result key", key);
-      }
-      if (early.blocked)
-        destroyElement(event.target, elType);
-    }
-    else {
-      mightRemove.add(key, event.target);
-    }
+    elementTracker._store(elType, event.url, 'elements', event.target);
   },
 
-  // When the background sends us the block results for some elements, remove
-  // the blocked ones.
-  // Inputs:
-  //   request: { results: array of [elType, url, blocked:bool] triples }
-  blockResultsHandler: function(request, sender, sendResponse) {
+  onBlockResults: function(request, sender, sendResponse) {
     if (request.command != 'block-results')
       return;
+
     var myFrame = document.location.href.replace(/#.*$/, "");
     if (request.frameUrl != myFrame) {
       log("My frame is", myFrame, "so I'm ignoring block results for", request.frameUrl);
       return;
     }
+
     for (var i = 0; i < request.results.length; i++) {
       var result = request.results[i];
       var elType = result[0], url = result[1], blocked = result[2];
-      var key = elType + " " + url;
-      if (mightRemove[key]) {
-        log("Got block result", blocked, "for", key);
-        if (blocked)
-          mightRemove[key].forEach(function(el) { destroyElement(el, elType); });
-        delete mightRemove[key];
-      }
-      else {
-        // See issue chromium:97392
-        log("Received early block result:", key, blocked);
-        if (mightRemove.sentEarly[key] == undefined)
-          mightRemove.sentEarly[key] = { blocked: blocked, count: 0};
-        mightRemove.sentEarly[key].count += 1;
-      }
-
+      elementTracker._store(elType, url, 'verdicts', blocked);
     }
     sendResponse({});
   },
+
+  _store: function(elType, url, targetList, value) {
+    var key = elType + " " + url;
+    if (!elementTracker[key])
+      elementTracker[key] = { elements: [], verdicts: [], elType: elType };
+    var data = elementTracker[key];
+    data[targetList].push(value);
+    log((targetList == 'elements' ? value.nodeName:value) + " is", targetList, "#", data[targetList].length, "for key", key.substring(0, 80));
+
+    if (data.elements.length == 0 || data.verdicts.length == 0 || data.starting)
+      return;
+
+    // we have enough data to act (see above for why it's deferred)
+    data.starting = true;
+    window.setTimeout(function() {
+      data.starting = false;
+      elementTracker._processMatch(key);
+    }, 0);
+  },
+
+  _processMatch: function(key) {
+    var data = elementTracker[key];
+    if (!data || data.verdicts.length == 0) {
+      log("This shouldn't happen", data && data.verdicts);
+      return; // shouldn't happen
+    }
+
+    var shouldBlock = data.verdicts[0];
+    log(data.elements.length, shouldBlock?"elements will be REMOVED.":"elements are harmless.", key);
+    if (shouldBlock)
+      data.elements.forEach(function(el) { destroyElement(el, data.elType); });
+    data.elements = [];
+    data.verdicts.pop();
+    if (data.verdicts.length == 0)
+      delete elementTracker[key];
+  }
 };
 
-
 function adblock_begin_new_style() {
-  document.addEventListener("beforeload", mightRemove.trackElement, true);
-  chrome.extension.onRequest.addListener(mightRemove.blockResultsHandler);
+  document.addEventListener("beforeload", elementTracker.onBeforeload, true);
+  chrome.extension.onRequest.addListener(elementTracker.onBlockResults);
 
   var opts = { 
     domain: document.location.hostname,
@@ -86,9 +97,9 @@ function adblock_begin_new_style() {
   BGcall('get_content_script_data', opts, function(data) {
     if (data.abort || data.page_is_whitelisted || data.adblock_is_paused) {
       // Our services aren't needed.  Stop all content script activity.
-      document.removeEventListener("beforeload", mightRemove.trackElement, true);
-      chrome.extension.onRequest.removeListener(mightRemove.blockResultsHandler);
-      delete mightRemove;
+      document.removeEventListener("beforeload", elementTracker.onBeforeload, true);
+      chrome.extension.onRequest.removeListener(elementTracker.onBlockResults);
+      delete elementTracker;
       return;
     }
 
