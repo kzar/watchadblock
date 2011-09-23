@@ -13,6 +13,8 @@ function typeForElement(el) {
     case 'FRAME': 
     case 'IFRAME': return ElementTypes.subdocument;
     case 'LINK': 
+      // favicons are reported as 'other' by onBeforeRequest.
+      // if this is changed, we should update this too.
       if (/(^|\s)icon($|\s)/i.test(el.rel))
         return ElementTypes.other;
       return ElementTypes.stylesheet;
