@@ -308,9 +308,9 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'da': return 'danish';
       case 'de': return 'easylist_plus_german';
       case 'es': return 'easylist_plus_spanish';
+      case 'el': return 'easylist_plus_greek';
       case 'fi': return 'easylist_plus_finnish';
       case 'fr': return 'easylist_plus_french';
-      case 'gr': return 'easylist_plus_greek';
       case 'he': return 'israeli';
       case 'hu': return 'hungarian';
       case 'it': return 'italian';
