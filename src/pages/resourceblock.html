@@ -119,7 +119,7 @@
         this.filters = filters;
       };
       FakeFilterSet.prototype = {
-        matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+        matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
           var f = this.filters, len = f.length;
           for (var i = 0; i < len; i++) {
             if (f[i].matches(url, loweredUrl, elementType, isThirdParty))

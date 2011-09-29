@@ -92,11 +92,11 @@ FilterSet.prototype = {
     return result;
   },
 
-  // Return the filter that matches this url+elementType on this pageDomain:
+  // Return the filter that matches this url+elementType on this frameDomain:
   // the filter in a relevant entry in this.items who is not also in a 
   // relevant entry in this.exclude.
-  matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
-    var limited = this._viewFor(pageDomain);
+  matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
+    var limited = this._viewFor(frameDomain);
     for (var k in limited.items) {
       var entry = limited.items[k];
       for (var i = 0; i < entry.length; i++) {
@@ -147,17 +147,17 @@ BlockingFilterSet.prototype = {
   //   url:string - The URL of the resource to possibly block
   //   elementType:ElementType - the type of element that is requesting the 
   //                             resource
-  //   pageDomain:string - domain of the page on which the element resides
+  //   frameDomain:string - domain of the frame on which the element resides
   //   returnFilter?:bool - see Returns
   // Returns:
   //   if returnFilter is true:
   //       text of matching pattern/whitelist filter, null if no match
   //   if returnFilter is false:
   //       true if the resource should be blocked, false otherwise
-  matches: function(url, elementType, pageDomain, returnFilter) {
+  matches: function(url, elementType, frameDomain, returnFilter) {
     var urlDomain = BlockingFilterSet._domainFor(url);
     var urlOrigin = BlockingFilterSet._secondLevelDomainOnly(urlDomain);
-    var docOrigin = BlockingFilterSet._secondLevelDomainOnly(pageDomain);
+    var docOrigin = BlockingFilterSet._secondLevelDomainOnly(frameDomain);
     var isThirdParty = (urlOrigin != docOrigin);
 
     // matchCache approach taken from ABP
@@ -171,13 +171,13 @@ BlockingFilterSet.prototype = {
     url = url.substring(0, LENGTH_CUTOFF);
     var loweredUrl = url.toLowerCase();
 
-    var match = this.whitelist.matches(url, loweredUrl, elementType, pageDomain, isThirdParty);
+    var match = this.whitelist.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
     if (match) {
       log("Whitelisted: '" + match._rule + "' -> " + url);
       this._matchCache[key] = (returnFilter ? match._text : false);
       return this._matchCache[key];
     }
-    match = this.pattern.matches(url, loweredUrl, elementType, pageDomain, isThirdParty);
+    match = this.pattern.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
     if (match) {
       log("Matched: '" + match._rule + "' -> " + url);
       this._matchCache[key] = (returnFilter ? match._text: true);

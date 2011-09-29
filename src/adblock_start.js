@@ -35,7 +35,7 @@ function relativeToAbsoluteUrl(url) {
 }
 
 // Browser-agnostic canLoad function.
-// Returns false if data.url, data.elType, and data.pageDomain together
+// Returns false if data.url, data.elType, and data.frameDomain together
 // should not be blocked.
 function browser_canLoad(event, data) {
   if (SAFARI) {
@@ -50,7 +50,7 @@ function browser_canLoad(event, data) {
       return true;
     }
 
-    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.pageDomain);
+    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.frameDomain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
     else if (isMatched)
@@ -93,7 +93,7 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    pageDomain: document.location.hostname
+    frameDomain: document.location.hostname
   };
   addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
@@ -168,7 +168,7 @@ function adblock_begin() {
         this.filters = filters;
       };
       FakeFilterSet.prototype = {
-        matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+        matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
           var f = this.filters, len = f.length;
           for (var i = 0; i < len; i++) {
             if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
