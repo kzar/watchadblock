@@ -47,9 +47,8 @@
           return;
 
         // Stores url, whitelisting, and blocking info for a tabid+frameid
-        var frameData = {
-          // TODO: the rest of this
-
+        // TODO: can we avoid making this a global once 'old' style dies?
+        frameData = {
           // Return the data object for the given tabId and frameId, creating
           // it if necessary.
           get: function(tabId, frameId) {
@@ -109,6 +108,16 @@
             if (sourceTab.whitelisted === undefined)
               sourceTab.whitelisted = page_is_whitelisted(sourceTab.url);
             return sourceTab.whitelisted;
+          },
+
+          // Record a resource for the resource blocker.
+          storeResource: function(tabId, url, elType) {
+            // TODO: only store if in Advanced mode.  Probably should make
+            // settings object to avoid parsing from localStorage every time.
+            var data = frameData.get(tabId, 0);
+            if (data.resources === undefined)
+              data.resources = {};
+            data.resources[elType + ':|:' + url] = null;
           },
 
           // Record that a url+elType was or was not blocked on the given tab.
@@ -172,6 +181,7 @@
               return { cancel: false };
             }
             var elType = ElementTypes.fromOnBeforeRequestType(details.type);
+            frameData.storeResource(tabId, details.url, elType);
             // details.frameId is the id of the frame that loaded the resource,
             // BUT when details.type == 'sub_frame' it's the id of the
             // loaded resource (a frame) itself, so we want the parent frame's
@@ -223,7 +233,6 @@
         catch(ex) {
           abortNewStyle(ex);
         }
-
 
       })();
 
@@ -636,6 +645,23 @@
         };
         return theFunction;
       })();
+      }
+
+      // Open the resource blocker when requested from the Chrome popup.
+      launch_resourceblocker = function(tabId) {
+        if (GLOBAL_block_style == "old") {
+          chrome.tabs.sendRequest(tabId, "open_resourcelist");
+        } else {
+          // TODO: once 'old' style is dead, have resourceblock.html
+          // request the resources from frameData, whose entries are
+          // deleted on tab navigate/close.  For now, just proxy to
+          // the 'old' method.
+          var data = frameData.get(tabId, 0);
+          if (!data)
+          return;
+          var resources = Object.keys(data.resources);
+          show_resourceblocker(resources, { tab: { url: data.url } });
+        }
       }
 
       // Will open the resource blocking tab.

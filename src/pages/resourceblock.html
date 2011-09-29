@@ -132,11 +132,14 @@
 
       // Creates the table that shows all blockable items
       function generateTable() {
-        if (!SAFARI) {
+        if (!SAFARI && BG.GLOBAL_block_style == "old") {
+          // Why do we do this in Chrome instead of access BG._myfilters?
           var local_filterset = new BlockingFilterSet(
             new FakeFilterSet(domaindata.patternSerialized),
             new FakeFilterSet(domaindata.whitelistSerialized)
           );
+        } else if (!SAFARI) {
+          var local_filterset = BG._myfilters.blocking;
         } else {
           var local_filterset = {
             _matchCache: {},
@@ -556,7 +559,7 @@
         var opts = {
           domain: domain,
           include_texts: true,
-          style: "old"
+          style: (SAFARI ? "old" : BG.GLOBAL_block_style)
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
