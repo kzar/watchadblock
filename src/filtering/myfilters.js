@@ -308,6 +308,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'da': return 'danish';
       case 'de': return 'easylist_plus_german';
       case 'es': return 'easylist_plus_spanish';
+      case 'el': return 'easylist_plus_greek';
       case 'fi': return 'easylist_plus_finnish';
       case 'fr': return 'easylist_plus_french';
       case 'he': return 'israeli';
@@ -369,6 +370,10 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "easylist_plus_german": { // Additional German filters
       url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
+      requiresList: "easylist",
+    },
+    "easylist_plus_greek": { // Additional Greek filters
+      url: "http://www.void.gr/kargig/void-gr-filters.txt",
       requiresList: "easylist",
     },
     "easylist_plus_norwegian": { // Additional Norwegian filters
