@@ -112,8 +112,8 @@
 
           // Record a resource for the resource blocker.
           storeResource: function(tabId, url, elType) {
-            // TODO: only store if in Advanced mode.  Probably should make
-            // settings object to avoid parsing from localStorage every time.
+            if (!get_settings().show_advanced_options)
+              return;
             var data = frameData.get(tabId, 0);
             if (data.resources === undefined)
               data.resources = {};
@@ -289,7 +289,7 @@
 
       // OPTIONAL SETTINGS
 
-      get_settings = function() {
+      function Settings() {
         var defaults = {
           debug_logging: false,
           show_google_search_text_ads: false,
@@ -297,13 +297,25 @@
           show_advanced_options: false
         };
         var settings = storage_get('settings') || {};
-        return $.extend(defaults, settings);
+        this._data = $.extend(defaults, settings);
+      };
+      Settings.prototype = {
+        set: function(name, is_enabled) {
+          this._data[name] = is_enabled;
+          storage_set('settings', this._data);
+        },
+        get_all: function() {
+          return this._data;
+        }
+      };
+      _settings = new Settings();
+
+      get_settings = function() {
+        return _settings.get_all();
       }
 
       set_setting = function(name, is_enabled) {
-        var settings = get_settings();
-        settings[name] = is_enabled;
-        storage_set('settings', settings);
+        _settings.set(name, is_enabled);
 
         if (name == "debug_logging") {
           if (is_enabled)
