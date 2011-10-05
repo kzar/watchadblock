@@ -208,6 +208,9 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
   $.ajax({
     url: url,
     cache: false,
+    headers: {
+      Accept: "text/plain",
+    },
     success: function(text, status, xhr) {
       // In case the subscription disappeared while we were out
       if (!that._subscriptions[id] || 
@@ -235,7 +238,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
 
 // Record that subscription_id is subscribed, was updated now, and has
 // the given text.  Requires that this._subscriptions[subscription_id] exists.
-// The xhr variable can be used in case you want to search the response headers
+// The xhr variable is used for searching the response headers
 MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
   this._subscriptions[id].last_update = new Date().getTime();
   delete this._subscriptions[id].last_update_failed;
@@ -243,14 +246,12 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
   // Record how many hours until we need to update the subscription text. This
   // can be specified in the response headers or in the file. Defaults to 120.
   this._subscriptions[id].expiresAfterHours = 120;
-  if (xhr) {
-    var expires = xhr.getResponseHeader("Cache-Control");
-    if (expires) {
-      var match = expires.match(/max\-age\=(\d+)/);
-      if (match && parseInt(match[1])) {
-        match = Math.min(parseInt(match[1]) / 3600, 21*24); // 3 week maximum
-        this._subscriptions[id].expiresAfterHours = Math.max(1, match); // 1 hour minimum
-      }
+  var expires = xhr.getResponseHeader("Cache-Control");
+  if (expires) {
+    var match = expires.match(/max\-age\=(\d+)/);
+    if (match && parseInt(match[1])) {
+      match = Math.min(parseInt(match[1]) / 3600, 21*24); // 3 week maximum
+      this._subscriptions[id].expiresAfterHours = Math.max(1, match); // 1 hour minimum
     }
   }
   var checkLines = text.split('\n', 15); //15 lines should be enough
