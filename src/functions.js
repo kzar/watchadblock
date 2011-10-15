@@ -64,5 +64,10 @@ storage_get = function(key) {
 // Inputs: key:string, value:object.
 // Returns undefined.
 storage_set = function(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (ex) {
+    alert(translate("storage_quota_exeeded"));
+    chrome.tabs.create({url: chrome.extension.getURL("options/index.html#ui-tabs-2")});
+  }
 }

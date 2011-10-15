@@ -81,15 +81,15 @@
             // version, clear it.
             chrome.browserAction.setBadgeText({text: ''});
             chrome.browserAction.setTitle({title: ''});
-            localStorage.setItem('saw_badge_version', info_ver);
+            storage_set('saw_badge_version', info_ver);
 
-            if (localStorage.getItem('saw_badge_info_version') != info_ver) {
+            if (storage_get('saw_badge_info_version') != info_ver) {
               // If the user hasn't dismissed the latest notice, show it.
               $("#div_new_release").show();
 
               $("#new_release_close").click(function() {
                 $("#div_new_release").slideUp();
-                localStorage.setItem('saw_badge_info_version', info_ver);
+                storage_set('saw_badge_info_version', info_ver);
               });
             }
           });

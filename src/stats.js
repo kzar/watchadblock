@@ -19,7 +19,7 @@ STATS = (function() {
     // another.  Lest we accidentally show the install page to a user
     // just because he took forever in updating, let's not remove any
     // of these.
-    if (localStorage.userid || localStorage.user_id || localStorage.installed_at)
+    if (storage_get("userid") || storage_get("user_id") || storage_get("installed_at"))
       return false;
     return true;
   })();
@@ -33,7 +33,6 @@ STATS = (function() {
     if (storage_get("user_id")) { // oops, this value was broken; replace it.
       var user_id = storage_get("user_id").substring(0, 8) + time_suffix;
       storage_set("userid", user_id);
-      console.log("Converted user id " + localStorage.user_id + " to " + user_id);
       delete localStorage.user_id; // delete the old
     }
     // TODO end temp
