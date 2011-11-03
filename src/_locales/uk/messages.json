@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "Найпопулярніше розширення для Chrome, яким користуються понад 2 мільйони людей! Заблокуйте рекламу по всьому Інтернету.",
     "description": "Extension description in manifest"
@@ -296,6 +296,10 @@
     "message": "Забираємо... будь ласка, чекайте.",
     "description": "Status label"
   },
+  "invalidListUrl": {
+    "message": "Хибний URL списку. Його буде видалено.",
+    "description": "Message when you subscribe to a non-list URL"
+  },
   "failedtofetchfilter": {
     "message": "Помилка отримання фільтру!",
     "description": "Error messagebox"
@@ -368,6 +372,10 @@
     "message": " — додаткові німецькі фільтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasylist_plus_greek": {
+    "message": " — додаткові грецькі фільтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filtereasylist_plus_norwegian": {
     "message": " — додаткові норвезькі фільтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -382,6 +390,10 @@
   },
   "filterrussian": {
     "message": " — додаткові російські фільтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterchinese": {
+    "message": " — додаткові китайські фільтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -572,6 +584,10 @@
   },
   "lang_german": {
     "message": "Німецькою",
+    "description": "language"
+  },
+  "lang_greek": {
+    "message": "Грецькою",
     "description": "language"
   },
   "lang_hungarian": {
@@ -986,6 +1002,18 @@
       }
     }
   },
+  "project_home": {
+    "message": "Домашня сторінка проекту",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Допомога",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "ЧаПи",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
   "report_ad_on_page": {
     "message": "Звітувати про рекламу на цій сторінці",
     "description": "Link in the button"
@@ -1113,6 +1141,10 @@
   "modifypath": {
     "message": "Сторінка:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "last_update_failed": {
+    "message": "Останнє оновлення пройшло невдало; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "show_ads_except_for": {
     "message": "Показувати рекламу <i>всюди,</i> за винятком цих доменів...",
