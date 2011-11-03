@@ -95,6 +95,11 @@ MyFilters.prototype.rebuild = function() {
     texts.push("@@||www.google.*/|$elemhide");   // Google Instant
   }
 
+  if (!SAFARI)
+    texts.push("@@|chrome-extension:$document");
+  else
+    texts.push("@@|safari-extension:$document");
+
   texts = texts.join('\n').split('\n');
 
   // Remove duplicates and empties.

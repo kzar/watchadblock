@@ -311,7 +311,7 @@
           settings: settings,
           selectors: []
         };
-        if (whitelisted)
+        if (whitelisted || result.adblock_is_paused)
           return result;
 
         // Not whitelisted, and running on adblock_start.  We have two tasks:
