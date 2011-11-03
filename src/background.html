@@ -501,10 +501,19 @@
 
         // Brand new users don't see badge (or popup's info div).
         if (STATS.firstRun) {
-          localStorage.setItem('saw_badge_version', version_to_notify);
-          localStorage.setItem('saw_badge_info_version', version_to_notify);
+          storage_set('saw_badge_version', version_to_notify);
+          storage_set('saw_badge_info_version', version_to_notify);
         }
-        var saw = localStorage.getItem('saw_badge_version');
+
+        // TEMP: As this wasn't stored as string initially, storage_get 
+        // throws an error and returns undefined
+        if (!storage_get('saw_badge_version') && localStorage.getItem('saw_badge_version')) {
+          storage_set('saw_badge_info_version', localStorage.getItem('saw_badge_info_version'));
+          storage_set('saw_badge_version', localStorage.getItem('saw_badge_version'));
+        }
+        // END TEMP
+
+        var saw = storage_get('saw_badge_version');
         if (saw != version_to_notify) {
           // If they haven't seen the latest, show it.
           chrome.browserAction.setTitle({title:translate("new_version")});
@@ -578,24 +587,6 @@
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
-
-      // TEMP: OLD STYLE WHITELIST
-      (function() {
-      //   TODO: Remove this when you are convinced everyone has updated their
-      //   version of AdBlock... Say in March or April
-        if (storage_get('whitelist')) {
-          var old_style_whitelist = storage_get('whitelist') || [];
-        for (var i=0; i<old_style_whitelist.length; i++) {
-          var website = old_style_whitelist[i];
-          if (website[0] == '.')
-            website = '*' + website;
-            add_custom_filter('@@||' + website + '^$document');
-        }
-        localStorage.removeItem('whitelist');
-      }
-      })();
-      // Remnants from issue 5382
-      localStorage.removeItem('subscribed_list_for_language');
     </script>
   </head>
   <body>

@@ -6,8 +6,7 @@
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
 function MyFilters() {
-  var subscriptions_json = localStorage.getItem('filter_lists') || "null";
-  this._subscriptions = JSON.parse(subscriptions_json);
+  this._subscriptions = storage_get('filter_lists');
   this._official_options = this._make_subscription_options();
 
   if (!this._subscriptions) {
@@ -67,7 +66,7 @@ function MyFilters() {
 // When a subscription property changes, this function stores it
 // Inputs: rebuild? boolean, true if the filterset should be rebuilt
 MyFilters.prototype._onSubscriptionChange = function(rebuild) {
-  localStorage.setItem('filter_lists', JSON.stringify(this._subscriptions));
+  storage_set('filter_lists', this._subscriptions);
 
   // The only reasons to (re)build the filter set are
   // - when AdBlock starts
