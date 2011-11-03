@@ -67,7 +67,9 @@ storage_set = function(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (ex) {
-    alert(translate("storage_quota_exeeded"));
-    chrome.tabs.create({url: chrome.extension.getURL("options/index.html#ui-tabs-2")});
+    if (ex.name == "QUOTA_EXCEEDED_ERR") {
+      alert(translate("storage_quota_exeeded"));
+      chrome.tabs.create({url: chrome.extension.getURL("options/index.html#ui-tabs-2")});
+    }
   }
 }
