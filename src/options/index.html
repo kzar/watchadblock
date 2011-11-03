@@ -60,12 +60,12 @@
     <div style="float:right;"> 
       <div>
         <span id="version_number"></span>
-        (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_new" i18n="optionschangelog"></a>) 
+        (<a href="http://code.google.com/p/adblockforchrome/wiki/Changelog" target="_blank" i18n="optionschangelog"></a>) 
       </div>
       <div>
-        <a href="http://code.google.com/p/adblockforchrome" target="_new" i18n="project_home"></a> |
-        <a href="http://code.google.com/p/adblockforchrome/wiki/GetHelp?tm=3" target="_new" i18n="help"></a> |
-        <a href="http://code.google.com/p/adblockforchrome/wiki/FrequentlyAskedQuestions" target="_new" i18n="faq"></a>
+        <a href="http://code.google.com/p/adblockforchrome" target="_blank" i18n="project_home"></a> |
+        <a href="http://code.google.com/p/adblockforchrome/wiki/GetHelp?tm=3" target="_blank" i18n="help"></a> |
+        <a href="http://code.google.com/p/adblockforchrome/wiki/FrequentlyAskedQuestions" target="_blank" i18n="faq"></a>
       </div>
       <div id="translation_credits"></div>
     </div>
@@ -79,7 +79,7 @@
             var userId = storage_get("userid");
             var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
             if (SAFARI) {
-              // Safari target=_new opens a new window by default, so we have to force its
+              // Safari target=_blank opens a new window by default, so we have to force its
               // height to be correct.
               window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
             } else {
