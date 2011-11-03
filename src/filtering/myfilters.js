@@ -154,6 +154,9 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     this._subscriptions[id].requiresList = 
                    this.customToDefaultId(this._subscriptions[id].requiresList);
 
+  if (forceFetch)
+    delete this._subscriptions[id].last_modified;
+
   if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
@@ -171,6 +174,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     delete this._subscriptions[id].last_update;
     delete this._subscriptions[id].expiresAfterHours;
     delete this._subscriptions[id].last_update_failed;
+    delete this._subscriptions[id].last_modified;
     if (this._subscriptions[id].deleteMe)
       delete this._subscriptions[id];
   }
@@ -207,7 +211,11 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
   $.ajax({
     url: url,
     cache: false,
-    success: function(text) {
+    headers: {
+      "Accept": "text/plain",
+      "If-Modified-Since": this._subscriptions[id].last_modified || undefined
+    },
+    success: function(text, status, xhr) {
       // In case the subscription disappeared while we were out
       if (!that._subscriptions[id] || 
           !that._subscriptions[id].subscribed)
@@ -215,9 +223,13 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
 
       // Sometimes text is "". Happens sometimes.  Weird, I know.
       // Every legit list starts with a comment.
-      if (text && text.length != 0 && Filter.isComment(text.trim())) {
+      if (status == "notmodified") {
+        log("List not modified " + url);
+        that._updateSubscriptionText(id, that._subscriptions[id].text);
+        that._onSubscriptionChange(true);
+      } else if (text && text.length != 0 && Filter.isComment(text.trim())) {
         log("Fetched " + url);
-        that._updateSubscriptionText(id, text);
+        that._updateSubscriptionText(id, text, xhr);
         that._onSubscriptionChange(true);
       } else {
         log("Fetched, but invalid list " + url);
@@ -234,27 +246,46 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
 
 // Record that subscription_id is subscribed, was updated now, and has
 // the given text.  Requires that this._subscriptions[subscription_id] exists.
-MyFilters.prototype._updateSubscriptionText = function(id, text) {
+// The xhr variable can be used to search the response headers
+MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
   this._subscriptions[id].last_update = new Date().getTime();
   delete this._subscriptions[id].last_update_failed;
 
-  // Record how many days until we need to update the subscription text
-  this._subscriptions[id].expiresAfterHours = 120; // The default
-  var checkLines = text.split('\n', 15); //15 lines should be enough
-  var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d*[1-9]\d*)\ ?(h?)/i;
-  var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
-  for (var i = 0; i < checkLines.length; i++) {
-    if (!Filter.isComment(checkLines[i]))
-      continue;
-    var match = checkLines[i].match(redirectRegex);
-    if (match) {
-      this._subscriptions[id].url = match[1]; //assuming the URL is always correct
-      this._subscriptions[id].last_update = 0;
+  // In case the resource wasn't modified, there is no need to reparse this.
+  // xhr isn't send in this case. Do reparse .text, in case we had some update
+  // which modified the checks in filternormalizer.js.
+  if (xhr) {
+    // Store the last time a resource was modified on the server, so we won't re-
+    // fetch if it wasn't modified. It is null if the server doesn't support this.
+    this._subscriptions[id].last_modified = xhr.getResponseHeader("Last-Modified");
+    // Record how many hours until we need to update the subscription text. This
+    // can be specified in the response headers or in the file. Defaults to 120.
+    this._subscriptions[id].expiresAfterHours = 120;
+    var expires = xhr.getResponseHeader("Cache-Control");
+    if (expires) {
+      var match = expires.match(/max\-age\=(\d+)/);
+      if (match && parseInt(match[1])) {
+        match = Math.min(parseInt(match[1]) / 3600, 21*24); // 3 week maximum
+        this._subscriptions[id].expiresAfterHours = Math.max(1, match); // 1 hour minimum
+      }
     }
-    match = checkLines[i].match(expiresRegex);
-    if (match) {
-      var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
-      this._subscriptions[id].expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
+    var checkLines = text.split('\n', 15); //15 lines should be enough
+    var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d+)\ ?(h?)/i;
+    var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
+    for (var i = 0; i < checkLines.length; i++) {
+      if (!Filter.isComment(checkLines[i]))
+        continue;
+      var match = checkLines[i].match(redirectRegex);
+      if (match) {
+        this._subscriptions[id].url = match[1]; //assuming the URL is always correct
+        this._subscriptions[id].last_update = 0;
+        delete this._subscriptions[id].last_modified;
+      }
+      match = checkLines[i].match(expiresRegex);
+      if (match && parseInt(match[1])) {
+        var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
+        this._subscriptions[id].expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
+      }
     }
   }
 
@@ -432,14 +463,15 @@ MyFilters.prototype._make_subscription_options = function() {
 }
 
 /* subscription properties:
-url: url of subscription
-initialUrl: the hardcoded url. Same as .url except when redirected
+url (string): url of subscription
+initialUrl (string): the hardcoded url. Same as .url except when redirected
 user_submitted (bool): submitted by the user or not
-requiresList: id of a list required for this list
+requiresList (string): id of a list required for this list
 subscribed (bool): if you are subscribed to the list or not
 last_update (date): time of the last succesfull update
+last_modified (string): time of the last change on the server
 last_update_failed (bool): true if the last update attempt failed
-text: the filters of the subscription
+text (string): the filters of the subscription
 expiresAfterHours (int): the time after which the subscription expires
 deleteMe (bool): if the subscription has to be deleted
 */
