@@ -58,7 +58,7 @@ function MyFilters() {
   // be updated
   var that = this;
   if (newUser) 
-    this.checkFilterUpdates;
+    this.checkFilterUpdates();
   else
     idleHandler.scheduleItem(that.checkFilterUpdates, 60);
 
