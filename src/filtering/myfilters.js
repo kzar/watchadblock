@@ -264,8 +264,8 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
     var expires = xhr.getResponseHeader("Cache-Control");
     if (expires) {
       var match = expires.match(/max\-age\=(\d+)/);
-      if (match && parseInt(match[1])) {
-        match = Math.min(parseInt(match[1]) / 3600, 21*24); // 3 week maximum
+      if (match && parseInt(match[1], 10)) {
+        match = Math.min(parseInt(match[1], 10) / 3600, 21*24); // 3 week maximum
         this._subscriptions[id].expiresAfterHours = Math.max(1, match); // 1 hour minimum
       }
     }
@@ -282,8 +282,8 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
         delete this._subscriptions[id].last_modified;
       }
       match = checkLines[i].match(expiresRegex);
-      if (match && parseInt(match[1])) {
-        var hours = parseInt(match[1]) * (match[2] == "h" ? 1 : 24);
+      if (match && parseInt(match[1], 10)) {
+        var hours = parseInt(match[1], 10) * (match[2] == "h" ? 1 : 24);
         this._subscriptions[id].expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
       }
     }
@@ -302,7 +302,7 @@ MyFilters.prototype.checkFilterUpdates = function(force) {
   for (var id in this._subscriptions) {
     if (this._subscriptions[id].subscribed) {
       this.changeSubscription(id, {}, force);
-    };
+    }
   }
 }
 
