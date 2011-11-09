@@ -222,7 +222,7 @@ PatternFilter._parseRule = function(text) {
   // - Do not escape | ^ and * because they are handled below.
   rule = rule.replace(/([^a-zA-Z0-9_\|\^\*])/g, '\\$1');
   //^ is a separator char in ABP
-  rule = rule.replace(/\^/g, '[^\\-\\.\\%a-zA-Z0-9]');
+  rule = rule.replace(/\^/g, '[^\\-\\.\\%a-zA-Z0-9_]');
   //If a rule contains *, replace that by .*
   rule = rule.replace(/\*/g, '.*');
   // Starting with || means it should start at a domain or subdomain name, so
