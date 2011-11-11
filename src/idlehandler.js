@@ -1,37 +1,46 @@
-// Schedules an function to be executed when the computer is idle.
+// Schedules a function to be executed once when the computer is idle.
 // Call idleHandler.scheduleItem to schedule a function for exection upon idle
 // inputs: theFunction: function to be executed
-//         maxWaitTime: maximum time to wait upon idle, in seconds
+//         seconds: maximum time to wait upon idle, in seconds. 600 if omitted.
 var idleHandler = {
-  scheduleItem:
-    function(callback, maxWaitTime) {
+  scheduleItemOnce:
+    // In  Safari, execute the function immediately. It doesn't support idle
+    function(callback, seconds) {
       if (SAFARI) {
         callback();
         return;
       }
-      idleHandler.scheduledItems.push(callback);
-      if (maxWaitTime)
-        idleHandler.maxDelay = Math.min(idleHandler.maxDelay, maxWaitTime * 2);
-      if (!idleHandler.timer)
-        idleHandler.timer = window.setInterval(idleHandler.checkExecutingTime, 500);
+      // In Chrome, schedule the item to be executed
+      idleHandler._scheduledItems.push({
+        callback: callback,
+        runAt: new Date(new Date().getTime() + 1000 * (seconds || 600))
+      });
+      if (!idleHandler._timer)
+        idleHandler._timer = window.setInterval(idleHandler._runIfIdle, 5000);
     },
-  maxDelay:
-    600 * 2, // Wait 10 minutes at max, 2 checks/second
-  timer:
+  _timer:
     null,
-  scheduledItems:
+  _scheduledItems:
     [],
-  checkExecutingTime:
+  _runIfIdle:
     function() {
+      // Checks if the browser is idle. If so, it executes all waiting functions
+      // Otherwise, it checks if an item has waited longer than allowed, and
+      // executes the ones who should be executed
       chrome.idle.queryState(15, function(state) {
-        idleHandler.maxDelay -= 1;
-        if (state == "idle" || idleHandler.maxDelay <= 0) {
-          idleHandler.maxDelay = 600 * 2;
-          idleHandler.timer = window.clearInterval(idleHandler.timer);
-          for (i=0; i<idleHandler.scheduledItems.length; i++)
-            idleHandler.scheduledItems[i]();
-          idleHandler.scheduledItems = [];
+        if (state == "idle") {
+          while (idleHandler._scheduledItems.length)
+            idleHandler._scheduledItems.shift().callback();
+        } else {
+          var now = new Date();
+          // Inversed loop, to prevent splice() making it skip the item after an
+          // executed item.
+          for (var i=idleHandler._scheduledItems.length-1; i>=0; i--)
+            if (idleHandler._scheduledItems[i].runAt <= now)
+              idleHandler._scheduledItems.splice(i, 1)[0].callback();
         }
+        if (!idleHandler._scheduledItems.length)
+          idleHandler._timer = window.clearInterval(idleHandler._timer);
       })
     }
 };
