@@ -165,7 +165,7 @@ var FilterNormalizer = {
     // Get rid of all valid [elemType="something"] selectors. They are valid,
     // and the risk is that their content will disturb further tests. To prevent
     // a[id="abc"]div to be valid, convert it to a[valid]div, which is invalid
-    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|\w+?)\]/g;
+    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|[a-z_\-][a-z0-9\-_]*?)\]/g;
     selector = selector.replace(test, '[valid]');
 
     // :not may contain every selector except for itself and tree selectors
