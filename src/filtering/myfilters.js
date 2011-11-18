@@ -15,6 +15,11 @@ function MyFilters() {
   }
 
   for (var id in this._subscriptions) {
+  	// Subscribe Ukrainian filter list users to the Russian list instead
+  	if ((id == 'ukranian') && (this._subscriptions[id].subscribed)) {
+      this.changeSubscription(id, {subscribed: false}, false);
+      this.changeSubscription('russian', {subscribed: true}, false);
+  	}
     // Delete unsubscribed ex-official lists.
     if (!this._official_options[id] && !this._subscriptions[id].user_submitted
         && !this._subscriptions[id].subscribed) {
@@ -353,7 +358,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'pl': return 'easylist_plus_polish';//sorry for the other Polish list
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
-      case 'uk': return 'ukranian';
+      case 'uk': return 'russian';
       case 'zh': return 'chinese';
       default: return '';
     }
