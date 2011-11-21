@@ -8,8 +8,9 @@
 function MyFilters() {
   this._subscriptions = storage_get('filter_lists');
   this._official_options = this._make_subscription_options();
-
-  if (!this._subscriptions) {
+  
+  var newUser = !this._subscriptions;
+  if (newUser) {
     // Brand new user. Install some filters for them.
     this._subscriptions = this._load_default_subscriptions();
   }
@@ -19,7 +20,7 @@ function MyFilters() {
     if (!this._official_options[id] && !this._subscriptions[id].user_submitted
         && !this._subscriptions[id].subscribed) {
       delete this._subscriptions[id];
-    } 
+    }
     // Convert subscribed ex-official lists into user-submitted lists.
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
@@ -55,10 +56,14 @@ function MyFilters() {
 
   // On startup and then every hour, check if a list is out of date and has to
   // be updated
-  this.checkFilterUpdates();
   var that = this;
+  if (newUser) 
+    this.checkFilterUpdates();
+  else
+    idleHandler.scheduleItemOnce(this.checkFilterUpdates, 60);
+
   window.setInterval(
-    function() { that.checkFilterUpdates(); }, 
+    function() { idleHandler.scheduleItemOnce(that.checkFilterUpdates); }, 
     60 * 60 * 1000
   );
 }
