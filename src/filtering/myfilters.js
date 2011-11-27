@@ -360,10 +360,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'it': return 'italian';
       case 'ja': return 'japanese';
       case 'ko': return 'easylist_plun_korean';
-      case 'nb': return 'easylist_plus_norwegian';
       case 'nl': return 'dutch';
-      case 'nn': return 'easylist_plus_norwegian';
-      case 'no': return 'easylist_plus_norwegian';
       case 'pl': return 'easylist_plus_polish';//sorry for the other Polish list
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
@@ -418,10 +415,6 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "easylist_plus_greek": { // Additional Greek filters
       url: "http://www.void.gr/kargig/void-gr-filters.txt",
-      requiresList: "easylist",
-    },
-    "easylist_plus_norwegian": { // Additional Norwegian filters
-      url: "http://home.online.no/~mlangsho/adblock.txt",
       requiresList: "easylist",
     },
     "easylist_plus_polish": { // Additional Polish filters
