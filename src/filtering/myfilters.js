@@ -60,10 +60,19 @@ function MyFilters() {
   if (newUser) 
     this.checkFilterUpdates();
   else
-    idleHandler.scheduleItemOnce(this.checkFilterUpdates, 60);
+    idleHandler.scheduleItemOnce(
+      function() { 
+        that.checkFilterUpdates();
+      },
+      60
+    );
 
   window.setInterval(
-    function() { idleHandler.scheduleItemOnce(that.checkFilterUpdates); }, 
+    function() { 
+      idleHandler.scheduleItemOnce(function() {
+        that.checkFilterUpdates();
+      });
+    }, 
     60 * 60 * 1000
   );
 }
