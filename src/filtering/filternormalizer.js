@@ -90,7 +90,7 @@ var FilterNormalizer = {
       // Remove rules that only apply to unsupported resource types.
       var unsupported = (ElementTypes.object_subrequest | ElementTypes.font |
                          ElementTypes.dtd | ElementTypes.other |
-                         ElementTypes.xbl | ElementTypes.ping |
+                         ElementTypes.xbl | ElementTypes.ping | ElementTypes.popup |
                          ElementTypes.xmlhttprequest | ElementTypes.donottrack);
       if (!Filter.isWhitelistFilter(filter))
         unsupported |= (ElementTypes.document | ElementTypes.elemhide);
