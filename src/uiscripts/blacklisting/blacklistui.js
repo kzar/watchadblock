@@ -283,7 +283,7 @@ BlacklistUi.prototype._redrawPage1 = function() {
   selected_data.html("<b>" + translate("blacklisterblockedelement") + "</b><br/>");
 
   selected_data.append($("<i></i>").text("<" + el[0].nodeName));
-  var attrs = ["id", "class", "name", "src", "href"];
+  var attrs = ["id", "class", "name", "src", "href", "data"];
   for (var i in attrs) {
     var val = BlacklistUi._ellipsis(el.attr(attrs[i]));
     if (val)
@@ -305,19 +305,19 @@ BlacklistUi.prototype._makeFilter = function() {
   var detailsDiv = $("#adblock-details", this._ui_page2);
 
   if ($("input:checkbox#cknodeName", detailsDiv).is(':checked')) {
-    result.push(el.attr('nodeName'));
+    result.push(el.prop('nodeName'));
     // Some iframed ads are in a bland iframe.  If so, at least try to
     // be more specific by walking the chain from the body to the iframe
     // in the CSS selector.
-    if (el.attr('nodeName') == 'IFRAME' && el.attr('id') == '') {
+    if (el.prop('nodeName') == 'IFRAME' && el.attr('id') == '') {
       var cur = el.parent();
-      while (cur.attr('nodeName') != 'BODY') {
-        result.unshift(cur.attr('nodeName') + " ");
+      while (cur.prop('nodeName') != 'BODY') {
+        result.unshift(cur.prop('nodeName') + " ");
         cur = cur.parent();
       }
     }
   }
-  var attrs = [ 'id', 'class', 'name', 'src', 'href' ];
+  var attrs = ['id', 'class', 'name', 'src', 'href', 'data'];
   function fixStr(str) {
     var q = str.indexOf('"') != -1 ? "'" : '"';
     return q + str + q;
@@ -364,18 +364,19 @@ BlacklistUi.prototype._redrawPage2 = function() {
   }
 
   detailsDiv.empty();
-  var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href'];
+  var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href', 'data'];
   for (var i = 0; i < attrs.length; i++) {
     var attr = attrs[i];
-    var val = BlacklistUi._ellipsis(el.attr(attr));
+    var longVal = (attr == "nodeName" ? el.prop("nodeName") : el.attr(attr));
+    var val = BlacklistUi._ellipsis(longVal);
 
     if (!val)
       continue;
 
-    // Check src and href only by default if no other identifiers are present
-    // except for the nodeName selector.
+    // Check src, data and href only by default if no other identifiers are
+    // present except for the nodeName selector.
     var checked = true;
-    if (attr == 'src' || attr == 'href')
+    if (attr == 'src' || attr == 'href' || attr == 'data')
       checked = $("input", detailsDiv).length == 1;
 
     var italic = $("<i></i>").text(val);
