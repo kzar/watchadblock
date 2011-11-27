@@ -20,11 +20,12 @@ var ElementTypes = {
   xbl: 2048,
   ping: 4096,
   xmlhttprequest: 8192,
-  donottrack: 65536
+  donottrack: 65536,
+  popup: 131072
   // if you add something here, update .ALL below
 };
 ElementTypes.ALLRESOURCETYPES = 16383; // all types that apply to resources
-ElementTypes.ALL = 131071; // all bits turned on
+ElementTypes.ALL = 262143; // all bits turned on
 
 var FilterOptions = {
   NONE: 0,
