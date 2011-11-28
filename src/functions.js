@@ -67,7 +67,9 @@ storage_set = function(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (ex) {
-    if (ex.name == "QUOTA_EXCEEDED_ERR") {
+    // Safari throws this error for all writes in Private Browsing mode.
+    // TODO: deal with the Safari case more gracefully.
+    if (ex.name == "QUOTA_EXCEEDED_ERR" && !SAFARI) {
       alert(translate("storage_quota_exceeded"));
       chrome.tabs.create({url: chrome.extension.getURL("options/index.html#ui-tabs-2")});
     }
