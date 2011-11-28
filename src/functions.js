@@ -52,7 +52,7 @@ function localizePage() {
 // Returns value if key exists, else undefined.
 storage_get = function(key) {
   var store = (SAFARI ? safari.extension.settings : localStorage);
-  var json = store[key];
+  var json = store.getItem(key);
   if (json == null)
     return undefined;
   try {
@@ -68,7 +68,7 @@ storage_get = function(key) {
 storage_set = function(key, value) {
   var store = (SAFARI ? safari.extension.settings : localStorage);
   try {
-    store[key] = JSON.stringify(value);
+    store.setItem(key, JSON.stringify(value));
   } catch (ex) {
     if (ex.name == "QUOTA_EXCEEDED_ERR") {
       alert(translate("storage_quota_exceeded"));
