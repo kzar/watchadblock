@@ -236,6 +236,12 @@
 
       })();
 
+      debug_report_elemhide = function(selector, sender) {
+        if (!window.frameData)
+          return;
+        frameData.storeResource(sender.tab.id, selector, "HIDE");
+      }
+
       // UNWHITELISTING
 
       // Look for a custom filter that would whitelist options.url,

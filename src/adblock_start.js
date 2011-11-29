@@ -190,7 +190,7 @@ function adblock_begin() {
 
     if (data.settings.debug_logging) {
       $(function() { 
-        debug_print_selector_matches(data.selectors);
+        debug_print_selector_matches(data.selectors, "old");
       });
     }
 
