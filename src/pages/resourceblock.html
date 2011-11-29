@@ -587,6 +587,9 @@
             // Load all stored resources
             var cache = BG.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
+            // ... but don't show them if the page is whitelisted
+            if (resources[url] && resources[url].type == ElementTypes.document)
+              loaded_resources = null;
             // Convert all resources to the object type
             if (loaded_resources)
               for (var i = 0; i < loaded_resources.length || 0; i++) {
