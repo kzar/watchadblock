@@ -76,15 +76,16 @@
       <script>
         $(function() {
           $('#paymentlink').click(function() {
-            var userId = storage_get("userid");
-            var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
-            if (SAFARI) {
-              // Safari target=_blank opens a new window by default, so we have to force its
-              // height to be correct.
-              window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
-            } else {
-              chrome.tabs.create({url: href});
-            }
+            BGcall("storage_get", "userid", function(userId) {
+              var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
+              if (SAFARI) {
+                // Safari target=_blank opens a new window by default, so we have to force its
+                // height to be correct.
+                window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
+              } else {
+                chrome.tabs.create({url: href});
+              }
+            });
             return false;
           });
         });
