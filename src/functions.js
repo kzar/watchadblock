@@ -51,7 +51,7 @@ function localizePage() {
 // Inputs: key:string.
 // Returns value if key exists, else undefined.
 storage_get = function(key) {
-  var store = (SAFARI ? safari.extension.settings : localStorage);
+  var store = (window.SAFARI ? safari.extension.settings : localStorage);
   var json = store.getItem(key);
   if (json == null)
     return undefined;
@@ -66,7 +66,7 @@ storage_get = function(key) {
 // Inputs: key:string, value:object.
 // Returns undefined.
 storage_set = function(key, value) {
-  var store = (SAFARI ? safari.extension.settings : localStorage);
+  var store = (window.SAFARI ? safari.extension.settings : localStorage);
   try {
     store.setItem(key, JSON.stringify(value));
   } catch (ex) {
