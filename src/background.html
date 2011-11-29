@@ -557,7 +557,7 @@
         }
         // Chrome without the webRequest API needs the blocking filters in the
         // content script.
-        if (!SAFARI && options.style == "old") {
+        if (!SAFARI && (options.style == "old" || options.include_texts)) {
           function packed(filter) {
             return [filter._rule.source, filter._allowedElementTypes, filter._options];
           }
