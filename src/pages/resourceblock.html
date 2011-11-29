@@ -132,14 +132,19 @@
 
       // Creates the table that shows all blockable items
       function generateTable() {
-        if (!SAFARI && BG.GLOBAL_block_style == "old") {
-          // Why do we do this in Chrome instead of access BG._myfilters?
+        if (!SAFARI) {
+          // TODO: if the background has to store filter texts in order to support
+          // resourceblock, its match cache might as well store filters instead of
+          // booleans at all times (no extra memory usage because the filters are
+          // already in memory.)  Do this after 'old' style dies in Chrome.
+          // This means 'return_filter' will always be true in .matches(), and that
+          // resourceblock will be able to point directly to BG._myfilters (it can't
+          // do it now because the matchCache is storing booleans so it can't get
+          // filter text info.)
           var local_filterset = new BlockingFilterSet(
             new FakeFilterSet(domaindata.patternSerialized),
             new FakeFilterSet(domaindata.whitelistSerialized)
           );
-        } else if (!SAFARI) {
-          var local_filterset = BG._myfilters.blocking;
         } else {
           var local_filterset = {
             _matchCache: {},
