@@ -176,12 +176,12 @@
               log("Ignoring unknown tab+frame", tabId, frameId);
               return { cancel: false };
             }
+            var elType = ElementTypes.fromOnBeforeRequestType(details.type);
+            frameData.storeResource(tabId, details.url, elType);
             if (frameData.isOnWhitelistedTab(tabId)) {
               log("Tab", tabId, "is whitelisted, ignoring", details.url.substring(0, 100));
               return { cancel: false };
             }
-            var elType = ElementTypes.fromOnBeforeRequestType(details.type);
-            frameData.storeResource(tabId, details.url, elType);
             // details.frameId is the id of the frame that loaded the resource,
             // BUT when details.type == 'sub_frame' it's the id of the
             // loaded resource (a frame) itself, so we want the parent frame's
@@ -235,6 +235,12 @@
         }
 
       })();
+
+      debug_report_elemhide = function(selector, sender) {
+        if (!window.frameData)
+          return;
+        frameData.storeResource(sender.tab.id, selector, "HIDE");
+      }
 
       // UNWHITELISTING
 
@@ -670,7 +676,7 @@
           // the 'old' method.
           var data = frameData.get(tabId, 0);
           if (!data)
-          return;
+            return;
           var resources = Object.keys(data.resources);
           show_resourceblocker(resources, { tab: { url: data.url } });
         }

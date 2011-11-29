@@ -81,12 +81,15 @@ function block_list_via_css(selectors) {
   d.insertBefore(css_chunk, null);
 }
 
-function debug_print_selector_matches(selectors) {
+function debug_print_selector_matches(selectors, style) {
   selectors.
     filter(function(selector) { return $(selector).length > 0; }).
     forEach(function(selector) {
       log("Debug: CSS '" + selector + "' hid:");
-      addResourceToList('HIDE:' + selector);
+      if (style == 'old')
+        addResourceToList('HIDE:|:' + selector);
+      else
+        BGcall("debug_report_elemhide", selector);
       $(selector).each(function(i, el) {
         log("       " + el.nodeName + "#" + el.id + "." + el.className);
       });

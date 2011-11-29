@@ -179,12 +179,15 @@
           switch(type) {
             case undefined: return "hiding";
             case ElementTypes.script: return "script";
+            case ElementTypes.background:
             case ElementTypes.image: return "image";
-            case ElementTypes.background: return "image";
             case ElementTypes.stylesheet: return "stylesheet";
             case ElementTypes.object: return "object";
             case ElementTypes.subdocument: return "subdocument";
+            case ElementTypes.object_subrequest: return "object_subrequest";
             case ElementTypes.media: return "media";
+            case ElementTypes.xmlhttprequest: return "xmlhttprequest";
+            case ElementTypes.other: return "other";
             case ElementTypes.document:
             case ElementTypes.elemhide: return "page";
             default: return "unknown";
@@ -589,8 +592,8 @@
               for (var i = 0; i < loaded_resources.length || 0; i++) {
                 if (/\<|\"/.test(loaded_resources[i]))
                   continue;
-                if (/^HIDE\:.+/.test(loaded_resources[i])) {
-                  var filter = "##" + loaded_resources[i].substring(5);
+                if (/^HIDE\:\|\:.+/.test(loaded_resources[i])) {
+                  var filter = "##" + loaded_resources[i].substring(7);
                   resources[filter] = {filter: filter};
                 } else {
                   var blockmatches = loaded_resources[i].split(':|:', 2);
@@ -598,7 +601,10 @@
                     continue; // Blacklister resources shouldn't be visible
                   if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
                     continue; // Ignore about: and data: urls
-                  resources[blockmatches[1]] = {type: Number(blockmatches[0])};
+                  var elemType = Number(blockmatches[0]);
+                  if (elemType == ElementTypes.document)
+                    continue;
+                  resources[blockmatches[1]] = {type: elemType};
                 }
               }
             if (Object.keys(resources).length == 0) {

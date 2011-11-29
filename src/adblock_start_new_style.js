@@ -111,7 +111,7 @@ function adblock_begin_new_style() {
 
     if (data.settings.debug_logging) {
       $(function() { 
-        debug_print_selector_matches(data.selectors);
+        debug_print_selector_matches(data.selectors, "new");
       });
     }
 
