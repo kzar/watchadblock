@@ -185,8 +185,6 @@
             // For most requests, Chrome and we agree on who sent the request: the frame.
             // But for iframe loads, we consider the request to be sent by the outer 
             // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
-            if (elType == ElementTypes.subdocument)
-              console.log("Using parent frame id " + details.parentFrameId + " instead of " + details.frameId);
             frameId = (elType == ElementTypes.subdocument ? details.parentFrameId : frameId);
             // May the URL be loaded by the requesting frame?
             var frameDomain = frameData.domainOfFrame(tabId, frameId);
