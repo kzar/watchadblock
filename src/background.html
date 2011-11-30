@@ -61,34 +61,37 @@
           // Inputs: details: object from onBeforeRequest callback
           // Returns false if this request's tab+frame are not trackable.
           track: function(details) {
-            var tabId = details.tabId, frameId = details.frameId;
-            var fd = frameData;
+            var fd = frameData, tabId = details.tabId;
 
-            if (details.type != "main_frame" && details.type != "sub_frame") {
-              // Usually, we just pay attention to main_frame and sub_frame
-              // requests.  However, if the main frame uses Javascript to
-              // create an empty iframe and inject a script tag into it (Youtube
-              // does this, for example), treat the frame as the same URL as
-              // the tab.
-              if (fd[tabId] && fd[tabId][0] && !fd[tabId][frameId]) {
-                fd.get(tabId, frameId).url = fd.get(tabId, 0).url;
-                log("Null frame", frameId, "found; giving it the tab's URL.");
-              }
-              return (fd[tabId] && fd[tabId][frameId]);
+            if (details.type == 'main_frame') { // New tab
+              delete fd[tabId];
+              fd.get(tabId, 0).url = details.url;
+              log("=========== Tracking tab:", tabId, details.url);
+              return true;
             }
 
-            // The tab or its frame has navigated.  Update its information.
-            if (fd[tabId])
-              delete fd[tabId][frameId]; // The frame is changing
-            if (frameId == 0) // == the tab's main document frame
-              delete fd[tabId]; // The whole tab is changing
-            // Don't record subframes on tabs that we aren't tracking (e.g. a
-            // chrome:// tab that loads an http:// frame)
-            if (frameId != 0 && !fd[tabId])
+            // Request from a tab opened before AdBlock started, or from a
+            // chrome:// tab containing an http:// iframe
+            if (!fd[tabId]) {
+              log("Ignoring unknown tab:", tabId, details.frameId, details.url);
               return false;
-            // Record the new frame's stats.
-            fd.get(tabId, frameId).url = details.url;
-            log("=========== Tracking frame", tabId, frameId, details.url);
+            }
+
+            // Some times e.g. Youtube create empty iframes via JavaScript and
+            // inject code into them.  So requests appear from unknown frames.
+            // Treat these frames as having the same URL as the tab.
+            var potentialEmptyFrameId = (details.type == 'sub_frame' ? details.parentFrameId: details.frameId);
+            if (!fd[tabId][potentialEmptyFrameId]) {
+              fd.get(tabId, potentialEmptyFrameId).url = fd.get(tabId, 0).url;
+              log("Null frame", tabId, potentialEmptyFrameId, "found; giving it the tab's URL.");
+            }
+
+            if (details.type == 'sub_frame') { // New frame
+              delete fd[tabId][details.frameId];
+              fd.get(tabId, details.frameId).url = details.url;
+              log("=========== Tracking frame", tabId, details.frameId, details.url);
+            }
+
             return true;
           },
 
@@ -160,45 +163,41 @@
         // When a request starts, perhaps block it.
         function onBeforeRequestHandler(details) {
           try {
-            var tabId = details.tabId, frameId = details.frameId;
+            // TODO storage_get
             if (localStorage.adblock_is_paused)
               return { cancel: false };
-            // I'm not sure whether the API will let us access requests that
-            // aren't from tabs, but if so we don't want them.
-            if (tabId == -1) {
-              log("Ignoring non-tab-related request to", details.url);
+
+            if (!frameData.track(details))
               return { cancel: false };
-            }
-            // In case it's a document load, track the URL of the frame.
-            // If we aren't tracking the frame, it was open when AdBlock was
-            // started.  Ignore and don't store data for the frame.
-            if (!frameData.track(details)) {
-              log("Ignoring unknown tab+frame", tabId, frameId);
-              return { cancel: false };
-            }
+
+            var tabId = details.tabId;
             var elType = ElementTypes.fromOnBeforeRequestType(details.type);
+
             frameData.storeResource(tabId, details.url, elType);
+
             if (frameData.isOnWhitelistedTab(tabId)) {
-              log("Tab", tabId, "is whitelisted, ignoring", details.url.substring(0, 100));
+              log("Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
               return { cancel: false };
             }
+
             // For most requests, Chrome and we agree on who sent the request: the frame.
             // But for iframe loads, we consider the request to be sent by the outer 
             // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
-            frameId = (elType == ElementTypes.subdocument ? details.parentFrameId : frameId);
+            var requestingFrameId = (details.type == 'sub_frame' ? details.parentFrameId : details.frameId);
             // May the URL be loaded by the requesting frame?
-            var frameDomain = frameData.domainOfFrame(tabId, frameId);
+            var frameDomain = frameData.domainOfFrame(tabId, requestingFrameId);
             var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
-            var results = frameData.storeBlockResults(tabId, frameId, details.url, elType, blocked);
+            var results = frameData.storeBlockResults(tabId, requestingFrameId, details.url, elType, blocked);
             // Non-null results means there's a good reason to send a batch of
             // results to the tab -- one was blocked, or there are many results
             if (results) {
               // frameUrl is used by the recipient to determine whether they're the frame who should
               // receive this or not.  Because the #anchor of a page can change without navigating
               // the frame, ignore the anchor when matching.
-              var frameUrl = frameData.get(tabId, frameId).url.replace(/#.*$/, "");
+              var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
               chrome.tabs.sendRequest(tabId, { command: "block-results", frameUrl: frameUrl, results: results });
             }
+
             log("Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
             return { cancel: blocked };
           }
