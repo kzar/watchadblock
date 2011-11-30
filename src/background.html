@@ -89,7 +89,7 @@
             if (details.type == 'sub_frame') { // New frame
               delete fd[tabId][details.frameId];
               fd.get(tabId, details.frameId).url = details.url;
-              log("=========== Tracking frame", tabId, details.frameId, details.url);
+              log("=========== Tracking frame", tabId, details.parentFrameId, details.frameId, details.url);
             }
 
             return true;
