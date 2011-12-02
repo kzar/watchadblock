@@ -1,6 +1,28 @@
 <html>
   <head>
     <script src="port.js"></script>
+    <script>
+      // TODO temp code to convert Safari from localStorage to settings.
+      // Added 11/2011.
+      (function() {
+        if (!SAFARI)
+          return;
+        if (safari.extension.settings.userid)
+          return; // already did it
+        var toCopy = [ 
+          "custom_filters", "filter_lists", "next_ping_time", "saw_badge_info_version",
+          "saw_badge_version", "saw_install_page", "settings", "total_pings", "userid"
+        ];
+        for (var i = 0; i < toCopy.length; i++) {
+          var key = toCopy[i];
+          if (localStorage[key] !== undefined) {
+            // Copy the stringified value from localStorage directly into settings
+            var value = localStorage[key];
+            safari.extension.settings[key] = value;
+          }
+        }
+      })();
+    </script>
     <script src="jquery/jquery.min.js"></script>
     <script src="functions.js"></script>
     <script src="stats.js"></script>
@@ -10,6 +32,7 @@
     <script src="filtering/filterset.js"></script>
     <script src="filtering/myfilters.js"></script>
     <script src="filtering/filternormalizer.js"></script>
+    <script src="idlehandler.js"></script>
     <script>
 
       // OPTIONAL SETTINGS
@@ -303,7 +326,7 @@
       // Inputs: filters:string the new filters.
       set_custom_filters_text = function(filters) {
         storage_set('custom_filters', filters);
-        _myfilters.update();
+        _myfilters.rebuild();
       }
 
       // Removes a custom filter entry.
@@ -318,7 +341,7 @@
 
       get_settings = function() {
         return _settings.get_all();
-      }
+        }
 
       set_setting = function(name, is_enabled) {
         _settings.set(name, is_enabled);
@@ -342,37 +365,50 @@
 
       // Rebuild the filterset based on the current settings and subscriptions.
       update_filters = function() {
-        _myfilters.update();
-      }
+        _myfilters.rebuild();
+        }
 
       // Fetch the latest version of all subscribed lists now.
       update_subscriptions_now = function() {
-        _myfilters.freshen_async(true);
+        _myfilters.checkFilterUpdates(true);
       }
 
       // Returns map from id to subscription object.  See filters.js for
       // description of subscription object.
       get_subscriptions_minus_text = function() {
-        return _myfilters.get_subscriptions_minus_text();
+        var result = {};
+        for (var id in _myfilters._subscriptions) {
+          result[id] = {};
+          for (var attr in _myfilters._subscriptions[id]) {
+            if (attr == "text") continue;
+            result[id][attr] = _myfilters._subscriptions[id][attr];
+          }
+        }
+        return result;
       }
 
       // Subscribes to a filter subscription.
       // Inputs: id: id to which to subscribe.  Either a well-known
       //             id, or "url:xyz" pointing to a user-specified list.
-      //         text: filter text string fetched from that url
       //         requires: the id of a list if it is a supplementary list,
       //                   or null if nothing required
       // Returns: null, upon completion
-      subscribe = function(id, text, requires) {
-        _myfilters.subscribe(id, text, requires);
+      subscribe = function(options) {
+        _myfilters.changeSubscription(options.id, {
+          subscribed: true,
+          requiresList: options.requires
+        });
       }
 
       // Unsubscribes from a filter subscription.
       // Inputs: id: id from which to unsubscribe.
       //         del: (bool) if the filter should be removed or not
       // Returns: null, upon completion.
-      unsubscribe = function(id, del) {
-        _myfilters.unsubscribe(id, del);
+      unsubscribe = function(options) {
+        _myfilters.changeSubscription(options.id, {
+          subscribed: false,
+          deleteMe: (options.del ? true : undefined)
+        });
       }
 
       // Return the scheme and domain for the given url.
@@ -453,7 +489,7 @@
             if (!get_settings().show_context_menu_items)
               return;
 
-            if (localStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
+            if (sessionStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
               return;
 
             function addMenu(title, callback) {
@@ -480,7 +516,7 @@
           }
 
           function setBrowserButton(info) {
-            if (localStorage.adblock_is_paused) {
+            if (sessionStorage.adblock_is_paused) {
               chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.disabled_site &&
                 !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
@@ -548,7 +584,7 @@
         var settings = get_settings();
         var result = {
           page_is_whitelisted: whitelisted,
-          adblock_is_paused: localStorage.getItem('adblock_is_paused'),
+          adblock_is_paused: sessionStorage.getItem('adblock_is_paused'),
           settings: settings,
           selectors: []
         };
@@ -763,10 +799,19 @@
 
         // Brand new users don't see badge (or popup's info div).
         if (STATS.firstRun) {
-          localStorage.setItem('saw_badge_version', version_to_notify);
-          localStorage.setItem('saw_badge_info_version', version_to_notify);
+          storage_set('saw_badge_version', version_to_notify);
+          storage_set('saw_badge_info_version', version_to_notify);
         }
-        var saw = localStorage.getItem('saw_badge_version');
+
+        // TEMP: As this wasn't stored as string initially, storage_get 
+        // throws an error and returns undefined
+        if (!storage_get('saw_badge_version') && localStorage.getItem('saw_badge_version')) {
+          storage_set('saw_badge_info_version', localStorage.getItem('saw_badge_info_version'));
+          storage_set('saw_badge_version', localStorage.getItem('saw_badge_version'));
+        }
+        // END TEMP
+
+        var saw = storage_get('saw_badge_version');
         if (saw != version_to_notify) {
           // If they haven't seen the latest, show it.
           chrome.browserAction.setTitle({title:translate("new_version")});
@@ -840,24 +885,6 @@
           event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
         }, false);
       }
-
-      // TEMP: OLD STYLE WHITELIST
-      (function() {
-        //   TODO: Remove this when you are convinced everyone has updated their
-        //   version of AdBlock... Say in March or April
-        if (storage_get('whitelist')) {
-          var old_style_whitelist = storage_get('whitelist') || [];
-          for (var i=0; i<old_style_whitelist.length; i++) {
-            var website = old_style_whitelist[i];
-            if (website[0] == '.')
-              website = '*' + website;
-            add_custom_filter('@@||' + website + '^$document');
-          }
-          localStorage.removeItem('whitelist');
-        }
-      })();
-      // Remnants from issue 5382
-      localStorage.removeItem('subscribed_list_for_language');
     </script>
   </head>
   <body>

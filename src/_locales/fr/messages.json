@@ -224,10 +224,6 @@
     "message": "J'aime les annonces textuelles Google; ne les bloquez pas.",
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
-  "youtubeads": {
-    "message": "Bloquer les publicités des vidéos YouTube",
-    "description": "Option on first tab page"
-  },
   "showcontextmenus": {
     "message": "Ajouter les éléments AdBlock dans le menu du clic droit",
     "description": "Option on first tab page"
@@ -293,10 +289,6 @@
     "message": "Mis à jour il y a 1 jour.",
     "description": "Label for subscription"
   },
-  "removedlabel": {
-    "message": "Retiré.",
-    "description": "Status label"
-  },
   "unsubscribedlabel": {
     "message": "Désabonné.",
     "description": "Status label"
@@ -305,20 +297,12 @@
     "message": "Récupération en cours...",
     "description": "Status label"
   },
-  "subscribedlabel": {
-    "message": "Abonné.",
-    "description": "Status label"
-  },
-  "nolisturllabel": {
-    "message": "That wasn't a list URL.",
-    "description": "Status label"
+  "invalidListUrl": {
+    "message": "URL de liste invalide. Elle sera supprimée.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Impossible de récupérer ce filtre !",
-    "description": "Error messagebox"
-  },
-  "enterurloflist": {
-    "message": "Entrez l'URL d'une liste de filtres pour s'y abonner.",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -389,6 +373,10 @@
     "message": " - filtres allemands additionnels",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasylist_plus_greek": {
+    "message": " - filtres grecs additionnels",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filtereasylist_plus_norwegian": {
     "message": " - filtres norvégiens additionnels",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -406,7 +394,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "Filtres chinois",
+    "message": " - filtres chinois additionnels",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -449,7 +437,10 @@
     "message": "Filtres ukrainiens",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (protection de la vie privée)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
+  },
   "blacklistclickmessage": {
     "message": "Faites un clic droit sur une pub pour la bloquer, ou bloquez-la ici manuellement.",
     "description": "Message at the top of the blacklist options tab"
@@ -597,6 +588,10 @@
   },
   "lang_german": {
     "message": "Allemand",
+    "description": "language"
+  },
+  "lang_greek": {
+    "message": "Grec",
     "description": "language"
   },
   "lang_hungarian": {
@@ -1011,6 +1006,18 @@
       }
     }
   },
+  "project_home": {
+    "message": "Accueil du projet",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Aide",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "FAQ",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
     "report_ad_on_page": {
     "message": "Rapporter une publicité sur cette page",
     "description": "Link in the button"
@@ -1139,6 +1146,10 @@
     "message": "Page :",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
+  "last_update_failed": {
+    "message": "La dernière mise à jour a échoué ; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
     "message": "Afficher les publicités <i>partout</i> sauf sur ces domaines...",
     "description": "Section title for blacklisting section of Customize tab"
@@ -1154,5 +1165,9 @@
   "warning_overrules_filters": {
     "message": "Attention : vous verrez les pubs sur tous les autres sites !<br>Ceci annule tous les autres filtres pour ces sites.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "storage_quota_exceeded": {
+    "message": "Vous avez dépassé la quantité de stockage que peut utiliser AdBlock! Désabonnez-vous de quelques listes de filtres.",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
   }
 }

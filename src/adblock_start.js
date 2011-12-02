@@ -97,11 +97,22 @@ beforeLoadHandler = function(event) {
   };
   addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
-    event.preventDefault();
+
+    // Work around bugs.webkit.org/show_bug.cgi?id=65412
+    // Allow the resource to load, but hide it afterwards.
+    // Probably a normal site will never reach 250.
+    beforeLoadHandler.blockCount++;
+    if (beforeLoadHandler.blockCount > 250) {
+      log("ABORTING: blocked over 250 requests, probably an infinite loading loop");
+      beforeLoadHandler.blockCount = 0;
+    } else
+      event.preventDefault();
+
     if (!weakDestroyElement(el, elType, event.mustBePurged))
       destroyElement(el, elType);
   }
 }
+beforeLoadHandler.blockCount = 0;
 
 function adblock_begin() {
   if (!SAFARI)

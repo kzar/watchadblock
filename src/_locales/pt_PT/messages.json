@@ -29,7 +29,7 @@
     "description": "Title for the installation success page"
   },
   "chromebutton_how_to_hide": {
-    "message": "Para esconder o botão, clica com o botão direito do rato sobre o ícone da AdBlock e escolhe ocultar botão. Pode visualizá-lo novamente a partir de Opções | Ferramentas | Extensões.",
+    "message": "Para esconder o botão, clica com o botão direito do rato sobre o ícone da AdBlock e escolhe ocultar botão. Pode visualizá-lo novamente a partir de Chave Inglesa | Ferramentas | Extensões.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "sliderexplanation": {
@@ -222,10 +222,6 @@
     "message": "Eu gosto dos anúncios de texto da Google; não bloquear esses.",
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
-  "youtubeads": {
-    "message": "Bloquear os anúncios nos videos do Youtube.",
-    "description": "Option on first tab page"
-  },
   "showcontextmenus": {
     "message": "Adicionar items ao menu do botão direito",
     "description": "Option on first tab page"
@@ -291,10 +287,6 @@
     "message": "actualizado à 1 dia atrás",
     "description": "Label for subscription"
   },
-  "removedlabel": {
-    "message": "Removido.",
-    "description": "Status label"
-  },
   "unsubscribedlabel": {
     "message": "Desinscrever",
     "description": "Status label"
@@ -303,20 +295,12 @@
     "message": "Actualizando... por favor aguarde.",
     "description": "Status label"
   },
-  "subscribedlabel": {
-    "message": "Inscrever-se.",
-    "description": "Status label"
-  },
-  "nolisturllabel": {
-    "message": "Isso não foi uma URL da lista.",
-    "description": "Status label"
+  "invalidListUrl": {
+    "message": "Lista URL inválida. Vai ser apagada.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Falhou a inscrição deste filtro!",
-    "description": "Error messagebox"
-  },
-  "enterurloflist": {
-    "message": "Por favor, digite a URL de uma lista de filtros para se inscrever.",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -387,6 +371,10 @@
     "message": " - filtros Alemães adicionais",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasylist_plus_greek": {
+    "message": " - filtros Gregos adicionais",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filtereasylist_plus_norwegian": {
     "message": " - filtros Noruegueses adicionais",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -404,7 +392,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "Filtros Chineses",
+    "message": " - filtros Chineses adicionais",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -447,7 +435,10 @@
     "message": "Filtros Ucranianos",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (protecção da privacidade)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
+  },
   "blacklistclickmessage": {
     "message": "Clique com o botão direito do rato num anúncio para bloquear -- ou bloqueie manualmente aqui.",
     "description": "Message at the top of the blacklist options tab"
@@ -590,11 +581,15 @@
     "description": "language"
   },
   "lang_french": {
-    "message": "Framcês",
+    "message": "Francês",
     "description": "language"
   },
   "lang_german": {
     "message": "Alemão",
+    "description": "language"
+  },
+  "lang_greek": {
+    "message": "Grego",
     "description": "language"
   },
   "lang_hungarian": {
@@ -646,7 +641,7 @@
     "description": "multiple choice option"
   },
   "nodefaultfilter1": {
-    "message": "Nós não temos um padrão de lista de filtros para esse idioma.<br/> Por favor tente encontrar uma lista apropriada que suporta este idioma $link$ ou bloquear este anúncio para si mesmo em 'Personalizar'.",
+    "message": "Nós não temos uma lista padrão de filtros para esse idioma.<br/> Por favor tente encontrar uma lista apropriada que suporte esse idioma $link$ ou bloqueie o anúncio só para si em 'Personalizar'.",
     "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders": {
       "link": {
@@ -670,11 +665,11 @@
     "description": "tell a user to see if a reported ad also appears in firefox"
   },
   "checkinfirefox1": {
-    "message": "Instalar o Firefox se não tiver.",
+    "message": "Instale o Firefox se não tiver.",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox2": {
-    "message": "Instalar Adblock Plus para o Firefox caso não tenha.",
+    "message": "Instale o Adblock Plus para o Firefox se não tiver.",
     "description": "instruction for how to check Firefox for a reported ad"
   },
   "checkinfirefox3": {
@@ -858,11 +853,11 @@
     "description": "resourceblocking page string"
   },
   "resourceblocklegend3": {
-    "message": "whitelisted recursos",
+    "message": "recursos com permissão",
     "description": "resourceblocking page string"
   },
   "resourceblocklegend4": {
-    "message": "recursos bloqueados",
+    "message": "recursos bloqueáveis",
     "description": "resourceblocking page string"
   },
   "resourceblocklegend5": {
@@ -1004,13 +999,25 @@
     "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
-        "content": "PPEDROF",
+        "content": "Pedro Oliveira",
         "example": "Michael G, Drew R"
       }
     }
   },
+  "project_home": {
+    "message": "Página Principal do Projecto",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Ajuda",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "Questões Frequentes",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
   "report_ad_on_page": {
-    "message": "Denuncie um anúnio nesta página",
+    "message": "Denunciar um anúnio nesta página",
     "description": "Link in the button"
   },
   "show_resourcelist": {
@@ -1018,7 +1025,7 @@
     "description": "Link in the button"
   },
   "advanced_options": {
-    "message": "Sou um profissional, mostrar opções avançadas.",
+    "message": "Visualizar opções avançadas.",
     "description": "Options page checkbox"
   },
   "subscribe_unsubscribe_all": {
@@ -1137,6 +1144,10 @@
     "message": "Página:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
+  "last_update_failed": {
+    "message": "A última actualização falhou; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
     "message": "Mostrar anúncios <i>em todo o lado</i> excepto para estes sites...",
     "description": "Section title for blacklisting section of Customize tab"
@@ -1152,5 +1163,9 @@
   "warning_overrules_filters": {
     "message": "Atenção: em todos os outros sites, vais ver anúncios!<br>Isto ultrapassa todos os outros filtros para esses sites.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "storage_quota_exceeded": {
+    "message": "Você excedeu a quantidade de armazenamento que o AdBlock pode usar. Por favor, desincreva-se de algumas listas!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
   }
 }

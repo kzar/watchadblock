@@ -45,11 +45,14 @@ function localizePage() {
   });
 }
 
-// Should not be used in content scripts.
+// TODO: move back into background.html since Safari can't use this
+// anywhere but in the background.  Do it after merging 6101 and 6238
+// and 5912 to avoid merge conflicts.
 // Inputs: key:string.
 // Returns value if key exists, else undefined.
 storage_get = function(key) {
-  var json = localStorage.getItem(key);
+  var store = (window.SAFARI ? safari.extension.settings : localStorage);
+  var json = store.getItem(key);
   if (json == null)
     return undefined;
   try {
@@ -60,9 +63,18 @@ storage_get = function(key) {
   }
 }
 
-// Should not be used in content scripts.
 // Inputs: key:string, value:object.
 // Returns undefined.
 storage_set = function(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  var store = (window.SAFARI ? safari.extension.settings : localStorage);
+  try {
+    store.setItem(key, JSON.stringify(value));
+  } catch (ex) {
+    // Safari throws this error for all writes in Private Browsing mode.
+    // TODO: deal with the Safari case more gracefully.
+    if (ex.name == "QUOTA_EXCEEDED_ERR" && !SAFARI) {
+      alert(translate("storage_quota_exceeded"));
+      chrome.tabs.create({url: chrome.extension.getURL("options/index.html#ui-tabs-2")});
+    }
+  }
 }

@@ -136,7 +136,7 @@
     "description": "Back to previous wizard page button"
   },
   "findingads": {
-    "message": "Намиране на реклами...<br/><br/><i>Това ще отнеме известно време.</i>",
+    "message": "Намиране на реклами…<br/><br/><i>Това ще отнеме известно време.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle": {
@@ -145,15 +145,15 @@
   },
 
   "adblock_wont_run_on_pages_matching": {
-    "message": "AdBlock не се изпълнява в страници, съвпадащи с:",
+    "message": "AdBlock няма да се изпълнява в страници, съвпадащи с:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   },
   "you_can_slide_to_change": {
-    "message": "Движете плъзгача, за да промените страниците, за които AdBlock не се изпълнява.",
+    "message": "Движете плъзгача, докато включите страниците, за които AdBlock няма да се изпълнява.",
     "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "whitelistertitle2": {
-    "message": "Изключване на AdBlock за...",
+    "message": "Изключване на AdBlock…",
     "description": "The title of the whitelister dialog"
   },
   "clickthead": {
@@ -166,7 +166,7 @@
     "description": "Button for excluding a domain in the whitelister dialog"
   },
   "subscribingtitle": {
-    "message": "Абониране за списък с филтри...",
+    "message": "Абониране за списък с филтри…",
     "description": "abp: link subscriber title"
   },
   "subscribingfinished": {
@@ -218,10 +218,6 @@
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Показвай текстови реклами от Google (харесват ми)",
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
-  },
-  "youtubeads": {
-    "message": "Блокирай вградените реклами към клиповете от YouTube",
-    "description": "Option on first tab page"
   },
   "showcontextmenus": {
     "message": "Добави елементи към дясното контекстно меню",
@@ -287,32 +283,20 @@
     "message": "обновен преди 1 ден",
     "description": "Label for subscription"
   },
-  "removedlabel": {
-    "message": "Премахнат.",
-    "description": "Status label"
-  },
   "unsubscribedlabel": {
     "message": "Без абонамент.",
     "description": "Status label"
   },
   "fetchinglabel": {
-    "message": "Извличане... моля, изчакайте.",
+    "message": "Извличане… моля, изчакайте.",
     "description": "Status label"
   },
-  "subscribedlabel": {
-    "message": "С абонамент.",
-    "description": "Status label"
-  },
-  "nolisturllabel": {
-    "message": "Не е списък с адреси.",
-    "description": "Status label"
+  "invalidListUrl": {
+    "message": "Недействителен адрес на списъка. Списъкът ще бъде изтрит.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Провалено извличане на филтъра!",
-    "description": "Error messagebox"
-  },
-  "enterurloflist": {
-    "message": "Моля, въведете адреса на списъка с филтри, за който се абонирате.",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -383,6 +367,10 @@
     "message": " - допълнителни немски филтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasylist_plus_greek": {
+    "message": " - допълнителни гръцки филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filtereasylist_plus_norwegian": {
     "message": " - допълнителни норвежки филтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -400,7 +388,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "котайски филтри",
+    "message": " - допълнителни китайски филтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -442,6 +430,10 @@
   "filterukranian": {
     "message": "украински филтри",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasyprivacy": {
+    "message": "филтри EasyPrivacy (лична неприкосновеност)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
   },
 
   "blacklistclickmessage": {
@@ -592,6 +584,10 @@
     "message": "немски",
     "description": "language"
   },
+  "lang_greek": {
+    "message": "гръцки",
+    "description": "language"
+  },
   "lang_hungarian": {
     "message": "унгарски",
     "description": "language"
@@ -731,14 +727,14 @@
     "description": "Context and popup menu entry"
   },
   "contextmenuexcludedomain": {
-    "message": "Не изпълнявай за домейна...",
+    "message": "Не изпълнявай за домейна…",
     "description": "Context menu entry"
   },
   "filecleanerwarning": {
     "message": "Ако виждате това съобщение при всяко пускане на AdBlock, моля, уверете се, че не ползвате програма за почистване на ненужни файлове, която чисти файловете в „localStorage“.",
     "description": "Help for users who use hyperactive file cleaners"
   },
- "typehiding": {
+  "typehiding": {
     "message": "скрито",
     "description": "A resource type (lowercase!)"
   },
@@ -865,7 +861,7 @@
     "description": "resourceblocking page string"
   },
   "loading": {
-    "message": "ЗАРЕЖДАНЕ...",
+    "message": "ЗАРЕЖДАНЕ…",
     "description": "resourceblocking page string"
   },
   "nextstep": {
@@ -1004,6 +1000,18 @@
       }
     }
   },
+  "project_home": {
+    "message": "Страница на проекта",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Помощ",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "ЧЗВ",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
   "report_ad_on_page": {
     "message": "Докладвай реклама в страницата",
     "description": "Link in the button"
@@ -1039,7 +1047,7 @@
     "description": "Install page subtitle"
   },
   "installing_adblock": {
-    "message": "Инсталиране на AdBlock...",
+    "message": "Инсталиране на AdBlock…",
     "description": "Install page: shown while progress bar loads"
   },
   "done": {
@@ -1132,8 +1140,12 @@
     "message": "Страница:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
+  "last_update_failed": {
+    "message": "Провалено обновяване: ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
-    "message": "Показване на реклами <i>навсякъде</i> без домейните...",
+    "message": "Показване на реклами <i>навсякъде</i> без домейните…",
     "description": "Section title for blacklisting section of Customize tab"
   },
   "only_block_ads_on_these_sites": {
@@ -1147,5 +1159,9 @@
   "warning_overrules_filters": {
     "message": "Внимание: във всички други сайтове ще виждате реклами!<br>Настройката изключва всички останали филтри за сайтовете.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "storage_quota_exceeded": {
+    "message": "Надхвърляте квотата, която AdBlock ползва за съхраняване на данни. Моля, прекратете абонаментите си за някои от списъците с филтри!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
   }
 }

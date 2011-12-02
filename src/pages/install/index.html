@@ -10,7 +10,7 @@
     <script src="../../functions.js"></script>
     <script>
       var installPageVersion = 2;
-      localStorage['saw_install_page'] = installPageVersion;
+      BGcall("storage_set", "saw_install_page", installPageVersion);
       $(function() {
         localizePage();
 

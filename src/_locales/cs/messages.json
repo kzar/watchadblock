@@ -1,4 +1,4 @@
-﻿{
+{
   "description1": {
     "message": "Nejoblíbenější rozšíření pro Chrome s více než 2 miliony uživatelů! Blokuje reklamy na celém webu.",
     "description": "Extension description in manifest"
@@ -223,10 +223,6 @@
     "message": "Líbí se mi textové reklamy Google, neblokuj je.",
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
-  "youtubeads": {
-    "message": "Blokovat reklamy uvnitř videí na YouTube.",
-    "description": "Option on first tab page"
-  },
   "showcontextmenus": {
     "message": "Přidat položky do nabídky po kliknutí pravým tlačítkem myši.",
     "description": "Option on first tab page"
@@ -292,10 +288,6 @@
     "message": "aktualizováno před 1 dnem",
     "description": "Label for subscription"
   },
-  "removedlabel": {
-    "message": "Odstraněno.",
-    "description": "Status label"
-  },
   "unsubscribedlabel": {
     "message": "Odhlášeno.",
     "description": "Status label"
@@ -304,20 +296,12 @@
     "message": "Načítám... Prosím, čekejte.",
     "description": "Status label"
   },
-  "subscribedlabel": {
-    "message": "Přihlášeno k odběru.",
-    "description": "Status label"
-  },
-  "nolisturllabel": {
-    "message": "Toto nebyla URL seznamu.",
-    "description": "Status label"
+  "invalidListUrl": {
+    "message": "Neplatný seznam URL. Bude smazán.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Nepodařilo se načíst tento filtr!",
-    "description": "Error messagebox"
-  },
-  "enterurloflist": {
-    "message": "Prosím, zadejte URL seznamu filtrů, který chcete přihlásit k odběru.",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -388,6 +372,10 @@
     "message": " - dodatečné německé filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasylist_plus_greek": {
+    "message": " - dodatečné řecké filtry",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filtereasylist_plus_norwegian": {
     "message": " - dodatečné norské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -405,7 +393,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "Čínské filtry",
+    "message": " - dodatečné čínské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -447,6 +435,10 @@
   "filterukranian": {
     "message": "Ukrajinské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (ochrana soukromí)",
+    "description": "A filter list. Don't translate 'EasyPrivacy', it's just here so you can add something like (privacy protection) or such to it."
   },
 
   "blacklistclickmessage": {
@@ -598,6 +590,10 @@
     "message": "Němčina",
     "description": "language"
   },
+  "lang_greek": {
+    "message": "Řečtina",
+    "description": "language"
+  },
   "lang_hungarian": {
     "message": "Maďarština",
     "description": "language"
@@ -700,7 +696,7 @@
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a> EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
       }
     }
   },
@@ -984,6 +980,10 @@
     "message": "Skrýt toto tlačítko",
     "description": "Toolbar button menu entry to hide the AdBlock button"
   },
+  "support_sentence": {
+    "message": "Pokud máte rádi AdBlock, prosím, klikněte na <img/> a zvažte, zda chcete <a>podpořit vývoj</a>!",
+    "description": "Sentence in popup menu.  The <img/> tag will be replaced by a Google +1 button, so you should put '<img/>' in your sentence wherever '+1' would make sense as part of the sentence.  The <a></a> tag links to a payment screen."
+  },
   "did_you_know_this_is_my_full_time_job": {
     "message": "Věděli jste, že toto je moje zaměstnání?",
     "description": "Text of a payment request link"
@@ -1005,6 +1005,18 @@
         "example": "Michael G, Drew R"
       }
     }
+  },
+  "project_home": {
+    "message": "Hlavní stránka projektu",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Nápověda a pomoc",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "Časté dotazy",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
   },
   "report_ad_on_page": {
     "message": "Nahlásit reklamu na této stránce",
@@ -1033,7 +1045,7 @@
     }
   },
   "now_you_have_adblock_hooray": {
-    "message": "Nyní máte AdBlock!  Hurááá!",
+    "message": "Nyní máte AdBlock! Hurááá!",
     "description": "Install page title. 'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
   },
   "any_new_tabs_you_open_Will_be_automatically_ad_free": {
@@ -1061,7 +1073,7 @@
     "description": "Install page instructions. The one question is a checkbox."
   },
   "that_was_easy": {
-    "message": "To bylo jednoduché",
+    "message": "Pokračovat",
     "description": "Install page: button text at end of setup section to proceed to the next section. The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
   "lets_get_you_set_up": {
@@ -1134,6 +1146,10 @@
     "message": "Stránka:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
 },
+  "last_update_failed": {
+    "message": "Poslední aktualizace se nezdařila; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
     "message": "Zobrazovat reklamy <i>všude</i> kromě těchto domén...",
     "description": "Section title for blacklisting section of Customize tab"

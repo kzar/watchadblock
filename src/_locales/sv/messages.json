@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "Det mest populära Chrome-tillägget, med över 2 miljoner användare!  Blockerar reklamtillägg över hela webben.",
     "description": "Extension description in manifest"
@@ -223,10 +223,6 @@
     "message": "Jag gillar Google's texttillägg; blockera dom inte.",
     "description": "Install page text; slightly shorter than the 'googletextads' message." 
   },
-  "youtubeads": {
-    "message": "Blockera inbäddad reklam i YouTube-videor.",
-    "description": "Option on first tab page"
-  },
   "showcontextmenus": {
     "message": "Lägg till AdBlock i högerklicksmenyn.",
     "description": "Option on first tab page"
@@ -292,10 +288,6 @@
     "message": "Uppdaterades för 1 dag sedan",
     "description": "Label for subscription"
   },
-  "removedlabel": {
-    "message": "Borttagen.",
-    "description": "Status label"
-  },
   "unsubscribedlabel": {
     "message": "Prenumeration avslutad.",
     "description": "Status label"
@@ -304,20 +296,12 @@
     "message": "Hämtar... vänta!",
     "description": "Status label"
   },
-  "subscribedlabel": {
-    "message": "Prenumererad.",
-    "description": "Status label"
-  },
-  "nolisturllabel": {
-    "message": "Det var ingen listadress.",
-    "description": "Status label"
+  "invalidListUrl": {
+    "message": "Ogiltig listadress. Den kommer att tas bort.",
+    "description": "Message when you subscribe to a non-list URL"
   },
   "failedtofetchfilter": {
     "message": "Kunde inte hämta detta filter!",
-    "description": "Error messagebox"
-  },
-  "enterurloflist": {
-    "message": "Ange URL för den filterlista du vill prenumerera på.",
     "description": "Error messagebox"
   },
   "removefromlist": {
@@ -388,6 +372,10 @@
     "message": " - Tysk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filtereasylist_plus_greek": {
+    "message": " - Grekisk tilläggslista",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filtereasylist_plus_norwegian": {
     "message": " - Norsk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -405,7 +393,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
-    "message": "Kinesiska filter",
+    "message": " - Kinesisk tilläggslista",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
@@ -448,7 +436,11 @@
     "message": "Ukrainska filter",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (Integritetsskydd)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
+  },
+  
   "blacklistclickmessage": {
     "message": "Högerklicka ett reklamtillägg på en sida för att blockera det -- eller blockera det manuellt här.",
     "description": "Message at the top of the blacklist options tab"
@@ -596,6 +588,10 @@
   },
   "lang_german": {
     "message": "Tyska",
+    "description": "language"
+  },
+  "lang_greek": {
+    "message": "Grekiska",
     "description": "language"
   },
   "lang_hungarian": {
@@ -1010,6 +1006,18 @@
       }
     }
   },
+  "project_home": {
+    "message": "Projektsida",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "help": {
+    "message": "Hjälp",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "faq": {
+    "message": "Vanliga frågor och svar",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
   "report_ad_on_page": {
     "message": "Rapportera ett tillägg på den här sidan",
     "description": "Link in the button"
@@ -1141,7 +1149,11 @@
   "modifypath": {
     "message": "Sida:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
-	  },
+  },
+  "last_update_failed": {
+    "message": "Senaste uppdatering mysslyckades; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
     "message": "Visa reklamtillägg <i>överallt</i> utom på dessa domäner...",
     "description": "Section title for blacklisting section of Customize tab"
@@ -1154,5 +1166,9 @@
     "message": "Varning: Du kommer att se tillägg på alla andra sidor!<br>
 	Det här åsidosätter också alla andra filter för dessa sidor .",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "storage_quota_exceeded": {
+    "message": "Du har överskridit den maximala mängden lagringsutrymme som AdBlock kan använda. Avsluta prenumerationen på en eller flera filterlistor!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
   }
 }

@@ -4,8 +4,6 @@ body {
   margin: 0px;
 }
 
-td { margin: 0px; padding: 0px; }
-
 #wrapper { 
   margin: 0px 0px;
   width: 240px;
@@ -47,7 +45,7 @@ a:not(.blue) {
 
 .menu-entry:hover {
   border: 1px solid #AECFF7;
-  -webkit-border-radius:3px;
+  border-radius: 3px;
   padding: 2px 1px;
   padding-left:37px;
   margin-left:-36px;
@@ -56,7 +54,7 @@ a:not(.blue) {
 .info {
   background: #dddddd;
   border: 1px solid gray;
-  -webkit-border-radius: 5px;
+  border-radius: 5px;
   margin: 5px;
   padding-left: 5px;
   padding-right: 5px;
@@ -79,13 +77,9 @@ a:not(.blue) {
 
 .box {
   background:white; 
-  -webkit-border-radius: 5px;
+  border-radius: 5px;
   border: 1px solid black; 
   padding: 10px;
-}
-
-#payment_measure {
-  font-weight: bold;
 }
 
 #pay_open {

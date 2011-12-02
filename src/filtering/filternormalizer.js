@@ -50,9 +50,11 @@ var FilterNormalizer = {
         return false;
 
     // Convert old-style hiding rules to new-style.
-    if (/#[^\:]*\(/.test(filter) && !/##/.test(filter)) {
+    if (/#[\*a-z0-9_\-]*(\(|$)/.test(filter) && !/##/.test(filter)) {
       // Throws exception if unparseable.
+      var oldFilter = filter;
       filter = FilterNormalizer._old_style_hiding_to_new(filter);
+      log('Converted ' + oldFilter + ' to ' + filter);
     }
 
     // If it is a hiding rule...
@@ -64,10 +66,22 @@ var FilterNormalizer = {
       if ($(parts[1] + ',html').length == 0)
         throw "Caused other selector filters to fail";
 
-      // Ignore [style] special case that WebKit parses badly.
-      var parsedFilter = new SelectorFilter(filter);
-      if (/style([\^\$\*]?=|\])/.test(filter))
+      // On a few sites, we have to ignore [style] rules.
+      // Affects Chrome (crbug 68705) and Safari (issue 6225).
+      if (/style([\^\$\*]?=|\])/.test(filter)) {
+        var ignoreStyleRulesOnTheseSites = "~mail.google.com,~mail.yahoo.com";
+        if (filter.indexOf(ignoreStyleRulesOnTheseSites) == -1) {
+          if (filter[0] != "#") ignoreStyleRulesOnTheseSites += ",";
+          filter = ignoreStyleRulesOnTheseSites + filter;
+        }
+      }
+
+      // This was a filter which only worked in older Gecko browsers (FF3)
+      // They'll never match in WebKit browsers.
+      if (/\~pregecko2.*\#\#/.test(filter))
         return null;
+
+      var parsedFilter = new SelectorFilter(filter);
 
     } else { // If it is a blocking rule...
       // This will throw an exception if the rule is invalid.
@@ -108,8 +122,8 @@ var FilterNormalizer = {
     // 1. a node -- this is optional and must be '*' or alphanumeric
     // 2. a series of ()-delimited arbitrary strings -- also optional
     //    the ()s can't be empty, and can't start with '='
-    if (rule.length == 0 || 
-        !/^(?:\*|[a-z0-9]*)(?:\([^=][^\)]*\))*$/i.test(rule))
+    if (rule.length == 0 ||
+        !/^(?:\*|[a-z0-9\-_]*)(?:\([^=][^\)]*?\))*$/i.test(rule))
       throw "bad selector filter";
 
     var first_segment = rule.indexOf('(');
@@ -137,7 +151,7 @@ var FilterNormalizer = {
 
     return domain + "##" + resultFilter;
   },
-  
+
   // Throw an exception if the selector isn't of a valid type.
   // Input: a CSS selector
   _checkCssSelector: function(selector) {
@@ -154,12 +168,12 @@ var FilterNormalizer = {
     // Get rid of all valid [elemType="something"] selectors. They are valid,
     // and the risk is that their content will disturb further tests. To prevent
     // a[id="abc"]div to be valid, convert it to a[valid]div, which is invalid
-    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|\w+?)\]/g;
+    var test = /\[[a-z0-9\-_]+(\~|\^|\$|\*|\|)?\=(\".*?\"|\'.*?\'|[a-z_\-][a-z0-9\-_]*?)\]/g;
     selector = selector.replace(test, '[valid]');
 
     // :not may contain every selector except for itself and tree selectors
     // therefore simply put the content of it at the end of the filters
-    test = /\:not\(\ *([^\ \)\>\+\~\,]+)\ *\)/g;
+    test = /\:not\(\ *([^\ \)\>\+\~\,]+\)?)\ *\)/g;
     var match = selector.match(test);
     if (match)
       for (var i=0; i<match.length; i++) {
@@ -180,10 +194,10 @@ var FilterNormalizer = {
           case "nth-of-type":
           case "nth-last-of-type":
           case "nth-child":
-          case "nth-last-child": 
+          case "nth-last-child":
             test = /^\ *((\-|\+)?\d*n\ *((\-|\+)?\ *\d+)?|(\-|\+)?\d+|odd|even)\ *$/;
             break;
-          case "lang": 
+          case "lang":
             test = /^\ *[a-z]+(\-[a-z0-9]+)?\ *$/;
             break;
           case "first-child":
@@ -229,15 +243,15 @@ var FilterNormalizer = {
 
     // Get rid of the nodeName selector.
     selector = selector.replace(/(^|\ )(\*|[a-z0-9_\-]+)/g, '');
-     
+
     // Get rid of #id selectors
     selector = selector.replace(/\#[a-z_][a-z0-9_\-]*/g, '[valid]');
-  
+
     // Get rid of valid .class selectors. Possibly more characters are valid,
     // but the current list doesn't contain these
     selector = selector.replace(/\.[a-z0-9\-_]+/g, '[valid]');
 
-    // If the filter is correct, nothing but [text] selectors are left. 
+    // If the filter is correct, nothing but [text] selectors are left.
     // Everything still behind except spaces must be an error.
     selector = selector.replace(/\[[a-z0-9\-_]+\]/g, '');
     selector = selector.trim();
