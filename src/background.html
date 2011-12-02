@@ -280,6 +280,10 @@
         return false;
       }
 
+      handlerBehaviorChanged = function() {
+        chrome.webRequest.handlerBehaviorChanged();
+      }
+
       // CUSTOM FILTERS
 
       // Get the custom filters text as a \n-separated text string.
