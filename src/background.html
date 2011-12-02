@@ -240,7 +240,8 @@
           }
         }
 
-        beginNewStyleBlocking();
+        if (_settings.get_all().use_webrequest_blocking)
+          beginNewStyleBlocking();
         // Whether in new or old style, we need to delete frameData for tabs when they
         // are closed, or else going from new -> old -> new could leave around some
         // stale tabid->url mappings
