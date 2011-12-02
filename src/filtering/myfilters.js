@@ -121,6 +121,7 @@ MyFilters.prototype.rebuild = function() {
   this.blocking = new BlockingFilterSet(
     FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
   );
+  handlerBehaviorChanged(); // defined in background
 }
 
 // If any subscribed filters are out of date, asynchronously load updated
