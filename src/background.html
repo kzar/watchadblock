@@ -12,38 +12,40 @@
     <script src="filtering/filternormalizer.js"></script>
     <script>
 
-      GLOBAL_block_style = "new";
-      // Determine whether GLOBAL_block_style should be "old"
-      (function() {
-        function shouldDegrade() {
-          if (SAFARI)
-            return true;
-          // TEMP while webRequest is experimental, pretend it has graduated
-          if (chrome.experimental && chrome.experimental.webRequest &&
-              !chrome.webRequest)
-            chrome.webRequest = chrome.experimental.webRequest;
-          try {
-            // Quick test that the API exists and that we may access it.
-            function x() { return { cancel: false }; }
-            chrome.webRequest.onBeforeRequest.addListener(x, undefined, ["blocking"]);
-            chrome.webRequest.onBeforeRequest.removeListener(x);
-          }
-          catch (ex) {
-            return true;
-          }
-          // We must assume the API will work; if it fails later, we'll catch
-          // it and gracefully degrade.
-          return false;
-        }
-        if (shouldDegrade()) {
-          GLOBAL_block_style = "old";
-        }
-      })();
+      // OPTIONAL SETTINGS
 
+      function Settings() {
+        var defaults = {
+          debug_logging: false,
+          show_google_search_text_ads: false,
+          show_context_menu_items: true,
+          show_advanced_options: false,
+          use_webrequest_blocking: false,
+        };
+        var settings = storage_get('settings') || {};
+        this._data = $.extend(defaults, settings);
+      };
+      Settings.prototype = {
+        set: function(name, is_enabled) {
+          this._data[name] = is_enabled;
+          storage_set('settings', this._data);
+        },
+        get_all: function() {
+          return this._data;
+        }
+      };
+      _settings = new Settings();
+
+
+      GLOBAL_block_style = "new";
+      // TODO temp until webRequest graduates from experimental
+      if (!SAFARI && chrome.experimental && chrome.experimental.webRequest &&
+              !chrome.webRequest)
+        chrome.webRequest = chrome.experimental.webRequest;
 
       // Implement blocking via the Chrome webRequest API.
       (function() {
-        if (SAFARI || GLOBAL_block_style == "old")
+        if (SAFARI)
           return;
 
         // Stores url, whitelisting, and blocking info for a tabid+frameid
@@ -202,35 +204,47 @@
             return { cancel: blocked };
           }
           catch(ex) {
-            abortNewStyle(ex);
+            abortNewStyleBlocking(ex.message);
             return { cancel: false };
           }
         }
 
         // Upon error in webRequest API, gracefully degrade to old style
-        // Inputs: ex: an exception that was thrown and caused the abort
-        function abortNewStyle(ex) {
+        // Inputs: message: the message explaining the abort
+        abortNewStyleBlocking = function(message) {
           GLOBAL_block_style = "old";
+          _settings.set('use_webrequest_blocking', false);
           try {
-            console.log("Falling back to old-style blocking.  Error message:");
-            console.log(ex.message);
-            console.trace();
-            STATS.msg("webRequest fail: " + ex.message);
             chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
-            chrome.tabs.onRemoved.removeListener(frameData.onTabClosedHandler);
+          }
+          catch(ex) {
+          }
+          try {
+            console.log("Falling back to old-style blocking.  Reason:");
+            console.log(message);
+            console.trace();
+            try { STATS.msg("webRequest fail: " + message); } catch(ex) {}
           }
           catch(ex) {
           }
         }
 
-        // Register to use webRequest API
-        try {
-          chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, undefined, ["blocking"]);
-          chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
+        beginNewStyleBlocking = function() {
+          GLOBAL_block_style = "new";
+          _settings.set('use_webrequest_blocking', true);
+          try {
+            chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, undefined, ["blocking"]);
+          }
+          catch(ex) {
+            abortNewStyleBlocking(ex.message);
+          }
         }
-        catch(ex) {
-          abortNewStyle(ex);
-        }
+
+        beginNewStyleBlocking();
+        // Whether in new or old style, we need to delete frameData for tabs when they
+        // are closed, or else going from new -> old -> new could leave around some
+        // stale tabid->url mappings
+        chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
 
       })();
 
@@ -291,29 +305,6 @@
         set_custom_filters_text(text.trim());
       }
 
-      // OPTIONAL SETTINGS
-
-      function Settings() {
-        var defaults = {
-          debug_logging: false,
-          show_google_search_text_ads: false,
-          show_context_menu_items: true,
-          show_advanced_options: false
-        };
-        var settings = storage_get('settings') || {};
-        this._data = $.extend(defaults, settings);
-      };
-      Settings.prototype = {
-        set: function(name, is_enabled) {
-          this._data[name] = is_enabled;
-          storage_set('settings', this._data);
-        },
-        get_all: function() {
-          return this._data;
-        }
-      };
-      _settings = new Settings();
-
       get_settings = function() {
         return _settings.get_all();
       }
@@ -326,6 +317,13 @@
             log = function() { console.log.apply(console, arguments); };
           else
             log = function() { };
+        }
+
+        if (!SAFARI && name == "use_webrequest_blocking") {
+          if (is_enabled)
+            beginNewStyleBlocking();
+          else
+            abortNewStyleBlocking("Requested by user");
         }
       }
 
