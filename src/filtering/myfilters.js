@@ -458,9 +458,6 @@ MyFilters.prototype._make_subscription_options = function() {
     "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
     },
-    "ukranian": { // Ukranian filters
-      url: "http://adblock.oasis.org.ua/banlist.txt",
-    },
     "easyprivacy": { // EasyPrivacy
       url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
     },
