@@ -15,11 +15,11 @@ function MyFilters() {
   }
 
   for (var id in this._subscriptions) {
-  	// Subscribe Ukrainian filter list users to the Russian list instead
-  	if ((id == 'ukranian') && (this._subscriptions[id].subscribed)) {
+    // Subscribe Ukrainian filter list users to the Russian list instead
+    if (id == 'ukranian' && this._subscriptions[id].subscribed) {
       this.changeSubscription(id, {subscribed: false}, false);
       this.changeSubscription('russian', {subscribed: true}, false);
-  	}
+    }
     // Delete unsubscribed ex-official lists.
     if (!this._official_options[id] && !this._subscriptions[id].user_submitted
         && !this._subscriptions[id].subscribed) {
