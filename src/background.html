@@ -308,6 +308,8 @@
       // No-op for Safari.  Runs in old-style in case new-style gets turned
       // back on.
       handlerBehaviorChanged = function() {
+        if (SAFARI)
+          return;
         try { 
           chrome.webRequest.handlerBehaviorChanged();
         } catch (ex) {
