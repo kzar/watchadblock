@@ -233,7 +233,7 @@
           GLOBAL_block_style = "new";
           _settings.set('use_webrequest_blocking', true);
           try {
-            chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, undefined, ["blocking"]);
+            chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
           }
           catch(ex) {
             abortNewStyleBlocking(ex.message);
