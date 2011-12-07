@@ -118,6 +118,12 @@ STATS = (function() {
           sleepThenPing();
         }, delay );
       };
+      // Try to detect corrupt storage and thus avoid ping floods.
+      if (millisTillNextPing() == 0) {
+        storage_set("next_ping_time", 1);
+        if (storage_get("next_ping_time") != 1)
+          return;
+      }
       // This will sleep, then ping, then schedule a new ping, then
       // call itself to start the process over again.
       sleepThenPing();
