@@ -61,11 +61,6 @@
 
 
       GLOBAL_block_style = "old";
-      // TODO temp until webRequest graduates from experimental
-      if (!SAFARI && chrome.experimental && chrome.experimental.webRequest &&
-              !chrome.webRequest)
-        chrome.webRequest = chrome.experimental.webRequest;
-
       // Implement blocking via the Chrome webRequest API.
       (function() {
         if (SAFARI)
