@@ -183,8 +183,7 @@
         // When a request starts, perhaps block it.
         function onBeforeRequestHandler(details) {
           try {
-            // TODO storage_get
-            if (localStorage.adblock_is_paused)
+            if (sessionStorage.adblock_is_paused)
               return { cancel: false };
 
             if (!frameData.track(details))
