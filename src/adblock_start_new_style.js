@@ -104,7 +104,10 @@ function adblock_begin_new_style() {
     }
 
     if (data.settings.debug_logging)
-      log = function() { console.log.apply(console, arguments); };
+      log = function() { 
+        if (arguments[0] == '[DEBUG]') // comment out for verbosity
+          console.log.apply(console, arguments);
+      };
 
     if (data.selectors.length != 0)
       block_list_via_css(data.selectors);

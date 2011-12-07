@@ -18,11 +18,11 @@ function adblock_begin_part_2() {
   }
 
   if (data.page_is_whitelisted) {
-    log("[DEBUG] Whitelisted frame:", document.location.href);
+    log("[DEBUG]", "Whitelisted frame:", document.location.href);
     return;
   }
 
-  log("[DEBUG] Tracking frame:", document.location.href);
+  log("[DEBUG]", "Tracking frame:", document.location.href);
 
   if (SAFARI) {
     // Add entries to right click menu.  Unlike Chrome, we can make

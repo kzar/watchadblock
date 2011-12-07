@@ -86,7 +86,7 @@
             if (details.type == 'main_frame') { // New tab
               delete fd[tabId];
               fd.get(tabId, 0).url = details.url;
-              log("[DEBUG] Tracking tab:", tabId, details.url);
+              log("[DEBUG]", "Tracking tab:", tabId, details.url);
               return true;
             }
 
@@ -196,7 +196,7 @@
 
             if (frameData.isOnWhitelistedTab(tabId)) {
               if (details.type == 'main_frame')
-                log("[DEBUG] Tab", tabId, "is whitelisted");
+                log("[DEBUG]", "Tab", tabId, "is whitelisted");
               log("Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
               return { cancel: false };
             }
@@ -346,7 +346,10 @@
 
         if (name == "debug_logging") {
           if (is_enabled)
-            log = function() { console.log.apply(console, arguments); };
+            log = function() { 
+              if (arguments[0] == '[DEBUG]') // comment out for verbosity
+                console.log.apply(console, arguments); 
+            };
           else
             log = function() { };
         }
@@ -820,7 +823,10 @@
       })();
 
       if (get_settings().debug_logging)
-        log = function() { console.log.apply(console, arguments); };
+        log = function() { 
+          if (arguments[0] == '[DEBUG]') // comment out for verbosity
+            console.log.apply(console, arguments); 
+        };
 
       _myfilters = new MyFilters();
 
