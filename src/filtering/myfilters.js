@@ -131,6 +131,7 @@ MyFilters.prototype.rebuild = function() {
   this.blocking = new BlockingFilterSet(
     FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
   );
+  handlerBehaviorChanged(); // defined in background
 }
 
 // Change a property of a subscription or check if it has to be updated

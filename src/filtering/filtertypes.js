@@ -156,6 +156,17 @@ PatternFilter._parseRule = function(text) {
       option = option.substring(1);
 
     option = option.replace(/\-/, '_');
+
+    // See crbug.com/93542 -- object-subrequest is reported as 'object',
+    // so we treat them as synonyms.  TODO issue 5935: we must address
+    // false positives/negatives due to this.
+    if (option == 'object_subrequest')
+      option = 'object';
+
+    // 'background' is a synonym for 'image'.
+    if (option == 'background')
+      option = 'image';
+    
     if (option in ElementTypes) { // this option is a known element type
       if (inverted)
         disallowedElementTypes |= ElementTypes[option];
@@ -176,10 +187,11 @@ PatternFilter._parseRule = function(text) {
       // option, without returning that the filter was invalid.
     }
     else {
-      // In case ABP adds a new option, and we do not support it, return an
-      // error. If we don't do this and the new type is an elementtype, the
-      // filter *$newtype will be parsed as '*$', e.g. match everything.
-      throw "Unsupported option: $" + options[i];
+      // Any other option may be a new option that we do not support.  Instead
+      // of ignoring it (converting a new-option-specific rule into a global
+      // rule), rename it to UNSUPPORTED, so it won't match any resource.
+      log("Unsupported element type in filter " + text);
+      result.allowedElementTypes |= ElementTypes.UNSUPPORTED;
     }
   }
   // No element types mentioned?  All types are allowed.
@@ -188,10 +200,6 @@ PatternFilter._parseRule = function(text) {
 
   // Extract the disallowed types from the allowed types
   result.allowedElementTypes &= ~disallowedElementTypes;
-
-  // Since ABP 1.3 'image' can also refer to 'background'
-  if (result.allowedElementTypes & ElementTypes.image)
-    result.allowedElementTypes |= ElementTypes.background;
 
   // We parse whitelist rules too, in which case we already know it's a
   // whitelist rule so can ignore the @@s.

@@ -23,6 +23,7 @@
                 localizePage();
 
                 $(".advanced").toggle(optionalSettings.show_advanced_options);
+                $(".chrome-only").toggle(!SAFARI);
               },
             }).
             show();
@@ -34,7 +35,7 @@
       function displayVersionNumber() {
         try {
           var xhr = new XMLHttpRequest();
-          xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
+          xhr.open("GET", chrome.extension.getURL('manifest.json'), true);
           xhr.onreadystatechange = function() {
             if(this.readyState == 4) {
               var theManifest = JSON.parse(this.responseText);

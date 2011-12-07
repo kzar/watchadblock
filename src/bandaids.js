@@ -1,11 +1,11 @@
-var run_bandaids = function(settings) {
+var run_bandaids = function(blocking_style) {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
   if (/mail\.live\.com/.test(document.location.host))
     apply_bandaid_for = "hotmail";
   else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
     apply_bandaid_for = "hkpub";
-  else if (/youtube/.test(document.location.hostname))
+  else if (blocking_style != "new" && /youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
 
   var bandaids = {
@@ -23,7 +23,6 @@ var run_bandaids = function(settings) {
         css("width", "100%").
         css("margin", "0px");
     },
-
     youtube: function() {
       function blockYoutubeAds(videoplayer) {
         var flashVars = $(videoplayer).attr('flashvars');
@@ -69,7 +68,6 @@ var run_bandaids = function(settings) {
         }, false);
       }
     }
-
   }; // end bandaids
 
   if (apply_bandaid_for) {

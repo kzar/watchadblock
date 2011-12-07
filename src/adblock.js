@@ -1,15 +1,3 @@
-function debug_print_selector_matches(selectors) {
-  selectors.
-    filter(function(selector) { return $(selector).length > 0; }).
-    forEach(function(selector) {
-      log("Debug: CSS '" + selector + "' hid:");
-      addResourceToList('HIDE:' + selector);
-      $(selector).each(function(i, el) {
-        log("       " + el.nodeName + "#" + el.id + "." + el.className);
-      });
-    });
-}
-
 function adblock_begin_part_2() {
   var data = GLOBAL_contentScriptData.data;
   delete GLOBAL_contentScriptData;
@@ -44,10 +32,6 @@ function adblock_begin_part_2() {
     }, false);
   }
 
-  // Run site-specific code to fix some errors, but only if the site has them
-  if (typeof run_bandaids == "function")
-    run_bandaids(data.settings);
-
   //Neither Chrome nor Safari blocks background images. So remove them
   //TODO: Remove background images for elements other than <body>
   var bgImage = $("body").css('background-image') || "";
@@ -80,8 +64,6 @@ function adblock_begin_part_2() {
     }
   }
 
-  if (data.settings.debug_logging)
-    debug_print_selector_matches(data.selectors);
 }
 
 // If $ (jquery) is undefined, we're on a xml or svg page and can't run
@@ -90,14 +72,4 @@ if (window.location != 'about:blank' && typeof $ != "undefined") {
     adblock_begin_part_2();
   else
     GLOBAL_contentScriptData.run_after_data_is_set = adblock_begin_part_2;
-
-  // Subscribe to the list when you click an abp: link
-  $('[href^="abp:"], [href^="ABP:"]').click(function(event) {
-    event.preventDefault();
-    var searchquery = $(this).attr("href").replace(/^.+?\?/, '');
-    if (searchquery)
-      window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                  searchquery), "_blank",
-                  'scrollbars=0,location=0,resizable=0,width=450,height=140');
-  });
 }

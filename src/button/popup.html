@@ -129,6 +129,7 @@
           $(function() {
             $("#div_status_paused a").click(function() {
               BG.sessionStorage.removeItem('adblock_is_paused');
+              BG.handlerBehaviorChanged();
               BG.updateButtonUIAndContextMenus();
               window.close();
             });
@@ -208,7 +209,7 @@
           $(function() {
             $("#div_show_resourcelist").click(function() {
               BG.getCurrentTabInfo(function(info) {
-                chrome.tabs.sendRequest(info.tab.id, "open_resourcelist");
+                BG.launch_resourceblocker(info.tab.id);
               });
             });
           });

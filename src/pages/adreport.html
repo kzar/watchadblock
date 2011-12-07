@@ -72,6 +72,13 @@
             subscribed_filter_names.push(id);
       });
 
+      var enabled_settings = [];
+      BGcall("get_settings", function(settings) {
+        for (setting in settings)
+          if (settings[setting])
+            enabled_settings.push(setting);
+      });
+
       //generate the URL to the issue tracker
       function generateReportURL() {
         var domain = "";
@@ -126,6 +133,9 @@
           "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
         if (AdBlockVersion)
           body.push("AdBlock " + AdBlockVersion);
+        body.push("");
+        body.push("=== Enabled settings ===");
+        body.push(enabled_settings.join('\n'));
 
         result = result + "&comment=" + escape(body.join('\n'));
 

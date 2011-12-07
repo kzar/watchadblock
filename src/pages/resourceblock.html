@@ -119,7 +119,7 @@
         this.filters = filters;
       };
       FakeFilterSet.prototype = {
-        matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
+        matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
           var f = this.filters, len = f.length;
           for (var i = 0; i < len; i++) {
             if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
@@ -133,6 +133,14 @@
       // Creates the table that shows all blockable items
       function generateTable() {
         if (!SAFARI) {
+          // TODO: if the background has to store filter texts in order to support
+          // resourceblock, its match cache might as well store filters instead of
+          // booleans at all times (no extra memory usage because the filters are
+          // already in memory.)  Do this after 'old' style dies in Chrome.
+          // This means 'return_filter' will always be true in .matches(), and that
+          // resourceblock will be able to point directly to BG._myfilters (it can't
+          // do it now because the matchCache is storing booleans so it can't get
+          // filter text info.)
           var local_filterset = new BlockingFilterSet(
             new FakeFilterSet(domaindata.patternSerialized),
             new FakeFilterSet(domaindata.whitelistSerialized)
@@ -176,12 +184,15 @@
           switch(type) {
             case undefined: return "hiding";
             case ElementTypes.script: return "script";
+            case ElementTypes.background:
             case ElementTypes.image: return "image";
-            case ElementTypes.background: return "image";
             case ElementTypes.stylesheet: return "stylesheet";
             case ElementTypes.object: return "object";
             case ElementTypes.subdocument: return "subdocument";
+            case ElementTypes.object_subrequest: return "object_subrequest";
             case ElementTypes.media: return "media";
+            case ElementTypes.xmlhttprequest: return "xmlhttprequest";
+            case ElementTypes.other: return "other";
             case ElementTypes.document:
             case ElementTypes.elemhide: return "page";
             default: return "unknown";
@@ -558,7 +569,8 @@
 
         var opts = {
           domain: domain,
-          include_texts: true
+          include_texts: true,
+          style: (SAFARI ? "old" : BG.GLOBAL_block_style)
         };
         BGcall('get_content_script_data', opts, function(data) {
           delete data.selectors;
@@ -583,13 +595,16 @@
             // Load all stored resources
             var cache = BG.show_resourceblocker.cached_resources;
             var loaded_resources = cache.get(url);
+            // ... but don't show them if the page is whitelisted
+            if (resources[url] && resources[url].type == ElementTypes.document)
+              loaded_resources = null;
             // Convert all resources to the object type
             if (loaded_resources)
               for (var i = 0; i < loaded_resources.length || 0; i++) {
                 if (/\<|\"/.test(loaded_resources[i]))
                   continue;
-                if (/^HIDE\:.+/.test(loaded_resources[i])) {
-                  var filter = "##" + loaded_resources[i].substring(5);
+                if (/^HIDE\:\|\:.+/.test(loaded_resources[i])) {
+                  var filter = "##" + loaded_resources[i].substring(7);
                   resources[filter] = {filter: filter};
                 } else {
                   var blockmatches = loaded_resources[i].split(':|:', 2);
@@ -597,7 +612,10 @@
                     continue; // Blacklister resources shouldn't be visible
                   if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
                     continue; // Ignore about: and data: urls
-                  resources[blockmatches[1]] = {type: Number(blockmatches[0])};
+                  var elemType = Number(blockmatches[0]);
+                  if (elemType == ElementTypes.document)
+                    continue;
+                  resources[blockmatches[1]] = {type: elemType};
                 }
               }
             if (Object.keys(resources).length == 0) {

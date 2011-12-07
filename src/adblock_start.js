@@ -34,31 +34,8 @@ function relativeToAbsoluteUrl(url) {
     return base[0] + url;
 }
 
-// Return the ElementType element type of the given element.
-function typeForElement(el) {
-  // TODO: handle background images that aren't just the BODY.
-  switch (el.nodeName.toUpperCase()) {
-    case 'INPUT': 
-    case 'IMG': return ElementTypes.image;
-    case 'SCRIPT': return ElementTypes.script;
-    case 'OBJECT': 
-    case 'EMBED': return ElementTypes.object;
-    case 'VIDEO': 
-    case 'AUDIO': 
-    case 'SOURCE': return ElementTypes.media;
-    case 'FRAME': 
-    case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': 
-      if (/(^|\s)icon($|\s)/i.test(el.rel))
-        return ElementTypes.image;
-      return ElementTypes.stylesheet;
-    case 'BODY': return ElementTypes.background;
-    default: return ElementTypes.NONE;
-  }
-}
-
 // Browser-agnostic canLoad function.
-// Returns false if data.url, data.elType, and data.pageDomain together
+// Returns false if data.url, data.elType, and data.frameDomain together
 // should not be blocked.
 function browser_canLoad(event, data) {
   if (SAFARI) {
@@ -73,7 +50,7 @@ function browser_canLoad(event, data) {
       return true;
     }
 
-    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.pageDomain);
+    var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.frameDomain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
     else if (isMatched)
@@ -82,19 +59,32 @@ function browser_canLoad(event, data) {
   }
 }
 
-//Do not make the frame display a white area
-//Not calling .remove(); as this causes some sites to reload continuesly
-function removeFrame(el) {
-  var parentEl = $(el).parent();
-  var cols = (parentEl.attr('cols').indexOf(',') > 0);
-  if (!cols && parentEl.attr('rows').indexOf(',') <= 0)
-    return;
-  cols = (cols ? 'cols' : 'rows');
-  // Convert e.g. '40,20,10,10,10,10' into '40,20,10,0,10,10'
-  var sizes = parentEl.attr(cols).split(',');
-  sizes[$(el).prevAll().length] = 0;
-  parentEl.attr(cols, sizes.join(','));
-}
+// Remove background images and purged elements.
+// Return true if the element has been handled.
+function weakDestroyElement(el, elType, mustBePurged) {
+  if (elType & ElementTypes.background) {
+    $(el).css("background-image", "none !important");
+    return true;
+  }
+  else if (elType == ElementTypes.script) {
+    return true; // nothing to do
+  }
+  else if (el.nodeName == "FRAME") {
+    return false; // can't handle frames
+  }
+  else if (mustBePurged) {
+    var replacement = document.createElement(el.nodeName);
+    if (el.id) replacement.id = el.id;
+    if (el.className) replacement.className = el.className;
+    if (el.name) replacement.name = el.name;
+    replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
+    $(el).replaceWith(replacement);
+    return true;
+  }
+  else {
+    return false; // not handled by this function
+  }
+};
 
 beforeLoadHandler = function(event) {
   var el = event.target;
@@ -103,7 +93,7 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    pageDomain: document.location.hostname
+    frameDomain: document.location.hostname
   };
   addResourceToList(elType + ':|:' + data.url);
   if (false == browser_canLoad(event, data)) {
@@ -118,79 +108,11 @@ beforeLoadHandler = function(event) {
     } else
       event.preventDefault();
 
-    if (el.nodeName == "FRAME")
-      removeFrame(el);
-    else if (elType & ElementTypes.background)
-      $(el).css("background-image", "none !important");
-    else if (!(elType & ElementTypes.script)) {
-      if (event.mustBePurged) {
-        var replacement = document.createElement(el.nodeName);
-        if (el.id) replacement.id = el.id;
-        if (el.className) replacement.className = el.className;
-        if (el.name) replacement.name = el.name;
-        replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
-        $(el).replaceWith(replacement);
-      } else {
-        // There probably won't be many sites that modify all of these.
-        // However, if we get issues, we might have to set the location and size
-        // via the css properties position, left, top, width and height
-        $(el).css({
-          "display": "none !important",
-          "visibility": "hidden !important",
-          "opacity": "0 !important",
-        }).
-        attr("width", "0px").
-        attr("height", "0px");
-      }
-    }
+    if (!weakDestroyElement(el, elType, event.mustBePurged))
+      destroyElement(el, elType);
   }
 }
 beforeLoadHandler.blockCount = 0;
-
-// Return the CSS text that will hide elements matching the given 
-// array of selectors.
-function css_hide_for_selectors(selectors) {
-  var result = [];
-  var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
-  for (var i = 0; i < selectors.length; i += GROUPSIZE) {
-    var line = selectors.slice(i, i + GROUPSIZE);
-    var rule = " { display:none !important; }";
-    result.push(line.join(',') + rule);
-  }
-  return result.join(' ');
-}
-
-// Add style rules hiding the given list of selectors.
-function block_list_via_css(selectors) {
-  var d = document.documentElement;
-  var css_chunk = document.createElement("style");
-  css_chunk.type = "text/css";
-  // Handle issue 5643
-  css_chunk.style.display = "none !important";
-  css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
-                        + css_hide_for_selectors(selectors);
-  d.insertBefore(css_chunk, null);
-}
-
-// Simplified FilterSet object that relies on all input filter texts being
-// definitely applicable to the current domain.
-function FakeFilterSet(serializedFilters) {
-  var filters = [];
-  for (var i = 0; i < serializedFilters.length; i++) {
-    filters.push(PatternFilter.fromData(serializedFilters[i]));
-  }
-  this.filters = filters;
-};
-FakeFilterSet.prototype = {
-  matches: function(url, loweredUrl, elementType, pageDomain, isThirdParty) {
-    var f = this.filters, len = f.length;
-    for (var i = 0; i < len; i++) {
-      if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
-        return f[i];
-    }
-    return null;
-  }
-}
 
 function adblock_begin() {
   if (!SAFARI)
@@ -202,9 +124,22 @@ function adblock_begin() {
   document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
-    domain: document.location.hostname
+    domain: document.location.hostname,
+    style: "old"
   };
   BGcall('get_content_script_data', opts, function(data) {
+    // Stops all content script activity that we have started.
+    function abort() {
+      document.removeEventListener("beforeload", beforeLoadHandler, true);
+      addResourceToList = function() { };
+      delete LOADED_TOO_FAST;
+      delete GLOBAL_collect_resources;
+    }
+
+    if (data.abort) { // We're using the webRequest API in Chrome.
+      abort();
+      return;
+    }
     // Store the data for adblock.js
     // If adblock.js already installed its code, run it after we're done.
     window.setTimeout(function() { 
@@ -213,12 +148,10 @@ function adblock_begin() {
     }, 0);
 
     if (data.settings.debug_logging)
-      log = function(text) { console.log(text); };
+      log = function() { console.log.apply(console, arguments); };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
-      document.removeEventListener("beforeload", beforeLoadHandler, true);
-      delete LOADED_TOO_FAST;
-      delete GLOBAL_collect_resources;
+      abort();
       return;
     }
 
@@ -235,9 +168,27 @@ function adblock_begin() {
     //Chrome can't block resources immediately. Therefore all resources
     //are cached first. Once the filters are loaded, simply remove them
     if (!SAFARI) {
-      // TODO speed: is there a faster way to do this?  e.g. send over a jsonified PatternFilter rather
-      // than the pattern text to reparse?  we should time those.  jsonified filter takes way more space
-      // but is much quicker to reparse.
+
+      // Simplified FilterSet object that relies on all input filter texts being
+      // definitely applicable to the current domain.
+      function FakeFilterSet(serializedFilters) {
+        var filters = [];
+        for (var i = 0; i < serializedFilters.length; i++) {
+          filters.push(PatternFilter.fromData(serializedFilters[i]));
+        }
+        this.filters = filters;
+      };
+      FakeFilterSet.prototype = {
+        matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
+          var f = this.filters, len = f.length;
+          for (var i = 0; i < len; i++) {
+            if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
+              return f[i];
+          }
+          return null;
+        }
+      }
+
       _local_block_filterset = new BlockingFilterSet(
         new FakeFilterSet(data.patternSerialized),
         new FakeFilterSet(data.whitelistSerialized)
@@ -247,10 +198,21 @@ function adblock_begin() {
         beforeLoadHandler(LOADED_TOO_FAST[i].data);
       delete LOADED_TOO_FAST;
     }
+
+    if (data.settings.debug_logging) {
+      $(function() { 
+        debug_print_selector_matches(data.selectors, "old");
+      });
+    }
+
+    // Run site-specific code to fix some errors, but only if the site has them
+    if (typeof run_bandaids == "function")
+      $(function() { run_bandaids("old"); });
   });
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
 // If $ (jquery) is undefined, we're on a xml or svg page and can't run
-if (document.location != 'about:blank' && typeof $ != "undefined")
+if (document.location != 'about:blank' && typeof $ != "undefined") {
   adblock_begin();
+}
