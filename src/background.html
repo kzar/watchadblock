@@ -86,7 +86,7 @@
             if (details.type == 'main_frame') { // New tab
               delete fd[tabId];
               fd.get(tabId, 0).url = details.url;
-              log("=========== Tracking tab:", tabId, details.url);
+              log("[DEBUG] Tracking tab:", tabId, details.url);
               return true;
             }
 
@@ -195,6 +195,8 @@
             frameData.storeResource(tabId, details.url, elType);
 
             if (frameData.isOnWhitelistedTab(tabId)) {
+              if (details.type == 'main_frame')
+                log("[DEBUG] Tab", tabId, "is whitelisted");
               log("Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
               return { cancel: false };
             }
