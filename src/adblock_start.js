@@ -53,8 +53,6 @@ function browser_canLoad(event, data) {
     var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.frameDomain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
-    else if (isMatched)
-      log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
 }

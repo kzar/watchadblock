@@ -173,7 +173,7 @@ BlockingFilterSet.prototype = {
 
     var match = this.whitelist.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
     if (match) {
-      log("Whitelisted: '" + match._rule + "' -> " + url);
+      log(frameDomain, ": whitelist rule", match._rule, "exempts url", url);
       this._matchCache[key] = (returnFilter ? match._text : false);
       return this._matchCache[key];
     }
