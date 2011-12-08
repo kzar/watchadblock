@@ -55,7 +55,7 @@ var elementTracker = {
       elementTracker[key] = { elements: [], verdicts: [], elType: elType };
     var data = elementTracker[key];
     data[targetList].push(value);
-    log((targetList == 'elements' ? value.nodeName:value) + " is", targetList, "#", data[targetList].length, "for key", key.substring(0, 80));
+    log("[DEBUG]", (targetList == 'elements' ? value.nodeName:value) + " is", targetList, "#", data[targetList].length, "for key", key.substring(0, 80));
 
     if (data.elements.length == 0 || data.verdicts.length == 0 || data.starting)
       return;
@@ -76,7 +76,7 @@ var elementTracker = {
     }
 
     var shouldBlock = data.verdicts[0];
-    log(data.elements.length, shouldBlock?"elements will be REMOVED.":"elements are harmless.", key);
+    log("[DEBUG]", data.elements.length, shouldBlock?"elements will be REMOVED.":"elements are harmless.", key);
     if (shouldBlock)
       data.elements.forEach(function(el) { destroyElement(el, data.elType); });
     data.elements = [];
@@ -104,7 +104,10 @@ function adblock_begin_new_style() {
     }
 
     if (data.settings.debug_logging)
-      log = function() { console.log.apply(console, arguments); };
+      log = function() { 
+        if (arguments[0] != '[DEBUG]') // comment out for verbosity
+          console.log.apply(console, arguments); 
+      };
 
     if (data.selectors.length != 0)
       block_list_via_css(data.selectors);

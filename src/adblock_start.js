@@ -148,7 +148,10 @@ function adblock_begin() {
     }, 0);
 
     if (data.settings.debug_logging)
-      log = function() { console.log.apply(console, arguments); };
+      log = function() { 
+        if (arguments[0] != '[DEBUG]') // comment out for verbosity
+          console.log.apply(console, arguments); 
+      };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       abort();

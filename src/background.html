@@ -86,14 +86,14 @@
             if (details.type == 'main_frame') { // New tab
               delete fd[tabId];
               fd.get(tabId, 0).url = details.url;
-              log("=========== Tracking tab:", tabId, details.url);
+              log("[DEBUG]", "=========== Tracking tab:", tabId, details.url);
               return true;
             }
 
             // Request from a tab opened before AdBlock started, or from a
             // chrome:// tab containing an http:// iframe
             if (!fd[tabId]) {
-              log("Ignoring unknown tab:", tabId, details.frameId, details.url);
+              log("[DEBUG]", "Ignoring unknown tab:", tabId, details.frameId, details.url);
               return false;
             }
 
@@ -103,13 +103,13 @@
             var potentialEmptyFrameId = (details.type == 'sub_frame' ? details.parentFrameId: details.frameId);
             if (!fd[tabId][potentialEmptyFrameId]) {
               fd.get(tabId, potentialEmptyFrameId).url = fd.get(tabId, 0).url;
-              log("Null frame", tabId, potentialEmptyFrameId, "found; giving it the tab's URL.");
+              log("[DEBUG]", "Null frame", tabId, potentialEmptyFrameId, "found; giving it the tab's URL.");
             }
 
             if (details.type == 'sub_frame') { // New frame
               delete fd[tabId][details.frameId];
               fd.get(tabId, details.frameId).url = details.url;
-              log("=========== Tracking frame", tabId, details.parentFrameId, details.frameId, details.url);
+              log("[DEBUG]", "=========== Tracking frame", tabId, details.parentFrameId, details.frameId, details.url);
             }
 
             return true;
@@ -175,7 +175,7 @@
 
           // When a tab is closed, delete all its data
           onTabClosedHandler: function(tabId) {
-            log("----------- Closing tab", tabId);
+            log("[DEBUG]", "----------- Closing tab", tabId);
             delete frameData[tabId];
           }
         };
@@ -195,7 +195,7 @@
             frameData.storeResource(tabId, details.url, elType);
 
             if (frameData.isOnWhitelistedTab(tabId)) {
-              log("Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
+              log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
               return { cancel: false };
             }
 
@@ -217,7 +217,7 @@
               chrome.tabs.sendRequest(tabId, { command: "block-results", frameUrl: frameUrl, results: results });
             }
 
-            log("Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
+            log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
             return { cancel: blocked };
           }
           catch(ex) {
@@ -337,7 +337,10 @@
 
         if (name == "debug_logging") {
           if (is_enabled)
-            log = function() { console.log.apply(console, arguments); };
+            log = function() { 
+              if (arguments[0] != '[DEBUG]') // comment out for verbosity
+                console.log.apply(console, arguments);
+            };
           else
             log = function() { };
         }
@@ -811,7 +814,10 @@
       })();
 
       if (get_settings().debug_logging)
-        log = function() { console.log.apply(console, arguments); };
+        log = function() { 
+          if (arguments[0] != '[DEBUG]') // comment out for verbosity
+            console.log.apply(console, arguments); 
+        };
 
       _myfilters = new MyFilters();
 
