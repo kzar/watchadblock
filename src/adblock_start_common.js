@@ -85,14 +85,17 @@ function debug_print_selector_matches(selectors, style) {
   selectors.
     filter(function(selector) { return $(selector).length > 0; }).
     forEach(function(selector) {
-      log("Debug: CSS '" + selector + "' hid:");
-      if (style == 'old')
-        addResourceToList('HIDE:|:' + selector);
-      else
-        BGcall("debug_report_elemhide", selector);
+      var matches = ""
       $(selector).each(function(i, el) {
-        log("       " + el.nodeName + "#" + el.id + "." + el.className);
+        matches += "        " + el.nodeName + "#" + el.id + "." + el.className + "\n";
       });
+      if (style == 'old') {
+        log("Debug: CSS '" + selector + "' hid:");
+        console.log(matches);
+        addResourceToList('HIDE:|:' + selector);
+      }
+      else
+        BGcall("debug_report_elemhide", selector, matches);
     });
 }
 

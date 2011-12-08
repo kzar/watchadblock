@@ -259,10 +259,11 @@
 
       })();
 
-      debug_report_elemhide = function(selector, sender) {
+      debug_report_elemhide = function(selector, matches, sender) {
         if (!window.frameData)
           return;
         frameData.storeResource(sender.tab.id, selector, "HIDE");
+        log(frameData.domainOfFrame(sender.tab.id, 0), ": hiding rule", selector, "matched:\n", matches);
       }
 
       // UNWHITELISTING
