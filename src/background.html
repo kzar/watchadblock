@@ -240,8 +240,7 @@
             console.log("Falling back to old-style blocking.  Reason:");
             console.log(message);
             console.trace();
-            var ignored = {"Requested by user":1, "Cannot read property 'onBeforeRequest' of undefined":1};
-            if (!(message in ignored))
+            if (message != "Cannot read property 'onBeforeRequest' of undefined")
               try { STATS.msg("webRequest fail: " + message); } catch(ex) {}
           }
           catch(ex) {
@@ -349,10 +348,15 @@
         }
 
         if (!SAFARI && name == "use_webrequest_blocking") {
-          if (is_enabled)
+          if (is_enabled) {
             beginNewStyleBlocking();
-          else
-            abortNewStyleBlocking("Requested by user");
+            if (GLOBAL_block_style == "new") // it worked
+              try { STATS.msg("successful opt in to webRequest"); } catch(ex) {}
+          }
+          else {
+            if (GLOBAL_block_style == "new") // it was working and they chose to disable it
+              abortNewStyleBlocking("opted out");
+          }
         }
       }
 
