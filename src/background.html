@@ -86,7 +86,7 @@
             if (details.type == 'main_frame') { // New tab
               delete fd[tabId];
               fd.get(tabId, 0).url = details.url;
-              log("[DEBUG]", "=========== Tracking tab:", tabId, details.url);
+              log("\n-------", fd.domainOfFrame(tabId, 0), ": loaded in tab", tabId, "--------\n\n");
               return true;
             }
 
