@@ -173,13 +173,13 @@ BlockingFilterSet.prototype = {
 
     var match = this.whitelist.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
     if (match) {
-      log("Whitelisted: '" + match._rule + "' -> " + url);
+      log(frameDomain, ": whitelist rule", match._rule, "exempts url", url);
       this._matchCache[key] = (returnFilter ? match._text : false);
       return this._matchCache[key];
     }
     match = this.pattern.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
     if (match) {
-      log("Matched: '" + match._rule + "' -> " + url);
+      log(frameDomain, ": matched", match._rule, "to url", url);
       this._matchCache[key] = (returnFilter ? match._text: true);
       return this._matchCache[key];
     }

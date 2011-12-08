@@ -53,8 +53,6 @@ function browser_canLoad(event, data) {
     var isMatched = data.url && _local_block_filterset.matches(data.url, data.elType, data.frameDomain);
     if (isMatched && event.mustBePurged)
       log("Purging if possible " + data.url);
-    else if (isMatched)
-      log("CHROME TRUE BLOCK " + data.url);
     return !isMatched;
   }
 }
@@ -148,7 +146,10 @@ function adblock_begin() {
     }, 0);
 
     if (data.settings.debug_logging)
-      log = function() { console.log.apply(console, arguments); };
+      log = function() { 
+        if (arguments[0] != '[DEBUG]') // comment out for verbosity
+          console.log.apply(console, arguments); 
+      };
 
     if (data.page_is_whitelisted || data.adblock_is_paused) {
       abort();
