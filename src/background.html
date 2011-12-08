@@ -257,13 +257,6 @@
           }
         }
 
-        if (_settings.get_all().use_webrequest_blocking)
-          beginNewStyleBlocking();
-        // Whether in new or old style, we need to delete frameData for tabs when they
-        // are closed, or else going from new -> old -> new could leave around some
-        // stale tabid->url mappings
-        chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
-
       })();
 
       debug_report_elemhide = function(selector, sender) {
@@ -337,7 +330,7 @@
 
       get_settings = function() {
         return _settings.get_all();
-        }
+      }
 
       set_setting = function(name, is_enabled) {
         _settings.set(name, is_enabled);
@@ -616,7 +609,7 @@
 
       // Bounce messages back to content scripts.
       if (!SAFARI) {
-      emit_page_broadcast = (function() {
+        emit_page_broadcast = (function() {
           var injectMap = {
             'top_open_whitelist_ui': {
               allFrames: false,
@@ -829,6 +822,17 @@
         // Safari has race condition where userId may not be available inside
         // index.html, so pass it in explicitly.
         chrome.tabs.create({url: "pages/install/index.html?u=" + STATS.userId});
+      }
+
+      // Chrome specific new-style blocking code.  Near the end so synchronous
+      // request handler doesn't hang Chrome while AdBlock initializes.
+      if (!SAFARI) {
+        if (get_settings().use_webrequest_blocking)
+          beginNewStyleBlocking();
+        // Whether in new or old style, we need to delete frameData for tabs when they
+        // are closed, or else going from new -> old -> new could leave around some
+        // stale tabid->url mappings
+        chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
       }
 
       // Safari specific code.
