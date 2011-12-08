@@ -221,7 +221,7 @@
             return { cancel: blocked };
           }
           catch(ex) {
-            abortNewStyleBlocking(ex.message);
+            abortNewStyleBlocking(ex.stack);
             return { cancel: false };
           }
         }
@@ -237,10 +237,15 @@
           catch(ex) {
           }
           try {
+            var message = message.
+              split('\n').
+              filter(function(line) { return /chrome-extension:/.test(line) || !/^ *at /.test(line); }).
+              join('\n').
+              replace(/[\(\)]/g, '').
+              replace(/^ *at .*chrome-extension:..[0-9a-z]*(.*) *$/gm, '  $1');
             console.log("Falling back to old-style blocking.  Reason:");
             console.log(message);
-            console.trace();
-            if (message != "Cannot read property 'onBeforeRequest' of undefined")
+            if (message.indexOf("Cannot read property 'onBeforeRequest' of undefined") == -1)
               try { STATS.msg("webRequest fail: " + message); } catch(ex) {}
           }
           catch(ex) {
@@ -254,7 +259,7 @@
             chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
           }
           catch(ex) {
-            abortNewStyleBlocking(ex.message);
+            abortNewStyleBlocking(ex.stack);
           }
         }
 
