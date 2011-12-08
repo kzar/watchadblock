@@ -240,7 +240,9 @@
             console.log("Falling back to old-style blocking.  Reason:");
             console.log(message);
             console.trace();
-            try { STATS.msg("webRequest fail: " + message); } catch(ex) {}
+            var ignored = {"Requested by user":1, "Cannot read property 'onBeforeRequest' of undefined":1};
+            if (!(message in ignored))
+              try { STATS.msg("webRequest fail: " + message); } catch(ex) {}
           }
           catch(ex) {
           }
