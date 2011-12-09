@@ -221,9 +221,6 @@ PatternFilter._parseRule = function(text) {
   // If it starts or ends with *, strip that -- it's a no-op.
   rule = rule.replace(/^\*/, '');
   rule = rule.replace(/\*$/, '');
-  // ^ at the end of a rule should only match a delimiter, but we ignore that
-  // for efficiency's sake.
-  rule = rule.replace(/\^$/, '');
   // Some chars in regexes mean something special; escape it always.
   // Escaped characters are also faster. 
   // - Do not escape a-z A-Z 0-9 and _ because they can't be escaped
