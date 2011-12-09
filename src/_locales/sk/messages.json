@@ -1,6 +1,6 @@
-{
+﻿{
   "description1": {
-    "message": "Najobľúbenejšie rozšírenie pre Chrome s viac ako 2 miliónmi používateľov! Blokuje reklamy na celom webe.",
+    "message": "Najobľúbenejšie rozšírenie pre Chrome s viac ako 3 miliónmi užívateľov! Blokuje reklamy na celom webe.",
     "description": "Extension description in manifest"
   },
   "buttoncancel": {
@@ -186,7 +186,7 @@
     "placeholders": {
       "version": {
         "content": "$1",
-        "example": "2.0.9"
+        "example": "2.5.1"
       }
     }
   },
@@ -226,6 +226,14 @@
   "showcontextmenus": {
     "message": "Pridať položky do ponuky po kliknutí pravým tlačidlom myši.",
     "description": "Option on first tab page"
+  },
+  "block_ads_in_all_videos_and_flash_games": {
+    "message": "Blokovať reklamy vo všetkých videách a vo Flash hrách.",
+    "description": "Option on first tab page"
+  },
+  "webrequest_warning": {
+    "message": "Táto funkcia je podporovaná novou verziou Chrome-u.<br>Ak sa AdBlock začne chovať zvláštne, môžete túto funkciu vypnúť odškrtnutím políčka.<br>Skontrolujte si, či máte najnovšiu verziu prehliadača Google Chrome a zapnuté auto-aktualizácie prehliadača Chrome.",
+    "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
   },
   "debuginlogoption": {
     "message": "Zobrazovať debug správy v Console Log (toto spomaluje AdBlock)",
@@ -325,7 +333,7 @@
     "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
   },
   "updatenowmessage": {
-    "message": "Aktualizácie sú sťahované automaticky; ale môžete ich aj <a>stiahnuť teraz</a>.",
+    "message": "Aktualizácie filtrov sa sťahujú automaticky; ale môžete ich aj <a>stiahnuť teraz</a>.",
     "description": "update filters text + button"
   },
   "orenteraurl": {
@@ -756,6 +764,18 @@
     "message": "rámec",
     "description": "A resource type (lowercase!)"
   },
+  "typeobject_subrequest": {
+    "message": "žiadosť objektu",
+    "description": "A resource type (lowercase!)"
+  },
+  "typexmlhttprequest": {
+    "message": "xml-http žiadosť",
+    "description": "A resource type (lowercase!)"
+  },
+  "typeother": {
+    "message": "ostatné",
+    "description": "A resource type (lowercase!)"
+  },
   "typemedia": {
     "message": "audio/video",
     "description": "A resource type (lowercase!)"
@@ -920,7 +940,7 @@
     "placeholders": {
       "version": {
         "content": "$1",
-        "example": "2.3.0"
+        "example": "2.5.1"
       }
     }
   },
@@ -933,7 +953,7 @@
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
   },
   "status_disabled": {
-    "message": "AdBlock sa nedá spustiť na tejto doméne.",
+    "message": "AdBlock sa nedá spustiť na tejto doméne",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
   "dont_run_on_pages_on_domain": {
@@ -941,7 +961,7 @@
     "description": "Menu entry to open the whitelist wizard."
   },
   "disabled_on_this_page": {
-    "message": "AdBlock je zakázaný na tejto stránke.",
+    "message": "AdBlock je zakázaný na tejto stránke",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "enable": {
@@ -949,7 +969,7 @@
     "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused": {
-    "message": "AdBlock je pozastavený.",
+    "message": "AdBlock je pozastavený",
     "description": "Message shown in toolbar button when AdBlock is paused."
   },
   "unpause": {
