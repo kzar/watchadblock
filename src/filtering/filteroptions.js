@@ -14,7 +14,8 @@ var ElementTypes = {
   other: 256,
   xmlhttprequest: 512,
   'document': 1024,
-  elemhide: 2048
+  elemhide: 2048,
+  popup: 4096,
   // If you add something here, update .ALLRESOURCES below.
 };
 ElementTypes.ALLRESOURCETYPES = 1023; // all types that apply to resources

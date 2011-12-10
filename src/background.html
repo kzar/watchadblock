@@ -271,6 +271,17 @@
 
       })();
 
+      // Popup blocking
+      if (!SAFARI && chrome.webNavigation && window.frameData && GLOBAL_block_style == "new") {
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(function(details) {
+          var opener = frameData.domainOfFrame(details.sourceTabId, details.sourceFrameId);
+          var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener);
+          if (match)
+            chrome.tabs.remove(details.tabId);
+          frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
+        });
+      }
+      
       debug_report_elemhide = function(selector, matches, sender) {
         if (!window.frameData)
           return;
