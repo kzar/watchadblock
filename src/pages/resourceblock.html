@@ -214,19 +214,22 @@
         var rows = [];
         for (var i in resources) {
           var matchingfilter = resources[i].filter;
+          var typeName = getTypeName(resources[i].type);
           if (!matchingfilter && !SAFARI)
             matchingfilter = local_filterset.matches(i, resources[i].type, domain, true);
 
           var type = {sort:3, name:undefined};
           if (matchingfilter)
-            if (matchingfilter[0] == '@')
+            if (Filter.isWhitelistFilter(matchingfilter))
               type = {sort:2, name:'whitelisted'};
-            else if (i[0] == '#')
+            else if (Filter.isSelectorFilter(i))
               type = {sort:0, name:'hiding'};
             else
               type = {sort:1, name:'blocked'};
 
-          var disabled = (type.name == 'whitelisted' || type.name == 'hiding');
+          // TODO: When crbug 80230 is fixed, allow $other again
+          var disabled = (type.name == 'whitelisted' || type.name == 'hiding' ||
+                          typeName == 'other' || typeName == 'unknown');
 
           var row = $("<tr>");
           if (type.name) row.addClass(type.name);
@@ -240,10 +243,9 @@
           $("<td>", { title: i, html: truncateI(i) }).appendTo(row);
 
           // Cell 3: Type
-          var typeName = getTypeName(resources[i].type);
           $("<td>", { name: typeName, text: translate('type' + typeName) }).appendTo(row);
 
-          // Cell 4: hidden sorting field
+          // Cell 4: hidden sorting field and matching filter
           cell = $("<td>");
           var span = $("<span>", { "class": "sorter", text: "3" }).appendTo(cell);
           if (type.name) {
@@ -256,7 +258,7 @@
           if (!disabled)
             row.find("td:not(:first-child)").addClass("clickableRow");
 
-          // Cell 5: Matched filter
+          // Cell 5: delete a custom filter
           if (inCustomFilters(matchingfilter))
             $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
           else
@@ -721,6 +723,14 @@
         <label for='typescr' i18n="typescript"></label>
         <input type="checkbox" value="stylesheet" checked="checked" id='typesty'/>
         <label for='typesty' i18n="typestylesheet"></label>
+        <input type="checkbox" value="xmlhttprequest" checked="checked" id='typexml'/>
+        <label for='typexml' i18n="typexmlhttprequest"></label>
+        <!--TODO: when crbug 93542 is fixed, uncomment this-->
+        <!--input type="checkbox" value="object_subrequest" checked="checked" id='typesubreq'/>
+        <label for='typesubreq' i18n="typeobject_subrequest"></label-->
+        <!--TODO: when crbug 80230 is fixed, uncomment this-->
+        <!--input type="checkbox" value="other" checked="checked" id='typeother'/>
+        <label for='typeother' i18n="typeother"></label-->
         <input type="checkbox" value="popup" id='typepopup' class='implicitType'/>
         <label for='typepopup' i18n="typepopup"></label><br/><br/>
       </div>
