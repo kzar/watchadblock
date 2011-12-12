@@ -162,7 +162,7 @@ BlockingFilterSet.prototype = {
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;
-    if (key in this._matchCache)
+    if (this._matchCache[key])
       return this._matchCache[key];
 
     // TODO: is there a better place to do this?

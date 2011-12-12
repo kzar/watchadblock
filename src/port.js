@@ -287,7 +287,7 @@ if (SAFARI) {
         // Fill in $Place_Holder1$ in message
         message = safesub(message, /\$(\w+?)\$/g, function(full, name) {
           var lowered = name.toLowerCase();
-          if (lowered in placeholders)
+          if (placeholders[lowered])
             return placeholders[lowered];
           return full; // e.g. '$FoO$' instead of 'foo'
         });
@@ -364,7 +364,7 @@ if (SAFARI) {
           for (var i = 0; i < l10nData.locales.length; i++) {
             var map = l10nData.messages[l10nData.locales[i]];
             // We must have the locale, and the locale must have the message
-            if (map && messageID in map)
+            if (map && map[messageID])
               return parseString(map[messageID], args);
           }
           return "";

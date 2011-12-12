@@ -1,6 +1,6 @@
 {
   "description1": {
-    "message": "La plus populaire des extensions Chrome, avec plus de 2 millions d'utilisateurs ! Bloque les publicités sur Internet.",
+    "message": "La plus populaire des extensions Chrome, avec plus de 3 millions d'utilisateurs ! Bloque les publicités sur Internet.",
     "description": "Extension description in manifest"
   },
   "buttoncancel": {
@@ -227,6 +227,14 @@
   "showcontextmenus": {
     "message": "Ajouter les éléments AdBlock dans le menu du clic droit",
     "description": "Option on first tab page"
+  },
+  "block_ads_in_all_videos_and_flash_games": {
+    "message": "Bloquer les pubs dans les vidéos et jeux Flash",
+    "description": "Option on first tab page"
+  },
+  "webrequest_warning": {
+    "message": "Cette fonction est uniquement supportée sur des versions récentes de Chrome.<br>Si AdBlock commence à se comporter bizarrement, désactivez-la.<br>Elle sera automatiquement désactivée si votre Chrome n'a pas encore à jour.",
+    "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
   },
   "debuginlogoption": {
     "message": "Afficher les messages de débogage dans la Console (ralentit AdBlock)",
@@ -734,39 +742,51 @@
   },
   "typehiding": {
     "message": "caché",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typescript": {
     "message": "script",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeimage": {
     "message": "image",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typestylesheet": {
     "message": "définition du style",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeobject": {
     "message": "objet interactif",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typesubdocument": {
     "message": "cadre",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
+  },
+  "typeobject_subrequest": {
+    "message": "object_subrequest",
+    "description": "A resource type"
+  },
+  "typexmlhttprequest": {
+    "message": "xmlhttprequest",
+    "description": "A resource type"
+  },
+  "typeother": {
+    "message": "autre",
+    "description": "A resource type"
   },
   "typemedia": {
     "message": "audio/video",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typepage": {
     "message": "page",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeunknown": {
     "message": "inconnu",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "blockeverycontaining": {
     "message": "Bloquer chaque ressource contenant :",

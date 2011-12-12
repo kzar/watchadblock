@@ -14,8 +14,7 @@ Filter._cache = {};
 // Throw an exception if the filter is invalid.
 Filter.fromText = function(text) {
   var cache = Filter._cache;
-  if (!(text in cache)) {
-
+  if (!cache[text]) {
     if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
     else
@@ -167,7 +166,7 @@ PatternFilter._parseRule = function(text) {
     if (option == 'background')
       option = 'image';
     
-    if (option in ElementTypes) { // this option is a known element type
+    if (ElementTypes[option]) { // this option is a known element type
       if (inverted)
         disallowedElementTypes |= ElementTypes[option];
       else
