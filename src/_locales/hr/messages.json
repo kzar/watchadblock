@@ -1,4 +1,4 @@
- {
+{
   "description1": {
     "message": "Najpopularnije Chrome proširenje, sa preko 2 milijuna korisnika! Blokira reklame na cijelom internetu.",
     "description": "Extension description in manifest"
@@ -136,7 +136,6 @@
     "message": "Nazad",
     "description": "Back to previous wizard page button"
   },
-
   "findingads": {
     "message": "Traženje reklama...<br/><br/><i>Ovo će potrajati trenutak.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
@@ -461,7 +460,6 @@
     "message": "<a>Prijavi reklamu</a> Adblock-u ili održavačima liste filtera.",
     "description": "A link for users who found an ad somewhere and want to report it"
   },
-
   "adblockreportinganad": {
     "message": "AdBlock - Prijavljivanje reklame",
     "description": "title of ad report page"
@@ -747,7 +745,7 @@
     }
   },
   "filterhasbeenadded": {
-    "message": "Filter je usoješno dodan!\nPonovno pokrenite stranicu da vidite rezultate!",
+    "message": "Filter je upješno dodan!\nPonovno pokrenite stranicu da vidite rezultate!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
   "noresourcessend": {
@@ -963,5 +961,207 @@
         "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
       }
     }
+  },
+  "adblock_auto_removes_ads_thats_all": {
+  "message": " AdBlock automatski uklanja reklame.  I to je najjednostavnije objašnjenje.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock neće raditi na nijednoj stranici koja odgovara slijedećem:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Sve nove kartice koje otvorite bit će automatski bez reklama.",
+    "description": "Install page subtitle"
+  },
+  "click_extensions": {
+    "message": "Kliknite <b>Proširenja</b> desno gore.",
+    "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
+  },
+  "click_install_update_automatically": {
+    "message": "Kliknite <b>Instaliraj ažuriranja automatski</b> okvir za odabir.",
+    "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
+  },
+  "click_safari_prefs": {
+    "message": "Kliknite <b>Safari &rArr; Postavke</b>.",
+    "description": "First step to turn on autoupdate.  &rArr; makes a right arrow (->)."
+  },
+  "click_updates": {
+    "message": "Dolje lijevo, kliknite <b>Ažuriranja</b>.",
+    "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock je onemogućen na ovoj stranici.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "done": {
+    "message": "gotovo.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "dont_run_on_pages_on_domain": {
+    "message": "Onemogući pokretanje na stranicima ove domene",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "faq": {
+    "message": "Pitanja i odgovori",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
+  "filterchinese": {
+    "message": " - dodatni kineski filteri",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_greek": {
+    "message": " - dodatni grčki filteri",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (zaštita privatnosti)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
+  },
+  "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
+    "message": "Prvo bi trebali <b>uključiti automatsko ažuriranje</b> u Safari postavkama, tako da primite ispravke i nove mogućnosti što češće.",
+    "description": "The first instructions on the Safari install page."
+  },
+  "for_more_options_right_click": {
+    "message": "Za više opcija, možete klikniti desni klina na stranicama ili kliknite $img$ dugme alatne trake.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "format_site1_site2_site3": {
+    "message": "Format: ~site1.com|~site2.com|~vijesti.site3.org",
+    "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "help": {
+    "message": "Pomoć",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "how_to_use_adblock": {
+    "message": "Kako koristiti AdBlock:",
+    "description": "Install page section title"
+  },
+  "i_like_googles_text_ads_dont_block_those": {
+    "message": "Sviđaju mi se Google-ove tekstualne reklame; ne želim ih blokirati.",
+    "description": "Install page text; slightly shorter than the 'googletextads' message." 
+  },
+  "i_pruned_your_subscriptions": {
+    "message": "OPASKA: Samo se trebate prijaviti na liste jezika koji koristite. Prijavili ste se na previše listi pa Vam je preglednik postao nestabilan.<br><br>Adblock Vam je se odjavio sa večine njih, ali opet se možete ponovno prijaviti ako stvarno želite .",
+    "description": "Explanation of why the user went from over 10 subscribed filter lists to just 4"
+  },
+  "installing_adblock": {
+    "message": "Instaliranje AdBlock-a...",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "invalidListUrl": {
+    "message": "Nepravilna lista URL. Bit će obrisana.",
+    "description": "Message when you subscribe to a non-list URL"
+  },
+  "lang_greek": {
+    "message": "Grčki",
+    "description": "language"
+  },
+  "last_update_failed": {
+    "message": "Posljednje ažuriranje je neuspjelo; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
+  "lets_get_you_set_up": {
+    "message": "Idemo podesiti Adblock!",
+    "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
+  },
+  "modifydomain": {
+    "message": "Lokacija:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Stranica:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Sada imate AdBlock! Hura!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "ok_autoupdate_is_on": {
+    "message": "U redu, automatsko ažuriranje je uključeno ",
+    "description": "Install page: text of button to press after turning on autoupdate."
+  },
+  "ok_now_what": {
+    "message": "U redu, a što sada? ",
+    "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Blokiraj reklame samo na slijedećim stranicama:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "please_fill_out_adblocks_one_question_setup": {
+    "message": "Molim ispunite AdBlock-ovo podešavanje jednim pitanjem:",
+    "description": "Install page instructions.  The one question is a checkbox."
+  },
+  "project_home": {
+    "message": "Stranica projekta",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Vidite ovo svaki puta kada pokrenete preglednik?",
+    "description": "Install page: link to click for help"
+  },
+  "set_up_adblock": {
+    "message": "Podešavanje AdBlock-a",
+    "description": "Install page: section title"
+  },
+  "show_ads_except_for": {
+    "message": "Prikaži reklame <i>bilo gdje</i> osim na slijedećim domenama...",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "show_me_how": {
+    "message": "Pokaži mi kako",
+    "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
+  },
+  "stop_blocking_ads": {
+    "message": "Zaustavi blokiranje reklama:",
+    "description": "Section header on third tab"
+  },
+  "storage_quota_exceeded": {
+    "message": "Prešli ste preko omogućene memorije koje AdBlock koristi. Molim Vas da se odjavite od nekih listi filtera!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "support_sentence": {
+    "message": "Ako Vam se sviđa AdBlock, molim kliknite <img/> i razmislite o <a>podršci razvijanja</a>!",
+    "description": "Sentence in popup menu.  The <img/> tag will be replaced by a Google +1 button, so you should put '<img/>' in your sentence wherever '+1' would make sense as part of the sentence.  The <a></a> tag links to a payment screen."
+  },
+  "that_was_easy": {
+    "message": "Ovo je bilo lagano",
+    "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "to_turn_on_autoupdate": {
+    "message": "Uključivanje automatskog ažuriranja:",
+    "description": "Install page: title of section with a list of steps to take"
+  },
+  "turning_on_autoupdate_is_really_important": {
+    "message": "Uključivanje automatskog ažuriranja je <b>veoma važno!</b>",
+    "description": "Message on Safari install page convincing users to not skip this setup step"
+  },
+  "warning_overrules_filters": {
+    "message": "Upozoranje: na svim drugim stranicama ćete vidjeti reklame!<br>Ovo nadilazi sve druge filtere za te stranice.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whitelistertitle2": {
+    "message": "Nemoj pokretati AdBlock na...",
+    "description": "The title of the whitelister dialog"
+  },
+  "you_can_slide_to_change": {
+    "message": "Možete pomaknuti klizač ispod kako biste promjenili točno gdje želite da se AdBlock ne pokreće.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Što više lista fitera koristite, sporiji će biti AdBlock. Korištenje previše lista može čak srušiti Vaš preglednik na nekim stranicama. Pritisnite U redu da se ipak prijavite na ovu listu.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  },
+  "block_ads_in_all_videos_and_flash_games": {
+    "message": "Blokiraj reklame u svim Flash aplikacijama (video, igre...)",
+    "description": "Option on first tab page"
   }
  }
