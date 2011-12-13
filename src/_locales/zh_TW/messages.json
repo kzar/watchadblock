@@ -420,6 +420,18 @@
     "message": "烏克蘭過濾清單",
     "description": "A filter list"
   },
+  "filterchinese": {
+    "message": " - 附加的中文過濾清單",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_greek": {
+    "message": " - 附加的希臘過濾清單",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasyprivacy": {
+    "message": "EasyPrivacy (隱私保護)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
+  },
 
   "blacklistclickmessage": {
     "message": "右鍵點選頁面上的廣告來阻擋它 ─ 或在此處手動阻擋。",
@@ -710,42 +722,66 @@
    "message": "AdBlock　網域白名單",
    "description": "Message of the exclude area"
  },
-"typehiding": {
+ "block_ads_in_all_videos_and_flash_games": {
+    "message": "阻擋影片和 Flash 遊戲中的廣告",
+    "description": "Option on first tab page"
+  },
+  "invalidListUrl": {
+    "message": "無效的清單網址。 它將會被刪除。",
+    "description": "Message when you subscribe to a non-list URL"
+  },
+  "lang_greek": {
+    "message": "希臘文",
+    "description": "language"
+  },
+  "last_update_failed": {
+    "message": "上次更新失敗; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
+  "storage_quota_exceeded": {
+    "message": "你超出了 AdBlock 能使用的儲存空間。 請取消訂閱一些清單!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "typehiding": {
    "message": "隱藏",
    "description": "A resource type (lowercase!)"
- },
- "typescript": {
+  },
+  "typescript": {
    "message": "腳本",
    "description": "A resource type (lowercase!)"
- },
- "typeimage": {
+  },
+  "typeimage": {
    "message": "圖片",
    "description": "A resource type (lowercase!)"
- },
- "typestylesheet": {
+  },
+  "typestylesheet": {
    "message": "樣式定義",
    "description": "A resource type (lowercase!)"
- },
- "typeobject": {
+  },
+  "typeobject": {
    "message": "互動式物件",
    "description": "A resource type (lowercase!)"
- },
- "typesubdocument": {
+  },
+  "typesubdocument": {
    "message": "框架",
    "description": "A resource type (lowercase!)"
- },
- "typemedia": {
+  },
+  "typemedia": {
    "message": "音樂/影片",
    "description": "A resource type (lowercase!)"
- },
- "typepage": {
+  },
+  "typepage": {
    "message": "頁面",
    "description": "A resource type (lowercase!)"
- },
- "typeunknown": {
+  },
+  "typeunknown": {
    "message": "未知",
    "description": "A resource type (lowercase!)"
- },
+  },
+  "webrequest_warning": {
+    "message": "此功能需要新版本的 Chrome。<br>如果 AdBlock 發生狀況，請取消此功能。<br>如果 Chrome 尚未更新到新版本，它會自動取消。",
+    "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
+  },
  "blockeverycontaining": {
    "message": "阻擋資源包含:",
    "description": "resourceblocking page string"
