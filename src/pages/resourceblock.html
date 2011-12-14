@@ -242,12 +242,12 @@
           var typeName = getTypeName(resources[i].type);
           $("<td>", { name: typeName, text: translate('type' + typeName) }).appendTo(row);
 
-          // Cell 4: hidden sorting field
+          // Cell 4: hidden sorting field and the matching filter
           cell = $("<td>");
           var span = $("<span>", { "class": "sorter", text: "3" }).appendTo(cell);
           if (type.name) {
             span.text(type.sort);
-            cell.append(matchingfilter);
+            cell.append(htmlEscape(matchingfilter));
           }
           row.append(cell);
 
@@ -601,12 +601,11 @@
             // Convert all resources to the object type
             if (loaded_resources)
               for (var i = 0; i < loaded_resources.length || 0; i++) {
-                if (/\<|\"/.test(loaded_resources[i]))
-                  continue;
                 if (/^HIDE\:\|\:.+/.test(loaded_resources[i])) {
                   var filter = "##" + loaded_resources[i].substring(7);
                   resources[filter] = {filter: filter};
                 } else {
+                  if (/\<|\"/.test(loaded_resources[i])) continue;
                   var blockmatches = loaded_resources[i].split(':|:', 2);
                   if (blockmatches[1].indexOf(chrome.extension.getURL("")) == 0)
                     continue; // Blacklister resources shouldn't be visible
@@ -630,7 +629,7 @@
             if (filters.replace('\n').length != 0) {
               filters = filters.split('\n');
               for (var i=0; i<filters.length; i++)
-                if (!/\#\#/.test(filters[i]))
+                if (!Filter.isSelectorFilter(filters[i]))
                   custom_filters.push(filters[i])
             }
           }
