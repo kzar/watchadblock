@@ -16,6 +16,12 @@ function MyFilters() {
   }
 
   for (var id in this._subscriptions) {
+    // Subscribe Ukrainian filter list users to the Russian list instead
+    // TODO temp if block installed 12/2011
+    if (id == 'ukranian' && this._subscriptions[id].subscribed) {
+      this.changeSubscription(id, {subscribed: false}, false);
+      this.changeSubscription('russian', {subscribed: true}, false);
+    }
     // Delete unsubscribed ex-official lists.
     if (!this._official_options[id] && !this._subscriptions[id].user_submitted
         && !this._subscriptions[id].subscribed) {
@@ -365,7 +371,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'pl': return 'easylist_plus_polish';//sorry for the other Polish list
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
-      case 'uk': return 'ukranian';
+      case 'uk': return 'russian';
       case 'zh': return 'chinese';
       default: return '';
     }
@@ -460,9 +466,6 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
-    },
-    "ukranian": { // Ukranian filters
-      url: "http://adblock.oasis.org.ua/banlist.txt",
     },
     "easyprivacy": { // EasyPrivacy
       url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
