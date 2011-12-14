@@ -9,7 +9,7 @@
           return;
         if (safari.extension.settings.userid)
           return; // already did it
-        var toCopy = [ 
+        var toCopy = [
           "custom_filters", "filter_lists", "next_ping_time", "saw_badge_info_version",
           "saw_badge_version", "saw_install_page", "settings", "total_pings", "userid"
         ];
@@ -203,7 +203,7 @@
             }
 
             // For most requests, Chrome and we agree on who sent the request: the frame.
-            // But for iframe loads, we consider the request to be sent by the outer 
+            // But for iframe loads, we consider the request to be sent by the outer
             // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
             var requestingFrameId = (details.type == 'sub_frame' ? details.parentFrameId : details.frameId);
             // May the URL be loaded by the requesting frame?
@@ -236,6 +236,7 @@
           _settings.set('use_webrequest_blocking', false);
           try {
             chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
+            chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
           }
           catch(ex) {
           }
@@ -260,12 +261,23 @@
           _settings.set('use_webrequest_blocking', true);
           try {
             chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
+            chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
           }
           catch(ex) {
             abortNewStyleBlocking(ex.stack);
           }
         }
 
+        // Popup blocking
+        function onCreatedNavigationTargetHandler(details) {
+          if (!frameData[details.sourceTabId] || !frameData[details.sourceTabId][details.sourceFrameId])
+            return;
+          var opener = frameData.domainOfFrame(details.sourceTabId, details.sourceFrameId);
+          var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener);
+          if (match)
+            chrome.tabs.remove(details.tabId);
+          frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
+        };
       })();
 
       debug_report_elemhide = function(selector, matches, sender) {
@@ -307,7 +319,7 @@
       handlerBehaviorChanged = function() {
         if (SAFARI)
           return;
-        try { 
+        try {
           chrome.webRequest.handlerBehaviorChanged();
         } catch (ex) {
         }
@@ -347,7 +359,7 @@
 
         if (name == "debug_logging") {
           if (is_enabled)
-            log = function() { 
+            log = function() {
               if (arguments[0] != '[DEBUG]') // comment out for verbosity
                 console.log.apply(console, arguments);
             };
@@ -810,7 +822,7 @@
           storage_set('saw_badge_info_version', version_to_notify);
         }
 
-        // TEMP: As this wasn't stored as string initially, storage_get 
+        // TEMP: As this wasn't stored as string initially, storage_get
         // throws an error and returns undefined
         if (!storage_get('saw_badge_version') && localStorage.getItem('saw_badge_version')) {
           storage_set('saw_badge_info_version', localStorage.getItem('saw_badge_info_version'));
@@ -829,9 +841,9 @@
       })();
 
       if (get_settings().debug_logging)
-        log = function() { 
+        log = function() {
           if (arguments[0] != '[DEBUG]') // comment out for verbosity
-            console.log.apply(console, arguments); 
+            console.log.apply(console, arguments);
         };
 
       _myfilters = new MyFilters();

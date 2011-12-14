@@ -92,7 +92,7 @@ var FilterNormalizer = {
       var unsupported = ElementTypes.UNSUPPORTED;
       if (SAFARI)
         unsupported |= (ElementTypes.object_subrequest | ElementTypes.other |
-                        ElementTypes.xmlhttprequest);
+                        ElementTypes.xmlhttprequest | ElementTypes.popup);
       if (!Filter.isWhitelistFilter(filter))
         unsupported |= (ElementTypes.document | ElementTypes.elemhide);
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
