@@ -111,6 +111,7 @@ PatternFilter.fromText = function(text) {
   result._allowedElementTypes = data.allowedElementTypes;
   result._options = data.options;
   result._rule = data.rule;
+  result._key = data.key;
   // Preserve _text for later in Chrome's background page and in
   // resourceblock.html.  Don't do so in safari or in content scripts, where
   // it's not needed.
@@ -218,6 +219,10 @@ PatternFilter._parseRule = function(text) {
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
+  key = rule.match(/\w{5}/);
+  if (key)
+    result.key = new RegExp(key);
+
   // If it starts or ends with *, strip that -- it's a no-op.
   rule = rule.replace(/^\*/, '');
   rule = rule.replace(/\*$/, '');
@@ -270,6 +275,9 @@ PatternFilter.prototype = {
 
     if (!(this._options & FilterOptions.MATCHCASE))
       url = loweredUrl;
+
+    if (this._key && !this._key.test(url))
+      return false;
 
     return this._rule.test(url);
   }
