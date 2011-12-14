@@ -83,21 +83,8 @@
           track: function(details) {
             var fd = frameData, tabId = details.tabId;
 
-            if (tabId == -1) {
-              try {
-                // TODO temp code to help solve issue chromium:106913
-                // Once it's solved, the logging code can be removed, and perhaps the if block
-                // (if tabId -1 is no longer passed to onBeforeRequest.)  If you can remove the
-                // if block, remove the TODO below re 'explicit'.
-                if (typeof GLOBAL_bug_report_count == "undefined") GLOBAL_bug_report_count = 0;
-                if (GLOBAL_bug_report_count < 10) {
-                  GLOBAL_bug_report_count += 1; // stop after 10
-                  var msg = details.type + " " + details.frameId + " " + details.parentFrameId + " " + details.url.substring(0, 150);
-                  STATS.msg("webRequest tabId -1 data: " + msg);
-                }
-              } catch (ex) {}
+            if (tabId == -1) // A hosted app's background page
               return false;
-            }
 
             if (details.type == 'main_frame') { // New tab
               delete fd[tabId];
@@ -108,8 +95,6 @@
 
             // Request from a tab opened before AdBlock started, or from a
             // chrome:// tab containing an http:// iframe
-            // TODO: I had to put an explicit tabId==-1 guard above, because somehow the below wasn't
-            // sufficient.  How is fd[-1] being filled?
             if (!fd[tabId]) {
               log("[DEBUG]", "Ignoring unknown tab:", tabId, details.frameId, details.url);
               return false;
