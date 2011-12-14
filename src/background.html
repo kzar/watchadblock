@@ -273,6 +273,8 @@
 
         // Popup blocking
         function onCreatedNavigationTargetHandler(details) {
+          if (!frameData[details.sourceTabId] || !frameData[details.sourceTabId][details.sourceFrameId])
+            return;
           var opener = frameData.domainOfFrame(details.sourceTabId, details.sourceFrameId);
           var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener);
           if (match)
