@@ -69,12 +69,26 @@
         // Stores url, whitelisting, and blocking info for a tabid+frameid
         // TODO: can we avoid making this a global once 'old' style dies?
         frameData = {
-          // Return the data object for the given tabId and frameId, creating
-          // it if necessary.
+          // Return the data object for |tabId| and |frameId|, or
+          // undefined if |tabId| and |frameId| are not being tracked.
           get: function(tabId, frameId) {
-            if (!frameData[tabId]) frameData[tabId] = {};
-            if (!frameData[tabId][frameId]) frameData[tabId][frameId] = {};
-            return frameData[tabId][frameId];
+            return (frameData[tabId] || {})[frameId];
+          },
+
+          // Record that |tabId|, |frameId| points to |url|.
+          record: function(tabId, frameId, url) {
+            var fd = frameData;
+            if (!fd[tabId]) fd[tabId] = {};
+            fd[tabId][frameId] = {
+              url: url,
+              // Cache these as they'll be needed once per request
+              domain: url_parts(url).domain,
+              blockResults: []
+            };
+            if (frameId == 0) {
+              fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
+              fd[tabId][frameId].resources = {};
+            }
           },
 
           // Watch for requests for new tabs and frames, and track their URLs.
@@ -88,8 +102,8 @@
 
             if (details.type == 'main_frame') { // New tab
               delete fd[tabId];
-              fd.get(tabId, 0).url = details.url;
-              log("\n-------", fd.domainOfFrame(tabId, 0), ": loaded in tab", tabId, "--------\n\n");
+              fd.record(tabId, 0, details.url);
+              log("\n-------", fd.get(tabId, 0).domain, ": loaded in tab", tabId, "--------\n\n");
               return true;
             }
 
@@ -104,46 +118,24 @@
             // inject code into them.  So requests appear from unknown frames.
             // Treat these frames as having the same URL as the tab.
             var potentialEmptyFrameId = (details.type == 'sub_frame' ? details.parentFrameId: details.frameId);
-            if (!fd[tabId][potentialEmptyFrameId]) {
-              fd.get(tabId, potentialEmptyFrameId).url = fd.get(tabId, 0).url;
+            if (undefined === fd.get(tabId, potentialEmptyFrameId)) {
+              fd.record(tabId, potentialEmptyFrameId, fd.get(tabId, 0).url);
               log("[DEBUG]", "Null frame", tabId, potentialEmptyFrameId, "found; giving it the tab's URL.");
             }
 
             if (details.type == 'sub_frame') { // New frame
-              delete fd[tabId][details.frameId];
-              fd.get(tabId, details.frameId).url = details.url;
+              fd.record(tabId, details.frameId, details.url);
               log("[DEBUG]", "=========== Tracking frame", tabId, details.parentFrameId, details.frameId, details.url);
             }
 
             return true;
           },
 
-          // Returns the domain of the URL of the specified tab+frame.
-          domainOfFrame: function(tabId, frameId) {
-            var frame = frameData.get(tabId, frameId);
-            // Cache the answer, since all requests from this frame need this
-            if (frame.domain === undefined)
-              frame.domain = url_parts(frame.url).domain;
-            return frame.domain;
-          },
-
-          // True if the given tabId is whitelisted.
-          isOnWhitelistedTab: function(tabId) {
-            var sourceTab = frameData.get(tabId, 0);
-            // Cache the answer, since the page will generate many requests.
-            if (sourceTab.whitelisted === undefined)
-              sourceTab.whitelisted = page_is_whitelisted(sourceTab.url);
-            return sourceTab.whitelisted;
-          },
-
           // Record a resource for the resource blocker.
           storeResource: function(tabId, url, elType) {
             if (!get_settings().show_advanced_options)
               return;
-            var data = frameData.get(tabId, 0);
-            if (data.resources === undefined)
-              data.resources = {};
-            data.resources[elType + ':|:' + url] = null;
+            frameData.get(tabId, 0).resources[elType + ':|:' + url] = null;
           },
 
           // Record that a url+elType was or was not blocked on the given tab.
@@ -161,15 +153,13 @@
             if (!worthStoring)
               return null;
             var data = frameData.get(tabId, frameId);
-            if (data.blockResults === undefined)
-              data.blockResults = [];
-            var blockData = data.blockResults;
-            blockData.push([elType, url, blocked]);
+            data.blockResults.push([elType, url, blocked]);
             // Increasing this number sends fewer messages but leaves more
             // unblocked items' keys (elType+" "+url) in tab memory
             // and background memory after a tab is done loading
-            if (blocked || blockData.length > 20) {
-              delete data.blockResults;
+            if (blocked || data.blockResults.length > 20) {
+              var blockData = data.blockResults;
+              data.blockResults = [];
               return blockData;
             } else {
               return null;
@@ -197,7 +187,7 @@
 
             frameData.storeResource(tabId, details.url, elType);
 
-            if (frameData.isOnWhitelistedTab(tabId)) {
+            if (frameData.get(tabId, 0).whitelisted) {
               log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
               return { cancel: false };
             }
@@ -207,7 +197,7 @@
             // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
             var requestingFrameId = (details.type == 'sub_frame' ? details.parentFrameId : details.frameId);
             // May the URL be loaded by the requesting frame?
-            var frameDomain = frameData.domainOfFrame(tabId, requestingFrameId);
+            var frameDomain = frameData.get(tabId, requestingFrameId).domain;
             var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
             var results = frameData.storeBlockResults(tabId, requestingFrameId, details.url, elType, blocked);
             // Non-null results means there's a good reason to send a batch of
@@ -272,7 +262,7 @@
         if (!window.frameData)
           return;
         frameData.storeResource(sender.tab.id, selector, "HIDE");
-        log(frameData.domainOfFrame(sender.tab.id, 0), ": hiding rule", selector, "matched:\n", matches);
+        log(frameData.get(sender.tab.id, 0).domain, ": hiding rule", selector, "matched:\n", matches);
       }
 
       // UNWHITELISTING
