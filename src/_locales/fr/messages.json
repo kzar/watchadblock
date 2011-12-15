@@ -29,7 +29,7 @@
     "description": "Title for the installation success page"
   },
   "chromebutton_how_to_hide": {
-    "message": "Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Cacher ce bouton'. Pour l'afficher à nouveau, allez dans Clé à molette | Outils | Extensions.",
+    "message": "Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Masquer le bouton'. Pour l'afficher à nouveau, allez dans Clé à molette | Outils | Extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "sliderexplanation": {
@@ -146,7 +146,7 @@
     "description": "Title of the first two dialogs of the blacklister"
   },
   "clickthead": {
-    "message": "Cliquez sur la pub, et nous allons la bloquer.",
+    "message": "Cliquez sur la pub à bloquer.",
     "description": "When you have to click the ad to continue"
   },
 
@@ -228,12 +228,12 @@
     "message": "Ajouter les éléments AdBlock dans le menu du clic droit",
     "description": "Option on first tab page"
   },
-  "block_ads_in_all_videos_and_flash_games": {
-    "message": "Bloquer les pubs dans les vidéos et jeux Flash",
+  "block_popups_video_flash_ads": {
+    "message": "Bloquer les popups et les pubs dans les vidéos et jeux Flash",
     "description": "Option on first tab page"
   },
   "webrequest_warning": {
-    "message": "Cette fonction est uniquement supportée sur des versions récentes de Chrome.<br>Si AdBlock commence à se comporter bizarrement, désactivez-la.<br>Elle sera automatiquement désactivée si votre Chrome n'a pas encore à jour.",
+    "message": "Cette fonction est uniquement supportée sur des versions récentes de Chrome.<br>Si AdBlock commence à se comporter bizarrement, désactivez-la.<br>Elle sera automatiquement désactivée si votre Chrome n'est pas encore à jour.",
     "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
   },
   "debuginlogoption": {
@@ -393,6 +393,10 @@
     "message": " - filtres roumains additionnels",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filterrussian": {
+    "message": " - filtres russes et ukrainiens additionnels",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filterchinese": {
     "message": " - filtres chinois additionnels",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -490,7 +494,7 @@
     "description": "Subtitle on the third tab"
   },
   "filtersavewarning": {
-    "message": "Attention : faire une erreur ici pourra entraîner un mauvais fonctionnement des autres filtres officiels.<br/>Lisez le <a>tutoriel de syntaxe</a> pour apprendre à ajouter des filtres avancés.",
+    "message": "Attention : faire une erreur ici peut entraîner un mauvais fonctionnement des filtres officiels.<br/>Consultez le <a>tutoriel de syntaxe</a> pour apprendre à ajouter des filtres avancés.",
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
@@ -511,7 +515,7 @@
     "description": "title of ad report page"
   },
   "adreport2": {
-    "message": "Vous venez de trouver une publicité sur une page web ? Et bien, nous allons trouver qui vous devez en informer.<br/>Notez que signaler des publicités est purement volontaire. Si vous ne voulez pas le faire, vous pouvez simplement fermer cette fenêtre, et bloquer la publicité pour vous-même, en ajoutant le filtre approprié dans l'onglet 'Personnaliser' des options AdBlock !",
+    "message": "Vous venez de trouver une publicité sur une page web ? Et bien, nous allons trouver qui vous pouvez en informer.<br/>Notez que signaler des publicités est purement volontaire. Si vous ne voulez pas le faire, vous pouvez simplement fermer cette fenêtre, et bloquer la publicité pour vous-même, en ajoutant le filtre approprié dans l'onglet 'Personnaliser' des options AdBlock !",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "updateyourlists": {
@@ -768,6 +772,10 @@
     "message": "autre",
     "description": "A resource type"
   },
+  "typepopup": {
+    "message": "popup",
+    "description": "A resource type"
+  },
   "typemedia": {
     "message": "audio/video",
     "description": "A resource type"
@@ -843,7 +851,7 @@
     "description": "resourceblocking page string"
   },
   "headerfilter": {
-    "message": "Filtres appariés",
+    "message": "Filtre correspondant",
     "description": "resourceblocking page string"
   },
   "close": {
@@ -885,6 +893,7 @@
   "anysite": {
     "message": "N'importe quel site",
     "description": "resourceblocking page string"
+
   },
   "onlyondomains": {
     "message": "UNIQUEMENT les pages sur ces domaines : ",
@@ -919,7 +928,7 @@
     "description": "Result of the final ad report question"
   },
   "cleanuplist": {
-    "message": "Optimiser les filtres dans cette liste :",
+    "message": "Nettoyer cette liste :",
     "description": "Option at the bottom of the third options tab"
   },
   "new_version": {
@@ -981,7 +990,7 @@
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
   },
   "hide_this_button": {
-    "message": "Cacher ce bouton",
+    "message": "Masquer ce bouton",
     "description": "Toolbar button menu entry to hide the AdBlock button"
   },
   "support_sentence": {
