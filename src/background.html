@@ -85,7 +85,7 @@
               domain: url_parts(url).domain,
               blockResults: []
             };
-            if (frameId == 0) {
+            if (frameId === 0) {
               fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
               fd[tabId][frameId].resources = {};
             }
