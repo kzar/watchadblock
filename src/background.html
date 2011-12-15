@@ -260,10 +260,10 @@
 
         // Popup blocking
         function onCreatedNavigationTargetHandler(details) {
-          if (!frameData[details.sourceTabId] || !frameData[details.sourceTabId][details.sourceFrameId])
+          var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
+          if (opener === undefined)
             return;
-          var opener = frameData.domainOfFrame(details.sourceTabId, details.sourceFrameId);
-          var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener);
+          var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
           if (match)
             chrome.tabs.remove(details.tabId);
           frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
