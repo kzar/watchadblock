@@ -227,6 +227,14 @@
     "message": "Добавить элементы в меню правой кнопки мыши.",
     "description": "Option on first tab page"
   },
+  "block_popups_video_flash_ads": {
+    "message": "Блокировать всплывающюю рекламу и рекламу во всех видео и в флеш-играх.",
+    "description": "Option on first tab page"
+  },
+  "webrequest_warning": {
+    "message": "Эта функция поддерживается новыми версиями Chrome.<br>Вы должны отключить её, если AdBlock начинает вести себя странно.<br>Она будет отключена автоматически, если Ваш Chrome еще не обновлен до новой версии.",
+    "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
+  },
   "debuginlogoption": {
     "message": "Показывать сообщения отладки в Журнале Консоли (замедляет AdBlock)",
     "description": "Option on first tab page"
@@ -384,6 +392,11 @@
     "message": " - дополнительные румынские фильтры",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filterrussian": {
+    "message": " - дополнительные русские и украинские фильтры",
+
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filterchinese": {
     "message": " - дополнительные китайские фильтры",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -425,8 +438,8 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasyprivacy": {
-    "message": "EasyPrivacy",
-    "description": "A filter list. Don't translate 'EasyPrivacy', it's just here so you can add something like (privacy protection) or such to it."
+    "message": "EasyPrivacy (конфедициальность)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
   },
 
   "blacklistclickmessage": {
@@ -450,7 +463,7 @@
     "description": "Section header on third tab"
   },
   "linkblockadbyurl": {
-    "message": "Блокировать рекламу по ее URL",
+    "message": "Блокировать рекламу по её URL",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
@@ -726,39 +739,55 @@
   },
  "typehiding": {
     "message": "скрытие",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typescript": {
     "message": "сценарий",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeimage": {
     "message": "изображение",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typestylesheet": {
     "message": "задание стиля",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeobject": {
     "message": "интерактивный объект",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typesubdocument": {
     "message": "фрейм",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
+  },
+  "typeobject_subrequest": {
+    "message": "object_subrequest",
+    "description": "A resource type"
+  },
+  "typexmlhttprequest": {
+    "message": "xmlhttprequest",
+    "description": "A resource type"
+  },
+  "typeother": {
+    "message": "другое",
+    "description": "A resource type"
+  },
+  "typepopup": {
+    "message": "popup",
+    "description": "A resource type"
   },
   "typemedia": {
     "message": "аудио/видео",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typepage": {
     "message": "страница",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeunknown": {
     "message": "неизвестно",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "blockeverycontaining": {
     "message": "Блокировать все ресурсы, содержащие:",
