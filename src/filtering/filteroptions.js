@@ -21,7 +21,7 @@ var ElementTypes = {
 ElementTypes.ALLRESOURCETYPES = 1023; // all types that apply to resources
 // Any unknown options on filters will be converted to $UNSUPPORTED,
 // which no resource will match.
-// This covers: donottrack dtd font media ping xbl (and anything unrecognized)
+// This covers: donottrack font media (and anything unrecognized)
 ElementTypes.UNSUPPORTED = 65536;
 
 // Convert a webRequest.onBeforeRequest type to an ElementType.
