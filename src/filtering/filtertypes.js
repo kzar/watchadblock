@@ -188,11 +188,9 @@ PatternFilter._parseRule = function(text) {
       // option, without returning that the filter was invalid.
     }
     else {
-      // Any other option may be a new option that we do not support.  Instead
-      // of ignoring it (converting a new-option-specific rule into a global
-      // rule), rename it to UNSUPPORTED, so it won't match any resource.
-      log("Unsupported element type in filter " + text);
-      result.allowedElementTypes |= ElementTypes.UNSUPPORTED;
+      // Any other option may be a new option that we do not support. Assign it
+      // to ElementTypes.UNKNOWN so filternormalizer will get rid of it.
+      result.allowedElementTypes |= ElementTypes.UNKNOWN;
     }
   }
   // No element types mentioned?  All types are allowed.

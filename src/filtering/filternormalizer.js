@@ -89,14 +89,18 @@ var FilterNormalizer = {
 
       // Remove rules that only apply to unsupported resource types.
       // It won't break if we left them in, but this speeds things up.
-      var unsupported = ElementTypes.UNSUPPORTED;
+      var unsupported = (ElementTypes.font | ElementTypes.donottrack);
       if (SAFARI)
         unsupported |= (ElementTypes.object_subrequest | ElementTypes.other |
                         ElementTypes.xmlhttprequest | ElementTypes.popup);
       if (!Filter.isWhitelistFilter(filter))
         unsupported |= (ElementTypes.document | ElementTypes.elemhide);
+
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
+
+      if (parsedFilter._allowedElementTypes & ElementTypes.UNKNOWN)
+        throw "Unknown filter option";
     }
 
     // Ignore filters whose domains aren't formatted properly.

@@ -9,20 +9,21 @@ var ElementTypes = {
   stylesheet: 8,
   'object': 16,
   subdocument: 32,
-  object_subrequest: 64,
-  media: 128,
+  object_subrequest: 64, // In new style, this one is in $object
+  media: 128, // In new style, this one is in $other
   other: 256,
   xmlhttprequest: 512,
   'document': 1024,
   elemhide: 2048,
   popup: 4096,
   // If you add something here, update .ALLRESOURCES below.
+
+  // The following are unsupported:
+  donottrack: 8192,
+  font: 16384, // In new style, this one is in $other
 };
 ElementTypes.ALLRESOURCETYPES = 1023; // all types that apply to resources
-// Any unknown options on filters will be converted to $UNSUPPORTED,
-// which no resource will match.
-// This covers: donottrack font media (and anything unrecognized)
-ElementTypes.UNSUPPORTED = 65536;
+ElementTypes.UNKNOWN = 65536; // unknown options get assigned to this
 
 // Convert a webRequest.onBeforeRequest type to an ElementType.
 ElementTypes.fromOnBeforeRequestType = function(type) {
