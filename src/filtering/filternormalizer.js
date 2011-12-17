@@ -88,7 +88,6 @@ var FilterNormalizer = {
       var parsedFilter = PatternFilter.fromText(filter);
 
       // Remove rules that only apply to unsupported resource types.
-      // It won't break if we left them in, but this speeds things up.
       var unsupported = (ElementTypes.font | ElementTypes.donottrack);
       if (SAFARI)
         unsupported |= (ElementTypes.object_subrequest | ElementTypes.other |
@@ -99,6 +98,7 @@ var FilterNormalizer = {
       if (!(parsedFilter._allowedElementTypes & ~unsupported))
         return null;
 
+      // Remove rules that contain unknown options
       if (parsedFilter._allowedElementTypes & ElementTypes.UNKNOWN)
         throw "Unknown filter option";
     }
