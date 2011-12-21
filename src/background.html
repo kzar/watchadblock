@@ -1,5 +1,6 @@
 <html>
   <head>
+    <script src="jquery/jquery.min.js"></script>
     <script src="port.js"></script>
     <script>
       // TODO temp code to convert Safari from localStorage to settings.
@@ -23,7 +24,6 @@
         }
       })();
     </script>
-    <script src="jquery/jquery.min.js"></script>
     <script src="functions.js"></script>
     <script src="stats.js"></script>
     <script src="filtering/filteroptions.js"></script>
@@ -59,6 +59,96 @@
       };
       _settings = new Settings();
 
+      // Open a new tab with a given URL.
+      // Inputs:
+      //   url: string - url for the tab
+      //   nearActive: bool - open the tab near currently active (instead of at the end). optional, defaults to false
+      //   window: windowId (Chrome)/window object (Safari) - window where the tab will be created. optional, defaults
+      //     to active window. Because Safari supports clickthrough on extension elements, Safari code will almost
+      //    always need to pass this argument. Chrome doesn't support it, so leave this argument empty in Chrome code.
+      function openTab(url, nearActive, window) {
+        // Fix relative URLs in Safari
+        if (SAFARI && !/:\/\//.test(url)) {
+          url = chrome.extension.getURL(url);
+        }
+
+        // Creates the tab
+        // Inputs:
+        //   url: string, required
+        //   window: window object (Safari) / window ID (Chrome), optional
+        //   index: tab index for the new tab, optional, ignored if window is empty
+        function doCreateTab(url, window, index) {
+          if (SAFARI) {
+            var tab;
+            if (window) {
+              tab = window.openTab("foreground", index);
+              if (!window.visible) {
+                window.activate();
+              }
+            } else {
+              tab = safari.application.openBrowserWindow().tabs[0];
+            }
+            tab.url = url;
+          } else {
+            var options = {url: url};
+            if (window !== undefined && window !== chrome.windows.WINDOW_ID_NONE) {
+              options.windowId = window;
+              if (index !== undefined) {
+                options.index = index;
+              }
+            }
+            chrome.tabs.create(options);
+          }
+        }
+
+        // Compute the index of the new tab (if nearActive and window exists, position it to the right of currently active
+        // tab, otherwise open it with the default behavior).
+        // Inputs:
+        //   window: window object (Safari) / window ID (Chrome)
+        //   callback: function(index), where index: Integer, optional
+        function getTabIndex(window, nearActive, callback) {
+          if (nearActive && SAFARI && window && window.activeTab) {
+            for (var i = 0; i < window.tabs.length; i++) {
+              if (window.tabs[i] === window.activeTab) {
+                index = i + 1;
+                callback(index);
+                return;
+              }
+            }
+          } else if (nearActive && !SAFARI && window !== undefined && window !== chrome.windows.WINDOW_ID_NONE) {
+            chrome.tabs.query({windowId: window.id, active: true}, function(tabs) {
+              if (tabs.length === 0) {
+                callback();
+              } else {
+                callback(tabs[0].index + 1);
+              }
+            });
+          } else {
+            callback();
+          }
+        }
+
+        if (SAFARI) {
+          window = window || safari.application.activeBrowserWindow;
+
+          getTabIndex(window, nearActive, function(index) {
+            doCreateTab(url, window, index);
+          });
+        } else {
+          var createTabInWindow = function(window) {
+            getTabIndex(window, nearActive, function(index) {
+              doCreateTab(url, window, index);
+            });
+          };
+          if (window !== undefined) {
+            createTabInWindow(window);
+          } else {
+            chrome.windows.getCurrent(function(window) {
+              createTabInWindow(window.id);
+            });
+          }
+        }
+      };
 
       GLOBAL_block_style = "old";
       // Implement blocking via the Chrome webRequest API.
@@ -422,22 +512,17 @@
         });
       }
 
-      // Return the scheme and domain for the given url.
-      // TODO I have code in a few places that extracts domains, I think.
-      // Deduplicate it.
-      url_parts = function(url) {
-        var parts = url.match("(.*?)://(..*?)/");
-        if (!parts) // may be "about:blank" or similar
-          parts = url.match("(.*?):(.*)");
-        // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
-        // impact users visibly so I'm letting it break.
-        var scheme = parts[1];
-        var domain = parts[2];
-        return {
-          scheme: scheme,
-          domain: domain
-        };
+      // Returns true if the url cannot be blocked
+      page_is_unblockable = function(url) {
+        if (!url) { // Safari empty/bookmarks/top sites page
+          return true;
+        } else {
+          var parts = url_parts(url);
+          var scheme = parts.scheme;
+          return (scheme != 'http' && scheme != 'https' && scheme != 'feed' && scheme != 'feed:https');
+        }
       }
+
       // INFO ABOUT CURRENT PAGE
 
       // Get interesting information about the current tab.
@@ -455,11 +540,7 @@
         chrome.tabs.getSelected(undefined, function(tab) {
           var url = url_parts(tab.url);
 
-          var disabled_site = false;
-          if (url.scheme != 'http' && url.scheme != 'https')
-            disabled_site = true;
-          if (/\:\/\/chrome.google.com\/webstore\//.test(tab.url))
-            disabled_site = true;
+          var disabled_site = page_is_unblockable(tab.url);
 
           var result = {
             tab: tab,
@@ -479,6 +560,9 @@
       //         to check what the page is whitelisted for: hiding rules or everything
       //   returnFilter: if the filter that whitelisted the page should be returned
       page_is_whitelisted = function(url, type, returnFilter) {
+        if (!url) { // Safari empty/bookmarks/top sites page
+          return true;
+        }
         url = url.replace(/\#.*$/, ''); // Remove anchors
         var loweredUrl = url.toLowerCase();
         if (!type)
@@ -579,6 +663,17 @@
         xhr.send();
         return xhr.responseText;
       };
+
+      // Creates a custom filter entry that whitelists a given page
+      // Inputs: url:string url of the page
+      // Returns: null if successful, otherwise an exception
+      create_page_whitelist_filter = function(url) {
+        var url = url.replace(/#.*$/, '');  // Remove anchors
+        var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
+        var has_querystring = url_parts[2];
+        var filter = '@@|' + url_parts[1] + (has_querystring ? '?' : '|') + '$document';
+        return add_custom_filter(filter);
+      }
 
       // TODO: make better.
       // Inputs: options object containing:
@@ -690,34 +785,6 @@
           return theFunction;
         })();
       }
-      if (SAFARI) {
-        emit_page_broadcast = (function() {
-        // Private list of connected ports for emit_page_broadcast()
-        var broadcast_ports = [];
-        chrome.extension.onConnect.addListener(function(port) {
-          port.onDisconnect.addListener(function(disconnected_port) {
-            var where = broadcast_ports.indexOf(disconnected_port);
-            if (where != -1) {
-              broadcast_ports.splice(where, 1);
-            }
-          });
-          broadcast_ports.push(port);
-        });
-
-        // The emit_page_broadcast() function
-        var theFunction = function(request, sender) {
-          $.each(broadcast_ports, function(i, port) {
-              // issue 5416, fixed in Chrome and probably never happens in
-              // Safari: port.sender.tab could be null for an unknown reason.
-              if (!port.sender.tab)
-                return;
-            if (port.sender.tab.id == sender.tab.id)
-              port.postMessage(request);
-          });
-        };
-        return theFunction;
-      })();
-      }
 
       // Open the resource blocker when requested from the Chrome popup.
       launch_resourceblocker = function(tabId) {
@@ -746,7 +813,7 @@
         var theFunction = function(resources, sender) {
           var url = sender.tab.url.replace(/\#.*/, '');
           _cached_resources.set(url, resources);
-          chrome.tabs.create({url: "pages/resourceblock.html?url=" + escape(url)});
+          openTab("pages/resourceblock.html?url=" + escape(url), true);
         };
         theFunction.cached_resources = _cached_resources; // make it public
 
@@ -846,7 +913,7 @@
       if (STATS.firstRun) { // show the walkthrough
         // Safari has race condition where userId may not be available inside
         // index.html, so pass it in explicitly.
-        chrome.tabs.create({url: "pages/install/index.html?u=" + STATS.userId});
+        openTab("pages/install/index.html?u=" + STATS.userId);
       }
 
       // Chrome specific new-style blocking code.  Near the end so synchronous
@@ -860,55 +927,8 @@
         chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
       }
 
-      // Safari specific code.
       if (SAFARI) {
-        // True blocking support.
-        safari.application.addEventListener("message", function(messageEvent) {
-          if (messageEvent.name != "canLoad")
-            return;
-
-          if (page_is_whitelisted(messageEvent.target.url)) {
-            messageEvent.message = true;
-            return;
-          }
-
-          var url = messageEvent.message.url;
-          var elType = messageEvent.message.elType;
-          var frameDomain = messageEvent.message.frameDomain;
-
-          var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
-          if (isMatched)
-            log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
-          messageEvent.message = !isMatched;
-        }, false);
-
-        safari.application.addEventListener("command", function(commandEvent) {
-          // Open Options page upon Toolbar button click.
-          if (commandEvent.command == "AdBlockOptions")
-            chrome.tabs.create({url: "options/index.html"});
-          if (commandEvent.command in
-              {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
-            safari.application.activeBrowserWindow.activeTab.page.dispatchMessage(commandEvent.command);
-          }
-        }, false);
-
-        // Open Options page upon settings checkbox click.
-        safari.extension.settings.openAdBlockOptions = false;
-        safari.extension.settings.addEventListener("change", function(e) {
-          if (e.key == 'openAdBlockOptions')
-            chrome.tabs.create({url: "options/index.html"});
-        }, false);
-
-        // Add context menus
-        safari.application.addEventListener("contextmenu", function(event) {
-          if (!event.userInfo)
-            return;
-          if (!get_settings().show_context_menu_items)
-            return;
-          event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
-          event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
-          event.contextMenu.appendContextMenuItem("show-whitelist-wizard", translate("contextmenuexcludedomain"));
-        }, false);
+        $.getScript("safari_bg.js");
       }
     </script>
   </head>

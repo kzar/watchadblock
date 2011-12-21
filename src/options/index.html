@@ -3,8 +3,8 @@
     <title i18n="optionstitle"></title>
     <link rel="stylesheet" href="options.css" />
     <link rel="stylesheet" href="../jquery/css/custom-theme/jquery-ui-1.8.custom.css" />
-    <script src="../port.js"></script>
     <script src="../jquery/jquery.min.js"></script>
+    <script src="../port.js"></script>
     <script src="../jquery/jquery.cookie.js"></script>
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
@@ -72,10 +72,19 @@
     </div>
     <h1 class="icon" i18n="optionstitle"></h1>
 
+    <div class="noticecontainer">
+      <div class="notice" id="safari50_updatenotice" i18n="safari50_updatenotice" i18n_replacement_el="safari50_update_link"></div>
+      <a id="safari50_update_link" href="http://www.apple.com/safari/" target="_blank"></a>
+    </div>
+
     <div style="margin: 1em 0px; font-size: 16px">
       <div class="link" id="paymentlink" i18n="did_you_know_this_is_my_full_time_job"></div>
       <script>
         $(function() {
+          if (SAFARI && LEGACY_SAFARI) {
+            $("#safari50_updatenotice").show();
+          }
+
           $('#paymentlink').click(function() {
             BGcall("storage_get", "userid", function(userId) {
               var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
@@ -84,7 +93,7 @@
                 // height to be correct.
                 window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
               } else {
-                chrome.tabs.create({url: href});
+                openTab(href);
               }
             });
             return false;

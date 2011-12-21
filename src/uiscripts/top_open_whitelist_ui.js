@@ -5,7 +5,18 @@ if (typeof may_open_dialog_ui === "undefined")
 function top_open_whitelist_ui() {
   if (!may_open_dialog_ui)
     return;
+
   var domain = document.location.hostname;
+
+  // Safari's document.location breaks in the feed reader if the feed is fetched via https. Normal
+  // feeds have URLs with scheme replaced with "feed", but HTTPS feeds have the scheme replaced with
+  // "feed:https", which isn't exatly a valid scheme. Safari's document.location can't handle that,
+  // so its domain property will be empty; fortunately, it puts a proper https url into the pathname
+  // property and we can use it.
+  if (SAFARI && domain === "" && document.location.href.indexOf("feed:https") === 0) {
+    var parts = url_parts(document.location.pathname);
+    domain = parts.domain;
+  }
 
   // defined in blacklister.js
   load_jquery_ui(function() {

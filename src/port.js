@@ -20,6 +20,9 @@ if (typeof SAFARI == "undefined") {
 // True in Safari, false in Chrome.
 SAFARI = (typeof safari !== "undefined");
 
+// Safari 5.0 (533.x.x) with no menu support
+LEGACY_SAFARI = SAFARI && (parseInt($.browser.version, 10) < 534);
+
 if (SAFARI) {
 
   var isOnGlobalPage = !!safari.extension.bars;
@@ -372,17 +375,8 @@ if (SAFARI) {
       };
 
       return theI18nObject;
-    })(),
+    })()
 
-    tabs: {
-      create: function(options) {
-        var window = safari.application.activeBrowserWindow;
-        var urlToOpen = options.url;
-        if (false == /:\/\//.test(urlToOpen))
-          urlToOpen = chrome.extension.getURL(urlToOpen);
-        window.openTab("foreground").url = urlToOpen;
-      }
-    }
   };
 }
 

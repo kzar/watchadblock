@@ -85,7 +85,7 @@
           <strong><i id="done" i18n="done" style="display:none"></i></strong>
           <br/><br/>
           <progress id="chrome-loading-progress" value=0 max=1>
-            <span id="safari-loading-progress"></span>%
+            <div id="safari-loading-progress"></div>
           </progress>
         </div>
         <div id="cleaner-warning">
@@ -113,10 +113,12 @@
           var pctDone = Math.pow(pctTime, 4);
 
           var bar = $("#chrome-loading-progress");
-          if (bar.length > 0) // Chrome
+          if (!SAFARI)
             bar[0].value = pctDone;
-          else // Safari
-            $("#safari-loading-progress").text(Math.min(100, Math.round(pctDone * 100)));
+          else { // Safari
+            $("#chrome-loading-progress").css("background-color", "#ccc").css("border", "1px solid black");
+            $("#safari-loading-progress").css("width", Math.min(100, Math.round(pctDone * 100)) + "%");
+          }
 
           if (pctDone < 1) {
             window.setTimeout(arguments.callee, 20);
