@@ -63,90 +63,42 @@
       // Inputs:
       //   url: string - url for the tab
       //   nearActive: bool - open the tab near currently active (instead of at the end). optional, defaults to false
-      //   window: windowId (Chrome)/window object (Safari) - window where the tab will be created. optional, defaults
+      //   safariWindow (Safari only): window object - window where the tab will be created. optional, defaults
       //     to active window. Because Safari supports clickthrough on extension elements, Safari code will almost
       //    always need to pass this argument. Chrome doesn't support it, so leave this argument empty in Chrome code.
-      function openTab(url, nearActive, window) {
-        // Fix relative URLs in Safari
-        if (SAFARI && !/:\/\//.test(url)) {
-          url = chrome.extension.getURL(url);
-        }
-
-        // Creates the tab
-        // Inputs:
-        //   url: string, required
-        //   window: window object (Safari) / window ID (Chrome), optional
-        //   index: tab index for the new tab, optional, ignored if window is empty
-        function doCreateTab(url, window, index) {
-          if (SAFARI) {
-            var tab;
-            if (window) {
-              tab = window.openTab("foreground", index);
-              if (!window.visible) {
-                window.activate();
-              }
-            } else {
-              tab = safari.application.openBrowserWindow().tabs[0];
-            }
-            tab.url = url;
+      function openTab(url, nearActive, safariWindow) {
+        if (!SAFARI) {
+          if (!nearActive) {
+            chrome.tabs.create({url: url});
           } else {
-            var options = {url: url};
-            if (window !== undefined && window !== chrome.windows.WINDOW_ID_NONE) {
-              options.windowId = window;
-              if (index !== undefined) {
-                options.index = index;
-              }
-            }
-            chrome.tabs.create(options);
-          }
-        }
-
-        // Compute the index of the new tab (if nearActive and window exists, position it to the right of currently active
-        // tab, otherwise open it with the default behavior).
-        // Inputs:
-        //   window: window object (Safari) / window ID (Chrome)
-        //   callback: function(index), where index: Integer, optional
-        function getTabIndex(window, nearActive, callback) {
-          if (nearActive && SAFARI && window && window.activeTab) {
-            for (var i = 0; i < window.tabs.length; i++) {
-              if (window.tabs[i] === window.activeTab) {
-                index = i + 1;
-                callback(index);
-                return;
-              }
-            }
-          } else if (nearActive && !SAFARI && window !== undefined && window !== chrome.windows.WINDOW_ID_NONE) {
-            chrome.tabs.query({windowId: window.id, active: true}, function(tabs) {
-              if (tabs.length === 0) {
-                callback();
-              } else {
-                callback(tabs[0].index + 1);
-              }
+            chrome.windows.getCurrent(function(currentWindow) {
+              chrome.tabs.query({active: true, windowId: currentWindow.id}, function(tabs) {
+                chrome.tabs.create({ url: url, index: (tabs[0] ? tabs[0].index + 1 : undefined) });
+              });
             });
-          } else {
-            callback();
           }
-        }
-
-        if (SAFARI) {
-          window = window || safari.application.activeBrowserWindow;
-
-          getTabIndex(window, nearActive, function(index) {
-            doCreateTab(url, window, index);
-          });
         } else {
-          var createTabInWindow = function(window) {
-            getTabIndex(window, nearActive, function(index) {
-              doCreateTab(url, window, index);
-            });
-          };
-          if (window !== undefined) {
-            createTabInWindow(window);
-          } else {
-            chrome.windows.getCurrent(function(window) {
-              createTabInWindow(window.id);
-            });
+          safariWindow = safariWindow || safari.application.activeBrowserWindow;
+          var index = undefined;
+          if (nearActive && safariWindow && safariWindow.activeTab) {
+            for (var i = 0; i < safariWindow.tabs.length; i++) {
+              if (safariWindow.tabs[i] === safariWindow.activeTab) {
+                index = i + 1;
+                break;
+              }
+            }
           }
+          var tab;
+          if (safariWindow) {
+            tab = safariWindow.openTab("foreground", index); // index may be undefined
+            if (!safariWindow.visible) {
+              safariWindow.activate();
+            }
+          } else {
+            tab = safari.application.openBrowserWindow().tabs[0];
+          }
+          var relative = (!/:\/\//.test(url)); // fix relative URLs
+          tab.url = (relative ? chrome.extension.getURL(url) : url);
         }
       };
 
