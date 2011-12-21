@@ -216,8 +216,7 @@
           $(function() {
             $("#div_report_an_ad").click(function() {
               BG.getCurrentTabInfo(function(info) {
-                var url = chrome.extension.getURL("pages/adreport.html") +
-                          "?url=" + escape(info.tab.url);
+                var url = "pages/adreport.html?url=" + escape(info.tab.url);
                 BG.openTab(url, true);
               });
             });
@@ -234,7 +233,7 @@
         </div>
         <script>
           $("#div_options").click(function() {
-            BG.openTab(chrome.extension.getURL("options/index.html"));
+            BG.openTab("options/index.html");
           });
         </script>
 
