@@ -113,10 +113,9 @@
           var pctDone = Math.pow(pctTime, 4);
 
           var bar = $("#chrome-loading-progress");
-          if (!SAFARI)
-            bar[0].value = pctDone;
-          else { // Safari
-            $("#chrome-loading-progress").css("background-color", "#ccc").css("border", "1px solid black");
+          bar[0].value = pctDone;
+          if (SAFARI) { // progress bar not yet supported
+            $("#chrome-loading-progress").css({"background-color": "#ccc", "border", "1px solid black"});
             $("#safari-loading-progress").css("width", Math.min(100, Math.round(pctDone * 100)) + "%");
           }
 

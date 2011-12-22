@@ -26,7 +26,7 @@ emit_page_broadcast = (function() {
 })();
 
 function adblockIsPaused() {
-  return Boolean(sessionStorage.getItem('adblock_is_paused'));
+  return sessionStorage.getItem('adblock_is_paused');
 }
 
 // True blocking support.

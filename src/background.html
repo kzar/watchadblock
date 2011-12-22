@@ -621,9 +621,9 @@
       // Returns: null if successful, otherwise an exception
       create_page_whitelist_filter = function(url) {
         var url = url.replace(/#.*$/, '');  // Remove anchors
-        var url_parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
-        var has_querystring = url_parts[2];
-        var filter = '@@|' + url_parts[1] + (has_querystring ? '?' : '|') + '$document';
+        var parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
+        var has_querystring = parts[2];
+        var filter = '@@|' + parts[1] + (has_querystring ? '?' : '|') + '$document';
         return add_custom_filter(filter);
       }
 
