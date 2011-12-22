@@ -45,6 +45,9 @@
           show_advanced_options: false,
           use_webrequest_blocking: false,
         };
+        // Opt in Chrome 17 users to webRequest.
+        if (chrome.webRequest)
+          defaults.use_webrequest_blocking = true;
         var settings = storage_get('settings') || {};
         this._data = $.extend(defaults, settings);
       };
