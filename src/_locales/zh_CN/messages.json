@@ -375,7 +375,11 @@
   "filtereasylist_plus_romanian": { 
     "message": " - 附加的罗马尼亚过滤清单", 
     "description": "A filter list" 
-  }, 
+  },
+  "filterrussian": {
+    "message": " - 附加的俄罗斯和乌克兰过滤清单",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filterczech": { 
     "message": "捷克过滤清单", 
     "description": "A filter list" 
@@ -429,6 +433,10 @@
     "message": "右键点选页面上的广告来阻挡它─ 或在此处手动阻挡。", 
     "description": "Message at the top of the blacklist opt​​ions tab" 
   }, 
+  "block_popups_video_flash_ads": {
+    "message": "阻挡影片和Flash 游戏中的广告",
+    "description": "Option on first tab page"
+  },
   "linkblockadbyurl": { 
     "message": "依网址阻挡广告", 
     "description": "Link on the third tab" 
@@ -730,42 +738,54 @@
     "message": "你超出了AdBlock 能使用的储存空间。 请取消订阅一些清单!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
   },
- "typehiding": { 
-   "message": "隐藏", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typescript": { 
-   "message": "脚本", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typeimage": { 
-   "message": "图片", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typestylesheet": { 
-   "message": "样式定义", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typeobject": { 
-   "message": "互动式物件", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typesubdocument": { 
-   "message": "框架", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typemedia": { 
-   "message": "音乐/影片", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typepage": { 
-   "message": "页面", 
-   "description": "A resource type (lowercase!)" 
- }, 
- "typeunknown": { 
-   "message": "未知", 
-   "description": "A resource type (lowercase!)" 
- }, 
+  "typehiding": {
+    "message": "hiding",
+    "description": "A resource type"
+  },
+  "typescript": {
+    "message": "script",
+    "description": "A resource type"
+  },
+  "typeimage": {
+    "message": "image",
+    "description": "A resource type"
+  },
+  "typestylesheet": {
+    "message": "style definition",
+    "description": "A resource type"
+  },
+  "typeobject": {
+    "message": "interactive object",
+    "description": "A resource type"
+  },
+  "typesubdocument": {
+    "message": "frame",
+    "description": "A resource type"
+  },
+  "typeobject_subrequest": {
+    "message": "object_subrequest",
+    "description": "A resource type"
+  },
+  "typexmlhttprequest": {
+    "message": "xmlhttprequest",
+    "description": "A resource type"
+  },
+  "typeother": {
+    "message": "other",
+    "description": "A resource type"
+  },
+  "typemedia": {
+    "message": "audio/video",
+    "description": "A resource type"
+  },
+  "typepage": {
+    "message": "page",
+    "description": "A resource type"
+  },
+  "typeunknown": {
+    "message": "unknown",
+    "description": "A resource type"
+  },
  "webrequest_warning": {
     "message": "此功能需要新版本的Chrome。<br>如果AdBlock 发生状况，请取消此功能。<br>如果Chrome 尚未更新到新版本，它会自动取消。",
     "description": "Warning about using block_ads_in_all_videos_and_flash_games. Leave the <br> after each sentence to make a line break."
