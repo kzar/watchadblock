@@ -255,7 +255,7 @@
           _settings.set('use_webrequest_blocking', true);
           try {
             chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
-            chromium:107255
+            // chromium:107255
             // chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
           }
           catch(ex) {
