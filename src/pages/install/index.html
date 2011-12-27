@@ -115,7 +115,7 @@
           var bar = $("#chrome-loading-progress");
           bar[0].value = pctDone;
           if (SAFARI) { // progress bar not yet supported
-            $("#chrome-loading-progress").css({"background-color": "#ccc", "border", "1px solid black"});
+            $("#chrome-loading-progress").css({"background-color": "#ccc", "border": "1px solid black"});
             $("#safari-loading-progress").css("width", Math.min(100, Math.round(pctDone * 100)) + "%");
           }
 
