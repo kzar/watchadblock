@@ -89,9 +89,9 @@
         var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
                      "?template=Ad%20report%20from%20user&summary=";
         if (domain)
-          result = result + escape("Ad report: " + domain);
+          result = result + encodeURIComponent("Ad report: " + domain);
         else
-          result = result + escape("Ad report at <enter URL of webpage here>");
+          result = result + encodeURIComponent("Ad report at <enter URL of webpage here>");
 
         var body = [];
         var count = 1;
@@ -137,7 +137,7 @@
         body.push("=== Enabled settings ===");
         body.push(enabled_settings.join('\n'));
 
-        result = result + "&comment=" + escape(body.join('\n'));
+        result = result + "&comment=" + encodeURIComponent(body.join('\n'));
 
         return result;
       }
@@ -298,9 +298,8 @@
       });
       $("#step4_no").click(function() {
         $("#step4").html("<span class='answer'>" + translate("no") + "</span>");
-        var reportLinkOpen = "<a href='" + generateReportURL() + "'>";
-        var reportLinkClose = "</a>";
-        $("#whattodo").html(translate("reporttous1", [reportLinkOpen, reportLinkClose]));
+        $("#whattodo").html(translate("reporttous2"));
+        $("a", "#whattodo").attr("href", generateReportURL());
       });
     </script>
 
