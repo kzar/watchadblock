@@ -45,6 +45,23 @@ function localizePage() {
   });
 }
 
+// Return the scheme and domain for the given url.
+// TODO I have code in a few places that extracts domains, I think.
+// Deduplicate it.
+url_parts = function(url) {
+  var parts = url.match("(.*?)://(..*?)/");
+  if (!parts) // may be "about:blank" or similar
+    parts = url.match("(.*?):(.*)");
+  // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
+  // impact users visibly so I'm letting it break.
+  var scheme = parts[1];
+  var domain = parts[2];
+  return {
+    scheme: scheme,
+    domain: domain
+  };
+}
+
 // TODO: move back into background.html since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
 // and 5912 to avoid merge conflicts.
@@ -74,7 +91,7 @@ storage_set = function(key, value) {
     // TODO: deal with the Safari case more gracefully.
     if (ex.name == "QUOTA_EXCEEDED_ERR" && !SAFARI) {
       alert(translate("storage_quota_exceeded"));
-      chrome.tabs.create({url: chrome.extension.getURL("options/index.html#ui-tabs-2")});
+      openTab("options/index.html#ui-tabs-2");
     }
   }
 }
