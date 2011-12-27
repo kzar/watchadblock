@@ -226,6 +226,14 @@
     "message": "Adicionar items ao menu do botão direito",
     "description": "Option on first tab page"
   },
+  "block_video_flash_ads": {
+    "message": "Bloquear anúncios em todos os videos e em jogos Flash.",
+    "description": "Option on first tab page"
+  },
+  "webrequest_warning": {
+    "message": "Esta funcionalidade é compativel com as novas versões do Chrome.<br>Deve desactivar se o AdBlock começar a funcionar de forma estranha.<br>Ele vai desactivar sosinho caso o Chrome ainda não tenha sido actualizado automaticamente para a nova versão.",
+    "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
+  },
   "debuginlogoption": {
     "message": "Mostar as operações na Consola de Logs (torna o AdBlock lento)",
     "description": "Option on first tab page"
@@ -381,6 +389,10 @@
   },
   "filtereasylist_plus_romanian": {
     "message": " - filtros Romenos adicionais",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterrussian": {
+    "message": " - filtros Russos e Ucranianos adicionais",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterchinese": {
@@ -730,6 +742,22 @@
   "typesubdocument": {
     "message": "frame",
     "description": "A resource type (lowercase!)"
+  },
+  "typeobject_subrequest": {
+    "message": "object_subrequest",
+    "description": "A resource type"
+  },
+  "typexmlhttprequest": {
+    "message": "xmlhttprequest",
+    "description": "A resource type"
+  },
+  "typeother": {
+    "message": "outro",
+    "description": "A resource type"
+  },
+  "typepopup": {
+    "message": "popup",
+    "description": "A resource type"
   },
   "typemedia": {
     "message": "audio/video",
@@ -1134,7 +1162,11 @@
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "storage_quota_exceeded": {
-    "message": "Você excedeu a quantidade de armazenamento que o AdBlock pode usar. Por favor, desincreva-se de algumas listas!",
+    "message": "Acabou de exceder a quantidade de armazenamento que o AdBlock pode usar. Por favor, desincreva-se de algumas listas!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "safari50_updatenotice": {
+    "message": "Está a usar uma versão antiga do Safari. Obtenha a última versão para usar o botão AdBlock para pausar o AdBlock, colocar websites na lista de permissão e reportar anúncios. <a>Actualizar agora</a>.",
+    "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }
 }
