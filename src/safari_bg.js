@@ -65,6 +65,9 @@ safari.application.addEventListener("command", function(event) {
     // Identifier will be of the form menuId:command, let's use this to get our window
     var menuId = event.target.identifier.split(':')[0];
     browserWindow = windowByMenuId[menuId];
+  } else {
+    // browserWindow is not available in event.target for context menu item events in Safari 5.1.
+    browserWindow = safari.application.activeBrowserWindow;
   }
   var command = event.command;
 
