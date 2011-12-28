@@ -84,18 +84,16 @@ var FilterNormalizer = {
       var parsedFilter = new SelectorFilter(filter);
 
     } else { // If it is a blocking rule...
-      // This will throw an exception if the rule is invalid.
-      var parsedFilter = PatternFilter.fromText(filter);
+      var parsedFilter = PatternFilter.fromText(filter); // throws if invalid
+      var types = parsedFilter._allowedElementTypes;
 
-      // Remove rules that only apply to unsupported resource types.
-      // It won't break if we left them in, but this speeds things up.
-      var unsupported = ElementTypes.UNSUPPORTED;
-      if (SAFARI)
-        unsupported |= (ElementTypes.object_subrequest | ElementTypes.other |
-                        ElementTypes.xmlhttprequest | ElementTypes.popup);
-      if (!Filter.isWhitelistFilter(filter))
-        unsupported |= (ElementTypes.document | ElementTypes.elemhide);
-      if (!(parsedFilter._allowedElementTypes & ~unsupported))
+      var whitelistOptions = (ElementTypes.document | ElementTypes.elemhide);
+      var hasWhitelistOptions = types & whitelistOptions;
+      if (!Filter.isWhitelistFilter(filter) && hasWhitelistOptions)
+        throw "$document and $elemhide may only be used on whitelist filters";
+
+      // In Safari, ignore rules with only Chrome-specific types (no-ops).
+      if (SAFARI && types === (types & ElementTypes.CHROMEONLY))
         return null;
     }
 
