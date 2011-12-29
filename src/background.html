@@ -44,6 +44,7 @@
           show_context_menu_items: true,
           show_advanced_options: false,
           use_webrequest_blocking: false,
+          popup_blocking: false,
         };
         // Opt in Chrome 17 users to webRequest.
         if (chrome.webRequest)
@@ -271,8 +272,12 @@
           _settings.set('use_webrequest_blocking', false);
           try {
             chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
-            // chromium:107255
-            // chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
+            // chromium:108198
+            chrome.permissions.contains({permissions: ['webNavigation']}, function(result) {
+              if (result) {
+                chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
+              }
+            });
           }
           catch(ex) {
           }
@@ -297,25 +302,30 @@
           _settings.set('use_webrequest_blocking', true);
           try {
             chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
-            // chromium:107255
-            // chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+            //chromium:108198
+            if (get_settings().popup_blocking)
+              chrome.permissions.contains({permissions: ['webNavigation']}, function(result) {
+                if (result) {
+                  chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+                }
+              });
           }
           catch(ex) {
             abortNewStyleBlocking(ex.stack);
           }
         }
-
-        // Popup blocking
-        function onCreatedNavigationTargetHandler(details) {
-          var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
-          if (opener === undefined)
-            return;
-          var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
-          if (match)
-            chrome.tabs.remove(details.tabId);
-          frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
-        };
       })();
+      
+      // Popup blocking
+      function onCreatedNavigationTargetHandler(details) {
+        var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
+        if (opener === undefined)
+          return;
+        var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
+        if (match)
+          chrome.tabs.remove(details.tabId);
+        frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
+      };
 
       debug_report_elemhide = function(selector, matches, sender) {
         if (!window.frameData)
@@ -402,6 +412,22 @@
             };
           else
             log = function() { };
+        }
+        
+        if (!SAFARI && name === "popup_blocking") {
+          if (is_enabled) {
+            chrome.permissions.contains({permissions: ['webNavigation']}, function(result) {
+              if (result && get_settings().use_webrequest_blocking) {
+                chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+              }
+            });
+          } else {
+            chrome.permissions.contains({permissions: ['webNavigation']}, function(result) {
+              if (result) {
+                chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
+              }
+            });
+          }
         }
 
         if (!SAFARI && name == "use_webrequest_blocking") {

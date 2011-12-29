@@ -54,6 +54,38 @@
       });
     </script>
 
+    <p class="chrome-only">
+      <input type="checkbox" class="feature" id="enable_popup_blocking" />
+      <label for="enable_popup_blocking" i18n="block_popups"></label>
+      <span i18n="betalabel"></span>
+    </p>
+    <div class="warning note" id="popup_warning" i18n="popup_warning"></div>
+    <script>
+      $(function() {
+        if (SAFARI) return;
+        hasWebNavigationPermission = false;
+        chrome.permissions.contains({permissions: ['webNavigation']}, function(result) {
+          hasWebNavigationPermission=result; // Sucks, but I have to do it this way.
+          // Chrome requires you to call permissions.request from within a user gesture event.
+          // Therefore I have to check this on beforehand...
+        });
+        $("#popup_warning").toggle($("#enable_popup_blocking").is(":checked"));
+        $("#enable_popup_blocking").click(function() {
+          $("#popup_warning").toggle(this.checked);
+          if (!this.checked || hasWebNavigationPermission) return;
+          chrome.permissions.request({permissions: ['webNavigation']}, function(granted) {
+            if (!granted) { // User didn't allow the permission to be added
+              $("#enable_popup_blocking").click().prop("checked", false);
+            } else {
+              // Cheating here. The background event has already fired, but at
+              // that moment, the permission dialog wasn't accepted yet...
+              BGcall("set_setting", "popup_blocking", true);
+            }
+          });
+        });
+      });
+    </script>
+
     <p>
       <input type="checkbox" class="feature" id="enable_show_context_menu_items" />
       <label for="enable_show_context_menu_items" i18n="showcontextmenus"></label>
