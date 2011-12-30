@@ -492,20 +492,23 @@
       //   }
       // Returns: null (asynchronous)
       getCurrentTabInfo = function(callback) {
-        chrome.tabs.getSelected(undefined, function(tab) {
-          var url = url_parts(tab.url);
+        chrome.windows.getCurrent(function(currentWindow) {
+          chrome.tabs.query({active: true, windowId: currentWindow.id}, function(tabs) {
+            var tab = tabs[0];
+            var url = url_parts(tab.url);
 
-          var disabled_site = page_is_unblockable(tab.url);
+            var disabled_site = page_is_unblockable(tab.url);
 
-          var result = {
-            tab: tab,
-            disabled_site: disabled_site,
-            domain: url.domain,
-          };
-          if (!disabled_site)
-            result.whitelisted = page_is_whitelisted(tab.url);
+            var result = {
+              tab: tab,
+              disabled_site: disabled_site,
+              domain: url.domain,
+            };
+            if (!disabled_site)
+              result.whitelisted = page_is_whitelisted(tab.url);
 
-          callback(result);
+            callback(result);
+          });
         });
       }
 
@@ -641,6 +644,7 @@
         if (options.style != GLOBAL_block_style) {
           return { abort: true };
         }
+
         var whitelisted = page_is_whitelisted(sender.tab.url);
         var settings = get_settings();
         var result = {
