@@ -122,7 +122,7 @@ if (!LEGACY_SAFARI) {
 
       windowByMenuId[menu.identifier] = toolbarItem.browserWindow;
 
-      // Attach the menu to the toolbar toolbarItem
+      // Attach the menu to the toolbar item
       toolbarItem.menu = menu;
       toolbarItem.toolTip = "AdBlock"; // change the tooltop on Safari 5.1+
       toolbarItem.command = null; // otherwise Safari will only show the menu on long-press
