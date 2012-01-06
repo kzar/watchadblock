@@ -50,9 +50,9 @@ function localizePage() {
 // Inputs: URL: the URL you want to parse
 //         part (optional): if you want a specific part of the URL, specify the
 //                          part name here. Must be one in the variable 'keys'
-// Outputs: string if part is specified, containing the requested part
-//          object otherwise, containing all parts and the queryKeys object
-function parseUri(URL, part) {
+// Outputs: string if part is specified, containing the requested part.
+//          object otherwise, containing all parts
+parseUri = function(URL, part) {
   var matches = /^(([^:]+(?::|$))(?:(?:[^:]+:)?\/\/)?(?:[^:@]*(?::[^:@]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/.exec(URL) || [];
   var uri = {};
   // The key values are identical to the JS location object values for that key
@@ -66,15 +66,19 @@ function parseUri(URL, part) {
   } else
     return matches[partIndex] || "";
 
-  // queryKeys contains all properties in uri.search and their values
-  // e.g., ?hello=world&ext=adblock would become {hello:"world", ext:"adblock"}
-  uri.queryKeys = {};
-  uri.search.replace(/(?:^\?|&)([^&=]*)=?([^&]*)/g, function () {
-    if (arguments[1]) uri.queryKeys[arguments[1]] = arguments[2];
-  });
-
   return uri;
 };
+// Parses the search part of an URL into an key: value object.
+// e.g., ?hello=world&ext=adblock would become {hello:"world", ext:"adblock"}
+// Inputs: search: the search query of an url. Must have &-separated values.
+parseUri.parseSearch = function(search) {
+  // Fails if a key exists twice (e.g., ?a=foo&a=bar would return {a:"bar"}
+  queryKeys = {};
+  search.replace(/(?:^\?|&)([^&=]*)=?([^&]*)/g, function () {
+    if (arguments[1]) queryKeys[arguments[1]] = arguments[2];
+  });
+  return queryKeys;
+}
 
 // TODO: move back into background.html since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
