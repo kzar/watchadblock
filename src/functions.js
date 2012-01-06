@@ -45,35 +45,26 @@ function localizePage() {
   });
 }
 
-// Parse an URL. Based upon http://blog.stevenlevithan.com/archives/parseuri
+// Parse a URL. Based upon http://blog.stevenlevithan.com/archives/parseuri
 // parseUri 1.2.2, (c) Steven Levithan <stevenlevithan.com>, MIT License
-// Inputs: URL: the URL you want to parse
-//         part (optional): if you want a specific part of the URL, specify the
-//                          part name here. Must be one in the variable 'keys'
-// Outputs: string if part is specified, containing the requested part.
-//          object otherwise, containing all parts
-parseUri = function(URL, part) {
-  var matches = /^(([^:]+(?::|$))(?:(?:[^:]+:)?\/\/)?(?:[^:@]*(?::[^:@]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/.exec(URL) || [];
-  var uri = {};
+// Inputs: url: the URL you want to parse
+// Outputs: object containing all parts of |url| as attributes
+parseUri = function(url) {
+  var matches = /^(([^:]+(?::|$))(?:(?:[^:]+:)?\/\/)?(?:[^:@]*(?::[^:@]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/.exec(url) || [];
   // The key values are identical to the JS location object values for that key
   var keys = ["href", "origin", "protocol", "host", "hostname", "port",
               "pathname", "search", "hash"];
-
-  var partIndex = keys.indexOf(part);
-  if (partIndex === -1) {
-    for (i=0; i<keys.length; i++)
-      uri[keys[i]] = matches[i] || "";
-  } else
-    return matches[partIndex] || "";
-
+  var uri = {};
+  for (var i=0; i<keys.length; i++)
+    uri[keys[i]] = matches[i] || "";
   return uri;
 };
-// Parses the search part of an URL into an key: value object.
+// Parses the search part of a URL into an key: value object.
 // e.g., ?hello=world&ext=adblock would become {hello:"world", ext:"adblock"}
-// Inputs: search: the search query of an url. Must have &-separated values.
+// Inputs: search: the search query of a URL. Must have &-separated values.
 parseUri.parseSearch = function(search) {
   // Fails if a key exists twice (e.g., ?a=foo&a=bar would return {a:"bar"}
-  queryKeys = {};
+  var queryKeys = {};
   search.replace(/(?:^\?|&)([^&=]*)=?([^&]*)/g, function () {
     if (arguments[1]) queryKeys[arguments[1]] = arguments[2];
   });
