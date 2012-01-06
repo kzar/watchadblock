@@ -127,7 +127,7 @@
             fd[tabId][frameId] = {
               url: url,
               // Cache these as they'll be needed once per request
-              domain: url_parts(url).domain,
+              domain: parseUri(url, 'hostname'),
               blockResults: []
             };
             if (frameId === 0) {
@@ -472,9 +472,8 @@
         if (!url) { // Safari empty/bookmarks/top sites page
           return true;
         } else {
-          var parts = url_parts(url);
-          var scheme = parts.scheme;
-          return (scheme != 'http' && scheme != 'https' && scheme != 'feed' && scheme != 'feed:https');
+          var scheme = parseUri(url, 'protocol')
+          return (scheme !== 'http:' && scheme !== 'https:' && scheme !== 'feed:');
         }
       }
 
@@ -493,14 +492,12 @@
       // Returns: null (asynchronous)
       getCurrentTabInfo = function(callback) {
         chrome.tabs.getSelected(undefined, function(tab) {
-          var url = url_parts(tab.url);
-
           var disabled_site = page_is_unblockable(tab.url);
 
           var result = {
             tab: tab,
             disabled_site: disabled_site,
-            domain: url.domain,
+            domain: parseUri(tab.url, 'hostname'),
           };
           if (!disabled_site)
             result.whitelisted = page_is_whitelisted(tab.url);
@@ -523,7 +520,7 @@
         if (!type)
           type = ElementTypes.document;
         var whitelist = _myfilters.blocking.whitelist;
-        var match = whitelist.matches(url, loweredUrl, type, url_parts(url).domain, false);
+        var match = whitelist.matches(url, loweredUrl, type, parseUri(url, 'hostname'), false);
         if (match)
           return returnFilter ? match._text : true;
         return false;

@@ -45,22 +45,36 @@ function localizePage() {
   });
 }
 
-// Return the scheme and domain for the given url.
-// TODO I have code in a few places that extracts domains, I think.
-// Deduplicate it.
-url_parts = function(url) {
-  var parts = url.match("(.*?)://(..*?)/");
-  if (!parts) // may be "about:blank" or similar
-    parts = url.match("(.*?):(.*)");
-  // TODO: crbug.com/81298 sometimes makes this break, but it doesn't
-  // impact users visibly so I'm letting it break.
-  var scheme = parts[1];
-  var domain = parts[2];
-  return {
-    scheme: scheme,
-    domain: domain
-  };
-}
+// Parse an URL. Based upon http://blog.stevenlevithan.com/archives/parseuri
+// parseUri 1.2.2, (c) Steven Levithan <stevenlevithan.com>, MIT License
+// Inputs: URL: the URL you want to parse
+//         part (optional): if you want a specific part of the URL, specify the
+//                          part name here. Must be one in the variable 'keys'
+// Outputs: string if part is specified, containing the requested part
+//          object otherwise, containing all parts and the queryKeys object
+function parseUri(URL, part) {
+  var matches = /^(([^:]+(?::|$))(?:(?:[^:]+:)?\/\/)?(?:[^:@]*(?::[^:@]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/.exec(URL) || [];
+  var uri = {};
+  // The key values are identical to the JS location object values for that key
+  var keys = ["href", "origin", "protocol", "host", "hostname", "port",
+              "pathname", "search", "hash"];
+
+  var partIndex = keys.indexOf(part);
+  if (partIndex === -1) {
+    for (i=0; i<keys.length; i++)
+      uri[keys[i]] = matches[i] || "";
+  } else
+    return matches[partIndex] || "";
+
+  // queryKeys contains all properties in uri.search and their values
+  // e.g., ?hello=world&ext=adblock would become {hello:"world", ext:"adblock"}
+  uri.queryKeys = {};
+  uri.search.replace(/(?:^\?|&)([^&=]*)=?([^&]*)/g, function () {
+    if (arguments[1]) uri.queryKeys[arguments[1]] = arguments[2];
+  });
+
+  return uri;
+};
 
 // TODO: move back into background.html since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238

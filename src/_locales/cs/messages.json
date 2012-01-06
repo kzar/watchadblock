@@ -1,6 +1,6 @@
 {
   "description1": {
-    "message": "Nejoblíbenější rozšíření pro Chrome s více než 2 miliony uživatelů! Blokuje reklamy na celém webu.",
+    "message": "Nejoblíbenější rozšíření pro Chrome s více než 3 miliony uživatelů! Blokuje reklamy na celém webu.",
     "description": "Extension description in manifest"
   },
   "buttoncancel": {
@@ -227,6 +227,14 @@
     "message": "Přidat položky do nabídky po kliknutí pravým tlačítkem myši.",
     "description": "Option on first tab page"
   },
+  "block_video_flash_ads": {
+    "message": "Blokovat reklamy ve všech videích a Flash hrách.",
+    "description": "Option on first tab page"
+  },
+  "webrequest_warning": {
+    "message": "Tato funkce je podporována v nových verzích Chrome.<br>Měli byste zrušit zaškrtnutí, pokud se AdBlock začne chovat divně.<br>Zaškrtnutí bude zrušeno, pokud se Chrome ještě automaticky neaktualizoval na novou verzi.",
+    "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
+  },
   "debuginlogoption": {
     "message": "Zobrazovat debug zprávy v Console Log (tohle zpomaluje AdBlock)",
     "description": "Option on first tab page"
@@ -384,6 +392,10 @@
     "message": " - dodatečné rumunské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
+  "filterrussian": {
+    "message": " - dodatečné ruské a ukrajinské filtry",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
   "filterchinese": {
     "message": " - dodatečné čínské filtry",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -426,7 +438,7 @@
   },
   "filtereasyprivacy": {
     "message": "EasyPrivacy (ochrana soukromí)",
-    "description": "A filter list. Don't translate 'EasyPrivacy', it's just here so you can add something like (privacy protection) or such to it."
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
   },
 
   "blacklistclickmessage": {
@@ -434,7 +446,7 @@
     "description": "Message at the top of the blacklist options tab"
   },
   "tabcustomizetitle": {
-    "message": "Přizpůsobení AdBlock",
+    "message": "Přizpůsobte si AdBlock",
     "description": "Title of the third tab"
   },
   "filterlistsrock": {
@@ -711,39 +723,55 @@
   },
   "typehiding": {
     "message": "skrytý",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typescript": {
     "message": "skript",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeimage": {
     "message": "obrázek",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typestylesheet": {
     "message": "definice stylu",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeobject": {
     "message": "interaktivní objekt",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typesubdocument": {
     "message": "rámec",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
+  },
+  "typeobject_subrequest": {
+    "message": "object_subrequest",
+    "description": "A resource type"
+  },
+  "typexmlhttprequest": {
+    "message": "xmlhttprequest",
+    "description": "A resource type"
+  },
+  "typeother": {
+    "message": "jiný",
+    "description": "A resource type"
+  },
+  "typepopup": {
+    "message": "popup",
+    "description": "A resource type"
   },
   "typemedia": {
     "message": "audio/video",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typepage": {
     "message": "stránka",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "typeunknown": {
     "message": "neznámý",
-    "description": "A resource type (lowercase!)"
+    "description": "A resource type"
   },
   "blockeverycontaining": {
     "message": "Blokovat každý prvek obsahující:",
@@ -1134,5 +1162,13 @@
   "warning_overrules_filters": {
     "message": "Upozornění: Na všech ostatních stránkách uvidíte reklamy!<br>Toto má přednost před všemi ostatními filtry pro tyto stránky.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+   },
+  "storage_quota_exceeded": {
+    "message": "Překročili jste ukládací prostor, který AdBlock může použít. Prosím, odhlaste odběr některých seznamů filtrů!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "safari50_updatenotice": {
+    "message": "Používáte starou verzi Safari. Získejte nejnovější verzi, abyste mohli používat tlačítko AdBlock na panelu nástrojů pro pozastavení AdBlock, spravovat chování na webových stránkách a nahlašovat reklamy. <a>Aktualizovat nyní</a>.",
+    "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }
 }
