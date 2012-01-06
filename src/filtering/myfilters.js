@@ -299,6 +299,8 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
       var match = checkLines[i].match(redirectRegex);
       if (match) {
         this._subscriptions[id].url = match[1]; //assuming the URL is always correct
+        // Force an update.  Even if our refetch below fails we'll have to 
+        // fetch the new URL in the future until it succeeds.
         this._subscriptions[id].last_update = 0;
       }
       match = checkLines[i].match(expiresRegex);
