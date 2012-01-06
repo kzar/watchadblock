@@ -139,7 +139,7 @@ if (!LEGACY_SAFARI) {
 
         if (item.browserWindow && !item.menu) {
           // Check if only this item lacks a menu (which means user just opened a new window) or there are multiple items
-          // lacking a menu (which only happens on browser startup or when the user removes ABP toolbar item and later
+          // lacking a menu (which only happens on browser startup or when the user removes AdBlock toolbar item and later
           // drags it back).
           var uninitializedItems = 0;
           for (var i = 0; i < safari.extension.toolbarItems.length; i++) {
