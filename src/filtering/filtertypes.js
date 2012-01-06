@@ -187,10 +187,8 @@ PatternFilter._parseRule = function(text) {
       // reports where this was causing issues. So for now, simply skip this
       // option, without returning that the filter was invalid.
     }
-    else {
-      log("Unknown option in filter " + text);
-      throw "Filter is invalid.";
-    }
+    else
+      throw "Unknown option " + option;
   }
   // If no element types are mentioned, the default set is implied.
   if (result.allowedElementTypes == ElementTypes.NONE)
