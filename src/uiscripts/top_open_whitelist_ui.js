@@ -14,7 +14,7 @@ function top_open_whitelist_ui() {
   // so its domain property will be empty; fortunately, it puts a proper https url into the pathname
   // property and we can use it.
   if (SAFARI && domain === "" && document.location.href.indexOf("feed:https") === 0) {
-    domain = url_parts(document.location.pathname, 'hostname');
+    domain = parseUri(document.location.pathname).hostname;
   }
 
   // defined in blacklister.js

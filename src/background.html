@@ -127,7 +127,7 @@
             fd[tabId][frameId] = {
               url: url,
               // Cache these as they'll be needed once per request
-              domain: parseUri(url, 'hostname'),
+              domain: parseUri(url).hostname,
               blockResults: []
             };
             if (frameId === 0) {
@@ -472,7 +472,7 @@
         if (!url) { // Safari empty/bookmarks/top sites page
           return true;
         } else {
-          var scheme = parseUri(url, 'protocol')
+          var scheme = parseUri(url).protocol;
           return (scheme !== 'http:' && scheme !== 'https:' && scheme !== 'feed:');
         }
       }
@@ -497,7 +497,7 @@
           var result = {
             tab: tab,
             disabled_site: disabled_site,
-            domain: parseUri(tab.url, 'hostname'),
+            domain: parseUri(tab.url).hostname,
           };
           if (!disabled_site)
             result.whitelisted = page_is_whitelisted(tab.url);
@@ -520,7 +520,7 @@
         if (!type)
           type = ElementTypes.document;
         var whitelist = _myfilters.blocking.whitelist;
-        var match = whitelist.matches(url, loweredUrl, type, parseUri(url, 'hostname'), false);
+        var match = whitelist.matches(url, loweredUrl, type, parseUri(url).hostname, false);
         if (match)
           return returnFilter ? match._text : true;
         return false;
