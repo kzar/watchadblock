@@ -729,7 +729,12 @@
             else {
               var param = JSON.stringify(parameter);
               details.code = fn_name + "(" + param + ");";
-              chrome.tabs.executeScript(undefined, details);
+              window.setTimeout(function() {
+                // Allow jQuery/jQueryUI to load. It's loaded async from within
+                // load_jquery_ui.js and might not be done loading when we are
+                // starting the final injected script from here.
+                chrome.tabs.executeScript(undefined, details);
+              }, 100);
             }
           };
 
