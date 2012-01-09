@@ -129,6 +129,7 @@ function adblock_begin_new_style() {
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
 // If document.documentElement instanceof HTMLElement is false, we're not on an HTML page
-if (document.location != 'about:blank' && document.documentElement instanceof HTMLElement) {
+// if document.documentElement doesn't exist, we're in Chrome 18
+if (document.location != 'about:blank' && (!document.documentElement || document.documentElement instanceof HTMLElement)) {
   adblock_begin_new_style();
 }
