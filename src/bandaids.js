@@ -12,9 +12,9 @@ var run_bandaids = function(blocking_style) {
     hotmail: function() {
       //removing the space remaining in Hotmail/WLMail
       el = document.querySelector(".Unmanaged .WithSkyscraper #MainContent");
-      if (el) {el.style["margin-right"] = "1px";}
+      if (el) {el.style.marginRight = "1px";}
       el = document.querySelector(".Managed .WithSkyscraper #MainContent");
-      if (el) {el.style["right"] = "1px";}
+      if (el) {el.style.right = "1px";}
     },
 
     hkpub: function() {

@@ -94,9 +94,9 @@ function block_list_via_css(selectors) {
 
 function debug_print_selector_matches(selectors, style) {
   selectors.
-    filter(function(selector) { return !!document.querySelector(selector); }).
+    filter(function(selector) { return document.querySelector(selector); }).
     forEach(function(selector) {
-      var matches = ""
+      var matches = "";
       elems = document.querySelectorAll(selector);
       for (var i=0; i<elems.length; i++) {
         var el = elems[i];

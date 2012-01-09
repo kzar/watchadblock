@@ -55,10 +55,10 @@ function adblock_begin_part_2() {
         hiddenImage.height = 0;
         hiddenImage.style.display = "none !important";
         hiddenImage.style.visibility = "hidden !important";
-      document.body.insertBefore(hiddenImage, null);
+      document.body.appendChild(hiddenImage);
       window.setTimeout(function() {
-        if (hiddenImage.style.opacity === 0) {
-          document.body.style["background-image"] = "none !important";
+        if (hiddenImage.style.opacity === "0") {
+          document.body.style.backgroundImage = "none !important";
         }
         document.body.removeChild(hiddenImage);
       }, 1);
