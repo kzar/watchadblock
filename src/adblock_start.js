@@ -61,7 +61,7 @@ function browser_canLoad(event, data) {
 // Return true if the element has been handled.
 function weakDestroyElement(el, elType, mustBePurged) {
   if (elType & ElementTypes.background) {
-    $(el).css("background-image", "none !important");
+    el.style["background-image"] = "none !important";
     return true;
   }
   else if (elType == ElementTypes.script) {
@@ -76,7 +76,7 @@ function weakDestroyElement(el, elType, mustBePurged) {
     if (el.className) replacement.className = el.className;
     if (el.name) replacement.name = el.name;
     replacement.setAttribute("style", "display: none !important; visibility: hidden !important; opacity: 0 !important");
-    $(el).replaceWith(replacement);
+    el.parentNode.replaceChild(replacement, el);
     return true;
   }
   else {
@@ -201,19 +201,21 @@ function adblock_begin() {
     }
 
     if (data.settings.debug_logging) {
-      $(function() { 
+      window.addEventListener("load", function() {
         debug_print_selector_matches(data.selectors, "old");
-      });
+      }, false);
     }
 
     // Run site-specific code to fix some errors, but only if the site has them
     if (typeof run_bandaids == "function")
-      $(function() { run_bandaids("old"); });
+      window.addEventListener("load", function() {
+        run_bandaids("old"); 
+      }, false);
   });
 }
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
-// If $ (jquery) is undefined, we're on a xml or svg page and can't run
-if (document.location != 'about:blank' && typeof $ != "undefined") {
+// If document.documentElement instanceof HTMLElement is false, we're not on an HTML page
+if (document.location != 'about:blank' && document.documentElement instanceof HTMLElement) {
   adblock_begin();
 }

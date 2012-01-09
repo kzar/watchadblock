@@ -1167,7 +1167,6 @@ http://www.pandora.com/static/valances/$domain=pandora.com
 http://zde-affinity.edgecaching.net/
 promo.md$domain=forum.md
 valueclick.net
-@@|safari-extension://com.betteradvertising.ghostery-
 @@||247realmedia.com^$domain=channel4.com
 @@||24ur.com/adserver/adall.php
 @@||adcraft.co/adimages/textlink-ads.jpg$domain=adcraft.co
@@ -1179,7 +1178,6 @@ valueclick.net
 @@||channel4.com/*/adstream_
 @@||imageshack.us/newuploader_ad.php
 @@||initialprint.com/home/0_assets/initialprint/rotation/ad
-@@||openx.com^$domain=openx.com
 @@||pandora.com/static/valances/pandora/base_styles.css
 @@||pandora.com/static/valances/pandora/default/
 @@||scorecardresearch.com^$domain=thinkatheist.com
@@ -1214,10 +1212,29 @@ valueclick.net
 ||static.stuff.co.nz/*/*/$background
 ||tokobagus.com^$third-party
 ||tpnads.com^$third-party
-@@|safari-extension://com.betafish.adblockforsafari-uamuu4s2d9/$document
-@@||acid3.acidtests.org^$document,domain=acid3.acidtests.org
 @@||css-tricks.com/examples/$elemhide,domain=css-tricks.com
+@@||vimcolorschemetest.googlecode.com/svn/html/$document,domain=vimcolorschemetest.googlecode.com
+
+!---ALL RULES ABOVE ARE FOR CHROME 16---!
+
+
+! Unsupported by the official lists
+@@|safari-extension://com.betafish.adblockforsafari-uamuu4s2d9/$document
+@@|safari-extension://com.betteradvertising.ghostery-
+
+! Ad providers. Filter lists don't care they are blocked
 @@||google.com/adsense/$document,domain=google.com
+@@||openx.com^$domain=openx.com
+
+! Because of the asdf[style] Chrome bug
+@@||apollohq.com^$elemhide,domain=apollohq.com
+@@||ginzaworld.com^$elemhide,domain=ginzaworld.com
 @@||instantservice.com/client/$elemhide,domain=instantservice.com
 @@||smartsheet.com^$elemhide,domain=smartsheet.com
-@@||vimcolorschemetest.googlecode.com/svn/html/$document,domain=vimcolorschemetest.googlecode.com
+
+! Because acid3 doesn't like our style block
+@@||acid3.acidtests.org^$document,domain=acid3.acidtests.org
+
+! 'This webpage was blocked by an extension' iframes and similar not catched resources
+ebuddy.com###login-pread-iframe-pread
+metacafe.com###IFrameExternalRecommendations
