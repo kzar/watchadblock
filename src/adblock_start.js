@@ -61,7 +61,7 @@ function browser_canLoad(event, data) {
 // Return true if the element has been handled.
 function weakDestroyElement(el, elType, mustBePurged) {
   if (elType & ElementTypes.background) {
-    el.style.backgroundImage = "none !important";
+    el.style.setProperty("background-image", "none", "important");
     return true;
   }
   else if (elType == ElementTypes.script) {

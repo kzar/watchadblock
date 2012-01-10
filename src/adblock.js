@@ -51,14 +51,14 @@ function adblock_begin_part_2() {
     } else {
       var hiddenImage = document.createElement("img");
         hiddenImage.src = bgImage;
-        hiddenImage.width = 0;
-        hiddenImage.height = 0;
-        hiddenImage.style.display = "none !important";
-        hiddenImage.style.visibility = "hidden !important";
+        hiddenImage.setAttribute("width", "0");
+        hiddenImage.setAttribute("height", "0");
+        hiddenImage.style.setProperty("display", "none", "important");
+        hiddenImage.style.setProperty("visibility", "hidden", "important");
       document.body.appendChild(hiddenImage);
       window.setTimeout(function() {
         if (hiddenImage.style.opacity === "0") {
-          document.body.style.backgroundImage = "none !important";
+          document.body.style.setProperty("background-image", "none", "important");
         }
         document.body.removeChild(hiddenImage);
       }, 1);

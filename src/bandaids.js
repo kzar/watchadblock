@@ -12,17 +12,17 @@ var run_bandaids = function(blocking_style) {
     hotmail: function() {
       //removing the space remaining in Hotmail/WLMail
       el = document.querySelector(".Unmanaged .WithSkyscraper #MainContent");
-      if (el) {el.style.marginRight = "1px";}
+      if (el) {el.style.setProperty("margin-right", "1px", null);}
       el = document.querySelector(".Managed .WithSkyscraper #MainContent");
-      if (el) {el.style.right = "1px";}
+      if (el) {el.style.setProperty("right", "1px", null);}
     },
 
     hkpub: function() {
       //issue 3971: due to 'display:none' the page isn't displayed correctly
       el = document.querySelector("#AutoNumber1");
       if (el) {
-        el.style.width = "100%";
-        el.style.margin = 0;
+        el.style.setProperty("width", "100%", null);
+        el.style.setProperty("margin", "0", null);
       }
     },
     youtube: function() {
