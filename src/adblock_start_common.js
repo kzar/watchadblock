@@ -30,16 +30,17 @@ function removeFrame(el) {
   var cols = ((parentEl.getAttribute('cols') || "").indexOf(',') > 0);
   if (!cols && (parentEl.getAttribute('rows') || "").indexOf(',') <= 0)
     return;
-  cols = (cols ? 'cols' : 'rows');
-  // Convert e.g. '40,20,10,10,10,10' into '40,20,10,0,10,10'
-  var sizes = parentEl.getAttribute(cols).split(',');
+  // Figure out which column or row to hide
   var index = 0;
   while (el.previousElementSibling) {
     index++;
     el = el.previousElementSibling;
   }
-  sizes[index] = 0;
-  parentEl.setAttribute(cols, sizes.join(','));
+  // Convert e.g. '40,20,10,10,10,10' into '40,20,10,0,10,10'
+  var attr = (cols ? 'cols' : 'rows');
+  var sizes = parentEl.getAttribute(attr).split(',');
+  sizes[index] = "0";
+  parentEl.setAttribute(attr, sizes.join(','));
 }
 
 // Remove an element from the page.
