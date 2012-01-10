@@ -123,7 +123,7 @@ PatternFilter.fromText = function(text) {
 }
 
 // Return a { rule, domainText, allowedElementTypes } object
-// for the given filter text.
+// for the given filter text.  Throws an exception if the rule is invalid.
 PatternFilter._parseRule = function(text) {
 
   var result = {
@@ -188,16 +188,12 @@ PatternFilter._parseRule = function(text) {
       // option, without returning that the filter was invalid.
     }
     else {
-      // Any other option may be a new option that we do not support.  Instead
-      // of ignoring it (converting a new-option-specific rule into a global
-      // rule), rename it to UNSUPPORTED, so it won't match any resource.
-      log("Unsupported element type in filter " + text);
-      result.allowedElementTypes |= ElementTypes.UNSUPPORTED;
+      throw "Unknown option in filter " + option;
     }
   }
-  // No element types mentioned?  All types are allowed.
+  // If no element types are mentioned, the default set is implied.
   if (result.allowedElementTypes == ElementTypes.NONE)
-    result.allowedElementTypes = (ElementTypes.ALLRESOURCETYPES);
+    result.allowedElementTypes = ElementTypes.DEFAULTTYPES;
 
   // Extract the disallowed types from the allowed types
   result.allowedElementTypes &= ~disallowedElementTypes;

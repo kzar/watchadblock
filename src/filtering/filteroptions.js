@@ -16,13 +16,13 @@ var ElementTypes = {
   'document': 1024,
   elemhide: 2048,
   popup: 4096,
-  // If you add something here, update .ALLRESOURCES below.
+  // If you add something here, update .DEFAULTTYPES and .CHROMEONLY below.
 };
-ElementTypes.ALLRESOURCETYPES = 1023; // all types that apply to resources
-// Any unknown options on filters will be converted to $UNSUPPORTED,
-// which no resource will match.
-// This covers: donottrack font media (and anything unrecognized)
-ElementTypes.UNSUPPORTED = 65536;
+// The types that are implied by a filter that doesn't explicitly specify types
+ElementTypes.DEFAULTTYPES = 1023;
+// Add here any types that Safari does not support.
+ElementTypes.CHROMEONLY = (ElementTypes.object_subrequest | ElementTypes.other 
+                           | ElementTypes.xmlhttprequest | ElementTypes.popup);
 
 // Convert a webRequest.onBeforeRequest type to an ElementType.
 ElementTypes.fromOnBeforeRequestType = function(type) {
