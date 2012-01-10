@@ -686,6 +686,8 @@
             'top_open_whitelist_ui': {
               allFrames: false,
               include: [
+                "jquery/jquery.min.js",
+                "jquery/jquery-ui.custom.min.js",
                 "uiscripts/load_jquery_ui.js",
                 "uiscripts/top_open_whitelist_ui.js"
                 ]
@@ -693,6 +695,8 @@
             'top_open_blacklist_ui': {
               allFrames: false,
               include: [
+                "jquery/jquery.min.js",
+                "jquery/jquery-ui.custom.min.js",
                 "uiscripts/load_jquery_ui.js",
                 "uiscripts/blacklisting/overlay.js",
                 "uiscripts/blacklisting/clickwatcher.js",
@@ -704,7 +708,8 @@
             'send_content_to_back': {
               allFrames: true,
               include: [
-                'uiscripts/blacklisting/send_content_to_back.js'
+                "jquery/jquery.min.js",
+                "uiscripts/blacklisting/send_content_to_back.js"
                 ]
             }
           };
@@ -729,12 +734,7 @@
             else {
               var param = JSON.stringify(parameter);
               details.code = fn_name + "(" + param + ");";
-              window.setTimeout(function() {
-                // Allow jQuery/jQueryUI to load. It's loaded async from within
-                // load_jquery_ui.js and might not be done loading when we are
-                // starting the final injected script from here.
-                chrome.tabs.executeScript(undefined, details);
-              }, 100);
+              chrome.tabs.executeScript(undefined, details);
             }
           };
 
