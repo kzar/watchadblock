@@ -76,7 +76,8 @@ function css_hide_for_selectors(selectors) {
 function block_list_via_css(selectors) {
   var d = document.documentElement;
   if (!d) {
-    // Bug in Chrome 18: document.documentElement is null on document_start
+    // See http://crbug.com/109272
+    // in Chrome 18: document.documentElement is null on document_start
     window.setTimeout(function() {
       block_list_via_css(selectors);
     }, 0);
@@ -97,7 +98,7 @@ function debug_print_selector_matches(selectors, style) {
     filter(function(selector) { return document.querySelector(selector); }).
     forEach(function(selector) {
       var matches = "";
-      elems = document.querySelectorAll(selector);
+      var elems = document.querySelectorAll(selector);
       for (var i=0; i<elems.length; i++) {
         var el = elems[i];
         matches += "        " + el.nodeName + "#" + el.id + "." + el.className + "\n";
