@@ -118,7 +118,7 @@ function debug_print_selector_matches(selectors, style) {
 // If document.documentElement instanceof HTMLElement is false, we're not on a html page and can't run
 // if document.documentElement doesn't exist, we're in Chrome 18
 if (document.location != 'about:blank' && (!document.documentElement || document.documentElement instanceof HTMLElement)) {
-  window.addEventListener("load", function() {
+  onReady(function() {
     // Subscribe to the list when you click an abp: link
     var elems = document.querySelectorAll('[href^="abp:"], [href^="ABP:"]');
     var abplinkhandler = function(event) {
@@ -132,5 +132,5 @@ if (document.location != 'about:blank' && (!document.documentElement || document
     for (var i=0; i<elems.length; i++) {
       elems[i].addEventListener("click", abplinkhandler, false);
     }
-  }, false);
+  });
 }

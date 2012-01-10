@@ -201,16 +201,12 @@ function adblock_begin() {
     }
 
     if (data.settings.debug_logging) {
-      window.addEventListener("load", function() {
-        debug_print_selector_matches(data.selectors, "old");
-      }, false);
+      onReady(function() { debug_print_selector_matches(data.selectors, "old"); });
     }
 
     // Run site-specific code to fix some errors, but only if the site has them
     if (typeof run_bandaids == "function")
-      window.addEventListener("load", function() {
-        run_bandaids("old"); 
-      }, false);
+      onReady(function() { run_bandaids("old"); });
   });
 }
 

@@ -113,16 +113,12 @@ function adblock_begin_new_style() {
       block_list_via_css(data.selectors);
 
     if (data.settings.debug_logging) {
-      window.addEventListener("load", function() { 
-        debug_print_selector_matches(data.selectors, "new");
-      }, false);
+      onReady(function() { debug_print_selector_matches(data.selectors, "new"); });
     }
 
     // Run site-specific code to fix some errors, but only if the site has them
     if (typeof run_bandaids == "function")
-      window.addEventListener("load", function() {
-        run_bandaids("new"); 
-      }, false);
+      onReady(function() { run_bandaids("new"); });
   });
 }
 
