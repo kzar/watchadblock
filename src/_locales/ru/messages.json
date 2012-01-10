@@ -231,6 +231,10 @@
     "message": "Блокировать всплывающюю рекламу и рекламу во всех видео и в флеш-играх.",
     "description": "Option on first tab page"
   },
+  "block_video_flash_ads": {
+    "message": "Блокировать рекламу во всех видео и в флеш-играх.",
+    "description": "Option on first tab page"
+  },
   "webrequest_warning": {
     "message": "Эта функция поддерживается новыми версиями Chrome.<br>Вы должны отключить её, если AdBlock начинает вести себя странно.<br>Она будет отключена автоматически, если Ваш Chrome еще не обновлен до новой версии.",
     "description": "Warning about using block_ads_in_all_videos_and_flash_games.  Leave the <br> after each sentence to make a line break."
@@ -688,7 +692,7 @@
     "placeholders": {
       "link": {
         "content": "$1",
-        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a> EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
       }
     }
   },
@@ -1167,5 +1171,9 @@
   "storage_quota_exceeded": {
     "message": "Вы превысили объем памяти, который может использовать AdBlock. Пожалуйста, отключите некоторые списки фильтров!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "safari50_updatenotice": {
+    "message": "Вы используете старую версию Safari. Установите последнюю версию, чтобы использовать кнопки панели инструментов AdBlock для приостановки работы AdBlock, использования белого списка веб-сайтов и сообщений о рекламе. <a>Обновить сейчас</a>.",
+    "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }
 }
