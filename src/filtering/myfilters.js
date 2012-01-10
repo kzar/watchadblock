@@ -66,6 +66,7 @@ function MyFilters() {
         that._subscriptions[id].text = FilterNormalizer.normalizeList(that._subscriptions[id].text);
       }
     }
+    // _onSubscriptionChange below saves our changes to storage
     storage_set('four_times_normalized_filters', true);
   })(this);
   // end temp code
