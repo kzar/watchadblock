@@ -136,6 +136,7 @@ BlockingFilterSet._secondLevelDomainOnly = function(domain) {
 }
 
 // Given a url, return its domain.
+// TODO replace with parseUri()
 BlockingFilterSet._domainFor = function(url) {
   return (url.match('://(.*?)/') || [ null, "unknown.com" ])[1];
 }
