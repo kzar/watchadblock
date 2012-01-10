@@ -27,7 +27,7 @@ var run_bandaids = function(blocking_style) {
     },
     youtube: function() {
       function blockYoutubeAds(videoplayer) {
-        var flashVars = videoplayer.setAttribute('flashvars');
+        var flashVars = videoplayer.getAttribute('flashvars');
         var inParam = false;
         if(!flashVars) {
             flashVars = videoplayer.querySelector('param[name="flashvars"]');
