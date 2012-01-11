@@ -34,7 +34,7 @@ function adblock_begin_part_2() {
 
   //Neither Chrome nor Safari blocks background images. So remove them
   //TODO: Remove background images for elements other than <body>
-  var bgImage = $("body").css('background-image') || "";
+  var bgImage = window.getComputedStyle(document.body)["background-image"] || "";
   var match = bgImage.match(/^url\((.*)\)$/);
   if (match)
     bgImage = match[1];
@@ -49,25 +49,27 @@ function adblock_begin_part_2() {
       };
       beforeLoadHandler(fakeEvent);
     } else {
-      var hiddenImage = $("<img>").
-        attr("src", bgImage).
-        attr("width", "0").
-        attr("height", "0").
-        css("display", "none !important").
-        css("visibility", "hidden !important");
-      $(document.body).append(hiddenImage);
+      var hiddenImage = document.createElement("img");
+        hiddenImage.src = bgImage;
+        hiddenImage.setAttribute("width", "0");
+        hiddenImage.setAttribute("height", "0");
+        hiddenImage.style.setProperty("display", "none", "important");
+        hiddenImage.style.setProperty("visibility", "hidden", "important");
+      document.body.appendChild(hiddenImage);
       window.setTimeout(function() {
-        if ($(hiddenImage).css("opacity") == 0)
-          $(document.body).css("background-image", "none !important");
-        $(hiddenImage).remove();
+        if (hiddenImage.style.opacity === "0") {
+          document.body.style.setProperty("background-image", "none", "important");
+        }
+        document.body.removeChild(hiddenImage);
       }, 1);
     }
   }
 
 }
 
-// If $ (jquery) is undefined, we're on a xml or svg page and can't run
-if (window.location != 'about:blank' && typeof $ != "undefined") {
+// If document.documentElement instanceof HTMLElement, we're on a HTML/XML page,
+// or on a page that Chrome converted to HTML (txt). Fails for svg for example.
+if (window.location != 'about:blank' && document.documentElement instanceof HTMLElement) {
   if (GLOBAL_contentScriptData.data)
     adblock_begin_part_2();
   else

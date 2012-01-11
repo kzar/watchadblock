@@ -17,6 +17,14 @@ BGcall = function() {
 // if the user chooses.
 log = function() { };
 
+// Behaves very similarly to $.ready() but does not require jQuery.
+function onReady(callback) {
+  if (document.readyState === "complete")
+    window.setTimeout(callback, 0);
+  else
+    window.addEventListener("load", callback, false);
+}
+
 function translate(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
 }

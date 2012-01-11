@@ -11,21 +11,23 @@ var run_bandaids = function(blocking_style) {
   var bandaids = {
     hotmail: function() {
       //removing the space remaining in Hotmail/WLMail
-      $(".Unmanaged .WithSkyscraper #MainContent").
-        css("margin-right", "1px");
-      $(".Managed .WithSkyscraper #MainContent").
-        css("right", "1px");
+      el = document.querySelector(".Unmanaged .WithSkyscraper #MainContent");
+      if (el) {el.style.setProperty("margin-right", "1px", null);}
+      el = document.querySelector(".Managed .WithSkyscraper #MainContent");
+      if (el) {el.style.setProperty("right", "1px", null);}
     },
 
     hkpub: function() {
       //issue 3971: due to 'display:none' the page isn't displayed correctly
-      $("#AutoNumber1").
-        css("width", "100%").
-        css("margin", "0px");
+      el = document.querySelector("#AutoNumber1");
+      if (el) {
+        el.style.setProperty("width", "100%", null);
+        el.style.setProperty("margin", "0", null);
+      }
     },
     youtube: function() {
       function blockYoutubeAds(videoplayer) {
-        var flashVars = $(videoplayer).attr('flashvars');
+        var flashVars = videoplayer.getAttribute('flashvars');
         var inParam = false;
         if(!flashVars) {
             flashVars = videoplayer.querySelector('param[name="flashvars"]');
@@ -55,9 +57,9 @@ var run_bandaids = function(blocking_style) {
         videoplayer.parentNode.replaceChild(replacement, videoplayer);
       }
       
-      if ($("#movie_player").length > 0) {
+      if (document.querySelector("#movie_player")) {
         //the movie player is already inserted
-        blockYoutubeAds($("#movie_player")[0]);
+        blockYoutubeAds(document.querySelector("#movie_player"));
       } else {
         //otherwise it has to be inserted yet
         document.addEventListener("DOMNodeInserted", function(e) {

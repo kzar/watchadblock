@@ -113,20 +113,19 @@ function adblock_begin_new_style() {
       block_list_via_css(data.selectors);
 
     if (data.settings.debug_logging) {
-      $(function() { 
-        debug_print_selector_matches(data.selectors, "new");
-      });
+      onReady(function() { debug_print_selector_matches(data.selectors, "new"); });
     }
 
     // Run site-specific code to fix some errors, but only if the site has them
     if (typeof run_bandaids == "function")
-      $(function() { run_bandaids("new"); });
+      onReady(function() { run_bandaids("new"); });
   });
 }
 
 
 // Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
-// If $ (jquery) is undefined, we're on a xml or svg page and can't run
-if (document.location != 'about:blank' && typeof $ != "undefined") {
+// If document.documentElement instanceof HTMLElement is false, we're not on an HTML page
+// if document.documentElement doesn't exist, we're in Chrome 18
+if (document.location != 'about:blank' && (!document.documentElement || document.documentElement instanceof HTMLElement)) {
   adblock_begin_new_style();
 }
