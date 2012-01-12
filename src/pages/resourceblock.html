@@ -473,8 +473,8 @@
 
             // Show the options
             $("#chooseoptions").show();
-            var domainOfSelectedUrl = $(".selected td:nth-of-type(2)").
-                attr('title').replace(/^[a-z]{0,5}\:\/\//, '').match(/^[^\/]+/)[0];
+            var domainOfSelectedUrl = parseUri($(".selected td:nth-of-type(2)").
+                attr('title')).hostname;
             var isThirdParty = CheckThirdParty(domain, domainOfSelectedUrl);
             if (!isThirdParty) {
               $("#thirdparty + * + *").remove();
