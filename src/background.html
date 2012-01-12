@@ -705,9 +705,11 @@
             'send_content_to_back': {
               allFrames: true,
               include: [
-                // no need to include jquery as it would redefine $ and clobber
-                // jquery UI.  send_content_to_back is only called from a
-                // jquery context.
+                "jquery/jquery.min.js",
+                // we must get jQuery into every frame, but that clobbers 
+                // jquery UI installed by top_open_blacklist_ui but not
+                // needed by us.  Reinstall on top_open_blacklist_ui's behalf.
+                "jquery/jquery-ui.custom.min.js",
                 "uiscripts/blacklisting/send_content_to_back.js"
                 ]
             }
