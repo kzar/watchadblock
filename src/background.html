@@ -705,7 +705,9 @@
             'send_content_to_back': {
               allFrames: true,
               include: [
-                "jquery/jquery.min.js",
+                // no need to include jquery as it would redefine $ and clobber
+                // jquery UI.  send_content_to_back is only called from a
+                // jquery context.
                 "uiscripts/blacklisting/send_content_to_back.js"
                 ]
             }
