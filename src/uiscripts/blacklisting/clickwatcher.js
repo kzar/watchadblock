@@ -7,13 +7,18 @@ function Highlighter() {
   var target = null;
   var enabled = false;
   var then = +new Date();
-  var box = $("<div class='adblock-highlight-node'></div>").css({
-    backgroundColor: "rgba(130, 180, 230, 0.5) !important",
-    outline: "solid 1px #0F4D9A !important",
-    boxSizing: "border-box !important",
-    position: "absolute !important", 
+  var box = $("<div class='adblock-highlight-node'></div>");
+  var css = {
+    backgroundColor: "rgba(130, 180, 230, 0.5)",
+    outline: "solid 1px #0F4D9A",
+    boxSizing: "border-box",
+    position: "absolute", 
     display: "none"
-  }).appendTo("body");
+  };
+  for (var key in css) {
+    box[0].style.setProperty(key, css[key], "important"); // crbug.com/110084
+  }
+  box.appendTo("body");
   
   function handler(e) {
     var offset, el = e.target;
@@ -33,12 +38,13 @@ function Highlighter() {
     target = $(el);
     offset = target.offset();
     box.css({
-      zIndex: (parseInt(target.css("z-index")) || 1) + " !important",
       height: target.outerHeight(), 
       width: target.outerWidth(), 
       left: offset.left, 
       top: offset.top 
     });
+    var zIndex = (parseInt(target.css("z-index")) || 1);
+    box[0].style.setProperty("zIndex", zIndex, "important"); // crbug.com/110084
     box.show(); 
   }
   
