@@ -57,7 +57,7 @@ function top_open_whitelist_ui() {
       var newTLD = "co." + domainparts[domainparts.length - 1];
       domainparts.splice(domainparts.length - 2, 2, newTLD);
     }
-    var location = document.location.pathname.match(/(.*?)(\/?)(\?|$)/);
+    var location = document.location.href.match(/\w+\:\/\/[^\/]+(.*?)(\/?)(\?|$)/);
     var pathparts = location[1].split('/');
 
     // Don't show the domain slider on

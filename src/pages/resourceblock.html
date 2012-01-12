@@ -544,7 +544,14 @@
           // Can be of the forms
           //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
           //  ?url=(page url)
-          var qps = parseUri.parseSearch(window.location.search);
+          var query = window.location.search.substring(1);
+          var parts = query.split('&');
+          var qps = {};
+          for (var i = 0; i < parts.length; i++) {
+            var matchKeyAndValue = parts[i].match(/(.*?)=(.*)/);
+            if (!matchKeyAndValue) continue;
+            qps[matchKeyAndValue[1]] = matchKeyAndValue[2];
+          }
           function validateUrl(url) {
             if (!/^https?:\/\//.test(url)) {
               window.close();
@@ -561,7 +568,7 @@
             url = unescape(qps.url);
             validateUrl(url);
 
-            domain = parseUri(url).hostname;
+            domain = BlockingFilterSet._domainFor(url);
           }
           if (qps.itemType) {
             var itemUrl = unescape(qps.itemUrl);
