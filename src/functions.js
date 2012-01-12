@@ -74,7 +74,7 @@ parseUri.parseSearch = function(search) {
   // Fails if a key exists twice (e.g., ?a=foo&a=bar would return {a:"bar"}
   var queryKeys = {};
   search.replace(/(?:^\?|&)([^&=]*)=?([^&]*)/g, function () {
-    if (arguments[1]) queryKeys[arguments[1]] = arguments[2];
+    if (arguments[1]) queryKeys[arguments[1]] = unescape(arguments[2]);
   });
   return queryKeys;
 }

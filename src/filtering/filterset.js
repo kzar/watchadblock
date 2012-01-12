@@ -135,13 +135,6 @@ BlockingFilterSet._secondLevelDomainOnly = function(domain) {
   return match[0].toLowerCase();
 }
 
-// Given a url, return its domain.
-// TODO replace with parseUri()
-BlockingFilterSet._domainFor = function(url) {
-  return (url.match('://(.*?)/') || [ null, "unknown.com" ])[1];
-}
-
-
 BlockingFilterSet.prototype = {
   // True if the url is blocked by this filterset.
   // Inputs:
@@ -156,7 +149,7 @@ BlockingFilterSet.prototype = {
   //   if returnFilter is false:
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, frameDomain, returnFilter) {
-    var urlDomain = BlockingFilterSet._domainFor(url);
+    var urlDomain = parseUri(url).hostname;
     var urlOrigin = BlockingFilterSet._secondLevelDomainOnly(urlDomain);
     var docOrigin = BlockingFilterSet._secondLevelDomainOnly(frameDomain);
     var isThirdParty = (urlOrigin != docOrigin);

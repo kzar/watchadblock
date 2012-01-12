@@ -52,13 +52,7 @@
       });
 
       //fetching the options...
-      var options = [];
-      var search = document.location.search.substring(1).split('&');
-      for (var item in search) {
-        if (!/\=/.test(search[item])) continue;
-        options[search[item].split('=')[0]] =
-                         unescape(search[item].split('=')[1]);
-      }
+      var options = parseUri.parseSearch(document.location.search);
 
       //get the list of subscribed filters and
       //all unsubscribed default filters
@@ -81,17 +75,13 @@
 
       //generate the URL to the issue tracker
       function generateReportURL() {
-        var domain = "";
-        if (options['url']) {
-          domain = options['url'].substring(options['url'].indexOf("://") + 3);
-          domain = domain.substring(0, domain.indexOf('/'));
-        }
         var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
                      "?template=Ad%20report%20from%20user&summary=";
-        if (domain)
-          result = result + encodeURIComponent("Ad report: " + domain);
-        else
-          result = result + encodeURIComponent("Ad report at <enter URL of webpage here>");
+
+        var domain = "<enter URL of webpage here>";
+        if (options.url)
+          domain = parseUri(options.url).hostname;
+        result = result + encodeURIComponent("Ad report: " + domain);
 
         var body = [];
         var count = 1;
@@ -99,7 +89,7 @@
             "Don't leave anything out or I'll probably " +
             "have to ignore your report. Thanks!");
         body.push("");
-        if (!options['url']) {
+        if (!options.url) {
           body.push(count + ". Paste the URL of the webpage showing an ad: ");
           body.push("");
           body.push("");
@@ -120,9 +110,9 @@
         body.push("");
         body.push("");
         body.push("-------- Please don't touch below this line. ---------");
-        if (options['url']) {
+        if (options.url) {
           body.push("=== URL with ad ===");
-          body.push(options['url']);
+          body.push(options.url);
           body.push("");
         }
         body.push("=== Subscribed filters ===");
