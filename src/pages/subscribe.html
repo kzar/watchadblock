@@ -51,10 +51,7 @@
         }
 
         //Get the URL
-        var queryparts = {};
-        var params = document.location.search.substring(1).split('&');
-        for (var i = 0; i < params.length; i++)
-          queryparts[params[i].split('=')[0]] = unescape(params[i].split('=')[1]);
+        var queryparts = parseUri.parseSearch(document.location.search);
 
         if (!/^https?\:\/\//i.test(queryparts.location)) {
           finished(false);
