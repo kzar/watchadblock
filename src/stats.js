@@ -134,7 +134,8 @@ STATS = (function() {
       var data = {
         cmd: "msg",
         u: userId,
-        m: message
+        m: message,
+        v: version
       };
       $.post(stats_url, data);
     }
