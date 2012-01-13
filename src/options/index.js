@@ -56,7 +56,7 @@ $(function() {
         // height to be correct.
         window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
       } else {
-        openTab(href);
+        BGcall("openTab", href);
       }
     });
     return false;
