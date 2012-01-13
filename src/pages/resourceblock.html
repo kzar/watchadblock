@@ -473,8 +473,8 @@
 
             // Show the options
             $("#chooseoptions").show();
-            var domainOfSelectedUrl = $(".selected td:nth-of-type(2)").
-                attr('title').replace(/^[a-z]{0,5}\:\/\//, '').match(/^[^\/]+/)[0];
+            var domainOfSelectedUrl = parseUri($(".selected td:nth-of-type(2)").
+                attr('title')).hostname;
             var isThirdParty = CheckThirdParty(domain, domainOfSelectedUrl);
             if (!isThirdParty) {
               $("#thirdparty + * + *").remove();
@@ -544,14 +544,7 @@
           // Can be of the forms
           //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
           //  ?url=(page url)
-          var query = window.location.search.substring(1);
-          var parts = query.split('&');
-          var qps = {};
-          for (var i = 0; i < parts.length; i++) {
-            var matchKeyAndValue = parts[i].match(/(.*?)=(.*)/);
-            if (!matchKeyAndValue) continue;
-            qps[matchKeyAndValue[1]] = matchKeyAndValue[2];
-          }
+          var qps = parseUri.parseSearch(window.location.search);
           function validateUrl(url) {
             if (!/^https?:\/\//.test(url)) {
               window.close();
@@ -568,7 +561,7 @@
             url = unescape(qps.url);
             validateUrl(url);
 
-            domain = BlockingFilterSet._domainFor(url);
+            domain = parseUri(url).hostname;
           }
           if (qps.itemType) {
             var itemUrl = unescape(qps.itemUrl);

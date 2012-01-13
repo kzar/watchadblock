@@ -1,7 +1,7 @@
 var run_bandaids = function(blocking_style) {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
-  if (/mail\.live\.com/.test(document.location.host))
+  if (/mail\.live\.com/.test(document.location.hostname))
     apply_bandaid_for = "hotmail";
   else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
     apply_bandaid_for = "hkpub";
