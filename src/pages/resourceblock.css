@@ -1,0 +1,88 @@
+.icon {
+  background-image:url('../img/icon32.png');
+}
+input:disabled + label {
+  cursor:default;
+}
+#resourceslist {
+  text-align: left;
+  cursor: default;
+  width: 100%;
+  margin-bottom:10px;
+}
+.header {
+  background-image: url(../img/sort.gif);
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center left;
+  padding-left: 20px;
+}
+.headerSortDown {
+  background-image: url(../img/sortdesc.gif);
+}
+.headerSortUp {
+  background-image: url(../img/sortasc.gif);
+}
+#resourceslist td, #selectblockableurl :not(#confirmUrl):not(b) {
+  font-size: 12px;
+  padding: 0px;
+  padding-right: 5px;
+}
+.sorter {
+  display:none;
+}
+.blocked {
+  color:red;
+}
+.whitelisted {
+  color:green;
+}
+#legend {
+  font-size: 12px;
+  background-color: white;
+  position:fixed;
+  top: 25px;
+  right: 10px;
+  padding: 5px;
+  display: none;
+}
+#choosedifferentresource {
+  font-size: 12px;
+  background-color: white;
+  padding-left: 5px;
+  display:none;
+  font-style: italic;
+}
+.hiding {
+  color:blue;
+}
+.clickableRow {
+  cursor: pointer;
+}
+.deleterule {
+  cursor: pointer;
+  background-image: url(../img/delete.gif);
+  background-repeat: no-repeat;
+  background-position: center left;
+  width: 9px;
+}
+#selectblockableurl input:radio {
+  margin-right: 7px;
+}
+#filterpreview {
+  font-size:12px;
+  font-style:italic;
+}
+.onlyifdebug {
+  display:none;
+}
+#addthefilter {
+  font-weight:bold;
+  font-size:15px;
+}
+#loading td {
+  text-align:center;
+  color:blue;
+  font-size:22px;
+  font-weight:bold;
+}
