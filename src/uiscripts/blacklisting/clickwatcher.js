@@ -9,9 +9,9 @@ function Highlighter() {
   var then = +new Date();
   var box = $("<div class='adblock-highlight-node'></div>");
   var css = {
-    backgroundColor: "rgba(130, 180, 230, 0.5)",
+    "background-color": "rgba(130, 180, 230, 0.5)",
     outline: "solid 1px #0F4D9A",
-    boxSizing: "border-box",
+    "box-sizing": "border-box",
     position: "absolute", 
     display: "none"
   };
@@ -44,7 +44,7 @@ function Highlighter() {
       top: offset.top 
     });
     var zIndex = (parseInt(target.css("z-index")) || 1);
-    box[0].style.setProperty("zIndex", zIndex, "important"); // crbug.com/110084
+    box[0].style.setProperty("z-index", zIndex, "important"); // crbug.com/110084
     box.show(); 
   }
   
