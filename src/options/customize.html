@@ -18,7 +18,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="linkblockadbyurl"></a>
-          <div id="divUrlBlock" class="addControls" style="display:none;">
+          <div id="divUrlBlock" class="addControls initially-hidden">
             <table class="entryTable">
               <tr>
                 <td i18n="blockurlwithtext" colspan="2"></td>
@@ -27,7 +27,7 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtBlockUrl" type="text" style="width:300px;" placeholder=".com/flashAd" /></td>
+                <td><input id="txtBlockUrl" type="text" class="width-300" placeholder=".com/flashAd" /></td>
                 <td class="guide">$domain=</td>
                 <td><input id="txtBlockUrlDomain" placeholder="*" type="text"/></td>
                 <td><input id="btnAddUrlBlock" type="button" i18n_value="buttonblockit" disabled="disabled"/></td>
@@ -38,7 +38,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="linkhidesection"></a>
-          <div id="divCssBlock" class="addControls" style="display:none;">
+          <div id="divCssBlock" class="addControls initially-hidden">
             <div i18n="blacklistclickmessage"></div>
             <table class="entryTable">
               <tr>
@@ -48,9 +48,9 @@
               <tr>
               </tr>
               <tr>
-                <td><input id="txtUserFilterDomain" type="text" placeholder="*" style="width:200px;"/></td>
+                <td><input id="txtUserFilterDomain" type="text" placeholder="*" class="width-200"/></td>
                 <td class="guide">##</td>
-                <td><input id="txtUserFilterCss" type="text" style="width:300px;"
+                <td><input id="txtUserFilterCss" type="text" class="width-300"
                      placeholder='div[class*="exampleClass"][id="someBigAd"]'/></td>
                 <td><input id="btnAddUserFilter" type="button" i18n_value="buttonblockit" disabled="disabled"/></td>
               </tr>
@@ -62,7 +62,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="linkunblock"></a>
-          <div id="divExcludeBlock" class="addControls" style="display:none;">
+          <div id="divExcludeBlock" class="addControls" class="initially-hidden">
             <table class="entryTable">
               <tr>
                 <td></td>
@@ -72,7 +72,7 @@
               </tr>
               <tr>
                 <td class="guide">@@</td>
-                <td><input id="txtUnblock" type="text" style="width:400px;"
+                <td><input id="txtUnblock" type="text" class="width-400"
                          placeholder="http://sleeplessgeek.blogspot.com/"/></td>
                 <td class="guide">$document</td>
                 <td><input id="btnAddExcludeFilter" type="button" i18n_value="buttonok" disabled="disabled"/></td>
@@ -83,7 +83,7 @@
 
         <div class="customizationSection">
           <a class="controlsLink" href="#" i18n="show_ads_except_for"></a>
-          <div id="divBlacklistBlock" class="addControls" style="display:none;">
+          <div id="divBlacklistBlock" class="addControls initially-hidden">
             <table class="entryTable">
               <tr>
                 <td></td>
@@ -91,7 +91,7 @@
               </tr>
               <tr>
                 <td class="guide">@@*$document,domain=</td>
-                <td><input id="txtBlacklist" type="text" style="width:400px;"/></td>
+                <td><input id="txtBlacklist" type="text" class="width-400"/></td>
                 <td><input id="btnAddBlacklist" type="button" i18n_value="buttonok" disabled="disabled"/></td>
               </tr>
               <tr>
@@ -100,34 +100,33 @@
               </tr>
               <tr>
                 <td></td>
-                <td colspan=3><div style="font-weight: bold; color:red" class="footnote"
-                    i18n="warning_overrules_filters"></div></td>
+                <td colspan=3><div class="footnote warning" i18n="warning_overrules_filters"></div></td>
             </table>
           </div>
         </div>
 
       </div>
 
-      <div style="margin-top:15px;">
-        <h3 style="display: inline;" i18n="manualfilteredit"></h3>
+      <div class="margin-top-15">
+        <h3 class="display-inline" i18n="manualfilteredit"></h3>
         <span>
           <input type="button" id="btnEditAdvancedFilters" i18n_value="buttonedit" />
-          <span id="spanSaveButton" style="display:none;">
+          <span id="spanSaveButton" class="initially-hidden">
             <input type="button" id="btnSaveAdvancedFilters" i18n_value="savebutton" />
-            <span style="color:red; font-weight: bold; margin-left:20px;" i18n="savereminder"></span>
+            <span class="warning" i18n="savereminder"></span>
           </span>
         </span>
       </div>
 
       <div>
         <div i18n="filtersavewarning" i18n_replacement_el="tutorlink"
-           class="footnote" style="margin-top: 5px; margin-bottom: 5px;"></div>
+           class="footnote margin-vertical-5"></div>
         <a id="tutorlink" href="http://adblockplus.org/en/filters"
            target="_blank"></a>
       </div>
 
       <div>
-        <textarea id="txtFiltersAdvanced" cols="112" rows="15" style="font-size:12px;" disabled></textarea>
+        <textarea id="txtFiltersAdvanced" cols="112" rows="15" disabled></textarea>
         <br/>
       </div>
 
