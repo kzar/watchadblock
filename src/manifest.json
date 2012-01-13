@@ -11,7 +11,7 @@
     "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking"
   ],
   "minimum_chrome_version": "6",
-  "background_page": "background.html",
+  "background_page": "background/background.html",
   "options_page": "options/index.html",
   "incognito": "spanning",
   "browser_action": {
@@ -31,9 +31,9 @@
         "filtering/filterset.js",
 
 
-        "adblock_start_common.js",
-        "adblock_start.js",
-        "adblock_start_new_style.js"
+        "content_scripts/adblock_start_common.js",
+        "content_scripts/adblock_start.js",
+        "content_scripts/adblock_start_new_style.js"
       ],
       "run_at": "document_start",
       "all_frames": true
@@ -45,7 +45,7 @@
         "*://*.youtube.com/*"
       ],
       "js": [
-        "bandaids.js"
+        "content_scripts/bandaids.js"
       ],
       "run_at": "document_start",
       "all_frames": true
@@ -53,7 +53,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "adblock.js"
+        "content_scripts/adblock.js"
       ],
       "run_at": "document_end",
       "all_frames": true
@@ -61,7 +61,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "uiscripts/blacklisting/rightclick_hook.js"
+        "content_scripts/ui/blacklisting/rightclick_hook.js"
       ],
       "run_at": "document_end",
       "all_frames": false

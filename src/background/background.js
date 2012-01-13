@@ -527,17 +527,17 @@ page_is_unblockable = function(url) {
 
           function setBrowserButton(info) {
             if (sessionStorage.adblock_is_paused) {
-              chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
+              chrome.browserAction.setIcon({path:"/img/icon19-grayscale.png", tabId: info.tab.id});
             } else if (info.disabled_site &&
               !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
                 // Show non-disabled icon on the installation-success page so it
                 // users see how it will normally look. All other disabled pages
                 // will have the gray one
-                chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
+                chrome.browserAction.setIcon({path:"/img/icon19-grayscale.png", tabId: info.tab.id});
               } else if (info.whitelisted) {
-                chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
+                chrome.browserAction.setIcon({path:"/img/icon19-whitelisted.png", tabId: info.tab.id});
               } else {
-                chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
+                chrome.browserAction.setIcon({path:"/img/icon19.png", tabId: info.tab.id});
               }
           }
 
@@ -646,34 +646,34 @@ page_is_unblockable = function(url) {
             'top_open_whitelist_ui': {
               allFrames: false,
               include: [
-                "jquery/jquery.min.js",
-                "jquery/jquery-ui.custom.min.js",
-                "uiscripts/load_jquery_ui.js",
-                "uiscripts/top_open_whitelist_ui.js"
+                "/jquery/jquery.min.js",
+                "/jquery/jquery-ui.custom.min.js",
+                "/content_scripts/ui/load_jquery_ui.js",
+                "/content_scripts/ui/top_open_whitelist_ui.js"
               ]
             },
             'top_open_blacklist_ui': {
               allFrames: false,
               include: [
-                "jquery/jquery.min.js",
-                "jquery/jquery-ui.custom.min.js",
-                "uiscripts/load_jquery_ui.js",
-                "uiscripts/blacklisting/overlay.js",
-                "uiscripts/blacklisting/clickwatcher.js",
-                "uiscripts/blacklisting/elementchain.js",
-                "uiscripts/blacklisting/blacklistui.js",
-                "uiscripts/top_open_blacklist_ui.js"
+                "/jquery/jquery.min.js",
+                "/jquery/jquery-ui.custom.min.js",
+                "/content_scripts/ui/load_jquery_ui.js",
+                "/content_scripts/ui/blacklisting/overlay.js",
+                "/content_scripts/ui/blacklisting/clickwatcher.js",
+                "/content_scripts/ui/blacklisting/elementchain.js",
+                "/content_scripts/ui/blacklisting/blacklistui.js",
+                "/content_scripts/ui/top_open_blacklist_ui.js"
               ]
             },
             'send_content_to_back': {
               allFrames: true,
               include: [
-                "jquery/jquery.min.js",
+                "/jquery/jquery.min.js",
                 // we must get jQuery into every frame, but that clobbers 
                 // jquery UI installed by top_open_blacklist_ui but not
                 // needed by us.  Reinstall on top_open_blacklist_ui's behalf.
                 "jquery/jquery-ui.custom.min.js",
-                "uiscripts/blacklisting/send_content_to_back.js"
+                "/content_scripts/ui/blacklisting/send_content_to_back.js"
               ]
             }
           };
