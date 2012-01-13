@@ -1,4 +1,3 @@
-
 var installPageVersion = 2;
 BGcall("storage_set", "saw_install_page", installPageVersion);
 $(function() {
@@ -42,34 +41,27 @@ $(function() {
       $("body").css("overflow", "auto");
       if (that.name == "last-step")
         $("#last-step #payment-types").each(function(el) { this.scrollIntoView(true); });
-      });
-
-      return false;
     });
+
+    return false;
   });
 
-  // Called after progress bar finishes
-  function begin() {
-    $("#header").fadeIn();
-    var startCard = (SAFARI ? "#start-safari": "#start-chrome");
-    $(startCard).css($("#wrapper").position()).fadeIn();
-  }
+  $("#cleaner-warning a").click(function() {
+    alert(translate("filecleanerwarning"));
+  });
 
-
-
-  $(function() {
-    $("#cleaner-warning a").click(function() {
-      alert(translate("filecleanerwarning"));
+  $("#start-chrome.card input").change(function() {
+    BGcall("set_setting", "show_google_search_text_ads", this.checked, function() {
+      BGcall("update_filters");
     });
   });
 
 
 
+  // Show a loading progress indicator for a few seconds while the user
+  // gets her bearings.
   var start = new Date();
-  var steps = 0;
   (function() {
-    // Show a loading progress indicator for a few seconds while the user
-    // gets her bearings.
 
     var runLength = 2500; // Should take this many ms
     var pctTime = (new Date() - start) / runLength; // Goes from 0 to 1
@@ -100,21 +92,21 @@ $(function() {
     }, 200);
   })();
 
+  // Called after progress bar finishes
+  function begin() {
+    $("#header").fadeIn();
+    var startCard = (SAFARI ? "#start-safari": "#start-chrome");
+    $(startCard).css($("#wrapper").position()).fadeIn();
+  }
 
-  $("#start-chrome.card input").change(function() {
-    BGcall("set_setting", "show_google_search_text_ads", this.checked, function() {
-      BGcall("update_filters");
-    });
+
+  // Load payment request iframe
+  var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
+  var iframe = $("<iframe>", {
+    src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
+    width: 750, height: 450, 
+    frameBorder: 0, scrolling: "no" 
   });
+  $("#iframe-slot").html(iframe);
 
-
-
-  $(function() {
-    var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
-    var iframe = $("<iframe>", {
-      src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
-      width: 750, height: 450, 
-      frameBorder: 0, scrolling: "no" 
-    });
-    $("#iframe-slot").html(iframe);
-  });
+});
