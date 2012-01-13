@@ -104,7 +104,6 @@ BlacklistUi.prototype._build_page1 = function() {
     href: "#",
     tabIndex: -1,
     css: { 
-      "font-size": "11px !important",
       "display": "none"
     },
     text: translate("block_by_url_instead"),
@@ -131,6 +130,7 @@ BlacklistUi.prototype._build_page1 = function() {
       return false;
     }
   });
+  link_to_block[0].style.setProperty("font-size", "11px", "important"); // crbug.com/110084
 
   var page = $("<div>").
     append(translate("sliderexplanation")).

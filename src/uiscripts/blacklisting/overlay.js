@@ -7,20 +7,23 @@ Overlay = function(options) {
       "position": "absolute",
       "left": el.position().left,
       "top": el.position().top,
-      "z-index": 1000000,
-      "background-color": "transparent !important"
+      "z-index": 1000000
     }).
     width(el.width()).
     height(el.height());
+  this.image[0].style.setProperty(
+    "background-color", "transparent", "important"); // crbug.com/110084
   this.el = el;
   this.click_handler = options.click_handler;
   
   this.image.
     bind("mouseenter",function() {
-      $(this).css("background-color", "rgba(130, 180, 230, 0.5) !important");
+      // crbug.com/110084
+      this.style.setProperty("background-color", "rgba(130, 180, 230, 0.5)", "important");
     }).
     bind("mouseleave",function() {
-      $(this).css("background-color", "transparent !important");
+      // crbug.com/110084
+      this.style.setProperty("background-color", "transparent", "important");
     })
 
   Overlay.instances.push(this);

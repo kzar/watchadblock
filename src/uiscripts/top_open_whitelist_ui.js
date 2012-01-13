@@ -34,7 +34,8 @@ function top_open_whitelist_ui() {
     var page = $("<div>").
       append('<span>' + translate("adblock_wont_run_on_pages_matching") + 
              '</span>').
-      append('<br/><br/><i id="domainpart"></i><i id="pathpart"></i>').
+      // issue chromium:110084
+      append('<br/><br/><i id="domainpart" style="font-size: medium !important"></i><i id="pathpart" style="font-size: medium !important"></i>').
       append("<br/><br/><br/><span id='whitelister_dirs'>" + 
              translate('you_can_slide_to_change') + "</span>").
       append('<br/><span id="modifydomain">' + translate('modifydomain') +
@@ -73,8 +74,9 @@ function top_open_whitelist_ui() {
     $("#whitelister_dirs", page).toggle(showDomain || showPath);
 
     
-    $("#domainpart, #pathpart", page).
-      css("fontSize", "medium !important");
+    // issue chromium:110084
+    // $("#domainpart, #pathpart", page).
+    //   css("fontSize", "medium !important");
     $("#pathpart").css("color", "grey");
 
     $("#domainslider", page).
