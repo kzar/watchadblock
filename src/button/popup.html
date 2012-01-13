@@ -17,10 +17,10 @@
 
         <!-- ***************** New release notification **************** -->
 
-        <div id="div_new_release" style="display:none;">
+        <div id="div_new_release" class="initially-hidden">
           <div class="box-wrapper">
             <div class = "box">
-              <div id="new_release_close" style="float:right;"><a class="blue" href="#">x</a></div>
+              <div id="new_release_close" class="float-right"><a class="blue" href="#">x</a></div>
               <div id="newtitle"></div> <!-- popup.js fills this -->
               <div id="newversioninfo" i18n="this_toolbar_button"></div>
             </div>
@@ -31,15 +31,15 @@
         <!-- ************ Standard menu entries *********** -->
 
         <div id="div_status_whitelisted" class="menu-entry">
-          <span style="font-style:italic;" i18n="disabled_on_this_page"></span>
+          <span class="italic" i18n="disabled_on_this_page"></span>
           <a i18n="enable" href="#" class="blue"></a>
         </div>
 
-        <div i18n="status_disabled" id="div_status_disabled" class="menu-entry" style="font-style: italic;">
+        <div i18n="status_disabled" id="div_status_disabled" class="menu-entry" class="italic">
         </div>
 
         <div id="div_status_paused" class="menu-entry">
-          <span i18n="status_paused" style="font-style:italic;"></span>
+          <span i18n="status_paused" class="italic"></span>
           <a i18n="unpause" href="#" class="blue"></a>
         </div>
 
@@ -75,7 +75,7 @@
 
         <div id="div_help_hide">
           <div id="div_help_hide_start" i18n="hide_this_button" class="menu-entry"></div>
-          <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none;">
+          <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" class="initially-hidden">
           </div>
         </div>
 
@@ -84,14 +84,13 @@
       </div> <!-- menu-items-->
 
       <div id="div_pay">
-        <div style="margin: 5px 0">
-          <div id="pay_close" style="float:right; display:none;"><a class="blue" href="#">x</a></div>
+        <div id="pay_inner">
+          <div id="pay_close" class="initially-hidden float-right"><a class="blue" href="#">x</a></div>
           <a href="#" class="blue" id="pay_open"
             i18n="did_you_know_this_is_my_full_time_job"></a>
         </div>
 
-        <div id="payment_wrapper" style="display:none; clear:left;">
-          <iframe width="100%" height="100%" frameBorder=0></iframe>
+        <div id="payment_wrapper" class="initially-hidden" class="clear-left">
         </div>
       </div>
     </div> <! -- wrapper -->
