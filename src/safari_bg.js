@@ -117,31 +117,55 @@ if (!LEGACY_SAFARI) {
       }
     })();
 
-    function createMenu(browserWindow) {
+    function createMenu(toolbarItem) {
       var menu = safari.extension.createMenu(nextMenuId());
 
-      windowByMenuId[menu.identifier] = browserWindow;
+      windowByMenuId[menu.identifier] = toolbarItem.browserWindow;
 
       // Attach the menu to the toolbar item
-      for (var i = 0; i < safari.extension.toolbarItems.length; i++) {
-        var item = safari.extension.toolbarItems[i];
-        if (item.browserWindow === browserWindow) {
-          item.menu = menu;
-          item.toolTip = "AdBlock"; // change the tooltop on Safari 5.1+
-          item.command = null; // otherwise Safari will only show the menu on long-press
+      toolbarItem.menu = menu;
+      toolbarItem.toolTip = "AdBlock"; // change the tooltop on Safari 5.1+
+      toolbarItem.command = null; // otherwise Safari will only show the menu on long-press
+    }
+
+    function removeMenu(menu) {
+      delete windowByMenuId[menu.identifier];
+      safari.extension.removeMenu(menu.identifier);
+    }
+
+    safari.application.addEventListener("validate", function(event) {
+      if (event.target instanceof SafariExtensionToolbarItem) {
+        var item = event.target;
+
+        if (item.browserWindow && !item.menu) {
+          // Check if only this item lacks a menu (which means user just opened a new window) or there are multiple items
+          // lacking a menu (which only happens on browser startup or when the user removes AdBlock toolbar item and later
+          // drags it back).
+          var uninitializedItems = 0;
+          for (var i = 0; i < safari.extension.toolbarItems.length; i++) {
+            var item = safari.extension.toolbarItems[i];
+            if (!item.menu) {
+              uninitializedItems++;
+            }
+          }
+
+          if (uninitializedItems > 1) {
+            // Browser startup or toolbar item added back to the toolbar. To prevent memory leaks in the second case,
+            // we need to remove all previously created menus and window mappings (as they are now invalid).
+            var menus = safari.extension.menus;
+            for (var i = 0; i < menus.length; i++) {
+              removeMenu(menus[i]);
+            }
+
+            // And now recreate the menus for toolbar items in all windows.
+            for (var i = 0; i < safari.extension.toolbarItems.length; i++) {
+              createMenu(safari.extension.toolbarItems[i]);
+            }
+          } else {
+            // New window opened, just create a menu for this window's item.
+            createMenu(item);
+          }
         }
-      }
-    }
-
-    // Create menus for each open window.
-    for (var i = 0; i < safari.application.browserWindows.length; i++) {
-      createMenu(safari.application.browserWindows[i]);
-    }
-
-    // Create menus for new windows.
-    safari.application.addEventListener("open", function(event) {
-      if (event.target instanceof SafariBrowserWindow) { // don't handle tabs
-        createMenu(event.target);
       }
     }, true);
 
@@ -157,8 +181,7 @@ if (!LEGACY_SAFARI) {
             item.menu = null;
 
             // Remove the menu and window mapping.
-            delete windowByMenuId[menu.identifier];
-            safari.extension.removeMenu(menu.identifier);
+            removeMenu(menu);
             break;
           }
         }
