@@ -1,3 +1,7 @@
+// TODO: Reorganize all this now that it's in its own .js file.
+// e.g. $(function() {}) calls can be consolidated, and comments
+// providing context would be useful.
+
 var BG = chrome.extension.getBackgroundPage();
 
 // Set menu entries appropriately for the selected tab.
@@ -169,16 +173,6 @@ $("#div_options").click(function() {
 
 $("#div_help_hide").click(function() {
   $("#help_hide_explanation").slideDown();
-});
-
-
-// support_sentence_holder is complicated, so we do l10n manually.
-$(function() {
-  var s = $("#support_sentence_holder");
-  s.html(translate("support_sentence"));
-  var s_link = s.find("a");
-  $("#pay_open").text(s_link.text()).replaceAll(s_link);
-  $("#plusone_button").replaceAll(s.find("img"));
 });
 
 
