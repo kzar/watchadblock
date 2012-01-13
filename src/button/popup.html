@@ -14,13 +14,6 @@
       <div id="menu-items">
 
         <div id="titletext"><span>AdBlock</span></div>
-        <script>
-          $("#titletext span").click(function() {
-            var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
-            BG.openTab(url);
-          });
-        </script>
-
 
         <!-- ***************** New release notification **************** -->
 
@@ -28,34 +21,12 @@
           <div class="box-wrapper">
             <div class = "box">
               <div id="new_release_close" style="float:right;"><a class="blue" href="#">x</a></div>
-              <div id="newtitle"></div>
-              <script>$("#newtitle").text(translate("newtitle", ["2.3.0"]));</script>
+              <div id="newtitle"></div> <!-- popup.js fills this -->
               <div id="newversioninfo" i18n="this_toolbar_button"></div>
             </div>
           </div>
           <div class="separator"></div>
         </div>
-        <script>
-          $(function() {
-            var info_ver = chrome.extension.getBackgroundPage().version_to_notify;
-            // If there was badge text set, informing the user of a new
-            // version, clear it.
-            chrome.browserAction.setBadgeText({text: ''});
-            chrome.browserAction.setTitle({title: ''});
-            storage_set('saw_badge_version', info_ver);
-
-            if (storage_get('saw_badge_info_version') != info_ver) {
-              // If the user hasn't dismissed the latest notice, show it.
-              $("#div_new_release").show();
-
-              $("#new_release_close").click(function() {
-                $("#div_new_release").slideUp();
-                storage_set('saw_badge_info_version', info_ver);
-              });
-            }
-          });
-        </script>
-
 
         <!-- ************ Standard menu entries *********** -->
 
@@ -63,21 +34,6 @@
           <span style="font-style:italic;" i18n="disabled_on_this_page"></span>
           <a i18n="enable" href="#" class="blue"></a>
         </div>
-        <script>
-          $("#div_status_whitelisted a").click(function() {
-            BG.getCurrentTabInfo(function(info) {
-              if (BG.try_to_unwhitelist(info.tab.url)) {
-                // Reload the tab
-                chrome.tabs.update(info.tab.id, {url: info.tab.url});
-                window.close();
-              } else {
-                $("#div_status_whitelisted").
-                  replaceWith(translate("disabled_by_filter_lists"));
-              }
-            });
-          });
-        </script>
-
 
         <div i18n="status_disabled" id="div_status_disabled" class="menu-entry" style="font-style: italic;">
         </div>
@@ -86,104 +42,28 @@
           <span i18n="status_paused" style="font-style:italic;"></span>
           <a i18n="unpause" href="#" class="blue"></a>
         </div>
-        <script>
-          $(function() {
-            $("#div_status_paused a").click(function() {
-              BG.sessionStorage.removeItem('adblock_is_paused');
-              BG.handlerBehaviorChanged();
-              BG.updateButtonUIAndContextMenus();
-              window.close();
-            });
-          });
-        </script>
-
-
 
         <div id="separator0" class="separator"></div>
 
         <div i18n="pause_adblock" id="div_pause_adblock" class="menu-entry">
         </div>
-        <script>
-          $("#div_pause_adblock").click(function() {
-            BG.sessionStorage.setItem('adblock_is_paused', true);
-            BG.updateButtonUIAndContextMenus();
-            chrome.contextMenus.removeAll();
-            window.close();
-          });
-        </script>
-
 
         <div i18n="block_an_ad_on_this_page" id="div_blacklist" class="menu-entry">
         </div>
-        <script>
-          $("#div_blacklist").click(function() {
-            BG.getCurrentTabInfo(function(info) {
-              BG.emit_page_broadcast(
-                {fn:'top_open_blacklist_ui', options: { nothing_clicked: true }},
-                { tab: info.tab } // fake sender to determine target page
-              );
-              window.close();
-            });
-          });
-        </script>
-
 
         <div i18n="dont_run_on_this_page" id="div_whitelist_page" class="menu-entry">
         </div>
-        <script>
-          $("#div_whitelist_page").click(function() {
-            BG.getCurrentTabInfo(function(info) {
-              BG.create_page_whitelist_filter(info.tab.url);
-              // Reload the tab
-              chrome.tabs.update(info.tab.id, {url: info.tab.url});
-              window.close();
-            });
-          });
-        </script>
-
-
 
         <div id="div_whitelist" class="menu-entry" i18n="dont_run_on_pages_on_domain">
         </div>
-        <script>
-          $("#div_whitelist").click(function() {
-            BG.getCurrentTabInfo(function(info) {
-              BG.emit_page_broadcast(
-                {fn:'top_open_whitelist_ui', options:{}},
-                { tab: info.tab } // fake sender to determine target page
-              );
-              window.close();
-            });
-          });
-        </script>
         
         <div id="separator3" class="separator"></div>
 
         <div id="div_show_resourcelist" class="menu-entry" i18n="show_resourcelist">
         </div>
-        <script>
-          $(function() {
-            $("#div_show_resourcelist").click(function() {
-              BG.getCurrentTabInfo(function(info) {
-                BG.launch_resourceblocker(info.tab.id);
-              });
-            });
-          });
-        </script>
         
         <div id="div_report_an_ad" class="menu-entry" i18n="report_ad_on_page">
         </div>
-        <script>
-          $(function() {
-            $("#div_report_an_ad").click(function() {
-              BG.getCurrentTabInfo(function(info) {
-                var url = "pages/adreport.html?url=" + escape(info.tab.url);
-                BG.openTab(url, true);
-              });
-            });
-          });
-        </script>
-
 
         <div id="separator1" class="separator"></div>
 
@@ -192,22 +72,12 @@
 
         <div i18n="options" id="div_options" class="menu-entry">
         </div>
-        <script>
-          $("#div_options").click(function() {
-            BG.openTab("options/index.html");
-          });
-        </script>
 
         <div id="div_help_hide">
           <div id="div_help_hide_start" i18n="hide_this_button" class="menu-entry"></div>
           <div id="help_hide_explanation" class="info" i18n="chromebutton_how_to_hide" style="display:none;">
           </div>
         </div>
-        <script>
-          $("#div_help_hide").click(function() {
-            $("#help_hide_explanation").slideDown();
-          });
-        </script>
 
         <div class="separator" id="separator2"></div>
 
@@ -234,60 +104,13 @@
           </span>
           <!-- This is injected into #support_sentence_holder above -->
           <a href="#" class="blue" id="pay_open"></a>
-          <script>
-            // support_sentence_holder is complicated, so we do l10n manually.
-            $(function() {
-              var s = $("#support_sentence_holder");
-              s.html(translate("support_sentence"));
-              var s_link = s.find("a");
-              $("#pay_open").text(s_link.text()).replaceAll(s_link);
-              $("#plusone_button").replaceAll(s.find("img"));
-            });
-          </script>
         </div>
 
         <div id="payment_wrapper" style="display:none; clear:left;">
           <iframe width="100%" height="100%" frameBorder=0></iframe>
         </div>
       </div>
-      <script>
-        $(function() {
-          var state = "initial";
-          var bodysize = { width: $("body").width(), height: $("body").height() };
-          var userId = storage_get("userid");
-          var payHref = "http://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
-          $("#pay_open").click(function() {
-            if (state == "initial") {
-              $("#payment_wrapper iframe").attr("src", payHref);
-            }
-            if (state == "open")
-              return;
-            state = "open";
-            $("#pay_close").show();
-            $("body").animate({width: 780, height: 490}, {queue:false});
-            $("#menu-items").slideUp();
-            $("#payment_wrapper").
-              width(0).height(0).show().
-              animate({width: 730, height: 450}, {queue:false});
-          });
-          $("#pay_close").click(function() {
-            if (state != "open")
-              return;
-            state = "closed";
-            $("body").animate(bodysize, {queue:false});
-            $("#menu-items").slideDown();
-            $("#payment_wrapper").animate({width: 0, height: 0}, {queue:false});
-            $("#pay_close").hide();
-            $("#payment_wrapper").slideUp();
-          });
-        });
-      </script>
     </div> <! -- wrapper -->
 
-    <script>
-      $(function() {
-        localizePage();
-      });
-    </script>
   </body>
 </html>
