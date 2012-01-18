@@ -454,13 +454,13 @@ $(function() {
       }
     }
     if (qps.url) {
-      url = unescape(qps.url);
+      url = qps.url;
       validateUrl(url);
 
       domain = parseUri(url).hostname;
     }
     if (qps.itemType) {
-      var itemUrl = unescape(qps.itemUrl);
+      var itemUrl = qps.itemUrl;
       validateUrl(itemUrl);
       validateItemType(qps.itemType);
 
