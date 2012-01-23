@@ -37,7 +37,7 @@ var elementTracker = {
 
     var myFrame = document.location.href.replace(/#.*$/, "");
     if (request.frameUrl != myFrame) {
-      log("My frame is", myFrame, "so I'm ignoring block results for", request.frameUrl);
+      log('[DEBUG]', "My frame is", myFrame, "so I'm ignoring block results for", request.frameUrl);
       return;
     }
 
