@@ -25,8 +25,6 @@ function load_options() {
       show();
   });
 }
-var optionalSettings = {};
-load_options();
 
 function displayVersionNumber() {
   try {
@@ -42,35 +40,28 @@ function displayVersionNumber() {
   } catch (ex) {} // silently fail
 }
 
-$(function() {
-  displayVersionNumber();
-
-  if (navigator.language.substring(0, 2) != "en")
-    $("#translation_credits").text(translate("translator_credit"));
-
-  //translation
-  localizePage();
-});
-
-
-
-
-$(function() {
-  if (SAFARI && LEGACY_SAFARI) {
-    $("#safari50_updatenotice").show();
-  }
-
-  $('#paymentlink').click(function() {
-    BGcall("storage_get", "userid", function(userId) {
-      var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
-      if (SAFARI) {
-        // Safari target=_blank opens a new window by default, so we have to force its
-        // height to be correct.
-        window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
-      } else {
-        BGcall("openTab", href);
-      }
-    });
-    return false;
+$('#paymentlink').click(function() {
+  BGcall("storage_get", "userid", function(userId) {
+    var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
+    if (SAFARI) {
+      // Safari target=_blank opens a new window by default, so we have to force its
+      // height to be correct.
+      window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
+    } else {
+      BGcall("openTab", href);
+    }
   });
+  return false;
 });
+
+if (navigator.language.substring(0, 2) != "en")
+  $("#translation_credits").text(translate("translator_credit"));
+
+if (SAFARI && LEGACY_SAFARI) {
+  $("#safari50_updatenotice").show();
+}
+
+var optionalSettings = {};
+load_options();
+displayVersionNumber();
+localizePage();

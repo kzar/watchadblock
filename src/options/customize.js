@@ -190,11 +190,8 @@ $(function() {
   BGcall("get_custom_filters_text", function(text) {
     $("#txtFiltersAdvanced").val(text);
   });
-});
 
 
-
-$(function() {
   $("#btnCleanUp").click(function() {
     //Don't save immediately, first allow them to review changes
     if ($("#btnEditAdvancedFilters").is(":visible"))

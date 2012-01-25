@@ -1,21 +1,16 @@
+// Check or uncheck each loaded DOM option checkbox according to the 
+// user's saved settings.
 $(function() {
-  // Check or uncheck each loaded DOM option checkbox according to the 
-  // user's saved settings.
-  function load_options() {
-    // Check or uncheck each option.
-    for (var name in optionalSettings) {
-      $("#enable_" + name).
-        attr("checked", optionalSettings[name]);
-    }
-    $("input.feature:checkbox").change(function() {
-      var is_enabled = $(this).is(':checked');
-      var name = this.id.substring(7); // TODO: hack
-      BGcall("set_setting", name, is_enabled);
-    });
+  for (var name in optionalSettings) {
+    $("#enable_" + name).
+      attr("checked", optionalSettings[name]);
   }
-  load_options();
+  $("input.feature:checkbox").change(function() {
+    var is_enabled = $(this).is(':checked');
+    var name = this.id.substring(7); // TODO: hack
+    BGcall("set_setting", name, is_enabled);
+  });
 });
-
 
 
 // TODO: This is a dumb race condition, and still has a bug where
@@ -31,16 +26,10 @@ $("#enable_show_google_search_text_ads").change(function() {
 });
 
 
-
-
-$(function() {
-  $("#webrequest_warning").toggle($("#enable_use_webrequest_blocking").is(":checked"));
-  $("#enable_use_webrequest_blocking").click(function() {
-    $("#webrequest_warning").toggle(this.checked);
-  });
+$("#webrequest_warning").toggle($("#enable_use_webrequest_blocking").is(":checked"));
+$("#enable_use_webrequest_blocking").click(function() {
+  $("#webrequest_warning").toggle(this.checked);
 });
-
-
 
 
 $("#enable_show_advanced_options").change(function() {

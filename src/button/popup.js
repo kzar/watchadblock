@@ -34,23 +34,9 @@ function customize_for_this_tab() {
   });
 }
 
-$(function() {
-  customize_for_this_tab();
-});
+function maybe_show_badge() {
+  $("#newtitle").text(translate("newtitle", ["2.3.0"]));
 
-
-
-$("#titletext span").click(function() {
-  var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
-  BG.openTab(url);
-});
-
-
-$("#newtitle").text(translate("newtitle", ["2.3.0"]));
-
-
-
-$(function() {
   var info_ver = chrome.extension.getBackgroundPage().version_to_notify;
   // If there was badge text set, informing the user of a new
   // version, clear it.
@@ -67,123 +53,99 @@ $(function() {
       storage_set('saw_badge_info_version', info_ver);
     });
   }
-});
+}
 
-
-
-$("#div_status_whitelisted a").click(function() {
-  BG.getCurrentTabInfo(function(info) {
-    if (BG.try_to_unwhitelist(info.tab.url)) {
-      // Reload the tab
-      chrome.tabs.update(info.tab.id, {url: info.tab.url});
-      window.close();
-    } else {
-      $("#div_status_whitelisted").
-        replaceWith(translate("disabled_by_filter_lists"));
-    }
-  });
-});
-
-
-
-
+// Click handlers
 $(function() {
+
+  $("#titletext span").click(function() {
+    var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
+    BG.openTab(url);
+  });
+
+  $("#div_status_whitelisted a").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      if (BG.try_to_unwhitelist(info.tab.url)) {
+        // Reload the tab
+        chrome.tabs.update(info.tab.id, {url: info.tab.url});
+        window.close();
+      } else {
+        $("#div_status_whitelisted").
+        replaceWith(translate("disabled_by_filter_lists"));
+      }
+    });
+  });
+
   $("#div_status_paused a").click(function() {
     BG.sessionStorage.removeItem('adblock_is_paused');
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
     window.close();
   });
-});
 
-
-
-
-$("#div_pause_adblock").click(function() {
-  BG.sessionStorage.setItem('adblock_is_paused', true);
-  BG.updateButtonUIAndContextMenus();
-  chrome.contextMenus.removeAll();
-  window.close();
-});
-
-
-
-$("#div_blacklist").click(function() {
-  BG.getCurrentTabInfo(function(info) {
-    BG.emit_page_broadcast(
-      {fn:'top_open_blacklist_ui', options: { nothing_clicked: true }},
-      { tab: info.tab } // fake sender to determine target page
-    );
+  $("#div_pause_adblock").click(function() {
+    BG.sessionStorage.setItem('adblock_is_paused', true);
+    BG.updateButtonUIAndContextMenus();
+    chrome.contextMenus.removeAll();
     window.close();
   });
-});
 
-
-
-
-$("#div_whitelist_page").click(function() {
-  BG.getCurrentTabInfo(function(info) {
-    BG.create_page_whitelist_filter(info.tab.url);
-    // Reload the tab
-    chrome.tabs.update(info.tab.id, {url: info.tab.url});
-    window.close();
+  $("#div_blacklist").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      BG.emit_page_broadcast(
+        {fn:'top_open_blacklist_ui', options: { nothing_clicked: true }},
+        { tab: info.tab } // fake sender to determine target page
+      );
+      window.close();
+    });
   });
-});
 
-
-
-
-$("#div_whitelist").click(function() {
-  BG.getCurrentTabInfo(function(info) {
-    BG.emit_page_broadcast(
-      {fn:'top_open_whitelist_ui', options:{}},
-      { tab: info.tab } // fake sender to determine target page
-    );
-    window.close();
+  $("#div_whitelist_page").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      BG.create_page_whitelist_filter(info.tab.url);
+      // Reload the tab
+      chrome.tabs.update(info.tab.id, {url: info.tab.url});
+      window.close();
+    });
   });
-});
 
+  $("#div_whitelist").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      BG.emit_page_broadcast(
+        {fn:'top_open_whitelist_ui', options:{}},
+        { tab: info.tab } // fake sender to determine target page
+      );
+      window.close();
+    });
+  });
 
-
-
-$(function() {
   $("#div_show_resourcelist").click(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.launch_resourceblocker(info.tab.id);
     });
   });
-});
 
 
-
-
-$(function() {
   $("#div_report_an_ad").click(function() {
     BG.getCurrentTabInfo(function(info) {
       var url = "pages/adreport.html?url=" + escape(info.tab.url);
       BG.openTab(url, true);
     });
   });
+
+
+  $("#div_options").click(function() {
+    BG.openTab("options/index.html");
+  });
+
+
+  $("#div_help_hide").click(function() {
+    $("#help_hide_explanation").slideDown();
+  });
 });
 
 
-
-
-$("#div_options").click(function() {
-  BG.openTab("options/index.html");
-});
-
-
-
-$("#div_help_hide").click(function() {
-  $("#help_hide_explanation").slideDown();
-});
-
-
-
-
-
-
+// Payment wrapper open/close click handlers
 $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
@@ -215,8 +177,8 @@ $(function() {
   });
 });
 
-
-
 $(function() {
+  customize_for_this_tab();
+  maybe_show_badge();
   localizePage();
 });
