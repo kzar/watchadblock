@@ -1,3 +1,6 @@
+// Used for finding evidence for potential caching issues on extension updates
+test_new_function = function() {};
+
 // Run a function on the background page.
 // Inputs (positional):
 //   first, a string - the name of the function to call

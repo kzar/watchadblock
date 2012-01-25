@@ -35,6 +35,15 @@
     <script src="idlehandler.js"></script>
     <script>
 
+    // Log if test_new_function (from functions.js) is undefined. If so, it 
+    // means Chrome must be caching content scripts at rare conditions.
+    // Do this here, so it'll log every time the user starts Chrome. That way, 
+    // we'd also know if the issue disappears after a few restarts (as it would
+    // in case of caching) or if it persists forever (no good explanation).
+    if (typeof test_new_function === 'undefined') {
+      try { STATS.msg("test_new_function was not defined"); } catch(ex) {}
+    }
+
       // OPTIONAL SETTINGS
 
       function Settings() {
