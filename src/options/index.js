@@ -7,12 +7,19 @@
               spinner: "",
               cache: true,
               cookie: {},
-              load: function() {
+              load: function(event, ui) {
                 //translation
                 localizePage();
 
                 $(".advanced").toggle(optionalSettings.show_advanced_options);
                 $(".chrome-only").toggle(!SAFARI);
+
+                // Must load tab .js here: CSP won't let injected html inject <script>
+                var scriptToLoad = ui.tab.dataset.script; // see index.html:data-script
+                // CSP blocks eval, which $().append(scriptTag) uses
+                var s = document.createElement("script");
+                s.src = scriptToLoad;
+                document.body.appendChild(s);
               },
             }).
             show();
