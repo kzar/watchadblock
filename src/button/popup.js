@@ -181,24 +181,6 @@
 
 
 
-              (function() {
-                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                po.src = 'https://apis.google.com/js/plusone.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-              })();
-
-
-
-
-            // support_sentence_holder is complicated, so we do l10n manually.
-            $(function() {
-              var s = $("#support_sentence_holder");
-              s.html(translate("support_sentence"));
-              var s_link = s.find("a");
-              $("#pay_open").text(s_link.text()).replaceAll(s_link);
-              $("#plusone_button").replaceAll(s.find("img"));
-            });
-
 
 
 
