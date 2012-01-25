@@ -307,13 +307,8 @@
       function finally_it_has_loaded_its_stuff() {
         if (domaindata.settings.debug_logging)
           $(".onlyifdebug").show();
-        // Create the table of resources and make it sortable
+        // Create the table of resources
         generateTable();
-        $("#resourceslist").tablesorter({
-          headers: { 0: {sorter:false}, 4: {sorter:false}},
-          cancelSelection: true,
-          sortList: [[3,0],[1,0],[3,0]]
-        });
         $("#resourceslist tbody tr").mouseenter(function() {
           if ($(this).hasClass('selected'))
             return;
