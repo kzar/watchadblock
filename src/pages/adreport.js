@@ -96,7 +96,7 @@ function generateReportURL() {
 
 
 
-// STEP 1
+// STEP 1: update filters
 
 //Updating the users filters
 $("#UpdateFilters").click(function() {
@@ -115,7 +115,7 @@ $("#step1_yes").click(function() {
 
 
 
-// STEP 2
+// STEP 2: language
 
 //if the user clicks an item
 var contact = "";
@@ -140,7 +140,7 @@ $("#step2_lang").change(function() {
 });
 
 
-// STEP 3
+// STEP 3: also in firefox
 
 //If the user clicks a radio button
 $("#step3_yes").click(function() {
@@ -161,7 +161,7 @@ $("#step3_wontcheck").click(function() {
 
 
 
-// STEP 4
+// STEP 4: video/flash ad
 
 //If the user clicks a radio button
 $("#step4_yes").click(function() {
