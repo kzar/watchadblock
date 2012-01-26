@@ -96,6 +96,7 @@ function generateReportURL() {
 
 
 
+// STEP 1
 
 //Updating the users filters
 $("#UpdateFilters").click(function() {
@@ -114,6 +115,7 @@ $("#step1_yes").click(function() {
 
 
 
+// STEP 2
 
 //if the user clicks an item
 var contact = "";
@@ -138,6 +140,7 @@ $("#step2_lang").change(function() {
 });
 
 
+// STEP 3
 
 //If the user clicks a radio button
 $("#step3_yes").click(function() {
@@ -158,6 +161,7 @@ $("#step3_wontcheck").click(function() {
 
 
 
+// STEP 4
 
 //If the user clicks a radio button
 $("#step4_yes").click(function() {
