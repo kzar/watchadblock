@@ -153,7 +153,12 @@ $(function() {
   var payHref = "http://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
   $("#pay_open").click(function() {
     if (state == "initial") {
-      $("#payment_wrapper iframe").attr("src", payHref);
+      $("<iframe>", {
+        frameBorder: 0,
+        width: "100%",
+        height: "100%",
+        src: payHref
+      }).appendTo("#payment_wrapper");
     }
     if (state == "open")
       return;
