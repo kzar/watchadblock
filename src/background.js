@@ -243,8 +243,7 @@ if (typeof test_new_function === 'undefined') {
       _settings.set('use_webrequest_blocking', false);
       try {
         chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
-        // chromium:107255
-        // chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
+        chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
       }
@@ -269,8 +268,7 @@ if (typeof test_new_function === 'undefined') {
       _settings.set('use_webrequest_blocking', true);
       try {
         chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
-        // chromium:107255
-        // chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
         abortNewStyleBlocking(ex.stack);
