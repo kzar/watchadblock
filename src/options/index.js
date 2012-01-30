@@ -15,11 +15,13 @@ function load_options() {
           $(".chrome-only").toggle(!SAFARI);
 
           // Must load tab .js here: CSP won't let injected html inject <script>
-          var scriptToLoad = ui.tab.dataset.script; // see index.html:data-script
-          // CSP blocks eval, which $().append(scriptTag) uses
-          var s = document.createElement("script");
-          s.src = scriptToLoad;
-          document.body.appendChild(s);
+          // see index.html:data-scripts
+          ui.tab.dataset.scripts.split(' ').forEach(function(scriptToLoad) {
+            // CSP blocks eval, which $().append(scriptTag) uses
+            var s = document.createElement("script");
+            s.src = scriptToLoad;
+            document.body.appendChild(s);
+          });
         },
       }).
       show();
