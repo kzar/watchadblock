@@ -244,22 +244,22 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
       }, 500);
     }
   }
-  $.ajax({
-    url: url,
-    cache: false,
+  
+  ajax(url, {
     headers: {
       "Accept": "text/plain",
       "If-Modified-Since": this._subscriptions[id].last_modified || undefined
     },
-    success: function(text, status, xhr) {
+    onSuccess: function(xhr) {
       // In case the subscription disappeared while we were out
       if (!that._subscriptions[id] || 
           !that._subscriptions[id].subscribed)
         return;
 
+      var text = xhr.responseText;
       // Sometimes text is "". Happens sometimes.  Weird, I know.
       // Every legit list starts with a comment.
-      if (status == "notmodified") {
+      if (xhr.status === 304) {
         log("List not modified " + url);
         that._updateSubscriptionText(id, that._subscriptions[id].text);
         that._onSubscriptionChange(true);
@@ -272,7 +272,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
         onError();
       }
     },
-    error: function() {
+    onError: function() {
       if (that._subscriptions[id])
         onError();
       log("Error fetching " + url);

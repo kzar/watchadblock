@@ -20,8 +20,11 @@ if (typeof test_new_function === 'undefined') {
     // Opt in Chrome 17 users to webRequest.
     if (chrome.webRequest)
       defaults.use_webrequest_blocking = true;
+    this._data = {};
     var settings = storage_get('settings') || {};
-    this._data = $.extend(defaults, settings);
+    for (var key in defaults) {
+      this._data[key] = (settings[key] !== undefined ? settings[key] : defaults[key]);
+    }
   };
   Settings.prototype = {
     set: function(name, is_enabled) {
@@ -859,5 +862,13 @@ if (typeof test_new_function === 'undefined') {
   }
 
   if (SAFARI) {
-    $.getScript("safari_bg.js");
+    ajax('safari_bg.js', {
+      allowCache: true,
+      headers: {
+        Accept: "text/javascript, application/javascript, */*; q=0.01"
+      },
+      onSuccess: function(xhr) {
+        eval(xhr.responseText);
+      }
+    });
   }

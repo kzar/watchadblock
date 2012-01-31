@@ -115,3 +115,61 @@ storage_set = function(key, value) {
     }
   }
 }
+
+// Perform an ajax (XHR) call
+// Inputs:
+//   url [string]: the URL to contact
+//   options [optional object]: any further options for the ajax call
+//     .headers [key:value object]: containing the headers for the request
+//     .method ["POST"|"GET"]: the method to be used (default: 'GET')
+//     .async [boolean]: false if the call should be synchronous (default: true)
+//     .allowCaching [boolean]: true if a cached version may be used (default: false)
+//     .data [key:value object]: (POST only) any data that should be send to the server
+//     .onSuccess(xhr) [function]: callback function if the XHR succeeds
+//        xhr is the xhr object, which can be used to get the responseText
+//     .onError(xhr, ex) [function]: callback function if the XHR fails
+//        xhr is the xhr object
+//        ex is the exception thrown (if any)
+
+ajax = function(url, options) {
+  options = options || {};
+  options.headers = options.headers || {};
+  options.onError = options.onError || function() {};
+  options.onSuccess = options.onSuccess || function() {};
+  var data = null;
+
+  if (!options.allowCaching && options.method !== "POST") {
+    // Use a trick from jQuery: to prevent caching, append a unique querystring
+    // parameter, which will not exist in the cache yet.
+    url = url + ( /\?/.test(url) ? "&" : "?") + "_=" + Date.now();
+  }
+
+  var xhr = new XMLHttpRequest();
+  xhr.open(options.method || "GET", url, options.async || true);
+
+  for (header in options.headers) {
+    if (options.headers[header] !== undefined)
+      xhr.setRequestHeader(header, options.headers[header]);
+  }
+
+  if (options.data && options.method === "POST") {
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    for (key in options.data)
+      data = (data ? data + "&" : "") + key + '=' + options.data[key];
+  }
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)
+        options.onSuccess(xhr);
+      else
+        options.onError(xhr, new Error('Received status code ' + xhr.status)); 
+    }
+  }
+
+  try {
+    xhr.send(data);
+  } catch (ex) {
+    options.onError(xhr, ex);
+  }
+}

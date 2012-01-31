@@ -13,11 +13,11 @@ emit_page_broadcast = (function() {
 
   // The emit_page_broadcast() function
   var theFunction = function(request, sender) {
-    $.each(broadcast_ports, function(i, port) {
-        // issue 5416, fixed in Chrome and probably never happens in
-        // Safari: port.sender.tab could be null for an unknown reason.
-        if (!port.sender.tab)
-          return;
+    broadcast_ports.forEach(function(port) {
+      // issue 5416, fixed in Chrome and probably never happens in
+      // Safari: port.sender.tab could be null for an unknown reason.
+      if (!port.sender.tab)
+        return;
       if (port.sender.tab.id == sender.tab.id)
         port.postMessage(request);
     });

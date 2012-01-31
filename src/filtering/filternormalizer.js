@@ -63,7 +63,7 @@ var FilterNormalizer = {
       var parts = filter.split('##');
       FilterNormalizer._checkCssSelector(parts[1]);
 
-      if ($(parts[1] + ',html').length == 0)
+      if (document.querySelectorAll(parts[1] + ',html').length === 0)
         throw "Caused other selector filters to fail";
 
       // On a few sites, we have to ignore [style] rules.

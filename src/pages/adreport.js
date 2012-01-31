@@ -194,11 +194,12 @@ try {
       if (SAFARI)
         checkURL = "http://safariadblock.com/update.plist";
       //fetch the version check file
-      $.ajax({
-        cache: false,
-        datatype: (SAFARI ? "text" : "xml"),
-        url: checkURL,
-        success: function(response) {
+      ajax(checkURL, {
+        headers: {
+          Accept: SAFARI ? "text/plain" : "application/xml, text/xml"
+        },
+        onSuccess: function(xhr) {
+          var response = xhr.responseText;
           var updateURL;
           if (!SAFARI) {
             updateURL = $("updatecheck[status='ok'][codebase]", response).attr('codebase');

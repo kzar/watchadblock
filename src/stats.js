@@ -67,11 +67,15 @@ STATS = (function() {
       data.installed_at = installed_at;
     // end temp
 
-    $.post(stats_url, data, function(response) {
-      // TODO temp until most installed_at users have done this.  Installed
-      // 6/2011.  Delete the other installed_at-related TODO temps in here
-      // when you delete this.
-      delete localStorage.installed_at;
+    ajax(stats_url, {
+      method: "POST",
+      data: data,
+      onSuccess: function(response) {
+        // TODO temp until most installed_at users have done this.  Installed
+        // 6/2011.  Delete the other installed_at-related TODO temps in here
+        // when you delete this.
+        delete localStorage.installed_at;
+      }
     });
   };
 
@@ -137,7 +141,10 @@ STATS = (function() {
         m: message,
         v: version
       };
-      $.post(stats_url, data);
+      ajax(stats_url, {
+        method: "POST",
+        data: data
+      });
     }
   };
 
