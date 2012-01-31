@@ -130,6 +130,7 @@ storage_set = function(key, value) {
 //     .onError(xhr, ex) [function]: callback function if the XHR fails
 //        xhr is the xhr object
 //        ex is the exception thrown (if any)
+// Returns: the xhr object
 
 ajax = function(url, options) {
   options = options || {};
@@ -145,7 +146,7 @@ ajax = function(url, options) {
   }
 
   var xhr = new XMLHttpRequest();
-  xhr.open(options.method || "GET", url, options.async || true);
+  xhr.open(options.method || "GET", url, options.async === undefined ? true : options.async);
 
   for (header in options.headers) {
     if (options.headers[header] !== undefined)
@@ -160,7 +161,12 @@ ajax = function(url, options) {
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)
+      // http status code 200-299: success
+      // http status code 304: file was not modified
+      // http status code 0: fetching a local file returns no status code.
+      //                     assume success if it does have a responseText
+      if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 ||
+          (!xhr.status && xhr.responseText))
         options.onSuccess(xhr);
       else
         options.onError(xhr, new Error('Received status code ' + xhr.status)); 
@@ -172,4 +178,5 @@ ajax = function(url, options) {
   } catch (ex) {
     options.onError(xhr, ex);
   }
+  return xhr;
 }

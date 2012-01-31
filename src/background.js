@@ -583,9 +583,10 @@ if (typeof test_new_function === 'undefined') {
   // Returns: the content of the file.
   readfile = function(file) {
     // A bug in jquery prevents local files from being read, so use XHR.
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", chrome.extension.getURL(file), false);
-    xhr.send();
+    xhr = ajax(file, {
+      async: false,
+      allowCaching: true,
+    });
     return xhr.responseText;
   };
 
@@ -863,10 +864,7 @@ if (typeof test_new_function === 'undefined') {
 
   if (SAFARI) {
     ajax('safari_bg.js', {
-      allowCache: true,
-      headers: {
-        Accept: "text/javascript, application/javascript, */*; q=0.01"
-      },
+      allowCaching: true,
       onSuccess: function(xhr) {
         eval(xhr.responseText);
       }
