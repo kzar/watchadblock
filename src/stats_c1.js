@@ -1,3 +1,6 @@
+// TODO TEMP CACHING TEST
+test_caching_stats_c1 = function() {};
+
 // Allows interaction with the server to track install rate
 // and log messages.
 STATS = (function() {

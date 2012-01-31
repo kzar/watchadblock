@@ -1,3 +1,6 @@
+// TODO TEMP CACHING TEST
+test_caching_background_temp_c1 = function() {};
+
       // TODO temp code to convert Safari from localStorage to settings.
       // Added 11/2011.
       (function() {

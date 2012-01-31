@@ -1,3 +1,6 @@
+// TODO TEMP CACHING TEST
+test_caching_filtering_filteroptions_c1 = function() {};
+
 // The options that can be specified on filters.  The first several options
 // specify the type of a URL request.
 

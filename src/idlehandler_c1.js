@@ -1,3 +1,6 @@
+// TODO TEMP CACHING TEST
+test_caching_idlehandler_c1 = function() {};
+
 // Schedules a function to be executed once when the computer is idle.
 // Call idleHandler.scheduleItem to schedule a function for exection upon idle
 // inputs: theFunction: function to be executed

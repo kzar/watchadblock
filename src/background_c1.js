@@ -1,11 +1,30 @@
-// Log if test_new_function (from functions.js) is undefined. If so, it 
-// means Chrome must be caching content scripts at rare conditions.
-// Do this here, so it'll log every time the user starts Chrome. That way, 
-// we'd also know if the issue disappears after a few restarts (as it would
-// in case of caching) or if it persists forever (no good explanation).
-if (typeof test_new_function === 'undefined') {
-  try { STATS.msg("test_new_function was not defined"); } catch(ex) {}
-}
+// TODO TEMP CACHING TEST
+test_caching_background_c1 = function() {};
+
+// Log which caching test functions are undefined.
+(function() {
+  try {
+    var exists = "";
+
+    // these were defined in files whose names changed
+    exists += (typeof(test_caching_background_c1)          === "undefined" ? "N": "Y");
+    exists += (typeof(test_caching_background_temp_c1)     === "undefined" ? "N": "Y");
+    exists += (typeof(test_caching_filtering_myfilters_c1) === "undefined" ? "N": "Y");
+    exists += (typeof(test_caching_idlehandler_c1)         === "undefined" ? "N": "Y");
+    exists += (typeof(test_caching_stats_c1)               === "undefined" ? "N": "Y");
+
+    exists += " ";
+
+    // these were in files whose names did not change
+    exists += (typeof(test_caching_filtering_filteroptions_c1) === "undefined" ? "N": "Y");
+    exists += (typeof(test_caching_functions_c1)               === "undefined" ? "N": "Y");
+    exists += (typeof(test_caching_port_c1)                    === "undefined" ? "N": "Y");
+
+    if (!/^[Y ]+$/.test(exists))
+      STATS.msg("c1 results: " + exists);
+  }
+  catch (ex) {}
+})();
 
   // OPTIONAL SETTINGS
 

@@ -1,5 +1,5 @@
-// Used for finding evidence for potential caching issues on extension updates
-test_new_function = function() {};
+// TODO TEMP CACHING TEST
+test_caching_functions_c1 = function() {};
 
 // Run a function on the background page.
 // Inputs (positional):

@@ -1,3 +1,6 @@
+// TODO TEMP CACHING TEST
+test_caching_port_c1 = function() {};
+
 // Chrome to Safari port
 // Author: Michael Gundlach (gundlach@gmail.com)
 // License: GPLv3 as part of adblockforchrome.googlecode.com
