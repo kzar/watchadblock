@@ -262,7 +262,8 @@ test_caching_background_c1 = function() {};
       _settings.set('use_webrequest_blocking', false);
       try {
         chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
-        chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
+// issue 6446
+//        chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
       }
@@ -287,7 +288,8 @@ test_caching_background_c1 = function() {};
       _settings.set('use_webrequest_blocking', true);
       try {
         chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+// issue 6446
+//        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
         abortNewStyleBlocking(ex.stack);
