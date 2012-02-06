@@ -7,33 +7,6 @@ GLOBAL_contentScriptData = {
   run_after_data_is_set: function() {},
 }
 
-// If url is relative, convert to absolute.
-function relativeToAbsoluteUrl(url) {
-    // Author: Tom Joseph of AdThwart
-
-    if (!url)
-      return url;
-
-    // If URL is already absolute, don't mess with it
-    if (/^[a-z\-]+\:/.test(url))
-      return url;
-
-    if (url[0] == '/') {
-      // Leading // means only the protocol is missing
-      if (url[1] && url[1] == "/")
-        return document.location.protocol + url;
-
-      // Leading / means absolute path
-      return document.location.protocol + "//" + document.location.host + url;
-    }
-
-    // Remove filename and add relative URL to it
-    var base = document.baseURI.match(/.+\//);
-    if (!base) 
-      return document.baseURI + "/" + url;
-    return base[0] + url;
-}
-
 // Browser-agnostic canLoad function.
 // Returns false if data.url, data.elType, and data.frameDomain together
 // should not be blocked.
