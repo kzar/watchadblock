@@ -147,7 +147,7 @@ function adblock_begin() {
 
     if (data.settings.debug_logging)
       log = function() { 
-        if (arguments[0] != '[DEBUG]') // comment out for verbosity
+        if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
           console.log.apply(console, arguments); 
       };
 

@@ -105,7 +105,7 @@ function adblock_begin_new_style() {
 
     if (data.settings.debug_logging)
       log = function() { 
-        if (arguments[0] != '[DEBUG]') // comment out for verbosity
+        if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
           console.log.apply(console, arguments); 
       };
 

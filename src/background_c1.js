@@ -388,7 +388,7 @@ test_caching_background_c1 = function() {};
     if (name == "debug_logging") {
       if (is_enabled)
         log = function() {
-          if (arguments[0] != '[DEBUG]') // comment out for verbosity
+          if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
             console.log.apply(console, arguments);
         };
       else
@@ -853,7 +853,7 @@ test_caching_background_c1 = function() {};
 
   if (get_settings().debug_logging)
     log = function() {
-      if (arguments[0] != '[DEBUG]') // comment out for verbosity
+      if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]') // comment out for verbosity
         console.log.apply(console, arguments);
     };
 
