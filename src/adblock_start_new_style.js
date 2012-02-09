@@ -28,7 +28,7 @@ var elementTracker = {
     if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
       return;
 
-    elementTracker._store(elType, event.url, 'elements', event.target);
+    elementTracker._store(elType, relativeToAbsoluteUrl(event.url), 'elements', event.target);
   },
 
   onBlockResults: function(request, sender, sendResponse) {
