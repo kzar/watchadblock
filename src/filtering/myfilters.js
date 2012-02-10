@@ -1,6 +1,3 @@
-// TODO TEMP CACHING TEST
-test_caching_filtering_myfilters_c1 = function() {};
-
 // Requires jquery and must be on a page with access to the background page
 
 // MyFilters class manages subscriptions and the FilterSet.
