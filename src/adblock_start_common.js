@@ -31,7 +31,7 @@ function relativeToAbsoluteUrl(url) {
     return url;
 
   // If URL is already absolute, don't mess with it
-  if (/^[a-z\-]+\:/.test(url))
+  if (/^[a-zA-Z\-]+\:/.test(url))
     return url;
 
   if (url[0] == '/') {
