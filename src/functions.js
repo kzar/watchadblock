@@ -1,9 +1,6 @@
 // Set to true to get noisier console.log statements
 VERBOSE_DEBUG = false;
 
-// TODO TEMP CACHING TEST
-test_caching_functions_c1 = function() {};
-
 // Run a function on the background page.
 // Inputs (positional):
 //   first, a string - the name of the function to call
