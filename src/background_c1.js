@@ -250,14 +250,14 @@ test_caching_background_c1 = function() {};
         return { cancel: blocked };
       }
       catch(ex) {
-        abortNewStyleBlocking(ex.stack);
+        logNewStyleBlockingError(ex.stack);
         return { cancel: false };
       }
     }
 
     // Upon error in webRequest API, gracefully degrade to old style
     // Inputs: message: the message explaining the abort
-    abortNewStyleBlocking = function(message) {
+    endNewStyleBlocking = function() {
       GLOBAL_block_style = "old";
       _settings.set('use_webrequest_blocking', false);
       try {
@@ -267,20 +267,10 @@ test_caching_background_c1 = function() {};
       }
       catch(ex) {
       }
-      try {
-        var message = message.
-          split('\n').
-          filter(function(line) { return /chrome-extension:/.test(line) || !/^ *at /.test(line); }).
-          join('\n').
-          replace(/[\(\)]/g, '').
-          replace(/^ *at .*chrome-extension:..[0-9a-z]*(.*) *$/gm, '  $1');
-        console.log("Falling back to old-style blocking.  Reason:");
-        console.log(message);
-        if (message.indexOf("Cannot read property 'onBeforeRequest' of undefined") == -1)
-          try { STATS.msg("webRequest fail: " + message); } catch(ex) {}
-      }
-      catch(ex) {
-      }
+    }
+
+    logNewStyleBlockingError = function(message) {
+      try { STATS.msg("new style blocking error: " + message); } catch(ex) {}
     }
 
     beginNewStyleBlocking = function() {
@@ -292,7 +282,7 @@ test_caching_background_c1 = function() {};
 //        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
-        abortNewStyleBlocking(ex.stack);
+        logNewStyleBlockingError(ex.stack);
       }
     }
 
@@ -396,15 +386,10 @@ test_caching_background_c1 = function() {};
     }
 
     if (!SAFARI && name == "use_webrequest_blocking") {
-      if (is_enabled) {
+      if (is_enabled)
         beginNewStyleBlocking();
-        if (GLOBAL_block_style == "new") // it worked
-          try { STATS.msg("successful opt in to webRequest"); } catch(ex) {}
-      }
-      else {
-        if (GLOBAL_block_style == "new") // it was working and they chose to disable it
-          abortNewStyleBlocking("opted out");
-      }
+      else
+        endNewStyleBlocking();
     }
   }
 
