@@ -1,0 +1,590 @@
+{
+  "buttoncancel": {
+    "message": "Откажи",
+    "description": "Cancel button"
+  },
+  "buttonok": {
+    "message": "Во ред!",
+    "description": "OK button"
+  },
+  "buttonblockit": {
+    "message": "Блокирај!",
+    "description": "Block button"
+  },
+  "buttonedit": {
+    "message": "Уреди",
+    "description": "Edit filter manually button"
+  },
+  "optionstitle": {
+    "message": "AdBlock Опции",
+    "description": "Title for the options page"
+  },
+
+  "sliderexplanation": {
+    "message": "Лизгајте го лизгачот додека рекламата не биде правилно блокирата на страната и блокираниот елемент изгледа корисно.",
+    "description": "Blacklister slider page message"
+  },
+  "slidertitle": {
+    "message": "Чекор 1: Што да се блокира?",
+    "description": "Blacklister slider page title"
+  },
+  "blacklisteroptions1": {
+    "message": "Што мислите, што би било активно во оваа реклама секојпат кога ќе ја посетите оваа страна?",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisternotsure": {
+    "message": "<b>Не сте сигурни?</b> само притиснете на 'Блокирај!' подолу.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
+  },
+  "blacklisterthefilter": {
+    "message": "Филтерот, кој може да се промени на страната со Опции:",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisteroptionstitle": {
+    "message": "Последен чекор: Што го прави ова да биде реклама?",
+    "description": "Blacklister options page title"
+  },
+  "blacklisternofilter": {
+    "message": "Ниеден филтер не е прецизиран!",
+    "description": "Warning if the user hasn't specified a filter"
+  },
+  "blacklistereditfilter": {
+    "message": "Впишете го правилниот филтер подолу и притиснете Во ред",
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
+  },
+  "blacklisterblockedelement": {
+    "message": "Блокиран Елемент:",
+    "description": "Tells the user what the blocked element is on the slider page"
+  },
+  "blacklisterwarningnofilter": {
+    "message": "Предупредување: Ниеден филтер не е прецизиран!",
+    "description": "Warns the user that no filter was specified"
+  },
+  "blacklisterblocksalloftype": {
+    "message": "Внимавајте: овој филтер ги блокира сите $elementtype$ елементи на страната!",
+    "description": "Warns the user that all elements of type X will be blocked",
+    "placeholders": {
+      "elementtype": {
+        "content": "$1",
+        "example": "DIV"
+      }
+    }
+  },
+  "blacklistersinglematch": {
+    "message": "Се совпаѓа со <b>1</b> предметот на оваа страна.",
+    "description": "Tells the user only one match was found"
+  },
+  "blacklistermatches": {
+    "message": "Се совпаѓа со $matchcount$ предмети на оваа страна.",
+    "description": "Tells the user multiple matches were found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "blacklisterattrwillbe": {
+    "message": "$attribute$ ќе бидат $value$",
+    "description": "Checkbox label",
+    "placeholders": {
+      "attribute": {
+        "content": "$1",
+        "example": "class"
+      },
+      "value": {
+        "content": "$2",
+        "example": "AdBanner"
+      }
+    }
+  },
+  "blacklistertype": {
+    "message": "Тип",
+    "description": "node name is called 'Type'"
+  },
+  "buttonlooksgood": {
+    "message": "Добро изгледа",
+    "description": "Looks good button"
+  },
+  "buttonback": {
+    "message": "Назад",
+    "description": "Back to previous wizard page button"
+  },
+
+  "findingads": {
+    "message": "Барам реклами...<br/><br/><i>Само момент.</i>",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "blockanadtitle": {
+    "message": "Блокирај реклама",
+    "description": "Title of the first two dialogs of the blacklister"
+  },
+  "clickthead": {
+    "message": "Кликнете на рекламата и јас ќе ве водам до блокирањето.",
+    "description": "When you have to click the ad to continue"
+  },
+
+  "buttonexclude": {
+    "message": "Исклучи",
+    "description": "Button for excluding a domain in the whitelister dialog"
+  },
+
+  "subscribingtitle": {
+    "message": "Се запишувам на филтер листата...",
+    "description": "abp: link subscriber title"
+  },
+  "subscribingfinished": {
+    "message": "Готово!",
+    "description": "abp: link subscriber result"
+  },
+  "subscribingfailed": {
+    "message": "Неуспешно!",
+    "description": "abp: link subscriber result"
+  },
+
+  "optionsversion": {
+    "message": "Верзија $version$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.0.9"
+      }
+    }
+  },
+  "optionschangelog": {
+    "message": "Листа со промени",
+    "description": "changelog link"
+  },
+  "tabgeneral": {
+    "message": "Општо",
+    "description": "A tab on the options page"
+  },
+  "tabfilterlists": {
+    "message": "Филтер листа",
+    "description": "A tab on the options page"
+  },
+
+  "generaloptions": {
+    "message": "Општи поставки",
+    "description": "Title of first tab page"
+  },
+  "betalabel": {
+    "message": "Бета",
+    "description": "Option on first tab page"
+  },
+  "googletextads": {
+    "message": "Ми се допаѓаат текстуалните реклами на резултатите од барање преку Гугл; Прикажи ми ги тие.",
+    "description": "Option on first tab page"
+  },
+  "debuginlogoption": {
+    "message": "Прикажи debug соопштенија во Console записникот (со ова се успорува AdBlock)",
+    "description": "Option on first tab page"
+  },
+
+  "updatedrightnow": {
+    "message": "сега обновено",
+    "description": "Label for subscription"
+  },
+  "updatedsecondsago": {
+    "message": "обновено пред $seconds$ секунди",
+    "description": "Label for subscription",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminutesago": {
+    "message": "обновено пред $minutes$ минути",
+    "description": "Label for subscription",
+    "placeholders": {
+      "minutes": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedhoursago": {
+    "message": "обновено пред $hours$ часа",
+    "description": "Label for subscription",
+    "placeholders": {
+      "hours": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updateddaysago": {
+    "message": "обновено пред $days$ денови",
+    "description": "Label for subscription",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminuteago": {
+    "message": "обновено пред 1 минута",
+    "description": "Label for subscription"
+  },
+  "updatedhourago": {
+    "message": "обновено пред 1 час",
+    "description": "Label for subscription"
+  },
+  "updateddayago": {
+    "message": "обновено пред 1 ден",
+    "description": "Label for subscription"
+  },
+  "unsubscribedlabel": {
+    "message": "Отпишано.",
+    "description": "Status label"
+  },
+  "fetchinglabel": {
+    "message": "Собирам... само момент.",
+    "description": "Status label"
+  },
+  "failedtofetchfilter": {
+    "message": "Неуспешно собирање на овој филтер!",
+    "description": "Error messagebox"
+  },
+  "removefromlist": {
+    "message": "Отстрани од листата",
+    "description": "Label to remove a custom filter"
+  },
+  "filterstabtitle": {
+    "message": "Запиши се на филтер листата",
+    "description": "Title of the filter list tab"
+  },
+  "filterlistlink": {
+    "message": "Не запишувајте се на повеќе од тоа што ви треба -- колку повеќе листи, толку побавна работа! Заслуги и повеќе листи можат да се најдат <a>тука</a>.",
+    "description": "Explanation of the filter lists"
+  },
+  "updatenowmessage": {
+    "message": "Ќе обновувам автоматски; вие исто така можете да <a>обновите сега</a>.",
+    "description": "update filters text + button"
+  },
+  "orenteraurl": {
+    "message": "Или внесете URL:",
+    "description": "link for custom subscription"
+  },
+  "subscribebutton": {
+    "message": "Запиши се",
+    "description": "subscribe to a list button"
+  },
+  "showlinkstolists": {
+    "message": "Прикажи линкови до филтер листите:",
+    "description": "Option on second tab page"
+  },
+  "labelshow": {
+    "message": "прикажи",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
+  "filteradblock_custom": {
+    "message": "AdBlock прилагодени филтри (препорачливо)",
+    "description": "A filter list. Don't translate 'AdBlock'"
+  },
+  "filtereasylist": {
+    "message": "EasyList (препорачливо)",
+    "description": "A filter list. Don't translate 'EasyList'"
+  },
+  "filtereasylist_plus_bulgarian": {
+    "message": " - додатни бугарски филтри",
+    "description": "A filter list"
+  },
+  "filterdutch": {
+    "message": " - додатни холандски филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_finnish": {
+    "message": " - додатни фински филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_french": {
+    "message": " - додатни француски филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_german": {
+    "message": " - додатни германски филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_polish": {
+    "message": " - додатни полски филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_romanian": {
+    "message": " - додатни романски филтри",
+    "description": "A filter list"
+  },
+  "filterczech": {
+    "message": "Чешки филтри",
+    "description": "A filter list"
+  },
+  "filterdanish": {
+    "message": "Дански филтри",
+    "description": "A filter list"
+  },
+  "filterhungarian": {
+    "message": "Унгарски филтри",
+    "description": "A filter list"
+  },
+  "filterisraeli": {
+    "message": "Израелски филтри",
+    "description": "A filter list"
+  },
+  "filteritalian": {
+    "message": "Италијански филтри",
+    "description": "A filter list"
+  },
+  "filterjapanese": {
+    "message": "Јапонски филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plun_korean": {
+    "message": "Корејски филтри",
+    "description": "A filter list"
+  },
+  "filterpolish": {
+    "message": "Полски филтри",
+    "description": "A filter list"
+  },
+  "filtereasylist_plus_spanish": {
+    "message": "Шпански филтри",
+    "description": "A filter list"
+  },
+
+  "linkblockadbyurl": {
+    "message": "Блокирај реклама преку нејзиниот URL",
+    "description": "Link on the third tab"
+  },
+  "linkhidesection": {
+    "message": "Сокриј дел од веб страната",
+    "description": "Link on the third tab"
+  },
+  "blockurlwithtext": {
+    "message": "Блокирај URL во кои го има следниот текст",
+    "description": "Message of the url-blocking area"
+  },
+  "csstomatch": {
+    "message": "CSS да се совпаѓа",
+    "description": "Message of the css-hiding area"
+  },
+  "blockdomain": {
+    "message": "Домејн на страната на кој да се однесува",
+    "description": "Message of the url and css -blocking area"
+  },
+  "manualfilteredit": {
+    "message": "Мануелно уреди ги филтрите:",
+    "description": "Subtitle on the third tab"
+  },
+  "filtersavewarning": {
+    "message": "Внимавајте: Ако овде згрешите,многу други филтри, вклучувајќи ги и официјалните, би можеле да не функционираат!<br/>Прочитајте го <a>туторијалот за filter syntax</a> за да научите како да додадете црна и бела листа филтри.",
+    "description": "Warning when blacklisting manually"
+  },
+  "savebutton": {
+    "message": "Зачувај",
+    "description": "Save button"
+  },
+  "savereminder": {
+    "message": "Не заборавајте да зачувате!",
+    "description": "Reminder to press save"
+  },
+  "adblockreportinganad": {
+    "message": "AdBlock - Пријавување на реклама",
+    "description": "title of ad report page"
+  },
+  "updateyourlists": {
+    "message": "Проверете дали вашите филтер листи се обновени",
+    "description": "instruction on ad report page"
+  },
+  "clickupdatefilters": {
+    "message": "Кликнете го ова: <a>Обнови ми ги филтрите!</a>",
+    "description": "instruction on ad report page"
+  },
+  "reloadadpage": {
+    "message": "Релоадирајте ја страната со рекламата.",
+    "description": "instruction on ad report page"
+  },
+  "adstillappear": {
+    "message": "Дали рекламата повторно се појавува?",
+    "description": "question on ad reporting page"
+  },
+  "yes": {
+    "message": "Да",
+    "description": "A positive response to a question"
+  },
+  "no": {
+    "message": "Не",
+    "description": "A negative response to a question"
+  },
+  "adalreadyblocked": {
+    "message": "Не треба да правите ништо бидејќи рекламата е веќе блокирана",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "correctfilters": {
+    "message": "Правилни филтри",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "pagelanguagecheck": {
+    "message": "На кој јазик е таа страна?",
+    "description": "question on ad report page"
+  },
+  "lang_english": {
+    "message": "Англиски",
+    "description": "language"
+  },
+  "lang_bulgarian": {
+    "message": "Бугарски",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "Кинески",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "Чешки",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "Дански",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "Холандски",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "Фински",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "Француски",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "Германски",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "Унгарски",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "Израелски",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "Италијански",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "Јапонски",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "Корејски",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "Полски",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "Романски",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "Руски",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "Шпански",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "Украински",
+    "description": "language"
+  },
+  "other": {
+    "message": "Други",
+    "description": "multiple choice option"
+  },
+  "retryaftersubscribe": {
+    "message": "Запишете се на оваа филтер листа, па обидете се повторно: $list_title$",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "checkinfirefox": {
+    "message": "Проверете во Firefox",
+    "description": "tell a user to see if a reported ad also appears in firefox"
+  },
+  "checkinfirefox1": {
+    "message": "Инсталирајте Firefox доколку немате.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox2": {
+    "message": "Инсталирајте Adblock Plus за Firefox доколку немате.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox3": {
+    "message": "Во Firefox, запишете се на истата филтер листа како во Chrome.(освен AdBlock прилагодени филтри).",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox4": {
+    "message": "Во Firefox, вчитајте ја страната со рекламата.",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "checkinfirefox5": {
+    "message": "Дали рекламата се појавува во Firefox?",
+    "description": "instruction for how to check Firefox for a reported ad"
+  },
+  "refusetocheck": {
+    "message": "Не сакам да го проверувам ова",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reportfilterlistproblem": {
+    "message": "Се работи за проблем со филтер листата. Пријавете го тука: $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reporttous2": {
+    "message": "Можете да ја пријавите рекламата нам <a>in the issue tracker</a>.",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
+  },
+  "fixityourself": {
+    "message": "Во ред, можете да ја блокирате рекламата самите на страната со Опции. Ви благодариме!",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "updatefromoldversion": {
+    "message": "Користите стара верзија на AdBlock. Ве молам прво обновете $updatelink$ со најновата верзија на  AdBlock",
+    "description": "ad report page instruction",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1update$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+      }
+    }
+  },
+"translator_credit": {
+  "message": "Credit for translation goes to: $translator_names$",
+  "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Mariach",
+        "example": "Michael G, Drew R"
+      }
+    }
+  }
+}
