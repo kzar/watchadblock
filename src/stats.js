@@ -110,21 +110,17 @@ STATS = (function() {
     // Called when attempting an event.  If not rate limited, returns
     // true and records the event.
     attempt: function() {
-      var now = new Date();
-      this._discard_old_or_irrelevant_times();
-      if (this.max_events_per_hour === null)
-        return true;
-      if (this._event_times.length >= this.max_events_per_hour)
-        return false;
-      this._event_times.push(now);
+      var now = new Date(), one_hour = 1000 * 60 * 60;
+      var times = this._event_times, mph = this.max_events_per_hour;
+      // Discard old or irrelevant events
+      while (times[0] && (times[0] + one_hour < now || mph === null))
+        times.shift();
+      if (mph === null) return true; // no limit
+      if (times.length >= mph) return false; // used our quota this hour
+      times.push(now);
       return true;
     },
-    _event_times: [],
-    _discard_old_or_irrelevant_times: function() {
-      var times = this._event_times, mph = this.max_events_per_hour, now = new Date();
-      while (times[0] && (now - times[0] > 1000 * 60 * 60 || mph === null))
-        times.shift();
-    }
+    _event_times: []
   };
 
   return {
