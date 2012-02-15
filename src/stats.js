@@ -174,8 +174,7 @@ STATS = (function() {
           throttle.max_events_per_hour = mph;
         }
       });
-    },
-    _throttle: throttle
+    }
   };
 
 })();
