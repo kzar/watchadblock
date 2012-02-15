@@ -140,7 +140,7 @@ $("#step2_lang").change(function() {
 });
 
 
-// STEP 3: also in FireFox
+// STEP 3: also in Firefox
 
 //If the user clicks a radio button
 $("#step3_yes").click(function() {
@@ -151,10 +151,10 @@ $("#step3_yes").click(function() {
   $("#whattodo").html(translate("reportfilterlistproblem", [reportLink]));
 });
 $("#step3_no").click(function() {
-  if (SAFARI)
+  if (SAFARI) {
     // Safari can't block video ads
     $("#step4DIV").css("display", "block");
-  else {
+  } else {
     $("#whattodo").html(translate("reporttous2"));
     $("a", "#whattodo").attr("href", generateReportURL());
   }
