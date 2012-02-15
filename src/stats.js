@@ -102,6 +102,31 @@ STATS = (function() {
       return Math.max(0, next_ping_time - new Date());
   };
 
+  // Used to rate limit .message()s.  Rate limits reset at startup.
+  var throttle = {
+    // A small initial amount in case the server is bogged down.
+    // The server will tell us the correct amount.
+    max_events_per_hour: 3, // null if no limit
+    // Called when attempting an event.  If not rate limited, returns
+    // true and records the event.
+    attempt: function() {
+      var now = new Date();
+      this._discard_old_or_irrelevant_times();
+      if (this.max_events_per_hour === null)
+        return true;
+      if (this._event_times.length >= this.max_events_per_hour)
+        return false;
+      this._event_times.push(now);
+      return true;
+    },
+    _event_times: [],
+    _discard_old_or_irrelevant_times: function() {
+      var times = this._event_times, mph = this.max_events_per_hour, now = new Date();
+      while (times[0] && (now - times[0] > 1000 * 60 * 60 || mph === null))
+        times.shift();
+    }
+  };
+
   return {
     // True if AdBlock was just installed.
     firstRun: firstRun,
@@ -129,16 +154,32 @@ STATS = (function() {
       sleepThenPing();
     },
 
-    // Record some data.
+    // Record some data, if we are not rate limited.
     msg: function(message) {
+      if (!throttle.attempt()) {
+        log("Rate limited:", message);
+        return;
+      }
       var data = {
         cmd: "msg",
         u: userId,
         m: message,
         v: version
       };
-      $.post(stats_url, data);
-    }
+      $.ajax(stats_url, {
+        type: "POST",
+        data: data, 
+        complete: function(xhr) {
+          var mph = parseInt(xhr.getResponseHeader("X-RateLimit-MPH"));
+          if (isNaN(mph) || mph < -1) // Server is sick
+            mph = 1;
+          if (mph === -1)
+            mph = null; // no rate limit
+          throttle.max_events_per_hour = mph;
+        }
+      });
+    },
+    _throttle: throttle
   };
 
 })();
