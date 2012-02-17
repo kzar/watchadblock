@@ -87,19 +87,6 @@ function destroyElement(el, elType) {
   }
 }
 
-// Return the CSS text that will hide elements matching the given 
-// array of selectors.
-function css_hide_for_selectors(selectors) {
-  var result = [];
-  var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
-  for (var i = 0; i < selectors.length; i += GROUPSIZE) {
-    var line = selectors.slice(i, i + GROUPSIZE);
-    var rule = " { display:none !important; }";
-    result.push(line.join(',') + rule);
-  }
-  return result.join(' ');
-}
-
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {
   var d = document.documentElement;
@@ -112,13 +99,27 @@ function block_list_via_css(selectors) {
     return;
   }
 
-  var css_chunk = document.createElement("style");
+  // Issue 6480: inserting a <style> tag too quickly made it be ignored.
+  // Use ABP's approach: a <link> tag that we can check for .sheet.
+  var css_chunk = document.createElement("link");
   css_chunk.type = "text/css";
-  // Handle issue 5643
-  css_chunk.style.setProperty("display", "none", "important");
-  css_chunk.innerText = "/*This block of style rules is inserted by AdBlock*/" 
-                        + css_hide_for_selectors(selectors);
+  css_chunk.rel = "stylesheet";
+  css_chunk.href = "data:text/css,";
   d.insertBefore(css_chunk, null);
+
+  function fill_in_css_chunk() {
+    if (!css_chunk.sheet) {
+      window.setTimeout(fill_in_css_chunk, 0);
+      return;
+    }
+    var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
+    for (var i = 0; i < selectors.length; i += GROUPSIZE) {
+      var line = selectors.slice(i, i + GROUPSIZE);
+      var rule = line.join(",") + " { display:none !important; }";
+      css_chunk.sheet.insertRule(rule);
+    }
+  }
+  fill_in_css_chunk();
 }
 
 function debug_print_selector_matches(selectors, style) {
