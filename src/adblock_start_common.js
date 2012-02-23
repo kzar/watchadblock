@@ -89,7 +89,7 @@ function destroyElement(el, elType) {
 
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {
-  var d = document.documentElement;
+  var d = document.head || document.documentElement;
   if (!d) {
     // See http://crbug.com/109272
     // in Chrome 18: document.documentElement is null on document_start
