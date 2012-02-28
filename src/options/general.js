@@ -26,12 +26,6 @@ $("#enable_show_google_search_text_ads").change(function() {
 });
 
 
-$("#webrequest_warning").toggle($("#enable_use_webrequest_blocking").is(":checked"));
-$("#enable_use_webrequest_blocking").click(function() {
-  $("#webrequest_warning").toggle(this.checked);
-});
-
-
 $("#enable_show_advanced_options").change(function() {
   // Reload the page to show or hide the advanced options on the
   // options page -- after a moment so we have time to save the option.
