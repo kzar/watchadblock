@@ -104,7 +104,7 @@ function block_list_via_css(selectors) {
   var css_chunk = document.createElement("link");
   css_chunk.type = "text/css";
   css_chunk.rel = "stylesheet";
-  css_chunk.href = "data:text/css,";
+  css_chunk.href = "about:";
   d.insertBefore(css_chunk, null);
 
   function fill_in_css_chunk() {
