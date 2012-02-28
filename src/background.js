@@ -837,5 +837,7 @@
   }
 
   if (SAFARI) {
-    $.getScript("safari_bg.js");
+    var s = document.createElement('script');
+    s.src = "safari_bg.js";
+    document.head.appendChild(s);
   }
