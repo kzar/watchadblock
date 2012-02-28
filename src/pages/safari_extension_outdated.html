@@ -31,10 +31,7 @@
         margin-top: 0px;
       }
       .card {
-        /* works in Safari (Windows at least) */
         background: -webkit-gradient(radial, 15% 25%, 20, 15% 25%, 700, from(#fff), to(#ddf));
-        /* even better in Chrome, get 100% spread instead of a fixed pixel value */
-        background: -webkit-radial-gradient(15% 25%, circle, #fff 20px, #ddf 100%);
         position: absolute; /* so it can slide */
         padding: 20px 40px;
         border-radius: 30px;
@@ -68,20 +65,7 @@
         background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#aad));
       }
     </style>
-    <script>
-      $(function() {
-        localizePage();
-
-        $("#disable_update_check").click(function() {
-          BGcall("disableUpdateCheck");
-          window.close();
-        });
-
-        $("#close").click(function() {
-          window.close();
-        })
-      });
-    </script>
+    <script src="safari_extension_outdated.js"></script>
   </head>
   <body>
     <div id="header">
@@ -100,7 +84,7 @@
           <li i18n="click_install_update_automatically"></li>
         </ol>
         <div class="nav">
-          <a href="#" id="disable_update_check"><span i18n="never_remind_again_button">Never remind me again</span></a>
+          <a href="#" id="disable_update_check"><span i18n="never_remind_again_button"></span></a>
           <a href="#" id="close"><span i18n="close"></span></a>
         </div>
       </div>

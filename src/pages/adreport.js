@@ -185,58 +185,9 @@ $("#step4_no").click(function() {
 // GENERAL STUFF
 
 //check for updates
-var AdBlockVersion;
-try {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
-  xhr.onreadystatechange = function() {
-    if(this.readyState == 4) {
-      //get the current version
-      AdBlockVersion = JSON.parse(this.responseText).version;
-      //check for newer versions
-      var checkURL = "http://clients2.google.com/service/update2/crx?" +
-          "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
-          AdBlockVersion + "%26uc";
-      if (SAFARI)
-        checkURL = "http://safariadblock.com/update.plist";
-      //fetch the version check file
-      $.ajax({
-        cache: false,
-        datatype: (SAFARI ? "text" : "xml"),
-        url: checkURL,
-        success: function(response) {
-          var updateURL;
-          if (!SAFARI) {
-            updateURL = $("updatecheck[status='ok'][codebase]", response).attr('codebase');
-          } else {
-            var version = response.match(/\<string\>(\d+\.\d+\.\d+)\<\/string\>/)[1];
-            if (isNewerVersion(version)) {
-              updateURL = response.match(/http\:\/\/.*\.safariextz/)[0];
-            }
-          }
-          //new version available
-          if (updateURL) {
-            $("#whattodo").html(translate("updatefromoldversion", ["<a href='" + updateURL + "'>", "</a>"]));
-            $("div[id^='step'][id$='DIV']").css('display', 'none');
-          }
-        }
-      });
-    }
-  };
-  xhr.send();
-} catch (ex) {}
-// Check if newVersion is newer than AdBlockVersion
-function isNewerVersion(newVersion) {
-  var versionRegex = /^(\d+)\.(\d+)\.(\d+)$/;
-  var current = AdBlockVersion.match(versionRegex);
-  var notCurrent = newVersion.match(versionRegex);
-  if (!current || !notCurrent)
-    return false;
-  for (var i=1; i<4; i++) {
-    if (current[i] < notCurrent[i])
-      return true;
-    if (current[i] > notCurrent[i])
-      return false;
+performUpdateCheck("ad-report-page", function(uptodate, updateURL) {
+  if (!uptodate && updateURL) {
+    $("#whattodo").html(translate("updatefromoldversion", ["<a href='" + updateURL + "'>", "</a>"]));
+    $("div[id^='step'][id$='DIV']").css('display', 'none');
   }
-  return false;
-}
+});

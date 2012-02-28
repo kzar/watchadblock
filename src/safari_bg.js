@@ -264,89 +264,45 @@ safari.application.addEventListener("contextmenu", function(event) {
 function disableUpdateCheck() {
   safari.extension.settings.update_check_disabled = true;
   delete safari.extension.settings.first_outdated_at;
+  delete safari.extension.settings.outdated_warning_shown_at;
 }
 
 // Check if the user has disabled updates.
 (function() {
+  var MAX_OUTDATED_TIME = 8 * 7 * 24 * 60 * 60 * 1000;     // Warn the user if extension has been outdate for more than 8 weeks
+  var INTERVAL_BETWEEN_WARNINGS = 7 * 24 * 60 * 60 * 1000; // Wait for 1 week before checking/warning the user again
+
   function updateCheck() {
-    function compareVersions(currentVersion, latestVersion) {
-      if (currentVersion === latestVersion) {
-        // Extension is up to date, clean up and we're done.
-        delete safari.extension.settings.first_outdated_at;
-      } else {
-        // Record the first time this extension became outdated.
-        var now = (new Date().getTime());
-        if (!safari.extension.settings.first_outdated_at) {
-          safari.extension.settings.first_outdated_at = now;
-        }
-
-        // If the extension has been outdated for more than 2 weeks, user probably didn't enable
-        // extension autoupdate. Open a page with instructions and reset the timer (we don't want to bother
-        // the user every day).
-        var timeDelta = now - safari.extension.settings.first_outdated_at;
-        if (!safari.extension.settings.update_check_disabled && timeDelta > 14 * 24 * 60 * 60 * 1000) {
+    if (!safari.extension.update_check_disabled) {
+      performUpdateCheck("out-of-date-check", function(uptodate) {
+        if (uptodate) {
           delete safari.extension.settings.first_outdated_at;
-          openTab("pages/safari_extension_outdated.html", false);
-        }
-      }
-
-      // Check again tomorrow
-      setTimeout(updateCheck, 24 * 60 * 60 * 1000);
-    }
-
-    function fetchLatestVersion(bundleIdentifier, updateManifestURL, currentVersion) {
-      // Fetch update manifest.
-      var manifestReq = new XMLHttpRequest();
-      manifestReq.open("GET", updateManifestURL, true);
-      manifestReq.onreadystatechange = function() {
-        if (manifestReq.readyState === 4) {
-          var latestVersion;
-          if (manifestReq.responseText) {
-            // The server doesn't set a proper content type for .plist files, so parse the XML manually.
-            var updateManifest = new DOMParser().parseFromString(manifestReq.responseText, 'application/xml');
-            var latestVersionXPath = "//key[./text() = 'CFBundleIdentifier']" +
-                                     "/following-sibling::string[./text() = '" + bundleIdentifier + "']" +
-                                     "/following-sibling::key[./text() = 'CFBundleVersion']" +
-                                     "/following-sibling::string/text()";
-            latestVersion = updateManifest.evaluate(latestVersionXPath, updateManifest, null,
-                                                    XPathResult.STRING_TYPE, null).stringValue;
+          delete safari.extension.settings.outdated_warning_shown_at;
+        } else {
+          // Record the first time this extension became outdated.
+          var now = Date.now();
+          if (!safari.extension.settings.first_outdated_at) {
+            safari.extension.settings.first_outdated_at = now;
           }
-          if (latestVersion) {
-            compareVersions(currentVersion, latestVersion);
-          } else {
-            // Some error occurred, re-check in an hour.
-            setTimeout(updateCheck, 60 * 60 * 1000);
-          }
-        }
-      };
-      manifestReq.send();
-    }
 
-    if (!safari.extension.settings.update_check_disabled) {
-        // Get currentVersion, bundle identifier and update manifest URL from the Info.plist file.
-        var plistReq = new XMLHttpRequest();
-        plistReq.open("GET", safari.extension.baseURI + "Info.plist", true);
-        plistReq.onreadystatechange = function() {
-          if (plistReq.readyState === 4) {
-            var infoPlist = plistReq.responseXML;
-            if (infoPlist) {
-              function stringValueForKey(key) {
-                return infoPlist.evaluate("/plist/dict/key[./text() = '" + key + "']/following-sibling::string/text()",
-                                          infoPlist, null, XPathResult.STRING_TYPE, null).stringValue;
-              };
+          // If the extension has been outdated for more than 8 weeks, user probably didn't enable
+          // extension autoupdate.
+          if (now - safari.extension.settings.first_outdated_at > MAX_OUTDATED_TIME) {
+            // Check that we haven't shown the warning in the last INTERVAL_BETWEEN_WARNINGS
+            if (!safari.extension.settings.outdated_warning_shown_at ||
+                now - safari.extension.settings.outdated_warning_shown_at > INTERVAL_BETWEEN_WARNINGS) {
 
-              var currentVersion = stringValueForKey("CFBundleVersion");
-              var bundleIdentifier = stringValueForKey("CFBundleIdentifier");
-              var updateManifestURL = stringValueForKey("Update Manifest URL");
-              if (currentVersion && bundleIdentifier && updateManifestURL) {
-                // Fetch update manifest to find out the latest version.
-                fetchLatestVersion(bundleIdentifier, updateManifestURL, currentVersion);
-              }
+              // Show the page that explains how to enable autoupdate.
+              safari.extension.settings.outdated_warning_shown_at = now;
+              openTab("pages/safari_extension_outdated.html");
             }
+
+            // Check again in a week since last warning
+            setTimeout(updateCheck, safari.extension.settings.outdated_warning_shown_at + INTERVAL_BETWEEN_WARNINGS);
           }
-        };
-        plistReq.send();
-    }
+        }
+      });
+}
   }
 
   // Start the update check a minute after browser startup to reduce the load on the computer.
