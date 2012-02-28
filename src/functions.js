@@ -181,12 +181,12 @@ parsePlist = function(document) {
 //   checkReason:string - update check reason appended to safari plist url, ignored on chrome
 //   callback:function(uptodate, updateURL) - called when update finishes
 performUpdateCheck = (function() {
-  function fetchLocalResource(url, callback) {
+  function fetchResource(url, callback) {
       var req = new XMLHttpRequest();
       req.open("GET", url, true);
       req.onreadystatechange = function() {
         if (req.readyState === 4 && req.responseText) {
-          callback(req);
+          callback(req.responseText);
         }
       };
       req.send();
@@ -195,17 +195,17 @@ performUpdateCheck = (function() {
   var fetchLocalManifest;
   if (SAFARI) {
     fetchLocalManifest = function(callback) {
-      fetchLocalResource(safari.extension.baseURI + "Info.plist",
-                         function(request) {
-                           callback(parsePlist(request.responseXML));
-                         });
+      fetchResource(safari.extension.baseURI + "Info.plist",
+                    function(response) {
+                      callback(parsePlist(new DOMParser().parseFromString(response, "application/xml")));
+                    });
     }
   } else {
     fetchLocalManifest = function(callback) {
-      fetchLocalResource(chrome.extension.getURL('manifest.json'),
-                         function(request) {
-                           callback(JSON.parse(request.responseText));
-                         });
+      fetchResource(chrome.extension.getURL('manifest.json'),
+                    function(response) {
+                      callback(JSON.parse(response));
+                    });
     }
   }
 
@@ -236,21 +236,21 @@ performUpdateCheck = (function() {
         var currentVersion = manifest["CFBundleVersion"];
         var bundleIdentifier = manifest["CFBundleIdentifier"];
 
-        $.get(updateURL + "?" + checkReason,
-              function(response) {
-                var updateManifest = parsePlist(response);
-                var updates = updateManifest["Extension Updates"];
-                for (var i = 0; i < updates.length; i++) {
-                  var update = updates[i];
-                  if (update["CFBundleIdentifier"] === bundleIdentifier) {
-                    var latestVersion = update["CFBundleVersion"];
-                    var extURL = update["URL"];
-                    var uptodate = (compareVersions(currentVersion, latestVersion) >= 0);
-                    callback(uptodate, extURL);
-                  }
-                }
-              },
-              "xml");
+        fetchResource(
+          updateURL + "?" + checkReason,
+          function(response) {
+            var updateManifest = parsePlist(new DOMParser().parseFromString(response, "application/xml"));
+            var updates = updateManifest["Extension Updates"];
+            for (var i = 0; i < updates.length; i++) {
+              var update = updates[i];
+              if (update["CFBundleIdentifier"] === bundleIdentifier) {
+                var latestVersion = update["CFBundleVersion"];
+                var extURL = update["URL"];
+                var uptodate = (compareVersions(currentVersion, latestVersion) >= 0);
+                callback(uptodate, extURL);
+              }
+            }
+          });
       });
     }
   } else {
@@ -260,16 +260,21 @@ performUpdateCheck = (function() {
         var checkURL = "http://clients2.google.com/service/update2/crx?" +
                        "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
                        currentVersion + "%26uc";
-        $.get(checkURL,
-              function(response) {
-                var updateURL = $("updatecheck[status='ok'][codebase]", response).attr('codebase');
-                if (updateURL) {
-                  callback(false, updateURL);
-                } else if ($("updatecheck[status='noupdate']", response).length > 0) {
-                  callback(true);
-                }
-              },
-              "text");
+        fetchResource(
+          checkURL,
+          function(response) {
+            // It looks like WebKit engines have problems with namespace resolutions,
+            // so we'll have to hunt for nodes using name() in the XPath.
+            var responseXML = new DOMParser().parseFromString(response, "application/xml");
+            var updateURL = responseXML.evaluate("//*[name() = 'updatecheck' and @status = 'ok']/@codebase",
+                                                 responseXML, null, XPathResult.STRING_TYPE, null).stringValue;
+            if (updateURL) {
+              callback(false, updateURL);
+            } else if (responseXML.evaluate("//*[name() = 'updatecheck' and @status = 'noupdate']",
+                                            responseXML, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null).singleNodeValue) {
+              callback(true);
+            }
+          });
       });
     }
   }
