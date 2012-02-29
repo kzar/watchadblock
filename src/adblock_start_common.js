@@ -99,12 +99,10 @@ function block_list_via_css(selectors) {
     return;
   }
 
-  // Issue 6480: inserting a <style> tag too quickly made it be ignored.
-  // Use ABP's approach: a <link> tag that we can check for .sheet.
-  var css_chunk = document.createElement("link");
+  // Issue 6480: inserting a <style> tag too quickly ignored its contents.
+  // Use ABP's approach: wait for .sheet to exist before injecting rules.
+  var css_chunk = document.createElement("style");
   css_chunk.type = "text/css";
-  css_chunk.rel = "stylesheet";
-  css_chunk.href = "about:";
   d.insertBefore(css_chunk, null);
 
   function fill_in_css_chunk() {
