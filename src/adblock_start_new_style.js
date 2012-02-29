@@ -44,6 +44,12 @@ var elementTracker = {
     for (var i = 0; i < request.results.length; i++) {
       var result = request.results[i];
       var elType = result[0], url = result[1], blocked = result[2];
+      if (elType === ElementTypes.subdocument) {
+        var frames = document.querySelectorAll('[src^="'+url+'"]');
+        for (var f=0;f<frames.length;f++) {
+          frames[f].style.setProperty("display", "none", "important");
+        }
+      }
       elementTracker._store(elType, url, 'verdicts', blocked);
     }
     sendResponse({});
