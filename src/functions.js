@@ -203,7 +203,7 @@ performUpdateCheck = (function() {
     var matchA = versionA.match(versionRegex);
     var matchB = versionB.match(versionRegex);
     if (!matchA || !matchB) {
-      throw "Invalid version string";
+      return null;
     }
 
     for (var i = 1; i < matchA.length; i++) {

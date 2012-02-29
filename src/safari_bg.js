@@ -297,8 +297,8 @@ function disableUpdateCheck() {
               openTab("pages/safari_extension_outdated.html");
             }
 
-            // Check again in a week since last warning
-            setTimeout(updateCheck, safari.extension.settings.outdated_warning_shown_at + INTERVAL_BETWEEN_WARNINGS);
+            // Check again in a week
+            setTimeout(updateCheck, INTERVAL_BETWEEN_WARNINGS);
           }
         }
       });
