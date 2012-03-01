@@ -31,6 +31,15 @@ var elementTracker = {
     elementTracker._store(elType, relativeToAbsoluteUrl(event.url), 'elements', event.target);
   },
 
+  processIframe: function(url) {
+    // Some iframes are not correctly removed as beforeLoad doesn't catch them
+    // Perform 'search and destroy' from here. examples in issue 6489 c14 & c15
+    for (var key in elementTracker) {
+      var foundFrames = document.querySelector('iframe[src^="' + url + '"]');
+      elementTracker._store(ElementTypes.subdocument, url, 'elements', foundFrames);
+    }
+  },
+
   onBlockResults: function(request, sender, sendResponse) {
     if (request.command != 'block-results')
       return;
@@ -57,7 +66,13 @@ var elementTracker = {
     data[targetList].push(value);
     log("[DEBUG]", (targetList == 'elements' ? value.nodeName:value) + " is", targetList, "#", data[targetList].length, "for key", key.substring(0, 80));
 
-    if (data.elements.length == 0 || data.verdicts.length == 0 || data.starting)
+    if (targetList === 'verdicts' && value === true && data.verdicts.length &&
+        elType === ElementTypes.subdocument && data.elements.length === 0) {
+      // Remove some ERR_BLOCKED_BY_CLIENT iframes
+      elementTracker.processIframe(url);
+    }
+
+    if (data.elements.length === 0 || data.verdicts.length === 0 || data.starting)
       return;
 
     // we have enough data to act (see above for why it's deferred)
