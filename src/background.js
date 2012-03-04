@@ -842,7 +842,7 @@
   
   if (!SAFARI) {
     var chromeversion = navigator.userAgent.match(/Chrome\/(\d+)\.\d+\.\d+\.\d+/)[1];
-    if (Number(chromeversion) < 107) {
+    if (Number(chromeversion) < 17) {
       if (storage_get('sawChrome16WarningOn') !== String(new Date().getDate())) {
         window.open('pages/Chrome16warning.html', "_blank", 
                   'scrollbars=0,location=0,resizable=0,width=635,height=350');
