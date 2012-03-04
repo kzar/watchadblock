@@ -26,7 +26,7 @@ STATS = (function() {
 
   // Give the user a userid if they don't have one yet.
   var userId = (function() {
-    var time_suffix = (+new Date()) % 1e8; // 8 digits from end of timestamp
+    var time_suffix = (Date.now()) % 1e8; // 8 digits from end of timestamp
 
     // TODO temp: convert user_id to userid, as user_id was not
     // random enough.  6/14/2011, affected < 100k users.
@@ -90,7 +90,7 @@ STATS = (function() {
       delay_hours = 24 * 7;
 
     var millis = 1000 * 60 * 60 * delay_hours;
-    storage_set("next_ping_time", +new Date() + millis);
+    storage_set("next_ping_time", Date.now() + millis);
   };
 
   // Return the number of milliseconds until the next scheduled ping.
@@ -99,7 +99,7 @@ STATS = (function() {
     if (!next_ping_time)
       return 0;
     else
-      return Math.max(0, next_ping_time - new Date());
+      return Math.max(0, next_ping_time - Date.now());
   };
 
   // Used to rate limit .message()s.  Rate limits reset at startup.
@@ -110,7 +110,7 @@ STATS = (function() {
     // Called when attempting an event.  If not rate limited, returns
     // true and records the event.
     attempt: function() {
-      var now = new Date(), one_hour = 1000 * 60 * 60;
+      var now = Date.now(), one_hour = 1000 * 60 * 60;
       var times = this._event_times, mph = this.max_events_per_hour;
       // Discard old or irrelevant events
       while (times[0] && (times[0] + one_hour < now || mph === null))

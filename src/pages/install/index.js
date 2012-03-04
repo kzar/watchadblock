@@ -49,13 +49,13 @@ $("#cleaner-warning a").click(function() {
 });
 
 
-var start = new Date();
+var start = Date.now();
 (function() {
   // Show a loading progress indicator for a few seconds while the user
   // gets her bearings.
 
   var runLength = 2500; // Should take this many ms
-  var pctTime = (new Date() - start) / runLength; // Goes from 0 to 1
+  var pctTime = (Date.now() - start) / runLength; // Goes from 0 to 1
 
   // Start slow, then speed up.
   var pctDone = Math.pow(pctTime, 4);
