@@ -295,16 +295,8 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
     // fetch if it wasn't modified. It is null if the server doesn't support this.
     this._subscriptions[id].last_modified = xhr.getResponseHeader("Last-Modified");
     // Record how many hours until we need to update the subscription text. This
-    // can be specified in the response headers or in the file. Defaults to 120.
+    // can be specified in the file. Defaults to 120.
     this._subscriptions[id].expiresAfterHours = 120;
-    var expires = xhr.getResponseHeader("Cache-Control");
-    if (expires) {
-      var match = expires.match(/max\-age\=(\d+)/);
-      if (match && parseInt(match[1], 10)) {
-        match = Math.min(parseInt(match[1], 10) / 3600, 21*24); // 3 week maximum
-        this._subscriptions[id].expiresAfterHours = Math.max(1, match); // 1 hour minimum
-      }
-    }
     var checkLines = text.split('\n', 15); //15 lines should be enough
     var expiresRegex = /(?:expires\:|expires\ after\ )\ *(\d+)\ ?(h?)/i;
     var redirectRegex = /(?:redirect\:|redirects\ to\ )\ *(https?\:\/\/\S+)/i;
