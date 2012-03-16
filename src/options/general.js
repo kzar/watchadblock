@@ -25,6 +25,29 @@ $("#enable_show_google_search_text_ads").change(function() {
   }, 1000);
 });
 
+function init_picreplacement() {
+  BGcall("picreplacement_show_on_options_page", function(show) {
+    var p = $("#picreplacement");
+    p.toggle(show);
+    p.find("[i18n]").each(function() {
+      $(this).text(picreplacement.translate($(this).attr("i18n")));
+    });
+    p.find("a").prop("href", picreplacement.translate("the_url"));
+  });
+}
+init_picreplacement();
+// Labels fall off on tab change for some reason: redo them.
+$("#tabpages").bind("tabsshow", init_picreplacement);
+// Don't use standard enable_ machinery: this is too complicated.
+BGcall("picreplacement_is_happening", function(enabled) {
+  var cb = $("#picreplacement").find(":checkbox");
+  cb.
+    attr("checked", enabled).
+    change(function() {
+      var is_enabled = $(this).is(':checked');
+      BGcall("set_setting", "do_picreplacement", is_enabled);
+    });
+});
 
 $("#enable_show_advanced_options").change(function() {
   // Reload the page to show or hide the advanced options on the

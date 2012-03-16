@@ -12,7 +12,10 @@ GLOBAL_contentScriptData = {
 // should not be blocked.
 function browser_canLoad(event, data) {
   if (SAFARI) {
-    return safari.self.tab.canLoad(event, data);
+    var result = safari.self.tab.canLoad(event, data);
+    if (result.picreplacement_enabled)
+      picreplacement.augmentIfAppropriate({el: event.target, elType: data.elType, blocked: !result.can_load});
+    return result.can_load;
   } else {
     // If we haven't yet asynchronously loaded our filters, store for later.
     if (typeof _local_block_filterset == "undefined") {

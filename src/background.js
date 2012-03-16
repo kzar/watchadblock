@@ -7,6 +7,7 @@
       show_context_menu_items: true,
       show_advanced_options: false,
       use_webrequest_blocking: false,
+      do_picreplacement: false,
     };
     // Opt in Chrome 17 users to webRequest.
     if (chrome.webRequest)
@@ -17,7 +18,10 @@
   Settings.prototype = {
     set: function(name, is_enabled) {
       this._data[name] = is_enabled;
-      storage_set('settings', this._data);
+      // Don't store defaults that the user hasn't modified
+      var stored_data = storage_get("settings") || {};
+      stored_data[name] = is_enabled;
+      storage_set('settings', stored_data);
     },
     get_all: function() {
       return this._data;
@@ -165,7 +169,7 @@
         // Increasing this number sends fewer messages but leaves more
         // unblocked items' keys (elType+" "+url) in tab memory
         // and background memory after a tab is done loading
-        if (blocked || data.blockResults.length > 20) {
+        if (blocked || data.blockResults.length > 0) { // picreplacement
           var blockData = data.blockResults;
           data.blockResults = [];
           return blockData;
@@ -215,7 +219,8 @@
           // receive this or not.  Because the #anchor of a page can change without navigating
           // the frame, ignore the anchor when matching.
           var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
-          chrome.tabs.sendRequest(tabId, { command: "block-results", frameUrl: frameUrl, results: results });
+          var picreplacement_enabled = picreplacement_checker.enabled(frameUrl);
+          chrome.tabs.sendRequest(tabId, { command: "block-results", picreplacement_enabled: picreplacement_enabled, frameUrl: frameUrl, results: results });
         }
 
         log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
@@ -511,18 +516,24 @@
       }
 
       function setBrowserButton(info) {
+        var icons = {
+          enabled: "img/icon19.png",
+          disabled: "img/icon19-grayscale.png",
+          whitelisted: "img/icon19-whitelisted.png"
+        };
+        icons = picreplacement_checker.get_icons(icons, info.tab.url);
         if (sessionStorage.adblock_is_paused) {
-          chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:icons.disabled, tabId: info.tab.id});
         } else if (info.disabled_site &&
             !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
           // Show non-disabled icon on the installation-success page so it
           // users see how it will normally look. All other disabled pages
           // will have the gray one
-          chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:icons.disabled, tabId: info.tab.id});
         } else if (info.whitelisted) {
-          chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:icons.whitelisted, tabId: info.tab.id});
         } else {
-          chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:icons.enabled, tabId: info.tab.id});
         }
       }
 

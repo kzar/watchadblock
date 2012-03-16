@@ -34,8 +34,10 @@ safari.application.addEventListener("message", function(messageEvent) {
   if (messageEvent.name != "canLoad")
     return;
 
+  var result = { picreplacement_enabled: picreplacement_checker.enabled(messageEvent.target.url) };
   if (adblockIsPaused() || page_is_whitelisted(messageEvent.target.url)) {
-    messageEvent.message = true;
+    result.can_load = true;
+    messageEvent.message = result;
     return;
   }
 
@@ -46,7 +48,8 @@ safari.application.addEventListener("message", function(messageEvent) {
   var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
   if (isMatched)
     log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
-  messageEvent.message = !isMatched;
+  result.can_load = !isMatched;
+  messageEvent.message = result;
 }, false);
 
 // Allows us to figure out the window for commands sent from the menu. Not used in Safari 5.0.
@@ -137,6 +140,7 @@ if (!LEGACY_SAFARI) {
       if (event.target instanceof SafariExtensionToolbarItem) {
         var item = event.target;
 
+        item.image = picreplacement_checker.get_safari_icon(item);
         if (item.browserWindow && !item.menu) {
           // Check if only this item lacks a menu (which means user just opened a new window) or there are multiple items
           // lacking a menu (which only happens on browser startup or when the user removes AdBlock toolbar item and later
@@ -216,7 +220,10 @@ if (!LEGACY_SAFARI) {
         var canBlock = !page_is_unblockable(url);
         var whitelisted = page_is_whitelisted(url);
 
-        appendMenuItem("toggle-pause", translate("pause_adblock"), paused);
+        var pause_message = translate("pause_adblock");
+        if (picreplacement_checker.enabled(url))
+          pause_message = pause_message.replace("Pause", "Paws");
+        appendMenuItem("toggle-pause", pause_message, paused);
         if (!paused && canBlock) {
           if (whitelisted) {
             // Show one checked "Don't run on this page" item that would un-whitelist the page.

@@ -144,6 +144,15 @@ $(function() {
   });
 });
 
+function picreplacement_adjust() {
+  BG.getCurrentTabInfo(function(info) {
+    if (BG.picreplacement_checker.enabled(info.tab.url)) {
+      $('[i18n*="pause"]').each(function() {
+        $(this).text($(this).text().replace("ause", "aws"));
+      });
+    }
+  });
+}
 
 // Payment wrapper open/close click handlers
 $(function() {
@@ -186,4 +195,5 @@ $(function() {
   customize_for_this_tab();
   maybe_show_badge();
   localizePage();
+  picreplacement_adjust();
 });

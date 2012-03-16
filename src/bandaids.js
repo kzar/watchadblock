@@ -10,6 +10,9 @@ var run_bandaids = function(blocking_style) {
 
   var bandaids = {
     hotmail: function() {
+      var today = new Date();
+      if (!(today < new Date(2012, 3, 1) || today >= new Date(2012, 3, 4)))
+        return;
       //removing the space remaining in Hotmail/WLMail
       el = document.querySelector(".Unmanaged .WithSkyscraper #MainContent");
       if (el) {el.style.setProperty("margin-right", "1px", null);}

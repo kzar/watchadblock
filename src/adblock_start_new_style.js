@@ -25,8 +25,11 @@ var elementTracker = {
       return;
 
     var elType = typeForElement(event.target);
-    if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
+    if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))) {
+      if (elementTracker.picreplacement_enabled)
+        picreplacement.augmentIfAppropriate({el: event.target});
       return;
+    }
 
     elementTracker._store(elType, relativeToAbsoluteUrl(event.url), 'elements', event.target);
   },
@@ -35,6 +38,7 @@ var elementTracker = {
     if (request.command != 'block-results')
       return;
 
+    elementTracker.picreplacement_enabled = request.picreplacement_enabled;
     var myFrame = document.location.href.replace(/#.*$/, "");
     if (request.frameUrl != myFrame) {
       log('[DEBUG]', "My frame is", myFrame, "so I'm ignoring block results for", request.frameUrl);
@@ -77,8 +81,13 @@ var elementTracker = {
 
     var shouldBlock = data.verdicts[0];
     log("[DEBUG]", data.elements.length, shouldBlock?"elements will be REMOVED.":"elements are harmless.", key);
-    if (shouldBlock)
-      data.elements.forEach(function(el) { destroyElement(el, data.elType); });
+    data.elements.forEach(function(el) {
+      if (elementTracker.picreplacement_enabled)
+        picreplacement.augmentIfAppropriate({el: el, elType: data.elType, blocked: shouldBlock});
+      if (shouldBlock)
+        destroyElement(el, data.elType);
+    });
+
     data.elements = [];
     data.verdicts.pop();
     if (data.verdicts.length == 0)
