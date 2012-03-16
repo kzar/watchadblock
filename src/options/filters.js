@@ -253,6 +253,7 @@ $(function() {
       url = url.match(abp_regex)[1]; // the part after 'location='
       url = unescape(url);
     }
+    url = url.trim();
     if (/^https?\:\/\/[^\<]+$/.test(url)) {
       subscribe("url:" + url);
       $("#txtNewSubscriptionUrl").val("");
