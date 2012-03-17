@@ -160,7 +160,7 @@ function updateSubscriptionInfoAll() {
     } else if (subscription.last_update_failed && !subscription.last_update) {
       text = translate("failedtofetchfilter");
     } else {
-      var how_long_ago = new Date().getTime() - subscription.last_update;
+      var how_long_ago = Date.now() - subscription.last_update;
       var seconds = Math.round(how_long_ago / 1000);
       var minutes = Math.round(seconds / 60);
       var hours = Math.round(minutes / 60);

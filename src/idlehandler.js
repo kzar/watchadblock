@@ -13,7 +13,7 @@ var idleHandler = {
       // In Chrome, schedule the item to be executed
       idleHandler._scheduledItems.push({
         callback: callback,
-        runAt: new Date(new Date().getTime() + 1000 * (seconds || 600))
+        runAt: new Date(Date.now() + 1000 * (seconds || 600))
       });
       if (!idleHandler._timer)
         idleHandler._timer = window.setInterval(idleHandler._runIfIdle, 5000);
@@ -32,7 +32,7 @@ var idleHandler = {
           while (idleHandler._scheduledItems.length)
             idleHandler._scheduledItems.shift().callback();
         } else {
-          var now = new Date();
+          var now = Date.now();
           // Inversed loop, to prevent splice() making it skip the item after an
           // executed item.
           for (var i=idleHandler._scheduledItems.length-1; i>=0; i--)

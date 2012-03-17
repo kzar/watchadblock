@@ -197,7 +197,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
       if (forceFetch) return true;
-      var millis = new Date().getTime() - subscription.last_update;
+      var millis = Date.now() - subscription.last_update;
       return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
     }
 
@@ -284,7 +284,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
 // the given text.  Requires that this._subscriptions[subscription_id] exists.
 // The xhr variable can be used to search the response headers
 MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
-  this._subscriptions[id].last_update = new Date().getTime();
+  this._subscriptions[id].last_update = Date.now();
   delete this._subscriptions[id].last_update_failed;
 
   // In case the resource wasn't modified, there is no need to reparse this.

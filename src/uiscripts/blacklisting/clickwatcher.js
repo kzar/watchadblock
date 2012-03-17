@@ -6,7 +6,7 @@
 function Highlighter() {
   var target = null;
   var enabled = false;
-  var then = +new Date();
+  var then = Date.now();
   var box = $("<div class='adblock-highlight-node'></div>");
   var css = {
     "background-color": "rgba(130, 180, 230, 0.5)",
@@ -22,7 +22,7 @@ function Highlighter() {
   
   function handler(e) {
     var offset, el = e.target;
-    var now = +new Date();
+    var now = Date.now();
     if (now - then < 25) {
       return;
     }
