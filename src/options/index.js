@@ -60,7 +60,11 @@ if (navigator.language.substring(0, 2) != "en")
   $("#translation_credits").text(translate("translator_credit"));
 
 if (SAFARI && LEGACY_SAFARI) {
-  $("#safari50_updatenotice").show();
+  if (navigator.appVersion.indexOf("Mac OS X 10_5_") !== -1) {
+    // Safari 5.1 isn't available on Leopard (OS X 10.5). Don't urge the users to upgrade in this case.
+  } else {
+    $("#safari50_updatenotice").show();
+  }
 }
 
 var optionalSettings = {};
