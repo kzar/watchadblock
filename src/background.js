@@ -841,11 +841,11 @@
   }
   
   if (!SAFARI) {
-    var chromeversion = navigator.userAgent.match(/Chrome\/(\d+)\.\d+\.\d+\.\d+/)[1];
-    if (Number(chromeversion) < 17) {
+    var chromeversion = navigator.userAgent.match(/Chrome\/(\d+)\.\d+\.\d+\.\d+/);
+    if (chromeversion && Number(chromeversion[1]) < 17) {
       if (storage_get('sawChrome16WarningOn') !== String(new Date().getDate())) {
         window.open('pages/Chrome16warning.html', "_blank", 
-                  'scrollbars=0,location=0,resizable=0,width=635,height=350');
+                  'scrollbars=0,location=0,resizable=0,width=640,height=365');
         storage_set('sawChrome16WarningOn', String(new Date().getDate()));
       }
     } else

@@ -1,6 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <title>A note from AdBlock</title>
     <link rel="stylesheet" href="../options/options.css" />
@@ -11,20 +11,30 @@
         padding-left:40px;
         margin: 14px 0;
       }
-      
     </style>
   </head>
   <body>
     <div class="section">
-      Pardon me for interrupting, but I need to tell you:<br/>
+      <i>Pardon me for interrupting, but I need to tell you:</i><br/>
       <h1>AdBlock is getting an upgrade.</h1>
-      This new update requires that you are using <b>Chrome 17</b> or newer.<br/><br/>
-      It seems the version you are using right now does not meet that requirement.<br/><br/>
-      To update Chrome, click the <i>Wrench menu</i> &gt; <i>About Google Chrome</i> &gt; <i>Update now</i>.<br/>
-      If you don't do this, AdBlock will <b>stop working</b> in a couple of weeks!<br/><br/>
-      <span style="color: gray;">The update we will launch in a couple of weeks will improve the way ads are blocked and implement popup blocking, as well as blocking ads in videos</span><br/><br/>
-      - The developers
+      AdBlock will soon block popups, ads in videos, and ads in Flash games.<br/>
+      This requires an up to date version of Chrome, but yours seems to be out of date.<br/><br/>
+
+      <h3>You should update Chrome now.</h3>
+      To update Chrome, click the <i>Wrench</i> menu &gt; <i>About Google Chrome</i> &gt; <i>Update now</i>.<br/>
+      If you don't do this, AdBlock will soon <b>stop working</b>!<br/><br/>
+
+      <i>
+        I'll show you this reminder daily until you update Chrome.<br/>
+        If you can't update Chrome, you can uninstall AdBlock from <a id="link" href="chrome://extensions">your list of extensions</a>.<br/>
+      </i>
     </div>
+    <script>
+      document.getElementById("link").addEventListener("click", function(e) {
+        chrome.tabs.create({url: "chrome://extensions"});
+        e.preventDefault();
+      }, false);
+    </script>
   </body>
 </html>
 
