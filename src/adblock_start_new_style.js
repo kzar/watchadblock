@@ -1,24 +1,3 @@
-// We track two events:
-//   A: beforeload -- an element has loaded which we should remove if blocked
-//   B: block-results -- sent by onBeforeRequest telling us which URLs
-//      were blocked and which were not.
-//
-// Because they can come in any order, and multiple As can come in for one B,
-// and multiple identical Bs may come in for different groups of As, we must
-// do the following:
-//
-//   When A arrives, store the element.  If we have both A and B, process them.
-//   When B arrives, store the verdict.  If we have both A and B, process them.
-//   function processMatch:
-//       Unstore all A elements and one B verdict.
-//       If verdict is 'blocked', remove the A elements from the DOM.
-//
-//   Running processMatch is actually deferred, so that if 5 As come after 1 B,
-//   the first A gives the other 4 As a chance to store their elements before
-//   processing their matching B.
-//
-// See issue chromium:97392 for more details.
-
 var elementTracker = {
   onBeforeload: function(event) {
     if (event.url == 'about:blank')
@@ -28,16 +7,15 @@ var elementTracker = {
     if (!(elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object))) {
       if (elementTracker.picreplacement_enabled)
         picreplacement.augmentIfAppropriate({el: event.target});
-      return;
     }
-
-    elementTracker._store(elType, relativeToAbsoluteUrl(event.url), 'elements', event.target);
   },
 
-  onBlockResults: function(request, sender, sendResponse) {
-    if (request.command != 'block-results')
+  onPurgeRequest: function(request, sender, sendResponse) {
+    if (request.command != 'purge-elements')
       return;
 
+    if (!elementTracker.picreplacement_enabled && request.picreplacement_enabled)
+      document.addEventListener("beforeload", elementTracker.onBeforeload, true);
     elementTracker.picreplacement_enabled = request.picreplacement_enabled;
     var myFrame = document.location.href.replace(/#.*$/, "");
     if (request.frameUrl != myFrame) {
@@ -45,59 +23,99 @@ var elementTracker = {
       return;
     }
 
-    for (var i = 0; i < request.results.length; i++) {
-      var result = request.results[i];
-      var elType = result[0], url = result[1], blocked = result[2];
-      elementTracker._store(elType, url, 'verdicts', blocked);
-    }
+    // TODO remove next line once .blocked is no longer sent and purge-elements
+    // is only sent for appropriate types.
+    if (request.blocked !== false && (request.elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object)))
+      window.setTimeout(function() { elementTracker._purgeElements(request.elType, request.url); }, 0);
+
     sendResponse({});
   },
 
-  _store: function(elType, url, targetList, value) {
-    var key = elType + " " + url;
-    if (!elementTracker[key])
-      elementTracker[key] = { elements: [], verdicts: [], elType: elType };
-    var data = elementTracker[key];
-    data[targetList].push(value);
-    log("[DEBUG]", (targetList == 'elements' ? value.nodeName:value) + " is", targetList, "#", data[targetList].length, "for key", key.substring(0, 80));
+  // Remove elements on the page of |elType| that request |url|.
+  // Will try again if none are found unless |lastTry|.
+  _purgeElements: function(elType, url, lastTry) {
+    log("[DEBUG]", "Purging:", lastTry, elType, url);
+    var tagdata = this._tagsForElType(elType);
+    var srcdata = this._srcsFor(url);
 
-    if (data.elements.length == 0 || data.verdicts.length == 0 || data.starting)
-      return;
-
-    // we have enough data to act (see above for why it's deferred)
-    data.starting = true;
-    window.setTimeout(function() {
-      data.starting = false;
-      elementTracker._processMatch(key);
-    }, 0);
-  },
-
-  _processMatch: function(key) {
-    var data = elementTracker[key];
-    if (!data || data.verdicts.length == 0) {
-      log("This shouldn't happen", data && data.verdicts);
-      return; // shouldn't happen
+    log("[DEBUG]", tagdata.length, srcdata.length);
+    for (var j=0; j < tagdata.length; j++) {
+      var tag = tagdata[j];
+      for (var k=0; k < srcdata.length; k++) {
+        var src = srcdata[k];
+        var selector = tag.name + '[' + tag.attr + src.op + '"' + src.text + '"]';
+        var results = document.querySelectorAll(selector);
+        log("[DEBUG]", results.length, "results for selector:", selector);
+        for (var i = 0; i < results.length; i++) {
+          // this is weaker than before: img/object/iframe that are not ads but
+          // that are within hidden sections will not be picreplaced.
+          if (elementTracker.picreplacement_enabled)
+            picreplacement.augmentIfAppropriate({el: el, elType: elType, blocked: true});
+          destroyElement(results[i], elType);
+          // The page probably doesn't express the same ad URL via two different 
+          // src strings, so once we find a match it's probably safe to quit looking.
+          return;
+        }
+      }
     }
 
-    var shouldBlock = data.verdicts[0];
-    log("[DEBUG]", data.elements.length, shouldBlock?"elements will be REMOVED.":"elements are harmless.", key);
-    data.elements.forEach(function(el) {
-      if (elementTracker.picreplacement_enabled)
-        picreplacement.augmentIfAppropriate({el: el, elType: data.elType, blocked: shouldBlock});
-      if (shouldBlock)
-        destroyElement(el, data.elType);
-    });
+    // No match; try later.
+    if (!lastTry) {
+      var that = this;
+      setTimeout(function() { that._purgeElements(elType, url, true); }, 2000);
+    }
+  },
 
-    data.elements = [];
-    data.verdicts.pop();
-    if (data.verdicts.length == 0)
-      delete elementTracker[key];
+  _tagsForElType: function(elType) {
+    var results = [];
+    if (elType & ElementTypes.image) {
+      results.push({name: "IMG", attr: "src"});
+    }
+    else if (elType & ElementTypes.subdocument) {
+      results.push({name: "IFRAME", attr: "src"});
+      results.push({name: "FRAME", attr: "src"});
+    }
+    else if (elType & ElementTypes.object) {
+      results.push({name: "OBJECT", attr: "data"});
+      results.push({name: "EMBED", attr: "src"});
+    }
+    return results;
+  },
+
+  // To enable testing
+  page_location: document.location,
+
+  // Return a list of { op, text }, where op is a CSS selector operator and
+  // text is the text to select in a src attr, in order to match an IMG on this
+  // page that could request the given absolute |url|.
+  _srcsFor: function(url) {
+    url = url.replace(/#.*$/, '');
+    var url_parts = parseUri(url);
+    var page_parts = this.page_location;
+    var results = [];
+    // Case 1: absolute (scheme-agnostic)
+    results.push({ op:"$=", text: url.match(':(//.*)$')[1] });
+    if (url_parts.hostname === page_parts.hostname) {
+      // Case 2: The kind that starts with '/'
+      results.push({ op:"=", text: url_parts.pathname+url_parts.search });
+      // Case 3: Relative URL
+      var page_dirs = page_parts.pathname.replace('#.*$', '').split('/');
+      var url_dirs = url_parts.pathname.split('/');
+      for (var i=0; page_dirs[i] === url_dirs[i] && i < page_dirs.length - 1 && i < url_dirs.length - 1; i++) {
+        // i is set to first differing position
+      }
+      var dir = new Array(page_dirs.length - i).join("/..").substring(1);
+      var path = url_dirs.slice(i).join("/") + url_parts.search;
+      var src = dir + (dir ? "/" : "") + path;
+      results.push({ op:"=", text: src });
+    }
+
+    return results;
   }
 };
 
 function adblock_begin_new_style() {
-  document.addEventListener("beforeload", elementTracker.onBeforeload, true);
-  chrome.extension.onRequest.addListener(elementTracker.onBlockResults);
+  chrome.extension.onRequest.addListener(elementTracker.onPurgeRequest);
 
   var opts = { 
     domain: document.location.hostname,
@@ -107,7 +125,7 @@ function adblock_begin_new_style() {
     if (data.abort || data.page_is_whitelisted || data.adblock_is_paused) {
       // Our services aren't needed.  Stop all content script activity.
       document.removeEventListener("beforeload", elementTracker.onBeforeload, true);
-      chrome.extension.onRequest.removeListener(elementTracker.onBlockResults);
+      chrome.extension.onRequest.removeListener(elementTracker.onPurgeRequest);
       delete elementTracker;
       return;
     }
