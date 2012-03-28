@@ -4,10 +4,8 @@ VERBOSE_DEBUG = false;
 // Issue 6614: Don't run in a frame, to avoid manipulation by websites.
 if (window.location.origin + "/" === chrome.extension.getURL("")) {
   // above line avoids content scripts making their host page break frames
-  if (window.top !== window) {
+  if (window.top !== window)
     window.location.replace("about:blank");
-    intentionally_crash; // so the rest of the page isn't executed
-  }
 }
 
 // Run a function on the background page.
