@@ -155,9 +155,10 @@ if (document.location != 'about:blank' && (!document.documentElement || document
       var searchquery = this.href.replace(/^.+?\?/, '?');
       if (searchquery) {
         var queryparts = parseUri.parseSearch(searchquery);
-        var loc = queryparts.location, reqLoc = queryparts.requiresLocation;
+        var id = "url:" + queryparts.location;
+        var reqLoc = queryparts.requiresLocation;
         var reqList = (reqLoc ? "url:" + reqLoc : undefined);
-        BGcall("subscribe", {id: 'url:' + loc, requires: reqList});
+        BGcall("subscribe", {id: id, requires: reqList});
         window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
                     "_blank",
                     'scrollbars=0,location=0,resizable=0,width=450,height=140');

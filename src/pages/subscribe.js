@@ -4,8 +4,9 @@ $(function() {
 
   // When the subscription is finished or aborted
   function finished(success) {
-    var message = (success ? "subscribingfinished" : "subscribingfailed");
-    $('span#result').text(translate(message));
+    var message = (success ? translate("subscribingfinished") :
+                             translate("subscribingfailed"));
+    $('#result').text(message);
     window.setTimeout(window.close, success ? 2000 : 3500);
   }
 
@@ -22,7 +23,7 @@ $(function() {
   chrome.extension.onRequest.addListener(function(request) {
     if (request.command != "filters_updated")
       return;
-    if ($('span#result').text())
+    if ($('#result').text())
       return;
 
     BGcall('get_subscriptions_minus_text', function(subs) {
