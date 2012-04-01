@@ -215,7 +215,7 @@ PatternFilter._parseRule = function(text) {
   if (!(result.options & FilterOptions.MATCHCASE))
     rule = rule.toLowerCase();
 
-  key = rule.match(/\w{5,}/);
+  var key = rule.match(/\w{5,}/);
   if (key)
     result.key = new RegExp(key);
 
