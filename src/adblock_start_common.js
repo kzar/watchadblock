@@ -152,11 +152,17 @@ if (document.location != 'about:blank' && (!document.documentElement || document
     var elems = document.querySelectorAll('[href^="abp:"], [href^="ABP:"]');
     var abplinkhandler = function(event) {
       event.preventDefault();
-      var searchquery = this.href.replace(/^.+?\?/, '');
-      if (searchquery)
-        window.open(chrome.extension.getURL('pages/subscribe.html?' +
-                    searchquery), "_blank",
+      var searchquery = this.href.replace(/^.+?\?/, '?');
+      if (searchquery) {
+        var queryparts = parseUri.parseSearch(searchquery);
+        var loc = queryparts.location;
+        var reqLoc = queryparts.requiresLocation;
+        var reqList = (reqLoc ? "url:" + reqLoc : undefined);
+        BGcall("subscribe", {id: "url:" + loc, requires: reqList});
+        window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
+                    "_blank",
                     'scrollbars=0,location=0,resizable=0,width=450,height=140');
+      }
     };
     for (var i=0; i<elems.length; i++) {
       elems[i].addEventListener("click", abplinkhandler, false);
