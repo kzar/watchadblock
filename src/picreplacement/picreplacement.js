@@ -375,7 +375,7 @@ translate: function(key) {
       es: "AdBlock ahora muestra los gatos en lugar de anuncios!",
       fr: "Dorénavant AdBlock affichera des chats à la place des publicités!",
       de: "AdBlock ersetzt ab heute Werbung durch Katzen!",
-      ru: "AdBlock теперь отображается кошек вместо рекламы!",
+      ru: "AdBlock теперь отображает котов вместо рекламы!",
       nl: "AdBlock toont je nu katten in plaats van advertenties!",
       zh: "现在显示的AdBlock猫，而不是广告！",
     },
