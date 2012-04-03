@@ -62,3 +62,12 @@ $("#enable_show_advanced_options").change(function() {
     window.location.reload();
   }, 50);
 });
+
+// picreplacement: Replace missing CatBlock checkbox with a message for those who are confused about where to find it.
+if (Date.now() >= new Date(2012, 3, 4) && !storage_get("saw_catblock_explanation_options_msg")) {
+  $("#catblock-explanation").show();
+  $("#catblock-explanation-close").click(function() {
+    $("#catblock-explanation").slideUp();
+    storage_set('saw_catblock_explanation_options_msg', true);
+  });
+}

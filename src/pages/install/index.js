@@ -86,7 +86,7 @@ var start = Date.now();
 })();
 
 
-$("#start-chrome.card input").change(function() {
+$("#start-chrome.card #showads").change(function() {
   BGcall("set_setting", "show_google_search_text_ads", this.checked, function() {
     BGcall("update_filters");
   });
@@ -101,5 +101,20 @@ var iframe = $("<iframe>", {
 });
 $("#iframe-slot").html(iframe);
 
-localizePage();
+// picreplacement: show appropriate instructions for getting CatBlock
+$("#start-chrome.card #show_catblock").change(function() {
+  var catblockIsDead = (Date.now() >= new Date(2012, 3, 4));
+  $('[i18n="ok_catblock_mode_is_enabled"]').toggle(!catblockIsDead);
+  $('[i18n="catblock_was_only_in_adblock_for_a_few_days"]').toggle(catblockIsDead);
 
+  if (!catblockIsDead) {
+    $("#catblock-response")[this.checked ? "slideDown" : "slideUp"]();
+    BGcall("set_setting", "do_picreplacement", this.checked);
+  }
+  else {
+    $("#catblock-response").slideDown();
+    this.checked = false;
+  }
+});
+
+localizePage();
