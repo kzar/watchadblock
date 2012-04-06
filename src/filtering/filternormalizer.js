@@ -44,6 +44,12 @@ var FilterNormalizer = {
     // Some rules are separated by \r\n; and hey, some rules may
     // have leading or trailing whitespace for some reason.
     filter = filter.replace(/\r$/, '').trim();
+    
+    // Issue 6624
+    if (/^\@\@\|http\:\*+\.[a-z][a-z]\^$/.test(filter)) {
+      console.log("Skipping poisoned filter", filter);
+      throw "Poisoned filter";
+    }
 
     // Remove comment/empty filters.
     if (Filter.isComment(filter))
