@@ -853,7 +853,9 @@
   
   if (!SAFARI) {
     var chromeversion = navigator.userAgent.match(/Chrome\/(\d+)\.\d+\.\d+\.\d+/);
-    if (chromeversion && Number(chromeversion[1]) < 17) {
+    // Issue 6662 - don't show to RockMelt users while RockMelt upgrades
+    var isRockMelt = navigator.userAgent.match(/RockMelt/);
+    if (chromeversion && !isRockMelt && Number(chromeversion[1]) < 17) {
       if (storage_get('sawChrome16WarningOn') !== String(new Date().getDate())) {
         window.open('pages/Chrome16warning.html', "_blank", 
                   'scrollbars=0,location=0,resizable=0,width=640,height=390');
