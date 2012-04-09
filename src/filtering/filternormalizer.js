@@ -45,12 +45,6 @@ var FilterNormalizer = {
     // have leading or trailing whitespace for some reason.
     filter = filter.replace(/\r$/, '').trim();
     
-    // Issue 6624
-    if (/^\@\@\|http\:\*+\.[a-z][a-z]\^$/.test(filter)) {
-      console.log("Skipping poisoned filter", filter);
-      throw "Poisoned filter";
-    }
-
     // Remove comment/empty filters.
     if (Filter.isComment(filter))
         return false;
@@ -90,6 +84,9 @@ var FilterNormalizer = {
       var parsedFilter = new SelectorFilter(filter);
 
     } else { // If it is a blocking rule...
+      // Issue 6624
+      filter = filter.replace(/\*+/g, '*');
+
       var parsedFilter = PatternFilter.fromText(filter); // throws if invalid
       var types = parsedFilter._allowedElementTypes;
 
