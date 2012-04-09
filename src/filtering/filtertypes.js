@@ -219,6 +219,9 @@ PatternFilter._parseRule = function(text) {
   if (key)
     result.key = new RegExp(key);
 
+  // ***** -> *
+  rule = rule.replace(/\*+/g, '*');
+
   // If it starts or ends with *, strip that -- it's a no-op.
   rule = rule.replace(/^\*/, '');
   rule = rule.replace(/\*$/, '');

@@ -84,9 +84,6 @@ var FilterNormalizer = {
       var parsedFilter = new SelectorFilter(filter);
 
     } else { // If it is a blocking rule...
-      // Issue 6624
-      filter = filter.replace(/\*+/g, '*');
-
       var parsedFilter = PatternFilter.fromText(filter); // throws if invalid
       var types = parsedFilter._allowedElementTypes;
 
