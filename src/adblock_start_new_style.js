@@ -28,10 +28,9 @@ var elementPurger = {
         for (var j=0; j < results.length; j++) {
           destroyElement(results[j], elType);
         }
-        if (results.length) {
-          log("[DEBUG]", "  ", results.length, "results for selector:", selector);
+        log("[DEBUG]", "  ", results.length, "results for selector:", selector);
+        if (results.length)
           return; // I doubt the same URL was loaded via 2 different src attrs.
-        }
       }
     }
 
