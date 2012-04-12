@@ -1,7 +1,7 @@
 var elementPurger = {
   onPurgeRequest: function(request, sender, sendResponse) {
     if (request.command === 'purge-elements' &&
-        request.frameUrl === elementPurger._frameUrl)
+        request.frameUrl === document.location.href.replace(/#.*$/, ""))
       elementPurger._purgeElements(request.elType, request.url);
 
     sendResponse({});
@@ -18,8 +18,8 @@ var elementPurger = {
     tags[ElementTypes.object] = { "OBJECT":1, EMBED:1 };
 
     var srcdata = this._srcsFor(url);
-    for (var tag in tags[elType]) {
-      for (var i=0; i < srcdata.length; i++) {
+    for (var i=0; i < srcdata.length; i++) {
+      for (var tag in tags[elType]) {
         var src = srcdata[i];
         var attr = (tag === "OBJECT" ? "data" : "src");
         var selector = tag + '[' + attr + src.op + '"' + src.text + '"]';
@@ -44,25 +44,31 @@ var elementPurger = {
   },
 
   // Return a list of { op, text }, where op is a CSS selector operator and
-  // text is the text to select in a src attr, in order to match an IMG on this
-  // page that could request the given absolute |url|.
+  // text is the text to select in a src attr, in order to match an element on
+  // this page that could request the given absolute |url|.
   _srcsFor: function(url) {
-    url = url.replace(/#.*$/, '');
+    // NB: <img src="a#b"> causes a request for "a", not "a#b".  I'm
+    // intentionally ignoring IMG tags that uselessly specify a fragment.
+    // AdBlock will fail to hide them after blocking the image.
     var url_parts = parseUri(url), page_parts = this._page_location;
     var results = [];
-    // Case 1: absolute (scheme-agnostic)
+    // Case 1: absolute (of the form "abc://de.f/ghi" or "//de.f/ghi")
     results.push({ op:"$=", text: url.match(':(//.*)$')[1] });
     if (url_parts.hostname === page_parts.hostname) {
+      var url_search_and_hash = url_parts.search + url_parts.hash;
       // Case 2: The kind that starts with '/'
-      results.push({ op:"=", text: url_parts.pathname+url_parts.search });
+      results.push({ op:"=", text: url_parts.pathname + url_search_and_hash });
       // Case 3: Relative URL
-      var page_dirs = page_parts.pathname.replace('#.*$', '').split('/');
+      var page_dirs = page_parts.pathname.split('/');
       var url_dirs = url_parts.pathname.split('/');
-      for (var i=0; page_dirs[i] === url_dirs[i] && i < page_dirs.length - 1 && i < url_dirs.length - 1; i++) {
-        // i is set to first differing position
+      var i = 0;
+      while (page_dirs[i] === url_dirs[i] 
+             && i < page_dirs.length - 1 
+             && i < url_dirs.length - 1) {
+        i++; // i is set to first differing position
       }
       var dir = new Array(page_dirs.length - i).join("/..").substring(1);
-      var path = url_dirs.slice(i).join("/") + url_parts.search;
+      var path = url_dirs.slice(i).join("/") + url_search_and_hash;
       var src = dir + (dir ? "/" : "") + path;
       results.push({ op:"=", text: src });
     }
@@ -70,7 +76,6 @@ var elementPurger = {
     return results;
   },
 
-  _frameUrl: document.location.href.replace(/#.*$/, ""),
   // To enable testing
   _page_location: document.location
 };

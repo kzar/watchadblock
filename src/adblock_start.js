@@ -95,7 +95,8 @@ function adblock_begin() {
   addResourceToList = function(resource) {
     GLOBAL_collect_resources[resource] = null;
   }
-  document.addEventListener("beforeload", beforeLoadHandler, true);
+  if (SAFARI)
+    document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
     domain: document.location.hostname,
@@ -114,6 +115,13 @@ function adblock_begin() {
       abort();
       return;
     }
+    if (!SAFARI) {
+      // Chrome 16 users still need this. Until we remove support for them,
+      // at least give them some blocking. Startup ads will slip through, but
+      // if they report it so we can say 'Update to v17+'.
+      document.addEventListener("beforeload", beforeLoadHandler, true);
+    }
+
     // Store the data for adblock.js
     // If adblock.js already installed its code, run it after we're done.
     window.setTimeout(function() { 
