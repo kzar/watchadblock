@@ -94,8 +94,7 @@
         fd[tabId][frameId] = {
           url: url,
           // Cache these as they'll be needed once per request
-          domain: parseUri(url).hostname,
-          blockResults: []
+          domain: parseUri(url).hostname
         };
         if (frameId === 0) {
           fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
@@ -147,35 +146,9 @@
       storeResource: function(tabId, url, elType) {
         if (!get_settings().show_advanced_options)
           return;
-        frameData.get(tabId, 0).resources[elType + ':|:' + url] = null;
-      },
-
-      // Record that a url+elType was or was not blocked on the given tab.
-      // We don't record the frame because there's no way to message a
-      // specific frame, so our results will be broadcast to every frame
-      // on the tab anyway.
-      //
-      // This only stores elTypes that actually need removing in the
-      // content script.
-      //
-      // Returns an array of [elType, url, blocked] stored results if
-      // it decides it's time for the tab to know about them.
-      storeBlockResults: function(tabId, frameId, url, elType, blocked) {
-        var worthStoring = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
-        if (!worthStoring)
-          return null;
-        var data = frameData.get(tabId, frameId);
-        data.blockResults.push([elType, url, blocked]);
-        // Increasing this number sends fewer messages but leaves more
-        // unblocked items' keys (elType+" "+url) in tab memory
-        // and background memory after a tab is done loading
-        if (blocked || data.blockResults.length > 0) { // picreplacement
-          var blockData = data.blockResults;
-          data.blockResults = [];
-          return blockData;
-        } else {
-          return null;
-        }
+        var data = frameData.get(tabId, 0);
+        if (data !== undefined)
+          data.resources[elType + ':|:' + url] = null;
       },
 
       // When a tab is closed, delete all its data
@@ -211,16 +184,15 @@
         // May the URL be loaded by the requesting frame?
         var frameDomain = frameData.get(tabId, requestingFrameId).domain;
         var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
-        var results = frameData.storeBlockResults(tabId, requestingFrameId, details.url, elType, blocked);
-        // Non-null results means there's a good reason to send a batch of
-        // results to the tab -- one was blocked, or there are many results
-        if (results) {
+
+        var canPurge = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
+        if (canPurge && blocked) {
           // frameUrl is used by the recipient to determine whether they're the frame who should
           // receive this or not.  Because the #anchor of a page can change without navigating
           // the frame, ignore the anchor when matching.
           var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
-          var picreplacement_enabled = picreplacement_checker.enabled(frameUrl);
-          chrome.tabs.sendRequest(tabId, { command: "block-results", picreplacement_enabled: picreplacement_enabled, frameUrl: frameUrl, results: results });
+          var data = { command: "purge-elements", frameUrl: frameUrl, url:details.url, elType: elType };
+          chrome.tabs.sendRequest(tabId, data); 
         }
 
         log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
@@ -279,7 +251,9 @@
     if (!window.frameData)
       return;
     frameData.storeResource(sender.tab.id, selector, "HIDE");
-    log(frameData.get(sender.tab.id, 0).domain, ": hiding rule", selector, "matched:\n", matches);
+    var data = frameData.get(sender.tab.id, 0);
+    if (data)
+      log(data.domain, ": hiding rule", selector, "matched:\n", matches);
   }
 
   // UNWHITELISTING
