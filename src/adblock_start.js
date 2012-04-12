@@ -95,7 +95,8 @@ function adblock_begin() {
   addResourceToList = function(resource) {
     GLOBAL_collect_resources[resource] = null;
   }
-  if (SAFARI)
+  var isRockMelt = navigator.userAgent.match(/RockMelt/);
+  if (SAFARI || isRockMelt)
     document.addEventListener("beforeload", beforeLoadHandler, true);
 
   var opts = { 
@@ -115,7 +116,7 @@ function adblock_begin() {
       abort();
       return;
     }
-    if (!SAFARI) {
+    if (!SAFARI && !isRockMelt) {
       // Chrome 16 users still need this. Until we remove support for them,
       // at least give them some blocking. Startup ads will slip through, but
       // if they report it so we can say 'Update to v17+'.
