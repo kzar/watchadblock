@@ -56,7 +56,8 @@ function maybe_show_badge() {
 }
 
 // picreplacement: CatBlock explanation for users who explicitly enabled it and are now wondering why it's gone
-if (storage_get("settings").do_picreplacement === true 
+if (storage_get("settings")
+    && storage_get("settings").do_picreplacement === true 
     && !storage_get("saw_catblock_explanation_popup")
     && Date.now() >= new Date(2012, 3, 4) ) {
   $("#catblock-explanation").show();
