@@ -19,8 +19,11 @@
 ! Because acid3 doesn't like our style block
 @@||acid3.acidtests.org^$document,domain=acid3.acidtests.org
 
-! 'This webpage was blocked by an extension' iframes and similar not catched resources
+! 'This webpage was blocked by an extension' iframes (in about:blank frames)
 ebuddy.com###login-pread-iframe-pread
+
+! 'This webpage was blocked by an extension' iframes (because it contains unescaped spaces)
+sing365.com##iframe[src^="http://jmn.jangonetwork.com/"]
 
 ! Because we cut off urls at 200 characters
 @@||24ur.com/adserver/adall.php
