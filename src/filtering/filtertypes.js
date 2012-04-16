@@ -128,12 +128,12 @@ PatternFilter._parseRule = function(text) {
 
   var result = {
     domainText: '',
-    allowedElementTypes: ElementTypes.NONE,
     options: FilterOptions.NONE
   };
 
   var optionsRegex = /\$~?[\w\-]+(?:=[^,\s]+)?(?:,~?[\w\-]+(?:=[^,\s]+)?)*$/;
   var optionsText = text.match(optionsRegex);
+  var allowedElementTypes;
   if (!optionsText) {
     var rule = text;
     var options = [];
@@ -141,8 +141,6 @@ PatternFilter._parseRule = function(text) {
     var options = optionsText[0].substring(1).toLowerCase().split(',');
     var rule = text.replace(optionsText[0], '');
   }
-
-  var disallowedElementTypes = ElementTypes.NONE;
 
   for (var i = 0; i < options.length; i++) {
     var option = options[i];
@@ -167,22 +165,27 @@ PatternFilter._parseRule = function(text) {
     // 'background' is a synonym for 'image'.
     if (option == 'background')
       option = 'image';
-    
+
     if (option in ElementTypes) { // this option is a known element type
-      if (inverted)
-        disallowedElementTypes |= ElementTypes[option];
-      else
-        result.allowedElementTypes |= ElementTypes[option];
+      if (inverted) {
+        if (allowedElementTypes === undefined)
+          allowedElementTypes = ElementTypes.DEFAULTTYPES;
+        allowedElementTypes &= ~ElementTypes[option];
+      } else {
+        if (allowedElementTypes === undefined)
+          allowedElementTypes = ElementTypes.NONE;
+        allowedElementTypes |= ElementTypes[option];
+      }
     }
-    else if (option == 'third_party') {
+    else if (option === 'third_party') {
       result.options |= 
           (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
     }
-    else if (option == 'match_case') {
+    else if (option === 'match_case') {
       //doesn't have an inverted function
       result.options |= FilterOptions.MATCHCASE;
     }
-    else if (option == 'collapse') {
+    else if (option === 'collapse') {
       // We currently do not support this option. However I've never seen any
       // reports where this was causing issues. So for now, simply skip this
       // option, without returning that the filter was invalid.
@@ -192,11 +195,11 @@ PatternFilter._parseRule = function(text) {
     }
   }
   // If no element types are mentioned, the default set is implied.
-  if (result.allowedElementTypes == ElementTypes.NONE)
+  // Otherwise, the element types are used, which can be ElementTypes.NONE
+  if (allowedElementTypes === undefined)
     result.allowedElementTypes = ElementTypes.DEFAULTTYPES;
-
-  // Extract the disallowed types from the allowed types
-  result.allowedElementTypes &= ~disallowedElementTypes;
+  else
+    result.allowedElementTypes = allowedElementTypes;
 
   // We parse whitelist rules too, in which case we already know it's a
   // whitelist rule so can ignore the @@s.
