@@ -211,8 +211,7 @@
       _settings.set('use_webrequest_blocking', false);
       try {
         chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
-// issue 6446
-//        chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
+        chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
       }
@@ -227,8 +226,7 @@
       _settings.set('use_webrequest_blocking', true);
       try {
         chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
-// issue 6446
-//        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
       }
       catch(ex) {
         logNewStyleBlockingError(ex.stack);
