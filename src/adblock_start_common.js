@@ -113,8 +113,7 @@ function block_list_via_css(selectors) {
     var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
     for (var i = 0; i < selectors.length; i += GROUPSIZE) {
       var line = selectors.slice(i, i + GROUPSIZE);
-      // picreplacement
-      var rule = line.join(",") + " { display:none !important; orphans: 4321 !important; }";
+      var rule = line.join(",") + " { display:none !important; }";
       css_chunk.sheet.insertRule(rule);
     }
   }

@@ -7,7 +7,6 @@
       show_context_menu_items: true,
       show_advanced_options: false,
       use_webrequest_blocking: false,
-      do_picreplacement: false,
     };
     // Opt in Chrome 17 users to webRequest.
     if (chrome.webRequest)
@@ -490,24 +489,18 @@
       }
 
       function setBrowserButton(info) {
-        var icons = {
-          enabled: "img/icon19.png",
-          disabled: "img/icon19-grayscale.png",
-          whitelisted: "img/icon19-whitelisted.png"
-        };
-        icons = picreplacement_checker.get_icons(icons, info.tab.url);
         if (sessionStorage.adblock_is_paused) {
-          chrome.browserAction.setIcon({path:icons.disabled, tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
         } else if (info.disabled_site &&
             !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
           // Show non-disabled icon on the installation-success page so it
           // users see how it will normally look. All other disabled pages
           // will have the gray one
-          chrome.browserAction.setIcon({path:icons.disabled, tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
         } else if (info.whitelisted) {
-          chrome.browserAction.setIcon({path:icons.whitelisted, tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
         } else {
-          chrome.browserAction.setIcon({path:icons.enabled, tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
         }
       }
 
