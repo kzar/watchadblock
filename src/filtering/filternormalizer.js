@@ -63,7 +63,9 @@ var FilterNormalizer = {
 
       try {
         // Throws if the filter is invalid...
-        document.querySelector(filter.substr(filter.indexOf('##') + 2));
+        var selectorPart = filter.substr(filter.indexOf("##") + 2);
+        if (document.querySelector(selectorPart + ',html').length === 0)
+          throw "Causes other filters to fail";
       } catch(ex) {
         // ...however, the thing it throws is not human-readable. This is.
         throw "Invalid CSS selector syntax";
