@@ -82,8 +82,8 @@ function destroyElement(el, elType) {
     el.style.setProperty("display", "none", "important");
     el.style.setProperty("visibility", "hidden", "important");
     el.style.setProperty("opacity", "0", "important");
-    el.setAttribute("width", 0);
-    el.setAttribute("height", 0);
+    el.style.setProperty("width", "0", "important");
+    el.style.setProperty("height", "0", "important");
   }
 }
 
@@ -113,7 +113,7 @@ function block_list_via_css(selectors) {
     var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
     for (var i = 0; i < selectors.length; i += GROUPSIZE) {
       var line = selectors.slice(i, i + GROUPSIZE);
-      var rule = line.join(",") + " { display:none !important; }";
+      var rule = line.join(",") + " { display:none !important; orphans: 4321 !important; }";
       css_chunk.sheet.insertRule(rule);
     }
   }

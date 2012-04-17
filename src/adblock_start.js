@@ -79,6 +79,8 @@ beforeLoadHandler = function(event) {
     } else
       event.preventDefault();
 
+    if (window.picinjection) 
+      window.picinjection._augmentBlockedElIfRightType(event.target);
     if (!weakDestroyElement(el, elType, event.mustBePurged))
       destroyElement(el, elType);
   }

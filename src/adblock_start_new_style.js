@@ -2,14 +2,17 @@ var elementPurger = {
   onPurgeRequest: function(request, sender, sendResponse) {
     if (request.command === 'purge-elements' &&
         request.frameUrl === document.location.href.replace(/#.*$/, ""))
-      elementPurger._purgeElements(request.elType, request.url);
+      elementPurger._purgeElements(request);
 
     sendResponse({});
   },
 
-  // Remove elements on the page of |elType| that request |url|.
-  // Will try again if none are found unless |lastTry|.
-  _purgeElements: function(elType, url, lastTry) {
+  // Remove elements on the page of |request.elType| that request
+  // |request.url|.  Will try again if none are found unless |lastTry|.
+  _purgeElements: function(request, lastTry) {
+    var elType = request.elType;
+    var url = request.url;
+
     log("[DEBUG]", "Purging:", lastTry, elType, url);
 
     var tags = {};
@@ -25,12 +28,17 @@ var elementPurger = {
         var selector = tag + '[' + attr + src.op + '"' + src.text + '"]';
 
         var results = document.querySelectorAll(selector);
-        for (var j=0; j < results.length; j++) {
-          destroyElement(results[j], elType);
-        }
         log("[DEBUG]", "  ", results.length, "results for selector:", selector);
-        if (results.length)
+        if (results.length) {
+          for (var j=0; j < results.length; j++) {
+            destroyElement(results[j], elType);
+          }
+          var externalId = "kodkhcagmjcidjgljmbfiaconnbnohho";
+          request.selector = selector;
+          console.log("SENDING TO CATBLOCK", externalId, request);
+          chrome.extension.sendRequest(externalId, request);
           return; // I doubt the same URL was loaded via 2 different src attrs.
+        }
       }
     }
 
@@ -39,7 +47,7 @@ var elementPurger = {
     // and causing a jarring page re-layout.
     if (!lastTry) {
       var that = this;
-      setTimeout(function() { that._purgeElements(elType, url, true); }, 2000);
+      setTimeout(function() { that._purgeElements(request, true); }, 2000);
     }
   },
 
