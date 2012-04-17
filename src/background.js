@@ -836,3 +836,5 @@
     } else
       localStorage.removeItem('sawChrome16WarningOn');
   }
+
+  log("\n===FINISHED LOADING===\n\n");
