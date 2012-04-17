@@ -68,7 +68,7 @@ function localizePage() {
 // Inputs: url: the URL you want to parse
 // Outputs: object containing all parts of |url| as attributes
 parseUri = function(url) {
-  var matches = /^(([^:]+(?::|$))(?:(?:\w+:)?\/\/)?(?:[^:@]*(?::[^:@]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/.exec(url);
+  var matches = /^(([^:]+(?::|$))(?:(?:\w+:)?\/\/)?(?:[^:@\/]*(?::[^:@\/]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/.exec(url);
   // The key values are identical to the JS location object values for that key
   var keys = ["href", "origin", "protocol", "host", "hostname", "port",
               "pathname", "search", "hash"];
