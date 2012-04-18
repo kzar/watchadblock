@@ -415,7 +415,8 @@
   //   }
   // Returns: null (asynchronous)
   getCurrentTabInfo = function(callback) {
-    chrome.tabs.getSelected(undefined, function(tab) {
+    chrome.tabs.query({active: true, windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
+      var tab = tabs[0];
       var disabled_site = page_is_unblockable(tab.url);
 
       var result = {
@@ -739,10 +740,10 @@
     //Otherwise the extension doesn't work (e.g. doesn't block ads)
     if (chrome.tabs) {
       chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-        if (tab.selected && changeInfo.status === "loading")
+        if (tab.active && changeInfo.status === "loading")
           updateButtonUIAndContextMenus();
       });
-      chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
+      chrome.tabs.onActivated.addListener(function() {
         updateButtonUIAndContextMenus();
       });
     }
