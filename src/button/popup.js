@@ -55,11 +55,10 @@ function maybe_show_badge() {
   }
 }
 
-// picreplacement: CatBlock explanation for users who explicitly enabled it and are now wondering why it's gone
+// CatBlock explanation for users who explicitly enabled it and are now wondering why it's gone
 if (storage_get("settings")
     && storage_get("settings").do_picreplacement === true 
-    && !storage_get("saw_catblock_explanation_popup")
-    && Date.now() >= new Date(2012, 3, 4) ) {
+    && !storage_get("saw_catblock_explanation_popup")) {
   $("#catblock-explanation").show();
   $("#catblock-explanation-close").click(function() {
     $("#catblock-explanation").slideUp();
@@ -157,16 +156,6 @@ $(function() {
   });
 });
 
-function picreplacement_adjust() {
-  BG.getCurrentTabInfo(function(info) {
-    if (BG.picreplacement_checker.enabled(info.tab.url)) {
-      $('[i18n*="pause"]').each(function() {
-        $(this).text($(this).text().replace("ause", "aws"));
-      });
-    }
-  });
-}
-
 // Payment wrapper open/close click handlers
 $(function() {
   var state = "initial";
@@ -208,5 +197,4 @@ $(function() {
   customize_for_this_tab();
   maybe_show_badge();
   localizePage();
-  picreplacement_adjust();
 });
