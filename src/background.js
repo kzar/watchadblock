@@ -159,48 +159,45 @@
 
     // When a request starts, perhaps block it.
     function onBeforeRequestHandler(details) {
-      try {
-        if (sessionStorage.adblock_is_paused)
-          return { cancel: false };
+      if (sessionStorage.adblock_is_paused)
+        return { cancel: false };
 
-        if (!frameData.track(details))
-          return { cancel: false };
+      if (!frameData.track(details))
+        return { cancel: false };
 
-        var tabId = details.tabId;
-        var elType = ElementTypes.fromOnBeforeRequestType(details.type);
+      var tabId = details.tabId;
+      var elType = ElementTypes.fromOnBeforeRequestType(details.type);
 
-        frameData.storeResource(tabId, details.url, elType);
+      frameData.storeResource(tabId, details.url, elType);
 
-        if (frameData.get(tabId, 0).whitelisted) {
-          log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
-          return { cancel: false };
-        }
-
-        // For most requests, Chrome and we agree on who sent the request: the frame.
-        // But for iframe loads, we consider the request to be sent by the outer
-        // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
-        var requestingFrameId = (details.type == 'sub_frame' ? details.parentFrameId : details.frameId);
-        // May the URL be loaded by the requesting frame?
-        var frameDomain = frameData.get(tabId, requestingFrameId).domain;
-        var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
-
-        var canPurge = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
-        if (canPurge && blocked) {
-          // frameUrl is used by the recipient to determine whether they're the frame who should
-          // receive this or not.  Because the #anchor of a page can change without navigating
-          // the frame, ignore the anchor when matching.
-          var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
-          var data = { command: "purge-elements", frameUrl: frameUrl, url:details.url, elType: elType };
-          chrome.tabs.sendRequest(tabId, data); 
-        }
-
-        log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
-        return { cancel: blocked };
-      }
-      catch(ex) {
-        logNewStyleBlockingError(ex.stack);
+      if (frameData.get(tabId, 0).whitelisted) {
+        log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
         return { cancel: false };
       }
+
+      // For most requests, Chrome and we agree on who sent the request: the frame.
+      // But for iframe loads, we consider the request to be sent by the outer
+      // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
+      var requestingFrameId = (details.type == 'sub_frame' ? details.parentFrameId : details.frameId);
+      // May the URL be loaded by the requesting frame?
+      var frameDomain = frameData.get(tabId, requestingFrameId).domain;
+      var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
+
+      var canPurge = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
+      if (canPurge && blocked) {
+        // frameUrl is used by the recipient to determine whether they're the frame who should
+        // receive this or not.  Because the #anchor of a page can change without navigating
+        // the frame, ignore the anchor when matching.
+        var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
+        var data = { command: "purge-elements", frameUrl: frameUrl, url:details.url, elType: elType };
+        chrome.tabs.sendRequest(tabId, data); 
+      }
+
+      log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
+      if (blocked && elType === ElementTypes.subdocument)
+        return { redirectUrl: "about:blank" };
+      else
+        return { cancel: blocked };
     }
 
     // Upon error in webRequest API, gracefully degrade to old style
