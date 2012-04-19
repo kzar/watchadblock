@@ -164,5 +164,17 @@ if (document.location != 'about:blank' && (!document.documentElement || document
     for (var i=0; i<elems.length; i++) {
       elems[i].addEventListener("click", abplinkhandler, false);
     }
+
+    (function() {
+      var styles = document.querySelectorAll("style");
+      var re = /#(\w+)\s*~\s*\*\s*{[^}]*display\s*:\s*none/;
+      for (var i = 0; i < styles.length; i++) {
+        if(re.test(styles[i].innerText)) {
+          var id = styles[i].innerText.match(re)[1];
+          styles[i].innerText = '#' + id + ' { display: none }';
+          return;
+        }
+      }
+    })();
   });
 }
