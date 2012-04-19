@@ -8,8 +8,7 @@ var run_bandaids = function(blocking_style) {
   else if (blocking_style != "new" && /youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
   else {
-    var hosts = [ /mastertoons\.com$/,
-                  /risiko-gesundheit\.de$/ ];
+    var hosts = [ /mastertoons\.com$/ ];
     hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
     if (hosts.length > 0)
       apply_bandaid_for = "noblock";
@@ -23,13 +22,6 @@ var run_bandaids = function(blocking_style) {
         var id = styles[i].innerText.match(re);
         if(id) {
           styles[i].innerText = '#' + id[1] + ' { display: none }';
-          return;
-        }
-      }
-      var els = document.querySelectorAll('[style*="position:fixed !important"]');
-      for (var i = 0; i < els.length; i++) {
-        if (/disable.*ad.*block/.test(els[i].innerText)) {
-          els[i].parentNode.removeChild(els[i]);
           return;
         }
       }
