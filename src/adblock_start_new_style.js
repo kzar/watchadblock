@@ -35,8 +35,8 @@ var elementPurger = {
           }
           var externalId = "kodkhcagmjcidjgljmbfiaconnbnohho";
           request.selector = selector;
-          console.log("SENDING TO CATBLOCK", externalId, request);
           chrome.extension.sendRequest(externalId, request);
+          
           return; // I doubt the same URL was loaded via 2 different src attrs.
         }
       }
