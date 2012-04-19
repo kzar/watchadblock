@@ -8,10 +8,10 @@ var run_bandaids = function(blocking_style) {
   else if (blocking_style != "new" && /youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
   else {
-    var hosts = [ /mastertoons/,
-                  /risiko-gesundheit/ ];
+    var hosts = [ /mastertoons\.com$/,
+                  /risiko-gesundheit\.de$/ ];
     hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
-    if (hosts)
+    if (hosts.length > 0)
       apply_bandaid_for = "noblock";
   }
 
