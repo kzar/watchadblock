@@ -194,10 +194,10 @@
       }
 
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
-      if (blocked)
+      if (blocked && elType === ElementTypes.subdocument)
         return { redirectUrl: "about:blank" };
       else
-        return { cancel: false };
+        return { cancel: blocked };
     }
 
     // Upon error in webRequest API, gracefully degrade to old style
