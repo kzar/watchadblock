@@ -82,8 +82,10 @@ function destroyElement(el, elType) {
     el.style.setProperty("display", "none", "important");
     el.style.setProperty("visibility", "hidden", "important");
     el.style.setProperty("opacity", "0", "important");
-    el.style.setProperty("width", "0", "important");
-    el.style.setProperty("height", "0", "important");
+    var css = (el.width || 0) + "px " + (el.height || 0) + "px";
+    el.style.setProperty("background-position", css);
+    el.setAttribute("width", 0);
+    el.setAttribute("height", 0);
   }
 }
 
