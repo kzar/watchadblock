@@ -7,8 +7,25 @@ var run_bandaids = function(blocking_style) {
     apply_bandaid_for = "hkpub";
   else if (blocking_style != "new" && /youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube";
+  else {
+    var hosts = [ /mastertoons\.com$/ ];
+    hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
+    if (hosts.length > 0)
+      apply_bandaid_for = "noblock";
+  }
 
   var bandaids = {
+    noblock: function() {
+      var styles = document.querySelectorAll("style");
+      var re = /#(\w+)\s*~\s*\*\s*{[^}]*display\s*:\s*none/;
+      for (var i = 0; i < styles.length; i++) {
+        var id = styles[i].innerText.match(re);
+        if(id) {
+          styles[i].innerText = '#' + id[1] + ' { display: none }';
+          return;
+        }
+      }
+    },
     hotmail: function() {
       //removing the space remaining in Hotmail/WLMail
       el = document.querySelector(".Unmanaged .WithSkyscraper #MainContent");
