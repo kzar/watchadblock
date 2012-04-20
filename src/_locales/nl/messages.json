@@ -605,29 +605,47 @@
       }
     }
   },
-  "checkinfirefox": {
-    "message": "In FireFox controleren",
-    "description": "tell a user to see if a reported ad also appears in firefox"
+  "checkinfirefoxtitle": {
+    "message": "In Firefox $chrome$ controleren",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1of Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
-  "checkinfirefox1": {
-    "message": "Installeer FireFox als je dat nog niet hebt.",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_1": {
+    "message": "Installeer Firefox $chrome$ als je dat nog niet hebt.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1of Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
-  "checkinfirefox2": {
-    "message": "Installeer AdBlock Plus als je dat nog niet hebt.",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_2": {
+    "message": "Installeer AdBlock Plus voor Firefox $chrome$ als je dat nog niet hebt.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1of AdBlockforChrome voor Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
-  "checkinfirefox3": {
-    "message": "Meld je in FireFox aan bij dezelfde filterlijsten als hier (m.u.v. AdBlock Custom filters).",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_3": {
+    "message": "Meld je in die browser aan bij dezelfde filterlijsten als hier (m.u.v. AdBlock Custom filters in Firefox).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
-  "checkinfirefox4": {
-    "message": "In FireFox, laad de pagina met de advertentie.",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_4": {
+    "message": "In die browser, laad de pagina met de advertentie.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
-  "checkinfirefox5": {
-    "message": "Zie je de advertentie ook in FireFox?",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_5": {
+    "message": "Zie je de advertentie ook in die browser?",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "refusetocheck": {
     "message": "Ik wil dit niet controleren",
