@@ -278,19 +278,6 @@ $(function() {
     sendResponse({});
   });
 
-
-  BGcall("storage_get", "pruned_oversubscription", function(pruned) {
-    BGcall("storage_get", "saw_prune_note", function(saw_note) {
-      if (pruned && !saw_note)
-        $("#prune_notification").show();
-    });
-  });
-  $("#prune_notification div").click(function() {
-    BGcall("storage_set", "saw_prune_note", true);
-    $("#prune_notification").hide();
-  });
-
-
   $("#subscribeAll").live("click", function(e) {
     var inputs = $("input:not(:checked)", ".subscription");
     for (var i=0; i<inputs.length; i++) {

@@ -827,4 +827,9 @@
       localStorage.removeItem('sawChrome16WarningOn');
   }
 
+  // Temp (4-20-12):
+  localStorage.removeItem('saw_prune_note');
+  localStorage.removeItem('pruned_oversubscription');
+  // End temp
+
   log("\n===FINISHED LOADING===\n\n");
