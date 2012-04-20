@@ -649,29 +649,47 @@
       }
     }
   },
-  "checkinfirefox": {
-    "message": "Check in Firefox",
-    "description": "tell a user to see if a reported ad also appears in firefox"
+  "checkinfirefoxtitle": {
+    "message": "Check in Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
-  "checkinfirefox1": {
-    "message": "Install Firefox if you don't have it.",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_1": {
+    "message": "Install Firefox $chrome$ if you don't have it.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
-  "checkinfirefox2": {
-    "message": "Install Adblock Plus for Firefox if you don't have it.",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_2": {
+    "message": "Install Adblock Plus for Firefox $chrome$ if you don't have it.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or AdBlockforChrome for Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
-  "checkinfirefox3": {
-    "message": "In Firefox, subscribe to the same filter lists as you have here (except AdBlock Custom filters).",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_3": {
+    "message": "In that browser, subscribe to the same filter lists as you have here (except for the AdBlock Custom filters in FireFox).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
-  "checkinfirefox4": {
-    "message": "In Firefox, load the page with the ad.",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_4": {
+    "message": "In that browser, load the page with the ad.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
-  "checkinfirefox5": {
-    "message": "Does the ad appear in Firefox?",
-    "description": "instruction for how to check Firefox for a reported ad"
+  "checkinfirefox_5": {
+    "message": "Does the ad appear in that browser too?",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "refusetocheck": {
     "message": "I don't want to check this",

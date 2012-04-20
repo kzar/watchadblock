@@ -137,6 +137,11 @@ $("#step2_lang").change(function() {
   }
   contact = required_lists[required_lists.length-1];
   $("#step3DIV").css("display", "block");
+
+  var hideChromeInChrome = (SAFARI?['','']:['<span style="display:none;">', '</span>']);
+  $("#checkinfirefox1").html(translate("checkinfirefox_1", hideChromeInChrome));
+  $("#checkinfirefox2").html(translate("checkinfirefox_2", hideChromeInChrome));
+  $("#checkinfirefox").html(translate("checkinfirefoxtitle", hideChromeInChrome));
 });
 
 
@@ -161,8 +166,14 @@ $("#step3_no").click(function() {
   $("#step3").html("<span class='answer'>" + translate("no") + "</span>");
 });
 $("#step3_wontcheck").click(function() {
+  if (!SAFARI) {
+    // Chrome blocking is good enough to assume the answer is 'yes'
+    $("#step3_yes").click();
+  } else {
+    // Safari can't do this.
+    $("#whattodo").text(translate("fixityourself"));
+  }
   $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
-  $("#whattodo").text(translate("fixityourself"));
 });
 
 
