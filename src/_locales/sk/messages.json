@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "Najobľúbenejšie rozšírenie pre Chrome s viac ako 4 miliónmi užívateľov! Blokuje reklamy na celom webe.",
     "description": "Extension description in manifest"
@@ -645,6 +645,48 @@
         "example": "French filters"
       }
     }
+  },
+  "checkinfirefoxtitle": {
+    "message": "Skontrolujte vo Firefoxe $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1alebo v Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_1": {
+    "message": "Nainštalujte FireFox $chrome$ ak ho nemáte.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1alebo Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_2": {
+    "message": "Nainštalujte Adblock Plus pre FireFox $chrome$ ak ho nemáte.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1alebo AdBlockforChrome pre Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_3": {
+    "message": "Načítajte v tomto prehliadači tie isté filtre ktoré máte tu (okrem AdBlock filtrov vo FireFoxe).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_4": {
+    "message": "Načítajte v prehliadači stránku s reklamou.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_5": {
+    "message": "Tiež sa zobrazuje reklama v tomto prehliadači?",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "refusetocheck": {
     "message": "Nechcem to takto kontrolovať",
