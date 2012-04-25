@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "Най-популярното разширение за Chrome с над 4 милиона потребители! Блокира реклами в цялата мрежа.",
     "description": "Extension description in manifest"
@@ -228,7 +228,7 @@
     "description": "Option on first tab page"
   },
   "block_popups_video_flash_ads": {
-    "message": "Блокирай рекламите в клипове и игри с Flash",
+    "message": "Блокирай изскачащите и рекламите в клипове и игри с Flash",
     "description": "Option on first tab page"
   },
   "updatedrightnow": {
@@ -639,6 +639,48 @@
         "example": "French filters"
       }
     }
+  },
+  "checkinfirefoxtitle": {
+    "message": "Проверка във Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1или Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_1": {
+    "message": "Инсталирайте Firefox $chrome$, ако го нямате.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1или Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_2": {
+    "message": "Инсталирайте Adblock Plus за Firefox $chrome$, ако го нямате.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1или AdBlockforChrome за Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_3": {
+    "message": "Абонирайте за същите списъци със филтри в браузъра (с изключение на собствените филтри към AdBlock за FireFox).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_4": {
+    "message": "Заредете страницата с рекламата в браузъра.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_5": {
+    "message": "Продължавате ли да я виждате в браузъра?",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "refusetocheck": {
     "message": "Не желая да правя такава проверка",
