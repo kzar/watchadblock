@@ -1,4 +1,4 @@
-{
+﻿{
   "description1": {
     "message": "A extensão mais popular para o Chrome, com mais de 4 milhões de utilizadores! Bloqueia anúncios por todo o lado na Web.",
     "description": "Extension description in manifest"
@@ -642,6 +642,48 @@
         "example": "French filters"
       }
     }
+  },
+  "checkinfirefoxtitle": {
+    "message": "Verificar no Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1ou Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_1": {
+    "message": "Intale o Firefox $chrome$ caso não o tenha instalado.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1ou Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_2": {
+    "message": "Instale o Adblock Plus no Firefox $chrome$ caso não esteja instalado.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1ou AdBlockforChrome para o Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_3": {
+    "message": "Nesse browser, subscreva as mesmas listas que tem aqui (excepto os filtros personalizados AdBlock no Firefox).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_4": {
+    "message": "Nesse browser, carregue a página com o anúncio.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_5": {
+    "message": "O anúncio também aparece nesse browser?",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "refusetocheck": {
     "message": "Não quero verificar isto",
