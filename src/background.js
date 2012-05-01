@@ -6,11 +6,7 @@
       show_google_search_text_ads: false,
       show_context_menu_items: true,
       show_advanced_options: false,
-      use_webrequest_blocking: false,
     };
-    // Opt in Chrome 17 users to webRequest.
-    if (chrome.webRequest)
-      defaults.use_webrequest_blocking = true;
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
   };
@@ -71,12 +67,8 @@
     }
   };
 
-  GLOBAL_block_style = "old";
   // Implement blocking via the Chrome webRequest API.
-  (function() {
-    if (SAFARI)
-      return;
-
+  if (!SAFARI) {
     // Stores url, whitelisting, and blocking info for a tabid+frameid
     // TODO: can we avoid making this a global once 'old' style dies?
     frameData = {
@@ -200,35 +192,6 @@
         return { cancel: blocked };
     }
 
-    // Upon error in webRequest API, gracefully degrade to old style
-    // Inputs: message: the message explaining the abort
-    endNewStyleBlocking = function() {
-      GLOBAL_block_style = "old";
-      _settings.set('use_webrequest_blocking', false);
-      try {
-        chrome.webRequest.onBeforeRequest.removeListener(onBeforeRequestHandler);
-        chrome.webNavigation.onCreatedNavigationTarget.removeListener(onCreatedNavigationTargetHandler);
-      }
-      catch(ex) {
-      }
-    }
-
-    logNewStyleBlockingError = function(message) {
-      try { STATS.msg("new style blocking error: " + message); } catch(ex) {}
-    }
-
-    beginNewStyleBlocking = function() {
-      GLOBAL_block_style = "new";
-      _settings.set('use_webrequest_blocking', true);
-      try {
-        chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
-        chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
-      }
-      catch(ex) {
-        logNewStyleBlockingError(ex.stack);
-      }
-    }
-
     // Popup blocking
     function onCreatedNavigationTargetHandler(details) {
       var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
@@ -239,7 +202,7 @@
         chrome.tabs.remove(details.tabId);
       frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
     };
-  })();
+  }
 
   debug_report_elemhide = function(selector, matches, sender) {
     if (!window.frameData)
@@ -328,13 +291,6 @@
         };
       else
         log = function() { };
-    }
-
-    if (!SAFARI && name == "use_webrequest_blocking") {
-      if (is_enabled)
-        beginNewStyleBlocking();
-      else
-        endNewStyleBlocking();
     }
   }
 
@@ -550,15 +506,10 @@
 
   // TODO: make better.
   // Inputs: options object containing:
-  //           style: "new" or "old" -- webRequest API content script
-  //                  sends "new", Safari/Chrome-old-style send "old".
   //           domain:string the domain of the calling frame.
   //           include_texts?:bool true if PatternFilter._text should be
   //                               appended to block filters.
   get_content_script_data = function(options, sender) {
-    if (options.style != GLOBAL_block_style) {
-      return { abort: true };
-    }
     var whitelisted = page_is_whitelisted(sender.tab.url);
     var settings = get_settings();
     var result = {
@@ -577,16 +528,10 @@
       result.selectors = _myfilters.hiding.
         filtersFor(options.domain, function(f) { return f.selector; });
     }
-    // Chrome without the webRequest API needs the blocking filters in the
-    // content script.
-    if (!SAFARI && (options.style == "old" || options.include_texts)) {
-      function packed(filter) {
-        return [filter._rule.source, filter._allowedElementTypes, filter._options];
-      }
-      if (options.include_texts) {
-        packed = function(filter) {
-          return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
-        }
+    // TODO this sucks.  and stop packing, since we can be slow on resourceblock.html.
+    if (!SAFARI && options.include_texts) {
+      var packed = function(filter) {
+        return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
       }
       result.patternSerialized = _myfilters.blocking.pattern.
         filtersFor(options.domain, packed);
@@ -670,37 +615,11 @@
 
   // Open the resource blocker when requested from the Chrome popup.
   launch_resourceblocker = function(tabId) {
-    if (GLOBAL_block_style == "old") {
-      chrome.tabs.sendRequest(tabId, "open_resourcelist");
-    } else {
-      // TODO: once 'old' style is dead, have resourceblock.html
-      // request the resources from frameData, whose entries are
-      // deleted on tab navigate/close.  For now, just proxy to
-      // the 'old' method.
-      var data = frameData.get(tabId, 0);
-      if (!data)
-        return;
-      var resources = Object.keys(data.resources);
-      show_resourceblocker(resources, { tab: { url: data.url } });
-    }
+    var data = frameData.get(tabId, 0);
+    if (!data)
+      return;
+    openTab("pages/resourceblock.html?tabId=" + tabId + "&url=" + escape(data.url), true);
   }
-
-  // Will open the resource blocking tab.
-  // Input: resources: array of resource strings;
-  //                   see resourceblock.html for format
-  show_resourceblocker = (function() {
-    // Stores resources used by resourceblock.html
-    var _cached_resources = new FifoCache(5);
-
-    var theFunction = function(resources, sender) {
-      var url = sender.tab.url.replace(/\#.*/, '');
-      _cached_resources.set(url, resources);
-      openTab("pages/resourceblock.html?url=" + escape(url), true);
-    };
-    theFunction.cached_resources = _cached_resources; // make it public
-
-    return theFunction;
-  })();
 
   // Return chrome.i18n._getL10nData() for content scripts who cannot
   // call that function (since it loads extension files from disk.)
@@ -798,15 +717,13 @@
     openTab("pages/install/index.html?u=" + STATS.userId);
   }
 
-  // Chrome specific new-style blocking code.  Near the end so synchronous
-  // request handler doesn't hang Chrome while AdBlock initializes.
   if (!SAFARI) {
-    if (get_settings().use_webrequest_blocking)
-      beginNewStyleBlocking();
-    // Whether in new or old style, we need to delete frameData for tabs when they
-    // are closed, or else going from new -> old -> new could leave around some
-    // stale tabid->url mappings
+    // Chrome blocking code.  Near the end so synchronous request handler
+    // doesn't hang Chrome while AdBlock initializes.
+    chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
     chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
+    // Popup blocking
+    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
   }
 
   if (SAFARI) {

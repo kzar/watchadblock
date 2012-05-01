@@ -88,43 +88,11 @@ var elementPurger = {
   _page_location: document.location
 };
 
-function adblock_begin_new_style() {
-  chrome.extension.onRequest.addListener(elementPurger.onPurgeRequest);
-
-  var opts = { 
-    domain: document.location.hostname,
-    style: "new"
-  };
-  BGcall('get_content_script_data', opts, function(data) {
-    if (data.abort || data.page_is_whitelisted || data.adblock_is_paused) {
-      // Our services aren't needed.  Stop all content script activity.
-      chrome.extension.onRequest.removeListener(elementPurger.onPurgeRequest);
-      return;
-    }
-
-    if (data.settings.debug_logging)
-      log = function() { 
-        if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
-          console.log.apply(console, arguments); 
-      };
-
-    if (data.selectors.length != 0)
-      block_list_via_css(data.selectors);
-
-    if (data.settings.debug_logging) {
-      onReady(function() { debug_print_selector_matches(data.selectors, "new"); });
-    }
-
-    // Run site-specific code to fix some errors, but only if the site has them
-    if (typeof run_bandaids == "function")
-      onReady(function() { run_bandaids("new"); });
-  });
-}
-
-
-// Safari loads adblock on about:blank pages, which is a waste of RAM and cycles.
-// If document.documentElement instanceof HTMLElement is false, we're not on an HTML page
-// if document.documentElement doesn't exist, we're in Chrome 18
-if (document.location != 'about:blank' && (!document.documentElement || document.documentElement instanceof HTMLElement)) {
-  adblock_begin_new_style();
-}
+adblock_begin({
+  startPurger: function() {
+    chrome.extension.onRequest.addListener(elementPurger.onPurgeRequest);
+  },
+  stopPurger: function() {
+    chrome.extension.onRequest.removeListener(elementPurger.onPurgeRequest);
+  }
+});

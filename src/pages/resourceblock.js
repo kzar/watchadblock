@@ -5,7 +5,6 @@ var resources = {};
 var domaindata;
 var custom_filters = [];
 
-// TODO Copy-and-modified from adblock_start.js
 function FakeFilterSet(serializedFilters) {
   var filters = [];
   for (var i = 0; i < serializedFilters.length; i++) {
@@ -24,7 +23,6 @@ FakeFilterSet.prototype = {
     return null;
   }
 }
-// TODO end copied part
 
 // Creates the table that shows all blockable items
 function generateTable() {
@@ -32,7 +30,7 @@ function generateTable() {
     // TODO: if the background has to store filter texts in order to support
     // resourceblock, its match cache might as well store filters instead of
     // booleans at all times (no extra memory usage because the filters are
-    // already in memory.)  Do this after 'old' style dies in Chrome.
+    // already in memory.)
     // This means 'return_filter' will always be true in .matches(), and that
     // resourceblock will be able to point directly to BG._myfilters (it can't
     // do it now because the matchCache is storing booleans so it can't get
@@ -465,8 +463,7 @@ $(function() {
 
   var opts = {
     domain: domain,
-    include_texts: true,
-    style: (SAFARI ? "old" : BG.GLOBAL_block_style)
+    include_texts: true
   };
   BGcall('get_content_script_data', opts, function(data) {
     delete data.selectors;
@@ -489,8 +486,8 @@ $(function() {
       }
 
       // Load all stored resources
-      var cache = BG.show_resourceblocker.cached_resources;
-      var loaded_resources = cache.get(url);
+      var frame_resources = (BG.frameData.get(qps.tabId, 0) || {}).resources;
+      var loaded_resources = Object.keys(frame_resources || {});
       // ... but don't show them if the page is whitelisted
       if (resources[url] && resources[url].type == ElementTypes.document)
         loaded_resources = null;
