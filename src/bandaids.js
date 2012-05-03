@@ -6,7 +6,7 @@ var run_bandaids = function() {
   else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
     apply_bandaid_for = "hkpub";
   else if (/youtube/.test(document.location.hostname))
-    apply_bandaid_for = "youtube";
+    apply_bandaid_for = "youtube_safari_only";
   else {
     var hosts = [ /mastertoons\.com$/ ];
     hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
@@ -42,7 +42,7 @@ var run_bandaids = function() {
         el.style.setProperty("margin", "0", null);
       }
     },
-    youtube: function() {
+    youtube_safari_only: function() {
       function blockYoutubeAds(videoplayer) {
         var flashVars = videoplayer.getAttribute('flashvars');
         var inParam = false;

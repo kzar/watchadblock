@@ -142,7 +142,7 @@ function debug_print_selector_matches(selectors) {
     });
 }
 
-function handleFilterListClicks() {
+function handleABPLinkClicks() {
   // Subscribe to the list when you click an abp: link
   var elems = document.querySelectorAll('[href^="abp:"], [href^="ABP:"]');
   var abplinkhandler = function(event) {
@@ -200,7 +200,7 @@ function adblock_begin(inputs) {
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.
       if (typeof run_bandaids == "function")
         run_bandaids("new");
-      handleFilterListClicks();
+      handleABPLinkClicks();
     });
 
     if (inputs.success) inputs.success();
