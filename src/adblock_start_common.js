@@ -173,9 +173,8 @@ function handleABPLinkClicks() {
 function adblock_begin(inputs) {
   if (document.location === 'about:blank') // Safari does this
     return;
-  var docElt = document.documentElement; // May be missing at first in Chrome 18
-  if (docElt && !(docElt instanceof HTMLElement)) // Only run on HTML pages
-    return;
+  if (!(document.documentElement instanceof HTMLElement))
+    return; // Only run on HTML pages
 
   inputs.startPurger();
 
