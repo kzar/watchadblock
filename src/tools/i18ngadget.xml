@@ -5,7 +5,7 @@
     <![CDATA[ 
       <script>
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "i18n_helper.htm", false);
+        xhr.open("GET", "http://adblockforchrome.googlecode.com/svn/trunk/tools/i18n_helper.htm", false);
         xhr.onreadystatechange = function () {
           if (xhr.readyState === 4) {
             if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 ||
