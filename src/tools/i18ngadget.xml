@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <Module>
   <ModulePrefs title="remote content example" />
-  <Content type="url" href="i18n_helper.htm" />
+  <Content type="html">
+    <![CDATA[ 
+      <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "i18n_helper.htm", false);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304 ||
+                (!xhr.status && xhr.responseText)) {
+              document.write(xhr.responseText);
+            }
+          }
+        }
+        try {
+          xhr.send();
+        } catch (ex) {}
+      </script>
+    ]]>
+  </Content>
 </Module>
