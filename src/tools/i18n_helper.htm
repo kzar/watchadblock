@@ -34,6 +34,9 @@
       #exportArea {
         display: none;
       }
+      #exportArea a {
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -45,6 +48,7 @@
       <br/>
       <i>Example: 'nl' for Dutch, 'pt-pt' for portuguese, etcetera. If you leave it empty, an empty translation file will be created<br/>
       If you paste the content of the file you already have translated, it'll load that file instead</i><br/>
+      <u>Please make sure that you already created an issue in the issue tracker before you start translating.</u><br/>
     </p>
     <div id="translateArea"></div>
     <div id="exportArea">
@@ -197,6 +201,10 @@
           }
           target.append(p);
         }
+        
+        $("textarea").bind("input", function() {
+          $("#exportArea :not(input)").remove();
+        });
       };
 
       $("#exportButton").click(function() {
@@ -217,7 +225,7 @@
               somethingIsEmpty = true;
             }
           });
-          $("#exportArea textarea").remove();
+          $("#exportArea :not(input)").remove();
           if (somethingIsEmpty) {
             delete translation[id];
           } else if (!doILikeThisMessage(translation[id])) {
@@ -226,9 +234,13 @@
             return;
           }
         }
-        // TODO: make it exportable (ask Michael?) or add steps to put it in a file and upload it
+
         $("#exportArea").append(
-          $("<textarea readonly='readonly' cols='50' rows='5'>").val(JSON.stringify(translation, undefined, 2))
+          $("<a download='messages.json' title='download'>").text("Download").attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(translation, undefined, 2)))
+        ).append(
+          $("<br/>")
+        ).append(
+          $("<span>").text("Save this file to your local computer and then attach it to the issue for your language in the issue tracker. After that, we'll take care of it.")
         );
       });
 
