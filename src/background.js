@@ -239,9 +239,8 @@
     return false;
   }
 
-  // Called when new-style blocking needs to clear the in-memory cache.
-  // No-op for Safari.  Runs in old-style in case new-style gets turned
-  // back on.
+  // Called when Chrome blocking needs to clear the in-memory cache.
+  // No-op for Safari.
   handlerBehaviorChanged = function() {
     if (SAFARI)
       return;
@@ -730,23 +729,11 @@
     $.getScript("safari_bg.js");
   }
   
-  if (!SAFARI) {
-    var chromeversion = navigator.userAgent.match(/Chrome\/(\d+)\.\d+\.\d+\.\d+/);
-    // Issue 6662 - don't show to RockMelt users while RockMelt upgrades
-    var isRockMelt = navigator.userAgent.match(/RockMelt/);
-    if (chromeversion && !isRockMelt && Number(chromeversion[1]) < 17) {
-      if (storage_get('sawChrome16WarningOn') !== String(new Date().getDate())) {
-        window.open('pages/Chrome16warning.html', "_blank", 
-                  'scrollbars=0,location=0,resizable=0,width=640,height=390');
-        storage_set('sawChrome16WarningOn', String(new Date().getDate()));
-      }
-    } else
-      localStorage.removeItem('sawChrome16WarningOn');
-  }
-
   // Temp (4-20-12):
   localStorage.removeItem('saw_prune_note');
   localStorage.removeItem('pruned_oversubscription');
+  // Temp (5-7-12):
+  localStorage.removeItem('sawChrome16WarningOn');
   // End temp
 
   log("\n===FINISHED LOADING===\n\n");

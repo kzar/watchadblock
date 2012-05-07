@@ -92,21 +92,12 @@ function destroyElement(el, elType) {
 
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {
-  var d = document.head || document.documentElement;
-  if (!d) {
-    // See http://crbug.com/109272
-    // in Chrome 18: document.documentElement is null on document_start
-    window.setTimeout(function() {
-      block_list_via_css(selectors);
-    }, 0);
-    return;
-  }
-
   // Issue 6480: inserting a <style> tag too quickly ignored its contents.
   // Use ABP's approach: wait for .sheet to exist before injecting rules.
   var css_chunk = document.createElement("style");
   css_chunk.type = "text/css";
-  d.insertBefore(css_chunk, null);
+  // Documents may not have a head
+  (document.head || document.documentElement).insertBefore(css_chunk, null);
 
   function fill_in_css_chunk() {
     if (!css_chunk.sheet) {
@@ -187,7 +178,7 @@ function adblock_begin(inputs) {
 
     if (data.settings.debug_logging)
       log = function() { 
-        if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
+        if (VERBOSE_DEBUG || arguments[0] !== '[DEBUG]')
           console.log.apply(console, arguments); 
       };
 
@@ -197,7 +188,7 @@ function adblock_begin(inputs) {
       if (data.settings.debug_logging)
         debug_print_selector_matches(data.selectors);
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.
-      if (typeof run_bandaids == "function")
+      if (typeof run_bandaids === "function")
         run_bandaids("new");
       handleABPLinkClicks();
     });

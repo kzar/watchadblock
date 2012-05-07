@@ -4,7 +4,7 @@ function blockBackgroundImageAd() {
   var match = bgImage.match(/^url\((.*)\)$/);
   if (match)
     bgImage = match[1];
-  if (bgImage && bgImage != "none") {
+  if (bgImage && bgImage !== "none") {
     var hiddenImage = document.createElement("img");
       hiddenImage.src = bgImage;
       hiddenImage.setAttribute("width", "0");
@@ -45,7 +45,7 @@ beforeLoadHandler = function(event) {
     elType: elType,
     frameDomain: document.location.hostname
   };
-  if (false == safari.self.tab.canLoad(event, data)) {
+  if (false === safari.self.tab.canLoad(event, data)) {
 
     // Work around bugs.webkit.org/show_bug.cgi?id=65412
     // Allow the resource to load, but hide it afterwards.
