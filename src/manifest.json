@@ -10,7 +10,7 @@
   "permissions": [
     "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
   ],
-  "minimum_chrome_version": "6",
+  "minimum_chrome_version": "17",
   "background_page": "background.html",
   "options_page": "options/index.html",
   "incognito": "spanning",
@@ -25,14 +25,8 @@
       "js": [
         "port.js",
         "functions.js", 
-      
         "filtering/filteroptions.js",
-        "filtering/filtertypes.js",
-        "filtering/filterset.js",
-
-
         "adblock_start_common.js",
-        "adblock_start.js",
         "adblock_start_new_style.js"
       ],
       "run_at": "document_start",
@@ -42,21 +36,12 @@
       "matches": [
         "*://*.mail.live.com/*",
         "*://*.hk-pub.com/forum/thread-*",
-        "*://*.youtube.com/*",
         "*://*.mastertoons.com/*"
       ],
       "js": [
         "bandaids.js"
       ],
       "run_at": "document_start",
-      "all_frames": true
-    },
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": [
-        "adblock.js"
-      ],
-      "run_at": "document_end",
       "all_frames": true
     },
     {

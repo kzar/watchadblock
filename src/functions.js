@@ -23,8 +23,8 @@ BGcall = function() {
   chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
 }
 
-// These are replaced with console.log in adblock_start.js and background.html
-// if the user chooses.
+// These are replaced with console.log in adblock_start_common.js and
+// background.html if the user chooses.
 log = function() { };
 
 // Behaves very similarly to $.ready() but does not require jQuery.
