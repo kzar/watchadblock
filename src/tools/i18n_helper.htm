@@ -57,14 +57,23 @@
     <script>
       var English = {}, i;
       //Load the English file
-      $.ajax({
-        url: "../_locales/en/messages.json",
-        cache: false,
-        success: function(text) {
-          try {
-            English = JSON.parse(text);
-          } catch(ex) {}
+      var JSONLocaleCallback  = function(json) {
+        if (json && !Object.keys(English).length) {
+          English = json;
+        } else if (!Object.keys(English).length) {
+          alert('The English translation file could not be loaded, but is required to be loaded. Please reload this page to try again');
+        } else if (json) {
+          continueBelow(json);
+        } else {
+          alert("The language file for the language you were looking for can't be found. An empty file will be loaded instead");
+          continueBelow();
         }
+      };
+      $.ajax({
+        url: "http://chromeadblock.com/l10n/messages.php",
+        data: { locale: "en" },
+        dataType: "jsonp",
+        jsonp: "JSONlocaleCallback"
       });
 
       // Enter in language code field -> submit
@@ -81,26 +90,19 @@
         if (language) {
           language = language[1].toLowerCase() + (language[2]||"").toUpperCase().replace('-', '_');
           $.ajax({
-            url: "../_locales/" + language + "/messages.json",
-            cache: false,
-            success: function(text) {
-              var JSONtext;
-              try {
-                JSONtext = JSON.parse(text);
-              } catch(ex) {
-                alert("The file could not be parsed. An empty file will be loaded instead");
-              }
-              continueBelow(JSONtext);
-            },
-            error: function() {
-              if (/^file\:/.test(location.href)) {
-                alert('In Chrome, file:/// URLs cannot use XHR\nStart the browser with --allow-file-access-from-files as command line flag to use it anyway');
-              } else {
-                alert('The language file for language ' + language + " can't be found. An empty file will be loaded instead");
-              }
+            url: "http://chromeadblock.com/l10n/messages.php",
+            data: { locale: language },
+            dataType: "jsonp",
+            jsonp: "JSONlocaleCallback"
+          });
+          // Try to figure out if something went wrong
+          window.setTimeout(function() {
+            if ($("textarea").length === 0) {
+              alert("The language file for the language you were looking for can't be found. An empty file will be loaded instead");
               continueBelow();
             }
-          });
+          }, 15000);
+          $("#languageselector input").prop("disabled", true);
         } else {
           var JSONtext;
           try {
@@ -242,6 +244,13 @@
         ).append(
           $("<span>").text("Save this file to your local computer and then attach it to the issue for your language in the issue tracker. After that, we'll take care of it.")
         );
+        if (!/Chrome/.test(navigator.userAgent)) {
+          $("#exportArea").append(
+            $("<br/>")
+          ).append(
+            $("<span>").text("Do not paste the contents of the page directly into the issue tracker! Attach it as an attachment.")
+          );
+        }
       });
 
       var doILikeThisMessage = function(entry) {
