@@ -45,7 +45,7 @@ beforeLoadHandler = function(event) {
     elType: elType,
     frameDomain: document.location.hostname
   };
-  if (false === safari.self.tab.canLoad(event, data)) {
+  if (!safari.self.tab.canLoad(event, data)) {
 
     // Work around bugs.webkit.org/show_bug.cgi?id=65412
     // Allow the resource to load, but hide it afterwards.
