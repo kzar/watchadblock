@@ -300,6 +300,7 @@
   // Inputs: filters:string the new filters.
   set_custom_filters_text = function(filters) {
     storage_set('custom_filters', filters);
+    chrome.extension.sendRequest({command: "custom_filters_updated"});
     _myfilters.rebuild();
   }
 
