@@ -1,9 +1,7 @@
-var BG = (SAFARI ? null : chrome.extension.getBackgroundPage());
-
-var domain = '';
 var resources = {};
 var domaindata;
 var custom_filters = [];
+var chosenResource = {};
 
 function FakeFilterSet(serializedFilters) {
   var filters = [];
@@ -51,12 +49,7 @@ function generateTable() {
     }
   }
   delete domaindata;
-  function htmlEscape(unsafe) {
-    var safe = unsafe.
-      replace(/\&/g, '&amp;').replace(/\</g, '&lt;').
-      replace(/\>/g, '&gt;').replace(/\"/g, '&quot;');
-    return safe;
-  }
+  
   // Truncates a resource URL if it is too long. Also escapes some
   // characters when they have a special meaning in HTML.
   // Inputs: the string to truncate
@@ -68,38 +61,16 @@ function generateTable() {
     if (j.length > 90)
       j = j.substring(0, 86) + '[...]';
 
-    return htmlEscape(j);
+    return j;
   }
-  // Converts the ElementTypes number back into an readable string
-  // or hiding or 'unknown' if it wasn't in ElementTypes.
-  // Inputs: One out of ElementTypes or 'undefined'
-  // Returns a string with the element type
-  function getTypeName(type) {
-    switch(type) {
-      case undefined: return "hiding";
-      case ElementTypes.script: return "script";
-      case ElementTypes.background:
-      case ElementTypes.image: return "image";
-      case ElementTypes.stylesheet: return "stylesheet";
-      case ElementTypes.object: return "object";
-      case ElementTypes.subdocument: return "subdocument";
-      case ElementTypes.object_subrequest: return "object_subrequest";
-      case ElementTypes.media: return "media";
-      case ElementTypes.xmlhttprequest: return "xmlhttprequest";
-      case ElementTypes.other: return "other";
-      case ElementTypes.document:
-      case ElementTypes.elemhide: return "page";
-      case ElementTypes.popup: return "popup";
-      default: return "unknown";
-    }
-  }
+  
   // Checks if the filter is in the custom filters and can be removed
   // Inputs: the filter that could be in the custom filters
   // Returns true if the filter was in the custom filters
   function inCustomFilters(filter) {
     if (!filter) return false;
     for (var i=0; i<custom_filters.length; i++)
-      if (matchingfilter == custom_filters[i])
+      if (matchingfilter === custom_filters[i])
         return true;
     return false;
   }
@@ -110,7 +81,7 @@ function generateTable() {
     var matchingfilter = resources[i].filter;
     var typeName = getTypeName(resources[i].type);
     if (!matchingfilter && !SAFARI)
-      matchingfilter = local_filterset.matches(i, resources[i].type, domain, true);
+      matchingfilter = local_filterset.matches(i, resources[i].type, resources[i].domain, true);
 
     var type = {sort:3, name:undefined};
     if (matchingfilter)
@@ -122,37 +93,50 @@ function generateTable() {
         type = {sort:1, name:'blocked'};
 
     // TODO: When crbug 80230 is fixed, allow $other again
-    var disabled = (type.name == 'whitelisted' || type.name == 'hiding' ||
-                    typeName == 'other' || typeName == 'unknown');
+    var disabled = (type.name === 'whitelisted' || type.name === 'hiding' ||
+                    typeName === 'other' || typeName === 'unknown');
+    
+    // We don't show the page URL unless it's excluded by $document or $elemhide
+    if (typeName === 'page' && !matchingfilter)
+      continue;
 
     var row = $("<tr>");
     if (type.name) row.addClass(type.name);
 
     // Cell 1: Checkbox
     var cell = $("<td><input type='checkbox'/></td>");
-    if (disabled) cell.find("input").attr("disabled", "disabled");
+    if (disabled) 
+      cell.find("input").attr("disabled", "disabled");
     row.append(cell);
 
     // Cell 2: URL
-    $("<td>", { title: i, html: truncateI(i) }).appendTo(row);
+    $("<td>", { title: i, text: truncateI(i) }).appendTo(row);
 
     // Cell 3: Type
-    $("<td>", { name: typeName, text: translate('type' + typeName) }).appendTo(row);
+    $("<td>", { text: translate('type' + typeName) }).appendTo(row);
 
     // Cell 4: hidden sorting field and matching filter
     cell = $("<td>");
-    var span = $("<span>", { "class": "sorter", text: "3" }).appendTo(cell);
-    if (type.name) {
-      span.text(type.sort);
-      cell.append(htmlEscape(matchingfilter));
-    }
+    $("<span>", { "class": "sorter", text: type.name ? type.sort : 3 }).appendTo(cell);
+    if (type.name)
+      $("<span>", { text: matchingfilter }).appendTo(cell);
     row.append(cell);
+    resources[i].filter = matchingfilter;
 
-    // Cells 2-4 may get class=clickableRow
+    // Cell 5: third-party or not
+    var resourceDomain = parseUri(i).hostname;
+    var isThirdParty = (type.name === 'hiding' ? false :
+                          CheckThirdParty(resources[i].domain, resourceDomain));
+    cell = $("<td>", {text: isThirdParty ? translate('yes') : translate('no'),
+        title: translate("resourcedomain", resources[i].domain || resourceDomain)});
+    row.append(cell);
+    resources[i].isThirdParty = isThirdParty;
+    
+    // Cells 2-5 may get class=clickableRow
     if (!disabled)
       row.find("td:not(:first-child)").addClass("clickableRow");
 
-    // Cell 5: delete a custom filter
+    // Cell 6: delete a custom filter
     if (inCustomFilters(matchingfilter))
       $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
     else
@@ -160,25 +144,61 @@ function generateTable() {
 
     rows.push(row);
   }
+  if (!rows.length) {
+    alert(translate('noresourcessend2'));
+    window.close();
+    return;
+  }
   $("#loading").remove();
   $("#resourceslist tbody").empty();
   for (var i = 0; i < rows.length; i++) {
     $("#resourceslist tbody").append(rows[i]);
   }
+  // Make it sortable, initial sort sequence is first the filter column (2),
+  // then the URL column (4)
+  $("#resourceslist th:not(:empty)").click(sortTable);
+  $("#resourceslist th:nth-child(2)").click();
+  $("#resourceslist th:nth-child(4)").click();
+  
   $(".deleterule").click(function() {
-    var filter = $(this).prev().text().substring(1);
-    BG.remove_custom_filter(filter);
-    if ($(this).prev().prev().attr("name") == "page") {
-      alert(translate("excludefilterremoved"));
-      window.close();
-    } else
-      document.location.reload();
+    var resource = resources[$(this).prevAll('td:nth-child(2)')[0].title];
+    BGcall('remove_custom_filter', resource.filter, function() {
+      if (getTypeName(resource.type) === "page") {
+        alert(translate("excludefilterremoved"));
+        window.close();
+      } else
+        document.location.reload();
+    });
   });
 };
 
+// Converts the ElementTypes number back into an readable string
+// or hiding or 'unknown' if it wasn't in ElementTypes.
+// Inputs: One out of ElementTypes or 'undefined'
+// Returns a string with the element type
+function getTypeName(type) {
+  switch(type) {
+    case undefined: return "hiding";
+    case ElementTypes.script: return "script";
+    case ElementTypes.background:
+    case ElementTypes.image: return "image";
+    case ElementTypes.stylesheet: return "stylesheet";
+    case ElementTypes.object: return "object";
+    case ElementTypes.subdocument: return "subdocument";
+    case ElementTypes.object_subrequest: return "object_subrequest";
+    case ElementTypes.media: return "media";
+    case ElementTypes.xmlhttprequest: return "xmlhttprequest";
+    case ElementTypes.other: return "other";
+    //Cheating with $document & $elemhide here to make it easier: they are considered 'the same'
+    case ElementTypes.document | ElementTypes.elemhide: return "page";
+    case ElementTypes.popup: return "popup";
+    default: return "unknown";
+  }
+}
+
 //Generate a list of pre-defined url filters
 function generateFilterSuggestions() {
-  var url = $(".selected td:nth-of-type(2)").attr('title');
+  var url = chosenResource.resource;
   url = url.replace(/\s{5}\(.*\)$/, '').replace(/\#.*$/, '');
   var isBlocked = ($(".selected").hasClass("blocked"));
   var blocksuggestions = [];
@@ -189,7 +209,7 @@ function generateFilterSuggestions() {
     blocksuggestions.push(strippedUrl);
   }
   if (strippedUrl.indexOf("/") > 0 &&
-      strippedUrl.lastIndexOf('/') != strippedUrl.indexOf('/')) {
+      strippedUrl.lastIndexOf('/') !== strippedUrl.indexOf('/')) {
     strippedUrl = strippedUrl.substr(0, strippedUrl.lastIndexOf('/') + 1);
     blocksuggestions.push(strippedUrl);
   }
@@ -197,8 +217,8 @@ function generateFilterSuggestions() {
     strippedUrl = strippedUrl.substr(0, strippedUrl.indexOf('/'));
     blocksuggestions.push(strippedUrl);
   }
-  if (strippedUrl.indexOf('.') != strippedUrl.lastIndexOf('.')) {
-    if (strippedUrl.replace('.co.', '').indexOf('.') != -1) {
+  if (strippedUrl.indexOf('.') !== strippedUrl.lastIndexOf('.')) {
+    if (strippedUrl.replace('.co.', '').indexOf('.') !== -1) {
       strippedUrl = strippedUrl.match(/[^.]+\.(co\.)?[^.]+$/i)[0];
       blocksuggestions.push(strippedUrl);
     }
@@ -247,8 +267,8 @@ function generateFilterSuggestions() {
 function createfilter() {
   var isBlocked = ($(".selected").hasClass("blocked"));
   var urlfilter = '';
-  if ($('#selectblockableurl #customurl').length != 0)
-    urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val();
+  if ($('#selectblockableurl #customurl').length)
+    urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val().replace(/^\@\@/, '');
   else
     urlfilter = $('#selectblockableurl input').val();
   if ((/^(\@\@)?\/.*\/$/).test(urlfilter))
@@ -264,7 +284,7 @@ function createfilter() {
       options.push($(this).val());
   });
 
-  return urlfilter + ((options.length != 0) ? '$' + options.join(',') : '');
+  return urlfilter + (options.length ? '$' + options.join(',') : '');
 }
 
 // Get the third-party domain
@@ -281,7 +301,7 @@ function GetThirdPartyDomain(domain) {
 function CheckThirdParty(domain1, domain2) {
   var match1 = GetThirdPartyDomain(domain1);
   var match2 = GetThirdPartyDomain(domain2);
-  return (match1 != match2);
+  return (match1 !== match2);
 }
 
 // Checks if the text in the domain list textbox is valid or not
@@ -306,6 +326,7 @@ function finally_it_has_loaded_its_stuff() {
     $(".onlyifdebug").show();
   // Create the table of resources
   generateTable();
+  // Add the dotted borders when hovering
   $("#resourceslist tbody tr").mouseenter(function() {
     if ($(this).hasClass('selected'))
       return;
@@ -340,14 +361,17 @@ function finally_it_has_loaded_its_stuff() {
     $('.clickableRow').removeClass('clickableRow');
     $('#resourceslist tr').css('border', 'black 1px dotted');
     $('#legend').remove();
-
+    chosenResource = resources[$(".selected td:nth-of-type(2)").prop('title')];
+    $(".selected td:nth-of-type(5)").text(
+                    chosenResource.isThirdParty ? translate('thirdparty') : '');
+    
     // Show the 'choose url' area
     $("#selectblockableurl").show();
     generateFilterSuggestions();
     // If the user clicks the 'next' button
     $("#confirmUrl").click(function() {
       if ($('#custom').is(':checked') &&
-          $('#customurl').val().trim() == '') {
+          $('#customurl').val().trim() === '') {
         alert(translate('novalidurlpattern'));
         return;
       }
@@ -362,20 +386,16 @@ function finally_it_has_loaded_its_stuff() {
 
       // Show the options
       $("#chooseoptions").show();
-      var domainOfSelectedUrl = parseUri($(".selected td:nth-of-type(2)").
-          attr('title')).hostname;
-      var isThirdParty = CheckThirdParty(domain, domainOfSelectedUrl);
+      var isThirdParty = chosenResource.isThirdParty;
       if (!isThirdParty) {
-        $("#thirdparty + * + *").remove();
-        $("#thirdparty + *").remove();
-        $("#thirdparty").remove();
+        $("#thirdparty + * + *, #thirdparty + *, #thirdparty").remove();
       } else
         // Use .find().text() so data from query string isn't injected as HTML
         $("#thirdparty + label").
           html(translate("thirdpartycheckbox", "<i></i>")).
-          find("i").text(GetThirdPartyDomain(domainOfSelectedUrl));
+          find("i").text(GetThirdPartyDomain(chosenResource.domain));
       $("#domainlist").
-        val(domain.replace(/^www\./, '')).
+        val(chosenResource.domain.replace(/^www\./, '')).
         click(function() {
           $("#domainis").
             attr("checked", "checked").
@@ -393,9 +413,8 @@ function finally_it_has_loaded_its_stuff() {
           }
           $("#filterpreview").text(createfilter());
         });
-      $("#domainis").val('domain=' + domain.replace(/^www\./, ''));
-      var selectorForFixedType = '[value="' +
-          $(".selected td:nth-of-type(3)").attr('name') + '"]';
+      $("#domainis").val('domain=' + chosenResource.domain.replace(/^www\./, ''));
+      var selectorForFixedType = '[value="' + getTypeName(chosenResource.type) +  '"]';
       if (!$(selectorForFixedType).is(":checked")) {
         // Special non-default type. For example $popup
         $("#types > input").removeAttr("checked");
@@ -427,12 +446,11 @@ function finally_it_has_loaded_its_stuff() {
 $(function() {
   // Translation
   localizePage();
-
   var url;
   if (window.location.search) {
     // Can be of the forms
     //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
-    //  ?url=(page url)
+    //  ?tabId=(tab ID)&url=(page url)
     var qps = parseUri.parseSearch(window.location.search);
     function validateUrl(url) {
       if (!/^https?:\/\//.test(url)) {
@@ -449,20 +467,27 @@ $(function() {
     if (qps.url) {
       url = qps.url;
       validateUrl(url);
-
-      domain = parseUri(url).hostname;
+    }
+    if (qps.tabId && isNaN(qps.tabId)) {
+      window.close();
+      return;
     }
     if (qps.itemType) {
       var itemUrl = qps.itemUrl;
       validateUrl(itemUrl);
       validateItemType(qps.itemType);
 
-      resources[itemUrl] = {type:ElementTypes[qps.itemType]};
+      resources[itemUrl] = {
+        type: ElementTypes[qps.itemType],
+        domain: parseUri(url).hostname,
+        resource: itemUrl
+      };
     }
   }
 
+
   var opts = {
-    domain: domain,
+    domain: parseUri(url).hostname,
     include_texts: true
   };
   BGcall('get_content_script_data', opts, function(data) {
@@ -475,71 +500,101 @@ $(function() {
       return;
     }
     if (!qps.itemUrl) {
-      // Show $elemhide and $document rules that match on the page
-      var excludeRule = BG.page_is_whitelisted(url, ElementTypes.document, true);
-      if (excludeRule)
-        resources[url] = {type: ElementTypes.document, filter: excludeRule};
-      else {
-        excludeRule = BG.page_is_whitelisted(url, ElementTypes.elemhide, true);
-        if (excludeRule)
-          resources[url] = {type: ElementTypes.elemhide, filter: excludeRule};
-      }
-
       // Load all stored resources
-      var frame_resources = (BG.frameData.get(qps.tabId, 0) || {}).resources;
-      var loaded_resources = Object.keys(frame_resources || {});
-      // ... but don't show them if the page is whitelisted
-      if (resources[url] && resources[url].type == ElementTypes.document)
-        loaded_resources = null;
-      // Convert all resources to the object type
-      if (loaded_resources)
-        for (var i = 0; i < loaded_resources.length || 0; i++) {
-          if (/^HIDE\:\|\:.+/.test(loaded_resources[i])) {
-            var filter = "##" + loaded_resources[i].substring(7);
-            resources[filter] = {filter: filter};
-          } else {
-            if (/\<|\"/.test(loaded_resources[i])) continue;
-            var blockmatches = loaded_resources[i].split(':|:', 2);
-            if (blockmatches[1].indexOf(chrome.extension.getURL("")) == 0)
-              continue; // Blacklister resources shouldn't be visible
-            if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
-              continue; // Ignore about: and data: urls
-            var elemType = Number(blockmatches[0]);
-            if (elemType == ElementTypes.document)
-              continue;
-            resources[blockmatches[1]] = {type: elemType};
+      BGcall('resourceblock_get_frameData', qps.tabId, function(loaded_frames) {
+        loaded_frames = loaded_frames || {}
+        
+        for (var thisFrame in loaded_frames) {
+          var frame = loaded_frames[thisFrame];
+
+          resources[frame.url] = {
+            type: ElementTypes.document | ElementTypes.elemhide,
+            domain: frame.domain,
+            resource: frame.url
+          }
+          
+          for (var res in frame.resources) {
+            if (/^HIDE\:\|\:.+/.test(res)) {
+              var filter = "##" + res.substring(7);
+              resources[filter] = {
+                filter: filter,
+                domain: frame.domain,
+                resource: filter
+              };
+            } else {
+              if (/\<|\"/.test(res)) continue;
+              var blockmatches = res.split(':|:');
+              if (blockmatches[1].indexOf(chrome.extension.getURL("")) === 0)
+                continue; // Blacklister resources shouldn't be visible
+              if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
+                continue; // Ignore about: and data: urls
+              var elemType = Number(blockmatches[0]);
+              if (elemType === ElementTypes.document)
+                continue;
+              resources[blockmatches[1]] = {
+                type: elemType,
+                domain: frame.domain,
+                resource: blockmatches[1]
+              };
+            }
           }
         }
-      if (Object.keys(resources).length == 0) {
-        alert(translate('noresourcessend'));
-        window.close();
-        return;
-      }
-    }
-    if (!SAFARI) {
-      var filters = BG.get_custom_filters_text();
-      filters = FilterNormalizer.normalizeList(filters);
-      if (filters.replace('\n').length != 0) {
-        filters = filters.split('\n');
-        for (var i=0; i<filters.length; i++)
-          if (!Filter.isSelectorFilter(filters[i]))
-            custom_filters.push(filters[i])
-      }
-    }
-    finally_it_has_loaded_its_stuff();
-    // If opened by the context menu, this variable exists
-    if (qps.itemUrl) {
-      if ($("#resourceslist input").attr("disabled")) {
-        // In case the resource has been whitelisted and can't be removed
-        if ($(".deleterule").length == 0) {
-          alert(translate('resourceiswhitelisted'));
-          window.close();
-          return;
+        continue_after_another_async_call();
+      });
+    } else 
+      continue_after_another_async_call();
+
+    function continue_after_another_async_call() {
+      BGcall('get_custom_filters_text', function(filters) {
+        if (!SAFARI) {
+          filters = FilterNormalizer.normalizeList(filters);
+          if (filters.replace('\n').length) {
+            filters = filters.split('\n');
+            for (var i=0; i<filters.length; i++)
+              if (!Filter.isSelectorFilter(filters[i]))
+                custom_filters.push(filters[i])
+          }
         }
-      } else
-        $("#resourceslist input").click();
-      $("#choosedifferentresource").remove();
-    } else
-      $("#legend").show();
+        finally_it_has_loaded_its_stuff();
+        // If opened by the context menu, this variable exists
+        if (qps.itemUrl) {
+          if ($("#resourceslist input").prop("disabled")) {
+            // In case the resource has been whitelisted and can't be removed
+            if ($(".deleterule").length === 0) {
+              alert(translate('resourceiswhitelisted'));
+              window.close();
+              return;
+            }
+          } else
+            $("#resourceslist input").click();
+          $("#choosedifferentresource").remove();
+        } else
+          $("#legend").show();
+      });
+    }
   });
 });
+
+
+sortTable = function(e) {
+  var rowNumber = $(this).prevAll().length + 1;
+  if ($(this).attr("data-sortDirection") === "ascending") {
+    $(this).attr("data-sortDirection", "descending"); // Z->A
+  } else {
+    $(this).attr("data-sortDirection", "ascending"); // A->Z
+  }
+  var cellList = [];
+  var rowList = [];
+  $("#resourceslist td:nth-of-type(" + rowNumber + ")").each(function(index, element) {
+    cellList.push(element.innerHTML + 'ÿÿÿÿÿ' + (index+10000));
+    rowList.push($(element).parent('tr'));
+  });
+  cellList.sort();
+  if ($(this).attr("data-sortDirection") === "descending") 
+    cellList.reverse();
+  $("#resourceslist tbody").empty();
+  cellList.forEach(function(item) {
+    var no = Number(item.match(/\d+$/)[0]) - 10000;
+    $("#resourceslist tbody").append(rowList[no]);
+  });
+}

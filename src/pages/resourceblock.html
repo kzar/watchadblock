@@ -99,6 +99,24 @@
         font-size:22px;
         font-weight:bold;
       }
+      #types input, #types label {
+        position: absolute;
+      }
+      #types label {
+        margin-left: 20px;
+      }
+      #types input:nth-of-type(4n+1), #types label:nth-of-type(4n+1) {
+        left: 20px;
+      }
+      #types input:nth-of-type(4n+2), #types label:nth-of-type(4n+2) {
+        left: 246px;
+      }
+      #types input:nth-of-type(4n+3), #types label:nth-of-type(4n+3) {
+        left: 468px;
+      }
+      #types input:nth-of-type(4n+4), #types label:nth-of-type(4n+4) {
+        left: 690px;
+      }
     </style>
     <script src="resourceblock.js"></script>
   </head>
@@ -112,6 +130,7 @@
         <th i18n="headerresource"></th>
         <th i18n="headertype"></th>
         <th i18n="headerfilter"></th>
+        <th i18n="thirdparty"></th>
         <th></th>
       </tr></thead>
       <tbody><tr id="loading"><td colspan="4" i18n="loading"></td></tr></tbody>
@@ -155,7 +174,7 @@
         <input type="checkbox" value="object" checked="checked" id="typeobj" />
         <label for='typeobj' i18n="typeobject"></label>
         <input type="checkbox" value="image" checked="checked" id="typeimg"/>
-        <label for='typeimg' i18n="typeimage"></label>
+        <label for='typeimg' i18n="typeimage"></label><br/>
         <input type="checkbox" value="script" checked="checked" id='typescr'/>
         <label for='typescr' i18n="typescript"></label>
         <input type="checkbox" value="stylesheet" checked="checked" id='typesty'/>
