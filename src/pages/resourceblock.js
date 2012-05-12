@@ -49,7 +49,7 @@ function generateTable() {
     }
   }
   delete domaindata;
-  
+
   // Truncates a resource URL if it is too long. Also escapes some
   // characters when they have a special meaning in HTML.
   // Inputs: the string to truncate
@@ -63,7 +63,7 @@ function generateTable() {
 
     return j;
   }
-  
+
   // Checks if the filter is in the custom filters and can be removed
   // Inputs: the filter that could be in the custom filters
   // Returns true if the filter was in the custom filters
@@ -95,7 +95,7 @@ function generateTable() {
     // TODO: When crbug 80230 is fixed, allow $other again
     var disabled = (type.name === 'whitelisted' || type.name === 'hiding' ||
                     typeName === 'other' || typeName === 'unknown');
-    
+
     // We don't show the page URL unless it's excluded by $document or $elemhide
     if (typeName === 'page' && !matchingfilter)
       continue;
@@ -105,19 +105,27 @@ function generateTable() {
 
     // Cell 1: Checkbox
     var cell = $("<td><input type='checkbox'/></td>");
-    if (disabled) 
+    if (disabled)
       cell.find("input").attr("disabled", "disabled");
     row.append(cell);
 
     // Cell 2: URL
-    $("<td>", { title: i, text: truncateI(i) }).appendTo(row);
+    $("<td>", {
+      title: i,
+      text: truncateI(i),
+      "data-column": "url"
+    }).appendTo(row);
 
     // Cell 3: Type
     $("<td>", { text: translate('type' + typeName) }).appendTo(row);
 
     // Cell 4: hidden sorting field and matching filter
     cell = $("<td>");
-    $("<span>", { "class": "sorter", text: type.name ? type.sort : 3 }).appendTo(cell);
+    $("<span>", {
+      "class": "sorter",
+      text: type.name ? type.sort : 3,
+      "data-column": "filter"
+    }).appendTo(cell);
     if (type.name)
       $("<span>", { text: matchingfilter }).appendTo(cell);
     row.append(cell);
@@ -127,11 +135,13 @@ function generateTable() {
     var resourceDomain = parseUri(i).hostname;
     var isThirdParty = (type.name === 'hiding' ? false :
                           CheckThirdParty(resources[i].domain, resourceDomain));
-    cell = $("<td>", {text: isThirdParty ? translate('yes') : translate('no'),
-        title: translate("resourcedomain", resources[i].domain || resourceDomain)});
+    cell = $("<td>", {
+        text: isThirdParty ? translate('yes') : translate('no'),
+        title: translate("resourcedomain", resources[i].domain || resourceDomain),
+        "data-column": "thirdparty"});
     row.append(cell);
     resources[i].isThirdParty = isThirdParty;
-    
+
     // Cells 2-5 may get class=clickableRow
     if (!disabled)
       row.find("td:not(:first-child)").addClass("clickableRow");
@@ -154,14 +164,14 @@ function generateTable() {
   for (var i = 0; i < rows.length; i++) {
     $("#resourceslist tbody").append(rows[i]);
   }
-  // Make it sortable, initial sort sequence is first the filter column (2),
-  // then the URL column (4)
+  // Make it sortable, initial sort sequence is first the filter column (4),
+  // then the URL column (2)
   $("#resourceslist th:not(:empty)").click(sortTable);
-  $("#resourceslist th:nth-child(2)").click();
-  $("#resourceslist th:nth-child(4)").click();
-  
+  $("#resourceslist th[data-column='url']").click();
+  $("#resourceslist th[data-column='filter']").click();
+
   $(".deleterule").click(function() {
-    var resource = resources[$(this).prevAll('td:nth-child(2)')[0].title];
+    var resource = resources[$(this).prevAll('td[data-column="url"]')[0].title];
     BGcall('remove_custom_filter', resource.filter, function() {
       if (getTypeName(resource.type) === "page") {
         alert(translate("excludefilterremoved"));
@@ -361,10 +371,10 @@ function finally_it_has_loaded_its_stuff() {
     $('.clickableRow').removeClass('clickableRow');
     $('#resourceslist tr').css('border', 'black 1px dotted');
     $('#legend').remove();
-    chosenResource = resources[$(".selected td:nth-of-type(2)").prop('title')];
-    $(".selected td:nth-of-type(5)").text(
+    chosenResource = resources[$(".selected td[data-column='url']").prop('title')];
+    $(".selected td[data-column='thirdparty']").text(
                     chosenResource.isThirdParty ? translate('thirdparty') : '');
-    
+
     // Show the 'choose url' area
     $("#selectblockableurl").show();
     generateFilterSuggestions();
@@ -502,8 +512,8 @@ $(function() {
     if (!qps.itemUrl) {
       // Load all stored resources
       BGcall('resourceblock_get_frameData', qps.tabId, function(loaded_frames) {
-        loaded_frames = loaded_frames || {}
-        
+        loaded_frames = loaded_frames || {};
+
         for (var thisFrame in loaded_frames) {
           var frame = loaded_frames[thisFrame];
 
@@ -511,8 +521,8 @@ $(function() {
             type: ElementTypes.document | ElementTypes.elemhide,
             domain: frame.domain,
             resource: frame.url
-          }
-          
+          };
+
           for (var res in frame.resources) {
             if (/^HIDE\:\|\:.+/.test(res)) {
               var filter = "##" + res.substring(7);
@@ -541,7 +551,7 @@ $(function() {
         }
         continue_after_another_async_call();
       });
-    } else 
+    } else
       continue_after_another_async_call();
 
     function continue_after_another_async_call() {
@@ -590,7 +600,7 @@ sortTable = function(e) {
     rowList.push($(element).parent('tr'));
   });
   cellList.sort();
-  if ($(this).attr("data-sortDirection") === "descending") 
+  if ($(this).attr("data-sortDirection") === "descending")
     cellList.reverse();
   $("#resourceslist tbody").empty();
   cellList.forEach(function(item) {
