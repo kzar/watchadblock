@@ -1,7 +1,7 @@
 chrome.extension.onRequest.addListener(function(request) {
   if (request.command != "filters_updated")
     return;
-  if ($("#txtFiltersAdvanced").attr("disabled") == false)
+  if ($("#txtFiltersAdvanced").prop("disabled") === false)
     return;
   BGcall("get_custom_filters_text", function(text) {
     $("#txtFiltersAdvanced").val(text);
@@ -155,7 +155,7 @@ $(function() {
   // When one presses 'Enter', pretend it was a click on the 'add' button
   $('.entryTable input:text').keypress(function(event) {
     var submitButton = $(this).closest(".entryTable").find(":button");
-    if (event.keyCode == '13' && submitButton.attr("disabled") == false) {
+    if (event.keyCode === 13 && !submitButton.prop("disabled")) {
       event.preventDefault();
       submitButton.click();
     }

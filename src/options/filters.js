@@ -106,7 +106,7 @@ function setSubscriptionList(subscriptions) {
       text(translate('labelshow')).
       css("margin-left", "6px").
       css("font-size", "10px").
-      css("display", $("#btnShowLinks").attr("disabled") ? "inline" : "none").
+      css("display", $("#btnShowLinks").prop("disabled") ? "inline" : "none").
       attr("target", "_blank").
       attr("class", "linkToList").
       attr("href", entry.url);
@@ -263,7 +263,7 @@ $(function() {
 
   // Pressing enter will add the list too
   $('#txtNewSubscriptionUrl').keypress(function(event) {
-    if (event.keyCode == '13') {
+    if (event.keyCode === 13) {
       event.preventDefault();
       $("#btnNewSubscriptionUrl").click();
     }

@@ -529,7 +529,7 @@ $(function() {
     finally_it_has_loaded_its_stuff();
     // If opened by the context menu, this variable exists
     if (qps.itemUrl) {
-      if ($("#resourceslist input").attr("disabled")) {
+      if ($("#resourceslist input").prop("disabled")) {
         // In case the resource has been whitelisted and can't be removed
         if ($(".deleterule").length == 0) {
           alert(translate('resourceiswhitelisted'));
