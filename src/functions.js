@@ -6,15 +6,19 @@ VERBOSE_DEBUG = false;
 //   first, a string - the name of the function to call
 //   then, any arguments to pass to the function (optional)
 //   then, a callback:function(return_value:any) (optional)
-BGcall = function() {
-  var args = [];
-  for (var i=0; i < arguments.length; i++)
-    args.push(arguments[i]);
-  var fn = args.shift();
-  var has_callback = (typeof args[args.length - 1] == "function");
-  var callback = (has_callback ? args.pop() : function() {});
-  chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
+_BGcall_ctor = function(cmd) {
+  return (function() {
+    var args = [];
+    for (var i=0; i < arguments.length; i++)
+      args.push(arguments[i]);
+    var fn = args.shift();
+    var has_callback = (typeof args[args.length - 1] == "function");
+    var callback = (has_callback ? args.pop() : function() {});
+    chrome.extension.sendRequest({command: cmd, fn:fn, args:args}, callback);
+  });
 }
+BGcall = _BGcall_ctor("call");
+BGcall_with_callback = _BGcall_ctor("call_with_callback");
 
 // These are replaced with console.log in adblock_start.js and background.html
 // if the user chooses.
@@ -116,156 +120,3 @@ storage_set = function(key, value) {
   }
 }
 
-// Parses Safari property list documents
-// Inputs: document:Document
-// Returns plist contents as a javascript value or null on errors
-// See: http://developer.apple.com/documentation/Darwin/Reference/ManPages/man5/plist.5.html
-parsePlist = function(document) {
-  var root = document.documentElement;
-
-  function parseElement(elem) {
-    if (elem.tagName === 'true') {
-      return true;
-    } else if (elem.tagName === 'false') {
-      return false;
-    } else if (elem.tagName === 'string' || elem.tagName === 'data') {
-      return elem.textContent;
-    } else if (elem.tagName === 'real') {
-      return parseFloat(elem.textContent);
-    } else if (elem.tagName === 'integer') {
-      return parseInt(elem.textContent, 10);
-    } else if (elem.tagName === 'date') {
-      return new Date(Date.parse(elem.textContent));
-    } else if (elem.tagName === 'array') {
-      var result = [];
-      for (var i = 0; i < elem.childNodes.length; i++) {
-        var child = elem.childNodes.item(i);
-        if (child.nodeType === Node.ELEMENT_NODE) {
-          result.push(parseElement(child));
-        }
-      }
-      return result;
-    } else if (elem.tagName === 'dict') {
-      var result = {};
-      var key = null;
-      for (var i = 0; i < elem.childNodes.length; i++) {
-        var child = elem.childNodes.item(i);
-        if (child.nodeType === Node.ELEMENT_NODE) {
-          if (key) {
-            result[key] = parseElement(child);
-            key = null;
-          } else if (child.tagName === 'key') {
-            key = child.textContent;
-          }
-        }
-      }
-      return result;
-    }
-  }
-
-  if (root && root.tagName === 'plist') {
-    for (var i = 0; i < root.childNodes.length; i++) {
-      var child = root.childNodes.item(i);
-      if (child.nodeType === Node.ELEMENT_NODE) {
-        return parseElement(child);
-      }
-    }
-    return parseElement(root.firstChild);
-  } else {
-    return null;
-  }
-}
-
-// Checks if the extension is up-to-date
-// Inputs:
-//   checkReason:string - update check reason appended to safari plist url, ignored on chrome
-//   callback:function(uptodate, updateURL) - called when update finishes
-performUpdateCheck = (function() {
-  var fetchLocalManifest;
-  if (SAFARI) {
-    fetchLocalManifest = function(callback) {
-      $.get(safari.extension.baseURI + "Info.plist",
-            function(plist) {
-              callback(parsePlist(plist));
-            },
-            "xml");
-    };
-  } else {
-    fetchLocalManifest = function(callback) {
-      $.get(chrome.extension.getURL('manifest.json'),
-            callback,
-            "json");
-    };
-  }
-
-  function compareVersions(versionA, versionB) {
-    var versionRegex = /^(\d+)\.(\d+)\.(\d+)$/;
-    var matchA = versionA.match(versionRegex);
-    var matchB = versionB.match(versionRegex);
-    if (!matchA || !matchB) {
-      return null;
-    }
-
-    for (var i = 1; i < matchA.length; i++) {
-      var a = parseInt(matchA[i], 10);
-      var b = parseInt(matchB[i], 10);
-      if (a < b) {
-        return -1;
-      } else if (a > b) {
-        return 1;
-      }
-    }
-    return 0;
-  }
-
-  if (SAFARI) {
-    return function(checkReason, callback) {
-      fetchLocalManifest(function(manifest) {
-        var updateURL = manifest["Update Manifest URL"];
-        var currentVersion = manifest["CFBundleVersion"];
-        var bundleIdentifier = manifest["CFBundleIdentifier"];
-
-        $.get(
-          updateURL + "?" + checkReason,
-          function(response) {
-            var updateManifest = parsePlist(response);
-            var updates = updateManifest["Extension Updates"];
-            for (var i = 0; i < updates.length; i++) {
-              var update = updates[i];
-              if (update["CFBundleIdentifier"] === bundleIdentifier) {
-                var latestVersion = update["CFBundleVersion"];
-                var extURL = update["URL"];
-                var uptodate = (compareVersions(currentVersion, latestVersion) >= 0);
-                callback(uptodate, extURL);
-              }
-            }
-          },
-          "xml");
-      });
-    }
-  } else {
-    return function(checkReason, callback) {
-      fetchLocalManifest(function(manifest) {
-        var currentVersion = manifest["version"];
-        var checkURL = "http://clients2.google.com/service/update2/crx?" +
-                       "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
-                       currentVersion + "%26uc";
-        $.get(
-          checkURL,
-          function(response) {
-            // It looks like WebKit engines have problems with namespace resolutions,
-            // so we'll have to hunt for nodes using name() in the XPath.
-            var updateURL = response.evaluate("//*[name() = 'updatecheck' and @status = 'ok']/@codebase",
-                                              response, null, XPathResult.STRING_TYPE, null).stringValue;
-            if (updateURL) {
-              callback(false, updateURL);
-            } else if (response.evaluate("//*[name() = 'updatecheck' and @status = 'noupdate']",
-                                         response, null, XPathResult.ANY_UNORDERED_NODE_TYPE, null).singleNodeValue) {
-              callback(true);
-            }
-          },
-          "xml");
-      });
-    }
-  }
-})();

@@ -274,8 +274,8 @@ function disableUpdateCheck() {
 
   function updateCheck() {
     if (!safari.extension.update_check_disabled) {
-      performUpdateCheck("out-of-date-check", function(uptodate) {
-        if (uptodate) {
+      performUpdateCheck("out-of-date-check", function(results) {
+        if (results.upToDate) {
           delete safari.extension.settings.first_outdated_at;
           delete safari.extension.settings.outdated_warning_shown_at;
         } else {
