@@ -72,8 +72,10 @@
     // Stores url, whitelisting, and blocking info for a tabid+frameid
     // TODO: can we avoid making this a global once 'old' style dies?
     frameData = {
-      // Return the data object for |tabId| and |frameId|, or
-      // undefined if |tabId| and |frameId| are not being tracked.
+      // Returns the data object for the frame with ID frameId on the tab with
+      // ID tabId. If frameId is not specified, it'll return the data for all
+      // frames on the tab with ID tabId. Returns undefined if tabId and frameId
+      // are not being tracked.
       get: function(tabId, frameId) {
         if (frameId !== undefined)
           return (frameData[tabId] || {})[frameId];
@@ -140,9 +142,8 @@
         if (!get_settings().show_advanced_options)
           return;
         var data = frameData.get(tabId, frameId);
-        if (data === undefined)
-          return;
-        data.resources[elType + ':|:' + url] = null;
+        if (data !== undefined)
+          data.resources[elType + ':|:' + url] = null;
       },
 
       // When a tab is closed, delete all its data

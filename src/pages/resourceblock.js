@@ -134,7 +134,7 @@ function generateTable() {
     // Cell 5: third-party or not
     var resourceDomain = parseUri(i).hostname;
     var isThirdParty = (type.name === 'hiding' ? false :
-                          CheckThirdParty(resources[i].domain, resourceDomain));
+                          checkThirdParty(resources[i].domain, resourceDomain));
     cell = $("<td>", {
         text: isThirdParty ? translate('yes') : translate('no'),
         title: translate("resourcedomain", resources[i].domain || resourceDomain),
@@ -300,7 +300,7 @@ function createfilter() {
 // Get the third-party domain
 // Inputs: the domain of which the third-party-check part is requested
 // Returns the third-party-check domain
-function GetThirdPartyDomain(domain) {
+function getThirdPartyDomain(domain) {
   var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
   return match[0].toLowerCase();
 }
@@ -308,9 +308,9 @@ function GetThirdPartyDomain(domain) {
 // Checks if it is a third-party resource or not
 // Inputs: the two domains to check
 // Returns true if third-party, false otherwise
-function CheckThirdParty(domain1, domain2) {
-  var match1 = GetThirdPartyDomain(domain1);
-  var match2 = GetThirdPartyDomain(domain2);
+function checkThirdParty(domain1, domain2) {
+  var match1 = getThirdPartyDomain(domain1);
+  var match2 = getThirdPartyDomain(domain2);
   return (match1 !== match2);
 }
 
@@ -403,7 +403,7 @@ function finally_it_has_loaded_its_stuff() {
         // Use .find().text() so data from query string isn't injected as HTML
         $("#thirdparty + label").
           html(translate("thirdpartycheckbox", "<i></i>")).
-          find("i").text(GetThirdPartyDomain(chosenResource.domain));
+          find("i").text(getThirdPartyDomain(chosenResource.domain));
       $("#domainlist").
         val(chosenResource.domain.replace(/^www\./, '')).
         click(function() {
@@ -585,9 +585,10 @@ $(function() {
   });
 });
 
-
-sortTable = function(e) {
-  var rowNumber = $(this).prevAll().length + 1;
+// Click event for the column titles (<th>) of a table.
+// It'll sort the table upon the contents of that column
+sortTable = function() {
+  var columnNumber = $(this).prevAll().length + 1;
   if ($(this).attr("data-sortDirection") === "ascending") {
     $(this).attr("data-sortDirection", "descending"); // Z->A
   } else {
@@ -595,9 +596,9 @@ sortTable = function(e) {
   }
   var cellList = [];
   var rowList = [];
-  $("#resourceslist td:nth-of-type(" + rowNumber + ")").each(function(index, element) {
+  $("#resourceslist td:nth-of-type(" + columnNumber + ")").each(function(index, element) {
     cellList.push(element.innerHTML + 'ÿÿÿÿÿ' + (index+10000));
-    rowList.push($(element).parent('tr'));
+    rowList.push($(element).parent('tr').clone(true));
   });
   cellList.sort();
   if ($(this).attr("data-sortDirection") === "descending")
