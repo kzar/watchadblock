@@ -6,8 +6,8 @@ VERBOSE_DEBUG = false;
 //   first, a string - the name of the function to call
 //   then, any arguments to pass to the function (optional)
 //   then, a callback:function(return_value:any) (optional)
-_BGcall_ctor = function(cmd) {
-  return (function() {
+_BGcall_constructor = function(cmd) {
+  return function() {
     var args = [];
     for (var i=0; i < arguments.length; i++)
       args.push(arguments[i]);
@@ -15,10 +15,10 @@ _BGcall_ctor = function(cmd) {
     var has_callback = (typeof args[args.length - 1] == "function");
     var callback = (has_callback ? args.pop() : function() {});
     chrome.extension.sendRequest({command: cmd, fn:fn, args:args}, callback);
-  });
+  };
 }
-BGcall = _BGcall_ctor("call");
-BGcall_with_callback = _BGcall_ctor("call_with_callback");
+BGcall = _BGcall_constructor("call");
+BGcall_with_callback = _BGcall_constructor("call_with_callback");
 
 // These are replaced with console.log in adblock_start.js and background.html
 // if the user chooses.
