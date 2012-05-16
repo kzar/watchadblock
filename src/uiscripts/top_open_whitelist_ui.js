@@ -17,6 +17,9 @@ function top_open_whitelist_ui() {
     domain = parseUri(document.location.pathname).host;
   }
 
+  // Get Flash objects out of the way of our UI
+  BGcall('emit_page_broadcast', {fn:'send_content_to_back', options:{}});
+  
   // defined in blacklister.js
   load_jquery_ui(function() {
     may_open_dialog_ui = false;
