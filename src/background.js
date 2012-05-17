@@ -175,6 +175,11 @@
       var frameDomain = frameData.get(tabId, requestingFrameId).domain;
       var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
 
+      // TODO temp issue 6139.  If this works, generalize it as a filter option
+      if (frameDomain === "www.hulu.com" && /(ll\.a|ads)\.hulu\.com/.test(details.url)) {
+        return { redirectUrl: "http://chromeadblock.com/huluad.flv" };
+      }
+
       var canPurge = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
       if (canPurge && blocked) {
         // frameUrl is used by the recipient to determine whether they're the frame who should
