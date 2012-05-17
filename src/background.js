@@ -549,8 +549,8 @@
         'top_open_whitelist_ui': {
           allFrames: false,
           include: [
-            "jquery/jquery.min.js",
-            "jquery/jquery-ui.custom.min.js",
+            "jquery/jquery.min-wrapped.js",
+            "jquery/jquery-ui.custom.min-wrapped.js",
             "uiscripts/load_jquery_ui.js",
             "uiscripts/top_open_whitelist_ui.js"
             ]
@@ -558,8 +558,8 @@
         'top_open_blacklist_ui': {
           allFrames: false,
           include: [
-            "jquery/jquery.min.js",
-            "jquery/jquery-ui.custom.min.js",
+            "jquery/jquery.min-wrapped.js",
+            "jquery/jquery-ui.custom.min-wrapped.js",
             "uiscripts/load_jquery_ui.js",
             "uiscripts/blacklisting/overlay.js",
             "uiscripts/blacklisting/clickwatcher.js",
@@ -571,7 +571,7 @@
         'send_content_to_back': {
           allFrames: true,
           include: [
-            "jquery/jquery.min.js",
+            "jquery/jquery.min-wrapped.js",
             "uiscripts/blacklisting/send_content_to_back.js"
             ]
         }

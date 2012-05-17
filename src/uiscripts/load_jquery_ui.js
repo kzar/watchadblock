@@ -19,7 +19,7 @@ function load_jquery_ui(callback) {
     callback();
   }
   else {
-    BGcall('readfile', "jquery/jquery-ui.custom.min.js", function(result) {
+    BGcall('readfile', "jquery/jquery-ui.custom.min-wrapped.js", function(result) {
       eval(result); // suck it, Trebek
 
       // chrome.i18n.getMessage() lazily loads a file from disk using xhr,
