@@ -571,7 +571,6 @@
         'send_content_to_back': {
           allFrames: true,
           include: [
-            "jquery/jquery.min.js",
             "uiscripts/blacklisting/send_content_to_back.js"
             ]
         }

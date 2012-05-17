@@ -9,29 +9,34 @@ send_content_to_back = function() {
   // seen cases (e.g. mtv3.fi's right side ad) where the show was so fast
   // that the wmode=transparent hadn't been applied; thus, we delay 250ms
   // before showing.
-  $("object").each(function(i, el) {
-      $(el).
-        hide().
-        append('<param name="wmode" value="transparent">');
-      window.setTimeout(function() { log("showing"); $(el).show(); }, 250);
-    });
-  $("embed").each(function(i, el) {
-      $(el).
-        hide().
-        attr('wmode', 'transparent');
-      window.setTimeout(function() { log("showing"); $(el).show(); }, 250);
-    });
+  var all = document.querySelectorAll("object,embed");
+  for (var i=0; i < all.length; i++) {
+    var el = all[i];
+    el.oldDisplay = el.style.display;
+    el.style.display = "none";
+
+    if (el.nodeName === "OBJECT")
+      el.appendChild('<param name="wmode" value="transparent">');
+    else
+      el.setAttribute("wmode", "transparent");
+  }
+
+  window.setTimeout(function() { 
+    log("showing");
+    for (var i=0; i < all.length; i++) {
+      all[i].style.display = all[i].oldDisplay;
+    }
+  }, 250);
 
   // Also, anybody with a z-index over 1 million is going to get in our
   // way.  Decrease it.
-  $('[style*="z-index"]').
-    filter(function(i) {
-        return $(this).css('z-index') >= 1000000;
-      }).
-    each(function(i, el) {
-        $(el).css('z-index', 999999);
-    });
-};
+  zIndexes = document.querySelectorAll('[style*="z-index"]');
+  for (var i = 0; i < zIndexes.length; i++) {
+    var el = zIndexes[i];
+    if (el.style["z-index"] >= 1000000)
+      el.style["z-index"] = 999999;
+  }
+}
 
 }
 
