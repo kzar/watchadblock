@@ -571,7 +571,7 @@
         'send_content_to_back': {
           allFrames: true,
           include: [
-            "uiscripts/blacklisting/send_content_to_back.js"
+            "uiscripts/send_content_to_back.js"
             ]
         }
       };
