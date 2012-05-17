@@ -158,12 +158,6 @@ ClickWatcher.prototype._build_ui = function() {
     not("embed,object").      // Dealt with separately below
     click(click_catch_this);  // Everybody else, blacklist upon click
 
-  // Send all objects and embeds to the background, and send any z-index
-  // crazies to a lower z-index.  I'd do it here, but objects within iframes
-  // will still block our click catchers over the iframes, so we have to tell
-  // all subframes to do it too.
-  BGcall('emit_page_broadcast', {fn:'send_content_to_back', options:{}});
-
   // Since iframes that will get clicked will almost always be an entire
   // ad, and I *really* don't want to figure out inter-frame communication
   // so that the blacklist UI's slider works between multiple layers of 
