@@ -106,7 +106,7 @@
         } else {
           var JSONtext;
           try {
-            JSONtext = JSON.parse($("#languagecode").val());
+            JSONtext = JSON.parse($("#languagecode").val() || "{}");
           } catch(ex) {
             alert('Invalid input');
           }
@@ -188,11 +188,14 @@
               );
               p.append($("<br>"));
               p.append('<span indent="3">Translation:</span>');
+              var phval = (current[id] && current[id].placeholders && current[id].placeholders[ph] ? current[id].placeholders[ph].content : '');
+              var phEnglishIsDollarNumberOnly = /^\$[1-9]$/.test(English[id].placeholders[ph].content);
               p.append(
                 $("<textarea cols='100' rows='2' placeholder='Enter translation here'>").
-                      val(current[id] && current[id].placeholders && current[id].placeholders[ph]?current[id].placeholders[ph].content:'').
+                      val(phval || phEnglishIsDollarNumberOnly ? English[id].placeholders[ph].content : '').
                       attr('data-placeholderForID', id).
-                      attr('data-placeholder', ph)
+                      attr('data-placeholder', ph).
+                      prop('disabled', phEnglishIsDollarNumberOnly && (English[id].placeholders[ph].content === phval || !phval))
               );
               p.append($("<br>"));
               p.append('<span indent="3">Example:</span>');
@@ -210,10 +213,11 @@
       };
 
       $("#exportButton").click(function() {
-        var translation = {};
+        var translation = {}, x = {};
         var IDs = Object.keys(English).sort();
+        $.extend(true, x, English); // We don't want object references to English...
         for (i=0; i<IDs.length; i++) {
-          translation[IDs[i]] = English[IDs[i]];
+          translation[IDs[i]] = x[IDs[i]];
         }
         for (id in translation) {
           var somethingIsEmpty = false;
@@ -230,8 +234,9 @@
           $("#exportArea :not(input)").remove();
           if (somethingIsEmpty) {
             delete translation[id];
-          } else if (!doILikeThisMessage(translation[id])) {
+          } else if (!doILikeThisMessage(translation[id], id)) {
             $("#hideTranslated:checked").click().change();
+            location.hash = "";
             location.hash = '__' + id;
             return;
           }
@@ -253,7 +258,7 @@
         }
       });
 
-      var doILikeThisMessage = function(entry) {
+      var doILikeThisMessage = function(entry, id) {
         /* THIS DOES NOT MAKE THE EXECUTABLE REDUNDANT, THESE ARE JUST VERY BASIC CHECKS! */
         var match = entry.message.replace(/\$\$/g, '===').match(/\$[\w]+\$/g),
          tmp = entry.message.replace(/\$\$/g, '==='), i;
@@ -280,8 +285,9 @@
           }
         }
         match = tmp.match(/\$[1-9]/g);
+        var lastfound = 0;
         if (match) {
-          var found = [], lastfound=1;
+          var found = [];
           for (i=0; i<match.length; i++) {
             found.push(match[i].substr(1));
           }
@@ -291,7 +297,22 @@
               alert("Numerical placeholder $" + (lastfound+1) + " not found");
               return false;
             }
+            lastfound = Number(found[i]);
           }
+        }
+        
+        tmp = English[id].message.replace(/\$\$/g, '===');
+        if (English[id].placeholders) {
+          for (i in English[id].placeholders) {
+            tmp = tmp.replace(new RegExp("\\$" + i + "\\$", "g"), '');
+          }
+          for (i in English[id].placeholders) {
+            tmp += English[id].placeholders[i].content;
+          }
+        }
+        if (new RegExp("\\$" + (lastfound+1)).test(tmp)) {
+          alert("Numerical placeholder $" + (lastfound+1) + " not found");
+          return false;
         }
 
         if ((/\&gt\;/.test(tmp) || /\&\#0*60\;/.test(tmp)) && ((/\&lt\;/.test(tmp) || /\&\#0*62\;/.test(tmp)))) {
