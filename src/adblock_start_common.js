@@ -126,7 +126,7 @@ function debug_print_selector_matches(selectors) {
       }
       if (SAFARI) {
         log("Debug: CSS '" + selector + "' hid:");
-        console.log(matches);
+        log(matches);
       }
       else
         BGcall("debug_report_elemhide", selector, matches);

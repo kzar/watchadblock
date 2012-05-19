@@ -72,10 +72,14 @@
     // Stores url, whitelisting, and blocking info for a tabid+frameid
     // TODO: can we avoid making this a global once 'old' style dies?
     frameData = {
-      // Return the data object for |tabId| and |frameId|, or
-      // undefined if |tabId| and |frameId| are not being tracked.
+      // Returns the data object for the frame with ID frameId on the tab with
+      // ID tabId. If frameId is not specified, it'll return the data for all
+      // frames on the tab with ID tabId. Returns undefined if tabId and frameId
+      // are not being tracked.
       get: function(tabId, frameId) {
-        return (frameData[tabId] || {})[frameId];
+        if (frameId !== undefined)
+          return (frameData[tabId] || {})[frameId];
+        return frameData[tabId];
       },
 
       // Record that |tabId|, |frameId| points to |url|.
@@ -85,11 +89,11 @@
         fd[tabId][frameId] = {
           url: url,
           // Cache these as they'll be needed once per request
-          domain: parseUri(url).hostname
+          domain: parseUri(url).hostname,
+          resources: {}
         };
         if (frameId === 0) {
           fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
-          fd[tabId][frameId].resources = {};
         }
       },
 
@@ -134,10 +138,10 @@
       },
 
       // Record a resource for the resource blocker.
-      storeResource: function(tabId, url, elType) {
+      storeResource: function(tabId, frameId, url, elType) {
         if (!get_settings().show_advanced_options)
           return;
-        var data = frameData.get(tabId, 0);
+        var data = frameData.get(tabId, frameId);
         if (data !== undefined)
           data.resources[elType + ':|:' + url] = null;
       },
@@ -160,8 +164,6 @@
       var tabId = details.tabId;
       var elType = ElementTypes.fromOnBeforeRequestType(details.type);
 
-      frameData.storeResource(tabId, details.url, elType);
-
       if (frameData.get(tabId, 0).whitelisted) {
         log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
         return { cancel: false };
@@ -171,6 +173,9 @@
       // But for iframe loads, we consider the request to be sent by the outer
       // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
       var requestingFrameId = (details.type == 'sub_frame' ? details.parentFrameId : details.frameId);
+
+      frameData.storeResource(tabId, requestingFrameId, details.url, elType);
+
       // May the URL be loaded by the requesting frame?
       var frameDomain = frameData.get(tabId, requestingFrameId).domain;
       var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
@@ -200,14 +205,14 @@
       var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
       if (match)
         chrome.tabs.remove(details.tabId);
-      frameData.storeResource(details.sourceTabId, details.url, ElementTypes.popup);
+      frameData.storeResource(details.sourceTabId, details.sourceFrameId, details.url, ElementTypes.popup);
     };
   }
 
   debug_report_elemhide = function(selector, matches, sender) {
     if (!window.frameData)
       return;
-    frameData.storeResource(sender.tab.id, selector, "HIDE");
+    frameData.storeResource(sender.tab.id, 0, selector, "HIDE");
     var data = frameData.get(sender.tab.id, 0);
     if (data)
       log(data.domain, ": hiding rule", selector, "matched:\n", matches);
@@ -619,6 +624,11 @@
     if (!data)
       return;
     openTab("pages/resourceblock.html?tabId=" + tabId + "&url=" + escape(data.url), true);
+  }
+  
+  // Get the framedata for resourceblock
+  resourceblock_get_frameData = function(tabId) {
+    return frameData.get(tabId);
   }
 
   // Return chrome.i18n._getL10nData() for content scripts who cannot
