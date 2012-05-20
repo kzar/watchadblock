@@ -13,7 +13,7 @@
       #translateArea b {
         line-height: 40px;
       }
-      * {
+      :not(a), a[download] {
         vertical-align: middle;
       }
       #translateArea i {
@@ -48,7 +48,7 @@
       <br/>
       <i>Example: 'nl' for Dutch, 'pt-pt' for portuguese, etcetera. If you leave it empty, an empty translation file will be created<br/>
       If you paste the content of the file you already have translated, it'll load that file instead</i><br/>
-      <u>Please make sure that you already created an issue in the issue tracker before you start translating.</u><br/>
+      <u>Please make sure that you already created an issue in the issue tracker and have read <a href="http://code.google.com/p/adblockforchrome/wiki/HowToTranslate">HowToTranslate</a> before you start translating!</u><br/>
     </p>
     <div id="translateArea"></div>
     <div id="exportArea">
@@ -247,13 +247,20 @@
         ).append(
           $("<br/>")
         ).append(
-          $("<span>").text("Save this file to your local computer and then attach it to the issue for your language in the issue tracker. After that, we'll take care of it.")
+          $("<span>").html("Save this file to your local computer and then attach it to the <a href='http://code.google.com/p/adblockforchrome/issues/list?can=1&q=type%3Dl10n+-status:duplicate+-status:invalid&sort=summary&colspec=ID+Status+Summary&x=area&y=priority&cells=tiles' target='_blank'>issue for your language</a> in the issue tracker. After that, we'll take care of it.")
         );
         if (!/Chrome/.test(navigator.userAgent)) {
           $("#exportArea").append(
             $("<br/>")
           ).append(
             $("<span>").text("Do not paste the contents of the page directly into the issue tracker! Attach it as an attachment.")
+          );
+        }
+        if (/Chrome\/19/.test(navigator.userAgent)) {
+          $("#exportArea").append(
+            $("<br/>")
+          ).append(
+            $("<span>").text("In Chrome 19, you have to right mouse click on the link and choose 'open in new tab'. Then paste it in a text file. When Chrome 20 is released, it'll work better.")
           );
         }
       });
