@@ -304,7 +304,7 @@
   // Rebuild the filterset based on the current settings and subscriptions.
   update_filters = function() {
     _myfilters.rebuild();
-    }
+  }
 
   // Fetch the latest version of all subscribed lists now.
   update_subscriptions_now = function() {
