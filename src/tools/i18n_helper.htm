@@ -150,7 +150,8 @@
                 }
               });
               $("#translateArea textarea ~ textarea[data-messageforid]").each(function() {
-                if (/\s/.test($(this).val().trim()) && $(this).val() === $(this).prevAll('textarea')[0].value) { // Smart guess
+                if (/\s/.test($(this).val().replace(/\$(?:\w+\$|[1-9])/g, '').trim()) &&
+                    $(this).val() === $(this).prevAll('textarea')[0].value) { // Smart guess
                   $(this).parent("div").css("display", "block");
                 }
               });
