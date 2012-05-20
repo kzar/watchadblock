@@ -607,16 +607,14 @@
 
   // Open the resource blocker when requested from the Chrome popup.
   launch_resourceblocker = function(tabId) {
-    var data = frameData.get(tabId, 0);
-    if (!data)
-      return;
     openTab("pages/resourceblock.html?tabId=" + tabId, true);
   }
-  
+
   // Get the framedata for resourceblock
   resourceblock_get_frameData = function(tabId) {
     return frameData.get(tabId);
   }
+
   // Get the filter texts for resourceblock
   resourceblock_get_filter_text = function() {
     return {
