@@ -1,17 +1,29 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>I18N helper</title>
+    <title>I18N Helper</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <style>
+      html {
+      	background-color: #EAEAEA;
+      	font-family: 'Arial', sans-serif;
+      	color: #414141;
+      }
+      .translation_box {
+        border: 2px solid grey;
+        border-radius: 5px;
+        padding-top: 15px;
+        padding-left: 10px;
+        padding-bottom: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-color: #D0D0D0;
+      }
       #translateArea textarea {
         margin-left: 12px;
         border: 1px solid grey;
         width: 80%;
-      }
-      #translateArea b {
-        line-height: 40px;
       }
       :not(a), a[download] {
         vertical-align: middle;
@@ -40,7 +52,8 @@
     </style>
   </head>
   <body>
-    <h1>I18N helper for AdBlockforChrome</h1>
+    <img src="i18nhelper_logo.png" alt="I18N Helper for AdBlock"/>
+    <br/><br/>
     <p id="languageselector">
       <b>Enter the language code or JSON file for the language you want to translate:</b>
       <input type="text" id="languagecode" />
@@ -48,6 +61,7 @@
       <br/>
       <i>Example: 'nl' for Dutch, 'pt-pt' for portuguese, etcetera. If you leave it empty, an empty translation file will be created<br/>
       If you paste the content of the file you already have translated, it'll load that file instead</i><br/>
+      <br/>
       <u>Please make sure that you already created an issue in the issue tracker and have read <a href="http://code.google.com/p/adblockforchrome/wiki/HowToTranslate">HowToTranslate</a> before you start translating!</u><br/>
     </p>
     <div id="translateArea"></div>
@@ -129,19 +143,19 @@
         target.append(
           $('<input type="checkbox" id="hideTranslated" />').change(function() {
             if ($(this).is(":checked")) {
-              $("#translateArea p").css("display", "none");
+              $("#translateArea div").css("display", "none");
               $("#translateArea textarea").each(function() {
                 if (!$(this).val()) {
-                  $(this).parent("p").css("display", "block");
+                  $(this).parent("div").css("display", "block");
                 }
               });
               $("#translateArea textarea ~ textarea[data-messageforid]").each(function() {
                 if (/\s/.test($(this).val().trim()) && $(this).val() === $(this).prevAll('textarea')[0].value) { // Smart guess
-                  $(this).parent("p").css("display", "block");
+                  $(this).parent("div").css("display", "block");
                 }
               });
             } else {
-              $("#translateArea p").css("display", "block");
+              $("#translateArea div").css("display", "block");
             }
           })
         ).append(
@@ -151,60 +165,60 @@
         var IDs = Object.keys(English).sort();
         for (i=0; i<IDs.length; i++) {
           var id = IDs[i];
-          var p = $("<p>");
-          p.append(
+          var div = $("<div class='translation_box'>");
+          div.append(
             $('<b>').text(id).attr('id', '__' + id)
           );
-          p.append($("<br>"));
-          p.append('<span indent="1">English message:</span>');
-          p.append(
+          div.append($("<br>"));
+          div.append('<span indent="1">English message:</span>');
+          div.append(
             $("<textarea disabled='disabled'>").val(English[id].message)
           );
-          p.append($("<br>"));
-          p.append('<span indent="1">Translation:</span>');
-          p.append(
+          div.append($("<br>"));
+          div.append('<span indent="1">Translation:</span>');
+          div.append(
             $("<textarea placeholder='Enter translation here'>").
                   val(current[id]?current[id].message:'').
                   attr('data-messageForId', id)
           );
-          p.append($("<br>"));
-          p.append('<span indent="1">Information:</span>');
-          p.append(
+          div.append($("<br>"));
+          div.append('<span indent="1">Information:</span>');
+          div.append(
             $("<i>").text(English[id].description)
           );
           if (English[id].placeholders) {
-            p.append($("<br>"));
-            p.append('<span indent="1">Placeholder' + (Object.keys(English[id].placeholders).length !== 1 ? 's' : '') + ':</span>');
+            div.append($("<br>"));
+            div.append('<span indent="1">Placeholder' + (Object.keys(English[id].placeholders).length !== 1 ? 's' : '') + ':</span>');
             var ph;
             for (ph in English[id].placeholders) {
-              p.append($("<br>"));
-              p.append(
+              div.append($("<br>"));
+              div.append(
                 $('<u indent="2">').text('$' + ph + '$')
               );
-              p.append($("<br>"));
-              p.append('<span indent="3">English message:</span>');
-              p.append(
+              div.append($("<br>"));
+              div.append('<span indent="3">English message:</span>');
+              div.append(
                 $("<textarea disabled='disabled'>").val(English[id].placeholders[ph].content)
               );
-              p.append($("<br>"));
-              p.append('<span indent="3">Translation:</span>');
+              div.append($("<br>"));
+              div.append('<span indent="3">Translation:</span>');
               var phval = (current[id] && current[id].placeholders && current[id].placeholders[ph] ? current[id].placeholders[ph].content : '');
               var phEnglishIsDollarNumberOnly = /^\$[1-9]$/.test(English[id].placeholders[ph].content);
-              p.append(
+              div.append(
                 $("<textarea cols='100' rows='2' placeholder='Enter translation here'>").
                       val(phval || phEnglishIsDollarNumberOnly ? English[id].placeholders[ph].content : '').
                       attr('data-placeholderForID', id).
                       attr('data-placeholder', ph).
                       prop('disabled', phEnglishIsDollarNumberOnly && (English[id].placeholders[ph].content === phval || !phval))
               );
-              p.append($("<br>"));
-              p.append('<span indent="3">Example:</span>');
-              p.append(
+              div.append($("<br>"));
+              div.append('<span indent="3">Example:</span>');
+              div.append(
                 $("<i>").text(English[id].placeholders[ph].example)
               );
             }
           }
-          target.append(p);
+          target.append(div);
         }
         
         $("textarea").bind("input", function() {
