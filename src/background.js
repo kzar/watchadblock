@@ -734,6 +734,19 @@
     chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
     // Popup blocking
     chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+
+    var handleEarlyOpenedTabs = function(tabs) {
+      log("Found", tabs.length, "tabs that were already opened");
+      for (var i=0; i<tabs.length; i++) {
+        var currentTab = tabs[i], tabId = currentTab.id;
+        if (frameData[tabId]) continue; // Known tab
+        frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
+        // TODO: once we're able to get the parentFrameId, call
+        // chrome.webNavigation.getAllFrames to 'load' the subframes
+      }
+    }
+    chrome.tabs.query({url: "http://*/*"}, handleEarlyOpenedTabs);
+    chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
   }
 
   if (SAFARI) {
