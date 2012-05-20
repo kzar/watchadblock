@@ -150,7 +150,7 @@
                 }
               });
               $("#translateArea textarea ~ textarea[data-messageforid]").each(function() {
-                if (/\s/.test($(this).val().replace(/\$(?:\w+\$|[1-9])/g, '').trim()) &&
+                if (/\s/.test($(this).val().replace(/(?:\$\w+\$|\$[1-9]|\<\w+.*?\>)/g, '').trim()) &&
                     $(this).val() === $(this).prevAll('textarea')[0].value) { // Smart guess
                   $(this).parent("div").css("display", "block");
                 }
@@ -204,13 +204,13 @@
               div.append($("<br>"));
               div.append('<span indent="3">Translation:</span>');
               var phval = (current[id] && current[id].placeholders && current[id].placeholders[ph] ? current[id].placeholders[ph].content : '');
-              var phEnglishIsDollarNumberOnly = /^\$[1-9]$/.test(English[id].placeholders[ph].content);
+              var phEnglishIsNonTranslatable = /^\$[1-9]$/.test(English[id].placeholders[ph].content) || /^\<\w+[^\>\<]*\>$/.test(English[id].placeholders[ph].content);
               div.append(
                 $("<textarea cols='100' rows='2' placeholder='Enter translation here'>").
-                      val(phval || phEnglishIsDollarNumberOnly ? English[id].placeholders[ph].content : '').
+                      val(phval || (phEnglishIsNonTranslatable ? English[id].placeholders[ph].content : '')).
                       attr('data-placeholderForID', id).
                       attr('data-placeholder', ph).
-                      prop('disabled', phEnglishIsDollarNumberOnly && (English[id].placeholders[ph].content === phval || !phval))
+                      prop('disabled', phEnglishIsNonTranslatable && (English[id].placeholders[ph].content === phval || !phval))
               );
               div.append($("<br>"));
               div.append('<span indent="3">Example:</span>');
