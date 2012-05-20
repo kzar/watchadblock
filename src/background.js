@@ -512,8 +512,6 @@
   // TODO: make better.
   // Inputs: options object containing:
   //           domain:string the domain of the calling frame.
-  //           include_texts?:bool true if PatternFilter._text should be
-  //                               appended to block filters.
   get_content_script_data = function(options, sender) {
     var whitelisted = page_is_whitelisted(sender.tab.url);
     var settings = get_settings();
@@ -526,22 +524,11 @@
     if (whitelisted || result.adblock_is_paused)
       return result;
 
-    // Not whitelisted, and running on adblock_start.  We have two tasks:
-    // apply CSS-hiding rules, and send Chrome a filterset.
-
+    // Not whitelisted, and running on adblock_start. We have to send the
+    // CSS-hiding rules.
     if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
       result.selectors = _myfilters.hiding.
         filtersFor(options.domain, function(f) { return f.selector; });
-    }
-    // TODO this sucks.  and stop packing, since we can be slow on resourceblock.html.
-    if (!SAFARI && options.include_texts) {
-      var packed = function(filter) {
-        return [filter._rule.source, filter._allowedElementTypes, filter._options, filter._text];
-      }
-      result.patternSerialized = _myfilters.blocking.pattern.
-        filtersFor(options.domain, packed);
-      result.whitelistSerialized = _myfilters.blocking.whitelist.
-        filtersFor(options.domain, packed);
     }
 
     return result;
@@ -623,12 +610,19 @@
     var data = frameData.get(tabId, 0);
     if (!data)
       return;
-    openTab("pages/resourceblock.html?tabId=" + tabId + "&url=" + escape(data.url), true);
+    openTab("pages/resourceblock.html?tabId=" + tabId, true);
   }
   
   // Get the framedata for resourceblock
   resourceblock_get_frameData = function(tabId) {
     return frameData.get(tabId);
+  }
+  // Get the filter texts for resourceblock
+  resourceblock_get_filter_text = function() {
+    return {
+      blocking: _myfilters.blocking.pattern,
+      whitelist: _myfilters.blocking.whitelist
+    };
   }
 
   // Return chrome.i18n._getL10nData() for content scripts who cannot
