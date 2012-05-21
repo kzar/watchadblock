@@ -10,7 +10,7 @@ function customize_for_this_tab() {
     function hide(L) { L.forEach(function(x) { shown[x] = false; }); }
 
     show(["div_options", "separator2"]);
-    if (BG.sessionStorage.getItem('adblock_is_paused')) {
+    if (BG.adblock_is_paused()) {
       show(["div_status_paused", "separator0", "div_options"]);
     } else if (info.disabled_site) {
       show(["div_status_disabled", "separator0", "div_options", 
@@ -89,14 +89,14 @@ $(function() {
   });
 
   $("#div_status_paused a").click(function() {
-    BG.sessionStorage.removeItem('adblock_is_paused');
+    BG.adblock_is_paused(false);
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
     window.close();
   });
 
   $("#div_pause_adblock").click(function() {
-    BG.sessionStorage.setItem('adblock_is_paused', true);
+    BG.adblock_is_paused(true);
     BG.updateButtonUIAndContextMenus();
     chrome.contextMenus.removeAll();
     window.close();
