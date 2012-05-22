@@ -1,33 +1,23 @@
 // Requires clickwatcher.js and elementchain.js and jQuery
 
 
-// surround str with good quotes. useful when joining strings.
-function fixStr(str) {
-  var q = str.indexOf('"') != -1 ? "'" : '"';
-  return q + str + q;
-}
-
-
 // Hide the specified CSS selector on the page, or if null, stop hiding.
-function preview(selector, hidePage2) {
+function preview(selector) {
   $("#adblock_blacklist_preview_css").remove();
   if (!selector) return;
   var css_preview = document.createElement("style");
   css_preview.type = "text/css";
   css_preview.id = "adblock_blacklist_preview_css";
   var d = "body .ui-dialog:last-child ";
-    
+
   // Show the blacklist UI.
-  // avoid this part if we're previewing while ui_page1 is displayed
-  if (hidePage2 !== true)
-  css_preview.innerText = d + "input {display:inline-block!important;opacity:1!important} " +
+  css_preview.innerText = d + "input {display:inline-block!important;} " +
       d + ", " + d + "div:not(#filter_warning), " + d + ".ui-icon, " + d +
       "a, " + d + "center, " + d +
-      "button {display:block!important;opacity:1!important} " +  d + "#adblock-details, " + d +
-      "span, " + d + "b, " + d + "i {display:inline!important;opacity:1!important} ";
-  // Fade the specified selector.
-  css_preview.innerText +=  selector + " {opacity:.1!important;}" +
-    selector + " " + selector + " {opacity:1!important;}";
+      "button {display:block!important;} " +  d + "#adblock-details, " + d +
+      "span, " + d + "b, " + d + "i {display:inline!important;} ";
+  // Hide the specified selector.
+  css_preview.innerText += selector + " {display:none!important;}";
 
   document.documentElement.appendChild(css_preview);
 }
@@ -63,7 +53,6 @@ BlacklistUi.prototype._onClose = function() {
   if (this._cancelled == true) {
     this._ui_page1.empty().remove();
     this._ui_page2.empty().remove();
-    preview(null);
     this._chain.current().show();
     this._fire('cancel');
   }
@@ -74,16 +63,6 @@ BlacklistUi.prototype.handle_change = function() {
   this._last = this._chain.current();
   this._redrawPage1();
   this._redrawPage2();
-  var el = this._chain.current();
-  var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href', 'data'];
-  var result = [el.prop('nodeName')];
-  for (var i = 0; i < attrs.length; i++) {
-    var attr = attrs[i];
-    var val = el.attr(attr);
-    if (val)
-      result.push('[' + attr + '=' + fixStr(val) + ']');
-  }
-  preview(result.join(''), true);
 }
 
 
@@ -106,15 +85,12 @@ BlacklistUi.prototype.show = function() {
   // If we do know the clicked element, go straight to the slider.
   else {
     this._chain = new ElementChain(this._clicked_item);
-    
-    // let handle_change() pass a selector to preview()
-    this._ui_page1 = this._build_page1();
-    this._ui_page2 = this._build_page2();
-    
     this._last = this._chain.current();
     this._chain.change(this, this.handle_change);
     this._chain.change();
 
+    this._ui_page1 = this._build_page1();
+    this._ui_page2 = this._build_page2();
     this._redrawPage1();
     this._ui_page1.dialog('open');
   }
@@ -276,16 +252,6 @@ BlacklistUi.prototype._build_page2 = function() {
         that._cancelled = true;
         that._redrawPage1();
         that._ui_page1.dialog('open');
-        var el = that._chain.current();
-        var attrs = ['nodeName', 'id', 'class', 'name', 'src', 'href', 'data'];
-        var result = [el.prop('nodeName')];
-        for (var i = 0; i < attrs.length; i++) {
-          var attr = attrs[i];
-          var val = el.attr(attr);
-          if (val)
-            result.push('[' + attr + '=' + fixStr(val) + ']');
-        }
-        preview(result.join(''), true);
       }
 
   page.dialog({
@@ -352,6 +318,10 @@ BlacklistUi.prototype._makeFilter = function() {
     }
   }
   var attrs = ['id', 'class', 'name', 'src', 'href', 'data'];
+  function fixStr(str) {
+    var q = str.indexOf('"') != -1 ? "'" : '"';
+    return q + str + q;
+  }
   for (var i in attrs) {
     if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
       result.push('[' + attrs[i] + '=' + fixStr(el.attr(attrs[i])) + ']');
