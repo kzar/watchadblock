@@ -133,21 +133,23 @@ MyFilters.prototype.rebuild = function() {
   texts = texts.join('\n').split('\n');
 
   // Remove duplicates and empties.
-  var hash = {}; for (var i = 0; i < texts.length; i++) hash[texts[i]] = 1;
-  delete hash[''];
-  texts = []; for (var unique_text in hash) texts.push(unique_text);
+  var unique = {};
+  for (var i = 0; i < texts.length; i++)
+    unique[texts[i]] = 1;
+  delete unique[''];
 
   var hidingText = [];
   var whitelistText = [];
   var patternText = [];
-  for (var i = 0; i < texts.length; i++) {
-    if (Filter.isSelectorFilter(texts[i]))
-      hidingText.push(texts[i]);
-    else if (Filter.isWhitelistFilter(texts[i]))
-      whitelistText.push(texts[i]);
+  for (var text in unique) {
+    if (Filter.isSelectorFilter(text))
+      hidingText.push(text);
+    else if (Filter.isWhitelistFilter(text))
+      whitelistText.push(text);
     else
-      patternText.push(texts[i]);
+      patternText.push(text);
   }
+
   this.hiding = FilterSet.fromTexts(hidingText);
   this.blocking = new BlockingFilterSet(
     FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
