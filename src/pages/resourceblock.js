@@ -1,6 +1,6 @@
 var resources = {};
 var debug_enabled = false;
-var custom_filters = [];
+var custom_filters = {};
 var chosenResource = {};
 var local_filterset = {};
 
@@ -18,17 +18,6 @@ function generateTable() {
       j = j.substring(0, 86) + '[...]';
 
     return j;
-  }
-
-  // Checks if the filter is in the custom filters and can be removed
-  // Inputs: the filter that could be in the custom filters
-  // Returns true if the filter was in the custom filters
-  function inCustomFilters(filter) {
-    if (!filter) return false;
-    for (var i=0; i<custom_filters.length; i++)
-      if (matchingfilter === custom_filters[i])
-        return true;
-    return false;
   }
 
   // Now create that table row-by-row
@@ -103,7 +92,7 @@ function generateTable() {
       row.find("td:not(:first-child)").addClass("clickableRow");
 
     // Cell 6: delete a custom filter
-    if (inCustomFilters(matchingfilter))
+    if (custom_filters[matchingfilter])
       $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
     else
       $("<td>").appendTo(row);
@@ -128,7 +117,7 @@ function generateTable() {
 
   $(".deleterule").click(function() {
     var resource = resources[$(this).prevAll('td[data-column="url"]')[0].title];
-    BGcall('remove_custom_filter', resource.filter, function() {
+    BGcall('remove_custom_filter', custom_filters[resource.filter], function() {
       if (getTypeName(resource.type) === "page") {
         alert(translate("excludefilterremoved"));
         window.close();
@@ -565,13 +554,12 @@ $(function() {
       function continue_after_another_async_call() {
         BGcall('get_custom_filters_text', function(filters) {
           if (!SAFARI) {
-            filters = FilterNormalizer.normalizeList(filters);
-            if (filters.replace('\n').length) {
-              filters = filters.split('\n');
-              for (var i=0; i<filters.length; i++)
-                if (!Filter.isSelectorFilter(filters[i]))
-                  custom_filters.push(filters[i])
-            }
+            filters = filters.split('\n');
+            for (var i=0; i<filters.length; i++)
+              try {
+                custom_filters[
+                    FilterNormalizer.normalizeLine(filters[i]) ] = filters[i];
+              } catch(ex) {} //Broken filter
           }
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
