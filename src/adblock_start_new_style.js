@@ -61,7 +61,7 @@ var elementPurger = {
     var url_parts = parseUri(url), page_parts = this._page_location;
     var results = [];
     // Case 1: absolute (of the form "abc://de.f/ghi" or "//de.f/ghi")
-    results.push({ op:"$=", text: url.match(':(//.*)$')[1] });
+    results.push({ op:"$=", text: url.match(/\:(\/\/.*)$/)[1] });
     if (url_parts.hostname === page_parts.hostname) {
       var url_search_and_hash = url_parts.search + url_parts.hash;
       // Case 2: The kind that starts with '/'
