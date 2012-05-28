@@ -57,7 +57,7 @@
     <p id="languageselector">
       <b>Enter the language code or JSON file for the language you want to translate:</b>
       <input type="text" id="languagecode" />
-      <input type="button" id="languagecodesubmit" value="Load" />
+      <input type="button" id="languagecodesubmit" value="Load" disabled="disabled" />
       <br/>
       <i>Example: 'nl' for Dutch, 'pt-pt' for portuguese, etcetera. If you leave it empty, an empty translation file will be created<br/>
       If you paste the content of the file you already have translated, it'll load that file instead</i><br/>
@@ -74,6 +74,7 @@
       var JSONLocaleCallback  = function(json) {
         if (json && !Object.keys(English).length) {
           English = json;
+          $("#languagecodesubmit").removeAttr('disabled');
         } else if (!Object.keys(English).length) {
           alert('The English translation file could not be loaded, but is required to be loaded. Please reload this page to try again');
         } else if (json) {
@@ -89,6 +90,11 @@
         dataType: "jsonp",
         jsonp: "JSONlocaleCallback"
       });
+      window.setTimeout(function() {
+        if (!Object.keys(English).length && $("#languagecodesubmit").prop('disabled')) {
+          alert("The English translation file could not be loaded, but is required to be loaded. Please reload this page to try again");
+        }
+      }, 15000);
 
       // Enter in language code field -> submit
       $('#languagecode').keypress(function(event) {
@@ -99,6 +105,7 @@
       });
 
       $("#languagecodesubmit").click(function() {
+        if (this.disabled) {return;}
         var language = $("#languagecode").val().trim();
         language = language.match(/^(\w\w)([_\-]\w\w)?$/);
         if (language) {
