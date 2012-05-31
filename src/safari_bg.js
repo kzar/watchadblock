@@ -25,16 +25,12 @@ emit_page_broadcast = (function() {
   return theFunction;
 })();
 
-function adblockIsPaused() {
-  return sessionStorage.getItem('adblock_is_paused');
-}
-
 // True blocking support.
 safari.application.addEventListener("message", function(messageEvent) {
   if (messageEvent.name != "canLoad")
     return;
 
-  if (adblockIsPaused() || page_is_whitelisted(messageEvent.target.url)) {
+  if (adblock_is_paused() || page_is_whitelisted(messageEvent.target.url)) {
     messageEvent.message = true;
     return;
   }
@@ -74,10 +70,10 @@ safari.application.addEventListener("command", function(event) {
   if (command === "AdBlockOptions") {
     openTab("options/index.html", false, browserWindow);
   } else if (command === "toggle-pause") {
-    if (adblockIsPaused()) {
-      sessionStorage.removeItem('adblock_is_paused');
+    if (adblock_is_paused()) {
+      adblock_is_paused(false);
     } else {
-      sessionStorage.setItem('adblock_is_paused', true);
+      adblock_is_paused(true);
     }
   } else if (command === "whitelist-currentpage") {
     var tab = browserWindow.activeTab;
@@ -212,7 +208,7 @@ if (!LEGACY_SAFARI) {
         }
 
         var url = windowByMenuId[menu.identifier].activeTab.url;
-        var paused = adblockIsPaused();
+        var paused = adblock_is_paused();
         var canBlock = !page_is_unblockable(url);
         var whitelisted = page_is_whitelisted(url);
 
@@ -251,7 +247,7 @@ safari.extension.settings.addEventListener("change", function(e) {
 safari.application.addEventListener("contextmenu", function(event) {
   if (!event.userInfo)
     return;
-  if (!get_settings().show_context_menu_items || adblockIsPaused())
+  if (!get_settings().show_context_menu_items || adblock_is_paused())
     return;
 
   var url = event.target.url;
