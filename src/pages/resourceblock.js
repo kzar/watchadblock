@@ -477,24 +477,9 @@ $(function() {
   };
   BGcall('resourceblock_get_filter_text', function(filtertexts) {
 
-    // Due to transferring, the objects inside the filtertexts lose their
-    // prototypes. Extract the text and simply rebuild.
-    var filterTextsFromFilterSet = function(filterset) {
-      // Safari doesn't send the filters, so don't try to find them.
-      if (SAFARI) return [];
-      
-      var c = [];
-      for (a in filterset.items) {
-        for (b=0; b<filterset.items[a].length; b++) {
-          c.push(filterset.items[a][b]._text);
-        }
-      }
-      return c;
-    }
-    var blocking = filterTextsFromFilterSet(filtertexts.blocking);
-    var whitelist = filterTextsFromFilterSet(filtertexts.whitelist);
     local_filterset = new BlockingFilterSet(
-                 FilterSet.fromTexts(blocking), FilterSet.fromTexts(whitelist));
+        FilterSet.fromTexts(filtertexts.blocking),
+        FilterSet.fromTexts(filtertexts.whitelist));
     
     BGcall('get_content_script_data', opts, function(data) {
       debug_enabled = data.settings.debug_logging;

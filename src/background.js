@@ -617,9 +617,22 @@
 
   // Get the filter texts for resourceblock
   resourceblock_get_filter_text = function() {
+    var filterTextsFromFilterSet = function(filterset) {
+      // Safari doesn't store the filter texts, so don't try to find them.
+      if (SAFARI) return [];
+      
+      var c = [];
+      for (var a in filterset.items) {
+        for (var b=0; b<filterset.items[a].length; b++) {
+          c.push(filterset.items[a][b]._text);
+        }
+      }
+      return c;
+    }
+
     return {
-      blocking: _myfilters.blocking.pattern,
-      whitelist: _myfilters.blocking.whitelist
+      blocking: filterTextsFromFilterSet(_myfilters.blocking.pattern),
+      whitelist: filterTextsFromFilterSet(_myfilters.blocking.whitelist)
     };
   }
 
