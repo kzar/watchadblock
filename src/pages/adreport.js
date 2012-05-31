@@ -101,7 +101,10 @@ function generateReportURL() {
 //Updating the users filters
 $("#UpdateFilters").click(function() {
   $(this).attr("disabled", "disabled");
-  BGcall("update_subscriptions_now");
+  BGcall("update_subscriptions_now", function() {
+    $(".afterFilterUpdate input").removeAttr('disabled');
+    $(".afterFilterUpdate").removeClass('afterFilterUpdate');
+  });
 });
 //if the user clicks a radio button
 $("#step1_no").click(function() {
