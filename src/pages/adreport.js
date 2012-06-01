@@ -81,8 +81,8 @@ function generateReportURL() {
   body.push(subscribed_filter_names.join('\n'));
   body.push("");
   body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
-  body.push(SAFARI ? "Safari " + navigator.userAgent.match('Version\/([0-9.]+)')[1] :
-    "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
+  body.push(SAFARI ? "Safari " + navigator.userAgent.match(/Version\/([0-9.]+)/)[1] :
+    "Google Chrome " + navigator.userAgent.match(/Chrome\/([0-9.]+)/)[1]);
   if (AdBlockVersion)
     body.push("AdBlock " + AdBlockVersion);
   body.push("");
