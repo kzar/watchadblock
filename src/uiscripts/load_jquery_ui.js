@@ -9,7 +9,7 @@ function load_jquery_ui(callback) {
     var url = chrome.extension.getURL(src);
     var link = $('<link rel="stylesheet" type="text/css" />').
       attr('href', url);
-    $("head").append(link);
+    $(document.head || document.documentElement).append(link);
   }
   load_css("jquery/css/custom-theme/jquery-ui-1.8.custom.css");
   load_css("jquery/css/override-page.css");

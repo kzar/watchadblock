@@ -155,7 +155,7 @@
 
     // When a request starts, perhaps block it.
     function onBeforeRequestHandler(details) {
-      if (sessionStorage.adblock_is_paused)
+      if (adblock_is_paused())
         return { cancel: false };
 
       if (!frameData.track(details))
@@ -358,6 +358,18 @@
       return (scheme !== 'http:' && scheme !== 'https:' && scheme !== 'feed:');
     }
   }
+  
+  // Get or set if AdBlock is paused
+  // Inputs: newValue (optional boolean): if true, AdBlock will be paused, if
+  //                  false, AdBlock will not be paused.
+  // Returns: undefined if newValue was specified, otherwise it returns true
+  //          if paused, false otherwise.
+  adblock_is_paused = function(newValue) {
+    if (newValue === undefined) {
+      return sessionStorage.getItem('adblock_is_paused') === "true";
+    }
+    sessionStorage.setItem('adblock_is_paused', newValue);
+  }
 
   // INFO ABOUT CURRENT PAGE
 
@@ -418,7 +430,7 @@
         if (!get_settings().show_context_menu_items)
           return;
 
-        if (sessionStorage.adblock_is_paused || info.whitelisted || info.disabled_site)
+        if (adblock_is_paused() || info.whitelisted || info.disabled_site)
           return;
 
         function addMenu(title, callback) {
@@ -445,7 +457,7 @@
       }
 
       function setBrowserButton(info) {
-        if (sessionStorage.adblock_is_paused) {
+        if (adblock_is_paused()) {
           chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
         } else if (info.disabled_site &&
             !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
@@ -519,7 +531,7 @@
     var settings = get_settings();
     var result = {
       page_is_whitelisted: whitelisted,
-      adblock_is_paused: sessionStorage.getItem('adblock_is_paused'),
+      adblock_is_paused: adblock_is_paused(),
       settings: settings,
       selectors: []
     };
@@ -734,6 +746,19 @@
     chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
     // Popup blocking
     chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+
+    var handleEarlyOpenedTabs = function(tabs) {
+      log("Found", tabs.length, "tabs that were already opened");
+      for (var i=0; i<tabs.length; i++) {
+        var currentTab = tabs[i], tabId = currentTab.id;
+        if (frameData[tabId]) continue; // Known tab
+        frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
+        // TODO: once we're able to get the parentFrameId, call
+        // chrome.webNavigation.getAllFrames to 'load' the subframes
+      }
+    }
+    chrome.tabs.query({url: "http://*/*"}, handleEarlyOpenedTabs);
+    chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
   }
 
   if (SAFARI) {

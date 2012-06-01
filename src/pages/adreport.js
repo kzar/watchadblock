@@ -81,7 +81,7 @@ function generateReportURL() {
   body.push(subscribed_filter_names.join('\n'));
   body.push("");
   body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
-  body.push(SAFARI ? "Safari " :
+  body.push(SAFARI ? "Safari " + navigator.userAgent.match('Version\/([0-9.]+)')[1] :
     "Google Chrome " + navigator.userAgent.match('Chrome\/([0-9.]+)')[1]);
   if (AdBlockVersion)
     body.push("AdBlock " + AdBlockVersion);
@@ -101,7 +101,10 @@ function generateReportURL() {
 //Updating the users filters
 $("#UpdateFilters").click(function() {
   $(this).attr("disabled", "disabled");
-  BGcall("update_subscriptions_now");
+  BGcall("update_subscriptions_now", function() {
+    $(".afterFilterUpdate input").removeAttr('disabled');
+    $(".afterFilterUpdate").removeClass('afterFilterUpdate');
+  });
 });
 //if the user clicks a radio button
 $("#step1_no").click(function() {

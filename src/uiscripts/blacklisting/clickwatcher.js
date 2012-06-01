@@ -153,10 +153,8 @@ ClickWatcher.prototype._build_ui = function() {
 
 
   // Most things can be blacklisted with a simple click handler.
-  $("*").
-    not("body,html").         // Don't remove the body that the UI lives on!
-    not("embed,object").      // Dealt with separately below
-    click(click_catch_this);  // Everybody else, blacklist upon click
+  $("body").on("click", ".adblock-killme-overlay, .adblock-highlight-node",
+    click_catch_this);
 
   // Send all objects and embeds to the background, and send any z-index
   // crazies to a lower z-index.  I'd do it here, but objects within iframes
@@ -197,7 +195,8 @@ ClickWatcher.prototype._build_ui = function() {
       title: translate("blockanadtitle"),
       buttons: btn,
       close: function() { 
-        $("*").unbind('click', click_catch_this);
+        $("body").off("click",
+          ".adblock-killme-overlay, .adblock-highlight-node", click_catch_this);
         Overlay.removeAll();
         that._onClose();
         page.remove();

@@ -34,6 +34,10 @@
       .section {
         display:none;
       }
+      .afterFilterUpdate, .afterFilterUpdate * {
+        color: #CCC;
+        cursor: auto;
+      }
     </style>
   </head>
   <body>
@@ -48,14 +52,14 @@
       <h2 i18n="updateyourlists"></h2>
       <ol>
         <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters"></li>
-        <li i18n="reloadadpage"></li>
+        <li i18n="reloadadpage" class="afterFilterUpdate"></li>
       </ol>
       <input type="button" value="Update my filters!" id="UpdateFilters" />
-      <span i18n="adstillappear"></span><br/>
-      <div id="step1" class="form">
-        <input type="radio" id="step1_yes" name="step1"/>
+      <span i18n="adstillappear" class="afterFilterUpdate"></span><br/>
+      <div id="step1" class="form afterFilterUpdate">
+        <input type="radio" id="step1_yes" name="step1" disabled="disabled" />
         <label for="step1_yes" i18n="yes"></label>
-        <input type="radio" id="step1_no" name="step1" />
+        <input type="radio" id="step1_no" name="step1" disabled="disabled" />
         <label for="step1_no" i18n="no"></label>
       </div>
     </div>
