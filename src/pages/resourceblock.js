@@ -1,55 +1,11 @@
 var resources = {};
-var domaindata;
-var custom_filters = [];
+var debug_enabled = false;
+var custom_filters = {};
 var chosenResource = {};
-
-function FakeFilterSet(serializedFilters) {
-  var filters = [];
-  for (var i = 0; i < serializedFilters.length; i++) {
-    filters.push(PatternFilter.fromData(serializedFilters[i]));
-    filters[i]._text = serializedFilters[i][3];
-  }
-  this.filters = filters;
-};
-FakeFilterSet.prototype = {
-  matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
-    var f = this.filters, len = f.length;
-    for (var i = 0; i < len; i++) {
-      if (f[i].matches(url, loweredUrl, elementType, isThirdParty))
-        return f[i];
-    }
-    return null;
-  }
-}
+var local_filterset = {};
 
 // Creates the table that shows all blockable items
 function generateTable() {
-  if (!SAFARI) {
-    // TODO: if the background has to store filter texts in order to support
-    // resourceblock, its match cache might as well store filters instead of
-    // booleans at all times (no extra memory usage because the filters are
-    // already in memory.)
-    // This means 'return_filter' will always be true in .matches(), and that
-    // resourceblock will be able to point directly to BG._myfilters (it can't
-    // do it now because the matchCache is storing booleans so it can't get
-    // filter text info.)
-    var local_filterset = new BlockingFilterSet(
-      new FakeFilterSet(domaindata.patternSerialized),
-      new FakeFilterSet(domaindata.whitelistSerialized)
-    );
-  } else {
-    var local_filterset = {
-      _matchCache: {},
-      pattern: {
-        filters: [],
-      },
-      whitelist: {
-        filters: [],
-      },
-    }
-  }
-  delete domaindata;
-
   // Truncates a resource URL if it is too long. Also escapes some
   // characters when they have a special meaning in HTML.
   // Inputs: the string to truncate
@@ -62,17 +18,6 @@ function generateTable() {
       j = j.substring(0, 86) + '[...]';
 
     return j;
-  }
-
-  // Checks if the filter is in the custom filters and can be removed
-  // Inputs: the filter that could be in the custom filters
-  // Returns true if the filter was in the custom filters
-  function inCustomFilters(filter) {
-    if (!filter) return false;
-    for (var i=0; i<custom_filters.length; i++)
-      if (matchingfilter === custom_filters[i])
-        return true;
-    return false;
   }
 
   // Now create that table row-by-row
@@ -147,7 +92,7 @@ function generateTable() {
       row.find("td:not(:first-child)").addClass("clickableRow");
 
     // Cell 6: delete a custom filter
-    if (inCustomFilters(matchingfilter))
+    if (custom_filters[matchingfilter])
       $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
     else
       $("<td>").appendTo(row);
@@ -172,7 +117,7 @@ function generateTable() {
 
   $(".deleterule").click(function() {
     var resource = resources[$(this).prevAll('td[data-column="url"]')[0].title];
-    BGcall('remove_custom_filter', resource.filter, function() {
+    BGcall('remove_custom_filter', custom_filters[resource.filter], function() {
       if (getTypeName(resource.type) === "page") {
         alert(translate("excludefilterremoved"));
         window.close();
@@ -278,7 +223,7 @@ function createfilter() {
   var isBlocked = ($(".selected").hasClass("blocked"));
   var urlfilter = '';
   if ($('#selectblockableurl #customurl').length)
-    urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val().replace(/^\@\@/, '');
+    urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val();
   else
     urlfilter = $('#selectblockableurl input').val();
   if ((/^(\@\@)?\/.*\/$/).test(urlfilter))
@@ -328,11 +273,26 @@ function isValidDomainList(text) {
   }
 }
 
+// Checks if a resource matches a filter, and if not, it asks the user if this
+// is correct and returns the answer
+// Inputs: filter: the filter to test the match against
+//         url: the resource URL
+//         type: the resource type
+//         domain: the resource domain
+// Returns: boolean: should it continue?
+function filterMatchesResource(filter, url, type, domain) {
+  var temp_filterset = new BlockingFilterSet(
+                        FilterSet.fromTexts([filter]), FilterSet.fromTexts([]));
+  if (!temp_filterset.matches(url, type, domain))
+    return confirm(translate("doesntmatchoriginal"));
+  return true;
+}
+
 // After getting annoyed by the time it takes to get the required data
 // finally start generating some content for the user, and allowing him to
 // do some things, instead of looking at 'LOADING'
 function finally_it_has_loaded_its_stuff() {
-  if (domaindata.settings.debug_logging)
+  if (debug_enabled)
     $(".onlyifdebug").show();
   // Create the table of resources
   generateTable();
@@ -384,6 +344,18 @@ function finally_it_has_loaded_its_stuff() {
           $('#customurl').val().trim() === '') {
         alert(translate('novalidurlpattern'));
         return;
+      }
+      if ($('#custom').is(':checked')) {
+        var custom_corrected = $('#customurl').val().
+                                 replace(/\s/g, '').replace(/^\@\@/, '');
+        // Check the URL only, therefore type image, so we don't end up with for
+        // example 'popup', a non-default type.
+        if (!filterMatchesResource(custom_corrected, chosenResource.resource,
+                                     ElementTypes.image, chosenResource.domain))
+          return;
+
+        // Remove preceeding @@ and trailing spaces
+        $('#customurl').val(custom_corrected);
       }
 
       // Hide unused stuff
@@ -441,7 +413,11 @@ function finally_it_has_loaded_its_stuff() {
 
       // Add the filter
       $("#addthefilter").click(function() {
-        BGcall('add_custom_filter', createfilter(), function(ex) {
+        var generated_filter = createfilter();
+        if (!filterMatchesResource(generated_filter, chosenResource.resource,
+                                    chosenResource.type, chosenResource.domain))
+          return;
+        BGcall('add_custom_filter', generated_filter, function(ex) {
           if (!ex)
             alert(translate("filterhasbeenadded"));
           else
@@ -460,7 +436,7 @@ $(function() {
   if (window.location.search) {
     // Can be of the forms
     //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
-    //  ?tabId=(tab ID)&url=(page url)
+    //  ?tabId=(tab ID)
     var qps = parseUri.parseSearch(window.location.search);
     function validateUrl(url) {
       if (!/^https?:\/\//.test(url)) {
@@ -497,91 +473,97 @@ $(function() {
 
 
   var opts = {
-    domain: parseUri(url).hostname,
-    include_texts: true
+    domain: parseUri(url || "x://y/").hostname
   };
-  BGcall('get_content_script_data', opts, function(data) {
-    delete data.selectors;
-    // Safari doesn't send the filter list
-    domaindata = data;
-    if (data.adblock_is_paused) {
-      alert(translate("adblock_is_paused"));
-      window.close();
-      return;
-    }
-    if (!qps.itemUrl) {
-      // Load all stored resources
-      BGcall('resourceblock_get_frameData', qps.tabId, function(loaded_frames) {
-        loaded_frames = loaded_frames || {};
+  BGcall('resourceblock_get_filter_text', function(filtertexts) {
 
-        for (var thisFrame in loaded_frames) {
-          var frame = loaded_frames[thisFrame];
+    local_filterset = new BlockingFilterSet(
+        FilterSet.fromTexts(filtertexts.blocking),
+        FilterSet.fromTexts(filtertexts.whitelist));
+    
+    BGcall('get_content_script_data', opts, function(data) {
+      debug_enabled = data.settings.debug_logging;
+      if (data.adblock_is_paused) {
+        alert(translate("adblock_is_paused"));
+        window.close();
+        return;
+      }
+      if (!qps.itemUrl) {
+        // Load all stored resources
+        BGcall('resourceblock_get_frameData', qps.tabId, function(loaded_frames) {
+          loaded_frames = loaded_frames || {};
 
-          resources[frame.url] = {
-            type: ElementTypes.document | ElementTypes.elemhide,
-            domain: frame.domain,
-            resource: frame.url
-          };
+          for (var thisFrame in loaded_frames) {
+            var frame = loaded_frames[thisFrame];
 
-          for (var res in frame.resources) {
-            if (/^HIDE\:\|\:.+/.test(res)) {
-              var filter = "##" + res.substring(7);
-              resources[filter] = {
-                filter: filter,
+            if (thisFrame === 0) {
+              // We don't parse $document and $elemhide rules for subframes
+              resources[frame.url] = {
+                type: ElementTypes.document | ElementTypes.elemhide,
                 domain: frame.domain,
-                resource: filter
-              };
-            } else {
-              if (/\<|\"/.test(res)) continue;
-              var blockmatches = res.split(':|:');
-              if (blockmatches[1].indexOf(chrome.extension.getURL("")) === 0)
-                continue; // Blacklister resources shouldn't be visible
-              if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
-                continue; // Ignore about: and data: urls
-              var elemType = Number(blockmatches[0]);
-              if (elemType === ElementTypes.document)
-                continue;
-              resources[blockmatches[1]] = {
-                type: elemType,
-                domain: frame.domain,
-                resource: blockmatches[1]
+                resource: frame.url
               };
             }
-          }
-        }
-        continue_after_another_async_call();
-      });
-    } else
-      continue_after_another_async_call();
 
-    function continue_after_another_async_call() {
-      BGcall('get_custom_filters_text', function(filters) {
-        if (!SAFARI) {
-          filters = FilterNormalizer.normalizeList(filters);
-          if (filters.replace('\n').length) {
+            for (var res in frame.resources) {
+              if (/^HIDE\:\|\:.+/.test(res)) {
+                var filter = "##" + res.substring(7);
+                resources[filter] = {
+                  filter: filter,
+                  domain: frame.domain,
+                  resource: filter
+                };
+              } else {
+                if (/\<|\"/.test(res)) continue;
+                var blockmatches = res.split(':|:');
+                if (blockmatches[1].indexOf(chrome.extension.getURL("")) === 0)
+                  continue; // Blacklister resources shouldn't be visible
+                if (!/^[a-z\-]+\:\/\//.test(blockmatches[1]))
+                  continue; // Ignore about: and data: urls
+                var elemType = Number(blockmatches[0]);
+                if (elemType === ElementTypes.document)
+                  continue;
+                resources[blockmatches[1]] = {
+                  type: elemType,
+                  domain: frame.domain,
+                  resource: blockmatches[1]
+                };
+              }
+            }
+          }
+          continue_after_another_async_call();
+        });
+      } else
+        continue_after_another_async_call();
+
+      function continue_after_another_async_call() {
+        BGcall('get_custom_filters_text', function(filters) {
+          if (!SAFARI) {
             filters = filters.split('\n');
             for (var i=0; i<filters.length; i++)
-              if (!Filter.isSelectorFilter(filters[i]))
-                custom_filters.push(filters[i])
+              try {
+                custom_filters[
+                    FilterNormalizer.normalizeLine(filters[i]) ] = filters[i];
+              } catch(ex) {} //Broken filter
           }
-        }
-        finally_it_has_loaded_its_stuff();
-        // If opened by the context menu, this variable exists
-        if (qps.itemUrl) {
-          if ($("#resourceslist input").prop("disabled")) {
-            // In case the resource has been whitelisted and can't be removed
-            if ($(".deleterule").length === 0) {
-              alert(translate('resourceiswhitelisted'));
-              window.close();
-              return;
-            }
+          finally_it_has_loaded_its_stuff();
+          // If opened by the context menu, this variable exists
+          if (qps.itemUrl) {
+            if ($("#resourceslist input").prop("disabled")) {
+              // In case the resource has been whitelisted and can't be removed
+              if ($(".deleterule").length === 0) {
+                alert(translate('resourceiswhitelisted'));
+                window.close();
+                return;
+              }
+            } else
+              $("#resourceslist input").click();
+            $("#choosedifferentresource").remove();
           } else
-            $("#resourceslist input").click();
-          $("#choosedifferentresource").remove();
-        } else
-          $("#legend").show();
-      });
-    }
+            $("#legend").show();
+        });
+      }
+    });
   });
 });
 
