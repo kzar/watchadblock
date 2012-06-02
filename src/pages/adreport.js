@@ -157,6 +157,7 @@ $("#step3_yes").click(function() {
     contact = contact.replace(" at ", "@");
   var reportLink = "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>";
   $("#whattodo").html(translate("reportfilterlistproblem", [reportLink]));
+  $("#privacy").show();
 });
 $("#step3_no").click(function() {
   if (SAFARI) {
@@ -165,6 +166,7 @@ $("#step3_no").click(function() {
   } else {
     $("#whattodo").html(translate("reporttous2"));
     $("a", "#whattodo").attr("href", generateReportURL());
+    $("#privacy").show();
   }
   $("#step3").html("<span class='answer'>" + translate("no") + "</span>");
 });
@@ -181,7 +183,7 @@ $("#step3_wontcheck").click(function() {
 
 
 
-// STEP 4: video/flash ad
+// STEP 4: video/flash ad (Safari-only)
 
 //If the user clicks a radio button
 $("#step4_yes").click(function() {
@@ -192,6 +194,7 @@ $("#step4_no").click(function() {
   $("#step4").html("<span class='answer'>" + translate("no") + "</span>");
   $("#whattodo").html(translate("reporttous2"));
   $("a", "#whattodo").attr("href", generateReportURL());
+  $("#privacy").show();
 });
 
 
