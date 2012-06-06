@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "En besked til CatBlock elskere:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -328,6 +328,10 @@
   "disabled_on_this_page": {
     "message": "AdBlock er slået fra på denne side.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "doesntmatchoriginal": {
+    "message": "Mønsteret passer ikke med det element du prøver at skjule! Skal vi fortsætte alligevel?",
+    "description": "resourceblocking page string"
   },
   "done": {
     "message": "færdig.",
@@ -715,6 +719,10 @@
       }
     }
   },
+  "noresourcessend2": {
+    "message": "Et eller andet gik helt galt. Der er ikke kommet nogen elementer frem. Siden vil nu lukke, men du skulle prøve at genindlæse siden.",
+    "description": "resourceblocking page string"
+  },
   "novalidurlpattern": {
     "message": "Venligst indtast et gyldigt URL mønster der skal findes!",
     "description": "resourceblocking page string"
@@ -847,6 +855,16 @@
     "message": "Bloker et element",
     "description": "resourceblocking page string"
   },
+  "resourcedomain": {
+    "message": "Indlæst på sider under domæne:\n$domain$",
+    "description": "Text shown when hovering over an item in the third-party column",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
   "resourceiswhitelisted": {
     "message": "Det valgte element er blevet godkendt, og kan derfor ikke blokeres.",
     "description": "resourceblocking page string"
@@ -978,6 +996,10 @@
   "that_was_easy": {
     "message": "Det var da let",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "thirdparty": {
+    "message": "Tredieparts",
+    "description": "Resource list column title telling if the resource originates from a different domain"
   },
   "thirdpartycheckbox": {
     "message": "Enhver hjemmeside UNDTAGET hjemmesider på domænet $domain$",
