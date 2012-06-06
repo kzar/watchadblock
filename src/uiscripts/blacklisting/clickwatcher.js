@@ -20,14 +20,6 @@ function Highlighter() {
   }
   box.appendTo("body");
   
-  if (!document.getElementById("adblock-flatlayers-css")) {
-    var css_preview = document.createElement("style");
-    css_preview.type = "text/css";
-    css_preview.id = "adblock-flatlayers-css";
-    css_preview.innerText = "* {z-index:auto !important;}";
-    document.documentElement.appendChild(css_preview);
-  }
-
   function handler(e) {
     var offset, el = e.target;
     var now = Date.now();
@@ -78,7 +70,6 @@ function Highlighter() {
       box.remove();
       delete box;
     }
-    $("#adblock-flatlayers-css").remove();
   };
 }
 
@@ -196,6 +187,8 @@ ClickWatcher.prototype._build_ui = function() {
       'font-size': '12px',
     }).
     dialog({
+      dialogClass: "adblock-blacklist-page0",
+      zIndex:10000000, 
       position:[50, 50],
       width:400,
       minHeight:125,
@@ -213,16 +206,14 @@ ClickWatcher.prototype._build_ui = function() {
         that._highlighter.disable();
       }
     });
-  
-  var widget = page.dialog("widget");
-  widget[0].style.setProperty('z-index', 10000000, "important");
-  widget.css("position", "fixed").
-    bind("mouseenter",function() {
-      that._highlighter.disable();
-    }).
-    bind("mouseleave",function() {
-      that._highlighter.enable();
-    });
+    page.dialog("widget").
+      css("position", "fixed").
+      bind("mouseenter",function() {
+        that._highlighter.disable();
+      }).
+      bind("mouseleave",function() {
+        that._highlighter.enable();
+      });
 
   return page;
 }
