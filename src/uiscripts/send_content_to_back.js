@@ -30,7 +30,7 @@ send_content_to_back = function() {
 
   // Also, anybody with a z-index over 1 million is going to get in our
   // way.  Decrease it.
-  zIndexes = document.querySelectorAll('[style*="z-index"]');
+  var zIndexes = document.querySelectorAll('[style*="z-index"]');
   for (var i = 0; i < zIndexes.length; i++) {
     var el = zIndexes[i];
     if (el.style["z-index"] >= 1000000)
