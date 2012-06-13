@@ -1,8 +1,6 @@
       // TODO temp code to convert Safari from localStorage to settings.
       // Added 11/2011.
       (function() {
-        if (!SAFARI)
-          return;
         if (safari.extension.settings.userid)
           return; // already did it
         var toCopy = [
