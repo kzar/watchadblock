@@ -35,4 +35,4 @@ send_content_to_back = function() {
 
 }
 
-//@ sourceURL=/uiscripts/blacklisting/send_content_to_back.js
+//@ sourceURL=/uiscripts/send_content_to_back.js
