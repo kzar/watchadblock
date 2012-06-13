@@ -576,11 +576,6 @@
         'send_content_to_back': {
           allFrames: true,
           include: [
-            "jquery/jquery.min.js",
-            // we must get jQuery into every frame, but that clobbers 
-            // jquery UI installed by top_open_blacklist_ui but not
-            // needed by us.  Reinstall on top_open_blacklist_ui's behalf.
-            "jquery/jquery-ui.custom.min.js",
             "uiscripts/send_content_to_back.js"
             ]
         }
