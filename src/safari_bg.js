@@ -273,7 +273,7 @@ function disableUpdateCheck() {
   var INTERVAL_BETWEEN_WARNINGS = 7 * 24 * 60 * 60 * 1000; // Wait for 1 week before checking/warning the user again
 
   function updateCheck() {
-    if (!safari.extension.update_check_disabled) {
+    if (!safari.extension.settings.update_check_disabled) {
       isAdBlockOutOfDate(function(upToDate) {
         if (upToDate) {
           delete safari.extension.settings.first_outdated_at;
@@ -302,7 +302,7 @@ function disableUpdateCheck() {
           }
         }
       });
-}
+    }
   }
 
   // Start the update check a minute after browser startup to reduce the load on the computer.
