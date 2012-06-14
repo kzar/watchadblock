@@ -134,10 +134,11 @@ function isAdBlockUpToDate(callback) {
     /\<string\>(\d+\.\d+\.\d+)\<\/string\>/ :
     /itemprop=\"version\" content=\"(\d+\.\d+\.\d+)\"/;
     
-  $.get(chrome.extension.getURL("manifest.json"), function(manifest) {
+  $.getJSON(chrome.extension.getURL("manifest.json"), function(manifest) {
+    $.ajaxSetup({ cache: false });
     $.get(checkURL, function(text) {
-        var newVersion = text.match(versionRegex)[1];
-        callback(asNum(manifest['version']) >= asNum(newVersion));
-      }
-  }, "text");
+      var newVersion = text.match(versionRegex)[1];
+      callback(asNum(manifest['version']) >= asNum(newVersion));
+    });
+  });
 }

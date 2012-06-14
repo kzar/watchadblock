@@ -739,19 +739,16 @@
   (function() {
     chrome.extension.onRequest.addListener(
       function(request, sender, sendResponse) {
-        if (request.command != "call" && request.command != "call_with_callback")
+        if (request.command != "call")
           return; // not for us
         // +1 button in browser action popup loads a frame which
         // runs content scripts.  Ignore their cries for ad blocking.
         if (sender.tab == null)
           return;
         var fn = window[request.fn];
-        if (request.command === "call_with_callback")
-          request.args.push(sendResponse);
         request.args.push(sender);
         var result = fn.apply(window, request.args);
-        if (request.command === "call")
-          sendResponse(result);
+        sendResponse(result);
       }
     );
   })();
