@@ -184,10 +184,10 @@ $("#step4_no").click(function() {
 
 // GENERAL STUFF
 
-//check for updates
-BGcall_with_callback("performUpdateCheck", "ad-report-page", function(results) {
-  if (!results.upToDate) {
-    $("#whattodo").html(translate("updatefromoldversion", ["<a href='" + results.updateURL + "'>", "</a>"]));
+isAdBlockUpToDate(function(upToDate) {
+  if (!upToDate) {
+    $("#whattodo").html(translate("updatefromoldversion", 
+      ["<a href='https://chromeadblock.com/help/outofdate/'>", "</a>"]));
     $("div[id^='step'][id$='DIV']").css('display', 'none');
   }
 });

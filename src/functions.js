@@ -6,19 +6,15 @@ VERBOSE_DEBUG = false;
 //   first, a string - the name of the function to call
 //   then, any arguments to pass to the function (optional)
 //   then, a callback:function(return_value:any) (optional)
-_BGcall_constructor = function(cmd) {
-  return function() {
-    var args = [];
-    for (var i=0; i < arguments.length; i++)
-      args.push(arguments[i]);
-    var fn = args.shift();
-    var has_callback = (typeof args[args.length - 1] == "function");
-    var callback = (has_callback ? args.pop() : function() {});
-    chrome.extension.sendRequest({command: cmd, fn:fn, args:args}, callback);
-  };
+BGcall = function() {
+  var args = [];
+  for (var i=0; i < arguments.length; i++)
+    args.push(arguments[i]);
+  var fn = args.shift();
+  var has_callback = (typeof args[args.length - 1] == "function");
+  var callback = (has_callback ? args.pop() : function() {});
+  chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
 }
-BGcall = _BGcall_constructor("call");
-BGcall_with_callback = _BGcall_constructor("call_with_callback");
 
 // These are replaced with console.log in adblock_start.js and background.html
 // if the user chooses.
@@ -120,3 +116,28 @@ storage_set = function(key, value) {
   }
 }
 
+// Calls callback, passing a single boolean, which is false if a newer
+// version of the extension is available.
+function isAdBlockUpToDate(callback) {
+  function asNum(versionString) { 
+    var parts = versionString.match(/^(\d+)\.(\d+)\.(\d+)$/).slice(1);
+    var v = parts.map(function(s) { return parseInt(s); });
+    return v[0] * 1e6 + v[1] * 1e3 + v[2];
+  }
+
+  var chromeID = "gighmmpiobklfepjocnamgkkbiglidom";
+  var checkURL = SAFARI ?
+    "https://safariadblock.com/update.plist?outofdatecheck" :
+    "https://chrome.google.com/webstore/detail/" + chromeID;
+
+  var versionRegex = SAFARI ?
+    /\<string\>(\d+\.\d+\.\d+)\<\/string\>/ :
+    /itemprop=\"version\" content=\"(\d+\.\d+\.\d+)\"/;
+    
+  $.get(chrome.extension.getURL("manifest.json"), function(manifest) {
+    $.get(checkURL, function(text) {
+        var newVersion = text.match(versionRegex)[1];
+        callback(asNum(manifest['version']) >= asNum(newVersion));
+      }
+  }, "text");
+}
