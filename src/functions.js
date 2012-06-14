@@ -116,8 +116,7 @@ storage_set = function(key, value) {
   }
 }
 
-// Calls callback, passing a single boolean, which is false if a newer
-// version of the extension is available.
+// Calls callback, passing (isUpToDate:bool, installedVersion:string).
 function isAdBlockUpToDate(callback) {
   function asNum(versionString) { 
     var parts = versionString.match(/^(\d+)\.(\d+)\.(\d+)$/).slice(1);
@@ -137,8 +136,9 @@ function isAdBlockUpToDate(callback) {
   $.getJSON(chrome.extension.getURL("manifest.json"), function(manifest) {
     $.ajaxSetup({ cache: false });
     $.get(checkURL, function(text) {
+      var thisVersion = manifest['version'];
       var newVersion = text.match(versionRegex)[1];
-      callback(asNum(manifest['version']) >= asNum(newVersion));
+      callback(asNum(thisVersion) >= asNum(newVersion), thisVersion);
     });
   });
 }

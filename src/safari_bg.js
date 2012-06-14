@@ -262,9 +262,7 @@ safari.application.addEventListener("contextmenu", function(event) {
 }, false);
 
 function disableUpdateCheck() {
-  safari.extension.settings.update_check_disabled = true;
-  delete safari.extension.settings.first_outdated_at;
-  delete safari.extension.settings.outdated_warning_shown_at;
+  storage_set("uptodate_check", { enabled: false });
 }
 
 // Check if the user has disabled updates.
@@ -273,27 +271,30 @@ function disableUpdateCheck() {
   var INTERVAL_BETWEEN_WARNINGS = 7 * 24 * 60 * 60 * 1000; // Wait for 1 week before checking/warning the user again
 
   function updateCheck() {
-    if (!safari.extension.settings.update_check_disabled) {
-      isAdBlockOutOfDate(function(upToDate) {
+    var uptodate_check = storage_get("uptodate_check") || { enabled: true };
+
+    if (uptodate_check.enabled) {
+      isAdBlockUpToDate(function(upToDate, currentVersion) {
         if (upToDate) {
-          delete safari.extension.settings.first_outdated_at;
-          delete safari.extension.settings.outdated_warning_shown_at;
+          uptodate_check.out_of_date = null;
         } else {
-          // Record the first time this extension became outdated.
           var now = Date.now();
-          if (!safari.extension.settings.first_outdated_at) {
-            safari.extension.settings.first_outdated_at = now;
+
+          // Note the time and version, if this version being outdated is news
+          if ( (uptodate_check.out_of_date || {}).version !== currentVersion ) {
+            uptodate_check.out_of_date = {
+              since: now,
+              version: currentVersion
+            };
           }
 
-          // If the extension has been outdated for more than 8 weeks, user probably didn't enable
-          // extension autoupdate.
-          if (now - safari.extension.settings.first_outdated_at > MAX_OUTDATED_TIME) {
+          // If this version has been outdated for more than 8 weeks, user
+          // probably didn't enable extension autoupdate.
+          if (now - update_check.out_of_date.since > MAX_OUTDATED_TIME) {
             // Check that we haven't shown the warning in the last INTERVAL_BETWEEN_WARNINGS
-            if (!safari.extension.settings.outdated_warning_shown_at ||
-                now - safari.extension.settings.outdated_warning_shown_at > INTERVAL_BETWEEN_WARNINGS) {
-
+            if (now - (update_check.last_warned_at || 0) > INTERVAL_BETWEEN_WARNINGS) {
               // Show the page that explains how to enable autoupdate.
-              safari.extension.settings.outdated_warning_shown_at = now;
+              update_check.last_warned_at = now;
               openTab("pages/safari_extension_outdated.html");
             }
 
@@ -301,6 +302,8 @@ function disableUpdateCheck() {
             setTimeout(updateCheck, INTERVAL_BETWEEN_WARNINGS);
           }
         }
+
+        storage_set("uptodate_check", uptodate_check);
       });
     }
   }
