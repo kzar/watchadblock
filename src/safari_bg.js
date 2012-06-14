@@ -268,44 +268,38 @@ function disableUpdateCheck() {
 // Check if the user has disabled updates.
 (function() {
   var MAX_OUTDATED_TIME = 8 * 7 * 24 * 60 * 60 * 1000;     // Warn the user if extension has been outdate for more than 8 weeks
-  var INTERVAL_BETWEEN_WARNINGS = 7 * 24 * 60 * 60 * 1000; // Wait for 1 week before checking/warning the user again
+  var INTERVAL_BETWEEN_CHECKS = 7 * 24 * 60 * 60 * 1000;   // Wait for 1 week before checking/warning the user again
 
   function updateCheck() {
-    var uptodate_check = storage_get("uptodate_check") || { enabled: true };
+    var now = Date.now();
+    if (!storage_get("uptodate_check"))
+      storage_set("uptodate_check", { enabled: true, last_checked_at: now });
 
-    if (uptodate_check.enabled) {
-      isAdBlockUpToDate(function(upToDate, currentVersion) {
-        if (upToDate) {
-          uptodate_check.out_of_date = null;
-        } else {
-          var now = Date.now();
+    var uptodate_check = storage_get("uptodate_check");
 
-          // Note the time and version, if this version being outdated is news
-          if ( (uptodate_check.out_of_date || {}).version !== currentVersion ) {
-            uptodate_check.out_of_date = {
-              since: now,
-              version: currentVersion
-            };
-          }
+    // Don't waste bandwidth if we've checked recently.
+    var timeSinceLastCheck = now - uptodate_check.last_checked_at;
+    if (!uptodate_check.enabled || timeSinceLastCheck < INTERVAL_BETWEEN_CHECKS)
+      return;
 
-          // If this version has been outdated for more than 8 weeks, user
-          // probably didn't enable extension autoupdate.
-          if (now - update_check.out_of_date.since > MAX_OUTDATED_TIME) {
-            // Check that we haven't shown the warning in the last INTERVAL_BETWEEN_WARNINGS
-            if (now - (update_check.last_warned_at || 0) > INTERVAL_BETWEEN_WARNINGS) {
-              // Show the page that explains how to enable autoupdate.
-              update_check.last_warned_at = now;
-              openTab("pages/safari_extension_outdated.html");
-            }
+    isAdBlockUpToDate(function(upToDate, currentVersion) {
+      uptodate_check.last_checked_at = now;
+      
+      if (upToDate) {
+        uptodate_check.out_of_date = null;
+      } else { 
+        // Note the time and version, if this version being outdated is news
+        if ( (uptodate_check.out_of_date || {}).version !== currentVersion )
+          uptodate_check.out_of_date = { since: now, version: currentVersion };
 
-            // Check again in a week
-            setTimeout(updateCheck, INTERVAL_BETWEEN_WARNINGS);
-          }
-        }
+        // Warn the user if they're so out of date that autoupdate must be off.
+        var outdatedTime = (now - update_check.out_of_date.since)
+        if (outdatedTime > MAX_OUTDATED_TIME)
+          openTab("pages/safari_extension_outdated.html");
+      }
 
-        storage_set("uptodate_check", uptodate_check);
-      });
-    }
+      storage_set("uptodate_check", uptodate_check);
+    });
   }
 
   // Start the update check a minute after browser startup to reduce the load on the computer.
