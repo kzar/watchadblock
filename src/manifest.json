@@ -1,16 +1,6 @@
 {
   "name": "AdBlock",
   "version": "2.5.36",
-  "description": "__MSG_description1__",
-  "icons": {
-    "16": "img/icon16.png",
-    "48": "img/icon48.png",
-    "128": "img/icon128.png"
-  },
-  "permissions": [
-    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
-  ],
-  "minimum_chrome_version": "18",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
@@ -27,13 +17,10 @@
       "background.js"
     ]
   },
-  "options_page": "options/index.html",
-  "incognito": "spanning",
-  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src *; frame-src 'self' http://chromeadblock.com",
   "browser_action": {
     "default_icon": "img/icon19.png",
-    "default_title": "__MSG_optionstitle__",
-    "default_popup": "button/popup.html"
+    "default_popup": "button/popup.html",
+    "default_title": "__MSG_optionstitle__"
   },
   "content_scripts": [
     {
@@ -69,8 +56,21 @@
       "all_frames": false
     }
   ],
+  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src *; frame-src 'self' http://chromeadblock.com",
   "default_locale": "en",
+  "description": "__MSG_description1__",
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "incognito": "spanning",
   "manifest_version": 2,
+  "minimum_chrome_version": "18",
+  "options_page": "options/index.html",
+  "permissions": [
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
+  ],
   "web_accessible_resources": [
     "img/icon24.png",
     "jquery/css/custom-theme/images/ui-bg_inset-hard_100_fcfdfd_1x100.png",
