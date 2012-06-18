@@ -567,7 +567,7 @@ $(function() {
           for (var thisFrame in loaded_frames) {
             var frame = loaded_frames[thisFrame];
 
-            if (thisFrame === 0) {
+            if (Number(thisFrame) === 0) {
               // We don't parse $document and $elemhide rules for subframes
               resources[frame.url] = {
                 type: ElementTypes.document | ElementTypes.elemhide,
