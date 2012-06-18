@@ -171,7 +171,7 @@ function adblock_begin(inputs) {
 
   var opts = { domain: document.location.hostname };
   BGcall('get_content_script_data', opts, function(data) {
-    if (data.page_is_whitelisted || data.adblock_is_paused) {
+    if (data.page_is_whitelisted || data.adblock_is_paused || data.disabled_site) {
       inputs.stopPurger();
       return;
     }
