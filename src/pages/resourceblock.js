@@ -29,13 +29,16 @@ function generateTable() {
       matchingfilter = local_filterset.matches(i, resources[i].type, resources[i].domain, true);
 
     var type = {sort:3, name:undefined};
-    if (matchingfilter)
+    if (matchingfilter) {
       if (Filter.isWhitelistFilter(matchingfilter))
         type = {sort:2, name:'whitelisted'};
       else if (Filter.isSelectorFilter(i))
         type = {sort:0, name:'hiding'};
       else
         type = {sort:1, name:'blocked'};
+    } else {
+      matchingfilter = "";
+    }
 
     // TODO: When crbug 80230 is fixed, allow $other again
     var disabled = (type.name === 'whitelisted' || type.name === 'hiding' ||
@@ -51,7 +54,7 @@ function generateTable() {
     // Cell 1: Checkbox
     var cell = $("<td><input type='checkbox'/></td>");
     if (disabled)
-      cell.find("input").attr("disabled", "disabled");
+      cell.find("input").prop("disabled", true);
     row.append(cell);
 
     // Cell 2: URL
@@ -62,14 +65,18 @@ function generateTable() {
     }).appendTo(row);
 
     // Cell 3: Type
-    $("<td>", { text: translate('type' + typeName) }).appendTo(row);
+    $("<td>", {
+      text: translate('type' + typeName),
+      "data-column": "type"
+    }).appendTo(row);
 
     // Cell 4: hidden sorting field and matching filter
-    cell = $("<td>");
+    cell = $("<td>", {
+      "data-column": "filter"
+    });
     $("<span>", {
       "class": "sorter",
-      text: type.name ? type.sort : 3,
-      "data-column": "filter"
+      text: type.name ? type.sort : 3
     }).appendTo(cell);
     if (type.name)
       $("<span>", { text: matchingfilter }).appendTo(cell);
@@ -199,9 +206,9 @@ function generateFilterSuggestions() {
   for (var i = 0; i < suggestions.length; i++)
     $("#suggestions").append(suggestions[i]);
   if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
-    $($("#suggestions").children('input')[1]).attr('checked', 'checked');
+    $($("#suggestions").children('input')[1]).prop('checked', true);
   else
-    $("#suggestions").find('input:first-child').attr('checked', 'checked');
+    $("#suggestions").find('input:first-child').prop('checked', true);
 
   if (!isBlocked)
     $("#selectblockableurl b").text(translate("blockeverycontaining"));
@@ -213,8 +220,10 @@ function generateFilterSuggestions() {
     size: "99",
     value: url,
     title: translate("wildcardhint")
+  }).bind("input", function() {
+    $("#custom").click()
   });
-  $("#custom + label").text('Custom: ').append(inputBox);
+  $("#custom + label").append(inputBox);
 }
 
 // Create the filter that will be applied from the chosen options
@@ -312,8 +321,69 @@ function finally_it_has_loaded_its_stuff() {
   // Close the legend
   $("#legend a").click(function(event) {
     event.preventDefault();
+    $("#search").val("").trigger('search');
     $("#legend").remove();
   });
+
+  // Search a resource
+  $('#search').bind("search", function() {
+    var patterns = $("#search").val().trim().replace(/\s+/g, ' ').split(" ");
+    for (var i=0; i<patterns.length; i++) {
+      patterns[i] = new RegExp(patterns[i]
+                      .replace(/\*+/g, '*')
+                      .replace(/\W/g, '\\$&')
+                      .replace(/\\\*/g, '.*'), "i");
+    }
+    $("#resourceslist tbody tr").show();
+    $("#nosearchresults").remove();
+    if (!$("#search").val().trim()) return;
+    $("#resourceslist tbody tr").each(function(i,el) {
+      var keywords = [];
+      var res = resources[$("[data-column='url']", el).attr('title')];
+      keywords.push(res.domain);
+      keywords.push(res.resource);
+      if (res.filter)
+        keywords.push(res.filter);
+      var typeName = getTypeName(res.type);
+      keywords.push(typeName);
+      if (/_/.test(typeName))
+        keywords.push(typeName.replace('_', '-')); // $object-subrequest === $object_subrequest
+      keywords.push(translate("type" + typeName));
+      if (res.isThirdParty) {
+        keywords.push(translate("thirdparty"));
+        keywords.push("third-party");
+        keywords.push("third_party");
+      } else {
+        // There are so many possible ways to call 'first-party' resources, that
+        // I'm not going to worry about those (localized) matches.
+        keywords.push("first-party");
+        keywords.push("first_party");
+      }
+      for (var j=0; j<patterns.length; j++) {
+        var hasBeenMatched = false;
+        for (i=0; i<keywords.length; i++) {
+          if (patterns[j].test(keywords[i])) {
+            hasBeenMatched=true;
+            break;
+          }
+        }
+        if (!hasBeenMatched) {
+          $(el).hide();
+          break;
+        }
+      }
+    });
+    if ($("#resourceslist tbody tr:visible").length === 0) {
+      $("#resourceslist tbody").
+        append("<tr id='nosearchresults'>" +
+              "<td colspan='6'>" + translate("nosearchresults") + "</td></tr>");
+    }
+  });
+  // Only enable "autosearch" if the number of resources is low. Otherwise, you
+  // risk having to wait a while until the function is finished searching while
+  // you're typing.
+  if (Object.keys(resources).length < 250)
+    $("#search").prop("incremental", true);
 
   // An item has been selected
   $('.clickableRow, input:enabled', '#resourceslist').click(function() {
@@ -326,8 +396,8 @@ function finally_it_has_loaded_its_stuff() {
     $(this).parents('tr').addClass('selected');
     $("#resourceslist tr:not(.selected)").remove();
     $("#resourceslist tr input").
-      attr('checked', 'checked').
-      attr('disabled', 'disabled');
+      prop('checked', true).
+      prop('disabled', true);
     $('.clickableRow').removeClass('clickableRow');
     $('#resourceslist tr').css('border', 'black 1px dotted');
     $('#legend').remove();
@@ -364,7 +434,7 @@ function finally_it_has_loaded_its_stuff() {
       $("#selectblockableurl input:radio:not(:checked)").remove();
       $("#confirmUrl").next().remove();
       $("#confirmUrl").remove();
-      $("#selectblockableurl *:not(br):not(b)").attr("disabled", "disabled");
+      $("#selectblockableurl *:not(br):not(b)").prop("disabled", true);
 
       // Show the options
       $("#chooseoptions").show();
@@ -376,18 +446,22 @@ function finally_it_has_loaded_its_stuff() {
         $("#thirdparty + label").
           html(translate("thirdpartycheckbox", "<i></i>")).
           find("i").text(getThirdPartyDomain(chosenResource.domain));
+
       $("#domainlist").
         val(chosenResource.domain.replace(/^www\./, '')).
         click(function() {
-          $("#domainis").
-            attr("checked", "checked").
-            change();
+          $("#domainis").prop("checked", true);
+          $("#filterpreview").text(createfilter());
+        }).
+        bind("input", function() {
+          $("#domainis").prop("checked", true);
+          $(this).trigger("keyup");
         }).
         keyup(function() {
           if (isValidDomainList($(this).val().trim().
               replace(/[a-z](\ |\,\ ?|\;\ ?)\~?[a-z0-9]/gi,'a|a'))){
-            $("#domainis").val('domain=' +
-                $(this).val().trim().replace(/(\ |\,|\;)+/g,'|'));
+            $("#domainis").
+              val('domain=' + $(this).val().trim().replace(/(\ |\,|\;)+/g,'|'));
             $("#domainlist").css('color', 'black');
           } else {
             $("#domainis").val('');
@@ -395,15 +469,17 @@ function finally_it_has_loaded_its_stuff() {
           }
           $("#filterpreview").text(createfilter());
         });
-      $("#domainis").val('domain=' + chosenResource.domain.replace(/^www\./, ''));
+      $("#domainis").
+        val('domain=' + chosenResource.domain.replace(/^www\./, ''));
+
       var selectorForFixedType = '[value="' + getTypeName(chosenResource.type) +  '"]';
       if (!$(selectorForFixedType).is(":checked")) {
         // Special non-default type. For example $popup
-        $("#types > input").removeAttr("checked");
+        $("#types > input").prop("checked", false);
       }
       $(selectorForFixedType).
-          attr('disabled', 'disabled').
-          attr('checked', 'checked');
+          prop('disabled', true).
+          prop('checked', true);
 
       // Update the preview filter
       $("#chooseoptions *").change(function() {
@@ -480,7 +556,7 @@ $(function() {
     local_filterset = new BlockingFilterSet(
         FilterSet.fromTexts(filtertexts.blocking),
         FilterSet.fromTexts(filtertexts.whitelist));
-    
+
     BGcall('get_content_script_data', opts, function(data) {
       debug_enabled = data.settings.debug_logging;
       if (data.adblock_is_paused) {
@@ -496,7 +572,7 @@ $(function() {
           for (var thisFrame in loaded_frames) {
             var frame = loaded_frames[thisFrame];
 
-            if (thisFrame === 0) {
+            if (Number(thisFrame) === 0) {
               // We don't parse $document and $elemhide rules for subframes
               resources[frame.url] = {
                 type: ElementTypes.document | ElementTypes.elemhide,
@@ -542,8 +618,9 @@ $(function() {
             filters = filters.split('\n');
             for (var i=0; i<filters.length; i++)
               try {
-                custom_filters[
-                    FilterNormalizer.normalizeLine(filters[i]) ] = filters[i];
+                var normalized = FilterNormalizer.normalizeLine(filters[i]);
+                if (normalized !== "")
+                  custom_filters[normalized] = filters[i];
               } catch(ex) {} //Broken filter
           }
           finally_it_has_loaded_its_stuff();
@@ -570,6 +647,9 @@ $(function() {
 // Click event for the column titles (<th>) of a table.
 // It'll sort the table upon the contents of that column
 sortTable = function() {
+  var table = $(this).closest('table');
+  if (table.find('[colspan]').length)
+    return; // can't handle the case where some columns have been merged locally
   var columnNumber = $(this).prevAll().length + 1;
   if ($(this).attr("data-sortDirection") === "ascending") {
     $(this).attr("data-sortDirection", "descending"); // Z->A
@@ -578,16 +658,16 @@ sortTable = function() {
   }
   var cellList = [];
   var rowList = [];
-  $("#resourceslist td:nth-of-type(" + columnNumber + ")").each(function(index, element) {
-    cellList.push(element.innerHTML + 'ÿÿÿÿÿ' + (index+10000));
+  $("td:nth-of-type(" + columnNumber + ")", table).each(function(index, element) {
+    cellList.push(element.innerHTML.toLowerCase() + 'ÿÿÿÿÿ' + (index+10000));
     rowList.push($(element).parent('tr').clone(true));
   });
   cellList.sort();
   if ($(this).attr("data-sortDirection") === "descending")
     cellList.reverse();
-  $("#resourceslist tbody").empty();
+  $("tbody", table).empty();
   cellList.forEach(function(item) {
     var no = Number(item.match(/\d+$/)[0]) - 10000;
-    $("#resourceslist tbody").append(rowList[no]);
+    $("tbody", table).append(rowList[no]);
   });
 }

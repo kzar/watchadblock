@@ -50,6 +50,9 @@ function localizePage() {
   $("[i18n_title]:not(.i18n-replaced)").each(function() {
     $(this).attr("title", translate($(this).attr("i18n_title")));
   });
+  $("[i18n_placeholder]:not(.i18n-replaced)").each(function() {
+    $(this).attr("placeholder", translate($(this).attr("i18n_placeholder")));
+  });
   $("[i18n_replacement_el]:not(.i18n-replaced)").each(function() {
     // Replace a dummy <a/> inside of localized text with a real element.
     // Give the real element the same text as the dummy link.
