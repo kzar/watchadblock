@@ -15,8 +15,12 @@ send_content_to_back = function() {
     el.oldDisplay = el.style.display;
     el.style.display = "none";
 
-    if (el.nodeName === "OBJECT")
-      el.appendChild('<param name="wmode" value="transparent">');
+    if (el.nodeName === "OBJECT") {
+      var param = document.createElement("param");
+      param.setAttribute("name", "wmode");
+      param.setAttribute("value", "transparent");
+      el.appendChild(param);
+    }
     else
       el.setAttribute("wmode", "transparent");
   }

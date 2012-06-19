@@ -4,7 +4,6 @@
 // Handle emit_page_broadcast
 safari.self.addEventListener("message", function(event) {
   if (event.name == "page-broadcast") {
-    // Only one command is supported
     if (event.message.fn == 'send_content_to_back') {
       send_content_to_back();
     }
