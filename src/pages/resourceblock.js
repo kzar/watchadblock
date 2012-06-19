@@ -379,6 +379,11 @@ function finally_it_has_loaded_its_stuff() {
               "<td colspan='6'>" + translate("nosearchresults") + "</td></tr>");
     }
   });
+  // Only enable "autosearch" if the number of resources is low. Otherwise, you
+  // risk having to wait a while until the function is finished searching while
+  // you're typing.
+  if (Object.keys(resources).length < 250)
+    $("#search").prop("incremental", true);
 
   // An item has been selected
   $('.clickableRow, input:enabled', '#resourceslist').click(function() {
