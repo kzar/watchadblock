@@ -6,6 +6,8 @@ function top_open_whitelist_ui() {
   if (!may_open_dialog_ui)
     return;
 
+  may_open_dialog_ui = false;
+
   var domain = document.location.host;
 
   // Safari's document.location breaks in the feed reader if the feed is fetched via https. Normal
@@ -22,8 +24,6 @@ function top_open_whitelist_ui() {
   
   // defined in blacklister.js
   load_jquery_ui(function() {
-    may_open_dialog_ui = false;
-
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
     btns[translate("buttonexclude")] = 

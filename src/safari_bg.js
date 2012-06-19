@@ -1,29 +1,6 @@
-emit_page_broadcast = (function() {
-  // Private list of connected ports for emit_page_broadcast()
-  var broadcast_ports = [];
-  chrome.extension.onConnect.addListener(function(port) {
-    port.onDisconnect.addListener(function(disconnected_port) {
-      var where = broadcast_ports.indexOf(disconnected_port);
-      if (where != -1) {
-        broadcast_ports.splice(where, 1);
-      }
-    });
-    broadcast_ports.push(port);
-  });
-
-  // The emit_page_broadcast() function
-  var theFunction = function(request, sender) {
-    $.each(broadcast_ports, function(i, port) {
-        // issue 5416, fixed in Chrome and probably never happens in
-        // Safari: port.sender.tab could be null for an unknown reason.
-        if (!port.sender.tab)
-          return;
-      if (port.sender.tab.id == sender.tab.id)
-        port.postMessage(request);
-    });
-  };
-  return theFunction;
-})();
+emit_page_broadcast = function(request) {
+  safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('page-broadcast', request);
+};
 
 // True blocking support.
 safari.application.addEventListener("message", function(messageEvent) {
