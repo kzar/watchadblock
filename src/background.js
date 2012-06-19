@@ -526,15 +526,18 @@
   // Inputs: options object containing:
   //           domain:string the domain of the calling frame.
   get_content_script_data = function(options, sender) {
-    var whitelisted = page_is_whitelisted(sender.tab.url);
+    var disabled = page_is_unblockable(sender.tab.url);
     var settings = get_settings();
     var result = {
-      page_is_whitelisted: whitelisted,
+      disabled_site: disabled,
       adblock_is_paused: adblock_is_paused(),
       settings: settings,
       selectors: []
     };
-    if (whitelisted || result.adblock_is_paused)
+    if (!disabled) {
+      result.page_is_whitelisted = page_is_whitelisted(sender.tab.url);
+    }
+    if (disabled || result.adblock_is_paused || result.page_is_whitelisted)
       return result;
 
     // Not whitelisted, and running on adblock_start. We have to send the

@@ -30,7 +30,8 @@ safari.application.addEventListener("message", function(messageEvent) {
   if (messageEvent.name != "canLoad")
     return;
 
-  if (adblock_is_paused() || page_is_whitelisted(messageEvent.target.url)) {
+  if (adblock_is_paused() || page_is_unblockable(messageEvent.target.url) ||
+      page_is_whitelisted(messageEvent.target.url)) {
     messageEvent.message = true;
     return;
   }
