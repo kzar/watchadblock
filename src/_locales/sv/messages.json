@@ -203,10 +203,6 @@
     "message": "OK",
     "description": "OK button"
   },
-  "reportpubliclyavailable": {
-    "message": "OBS! Din rapport kan komma att bli pulicerad offentligt. Håll det i minnet om du inkluderar något av privat natur.",
-    "description": "Ad report page string, when you're about to submit a report"
-  },
   "cantblockflash": {
     "message": "Vi kan inte blockera reklam i Flash och andra tillägg än. Vi väntar på stöd från webbläsaren och WebKit.",
     "description": "Result of the final ad report question"
@@ -312,6 +308,10 @@
   "csstomatch": {
     "message": "CSS att matcha",
     "description": "Message of the css-hiding area"
+  },
+  "custompattern": {
+    "message": "Anpassat:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
   "debuginlogoption": {
     "message": "Visa felsökningsinformation i loggen (vilket gör AdBlock långsammare)",
@@ -727,6 +727,10 @@
     "message": "Något blev fel. Inga resurser skickades. Denna sida kommer att stängas. Försök att uppdatera webbsidan.",
     "description": "resourceblocking page string"
   },
+  "nosearchresults": {
+    "message": "Inga resurser hittades",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
   "novalidurlpattern": {
     "message": "Ange en giltig URL-mall att matcha!",
     "description": "resourceblocking page string"
@@ -831,6 +835,10 @@
       }
     }
   },
+  "reportpubliclyavailable": {
+    "message": "OBS! Din rapport kan komma att bli pulicerad offentligt. Håll det i minnet om du inkluderar något av privat natur.",
+    "description": "Ad report page string, when you're about to submit a report"
+  },
   "reporttous2": {
     "message": "Om du kan läsa/skriva engelska, kan du rapportera reklamtillägget till oss <a>in the issue tracker</a>.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
@@ -894,6 +902,14 @@
   "savereminder": {
     "message": "Glöm inte att spara!",
     "description": "Reminder to press save"
+  },
+  "searchexplanation": {
+    "message": "Använd * för att matcha noll eller fler tecken. Exempel: 'banner*.gif' matchar bilderna 'banner.gif', 'banner123.gif', och 'bannerxyz.gif'.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Sök resurser...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
   },
   "seeing_this_every_time_you_start_your_browser": {
     "message": "Ser du detta varje gång du startar webbläsaren?",
