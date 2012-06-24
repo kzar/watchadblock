@@ -309,6 +309,10 @@
     "message": "Eşleşen CSS öğeleri",
     "description": "Message of the css-hiding area"
   },
+  "custompattern": {
+    "message": "Özel:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
   "debuginlogoption": {
     "message": "Konsol Günlüğünde hata ayıklama bilgilerini göster (Adblock'u yavaşlatır)",
     "description": "Option on first tab page"
@@ -458,7 +462,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterlistlink": {
-    "message": "İhtiyacınız olmayan filtreleri eklemeyin -- her biri Adblock'u biraz daha yavaşlatır. \"Emeği geçenler\" listeleri ve daha fazlası <a>buradan</a> görülebilir.",
+    "message": "İhtiyacınız olmayan filtrelere abone olmayın -- her biri Adblock'u biraz daha yavaşlatır. \"Emeği geçenler\" listeleri ve daha fazlası <a>buradan</a> görülebilir.",
     "description": "Explanation of the filter lists"
   },
   "filterlistsrock": {
@@ -474,7 +478,7 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtersavewarning": {
-    "message": "Dikkat: eğer burada bir hata yaparsanız, yüklediğiniz resmi filtreler de dahil, çoğu liste tamamen bozulabilir!<br/> Gelişmiş izin verilenler ve engellenenler listesi oluşturmak için lütfen <a>filtre sözdizimi kuralları</a> bölümünü okuyun.",
+    "message": "Dikkat: eğer burada bir hata yaparsanız, abone olduğunuz filtreler de dahil, çoğu liste tamamen bozulabilir!<br/> Gelişmiş \"izin verilenler\" ve \"engellenenler\" listesi oluşturmak için lütfen <a>filtre sözdizimi kuralları</a> bölümünü okuyun.",
     "description": "Warning when blacklisting manually"
   },
   "filterstabtitle": {
@@ -560,7 +564,7 @@
     "description": "Install page: shown while progress bar loads"
   },
   "invalidListUrl": {
-    "message": "Geçersiz liste URL'si. Bu link silinecek.",
+    "message": "Geçersiz filtre listesi URL'si. Bu link silinecek.",
     "description": "Message when you subscribe to a non-list URL"
   },
   "labelshow": {
@@ -723,6 +727,10 @@
     "message": "Bir şeyler ters gitti. Hiç bir kaynak gönderilmedi. Bu sayfa şimdi kapanacak. Web sitesini tekrar yüklemeyi deneyin.",
     "description": "resourceblocking page string"
   },
+  "nosearchresults": {
+    "message": "Hiç bir kaynak bulunamadı",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
   "novalidurlpattern": {
     "message": "Lütfen eşleşme için geçerli bir URL kalıbı seçin!",
     "description": "resourceblocking page string"
@@ -884,7 +892,7 @@
     }
   },
   "safari50_updatenotice": {
-    "message": "Safari'nin eski bir sürümünü kullanıyorsunuz. Adblock araç çubuğu butonunu kullanabilmek, bir web sitesine izin vermek ya da reklam bildirmek istiyorsanız, son sürüme geçin.",
+    "message": "Safari'nin eski bir sürümünü kullanıyorsunuz. Adblock araç çubuğu butonunu kullanabilmek, bir web sitesine izin verebilmek ya da reklam bildirebilmek istiyorsanız, son sürüme geçin.",
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   },
   "savebutton": {
@@ -895,12 +903,20 @@
     "message": "Kaydetmeyi unutmayın!",
     "description": "Reminder to press save"
   },
+  "searchexplanation": {
+    "message": "Kelimeyi olduğu gibi ve başka harfler ekli şekilleriyle birlikte bulmak için * kullanın.   Örneğin, \"banner*.gif resim\" araması, \"banner.gif\", \"banner123.gif\" ve \"bannerxyz.gif\" gibi sonuçlarla eşleşir.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Kaynaklar içinde ara...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
+  },
   "seeing_this_every_time_you_start_your_browser": {
     "message": "Tarayıcı her açıldığında bunu mu görüyorsunuz?",
     "description": "Install page: link to click for help"
   },
   "selectresources": {
-    "message": "Engelemek ya da engellemesini kaldırmak istediğiniz kaynağı seçin",
+    "message": "Engellemek ya da engellemesini kaldırmak istediğiniz kaynağı seçin",
     "description": "resourceblocking page string"
   },
   "set_up_adblock": {
@@ -920,7 +936,7 @@
     "description": "Link in the button"
   },
   "showcontextmenus": {
-    "message": "Sağ tıklama menüsüne öğe ekle.",
+    "message": "Sağ tıklama menüsüne Adblock seçeneklerini ekle.",
     "description": "Option on first tab page"
   },
   "showlinkstolists": {
@@ -928,7 +944,7 @@
     "description": "Option on second tab page"
   },
   "sliderexplanation": {
-    "message": "Reklam düzgün bir şekilde engelleninceye ve engellenen öğe düzgün görüntüleninceye kadar kaydırıcıyı ilerletin.",
+    "message": "Reklam düzgün bir şekilde engelleninceye ve engellenen öğe sayfa yapısını bozmayacak şekilde görüntüleninceye kadar kaydırıcıyı ilerletin.",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
@@ -974,7 +990,7 @@
     "description": "abp: link subscriber result"
   },
   "subscribingfinished": {
-    "message": "Tamanlandı!",
+    "message": "Tamamlandı!",
     "description": "abp: link subscriber result"
   },
   "subscribingtitle": {
@@ -1172,7 +1188,7 @@
     "description": "instruction on ad report page"
   },
   "warning_overrules_filters": {
-    "message": "Dikkat: bu sitelerin dışında tüm sitelerde reklamları görebileceksiniz!<br> Bu sitelerde kullandığınız filtreler geçersiz olacak.",
+    "message": "Dikkat: bu sitelerin dışında tüm sitelerde reklamları görebileceksiniz!<br> Kullandığınız filtreler bu sitelerde geçersiz olacak.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "whitelistertitle2": {
