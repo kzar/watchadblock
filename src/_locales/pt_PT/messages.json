@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "Uma nota para os amantes do CatBlock:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -120,7 +120,7 @@
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisteroptions1": {
-    "message": "O que você acha que vai ser verdade sobre este anúncio cada vez que visita esta página?",
+    "message": "O que acha que vai ser verdade sobre este anúncio cada vez que visita esta página?",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
@@ -309,6 +309,10 @@
     "message": "CSS para corresponder",
     "description": "Message of the css-hiding area"
   },
+  "custompattern": {
+    "message": "Personalizado:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
   "debuginlogoption": {
     "message": "Mostar as operações na Consola de Logs (torna o AdBlock lento)",
     "description": "Option on first tab page"
@@ -328,6 +332,10 @@
   "disabled_on_this_page": {
     "message": "AdBlock está desactivado neste site.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "doesntmatchoriginal": {
+    "message": "O padrão que introduziu não corresponde ao recurso que tentou bloquear! Continuar mesmo assim?",
+    "description": "resourceblocking page string"
   },
   "done": {
     "message": "concluído.",
@@ -512,7 +520,7 @@
     "description": "Title of first tab page"
   },
   "googletextads": {
-    "message": "Eu gosto dos anúncios de texto nos resultados de pesquisa do Google, mostrar-me esses.",
+    "message": "Eu gosto dos anúncios nos resultados de pesquisa do Google, mostrar-me esses.",
     "description": "Option on first tab page"
   },
   "headerfilter": {
@@ -719,6 +727,10 @@
     "message": "Alguma coisa aconteceu de errado. Nenhum recurso foi enviado. Esta página vai ser fechada. Tente recarregar o site.",
     "description": "resourceblocking page string"
   },
+  "nosearchresults": {
+    "message": "Nenhum recurso encontrado",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
   "novalidurlpattern": {
     "message": "Por favor insira um URL válido para coincidir!",
     "description": "resourceblocking page string"
@@ -823,6 +835,10 @@
       }
     }
   },
+  "reportpubliclyavailable": {
+    "message": "Nota: o seu relatório pode tornar-se público. Tenha isso em atenção antes de incluir alguma coisa privada.",
+    "description": "Ad report page string, when you're about to submit a report"
+  },
   "reporttous2": {
     "message": "Você pode denunciar o anúncio para nós, utilizando <a>o descobridor de erros</a>.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
@@ -886,6 +902,14 @@
   "savereminder": {
     "message": "Não se esqueça de guardar!",
     "description": "Reminder to press save"
+  },
+  "searchexplanation": {
+    "message": "Use * para corresponder a zero ou mais letras. Por exemplo, 'banner*.gif image' corresponde a imagens 'banner.gif', 'banner123.gif', e 'bannerxyz.gif'.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Procurar recursos...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
   },
   "seeing_this_every_time_you_start_your_browser": {
     "message": "Vê isto sempre que inicia o browser?",
