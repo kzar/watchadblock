@@ -35,7 +35,7 @@ safari.application.addEventListener("command", function(event) {
   if (event.target.browserWindow) {
     // Context menu item event or button event on Safari 5.0, browserWindow is available in event.target.
     browserWindow = event.target.browserWindow;
-  } else if (event.target instanceof SafariExtensionMenuItem) {
+  } else if (!LEGACY_SAFARI && event.target instanceof SafariExtensionMenuItem) {
     // Identifier will be of the form menuId:command, let's use this to get our window
     var menuId = event.target.identifier.split(':')[0];
     browserWindow = windowByMenuId[menuId];
