@@ -1,5 +1,5 @@
-// This file is only loaded by Safari.  Chrome uses chrome.tabs.executeScript
-// in lieu of broadcasts, and registers context menus in background.html.
+// This file is only loaded by Safari. Chrome uses chrome.tabs.executeScript
+// in lieu of broadcasts, and registers context menus in background.js.
 
 // Handle emit_page_broadcast
 safari.self.addEventListener("message", function(event) {

@@ -24,7 +24,7 @@ BGcall = function() {
 }
 
 // These are replaced with console.log in adblock_start_common.js and
-// background.html if the user chooses.
+// background.js if the user chooses.
 log = function() { };
 
 // Behaves very similarly to $.ready() but does not require jQuery.
@@ -92,7 +92,7 @@ parseUri.parseSearch = function(search) {
   return queryKeys;
 }
 
-// TODO: move back into background.html since Safari can't use this
+// TODO: move back into background.js since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
 // and 5912 to avoid merge conflicts.
 // Inputs: key:string.
