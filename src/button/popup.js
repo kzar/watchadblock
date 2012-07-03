@@ -98,7 +98,6 @@ $(function() {
   $("#div_pause_adblock").click(function() {
     BG.adblock_is_paused(true);
     BG.updateButtonUIAndContextMenus();
-    chrome.contextMenus.removeAll();
     window.close();
   });
 
