@@ -1,3 +1,12 @@
+  // Send the file name and line number of any error message. This will help us
+  // to trace down any frequent errors we can't confirm ourselves.
+  window.addEventListener("error", function(e) {
+    var str = "Error: " +
+             (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
+             ":" + (e.lineno||"anywhere");
+    STATS.msg(str);
+  })
+  
   // OPTIONAL SETTINGS
 
   function Settings() {
