@@ -202,6 +202,8 @@
       var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
       if (opener === undefined)
         return;
+      if (frameData.get(details.sourceTabId, 0).whitelisted)
+        return;
       var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
       if (match)
         chrome.tabs.remove(details.tabId);
