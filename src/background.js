@@ -384,9 +384,19 @@
   //                           Extension Gallery, where extensions don't run.
   //   }
   // Returns: null (asynchronous)
-  getCurrentTabInfo = function(callback) {
+  getCurrentTabInfo = function(callback, secondTime) {
     chrome.tabs.query({active: true, windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
       var tab = tabs[0];
+
+      if (!tab.url) {
+      // tab URL is not set directly after you opened a window using window.open()
+        if (!secondTime)
+          window.setTimeout(function() {
+            getCurrentTabInfo(callback, true);
+          }, 250);
+        return;
+      }
+
       var disabled_site = page_is_unblockable(tab.url);
 
       var result = {
