@@ -332,9 +332,9 @@ function finally_it_has_loaded_its_stuff() {
       patterns[i] = new RegExp(patterns[i]
                       .replace(/\*+/g, '*')
                       .replace(/\W/g, '\\$&')
-                      .replace(/\\\*/g, '.*'), "i");
+                      .replace(/\\\*/g, '[^\\t]*'), "i");
     }
-    $("#resourceslist tbody tr").show();
+    $("#resourceslist tbody tr.noSearchMatch").removeClass("noSearchMatch");
     $("#nosearchresults").remove();
     if (!$("#search").val().trim()) return;
     $("#resourceslist tbody tr").each(function(i,el) {
@@ -359,16 +359,11 @@ function finally_it_has_loaded_its_stuff() {
         keywords.push("first-party");
         keywords.push("first_party");
       }
+      keywords = keywords.join('\t');
       for (var j=0; j<patterns.length; j++) {
-        var hasBeenMatched = false;
-        for (i=0; i<keywords.length; i++) {
-          if (patterns[j].test(keywords[i])) {
-            hasBeenMatched=true;
-            break;
-          }
-        }
-        if (!hasBeenMatched) {
-          $(el).hide();
+        if (!patterns[j].test(keywords)) {
+          // Setting styles directly is terribly slow. Using classes is way faster.
+          $(el).addClass("noSearchMatch");
           break;
         }
       }
@@ -379,11 +374,6 @@ function finally_it_has_loaded_its_stuff() {
               "<td colspan='6'>" + translate("nosearchresults") + "</td></tr>");
     }
   });
-  // Only enable "autosearch" if the number of resources is low. Otherwise, you
-  // risk having to wait a while until the function is finished searching while
-  // you're typing.
-  if (Object.keys(resources).length < 250)
-    $("#search").prop("incremental", true);
 
   // An item has been selected
   $('.clickableRow, input:enabled', '#resourceslist').click(function() {
