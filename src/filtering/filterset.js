@@ -159,10 +159,6 @@ BlockingFilterSet.prototype = {
     if (key in this._matchCache)
       return this._matchCache[key];
 
-    // TODO: is there a better place to do this?
-    // Limiting length of URL to avoid painful regexes.
-    var LENGTH_CUTOFF = 200;
-    url = url.substring(0, LENGTH_CUTOFF);
     var loweredUrl = url.toLowerCase();
 
     var match = this.whitelist.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
