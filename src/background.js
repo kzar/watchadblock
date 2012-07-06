@@ -764,10 +764,6 @@
     chrome.tabs.query({url: "http://*/*"}, handleEarlyOpenedTabs);
     chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
   }
-
-  if (SAFARI) {
-    $.getScript("safari_bg.js");
-  }
   
   // Temp (4-20-12):
   localStorage.removeItem('saw_prune_note');
