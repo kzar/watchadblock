@@ -157,7 +157,7 @@ STATS = (function() {
         return;
       }
       var data = {
-        cmd: "msg",
+        cmd: "msg2",
         u: userId,
         m: message,
         v: version
