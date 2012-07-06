@@ -389,7 +389,7 @@
       var tab = tabs[0];
 
       if (!tab.url) {
-      // tab URL is not set directly after you opened a window using window.open()
+      // Issue 6877: tab URL is not set directly after you opened a window using window.open()
         if (!secondTime)
           window.setTimeout(function() {
             getCurrentTabInfo(callback, true);
