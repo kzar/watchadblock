@@ -16,9 +16,9 @@ Filter.fromText = function(text) {
   var cache = Filter._cache;
   if (!(text in cache)) {
 
-  if (Filter.isSelectorFilter(text))
+    if (Filter.isSelectorFilter(text))
       cache[text] = new SelectorFilter(text);
-  else
+    else
       cache[text] = PatternFilter.fromText(text);
   }
   return cache[text];
