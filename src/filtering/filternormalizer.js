@@ -50,7 +50,7 @@ var FilterNormalizer = {
         return false;
 
     // Convert old-style hiding rules to new-style.
-    if (/#[\*a-z0-9_\-]*(\(|$)/.test(filter) && !/##/.test(filter)) {
+    if (/#[\*a-z0-9_\-]*(\(|$)/.test(filter) && !/\#\@?\#./.test(filter)) {
       // Throws exception if unparseable.
       var oldFilter = filter;
       filter = FilterNormalizer._old_style_hiding_to_new(filter);
@@ -63,7 +63,7 @@ var FilterNormalizer = {
 
       try {
         // Throws if the filter is invalid...
-        var selectorPart = filter.substr(filter.indexOf("##") + 2);
+        var selectorPart = filter.replace(/^.*?\#\@?\#/, '');
         if (document.querySelector(selectorPart + ',html').length === 0)
           throw "Causes other filters to fail";
       } catch(ex) {
