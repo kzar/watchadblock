@@ -30,7 +30,12 @@ function top_open_whitelist_ui() {
         function() {
           var filter = '@@||' + generateUrl() + '$document';
           BGcall('add_custom_filter', filter, function() {
-            document.location.reload();
+            if (confirm(translate("reloadtabnow")))
+              document.location.reload();
+            else {
+              BGcall('updateButtonUIAndContextMenus');
+              page.dialog('close');
+            }
           });
         }
 

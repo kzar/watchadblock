@@ -35,7 +35,8 @@ function top_open_blacklist_ui(options) {
       blacklist_ui.block(function() {
         may_open_dialog_ui = true;
         // In case of frames, reload, as the frame might contain matches too.
-        if ($("iframe, frameset, frame").filter(":visible").length > 0)
+        if ($("iframe, frameset, frame").filter(":visible").length > 0 &&
+            confirm(translate("reloadtabnow")))
           document.location.reload();
       });
       blacklist_ui.show();

@@ -56,14 +56,16 @@ safari.application.addEventListener("command", function(event) {
   } else if (command === "whitelist-currentpage") {
     var tab = browserWindow.activeTab;
     create_page_whitelist_filter(tab.url);
-    tab.url = tab.url;
+    if (confirm(translate("reloadtabnow"))) {
+      tab.url = tab.url;
+    }
   } else if (command === "unwhitelist-currentpage") {
     var tab = browserWindow.activeTab;
     var unwhitelisted = false;
     while (try_to_unwhitelist(tab.url)) {
       unwhitelisted = true;
     }
-    if (unwhitelisted) {
+    if (unwhitelisted && confirm(translate("reloadtabnow"))) {
       tab.url = tab.url;
     }
   } else if (command === "report-ad") {

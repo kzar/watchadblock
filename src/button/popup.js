@@ -78,8 +78,10 @@ $(function() {
   $("#div_status_whitelisted a").click(function() {
     BG.getCurrentTabInfo(function(info) {
       if (BG.try_to_unwhitelist(info.tab.url)) {
-        // Reload the tab
-        chrome.tabs.update(info.tab.id, {url: info.tab.url});
+        if (confirm(translate("reloadtabnow")))
+          chrome.tabs.reload();
+        else
+          BG.updateButtonUIAndContextMenus();
         window.close();
       } else {
         $("#div_status_whitelisted").
@@ -114,8 +116,10 @@ $(function() {
   $("#div_whitelist_page").click(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.create_page_whitelist_filter(info.tab.url);
-      // Reload the tab
-      chrome.tabs.update(info.tab.id, {url: info.tab.url});
+      if (confirm(translate("reloadtabnow")))
+        chrome.tabs.reload();
+      else
+        BG.updateButtonUIAndContextMenus();
       window.close();
     });
   });
