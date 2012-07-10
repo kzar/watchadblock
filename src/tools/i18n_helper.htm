@@ -278,13 +278,6 @@
             $("<span>").text("Do not paste the contents of the page directly into the issue tracker! Attach it as an attachment.")
           );
         }
-        if (/Chrome\/19/.test(navigator.userAgent)) {
-          $("#exportArea").append(
-            $("<br/>")
-          ).append(
-            $("<span>").text("In Chrome 19, you have to right mouse click on the link and choose 'open in new tab'. Then paste it in a text file. When Chrome 20 is released, it'll work better.")
-          );
-        }
       });
 
       var doILikeThisMessage = function(entry, id) {
