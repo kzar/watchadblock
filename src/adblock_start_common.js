@@ -182,7 +182,8 @@ function adblock_begin(inputs) {
           console.log.apply(console, arguments); 
       };
 
-    block_list_via_css(data.selectors);
+    if (data.selectors.length)
+      block_list_via_css(data.selectors);
 
     onReady(function() {
       if (data.settings.debug_logging)
