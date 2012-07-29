@@ -132,7 +132,7 @@ $(function() {
 
   $("#div_show_resourcelist").click(function() {
     BG.getCurrentTabInfo(function(info) {
-      BG.launch_resourceblocker(info.tab.id);
+      BG.launch_resourceblocker("?tabId=" + info.tab.id);
     });
   });
 
