@@ -412,8 +412,7 @@
 
       var result = {
         tab: tab,
-        disabled_site: disabled_site,
-        domain: parseUri(tab.url).hostname,
+        disabled_site: disabled_site
       };
       if (!disabled_site)
         result.whitelisted = page_is_whitelisted(tab.url);
