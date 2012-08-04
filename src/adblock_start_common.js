@@ -92,6 +92,8 @@ function destroyElement(el, elType) {
 
 // Add style rules hiding the given list of selectors.
 function block_list_via_css(selectors) {
+  if (!selectors.length)
+    return;
   // Issue 6480: inserting a <style> tag too quickly ignored its contents.
   // Use ABP's approach: wait for .sheet to exist before injecting rules.
   var css_chunk = document.createElement("style");
@@ -182,8 +184,7 @@ function adblock_begin(inputs) {
           console.log.apply(console, arguments); 
       };
 
-    if (data.selectors.length)
-      block_list_via_css(data.selectors);
+    block_list_via_css(data.selectors);
 
     onReady(function() {
       if (data.settings.debug_logging)
