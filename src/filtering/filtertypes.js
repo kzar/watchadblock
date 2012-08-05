@@ -239,7 +239,7 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/\*/g, '.*');
   // Starting with || means it should start at a domain or subdomain name, so
   // match ://<the rule> or ://some.domains.here.and.then.<the rule>
-  rule = rule.replace(/^\|\|/, '\\:\\/\\/([^\\/]+\\.)?');
+  rule = rule.replace(/^\|\|/, '^[^\\/]+\\:\\/\\/([^\\/]+\\.)?');
   // Starting with | means it should be at the beginning of the URL.
   rule = rule.replace(/^\|/, '^');
   // Rules ending in | means the URL should end there
