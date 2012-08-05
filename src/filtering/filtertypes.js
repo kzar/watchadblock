@@ -225,9 +225,6 @@ PatternFilter._parseRule = function(text) {
   // ***** -> *
   rule = rule.replace(/\*\*+/g, '*');
 
-  // If it starts or ends with *, strip that -- it's a no-op.
-  rule = rule.replace(/^\*/, '');
-  rule = rule.replace(/\*$/, '');
   // Some chars in regexes mean something special; escape it always.
   // Escaped characters are also faster. 
   // - Do not escape a-z A-Z 0-9 and _ because they can't be escaped
@@ -246,6 +243,9 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/\|$/, '$');
   // Any other '|' within a string should really be a pipe.
   rule = rule.replace(/\|/g, '\\|');
+  // If it starts or ends with *, strip that -- it's a no-op.
+  rule = rule.replace(/^\.\*/, '');
+  rule = rule.replace(/\.\*$/, '');
 
   result.rule = new RegExp(rule);
   return result;
