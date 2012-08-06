@@ -433,7 +433,7 @@
     if (!type)
       type = ElementTypes.document;
     var whitelist = _myfilters.blocking.whitelist;
-    return whitelist.matches(url, type, parseUri(url).hostname);
+    return whitelist.matches(url, type, parseUri(url).hostname, false);
   }
 
   if (!SAFARI) {

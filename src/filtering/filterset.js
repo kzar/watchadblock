@@ -95,6 +95,7 @@ FilterSet.prototype = {
   // Return the filter that matches this url+elementType on this frameDomain:
   // the filter in a relevant entry in this.items who is not also in a 
   // relevant entry in this.exclude.
+  // isThirdParty: true if url and frameDomain have different origins.
   matches: function(url, elementType, frameDomain, isThirdParty) {
     var limited = this._viewFor(frameDomain);
     for (var k in limited.items) {
