@@ -8,16 +8,6 @@ function Highlighter() {
   var enabled = false;
   var then = Date.now();
   var box = $("<div class='adblock-highlight-node'></div>");
-  var css = {
-    "background-color": "rgba(130, 180, 230, 0.5)",
-    outline: "solid 1px #0F4D9A",
-    "box-sizing": "border-box",
-    position: "absolute", 
-    display: "none"
-  };
-  for (var key in css) {
-    box[0].style.setProperty(key, css[key], "important"); // crbug.com/110084
-  }
   box.appendTo("body");
   
   function handler(e) {
@@ -44,7 +34,7 @@ function Highlighter() {
       top: offset.top 
     });
     var zIndex = (parseInt(target.css("z-index")) || 1);
-    box[0].style.setProperty("z-index", zIndex, "important"); // crbug.com/110084
+    box[0].style.setProperty("z-index", zIndex, "important");
     box.show(); 
   }
   
@@ -95,11 +85,6 @@ ClickWatcher.prototype.show = function() {
   var that = this;
   var wait = $("<div></div>").
     append(translate("findingads")).
-    css({
-      'background': 'white',
-      'text-align': 'left',
-      'font-size': '12px',
-    }).
     dialog({
       zIndex: 10000000, 
       position: [50, 50],
@@ -170,16 +155,14 @@ ClickWatcher.prototype._build_ui = function() {
   });
 
   var btn = {};
-  btn[translate("buttoncancel")] = function() { page.dialog('close'); }
+  btn[translate("buttoncancel")] = function() { 
+    $(".adblock-ui-stylesheet").remove();
+    page.dialog('close');
+  }
 
   var page = $("<div></div>").
     append(translate("clickthead")).
     append("<br/><br/>").
-    css({
-      'background': 'white',
-      'text-align': 'left',
-      'font-size': '12px',
-    }).
     dialog({
       zIndex:10000000, 
       position:[50, 50],
@@ -188,7 +171,7 @@ ClickWatcher.prototype._build_ui = function() {
       autoOpen: false,
       title: translate("blockanadtitle"),
       buttons: btn,
-      close: function() { 
+      close: function() {   
         $("body").off("click",
           ".adblock-killme-overlay, .adblock-highlight-node", click_catch_this);
         Overlay.removeAll();
