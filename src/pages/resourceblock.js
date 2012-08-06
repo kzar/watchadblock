@@ -33,6 +33,7 @@ function generateTable() {
       if (Filter.isWhitelistFilter(matchingfilter))
         type = {sort:2, name:'whitelisted'};
       else if (Filter.isSelectorFilter(i))
+        // TODO: report excluded hiding rules
         type = {sort:0, name:'hiding'};
       else
         type = {sort:1, name:'blocked'};

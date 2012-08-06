@@ -141,8 +141,11 @@ MyFilters.prototype.rebuild = function() {
   var hidingText = [];
   var whitelistText = [];
   var patternText = [];
+  var hidingExcludeText = [];
   for (var text in unique) {
-    if (Filter.isSelectorFilter(text))
+    if (Filter.isSelectorExcludeFilter(text))
+      hidingExcludeText.push(text);
+    else if (Filter.isSelectorFilter(text))
       hidingText.push(text);
     else if (Filter.isWhitelistFilter(text))
       whitelistText.push(text);
@@ -151,6 +154,7 @@ MyFilters.prototype.rebuild = function() {
   }
 
   this.hiding = FilterSet.fromTexts(hidingText);
+  this.hidingWhitelist = FilterSet.fromTexts(hidingExcludeText);
   this.blocking = new BlockingFilterSet(
     FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
   );

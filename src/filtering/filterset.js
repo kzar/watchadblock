@@ -67,8 +67,9 @@ FilterSet.prototype = {
   },
 
   // Get a list of all Filter objects that should be tested on the given
-  // domain, and return it with the given map function applied.
-  filtersFor: function(domain, mapper) {
+  // domain, and return it with the given map function applied. This function
+  // is for hiding rules only
+  filtersFor: function(domain, isWhitelistSelector) {
     var limited = this._viewFor(domain);
     var data = {};
     // data = set(limited.items)
@@ -78,17 +79,27 @@ FilterSet.prototype = {
         var filter = entry[i];
         data[filter.id] = filter;
       }
-    } 
+    }
     // data -= limited.exclude
     for (var subdomain in limited.exclude) {
       for (var filterId in limited.exclude[subdomain]) {
         delete data[filterId];
       }
     }
+    var selectorsToExclude = {};
+    if (!isWhitelistSelector) {
+      // selectorsToExclude = set(relevant elemhide exception selectors)
+      var excludedFilters = _myfilters.hidingWhitelist.filtersFor(domain, true);
+      for (k=0; k<excludedFilters.length; k++) {
+        selectorsToExclude[excludedFilters[k]] = true;
+      }
+    }
     var result = [];
     for (var k in data) {
-      result.push(mapper(data[k]));
+      if (!selectorsToExclude[data[k].selector])
+        result.push(data[k].selector);
     }
+    
     return result;
   },
 

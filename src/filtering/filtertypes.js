@@ -25,7 +25,14 @@ Filter.fromText = function(text) {
 }
 
 Filter.isSelectorFilter = function(text) {
-  return /\#\#/.test(text);
+  // This returns true for both hiding rules as hiding whitelist rules
+  // This means that you'll first have to check if something is an excluded rule
+  // before checking this, if the difference matters.
+  return /\#\@?\#./.test(text);
+}
+
+Filter.isSelectorExcludeFilter = function(text) {
+  return /\#\@\#./.test(text);
 }
 
 Filter.isWhitelistFilter = function(text) {
@@ -33,10 +40,10 @@ Filter.isWhitelistFilter = function(text) {
 }
 
 Filter.isComment = function(text) {
-  return text.length == 0 ||
-         text[0] == '!' ||
-         (text[0] == '[' && /^\[adblock/i.test(text)) ||
-         (text[0] == '(' && /^\(adblock/i.test(text));
+  return text.length === 0 ||
+         text[0] === '!' ||
+         (text[0] === '[' && /^\[adblock/i.test(text)) ||
+         (text[0] === '(' && /^\(adblock/i.test(text));
 }
 
 // Given a comma-separated list of domain includes and excludes, return
@@ -79,9 +86,9 @@ Filter._domainInfo = function(domainText, divider) {
 var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
 
-  var parts = text.split('##');
-  this._domains = Filter._domainInfo(parts[0], ',');
-  this.selector = parts[1];
+  var parts = text.match(/(^.*?)\#\@?\#(.+$)/);
+  this._domains = Filter._domainInfo(parts[1], ',');
+  this.selector = parts[2];
 };
 SelectorFilter.prototype = {
   // Inherit from Filter.

@@ -561,7 +561,7 @@
     // CSS-hiding rules.
     if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
       result.selectors = _myfilters.hiding.
-        filtersFor(options.domain, function(f) { return f.selector; });
+        filtersFor(options.domain);
     }
 
     return result;
