@@ -86,22 +86,21 @@ FilterSet.prototype = {
         delete data[filterId];
       }
     }
-    var result = [];
-    for (var k in data) {
-      result.push(data[k].selector);
-    }
-    
-    // Remove excluded selectors for this domain
+    var selectorsToExclude = {};
     if (!isWhitelistSelector) {
+      // selectorsToExclude = set(relevant elemhide exception selectors)
       var excludedFilters = _myfilters.hidingWhitelist.filtersFor(domain, true);
       for (k=0; k<excludedFilters.length; k++) {
-        var index = result.indexOf(excludedFilters[k]);
-        while (index !== -1) {
-          result.splice(index, 1);
-          index = result.indexOf(excludedFilters[k]);
-        }
+        selectorsToExclude[excludedFilters[k]] = true;
       }
     }
+    // result = list(set(f.selector for f in data) - selectorsToExclude)
+    var result = [];
+    for (var k in data) {
+      if (!(data[k].selector in selectorsToExclude))
+        result.push(data[k].selector);
+    }
+    
     return result;
   },
 
