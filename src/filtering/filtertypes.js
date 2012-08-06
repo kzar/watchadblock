@@ -209,18 +209,16 @@ PatternFilter._parseRule = function(text) {
   // Convert regexy stuff.
 
   // First, check if the rule itself is in regex form.  If so, we're done.
+  var matchcase = (result.options & FilterOptions.MATCHCASE) ? "" : "i";
   if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
-    result.rule = new RegExp(result.rule);
+    result.rule = new RegExp(result.rule, matchcase);
     return result;
   }
 
-  if (!(result.options & FilterOptions.MATCHCASE))
-    rule = rule.toLowerCase();
-
   var key = rule.match(/\w{5,}/);
   if (key)
-    result.key = new RegExp(key);
+    result.key = new RegExp(key, matchcase);
 
   // ***** -> *
   rule = rule.replace(/\*\*+/g, '*');
@@ -247,7 +245,7 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/^\.\*/, '');
   rule = rule.replace(/\.\*$/, '');
 
-  result.rule = new RegExp(rule);
+  result.rule = new RegExp(rule, matchcase);
   return result;
 }
 
@@ -262,7 +260,7 @@ PatternFilter.prototype = {
   //   elementType:ElementTypes the type of DOM element.
   //   isThirdParty: true if the request for url was from a page of a
   //       different origin
-  matches: function(url, loweredUrl, elementType, isThirdParty) {
+  matches: function(url, elementType, isThirdParty) {
     if (!(elementType & this._allowedElementTypes))
       return false;
 
@@ -274,9 +272,6 @@ PatternFilter.prototype = {
 
     if ((this._options & FilterOptions.FIRSTPARTY) && isThirdParty)
       return false;
-
-    if (!(this._options & FilterOptions.MATCHCASE))
-      url = loweredUrl;
 
     if (this._key && !this._key.test(url))
       return false;

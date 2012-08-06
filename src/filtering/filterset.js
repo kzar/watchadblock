@@ -95,13 +95,14 @@ FilterSet.prototype = {
   // Return the filter that matches this url+elementType on this frameDomain:
   // the filter in a relevant entry in this.items who is not also in a 
   // relevant entry in this.exclude.
-  matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
+  // isThirdParty: true if url and frameDomain have different origins.
+  matches: function(url, elementType, frameDomain, isThirdParty) {
     var limited = this._viewFor(frameDomain);
     for (var k in limited.items) {
       var entry = limited.items[k];
       for (var i = 0; i < entry.length; i++) {
         var filter = entry[i];
-        if (!filter.matches(url, loweredUrl, elementType, isThirdParty))
+        if (!filter.matches(url, elementType, isThirdParty))
           continue; // no match
         // Maybe filter shouldn't match because it is excluded on our domain?
         var excluded = false;
@@ -159,15 +160,13 @@ BlockingFilterSet.prototype = {
     if (key in this._matchCache)
       return this._matchCache[key];
 
-    var loweredUrl = url.toLowerCase();
-
-    var match = this.whitelist.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
+    var match = this.whitelist.matches(url, elementType, frameDomain, isThirdParty);
     if (match) {
       log(frameDomain, ": whitelist rule", match._rule, "exempts url", url);
       this._matchCache[key] = (returnFilter ? match._text : false);
       return this._matchCache[key];
     }
-    match = this.pattern.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
+    match = this.pattern.matches(url, elementType, frameDomain, isThirdParty);
     if (match) {
       log(frameDomain, ": matched", match._rule, "to url", url);
       this._matchCache[key] = (returnFilter ? match._text: true);

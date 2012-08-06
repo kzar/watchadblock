@@ -237,14 +237,13 @@
   // Returns: true if a filter was found and removed; false otherwise.
   try_to_unwhitelist = function(url) {
     url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
-    var loweredUrl = url.toLowerCase();
     var custom_filters = get_custom_filters_text().split('\n');
     for (var i = 0; i < custom_filters.length; i++) {
       var text = custom_filters[i];
       if (!Filter.isWhitelistFilter(text))
         continue;
       var filter = PatternFilter.fromText(text);
-      if (!filter.matches(url, loweredUrl, ElementTypes.document, false))
+      if (!filter.matches(url, ElementTypes.document, false))
         continue;
 
       custom_filters.splice(i, 1); // Remove this whitelist filter text
@@ -428,20 +427,15 @@
   //   url: the url of the page
   //   type: one out of ElementTypes, default ElementTypes.document,
   //         to check what the page is whitelisted for: hiding rules or everything
-  //   returnFilter: if the filter that whitelisted the page should be returned
-  page_is_whitelisted = function(url, type, returnFilter) {
+  page_is_whitelisted = function(url, type) {
     if (!url) { // Safari empty/bookmarks/top sites page
       return true;
     }
     url = url.replace(/\#.*$/, ''); // Remove anchors
-    var loweredUrl = url.toLowerCase();
     if (!type)
       type = ElementTypes.document;
     var whitelist = _myfilters.blocking.whitelist;
-    var match = whitelist.matches(url, loweredUrl, type, parseUri(url).hostname, false);
-    if (match)
-      return returnFilter ? match._text : true;
-    return false;
+    return whitelist.matches(url, type, parseUri(url).hostname, false);
   }
 
   if (!SAFARI) {
