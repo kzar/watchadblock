@@ -11,8 +11,11 @@ STATS = (function() {
     var manifest = JSON.parse(xhr.responseText);
     return manifest.version;
   })();
-  var osMatch = navigator.appVersion.match(/(CrOS|Windows|Mac|Linux)/i);
-  var os = osMatch ? osMatch[1] : "Unknown";
+  var match = navigator.appVersion.match(/(CrOS|Windows|Mac|Linux) ([^\)]*)\)/i);
+  var os = match ? match[1] : "Unknown";
+  var osVersion = match ? match[2] : "Unknown";
+  match = navigator.appVersion.match(/(?:Chrome|Version)\/([0-9.]*)/);
+  var browserVersion = match ? match[1] : "Unknown";
 
   var firstRun = (function() {
     // All of these have represented the user existing at one point or
@@ -27,15 +30,6 @@ STATS = (function() {
   // Give the user a userid if they don't have one yet.
   var userId = (function() {
     var time_suffix = (Date.now()) % 1e8; // 8 digits from end of timestamp
-
-    // TODO temp: convert user_id to userid, as user_id was not
-    // random enough.  6/14/2011, affected < 100k users.
-    if (storage_get("user_id")) { // oops, this value was broken; replace it.
-      var user_id = storage_get("user_id").substring(0, 8) + time_suffix;
-      storage_set("userid", user_id);
-      delete localStorage.user_id; // delete the old
-    }
-    // TODO end temp
 
     if (!storage_get("userid")) {
       var alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -61,18 +55,8 @@ STATS = (function() {
       f: SAFARI ? "S": "E",
       o: os
     };
-    // TODO temp
-    var installed_at = storage_get("installed_at");
-    if (installed_at)
-      data.installed_at = installed_at;
-    // end temp
 
-    $.post(stats_url, data, function(response) {
-      // TODO temp until most installed_at users have done this.  Installed
-      // 6/2011.  Delete the other installed_at-related TODO temps in here
-      // when you delete this.
-      delete localStorage.installed_at;
-    });
+    $.post(stats_url, data);
   };
 
   // Called just after we ping the server, to schedule our next ping.
@@ -128,6 +112,12 @@ STATS = (function() {
     firstRun: firstRun,
 
     userId: userId,
+    flavor: SAFARI ? "S": "E",
+    browser: SAFARI ? "Safari" : "Chrome",
+    browserVersion: browserVersion,
+    os: os,
+    osVersion: osVersion,
+    
 
     // Ping the server when necessary.
     startPinging: function() {
@@ -158,9 +148,13 @@ STATS = (function() {
       }
       var data = {
         cmd: "msg2",
-        u: userId,
         m: message,
-        v: version
+        u: userId,
+        v: version,
+        f: SAFARI ? "S": "E",
+        bv: browserVersion,
+        o: os,
+        ov: osVersion
       };
       $.ajax(stats_url, {
         type: "POST",
