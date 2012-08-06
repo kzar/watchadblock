@@ -94,10 +94,9 @@ FilterSet.prototype = {
         selectorsToExclude[excludedFilters[k]] = true;
       }
     }
-    // result = list(set(f.selector for f in data) - selectorsToExclude)
     var result = [];
     for (var k in data) {
-      if (!(data[k].selector in selectorsToExclude))
+      if (!selectorsToExclude[data[k].selector])
         result.push(data[k].selector);
     }
     
