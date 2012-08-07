@@ -1,3 +1,10 @@
+// For reverting: X32 was based off of 2.5.39's /pages/install/ .
+var X32G = (Math.random() > .5) ? 1 : 2;
+if (X32G == 2) {
+  $(".x32g").show();
+  $("#header").animate({"margin-bottom": 25, "margin-top": 5});
+}
+
 var installPageVersion = 2;
 BGcall("storage_set", "saw_install_page", installPageVersion);
 
@@ -17,8 +24,8 @@ $(".nav a").click(function() {
   var target = $("#" + this.name);
   // Give the payment card more room.
   if (this.name == 'last-step') {
-    marker.top -= 90;
-    $("#header").animate({"margin-bottom": 5, "margin-top": 5});
+    marker.top -= 50;
+    $("#header").animate({"margin-bottom": 5, "margin-top": 15});
   }
   target.css(marker);
   target.css(edge, $(document)[diameterFn]() + pad);
@@ -80,6 +87,8 @@ var start = Date.now();
       fadeOut(function() {
         $("#header").fadeIn();
         var startCard = (SAFARI ? "#start-safari": "#start-chrome");
+        if (X32G == 2)
+          startCard = "#last-step";
         $(startCard).css($("#wrapper").position()).fadeIn();
       });
   }, 200);
@@ -95,7 +104,7 @@ $("#start-chrome.card #showads").change(function() {
 
 var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
 var iframe = $("<iframe>", {
-  src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId,
+  src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId + "&x32g=" + X32G,
   width: 750, height: 450, 
   frameBorder: 0, scrolling: "no" 
 });
