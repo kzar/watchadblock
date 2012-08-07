@@ -128,6 +128,7 @@ MyFilters.prototype.rebuild = function() {
   if (get_settings().show_google_search_text_ads) {
     texts.push("@@||google.*/search?$elemhide"); // standard search
     texts.push("@@||www.google.*/|$elemhide");   // Google Instant
+    texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide"); // Instant
   }
 
   texts = texts.join('\n').split('\n');
