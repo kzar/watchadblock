@@ -11,21 +11,13 @@ STATS = (function() {
     var manifest = JSON.parse(xhr.responseText);
     return manifest.version;
   })();
-  var match = navigator.appVersion.match(/(CrOS|Windows|Mac|Linux) ([^\)]*)\)/i);
+  var match = navigator.appVersion.match(/(CrOS|Windows|Mac|Linux)\ ?([^\)]*)\)/i);
   var os = match ? match[1] : "Unknown";
   var osVersion = match ? match[2] : "Unknown";
-  match = navigator.appVersion.match(/(?:Chrome|Version)\/([0-9.]*)/);
+  match = navigator.appVersion.match(/(?:Chrome|Version)\/([0-9.]+)/);
   var browserVersion = match ? match[1] : "Unknown";
 
-  var firstRun = (function() {
-    // All of these have represented the user existing at one point or
-    // another.  Lest we accidentally show the install page to a user
-    // just because he took forever in updating, let's not remove any
-    // of these.
-    if (storage_get("userid") || storage_get("user_id") || storage_get("installed_at"))
-      return false;
-    return true;
-  })();
+  var firstRun = !storage_get("userid");
 
   // Give the user a userid if they don't have one yet.
   var userId = (function() {
