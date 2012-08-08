@@ -3,7 +3,7 @@
 STATS = (function() {
   var stats_url = "http://chromeadblock.com/api/stats2.php";
 
-  //Get some information about the version and os
+  //Get some information about the version, os, and browser
   var version = (function() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
@@ -15,6 +15,7 @@ STATS = (function() {
   var os = match ? match[1] : "Unknown";
   var osVersion = match ? match[2] : "Unknown";
   match = navigator.appVersion.match(/(?:Chrome|Version)\/([0-9.]+)/);
+  var flavor = SAFARI ? "S": "E";
   var browserVersion = match ? match[1] : "Unknown";
 
   var firstRun = !storage_get("userid");
@@ -44,7 +45,7 @@ STATS = (function() {
       cmd: "ping",
       u: userId,
       v: version,
-      f: SAFARI ? "S": "E",
+      f: flavor,
       o: os
     };
 
@@ -104,7 +105,8 @@ STATS = (function() {
     firstRun: firstRun,
 
     userId: userId,
-    flavor: SAFARI ? "S": "E",
+    version: version,
+    flavor: flavor,
     browser: SAFARI ? "Safari" : "Chrome",
     browserVersion: browserVersion,
     os: os,
@@ -143,7 +145,7 @@ STATS = (function() {
         m: message,
         u: userId,
         v: version,
-        f: SAFARI ? "S": "E",
+        f: flavor,
         bv: browserVersion,
         o: os,
         ov: osVersion
