@@ -145,6 +145,7 @@ STATS = (function() {
         m: message,
         u: userId,
         v: version,
+        fr: firstRun,
         f: flavor,
         bv: browserVersion,
         o: os,
