@@ -126,9 +126,12 @@ MyFilters.prototype.rebuild = function() {
 
   //Exclude google search results ads if the user has checked that option
   if (get_settings().show_google_search_text_ads) {
-    texts.push("@@||google.*/search?$elemhide"); // standard search
-    texts.push("@@||www.google.*/|$elemhide");   // Google Instant
-    texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide"); // Instant
+    // Standard search
+    texts.push("@@||google.*/search?$elemhide");
+    // Google Instant: go to google.com, type 'hotel' and don't press Enter
+    texts.push("@@||www.google.*/|$elemhide");
+    // Google Instant: open a Chrome tab, type 'hotel' and don't press Enter
+    texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide");
   }
 
   texts = texts.join('\n').split('\n');
