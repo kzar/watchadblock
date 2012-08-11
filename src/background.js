@@ -200,10 +200,14 @@
       }
 
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
-      if (blocked && elType === ElementTypes.subdocument)
+      if (blocked && elType === ElementTypes.image) {
+        // 1x1 px transparant image.
+        return {redirectUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAAnAAAAJwEqCZFPAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII="};
+      }
+      if (blocked && elType === ElementTypes.subdocument) {
         return { redirectUrl: "about:blank" };
-      else
-        return { cancel: blocked };
+      }
+      return { cancel: blocked };
     }
 
     // Popup blocking
