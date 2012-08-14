@@ -54,8 +54,8 @@
     <!--STEP 0-->
     <div style="padding-left:5px; margin-bottom:20px;" i18n="adreport2"></div>
 
-    <!--STEP 1-->
-    <div class="section" id="step1DIV" style="display:block;">
+    <!--STEP 1: update filters-->
+    <div class="section" id="step_update_filters_DIV" style="display:block;">
       <h2 i18n="updateyourlists"></h2>
       <ol>
         <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters"></li>
@@ -63,21 +63,21 @@
       </ol>
       <input type="button" value="Update my filters!" id="UpdateFilters" />
       <span i18n="adstillappear" class="afterFilterUpdate"></span><br/>
-      <div id="step1" class="form afterFilterUpdate">
-        <input type="radio" id="step1_yes" name="step1" disabled="disabled" />
-        <label for="step1_yes" i18n="yes"></label>
-        <input type="radio" id="step1_no" name="step1" disabled="disabled" />
-        <label for="step1_no" i18n="no"></label>
+      <div id="step_update_filters" class="form afterFilterUpdate">
+        <input type="radio" id="step_update_filters_yes" name="step_update_filters" disabled="disabled" />
+        <label for="step_update_filters_yes" i18n="yes"></label>
+        <input type="radio" id="step_update_filters_no" name="step_update_filters" disabled="disabled" />
+        <label for="step_update_filters_no" i18n="no"></label>
       </div>
     </div>
 
 
-    <!--STEP 2-->
-    <div class="section" id="step2DIV">
+    <!--STEP 2: language-->
+    <div class="section" id="step_language_DIV">
       <h2 i18n="correctfilters"></h2>
       <span i18n="pagelanguagecheck"></span>
-      <div id="step2" class="form">
-        <select id="step2_lang">
+      <div id="step_language" class="form">
+        <select id="step_language_lang">
           <option disabled="disabled" selected="selected"></option>
           <option value="easylist;http://forums.lanik.us/" i18n="lang_english"></option>
           <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org" i18n="lang_bulgarian"></option>
@@ -104,9 +104,23 @@
       </div>
     </div>
 
+    
+    <!--STEP 3: malware-->
+    <div class="section" id="step_malware_DIV">
+      <h2 i18n="oneverysitetitle"></h2>
+      <span i18n="adsoneverysite"></span>
+      <div class="form" id="step_malware">
+        <input type="radio" id="step_malware_yes" name="step_malware"/>
+        <label for="step_malware_yes" i18n="yes"></label>
+        <input type="radio" id="step_malware_no" name="step_malware" />
+        <label for="step_malware_no" i18n="no"></label>
+        <input type="radio" id="step_malware_wontcheck" name="step_malware" />
+        <label for="step_malware_wontcheck" i18n="refusetocheck"></label>
+      </div>
+    </div>
 
-    <!--STEP 3-->
-    <div class="section" id="step3DIV">
+    <!--STEP 4: also in Firefox-->
+    <div class="section" id="step_firefox_DIV">
       <h2 id="checkinfirefox"></h2>
       <ol>
         <li id="checkinfirefox1"></li>
@@ -115,26 +129,26 @@
         <li i18n="checkinfirefox_4"></li>
       </ol>
       <span i18n="checkinfirefox_5"></span>
-      <div class="form" id="step3">
-        <input type="radio" id="step3_yes" name="step3"/>
-        <label for="step3_yes" i18n="yes"></label>
-        <input type="radio" id="step3_no" name="step3" />
-        <label for="step3_no" i18n="no"></label>
-        <input type="radio" id="step3_wontcheck" name="step3" />
-        <label for="step3_wontcheck" i18n="refusetocheck"></label>
+      <div class="form" id="step_firefox">
+        <input type="radio" id="step_firefox_yes" name="step_firefox"/>
+        <label for="step_firefox_yes" i18n="yes"></label>
+        <input type="radio" id="step_firefox_no" name="step_firefox" />
+        <label for="step_firefox_no" i18n="no"></label>
+        <input type="radio" id="step_firefox_wontcheck" name="step_firefox" />
+        <label for="step_firefox_wontcheck" i18n="refusetocheck"></label>
       </div>
     </div>
 
 
-    <!--STEP 4-->
-    <div class="section" id="step4DIV">
+    <!--STEP 5: video/flash ads-->
+    <div class="section" id="step_flash_DIV">
       <h2 i18n="flashads"></h2>
       <span i18n="cantblockflashwarning"></span>
-      <div class="form" id="step4">
-        <input type="radio" id="step4_yes" name="step4"/>
-        <label for="step4_yes" i18n="yes"></label>
-        <input type="radio" id="step4_no" name="step4" />
-        <label for="step4_no" i18n="no"></label>
+      <div class="form" id="step_flash">
+        <input type="radio" id="step_flash_yes" name="step_flash"/>
+        <label for="step_flash_yes" i18n="yes"></label>
+        <input type="radio" id="step_flash_no" name="step_flash" />
+        <label for="step_flash_no" i18n="no"></label>
       </div>
     </div>
 
