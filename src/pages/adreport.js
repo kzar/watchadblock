@@ -2,7 +2,7 @@ $(function() {
   localizePage();
   
   // Sort the languages list
-  var languageOptions = $("#step2_lang option");
+  var languageOptions = $("#step_language_lang option");
   languageOptions.sort(function(a,b) {
     if (!a.text) return -1; if (!b.text) return 1; // First one is empty
     if (!a.value) return 1; if (!b.value) return -1; // 'Other' at the end
@@ -10,7 +10,7 @@ $(function() {
     if (b.getAttribute("i18n") == "lang_english") return 1;
     return (a.text > b.text) ? 1 : -1;
   });
-  $("#step2_lang").empty().append(languageOptions);
+  $("#step_language_lang").empty().append(languageOptions);
 });
 
 //fetching the options...
@@ -107,13 +107,13 @@ $("#UpdateFilters").click(function() {
   });
 });
 //if the user clicks a radio button
-$("#step1_no").click(function() {
-  $("#step1").html("<span class='answer'>" + translate("no") + "</span>");
+$("#step_update_filters_no").click(function() {
+  $("#step_update_filters").html("<span class='answer'>" + translate("no") + "</span>");
   $("#whattodo").text(translate("adalreadyblocked"));
 });
-$("#step1_yes").click(function() {
-  $("#step1").html("<span class='answer'>" + translate("yes") + "</span>");
-  $("#step2DIV").css("display", "block");
+$("#step_update_filters_yes").click(function() {
+  $("#step_update_filters").html("<span class='answer'>" + translate("yes") + "</span>");
+  $("#step_language_DIV").css("display", "block");
 });
 
 
@@ -122,9 +122,9 @@ $("#step1_yes").click(function() {
 
 //if the user clicks an item
 var contact = "";
-$("#step2_lang").change(function() {
-  var selected = $("#step2_lang option:selected");
-  $("#step2").html("<span class='answer'>"+ selected.text() +"</span>");
+$("#step_language_lang").change(function() {
+  var selected = $("#step_language_lang option:selected");
+  $("#step_language").html("<span class='answer'>"+ selected.text() +"</span>");
   if (selected.text() == translate("other")) {
     $("#whattodo").html(translate("nodefaultfilter1",
                                   ["<a href='http://adblockplus.org/en/subscriptions'>", "</a>"]));
@@ -139,7 +139,13 @@ $("#step2_lang").change(function() {
     }
   }
   contact = required_lists[required_lists.length-1];
-  $("#step3DIV").css("display", "block");
+  if (sessionStorage.getItem("errorOccurred")) {
+    // Skip the malware step if an error has occurred. We don't want to scare
+    // users if we have a bug in our code
+    $("#step_firefox_DIV").css("display", "block");
+  } else {
+    $("#step_malware_DIV").css("display", "block");
+  }
 
   var hideChromeInChrome = (SAFARI?['','']:['<span style="display:none;">', '</span>']);
   $("#checkinfirefox1").html(translate("checkinfirefox_1", hideChromeInChrome));
@@ -148,50 +154,62 @@ $("#step2_lang").change(function() {
 });
 
 
-// STEP 3: also in Firefox
+// STEP 3: malware
+//if the user clicks a radio button
+$("#step_malware_no, #step_malware_wontcheck").click(function() {
+  $("#step_malware").html("<span class='answer'>" + $(this).next("label").text() + "</span>");
+  $("#step_firefox_DIV").css("display", "block");
+});
+$("#step_malware_yes").click(function() {
+  $("#step_malware").html("<span class='answer'>" + translate("yes") + "</span>");
+  $("#whattodo").text(translate("maybemalware"));
+});
+
+
+// STEP 4: also in Firefox
 
 //If the user clicks a radio button
-$("#step3_yes").click(function() {
-  $("#step3").html("<span class='answer'>" + translate("yes") + "</span>");
+$("#step_firefox_yes").click(function() {
+  $("#step_firefox").html("<span class='answer'>" + translate("yes") + "</span>");
   if (/^mailto\:/.test(contact))
     contact = contact.replace(" at ", "@");
   var reportLink = "<a href='" + contact + "'>" + contact.replace(/^mailto\:/, '') + "</a>";
   $("#whattodo").html(translate("reportfilterlistproblem", [reportLink]));
   $("#privacy").show();
 });
-$("#step3_no").click(function() {
+$("#step_firefox_no").click(function() {
   if (SAFARI) {
     // Safari can't block video ads
-    $("#step4DIV").css("display", "block");
+    $("#step_flash_DIV").css("display", "block");
   } else {
     $("#whattodo").html(translate("reporttous2"));
     $("a", "#whattodo").attr("href", generateReportURL());
     $("#privacy").show();
   }
-  $("#step3").html("<span class='answer'>" + translate("no") + "</span>");
+  $("#step_firefox").html("<span class='answer'>" + translate("no") + "</span>");
 });
-$("#step3_wontcheck").click(function() {
+$("#step_firefox_wontcheck").click(function() {
   if (!SAFARI) {
     // Chrome blocking is good enough to assume the answer is 'yes'
-    $("#step3_yes").click();
+    $("#step_firefox_yes").click();
   } else {
     // Safari can't do this.
     $("#whattodo").text(translate("fixityourself"));
   }
-  $("#step3").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
+  $("#step_firefox").html("<span class='answer'>" + translate("refusetocheck") + "</span>");
 });
 
 
 
-// STEP 4: video/flash ad (Safari-only)
+// STEP 5: video/flash ad (Safari-only)
 
 //If the user clicks a radio button
-$("#step4_yes").click(function() {
-  $("#step4").html("<span class='answer'>" + translate("yes") + "</span>");
+$("#step_flash_yes").click(function() {
+  $("#step_flash").html("<span class='answer'>" + translate("yes") + "</span>");
   $("#whattodo").text(translate("cantblockflash"));
 });
-$("#step4_no").click(function() {
-  $("#step4").html("<span class='answer'>" + translate("no") + "</span>");
+$("#step_flash_no").click(function() {
+  $("#step_flash").html("<span class='answer'>" + translate("no") + "</span>");
   $("#whattodo").html(translate("reporttous2"));
   $("a", "#whattodo").attr("href", generateReportURL());
   $("#privacy").show();

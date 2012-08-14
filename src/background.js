@@ -5,6 +5,7 @@
              (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
              ":" + (e.lineno||"anywhere");
     STATS.msg(str);
+    sessionStorage.setItem("errorOccurred", true);
   })
   
   // OPTIONAL SETTINGS
