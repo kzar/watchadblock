@@ -9,6 +9,7 @@
   <script src="/port.js" type="text/javascript"></script>
   <script src="/functions.js" type="text/javascript"></script>
   <script src="/filtering/filteroptions.js" type="text/javascript"></script>
+  <script src="/filtering/domainset.js" type="text/javascript"></script>
   <script src="/adblock_start_common.js" type="text/javascript"></script>
   <script src="/adblock_start_chrome.js" type="text/javascript"></script>
   
@@ -54,7 +55,43 @@
       deepEqual(parseUri.parseSearch("?hello=world&&ext=adblock"), {"ext": "adblock", "hello": "world"});
       deepEqual(parseUri.parseSearch("?hello&&&&ext=adblock"), {"ext": "adblock", "hello": ""});
     });
-    
+
+    module("DomainSet: merging hiding filters with hiding exclusion filters");
+    test("subtract()", function() {
+
+      var _normalize = function(data) {
+        var result = {};
+        for (var d in data)
+          result[d === 'ALL' ? '': d + '.com'] = data[d];
+        return result;
+      }
+      // Does DomainSet(data1).subtract(DomainSet(data2)) work as expected?
+      var _test = function(data1, data2, result) {
+        var set1 = new DomainSet(_normalize(data1));
+        set1.subtract( new DomainSet(_normalize(data2)) );
+        deepEqual(set1._has, _normalize(result), JSON.stringify(data1) + ' minus ' + JSON.stringify(data2));
+      }
+
+      var T = true, F = false;
+      _test({ ALL: T, }, { ALL: T }, { ALL: F });
+      _test({ ALL: T, }, { ALL: F, 'a': T }, { ALL: T, 'a': F });
+      _test({ ALL: F, 'a': T }, { ALL: F, 'a': T }, { ALL: F });
+      _test({ ALL: F, 'a': T }, { ALL: F, 'b': T }, { ALL: F, 'a': T });
+      _test({ ALL: F, 'a': T }, { ALL: F, 's.a': T }, { ALL: F, 'a': T, 's.a': F});
+      _test({ ALL: F, 'a': T, 'c.b.a': F }, { ALL: F, 'b.a': T }, { ALL: F, 'a': T, 'b.a': F });
+      _test({ ALL: F, 'a': T, 'd.c.b.a': F }, { ALL: F, 'b.a': T, 'c.b.a': F }, { ALL: F, 'a': T, 'b.a': F, 'c.b.a': T, 'd.c.b.a': F });
+      _test({ ALL: T, 'b.a': F }, { ALL: F, 'd': T }, { ALL: T, 'd': F, 'b.a': F });
+      _test({ ALL: F, 'b.a': T }, { ALL: T, 'd': F }, { ALL: F });
+      _test({ ALL: T, 'b.a': F }, { ALL: T, 'a': F }, { ALL: F, 'a': T, 'b.a': F });
+      _test({ ALL: F, 'b.a': T, 'd.c.b.a': F }, { ALL: F, 'a': T, 'c.b.a': F }, {ALL: F, 'c.b.a': T, 'd.c.b.a': F });
+      _test({ ALL: F, 'c.b.a': T, 'd.c.b.a': F}, { ALL: F, 'a': T, 'd.a': F }, { ALL: F });
+      _test({ ALL: F, 'b.a': T, 'c.b.a': F }, { ALL: F, 'd': T }, { ALL: F, 'b.a': T, 'c.b.a': F });
+      _test({ ALL: T, 'b.a': F }, { ALL: F, 'a': T, 'd.a': F }, { ALL: T, 'a': F, 'd.a': T });
+
+    });
+
+
+
     if (/Chrome/.test(navigator.userAgent)) {
       // CHROME ONLY
       (function() {
