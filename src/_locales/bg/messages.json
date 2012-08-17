@@ -31,6 +31,10 @@
     "message": "Току-що сте открили реклама в страница? Добре, ще ви съдействаме да намерите правилното място, за да я докладвате!<br/> Запомнете: докладването на реклами е доброволно. Ако не желаете да го правите можете да затворите този прозорец и да я блокирате самостоятелно, като добавите филтър за нея към преградка „Нагласяване“ в страницата с настройки!",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
+  "adsoneverysite": {
+    "message": "Виждате реклами в повечето посещавани сайтове (началната страница, служебния сайт и т.н.), но ако ги посетите от чужд компютър те са без реклами?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
   "adstillappear": {
     "message": "Продължавате ли да я виждате?",
     "description": "question on ad reporting page"
@@ -300,6 +304,10 @@
   "close": {
     "message": "Затвори",
     "description": "resourceblocking page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Можете вече да затворете преградката и да сърфирате без реклами. Забавлявайте се!",
+    "description": "Install page string"
   },
   "correctfilters": {
     "message": "Правилни филтри",
@@ -679,6 +687,10 @@
     "message": "Да редактирате филтрите наръка:",
     "description": "Subtitle on the third tab"
   },
+  "maybemalware": {
+    "message": "Не всяка страница в интернет съдържа реклами. Възможно е фактът, че виждате толкова много да означава, че в компютъра ви има нежелан софтуер. Опитайте да забраните всички разширения едно по едно и проверете дали тази неизправност ще изчезне. Ако продължи, опитайте да пуснете (пълно) сканиране на системата с обновен антивирусен софутуер, защото е вероятно това да се дължи на зловредна програма.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
   "modifydomain": {
     "message": "Сайт:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
@@ -747,6 +759,10 @@
     "message": "Добре, и сега какво?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   },
+  "oneverysitetitle": {
+    "message": "Гъмжи от реклами!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
   "only_block_ads_on_these_sites": {
     "message": "Блокиране на реклами само за сайтовете:",
     "description": "Label for textbox where user enters a list of sites on Customize tab"
@@ -758,6 +774,62 @@
   "onlyresourcetypes": {
     "message": "Филтърът ще се приложи към ресурси от следния вид:",
     "description": "resourceblocking page string"
+  },
+  "opera_120_install": {
+    "message": "Във версиите на Opera до 12.50 някои реклами могат да не бъдат блокирани, тъй като е невъзможно да бъде направен разбор на всички правила. Ограничението ще отпадне с обновяване на Opera до версия 12.50 и същите реклами вече ще се блокират правилно.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Във версиите на Opera до 12.50 някои от настройките са в сиво, защото не се поддържат.",
+    "description": "Opera < 12.50 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Увеличете стойността на\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Харесва ви разширението? Ако е така, помислете за дарение от страницата с настройки!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Ако харесвате разширението, помислете за дарение чрез страницата с настройки.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Разрешено в $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Домейн, за който AdBlock не блокира нищо:",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "За допълнителни настройки щракнете бутона в лентата или отворете настройките чрез Opera &rArr; Разширения &rArr; Организиране на разширенията &rArr; икона гаечен ключ &rArr; Предпочитания",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Показване на реклами в домейна",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Можете да разрешите бутона повторно от настройките на разширението",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Показвай бутон в лентата",
+    "description": "Opera option to show/hide the button"
   },
   "options": {
     "message": "Настройки",
@@ -1016,6 +1088,10 @@
   "that_was_easy": {
     "message": "Беше лесно, нали?",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "thats_it": {
+    "message": "Това беше!",
+    "description": "Install page string"
   },
   "thirdparty": {
     "message": "Трета страна",
