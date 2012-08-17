@@ -31,6 +31,10 @@
     "message": "Demek bu sayfada bir reklam buldunuz.. Bunu doğru yere bildirmenize yardımcı olacağım<br/> Unutmayın: reklam bildirmek isteğe bağlıdır. Eğer bildirmek istemiyorsanız, bu pencereyi kapatabilir ve Ayarlar bölümünden Özelleştir seçeneğini kullanarak filtreyi sadece kendiniz için ekleyebilirsiniz.",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
+  "adsoneverysite": {
+    "message": "Ziyaret ettiğiniz çoğu sitede (başlangıç sayfanız, işvereninizin internet sitesi gibi) reklamlar görüp, aynı siteleri başka bir bilgisayardan ziyaret ettiğiniz zaman bu reklamları göremiyor musunuz?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
   "adstillappear": {
     "message": "Reklam hala görünüyor mu?",
     "description": "question on ad reporting page"
@@ -346,7 +350,7 @@
     "description": "Menu entry to open the whitelist wizard."
   },
   "dont_run_on_this_page": {
-    "message": "Bu sayfada çalışma",
+    "message": "Bu sayfada Adblock'u durdur",
     "description": "Menu entry to whitelist a page"
   },
   "enable": {
@@ -540,7 +544,7 @@
     "description": "Text of link to a page with fixes to common problems and a list of known issues"
   },
   "hide_this_button": {
-    "message": "Bu butonu sakla",
+    "message": "Bu düğmeyi gizle",
     "description": "Toolbar button menu entry to hide the AdBlock button"
   },
   "how_to_use_adblock": {
@@ -564,7 +568,7 @@
     "description": "Install page: shown while progress bar loads"
   },
   "invalidListUrl": {
-    "message": "Geçersiz filtre listesi URL'si. Bu link silinecek.",
+    "message": "Geçersiz filtre listesi linki. Bu link silinecek.",
     "description": "Message when you subscribe to a non-list URL"
   },
   "labelshow": {
@@ -679,6 +683,10 @@
     "message": "Filtrelerinizi manuel olarak düzenleyin:",
     "description": "Subtitle on the third tab"
   },
+  "maybemalware": {
+    "message": "İnternetteki tüm siteler reklam içermez. Bu kadar çok reklamla karşılaşıyor olmanız, bilgisayarınızda, istenmeyen zararlı bir program olduğu anlamına gelebilir. Tüm eklentileri teker teker kapatıp, sorunun devam edip etmediğine bakın. Eğer sorun devam ediyorsa, bir zararlı yazılımdan kaynaklanma ihtimali olduğundan, güncel bir antivirüs yazılımıyla tarama yapmanız önerilir.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
   "modifydomain": {
     "message": "Site:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
@@ -746,6 +754,10 @@
   "ok_now_what": {
     "message": "Tamam, peki ya şimdi?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
+  },
+  "oneverysitetitle": {
+    "message": "Reklamlar her yerde!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
   },
   "only_block_ads_on_these_sites": {
     "message": "Sadece bu sitelerdeki reklamları engelle:",
@@ -1188,7 +1200,7 @@
     "description": "instruction on ad report page"
   },
   "warning_overrules_filters": {
-    "message": "Dikkat: bu sitelerin dışında tüm sitelerde reklamları görebileceksiniz!<br> Kullandığınız filtreler bu sitelerde geçersiz olacak.",
+    "message": "Dikkat: bu sitelerin dışında tüm sitelerde reklamları görebileceksiniz!<br> Kullandığınız filtreler bu siteler dışında geçersiz olacak.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "whitelistertitle2": {
@@ -1214,5 +1226,37 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Ne kadar çok filtre listesi kullanırsanız, Adblock o kadar yavaşlar. Çok fazla liste kullanmak bazı sitelerde tarayıcınızın çökmesine bile sebep olabilir. Bu listeyi yine de eklemek istiyorsanız Tamam'a basın.",
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  },
+  "opera_linkunblock": {
+    "message": "Bir alan adındaki reklamları göster",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Araç çubuğu düğmesini göster",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_for_more_options": {
+    "message": "Daha fazla seçenek için, araç çubuğundaki düğmeye tıklayın ya da Opera &rArr; Eklentiler &rArr; Eklentileri yönet &rArr; anahtar tuşu &rArr; Tercihler'den tercihleri açın.",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "Bu kadar!",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Bu sekmeyi kapatıp reklamsız gezintinize başlayabilirsiniz. İyi eğlenceler!",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "Eğer bu eklentiyi gerçekten sevdiyseniz, lütfen seçenekler sayfasından bağış yapmayı düşünün.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_120_install": {
+    "message": "12.50'den önceki Opera sürümlerinde, bazı reklamlar, bütün kurallar o sürümlerde doğru çalıştırılamadığından engellenemeyebilir. Bu sorun Opera sürümü 12.50'ye güncellendiğinde düzelecektir. 12.50'den itibaren tüm reklamlar doğru bir şekilde engellenecektir.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Opera 12.50'den önceki sürümlerde bazı ayarlar gri görünüyor, çünkü önceki sürümlerde desteklenmiyor.",
+    "description": "Opera < 12.50 warning above options page"
   }
 }
