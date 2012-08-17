@@ -1111,6 +1111,18 @@
       }
     }
   },
+  "i_came_here_looking_for_catblock": {
+    "message": "Ik kwam hier voor <b>CatBlock</b>! Vervang advertenties door afbeeldingen van katten!",
+    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
+  },
+  "a_note_to_you_catblock_lovers": {
+    "message": "Opmerking voor CatBlock liefhebbers:",
+    "description": "Message header for a note directed to users who want to know how to get CatBlock."
+  },
+  "catblock_was_only_in_adblock_for_a_few_days": {
+    "message": "CatBlock was alleen toegevoegd als een 1 aprilgrap. Als je nog steeds CatBlock wilt gebruiken, <a>lees dit</a>.",
+    "description": "Message shown to users expressing intent to get CatBlock after April 4th.  It links them to instructions for getting the standalone version of CatBlock."
+  },
   "ok_now_what": {
     "message": "OK, en nu? ",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
@@ -1222,5 +1234,69 @@
   "maybemalware": {
     "message": "Niet alle pagina's op het internet bevatten advertenties. Het feit dat je er zo veel ziet, kan betekenen dat er ongewenste software op je computer aanwezig is. Probeer alle extensies een voor een uit te schakelen en kijk of het probleem verdwijnt. Indien dat niet zo is, probeer dan een (volledige) systeemscan uit te voeren met een up-to-date antivirusprogramma, want dit kan mogelijk door malware veroorzaakt worden.",
     "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "opera_reenable_button": {
+    "message": "Je kunt de knop weer inschakelen op de optiespagina",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_linkunblock": {
+    "message": "Toon advertenties op een domein:",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_excludedomainorurl": {
+    "message": "Het domein waar AdBlock niets moet blokkeren",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Toon de knop in de werkbalk",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Je kunt de waarde van de volgende instelling verhogen:\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_for_more_options": {
+    "message": "Voor meer opties kun je op de werkbalkknop klikken of open de optiespagina via Opera &rArr; Extensies &rArr; Extensies Beheren &rArr; gereedschap icoontje &rArr; Voorkeuren",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "Dat is alles!",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Je kunt deze tab sluiten en beginnen met browsen. Veel plezier!",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "Als je deze extensie prettig vindt, overweeg dan aub te doneren via de optiespagina.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_donations_button": {
+    "message": "Vindt je de extensie prettig? Overweeg dan aub te doneren via de optiespagina!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_enabledin": {
+    "message": "Ingeschakeld in $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_120_install": {
+    "message": "In Opera versies voor Opera 12.50, enkele advertenties kunnen niet geblokkeerd worden omdat niet alle filters verwerkt kunnen worden in deze versie. Dit zal opgelost zijn wanneer Opera naar versie 12.50 bijwerkt. Vanaf dat moment zullen alle advertenties geblokkeerd worden.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "In Opera versies voor Opera 12.50 zijn enkele opties uitgeschakeld, omdat die in deze versies niet ondersteund kunnen worden.",
+    "description": "Opera < 12.50 warning above options page"
   }
 }
