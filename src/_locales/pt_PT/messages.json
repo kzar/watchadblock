@@ -305,6 +305,10 @@
     "message": "Fechar",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Pode fechar este separador e começar a navegar sem anúncios. Diverte-te!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Corrigir os filtros",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -771,6 +775,62 @@
     "message": "Este filtro aplica-se aos recursos desses tipos:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "Nas versões anteriores à do Opera 12.50, alguns anúncios não podem ser bloqueados pois não é possível analisar todas as regras nessas versões. Isto vai ser corrigido quando o Opera actualizar para a versão 12.50. A partir desse momento, todos os anúncios vão ser correctamente bloqueados.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Versões anteriores à do Opera 12.50, algumas opções estão bloqueadas, porque não são suportadas nessas versões.",
+    "description": "Opera < 12.50 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Também pode aumentar o valor da\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Gosta desta extensão? Se sim, por favor considere doar via a página das opções!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Se gosta desta extensão, por favor considere doar via a página das opções.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Activar em $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Domínio onde o AdBlock não deve bloquear nada",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "Para mais opções, clique no botão da toolbar ou entre nas preferencias via Opera &rArr; Extensões &rArr; Gerir Extensões &rArr; icone da ferramenta &rArr; Preferências",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Mostrar anúncios num domínio",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Pode re-activar o botão nas preferências desta extensão",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Mostrar o botão na toolbar",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
     "message": "Opções",
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
@@ -1028,6 +1088,10 @@
   "that_was_easy": {
     "message": "Isso foi fácil",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "thats_it": {
+    "message": "Tudo pronto!",
+    "description": "Install page string"
   },
   "thirdparty": {
     "message": "Terceiros",
