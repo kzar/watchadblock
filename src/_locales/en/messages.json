@@ -1234,5 +1234,61 @@
   "maybemalware": {
     "message": "Not all pages on the internet contain advertisements. The fact that you see so many may indicate that your computer contains some unwanted software. Try disabling all extensions one by one and see if the problem disappears. If not, try running a (full) system scan with up-to-date antivirus software, as this could possibly be caused by malware.",
     "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "opera_reenable_button": {
+    "message": "You can re-enable the button in the preferences of this extension",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_linkunblock": {
+    "message": "Show ads on a domain",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_excludedomainorurl": {
+    "message": "The domain where AdBlock shouldn't block anything",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Show the toolbar button",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_can_also_change_setting": {
+    "message": "You can also increase the value of\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_for_more_options": {
+    "message": "For more options, you can click the toolbar button or open the preferences via Opera &rArr; Extensions &rArr; Manage Extensions &rArr; wrench icon &rArr; Preferences",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "That's it!",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "You can close this tab and begin browsing ad-free. Have fun!",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "If you really like this extension, please consider donating via the options page.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_donations_button": {
+    "message": " Like this extension? If so, please consider donating in the options page!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_enabledin": {
+    "message": "Enabled in $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
   }
 }
