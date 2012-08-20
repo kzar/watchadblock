@@ -69,6 +69,10 @@ safari.application.addEventListener("command", function(event) {
   } else if (command === "report-ad") {
     var url = "pages/adreport.html?url=" + escape(browserWindow.activeTab.url);
     openTab(url, true, browserWindow);
+  } else if (command === "undo-last-block") {
+    remove_last_custom_filter();
+    var tab = browserWindow.activeTab;
+    tab.url = tab.url;
   } else if (command in {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
     browserWindow.activeTab.page.dispatchMessage(command);
   }
@@ -190,6 +194,10 @@ if (!LEGACY_SAFARI) {
         var canBlock = !page_is_unblockable(url);
         var whitelisted = page_is_whitelisted(url);
 
+        if (!paused && canBlock && has_last_custom_filter()) {
+          appendMenuItem("undo-last-block", translate("undo_last_block"));
+          menu.appendSeparator(itemIdentifier("separator0"));
+        }
         appendMenuItem("toggle-pause", translate("pause_adblock"), paused);
         if (!paused && canBlock) {
           if (whitelisted) {
@@ -230,6 +238,9 @@ safari.application.addEventListener("contextmenu", function(event) {
 
   var url = event.target.url;
   if (!page_is_unblockable(url) && !page_is_whitelisted(url)) {
+    if (has_last_custom_filter()) {
+      event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
+    }
     event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
     event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
   }

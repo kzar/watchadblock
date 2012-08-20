@@ -296,6 +296,16 @@
     set_custom_filters_text(text.trim());
   }
 
+  has_last_custom_filter = function() {
+    return !!sessionStorage.getItem('last_custom_filter');
+  }
+
+  remove_last_custom_filter = function() {
+    if (has_last_custom_filter())
+      remove_custom_filter(sessionStorage.getItem('last_custom_filter'));
+    sessionStorage.removeItem('last_custom_filter');
+  }
+
   get_settings = function() {
     return _settings.get_all();
   }
@@ -464,6 +474,13 @@
           });
         }
 
+        if (has_last_custom_filter()) {
+          addMenu(translate("undo_last_block"), function(tab) {
+            remove_last_custom_filter();
+            chrome.tabs.update(tab.id, {url: tab.url});
+          });
+        }
+
         addMenu(translate("block_this_ad"), function(tab, clickdata) {
           emit_page_broadcast(
             {fn:'top_open_blacklist_ui', options:{info: clickdata}},
@@ -512,6 +529,8 @@
     var custom_filters = get_custom_filters_text();
     try {
       if (FilterNormalizer.normalizeLine(filter)) {
+        if (Filter.isSelectorFilter(filter))
+          sessionStorage.setItem('last_custom_filter', filter);
         custom_filters = custom_filters + '\n' + filter;
         set_custom_filters_text(custom_filters);
         return null;

@@ -20,6 +20,9 @@ function customize_for_this_tab() {
             "separator0", "div_pause_adblock", "separator1", 
             "div_options", "div_help_hide_start"]);
     } else {
+      if (BG.has_last_custom_filter()) {
+        show(["div_undo", "separator0"]);
+      };
       show(["div_pause_adblock", "div_blacklist", "div_whitelist", 
             "div_whitelist_page", "div_show_resourcelist", 
             "div_report_an_ad", "separator1", "div_options", 
@@ -93,6 +96,14 @@ $(function() {
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
     window.close();
+  });
+
+  $("#div_undo").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      BG.remove_last_custom_filter();
+      chrome.tabs.update(info.tab.id, {url: info.tab.url});
+      window.close();
+    });
   });
 
   $("#div_pause_adblock").click(function() {
