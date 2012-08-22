@@ -296,12 +296,19 @@
     set_custom_filters_text(text.trim());
   }
 
-  has_last_custom_filter = function() {
-    return !!sessionStorage.getItem('last_custom_filter');
+  // Returns true if there's a recently created custom selector filter.  If
+  // |url| is truthy, the filter must have been created on |url|'s domain.
+  has_last_custom_filter = function(url) {
+    var filter = sessionStorage.getItem('last_custom_filter');
+    if (!filter)
+      return false;
+    if (!url)
+      return true;
+    return filter.split("##")[0] === parseUri(url).hostname;
   }
 
   remove_last_custom_filter = function() {
-    if (has_last_custom_filter())
+    if (sessionStorage.getItem('last_custom_filter'))
       remove_custom_filter(sessionStorage.getItem('last_custom_filter'));
     sessionStorage.removeItem('last_custom_filter');
   }
@@ -474,7 +481,7 @@
           });
         }
 
-        if (has_last_custom_filter()) {
+        if (has_last_custom_filter(info.tab.url)) {
           addMenu(translate("undo_last_block"), function(tab) {
             remove_last_custom_filter();
             chrome.tabs.update(tab.id, {url: tab.url});
