@@ -22,7 +22,6 @@ var run_bandaids = function() {
         var id = styles[i].innerText.match(re);
         if(id) {
           styles[i].innerText = '#' + id[1] + ' { display: none }';
-          return;
         }
       }
     },
