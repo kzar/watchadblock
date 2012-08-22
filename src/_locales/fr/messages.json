@@ -1219,5 +1219,81 @@
   "custompattern": {
     "message": "Personnalisé :",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
+  "oneverysitetitle": {
+    "message": "Des pubs partout !",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
+  "adsoneverysite": {
+    "message": "Vous voyez des publicités sur la plupart des sites que vous visitez (votre page d'accueil, le site web de votre employeur, etc...), mais lorsque vous visitez ces mêmes sites sur l'ordinateur d'un ami, les publicités n'y sont pas ?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
+  "maybemalware": {
+    "message": "Pas toutes les pages Internet contiennent des publicités. Le fait que vous en voyez tellement pourrait indiquer que votre ordinateur contient des logiciels indésirables. Essayez de désactiver toutes les extensions une par une et voyez si le problème disparaît. Si non, essayez de lancer une analyse du système (complète) avec un antivirus à jour, car cela pourrait éventuellement être causé par des logiciels malveillants.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "opera_reenable_button": {
+    "message": "Vous pouvez réactiver le bouton dans les préférences de cette extension",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_linkunblock": {
+    "message": "Afficher les pubs sur un domaine",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_excludedomainorurl": {
+    "message": "Le domaine où AdBlock ne doit rien bloquer",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Afficher le bouton de la barre d'outils",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Vous pouvez également augmenter la valeur de\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_for_more_options": {
+    "message": "Pour plus d'options, vous pouvez cliquer sur le bouton de la barre d'outils ou ouvrir les préférences via Opera &rArr; Extensions &rArr; Gérer les extensions &rArr; icône de clé à molette &rArr; Préférences",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "C'est tout !",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Vous pouvez fermer cet onglet et commencer à naviguer sans publicités. Amusez-vous bien !",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "Si vous aimez vraiment cette extension, merci de songer à faire don via la page des options.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_donations_button": {
+    "message": "Vous aimez cette extension ? Si oui, songez à faire un don dans la page des options !",
+    "description": "Opera donate request in the button"
+  },
+  "opera_enabledin": {
+    "message": "Activé dans $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_120_install": {
+    "message": "Dans les versions d'Opera antérieures à 12.50, certaines pubs peuvent ne pas être bloquées car il n'est pas possible de parser toutes les les règles dans ces versions. Ce sera corrigé lorsqu'Opera sera mis à jour à la version 12.50. À partir de ce moment, toutes les pubs seront bloquées correctement.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Dans les versions d'Opera antérieures à 12.50, certaines options sont grisées, car elles ne sont pas supportées dans ces versions.",
+    "description": "Opera < 12.50 warning above options page"
   }
 }
