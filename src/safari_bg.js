@@ -195,7 +195,7 @@ if (!LEGACY_SAFARI) {
         var whitelisted = page_is_whitelisted(url);
 
         var eligible_for_undo = !paused && (!canBlock || !whitelisted);
-        if (eligible_for_undo && has_last_custom_filter(!canBlock ? undefined : url)) {
+        if (eligible_for_undo && has_last_custom_filter(canBlock ? url : undefined)) {
           appendMenuItem("undo-last-block", translate("undo_last_block"));
           menu.appendSeparator(itemIdentifier("separator0"));
         }
