@@ -105,7 +105,8 @@ $(function() {
   $("#div_undo").click(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.remove_last_custom_filter();
-      chrome.tabs.update(info.tab.id, {url: info.tab.url});
+      if (!info.disabled_site)
+        chrome.tabs.update(info.tab.id, {url: info.tab.url});
       window.close();
     });
   });
