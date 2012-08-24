@@ -308,9 +308,10 @@
   }
 
   remove_last_custom_filter = function() {
-    if (sessionStorage.getItem('last_custom_filter'))
+    if (sessionStorage.getItem('last_custom_filter')) {
       remove_custom_filter(sessionStorage.getItem('last_custom_filter'));
-    sessionStorage.removeItem('last_custom_filter');
+      sessionStorage.removeItem('last_custom_filter');
+    }
   }
 
   get_settings = function() {
