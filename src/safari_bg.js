@@ -241,8 +241,8 @@ safari.application.addEventListener("contextmenu", function(event) {
   if (page_is_unblockable(url) || page_is_whitelisted(url))
     return;
 
-  if (has_last_custom_filter(url))
-    event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
   event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
   event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
+  if (has_last_custom_filter(url))
+    event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
 }, false);
