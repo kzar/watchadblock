@@ -305,6 +305,10 @@
     "message": "Zavrieť",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Teraz môžete zavrieť túto kartu a začať surfovať bez reklám!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Opraviť filtre",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -771,6 +775,62 @@
     "message": "Tento filter sa vzťahuje na prvky týchto typov:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "Opera verzie nižšej ako 12.50 neblokuje všetky reklamy, pretože to nie je možné. Toto bude opravené, keď sa Opera aktualizuje na verziu 12.50. Od toho momentu budú blokované všetky reklamy",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "V Opere verzie nižšej ako 12.50 sú niektoré možnosti obmedzené, pretože v týchto verziách nie sú niektoré funkcie podporované.",
+    "description": "Opera < 12.50 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Môžete tiež zvýšiť hodnotu $setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Máte radi toto rozšírenie? Ak áno, pomôžte nám donáciou na stránke nastavení!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Ak milujete toto rozšírenie, prosím prispejte donáciou cez stránku nastavení.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Zapnuté v $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Doména, kde AdBlock by nemal nič blokovať",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "Pre viac možností, môžete kliknúť na tlačidlo alebo otvoriť nastavenia cez Opera ⇒ Rozšírenie ⇒ Spravovať rozšírenia ⇒ ikona kľúča ⇒ Predvoľby",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Zobraz reklamy na doméne",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Tlačidlo môžete znovu zobraziť v nastavení rozšírenia",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Zobraz tlačidlo na paneli nástrojov",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
     "message": "Nastavenia",
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
@@ -1028,6 +1088,10 @@
   "that_was_easy": {
     "message": "Pokračovať",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
+  },
+  "thats_it": {
+    "message": "Už to je!",
+    "description": "Install page string"
   },
   "thirdparty": {
     "message": "Tretia strana",
