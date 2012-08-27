@@ -85,8 +85,7 @@ $(function() {
   $("#div_status_whitelisted a").click(function() {
     BG.getCurrentTabInfo(function(info) {
       if (BG.try_to_unwhitelist(info.tab.url)) {
-        // Reload the tab
-        chrome.tabs.update(info.tab.id, {url: info.tab.url});
+        chrome.tabs.reload();
         window.close();
       } else {
         $("#div_status_whitelisted").
@@ -106,7 +105,7 @@ $(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.remove_last_custom_filter();
       if (!info.disabled_site)
-        chrome.tabs.update(info.tab.id, {url: info.tab.url});
+        chrome.tabs.reload()
       window.close();
     });
   });
@@ -130,8 +129,7 @@ $(function() {
   $("#div_whitelist_page").click(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.create_page_whitelist_filter(info.tab.url);
-      // Reload the tab
-      chrome.tabs.update(info.tab.id, {url: info.tab.url});
+      chrome.tabs.reload()
       window.close();
     });
   });
