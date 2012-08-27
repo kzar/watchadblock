@@ -296,6 +296,24 @@
     set_custom_filters_text(text.trim());
   }
 
+  // Returns true if there's a recently created custom selector filter.  If
+  // |url| is truthy, the filter must have been created on |url|'s domain.
+  has_last_custom_filter = function(url) {
+    var filter = sessionStorage.getItem('last_custom_filter');
+    if (!filter)
+      return false;
+    if (!url)
+      return true;
+    return filter.split("##")[0] === parseUri(url).hostname;
+  }
+
+  remove_last_custom_filter = function() {
+    if (sessionStorage.getItem('last_custom_filter')) {
+      remove_custom_filter(sessionStorage.getItem('last_custom_filter'));
+      sessionStorage.removeItem('last_custom_filter');
+    }
+  }
+
   get_settings = function() {
     return _settings.get_all();
   }
@@ -477,6 +495,14 @@
             {tab: tab}
           );
         });
+
+        if (has_last_custom_filter(info.tab.url)) {
+          addMenu(translate("undo_last_block"), function(tab) {
+            remove_last_custom_filter();
+            chrome.tabs.update(tab.id, {url: tab.url});
+          });
+        }
+
       }
 
       function setBrowserButton(info) {
@@ -512,6 +538,11 @@
     var custom_filters = get_custom_filters_text();
     try {
       if (FilterNormalizer.normalizeLine(filter)) {
+        if (Filter.isSelectorFilter(filter)) {
+          sessionStorage.setItem('last_custom_filter', filter);
+          if (!SAFARI)
+            updateButtonUIAndContextMenus();
+        }
         custom_filters = custom_filters + '\n' + filter;
         set_custom_filters_text(custom_filters);
         return null;

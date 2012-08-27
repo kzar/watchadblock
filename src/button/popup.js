@@ -10,7 +10,8 @@ function customize_for_this_tab() {
     function hide(L) { L.forEach(function(x) { shown[x] = false; }); }
 
     show(["div_options", "separator2"]);
-    if (BG.adblock_is_paused()) {
+    var paused = BG.adblock_is_paused();
+    if (paused) {
       show(["div_status_paused", "separator0", "div_options"]);
     } else if (info.disabled_site) {
       show(["div_status_disabled", "separator0", "div_options", 
@@ -25,6 +26,12 @@ function customize_for_this_tab() {
             "div_report_an_ad", "separator1", "div_options", 
             "div_help_hide_start", "separator3"]);
     }
+
+    var eligible_for_undo = !paused && (info.disabled_site || !info.whitelisted);
+    var url_to_check_for_undo = info.disabled_site ? undefined : info.tab.url;
+    if (eligible_for_undo && BG.has_last_custom_filter(url_to_check_for_undo))
+      show(["div_undo", "separator0"]);
+
     if (!BG.get_settings().show_advanced_options)
       hide(["separator3", "div_show_resourcelist", "div_report_an_ad"]);
 
@@ -93,6 +100,15 @@ $(function() {
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
     window.close();
+  });
+
+  $("#div_undo").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      BG.remove_last_custom_filter();
+      if (!info.disabled_site)
+        chrome.tabs.update(info.tab.id, {url: info.tab.url});
+      window.close();
+    });
   });
 
   $("#div_pause_adblock").click(function() {
