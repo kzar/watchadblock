@@ -305,6 +305,10 @@
     "message": "Закрыть",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Вы можете закрыть эту вкладку и начать просмотр без рекламы. Удачи!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Правильные фильтры",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -771,6 +775,62 @@
     "message": "Этот фильтр применяется к ресурсам этих типов:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "В Opera до версии 12.50, некоторый вид рекламы может оказаться не заблокированным, поскольку не возможно разобрать все правила в этих версиях. Это будет исправлено, как только Opera обновится до версии 12.50. С этого момента, вся реклама будет заблокирована.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "В Opera до версии 12.50, некоторые опции неактивны, так как они не поддерживаются в этих версиях.",
+    "description": "Opera < 12.50 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Вы также можете увеличить значение\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Вам нравится это расширение? Если это так, пожалуйста, отправьте пожертвования на странице параметров!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Если Вам действительно нравится это расширение, пожалуйста, отправьте пожертвования через страницу параметров.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Вкл. в $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Домены, где AdBlock не должен блокировать все",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "Для настройки дополнительных параметров, Вы можете нажать кнопку на панели инструментов или открыть предпочтения через Opera &rArr; Расширения &rArr; Управление расширениями &rArr; Значок гаечного ключа &rArr; Предпочтения",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Показать рекламу на домене",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Вы можете снова включить кнопку в настройках этого расширения",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Показать кнопку на панели инструментов",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
     "message": "Параметры",
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
@@ -1029,6 +1089,10 @@
     "message": "Это было легко",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
+  "thats_it": {
+    "message": "Вот и все!",
+    "description": "Install page string"
+  },
   "thirdparty": {
     "message": "Сторонние",
     "description": "Resource list column title telling if the resource originates from a different domain"
@@ -1116,6 +1180,10 @@
   "typexmlhttprequest": {
     "message": "xmlhttprequest",
     "description": "A resource type"
+  },
+  "undo_last_block": {
+    "message": "Отмена последней блокировки",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   },
   "unpause": {
     "message": "возобновить",
