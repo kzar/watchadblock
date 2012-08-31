@@ -104,7 +104,7 @@ $("#start-chrome.card #showads").change(function() {
 
 var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
 var iframe = $("<iframe>", {
-  src: "http://chromeadblock.com/pay/?source=I&header=install&u=" + userId + "&x32g=" + X32G,
+  src: "https://chromeadblock.com/pay/?source=I&header=install&u=" + userId + "&x32g=" + X32G,
   width: 750, height: 450, 
   frameBorder: 0, scrolling: "no" 
 });
