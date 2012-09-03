@@ -420,9 +420,9 @@ function finally_it_has_loaded_its_stuff() {
       }
 
       // Hide unused stuff
-      $("#selectblockableurl input:radio:not(:checked)").
+      $("#selectblockableurl input[type='radio']:not(:checked)").
           nextUntil('input').remove();
-      $("#selectblockableurl input:radio:not(:checked)").remove();
+      $("#selectblockableurl input[type='radio']:not(:checked)").remove();
       $("#confirmUrl").next().remove();
       $("#confirmUrl").remove();
       $("#selectblockableurl *:not(br):not(b)").prop("disabled", true);

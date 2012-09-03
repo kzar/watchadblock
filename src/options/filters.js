@@ -278,7 +278,7 @@ $(function() {
     sendResponse({});
   });
 
-  $("#subscribeAll").live("click", function(e) {
+  $("#subscribeAll").on("click", function(e) {
     var inputs = $("input:not(:checked)", ".subscription");
     for (var i=0; i<inputs.length; i++) {
       window.setTimeout((function() { // Catch i in closure
@@ -288,7 +288,7 @@ $(function() {
     }
     e.preventDefault();
   });
-  $("#unsubscribeAll").live("click", function(e) {
+  $("#unsubscribeAll").on("click", function(e) {
     $("input", ".subscription").each(function(i, el) {
       if (el.checked)
         $(el).click().change();
