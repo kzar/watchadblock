@@ -85,7 +85,8 @@ $(function() {
   $("#div_status_whitelisted a").click(function() {
     BG.getCurrentTabInfo(function(info) {
       if (BG.try_to_unwhitelist(info.tab.url)) {
-        chrome.tabs.reload();
+        // Reload the tab
+        chrome.tabs.update(info.tab.id, {url: info.tab.url});
         window.close();
       } else {
         $("#div_status_whitelisted").
@@ -105,7 +106,7 @@ $(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.remove_last_custom_filter();
       if (!info.disabled_site)
-        chrome.tabs.reload();
+        chrome.tabs.update(info.tab.id, {url: info.tab.url});
       window.close();
     });
   });
@@ -129,7 +130,8 @@ $(function() {
   $("#div_whitelist_page").click(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.create_page_whitelist_filter(info.tab.url);
-      chrome.tabs.reload();
+      // Reload the tab
+      chrome.tabs.update(info.tab.id, {url: info.tab.url});
       window.close();
     });
   });
@@ -174,17 +176,17 @@ $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
   var userId = storage_get("userid");
-  var payHref = "https://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
+  var payHref = "http://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
   $("#pay_open").click(function() {
-    if (state == "initial") {
-      $("<iframe>", {
-        frameBorder: 0,
-        width: "100%",
-        height: "100%",
-        src: payHref
-      }).appendTo("#payment_wrapper");
+    if (state === "initial") {
+      $("<iframe>").
+        attr("frameBorder", 0).
+        attr("src", payHref).
+        width("100%").
+        height("100%").
+        appendTo("#payment_wrapper");
     }
-    if (state == "open")
+    if (state === "open")
       return;
     state = "open";
     $("#pay_close").show();

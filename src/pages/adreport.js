@@ -37,7 +37,7 @@ BGcall("get_settings", function(settings) {
 
 //generate the URL to the issue tracker
 function generateReportURL() {
-  var result = "https://code.google.com/p/adblockforchrome/issues/entry" +
+  var result = "http://code.google.com/p/adblockforchrome/issues/entry" +
                "?template=Ad%20report%20from%20user&summary=";
 
   var domain = "<enter URL of webpage here>";
@@ -127,7 +127,7 @@ $("#step_language_lang").change(function() {
   $("#step_language").html("<span class='answer'>"+ selected.text() +"</span>");
   if (selected.text() == translate("other")) {
     $("#whattodo").html(translate("nodefaultfilter1",
-                                  ["<a href='https://adblockplus.org/en/subscriptions'>", "</a>"]));
+                                  ["<a href='http://adblockplus.org/en/subscriptions'>", "</a>"]));
     return;
   } else {
     var required_lists = selected.attr('value').split(';');
@@ -229,11 +229,11 @@ try {
       //get the current version
       AdBlockVersion = JSON.parse(this.responseText).version;
       //check for newer versions
-      var checkURL = "https://clients2.google.com/service/update2/crx?" +
+      var checkURL = "http://clients2.google.com/service/update2/crx?" +
           "x=id%3Dgighmmpiobklfepjocnamgkkbiglidom%26v%3D" +
           AdBlockVersion + "%26uc";
       if (SAFARI)
-        checkURL = "https://safariadblock.com/update.plist";
+        checkURL = "http://safariadblock.com/update.plist";
       //fetch the version check file
       $.ajax({
         cache: false,
