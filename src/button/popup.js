@@ -105,7 +105,7 @@ $(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.remove_last_custom_filter();
       if (!info.disabled_site)
-        chrome.tabs.reload()
+        chrome.tabs.reload();
       window.close();
     });
   });
@@ -129,7 +129,7 @@ $(function() {
   $("#div_whitelist_page").click(function() {
     BG.getCurrentTabInfo(function(info) {
       BG.create_page_whitelist_filter(info.tab.url);
-      chrome.tabs.reload()
+      chrome.tabs.reload();
       window.close();
     });
   });

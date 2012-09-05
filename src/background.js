@@ -499,7 +499,7 @@
         if (has_last_custom_filter(info.tab.url)) {
           addMenu(translate("undo_last_block"), function(tab) {
             remove_last_custom_filter();
-            chrome.tabs.reload()
+            chrome.tabs.reload();
           });
         }
 
