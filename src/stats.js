@@ -1,7 +1,7 @@
 // Allows interaction with the server to track install rate
 // and log messages.
 STATS = (function() {
-  var stats_url = "http://chromeadblock.com/api/stats2.php";
+  var stats_url = "https://chromeadblock.com/api/stats2.php";
 
   //Get some information about the version, os, and browser
   var version = (function() {

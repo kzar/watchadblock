@@ -176,7 +176,7 @@ $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
   var userId = storage_get("userid");
-  var payHref = "http://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
+  var payHref = "https://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
   $("#pay_open").click(function() {
     if (state == "initial") {
       $("<iframe>", {
