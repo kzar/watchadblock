@@ -5,7 +5,7 @@ $(function() {
     $("#enable_" + name).
       attr("checked", optionalSettings[name]);
   }
-  $("input.feature:checkbox").change(function() {
+  $("input.feature[type='checkbox']").change(function() {
     var is_enabled = $(this).is(':checked');
     var name = this.id.substring(7); // TODO: hack
     BGcall("set_setting", name, is_enabled);
@@ -31,7 +31,7 @@ $("#enable_show_advanced_options").change(function() {
   // Also, disable all advanced options, so that non-advanced users will
   // not end up with debug/beta/test options enabled.
   if (!this.checked)
-    $(".advanced :checkbox:checked").each(function() {
+    $(".advanced input[type='checkbox']:checked").each(function() {
       BGcall("set_setting", this.id.substr(7), false);
     });
   window.setTimeout(function() {

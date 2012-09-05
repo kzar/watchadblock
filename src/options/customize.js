@@ -44,7 +44,7 @@ $(function() {
     else
       appendCustomFilter(blockDomain + "##" + blockCss);
 
-    $(this).closest(".entryTable").find("input:text").val("");
+    $(this).closest(".entryTable").find("input[type='text']").val("");
     $(this).attr("disabled", "disabled");
   });
 
@@ -57,7 +57,7 @@ $(function() {
 
     appendCustomFilter('@@' + excludeUrl + '$document');
 
-    $(this).closest(".entryTable").find("input:text").val("");
+    $(this).closest(".entryTable").find("input[type='text']").val("");
     $(this).attr("disabled", "disabled");
   });
 
@@ -91,7 +91,7 @@ $(function() {
     else
       appendCustomFilter(blockUrl + "$domain=" + blockDomain);
 
-    $(this).closest(".entryTable").find("input:text").val("");
+    $(this).closest(".entryTable").find("input[type='text']").val("");
     $(this).attr("disabled", "disabled");
   });
 
@@ -110,7 +110,7 @@ $(function() {
     }
   });
 
-  $("#divUrlBlock input:text").bind("input", function() {
+  $("#divUrlBlock input[type='text']").bind("input", function() {
     var blockUrl = $("#txtBlockUrl").val().trim();
     var blockDomain = $("#txtBlockUrlDomain").val().trim();
     if (blockDomain == '*')
@@ -127,7 +127,7 @@ $(function() {
     $("#btnAddUrlBlock").attr("disabled", ok ? null : "disabled");
   });
 
-  $("#divCssBlock input:text").bind("input", function() {
+  $("#divCssBlock input[type='text']").bind("input", function() {
     var blockCss = $("#txtUserFilterCss").val().trim();
     var blockDomain = $("#txtUserFilterDomain").val().trim();
     if (blockDomain == '*')
@@ -140,7 +140,7 @@ $(function() {
     $("#btnAddUserFilter").attr("disabled", ok ? null : "disabled");
   });
 
-  $("#divExcludeBlock input:text").bind("input", function() {
+  $("#divExcludeBlock input[type='text']").bind("input", function() {
     var unblockUrl = $("#txtUnblock").val().trim();
     var ok = false;
     try {
@@ -153,8 +153,8 @@ $(function() {
   });
 
   // When one presses 'Enter', pretend it was a click on the 'add' button
-  $('.entryTable input:text').keypress(function(event) {
-    var submitButton = $(this).closest(".entryTable").find(":button");
+  $(".entryTable input[type='text']").keypress(function(event) {
+    var submitButton = $(this).closest(".entryTable").find("input[type='button']");
     if (event.keyCode === 13 && !submitButton.prop("disabled")) {
       event.preventDefault();
       submitButton.click();

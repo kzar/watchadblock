@@ -326,7 +326,7 @@ BlacklistUi.prototype._makeFilter = function() {
   var el = this._chain.current();
   var detailsDiv = $("#adblock-details", this._ui_page2);
 
-  if ($("input:checkbox#cknodeName", detailsDiv).is(':checked')) {
+  if ($("input[type='checkbox']#cknodeName", detailsDiv).is(':checked')) {
     result.push(el.prop('nodeName'));
     // Some iframed ads are in a bland iframe.  If so, at least try to
     // be more specific by walking the chain from the body to the iframe
@@ -341,14 +341,14 @@ BlacklistUi.prototype._makeFilter = function() {
   }
   var attrs = ['id', 'class', 'name', 'src', 'href', 'data'];
   for (var i in attrs) {
-    if ($("input:checkbox#ck" + attrs[i], detailsDiv).is(':checked'))
+    if ($("input[type='checkbox']#ck" + attrs[i], detailsDiv).is(':checked'))
       result.push('[' + attrs[i] + '=' + JSON.stringify(el.attr(attrs[i])) + ']');
   }
 
   var warningMessage;
   if (result.length == 0)
     warningMessage = translate("blacklisterwarningnofilter");
-  else if (result.length == 1 && $("input:checkbox#cknodeName", detailsDiv).is(':checked'))
+  else if (result.length == 1 && $("input[type='checkbox']#cknodeName", detailsDiv).is(':checked'))
     warningMessage = translate("blacklisterblocksalloftype", [result[0]]);
   $("#filter_warning", this._ui_page2).
     css("display", (warningMessage ? "block" : "none")).

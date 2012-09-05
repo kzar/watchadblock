@@ -80,7 +80,7 @@
   // Implement blocking via the Chrome webRequest API.
   if (!SAFARI) {
     // Stores url, whitelisting, and blocking info for a tabid+frameid
-    // TODO: can we avoid making this a global once 'old' style dies?
+    // TODO: can we avoid making this a global?
     frameData = {
       // Returns the data object for the frame with ID frameId on the tab with
       // ID tabId. If frameId is not specified, it'll return the data for all
