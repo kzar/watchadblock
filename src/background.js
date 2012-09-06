@@ -379,6 +379,8 @@
       return sessionStorage.getItem('adblock_is_paused') === "true";
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
+    if (SAFARI)
+      _myfilters.stylesheetRegistrar.pause(newValue);
   }
 
   // INFO ABOUT CURRENT PAGE
@@ -548,8 +550,7 @@
     var result = {
       disabled_site: disabled,
       adblock_is_paused: adblock_is_paused(),
-      settings: settings,
-      selectors: []
+      settings: settings
     };
     if (!disabled) {
       result.page_is_whitelisted = page_is_whitelisted(sender.tab.url);
@@ -558,10 +559,12 @@
       return result;
 
     // Not whitelisted, and running on adblock_start. We have to send the
-    // CSS-hiding rules.
-    if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-      result.selectors = _myfilters.hiding.
-        filtersFor(options.domain);
+    // CSS-hiding rules in Chrome.
+    if (!SAFARI) {
+      if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
+        result.selectors = _myfilters.hiding.
+          filtersFor(options.domain);
+      }
     }
 
     return result;

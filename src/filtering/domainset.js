@@ -1,8 +1,10 @@
 // DomainSet: a subset of all domains.
 //
-// It can represent sets like 'all domains', or 'all domains except foo.com',
-// or 'only sub.foo.com', or 'a.com, b.com, and c.com, but not sub.a.com or
-// sub.b.com (but including sub.sub.b.com)'.
+// It can represent any subset of all domains.  Some examples:
+//  - all domains
+//  - all domains except foo
+//  - only sub.foo
+//  - only a, b, and c, excluding sub.a or sub.b (but including sub.sub.b)
 
 // Create a new DomainSet from the given |data|.
 //
@@ -21,22 +23,43 @@ DomainSet.ALL = '';
 
 // Return the parent domain of |domain|, or DomainSet.ALL.
 DomainSet._parentDomainOf = function(domain) {
-  // Don't worry about co.uk; we can treat it as a domain and all still works
-  var match = domain.match(/\.(.*\..*)$/);
-  return (match ? match[1] : DomainSet.ALL);
+  return domain.replace(/^.+?(?:\.|$)/, '');
 };
+
+// Return an object whose keys are |domain| and all of its parent domains, up
+// to and including the TLD.
+DomainSet.domainAndParents = function(domain) {
+  var result = {};
+  var parts = domain.split('.');
+  var nextDomain = parts[parts.length -1];
+  for (var i = parts.length-1; i >=0; i--) {
+    result[nextDomain] = 1;
+    if (i > 0)
+      nextDomain = parts[i - 1] + '.' + nextDomain;
+  }
+  return result;
+}
 
 DomainSet.prototype = {
 
   // True if |domain| is in the subset of all domains represented by |this|.
   //
-  // E.g. if |this| DomainSet is the set of all domains other than a.com, then
-  // 'b.com' will yield true, and both 'a.com' and 's.a.com' will yield false.
+  // E.g. if |this| DomainSet is the set of all domains other than a, then 'b'
+  // will yield true, and both 'a' and 'sub.a' will yield false.
   has: function(domain) {
     if (this._has[domain] !== undefined)
       return this._has[domain];
     else
       return this.has(DomainSet._parentDomainOf(domain));
+  },
+
+  // Returns true if this set contains all domains.
+  full: function() {
+    for (var k in this._has) {
+      if (k !== DomainSet.ALL || !this._has[k])
+        return false;
+    }
+    return true;
   },
 
   // Modify |this| by set-subtracting |other|.
@@ -63,7 +86,7 @@ DomainSet.prototype = {
     for (d in this._has)
       this._has[d] = operator(this._has[d], other.has(d));
     // Optimization: get rid of redundant entries that now exist in this._has.
-    // E.g. if DomainSet.ALL, a.com, and s.a.com all = true, delete the last 2.
+    // E.g. if DomainSet.ALL, a, and sub.a all = true, delete the last 2.
     var newHas = {};
     newHas[DomainSet.ALL] = this._has[DomainSet.ALL];
     for (d in this._has)

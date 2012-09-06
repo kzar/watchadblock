@@ -6,6 +6,9 @@
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
 function MyFilters() {
+  if (SAFARI)
+    this.styleSheetRegistrar = new StyleSheetRegistrar();
+
   this._subscriptions = storage_get('filter_lists');
   this._official_options = this._make_subscription_options();
   
@@ -138,25 +141,37 @@ MyFilters.prototype.rebuild = function() {
     unique[texts[i]] = 1;
   delete unique[''];
 
-  var hidingText = [];
-  var whitelistText = [];
-  var patternText = [];
-  var hidingExcludeText = [];
+  // on un/pause: styleSheetRegistrar.un/pause()
+  // resourceblock: I don't care.
+
+  var filters = { hiding: {}, exclude: {}, pattern: {}, whitelist: {} };
   for (var text in unique) {
+    var filter = Filter.fromText(text);
     if (Filter.isSelectorExcludeFilter(text))
-      hidingExcludeText.push(text);
+      filters.exclude[filter.selector] = filter;
     else if (Filter.isSelectorFilter(text))
-      hidingText.push(text);
+      filters.hiding[filter.selector] = filter;
     else if (Filter.isWhitelistFilter(text))
-      whitelistText.push(text);
+      filters.whitelist[filter.id] = filter;
     else
-      patternText.push(text);
+      filters.pattern[filter.id] = filter;
+  }
+  for (var selector in filters.exclude) {
+    if (filters.hiding[selector]) {
+      var exclusion = filters.exclude[selector]._domains;
+      filters.hiding[selector]._domains.subtract(exclusion);
+    }
   }
 
-  this.hiding = FilterSet.fromTexts(hidingText);
-  this.hidingWhitelist = FilterSet.fromTexts(hidingExcludeText);
+  if (SAFARI) {
+    this.styleSheetRegistrar.register(filters.hiding);
+  }
+  else
+    this.hiding = FilterSet.fromFilters(filters.hiding);
+
   this.blocking = new BlockingFilterSet(
-    FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
+    FilterSet.fromFilters(filters.pattern), 
+    FilterSet.fromFilters(filters.whitelist)
   );
   handlerBehaviorChanged(); // defined in background
 }

@@ -43,7 +43,7 @@ test("subtract()", function() {
   var _normalize = function(data) {
     var result = {};
     for (var d in data)
-      result[d === 'ALL' ? '': d + '.com'] = data[d];
+      result[d === 'ALL' ? DomainSet.ALL : d] = data[d];
     return result;
   }
   // Does DomainSet(data1).subtract(DomainSet(data2)) work as expected?
