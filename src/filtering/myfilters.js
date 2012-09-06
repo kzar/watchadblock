@@ -386,7 +386,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'ja': return 'japanese';
       case 'ko': return 'easylist_plun_korean';
       case 'nl': return 'dutch';
-      case 'pl': return 'easylist_plus_polish';//sorry for the other Polish list
+      case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
       case 'uk': return 'russian';
@@ -478,9 +478,6 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "easylist_plun_korean": {  // Korean filters
       url: "https://secure.fanboy.co.nz/fanboy-korean.txt",
-    },
-    "polish": { // Polish filters
-      url: "http://www.niecko.pl/adblock/adblock.txt",
     },
     "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
