@@ -89,7 +89,7 @@ ClickWatcher.prototype.show = function() {
       zIndex: 10000000, 
       position: [50, 50],
       height: 120,
-      minHeight: 50,
+      minHeight: 120,
       title: translate("blockanadtitle")
     });
   // setTimeout to give 'wait' a chance to display

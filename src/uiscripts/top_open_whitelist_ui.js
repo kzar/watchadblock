@@ -47,7 +47,7 @@ function top_open_whitelist_ui() {
       dialog({
         title: translate("whitelistertitle2"),
         width: 600,
-        minHeight: 50,
+        minHeight: 130,
         buttons: btns,
         close: function() {
           may_open_dialog_ui = true;
