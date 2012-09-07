@@ -305,6 +305,10 @@
     "message": "Kapat",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Bu sekmeyi kapatıp web sitelerini reklamsız gezmeye başlayabilirsiniz. İyi eğlenceler!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Filtreleri düzelt",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -771,6 +775,62 @@
     "message": "Bu filtre şu tipteki kaynaklara uygulanır:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "Opera 12.50'den önceki sürümlerde, Adblock'un tüm kuralları doğru çalıştırılamadığından, tüm reklamlar engellenemeyebilir. Bu sorun , Opera, 12.50 güncellemesini yayınladığında düzelecektir. 12.50 sürümünden itibaren tüm reklamlar doğru şekilde engellenecektir.",
+    "description": "Opera < 12.50 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Opera 12.50'den önceki sürümlerde, bazı seçenekler desteklenemediğinden, kullanılamaz durumda görünüyor.",
+    "description": "Opera < 12.50 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Ayrıca siz de şu seçenek için değeri artırabilirsiniz; $setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Bu eklentiyi seviyor musunuz? Eğer öyleyse, lütfen seçenekler sayfasından bağış yapmayı düşünün!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Eğer bu eklentiyi gerçekten seviyorsanız, seçenekler sayfasından bağış yapmayı düşününün.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Aktifleştirildiği sürüm; $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.50"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Adblock'un hiç bir şeyi engellemesini istemediğiniz alan adı",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "Daha fazla seçenek için, araç çubuğu butonuna tıklayabilir ya da Opera menüsü aracılığıyla, Eklentiler &rArr; Eklentileri Yönet &rArr; ayar simgesi &rArr; Tercihler menüsünü kullanabilirsiniz.",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Bir alan adındaki reklamları göster",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Uzantının Tercihler menüsünü kullanarak bu butonu tekrar aktifleştirebilirsiniz.",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Araç çubuğu butonunu göster",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
     "message": "Seçenekler",
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
@@ -1029,6 +1089,10 @@
     "message": "Bu beklediğimden daha kolay oldu",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
+  "thats_it": {
+    "message": "Hepsi bu kadar!",
+    "description": "Install page string"
+  },
   "thirdparty": {
     "message": "Üçüncü şahıs",
     "description": "Resource list column title telling if the resource originates from a different domain"
@@ -1116,6 +1180,10 @@
   "typexmlhttprequest": {
     "message": "xmlhttprequest",
     "description": "A resource type"
+  },
+  "undo_last_block": {
+    "message": "Son değişiklikleri geri al",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   },
   "unpause": {
     "message": "tekrar başlat",
@@ -1226,37 +1294,5 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Ne kadar çok filtre listesi kullanırsanız, Adblock o kadar yavaşlar. Çok fazla liste kullanmak bazı sitelerde tarayıcınızın çökmesine bile sebep olabilir. Bu listeyi yine de eklemek istiyorsanız Tamam'a basın.",
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
-  },
-  "opera_linkunblock": {
-    "message": "Bir alan adındaki reklamları göster",
-    "description": "Opera version of the 'linkunblock' string"
-  },
-  "opera_show_toolbar_button": {
-    "message": "Araç çubuğu düğmesini göster",
-    "description": "Opera option to show/hide the button"
-  },
-  "opera_for_more_options": {
-    "message": "Daha fazla seçenek için, araç çubuğundaki düğmeye tıklayın ya da Opera &rArr; Eklentiler &rArr; Eklentileri yönet &rArr; anahtar tuşu &rArr; Tercihler'den tercihleri açın.",
-    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it": {
-    "message": "Bu kadar!",
-    "description": "Install page string"
-  },
-  "close_tab_begin_browsing": {
-    "message": "Bu sekmeyi kapatıp reklamsız gezintinize başlayabilirsiniz. İyi eğlenceler!",
-    "description": "Install page string"
-  },
-  "opera_donations_install": {
-    "message": "Eğer bu eklentiyi gerçekten sevdiyseniz, lütfen seçenekler sayfasından bağış yapmayı düşünün.",
-    "description": "Opera donate request in the install page"
-  },
-  "opera_120_install": {
-    "message": "12.50'den önceki Opera sürümlerinde, bazı reklamlar, bütün kurallar o sürümlerde doğru çalıştırılamadığından engellenemeyebilir. Bu sorun Opera sürümü 12.50'ye güncellendiğinde düzelecektir. 12.50'den itibaren tüm reklamlar doğru bir şekilde engellenecektir.",
-    "description": "Opera < 12.50 warning during installation"
-  },
-  "opera_120_options": {
-    "message": "Opera 12.50'den önceki sürümlerde bazı ayarlar gri görünüyor, çünkü önceki sürümlerde desteklenmiyor.",
-    "description": "Opera < 12.50 warning above options page"
   }
 }
