@@ -90,31 +90,6 @@ function destroyElement(el, elType) {
   }
 }
 
-// Add style rules hiding the given list of selectors.
-function block_list_via_css(selectors) {
-  if (!selectors.length)
-    return;
-  // Issue 6480: inserting a <style> tag too quickly ignored its contents.
-  // Use ABP's approach: wait for .sheet to exist before injecting rules.
-  var css_chunk = document.createElement("style");
-  css_chunk.type = "text/css";
-  // Documents may not have a head
-  (document.head || document.documentElement).insertBefore(css_chunk, null);
-
-  function fill_in_css_chunk() {
-    if (!css_chunk.sheet) {
-      window.setTimeout(fill_in_css_chunk, 0);
-      return;
-    }
-    var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
-    for (var i = 0; i < selectors.length; i += GROUPSIZE) {
-      var line = selectors.slice(i, i + GROUPSIZE);
-      var rule = line.join(",") + " { display:none !important; orphans: 4321 !important; }";
-      css_chunk.sheet.insertRule(rule);
-    }
-  }
-  fill_in_css_chunk();
-}
 
 function debug_print_selector_matches(selectors) {
   selectors.
@@ -173,20 +148,22 @@ function adblock_begin(inputs) {
 
   var opts = { domain: document.location.hostname };
   BGcall('get_content_script_data', opts, function(data) {
-    if (data.page_is_whitelisted || data.adblock_is_paused || data.disabled_site) {
-      inputs.stopPurger();
-      return;
-    }
-
     if (data.settings.debug_logging)
       log = function() { 
         if (VERBOSE_DEBUG || arguments[0] !== '[DEBUG]')
           console.log.apply(console, arguments); 
       };
 
-    block_list_via_css(data.selectors);
+    inputs.handleHiding(data);
+
+    if (!data.running) {
+      inputs.stopPurger();
+      return;
+    }
 
     onReady(function() {
+      // TODO: ResourceList could pull html.innerText from page instead: we
+      // could axe this (and Safari's .selectors calculation in debug mode)
       if (data.settings.debug_logging)
         debug_print_selector_matches(data.selectors);
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.

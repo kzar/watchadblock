@@ -70,6 +70,11 @@ adblock_begin({
   stopPurger: function() { 
     document.removeEventListener("beforeload", beforeLoadHandler, true);
   },
+  handleHiding: function(data) {
+    if (data.runnable && !data.hiding) {
+      document.documentElement.classList.add(data.avoidHidingClass);
+    }
+  },
   success: function() {
     onReady(function() { blockBackgroundImageAd(); });
 

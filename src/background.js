@@ -380,7 +380,7 @@
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
     if (SAFARI)
-      _myfilters.stylesheetRegistrar.pause(newValue);
+      _myfilters.styleSheetRegistrar.pause(newValue);
   }
 
   // INFO ABOUT CURRENT PAGE
@@ -541,32 +541,32 @@
     return add_custom_filter(filter);
   }
 
-  // TODO: make better.
   // Inputs: options object containing:
   //           domain:string the domain of the calling frame.
   get_content_script_data = function(options, sender) {
-    var disabled = page_is_unblockable(sender.tab.url);
     var settings = get_settings();
+    var runnable = !adblock_is_paused() && !page_is_unblockable(sender.tab.url);
+    var running = runnable && !page_is_whitelisted(sender.tab.url);
+    var hiding = running && !page_is_whitelisted(sender.tab.url,
+                                                        ElementTypes.elemhide);
     var result = {
-      disabled_site: disabled,
-      adblock_is_paused: adblock_is_paused(),
-      settings: settings
+      settings: settings,
+      runnable: runnable,
+      running: running,
+      hiding: hiding
     };
-    if (!disabled) {
-      result.page_is_whitelisted = page_is_whitelisted(sender.tab.url);
-    }
-    if (disabled || result.adblock_is_paused || result.page_is_whitelisted)
-      return result;
-
-    // Not whitelisted, and running on adblock_start. We have to send the
-    // CSS-hiding rules in Chrome.
-    if (!SAFARI) {
-      if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-        result.selectors = _myfilters.hiding.
-          filtersFor(options.domain);
+    if (SAFARI) {
+      _myfilters.styleSheetRegistrar.prepareFor(options.domain);
+      result.avoidHidingClass = StyleSheetRegistrar._avoidHidingClass;
+      if (settings.debug_logging && hiding) {
+        var filters = _myfilters.StyleSheetRegistrar._filters;
+        var filterset = FilterSet.fromFilters(filters);
+        result.selectors = filterset.filtersFor(options.domain);
       }
     }
-
+    if (!SAFARI && hiding) {
+      result.selectors = _myfilters.hiding.filtersFor(options.domain);
+    }
     return result;
   };
 

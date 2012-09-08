@@ -93,11 +93,41 @@ var elementPurger = {
   _page_location: document.location
 };
 
+// Add style rules hiding the given list of selectors.
+function block_list_via_css(selectors) {
+  if (!selectors.length)
+    return;
+  // Issue 6480: inserting a <style> tag too quickly ignored its contents.
+  // Use ABP's approach: wait for .sheet to exist before injecting rules.
+  var css_chunk = document.createElement("style");
+  css_chunk.type = "text/css";
+  // Documents may not have a head
+  (document.head || document.documentElement).insertBefore(css_chunk, null);
+
+  function fill_in_css_chunk() {
+    if (!css_chunk.sheet) {
+      window.setTimeout(fill_in_css_chunk, 0);
+      return;
+    }
+    var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
+    for (var i = 0; i < selectors.length; i += GROUPSIZE) {
+      var line = selectors.slice(i, i + GROUPSIZE);
+      var rule = line.join(",") + " { display:none !important; orphans: 4321 !important; }";
+      css_chunk.sheet.insertRule(rule);
+    }
+  }
+  fill_in_css_chunk();
+}
+
 adblock_begin({
   startPurger: function() {
     chrome.extension.onRequest.addListener(elementPurger.onPurgeRequest);
   },
   stopPurger: function() {
     chrome.extension.onRequest.removeListener(elementPurger.onPurgeRequest);
+  },
+  handleHiding: function(data) {
+    if (data.hiding)
+      block_list_via_css(data.selectors);
   }
 });

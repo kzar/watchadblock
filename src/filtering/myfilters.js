@@ -144,28 +144,34 @@ MyFilters.prototype.rebuild = function() {
   // on un/pause: styleSheetRegistrar.un/pause()
   // resourceblock: I don't care.
 
-  var filters = { hiding: {}, exclude: {}, pattern: {}, whitelist: {} };
+  function store(map, filter) {
+    if (map[filter.selector] === undefined)
+      map[filter.selector] = {};
+    map[filter.selector][filter.id] = filter;
+  }
+  var filters = { hidingUnmerged: [], hiding: {}, exclude: {},
+                  pattern: {}, whitelist: {} };
   for (var text in unique) {
     var filter = Filter.fromText(text);
     if (Filter.isSelectorExcludeFilter(text))
-      filters.exclude[filter.selector] = filter;
+      store(filters.exclude, filter);
     else if (Filter.isSelectorFilter(text))
-      filters.hiding[filter.selector] = filter;
+      filters.hidingUnmerged.push(filter);
     else if (Filter.isWhitelistFilter(text))
       filters.whitelist[filter.id] = filter;
     else
       filters.pattern[filter.id] = filter;
   }
-  for (var selector in filters.exclude) {
-    if (filters.hiding[selector]) {
-      var exclusion = filters.exclude[selector]._domains;
-      filters.hiding[selector]._domains.subtract(exclusion);
+  for (var i = 0; i < filters.hidingUnmerged.length; i++) {
+    var hider = filters.hidingUnmerged[i];
+    for (var id in filters.exclude[hider.selector]) {
+      hider._domains.subtract(filters.exclude[hider.selector][id]._domains);
     }
+    filters.hiding[hider.id] = hider;
   }
 
-  if (SAFARI) {
+  if (SAFARI)
     this.styleSheetRegistrar.register(filters.hiding);
-  }
   else
     this.hiding = FilterSet.fromFilters(filters.hiding);
 

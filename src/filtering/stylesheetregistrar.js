@@ -1,10 +1,15 @@
 // Handled telling Safari about SelectorFilters.
 function StyleSheetRegistrar() {
   this._paused = false;
+  this._recentDomains = [];
 }
 
-StyleSheetRegistrar._random = Math.floor(Math.random() * 1E6);
-StyleSheetRegistrar._selectorPrefix = 'html:not(.' + StyleSheetRegistrar._random + ') ';
+// Applied to frames on $document or $elemhide pages to disable hiding
+StyleSheetRegistrar._avoidHidingClass = 'x' + Math.floor(Math.random() * 1E6);
+StyleSheetRegistrar._css = {
+  prefix: 'html:not(.' + StyleSheetRegistrar._avoidHidingClass + ') ',
+  suffix: ' { display: none; orphans: 4321; }'
+};
 
 StyleSheetRegistrar.prototype = {
 
@@ -13,6 +18,7 @@ StyleSheetRegistrar.prototype = {
   pause: function(paused) {
     if (paused == this._paused)
       return;
+    this._paused = paused;
     if (paused)
       this._clear();
     else
@@ -21,38 +27,32 @@ StyleSheetRegistrar.prototype = {
 
   // Make sure that all filters to be run on |domain| are applied.
   prepareFor: function(domain) {
+    console.log("Preparing for", domain);
     for (var nextDomain in DomainSet.domainAndParents(domain)) {
       if (this._needsWork.lazy[nextDomain]) {
         this._applyCorrectly("lazy", nextDomain);
       }
       if (this._needsWork.liars[nextDomain]) {
+        // TODO bug: this seems to remove the global sheet (all sheets?).
         safari.extension.removeContentStyleSheet(this._liarSheet);
+        console.log("Removed liar sheet.");
         this._applyCorrectly("liars", nextDomain); // Correctly apply some liars
         this._applyLiars(); // ...and (globally) re-apply the others.
       }
     }
+    this._recentDomains.unshift(domain);
+    this._recentDomains.splice(30); // Keep a limited number
   },
 
   // Tell Safari to use the given SelectorFilters.  |data| is an object whose
   // values are the Filters to register.  Any prevously registered filters will
   // be unregistered.
   register: function(data) {
-    this._clear();
+    this._filters = data; // All filters.  Needed for unpausing.
+    if (this._paused)
+      return;
 
-    // All filters.  Needed for unpausing.
-    this._filters = data;
-    this._needsWork = {
-      // Filters that only run on certain domains.  We wait until that domain
-      // is loaded to apply them.
-      lazy: {},  // maps from domain to set of Filter ids that mention it
-      // Filters that run almost everywhere.  We apply them globally until an
-      // excluded domain is loaded, then apply that domain's filters correctly.
-      liars: {}, // maps from domain to set of Filter ids that mention it
-      // All filters whose ids are in .lazy or .liars.
-      byId: {}   // maps from Filter id to Filter
-    };
-    // Pointer to stylesheet that globally applies _needsWork.liars
-    this._liarSheet = null;
+    this._clear();
 
     var willApply = {
       correctly: [],
@@ -79,10 +79,20 @@ StyleSheetRegistrar.prototype = {
     }
     this._applyGlobally(willApply.correctly);
     this._applyLiars();
+    
+    // Correctly apply filters related to domains in any currently-open tabs.
+    this._prepareForRecentDomains();
+  },
+
+  // Call prepareFor() on the most recently viewed domains.
+  _prepareForRecentDomains: function() {
+    var that = this;
+    this._recentDomains.splice(-1000).forEach(function(d) { that.prepareFor(d); });
   },
 
   // Create and apply this._liarSheet, built from this._needsWork.liars.
   _applyLiars: function() {
+    console.log("Adding liar sheet...");
     var liarFilters = {};
     for (var domain in this._needsWork.liars) {
       for (var id in this._needsWork.liars[domain]) {
@@ -100,30 +110,37 @@ StyleSheetRegistrar.prototype = {
   // Apply the array of |selectors| to all domains and return a handle to the
   // created stylesheet.
   _applyGlobally: function(selectors) {
-    var prefix = StyleSheetRegistrar._selectorPrefix;
-    var sheet = prefix + selectors.join(", " + prefix) + " {display: none}";
+    if (selectors.length === 0)
+      return null;
+    var _css = StyleSheetRegistrar._css;
+    var sheet = _css.prefix + selectors.join(", " + _css.prefix) + _css.suffix;
     console.log("Adding global content stylesheet:"); // TODO
     console.log(sheet);
-    return safari.extension.addContentStyleSheet(sheet);
+    var blacklist = [safari.extension.baseURI + "*"];
+    return safari.extension.addContentStyleSheet(sheet, undefined, blacklist);
   },
 
   // addContentStyleSheet for |filter|.
   _applyFilter: function(filter) {
     var list = { white: [], black: [] };
     for (var domain in filter._domains._has) {
-      if (domain !== DomainSet.ALL)
-        list[filter._domains._has[domain] ? 'white' : 'black'].push(domain);
+      if (domain !== DomainSet.ALL) {
+        var theList = list[filter._domains._has[domain] ? 'white' : 'black'];
+        theList.push(['http://*.', domain, '/*'].join(''));
+        theList.push(['https://*.', domain, '/*'].join(''));
+      }
     }
-    var prefix = StyleSheetRegistrar._selectorPrefix;
-    var sheet = prefix + filter.selector + " {display: none}";
+    list.black.push(safari.extension.baseURI + "*");
+    var _css = StyleSheetRegistrar._css;
+    var sheet = _css.prefix + filter.selector + _css.suffix;
     console.log("Adding individual stylesheet with whitelist:", list.white, " and blacklist ", list.black); // TODO
     console.log(sheet); // TODO
     // TODO: wrong behavior for { ALL: true, a: false, sub.a: true }?
     safari.extension.addContentStyleSheet(sheet, list.white, list.black);
   },
 
-  // this._needsWork[listName][domain] contains filter IDs.  Apply these filters correctly,
-  // then remove them from this._needsWork.
+  // this._needsWork[listName][domain] contains filter IDs.  Apply these
+  // filters correctly, then remove them from this._needsWork.
   _applyCorrectly: function(listName, domain) {
     for (var id in this._needsWork[listName][domain]) {
       var filter = this._needsWork.byId[id];
@@ -140,7 +157,21 @@ StyleSheetRegistrar.prototype = {
 
   // Tell Safari to forget about all registered filters.
   _clear: function() {
+    this._needsWork = {
+      // Filters that only run on certain domains.  We wait until that domain
+      // is loaded to apply them.
+      lazy: {},  // maps from domain to set of Filter ids that mention it
+      // Filters that run almost everywhere.  We apply them globally until an
+      // excluded domain is loaded, then apply that domain's filters correctly.
+      liars: {}, // maps from domain to set of Filter ids that mention it
+      // All filters whose ids are in .lazy or .liars.
+      byId: {}   // maps from Filter id to Filter
+    };
+    // Pointer to stylesheet that globally applies _needsWork.liars
+    this._liarSheet = null;
+
     safari.extension.removeContentStyleSheets();
+    console.log("Removed all style sheets.");
   }
 
 };
