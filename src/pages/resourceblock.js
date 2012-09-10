@@ -50,7 +50,8 @@ function generateTable() {
       continue;
 
     var row = $("<tr>");
-    if (type.name) row.addClass(type.name);
+    if (type.name)
+      row.addClass(type.name);
 
     // Cell 1: Checkbox
     var cell = $("<td><input type='checkbox'/></td>");
@@ -59,28 +60,29 @@ function generateTable() {
     row.append(cell);
 
     // Cell 2: URL
-    $("<td>", {
-      title: i,
-      text: truncateI(i),
-      "data-column": "url"
-    }).appendTo(row);
+    $("<td>").
+      attr("title", i).
+      attr("data-column", "url").
+      text(truncateI(i)).
+      appendTo(row);
 
     // Cell 3: Type
-    $("<td>", {
-      text: translate('type' + typeName),
-      "data-column": "type"
-    }).appendTo(row);
+    $("<td>").
+      attr("data-column", "type").
+      text(translate('type' + typeName)).
+      appendTo(row);
 
     // Cell 4: hidden sorting field and matching filter
-    cell = $("<td>", {
-      "data-column": "filter"
-    });
-    $("<span>", {
-      "class": "sorter",
-      text: type.name ? type.sort : 3
-    }).appendTo(cell);
+    cell = $("<td>").
+      attr("data-column", "filter");
+    $("<span>").
+      addClass("sorter").
+      text(type.name ? type.sort : 3).
+      appendTo(cell);
     if (type.name)
-      $("<span>", { text: matchingfilter }).appendTo(cell);
+      $("<span>").
+        text(matchingfilter).
+        appendTo(cell);
     row.append(cell);
     resources[i].filter = matchingfilter;
 
@@ -88,10 +90,10 @@ function generateTable() {
     var resourceDomain = parseUri(i).hostname;
     var isThirdParty = (type.name === 'hiding' ? false :
                           checkThirdParty(resources[i].domain, resourceDomain));
-    cell = $("<td>", {
-        text: isThirdParty ? translate('yes') : translate('no'),
-        title: translate("resourcedomain", resources[i].domain || resourceDomain),
-        "data-column": "thirdparty"});
+    cell = $("<td>").
+        text(isThirdParty ? translate('yes') : translate('no')).
+        attr("title", translate("resourcedomain", resources[i].domain || resourceDomain)).
+        attr("data-column", "thirdparty");
     row.append(cell);
     resources[i].isThirdParty = isThirdParty;
 
@@ -101,7 +103,10 @@ function generateTable() {
 
     // Cell 6: delete a custom filter
     if (custom_filters[matchingfilter])
-      $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
+      $("<td>").
+        addClass("deleterule").
+        attr("title", translate("removelabel")).
+        appendTo(row);
     else
       $("<td>").appendTo(row);
 
@@ -189,16 +194,14 @@ function generateFilterSuggestions() {
 
   var suggestions = [];
   for (var i in blocksuggestions) {
-    var inputBox = $("<input>", {
-      type: "radio",
-      name: "urloption",
-      id: "suggest_" + i,
-      value: (isBlocked ? "@@||" : "||") + blocksuggestions[i]
-    });
-    var label = $("<label>", {
-      "for": "suggest_" + i,
-      text: blocksuggestions[i]
-    });
+    var inputBox = $("<input>").
+      attr("type", "radio").
+      attr("name", "urloption").
+      attr("id", "suggest_" + i).
+      val((isBlocked ? "@@||" : "||") + blocksuggestions[i]);
+    var label = $("<label>").
+      attr("for", "suggest_" + i).
+      text(blocksuggestions[i]);
     suggestions.push(inputBox);
     suggestions.push(label);
     suggestions.push("<br/>");
@@ -215,15 +218,15 @@ function generateFilterSuggestions() {
     $("#selectblockableurl b").text(translate("blockeverycontaining"));
   else
     $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
-  var inputBox = $('<input>', {
-    type: "text",
-    id: "customurl",
-    size: "99",
-    value: url,
-    title: translate("wildcardhint")
-  }).bind("input", function() {
-    $("#custom").click()
-  });
+  var inputBox = $('<input>').
+    attr("type", "text").
+    attr("id", "customurl").
+    attr("size", "99").
+    attr("title", translate("wildcardhint")).
+    val(url).
+    bind("input", function() {
+      $("#custom").click()
+    });
   $("#custom + label").append(inputBox);
 }
 
@@ -276,7 +279,8 @@ function isValidDomainList(text) {
   if (!text)
     return false;
   try {
-    FilterNormalizer.normalizeLine('*$domain=' + text);
+    var parsedDomains = Filter._domainInfo(text, "|");
+    FilterNormalizer._verifyDomains(parsedDomains);
     return true;
   } catch(ex) {
     return false;
@@ -449,10 +453,9 @@ function finally_it_has_loaded_its_stuff() {
           $(this).trigger("keyup");
         }).
         keyup(function() {
-          if (isValidDomainList($(this).val().trim().
-              replace(/[a-z](\ |\,\ ?|\;\ ?)\~?[a-z0-9]/gi,'a|a'))){
+          if (isValidDomainList($(this).val().trim().replace(/(\s|\,|\;)+/g, '|'))){
             $("#domainis").
-              val('domain=' + $(this).val().trim().replace(/(\ |\,|\;)+/g,'|'));
+              val('domain=' + $(this).val().trim().replace(/(\s|\,|\;)+/g, '|'));
             $("#domainlist").css('color', 'black');
           } else {
             $("#domainis").val('');
@@ -485,11 +488,11 @@ function finally_it_has_loaded_its_stuff() {
                                     chosenResource.type, chosenResource.domain))
           return;
         BGcall('add_custom_filter', generated_filter, function(ex) {
-          if (!ex)
+          if (!ex) {
             alert(translate("filterhasbeenadded"));
-          else
+            window.close();
+          } else
             alert(translate("blacklistereditinvalid1", ex));
-          window.close();
         });
       });
     });

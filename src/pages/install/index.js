@@ -92,6 +92,12 @@ var start = Date.now();
         $(startCard).css($("#wrapper").position()).fadeIn();
       });
   }, 200);
+  
+  if (SAFARI) {
+    $("<img>").
+      attr("src", "autoupdate.png").
+      prependTo("#autoupdate-howto");
+  }
 })();
 
 
@@ -103,11 +109,12 @@ $("#start-chrome.card #showads").change(function() {
 
 
 var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
-var iframe = $("<iframe>", {
-  src: "https://chromeadblock.com/pay/?source=I&header=install&u=" + userId + "&x32g=" + X32G,
-  width: 750, height: 450, 
-  frameBorder: 0, scrolling: "no" 
-});
+var iframe = $("<iframe>").
+  attr("src", "https://chromeadblock.com/pay/?source=I&header=install&u=" + userId + "&x32g=" + X32G).
+  attr("frameborder", "0").
+  attr("scrolling", "no").
+  width(750).
+  height(450);
 $("#iframe-slot").html(iframe);
 
 // Show appropriate instructions for getting CatBlock

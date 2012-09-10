@@ -133,12 +133,12 @@ BlacklistUi.prototype.show = function() {
 BlacklistUi.prototype._build_page1 = function() {
   var that = this;
 
-  var link_to_block = $("<a>", {
-    id: "block_by_url_link",
-    href: "#",
-    tabIndex: -1,
-    text: translate("block_by_url_instead"),
-    click: function(e) {
+  var link_to_block = $("<a>").
+    attr("id", "block_by_url_link").
+    attr("href", "#").
+    attr("tabIndex", "-1").
+    text(translate("block_by_url_instead")).
+    click(function(e) {
       var el = that._chain.current();
       var elType = typeForElement(el[0]);
       var type = ElementTypes.NONE;
@@ -158,8 +158,7 @@ BlacklistUi.prototype._build_page1 = function() {
       e.preventDefault();
       that._ui_page1.dialog('close');
       return false;
-    }
-  });
+    });
 
   var page = $("<div>").
     append(translate("sliderexplanation")).

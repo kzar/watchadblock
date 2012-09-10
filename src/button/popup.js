@@ -176,15 +176,15 @@ $(function() {
   var userId = storage_get("userid");
   var payHref = "https://chromeadblock.com/pay/?source=P&small=true&u=" + userId;
   $("#pay_open").click(function() {
-    if (state == "initial") {
-      $("<iframe>", {
-        frameBorder: 0,
-        width: "100%",
-        height: "100%",
-        src: payHref
-      }).appendTo("#payment_wrapper");
+    if (state === "initial") {
+      $("<iframe>").
+        attr("frameBorder", 0).
+        attr("src", payHref).
+        width("100%").
+        height("100%").
+        appendTo("#payment_wrapper");
     }
-    if (state == "open")
+    if (state === "open")
       return;
     state = "open";
     $("#pay_close").show();
