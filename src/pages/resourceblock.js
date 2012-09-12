@@ -280,7 +280,7 @@ function isValidDomainList(text) {
     return false;
   try {
     var parsedDomains = Filter._domainInfo(text, "|");
-    FilterNormalizer._verifyDomains(parsedDomains);
+    FilterNormalizer.verifyDomains(parsedDomains);
     return true;
   } catch(ex) {
     return false;

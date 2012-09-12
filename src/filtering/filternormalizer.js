@@ -98,7 +98,7 @@ var FilterNormalizer = {
     }
 
     // Ignore filters whose domains aren't formatted properly.
-    FilterNormalizer._verifyDomains(parsedFilter._domains);
+    FilterNormalizer.verifyDomains(parsedFilter._domains);
 
     // Nothing's wrong with the filter.
     return filter;
@@ -153,7 +153,7 @@ var FilterNormalizer = {
   // Throw an exception if the input contains invalid domains.
   // Input: domainInfo: { applied_on:array, not_applied_on:array }, where each
   //                    array entry is a domain.
-  _verifyDomains: function(domainInfo) {
+  verifyDomains: function(domainInfo) {
     for (var name in { "applied_on":1, "not_applied_on":1 }) {
       for (var i = 0; i < domainInfo[name].length; i++) {
         if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+$/i.test(domainInfo[name][i]) == false)
