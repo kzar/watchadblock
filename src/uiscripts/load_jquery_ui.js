@@ -6,7 +6,7 @@ function load_jquery_ui(callback) {
       addClass("adblock-ui-stylesheet");
     $(document.head || document.documentElement).append(link);
   }
-  load_css("jquery/css/custom-theme/jquery-ui.custom.css");
+  load_css("jquery/css/jquery-ui.custom.css");
   load_css("jquery/css/override-page.css");
 
   if (!SAFARI) {
