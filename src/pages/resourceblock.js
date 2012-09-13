@@ -185,9 +185,9 @@ function generateFilterSuggestions() {
     strippedUrl = strippedUrl.substr(0, strippedUrl.indexOf('/'));
     blocksuggestions.push(strippedUrl);
   }
-  if (strippedUrl.indexOf('.') !== strippedUrl.lastIndexOf('.')) {
-    if (strippedUrl.replace('.co.', '').indexOf('.') !== -1) {
-      strippedUrl = strippedUrl.match(/[^.]+\.(co\.)?[^.]+$/i)[0];
+  if (strippedUrl.indexOf('.') !== strippedUrl.replace(/\.$/, '').lastIndexOf('.')) {
+    if (strippedUrl.replace('.co.', '').replace(/\.$/, '').indexOf('.') !== -1) {
+      strippedUrl = strippedUrl.match(/[^.]+\.(co\.)?[^.]+\.?$/i)[0];
       blocksuggestions.push(strippedUrl);
     }
   }
@@ -259,7 +259,7 @@ function createfilter() {
 // Inputs: the domain of which the third-party-check part is requested
 // Returns the third-party-check domain
 function getThirdPartyDomain(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
+  var match = domain.match(/[^.]+\.(co\.)?[^.]+\.?$/) || [ domain ];
   return match[0].toLowerCase();
 }
 

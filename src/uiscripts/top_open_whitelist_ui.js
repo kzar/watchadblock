@@ -57,6 +57,11 @@ function top_open_whitelist_ui() {
       });
 
     var domainparts = domain.split('.');
+    if (domainparts[domainparts.length-1] === '') {
+      // Trailing dot domain
+      var TLDdot = domainparts[domainparts.length-2] + ".";
+      domainparts.splice(domainparts.length - 2, 2, TLDdot);
+    }
     if (domainparts[domainparts.length - 2] == "co") {
       var newTLD = "co." + domainparts[domainparts.length - 1];
       domainparts.splice(domainparts.length - 2, 2, newTLD);

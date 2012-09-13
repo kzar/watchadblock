@@ -143,8 +143,8 @@ BlockingFilterSet = function(patternFilterSet, whitelistFilterSet) {
 
 // Strip third+ level domain names from the domain and return the result.
 BlockingFilterSet._secondLevelDomainOnly = function(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
-  return match[0].toLowerCase();
+  var match = domain.match(/([^\.]+\.(?:co\.)?[^\.]+)\.?$/) || [ '', domain ];
+  return match[1].toLowerCase();
 }
 
 BlockingFilterSet.prototype = {
