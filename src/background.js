@@ -248,7 +248,11 @@
       var text = custom_filters[i];
       if (!Filter.isWhitelistFilter(text))
         continue;
-      var filter = PatternFilter.fromText(text);
+      try {
+        var filter = PatternFilter.fromText(text);
+      } catch (ex) { 
+        continue; 
+      }
       if (!filter.matches(url, ElementTypes.document, false))
         continue;
 
