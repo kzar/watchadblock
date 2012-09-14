@@ -6,7 +6,7 @@
              ":" + (e.lineno||"anywhere");
     STATS.msg(str);
     sessionStorage.setItem("errorOccurred", true);
-  })
+  });
   
   // OPTIONAL SETTINGS
 
@@ -332,6 +332,19 @@
         log = function() { };
     }
   }
+
+  show_delayed_payment_request_at = function(when) {
+    if (!when) 
+      return;
+    storage_set("show_delayed_payment_request_at", when);
+    var delayMillis = Math.max(when - Date.now(), 60E3);
+    window.setTimeout(function() {
+      if (storage_get("show_delayed_payment_request_at")) {
+        storage_set("show_delayed_payment_request_at", undefined);
+        openTab("pages/install/index.html?delayed&u=" + STATS.userId);
+      }
+    }, delayMillis);
+  };
 
   // MYFILTERS PASSTHROUGHS
 
@@ -795,6 +808,9 @@
     // Safari has race condition where userId may not be available inside
     // index.html, so pass it in explicitly.
     openTab("pages/install/index.html?u=" + STATS.userId);
+  }
+  else {
+    show_delayed_payment_request_at(storage_get("show_delayed_payment_request_at"));
   }
 
   if (!SAFARI) {
