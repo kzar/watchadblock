@@ -56,16 +56,10 @@ function top_open_whitelist_ui() {
         }
       });
 
-    var domainparts = domain.split('.');
-    if (domainparts[domainparts.length-1] === '') {
-      // Trailing dot domain
-      var TLDdot = domainparts[domainparts.length-2] + ".";
-      domainparts.splice(domainparts.length - 2, 2, TLDdot);
-    }
-    if (domainparts[domainparts.length - 2] == "co") {
-      var newTLD = "co." + domainparts[domainparts.length - 1];
-      domainparts.splice(domainparts.length - 2, 2, newTLD);
-    }
+    var fixedDomainPart = parseUri.secondLevelDomainOnly(domain, true);
+    var domainparts = domain.substr(0, domain.lastIndexOf(fixedDomainPart)).split('.');
+    domainparts.splice(domainparts.length-1, 1, fixedDomainPart);
+
     var location = document.location.pathname.match(/(.*?)(\/?)(\?|$)/);
     var pathparts = location[1].split('/');
 
@@ -73,7 +67,7 @@ function top_open_whitelist_ui() {
     // - sites without a third level domain name (e.g. foo.com)
     // - sites with an ip domain (e.g. 1.2.3.4)
     // Don't show the location slider on domain-only locations
-    var noThirdLevelDomain = (domainparts.length == 2);
+    var noThirdLevelDomain = (domainparts.length === 1);
     var domainIsIp = /^(\d+\.){3}\d+$/.test(domain);
     var showDomain = !(noThirdLevelDomain || domainIsIp);
     $("#modifydomain", page).toggle(showDomain);
@@ -82,7 +76,7 @@ function top_open_whitelist_ui() {
     $("#whitelister_dirs", page).toggle(showDomain || showPath);
 
     $("#domainslider", page).
-      attr("max", Math.max(domainparts.length - 2, 1));
+      attr("max", Math.max(domainparts.length - 1, 1));
     $("#pathslider", page).
       attr("max", Math.max(pathparts.length - 1, 1));
     $("#pathslider, #domainslider", page).
