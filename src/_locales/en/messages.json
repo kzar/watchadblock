@@ -703,13 +703,17 @@
   },
   "updatefromoldversion": {
     "message": "You are using an old version of AdBlock. Please first $updatelink$ to the newest version of AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1update$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
+  },
+  "adblock_outdated_chrome": {
+    "message": "You are using an old version of AdBlock. Please go to <a href='#'>the extensions page</a>, enable 'Developer mode' and click 'Update extensions now'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "block_an_ad_on_this_page": {
     "message": "Block an ad on this page",
@@ -991,7 +995,7 @@
   },
   "options": {
     "message": "Options",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "hide_this_button": {
     "message": "Hide this button",
