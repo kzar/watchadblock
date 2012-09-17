@@ -8,13 +8,11 @@ body {
   background: -webkit-gradient(linear, left top, left bottom, from(#bbf), to(#fff), color-stop(.5, #fff))
               no-repeat;
 }
-#header {
-  display: none; /* shown after loading completes */
-  margin: 50px 0;
+.header {
+  display: none;
   background: url('../../img/icon48.png') no-repeat;
-  padding-top: 5px;
-  padding-left: 55px;
-  z-index: 10;
+  padding: 5px 0 0 55px; /* Shift header text to make room for icon */
+  margin: 5px 0 25px 0; /* Whitespace around header */
 }
 h1 {
   margin: 0;
@@ -28,7 +26,6 @@ h2 {
   background: -webkit-gradient(radial, 15% 25%, 20, 15% 25%, 700, from(#fff), to(#ddf));
   /* even better in Chrome, get 100% spread instead of a fixed pixel value */
   background: -webkit-radial-gradient(15% 25%, circle, #fff 20px, #ddf 100%);
-  position: absolute; /* so it can slide */
   padding: 20px 40px;
   border-radius: 30px;
   border: 1px solid white;
@@ -80,28 +77,61 @@ h2 {
   font-style: italic;
 }
 #loading.card {
-  display: block; /* unlike other cards, this one is shown */
-  position: static;
+  display:block; /* its wrapper is hidden, not it */
   width: 280px;
 }
 #loading.card progress {
   width: 100%;
 }
-#start-safari.card {
-  width: 530px;
+#loading-delayed.card {
+  position: relative;
+  top: 50px;
+  left: 225px;
+  width: 150px;
+  font-style:italic;
 }
-#start-chrome.card {
-  width: 600px;
+#later.card {
+  width: 650px;
 }
-#autoupdate-howto.card {
-  width: 700px;
+#last-step.card {
+  width: 750px;
 }
-#autoupdate-howto.card ol li {
-  margin-bottom: 1.5em;
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  12% {
+    -webkit-transform: rotate(45deg);
+  }
+  25% {
+    -webkit-transform: rotate(90deg);
+  }
+  38% {
+    -webkit-transform: rotate(135deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  63% {
+    -webkit-transform: rotate(225deg);
+  }
+  75% {
+    -webkit-transform: rotate(270deg);
+  }
+  87% {
+    -webkit-transform: rotate(315deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
-#howto.card {
-  width: 500px;
+#spinner {
+  -webkit-animation-name: rotate;
+  -webkit-animation-delay: 0.6s;
+  -webkit-animation-duration: 2.8s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: step-start;
 }
-#howto.card img {
-  vertical-align: bottom;
+ul.links li {
+  margin-bottom: .3em;
 }
