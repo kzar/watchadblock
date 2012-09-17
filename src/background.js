@@ -333,14 +333,17 @@
     }
   }
 
+  // If |when| is specified, show the user a payment request at that time, or
+  // in one minute if |when| is in the past.
   show_delayed_payment_request_at = function(when) {
     if (!when) 
       return;
-    storage_set("show_delayed_payment_request_at", when);
+    var key = "show_delayed_payment_request_at";
+    storage_set(key, when);
     var delayMillis = Math.max(when - Date.now(), 60E3);
     window.setTimeout(function() {
-      if (storage_get("show_delayed_payment_request_at")) {
-        storage_set("show_delayed_payment_request_at", undefined);
+      if (storage_get(key)) {
+        storage_set(key, undefined);
         openTab("pages/install/index.html?delayed&u=" + STATS.userId);
       }
     }, delayMillis);
