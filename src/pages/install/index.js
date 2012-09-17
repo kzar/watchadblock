@@ -26,7 +26,6 @@ function showCard(cardId) {
 // Show a loading progress indicator for a few seconds while the user
 // gets her bearings.
 function showLoadingBar() {
-  $("#loading-wrapper").show();
   var start = Date.now();
   (function() {
 
@@ -86,6 +85,7 @@ var iframe = $("<iframe>", {
 $("#iframe-slot").html(iframe);
 
 if (delayed) {
+  $("#loading-wrapper").hide();
   $("#header-delayed").fadeIn();
   var cardId = "loading-delayed";
   showCard(cardId);
