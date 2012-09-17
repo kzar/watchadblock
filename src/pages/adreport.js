@@ -218,7 +218,7 @@ $("#step_flash_no").click(function() {
 
 
 // GENERAL STUFF
-SAFARI = true
+
 //check for updates
 var AdBlockVersion;
 $.ajax({
