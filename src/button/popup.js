@@ -14,7 +14,7 @@ function customize_for_this_tab() {
     if (paused) {
       show(["div_status_paused", "separator0", "div_options"]);
     } else if (info.disabled_site) {
-      show(["div_status_disabled", "separator0", "div_pause_adblock", 
+      show(["div_status_disabled", "separator0", 
             "div_options", "div_help_hide_start"]);
     } else if (info.whitelisted) {
       show(["div_status_whitelisted", "div_show_resourcelist", 
