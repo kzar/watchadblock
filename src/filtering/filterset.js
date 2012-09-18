@@ -141,10 +141,13 @@ BlockingFilterSet = function(patternFilterSet, whitelistFilterSet) {
   this._matchCache = {};
 }
 
-// Strip third+ level domain names from the domain and return the result.
-BlockingFilterSet._secondLevelDomainOnly = function(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
-  return match[0].toLowerCase();
+// Checks if the two domains have the same origin
+// Inputs: the two domains
+// Returns: true if third-party, false otherwise
+BlockingFilterSet.checkThirdParty = function(domain1, domain2) {
+  var match1 = parseUri.secondLevelDomainOnly(domain1, false);
+  var match2 = parseUri.secondLevelDomainOnly(domain2, false);
+  return (match1 !== match2);
 }
 
 BlockingFilterSet.prototype = {
@@ -162,9 +165,7 @@ BlockingFilterSet.prototype = {
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, frameDomain, returnFilter) {
     var urlDomain = parseUri(url).hostname;
-    var urlOrigin = BlockingFilterSet._secondLevelDomainOnly(urlDomain);
-    var docOrigin = BlockingFilterSet._secondLevelDomainOnly(frameDomain);
-    var isThirdParty = (urlOrigin != docOrigin);
+    var isThirdParty = BlockingFilterSet.checkThirdParty(urlDomain, frameDomain);
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;

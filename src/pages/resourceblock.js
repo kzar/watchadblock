@@ -89,13 +89,14 @@ function generateTable() {
     // Cell 5: third-party or not
     var resourceDomain = parseUri(i).hostname;
     var isThirdParty = (type.name === 'hiding' ? false :
-                          checkThirdParty(resources[i].domain, resourceDomain));
+        BlockingFilterSet.checkThirdParty(resources[i].domain, resourceDomain));
     cell = $("<td>").
         text(isThirdParty ? translate('yes') : translate('no')).
         attr("title", translate("resourcedomain", resources[i].domain || resourceDomain)).
         attr("data-column", "thirdparty");
     row.append(cell);
     resources[i].isThirdParty = isThirdParty;
+    resources[i].resourceDomain = resourceDomain;
 
     // Cells 2-5 may get class=clickableRow
     if (!disabled)
@@ -185,11 +186,10 @@ function generateFilterSuggestions() {
     strippedUrl = strippedUrl.substr(0, strippedUrl.indexOf('/'));
     blocksuggestions.push(strippedUrl);
   }
-  if (strippedUrl.indexOf('.') !== strippedUrl.lastIndexOf('.')) {
-    if (strippedUrl.replace('.co.', '').indexOf('.') !== -1) {
-      strippedUrl = strippedUrl.match(/[^.]+\.(co\.)?[^.]+$/i)[0];
-      blocksuggestions.push(strippedUrl);
-    }
+  
+  var minimumdomain = parseUri.secondLevelDomainOnly(strippedUrl, true);
+  if (minimumdomain !== strippedUrl) {
+    blocksuggestions.push(minimumdomain);
   }
 
   var suggestions = [];
@@ -253,23 +253,6 @@ function createfilter() {
   });
 
   return urlfilter + (options.length ? '$' + options.join(',') : '');
-}
-
-// Get the third-party domain
-// Inputs: the domain of which the third-party-check part is requested
-// Returns the third-party-check domain
-function getThirdPartyDomain(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
-  return match[0].toLowerCase();
-}
-
-// Checks if it is a third-party resource or not
-// Inputs: the two domains to check
-// Returns true if third-party, false otherwise
-function checkThirdParty(domain1, domain2) {
-  var match1 = getThirdPartyDomain(domain1);
-  var match2 = getThirdPartyDomain(domain2);
-  return (match1 !== match2);
 }
 
 // Checks if the text in the domain list textbox is valid or not
@@ -436,11 +419,13 @@ function finally_it_has_loaded_its_stuff() {
       var isThirdParty = chosenResource.isThirdParty;
       if (!isThirdParty) {
         $("#thirdparty + * + *, #thirdparty + *, #thirdparty").remove();
-      } else
+      } else {
         // Use .find().text() so data from query string isn't injected as HTML
         $("#thirdparty + label").
           html(translate("thirdpartycheckbox", "<i></i>")).
-          find("i").text(getThirdPartyDomain(chosenResource.domain));
+          find("i").
+          text(parseUri.secondLevelDomainOnly(chosenResource.resourceDomain, true));
+      }
 
       $("#domainlist").
         val(chosenResource.domain.replace(/^www\./, '')).
