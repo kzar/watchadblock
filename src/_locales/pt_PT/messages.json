@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "Uma nota para os amantes do CatBlock:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -14,6 +14,10 @@
   "adblock_is_paused": {
     "message": "AdBlock está em pausa. Portanto, não há recursos a serem capturadas, por isso esta página não pode ser usada. Retome o AdBlock primeiro e tente novamente.",
     "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Está a usar uma versão antiga do AdBlock. Por favor vá à <a href='#'>página das extensões</a>, active o 'Modo de programador' e clique 'Atualizar extensões agora'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock não corre nas seguintes páginas:",
@@ -829,7 +833,7 @@
   },
   "options": {
     "message": "Opções",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "lista de alterações",
@@ -1247,7 +1251,7 @@
   },
   "updatefromoldversion": {
     "message": "Está a utilizar uma versão antiga do AdBlock. Visite $updatelink$ para actualizar para a versão mais recente da AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1actualizar$2",
