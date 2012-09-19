@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "En besked til CatBlock elskere:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -15,6 +15,10 @@
     "message": "AdBlock er midlertidigt afbrudt. Der bliver derfor ikke blokeret noget, så denne side kan ikke bruges. Genaktiver AdBlock og prøv igen.",
     "description": "resourceblocking page string"
   },
+  "adblock_outdated_chrome": {
+    "message": "Du bruger en gammel version af AdBlock. Gå venligst til <a href='#'>siden for udvidelser</a>, aktiver 'Udviklertilstand' og klik på 'Opdater udvidelser nu'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock vil ikke køre på nogen sider der passer med:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -30,6 +34,10 @@
   "adreport2": {
     "message": "Okay, så du har fundet en reklame på en hjemmeside? Nå, men jeg vil hjælpe med og finde det rette sted og raportere den!<br/> Husk: rapportering af reklamer er frivilligt. Hvis du ikke ønsker at gøre det, kan du blot lukke dette vindue og nøjes med at blokere den for kun dig, ved at tilføje den under 'Tilpas' tabben under Indstillinger!",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
+  },
+  "adsoneverysite": {
+    "message": "Ser du reklamer på de fleste sider du besøger (din startside, firmaets intranet sider mv.), men når du ser de samme sider på en andens computer, er der ingen reklamer?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
   },
   "adstillappear": {
     "message": "Vises reklamen stadig?",
@@ -300,6 +308,10 @@
   "close": {
     "message": "Luk",
     "description": "resourceblocking page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Du kan nu lukke denne fane og begynde at surfe internettet uden reklamer. God fornøjelse!",
+    "description": "Install page string"
   },
   "correctfilters": {
     "message": "Ret filtre",
@@ -675,6 +687,10 @@
     "message": "Rediger dine filtre manuelt:",
     "description": "Subtitle on the third tab"
   },
+  "maybemalware": {
+    "message": "Ikke alle sider på internettet indeholder reklamer. En af årsagerne til, at du ser mange reklamer, kan være at din computer indeholder noget uønsket software. Prøv at slå alle udvidelser fra, én efter én, og se om problemet forsvinder. Hvis ikke kan du prøve at lave en komplet scanning af din computer, med opdateret antivirus software, da dette kan skyldes malware på din pc.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
   "modifydomain": {
     "message": "Domæne:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
@@ -743,6 +759,10 @@
     "message": "OK, hvad så nu?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   },
+  "oneverysitetitle": {
+    "message": "Reklamer overalt!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
   "only_block_ads_on_these_sites": {
     "message": "Bloker kun reklamer på disse domæner:",
     "description": "Label for textbox where user enters a list of sites on Customize tab"
@@ -755,9 +775,65 @@
     "message": "Dette filter gælder for følgende element typer:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "I Opera versioner før version 12.10, kan det forekomme at nogle reklamer ikke bliver fjernet, da nogle af scannings reglerne ikke virker i denne version. Problemet er løst i version 12.10 af Opera. Når opdateringen finder sted, vil alle reklamer blive blokeret.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "I Opera versioner før version 12.10, kan nogle muligheder være deaktiveret. Dette fordi de ikke er understøttet i disse ældre versioner af Opera.",
+    "description": "Opera < 12.10 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Du kan også øge værdien af\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Er du vild med udvidelsen? Hvis du er, vil jeg blive glad hvis du vil overveje at give en donation. Find mere information under 'Valgmuligheder'",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Hvis du virkelig er vild med denne udvidelse, vil jeg blive glad hvis du ville overveje at give en donation via",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Aktiveret i $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Domænet hvor AdBlock ikke skal blokere noget",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "For flere muligheder, kan du klikke på ikonet i værktøjslinien, eller åbne indstillinger via Opera &rArr; Udvidelser &rArr; Administrer udvidelser &rArr; skruenøgle ikon &rArr; Indstillinger",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Vis reklamer på et domæne",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Du genaktivere knappen under indstillinger for denne udvidelse",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Vis knap i værktøjslinien",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
     "message": "Indstillinger",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "changelog",
@@ -1013,6 +1089,10 @@
     "message": "Det var da let",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
+  "thats_it": {
+    "message": "Det var det!",
+    "description": "Install page string"
+  },
   "thirdparty": {
     "message": "Tredieparts",
     "description": "Resource list column title telling if the resource originates from a different domain"
@@ -1101,6 +1181,10 @@
     "message": "xmlhttprequest",
     "description": "A resource type"
   },
+  "undo_last_block": {
+    "message": "Fortryd seneste blokering.",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "unpause": {
     "message": "genoptag",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
@@ -1167,7 +1251,7 @@
   },
   "updatefromoldversion": {
     "message": "Du benytter en gammel version af AdBlock. Venligst $updatelink$ først for og få den nyeste version af AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1opdater$2",
