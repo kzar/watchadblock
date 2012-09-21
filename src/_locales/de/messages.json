@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "Hinweis an alle die CatBlock lieben:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -14,6 +14,10 @@
   "adblock_is_paused": {
     "message": "AdBlock ist pausiert. Deshalb können keine Elemente aufgelistet werden. Starten Sie zuerst AdBlock wieder und versuchen Sie es erneut.",
     "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Sie benutzen eine veraltete Version von AdBlock. Bitte rufen Sie die <a href='#'>Erweiterungen-Seite</a> auf, aktivieren Sie den \"Entwicklermodus\" und klicken Sie auf \"Erweiterungen jetzt aktualisieren\".",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock wird auf allen Seiten deaktiviert, auf die folgendes zutrifft:",
@@ -274,7 +278,7 @@
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
-    "message": "Filter überprüfen und korrigieren:",
+    "message": "Filter überprüfen und fehlerhafte Filter entfernen:",
     "description": "Option at the bottom of the third options tab"
   },
   "click_extensions": {
@@ -829,7 +833,7 @@
   },
   "options": {
     "message": "Einstellungen",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "Changelog",
@@ -1177,6 +1181,10 @@
     "message": "xmlhttprequest",
     "description": "A resource type"
   },
+  "undo_last_block": {
+    "message": "Zuletzt hinzugefügten Filter wieder entfernen",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "unpause": {
     "message": "AdBlock wieder starten",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
@@ -1243,7 +1251,7 @@
   },
   "updatefromoldversion": {
     "message": "Sie benutzen eine veraltete Version von AdBlock. Bitte $updatelink$ Sie zuerst AdBlock auf die neueste Version",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1aktualisieren$2",
