@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "Poznámka milovníkom CatBlocku:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -14,6 +14,10 @@
   "adblock_is_paused": {
     "message": "AdBlock je pozastavený. Pretože neboli zachytené žiadne prvky, nie je možné túto stránku použiť. Najprv spustite AdBlock a potom to znovu skúste.",
     "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Používate zastaranú verziu AdBlocku. Prosím choďte na <a href='#'>stránku s rozšíreniami</a>, zapnite 'Režim pre vývojárov' a kliknite na 'Aktualizovať rozšírenia'.",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock sa nebude spúšťať na zodpovedajúcich stránkach:",
@@ -829,7 +833,7 @@
   },
   "options": {
     "message": "Nastavenia",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "zoznam zmien",
@@ -1177,6 +1181,10 @@
     "message": "xml-http žiadosť",
     "description": "A resource type"
   },
+  "undo_last_block": {
+    "message": "Vrátiť späť poslednú blokovanú reklamu",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "unpause": {
     "message": "Spustiť AdBlock",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
@@ -1243,7 +1251,7 @@
   },
   "updatefromoldversion": {
     "message": "Používate zastaralú verziu programu AdBlock. Prosím, najprv musíte aktualizovať $updatelink$ AdBlock na najnovšiu verziu",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1update$2",
