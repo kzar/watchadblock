@@ -711,6 +711,10 @@
       }
     }
   },
+  "adblock_outdated_chrome": {
+    "message": "Používáte starou verzi AdBlock. Prosím, jděte na stránku <a href='#'>Rozšíření</a>, povolte 'Režim pro vývojáře' a klikněte na 'Aktualizovat rozšíření'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
   "block_an_ad_on_this_page": {
     "message": "Blokovat reklamu na této stránce",
     "description": "Toolbar button menu entry and context menu entry"
@@ -981,13 +985,17 @@
     "message": "Pozastavit AdBlock",
     "description": "Menu entry to pause AdBlock."
   },
+  "undo_last_block": {
+    "message": "Vrátit zpět poslední blok",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "dont_run_on_this_page": {
     "message": "Nepoužívat na této stránce",
     "description": "Menu entry to whitelist a page"
   },
   "options": {
     "message": "Nastavení",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "hide_this_button": {
     "message": "Skrýt toto tlačítko",
@@ -1210,5 +1218,81 @@
   "custompattern": {
     "message": "Vlastní:",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+    },
+  "oneverysitetitle": {
+    "message": "Reklamy jsou všude!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
+  "adsoneverysite": {
+    "message": "Vidíte reklamy na většině stránek, které navštívíte (na vaší úvodní stránce, na stránce zaměstnavatele, atd.), ale když návštívíte tytéž stránky na jiném počítači, jsou reklamy pryč?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
+  "maybemalware": {
+    "message": "Ne všechny stránky na internetu obsahují reklamy. Pokud vidíte tolik reklam, může to znamenat, že váš počítač obsahuje nějaký nežádoucí software. Zkuste vypnout všechna rozšíření jednoho po druhém, abyste zjistili, zda problém zmizí. Pokud ne, zkuste (úplnou) kontrolu systému s aktualizovaným antivirovým softwarem, protože to může být způsobeno nějakým malwarem.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "opera_reenable_button": {
+    "message": "Tlačítko můžete znovu povolit v nastavení tohoto rozšíření",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_linkunblock": {
+    "message": "Zobrazit reklamy na doméně",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_excludedomainorurl": {
+    "message": "Doména, kde by AdBlock neměl nic blokovat",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Zobrazit tlačítko panelu nástrojů",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Můžete také zvýšit hodnotu\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_for_more_options": {
+    "message": "Pro více možností, můžete kliknout na tlačítko panelu nástrojů nebo otevřete předvolby přes Opera &rArr; Rozšíření &rArr; Spravovat rozšíření &rArr; ikona klíče &rArr; Předvolby",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "A je to!",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Můžete zavřít tuto kartu a začít procházení bez reklam. Dobrou zábavu!",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "Pokud se vám líbí toto rozšíření, prosím zvažte poslaní daru prostřednictvím nabídky na stránce v nastavení.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_donations_button": {
+    "message": "Líbí se vám toto rozšíření? Pokud ano, prosím zvažte poslání daru pomocí nabídky na stránce v nastavení!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_enabledin": {
+    "message": "Aktivní v $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_120_install": {
+    "message": "V Opeře před verzí 12.10, nebudou některé reklamy blokovány, protože není možné analyzovat všechna pravidla. To lze napravit aktualizací Opery na verzi 12.10. Od tohoto okamžiku budou všechny reklamy blokovány správně.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "V Opeře před verzí 12.10, jsou některé možnosti zašedivělé, protože nejsou ve starších verzích podporovány.",
+    "description": "Opera < 12.10 warning above options page"
   }
 }
