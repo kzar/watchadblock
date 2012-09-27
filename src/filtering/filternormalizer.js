@@ -71,6 +71,9 @@ var FilterNormalizer = {
         throw "Invalid CSS selector syntax";
       }
 
+      // Make sure we don't break if the filter actually is a javascript function
+      FilterNormalizer._checkXSS(selectorPart);
+
       // On a few sites, we have to ignore [style] rules.
       // Affects Chrome (crbug 68705) and Safari (issue 6225).
       if (/style([\^\$\*]?=|\])/.test(filter)) {
@@ -99,6 +102,9 @@ var FilterNormalizer = {
 
     // Ignore filters whose domains aren't formatted properly.
     FilterNormalizer.verifyDomains(parsedFilter._domains);
+
+    // Make sure we don't break if the filter actually is a javascript function
+    FilterNormalizer._checkXSS(filter);
 
     // Nothing's wrong with the filter.
     return filter;
@@ -150,6 +156,14 @@ var FilterNormalizer = {
     return domain + "##" + resultFilter;
   },
 
+  // Checks if the filter is a security risk for us
+  // Throw an exeption if it is a potential threat
+  // Input: text (string): the item to check
+  _checkXSS: function(text) {
+    if (({})[text])
+      throw "Filter causes security risk";
+  },
+
   // Throw an exception if the input contains invalid domains.
   // Input: domainInfo: { applied_on:array, not_applied_on:array }, where each
   //                    array entry is a domain.
@@ -158,6 +172,8 @@ var FilterNormalizer = {
       for (var i = 0; i < domainInfo[name].length; i++) {
         if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+\.?$/i.test(domainInfo[name][i]) == false)
           throw "Invalid domain: " + domainInfo[name][i];
+        // Make sure we don't break if the domain actually is a javascript function
+        FilterNormalizer._checkXSS(domainInfo[name][i]);
       }
     }
   }
