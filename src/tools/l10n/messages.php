@@ -10,7 +10,7 @@
 
   $locale = $_GET["locale"];
 
-  if (!preg_match('/^[a-zA-Z_-]+$/', $locale))
+  if (!preg_match('/^[a-zA-Z_-]+$/', $locale)) {
     go("");
     exit(1);
   }
