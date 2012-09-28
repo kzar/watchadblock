@@ -22,7 +22,6 @@ var run_bandaids = function() {
         var id = styles[i].innerText.match(re);
         if(id) {
           styles[i].innerText = '#' + id[1] + ' { display: none }';
-          return;
         }
       }
     },
@@ -32,6 +31,8 @@ var run_bandaids = function() {
       if (el) {el.style.setProperty("margin-right", "1px", null);}
       el = document.querySelector(".Managed .WithSkyscraper #MainContent");
       if (el) {el.style.setProperty("right", "1px", null);}
+      el = document.getElementById("SkyscraperContent");
+      if (el) {el.style.setProperty("display", "none", null);}
     },
 
     hkpub: function() {

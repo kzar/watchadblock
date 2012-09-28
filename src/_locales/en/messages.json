@@ -1,6 +1,6 @@
 ﻿{
   "description1": {
-    "message": "The most popular Chrome extension, with over 5 million users!  Blocks ads all over the web.",
+    "message": "The most popular Chrome extension, with over 8 million users!  Blocks ads all over the web.",
     "description": "Extension description in manifest"
   },
   "buttoncancel": {
@@ -10,6 +10,10 @@
   "buttonok": {
     "message": "OK!",
     "description": "OK button"
+  },
+  "reportpubliclyavailable": {
+    "message": "Note: your report may become publicly available. Keep that in mind before including anything private.",
+    "description": "Ad report page string, when you're about to submit a report"
   },
   "buttonblockit": {
     "message": "Block it!",
@@ -27,7 +31,6 @@
     "message": "Third-party",
     "description": "Resource list column title telling if the resource originates from a different domain"
   },
-
   "installedtitle": {
     "message": "AdBlock is now installed!",
     "description": "Title for the installation success page"
@@ -140,7 +143,6 @@
     "message": "Back",
     "description": "Back to previous wizard page button"
   },
-
   "findingads": {
     "message": "Finding ads...<br/><br/><i>This'll only take a moment.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
@@ -153,7 +155,6 @@
     "message": "Click the ad, and I'll walk you through blocking it.",
     "description": "When you have to click the ad to continue"
   },
-
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock won't run on any page matching:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -170,7 +171,6 @@
     "message": "Exclude",
     "description": "Button for excluding a domain in the whitelister dialog"
   },
-
   "subscribingtitle": {
     "message": "Subscribing to filter list...",
     "description": "abp: link subscriber title"
@@ -183,7 +183,6 @@
     "message": "Failed!",
     "description": "abp: link subscriber result"
   },
-
   "optionsversion": {
     "message": "Version $version$",
     "description": "Version number",
@@ -210,7 +209,6 @@
     "message": "Customize",
     "description": "A tab on the options page"
   },
-
   "generaloptions": {
     "message": "General options",
     "description": "Title of first tab page"
@@ -225,7 +223,7 @@
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "I like Google's text ads; don't block those.",
-    "description": "Install page text; slightly shorter than the 'googletextads' message." 
+    "description": "Install page text; slightly shorter than the 'googletextads' message."
   },
   "showcontextmenus": {
     "message": "Add items to the right click menu.",
@@ -235,7 +233,6 @@
     "message": "Show debug statements in Console Log (which slows down AdBlock)",
     "description": "Option on first tab page"
   },
-
   "updatedrightnow": {
     "message": "updated right now",
     "description": "Label for subscription"
@@ -420,10 +417,6 @@
     "message": "Korean filters",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-  "filterpolish": {
-    "message": "Polish filters",
-    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
-  },
   "filtereasylist_plus_spanish": {
     "message": "Spanish filters",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -432,7 +425,6 @@
     "message": "EasyPrivacy (privacy protection)",
     "description": "A filter list. Don't translate the name 'EasyPrivacy'."
   },
-
   "blacklistclickmessage": {
     "message": "Right click an ad on a page to block it -- or block it here manually.",
     "description": "Message at the top of the blacklist options tab"
@@ -711,13 +703,17 @@
   },
   "updatefromoldversion": {
     "message": "You are using an old version of AdBlock. Please first $updatelink$ to the newest version of AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1update$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
+  },
+  "adblock_outdated_chrome": {
+    "message": "You are using an old version of AdBlock. Please go to <a href='#'>the extensions page</a>, enable 'Developer mode' and click 'Update extensions now'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "block_an_ad_on_this_page": {
     "message": "Block an ad on this page",
@@ -989,13 +985,17 @@
     "message": "Pause AdBlock",
     "description": "Menu entry to pause AdBlock."
   },
+  "undo_last_block": {
+    "message": "Undo last block",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "dont_run_on_this_page": {
     "message": "Don't run on this page",
     "description": "Menu entry to whitelist a page"
   },
   "options": {
     "message": "Options",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "hide_this_button": {
     "message": "Hide this button",
@@ -1202,5 +1202,97 @@
   "safari50_updatenotice": {
     "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. <a>Upgrade now</a>.",
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
+  },
+  "searchexplanation": {
+    "message": "Use * to match zero or more letters.  For example, 'banner*.gif image' matches the images 'banner.gif', 'banner123.gif', and 'bannerxyz.gif'.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Search resources...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
+  },
+  "nosearchresults": {
+    "message": "No resources found",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
+  "custompattern": {
+    "message": "Custom:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
+  "oneverysitetitle": {
+    "message": "Ads everywhere!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
+  "adsoneverysite": {
+    "message": "Do you see ads on most sites that you visit (your start page, your employer's web site, etc.), but when you visit those same sites on a friend's computer, the ads are gone?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
+  "maybemalware": {
+    "message": "Not all pages on the internet contain advertisements. The fact that you see so many may indicate that your computer contains some unwanted software. Try disabling all extensions one by one and see if the problem disappears. If not, try running a (full) system scan with up-to-date antivirus software, as this could possibly be caused by malware.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "opera_reenable_button": {
+    "message": "You can re-enable the button in the preferences of this extension",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_linkunblock": {
+    "message": "Show ads on a domain",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_excludedomainorurl": {
+    "message": "The domain where AdBlock shouldn't block anything",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Show the toolbar button",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_can_also_change_setting": {
+    "message": "You can also increase the value of\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_for_more_options": {
+    "message": "For more options, you can click the toolbar button or open the preferences via Opera &rArr; Extensions &rArr; Manage Extensions &rArr; wrench icon &rArr; Preferences",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "That's it!",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "You can close this tab and begin browsing ad-free. Have fun!",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "If you really like this extension, please consider donating via the options page.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_donations_button": {
+    "message": "Like this extension? If so, please consider donating in the options page!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_enabledin": {
+    "message": "Enabled in $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_120_install": {
+    "message": "In Opera versions before Opera 12.10, some ads may not be blocked as it is not possible to parse all rules in those versions. This will be fixed when Opera updates to version 12.10. From that moment, all ads will be correctly blocked.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "In Opera versions before Opera 12.10, some options are greyed out, because they can't be supported in those versions.",
+    "description": "Opera < 12.10 warning above options page"
   }
 }

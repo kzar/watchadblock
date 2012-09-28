@@ -126,8 +126,12 @@ MyFilters.prototype.rebuild = function() {
 
   //Exclude google search results ads if the user has checked that option
   if (get_settings().show_google_search_text_ads) {
-    texts.push("@@||google.*/search?$elemhide"); // standard search
-    texts.push("@@||www.google.*/|$elemhide");   // Google Instant
+    // Standard search
+    texts.push("@@||google.*/search?$elemhide");
+    // Google Instant: go to google.com, type 'hotel' and don't press Enter
+    texts.push("@@||www.google.*/|$elemhide");
+    // Google Instant: open a Chrome tab, type 'hotel' and don't press Enter
+    texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide");
   }
 
   texts = texts.join('\n').split('\n');
@@ -141,8 +145,11 @@ MyFilters.prototype.rebuild = function() {
   var hidingText = [];
   var whitelistText = [];
   var patternText = [];
+  var hidingExcludeText = [];
   for (var text in unique) {
-    if (Filter.isSelectorFilter(text))
+    if (Filter.isSelectorExcludeFilter(text))
+      hidingExcludeText.push(text);
+    else if (Filter.isSelectorFilter(text))
       hidingText.push(text);
     else if (Filter.isWhitelistFilter(text))
       whitelistText.push(text);
@@ -151,6 +158,7 @@ MyFilters.prototype.rebuild = function() {
   }
 
   this.hiding = FilterSet.fromTexts(hidingText);
+  this.hidingWhitelist = FilterSet.fromTexts(hidingExcludeText);
   this.blocking = new BlockingFilterSet(
     FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
   );
@@ -378,7 +386,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'ja': return 'japanese';
       case 'ko': return 'easylist_plun_korean';
       case 'nl': return 'dutch';
-      case 'pl': return 'easylist_plus_polish';//sorry for the other Polish list
+      case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
       case 'uk': return 'russian';
@@ -405,7 +413,7 @@ MyFilters.prototype._make_subscription_options = function() {
   // When modifying a list, IDs mustn't change!
   return {
     "adblock_custom": { // AdBlock custom filters
-      url: "http://chromeadblock.com/filters/adblock_custom.txt",
+      url: "https://chromeadblock.com/filters/adblock_custom.txt",
     },
     "easylist": { // EasyList
       url: "http://adblockplus.mozdev.org/easylist/easylist.txt"
@@ -447,7 +455,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "chinese": { // Additional Chinese filters
-      url: "http://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
+      url: "https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       requiresList: "easylist",
     },
     "czech": { // Czech filters
@@ -470,9 +478,6 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "easylist_plun_korean": {  // Korean filters
       url: "https://secure.fanboy.co.nz/fanboy-korean.txt",
-    },
-    "polish": { // Polish filters
-      url: "http://www.niecko.pl/adblock/adblock.txt",
     },
     "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",

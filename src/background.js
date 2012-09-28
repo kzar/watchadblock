@@ -1,3 +1,13 @@
+  // Send the file name and line number of any error message. This will help us
+  // to trace down any frequent errors we can't confirm ourselves.
+  window.addEventListener("error", function(e) {
+    var str = "Error: " +
+             (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
+             ":" + (e.lineno||"anywhere");
+    STATS.msg(str);
+    sessionStorage.setItem("errorOccurred", true);
+  });
+  
   // OPTIONAL SETTINGS
 
   function Settings() {
@@ -70,7 +80,7 @@
   // Implement blocking via the Chrome webRequest API.
   if (!SAFARI) {
     // Stores url, whitelisting, and blocking info for a tabid+frameid
-    // TODO: can we avoid making this a global once 'old' style dies?
+    // TODO: can we avoid making this a global?
     frameData = {
       // Returns the data object for the frame with ID frameId on the tab with
       // ID tabId. If frameId is not specified, it'll return the data for all
@@ -191,16 +201,23 @@
       }
 
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
-      if (blocked && elType === ElementTypes.subdocument)
+      if (blocked && elType === ElementTypes.image) {
+        // 1x1 px transparant image.
+        // Same URL as ABP and Ghostery to prevent conflict warnings (issue 7042)
+        return {redirectUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=="};
+      }
+      if (blocked && elType === ElementTypes.subdocument) {
         return { redirectUrl: "about:blank" };
-      else
-        return { cancel: blocked };
+      }
+      return { cancel: blocked };
     }
 
     // Popup blocking
     function onCreatedNavigationTargetHandler(details) {
       var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
       if (opener === undefined)
+        return;
+      if (frameData.get(details.sourceTabId, 0).whitelisted)
         return;
       var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
       if (match)
@@ -226,14 +243,17 @@
   // Returns: true if a filter was found and removed; false otherwise.
   try_to_unwhitelist = function(url) {
     url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
-    var loweredUrl = url.toLowerCase();
     var custom_filters = get_custom_filters_text().split('\n');
     for (var i = 0; i < custom_filters.length; i++) {
       var text = custom_filters[i];
       if (!Filter.isWhitelistFilter(text))
         continue;
-      var filter = PatternFilter.fromText(text);
-      if (!filter.matches(url, loweredUrl, ElementTypes.document, false))
+      try {
+        var filter = PatternFilter.fromText(text);
+      } catch (ex) { 
+        continue; 
+      }
+      if (!filter.matches(url, ElementTypes.document, false))
         continue;
 
       custom_filters.splice(i, 1); // Remove this whitelist filter text
@@ -281,6 +301,24 @@
     set_custom_filters_text(text.trim());
   }
 
+  // Returns true if there's a recently created custom selector filter.  If
+  // |url| is truthy, the filter must have been created on |url|'s domain.
+  has_last_custom_filter = function(url) {
+    var filter = sessionStorage.getItem('last_custom_filter');
+    if (!filter)
+      return false;
+    if (!url)
+      return true;
+    return filter.split("##")[0] === parseUri(url).hostname;
+  }
+
+  remove_last_custom_filter = function() {
+    if (sessionStorage.getItem('last_custom_filter')) {
+      remove_custom_filter(sessionStorage.getItem('last_custom_filter'));
+      sessionStorage.removeItem('last_custom_filter');
+    }
+  }
+
   get_settings = function() {
     return _settings.get_all();
   }
@@ -298,6 +336,22 @@
         log = function() { };
     }
   }
+
+  // If |when| is specified, show the user a payment request at that time, or
+  // in one minute if |when| is in the past.
+  show_delayed_payment_request_at = function(when) {
+    if (!when) 
+      return;
+    var key = "show_delayed_payment_request_at";
+    storage_set(key, when);
+    var delayMillis = Math.max(when - Date.now(), 60E3);
+    window.setTimeout(function() {
+      if (storage_get(key)) {
+        storage_set(key, undefined);
+        openTab("pages/install/index.html?delayed&u=" + STATS.userId);
+      }
+    }, delayMillis);
+  };
 
   // MYFILTERS PASSTHROUGHS
 
@@ -384,14 +438,27 @@
   //                           Extension Gallery, where extensions don't run.
   //   }
   // Returns: null (asynchronous)
-  getCurrentTabInfo = function(callback) {
-    chrome.tabs.getSelected(undefined, function(tab) {
+  getCurrentTabInfo = function(callback, secondTime) {
+    chrome.tabs.query({active: true, windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
+      if (tabs.length === 0)
+        return; // For example: only the background devtools or a popup are opened
+      var tab = tabs[0];
+
+      if (!tab.url) {
+        // Issue 6877: tab URL is not set directly after you opened a window
+        // using window.open()
+        if (!secondTime)
+          window.setTimeout(function() {
+            getCurrentTabInfo(callback, true);
+          }, 250);
+        return;
+      }
+
       var disabled_site = page_is_unblockable(tab.url);
 
       var result = {
         tab: tab,
-        disabled_site: disabled_site,
-        domain: parseUri(tab.url).hostname,
+        disabled_site: disabled_site
       };
       if (!disabled_site)
         result.whitelisted = page_is_whitelisted(tab.url);
@@ -404,20 +471,15 @@
   //   url: the url of the page
   //   type: one out of ElementTypes, default ElementTypes.document,
   //         to check what the page is whitelisted for: hiding rules or everything
-  //   returnFilter: if the filter that whitelisted the page should be returned
-  page_is_whitelisted = function(url, type, returnFilter) {
+  page_is_whitelisted = function(url, type) {
     if (!url) { // Safari empty/bookmarks/top sites page
       return true;
     }
     url = url.replace(/\#.*$/, ''); // Remove anchors
-    var loweredUrl = url.toLowerCase();
     if (!type)
       type = ElementTypes.document;
     var whitelist = _myfilters.blocking.whitelist;
-    var match = whitelist.matches(url, loweredUrl, type, parseUri(url).hostname, false);
-    if (match)
-      return returnFilter ? match._text : true;
-    return false;
+    return whitelist.matches(url, type, parseUri(url).hostname, false);
   }
 
   if (!SAFARI) {
@@ -454,6 +516,14 @@
             {tab: tab}
           );
         });
+
+        if (has_last_custom_filter(info.tab.url)) {
+          addMenu(translate("undo_last_block"), function(tab) {
+            remove_last_custom_filter();
+            chrome.tabs.reload();
+          });
+        }
+
       }
 
       function setBrowserButton(info) {
@@ -489,6 +559,11 @@
     var custom_filters = get_custom_filters_text();
     try {
       if (FilterNormalizer.normalizeLine(filter)) {
+        if (Filter.isSelectorFilter(filter)) {
+          sessionStorage.setItem('last_custom_filter', filter);
+          if (!SAFARI)
+            updateButtonUIAndContextMenus();
+        }
         custom_filters = custom_filters + '\n' + filter;
         set_custom_filters_text(custom_filters);
         return null;
@@ -525,22 +600,25 @@
   // Inputs: options object containing:
   //           domain:string the domain of the calling frame.
   get_content_script_data = function(options, sender) {
-    var whitelisted = page_is_whitelisted(sender.tab.url);
+    var disabled = page_is_unblockable(sender.tab.url);
     var settings = get_settings();
     var result = {
-      page_is_whitelisted: whitelisted,
+      disabled_site: disabled,
       adblock_is_paused: adblock_is_paused(),
       settings: settings,
       selectors: []
     };
-    if (whitelisted || result.adblock_is_paused)
+    if (!disabled) {
+      result.page_is_whitelisted = page_is_whitelisted(sender.tab.url);
+    }
+    if (disabled || result.adblock_is_paused || result.page_is_whitelisted)
       return result;
 
     // Not whitelisted, and running on adblock_start. We have to send the
     // CSS-hiding rules.
     if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
       result.selectors = _myfilters.hiding.
-        filtersFor(options.domain, function(f) { return f.selector; });
+        filtersFor(options.domain);
     }
 
     return result;
@@ -575,12 +653,7 @@
         'send_content_to_back': {
           allFrames: true,
           include: [
-            "jquery/jquery.min.js",
-            // we must get jQuery into every frame, but that clobbers 
-            // jquery UI installed by top_open_blacklist_ui but not
-            // needed by us.  Reinstall on top_open_blacklist_ui's behalf.
-            "jquery/jquery-ui.custom.min.js",
-            "uiscripts/blacklisting/send_content_to_back.js"
+            "uiscripts/send_content_to_back.js"
             ]
         }
       };
@@ -618,8 +691,8 @@
   }
 
   // Open the resource blocker when requested from the Chrome popup.
-  launch_resourceblocker = function(tabId) {
-    openTab("pages/resourceblock.html?tabId=" + tabId, true);
+  launch_resourceblocker = function(query) {
+    openTab("pages/resourceblock.html" + query, true);
   }
 
   // Get the framedata for resourceblock
@@ -682,10 +755,10 @@
     //Otherwise the extension doesn't work (e.g. doesn't block ads)
     if (chrome.tabs) {
       chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-        if (tab.selected && changeInfo.status === "loading")
+        if (tab.active && changeInfo.status === "loading")
           updateButtonUIAndContextMenus();
       });
-      chrome.tabs.onSelectionChanged.addListener(function(tabid, selectInfo) {
+      chrome.tabs.onActivated.addListener(function() {
         updateButtonUIAndContextMenus();
       });
     }
@@ -743,6 +816,9 @@
     // index.html, so pass it in explicitly.
     openTab("pages/install/index.html?u=" + STATS.userId);
   }
+  else {
+    show_delayed_payment_request_at(storage_get("show_delayed_payment_request_at"));
+  }
 
   if (!SAFARI) {
     // Chrome blocking code.  Near the end so synchronous request handler
@@ -764,10 +840,6 @@
     }
     chrome.tabs.query({url: "http://*/*"}, handleEarlyOpenedTabs);
     chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
-  }
-
-  if (SAFARI) {
-    $.getScript("safari_bg.js");
   }
   
   // Temp (4-20-12):

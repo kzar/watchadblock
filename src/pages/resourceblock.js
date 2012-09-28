@@ -29,13 +29,17 @@ function generateTable() {
       matchingfilter = local_filterset.matches(i, resources[i].type, resources[i].domain, true);
 
     var type = {sort:3, name:undefined};
-    if (matchingfilter)
+    if (matchingfilter) {
       if (Filter.isWhitelistFilter(matchingfilter))
         type = {sort:2, name:'whitelisted'};
-      else if (Filter.isSelectorFilter(i))
+      else if (Filter.isSelectorFilter(i)) {
+        // TODO: report excluded hiding rules
         type = {sort:0, name:'hiding'};
-      else
+      } else
         type = {sort:1, name:'blocked'};
+    } else {
+      matchingfilter = "";
+    }
 
     // TODO: When crbug 80230 is fixed, allow $other again
     var disabled = (type.name === 'whitelisted' || type.name === 'hiding' ||
@@ -46,46 +50,53 @@ function generateTable() {
       continue;
 
     var row = $("<tr>");
-    if (type.name) row.addClass(type.name);
+    if (type.name)
+      row.addClass(type.name);
 
     // Cell 1: Checkbox
     var cell = $("<td><input type='checkbox'/></td>");
     if (disabled)
-      cell.find("input").attr("disabled", "disabled");
+      cell.find("input").prop("disabled", true);
     row.append(cell);
 
     // Cell 2: URL
-    $("<td>", {
-      title: i,
-      text: truncateI(i),
-      "data-column": "url"
-    }).appendTo(row);
+    $("<td>").
+      attr("title", i).
+      attr("data-column", "url").
+      text(truncateI(i)).
+      appendTo(row);
 
     // Cell 3: Type
-    $("<td>", { text: translate('type' + typeName) }).appendTo(row);
+    $("<td>").
+      attr("data-column", "type").
+      text(translate('type' + typeName)).
+      appendTo(row);
 
     // Cell 4: hidden sorting field and matching filter
-    cell = $("<td>");
-    $("<span>", {
-      "class": "sorter",
-      text: type.name ? type.sort : 3,
-      "data-column": "filter"
-    }).appendTo(cell);
+    cell = $("<td>").
+      attr("data-column", "filter");
+    $("<span>").
+      addClass("sorter").
+      text(type.name ? type.sort : 3).
+      appendTo(cell);
     if (type.name)
-      $("<span>", { text: matchingfilter }).appendTo(cell);
+      $("<span>").
+        text(matchingfilter).
+        appendTo(cell);
     row.append(cell);
     resources[i].filter = matchingfilter;
 
     // Cell 5: third-party or not
     var resourceDomain = parseUri(i).hostname;
     var isThirdParty = (type.name === 'hiding' ? false :
-                          checkThirdParty(resources[i].domain, resourceDomain));
-    cell = $("<td>", {
-        text: isThirdParty ? translate('yes') : translate('no'),
-        title: translate("resourcedomain", resources[i].domain || resourceDomain),
-        "data-column": "thirdparty"});
+        BlockingFilterSet.checkThirdParty(resources[i].domain, resourceDomain));
+    cell = $("<td>").
+        text(isThirdParty ? translate('yes') : translate('no')).
+        attr("title", translate("resourcedomain", resources[i].domain || resourceDomain)).
+        attr("data-column", "thirdparty");
     row.append(cell);
     resources[i].isThirdParty = isThirdParty;
+    resources[i].resourceDomain = resourceDomain;
 
     // Cells 2-5 may get class=clickableRow
     if (!disabled)
@@ -93,7 +104,10 @@ function generateTable() {
 
     // Cell 6: delete a custom filter
     if (custom_filters[matchingfilter])
-      $("<td>", { "class": "deleterule", title: translate("removelabel") }).appendTo(row);
+      $("<td>").
+        addClass("deleterule").
+        attr("title", translate("removelabel")).
+        appendTo(row);
     else
       $("<td>").appendTo(row);
 
@@ -172,25 +186,22 @@ function generateFilterSuggestions() {
     strippedUrl = strippedUrl.substr(0, strippedUrl.indexOf('/'));
     blocksuggestions.push(strippedUrl);
   }
-  if (strippedUrl.indexOf('.') !== strippedUrl.lastIndexOf('.')) {
-    if (strippedUrl.replace('.co.', '').indexOf('.') !== -1) {
-      strippedUrl = strippedUrl.match(/[^.]+\.(co\.)?[^.]+$/i)[0];
-      blocksuggestions.push(strippedUrl);
-    }
+  
+  var minimumdomain = parseUri.secondLevelDomainOnly(strippedUrl, true);
+  if (minimumdomain !== strippedUrl) {
+    blocksuggestions.push(minimumdomain);
   }
 
   var suggestions = [];
   for (var i in blocksuggestions) {
-    var inputBox = $("<input>", {
-      type: "radio",
-      name: "urloption",
-      id: "suggest_" + i,
-      value: (isBlocked ? "@@||" : "||") + blocksuggestions[i]
-    });
-    var label = $("<label>", {
-      "for": "suggest_" + i,
-      text: blocksuggestions[i]
-    });
+    var inputBox = $("<input>").
+      attr("type", "radio").
+      attr("name", "urloption").
+      attr("id", "suggest_" + i).
+      val((isBlocked ? "@@||" : "||") + blocksuggestions[i]);
+    var label = $("<label>").
+      attr("for", "suggest_" + i).
+      text(blocksuggestions[i]);
     suggestions.push(inputBox);
     suggestions.push(label);
     suggestions.push("<br/>");
@@ -199,22 +210,24 @@ function generateFilterSuggestions() {
   for (var i = 0; i < suggestions.length; i++)
     $("#suggestions").append(suggestions[i]);
   if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
-    $($("#suggestions").children('input')[1]).attr('checked', 'checked');
+    $($("#suggestions").children('input')[1]).prop('checked', true);
   else
-    $("#suggestions").find('input:first-child').attr('checked', 'checked');
+    $("#suggestions").find('input:first-child').prop('checked', true);
 
   if (!isBlocked)
     $("#selectblockableurl b").text(translate("blockeverycontaining"));
   else
     $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
-  var inputBox = $('<input>', {
-    type: "text",
-    id: "customurl",
-    size: "99",
-    value: url,
-    title: translate("wildcardhint")
-  });
-  $("#custom + label").text('Custom: ').append(inputBox);
+  var inputBox = $('<input>').
+    attr("type", "text").
+    attr("id", "customurl").
+    attr("size", "99").
+    attr("title", translate("wildcardhint")).
+    val(url).
+    bind("input", function() {
+      $("#custom").click()
+    });
+  $("#custom + label").append(inputBox);
 }
 
 // Create the filter that will be applied from the chosen options
@@ -242,23 +255,6 @@ function createfilter() {
   return urlfilter + (options.length ? '$' + options.join(',') : '');
 }
 
-// Get the third-party domain
-// Inputs: the domain of which the third-party-check part is requested
-// Returns the third-party-check domain
-function getThirdPartyDomain(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
-  return match[0].toLowerCase();
-}
-
-// Checks if it is a third-party resource or not
-// Inputs: the two domains to check
-// Returns true if third-party, false otherwise
-function checkThirdParty(domain1, domain2) {
-  var match1 = getThirdPartyDomain(domain1);
-  var match2 = getThirdPartyDomain(domain2);
-  return (match1 !== match2);
-}
-
 // Checks if the text in the domain list textbox is valid or not
 // Inputs: the text from the text box
 // Returns true if the domain list was valid, false otherwise
@@ -266,7 +262,8 @@ function isValidDomainList(text) {
   if (!text)
     return false;
   try {
-    FilterNormalizer.normalizeLine('*$domain=' + text);
+    var parsedDomains = Filter._domainInfo(text, "|");
+    FilterNormalizer.verifyDomains(parsedDomains);
     return true;
   } catch(ex) {
     return false;
@@ -312,7 +309,58 @@ function finally_it_has_loaded_its_stuff() {
   // Close the legend
   $("#legend a").click(function(event) {
     event.preventDefault();
+    $("#search").val("").trigger('search');
     $("#legend").remove();
+  });
+
+  // Search a resource
+  $('#search').bind("search", function() {
+    var patterns = $("#search").val().trim().replace(/\s+/g, ' ').split(" ");
+    for (var i=0; i<patterns.length; i++) {
+      patterns[i] = new RegExp(patterns[i]
+                      .replace(/\*+/g, '*')
+                      .replace(/\W/g, '\\$&')
+                      .replace(/\\\*/g, '[^\\t]*'), "i");
+    }
+    $("#resourceslist tbody tr.noSearchMatch").removeClass("noSearchMatch");
+    $("#nosearchresults").remove();
+    if (!$("#search").val().trim()) return;
+    $("#resourceslist tbody tr").each(function(i,el) {
+      var keywords = [];
+      var res = resources[$("[data-column='url']", el).attr('title')];
+      keywords.push(res.domain);
+      keywords.push(res.resource);
+      if (res.filter)
+        keywords.push(res.filter);
+      var typeName = getTypeName(res.type);
+      keywords.push(typeName);
+      if (/_/.test(typeName))
+        keywords.push(typeName.replace('_', '-')); // $object-subrequest === $object_subrequest
+      keywords.push(translate("type" + typeName));
+      if (res.isThirdParty) {
+        keywords.push(translate("thirdparty"));
+        keywords.push("third-party");
+        keywords.push("third_party");
+      } else {
+        // There are so many possible ways to call 'first-party' resources, that
+        // I'm not going to worry about those (localized) matches.
+        keywords.push("first-party");
+        keywords.push("first_party");
+      }
+      keywords = keywords.join('\t');
+      for (var j=0; j<patterns.length; j++) {
+        if (!patterns[j].test(keywords)) {
+          // Setting styles directly is terribly slow. Using classes is way faster.
+          $(el).addClass("noSearchMatch");
+          break;
+        }
+      }
+    });
+    if ($("#resourceslist tbody tr:visible").length === 0) {
+      $("#resourceslist tbody").
+        append("<tr id='nosearchresults'>" +
+              "<td colspan='6'>" + translate("nosearchresults") + "</td></tr>");
+    }
   });
 
   // An item has been selected
@@ -326,8 +374,8 @@ function finally_it_has_loaded_its_stuff() {
     $(this).parents('tr').addClass('selected');
     $("#resourceslist tr:not(.selected)").remove();
     $("#resourceslist tr input").
-      attr('checked', 'checked').
-      attr('disabled', 'disabled');
+      prop('checked', true).
+      prop('disabled', true);
     $('.clickableRow').removeClass('clickableRow');
     $('#resourceslist tr').css('border', 'black 1px dotted');
     $('#legend').remove();
@@ -359,35 +407,40 @@ function finally_it_has_loaded_its_stuff() {
       }
 
       // Hide unused stuff
-      $("#selectblockableurl input:radio:not(:checked)").
+      $("#selectblockableurl input[type='radio']:not(:checked)").
           nextUntil('input').remove();
-      $("#selectblockableurl input:radio:not(:checked)").remove();
+      $("#selectblockableurl input[type='radio']:not(:checked)").remove();
       $("#confirmUrl").next().remove();
       $("#confirmUrl").remove();
-      $("#selectblockableurl *:not(br):not(b)").attr("disabled", "disabled");
+      $("#selectblockableurl *:not(br):not(b)").prop("disabled", true);
 
       // Show the options
       $("#chooseoptions").show();
       var isThirdParty = chosenResource.isThirdParty;
       if (!isThirdParty) {
         $("#thirdparty + * + *, #thirdparty + *, #thirdparty").remove();
-      } else
+      } else {
         // Use .find().text() so data from query string isn't injected as HTML
         $("#thirdparty + label").
           html(translate("thirdpartycheckbox", "<i></i>")).
-          find("i").text(getThirdPartyDomain(chosenResource.domain));
+          find("i").
+          text(parseUri.secondLevelDomainOnly(chosenResource.resourceDomain, true));
+      }
+
       $("#domainlist").
         val(chosenResource.domain.replace(/^www\./, '')).
         click(function() {
-          $("#domainis").
-            attr("checked", "checked").
-            change();
+          $("#domainis").prop("checked", true);
+          $("#filterpreview").text(createfilter());
+        }).
+        bind("input", function() {
+          $("#domainis").prop("checked", true);
+          $(this).trigger("keyup");
         }).
         keyup(function() {
-          if (isValidDomainList($(this).val().trim().
-              replace(/[a-z](\ |\,\ ?|\;\ ?)\~?[a-z0-9]/gi,'a|a'))){
-            $("#domainis").val('domain=' +
-                $(this).val().trim().replace(/(\ |\,|\;)+/g,'|'));
+          if (isValidDomainList($(this).val().trim().replace(/(\s|\,|\;)+/g, '|'))){
+            $("#domainis").
+              val('domain=' + $(this).val().trim().replace(/(\s|\,|\;)+/g, '|'));
             $("#domainlist").css('color', 'black');
           } else {
             $("#domainis").val('');
@@ -395,15 +448,17 @@ function finally_it_has_loaded_its_stuff() {
           }
           $("#filterpreview").text(createfilter());
         });
-      $("#domainis").val('domain=' + chosenResource.domain.replace(/^www\./, ''));
+      $("#domainis").
+        val('domain=' + chosenResource.domain.replace(/^www\./, ''));
+
       var selectorForFixedType = '[value="' + getTypeName(chosenResource.type) +  '"]';
       if (!$(selectorForFixedType).is(":checked")) {
         // Special non-default type. For example $popup
-        $("#types > input").removeAttr("checked");
+        $("#types > input").prop("checked", false);
       }
       $(selectorForFixedType).
-          attr('disabled', 'disabled').
-          attr('checked', 'checked');
+          prop('disabled', true).
+          prop('checked', true);
 
       // Update the preview filter
       $("#chooseoptions *").change(function() {
@@ -418,11 +473,11 @@ function finally_it_has_loaded_its_stuff() {
                                     chosenResource.type, chosenResource.domain))
           return;
         BGcall('add_custom_filter', generated_filter, function(ex) {
-          if (!ex)
+          if (!ex) {
             alert(translate("filterhasbeenadded"));
-          else
+            window.close();
+          } else
             alert(translate("blacklistereditinvalid1", ex));
-          window.close();
         });
       });
     });
@@ -480,7 +535,7 @@ $(function() {
     local_filterset = new BlockingFilterSet(
         FilterSet.fromTexts(filtertexts.blocking),
         FilterSet.fromTexts(filtertexts.whitelist));
-    
+
     BGcall('get_content_script_data', opts, function(data) {
       debug_enabled = data.settings.debug_logging;
       if (data.adblock_is_paused) {
@@ -496,7 +551,7 @@ $(function() {
           for (var thisFrame in loaded_frames) {
             var frame = loaded_frames[thisFrame];
 
-            if (thisFrame === 0) {
+            if (Number(thisFrame) === 0) {
               // We don't parse $document and $elemhide rules for subframes
               resources[frame.url] = {
                 type: ElementTypes.document | ElementTypes.elemhide,
@@ -542,8 +597,9 @@ $(function() {
             filters = filters.split('\n');
             for (var i=0; i<filters.length; i++)
               try {
-                custom_filters[
-                    FilterNormalizer.normalizeLine(filters[i]) ] = filters[i];
+                var normalized = FilterNormalizer.normalizeLine(filters[i]);
+                if (normalized !== "")
+                  custom_filters[normalized] = filters[i];
               } catch(ex) {} //Broken filter
           }
           finally_it_has_loaded_its_stuff();
@@ -570,6 +626,9 @@ $(function() {
 // Click event for the column titles (<th>) of a table.
 // It'll sort the table upon the contents of that column
 sortTable = function() {
+  var table = $(this).closest('table');
+  if (table.find('[colspan]').length)
+    return; // can't handle the case where some columns have been merged locally
   var columnNumber = $(this).prevAll().length + 1;
   if ($(this).attr("data-sortDirection") === "ascending") {
     $(this).attr("data-sortDirection", "descending"); // Z->A
@@ -578,16 +637,16 @@ sortTable = function() {
   }
   var cellList = [];
   var rowList = [];
-  $("#resourceslist td:nth-of-type(" + columnNumber + ")").each(function(index, element) {
-    cellList.push(element.innerHTML + 'ÿÿÿÿÿ' + (index+10000));
+  $("td:nth-of-type(" + columnNumber + ")", table).each(function(index, element) {
+    cellList.push(element.innerHTML.toLowerCase() + 'ÿÿÿÿÿ' + (index+10000));
     rowList.push($(element).parent('tr').clone(true));
   });
   cellList.sort();
   if ($(this).attr("data-sortDirection") === "descending")
     cellList.reverse();
-  $("#resourceslist tbody").empty();
+  $("tbody", table).empty();
   cellList.forEach(function(item) {
     var no = Number(item.match(/\d+$/)[0]) - 10000;
-    $("#resourceslist tbody").append(rowList[no]);
+    $("tbody", table).append(rowList[no]);
   });
 }

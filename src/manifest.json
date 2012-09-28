@@ -1,23 +1,26 @@
 {
   "name": "AdBlock",
-  "version": "2.5.34",
-  "description": "__MSG_description1__",
-  "icons": {
-    "16": "img/icon16.png",
-    "48": "img/icon48.png",
-    "128": "img/icon128.png"
+  "version": "2.5.45",
+  "background": {
+    "scripts": [
+      "jquery/jquery.min.js",
+      "port.js",
+      "functions.js",
+      "stats.js",
+      "filtering/filteroptions.js",
+      "filtering/fifocache.js",
+      "filtering/filtertypes.js",
+      "filtering/filterset.js",
+      "filtering/myfilters.js",
+      "filtering/filternormalizer.js",
+      "idlehandler.js",
+      "background.js"
+    ]
   },
-  "permissions": [
-    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
-  ],
-  "minimum_chrome_version": "17",
-  "background_page": "background.html",
-  "options_page": "options/index.html",
-  "incognito": "spanning",
   "browser_action": {
     "default_icon": "img/icon19.png",
-    "default_title": "__MSG_optionstitle__",
-    "popup": "button/popup.html"
+    "default_popup": "button/popup.html",
+    "default_title": "AdBlock"
   },
   "content_scripts": [
     {
@@ -27,7 +30,7 @@
         "functions.js", 
         "filtering/filteroptions.js",
         "adblock_start_common.js",
-        "adblock_start_new_style.js"
+        "adblock_start_chrome.js"
       ],
       "run_at": "document_start",
       "all_frames": true
@@ -53,5 +56,27 @@
       "all_frames": false
     }
   ],
-  "default_locale": "en"
+  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src *; frame-src 'self' https://chromeadblock.com",
+  "default_locale": "en",
+  "description": "__MSG_description1__",
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "incognito": "spanning",
+  "manifest_version": 2,
+  "minimum_chrome_version": "18",
+  "options_page": "options/index.html",
+  "permissions": [
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "img/icon24.png",
+    "jquery/css/images/ui-bg_inset-hard_100_fcfdfd_1x100.png",
+    "jquery/css/images/ui-icons_056b93_256x240.png",
+    "jquery/css/images/ui-icons_d8e7f3_256x240.png",
+    "jquery/css/jquery-ui.custom.css",
+    "jquery/css/override-page.css"
+  ]
 }

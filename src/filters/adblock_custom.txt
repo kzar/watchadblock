@@ -1,12 +1,9 @@
 ! Chrome AdBlock auxiliarly filters
-! Last update: Mon Apr 16 12:34:10 EDT 2012
-
-! Unsupported by the official lists
-@@|safari-extension://com.betafish.adblockforsafari-uamuu4s2d9/$document
-@@|safari-extension://com.betteradvertising.ghostery-
+! Last update: Sun Aug  5 20:06:45 EDT 2012
 
 ! Ad providers. Filter lists don't care they are blocked
 @@||advertising.apple.com^$domain=advertising.apple.com
+@@||google.co.uk/ads/$domain=google.co.uk
 @@||google.com/adsense/$document,domain=google.com
 @@||openx.com^$domain=openx.com
 
@@ -19,8 +16,12 @@
 ! Because acid3 doesn't like our style block
 @@||acid3.acidtests.org^$document,domain=acid3.acidtests.org
 
-! Because we cut off urls at 200 characters
-@@||24ur.com/adserver/adall.php
-
 ! Chrome-specific
 @@||doubleclick.net/adj/ftd-rubriken/$script,domain=ftd.de
+
+! Don't block extension resources injected in pages
+@@|chrome-extension:
+@@|safari-extension:
+
+! Work around false positive in EasyList
+@@/ad/audsci.$domain=washingtonpost.com

@@ -1,6 +1,6 @@
 ﻿{
   "description1": {
-    "message": "La plus populaire des extensions Chrome, avec plus de 5 millions d'utilisateurs ! Bloque les publicités sur Internet.",
+    "message": "La plus populaire des extensions Chrome, avec plus de 8 millions d'utilisateurs ! Bloque les publicités sur Internet.",
     "description": "Extension description in manifest"
   },
   "buttoncancel": {
@@ -10,6 +10,10 @@
   "buttonok": {
     "message": "OK",
     "description": "OK button"
+  },
+  "reportpubliclyavailable": {
+    "message": "Note : votre rapport peut être rendu public. Gardez cela à l'esprit avant d'inclure quoi que ce soit de privé.",
+    "description": "Ad report page string, when you're about to submit a report"
   },
   "buttonblockit": {
     "message": "Bloquer",
@@ -139,7 +143,6 @@
     "message": "Retour",
     "description": "Back to previous wizard page button"
   },
-
   "findingads": {
     "message": "Recherche des pubs...<br/><br/><i>Cela peut prendre un moment.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
@@ -152,7 +155,6 @@
     "message": "Cliquez sur la pub à bloquer.",
     "description": "When you have to click the ad to continue"
   },
-
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock ne s'exécutera pas sur les pages correspondantes à :",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -165,12 +167,10 @@
     "message": "Ne pas exécuter AdBlock sur...",
     "description": "The title of the whitelister dialog"
   },
-
   "buttonexclude": {
     "message": "Exclure",
     "description": "Button for excluding a domain in the whitelister dialog"
   },
-
   "subscribingtitle": {
     "message": "Abonnement à la liste de filtres...",
     "description": "abp: link subscriber title"
@@ -183,7 +183,6 @@
     "message": "Erreur !",
     "description": "abp: link subscriber result"
   },
-
   "optionsversion": {
     "message": "Version $version$",
     "description": "Version number",
@@ -224,7 +223,7 @@
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "J'aime les annonces textuelles Google; ne les bloquez pas.",
-    "description": "Install page text; slightly shorter than the 'googletextads' message." 
+    "description": "Install page text; slightly shorter than the 'googletextads' message."
   },
   "showcontextmenus": {
     "message": "Ajouter les éléments AdBlock dans le menu du clic droit",
@@ -418,10 +417,6 @@
     "message": "Filtres coréens",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
-  "filterpolish": {
-    "message": "Filtres polonais",
-    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
-  },
   "filtereasylist_plus_spanish": {
     "message": "Filtres espagnols",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -487,11 +482,11 @@
     "description": "Warning when blacklisting manually"
   },
   "savebutton": {
-    "message": "Sauvegarder",
+    "message": "Enregistrer",
     "description": "Save button"
   },
   "savereminder": {
-    "message": "N'oubliez pas de sauvegarder !",
+    "message": "N'oubliez pas d'enregistrer !",
     "description": "Reminder to press save"
   },
   "adblockreportinganad": {
@@ -499,7 +494,7 @@
     "description": "title of ad report page"
   },
   "adreport2": {
-    "message": "Vous venez de trouver une publicité sur une page web ? Et bien, nous allons trouver qui vous pouvez en informer.<br/>Notez que signaler des publicités est purement volontaire. Si vous ne voulez pas le faire, vous pouvez simplement fermer cette fenêtre, et bloquer la publicité pour vous-même, en ajoutant le filtre approprié dans l'onglet 'Personnaliser' des options AdBlock !",
+    "message": "Vous venez de trouver une publicité sur une page web ? Et bien, nous allons trouver qui vous pouvez en informer.<br/>Notez que signaler des publicités est purement volontaire. Si vous ne souhaitez pas le faire, vous pouvez simplement fermer cette fenêtre, et bloquer la publicité pour vous-même, en ajoutant le filtre approprié dans l'onglet 'Personnaliser' des options AdBlock !",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "updateyourlists": {
@@ -796,6 +791,10 @@
     "message": "Entrez un modèle d'URL valide !",
     "description": "resourceblocking page string"
   },
+  "doesntmatchoriginal": {
+    "message": "Le modèle que vous avez entré ne correspond pas à la ressouce que vous souhaitez bloquer ! Continuer tout de même ?",
+    "description": "resourceblocking page string"
+  },
   "thirdpartycheckbox": {
     "message": "N'importe quel site SAUF les sites sur le domaine $domain$",
     "description": "resourceblocking page string",
@@ -921,7 +920,7 @@
     "description": "Title of the final ad report question if the ad didn't appear in FF"
   },
   "cantblockflashwarning": {
-    "message": "Est-ce que la publicité s'affiche dans ou avant une vidéo, ou dans un plugin comme par exmeple un jeu Flash ?",
+    "message": "Est-ce que la publicité s'affiche dans ou avant une vidéo, ou dans un plugin comme par exemple un jeu Flash ?",
     "description": "Text of the final ad report question"
   },
   "cantblockflash": {
@@ -981,6 +980,10 @@
   "pause_adblock": {
     "message": "Désactiver AdBlock",
     "description": "Menu entry to pause AdBlock."
+  },
+  "undo_last_block": {
+    "message": "Annuler le dernier blocage",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   },
   "dont_run_on_this_page": {
     "message": "Désactiver sur cette page",
@@ -1195,5 +1198,97 @@
   "safari50_updatenotice": {
     "message": "Vous utilisez une ancienne version de Safari. Merci de mettre à jour vers la dernière version afin de pouvoir utiliser le bouton de la barre d'outils pour désactiver AdBlock, autoriser des sites web, ou rapporter des pubs. <a>Mettre à jour maintenant</a>.",
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
+  },
+  "searchexplanation": {
+    "message": "Utilisez * pour remplacer zéro ou plusieurs lettres. Par exemple, 'image banner*.gif' correspondra aux images 'banner.gif', 'banner123.gif', et 'bannerxyz.gif'.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Rechercher des ressources...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
+  },
+  "nosearchresults": {
+    "message": "Aucune ressource trouvée",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
+  "custompattern": {
+    "message": "Personnalisé :",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
+  "oneverysitetitle": {
+    "message": "Des pubs partout !",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
+  "adsoneverysite": {
+    "message": "Vous voyez des publicités sur la plupart des sites que vous visitez (votre page d'accueil, le site web de votre employeur, etc...), mais lorsque vous visitez ces mêmes sites sur l'ordinateur d'un ami, les publicités n'y sont pas ?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
+  "maybemalware": {
+    "message": "Pas toutes les pages Internet contiennent des publicités. Le fait que vous en voyez tellement pourrait indiquer que votre ordinateur contient des logiciels indésirables. Essayez de désactiver toutes les extensions une par une et voyez si le problème disparaît. Si non, essayez de lancer une analyse du système (complète) avec un antivirus à jour, car cela pourrait éventuellement être causé par des logiciels malveillants.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "opera_reenable_button": {
+    "message": "Vous pouvez réactiver le bouton dans les préférences de cette extension",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_linkunblock": {
+    "message": "Afficher les pubs sur un domaine",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_excludedomainorurl": {
+    "message": "Le domaine où AdBlock ne doit rien bloquer",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Afficher le bouton de la barre d'outils",
+    "description": "Opera option to show/hide the button"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Vous pouvez également augmenter la valeur de\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_for_more_options": {
+    "message": "Pour plus d'options, vous pouvez cliquer sur le bouton de la barre d'outils ou ouvrir les préférences via Opera &rArr; Extensions &rArr; Gérer les extensions &rArr; icône de clé à molette &rArr; Préférences",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "thats_it": {
+    "message": "C'est tout !",
+    "description": "Install page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Vous pouvez fermer cet onglet et commencer à naviguer sans publicités. Amusez-vous bien !",
+    "description": "Install page string"
+  },
+  "opera_donations_install": {
+    "message": "Si vous aimez vraiment cette extension, merci de songer à faire don via la page des options.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_donations_button": {
+    "message": "Vous aimez cette extension ? Si oui, songez à faire un don dans la page des options !",
+    "description": "Opera donate request in the button"
+  },
+  "opera_enabledin": {
+    "message": "Activé dans $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_120_install": {
+    "message": "Dans les versions d'Opera antérieures à 12.10, certaines pubs peuvent ne pas être bloquées car il n'est pas possible de parser toutes les les règles dans ces versions. Ce sera corrigé lorsqu'Opera sera mis à jour à la version 12.10. À partir de ce moment, toutes les pubs seront bloquées correctement.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Dans les versions d'Opera antérieures à 12.10, certaines options sont grisées, car elles ne sont pas supportées dans ces versions.",
+    "description": "Opera < 12.10 warning above options page"
   }
 }

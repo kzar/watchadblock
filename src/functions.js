@@ -24,7 +24,7 @@ BGcall = function() {
 }
 
 // These are replaced with console.log in adblock_start_common.js and
-// background.html if the user chooses.
+// background.js if the user chooses.
 log = function() { };
 
 // Behaves very similarly to $.ready() but does not require jQuery.
@@ -49,6 +49,9 @@ function localizePage() {
   });
   $("[i18n_title]:not(.i18n-replaced)").each(function() {
     $(this).attr("title", translate($(this).attr("i18n_title")));
+  });
+  $("[i18n_placeholder]:not(.i18n-replaced)").each(function() {
+    $(this).attr("placeholder", translate($(this).attr("i18n_placeholder")));
   });
   $("[i18n_replacement_el]:not(.i18n-replaced)").each(function() {
     // Replace a dummy <a/> inside of localized text with a real element.
@@ -87,9 +90,17 @@ parseUri.parseSearch = function(search) {
     if (arguments[1]) queryKeys[arguments[1]] = unescape(arguments[2]);
   });
   return queryKeys;
+};
+// Strip third+ level domain names from the domain and return the result.
+// Inputs: domain: the domain that should be parsed
+//         keepDot: true if trailing dots should be preserved in the domain
+// Returns: the parsed domain
+parseUri.secondLevelDomainOnly = function(domain, keepDot) {
+  var match = domain.match(/([^\.]+\.(?:co\.)?[^\.]+)\.?$/) || [domain, domain];
+  return match[keepDot ? 0 : 1].toLowerCase();
 }
 
-// TODO: move back into background.html since Safari can't use this
+// TODO: move back into background.js since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
 // and 5912 to avoid merge conflicts.
 // Inputs: key:string.

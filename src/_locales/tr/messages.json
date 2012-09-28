@@ -1,66 +1,70 @@
 ﻿{
   "a_note_to_you_catblock_lovers": {
-    "message": "Для вас, прихильники CatBlock",
+    "message": "CatBlock sevenlere bir not:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
   },
   "adalreadyblocked": {
-    "message": "Нічого не треба робити, адже рекламу вже заблоковано",
+    "message": "Reklam zaten engellendiği için bir şey yapmanıza gerek yok",
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "adblock_auto_removes_ads_thats_all": {
-    "message": "AdBlock автоматично прибирає рекламу. Це, власне, і все.",
+    "message": "Adblock otomatik olarak tüm reklamları engeller. Hepsi bu.",
     "description": "Install page: explaining how to use adblock."
   },
   "adblock_is_paused": {
-    "message": "AdBlock призупинено. Оскільки жодні ресурси не використовуються, користування цією сторінкою неможливе. Запустіть AdBlock та спробуйте знову.",
+    "message": "Adblock duraklatıldı. Hiç bir kaynak olmadığı için, bu sayfa kullanılamaz. Adblock'u tekrar başlatıp yeniden deneyin.",
     "description": "resourceblocking page string"
   },
   "adblock_wont_run_on_pages_matching": {
-    "message": "AdBlock не працюватиме на сторінках, що містять:",
+    "message": "Adblock şu durumlarla eşleşen sayfalarda çalışmayacak:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   },
   "adblockreportinganad": {
-    "message": "AdBlock — Звіт про рекламу",
+    "message": "Adblock - Reklam bildirme",
     "description": "title of ad report page"
   },
   "addthisfilter": {
-    "message": "Додати цей фільтр",
+    "message": "Bu filtreyi ekleyin",
     "description": "resourceblocking page string"
   },
   "adreport2": {
-    "message": "Тож, ви щойно побачили рекламу на веб-сторінці? Ну, то я допоможу вам відзвітувати про неї куди треба!<br/> Пам’ятайте: подача звіту — добровільна справа. Якщо ви не хочете цього робити, просто закрийте це вікно та заблокуйте рекламу лише для себе, додавши відповідний фільтр на вкладці «Налаштувати» сторінки параметрів!",
+    "message": "Demek bu sayfada bir reklam buldunuz.. Bunu doğru yere bildirmenize yardımcı olacağım<br/> Unutmayın: reklam bildirmek isteğe bağlıdır. Eğer bildirmek istemiyorsanız, bu pencereyi kapatabilir ve Ayarlar bölümünden Özelleştir seçeneğini kullanarak filtreyi sadece kendiniz için ekleyebilirsiniz.",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
+  "adsoneverysite": {
+    "message": "Ziyaret ettiğiniz çoğu sitede (başlangıç sayfanız, işvereninizin internet sitesi gibi) reklamlar görüp, aynı siteleri başka bir bilgisayardan ziyaret ettiğiniz zaman bu reklamları göremiyor musunuz?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
   "adstillappear": {
-    "message": "Ви все ще її бачите?",
+    "message": "Reklam hala görünüyor mu?",
     "description": "question on ad reporting page"
   },
   "advanced_options": {
-    "message": "Я досвідчений користувач, покажіть мені просунуті налаштування.",
+    "message": "Tecrübeli bir kullanıcıyım, bana gelişmiş seçenekleri göster.",
     "description": "Options page checkbox"
   },
   "any_new_tabs_you_open_Will_be_automatically_ad_free": {
-    "message": "Відтепер усі нововідкриті вкладки не міститимуть реклами.",
+    "message": "Açtığınız tüm yeni sekmeler otomatik olarak reklamsız görünecek.",
     "description": "Install page subtitle"
   },
   "anysite": {
-    "message": "Усіх веб-сайтів",
+    "message": "Herhangi bir web sitesi",
     "description": "resourceblocking page string"
   },
   "appliedwhenbrowsing": {
-    "message": "Цей фільтр буде застосовано під час перегляду:",
+    "message": "Bu filtre şu sayfaları gezerken kullanılacak:",
     "description": "resourceblocking page string"
   },
   "betalabel": {
-    "message": "Бета",
+    "message": "Beta",
     "description": "Option on first tab page"
   },
   "blacklistclickmessage": {
-    "message": "Натисніть правою кнопкою миші на рекламі, щоб заблокувати її, або зробіть це тут вручну.",
+    "message": "Reklamı engellemek için sağ tıklayın -- ya da buradan manuel olarak engelleyin.",
     "description": "Message at the top of the blacklist options tab"
   },
   "blacklisterattrwillbe": {
-    "message": "$attribute$ відповідатиме $value$",
+    "message": "$attribute$ olacak $value$",
     "description": "Checkbox label",
     "placeholders": {
       "attribute": {
@@ -74,11 +78,11 @@
     }
   },
   "blacklisterblockedelement": {
-    "message": "Заблокований елемент:",
+    "message": "Engellenen öğe:",
     "description": "Tells the user what the blocked element is on the slider page"
   },
   "blacklisterblocksalloftype": {
-    "message": "Будьте обережні: цей фільтр заблокує усі елементи $elementtype$ на цій сторінці!",
+    "message": "Dikkat: bu filtre sayfadaki tüm $elementtype$ öğelerini engelleyecek!",
     "description": "Warns the user that all elements of type X will be blocked",
     "placeholders": {
       "elementtype": {
@@ -88,11 +92,11 @@
     }
   },
   "blacklistereditfilter": {
-    "message": "Будь ласка, уведіть вірний фільтр та натисніть «Гаразд».",
+    "message": "Lütfen eklemek istediğiniz filtreyi yazın ve OK tuşuna basın.",
     "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid1": {
-    "message": "Помилка введення фільтру: $exception$",
+    "message": "Filtre geçersiz: $exception$",
     "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
     "placeholders": {
       "exception": {
@@ -102,7 +106,7 @@
     }
   },
   "blacklistermatches": {
-    "message": "Елементів під фільтром на поточній сторінці: $matchcount$.",
+    "message": "Bu sayfada $matchcount$ benzer öğe bulundu.",
     "description": "Tells the user multiple matches were found",
     "placeholders": {
       "matchcount": {
@@ -112,385 +116,397 @@
     }
   },
   "blacklisternofilter": {
-    "message": "Фільтр не вказано!",
+    "message": "Filtre tanımlanmamış.",
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklisternotsure": {
-    "message": "<b>Не певні?</b> просто натисніть «Заблокувати!» нижче.",
+    "message": "<b>Emin değil misiniz?</b> Sadece \"Engelle!\" tuşuna basın.",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisteroptions1": {
-    "message": "Які ознаки на вашу думку найкраще характеризуватимуть цю рекламу?",
+    "message": "Bu sayfayı her ziyaret ettiğinizde hangisinin geçerli olacağını düşünüyorsunuz?",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle": {
-    "message": "Останній крок: що робить це рекламою?",
+    "message": "Son adım: Bu öğeyi reklam yapan nedir?",
     "description": "Blacklister options page title"
   },
   "blacklistersinglematch": {
-    "message": "Під фільтр потрапляє <b>1</b> елемент на поточній сторінці.",
+    "message": "Bu sayfada <b>1</b> benzer öğe bulundu.",
     "description": "Tells the user only one match was found"
   },
   "blacklisterthefilter": {
-    "message": "Фільтр, який можна змінити на сторінці «Налаштувати»:",
+    "message": "Ayarlar bölümünden değiştirilebilecek filtre:",
     "description": "Blacklister attribute choosing page message"
   },
   "blacklistertype": {
-    "message": "Тип",
+    "message": "Tip",
     "description": "node name is called 'Type'"
   },
   "blacklisterwarningnofilter": {
-    "message": "Увага: фільтр не вказано!",
+    "message": "Dikkat: hiç filtre tanımlanmamış!",
     "description": "Warns the user that no filter was specified"
   },
   "block_an_ad_on_this_page": {
-    "message": "Заблокувати рекламу на цій сторінці",
+    "message": "Bu sayfadaki bir reklamı engelleyin",
     "description": "Toolbar button menu entry and context menu entry"
   },
   "block_by_url_instead": {
-    "message": "Просунуте: натомість заблокувати URL",
+    "message": "Gelişmiş: Sayfa URL'sini kullanarak engelleyin",
     "description": "Link on blacklister slider page"
   },
   "block_this_ad": {
-    "message": "Заблокувати цю рекламу",
+    "message": "Bu reklamı engelle",
     "description": "Context and popup menu entry"
   },
   "blockanadtitle": {
-    "message": "Заблокувати рекламу",
+    "message": "Bir reklam engelle",
     "description": "Title of the first two dialogs of the blacklister"
   },
   "blockdomain": {
-    "message": "Домен чи сторінка для обробки",
+    "message": "Sayfanın bulunduğu alan adında uygulanacak",
     "description": "Message of the url and css -blocking area"
   },
   "blockeverycontaining": {
-    "message": "Заблокувати всі ресурси, що містять:",
+    "message": "Şu içerik bulunan tüm kaynakları engelle:",
     "description": "resourceblocking page string"
   },
   "blockmoreads": {
-    "message": "Заблокувати невідловлену досі рекламу:",
+    "message": "Daha fazla reklam engelle:",
     "description": "Section header on third tab"
   },
   "blockurlwithtext": {
-    "message": "Блокувати URL’и, що містять такий текст",
+    "message": "Şu metni içeren URL'leri engelle",
     "description": "Message of the url-blocking area"
   },
   "buttonback": {
-    "message": "Назад",
+    "message": "Geri",
     "description": "Back to previous wizard page button"
   },
   "buttonblockit": {
-    "message": "Заблокувати!",
+    "message": "Engelle!",
     "description": "Block button"
   },
   "buttoncancel": {
-    "message": "Скасувати",
+    "message": "İptal",
     "description": "Cancel button"
   },
   "buttonedit": {
-    "message": "Змінити",
+    "message": "Düzenle",
     "description": "Edit filter manually button"
   },
   "buttonexclude": {
-    "message": "Виключити",
+    "message": "İstisna",
     "description": "Button for excluding a domain in the whitelister dialog"
   },
   "buttonlooksgood": {
-    "message": "Так краще",
+    "message": "İyi görünüyor",
     "description": "Looks good button"
   },
   "buttonok": {
-    "message": "Гаразд!",
+    "message": "Tamam!",
     "description": "OK button"
   },
   "cantblockflash": {
-    "message": "Поки що ми не маємо змоги блокувати рекламу всередині Flash або інших плаґінів. Ми очікуємо на пітримку таких технологій від веб-переглядача та рушія виведення веб-сторінок WebKit.",
+    "message": "Flash ve diğer eklentiler içinde bulunan reklamları henüz engelleyemiyoruz. Tarayıcı ve Webkit'in bu konuda desteğini bekliyoruz.",
     "description": "Result of the final ad report question"
   },
   "cantblockflashwarning": {
-    "message": "Чи з’являється ця реклама усередині чи перед початком відео, або ж у рамках якихось інших плаґінів на кшталт ігр на Flash?",
+    "message": "Reklam bir video başlamadan önce, video oynatılırken ya da Flash oyunu gibi bir eklentide mi görünüyor?",
     "description": "Text of the final ad report question"
   },
   "casesensitive": {
-    "message": "Цей фільтр чутливий до регістру:",
+    "message": "Bu filtre BÜYÜK/küçük harf duyarlıdır:",
     "description": "resourceblocking page string"
   },
   "catblock_was_only_in_adblock_for_a_few_days": {
-    "message": "CatBlock був доступним у AdBlock лише до 4 квітня. Якщо ви хочете користуватися CatBlock після цього, <a>прочитайте це</a>.",
+    "message": "Catblock, Adblock içinde sadece 4 Nisan'a kadar kullanıldı. Eğer hala CatBlock kullanmak istiyorsanız, <a>burayı okuyun</>",
     "description": "Message shown to users expressing intent to get CatBlock after April 4th.  It links them to instructions for getting the standalone version of CatBlock."
   },
   "changelabel": {
-    "message": "змінити",
+    "message": "değiştir",
     "description": "link to change resources on the resourceblock page"
   },
   "checkinfirefox_1": {
-    "message": "Встановіть Firefox$chrome$, якщо",
+    "message": "Eğer zaten yüklü değilse, Firefox $chrome$ yükleyin.",
     "description": "instruction for how to check Firefox/Chrome for a reported ad",
     "placeholders": {
       "chrome": {
-        "content": "$1 або Chrome$2",
+        "content": "$1ya da Chrome$2",
         "example": "This will only be shown in Safari. Chrome users will not see this."
       }
     }
   },
   "checkinfirefox_2": {
-    "message": "Встановіть Adblock Plus для Firefox$chrome$, якщо допоки він не встановлений.",
+    "message": "Eğer zaten yüklü değilse, Firefox için Adblock Plus $chrome$ yükleyin.",
     "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
     "placeholders": {
       "chrome": {
-        "content": "$1 або AdBlockforChrome для Chrome$2",
+        "content": "$1ya da Chrome için AdblockforChrome$2",
         "example": "This will only be shown in Safari. Chrome users will not see this."
       }
     }
   },
   "checkinfirefox_3": {
-    "message": "У тому переглядачі передплатіть ті самі списки фільтрів, що й у цьому (за винятком Власних фільтрів AdBlock у FireFox).",
+    "message": "Yüklediğiniz tarayıcıda burada kullandığınız filtre listelerine abone olun (Firefox'taki Adblock özel filtreleri hariç)",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "checkinfirefox_4": {
-    "message": "У тому переглядачі відкрийте сторінку із рекламою.",
+    "message": "Yüklediğiniz tarayıcıda, reklam olan bir sayfayı açın.",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "checkinfirefox_5": {
-    "message": "Чи з’являється реклама на нововідкритій сторінці?",
+    "message": "Reklam o tarayıcıda da görünüyor mu?",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
   "checkinfirefoxtitle": {
-    "message": "Перевірте у Firefox $chrome$",
+    "message": "Firefox $chrome$ için reklamın görünüp görünmediğini kontrol edin.",
     "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
     "placeholders": {
       "chrome": {
-        "content": "$1або Chrome$2",
+        "content": "$1ya da Chrome$2",
         "example": "This will only be shown in Safari. Chrome users will not see this."
       }
     }
   },
   "chromebutton_how_to_hide": {
-    "message": "Щоб приховати кнопку, натисніть на ній правою кнопкою миші та оберіть «Сховати кнопку». Щоб побачити її знову, натисніть на Звідний ключ > Інструменти > Розширення.",
+    "message": "Butonu gizlemek için, sağ tıklayıp, Gizle butonuna basın. Tekrar görünmesini istediğiniz zaman Chrome Araçlar | Uzantılar menüsünü kullanabilirsiniz.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
-    "message": "Оптимізувати фільтри у цьому списку:",
+    "message": "Bu listeyi temizle:",
     "description": "Option at the bottom of the third options tab"
   },
   "click_extensions": {
-    "message": "Натисніть <b>Extensions</b> у правому верхньому куті.",
+    "message": "Sağ üst köşeden <b>Uzantılar</b> tıklayın.",
     "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
   },
   "click_install_update_automatically": {
-    "message": "Відзначте прапорець <b>Install Updates Automatically</b>.",
+    "message": "<b>Güncelleştirmeleri Otomatik Olarak Yükle</b> kutusunu işaretleyin.",
     "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
   },
   "click_safari_prefs": {
-    "message": "Натисніть <b>Safari &rArr; Preferences</b>.",
+    "message": "<b>Safari &rArr; Tercihler</b> menüsünü tıklayın.",
     "description": "First step to turn on autoupdate.  &rArr; makes a right arrow (->)."
   },
   "click_updates": {
-    "message": "Ліворуч унизу натисніть <b>Updates</b>.",
+    "message": "Sol alt kısımda, <b>Güncelleştirmeler</b> menüsünü açın.",
     "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
   },
   "clickthead": {
-    "message": "Натисніть на рекламі, і я допоможу вам її позбутися.",
+    "message": "Reklamı tıklatın, ve engelleme seçeneklerini görün.",
     "description": "When you have to click the ad to continue"
   },
   "clickupdatefilters": {
-    "message": "Натисніть: <a>Оновити мої списки фільтрів!</a>",
+    "message": "Buraya tıklayın: <a>Filtrelerimi güncelleştir!</a>",
     "description": "instruction on ad report page"
   },
   "close": {
-    "message": "Закрити",
+    "message": "Kapat",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Bu sekmeyi kapatıp web sitelerini reklamsız gezmeye başlayabilirsiniz. İyi eğlenceler!",
+    "description": "Install page string"
+  },
   "correctfilters": {
-    "message": "Правильні фільтри",
+    "message": "Filtreleri düzelt",
     "description": "on the ad report page, label describing having the right set of filters"
   },
   "csstomatch": {
-    "message": "захопити CSS",
+    "message": "Eşleşen CSS öğeleri",
     "description": "Message of the css-hiding area"
   },
+  "custompattern": {
+    "message": "Özel:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
   "debuginlogoption": {
-    "message": "Показувати інформацію для налагодження у Консольному лозі (уповільнює роботу AdBlock)",
+    "message": "Konsol Günlüğünde hata ayıklama bilgilerini göster (Adblock'u yavaşlatır)",
     "description": "Option on first tab page"
   },
   "description1": {
-    "message": "Найпопулярніше розширення для Chrome, яким користуються понад 8 мільйони людей! Заблокуйте рекламу по всьому Інтернету.",
+    "message": "8 milyondan fazla kullanıcısıyla en popüler Chrome eklentisi! Webdeki tüm reklamları engeller.",
     "description": "Extension description in manifest"
   },
   "did_you_know_this_is_my_full_time_job": {
-    "message": "Чи знали ви, що ваші пожертви на розвиток AdBlock — єдине джерело мого доходу?",
+    "message": "Adblock'un tek işim olduğunu biliyor muydunuz?",
     "description": "Text of a payment request link"
   },
   "disabled_by_filter_lists": {
-    "message": "Перепрошуємо, AdBlock вимкнено на цій сторінці одним зі списків фільтрів.",
+    "message": "Üzgünüm, Filtre listelerinizden biri Adblock'u bu sayfada kapatmak için ayarlanmış.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
   },
   "disabled_on_this_page": {
-    "message": "AdBlock вимкнено на цій сторінці.",
+    "message": "Adblock bu sayfada kapatılmıştır.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
+  "doesntmatchoriginal": {
+    "message": "Verdiğiniz tanım engellemeye çalıştığınız kaynakla uyuşmuyor! Yine de devam etmek ister misiniz?",
+    "description": "resourceblocking page string"
+  },
   "done": {
-    "message": "готово.",
+    "message": "bitti.",
     "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
   },
   "dont_run_on_pages_on_domain": {
-    "message": "Не виконувати на сторінках цього домена",
+    "message": "Bu alan adındaki sayfalarda çalışma",
     "description": "Menu entry to open the whitelist wizard."
   },
   "dont_run_on_this_page": {
-    "message": "Не запускати на цій сторінці",
+    "message": "Bu sayfada Adblock'u durdur",
     "description": "Menu entry to whitelist a page"
   },
   "enable": {
-    "message": "увімкнути",
+    "message": "etkinleştir",
     "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "excludedomainorurl": {
-    "message": "Домен або URL, на якому AdBlock не працюватиме",
+    "message": "Adblock'un çalışmasını istemediğiniz sayfa ve alan adları",
     "description": "Message of the exclude area"
   },
   "excludefilterremoved": {
-    "message": "Фільтр видалено. Будь ласка, перезавантажте вихідну сторінку, щоб згенерувати список ресурсів.",
+    "message": "Filtre silindi. Listeyi geri yüklemek için orijinal sayfayı yenileyin.",
     "description": "Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "failedtofetchfilter": {
-    "message": "Помилка отримання фільтру!",
+    "message": "Bu filtre kaynaktan yüklenemedi!",
     "description": "Error messagebox"
   },
   "faq": {
-    "message": "ЧаПи",
+    "message": "SSS",
     "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
   },
   "fetchinglabel": {
-    "message": "Забираємо... будь ласка, чекайте.",
+    "message": "Yükleniyor... lütfen bekleyin.",
     "description": "Status label"
   },
   "filecleanerwarning": {
-    "message": "Якщо ви бачите це повідомлення щоразу під час запуску AdBlock, будь ласка переконайтеся, що у вас не запущено очищувач файлів, що знищує файли у 'localStorage'.",
+    "message": "Eğer her Adblock'u başlattığınızda bu mesajı görüyorsanız, kullandığınız dosya temizleyicinin 'localStorage' dosyalarını da temizlediğinden emin olun.",
     "description": "Help for users who use hyperactive file cleaners"
   },
   "filteradblock_custom": {
-    "message": "Власні фільтри AdBlock (радимо)",
+    "message": "Adblock özel filtreleri (tavsiye edilir)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filterchinese": {
-    "message": "— додаткові китайські фільтри",
+    "message": "- Ek Çince'ye özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
-    "message": "Чеські фільтри",
+    "message": "Çek diline özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdanish": {
-    "message": "Датські фільтри",
+    "message": "Danimarkacaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdutch": {
-    "message": "— додаткові голландські фільтри",
+    "message": "Flemenkçeye özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist": {
-    "message": "EasyList (радимо)",
+    "message": "EasyList (tavsiye edilir)",
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plun_korean": {
-    "message": "Корейські фільтри",
+    "message": "Koreceye özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": "— додаткові болгарські фільтри",
+    "message": "- Ek Bulgarcaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_finnish": {
-    "message": "— додаткові фінські фільтри",
+    "message": "- Ek Finceye özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_french": {
-    "message": "— додаткові французькі фільтри",
+    "message": "- Ek Fransızcaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_german": {
-    "message": "— додаткові німецькі фільтри",
+    "message": "- Ek Almancaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_greek": {
-    "message": "— додаткові грецькі фільтри",
+    "message": "- Ek Yunancaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_polish": {
-    "message": "— додаткові польські фільтри",
+    "message": "- Ek Leh diline özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_romanian": {
-    "message": "— додаткові румунські фільтри",
+    "message": "- Ek Romenceye özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_spanish": {
-    "message": "Іспанські фільтри",
+    "message": "İspanyolcaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasyprivacy": {
-    "message": "EasyPrivacy (для захисту приватності)",
+    "message": "EasyPrivacy (gizlilik koruması)",
     "description": "A filter list. Don't translate the name 'EasyPrivacy'."
   },
   "filterhasbeenadded": {
-    "message": "Фільтр додано успішно!\nПерезавантажте сторінку, щоб побачити його вплив!",
+    "message": "Filtre başarıyla eklendi!\nSonucu görmek için sayfayı yenileyin!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
   "filterhungarian": {
-    "message": "Угорські фільтри",
+    "message": "Macarcaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterisraeli": {
-    "message": "Ізраїльські фільтри",
+    "message": "İbraniceye özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filteritalian": {
-    "message": "Італійські фільтри",
+    "message": "İtalyancaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterjapanese": {
-    "message": "Японські фільтри",
+    "message": "Japoncaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterlistlink": {
-    "message": "Не передплачуйте більше за необхідне — кожен список трохи, та уповільнює роботу! Додаткові списки та інформацію щодо їх авторства можна знайти <a>тут</a>.",
+    "message": "İhtiyacınız olmayan filtrelere abone olmayın -- her biri Adblock'u biraz daha yavaşlatır. \"Emeği geçenler\" listeleri ve daha fazlası <a>buradan</a> görülebilir.",
     "description": "Explanation of the filter lists"
   },
   "filterlistsrock": {
-    "message": "Списки фільтрів блокують майже всю рекламу в Інтернеті. Проте ви можете:",
+    "message": "Filtre listeleri web sitelerindeki çoğu reklamı engeller. Ayrıca şunları da yapabilirsiniz:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
   "filterrussian": {
-    "message": "— додаткові російські та українські фільтри",
+    "message": "- Ek Rusça ve Ukraynacaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtersavewarning": {
-    "message": "Будьте обережні: якщо тут припуститися помилки, багато інших фільтрів, включаючи офіційні, можуть працювати некоректно!<br/>Читайте <a>порадник із синтаксису фільтрів (англ.)</a>, аби навчитися керувати чорними та білими списками фільтрів.",
+    "message": "Dikkat: eğer burada bir hata yaparsanız, abone olduğunuz filtreler de dahil, çoğu liste tamamen bozulabilir!<br/> Gelişmiş \"izin verilenler\" ve \"engellenenler\" listesi oluşturmak için lütfen <a>filtre sözdizimi kuralları</a> bölümünü okuyun.",
     "description": "Warning when blacklisting manually"
   },
   "filterstabtitle": {
-    "message": "Передплата списку фільтрів",
+    "message": "Filtrelere kaydolun.",
     "description": "Title of the filter list tab"
   },
   "findingads": {
-    "message": "Пошук реклами...<br/><br/><i>Це триватиме недовго.</i>",
+    "message": "Reklamlar bulunuyor..<br/><br/><i>Bu sadece bir kaç saniye sürecek.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
-    "message": "Спершу, ви маєте <b>увімкнути автооновлення</b> у настройках Safari, тож ви матимете виправлення помилок та нові функції відразу після їх появи.",
+    "message": "İlk önce, Safari Tercihler kısmından <b>otomatik güncelleştirmeleri açın</b>, böylece yeni özellikleri ve hata düzeltmelerini ben yazdıkça alabileceksiniz.",
     "description": "The first instructions on the Safari install page."
   },
   "fixityourself": {
-    "message": "Гаразд, ви все ще можете заблокувати цю рекламу лише для себе на сторінці настройок. Дякуємо!",
+    "message": "Tamam, bu reklamı yine de Ayarlar menüsünü kullanarak kendiniz için engelleyebilirsiniz. Teşekkürler!",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "flashads": {
-    "message": "Відео та Flash",
+    "message": "Video ve Flash",
     "description": "Title of the final ad report question if the ad didn't appear in FF"
   },
   "for_more_options_right_click": {
-    "message": "Для додаткових налаштувань, можна натискати правою кнопкою миші на веб-сторінках або натискати на цій $img$ кнопці панелі інструментів.",
+    "message": "Daha fazla seçenek için, web sayfalarına sağ tıklayabilir ya da $img$ araç çubuğu butonunu kullanabilirsiniz.",
     "description": "Install page: explaining how to use adblock in more detail.",
     "placeholders": {
       "img": {
@@ -500,191 +516,195 @@
     }
   },
   "format_site1_site2_site3": {
-    "message": "Формат: ~site1.com|~site2.com|~novyny.site3.org",
+    "message": "Biçim: ~site1.com|~site2.com|~haberler.site3.org",
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
   },
   "generaloptions": {
-    "message": "Загальні настройки",
+    "message": "Genel Ayarlar",
     "description": "Title of first tab page"
   },
   "googletextads": {
-    "message": "Я не проти реклами у результатах пошуку Google; нехай лишається.",
+    "message": "Google arama sonuçlarında çıkan reklamları seviyorum; onları engelleme.",
     "description": "Option on first tab page"
   },
   "headerfilter": {
-    "message": "Підпадає під фільтр",
+    "message": "Eşleşen filtre",
     "description": "resourceblocking page string"
   },
   "headerresource": {
-    "message": "Ресурс",
+    "message": "Kaynak",
     "description": "resourceblocking page string"
   },
   "headertype": {
-    "message": "Тип",
+    "message": "Tip",
     "description": "resourceblocking page string"
   },
   "help": {
-    "message": "Допомога",
+    "message": "Yardım",
     "description": "Text of link to a page with fixes to common problems and a list of known issues"
   },
   "hide_this_button": {
-    "message": "Сховати цю кнопку",
+    "message": "Bu düğmeyi gizle",
     "description": "Toolbar button menu entry to hide the AdBlock button"
   },
   "how_to_use_adblock": {
-    "message": "Як користуватися AdBlock:",
+    "message": "Adblock nasıl kullanılır:",
     "description": "Install page section title"
   },
   "i_came_here_looking_for_catblock": {
-    "message": "Я прийшов сюди по <b>CatBlock</b>! Замініть рекламу на зображення киць!",
+    "message": "Ben <b>Catblock</b> için geldim! Reklamları kedi resimleriyle değiştir!",
     "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
-    "message": "Мені подобається реклама від Google; не блокувати її.",
+    "message": "Google'ın metin reklamlarını seviyorum; onları engelleme.",
     "description": "Install page text; slightly shorter than the 'googletextads' message."
   },
   "installedtitle": {
-    "message": "AdBlock встановлено!",
+    "message": "Adblock kuruldu!",
     "description": "Title for the installation success page"
   },
   "installing_adblock": {
-    "message": "Встановлення AdBlock...",
+    "message": "Adblock Kuruluyor...",
     "description": "Install page: shown while progress bar loads"
   },
   "invalidListUrl": {
-    "message": "Хибний URL списку. Його буде видалено.",
+    "message": "Geçersiz filtre listesi linki. Bu link silinecek.",
     "description": "Message when you subscribe to a non-list URL"
   },
   "labelshow": {
-    "message": "показати",
+    "message": "göster",
     "description": "The label when you click the 'show links to filter lists' option"
   },
   "lang_bulgarian": {
-    "message": "Болгарською",
+    "message": "Bulgarca",
     "description": "language"
   },
   "lang_chinese": {
-    "message": "Китайською",
+    "message": "Çince",
     "description": "language"
   },
   "lang_czech": {
-    "message": "Чеською",
+    "message": "Çekce",
     "description": "language"
   },
   "lang_danish": {
-    "message": "Датською",
+    "message": "Danimarkaca",
     "description": "language"
   },
   "lang_dutch": {
-    "message": "Голландською",
+    "message": "Flemenkçe",
     "description": "language"
   },
   "lang_english": {
-    "message": "Англійською",
+    "message": "İngilizce",
     "description": "language"
   },
   "lang_finnish": {
-    "message": "Фінською",
+    "message": "Fince",
     "description": "language"
   },
   "lang_french": {
-    "message": "Французькою",
+    "message": "Fransızca",
     "description": "language"
   },
   "lang_german": {
-    "message": "Німецькою",
+    "message": "Almanca",
     "description": "language"
   },
   "lang_greek": {
-    "message": "Грецькою",
+    "message": "Yunanca",
     "description": "language"
   },
   "lang_hungarian": {
-    "message": "Угорською",
+    "message": "Macarca",
     "description": "language"
   },
   "lang_israeli": {
-    "message": "Івритом",
+    "message": "İbranice",
     "description": "language"
   },
   "lang_italian": {
-    "message": "Італійською",
+    "message": "İtalyanca",
     "description": "language"
   },
   "lang_japanese": {
-    "message": "Японською",
+    "message": "Japonca",
     "description": "language"
   },
   "lang_korean": {
-    "message": "Корейською",
+    "message": "Korece",
     "description": "language"
   },
   "lang_polish": {
-    "message": "Польською",
+    "message": "Lehçe",
     "description": "language"
   },
   "lang_romanian": {
-    "message": "Румунською",
+    "message": "Rumence",
     "description": "language"
   },
   "lang_russian": {
-    "message": "Російською",
+    "message": "Rusça",
     "description": "language"
   },
   "lang_spanish": {
-    "message": "Іспанською",
+    "message": "İspanyolca",
     "description": "language"
   },
   "lang_ukranian": {
-    "message": "Українською",
+    "message": "Ukraynaca",
     "description": "language"
   },
   "last_update_failed": {
-    "message": "Останнє оновлення пройшло невдало;",
+    "message": "Son güncelleştirme başarısız oldu;",
     "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "lets_get_you_set_up": {
-    "message": "Давайте встановимо вам AdBlock!",
+    "message": "Gelin Adblock'u sizin için hazırlayalım!",
     "description": "Install page: section header for Safari users.  These users do not see the section with the 'set_up_adblock' message.  The tone should be friendly."
   },
   "linkblockadbyurl": {
-    "message": "Заблокувати рекламу за її URL",
+    "message": "Reklamı URL'sine göre engelle",
     "description": "Link on the third tab"
   },
   "linkhidesection": {
-    "message": "Приховати частину веб-сторінки",
+    "message": "Web sayfasının bir bölümünü sakla",
     "description": "Link on the third tab"
   },
   "linkunblock": {
-    "message": "Показувати рекламу на веб-сторінці або домені",
+    "message": "Bir web sayfasındaki ya da alan adındaki reklamları göster",
     "description": "Link on the third tab"
   },
   "loading": {
-    "message": "ЗАВАНТАЖЕННЯ...",
+    "message": "YÜKLENİYOR...",
     "description": "resourceblocking page string"
   },
   "manualfilteredit": {
-    "message": "Налаштувати фільтри вручну:",
+    "message": "Filtrelerinizi manuel olarak düzenleyin:",
     "description": "Subtitle on the third tab"
   },
+  "maybemalware": {
+    "message": "İnternetteki tüm siteler reklam içermez. Bu kadar çok reklamla karşılaşıyor olmanız, bilgisayarınızda, istenmeyen zararlı bir program olduğu anlamına gelebilir. Tüm eklentileri teker teker kapatıp, sorunun devam edip etmediğine bakın. Eğer sorun devam ediyorsa, bir zararlı yazılımdan kaynaklanma ihtimali olduğundan, güncel bir antivirüs yazılımıyla tarama yapmanız önerilir.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
   "modifydomain": {
-    "message": "Сайт:",
+    "message": "Site:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
   },
   "modifypath": {
-    "message": "Сторінка:",
+    "message": "Sayfa:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
   "multipledomainshint": {
-    "message": "Відділяйте різні домени комами або пробілами",
+    "message": "Farklı alan adlarını virgülle ya da boşlukla ayırın",
     "description": "resourceblocking page string"
   },
   "new_version": {
-    "message": "Нова версія!",
+    "message": "Yeni sürüm!",
     "description": "Tooltip on toolbar button when a significant new version is released"
   },
   "newtitle": {
-    "message": "Нове у версії $version$:",
+    "message": "Sürüm $version$ için yenilikler:",
     "description": "Message in popup button telling users about new features",
     "placeholders": {
       "version": {
@@ -694,65 +714,133 @@
     }
   },
   "nextstep": {
-    "message": "Наступний крок",
+    "message": "Sonraki adım",
     "description": "resourceblocking page string"
   },
   "no": {
-    "message": "Ні",
+    "message": "Hayır",
     "description": "A negative response to a question"
   },
   "nodefaultfilter1": {
-    "message": "У нас немає стандартного списку фільтрів для цієї мови.<br/>Будь ласка, спробуйте знайти гожий список з підтримкою цієї мови $link$ або заблокуйте цю рекламу самотужки на вкладці «Налаштувати».",
+    "message": "Bu dil için varsayılan bir filtre listemiz yok.<br/> Lütfen bu dili destekleyen uygun bir liste bulmaya çalışın ya da $link$ \"Özelleştir\" seçeneğini kullanarak bu reklamı kendiniz için engelleyin.",
     "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders": {
       "link": {
-        "content": "$1тут$2",
+        "content": "$1buradan$2",
         "example": "<a href='http://abp.org'>here</a>"
       }
     }
   },
+  "noresourcessend2": {
+    "message": "Bir şeyler ters gitti. Hiç bir kaynak gönderilmedi. Bu sayfa şimdi kapanacak. Web sitesini tekrar yüklemeyi deneyin.",
+    "description": "resourceblocking page string"
+  },
+  "nosearchresults": {
+    "message": "Hiç bir kaynak bulunamadı",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
   "novalidurlpattern": {
-    "message": "Будь ласка, уведіть правильну послідовність фільтрування URL!",
+    "message": "Lütfen eşleşme için geçerli bir URL kalıbı seçin!",
     "description": "resourceblocking page string"
   },
   "now_you_have_adblock_hooray": {
-    "message": "У вас тепер є AdBlock! Ура!",
+    "message": "Artık Adblock kullanıyorsunuz! Yaşasın!",
     "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
   },
   "ok_autoupdate_is_on": {
-    "message": "Гаразд, автооновлення увімкнено",
+    "message": "Tamam, otomatik güncelleştirmeler şimdi açık",
     "description": "Install page: text of button to press after turning on autoupdate."
   },
   "ok_now_what": {
-    "message": "Гаразд, далі що?",
+    "message": "Tamam, peki ya şimdi?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   },
+  "oneverysitetitle": {
+    "message": "Reklamlar her yerde!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
   "only_block_ads_on_these_sites": {
-    "message": "Блокувати рекламу лише на цих сайтах:",
+    "message": "Sadece bu sitelerdeki reklamları engelle:",
     "description": "Label for textbox where user enters a list of sites on Customize tab"
   },
   "onlyondomains": {
-    "message": "ЛИШЕ сторінок на таких доменах:",
+    "message": "Sadece bu alan adlarındaki sayfalar:",
     "description": "resourceblocking page string"
   },
   "onlyresourcetypes": {
-    "message": "Цей фільтр застосовується до ресурсів таких типів:",
+    "message": "Bu filtre şu tipteki kaynaklara uygulanır:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "Opera 12.10'den önceki sürümlerde, Adblock'un tüm kuralları doğru çalıştırılamadığından, tüm reklamlar engellenemeyebilir. Bu sorun , Opera, 12.10 güncellemesini yayınladığında düzelecektir. 12.10 sürümünden itibaren tüm reklamlar doğru şekilde engellenecektir.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Opera 12.10'den önceki sürümlerde, bazı seçenekler desteklenemediğinden, kullanılamaz durumda görünüyor.",
+    "description": "Opera < 12.10 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Ayrıca siz de şu seçenek için değeri artırabilirsiniz; $setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Bu eklentiyi seviyor musunuz? Eğer öyleyse, lütfen seçenekler sayfasından bağış yapmayı düşünün!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Eğer bu eklentiyi gerçekten seviyorsanız, seçenekler sayfasından bağış yapmayı düşününün.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Aktifleştirildiği sürüm; $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Adblock'un hiç bir şeyi engellemesini istemediğiniz alan adı",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "Daha fazla seçenek için, araç çubuğu butonuna tıklayabilir ya da Opera menüsü aracılığıyla, Eklentiler &rArr; Eklentileri Yönet &rArr; ayar simgesi &rArr; Tercihler menüsünü kullanabilirsiniz.",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Bir alan adındaki reklamları göster",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Uzantının Tercihler menüsünü kullanarak bu butonu tekrar aktifleştirebilirsiniz.",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Araç çubuğu butonunu göster",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
-    "message": "Параметри",
+    "message": "Seçenekler",
     "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
-    "message": "список змін",
+    "message": "değişiklikler listesi",
     "description": "changelog link"
   },
   "optionstitle": {
-    "message": "Настройки AdBlock",
+    "message": "Adblock Ayarları",
     "description": "Title for the options page"
   },
   "optionsversion": {
-    "message": "Версія $version$",
+    "message": "Sürüm $version$",
     "description": "Version number",
     "placeholders": {
       "version": {
@@ -762,51 +850,51 @@
     }
   },
   "orenteraurl": {
-    "message": "Або введіть URL:",
+    "message": "Ya da bir URL girin:",
     "description": "link for custom subscription"
   },
   "other": {
-    "message": "Іншими",
+    "message": "Diğer",
     "description": "multiple choice option"
   },
   "pagelanguagecheck": {
-    "message": "Якою мовою складено цю сторінку?",
+    "message": "Bu sayfa hangi dilde yazılmış?",
     "description": "question on ad report page"
   },
   "pause_adblock": {
-    "message": "Призупинити AdBlock",
+    "message": "Adblock'u duraklat",
     "description": "Menu entry to pause AdBlock."
   },
   "please_fill_out_adblocks_one_question_setup": {
-    "message": "Будь ласка, пройдіть однокрокову процедуру встановлення AdBlock:",
+    "message": "Lütfen Adblock'un tek soruluk kurulumunu tamamlayın:",
     "description": "Install page instructions.  The one question is a checkbox."
   },
   "project_home": {
-    "message": "Домашня сторінка проекту",
+    "message": "Proje sayfası",
     "description": "Text of link to the AdBlock open source project homepage (not the install page)"
   },
   "refusetocheck": {
-    "message": "Мені ліньки перевіряти",
+    "message": "Bunu kontrol etmek istemiyorum",
     "description": "user is telling us they don't wish to investigate something for us"
   },
   "reloadadpage": {
-    "message": "Оновіть сторінку з рекламою.",
+    "message": "Reklam içeren bir sayfayı yenileyin",
     "description": "instruction on ad report page"
   },
   "removefromlist": {
-    "message": "Видалити зі списку",
+    "message": "Listeden sil",
     "description": "Label to remove a custom filter"
   },
   "removelabel": {
-    "message": "Видалити",
+    "message": "Sil",
     "description": "link to remove a filter"
   },
   "report_ad_on_page": {
-    "message": "Звітувати про рекламу на цій сторінці",
+    "message": "Bu sayfada bir reklam bildir",
     "description": "Link in the button"
   },
   "reportfilterlistproblem": {
-    "message": "Проблема у списку фільтрів. Відзвітуйте тут: $link$",
+    "message": "Bu bir filtre listesi problemi. $link$ adresine bildirin",
     "description": "telling the user to report an ad to a filter list maintainer",
     "placeholders": {
       "link": {
@@ -815,40 +903,54 @@
       }
     }
   },
+  "reportpubliclyavailable": {
+    "message": "Not: Bildiriminiz halka açık bir şekilde görünebilir. Gizlilik içerebilecek bir bilgi dahil etmeden önce bunu göz önünde bulundurun.",
+    "description": "Ad report page string, when you're about to submit a report"
+  },
   "reporttous2": {
-    "message": "Якщо ви говорите англійською, ви можете повідомити про рекламу особисто нас <a>на трекері помилок</a>.",
+    "message": "Eğer İngilizce biliyorsanız bir reklamı bize <a>sorun denetleyici</a> kısmından bildirebilirsiniz.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
   },
   "resourceblocklegend1": {
-    "message": "Легенда:",
+    "message": "Lejant",
     "description": "resourceblocking page string"
   },
   "resourceblocklegend2": {
-    "message": "заблоковані ресурси",
+    "message": "engellenmiş kaynaklar",
     "description": "resourceblocking page string"
   },
   "resourceblocklegend3": {
-    "message": "дозволені ресурси",
+    "message": "izin verilen kaynaklar",
     "description": "resourceblocking page string"
   },
   "resourceblocklegend4": {
-    "message": "ресурси, що підлягають блокуванню",
+    "message": "engellenebilir kaynaklar",
     "description": "resourceblocking page string"
   },
   "resourceblocklegend5": {
-    "message": "застосовано правила приховування",
+    "message": "uygulanmış gizleme kuralları",
     "description": "resourceblocking page string"
   },
   "resourceblocktitle": {
-    "message": "Заблокувати ресурс",
+    "message": "Bir kaynağı engelle",
     "description": "resourceblocking page string"
   },
+  "resourcedomain": {
+    "message": "Şu alan adındaki sayfa yüklendi:\n$domain$",
+    "description": "Text shown when hovering over an item in the third-party column",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
   "resourceiswhitelisted": {
-    "message": "Обраний ресурс додано до білого списку. Тож його неможливо заблокувати.",
+    "message": "Seçilen kaynak izin verilenler bölümüne eklenmiş. Bu yüzden engelleyemezsiniz.",
     "description": "resourceblocking page string"
   },
   "retryaftersubscribe": {
-    "message": "Передплатіть цей список фільтрів, та спробуйте знов: $list_title$",
+    "message": "Bu filtreye abone olup, tekrar deneyin: $list_title$",
     "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
     "placeholders": {
       "list_title": {
@@ -858,125 +960,141 @@
     }
   },
   "safari50_updatenotice": {
-    "message": "Ви користуєтесь застарілою версією Safari. Встановіть найновішу версію, аби користуватися кнопкою на панелі інструментів для призупинки AdBlock, занесення сайтів у білий список, та подання скарг на рекламу. <a>Оновити зараз</a>.",
+    "message": "Safari'nin eski bir sürümünü kullanıyorsunuz. Adblock araç çubuğu butonunu kullanabilmek, bir web sitesine izin verebilmek ya da reklam bildirebilmek istiyorsanız, son sürüme geçin.",
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   },
   "savebutton": {
-    "message": "Зберегти",
+    "message": "Kaydet",
     "description": "Save button"
   },
   "savereminder": {
-    "message": "Не забудьте зберегти!",
+    "message": "Kaydetmeyi unutmayın!",
     "description": "Reminder to press save"
   },
+  "searchexplanation": {
+    "message": "Kelimeyi olduğu gibi ve başka harfler ekli şekilleriyle birlikte bulmak için * kullanın.   Örneğin, \"banner*.gif resim\" araması, \"banner.gif\", \"banner123.gif\" ve \"bannerxyz.gif\" gibi sonuçlarla eşleşir.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Kaynaklar içinde ara...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
+  },
   "seeing_this_every_time_you_start_your_browser": {
-    "message": "Бачите це повідомлення щоразу, запускаючи веб-переглядач?",
+    "message": "Tarayıcı her açıldığında bunu mu görüyorsunuz?",
     "description": "Install page: link to click for help"
   },
   "selectresources": {
-    "message": "Виберіть ресурс, який слід заблокувати або розблокувати",
+    "message": "Engellemek ya da engellemesini kaldırmak istediğiniz kaynağı seçin",
     "description": "resourceblocking page string"
   },
   "set_up_adblock": {
-    "message": "Настроїти AdBlock",
+    "message": "Adblock'u kur",
     "description": "Install page: section title"
   },
   "show_ads_except_for": {
-    "message": "Показувати рекламу <i>всюди,</i> за винятком цих доменів...",
+    "message": "Şu alan adlarındakiler hariç <i>her yerdeki</i> reklamları göster",
     "description": "Section title for blacklisting section of Customize tab"
   },
   "show_me_how": {
-    "message": "Покажіть мені як",
+    "message": "Nasıl yapıldığını göster",
     "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
   },
   "show_resourcelist": {
-    "message": "Показати список ресурсів",
+    "message": "Kaynak listesini göster",
     "description": "Link in the button"
   },
   "showcontextmenus": {
-    "message": "Керувати за допомогою контекстного меню.",
+    "message": "Sağ tıklama menüsüne Adblock seçeneklerini ekle.",
     "description": "Option on first tab page"
   },
   "showlinkstolists": {
-    "message": "Показувати посилання на списки фільтрів:",
+    "message": "Filtre listeleri için linkleri göster:",
     "description": "Option on second tab page"
   },
   "sliderexplanation": {
-    "message": "Перетягуйте повзунок доти, доки реклама не зникне, проте не переборщіть.",
+    "message": "Reklam düzgün bir şekilde engelleninceye ve engellenen öğe sayfa yapısını bozmayacak şekilde görüntüleninceye kadar kaydırıcıyı ilerletin.",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
-    "message": "Крок 1: З’ясуймо, що слід заблокувати",
+    "message": "İlk Adım: Nelerin engelleneceğini belirle",
     "description": "Blacklister slider page title"
   },
   "status_disabled": {
-    "message": "AdBlock не може бути застосовано на цьому домені.",
+    "message": "Adblock bu alan adında çalışamaz.",
     "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
   "status_paused": {
-    "message": "AdBlock призупинено.",
+    "message": "Adblock duraklatıldı.",
     "description": "Message shown in toolbar button when AdBlock is paused."
   },
   "stop_blocking_ads": {
-    "message": "Припинити блокувати рекламу:",
+    "message": "Şu reklamları engellemeyi durdur:",
     "description": "Section header on third tab"
   },
   "storage_quota_exceeded": {
-    "message": "Перевищено ліміт місця, яке для AdBlock виділяється веб-переглядачем. Будь ласка, скасуйте передплату кількох списків фільтрів!",
+    "message": "Adblock'un kullanabileceği depolama alanını aştınız. Lütfen bazı filtreleri listeden silin!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
   },
   "subscribe_unsubscribe_all": {
-    "message": "$subscribe$ або $unsubscribe$ списків фільтрів.",
+    "message": "Tüm listelere $subscribe$ ya da $unsubscribe$",
     "description": "Link in the button",
     "placeholders": {
       "subscribe": {
-        "content": "<a href='#' id='subscribeAll'>Передплатіть усі</a>",
+        "content": "<a href='#' id='subscribeAll'>Abone ol</a>",
         "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
       },
       "unsubscribe": {
-        "content": "<a href='#' id='unsubscribeAll'>скасуйте передплату усіх</a>",
+        "content": "<a href='#' id='unsubscribeAll'>Aboneliği kaldır</a>",
         "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
       }
     }
   },
   "subscribebutton": {
-    "message": "Передплатити",
+    "message": "Abone ol",
     "description": "subscribe to a list button"
   },
   "subscribingfailed": {
-    "message": "Невдало!",
+    "message": "Başarısız!",
     "description": "abp: link subscriber result"
   },
   "subscribingfinished": {
-    "message": "Готово!",
+    "message": "Tamamlandı!",
     "description": "abp: link subscriber result"
   },
   "subscribingtitle": {
-    "message": "Підписка на список фільтрів...",
+    "message": "Filtre listelerine abone olunuyor...",
     "description": "abp: link subscriber title"
   },
   "tabcustomize": {
-    "message": "Налаштувати",
+    "message": "Özelleştir",
     "description": "A tab on the options page"
   },
   "tabcustomizetitle": {
-    "message": "Налаштувати AdBlock",
+    "message": "Adblock'u özelleştir",
     "description": "Title of the third tab"
   },
   "tabfilterlists": {
-    "message": "Список фільтрів",
+    "message": "Filtre listeleri",
     "description": "A tab on the options page"
   },
   "tabgeneral": {
-    "message": "Загальне",
+    "message": "Genel",
     "description": "A tab on the options page"
   },
   "that_was_easy": {
-    "message": "Це було легко",
+    "message": "Bu beklediğimden daha kolay oldu",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
+  "thats_it": {
+    "message": "Hepsi bu kadar!",
+    "description": "Install page string"
+  },
+  "thirdparty": {
+    "message": "Üçüncü şahıs",
+    "description": "Resource list column title telling if the resource originates from a different domain"
+  },
   "thirdpartycheckbox": {
-    "message": "Будь-який веб-сайт ЗА ВИКЛЮЧЕННЯМ сайтів на домені $domain$",
+    "message": "Bu alan adlarındaki web siteleri hariç $domain$",
     "description": "resourceblocking page string",
     "placeholders": {
       "domain": {
@@ -986,93 +1104,97 @@
     }
   },
   "this_toolbar_button": {
-    "message": "Ця кнопка :)",
+    "message": "Bu araç çubuğu butonu :)",
     "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
-    "message": "Аби увімкнути автооновлення:",
+    "message": "Otomatik güncelleştirmeleri açmak için:",
     "description": "Install page: title of section with a list of steps to take"
   },
   "translator_credit": {
-    "message": "Переклад українською: $translator_names$",
+    "message": "Çeviriyi yapan: $translator_names$",
     "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
-        "content": "Юрій Жарков",
+        "content": "Necip Ateş",
         "example": "Michael G, Drew R"
       }
     }
   },
   "turning_on_autoupdate_is_really_important": {
-    "message": "Увімкнення автооновлення <b>насправді важливе!</b>",
+    "message": "Otomatik güncelleştirmeleri açmak <b>gerçekten önemlidir!</b>",
     "description": "Message on Safari install page convincing users to not skip this setup step"
   },
   "typehiding": {
-    "message": "приховане",
+    "message": "gizlenen",
     "description": "A resource type"
   },
   "typeimage": {
-    "message": "зображення",
+    "message": "resim",
     "description": "A resource type"
   },
   "typemedia": {
-    "message": "аудіо/відео",
+    "message": "ses/video",
     "description": "A resource type"
   },
   "typeobject": {
-    "message": "інтерактивний об’єкт",
+    "message": "etkileşimli öğe",
     "description": "A resource type"
   },
   "typeobject_subrequest": {
-    "message": "object_subrequest",
+    "message": "öğe_altistemi",
     "description": "A resource type"
   },
   "typeother": {
-    "message": "інший",
+    "message": "diğer",
     "description": "A resource type"
   },
   "typepage": {
-    "message": "сторінка",
+    "message": "sayfa",
     "description": "A resource type"
   },
   "typepopup": {
-    "message": "зринаючий",
+    "message": "açılan pencere",
     "description": "A resource type"
   },
   "typescript": {
-    "message": "скрипт",
+    "message": "komut",
     "description": "A resource type"
   },
   "typestylesheet": {
-    "message": "визначення стилю",
+    "message": "stil tanımı",
     "description": "A resource type"
   },
   "typesubdocument": {
-    "message": "фрейм",
+    "message": "çerçeve",
     "description": "A resource type"
   },
   "typeunknown": {
-    "message": "невідомо",
+    "message": "bilinmeyen",
     "description": "A resource type"
   },
   "typexmlhttprequest": {
     "message": "xmlhttprequest",
     "description": "A resource type"
   },
+  "undo_last_block": {
+    "message": "Son değişiklikleri geri al",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "unpause": {
-    "message": "запустити",
+    "message": "tekrar başlat",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
   },
   "unsubscribedlabel": {
-    "message": "Передплату скасовано.",
+    "message": "Abonelik kaldırıldı.",
     "description": "Status label"
   },
   "updateddayago": {
-    "message": "оновлено день тому",
+    "message": "1 gün önce güncelleştirildi",
     "description": "Label for subscription"
   },
   "updateddaysago": {
-    "message": "оновлено $days$ дні(в) тому",
+    "message": "$days$ önce güncelleştirildi",
     "description": "Label for subscription",
     "placeholders": {
       "days": {
@@ -1082,11 +1204,11 @@
     }
   },
   "updatedhourago": {
-    "message": "оновлено годину тому",
+    "message": "1 saat önce güncelleştirildi",
     "description": "Label for subscription"
   },
   "updatedhoursago": {
-    "message": "оновлено $hours$ годин(и) тому",
+    "message": "$hours$ saat önce güncelleştirildi.",
     "description": "Label for subscription",
     "placeholders": {
       "hours": {
@@ -1096,11 +1218,11 @@
     }
   },
   "updatedminuteago": {
-    "message": "оновлено хвилину тому",
+    "message": "1 dakika önce güncelleştirildi",
     "description": "Label for subscription"
   },
   "updatedminutesago": {
-    "message": "оновлено $minutes$ хвилин(и) тому",
+    "message": "$minutes$ dakika önce güncelleştirildi",
     "description": "Label for subscription",
     "placeholders": {
       "minutes": {
@@ -1110,11 +1232,11 @@
     }
   },
   "updatedrightnow": {
-    "message": "щойно оновлено",
+    "message": "şimdi güncellendi",
     "description": "Label for subscription"
   },
   "updatedsecondsago": {
-    "message": "оновлено $seconds$ секунд(и) тому",
+    "message": "$seconds$ saniye önce güncelleştirildi",
     "description": "Label for subscription",
     "placeholders": {
       "seconds": {
@@ -1124,49 +1246,49 @@
     }
   },
   "updatefromoldversion": {
-    "message": "Ви користуєтесь застарілою версією AdBlock. Будь ласка, спершу $updatelink$ до найновішої версії AdBlock",
+    "message": "Adblock'un eski bir sürümünü kullanıyorsunuz. Lütfen $updatelink$ linkini kullanarak Adblock'un son sürümüne geçin.",
     "description": "ad report page instruction",
     "placeholders": {
       "updatelink": {
-        "content": "$1оновіться$2",
+        "content": "$1güncelleme$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
   },
   "updatenowmessage": {
-    "message": "Я сам оновлюватиму списки; та ви можете <a>оновити їх</a> для мене зараз.",
+    "message": "Güncellemeler otomatik olarak yüklenecek; siz de <a>şimdi güncelle</a> linkini kullanarak güncelleyebilirsiniz.",
     "description": "update filters text + button"
   },
   "updateyourlists": {
-    "message": "Переконайтеся, що списки фільтрів свіжі",
+    "message": "Filtre listelerinin güncel olduğundan emin olun",
     "description": "instruction on ad report page"
   },
   "warning_overrules_filters": {
-    "message": "Увага: на всіх інших сайтах ви бачитимете рекламу!<br>Ці правила важливіші за інші фільтри для вказаних сайтів.",
+    "message": "Dikkat: bu sitelerin dışında tüm sitelerde reklamları görebileceksiniz!<br> Kullandığınız filtreler bu siteler dışında geçersiz olacak.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "whitelistertitle2": {
-    "message": "Не застосовувати AdBlock до...",
+    "message": "Adblock'u şu sitelerde kullanma...",
     "description": "The title of the whitelister dialog"
   },
   "whitelisteverycontaining": {
-    "message": "Заносити до білого списку всі ресурси, що містять:",
+    "message": "Şu öğeleri içeren tüm kaynaklara izin ver:",
     "description": "resourceblocking page string"
   },
   "wildcardhint": {
-    "message": "Зауважте: ви можете використовувати тут оператор * для позначення послідовності будь-яких символів",
+    "message": "Not: * işaretini burada joker olarak kullanabilirsiniz",
     "description": "resourceblocking page string"
   },
   "yes": {
-    "message": "Так",
+    "message": "Evet",
     "description": "A positive response to a question"
   },
   "you_can_slide_to_change": {
-    "message": "Перетягніть, щоб визначити, чого саме не чіпатиме AdBlock.",
+    "message": "Aşağı kaydırarak Adblock'un tam olarak hangi sayfalarda çalışıp çalışmayacağını değiştirebilirsiniz",
     "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "you_know_thats_a_bad_idea_right": {
-    "message": "Що більше списків фільтрів ви використовуєте, то повільніше працює AdBlock. На деяких сайтах надмірне використання списків може навіть призвести до аварійного завершення роботи переглядача. Натисніть OK, щоб попри все передплатити цей список.",
+    "message": "Ne kadar çok filtre listesi kullanırsanız, Adblock o kadar yavaşlar. Çok fazla liste kullanmak bazı sitelerde tarayıcınızın çökmesine bile sebep olabilir. Bu listeyi yine de eklemek istiyorsanız Tamam'a basın.",
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
   }
 }

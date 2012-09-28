@@ -1,17 +1,12 @@
 function load_jquery_ui(callback) {
-  if (typeof global_have_loaded_jquery_ui != "undefined") {
-    callback();
-    return; // don't inject stylesheets more than once
-  }
-  global_have_loaded_jquery_ui = true;
-
   function load_css(src) {
     var url = chrome.extension.getURL(src);
     var link = $('<link rel="stylesheet" type="text/css" />').
-      attr('href', url);
+      attr('href', url).
+      addClass("adblock-ui-stylesheet");
     $(document.head || document.documentElement).append(link);
   }
-  load_css("jquery/css/custom-theme/jquery-ui-1.8.custom.css");
+  load_css("jquery/css/jquery-ui.custom.css");
   load_css("jquery/css/override-page.css");
 
   if (!SAFARI) {

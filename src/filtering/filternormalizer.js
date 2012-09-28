@@ -50,7 +50,7 @@ var FilterNormalizer = {
         return false;
 
     // Convert old-style hiding rules to new-style.
-    if (/#[\*a-z0-9_\-]*(\(|$)/.test(filter) && !/##/.test(filter)) {
+    if (/#[\*a-z0-9_\-]*(\(|$)/.test(filter) && !/\#\@?\#./.test(filter)) {
       // Throws exception if unparseable.
       var oldFilter = filter;
       filter = FilterNormalizer._old_style_hiding_to_new(filter);
@@ -63,7 +63,7 @@ var FilterNormalizer = {
 
       try {
         // Throws if the filter is invalid...
-        var selectorPart = filter.substr(filter.indexOf("##") + 2);
+        var selectorPart = filter.replace(/^.*?\#\@?\#/, '');
         if (document.querySelector(selectorPart + ',html').length === 0)
           throw "Causes other filters to fail";
       } catch(ex) {
@@ -80,11 +80,6 @@ var FilterNormalizer = {
           filter = ignoreStyleRulesOnTheseSites + filter;
         }
       }
-
-      // This was a filter which only worked in older Gecko browsers (FF3)
-      // They'll never match in WebKit browsers.
-      if (/\~pregecko2.*\#\#/.test(filter))
-        return null;
 
       var parsedFilter = new SelectorFilter(filter);
 
@@ -103,7 +98,7 @@ var FilterNormalizer = {
     }
 
     // Ignore filters whose domains aren't formatted properly.
-    FilterNormalizer._verifyDomains(parsedFilter._domains);
+    FilterNormalizer.verifyDomains(parsedFilter._domains);
 
     // Nothing's wrong with the filter.
     return filter;
@@ -158,10 +153,10 @@ var FilterNormalizer = {
   // Throw an exception if the input contains invalid domains.
   // Input: domainInfo: { applied_on:array, not_applied_on:array }, where each
   //                    array entry is a domain.
-  _verifyDomains: function(domainInfo) {
+  verifyDomains: function(domainInfo) {
     for (var name in { "applied_on":1, "not_applied_on":1 }) {
       for (var i = 0; i < domainInfo[name].length; i++) {
-        if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+$/i.test(domainInfo[name][i]) == false)
+        if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+\.?$/i.test(domainInfo[name][i]) == false)
           throw "Invalid domain: " + domainInfo[name][i];
       }
     }

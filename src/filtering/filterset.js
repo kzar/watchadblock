@@ -67,8 +67,9 @@ FilterSet.prototype = {
   },
 
   // Get a list of all Filter objects that should be tested on the given
-  // domain, and return it with the given map function applied.
-  filtersFor: function(domain, mapper) {
+  // domain, and return it with the given map function applied. This function
+  // is for hiding rules only
+  filtersFor: function(domain, isWhitelistSelector) {
     var limited = this._viewFor(domain);
     var data = {};
     // data = set(limited.items)
@@ -78,30 +79,41 @@ FilterSet.prototype = {
         var filter = entry[i];
         data[filter.id] = filter;
       }
-    } 
+    }
     // data -= limited.exclude
     for (var subdomain in limited.exclude) {
       for (var filterId in limited.exclude[subdomain]) {
         delete data[filterId];
       }
     }
+    var selectorsToExclude = {};
+    if (!isWhitelistSelector) {
+      // selectorsToExclude = set(relevant elemhide exception selectors)
+      var excludedFilters = _myfilters.hidingWhitelist.filtersFor(domain, true);
+      for (k=0; k<excludedFilters.length; k++) {
+        selectorsToExclude[excludedFilters[k]] = true;
+      }
+    }
     var result = [];
     for (var k in data) {
-      result.push(mapper(data[k]));
+      if (!selectorsToExclude[data[k].selector])
+        result.push(data[k].selector);
     }
+    
     return result;
   },
 
   // Return the filter that matches this url+elementType on this frameDomain:
   // the filter in a relevant entry in this.items who is not also in a 
   // relevant entry in this.exclude.
-  matches: function(url, loweredUrl, elementType, frameDomain, isThirdParty) {
+  // isThirdParty: true if url and frameDomain have different origins.
+  matches: function(url, elementType, frameDomain, isThirdParty) {
     var limited = this._viewFor(frameDomain);
     for (var k in limited.items) {
       var entry = limited.items[k];
       for (var i = 0; i < entry.length; i++) {
         var filter = entry[i];
-        if (!filter.matches(url, loweredUrl, elementType, isThirdParty))
+        if (!filter.matches(url, elementType, isThirdParty))
           continue; // no match
         // Maybe filter shouldn't match because it is excluded on our domain?
         var excluded = false;
@@ -129,10 +141,13 @@ BlockingFilterSet = function(patternFilterSet, whitelistFilterSet) {
   this._matchCache = {};
 }
 
-// Strip third+ level domain names from the domain and return the result.
-BlockingFilterSet._secondLevelDomainOnly = function(domain) {
-  var match = domain.match(/[^.]+\.(co\.)?[^.]+$/) || [ domain ];
-  return match[0].toLowerCase();
+// Checks if the two domains have the same origin
+// Inputs: the two domains
+// Returns: true if third-party, false otherwise
+BlockingFilterSet.checkThirdParty = function(domain1, domain2) {
+  var match1 = parseUri.secondLevelDomainOnly(domain1, false);
+  var match2 = parseUri.secondLevelDomainOnly(domain2, false);
+  return (match1 !== match2);
 }
 
 BlockingFilterSet.prototype = {
@@ -150,28 +165,20 @@ BlockingFilterSet.prototype = {
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, frameDomain, returnFilter) {
     var urlDomain = parseUri(url).hostname;
-    var urlOrigin = BlockingFilterSet._secondLevelDomainOnly(urlDomain);
-    var docOrigin = BlockingFilterSet._secondLevelDomainOnly(frameDomain);
-    var isThirdParty = (urlOrigin != docOrigin);
+    var isThirdParty = BlockingFilterSet.checkThirdParty(urlDomain, frameDomain);
 
     // matchCache approach taken from ABP
     var key = url + " " + elementType + " " + isThirdParty;
     if (key in this._matchCache)
       return this._matchCache[key];
 
-    // TODO: is there a better place to do this?
-    // Limiting length of URL to avoid painful regexes.
-    var LENGTH_CUTOFF = 200;
-    url = url.substring(0, LENGTH_CUTOFF);
-    var loweredUrl = url.toLowerCase();
-
-    var match = this.whitelist.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
+    var match = this.whitelist.matches(url, elementType, frameDomain, isThirdParty);
     if (match) {
       log(frameDomain, ": whitelist rule", match._rule, "exempts url", url);
       this._matchCache[key] = (returnFilter ? match._text : false);
       return this._matchCache[key];
     }
-    match = this.pattern.matches(url, loweredUrl, elementType, frameDomain, isThirdParty);
+    match = this.pattern.matches(url, elementType, frameDomain, isThirdParty);
     if (match) {
       log(frameDomain, ": matched", match._rule, "to url", url);
       this._matchCache[key] = (returnFilter ? match._text: true);

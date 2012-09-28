@@ -25,7 +25,14 @@ Filter.fromText = function(text) {
 }
 
 Filter.isSelectorFilter = function(text) {
-  return /\#\#/.test(text);
+  // This returns true for both hiding rules as hiding whitelist rules
+  // This means that you'll first have to check if something is an excluded rule
+  // before checking this, if the difference matters.
+  return /\#\@?\#./.test(text);
+}
+
+Filter.isSelectorExcludeFilter = function(text) {
+  return /\#\@\#./.test(text);
 }
 
 Filter.isWhitelistFilter = function(text) {
@@ -33,10 +40,10 @@ Filter.isWhitelistFilter = function(text) {
 }
 
 Filter.isComment = function(text) {
-  return text.length == 0 ||
-         text[0] == '!' ||
-         (text[0] == '[' && /^\[adblock/i.test(text)) ||
-         (text[0] == '(' && /^\(adblock/i.test(text));
+  return text.length === 0 ||
+         text[0] === '!' ||
+         (text[0] === '[' && /^\[adblock/i.test(text)) ||
+         (text[0] === '(' && /^\(adblock/i.test(text));
 }
 
 // Given a comma-separated list of domain includes and excludes, return
@@ -79,9 +86,9 @@ Filter._domainInfo = function(domainText, divider) {
 var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
 
-  var parts = text.split('##');
-  this._domains = Filter._domainInfo(parts[0], ',');
-  this.selector = parts[1];
+  var parts = text.match(/(^.*?)\#\@?\#(.+$)/);
+  this._domains = Filter._domainInfo(parts[1], ',');
+  this.selector = parts[2];
 };
 SelectorFilter.prototype = {
   // Inherit from Filter.
@@ -209,25 +216,20 @@ PatternFilter._parseRule = function(text) {
   // Convert regexy stuff.
 
   // First, check if the rule itself is in regex form.  If so, we're done.
+  var matchcase = (result.options & FilterOptions.MATCHCASE) ? "" : "i";
   if (/^\/.+\/$/.test(rule)) {
     result.rule = rule.substr(1, rule.length - 2); // remove slashes
-    result.rule = new RegExp(result.rule);
+    result.rule = new RegExp(result.rule, matchcase);
     return result;
   }
 
-  if (!(result.options & FilterOptions.MATCHCASE))
-    rule = rule.toLowerCase();
-
   var key = rule.match(/\w{5,}/);
   if (key)
-    result.key = new RegExp(key);
+    result.key = new RegExp(key, matchcase);
 
   // ***** -> *
-  rule = rule.replace(/\*+/g, '*');
+  rule = rule.replace(/\*\*+/g, '*');
 
-  // If it starts or ends with *, strip that -- it's a no-op.
-  rule = rule.replace(/^\*/, '');
-  rule = rule.replace(/\*$/, '');
   // Some chars in regexes mean something special; escape it always.
   // Escaped characters are also faster. 
   // - Do not escape a-z A-Z 0-9 and _ because they can't be escaped
@@ -239,15 +241,18 @@ PatternFilter._parseRule = function(text) {
   rule = rule.replace(/\*/g, '.*');
   // Starting with || means it should start at a domain or subdomain name, so
   // match ://<the rule> or ://some.domains.here.and.then.<the rule>
-  rule = rule.replace(/^\|\|/, '\\:\\/\\/([^\\/]+\\.)?');
+  rule = rule.replace(/^\|\|/, '^[^\\/]+\\:\\/\\/([^\\/]+\\.)?');
   // Starting with | means it should be at the beginning of the URL.
   rule = rule.replace(/^\|/, '^');
   // Rules ending in | means the URL should end there
   rule = rule.replace(/\|$/, '$');
   // Any other '|' within a string should really be a pipe.
   rule = rule.replace(/\|/g, '\\|');
+  // If it starts or ends with *, strip that -- it's a no-op.
+  rule = rule.replace(/^\.\*/, '');
+  rule = rule.replace(/\.\*$/, '');
 
-  result.rule = new RegExp(rule);
+  result.rule = new RegExp(rule, matchcase);
   return result;
 }
 
@@ -262,7 +267,7 @@ PatternFilter.prototype = {
   //   elementType:ElementTypes the type of DOM element.
   //   isThirdParty: true if the request for url was from a page of a
   //       different origin
-  matches: function(url, loweredUrl, elementType, isThirdParty) {
+  matches: function(url, elementType, isThirdParty) {
     if (!(elementType & this._allowedElementTypes))
       return false;
 
@@ -274,9 +279,6 @@ PatternFilter.prototype = {
 
     if ((this._options & FilterOptions.FIRSTPARTY) && isThirdParty)
       return false;
-
-    if (!(this._options & FilterOptions.MATCHCASE))
-      url = loweredUrl;
 
     if (this._key && !this._key.test(url))
       return false;

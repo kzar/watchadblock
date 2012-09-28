@@ -1,36 +1,14 @@
-emit_page_broadcast = (function() {
-  // Private list of connected ports for emit_page_broadcast()
-  var broadcast_ports = [];
-  chrome.extension.onConnect.addListener(function(port) {
-    port.onDisconnect.addListener(function(disconnected_port) {
-      var where = broadcast_ports.indexOf(disconnected_port);
-      if (where != -1) {
-        broadcast_ports.splice(where, 1);
-      }
-    });
-    broadcast_ports.push(port);
-  });
-
-  // The emit_page_broadcast() function
-  var theFunction = function(request, sender) {
-    $.each(broadcast_ports, function(i, port) {
-        // issue 5416, fixed in Chrome and probably never happens in
-        // Safari: port.sender.tab could be null for an unknown reason.
-        if (!port.sender.tab)
-          return;
-      if (port.sender.tab.id == sender.tab.id)
-        port.postMessage(request);
-    });
-  };
-  return theFunction;
-})();
+emit_page_broadcast = function(request) {
+  safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('page-broadcast', request);
+};
 
 // True blocking support.
 safari.application.addEventListener("message", function(messageEvent) {
   if (messageEvent.name != "canLoad")
     return;
 
-  if (adblock_is_paused() || page_is_whitelisted(messageEvent.target.url)) {
+  if (adblock_is_paused() || page_is_unblockable(messageEvent.target.url) ||
+      page_is_whitelisted(messageEvent.target.url)) {
     messageEvent.message = true;
     return;
   }
@@ -57,7 +35,7 @@ safari.application.addEventListener("command", function(event) {
   if (event.target.browserWindow) {
     // Context menu item event or button event on Safari 5.0, browserWindow is available in event.target.
     browserWindow = event.target.browserWindow;
-  } else if (event.target instanceof SafariExtensionMenuItem) {
+  } else if (!LEGACY_SAFARI && event.target instanceof SafariExtensionMenuItem) {
     // Identifier will be of the form menuId:command, let's use this to get our window
     var menuId = event.target.identifier.split(':')[0];
     browserWindow = windowByMenuId[menuId];
@@ -91,6 +69,11 @@ safari.application.addEventListener("command", function(event) {
   } else if (command === "report-ad") {
     var url = "pages/adreport.html?url=" + escape(browserWindow.activeTab.url);
     openTab(url, true, browserWindow);
+  } else if (command === "undo-last-block") {
+    remove_last_custom_filter();
+    var tab = browserWindow.activeTab;
+    if (!page_is_unblockable(tab.url))
+      tab.url = tab.url;
   } else if (command in {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {
     browserWindow.activeTab.page.dispatchMessage(command);
   }
@@ -212,6 +195,11 @@ if (!LEGACY_SAFARI) {
         var canBlock = !page_is_unblockable(url);
         var whitelisted = page_is_whitelisted(url);
 
+        var eligible_for_undo = !paused && (!canBlock || !whitelisted);
+        if (eligible_for_undo && has_last_custom_filter(canBlock ? url : undefined)) {
+          appendMenuItem("undo-last-block", translate("undo_last_block"));
+          menu.appendSeparator(itemIdentifier("separator0"));
+        }
         appendMenuItem("toggle-pause", translate("pause_adblock"), paused);
         if (!paused && canBlock) {
           if (whitelisted) {
@@ -251,8 +239,11 @@ safari.application.addEventListener("contextmenu", function(event) {
     return;
 
   var url = event.target.url;
-  if (!page_is_unblockable(url) && !page_is_whitelisted(url)) {
-    event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
-    event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
-  }
+  if (page_is_unblockable(url) || page_is_whitelisted(url))
+    return;
+
+  event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
+  event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
+  if (has_last_custom_filter(url))
+    event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
 }, false);

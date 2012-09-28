@@ -8,6 +8,9 @@ function top_open_blacklist_ui(options) {
 
   may_open_dialog_ui = false;
 
+  // Get Flash objects out of the way of our UI
+  BGcall('emit_page_broadcast', {fn:'send_content_to_back', options:{}});
+  
   load_jquery_ui(function() {
     // If they chose "Block an ad on this page..." ask them to click the ad
     if (options.nothing_clicked)

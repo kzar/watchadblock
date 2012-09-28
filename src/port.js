@@ -183,57 +183,6 @@ if (SAFARI) {
         }
       },
 
-      // TODO: axe this, it's only used in Safari-specific code
-      connect: function(port_data) {
-        var portUuid = "portUuid" + Math.random();
-        var message = {name: port_data.name, uuid: portUuid};
-        dispatchContext().dispatchMessage("port-create", message);
-
-        var newPort = {
-          name: port_data.name,
-          onMessage: { 
-            addListener: function(listener) {
-              listenFor("port-postMessage", function(messageEvent) {
-                // If the message was a port.postMessage to our port, notify our listener.
-                if (messageEvent.message.portUuid != portUuid)
-                  return;
-                listener(messageEvent.message.data);
-              });
-            } 
-          }
-        };
-        return newPort;
-      },
-
-      // TODO: axe this, it's only used in Safari-specific code
-      onConnect: {
-        addListener: function(handler) {
-          // Listen for port creations
-          listenFor("port-create", function(messageEvent) {
-            var portName = messageEvent.message.name;
-            var portUuid = messageEvent.message.uuid;
-
-            var id = getTabId(messageEvent.target);
-
-            var newPort = {
-              name: portName,
-              sender: { tab: { id: id, url: messageEvent.target.url } },
-              onDisconnect: { 
-                addListener: function() { 
-                  // CHROME PORT LIBRARY: chrome.extension.onConnect.addListener: port.onDisconnect is not implemented, so I'm doing nothing.
-                }
-              },
-              postMessage: function(data) {
-                dispatchContext(messageEvent).dispatchMessage("port-postMessage", { portUuid: portUuid, data: data });
-              }
-            };
-
-            // Inform the onNewPort caller about the new port
-            handler(newPort);
-          });
-        }
-      },
-
       onRequestExternal: {
         addListener: function() {
           // CHROME PORT LIBRARY: onRequestExternal not supported.

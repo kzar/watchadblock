@@ -4,7 +4,7 @@
     <title>I18N Helper</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <style>
+    <style type="text/css">
       html {
       	background-color: #EAEAEA;
       	font-family: 'Arial', sans-serif;
@@ -276,13 +276,6 @@
             $("<br/>")
           ).append(
             $("<span>").text("Do not paste the contents of the page directly into the issue tracker! Attach it as an attachment.")
-          );
-        }
-        if (/Chrome\/19/.test(navigator.userAgent)) {
-          $("#exportArea").append(
-            $("<br/>")
-          ).append(
-            $("<span>").text("In Chrome 19, you have to right mouse click on the link and choose 'open in new tab'. Then paste it in a text file. When Chrome 20 is released, it'll work better.")
           );
         }
       });

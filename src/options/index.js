@@ -44,7 +44,7 @@ function displayVersionNumber() {
 
 $('#paymentlink').click(function() {
   BGcall("storage_get", "userid", function(userId) {
-    var href = "http://chromeadblock.com/pay/?source=O&u=" + userId;
+    var href = "https://chromeadblock.com/pay/?source=O&u=" + userId;
     if (SAFARI) {
       // Safari target=_blank opens a new window by default, so we have to force its
       // height to be correct.

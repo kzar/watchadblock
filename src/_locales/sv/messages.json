@@ -31,6 +31,10 @@
     "message": "Har du hittat ett reklamtillägg? Då skall vi försöka hitta rätt ställe att rapportera till!<br/> Kom ihåg! Rapportera reklam är frivilligt! Om du inte vill göra detta, kan du bara stänga det här fönstret och istället blockera reklamen genom att lägga till ett eget filter under fliken 'Anpassa' i AdBlock-alternativ!",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
+  "adsoneverysite": {
+    "message": "Ser du reklamtillägg på de flesta sidor du besöker (din startsida, ditt företags hemsida, etc.),\nmen inte om du besöker samma sidor på någon bekants dator?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
   "adstillappear": {
     "message": "Är reklamtillägget fortfarande kvar?",
     "description": "question on ad reporting page"
@@ -301,6 +305,10 @@
     "message": "Stäng",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Du kan stänga den här fliken och börja surfa reklamfritt. Ha det så kul!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Korrekt filter",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -309,12 +317,16 @@
     "message": "CSS att matcha",
     "description": "Message of the css-hiding area"
   },
+  "custompattern": {
+    "message": "Anpassat:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
   "debuginlogoption": {
     "message": "Visa felsökningsinformation i loggen (vilket gör AdBlock långsammare)",
     "description": "Option on first tab page"
   },
   "description1": {
-    "message": "Det mest populära Chrome-tillägget, med över 5 miljoner användare!  Blockerar reklamtillägg över hela webben.",
+    "message": "Det mest populära Chrome-tillägget, med över 8 miljoner användare!  Blockerar reklamtillägg över hela webben.",
     "description": "Extension description in manifest"
   },
   "did_you_know_this_is_my_full_time_job": {
@@ -464,10 +476,6 @@
   "filterlistsrock": {
     "message": "Filterlistorna blockerar de flesta reklamtillägg på webben.  Du kan också:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
-  },
-  "filterpolish": {
-    "message": "Polska filter",
-    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterrussian": {
     "message": "- Rysk och Ukrainsk tilläggslista",
@@ -675,6 +683,10 @@
     "message": "Redigera dina filter manuellt:",
     "description": "Subtitle on the third tab"
   },
+  "maybemalware": {
+    "message": "Alla sidor på Internet innehåller inte reklam. Det faktum att du ser så mycket reklam, kan innebära att din dator innehåller oönskade program. Prova att avaktivera alla tillägg, ett efter ett, och se om problemet försvinner. Om inte, bör du köra en fullständig genomsökning med ett uppdaterat antivirusprogram, eftersom detta kan orsakas av skadlig kod.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
   "modifydomain": {
     "message": "Domän:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
@@ -723,6 +735,10 @@
     "message": "Något blev fel. Inga resurser skickades. Denna sida kommer att stängas. Försök att uppdatera webbsidan.",
     "description": "resourceblocking page string"
   },
+  "nosearchresults": {
+    "message": "Inga resurser hittades",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
   "novalidurlpattern": {
     "message": "Ange en giltig URL-mall att matcha!",
     "description": "resourceblocking page string"
@@ -739,6 +755,10 @@
     "message": "OK, nu då?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   },
+  "oneverysitetitle": {
+    "message": "Reklamtillägg överallt!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
   "only_block_ads_on_these_sites": {
     "message": "Blockera reklamtillägg, endast på dessa sidor:",
     "description": "Label for textbox where user enters a list of sites on Customize tab"
@@ -750,6 +770,62 @@
   "onlyresourcetypes": {
     "message": "Detta filter används för resurser av den här typen:",
     "description": "resourceblocking page string"
+  },
+  "opera_120_install": {
+    "message": "Vissa reklamtillägg kanske inte blockeras i Opera-versioner före v12.10, eftersom det inte är möjligt att tolka alla regler i dessa versioner. Detta kommer att justeras med uppdatering till Opera v12.10. Efter det kommer alla reklamtillägg att blockeras korrekt.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "I Opera-versioner före v12.10 är vissa alternativ inaktiverade, eftersom de inte stöds i dessa versioner.",
+    "description": "Opera < 12.10 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Du kan också utöka värdet för \n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Tycker du om det här webbläsartillägget? Överväg i så fall en donation, via Alternativ-menyn.",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Om du verkligen tycker du om det här webbläsartillägget, överväg i så fall en donation, via Alternativ-menyn.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Aktiverad i $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Domän där AdBlock inte skall blockera någonting",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "För fler alternativ kan du klicka på verktygsikonen eller öppna inställningarna via Opera &rArr; Tillägg &rArr; Hantera tillägg &rArr; Verktygsikonen &rArr; Inställningar",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Visa reklam på en domän",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Du kan återaktivera knappen i inställningarna för det här tillägget",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Visa ikon i verktygsraden",
+    "description": "Opera option to show/hide the button"
   },
   "options": {
     "message": "Alternativ",
@@ -827,6 +903,10 @@
       }
     }
   },
+  "reportpubliclyavailable": {
+    "message": "OBS! Din rapport kan komma att bli pulicerad offentligt. Håll det i minnet om du inkluderar något av privat natur.",
+    "description": "Ad report page string, when you're about to submit a report"
+  },
   "reporttous2": {
     "message": "Om du kan läsa/skriva engelska, kan du rapportera reklamtillägget till oss <a>in the issue tracker</a>.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
@@ -890,6 +970,14 @@
   "savereminder": {
     "message": "Glöm inte att spara!",
     "description": "Reminder to press save"
+  },
+  "searchexplanation": {
+    "message": "Använd * för att matcha noll eller fler tecken. Exempel: 'banner*.gif' matchar bilderna 'banner.gif', 'banner123.gif', och 'bannerxyz.gif'.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Sök resurser...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
   },
   "seeing_this_every_time_you_start_your_browser": {
     "message": "Ser du detta varje gång du startar webbläsaren?",
@@ -997,6 +1085,10 @@
     "message": "Det var ju lätt!",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
+  "thats_it": {
+    "message": "Det var allt!",
+    "description": "Install page string"
+  },
   "thirdparty": {
     "message": "Tredje-part",
     "description": "Resource list column title telling if the resource originates from a different domain"
@@ -1084,6 +1176,10 @@
   "typexmlhttprequest": {
     "message": "xmlhttprequest",
     "description": "A resource type"
+  },
+  "undo_last_block": {
+    "message": "Ångra senaste blockeringen",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   },
   "unpause": {
     "message": "Aktivera",
