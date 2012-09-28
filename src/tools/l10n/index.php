@@ -1,10 +1,19 @@
+<? 
+  // Localization Helper: help translators to localize Chrome extensions.
+  // Part of the AdBlock project (getadblock.com/project)
+  // License: GPLv3 as part of getadblock.com/project
+  //          or MIT if GPLv3 conflicts with your code's license.
+
+  require_once("projects.php"); 
+?>
+
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>I18N Helper</title>
+    <title>Localization Helper</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-    <style type="text/css">
+    <style>
       html {
       	background-color: #EAEAEA;
       	font-family: 'Arial', sans-serif;
@@ -52,7 +61,8 @@
     </style>
   </head>
   <body>
-    <img src="i18nhelper_logo.png" alt="I18N Helper for AdBlock"/>
+    <img height=64 src="<?= $projectdata["logo_url"] ?>" alt="<?= $projectdata["title"] ?> Localization Helper"/>
+    <span style="font-family: Arial; font-size: 48px"><?= $projectdata["title"] ?> Localization Helper</span>
     <br/><br/>
     <p id="languageselector">
       <b>Enter the language code or JSON file for the language you want to translate:</b>
@@ -62,6 +72,7 @@
       <i>Example: 'nl' for Dutch, 'pt-pt' for portuguese, etcetera. If you leave it empty, an empty translation file will be created<br/>
       If you paste the content of the file you already have translated, it'll load that file instead</i><br/>
       <br/>
+      <!-- TODO point to project-specific URL -->
       <u>Please make sure that you already created an issue in the issue tracker and have read <a href="http://code.google.com/p/adblockforchrome/wiki/HowToTranslate">HowToTranslate</a> before you start translating!</u><br/>
     </p>
     <div id="translateArea"></div>
@@ -86,12 +97,12 @@
       };
       $.ajax({
         url: "http://chromeadblock.com/l10n/messages.php",
-        data: { locale: "en" },
-        dataType: "jsonp",
-        jsonp: "JSONlocaleCallback"
+        data: { locale: "en", project: "<?= $project ?>" },
+        dataType: "jsonp"
       });
       window.setTimeout(function() {
         if (!Object.keys(English).length && $("#languagecodesubmit").prop('disabled')) {
+          // TODO allow other default locales
           alert("The English translation file could not be loaded, but is required to be loaded. Please reload this page to try again");
         }
       }, 15000);
@@ -112,9 +123,8 @@
           language = language[1].toLowerCase() + (language[2]||"").toUpperCase().replace('-', '_');
           $.ajax({
             url: "http://chromeadblock.com/l10n/messages.php",
-            data: { locale: language },
-            dataType: "jsonp",
-            jsonp: "JSONlocaleCallback"
+            data: { locale: language, project: "<?= $project ?>" },
+            dataType: "jsonp"
           });
           // Try to figure out if something went wrong
           window.setTimeout(function() {
@@ -269,13 +279,20 @@
         ).append(
           $("<br/>")
         ).append(
-          $("<span>").html("Save this file to your local computer and then attach it to the <a href='http://code.google.com/p/adblockforchrome/issues/list?can=1&q=type%3Dl10n+-status:duplicate+-status:invalid&sort=summary&colspec=ID+Status+Summary&x=area&y=priority&cells=tiles' target='_blank'>issue for your language</a> in the issue tracker. After that, we'll take care of it.")
+          $("<span>").html("<?= $projectdata["done_instructions"] ?>")
         );
         if (!/Chrome/.test(navigator.userAgent)) {
           $("#exportArea").append(
             $("<br/>")
           ).append(
             $("<span>").text("Do not paste the contents of the page directly into the issue tracker! Attach it as an attachment.")
+          );
+        }
+        if (/Chrome\/19/.test(navigator.userAgent)) {
+          $("#exportArea").append(
+            $("<br/>")
+          ).append(
+            $("<span>").text("In Chrome 19, you have to right mouse click on the link and choose 'open in new tab'. Then paste it in a text file. When Chrome 20 is released, it'll work better.")
           );
         }
       });
