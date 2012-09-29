@@ -32,7 +32,7 @@ function preview(selector, step) {
     css_preview.innerText += selector + " {opacity:.1!important;} " +
       selector + " " + selector + " {opacity:1!important;}";
     break;
-  default:
+  case 2:
     var d = "body .adblock-blacklist-page2 ";
     // Show the blacklist UI.
     css_preview.innerText = d + "input, " + d +
@@ -196,7 +196,7 @@ BlacklistUi.prototype._build_page1 = function() {
 
   page.dialog({
       dialogClass: "adblock-blacklist-page1",
-      zIndex: 10000000, 
+      zIndex: 11000000, 
       position: [50, 50],
       width: 410,
       autoOpen: false,
@@ -292,7 +292,7 @@ BlacklistUi.prototype._build_page2 = function() {
 
   page.dialog({
       dialogClass: "adblock-blacklist-page2",
-      zIndex:10000000, 
+      zIndex:11000000, 
       position:[50, 50],
       width: 500,
       autoOpen: false,
@@ -303,6 +303,7 @@ BlacklistUi.prototype._build_page2 = function() {
         preview(null); // cancel preview
       }
     });
+  page.dialog("widget").css("position", "fixed");
 
   return page;
 }

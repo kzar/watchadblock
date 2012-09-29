@@ -86,7 +86,7 @@ ClickWatcher.prototype.show = function() {
   var wait = $("<div></div>").
     append(translate("findingads")).
     dialog({
-      zIndex: 10000000, 
+      zIndex: 11000000, 
       position: [50, 50],
       height: 120,
       minHeight: 120,
