@@ -2,7 +2,7 @@ var resources = {};
 var debug_enabled = false;
 var custom_filters = {};
 var chosenResource = {};
-var local_filterset = {};
+var local_filtersets = {};
 
 // Creates the table that shows all blockable items
 function generateTable() {
@@ -24,9 +24,66 @@ function generateTable() {
   var rows = [];
   for (var i in resources) {
     var matchingfilter = resources[i].filter;
+    var matchingListID = "", matchingListName = "";
     var typeName = getTypeName(resources[i].type);
-    if (!matchingfilter && !SAFARI)
-      matchingfilter = local_filterset.matches(i, resources[i].type, resources[i].domain, true);
+    if (!SAFARI) {
+      if (matchingfilter) {
+        // If matchingfilter is already set, it's a hiding rule or a bug.
+        // However, we only know the selector part (e.g. ##.ad) not the full
+        // selector (e.g., domain.com##.ad). Neither do we know the filter list
+        for (var fset in local_filtersets) {
+          // Slow? Yeah, for sure! But usually you have very few hiding rule
+          // matches, not necessary for the same domain. And we can be slow in
+          // resourceblock, so there is no need to cache this.
+          var hidingset = local_filtersets[fset].hiding;
+          var hidingrules = hidingset.filtersFor(resources[i].domain, true);
+          if (hidingrules.indexOf(matchingfilter.substr(2)) !== -1) {
+            var subdomain = resources[i].domain;
+            var k = 0;
+            while (subdomain) {
+              k++; if (k>100) break;
+              if (hidingset.items[subdomain]) {
+                for (var j=0; j<hidingset.items[subdomain].length; j++) {
+                  if (hidingset.items[subdomain][j].selector === matchingfilter.substr(2)) {
+                    // Ignore the case that a list contains both
+                    // ##filter
+                    // ~this.domain.com,domain.com##filter
+                    matchingfilter = hidingset.items[subdomain][j]._text;
+                  }
+                }
+              }
+              if (subdomain === "global") {break;}
+              subdomain = subdomain.replace(/^.+?(\.|$)/, '') || "global";
+            }
+            matchingListID = fset;
+            break;
+          }
+        }
+      } else {
+        for (var fset in local_filtersets) {
+          matchingfilter = local_filtersets[fset].blocking.
+                matches(i, resources[i].type, resources[i].domain, true);
+          if (matchingfilter) {
+            matchingListID = fset;
+            break;
+          }
+        }
+      }
+    }
+
+    if (matchingListID) {
+      if (matchingListID === "user_custom_filters") {
+        matchingListName = translate("tabcustomize");
+      } else if (matchingListID === "build_in_filters") {
+        matchingListName = "AdBlock";
+      } else {
+        matchingListName = translate("filter" + matchingListID);
+        if (!matchingListName) {
+          matchingListName = matchingListID.substr(4);
+          validateUrl(matchingListName);
+        }
+      }
+    }
 
     var type = {sort:3, name:undefined};
     if (matchingfilter) {
@@ -81,10 +138,12 @@ function generateTable() {
       appendTo(cell);
     if (type.name)
       $("<span>").
-        text(matchingfilter).
+        text(custom_filters[matchingfilter] || matchingfilter).
+        attr('title', translate("filterorigin", matchingListName)).
         appendTo(cell);
     row.append(cell);
     resources[i].filter = matchingfilter;
+    resources[i].filterlist = matchingListName;
 
     // Cell 5: third-party or not
     var resourceDomain = parseUri(i).hostname;
@@ -132,6 +191,8 @@ function generateTable() {
   $(".deleterule").click(function() {
     var resource = resources[$(this).prevAll('td[data-column="url"]')[0].title];
     BGcall('remove_custom_filter', custom_filters[resource.filter], function() {
+      // If the filter was a hiding rule, it'll still show up since it's still in
+      // frameData in the background. However, I consider that acceptable.
       if (getTypeName(resource.type) === "page") {
         alert(translate("excludefilterremoved"));
         window.close();
@@ -186,7 +247,7 @@ function generateFilterSuggestions() {
     strippedUrl = strippedUrl.substr(0, strippedUrl.indexOf('/'));
     blocksuggestions.push(strippedUrl);
   }
-  
+
   var minimumdomain = parseUri.secondLevelDomainOnly(strippedUrl, true);
   if (minimumdomain !== strippedUrl) {
     blocksuggestions.push(minimumdomain);
@@ -228,6 +289,36 @@ function generateFilterSuggestions() {
       $("#custom").click()
     });
   $("#custom + label").append(inputBox);
+}
+
+// Create filtersets for resourceblock and put them in the local_filtersets
+// object. Similar to MyFilters.prototype.rebuild(), but keeps every list
+// separate. Inputs
+//   id: identifier of the list
+//   text: array containing all filters in the list
+function createResourceblockFilterset(id, text) {
+  local_filtersets[id] = {};
+  var w = [], b = [], h = [];
+
+  for (var i=0; i<text.length; i++) {
+    if (Filter.isSelectorFilter(text[i]))
+      h.push(text[i]);
+    else if (Filter.isWhitelistFilter(text[i]))
+      w.push(text[i]);
+    else
+      b.push(text[i]);
+  }
+  local_filtersets[id].hiding = FilterSet.fromTexts(h);
+  local_filtersets[id].blocking =
+    new BlockingFilterSet(FilterSet.fromTexts(b), FilterSet.fromTexts(w));
+}
+
+// Check an URL for it's validity
+function validateUrl(url) {
+  if (!/^https?:\/\//.test(url)) {
+    window.close();
+    return;
+  }
 }
 
 // Create the filter that will be applied from the chosen options
@@ -330,8 +421,13 @@ function finally_it_has_loaded_its_stuff() {
       var res = resources[$("[data-column='url']", el).attr('title')];
       keywords.push(res.domain);
       keywords.push(res.resource);
-      if (res.filter)
+      if (res.filter) {
         keywords.push(res.filter);
+        if (custom_filters[res.filter] !== res.filter)
+          keywords.push(custom_filters[res.filter]);
+      }
+      if (res.filterlist)
+        keywords.push(res.filterlist);
       var typeName = getTypeName(res.type);
       keywords.push(typeName);
       if (/_/.test(typeName))
@@ -493,12 +589,6 @@ $(function() {
     //  ?url=(page url)&itemType=(someElementType)&itemUrl=(item url)
     //  ?tabId=(tab ID)
     var qps = parseUri.parseSearch(window.location.search);
-    function validateUrl(url) {
-      if (!/^https?:\/\//.test(url)) {
-        window.close();
-        return;
-      }
-    }
     function validateItemType(itemType) {
       if (!ElementTypes[itemType]) {
         window.close();
@@ -530,13 +620,18 @@ $(function() {
   var opts = {
     domain: parseUri(url || "x://y/").hostname
   };
-  BGcall('resourceblock_get_filter_text', function(filtertexts) {
+  BGcall('storage_get', 'filter_lists', function(filter_lists) {
 
-    local_filterset = new BlockingFilterSet(
-        FilterSet.fromTexts(filtertexts.blocking),
-        FilterSet.fromTexts(filtertexts.whitelist));
+    for (var id in filter_lists) {
+      if (filter_lists[id].subscribed) {
+        createResourceblockFilterset(id, filter_lists[id].text.split('\n'));
+      }
+    }
 
     BGcall('get_content_script_data', opts, function(data) {
+      createResourceblockFilterset("build_in_filters",
+            MyFilters.prototype.getExtensionFilters(data.settings));
+
       debug_enabled = data.settings.debug_logging;
       if (data.adblock_is_paused) {
         alert(translate("adblock_is_paused"));
@@ -601,6 +696,7 @@ $(function() {
                 if (normalized !== "")
                   custom_filters[normalized] = filters[i];
               } catch(ex) {} //Broken filter
+            createResourceblockFilterset("user_custom_filters", Object.keys(custom_filters));
           }
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
