@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "Для вас, прихильники CatBlock",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -15,6 +15,10 @@
     "message": "AdBlock призупинено. Оскільки жодні ресурси не використовуються, користування цією сторінкою неможливе. Запустіть AdBlock та спробуйте знову.",
     "description": "resourceblocking page string"
   },
+  "adblock_outdated_chrome": {
+    "message": "Ви користуєтесь старою версією AdBlock. Будь ласка, перейдіть на сторінку <a href='#'>розширень</a>, увімкніть «Режим розробника» та натисніть «Оновити розширення зараз».",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock не працюватиме на сторінках, що містять:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -30,6 +34,10 @@
   "adreport2": {
     "message": "Тож, ви щойно побачили рекламу на веб-сторінці? Ну, то я допоможу вам відзвітувати про неї куди треба!<br/> Пам’ятайте: подача звіту — добровільна справа. Якщо ви не хочете цього робити, просто закрийте це вікно та заблокуйте рекламу лише для себе, додавши відповідний фільтр на вкладці «Налаштувати» сторінки параметрів!",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
+  },
+  "adsoneverysite": {
+    "message": "Чи бачите ви рекламу на більшості відвідуваних вами сайті? Наприклад, на домашній сторінці, на сайті вашої організації тощо. При цьому, при перегляді цих сторінок з іншого комп’ютера, реклама відсутня.",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
   },
   "adstillappear": {
     "message": "Ви все ще її бачите?",
@@ -301,6 +309,10 @@
     "message": "Закрити",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Ви можете закрити цей таб та розпочати вільний від реклами перегляд. Нехай щастить!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Правильні фільтри",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -309,12 +321,16 @@
     "message": "захопити CSS",
     "description": "Message of the css-hiding area"
   },
+  "custompattern": {
+    "message": "Власний:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
   "debuginlogoption": {
     "message": "Показувати інформацію для налагодження у Консольному лозі (уповільнює роботу AdBlock)",
     "description": "Option on first tab page"
   },
   "description1": {
-    "message": "Найпопулярніше розширення для Chrome, яким користуються понад 8 мільйони людей! Заблокуйте рекламу по всьому Інтернету.",
+    "message": "Найпопулярніше розширення для Chrome, яким користуються понад 8 мільйонів людей! Заблокуйте рекламу по всьому Інтернету.",
     "description": "Extension description in manifest"
   },
   "did_you_know_this_is_my_full_time_job": {
@@ -328,6 +344,10 @@
   "disabled_on_this_page": {
     "message": "AdBlock вимкнено на цій сторінці.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "doesntmatchoriginal": {
+    "message": "Уведена вами послідовність не захоплює ресурси, який ви намагалися заблокувати! Все одно продовжити?",
+    "description": "resourceblocking page string"
   },
   "done": {
     "message": "готово.",
@@ -667,6 +687,10 @@
     "message": "Налаштувати фільтри вручну:",
     "description": "Subtitle on the third tab"
   },
+  "maybemalware": {
+    "message": "вимикаючи усі розширення одне за одним, та перевіряючи, чи не зникне проблема. Якщо це не допоможе, спробуйте виконати повне сканування свого комп’ютера, використовуючи свіжооновлений антивірус, щоб перевірити, чи не зумовлена поява реклами зовнішнім втручанням.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
   "modifydomain": {
     "message": "Сайт:",
     "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
@@ -711,6 +735,10 @@
       }
     }
   },
+  "noresourcessend2": {
+    "message": "Щось зламалося. Не було передано жодних ресурсів. Цю сторінку буде закрито. Спробуйте перезавантажити сайт.",
+    "description": "resourceblocking page string"
+  },
   "novalidurlpattern": {
     "message": "Будь ласка, уведіть правильну послідовність фільтрування URL!",
     "description": "resourceblocking page string"
@@ -727,6 +755,10 @@
     "message": "Гаразд, далі що?",
     "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
   },
+  "oneverysitetitle": {
+    "message": "Реклама усюди!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
   "only_block_ads_on_these_sites": {
     "message": "Блокувати рекламу лише на цих сайтах:",
     "description": "Label for textbox where user enters a list of sites on Customize tab"
@@ -739,9 +771,65 @@
     "message": "Цей фільтр застосовується до ресурсів таких типів:",
     "description": "resourceblocking page string"
   },
+  "opera_120_install": {
+    "message": "Якщо ви користуєтесь версіями Opera молодшими за Opera 12.10, деякі рекламні блоки не вдасться заблокувати через неможливість обробки усіх правил такими версіями. Проблему буде усунено щойно Opera оновиться до версії 12.10. Відтоді уся реклама блокуватиметься правильно.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Якщо ви користуєтесь версіями Opera молодшими за Opera 12.10, деякі налаштування недоступні, оскільки вони не підтримуються у таких версіях.",
+    "description": "Opera < 12.10 warning above options page"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Ви також можете збільшити обсяг \n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Подобається це розширення? Якщо так, будь ласка, зробіть пожертву, скориставшись посиланням на сторінці настройок!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Якщо вам справді подобається це розширення, будь ласка, зробіть пожертву, скориставшись посиланням на сторінці настройок!",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Доступно у $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Домен, на якому AdBlock не діятиме",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "Для більш детальних настройок, ви можете натиснути кнопку на панелі інструментів або відкрити сторінку настройок, перейшовши до Opera &rArr; Розширення &rArr; Керувати розширеннями &rArr; розвідний ключ &rArr; Настройки",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Показувати рекламу на домені",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Ви можете знов активувати кнопку у настройках цього розширення",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Показувати кнопку на панелі інструментів",
+    "description": "Opera option to show/hide the button"
+  },
   "options": {
     "message": "Параметри",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "список змін",
@@ -815,6 +903,10 @@
       }
     }
   },
+  "reportpubliclyavailable": {
+    "message": "Зауважте: ваш звіт може стати доступним широкому загалу. Пам’ятайте про це, вказуючи будь-яку особисту інформацію.",
+    "description": "Ad report page string, when you're about to submit a report"
+  },
   "reporttous2": {
     "message": "Якщо ви говорите англійською, ви можете повідомити про рекламу особисто нас <a>на трекері помилок</a>.",
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
@@ -843,6 +935,16 @@
     "message": "Заблокувати ресурс",
     "description": "resourceblocking page string"
   },
+  "resourcedomain": {
+    "message": "Завантажено зі сторінки із доменом:\n$domain$",
+    "description": "Text shown when hovering over an item in the third-party column",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
   "resourceiswhitelisted": {
     "message": "Обраний ресурс додано до білого списку. Тож його неможливо заблокувати.",
     "description": "resourceblocking page string"
@@ -868,6 +970,14 @@
   "savereminder": {
     "message": "Не забудьте зберегти!",
     "description": "Reminder to press save"
+  },
+  "searchexplanation": {
+    "message": "Вживайте * щоб позначити нуль чи більше знаків. Приміром 'banner*.gif image' знайде зображення 'banner.gif', 'banner123.gif', та 'bannerxyz.gif'.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Шукати у ресурсах...",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
   },
   "seeing_this_every_time_you_start_your_browser": {
     "message": "Бачите це повідомлення щоразу, запускаючи веб-переглядач?",
@@ -975,6 +1085,14 @@
     "message": "Це було легко",
     "description": "Install page: button text at end of setup section to proceed to the next section.  The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
   },
+  "thats_it": {
+    "message": "Ось і все!",
+    "description": "Install page string"
+  },
+  "thirdparty": {
+    "message": "Третіх сторін",
+    "description": "Resource list column title telling if the resource originates from a different domain"
+  },
   "thirdpartycheckbox": {
     "message": "Будь-який веб-сайт ЗА ВИКЛЮЧЕННЯМ сайтів на домені $domain$",
     "description": "resourceblocking page string",
@@ -1059,6 +1177,10 @@
     "message": "xmlhttprequest",
     "description": "A resource type"
   },
+  "undo_last_block": {
+    "message": "Скасувати останнє блокування",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
   "unpause": {
     "message": "запустити",
     "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
@@ -1125,7 +1247,7 @@
   },
   "updatefromoldversion": {
     "message": "Ви користуєтесь застарілою версією AdBlock. Будь ласка, спершу $updatelink$ до найновішої версії AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1оновіться$2",
