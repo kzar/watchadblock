@@ -89,6 +89,10 @@ var SelectorFilter = function(text) {
   var parts = text.match(/(^.*?)\#\@?\#(.+$)/);
   this._domains = Filter._domainInfo(parts[1], ',');
   this.selector = parts[2];
+  // Preserve _text for resourceblock. Don't do so in Safari, where
+  // resources aren't recorded
+  if (document.location.pathname === '/pages/resourceblock.html')
+    this._text = text;
 };
 SelectorFilter.prototype = {
   // Inherit from Filter.
@@ -119,12 +123,9 @@ PatternFilter.fromText = function(text) {
   result._options = data.options;
   result._rule = data.rule;
   result._key = data.key;
-  // Preserve _text for later in Chrome's background page and in
-  // resourceblock.html.  Don't do so in safari or in content scripts, where
-  // it's not needed.
-  // TODO once Chrome has a real blocking API, we can change this to
-  //   if (/resourceblock.html/.test(document.location.href))
-  if (document.location.protocol == 'chrome-extension:')
+  // Preserve _text for resourceblock. Don't do so in Safari, where
+  // resources aren't recorded
+  if (document.location.pathname === '/pages/resourceblock.html')
     result._text = text;
   return result;
 }

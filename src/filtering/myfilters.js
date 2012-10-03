@@ -112,6 +112,21 @@ MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   chrome.extension.sendRequest({command: "filters_updated"});
 }
 
+// get filters that are defined in the extension
+MyFilters.prototype.getExtensionFilters = function(settings) {
+  //Exclude google search results ads if the user has checked that option
+  var texts = [];
+  if (settings.show_google_search_text_ads) {
+    // Standard search
+    texts.push("@@||google.*/search?$elemhide");
+    // Google Instant: go to google.com, type 'hotel' and don't press Enter
+    texts.push("@@||www.google.*/|$elemhide");
+    // Google Instant: open a Chrome tab, type 'hotel' and don't press Enter
+    texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide");
+  }
+  return texts;
+};
+
 // Rebuild filters based on the current settings and subscriptions.
 MyFilters.prototype.rebuild = function() {
   var texts = [];
@@ -124,15 +139,7 @@ MyFilters.prototype.rebuild = function() {
   if (customfilters)
     texts.push(FilterNormalizer.normalizeList(customfilters));
 
-  //Exclude google search results ads if the user has checked that option
-  if (get_settings().show_google_search_text_ads) {
-    // Standard search
-    texts.push("@@||google.*/search?$elemhide");
-    // Google Instant: go to google.com, type 'hotel' and don't press Enter
-    texts.push("@@||www.google.*/|$elemhide");
-    // Google Instant: open a Chrome tab, type 'hotel' and don't press Enter
-    texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide");
-  }
+  texts = texts.concat(this.getExtensionFilters(get_settings()));
 
   texts = texts.join('\n').split('\n');
 
