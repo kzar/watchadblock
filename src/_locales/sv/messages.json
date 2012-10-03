@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "Ett meddelande till er CatBlock-älskare:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -14,6 +14,10 @@
   "adblock_is_paused": {
     "message": "AdBlock är pausad. Därför visas inga resurser, så den här sidan kan inte användas. Starta AdBlock och försök igen.",
     "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Du använder en gammal version av AdBlock. Gå till <a href='#'>the extensions page</a>, bocka i 'Programerarläge' och klicka på 'Uppdatera tillägg nu'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock avaktiveras på alla sidor som matchar:",
@@ -829,7 +833,7 @@
   },
   "options": {
     "message": "Alternativ",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "Changelog",
@@ -1247,7 +1251,7 @@
   },
   "updatefromoldversion": {
     "message": "Du använder en gammal version av AdBlock. Uppdatera först $updatelink$ till senaste versionen av AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1update$2",
