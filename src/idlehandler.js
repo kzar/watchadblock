@@ -5,9 +5,9 @@
 var idleHandler = {
   scheduleItemOnce:
     function(callback, seconds) {
-      // In  Safari, execute the function with only the minimum idle delay.
-      // It doesn't support idle, but at least we make sure that functions
-      // don't execute when we're too busy to handle them.
+      // Safari doesn't support idle scheduling, but scheduleItemOnce is
+      // sometimes called when we know we're busy (e.g. startup).  So we delay
+      // a while to increase the chance that we'll run during an idle period.
       if (SAFARI) {
         window.setTimeout(callback, 15000);
         return;
