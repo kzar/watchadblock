@@ -6,8 +6,7 @@ Filter._lastId = 0;
 
 // Maps filter text to Filter instances.  This is important, as it allows
 // us to throw away and rebuild the FilterSet at will.
-// TODO(gundlach): is the extra memory worth it if we only rebuild the
-// FilterSet upon subscribe/unsubscribe/refresh?
+// Will be cleared after a fixed time interval
 Filter._cache = {};
 
 // Return a Filter instance for the given filter text.

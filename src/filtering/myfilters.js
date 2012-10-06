@@ -170,6 +170,13 @@ MyFilters.prototype.rebuild = function() {
     FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
   );
   handlerBehaviorChanged(); // defined in background
+  
+  // After 90 seconds, delete the cache. That way the cache is available when
+  // rebuilding multiple times in a row (when multiple lists have to update at
+  // the same time), but we save memory during all other times.
+  window.setTimeout(function() {
+    Filter._cache = {};
+  }, 90000);
 }
 
 // Change a property of a subscription or check if it has to be updated
