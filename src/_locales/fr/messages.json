@@ -35,8 +35,8 @@
     "message": "AdBlock est maintenant installé!",
     "description": "Title for the installation success page"
   },
-  "chromebutton_how_to_hide": {
-    "message": "Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Masquer le bouton'. Pour l'afficher à nouveau, allez dans Clé à molette | Outils | Extensions.",
+  "chromebutton_how_to_hide2": {
+    "message": "Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Masquer le bouton'.  Pour l'afficher à nouveau, allez dans chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "sliderexplanation": {
@@ -703,13 +703,17 @@
   },
   "updatefromoldversion": {
     "message": "Vous utilisez une version obsolète d'AdBlock. Merci de commencer par la $updatelink$.",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1mettre à jour$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
+  },
+  "adblock_outdated_chrome": {
+    "message": "Vous utilisez une version obsolète d'AdBlock. Merci d'aller sur <a href='#'>la page des extensions</a>, activer le 'Mode développeur' et cliquer sur 'Mettre à jour les extensions maintenant'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "block_an_ad_on_this_page": {
     "message": "Bloquer une pub sur cette page",
@@ -991,7 +995,7 @@
   },
   "options": {
     "message": "Options",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "hide_this_button": {
     "message": "Masquer ce bouton",
@@ -1147,10 +1151,6 @@
       }
     }
   },
-  "i_came_here_looking_for_catblock": {
-    "message": "Je cherche <b>CatBlock</b> ! Remplacez les pubs par des chats !",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
-  },
   "a_note_to_you_catblock_lovers": {
     "message": "Note pour ceux qui ont aimé CatBlock :",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -1290,5 +1290,15 @@
   "opera_120_options": {
     "message": "Dans les versions d'Opera antérieures à 12.10, certaines options sont grisées, car elles ne sont pas supportées dans ces versions.",
     "description": "Opera < 12.10 warning above options page"
+  },
+  "filterorigin": {
+    "message": "Origine du filtre :\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
   }
 }
