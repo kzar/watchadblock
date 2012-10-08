@@ -273,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "Чтобы скрыть кнопку щелкните её правой кнопкой мыши и выберите Hide Button.  Вы можете показать ее вновь, нажав Ключ | Инструменты | Расширения.",
+  "chromebutton_how_to_hide2": {
+    "message": "Чтобы скрыть кнопку, нажмите правую кнопку мыши и выберите Скрыть. Вы можете показать её снова в chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -481,6 +481,16 @@
     "message": "Списки фильтров блокируют большинство рекламы в Интернете. Вы также можете:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "filterorigin": {
+    "message": "Происхождение фильтра:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
   "filterrussian": {
     "message": "- дополнительные русские и украинские фильтры",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -554,10 +564,6 @@
   "how_to_use_adblock": {
     "message": "Как использовать AdBlock:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Я пришел сюда в поисках <b>CatBlock</b>! Заменить рекламу фотографиями кошек!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Мне нравится текстовая реклама Google; не блокировать её.",
