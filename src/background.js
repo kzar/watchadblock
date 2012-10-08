@@ -347,7 +347,7 @@
     var delayMillis = Math.max(when - Date.now(), 60E3);
     window.setTimeout(function() {
       if (storage_get(key)) {
-        localStorage.removeItem(key);
+        storage_set(key, undefined); // Broken: you can't read this anymore
         openTab("pages/install/index.html?delayed&u=" + STATS.userId);
       }
     }, delayMillis);
