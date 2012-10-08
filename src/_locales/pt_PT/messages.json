@@ -273,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "Para esconder o botão, clica com o botão direito do rato sobre o ícone da AdBlock e escolhe ocultar botão. Pode visualizá-lo novamente a partir de Chave Inglesa | Ferramentas | Extensões.",
+  "chromebutton_how_to_hide2": {
+    "message": "Para ocultar o botão, faça clique direito sobre ele e seleccione Ocultar botão. Pode visualizá-lo novamente em chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -481,6 +481,16 @@
     "message": "A lista de filtros bloqueia maior parte dos anúncios. Também pode:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "filterorigin": {
+    "message": "Origem do filtro:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
   "filterrussian": {
     "message": "- filtros Russos e Ucranianos adicionais",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -554,10 +564,6 @@
   "how_to_use_adblock": {
     "message": "Como usar o AdBlock:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Eu vim aqui à procura de <b>CatBlock</b>!  Substitui anunúncios por imagens de gatos!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Eu gosto dos anúncios de texto da Google; não bloquear esses.",
