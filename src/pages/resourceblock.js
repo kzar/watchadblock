@@ -26,47 +26,46 @@ function generateTable() {
     var matchingfilter = resources[i].filter;
     var matchingListID = "", matchingListName = "";
     var typeName = getTypeName(resources[i].type);
-    if (!SAFARI) {
-      if (matchingfilter) {
-        // If matchingfilter is already set, it's a hiding rule or a bug.
-        // However, we only know the selector part (e.g. ##.ad) not the full
-        // selector (e.g., domain.com##.ad). Neither do we know the filter list
-        for (var fset in local_filtersets) {
-          // Slow? Yeah, for sure! But usually you have very few hiding rule
-          // matches, not necessary for the same domain. And we can be slow in
-          // resourceblock, so there is no need to cache this.
-          var hidingset = local_filtersets[fset].hiding;
-          var hidingrules = hidingset.filtersFor(resources[i].domain, true);
-          if (hidingrules.indexOf(matchingfilter.substr(2)) !== -1) {
-            var subdomain = resources[i].domain;
-            var k = 0;
-            while (subdomain) {
-              k++; if (k>100) break;
-              if (hidingset.items[subdomain]) {
-                for (var j=0; j<hidingset.items[subdomain].length; j++) {
-                  if (hidingset.items[subdomain][j].selector === matchingfilter.substr(2)) {
-                    // Ignore the case that a list contains both
-                    // ##filter
-                    // ~this.domain.com,domain.com##filter
-                    matchingfilter = hidingset.items[subdomain][j]._text;
-                  }
+
+    if (matchingfilter) {
+      // If matchingfilter is already set, it's a hiding rule or a bug.
+      // However, we only know the selector part (e.g. ##.ad) not the full
+      // selector (e.g., domain.com##.ad). Neither do we know the filter list
+      for (var fset in local_filtersets) {
+        // Slow? Yeah, for sure! But usually you have very few hiding rule
+        // matches, not necessary for the same domain. And we can be slow in
+        // resourceblock, so there is no need to cache this.
+        var hidingset = local_filtersets[fset].hiding;
+        var hidingrules = hidingset.filtersFor(resources[i].domain, true);
+        if (hidingrules.indexOf(matchingfilter.substr(2)) !== -1) {
+          var subdomain = resources[i].domain;
+          var k = 0;
+          while (subdomain) {
+            k++; if (k>100) break;
+            if (hidingset.items[subdomain]) {
+              for (var j=0; j<hidingset.items[subdomain].length; j++) {
+                if (hidingset.items[subdomain][j].selector === matchingfilter.substr(2)) {
+                  // Ignore the case that a list contains both
+                  // ##filter
+                  // ~this.domain.com,domain.com##filter
+                  matchingfilter = hidingset.items[subdomain][j]._text;
                 }
               }
-              if (subdomain === "global") {break;}
-              subdomain = subdomain.replace(/^.+?(\.|$)/, '') || "global";
             }
-            matchingListID = fset;
-            break;
+            if (subdomain === "global") {break;}
+            subdomain = subdomain.replace(/^.+?(\.|$)/, '') || "global";
           }
+          matchingListID = fset;
+          break;
         }
-      } else {
-        for (var fset in local_filtersets) {
-          matchingfilter = local_filtersets[fset].blocking.
-                matches(i, resources[i].type, resources[i].domain, true);
-          if (matchingfilter) {
-            matchingListID = fset;
-            break;
-          }
+      }
+    } else {
+      for (var fset in local_filtersets) {
+        matchingfilter = local_filtersets[fset].blocking.
+              matches(i, resources[i].type, resources[i].domain, true);
+        if (matchingfilter) {
+          matchingListID = fset;
+          break;
         }
       }
     }
@@ -688,16 +687,14 @@ $(function() {
 
       function continue_after_another_async_call() {
         BGcall('get_custom_filters_text', function(filters) {
-          if (!SAFARI) {
-            filters = filters.split('\n');
-            for (var i=0; i<filters.length; i++)
-              try {
-                var normalized = FilterNormalizer.normalizeLine(filters[i]);
-                if (normalized !== "")
-                  custom_filters[normalized] = filters[i];
-              } catch(ex) {} //Broken filter
-            createResourceblockFilterset("user_custom_filters", Object.keys(custom_filters));
-          }
+          filters = filters.split('\n');
+          for (var i=0; i<filters.length; i++)
+            try {
+              var normalized = FilterNormalizer.normalizeLine(filters[i]);
+              if (normalized !== "")
+                custom_filters[normalized] = filters[i];
+            } catch(ex) {} //Broken filter
+          createResourceblockFilterset("user_custom_filters", Object.keys(custom_filters));
           finally_it_has_loaded_its_stuff();
           // If opened by the context menu, this variable exists
           if (qps.itemUrl) {
