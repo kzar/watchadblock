@@ -528,17 +528,17 @@
 
       function setBrowserButton(info) {
         if (adblock_is_paused()) {
-          chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:{'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"}, tabId: info.tab.id});
         } else if (info.disabled_site &&
             !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
           // Show non-disabled icon on the installation-success page so it
           // users see how it will normally look. All other disabled pages
           // will have the gray one
-          chrome.browserAction.setIcon({path:"img/icon19-grayscale.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:{'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"}, tabId: info.tab.id});
         } else if (info.whitelisted) {
-          chrome.browserAction.setIcon({path:"img/icon19-whitelisted.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:{'19': "img/icon19-whitelisted.png", '38': "img/icon38-whitelisted.png"}, tabId: info.tab.id});
         } else {
-          chrome.browserAction.setIcon({path:"img/icon19.png", tabId: info.tab.id});
+          chrome.browserAction.setIcon({path:{'19': "img/icon19.png", '38': "img/icon38.png"}, tabId: info.tab.id});
         }
       }
 
