@@ -41,27 +41,6 @@ function customize_for_this_tab() {
   });
 }
 
-function maybe_show_badge() {
-  $("#newtitle").text(translate("newtitle", ["2.3.0"]));
-
-  var info_ver = chrome.extension.getBackgroundPage().version_to_notify;
-  // If there was badge text set, informing the user of a new
-  // version, clear it.
-  chrome.browserAction.setBadgeText({text: ''});
-  chrome.browserAction.setTitle({title: ''});
-  storage_set('saw_badge_version', info_ver);
-
-  if (storage_get('saw_badge_info_version') != info_ver) {
-    // If the user hasn't dismissed the latest notice, show it.
-    $("#div_new_release").show();
-
-    $("#new_release_close").click(function() {
-      $("#div_new_release").slideUp();
-      storage_set('saw_badge_info_version', info_ver);
-    });
-  }
-}
-
 // CatBlock explanation for users who explicitly enabled it and are now wondering why it's gone
 if (storage_get("settings")
     && storage_get("settings").do_picreplacement === true 
@@ -208,6 +187,5 @@ $(function() {
 
 $(function() {
   customize_for_this_tab();
-  maybe_show_badge();
   localizePage();
 });
