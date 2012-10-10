@@ -119,9 +119,14 @@ storage_get = function(key) {
 }
 
 // Inputs: key:string, value:object.
+// If value === undefined, removes key from storage.
 // Returns undefined.
 storage_set = function(key, value) {
   var store = (window.SAFARI ? safari.extension.settings : localStorage);
+  if (value === undefined) {
+    store.removeItem(key);
+    return;
+  }
   try {
     store.setItem(key, JSON.stringify(value));
   } catch (ex) {

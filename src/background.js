@@ -347,7 +347,7 @@
     var delayMillis = Math.max(when - Date.now(), 60E3);
     window.setTimeout(function() {
       if (storage_get(key)) {
-        storage_set(key, undefined); // Broken: you can't read this anymore
+        storage_set(key, undefined);
         openTab("pages/install/index.html?delayed&u=" + STATS.userId);
       }
     }, delayMillis);
@@ -821,11 +821,4 @@
     chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
   }
   
-  // Temp (4-20-12):
-  localStorage.removeItem('saw_prune_note');
-  localStorage.removeItem('pruned_oversubscription');
-  // Temp (5-7-12):
-  localStorage.removeItem('sawChrome16WarningOn');
-  // End temp
-
   log("\n===FINISHED LOADING===\n\n");
