@@ -32,7 +32,11 @@ var run_bandaids = function() {
       el = document.querySelector(".Managed .WithSkyscraper #MainContent");
       if (el) {el.style.setProperty("right", "1px", null);}
       el = document.getElementById("SkyscraperContent");
-      if (el) {el.style.setProperty("display", "none", null);}
+      if (el) {
+        el.style.setProperty("display", "none", null); 
+        el.style.setProperty("position", "absolute", null); 
+        el.style.setProperty("right", "0px", null); 
+      }
     },
 
     hkpub: function() {
