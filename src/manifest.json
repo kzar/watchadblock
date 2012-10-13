@@ -2,21 +2,25 @@
   "name": "AdBlock",
   "version": "2.3.11",
   "description": "__MSG_description1__",
+  "manifest_version": 2,
   "icons": {
     "16": "img/icon16.png",
     "48": "img/icon48.png",
     "128": "img/icon128.png"
   },
   "permissions": [
-    "http://*/*", "https://*/*", "contextMenus", "tabs"
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "background"
   ],
   "minimum_chrome_version": "6",
-  "background_page": "background.html",
+  "background": {
+    "page": "background.html"
+  },
+  //"background_page": "background.html",
   "options_page": "options/index.html",
   "browser_action": {
     "default_icon": "img/icon19.png",
     "default_title": "__MSG_optionstitle__",
-    "popup": "button/popup.html"
+    "default_popup": "button/popup.html"
   },
   "content_scripts": [
     {
