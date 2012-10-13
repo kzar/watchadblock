@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "За почитателите на CatBlock:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -124,7 +124,7 @@
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklisternotsure": {
-    "message": "<b>Не сте сигурен?</b> — натиснете „Блокирай!“ по-долу.",
+    "message": "<b>Не сте сигурен?</b> — натиснете „Блокирай!“ по-долу.",
     "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
   },
   "blacklisteroptions1": {
@@ -273,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "За да скриете бутона, щракнете с десен по него и посочете Скрий бутона. Можете да го покажете отново от Ключ | Инструменти | Разширения.",
+  "chromebutton_how_to_hide2": {
+    "message": "За да скриете бутона, щракнете с десен по него и посочете Скрий бутона. Можете да го покажете от chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -474,12 +474,22 @@
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterlistlink": {
-    "message": "Не се абонирайте за повече, отколкото са ви необходими — всеки нов ще ви забавя малко повече! Признания и допълнителни списъци можете да намерите <a>тук</a>.",
+    "message": "Не се абонирайте за повече, отколкото са ви необходими — всеки нов ще ви забавя малко повече! Признания и допълнителни списъци можете да намерите <a>тук</a>.",
     "description": "Explanation of the filter lists"
   },
   "filterlistsrock": {
     "message": "Филтрите блокират повечето реклами в мрежата. Можете също така:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "filterorigin": {
+    "message": "Филтърът се намира в:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
   },
   "filterrussian": {
     "message": "- допълнителни руски и украински филтри",
@@ -554,10 +564,6 @@
   "how_to_use_adblock": {
     "message": "Използване на AdBlock:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Търся<b>CatBlock</b> — заместителят на реклами със снимки на котки!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Показвай текстови реклами от Google (харесват ми)",
@@ -833,7 +839,7 @@
   },
   "options": {
     "message": "Настройки",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "списък с изменения",
@@ -1251,7 +1257,7 @@
   },
   "updatefromoldversion": {
     "message": "Ползвате стара версия на AdBlock. Моля, първо $updatelink$ AdBlock до най-новата версия",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1обновете$2",
