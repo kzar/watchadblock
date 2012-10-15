@@ -16,12 +16,6 @@ function MyFilters() {
   }
 
   for (var id in this._subscriptions) {
-    // Subscribe Ukrainian filter list users to the Russian list instead
-    // TODO temp if block installed 12/2011
-    if (id == 'ukranian' && this._subscriptions[id].subscribed) {
-      this.changeSubscription(id, {subscribed: false}, false);
-      this.changeSubscription('russian', {subscribed: true}, false);
-    }
     // Delete unsubscribed ex-official lists.
     if (!this._official_options[id] && !this._subscriptions[id].user_submitted
         && !this._subscriptions[id].subscribed) {
@@ -53,24 +47,6 @@ function MyFilters() {
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
   }
-
-  // Temp: remove an old localStorage entry
-  delete localStorage['three_times_normalized_filters'];
-  // temp code to normalize non-normalized filters, one time.
-  // Installed 1/6/2012. Remove after everyone has gotten this update.
-  (function(that) {
-    if (storage_get('four_times_normalized_filters'))
-      return;
-    for (var id in that._subscriptions) {
-      if (that._subscriptions[id].text) {
-        that._subscriptions[id].text = FilterNormalizer.normalizeList(that._subscriptions[id].text);
-      }
-    }
-    // _onSubscriptionChange below saves our changes to storage
-    storage_set('four_times_normalized_filters', true);
-  })(this);
-  // end temp code
-
 
   // Build the filter list
   this._onSubscriptionChange(true);
