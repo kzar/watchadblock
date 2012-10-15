@@ -26,3 +26,8 @@
 
 ! Work around false positive in EasyList
 @@/ad/audsci.$domain=washingtonpost.com
+
+! They contain spaces in the URL so purging doesn't work properly
+cistor.pl##img[src*="/ads_files/"]
+nysa.eu##img[src*="/ads_files/"]
+wrzesnia.pl##img[src*="/ads_files/"]
