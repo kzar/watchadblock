@@ -507,6 +507,10 @@
     "message": "Suche nach Werbung...<br/><br/><i>Dies dauert nur einen kurzen Moment.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
+  "firefox_explanation": {
+    "message": "Der Zweck dieser Frage ist herauszufinden wer Ihren Bericht erhalten soll. Sollten Sie diese Frage falsch beantworten wird der Bericht an die falschen Personen gesendet und möglicherweise ignoriert.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Zuerst sollten Sie in den Safari-Einstellungen die <b>automatischen Updates für Erweiterungen aktivieren</b>, damit Sie Fehlerbehebungen und neue Features schnellstmöglich erhalten.",
     "description": "The first instructions on the Safari install page."
@@ -564,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "AdBlock benutzen:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Suchen Sie <b>CatBlock</b>?  Soll AdBlock Werbung durch Katzenbilder ersetzen?",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Textanzeigen in den Google-Suchergebnissen anzeigen",
@@ -712,20 +712,6 @@
   "multipledomainshint": {
     "message": "Trennen Sie mehrere Adressen mit Kommas oder Leerzeichen",
     "description": "resourceblocking page string"
-  },
-  "new_version": {
-    "message": "Neue Version!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Neu in Version $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
   },
   "nextstep": {
     "message": "Nächster Schritt",
@@ -1116,10 +1102,6 @@
         "example": "example.com"
       }
     }
-  },
-  "this_toolbar_button": {
-    "message": "Dieser Toolbar-Button :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
     "message": "So aktivieren Sie die automatischen Updates:",
