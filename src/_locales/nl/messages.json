@@ -507,6 +507,10 @@
     "message": "Advertenties zoeken...<br/><br/><i>Dit duurt maar eventjes.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
+  "firefox_explanation": {
+    "message": "Het doel van deze vraag is bepalen wie de melding ontvangt. Als je deze vraag incorrect beantwoord, dan kan het naar de verkeerde mensen gestuurd worden, waardoor de melding genegeerd zal worden.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Eerst moet je <b>automatische updates inschakelen</b>, zodat fouten zo snel mogelijk verholpen kunnen worden.",
     "description": "The first instructions on the Safari install page."
@@ -564,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "Hoe kan ik AdBlock gebruiken:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Ik kwam hier voor <b>CatBlock</b>! Vervang advertenties door afbeeldingen van katten!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Ik wil de tekstadvertenties op Google kunnen zien.",
@@ -712,20 +712,6 @@
   "multipledomainshint": {
     "message": "Verschillende domeinen moeten gescheiden worden met komma's of spaties",
     "description": "resourceblocking page string"
-  },
-  "new_version": {
-    "message": "Nieuwe versie!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Nieuw in versie $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
   },
   "nextstep": {
     "message": "Volgende stap",
@@ -1116,10 +1102,6 @@
         "example": "example.com"
       }
     }
-  },
-  "this_toolbar_button": {
-    "message": "Deze knop :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
     "message": "Om automatische updates aan te zetten:",
