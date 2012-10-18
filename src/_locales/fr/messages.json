@@ -935,24 +935,6 @@
     "message": "Nettoyer cette liste :",
     "description": "Option at the bottom of the third options tab"
   },
-  "new_version": {
-    "message": "Nouvelle version !",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Nouveautés de la version $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
-  "this_toolbar_button": {
-    "message": "Ce bouton de la barre d'outils",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
-  },
   "disabled_by_filter_lists": {
     "message": "Désolé, AdBlock est désactivé sur cette page par un ou plusieurs de vos filtres.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -1304,5 +1286,17 @@
   "firefox_explanation": {
     "message": "Le but de cette question est de déterminer qui doit recevoir votre rapport. Si vous répondez incorrectement à cette question, le rapport ne sera pas envoyé aux bonnes personnes, et il pourrait être ignoré.",
     "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
+  "opera_secure_pages": {
+    "message": "Pages sécurisées",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Allez dans le menu Opera &rArr; Extensions &rArr; Gérer les extensions &rArr; cliquez sur la roue dentée à côté d'AdBlock &rArr; Vie privée.<br/>Est-ce que l'interaction avec les pages sécurisées est permise ?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
+  "opera_allow_secure": {
+    "message": "Si vous souhaitez utiliser AdBlock sur des pages sécurisées (pages avec un cadenas dans la barre d'outils), vous devez d'abord activer l'option pour permettre l'interaction avec les pages sécurisées.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   }
 }
