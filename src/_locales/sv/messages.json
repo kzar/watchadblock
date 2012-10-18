@@ -507,6 +507,10 @@
     "message": "Söker reklamtillägg...<br/><br/><i>Det tar bara ett ögonblick!</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
+  "firefox_explanation": {
+    "message": "Syftet med denna fråga, är att avgöra vem som skall ta emot din rapport. Besvarar du denna fråga felaktigt, kommer rapporten att skickas till fel personer och riskerar därmed att ignoreras.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Först bör du <b>aktivera auto-uppdatering</b> under Safari Inställningar, så att du får bug-fixar och nya funktioner efter hand som dom skrivs.",
     "description": "The first instructions on the Safari install page."
@@ -564,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "Att använda AdBlock:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Jag söker efter <b>CatBlock</b>! Ersätt reklamtillägg med kattbilder!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Jag gillar Google's texttillägg; blockera dom inte.",
@@ -712,20 +712,6 @@
   "multipledomainshint": {
     "message": "Separera multipla domäner med komma eller blanksteg",
     "description": "resourceblocking page string"
-  },
-  "new_version": {
-    "message": "Ny version!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Nytt i version $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
   },
   "nextstep": {
     "message": "Nästa steg",
@@ -1116,10 +1102,6 @@
         "example": "example.com"
       }
     }
-  },
-  "this_toolbar_button": {
-    "message": "Denna AdBlock-knapp :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
     "message": "Att aktivera auto-uppdatering:",
