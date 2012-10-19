@@ -1,4 +1,4 @@
-﻿{
+{
   "a_note_to_you_catblock_lovers": {
     "message": "CatBlock sevenlere bir not:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -14,6 +14,10 @@
   "adblock_is_paused": {
     "message": "Adblock duraklatıldı. Hiç bir kaynak olmadığı için, bu sayfa kullanılamaz. Adblock'u tekrar başlatıp yeniden deneyin.",
     "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Adblock'un eski bir sürümünü kullanıyorsunuz. Lütfen <a href='#'>uzantılar sayfası</a>, 'Geliştirici modu' ve 'Uzantıları şimdi güncelle' seçeneklerini kullanarak güncelleme yapın.",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   },
   "adblock_wont_run_on_pages_matching": {
     "message": "Adblock şu durumlarla eşleşen sayfalarda çalışmayacak:",
@@ -269,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "Butonu gizlemek için, sağ tıklayıp, Gizle butonuna basın. Tekrar görünmesini istediğiniz zaman Chrome Araçlar | Uzantılar menüsünü kullanabilirsiniz.",
+  "chromebutton_how_to_hide2": {
+    "message": "Düğmeyi gizlemek için, sağ tıklayıp 'Düğmeyi gizle'yi seçin. Tekrar görünmesi için adres çubuğundan; chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -477,6 +481,16 @@
     "message": "Filtre listeleri web sitelerindeki çoğu reklamı engeller. Ayrıca şunları da yapabilirsiniz:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "filterorigin": {
+    "message": "Filtre kaynağı:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
   "filterrussian": {
     "message": "- Ek Rusça ve Ukraynacaya özgü filtreler",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -492,6 +506,10 @@
   "findingads": {
     "message": "Reklamlar bulunuyor..<br/><br/><i>Bu sadece bir kaç saniye sürecek.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "firefox_explanation": {
+    "message": "Bu sorunun amacı bildiriminizi kimin alacağını belirlemek içindir. Eğer bu soruyu yanlış yanıtlarsanız, bildiriminiz yanlış insanlara ulaşıp, dikkate alınmayabilir.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
   },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "İlk önce, Safari Tercihler kısmından <b>otomatik güncelleştirmeleri açın</b>, böylece yeni özellikleri ve hata düzeltmelerini ben yazdıkça alabileceksiniz.",
@@ -550,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "Adblock nasıl kullanılır:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Ben <b>Catblock</b> için geldim! Reklamları kedi resimleriyle değiştir!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Google'ın metin reklamlarını seviyorum; onları engelleme.",
@@ -699,20 +713,6 @@
     "message": "Farklı alan adlarını virgülle ya da boşlukla ayırın",
     "description": "resourceblocking page string"
   },
-  "new_version": {
-    "message": "Yeni sürüm!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Sürüm $version$ için yenilikler:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
   "nextstep": {
     "message": "Sonraki adım",
     "description": "resourceblocking page string"
@@ -772,12 +772,16 @@
     "description": "resourceblocking page string"
   },
   "opera_120_install": {
-    "message": "Opera 12.10'den önceki sürümlerde, Adblock'un tüm kuralları doğru çalıştırılamadığından, tüm reklamlar engellenemeyebilir. Bu sorun , Opera, 12.10 güncellemesini yayınladığında düzelecektir. 12.10 sürümünden itibaren tüm reklamlar doğru şekilde engellenecektir.",
+    "message": "Opera 12.10'dan önceki sürümlerde, Adblock'un tüm kuralları doğru çalıştırılamadığından, tüm reklamlar engellenemeyebilir. Bu sorun , Opera, 12.10 güncellemesini yayınladığında düzelecektir. 12.10 sürümünden itibaren tüm reklamlar doğru şekilde engellenecektir.",
     "description": "Opera < 12.10 warning during installation"
   },
   "opera_120_options": {
-    "message": "Opera 12.10'den önceki sürümlerde, bazı seçenekler desteklenemediğinden, kullanılamaz durumda görünüyor.",
+    "message": "Opera 12.10'dan önceki sürümlerde, bazı seçenekler desteklenemediğinden, kullanılamaz durumda görünüyor.",
     "description": "Opera < 12.10 warning above options page"
+  },
+  "opera_allow_secure": {
+    "message": "Eğer Adblock'u güvenli sayfalarda (araç çubuğunda yeşil renkli kilit işareti olan sayfalar) kullanmak istiyorsanız, öncelikle güvenli sayfalara erişim seçeneğini aktif hale getirmelisiniz.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "opera_can_also_change_setting": {
     "message": "Ayrıca siz de şu seçenek için değeri artırabilirsiniz; $setting$",
@@ -823,13 +827,21 @@
     "message": "Uzantının Tercihler menüsünü kullanarak bu butonu tekrar aktifleştirebilirsiniz.",
     "description": "Opera browser button message when you click 'hide this button'"
   },
+  "opera_secure_pages": {
+    "message": "Güvenli sayfalar",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Opera menüsü &rArr; Eklentiler &rArr; Eklentileri Yönet &rArr; Adblock simgesinin yanındaki anahtar ikonu &rArr; ve Gizlilik seçeneğine tıklayın.<br/> \"Güvenli sayfalarla etkileşime izin ver\" seçeneği işaretli mi?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_show_toolbar_button": {
     "message": "Araç çubuğu butonunu göster",
     "description": "Opera option to show/hide the button"
   },
   "options": {
     "message": "Seçenekler",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "değişiklikler listesi",
@@ -1103,10 +1115,6 @@
       }
     }
   },
-  "this_toolbar_button": {
-    "message": "Bu araç çubuğu butonu :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
-  },
   "to_turn_on_autoupdate": {
     "message": "Otomatik güncelleştirmeleri açmak için:",
     "description": "Install page: title of section with a list of steps to take"
@@ -1247,7 +1255,7 @@
   },
   "updatefromoldversion": {
     "message": "Adblock'un eski bir sürümünü kullanıyorsunuz. Lütfen $updatelink$ linkini kullanarak Adblock'un son sürümüne geçin.",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1güncelleme$2",
