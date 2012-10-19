@@ -713,20 +713,6 @@
     "message": "Separar múltiplos domínios com virgulas ou espaços",
     "description": "resourceblocking page string"
   },
-  "new_version": {
-    "message": "Nova versão!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Novo na versão $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
   "nextstep": {
     "message": "Fase seguinte",
     "description": "resourceblocking page string"
@@ -793,6 +779,10 @@
     "message": "Versões anteriores à do Opera 12.10, algumas opções estão bloqueadas, porque não são suportadas nessas versões.",
     "description": "Opera < 12.10 warning above options page"
   },
+  "opera_allow_secure": {
+    "message": "Se quiser usar o AdBlock em páginas seguras (páginas que têm o ícone do cadeado na toolbar), primeira precisa de activar a opção para permitir acesso a páginas seguras.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_can_also_change_setting": {
     "message": "Também pode aumentar o valor da\n$setting$",
     "description": "Message when the storage quota is reached, for advanced users in Opera",
@@ -836,6 +826,14 @@
   "opera_reenable_button": {
     "message": "Pode re-activar o botão nas preferências desta extensão",
     "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_secure_pages": {
+    "message": "Páginas seguras",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Clique no menu do Opera &rArr; Extensões &rArr; Gerir Extensões &rArr; procure o AdBlock e clique no ícone da chave &rArr; clique em Privacidade.<br/>A opção para permitir o acesso a páginas seguras está activado?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "opera_show_toolbar_button": {
     "message": "Mostrar o botão na toolbar",
@@ -1116,10 +1114,6 @@
         "example": "example.com"
       }
     }
-  },
-  "this_toolbar_button": {
-    "message": "Este botão da Toolbar :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
     "message": "Para ligar as actualizações automáticas:",
