@@ -26,7 +26,7 @@ FilterSet.fromTexts = function(lines) {
     // Even though we normalized the filters when AdBlock first received them,
     // we may have joined a few lists together with newlines.  Check for these
     // just in case.
-    if (lines[i].length == 0)
+    if (lines[i].length === 0)
       continue;
     var filter = Filter.fromText(lines[i]);
 
@@ -34,12 +34,14 @@ FilterSet.fromTexts = function(lines) {
       if (!result.exclude[d]) result.exclude[d] = {};
       result.exclude[d][filter.id] = true;
     });
-    filter._domains.applied_on.forEach(function(d) {
-      if (!result.items[d]) result.items[d] = [];
-      result.items[d].push(filter);
-    });
-    if (filter._domains.applied_on.length == 0)
+    if (filter._domains.applied_on.length === 0) {
       result.items['global'].push(filter);
+    } else {
+      filter._domains.applied_on.forEach(function(d) {
+        if (!result.items[d]) result.items[d] = [];
+        result.items[d].push(filter);
+      });
+    }
   }
 
   return result;
