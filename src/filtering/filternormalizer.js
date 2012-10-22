@@ -100,7 +100,7 @@ var FilterNormalizer = {
     // Ignore filters whose domains aren't formatted properly.
     FilterNormalizer.verifyDomains(parsedFilter._domains);
 
-    // Make sure we don't break if the filter actually is a javascript function
+    // Ensure filter doesn't break AdBlock
     FilterNormalizer._checkForObjectProperty(filter);
 
     // Nothing's wrong with the filter.
@@ -153,7 +153,8 @@ var FilterNormalizer = {
     return domain + "##" + resultFilter;
   },
 
-  // Checks if the filter is an object property, which we should not overwrite
+  // Checks if the filter is an object property, which we should not overwrite.
+  // See Issue 7117.
   // Throw an exeption if that's the case
   // Input: text (string): the item to check
   _checkForObjectProperty: function(text) {
@@ -169,7 +170,7 @@ var FilterNormalizer = {
       for (var i = 0; i < domainInfo[name].length; i++) {
         if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+\.?$/i.test(domainInfo[name][i]) == false)
           throw "Invalid domain: " + domainInfo[name][i];
-        // Make sure we don't break if the domain actually is a javascript function
+        // Ensure domain doesn't break AdBlock
         FilterNormalizer._checkForObjectProperty(domainInfo[name][i]);
       }
     }
