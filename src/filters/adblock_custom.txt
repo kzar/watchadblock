@@ -17,15 +17,14 @@
 ! Because acid3 doesn't like our style block
 @@||acid3.acidtests.org^$document,domain=acid3.acidtests.org
 
-! Chrome-specific
+! WebKit-specific
 @@||doubleclick.net/adj/ftd-rubriken/$script,domain=ftd.de
+@@||washingtonpost.com^*=/ad/audsci.js$domain=washingtonpost.com
+||gamecopyworld.com/games/js/abd.js$domain=gamecopyworld.com
 
 ! Don't block extension resources injected in pages
 @@|chrome-extension:
 @@|safari-extension:
-
-! Work around false positive in EasyList
-@@/ad/audsci.$domain=washingtonpost.com
 
 ! They contain spaces in the URL so purging doesn't work properly
 cistor.pl##img[src*="/ads_files/"]
