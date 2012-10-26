@@ -190,6 +190,13 @@
       var frameDomain = frameData.get(tabId, requestingFrameId).domain;
       var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
 
+      // Issue 7178
+      if (blocked && frameDomain === "www.hulu.com") {
+        if (frameData.get(tabId, 0).domain !== "www.hulu.com"
+            && /ads.hulu.com/.test(details.url)) // good enough
+          blocked = false;
+      }
+
       var canPurge = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
       if (canPurge && blocked) {
         // frameUrl is used by the recipient to determine whether they're the frame who should
