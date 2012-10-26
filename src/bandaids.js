@@ -3,8 +3,6 @@ var run_bandaids = function() {
   var apply_bandaid_for = "";
   if (/mail\.live\.com/.test(document.location.hostname))
     apply_bandaid_for = "hotmail";
-  else if (/\.hk-pub\.com\/forum\/thread\-/.test(document.location.href))
-    apply_bandaid_for = "hkpub";
   else if (/youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube_safari_only";
   else {
@@ -39,14 +37,6 @@ var run_bandaids = function() {
       }
     },
 
-    hkpub: function() {
-      //issue 3971: due to 'display:none' the page isn't displayed correctly
-      el = document.querySelector("#AutoNumber1");
-      if (el) {
-        el.style.setProperty("width", "100%", null);
-        el.style.setProperty("margin", "0", null);
-      }
-    },
     youtube_safari_only: function() {
       function blockYoutubeAds(videoplayer) {
         var flashVars = videoplayer.getAttribute('flashvars');
