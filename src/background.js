@@ -193,7 +193,7 @@
       // Issue 7178
       if (blocked && frameDomain === "www.hulu.com") {
         if (frameData.get(tabId, 0).domain !== "www.hulu.com"
-            && /ads.hulu.com/.test(details.url)) // good enough
+            && /ads\.hulu\.com/.test(details.url)) // good enough
           blocked = false;
       }
 
