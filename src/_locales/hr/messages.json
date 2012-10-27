@@ -273,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "Da biste sakrili dugme, kliknite desnim klikom na njemu i odaberite Sakrij dugme.  Možete ga opet prikazati pod Ključ | Alati | Proširenja.",
+  "chromebutton_how_to_hide2": {
+    "message": "Sakrijte gumb tako da ga desnim klikom miša kliknete i odaberte Sakrij gumb. Možete gumb vratiti nazad u opcijama proširenja: chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -481,6 +481,16 @@
     "message": "Liste filtera blokiraju večinu reklama na internetu. Možete također:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "filterorigin": {
+    "message": "Podrijetlo filtera:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
   "filterrussian": {
     "message": "- dodatni ruski i ukrajinski filteri",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -496,6 +506,10 @@
   "findingads": {
     "message": "Traženje reklama...<br/><br/><i>Ovo će potrajati trenutak.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "firefox_explanation": {
+    "message": "Svrha ovog pitanja je da se utvrdi tko bi trebao primiti vaš izvještaj. Ako odgovorite netočno, izvještaj će biti poslan krivim ljudima pa tako možda i zanemaren.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
   },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Prvo bi trebali <b>uključiti automatsko ažuriranje</b> u Safari postavkama, tako da primite ispravke i nove mogućnosti što češće.",
@@ -554,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "Kako koristiti AdBlock:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Došao sam ovdje po <b>CatBlock</b>! Zamijeni reklame sa slikama mačaka!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Sviđaju mi se Google-ove tekstualne reklame; ne želim ih blokirati.",
@@ -703,20 +713,6 @@
     "message": "Odvoji različite domene sa zarezima ili razmacima",
     "description": "resourceblocking page string"
   },
-  "new_version": {
-    "message": "Nova verzija!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Novo u ovoj verziji $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
   "nextstep": {
     "message": "Slijedeći korak",
     "description": "resourceblocking page string"
@@ -783,6 +779,10 @@
     "message": "U verzijama Opere prije verzije 12.10, neke opcije su zasivljene, zato što nisu podržane u tim verzijama preglednika.",
     "description": "Opera < 12.10 warning above options page"
   },
+  "opera_allow_secure": {
+    "message": "Ako želite koristiti AdBlock na sigurnim stranicama (stranicama koje imaju ikonu brave u alatnoj traci) morate prvo omogućiti opciju da dopustite pristup sigurnim stranicama.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_can_also_change_setting": {
     "message": "Možete također povećati vrijednost\n$setting$",
     "description": "Message when the storage quota is reached, for advanced users in Opera",
@@ -826,6 +826,14 @@
   "opera_reenable_button": {
     "message": "Možete omogućiti gumb u postavkama ovog proširenja",
     "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_secure_pages": {
+    "message": "Sigurne stranice",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Kliknite Ekstenzije (u izborniku) &rArr; Upravljanje ekstenzijama... &rArr; potražite AdBlock i kliknite ikonu ključa odmah pokraj &rArr; kliknite Privatnost. <br/>Je li opcija da omogućite pristup sigurnim stranicama uključena?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "opera_show_toolbar_button": {
     "message": "Prikaži gumb na alatnoj traci",
@@ -1106,10 +1114,6 @@
         "example": "example.com"
       }
     }
-  },
-  "this_toolbar_button": {
-    "message": "Ovo dugme alatne trake :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
     "message": "Uključivanje automatskog ažuriranja:",
