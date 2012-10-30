@@ -417,7 +417,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_finnish": { // Additional Finnish filters
-      url: "http://www.wiltteri.net/wiltteri.txt",
+      url: "http://download.wiltteri.net/wiltteri.txt",
       requiresList: "easylist",
     },
     "easylist_plus_french": { // Additional French filters
