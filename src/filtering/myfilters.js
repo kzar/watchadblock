@@ -100,6 +100,13 @@ MyFilters.prototype.getExtensionFilters = function(settings) {
     // Google Instant: open a Chrome tab, type 'hotel' and don't press Enter
     texts.push("@@||google.*/webhp?*sourceid=*instant&$elemhide");
   }
+  if (settings.whitelist_hulu_ads) {
+    // Issue 7178: FilterNormalizer removes EasyList's too-broad Hulu whitelist
+    // entries.  If the user enables whitelist_hulu_ads, just add them back.
+    // This workaround can be removed when EasyList changes its Hulu strategy.
+    texts.push("@@||ads.hulu.com/published/*.flv");
+    texts.push("@@||ads.hulu.com/published/*.mp4");
+  }
   return texts;
 };
 
