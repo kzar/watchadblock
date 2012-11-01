@@ -421,7 +421,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_french": { // Additional French filters
-      url: "http://lian.info.tm/liste_fr.txt",
+      url: "http://adblock-listefr.com/liste_fr.txt",
       requiresList: "easylist",
     },
     "easylist_plus_german": { // Additional German filters
