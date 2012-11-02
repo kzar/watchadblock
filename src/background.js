@@ -14,6 +14,7 @@
     var defaults = {
       debug_logging: false,
       show_google_search_text_ads: false,
+      whitelist_hulu_ads: false, // Issue 7178
       show_context_menu_items: true,
       show_advanced_options: false,
     };
@@ -189,6 +190,13 @@
       // May the URL be loaded by the requesting frame?
       var frameDomain = frameData.get(tabId, requestingFrameId).domain;
       var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
+
+      // Issue 7178
+      if (blocked && frameDomain === "www.hulu.com") {
+        if (frameData.get(tabId, 0).domain !== "www.hulu.com"
+            && /ads\.hulu\.com/.test(details.url)) // good enough
+          blocked = false;
+      }
 
       var canPurge = (elType & (ElementTypes.image | ElementTypes.subdocument | ElementTypes.object));
       if (canPurge && blocked) {

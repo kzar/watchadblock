@@ -92,6 +92,12 @@ var FilterNormalizer = {
       if (!Filter.isWhitelistFilter(filter) && hasWhitelistOptions)
         throw "$document and $elemhide may only be used on whitelist filters";
 
+      // Issue 7178
+      if (!SAFARI && 
+          /^\@\@\|\|ads\.hulu\.com\/published\/\*\.(flv|mp4)$/.test(filter)) {
+        return null; // background.js implements this rule more specifically
+      }
+    
       // In Safari, ignore rules with only Chrome-specific types (no-ops).
       if (SAFARI && types === (types & ElementTypes.CHROMEONLY))
         return null;

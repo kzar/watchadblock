@@ -11,8 +11,11 @@ function load_options() {
           //translation
           localizePage();
 
-          $(".advanced").toggle(optionalSettings.show_advanced_options);
-          $(".chrome-only").toggle(!SAFARI);
+          // Toggle won't handle .advanced.chrome-only
+          if (!optionalSettings.show_advanced_options)
+            $(".advanced").hide();
+          if (SAFARI)
+            $(".chrome-only").hide();
 
           // Must load tab .js here: CSP won't let injected html inject <script>
           // see index.html:data-scripts
