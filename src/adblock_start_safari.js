@@ -38,6 +38,7 @@ function weakDestroyElement(el, elType) {
 
 beforeLoadHandler = function(event) {
   var el = event.target;
+  if (!el.nodeName) return; // issue 6256
   // Cancel the load if canLoad is false.
   var elType = typeForElement(el);
   var data = { 
