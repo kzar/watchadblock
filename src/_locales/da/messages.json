@@ -8,7 +8,7 @@
     "description": "on the ad report page, telling a user there is nothing to do"
   },
   "adblock_auto_removes_ads_thats_all": {
-    "message": "AdBlock fjerner automatisk reklamer. Det er alt!",
+    "message": "AdBlock fjerner automatisk reklamer. Mere er der som sådan ikke til det.",
     "description": "Install page: explaining how to use adblock."
   },
   "adblock_is_paused": {
@@ -273,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "For at skjule knappen, skal du højreklikke på den og vælge Skjul Knap. Du kan få den frem igen under Skruenøgle | Indstillinger | Udvidelser.",
+  "chromebutton_how_to_hide2": {
+    "message": "For at skjule knappen skal du højreklikke på den og vælge Skjul knap. Du kan få den frem igen ved at gå til chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -481,6 +481,16 @@
     "message": "Filter listerne blokerer de fleste reklamer på nettet. Du kan også:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "filterorigin": {
+    "message": "Oprindelige filter:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
   "filterrussian": {
     "message": "- yderligere Rusiske og Ukrainske filtre",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -496,6 +506,10 @@
   "findingads": {
     "message": "Finder reklamer...<br/><br/><i>Det tager kun et øjeblik.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "firefox_explanation": {
+    "message": "Formålet med dette spørgsmål er for at fastslå, hvem der bør modtage din rapportering. Hvis du besvarer spørgsmålet forkert vil rapporten blive sendt til de forkerte folk, og måske blive ignoreret.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
   },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Først bør du <b>aktivere autoupdate</b> under Safari Indstillinger, så du får fejlrettelser og nye funktioner i takt med, at jeg skriver dem.",
@@ -554,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "Hvordan bruges AdBlock:",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Hey, jeg er på udkig efter <b>CatBlock</b>! Erstat reklamer med billeder af katte!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Jeg kan godt lide Google's tekst reklamer; lad være med at blokere dem.",
@@ -703,20 +713,6 @@
     "message": "Adskil flere domæner med komma eller mellemrum",
     "description": "resourceblocking page string"
   },
-  "new_version": {
-    "message": "Ny version!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Nyt i version $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
   "nextstep": {
     "message": "Næste trin",
     "description": "resourceblocking page string"
@@ -783,6 +779,10 @@
     "message": "I Opera versioner før version 12.10, kan nogle muligheder være deaktiveret. Dette fordi de ikke er understøttet i disse ældre versioner af Opera.",
     "description": "Opera < 12.10 warning above options page"
   },
+  "opera_allow_secure": {
+    "message": "Hvis du vil benytte AdBlock på sikrede sider (sider der har en hængelås i værktøjslinjen), skal du først slå muligheden til under Indstillinger for AdBlock.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_can_also_change_setting": {
     "message": "Du kan også øge værdien af\n$setting$",
     "description": "Message when the storage quota is reached, for advanced users in Opera",
@@ -826,6 +826,14 @@
   "opera_reenable_button": {
     "message": "Du genaktivere knappen under indstillinger for denne udvidelse",
     "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_secure_pages": {
+    "message": "Sikrede sider",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Klik på Udvidelser (i menuen) &rArr; Administrer Udvidelser &rArr; kig efter AdBlock og klik på skruenøgle-ikonet &rArr; Klik Privatliv.<br/>Er muligheden for at tillade adgang til sikrede sider tilvalgt?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "opera_show_toolbar_button": {
     "message": "Vis knap i værktøjslinien",
@@ -1106,10 +1114,6 @@
         "example": "example.com"
       }
     }
-  },
-  "this_toolbar_button": {
-    "message": "Denne toolbar knap :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
   },
   "to_turn_on_autoupdate": {
     "message": "For at aktivere autoupdate:",
