@@ -15,6 +15,10 @@
     "message": "Adblock está pausado. Portanto nenhum recurso é capturado, logo esta página não pode ser usada. Despause o Adblock primeiro e tente novamente.",
     "description": "resourceblocking page string"
   },
+  "adblock_outdated_chrome": {
+    "message": "Você está usando uma versão velha do AdBlock. Por favor vá para <a href='#>a página extensões</a>, habilite \"Modo do desenvolvedor' e clique \"Atualizar extensões agora'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
   "adblock_wont_run_on_pages_matching": {
     "message": "Adblock não irá atuar em qualquer página que corresponde a:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -269,8 +273,8 @@
       }
     }
   },
-  "chromebutton_how_to_hide": {
-    "message": "Para esconder o botão, clique com o botão direito e escolha Esconder Botão. Você pode mostrar-lo novamente em Chave Inglesa | Ferramentas | Extensões",
+  "chromebutton_how_to_hide2": {
+    "message": "Para esconder o botão, clique com o botão direito e escolha Esconder Botão. Você pode mostrá-lo novamente em chrome://chrome/extensions.",
     "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "cleanuplist": {
@@ -477,6 +481,16 @@
     "message": "As listas de filtros bloqueiam a maioria das propagandas na web. Você também pode:",
     "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
   },
+  "filterorigin": {
+    "message": "Origem do filtro:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
   "filterrussian": {
     "message": "- filtros russos e ucranianos adicionais",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
@@ -492,6 +506,10 @@
   "findingads": {
     "message": "Encontrando propagandas...<br/><br/><i>Isso só levará um momento.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "firefox_explanation": {
+    "message": "O propósito desta pergunta é determinar quem deve receber seu relatório. Se você responder esta pergunta incorretamente, o relatório sera enviado para as pessoas erradas, logo poderá ser ignorado.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
   },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Primeiro, você deve <b>ligar a auto-atualização</b> nas Preferências do Safari, para que você receba correções de bugs e novos recursos assim que eu os escrever.",
@@ -550,10 +568,6 @@
   "how_to_use_adblock": {
     "message": "Como usar o AdBlock",
     "description": "Install page section title"
-  },
-  "i_came_here_looking_for_catblock": {
-    "message": "Eu vim aqui procurando pelo <b>CatBlock</b>! Substitua propagando com imagens de gatos!",
-    "description": "Install page checkbox letting the user indicate that they installed AdBlock because they heard about CatBlock, and they want to enable it."
   },
   "i_like_googles_text_ads_dont_block_those": {
     "message": "Eu gosto das propagandas de texto da Google; não bloqueie estas.",
@@ -699,20 +713,6 @@
     "message": "Separe múltiplos domínios com vírgulas ou espaços",
     "description": "resourceblocking page string"
   },
-  "new_version": {
-    "message": "Nova versão!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Novo na versão $version$",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
   "nextstep": {
     "message": "Próximo passo",
     "description": "resourceblocking page string"
@@ -779,6 +779,10 @@
     "message": "Em versões do Opera anteriores ao Opera 12.10, algumas opções estão esmaecidas, pois não são suportadas nessas versões.",
     "description": "Opera < 12.10 warning above options page"
   },
+  "opera_allow_secure": {
+    "message": "Se você quer usar o AdBlock em páginas seguras (páginas com um ícone de cadeado na barra de ferramentas), você deve antes habilitar a opção de permitir acesso à páginas seguras.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_can_also_change_setting": {
     "message": "Você também poder aumentar o valor de\n$setting$",
     "description": "Message when the storage quota is reached, for advanced users in Opera",
@@ -823,13 +827,21 @@
     "message": "Você poder reabilitar o botão nas preferências desta extensão",
     "description": "Opera browser button message when you click 'hide this button'"
   },
+  "opera_secure_pages": {
+    "message": "Páginas seguras",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Clique Extensões (no menu) &rArr; Gerenciar Extensões &rArr; procure pelo AdBlock e clique no ícone de chave próximo &rArr; clique Privacidade.<br/>A opção de permitir acesso à páginas seguras está habilitada?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_show_toolbar_button": {
     "message": "Mostrar botão na barra de ferramentas",
     "description": "Opera option to show/hide the button"
   },
   "options": {
     "message": "Opções",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "Log de mudanças",
@@ -1103,10 +1115,6 @@
       }
     }
   },
-  "this_toolbar_button": {
-    "message": "Este botão da barra de ferramentas :)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
-  },
   "to_turn_on_autoupdate": {
     "message": "Para ligar a auto-atualização:",
     "description": "Install page: title of section with a list of steps to take"
@@ -1247,7 +1255,7 @@
   },
   "updatefromoldversion": {
     "message": "Você está usando uma versão antiga do AdBlock. Por favor antes $updatelink$ para a versão mais nova do AdBlock",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1atualize$2",
@@ -1278,6 +1286,10 @@
   "wildcardhint": {
     "message": "Nota: você poder usar * como caractere curinga aqui",
     "description": "resourceblocking page string"
+  },
+  "work_around_hulu_problems": {
+    "message": "Solução alternativa para vídeos que não rodam em Hulu.com (requer reinicialização do navegador)",
+    "description": "Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
   },
   "yes": {
     "message": "Sim",
