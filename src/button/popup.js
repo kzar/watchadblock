@@ -41,17 +41,6 @@ function customize_for_this_tab() {
   });
 }
 
-// CatBlock explanation for users who explicitly enabled it and are now wondering why it's gone
-if (storage_get("settings")
-    && storage_get("settings").do_picreplacement === true 
-    && !storage_get("saw_catblock_explanation_popup")) {
-  $("#catblock-explanation").show();
-  $("#catblock-explanation-close").click(function() {
-    $("#catblock-explanation").slideUp();
-    storage_set('saw_catblock_explanation_popup', true);
-  });
-}
-
 
 // Click handlers
 $(function() {

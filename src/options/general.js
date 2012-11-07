@@ -38,14 +38,3 @@ $("#enable_show_advanced_options").change(function() {
     window.location.reload();
   }, 50);
 });
-
-// Replace missing CatBlock checkbox with a message for those who are confused about where to find it.
-BGcall("storage_get", "saw_catblock_explanation_options_msg", function(saw) {
-  if (!saw) {
-    $("#catblock-explanation").show();
-    $("#catblock-explanation-close").click(function() {
-      $("#catblock-explanation").slideUp();
-      BGcall("storage_set", 'saw_catblock_explanation_options_msg', true);
-    });
-  }
-});
