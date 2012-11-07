@@ -691,7 +691,7 @@ $(function() {
           for (var i=0; i<filters.length; i++)
             try {
               var normalized = FilterNormalizer.normalizeLine(filters[i]);
-              if (normalized !== "")
+              if (normalized) // filter out comments and ignored filters
                 custom_filters[normalized] = filters[i];
             } catch(ex) {} //Broken filter
           createResourceblockFilterset("user_custom_filters", Object.keys(custom_filters));
