@@ -6,7 +6,7 @@
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
 function MyFilters() {
-  if (SAFARI)
+  if (SAFARI6)
     this.styleSheetRegistrar = new StyleSheetRegistrar();
 
   this._subscriptions = storage_get('filter_lists');
@@ -170,7 +170,7 @@ MyFilters.prototype.rebuild = function() {
     filters.hiding[hider.id] = hider;
   }
 
-  if (SAFARI)
+  if (SAFARI6)
     this.styleSheetRegistrar.register(filters.hiding);
   else
     this.hiding = FilterSet.fromFilters(filters.hiding);

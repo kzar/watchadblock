@@ -71,7 +71,7 @@ adblock_begin({
     document.removeEventListener("beforeload", beforeLoadHandler, true);
   },
   handleHiding: function(data) {
-    if (data.runnable && !data.hiding) {
+    if (SAFARI6 && data.runnable && !data.hiding) {
       document.documentElement.classList.add(data.avoidHidingClass);
     }
   },

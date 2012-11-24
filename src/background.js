@@ -298,15 +298,8 @@
   set_setting = function(name, is_enabled) {
     _settings.set(name, is_enabled);
 
-    if (name == "debug_logging") {
-      if (is_enabled)
-        log = function() {
-          if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
-            console.log.apply(console, arguments);
-        };
-      else
-        log = function() { };
-    }
+    if (name == "debug_logging")
+      logging(is_enabled);
   }
 
   // MYFILTERS PASSTHROUGHS
@@ -379,7 +372,7 @@
       return sessionStorage.getItem('adblock_is_paused') === "true";
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
-    if (SAFARI)
+    if (SAFARI6)
       _myfilters.styleSheetRegistrar.pause(newValue);
   }
 
@@ -555,16 +548,16 @@
       running: running,
       hiding: hiding
     };
-    if (SAFARI) {
+    if (SAFARI6) {
       _myfilters.styleSheetRegistrar.prepareFor(options.domain);
       result.avoidHidingClass = StyleSheetRegistrar._avoidHidingClass;
       if (settings.debug_logging && hiding) {
-        var filters = _myfilters.StyleSheetRegistrar._filters;
+        var filters = _myfilters.styleSheetRegistrar._filters;
         var filterset = FilterSet.fromFilters(filters);
         result.selectors = filterset.filtersFor(options.domain);
       }
     }
-    if (!SAFARI && hiding) {
+    if (!SAFARI6 && hiding) {
       result.selectors = _myfilters.hiding.filtersFor(options.domain);
     }
     return result;
@@ -747,10 +740,7 @@
   })();
 
   if (get_settings().debug_logging)
-    log = function() {
-      if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]') // comment out for verbosity
-        console.log.apply(console, arguments);
-    };
+    logging(true);
 
   _myfilters = new MyFilters();
 

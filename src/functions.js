@@ -23,9 +23,21 @@ BGcall = function() {
   chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
 }
 
-// These are replaced with console.log in adblock_start_common.js and
-// background.js if the user chooses.
-log = function() { };
+// Enabled in adblock_start_common.js and background.js if the user wants
+logging = function(enabled) {
+  if (enabled) {
+    log = function() {
+      if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]') // comment out for verbosity
+        console.log.apply(console, arguments);
+    };
+    logGroup = function() { console.group.apply(console, arguments); };
+    logGroupEnd = function() { console.groupEnd(); };
+  }
+  else {
+    log = logGroup = logGroupEnd = function() {};
+  }
+}
+logging(false); // disabled by default
 
 // Behaves very similarly to $.ready() but does not require jQuery.
 function onReady(callback) {

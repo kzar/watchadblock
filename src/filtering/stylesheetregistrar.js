@@ -27,19 +27,23 @@ StyleSheetRegistrar.prototype = {
 
   // Make sure that all filters to be run on |domain| are applied.
   prepareFor: function(domain) {
-    console.log("Preparing for", domain);
+    if (this._recentDomains.indexOf(domain) !== -1)
+      return;
+    logGroup("Preparing for", domain);
     for (var nextDomain in DomainSet.domainAndParents(domain)) {
       if (this._needsWork.lazy[nextDomain]) {
         this._applyCorrectly("lazy", nextDomain);
       }
       if (this._needsWork.liars[nextDomain]) {
-        // TODO bug: this seems to remove the global sheet (all sheets?).
-        safari.extension.removeContentStyleSheet(this._liarSheet);
-        console.log("Removed liar sheet.");
+        logGroup("Extracting some liars and rebuilding liar sheet.");
         this._applyCorrectly("liars", nextDomain); // Correctly apply some liars
+        log("Removing old liars sheet");
+        safari.extension.removeContentStyleSheet(this._liarSheet);
         this._applyLiars(); // ...and (globally) re-apply the others.
+        logGroupEnd();
       }
     }
+    logGroupEnd();
     this._recentDomains.unshift(domain);
     this._recentDomains.splice(30); // Keep a limited number
   },
@@ -92,7 +96,6 @@ StyleSheetRegistrar.prototype = {
 
   // Create and apply this._liarSheet, built from this._needsWork.liars.
   _applyLiars: function() {
-    console.log("Adding liar sheet...");
     var liarFilters = {};
     for (var domain in this._needsWork.liars) {
       for (var id in this._needsWork.liars[domain]) {
@@ -104,7 +107,9 @@ StyleSheetRegistrar.prototype = {
       if (liarFilters[id])
         selectors.push(liarFilters[id].selector);
     }
+    logGroup("Creating liar sheet (", selectors.length, "filters)");
     this._liarSheet = this._applyGlobally(selectors);
+    logGroupEnd();
   },
 
   // Apply the array of |selectors| to all domains and return a handle to the
@@ -114,8 +119,8 @@ StyleSheetRegistrar.prototype = {
       return null;
     var _css = StyleSheetRegistrar._css;
     var sheet = _css.prefix + selectors.join(", " + _css.prefix) + _css.suffix;
-    console.log("Adding global content stylesheet:"); // TODO
-    console.log(sheet);
+    log("Adding global sheet (", selectors.length, "filters)"); // TODO
+    if (selectors.length < 10) log(sheet);
     var blacklist = [safari.extension.baseURI + "*"];
     return safari.extension.addContentStyleSheet(sheet, undefined, blacklist);
   },
@@ -131,10 +136,12 @@ StyleSheetRegistrar.prototype = {
       }
     }
     list.black.push(safari.extension.baseURI + "*");
+    logGroup("Adding one-filter sheet for:", filter.selector);
+    log("Whitelist:", list.white);
+    log("Blacklist:", list.black);
+    logGroupEnd();
     var _css = StyleSheetRegistrar._css;
     var sheet = _css.prefix + filter.selector + _css.suffix;
-    console.log("Adding individual stylesheet with whitelist:", list.white, " and blacklist ", list.black); // TODO
-    console.log(sheet); // TODO
     // TODO: wrong behavior for { ALL: true, a: false, sub.a: true }?
     safari.extension.addContentStyleSheet(sheet, list.white, list.black);
   },
@@ -171,7 +178,7 @@ StyleSheetRegistrar.prototype = {
     this._liarSheet = null;
 
     safari.extension.removeContentStyleSheets();
-    console.log("Removed all style sheets.");
+    log("Removed all style sheets.");
   }
 
 };

@@ -149,10 +149,7 @@ function adblock_begin(inputs) {
   var opts = { domain: document.location.hostname };
   BGcall('get_content_script_data', opts, function(data) {
     if (data.settings.debug_logging)
-      log = function() { 
-        if (VERBOSE_DEBUG || arguments[0] !== '[DEBUG]')
-          console.log.apply(console, arguments); 
-      };
+      logging(true);
 
     inputs.handleHiding(data);
 
