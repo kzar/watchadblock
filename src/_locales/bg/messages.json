@@ -1,4 +1,4 @@
-{
+﻿{
   "a_note_to_you_catblock_lovers": {
     "message": "За почитателите на CatBlock:",
     "description": "Message header for a note directed to users who want to know how to get CatBlock."
@@ -507,6 +507,10 @@
     "message": "Намиране на реклами…<br/><br/><i>Това ще отнеме известно време.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
+  "firefox_explanation": {
+    "message": "Въпросът определя кой трябва да получи вашия доклад. Ако отговорите неправилно, докладът ви ще получат неподходящите хора и може да не бъде взет под внимание.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
   "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
     "message": "Първо, трябва да <b>включите автоматичното обновяване</b> в настройките на Safari, за да получавате поправки на грешки и нови възможности, веднага щом ги публикувам.",
     "description": "The first instructions on the Safari install page."
@@ -709,20 +713,6 @@
     "message": "Отделете множеството домейни със запетаи или с интервали",
     "description": "resourceblocking page string"
   },
-  "new_version": {
-    "message": "Нова версия!",
-    "description": "Tooltip on toolbar button when a significant new version is released"
-  },
-  "newtitle": {
-    "message": "Новото във версия $version$:",
-    "description": "Message in popup button telling users about new features",
-    "placeholders": {
-      "version": {
-        "content": "$1",
-        "example": "2.3.0"
-      }
-    }
-  },
   "nextstep": {
     "message": "Следваща стъпка",
     "description": "resourceblocking page string"
@@ -789,6 +779,10 @@
     "message": "Във версиите на Opera до 12.10 някои от настройките са в сиво, защото не се поддържат.",
     "description": "Opera < 12.10 warning above options page"
   },
+  "opera_allow_secure": {
+    "message": "Ако искате да ползвате AdBlock в защитени страници (такива с икона катинар в лентата), първо разрешете настройката за достъп до защитени страници.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_can_also_change_setting": {
     "message": "Увеличете стойността на\n$setting$",
     "description": "Message when the storage quota is reached, for advanced users in Opera",
@@ -822,7 +816,7 @@
     "description": "Opera version of the 'excludedomainorurl' string"
   },
   "opera_for_more_options": {
-    "message": "За допълнителни настройки щракнете бутона в лентата или отворете настройките чрез Opera &rArr; Разширения &rArr; Организиране на разширенията &rArr; икона гаечен ключ &rArr; Предпочитания",
+    "message": "За допълнителни настройки щракнете бутона в лентата или отворете настройките чрез Opera &rArr; Разширения &rArr; Организиране на разширенията &rArr; икона ключ &rArr; Предпочитания",
     "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
   },
   "opera_linkunblock": {
@@ -832,6 +826,14 @@
   "opera_reenable_button": {
     "message": "Можете да разрешите бутона повторно от настройките на разширението",
     "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_secure_pages": {
+    "message": "Защитени страници",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "От менюто отворете Разширения &rArr; Организиране на разширенията &rArr; AdBlock (и там до него щракнете по иконата ключ) &rArr; Лични данни.<br/>Разрешена ли е настройката за достъп до защитени страници?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "opera_show_toolbar_button": {
     "message": "Показвай бутон в лентата",
@@ -1113,10 +1115,6 @@
       }
     }
   },
-  "this_toolbar_button": {
-    "message": "Този бутон в лентата :-)",
-    "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
-  },
   "to_turn_on_autoupdate": {
     "message": "За включване на автоматичното обновяване:",
     "description": "Install page: title of section with a list of steps to take"
@@ -1288,6 +1286,10 @@
   "wildcardhint": {
     "message": "Забележка: тук можете да ползвате * за означаване на всичко",
     "description": "resourceblocking page string"
+  },
+  "work_around_hulu_problems": {
+    "message": "Ползвай заобиколен начин за нетръгващи клипове от Hulu.com (след повторен пуск на браузъра)",
+    "description": "Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
   },
   "yes": {
     "message": "Да",
