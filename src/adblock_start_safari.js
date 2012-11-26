@@ -63,12 +63,22 @@ beforeLoadHandler = function(event) {
 }
 beforeLoadHandler.blockCount = 0;
 
+// Send the frame domain to the background when requested.
+sendDomainHandler = function(event) {
+  if (event.name === "send-domain") {
+    var domain = document.location.hostname;
+    safari.self.tab.dispatchMessage("send-domain-response", domain);
+  }
+}
+
 adblock_begin({
   startPurger: function() { 
     document.addEventListener("beforeload", beforeLoadHandler, true);
+    safari.self.addEventListener("message", sendDomainHandler, false);
   },
   stopPurger: function() { 
     document.removeEventListener("beforeload", beforeLoadHandler, true);
+    safari.self.removeEventListener("message", sendDomainHandler, false);
   },
   handleHiding: function(data) {
     if (SAFARI6 && data.runnable && !data.hiding) {

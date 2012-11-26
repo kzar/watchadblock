@@ -14,7 +14,19 @@ wronglyGlobalSheet: url
 // Handled telling Safari about SelectorFilters.
 function StyleSheetRegistrar() {
   this._paused = false;
-  this._recentDomains = [];
+
+  // Add domain-specific rules on tab switch
+  var that = this;
+  safari.application.addEventListener("activate", function(event) {
+    if (event.target && event.target.page)
+      event.target.page.dispatchMessage("send-domain");
+  }, true);
+  safari.application.addEventListener("message", function(event) {
+    if (event.name === "send-domain-response") {
+      var domain = event.message;
+      that.prepareFor(domain);
+    }
+  }, true);
 }
 
 // Applied to frames on $document or $elemhide pages to disable hiding
@@ -40,8 +52,6 @@ StyleSheetRegistrar.prototype = {
 
   // Make sure that all filters to be run on |domain| are applied.
   prepareFor: function(domain) {
-    if (this._recentDomains.indexOf(domain) !== -1)
-      return;
     logGroup("Preparing for", domain);
     for (var nextDomain in DomainSet.domainAndParents(domain)) {
       if (this._needsWork.lazy[nextDomain]) {
@@ -57,8 +67,6 @@ StyleSheetRegistrar.prototype = {
       }
     }
     logGroupEnd();
-    this._recentDomains.unshift(domain);
-    this._recentDomains.splice(30); // Keep a limited number
   },
 
   // Tell Safari to use the given SelectorFilters.  |data| is an object whose
@@ -97,14 +105,9 @@ StyleSheetRegistrar.prototype = {
     this._applyGlobally(willApply.correctly);
     this._applyLiars();
     
-    // Correctly apply filters related to domains in any currently-open tabs.
-    this._prepareForRecentDomains();
-  },
-
-  // Call prepareFor() on the most recently viewed domains.
-  _prepareForRecentDomains: function() {
-    var that = this;
-    this._recentDomains.splice(-1000).forEach(function(d) { that.prepareFor(d); });
+    // Prep for current tab.  Other tabs prepped for when activated
+    var t = ((safari.application.activeBrowserWindow || {}).activeTab || {});
+    if (t) t.page.dispatchMessage("send-domain");
   },
 
   // Create and apply this._liarSheet, built from this._needsWork.liars.
