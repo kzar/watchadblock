@@ -1,3 +1,16 @@
+/*
+TODO: eventual format, improving on the current lazy/liars format:
+
+'unfinished': {
+  'forDomain': map of domain -> list of id // lazies and liars lumped together
+  'filters': map of id -> filter
+  'wronglyGlobal': set of id // liar ids only, not grouped by domain
+}
+allById: map of ? -> filter
+wronglyGlobalSheet: url
+
+*/
+
 // Handled telling Safari about SelectorFilters.
 function StyleSheetRegistrar() {
   this._paused = false;
@@ -125,38 +138,61 @@ StyleSheetRegistrar.prototype = {
     return safari.extension.addContentStyleSheet(sheet, undefined, blacklist);
   },
 
-  // addContentStyleSheet for |filter|.
-  _applyFilter: function(filter) {
-    var list = { white: [], black: [] };
-    for (var domain in filter._domains._has) {
-      if (domain !== DomainSet.ALL) {
-        var theList = list[filter._domains._has[domain] ? 'white' : 'black'];
-        theList.push(['http://*.', domain, '/*'].join(''));
-        theList.push(['https://*.', domain, '/*'].join(''));
-      }
-    }
-    list.black.push(safari.extension.baseURI + "*");
-    logGroup("Adding one-filter sheet for:", filter.selector);
-    log("Whitelist:", list.white);
-    log("Blacklist:", list.black);
-    logGroupEnd();
-    var _css = StyleSheetRegistrar._css;
-    var sheet = _css.prefix + filter.selector + _css.suffix;
-    // TODO: wrong behavior for { ALL: true, a: false, sub.a: true }?
-    safari.extension.addContentStyleSheet(sheet, list.white, list.black);
-  },
-
   // this._needsWork[listName][domain] contains filter IDs.  Apply these
   // filters correctly, then remove them from this._needsWork.
   _applyCorrectly: function(listName, domain) {
+
+    // TODO: this method is a mess but it works and is efficient (in that it
+    // submits all filters for a given whitelist+blacklist pattern in a single
+    // call.) Refactor and clean up.
+
+    var domainStringToSelectorsMap = {};
     for (var id in this._needsWork[listName][domain]) {
       var filter = this._needsWork.byId[id];
       // We delete the pointer to the filter after applying it, so that other
       // domains that reference it don't re-apply it.  Checking for existence
       // is easier than deleting its ID from each of its domains' lists.
-      if (filter)
-        this._applyFilter(filter);
+      if (!filter)
+        continue;
+
+      var list = { white: [], black: [] };
+      for (var domain in filter._domains._has) {
+        if (domain !== DomainSet.ALL) {
+          var theList = list[filter._domains._has[domain] ? 'white' : 'black'];
+          theList.push(domain);
+        }
+      }
+      var asString = list.white.sort().join(" ") + "~" + 
+                     list.black.sort().join(" ");
+      if (domainStringToSelectorsMap[asString] === undefined)
+        domainStringToSelectorsMap[asString] = [];
+      domainStringToSelectorsMap[asString].push(filter.selector);
+
       delete this._needsWork.byId[id];
+    }
+    for (var domainString in domainStringToSelectorsMap) {
+
+      var list = { white: [], black: [] };
+      var parts = domainString.split("~");
+      for (var domain in parts[0].split(" ")) {
+        list.white.push(['http://*.', domain, '/*'].join(''));
+        list.white.push(['https://*.', domain, '/*'].join(''));
+      }
+      for (var domain in parts[1].split(" ")) {
+        list.black.push(['http://*.', domain, '/*'].join(''));
+        list.black.push(['https://*.', domain, '/*'].join(''));
+      }
+      list.black.push(safari.extension.baseURI + "*");
+
+      var _css = StyleSheetRegistrar._css;
+      var selectors = domainStringToSelectorsMap[domainString];
+      var sheet = _css.prefix + selectors.join(", " + _css.prefix) + _css.suffix;
+      logGroup("Adding filter sheet for:", selectors.join(", "));
+      log("Domains:", domainString);
+      logGroupEnd();
+      // TODO: wrong behavior for { ALL: true, a: false, sub.a: true }?
+      safari.extension.addContentStyleSheet(sheet, list.white, list.black);
+
     }
     // This domain's filters are now correctly applied.
     delete this._needsWork[listName][domain];
