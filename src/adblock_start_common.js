@@ -139,7 +139,7 @@ function handleABPLinkClicks() {
 //               AdBlock should not be running.
 //   success?: function called at the end if AdBlock should run on the page.
 function adblock_begin(inputs) {
-  if (document.location === 'about:blank') // Safari does this
+  if (document.location.href === 'about:blank') // Safari does this
     return;
   if (!(document.documentElement instanceof HTMLElement))
     return; // Only run on HTML pages
