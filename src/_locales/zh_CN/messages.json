@@ -1,8 +1,4 @@
 ﻿{
-  "description1": {
-    "message": "最受欢迎的Google 浏览器扩充功能，拥有超过8 百万位使用者！阻挡网路上所有的广告。",
-    "description": "Extension description in manifest"
-  },
   "buttoncancel": {
     "message": "取消",
     "description": "Cancel button"
@@ -27,11 +23,7 @@
     "message": "AdBlock 安装成功！",
     "description": "Title for the installation success page"
   },
-  "chromebutton_how_to_hide": {
-   "message": "如果要隐藏按钮，右键并且点选『隐藏按钮』。你可以从把手| 工具| 扩充套件恢复按钮。",
-   "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
-  },
- "block_by_url_instead": {
+  "block_by_url_instead": {
    "message": "高级: 使用网址阻挡",
    "description": "Link on blacklister slider page"
  },
@@ -61,10 +53,6 @@
    "message": "自订",
      "description": "A tab on the options page"
    },
- "i_like_googles_text_ads_dont_block_those": {
-   "message": "我喜欢Google 文字广告; 不要阻挡它们。",
-   "description": "Install page text; slightly shorter than the 'googletextads' message."
- },
  "you_know_thats_a_bad_idea_right": {
    "message": "使用越多的过滤清单会使AdBlock 越慢。 过多的过滤清单会使浏览器在部份网站当机。 点选『确认』继续。",
    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
@@ -853,24 +841,6 @@
    "message": "优化这个过滤清单的规则:",
    "description": "Option at the bottom of the third options tab"
  },
- "new_version": {
-   "message": "新版本!",
-   "description": "Tooltip on toolbar button when a significant new version is released"
- },
- "newtitle": {
-   "message": "版本 $version$ 的新功能:",
-   "description": "Message in popup button telling users about new features",
-   "placeholders": {
-     "version": {
-       "content": "$1",
-       "example": "2.3.0"
-     }
-   }
- },
- "this_toolbar_button": {
-   "message": "这个工具列按钮 :)",
-   "description": "The description of what is new in version 2.3.0: a toolbar button was added to the extension"
- },
  "disabled_by_filter_lists": {
    "message": "抱歉, 因为你的一个过滤清单，AdBlock 在这个页面被关闭",
    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -981,58 +951,6 @@
    "message": "每次你启动浏览器都会看见这个吗?",
    "description": "Install page: link to click for help"
  },
- "set_up_adblock": {
-   "message": "设定 AdBlock",
-   "description": "Install page: section title"
- },
- "please_fill_out_adblocks_one_question_setup": {
-   "message": "请填完AdBlock 的一个问题设定:",
-   "description": "Install page instructions. The one question is a checkbox."
- },
- "that_was_easy": {
-   "message": "那很简单",
-   "description": "Install page: button text at end of setup section to proceed to the next section. The text is reflecting what the user is thinking ('That setup was easier than I expected!')"
- },
- "lets_get_you_set_up": {
-   "message": "让我们帮你设定!",
-   "description": "Install page: section header for Safari users. These users do not see the section with the 'set_up_adblock' message. The tone should be friendly."
- },
- "first_turn_on_autoupdate_to_get_bugfixes_as_i_write_them": {
-   "message": "第一步, 你应该位于『Safari喜好』的<b>开启自动更新</b> , 所以你可以获得修补和新功能。",
-   "description": "The first instructions on the Safari install page."
- },
- "turning_on_autoupdate_is_really_important": {
-   "message": "开启自动更新<b>非常重要!</b>",
-   "description": "Message on Safari install page convincing users to not skip this setup step"
- },
- "show_me_how": {
-   "message": "告诉我怎么做",
-   "description": "Install page: text of button Safari users can press to be shown how to turn on autoupdate"
- },
- "ok_autoupdate_is_on": {
-   "message": "好, 自动更新已开启 ",
-   "description": "Install page: text of button to press after turning on autoupdate."
- },
- "to_turn_on_autoupdate": {
-   "message": "如果要开启自动更新:",
-   "description": "Install page: title of section with a list of steps to take"
- },
- "click_safari_prefs": {
-   "message": "点选 <b>Safari &rArr; 喜好</b>.",
-   "description": "First step to turn on autoupdate. &rArr; makes a right arrow (->)."
- },
- "click_extensions": {
-   "message": "点选位于右上角的<b>扩充套件</b> 。",
-   "description": "Second step to turn on autoupdate, after opening Safari -> Preferences."
- },
- "click_updates": {
-   "message": "在左下角点选 <b>更新</b>.",
-   "description": "Third step to turn on autoupdate, after opening Safari -> Preferences -> Extensions."
- },
- "click_install_update_automatically": {
-   "message": "点选<b>自动更新</b> 勾选拦。",
-   "description": "Last step to turn on autoupdate, after opening Safari -> Preferences -> Extensions -> Updates."
- },
  "how_to_use_adblock": {
    "message": "如何使用 AdBlock:",
    "description": "Install page section title"
@@ -1050,10 +968,6 @@
        "example": "A small picture of the toolbar button. Do not translate."
      }
    }
- },
- "ok_now_what": {
-   "message": "好了, 然后呢? ",
-   "description": "Install page: text of button to press after learning how to use AdBlock. 'Now what?' is a slang expression meaning 'I have done everything you have asked so far; what do I do next?'"
  },
  "modifydomain": {
    "message": "网站:",
