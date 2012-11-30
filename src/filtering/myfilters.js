@@ -106,6 +106,8 @@ MyFilters.prototype.getExtensionFilters = function(settings) {
     // This workaround can be removed when EasyList changes its Hulu strategy.
     texts.push("@@||ads.hulu.com/published/*.flv");
     texts.push("@@||ads.hulu.com/published/*.mp4");
+    texts.push("@@||ll.a.hulu.com/published/*.flv");
+    texts.push("@@||ll.a.hulu.com/published/*.mp4");
   }
   return texts;
 };

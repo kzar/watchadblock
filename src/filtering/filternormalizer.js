@@ -94,7 +94,7 @@ var FilterNormalizer = {
 
       // Issue 7178
       if (!SAFARI && 
-          /^\@\@\|\|ads\.hulu\.com\/published\/\*\.(flv|mp4)$/.test(filter)) {
+          /^\@\@\|\|(ads|ll\.a)\.hulu\.com\/published\/\*\.(flv|mp4)$/.test(filter)) {
         return null; // background.js implements this rule more specifically
       }
     
