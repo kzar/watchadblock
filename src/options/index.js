@@ -48,13 +48,7 @@ function displayVersionNumber() {
 $('#paymentlink').click(function() {
   BGcall("storage_get", "userid", function(userId) {
     var href = "https://chromeadblock.com/pay/?source=O&u=" + userId;
-    if (SAFARI) {
-      // Safari target=_blank opens a new window by default, so we have to force its
-      // height to be correct.
-      window.open(href, "payment", 'location=0,status=0,scrollbars=0,width=800,height=550');
-    } else {
-      BGcall("openTab", href);
-    }
+    BGcall("openTab", href);
   });
   return false;
 });
