@@ -550,7 +550,7 @@
     };
     if (SAFARI6) {
       _myfilters.styleSheetRegistrar.prepareFor(options.domain);
-      result.avoidHidingClass = StyleSheetRegistrar._avoidHidingClass;
+      result.avoidHidingClass = StyleSheetRegistrar.avoidHidingClass;
       if (settings.debug_logging && hiding) {
         var filters = _myfilters.styleSheetRegistrar._filters;
         var filterset = FilterSet.fromFilters(filters);

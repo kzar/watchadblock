@@ -1,42 +1,49 @@
-/*
-TODO: eventual format, improving on the current lazy/liars format:
-
-'unfinished': {
-  'forDomain': map of domain -> list of id // lazies and liars lumped together
-  'filters': map of id -> filter
-  'wronglyGlobal': set of id // liar ids only, not grouped by domain
-}
-allById: map of ? -> filter
-wronglyGlobalSheet: url
-
-*/
-
-// Handled telling Safari about SelectorFilters.
+// Handles telling Safari about SelectorFilters.
 function StyleSheetRegistrar() {
   this._paused = false;
-
-  // Add domain-specific rules on tab switch
-  var that = this;
-  safari.application.addEventListener("activate", function(event) {
-    if (event.target && event.target.page)
-      event.target.page.dispatchMessage("send-domain");
-  }, true);
-  safari.application.addEventListener("message", function(event) {
-    if (event.name === "send-domain-response") {
-      var domain = event.message;
-      that.prepareFor(domain);
-    }
-  }, true);
+  this._clear();
+  this._initializeEvents();
 }
 
 // Applied to frames on $document or $elemhide pages to disable hiding
-StyleSheetRegistrar._avoidHidingClass = 'x' + Math.floor(Math.random() * 1E6);
-StyleSheetRegistrar._css = {
-  prefix: 'html:not(.' + StyleSheetRegistrar._avoidHidingClass + ') ',
-  suffix: ' { display: none; orphans: 4321; }'
-};
+StyleSheetRegistrar.avoidHidingClass = 'x' + Math.floor(Math.random() * 1E6);
 
 StyleSheetRegistrar.prototype = {
+  // Tell Safari to forget about all registered filters.
+  _clear: function() {
+    this._unfinished = {
+      // Map of domain -> set of id for all unfinished filters for that domain
+      forDomain: {},
+      // Set of ids for all unfinished filters that were applied globally
+      // but should have blacklisted some domains
+      overbroad: {}
+    };
+    // Pointer to stylesheet that globally applies _unfinished.overbroad's
+    this._overbroadSheet = null;
+
+    safari.extension.removeContentStyleSheets();
+    log("Removed all style sheets.");
+  },
+
+  // Add event handlers so that we register domain-specific rules whenever
+  // the user switches tabs.  These are never un-registered, which would be
+  // a memory leak if StyleSheetRegistrar were ever destroyed and recreated.
+  _initializeEvents: function() {
+    var that = this;
+    safari.application.addEventListener("activate", function(event) {
+      if (event.target && event.target.page)
+        event.target.page.dispatchMessage("send-domain");
+    }, true);
+    safari.application.addEventListener("message", function(event) {
+      if (event.name === "send-domain-response") {
+        var domain = event.message;
+        that.prepareFor(domain);
+      }
+    }, true);
+    // TODO: instead of get_content_script_data calling prepareFor, use
+    // navigation events in addition to 'activate' events to request the data.
+    // then prepareFor can become private.
+  },
 
   // Pause or unpause Safari's application of filters to pages.  |paused| is
   // a boolean saying whether to pause.
@@ -53,171 +60,136 @@ StyleSheetRegistrar.prototype = {
   // Make sure that all filters to be run on |domain| are applied.
   prepareFor: function(domain) {
     logGroup("Preparing for", domain);
+    var anyOverbroad = false;
     for (var nextDomain in DomainSet.domainAndParents(domain)) {
-      if (this._needsWork.lazy[nextDomain]) {
-        this._applyCorrectly("lazy", nextDomain);
-      }
-      if (this._needsWork.liars[nextDomain]) {
-        logGroup("Extracting some liars and rebuilding liar sheet.");
-        this._applyCorrectly("liars", nextDomain); // Correctly apply some liars
-        log("Removing old liars sheet");
-        safari.extension.removeContentStyleSheet(this._liarSheet);
-        this._applyLiars(); // ...and (globally) re-apply the others.
-        logGroupEnd();
-      }
+      if (this._unfinished.forDomain[nextDomain])
+        if (this._finish(nextDomain))
+          anyOverbroad = true;
+    }
+    if (anyOverbroad) {
+      logGroup("Replacing overbroad sheet.");
+      safari.extension.removeContentStyleSheet(this._overbroadSheet);
+      this._overbroadSheet = this._applyGlobally(this._unfinished.overbroad);
+      logGroupEnd();
     }
     logGroupEnd();
   },
 
-  // Tell Safari to use the given SelectorFilters.  |data| is an object whose
-  // values are the Filters to register.  Any prevously registered filters will
-  // be unregistered.
-  register: function(data) {
-    this._filters = data; // All filters.  Needed for unpausing.
+  // Tell Safari to use the given SelectorFilters.  Any prevously registered
+  // filters will be unregistered.
+  // Inputs: filters: map of id -> SelectorFilter.
+  register: function(filters) {
+    this._filters = filters;
     if (this._paused)
       return;
 
     this._clear();
 
-    var willApply = {
-      correctly: [],
-      inLiarSheet: []
-    };
-    // Populate willApply and this._needsWork
-    for (var _ in data) {
-      var filter = data[_];
-      if (filter._domains.full())
-        willApply.correctly.push(filter.selector);
-      else {
-        var isLiar = (filter._domains._has[DomainSet.ALL] == true);
-        // Record what kind of work we eventually need to do on this filter
-        this._needsWork.byId[filter.id] = filter;
-        var ids = (this._needsWork[isLiar ? "liars" : "lazy"]);
-        for (var domain in filter._domains._has) {
-          if (domain !== DomainSet.ALL) {
-            if (ids[domain] === undefined)
-              ids[domain] = {};
-            ids[domain][filter.id] = true;
-          }
-        }
+    var globalFilterIds = {}, unfinished = this._unfinished;
+    for (var id in this._filters) {
+      var filter = this._filters[id];
+      if (filter._domains.full()) {
+        globalFilterIds[id] = true;
+      } else { // Record all the domains this filter refers to
+        for (var domain in filter._domains._has)
+          if (domain !== DomainSet.ALL)
+            this._setDefault(unfinished.forDomain, domain, {})[id] = true;
+        if (filter._domains._has[DomainSet.ALL]) // excludes some domains
+          unfinished.overbroad[id] = true;
       }
     }
-    this._applyGlobally(willApply.correctly);
-    this._applyLiars();
+    this._applyGlobally(globalFilterIds);
+    logGroup("Creating overbroad sheet.");
+    this._overbroadSheet = this._applyGlobally(this._unfinished.overbroad);
+    logGroupEnd();
     
     // Prep for current tab.  Other tabs prepped for when activated
     var t = ((safari.application.activeBrowserWindow || {}).activeTab || {});
     if (t) t.page.dispatchMessage("send-domain");
   },
 
-  // Create and apply this._liarSheet, built from this._needsWork.liars.
-  _applyLiars: function() {
-    var liarFilters = {};
-    for (var domain in this._needsWork.liars) {
-      for (var id in this._needsWork.liars[domain]) {
-        liarFilters[id] = this._needsWork.byId[id];
-      }
-    }
+  // Apply the given filters' selectors to all domains.
+  // Input: filterIds:set of int:ids of filters whose selectors to apply.
+  // Returns: A handle to the created stylesheet.
+  _applyGlobally: function(filterIds) {
     var selectors = [];
-    for (var id in liarFilters) {
-      if (liarFilters[id])
-        selectors.push(liarFilters[id].selector);
+    for (var id in filterIds) {
+      selectors.push(this._filters[id].selector);
     }
-    logGroup("Creating liar sheet (", selectors.length, "filters)");
-    this._liarSheet = this._applyGlobally(selectors);
-    logGroupEnd();
-  },
-
-  // Apply the array of |selectors| to all domains and return a handle to the
-  // created stylesheet.
-  _applyGlobally: function(selectors) {
     if (selectors.length === 0)
       return null;
-    var _css = StyleSheetRegistrar._css;
-    var sheet = _css.prefix + selectors.join(", " + _css.prefix) + _css.suffix;
-    log("Adding global sheet (", selectors.length, "filters)"); // TODO
+    log("Adding global sheet (", selectors.length, "filters)");
     if (selectors.length < 10) log(sheet);
+    var sheet = this._sheetFor(selectors);
     var blacklist = [safari.extension.baseURI + "*"];
     return safari.extension.addContentStyleSheet(sheet, undefined, blacklist);
   },
 
-  // this._needsWork[listName][domain] contains filter IDs.  Apply these
-  // filters correctly, then remove them from this._needsWork.
-  _applyCorrectly: function(listName, domain) {
+  // Apply this._unfinished.forDomain[domain]'s filters correctly, then
+  // remove them from this._unfinished.
+  // Returns true if any were previously applied overbroadly.
+  _finish: function(domain) {
+    var anyOverbroad = false;
+    var idsByDomain = this._unfinished.forDomain;
+    var selectorsByDomains = {};
 
-    // TODO: this method is a mess but it works and is efficient (in that it
-    // submits all filters for a given whitelist+blacklist pattern in a single
-    // call.) Refactor and clean up.
+    for (var id in idsByDomain[domain]) {
+      var filter = this._filters[id];
 
-    var domainStringToSelectorsMap = {};
-    for (var id in this._needsWork[listName][domain]) {
-      var filter = this._needsWork.byId[id];
-      // We delete the pointer to the filter after applying it, so that other
-      // domains that reference it don't re-apply it.  Checking for existence
-      // is easier than deleting its ID from each of its domains' lists.
-      if (!filter)
-        continue;
+      if (this._unfinished.overbroad[id]) {
+        delete this._unfinished.overbroad[id]; // Being corrected now
+        anyOverbroad = true; // Must rebuild overbroadSheet
+      }
 
       var list = { white: [], black: [] };
-      for (var domain in filter._domains._has) {
-        if (domain !== DomainSet.ALL) {
-          var theList = list[filter._domains._has[domain] ? 'white' : 'black'];
-          theList.push(domain);
+      for (var mentionedDomain in filter._domains._has) {
+        if (mentionedDomain !== DomainSet.ALL) {
+          var isWhite = filter._domains._has[mentionedDomain];
+          list[isWhite ? 'white' : 'black'].push(mentionedDomain);
+          // Delete the filter from any other domain that mentions it.
+          if (idsByDomain[mentionedDomain] && domain !== mentionedDomain)
+            delete idsByDomain[mentionedDomain][id];
         }
       }
-      var asString = list.white.sort().join(" ") + "~" + 
-                     list.black.sort().join(" ");
-      if (domainStringToSelectorsMap[asString] === undefined)
-        domainStringToSelectorsMap[asString] = [];
-      domainStringToSelectorsMap[asString].push(filter.selector);
-
-      delete this._needsWork.byId[id];
+      var key = ['^', list.white.sort().join(" ^"), " ",
+                 "~", list.black.sort().join(" ~")].join('');
+      this._setDefault(selectorsByDomains, key, []).push(filter.selector);
     }
-    for (var domainString in domainStringToSelectorsMap) {
+    delete idsByDomain[domain];
 
+    // Apply all of this domain's filters correctly.
+    for (var domainString in selectorsByDomains) {
       var list = { white: [], black: [] };
-      var parts = domainString.split("~");
-      for (var domain in parts[0].split(" ")) {
-        list.white.push(['http://*.', domain, '/*'].join(''));
-        list.white.push(['https://*.', domain, '/*'].join(''));
-      }
-      for (var domain in parts[1].split(" ")) {
-        list.black.push(['http://*.', domain, '/*'].join(''));
-        list.black.push(['https://*.', domain, '/*'].join(''));
+      for (var entry in domainString.split(" ")) {
+        if (entry.length <= 1) continue;
+        var domain = entry.substring(1);
+        var target = list[entry[0] === '~' ? 'black' : 'white'];
+        target.push(['http://*.', domain, '/*'].join(''));
+        target.push(['https://*.', domain, '/*'].join(''));
       }
       list.black.push(safari.extension.baseURI + "*");
 
-      var _css = StyleSheetRegistrar._css;
-      var selectors = domainStringToSelectorsMap[domainString];
-      var sheet = _css.prefix + selectors.join(", " + _css.prefix) + _css.suffix;
-      logGroup("Adding filter sheet for:", selectors.join(", "));
-      log("Domains:", domainString);
-      logGroupEnd();
+      var selectors = selectorsByDomains[domainString];
+      log("Adding filter sheet:", selectors.join(", "), " on ", domainString);
       // TODO: wrong behavior for { ALL: true, a: false, sub.a: true }?
+      var sheet = this._sheetFor(selectors);
       safari.extension.addContentStyleSheet(sheet, list.white, list.black);
-
     }
-    // This domain's filters are now correctly applied.
-    delete this._needsWork[listName][domain];
+
+    return anyOverbroad;
   },
 
-  // Tell Safari to forget about all registered filters.
-  _clear: function() {
-    this._needsWork = {
-      // Filters that only run on certain domains.  We wait until that domain
-      // is loaded to apply them.
-      lazy: {},  // maps from domain to set of Filter ids that mention it
-      // Filters that run almost everywhere.  We apply them globally until an
-      // excluded domain is loaded, then apply that domain's filters correctly.
-      liars: {}, // maps from domain to set of Filter ids that mention it
-      // All filters whose ids are in .lazy or .liars.
-      byId: {}   // maps from Filter id to Filter
-    };
-    // Pointer to stylesheet that globally applies _needsWork.liars
-    this._liarSheet = null;
+  // Returns the hiding stylesheet for the given array of selectors.
+  _sheetFor: function(selectors) {
+    var prefix = 'html:not(.' + StyleSheetRegistrar.avoidHidingClass + ') ';
+    var suffix = ' { display: none; orphans: 4321; }';
+    return prefix + selectors.join(", " + prefix) + suffix;
+  },
 
-    safari.extension.removeContentStyleSheets();
-    log("Removed all style sheets.");
+  // Return obj[value], first setting it to |defaultValue| if it is undefined.
+  _setDefault: function(obj, value, defaultValue) {
+    if (obj[value] === undefined)
+      obj[value] = defaultValue;
+    return obj[value];
   }
-
 };
