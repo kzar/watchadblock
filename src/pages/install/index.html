@@ -16,8 +16,7 @@
       <div i18n="for_more_options_right_click"></div>
     </div>
     <div class="header" id="header-delayed">
-      <!-- TODO i18n throughout if I keep this approach -->
-      <h1>Welcome back to AdBlock Setup!</h1>
+      <h1 i18n="welcome_back_to_adblock_setup"></h1>
     </div>
 
     <div id="wrapper">
@@ -36,7 +35,7 @@
       </div>
 
       <div class="card" id="loading-delayed">
-        Just a moment...<br/><br/>
+        <span i18n="just_a_moment"></span><br/><br/>
         <center><img src="../../img/icon32.png" id="spinner"></center>
       </div> <!-- card -->
 
@@ -46,18 +45,8 @@
       </div> <!-- card -->
 
       <div class="card" id="later">
-        <h2>Try out AdBlock for a while</h2>
-        <p>OK, I'll come back once you've had a chance to look around!</p>
-        <p>You might try these sites to see how lovely they look without ads:</p>
-        <ul class="links">
-          <li class="video"><a target="_blank" href="http://www.youtube.com/watch?v=G0k3kHtyoqc">YouTube</a>: no ads in videos!</li>
-          <li><a target="_blank" href="http://facebook.com">Facebook</a>: the giant pile of ads on the right? Gone.</li>
-          <li class="video"><a target="_blank" href="http://www.thedailyshow.com/full-episodes/">The Daily Show</a>: commercial free!</li>
-          <li><a target="_blank" href="http://yahoo.com">Yahoo!</a>: the animated ads are gone!</li>
-          <li><a target="_blank" href="http://washingtonpost.com">The Washington Post</a>: note the lack of the huge right-side ad.</li>
-          <li><a target="_blank" href="http://cnn.com">CNN</a>: so much cleaner.</li>
-        </ul>
-        <p>Try <b>pausing AdBlock</b> from the <img src="../../img/icon19.png"> toolbar menu and reload a page to see it with and without ads.
+        <div id="later-iframe-slot">
+        </div>
       </div> <!-- card -->
 
     </div>

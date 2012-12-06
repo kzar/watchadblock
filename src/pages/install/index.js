@@ -60,30 +60,22 @@ function showLoadingBar() {
   })();
 }
 
-window.onmessage = function(e) {
-  if (e.origin !== "https://chromeadblock.com")
-    return;
-  if (e.data.command !== "delay")
-    return;
-  var when = Date.now() + e.data.minutes * 60E3;
-  BGcall("show_delayed_payment_request_at", when);
-  showCard("later");
-  if (SAFARI)
-    $("li.video").hide();
-};
-
 var delayed = /[&?]delayed/.test(document.location.search);
 
-// Load iframe
-var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
-var iframe = $("<iframe>").
-  attr("src", "https://chromeadblock.com/pay/?source=I&header=install&u=" + 
-       userId + (delayed ? "&delayed" : "") + "&x=33").
-  attr("frameBorder", 0).
-  attr("scrolling", "no").
-  width(750).
-  height(450);
-$("#iframe-slot").html(iframe);
+// Load iframes
+function makeIframe(url) {
+  var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
+  var qparams = "?source=I&header=install&u=" + userId + 
+                (delayed ? "&delayed" : "") +
+                (sessionStorage["xv"] ? "&v=" + sessionStorage["xv"] : "");
+  return $("<iframe>").
+    attr("src", url + qparams).
+    attr("frameBorder", 0).
+    attr("scrolling", "no").
+    width(750).
+    height(450);
+}
+$("#iframe-slot").html(makeIframe("https://chromeadblock.com/pay/"));
 
 if (delayed) {
   $("#loading-wrapper").hide();
@@ -97,5 +89,22 @@ if (delayed) {
 else {
   showLoadingBar();
 }
+
+function delayAWhile(minutes) {
+  var when = Date.now() + minutes * 60E3;
+  BGcall("show_delayed_payment_request_at", when);
+  showCard("later");
+}
+
+window.onmessage = function(e) {
+  if (e.origin !== "https://chromeadblock.com")
+    return;
+  if (e.data.command === "delay")
+    delayAWhile(e.data.minutes);
+  if (e.data.command === "set-xv") {
+    sessionStorage["xv"] = e.data.value;
+    $("#later-iframe-slot").html(makeIframe("https://chromeadblock.com/pay/later/"));
+  }
+};
 
 localizePage();
