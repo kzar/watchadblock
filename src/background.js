@@ -34,6 +34,7 @@
         }
       };
     })();
+    /*
     chrome.extension.onMessageExternal.addListener(function(message, sender, sendResponse) {
       if (message === undefined || message.msg !== "get-block-counts")
         return;
@@ -46,6 +47,7 @@
         total: blockCounts.get().total,
       });
     });
+    */
   }
 
   // OPTIONAL SETTINGS
