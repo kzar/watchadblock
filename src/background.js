@@ -8,6 +8,46 @@
     sessionStorage.setItem("errorOccurred", true);
   });
   
+  if (!SAFARI) {
+    // Records how many ads have been blocked by AdBlock.  This is used
+    // by the AdBlock app in the Chrome Web Store to display statistics
+    // to the user.
+    var blockCounts = (function() {
+      var key = "blockage_stats";
+      var data = storage_get(key);
+      if (!data) 
+        data = {};
+      if (data.start === undefined)
+        data.start = Date.now();
+      if (data.total === undefined)
+        data.total = 0;
+      storage_set(key, data);
+
+      return {
+        recordOneAdBlocked: function() {
+          var data = storage_get(key);
+          data.total += 1;
+          storage_set(key, data);
+        },
+        get: function() { 
+          return storage_get(key); 
+        }
+      };
+    })();
+    chrome.extension.onMessageExternal.addListener(function(message, sender, sendResponse) {
+      if (message === undefined || message.msg !== "get-block-counts")
+        return;
+
+      // TODO: once app has stabilized in Web Store, only respond to app's extensionid.
+
+      sendResponse({
+        version: 1,
+        start: blockCounts.get().start,
+        total: blockCounts.get().total,
+      });
+    });
+  }
+
   // OPTIONAL SETTINGS
 
   function Settings() {
@@ -217,6 +257,8 @@
       if (blocked && elType === ElementTypes.subdocument) {
         return { redirectUrl: "about:blank" };
       }
+      if (blocked)
+        blockCounts.recordOneAdBlocked();
       return { cancel: blocked };
     }
 
