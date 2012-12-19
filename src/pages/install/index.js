@@ -77,11 +77,8 @@ var delayed = /[&?]delayed/.test(document.location.search);
 // Load iframe
 var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
 var iframe = $("<iframe>").
-// TODO temp: chromeadblock.com going down for an hour
-  attr("src", "https://s3.amazonaws.com/adblockpayment/index.html").
-//  attr("src", "https://chromeadblock.com/pay/?source=I&header=install&u=" + 
-//       userId + (delayed ? "&delayed" : "") + "&x=33").
-// TODO end temp
+  attr("src", "https://chromeadblock.com/pay/?source=I&header=install&u=" + 
+       userId + (delayed ? "&delayed" : "") + "&x=33").
   attr("frameBorder", 0).
   attr("scrolling", "no").
   width(750).
