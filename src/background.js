@@ -21,6 +21,7 @@
         data.start = Date.now();
       if (data.total === undefined)
         data.total = 0;
+      data.version = 1;
       storage_set(key, data);
 
       return {
@@ -34,20 +35,6 @@
         }
       };
     })();
-    /*
-    chrome.extension.onMessageExternal.addListener(function(message, sender, sendResponse) {
-      if (message === undefined || message.msg !== "get-block-counts")
-        return;
-
-      // TODO: once app has stabilized in Web Store, only respond to app's extensionid.
-
-      sendResponse({
-        version: 1,
-        start: blockCounts.get().start,
-        total: blockCounts.get().total,
-      });
-    });
-    */
   }
 
   // OPTIONAL SETTINGS
@@ -208,6 +195,12 @@
 
     // When a request starts, perhaps block it.
     function onBeforeRequestHandler(details) {
+      // Support blockCounts app... can't talk to external apps w/o sendMessageExternal which causes a permission warning.
+      if (details.type === "sub_frame" && details.url.indexOf('https://chromeadblock.com/app/channel.html') === 0)
+        window.app_channel_iframe = details.frameId;
+      if (details.url === 'https://chromeadblock.com/app/magic_script.js' && window.app_channel_iframe === details.frameId)
+        return { redirectUrl: "data:,go(" + JSON.stringify(blockCounts.get()) + ");" };
+
       if (adblock_is_paused())
         return { cancel: false };
 
