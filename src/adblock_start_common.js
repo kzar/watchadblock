@@ -50,6 +50,32 @@ function relativeToAbsoluteUrl(url) {
   return base[0] + url;
 }
 
+// Add style rules hiding the given list of selectors.
+function block_list_via_css(selectors) {
+  if (!selectors.length)
+    return;
+  // Issue 6480: inserting a <style> tag too quickly ignored its contents.
+  // Use ABP's approach: wait for .sheet to exist before injecting rules.
+  var css_chunk = document.createElement("style");
+  css_chunk.type = "text/css";
+  // Documents may not have a head
+  (document.head || document.documentElement).insertBefore(css_chunk, null);
+
+  function fill_in_css_chunk() {
+    if (!css_chunk.sheet) {
+      window.setTimeout(fill_in_css_chunk, 0);
+      return;
+    }
+    var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
+    for (var i = 0; i < selectors.length; i += GROUPSIZE) {
+      var line = selectors.slice(i, i + GROUPSIZE);
+      var rule = line.join(",") + " { display:none !important; orphans: 4321 !important; }";
+      css_chunk.sheet.insertRule(rule);
+    }
+  }
+  fill_in_css_chunk();
+}
+
 //Do not make the frame display a white area
 //Not calling .remove(); as this causes some sites to reload continuesly
 function removeFrame(el) {

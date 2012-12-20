@@ -15,9 +15,17 @@
       show_google_search_text_ads: false,
       show_context_menu_items: true,
       show_advanced_options: false,
+      new_safari_hiding: false,
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
+
+    // new_safari_hiding should NEVER be set to true outside Safari 6.  Leaving
+    // this code here to remember this when we switch new_safari_hiding from
+    // opt-in to opt-out in Safari 6: even if somehow a non-Safari-6 user gets
+    // this set to true, it will be reset when they restart their browser.
+    if (!SAFARI6)
+      this._data.new_safari_hiding = false;
   };
   Settings.prototype = {
     set: function(name, is_enabled) {
@@ -298,8 +306,11 @@
   set_setting = function(name, is_enabled) {
     _settings.set(name, is_enabled);
 
-    if (name == "debug_logging")
+    if (name === "debug_logging")
       logging(is_enabled);
+
+    if (name === "new_safari_hiding")
+      update_filters();
   }
 
   // MYFILTERS PASSTHROUGHS
@@ -372,7 +383,7 @@
       return sessionStorage.getItem('adblock_is_paused') === "true";
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
-    if (SAFARI6)
+    if (_myfilters.styleSheetRegistrar)
       _myfilters.styleSheetRegistrar.pause(newValue);
   }
 
@@ -548,7 +559,7 @@
       running: running,
       hiding: hiding
     };
-    if (SAFARI6) {
+    if (_myfilters.styleSheetRegistrar) {
       _myfilters.styleSheetRegistrar.prepareFor(options.domain);
       result.avoidHidingClass = StyleSheetRegistrar.avoidHidingClass;
       if (settings.debug_logging && hiding) {
@@ -557,7 +568,7 @@
         result.selectors = filterset.filtersFor(options.domain);
       }
     }
-    if (!SAFARI6 && hiding) {
+    if (!_myfilters.styleSheetRegistrar && hiding) {
       result.selectors = _myfilters.hiding.filtersFor(options.domain);
     }
     return result;

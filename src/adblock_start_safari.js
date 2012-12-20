@@ -81,9 +81,10 @@ adblock_begin({
     safari.self.removeEventListener("message", sendDomainHandler, false);
   },
   handleHiding: function(data) {
-    if (SAFARI6 && data.runnable && !data.hiding) {
+    if (data.settings.new_safari_hiding && data.runnable && !data.hiding)
       document.documentElement.classList.add(data.avoidHidingClass);
-    }
+    else if (!data.settings.new_safari_hiding && data.hiding)
+      block_list_via_css(data.selectors);
   },
   success: function() {
     onReady(function() { blockBackgroundImageAd(); });

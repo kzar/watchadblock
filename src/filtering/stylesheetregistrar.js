@@ -1,8 +1,8 @@
 // Handles telling Safari about SelectorFilters.
 function StyleSheetRegistrar() {
+  this._filters = {};
   this._paused = false;
   this._clear();
-  this._initializeEvents();
 }
 
 // Applied to frames on $document or $elemhide pages to disable hiding
@@ -23,26 +23,6 @@ StyleSheetRegistrar.prototype = {
 
     safari.extension.removeContentStyleSheets();
     log("Removed all style sheets.");
-  },
-
-  // Add event handlers so that we register domain-specific rules whenever
-  // the user switches tabs.  These are never un-registered, which would be
-  // a memory leak if StyleSheetRegistrar were ever destroyed and recreated.
-  _initializeEvents: function() {
-    var that = this;
-    safari.application.addEventListener("activate", function(event) {
-      if (event.target && event.target.page)
-        event.target.page.dispatchMessage("send-domain");
-    }, true);
-    safari.application.addEventListener("message", function(event) {
-      if (event.name === "send-domain-response") {
-        var domain = event.message;
-        that.prepareFor(domain);
-      }
-    }, true);
-    // TODO: instead of get_content_script_data calling prepareFor, use
-    // navigation events in addition to 'activate' events to request the data.
-    // then prepareFor can become private.
   },
 
   // Pause or unpause Safari's application of filters to pages.  |paused| is
@@ -83,6 +63,7 @@ StyleSheetRegistrar.prototype = {
     if (this._paused)
       return;
 
+    logGroup("StyleSheetRegistrar.register");
     this._clear();
 
     var globalFilterIds = {}, unfinished = this._unfinished;
@@ -106,6 +87,7 @@ StyleSheetRegistrar.prototype = {
     // Prep for current tab.  Other tabs prepped for when activated
     var t = ((safari.application.activeBrowserWindow || {}).activeTab || {});
     if (t) t.page.dispatchMessage("send-domain");
+    logGroupEnd();
   },
 
   // Apply the given filters' selectors to all domains.
@@ -118,9 +100,9 @@ StyleSheetRegistrar.prototype = {
     }
     if (selectors.length === 0)
       return null;
+    var sheet = this._sheetFor(selectors);
     log("Adding global sheet (", selectors.length, "filters)");
     if (selectors.length < 10) log(sheet);
-    var sheet = this._sheetFor(selectors);
     var blacklist = [safari.extension.baseURI + "*"];
     return safari.extension.addContentStyleSheet(sheet, undefined, blacklist);
   },
@@ -160,7 +142,9 @@ StyleSheetRegistrar.prototype = {
     // Apply all of this domain's filters correctly.
     for (var domainString in selectorsByDomains) {
       var list = { white: [], black: [] };
-      for (var entry in domainString.split(" ")) {
+      var entries = domainString.split(" ");
+      for (var i=0; i < entries.length; i++) {
+        var entry = entries[i];
         if (entry.length <= 1) continue;
         var domain = entry.substring(1);
         var target = list[entry[0] === '~' ? 'black' : 'white'];
@@ -193,3 +177,28 @@ StyleSheetRegistrar.prototype = {
     return obj[value];
   }
 };
+
+// Add event handlers so that we register domain-specific rules whenever
+// the user switches tabs.  removeEventListener for these seems not to work,
+// which is why we register them outside StyleSheetRegistrar rather than
+// destroying them when _myfilters.styleSheetRegistrar is deleted.
+(function() {
+  safari.application.addEventListener("activate", function(event) {
+    var registrar = _myfilters.styleSheetRegistrar;
+    if (registrar && !registrar._paused && event.target && event.target.page) {
+      log("StyleSheetRegistrar activate event fired");
+      event.target.page.dispatchMessage("send-domain");
+    }
+  }, true);
+  safari.application.addEventListener("message", function(event) {
+    var registrar = _myfilters.styleSheetRegistrar;
+    if (event.name === "send-domain-response" && registrar && !registrar._paused) {
+      log("StyleSheetRegistrar send-domain-response event fired");
+      var domain = event.message;
+      registrar.prepareFor(domain);
+    }
+  }, true);
+  // TODO: instead of get_content_script_data calling prepareFor, use
+  // navigation events in addition to 'activate' events to request the data.
+  // then prepareFor can become private to this file.
+})();
