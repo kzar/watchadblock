@@ -198,7 +198,7 @@
       // Support blockCounts app... can't talk to external apps w/o sendMessageExternal which causes a permission warning.
       if (details.type === "sub_frame" && details.url.indexOf('https://chromeadblock.com/app/channel.html') === 0)
         window.app_channel_iframe = details.frameId;
-      if (details.url === 'https://chromeadblock.com/app/magic_script.js' && window.app_channel_iframe === details.frameId)
+      if (window.app_channel_iframe === details.frameId && details.url.indexOf('https://chromeadblock.com/app/magic_script.js') === 0)
         return { redirectUrl: "data:,go(" + JSON.stringify(blockCounts.get()) + ");" };
 
       if (adblock_is_paused())
@@ -243,6 +243,8 @@
         chrome.tabs.sendRequest(tabId, data); 
       }
 
+      if (blocked)
+        blockCounts.recordOneAdBlocked();
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
       if (blocked && elType === ElementTypes.image) {
         // 1x1 px transparant image.
@@ -252,8 +254,6 @@
       if (blocked && elType === ElementTypes.subdocument) {
         return { redirectUrl: "about:blank" };
       }
-      if (blocked)
-        blockCounts.recordOneAdBlocked();
       return { cancel: blocked };
     }
 
