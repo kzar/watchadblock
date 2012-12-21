@@ -173,20 +173,19 @@ function adblock_begin(inputs) {
 
   var opts = { domain: document.location.hostname };
   BGcall('get_content_script_data', opts, function(data) {
-    if (data.page_is_whitelisted || data.adblock_is_paused || data.disabled_site) {
+    if (data.settings.debug_logging)
+      logging(true);
+
+    inputs.handleHiding(data);
+
+    if (!data.running) {
       inputs.stopPurger();
       return;
     }
 
-    if (data.settings.debug_logging)
-      log = function() { 
-        if (VERBOSE_DEBUG || arguments[0] !== '[DEBUG]')
-          console.log.apply(console, arguments); 
-      };
-
-    block_list_via_css(data.selectors);
-
     onReady(function() {
+      // TODO: ResourceList could pull html.innerText from page instead: we
+      // could axe this (and Safari's .selectors calculation in debug mode)
       if (data.settings.debug_logging)
         debug_print_selector_matches(data.selectors);
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.

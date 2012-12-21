@@ -16,31 +16,22 @@ function FilterSet() {
 }
 
 
-// Builds Filter objects from an array of filter text.  All filters should be
-// the same type (whitelisting PatternFilters, blocking PatternFilters, or
-// SelectorFilters.)
-FilterSet.fromTexts = function(lines) {
+// Construct a FilterSet from the Filters that are the values in the |data|
+// object.  All filters should be the same type (whitelisting PatternFilters,
+// blocking PatternFilters, or SelectorFilters.)
+FilterSet.fromFilters = function(data) {
   var result = new FilterSet();
 
-  for (var i = 0; i < lines.length; i++) {
-    // Even though we normalized the filters when AdBlock first received them,
-    // we may have joined a few lists together with newlines.  Check for these
-    // just in case.
-    if (lines[i].length === 0)
-      continue;
-    var filter = Filter.fromText(lines[i]);
+  for (var _ in data) {
+    var filter = data[_];
 
-    filter._domains.not_applied_on.forEach(function(d) {
-      if (!result.exclude[d]) result.exclude[d] = {};
-      result.exclude[d][filter.id] = true;
-    });
-    if (filter._domains.applied_on.length === 0) {
-      result.items['global'].push(filter);
-    } else {
-      filter._domains.applied_on.forEach(function(d) {
-        if (!result.items[d]) result.items[d] = [];
-        result.items[d].push(filter);
-      });
+    for (var d in filter._domains.has) {
+      if (filter._domains.has[d]) {
+        var key = (d === DomainSet.ALL ? 'global' : d);
+        setDefault(result.items, key, []).push(filter);
+      }
+      else if (d !== DomainSet.ALL)
+        setDefault(result.exclude, d, {})[filter.id] = true;
     }
   }
 
@@ -55,15 +46,11 @@ FilterSet.prototype = {
   _viewFor: function(domain) {
     var result = new FilterSet();
     result.items['global'] = this.items['global'];
-    var parts = domain.split('.');
-    var nextDomain = parts[parts.length -1];
-    for (var i = parts.length-1; i >=0; i--) {
+    for (var nextDomain in DomainSet.domainAndParents(domain)) {
       if (this.items[nextDomain])
         result.items[nextDomain] = this.items[nextDomain];
       if (this.exclude[nextDomain])
         result.exclude[nextDomain] = this.exclude[nextDomain];
-      if (i > 0)
-        nextDomain = parts[i - 1] + '.' + nextDomain;
     }
     return result;
   },
@@ -71,7 +58,7 @@ FilterSet.prototype = {
   // Get a list of all Filter objects that should be tested on the given
   // domain, and return it with the given map function applied. This function
   // is for hiding rules only
-  filtersFor: function(domain, skipWhitelistCheck) {
+  filtersFor: function(domain) {
     var limited = this._viewFor(domain);
     var data = {};
     // data = set(limited.items)
@@ -88,20 +75,9 @@ FilterSet.prototype = {
         delete data[filterId];
       }
     }
-    var selectorsToExclude = {};
-    if (!skipWhitelistCheck) {
-      // selectorsToExclude = set(relevant elemhide exception selectors)
-      var excludedFilters = _myfilters.hidingWhitelist.filtersFor(domain, true);
-      for (k=0; k<excludedFilters.length; k++) {
-        selectorsToExclude[excludedFilters[k]] = true;
-      }
-    }
     var result = [];
-    for (var k in data) {
-      if (!selectorsToExclude[data[k].selector])
-        result.push(data[k].selector);
-    }
-    
+    for (var k in data)
+      result.push(data[k].selector);
     return result;
   },
 
