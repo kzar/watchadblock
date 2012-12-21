@@ -15,7 +15,7 @@
 function DomainSet(data) { 
   if (data[DomainSet.ALL] === undefined)
     throw Error("DomainSet: data[DomainSet.ALL] is undefined.");
-  this._has = data; // The internal representation of our set of domains.
+  this.has = data; // The internal representation of our set of domains.
 }
 
 // The pseudodomain representing all domains.
@@ -42,21 +42,10 @@ DomainSet.domainAndParents = function(domain) {
 
 DomainSet.prototype = {
 
-  // True if |domain| is in the subset of all domains represented by |this|.
-  //
-  // E.g. if |this| DomainSet is the set of all domains other than a, then 'b'
-  // will yield true, and both 'a' and 'sub.a' will yield false.
-  has: function(domain) {
-    if (this._has[domain] !== undefined)
-      return this._has[domain];
-    else
-      return this.has(DomainSet._parentDomainOf(domain));
-  },
-
   // Returns true if this set contains all domains.
   full: function() {
-    for (var k in this._has) {
-      if (k !== DomainSet.ALL || !this._has[k])
+    for (var k in this.has) {
+      if (k !== DomainSet.ALL || !this.has[k])
         return false;
     }
     return true;
@@ -75,24 +64,35 @@ DomainSet.prototype = {
   // Modify |this| to be the result of applying the given set |operator| (a
   // 2-param boolean function) to |this| and |other|. Returns undefined.
   _apply: function(operator, other) {
-    var d; // represents a domain -- an element in ._has
+    var d; // represents a domain -- an element in .has
 
-    // Make sure there's an entry in ._has for every entry in other._has, so
+    // Make sure there's an entry in .has for every entry in other.has, so
     // that we examine every pairing in the next for loop.
-    for (d in other._has)
-      this._has[d] = this.has(d);
-    // Apply the set operation to each pair of entries.  Use other.has() to
-    // derive any missing other._has entries.
-    for (d in this._has)
-      this._has[d] = operator(this._has[d], other.has(d));
-    // Optimization: get rid of redundant entries that now exist in this._has.
+    for (d in other.has)
+      this.has[d] = this._computedHas(d);
+    // Apply the set operation to each pair of entries.  Use
+    // other._computedHas() to derive any missing other.has entries.
+    for (d in this.has)
+      this.has[d] = operator(this.has[d], other._computedHas(d));
+    // Optimization: get rid of redundant entries that now exist in this.has.
     // E.g. if DomainSet.ALL, a, and sub.a all = true, delete the last 2.
     var newHas = {};
-    newHas[DomainSet.ALL] = this._has[DomainSet.ALL];
-    for (d in this._has)
-      if (this._has[d] !== this.has(DomainSet._parentDomainOf(d)))
-        newHas[d] = this._has[d];
-    this._has = newHas;
-  }
+    newHas[DomainSet.ALL] = this.has[DomainSet.ALL];
+    for (d in this.has)
+      if (this.has[d] !== this._computedHas(DomainSet._parentDomainOf(d)))
+        newHas[d] = this.has[d];
+    this.has = newHas;
+  },
   
+  // True if |domain| is in the subset of all domains represented by |this|.
+  //
+  // E.g. if |this| DomainSet is the set of all domains other than a, then 'b'
+  // will yield true, and both 'a' and 'sub.a' will yield false.
+  _computedHas: function(domain) {
+    if (this.has[domain] !== undefined)
+      return this.has[domain];
+    else
+      return this._computedHas(DomainSet._parentDomainOf(domain));
+  },
+
 };

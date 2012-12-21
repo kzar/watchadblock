@@ -72,10 +72,10 @@ StyleSheetRegistrar.prototype = {
       if (filter._domains.full()) {
         globalFilterIds[id] = true;
       } else { // Record all the domains this filter refers to
-        for (var domain in filter._domains._has)
+        for (var domain in filter._domains.has)
           if (domain !== DomainSet.ALL)
             setDefault(unfinished.forDomain, domain, {})[id] = true;
-        if (filter._domains._has[DomainSet.ALL]) // excludes some domains
+        if (filter._domains.has[DomainSet.ALL]) // excludes some domains
           unfinished.overbroad[id] = true;
       }
     }
@@ -124,9 +124,9 @@ StyleSheetRegistrar.prototype = {
       }
 
       var list = { white: [], black: [] };
-      for (var mentionedDomain in filter._domains._has) {
+      for (var mentionedDomain in filter._domains.has) {
         if (mentionedDomain !== DomainSet.ALL) {
-          var isWhite = filter._domains._has[mentionedDomain];
+          var isWhite = filter._domains.has[mentionedDomain];
           list[isWhite ? 'white' : 'black'].push(mentionedDomain);
           // Delete the filter from any other domain that mentions it.
           if (idsByDomain[mentionedDomain] && domain !== mentionedDomain)

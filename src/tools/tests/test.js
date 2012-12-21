@@ -50,7 +50,7 @@ test("subtract()", function() {
   var _test = function(data1, data2, result) {
     var set1 = new DomainSet(_normalize(data1));
     set1.subtract( new DomainSet(_normalize(data2)) );
-    deepEqual(set1._has, _normalize(result), JSON.stringify(data1) + ' minus ' + JSON.stringify(data2));
+    deepEqual(set1.has, _normalize(result), JSON.stringify(data1) + ' minus ' + JSON.stringify(data2));
   }
 
   var T = true, F = false;

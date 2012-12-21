@@ -152,7 +152,7 @@ var FilterNormalizer = {
 
   // Throw an exception if the DomainSet |domainSet| contains invalid domains.
   _verifyDomains: function(domainSet) {
-    for (var domain in domainSet._has) {
+    for (var domain in domainSet.has) {
       if (domain === DomainSet.ALL)
         continue;
       if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+$/i.test(domain) == false)

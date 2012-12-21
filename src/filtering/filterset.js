@@ -25,14 +25,8 @@ FilterSet.fromFilters = function(data) {
   for (var _ in data) {
     var filter = data[_];
 
-    // TODO: ._has shouldn't be accessed directly.  Rework ._has and .has() or
-    // make an accessor or think about why .has() exists -- shouldn't we be asking
-    // that at runtime rather than building up this auxiliary structure?  If not,
-    // we should rename it like ._has() and ._has to .has.
-    // Maybe just expose ._has.keys() as .entries() and they have to call .has()?  That's
-    // just doubly slow and circuitous.
-    for (var d in filter._domains._has) {
-      if (filter._domains._has[d]) {
+    for (var d in filter._domains.has) {
+      if (filter._domains.has[d]) {
         var key = (d === DomainSet.ALL ? 'global' : d);
         setDefault(result.items, key, []).push(filter);
       }
