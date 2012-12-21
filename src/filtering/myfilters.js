@@ -138,17 +138,12 @@ MyFilters.prototype.rebuild = function() {
     unique[texts[i]] = 1;
   delete unique[''];
 
-  function store(map, filter) {
-    if (map[filter.selector] === undefined)
-      map[filter.selector] = {};
-    map[filter.selector][filter.id] = filter;
-  }
   var filters = { hidingUnmerged: [], hiding: {}, exclude: {},
                   pattern: {}, whitelist: {} };
   for (var text in unique) {
     var filter = Filter.fromText(text);
     if (Filter.isSelectorExcludeFilter(text))
-      store(filters.exclude, filter);
+      setDefault(filters.exclude, filter.selector, {})[filter.id] = filter;
     else if (Filter.isSelectorFilter(text))
       filters.hidingUnmerged.push(filter);
     else if (Filter.isWhitelistFilter(text))

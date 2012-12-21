@@ -74,7 +74,7 @@ StyleSheetRegistrar.prototype = {
       } else { // Record all the domains this filter refers to
         for (var domain in filter._domains._has)
           if (domain !== DomainSet.ALL)
-            this._setDefault(unfinished.forDomain, domain, {})[id] = true;
+            setDefault(unfinished.forDomain, domain, {})[id] = true;
         if (filter._domains._has[DomainSet.ALL]) // excludes some domains
           unfinished.overbroad[id] = true;
       }
@@ -135,7 +135,7 @@ StyleSheetRegistrar.prototype = {
       }
       var key = ['^', list.white.sort().join(" ^"), " ",
                  "~", list.black.sort().join(" ~")].join('');
-      this._setDefault(selectorsByDomains, key, []).push(filter.selector);
+      setDefault(selectorsByDomains, key, []).push(filter.selector);
     }
     delete idsByDomain[domain];
 
@@ -168,13 +168,6 @@ StyleSheetRegistrar.prototype = {
     var prefix = 'html:not(.' + StyleSheetRegistrar.avoidHidingClass + ') ';
     var suffix = ' { display: none; orphans: 4321; }';
     return prefix + selectors.join(", " + prefix) + suffix;
-  },
-
-  // Return obj[value], first setting it to |defaultValue| if it is undefined.
-  _setDefault: function(obj, value, defaultValue) {
-    if (obj[value] === undefined)
-      obj[value] = defaultValue;
-    return obj[value];
   }
 };
 

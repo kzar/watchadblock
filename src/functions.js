@@ -21,7 +21,7 @@ BGcall = function() {
   var has_callback = (typeof args[args.length - 1] == "function");
   var callback = (has_callback ? args.pop() : function() {});
   chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
-}
+};
 
 // Enabled in adblock_start_common.js and background.js if the user wants
 logging = function(enabled) {
@@ -36,22 +36,22 @@ logging = function(enabled) {
   else {
     log = logGroup = logGroupEnd = function() {};
   }
-}
+};
 logging(false); // disabled by default
 
 // Behaves very similarly to $.ready() but does not require jQuery.
-function onReady(callback) {
+onReady = function(callback) {
   if (document.readyState === "complete")
     window.setTimeout(callback, 0);
   else
     window.addEventListener("load", callback, false);
-}
+};
 
-function translate(messageID, args) {
+translate = function(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
-}
+};
 
-function localizePage() {
+localizePage = function() {
   //translate a page into the users language
   $("[i18n]:not(.i18n-replaced)").each(function() {
     $(this).html(translate($(this).attr("i18n")));
@@ -76,7 +76,7 @@ function localizePage() {
     // clobber our work
     $(this).addClass("i18n-replaced");
   });
-}
+};
 
 // Parse a URL. Based upon http://blog.stevenlevithan.com/archives/parseuri
 // parseUri 1.2.2, (c) Steven Levithan <stevenlevithan.com>, MIT License
@@ -102,7 +102,7 @@ parseUri.parseSearch = function(search) {
     if (arguments[1]) queryKeys[arguments[1]] = unescape(arguments[2]);
   });
   return queryKeys;
-}
+};
 
 // TODO: move back into background.js since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
@@ -120,7 +120,7 @@ storage_get = function(key) {
     log("Couldn't parse json for " + key);
     return undefined;
   }
-}
+};
 
 // Inputs: key:string, value:object.
 // Returns undefined.
@@ -136,4 +136,11 @@ storage_set = function(key, value) {
       openTab("options/index.html#ui-tabs-2");
     }
   }
-}
+};
+
+// Return obj[value], first setting it to |defaultValue| if it is undefined.
+setDefault = function(obj, value, defaultValue) {
+  if (obj[value] === undefined)
+    obj[value] = defaultValue;
+  return obj[value];
+};
