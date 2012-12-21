@@ -13,9 +13,6 @@ function FilterSet() {
   //   /f/$domain=foo.com,~sub.foo.com would appear in
   //     items['foo.com'], exclude['sub.foo.com']
   this.exclude = {};
-
-  // TODO: why am I creating this?  So that I can have a map of IDs to T/F?
-  this.filters = {};
 }
 
 
@@ -28,10 +25,6 @@ FilterSet.fromFilters = function(data) {
   for (var _ in data) {
     var filter = data[_];
 
-    // TODO: only store .filters in Safari, or else break apart the storing of filters
-    // from the .exclude/.items structure
-    result.filters[filter.id] = filter;
-
     // TODO: ._has shouldn't be accessed directly.  Rework ._has and .has() or
     // make an accessor or think about why .has() exists -- shouldn't we be asking
     // that at runtime rather than building up this auxiliary structure?  If not,
@@ -41,15 +34,10 @@ FilterSet.fromFilters = function(data) {
     for (var d in filter._domains._has) {
       if (filter._domains._has[d]) {
         var key = (d === DomainSet.ALL ? 'global' : d);
-        if (!result.items[key]) result.items[key] = [];
-        result.items[key].push(filter);
+        setDefault(result.items, key, []).push(filter);
       }
-      else {
-        if (d !== DomainSet.ALL) {
-          if (!result.exclude[d]) result.exclude[d] = {};
-          result.exclude[d][filter.id] = true;
-        }
-      }
+      else if (d !== DomainSet.ALL)
+        setDefault(result.exclude, d, {})[filter.id] = true;
     }
   }
 
