@@ -81,6 +81,28 @@ var SelectorFilter = function(text) {
   if (document.location.pathname === '/pages/resourceblock.html')
     this._text = text;
 };
+
+// If !|excludeFilters|, returns filter.
+// Otherwise, returns a new SelectorFilter that is the combination of
+// |filter| and each selector exclusion filter in the given list.  
+SelectorFilter.merge = function(filter, excludeFilters) {
+  if (!excludeFilters)
+    return filter;
+
+  var domains = filter._domains.clone();
+  for (var i = 0; i < excludeFilters.length; i++) {
+    domains.subtract(excludeFilters[i]._domains);
+  }
+
+  var result = new SelectorFilter("_##_");
+  result.selector = filter.selector;
+  if (filter._text)
+    result._text = filter._text;
+  result._domains = domains;
+
+  return result;
+};
+
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,

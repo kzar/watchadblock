@@ -42,10 +42,15 @@ DomainSet.domainAndParents = function(domain) {
 
 DomainSet.prototype = {
 
+  // Returns a new identical DomainSet.
+  clone: function() {
+    return new DomainSet(JSON.parse(JSON.stringify(this.has)));
+  },
+
   // Returns true if this set contains all domains.
   full: function() {
     for (var k in this.has) {
-      if (k !== DomainSet.ALL || !this.has[k])
+      if (!this.has[k])
         return false;
     }
     return true;

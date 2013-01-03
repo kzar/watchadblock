@@ -1,6 +1,6 @@
-module("Checking for dumb developers");
+module("General");
 test("Using extension domain", 1, function() {
-  ok(window.chrome && chrome.extension, "This test suite must be running on an extension URL!");
+  ok(window.chrome && chrome.extension, "This test suite should be running on an extension URL");
 });
 
 module("Parsing URLs: parseURI");
@@ -37,8 +37,38 @@ test("parseSearch", 11, function() {
   deepEqual(parseUri.parseSearch("?hello&&&&ext=adblock"), {"ext": "adblock", "hello": ""});
 });
 
-module("DomainSet: merging hiding filters with hiding exclusion filters");
-test("subtract()", function() {
+module("DomainSet");
+test("caching and immutable Filters", function() {
+  var text = "safariadblock.com##div" 
+  var f = Filter.fromText(text);
+  strictEqual(f, Filter.fromText(text), "Caching works");
+  var fCopy = JSON.parse(JSON.stringify(f));
+
+  var f2 = SelectorFilter.merge(f, [Filter.fromText("safariadblock.com#@#div")]);
+  notDeepEqual(f._domains, f2._domains);
+
+  var fSecondCopy = JSON.parse(JSON.stringify(f));
+  deepEqual(fCopy, fSecondCopy, "Filters are not mutated by SelectorFilter.merge()");
+
+  strictEqual(f, Filter.fromText(text), "Cached filters aren't affected by subtraction");
+});
+
+test("clone", function() {
+  var d = new DomainSet({"": true, "a.com": false, "b.a.com": true});
+  var d2 = d.clone();
+  notStrictEqual(d, d2);
+  deepEqual(d, d2);
+});
+
+test("full", function() {
+  ok(new DomainSet({"": true}).full());
+  ok(new DomainSet({"": true, "a.com": true}).full());
+  ok(!new DomainSet({"": true, "a.com": false, "b.a.com": true}).full());
+  ok(!new DomainSet({"": false}).full());
+  ok(!new DomainSet({"": false, "a.com": true}).full());
+});
+
+test("subtract", function() {
 
   var _normalize = function(data) {
     var result = {};
@@ -71,7 +101,47 @@ test("subtract()", function() {
 
 });
 
+module("SelectorFilter");
 
+test("merge", function() {
+  var _testEmpty = function(a, b) {
+    var first = SelectorFilter.merge(
+      Filter.fromText(a), 
+      b.map(function(text) { return Filter.fromText(text); })
+    );
+    var result = new DomainSet({"": false});
+    deepEqual(first._domains, result, a + " - " + JSON.stringify(b) + " = nothing");
+  }
+  var _test = function(a, b, c) {
+    var first = SelectorFilter.merge(
+      Filter.fromText(a), 
+      b.map(function(text) { return Filter.fromText(text); })
+    );
+    var second = Filter.fromText(c);
+    notEqual(first.id, second.id);
+    first.id = second.id;
+    deepEqual(first, second, a + " - " + JSON.stringify(b) + " = " + c);
+  }
+  var f = [
+    "a.com##div",
+    "b.com##div",
+    "sub.a.com##div",
+    "~a.com##div",
+    "##div",
+  ];
+  strictEqual(SelectorFilter.merge(f[0], undefined), f[0]);
+  _testEmpty(f[0], [f[0]]);
+  _testEmpty(f[0], [f[4]]);
+  _testEmpty(f[0], [f[1], f[2], f[3], f[4]]);
+  _testEmpty(f[1], [f[3]]);
+  _test(f[0], [f[1]], "a.com##div");
+  _test(f[0], [f[2]], "a.com,~sub.a.com##div");
+  _test(f[0], [f[3]], "a.com##div");
+  _test(f[0], [f[1], f[2], f[3]], "a.com,~sub.a.com##div");
+  _test(f[1], [f[2]], f[1]);
+});
+
+module("MyFilters");
 
 if (/Chrome/.test(navigator.userAgent)) {
   // CHROME ONLY

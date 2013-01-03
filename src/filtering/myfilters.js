@@ -139,7 +139,7 @@ MyFilters.prototype.rebuild = function() {
   for (var text in unique) {
     var filter = Filter.fromText(text);
     if (Filter.isSelectorExcludeFilter(text))
-      setDefault(filters.exclude, filter.selector, {})[filter.id] = filter;
+      setDefault(filters.exclude, filter.selector, []).push(filter);
     else if (Filter.isSelectorFilter(text))
       filters.hidingUnmerged.push(filter);
     else if (Filter.isWhitelistFilter(text))
@@ -148,10 +148,8 @@ MyFilters.prototype.rebuild = function() {
       filters.pattern[filter.id] = filter;
   }
   for (var i = 0; i < filters.hidingUnmerged.length; i++) {
-    var hider = filters.hidingUnmerged[i];
-    for (var id in filters.exclude[hider.selector]) {
-      hider._domains.subtract(filters.exclude[hider.selector][id]._domains);
-    }
+    filter = filters.hidingUnmerged[i];
+    var hider = SelectorFilter.merge(filter, filters.exclude[filter.selector]);
     filters.hiding[hider.id] = hider;
   }
 
