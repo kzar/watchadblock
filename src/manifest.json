@@ -18,7 +18,10 @@
     ]
   },
   "browser_action": {
-    "default_icon": "img/icon19.png",
+    "default_icon": {
+      "19": "img/icon19.png",
+      "38": "img/icon38.png"
+    },
     "default_popup": "button/popup.html",
     "default_title": "AdBlock"
   },
@@ -65,7 +68,7 @@
   },
   "incognito": "spanning",
   "manifest_version": 2,
-  "minimum_chrome_version": "18",
+  "minimum_chrome_version": "23",
   "options_page": "options/index.html",
   "permissions": [
     "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
