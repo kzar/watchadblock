@@ -168,17 +168,15 @@ var FilterNormalizer = {
       throw "Filter causes problems in the code";
   },
 
-  // Throw an exception if the input contains invalid domains.
-  // Input: domainInfo: { applied_on:array, not_applied_on:array }, where each
-  //                    array entry is a domain.
-  verifyDomains: function(domainInfo) {
-    for (var name in { "applied_on":1, "not_applied_on":1 }) {
-      for (var i = 0; i < domainInfo[name].length; i++) {
-        if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+\.?$/i.test(domainInfo[name][i]) == false)
-          throw "Invalid domain: " + domainInfo[name][i];
-        // Ensure domain doesn't break AdBlock
-        FilterNormalizer._checkForObjectProperty(domainInfo[name][i]);
-      }
+  // Throw an exception if the DomainSet |domainSet| contains invalid domains.
+  verifyDomains: function(domainSet) {
+    for (var domain in domainSet.has) {
+      if (domain === DomainSet.ALL)
+        continue;
+      if (/^([a-z0-9\-_\u00DF-\u00F6\u00F8-\uFFFFFF]+\.)*[a-z0-9\u00DF-\u00F6\u00F8-\uFFFFFF]+\.?$/i.test(domain) == false)
+        throw Error("Invalid domain: " + domain);
+      // Ensure domain doesn't break AdBlock
+      FilterNormalizer._checkForObjectProperty(domain);
     }
   }
 }

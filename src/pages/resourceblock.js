@@ -299,19 +299,20 @@ function generateFilterSuggestions() {
 //   text: array containing all filters in the list
 function createResourceblockFilterset(id, text) {
   local_filtersets[id] = {};
-  var w = [], b = [], h = [];
+  var w = {}, b = {}, h = {};
 
   for (var i=0; i<text.length; i++) {
+    var filter = Filter.fromText(text[i]);
     if (Filter.isSelectorFilter(text[i]))
-      h.push(text[i]);
+      h[filter.id] = filter;
     else if (Filter.isWhitelistFilter(text[i]))
-      w.push(text[i]);
+      w[filter.id] = filter;
     else
-      b.push(text[i]);
+      b[filter.id] = filter;
   }
-  local_filtersets[id].hiding = FilterSet.fromTexts(h);
+  local_filtersets[id].hiding = FilterSet.fromFilters(h);
   local_filtersets[id].blocking =
-    new BlockingFilterSet(FilterSet.fromTexts(b), FilterSet.fromTexts(w));
+    new BlockingFilterSet(FilterSet.fromFilters(b), FilterSet.fromFilters(w));
 }
 
 // Check an URL for it's validity
@@ -371,7 +372,8 @@ function isValidDomainList(text) {
 // Returns: boolean: should it continue?
 function filterMatchesResource(filter, url, type, domain) {
   var temp_filterset = new BlockingFilterSet(
-                        FilterSet.fromTexts([filter]), FilterSet.fromTexts([]));
+                        FilterSet.fromFilters({1: Filter.fromText(filter) }),
+                        FilterSet.fromFilters({}));
   if (!temp_filterset.matches(url, type, domain))
     return confirm(translate("doesntmatchoriginal"));
   return true;

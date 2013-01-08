@@ -25,6 +25,14 @@ $("#enable_show_google_search_text_ads").change(function() {
   }, 1000);
 });
 
+if (SAFARI6) {
+  $("#new_safari_hiding_option").show();
+  $("#new_safari_hiding_warning").toggle(optionalSettings.new_safari_hiding);
+  $("#enable_new_safari_hiding").change(function() {
+    $("#new_safari_hiding_warning").toggle(this.checked);
+  });
+}
+
 $("#enable_show_advanced_options").change(function() {
   // Reload the page to show or hide the advanced options on the
   // options page -- after a moment so we have time to save the option.

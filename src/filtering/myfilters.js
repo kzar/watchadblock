@@ -134,25 +134,48 @@ MyFilters.prototype.rebuild = function() {
     unique[texts[i]] = 1;
   delete unique[''];
 
-  var hidingText = [];
-  var whitelistText = [];
-  var patternText = [];
-  var hidingExcludeText = [];
+  var filters = { hidingUnmerged: [], hiding: {}, exclude: {},
+                  pattern: {}, whitelist: {} };
   for (var text in unique) {
+    var filter = Filter.fromText(text);
     if (Filter.isSelectorExcludeFilter(text))
-      hidingExcludeText.push(text);
+      setDefault(filters.exclude, filter.selector, []).push(filter);
     else if (Filter.isSelectorFilter(text))
-      hidingText.push(text);
+      filters.hidingUnmerged.push(filter);
     else if (Filter.isWhitelistFilter(text))
-      whitelistText.push(text);
+      filters.whitelist[filter.id] = filter;
     else
-      patternText.push(text);
+      filters.pattern[filter.id] = filter;
+  }
+  for (var i = 0; i < filters.hidingUnmerged.length; i++) {
+    filter = filters.hidingUnmerged[i];
+    var hider = SelectorFilter.merge(filter, filters.exclude[filter.selector]);
+    filters.hiding[hider.id] = hider;
   }
 
-  this.hiding = FilterSet.fromTexts(hidingText);
-  this.hidingWhitelist = FilterSet.fromTexts(hidingExcludeText);
+  if (SAFARI6) {
+    var new_hiding = get_settings().new_safari_hiding;
+    if (new_hiding && !this.styleSheetRegistrar) {
+      logGroup("Creating StyleSheetRegistrar");
+      this.styleSheetRegistrar = new StyleSheetRegistrar();
+      logGroupEnd();
+    }
+    else if (!new_hiding && this.styleSheetRegistrar) {
+      logGroup("Deleting StyleSheetRegistrar");
+      this.styleSheetRegistrar.pause(true);
+      delete this.styleSheetRegistrar;
+      logGroupEnd();
+    }
+  }
+
+  if (this.styleSheetRegistrar)
+    this.styleSheetRegistrar.register(filters.hiding);
+  else
+    this.hiding = FilterSet.fromFilters(filters.hiding);
+
   this.blocking = new BlockingFilterSet(
-    FilterSet.fromTexts(patternText), FilterSet.fromTexts(whitelistText)
+    FilterSet.fromFilters(filters.pattern), 
+    FilterSet.fromFilters(filters.whitelist)
   );
   handlerBehaviorChanged(); // defined in background
   

@@ -46,9 +46,17 @@
       whitelist_hulu_ads: false, // Issue 7178
       show_context_menu_items: true,
       show_advanced_options: false,
+      new_safari_hiding: false,
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
+
+    // new_safari_hiding should NEVER be set to true outside Safari 6.  Leaving
+    // this code here to remember this when we switch new_safari_hiding from
+    // opt-in to opt-out in Safari 6: even if somehow a non-Safari-6 user gets
+    // this set to true, it will be reset when they restart their browser.
+    if (!SAFARI6)
+      this._data.new_safari_hiding = false;
   };
   Settings.prototype = {
     set: function(name, is_enabled) {
@@ -371,15 +379,11 @@
   set_setting = function(name, is_enabled) {
     _settings.set(name, is_enabled);
 
-    if (name == "debug_logging") {
-      if (is_enabled)
-        log = function() {
-          if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]')
-            console.log.apply(console, arguments);
-        };
-      else
-        log = function() { };
-    }
+    if (name === "debug_logging")
+      logging(is_enabled);
+
+    if (name === "new_safari_hiding")
+      update_filters();
   }
 
   // If |when| is specified, show the user a payment request at that time, or
@@ -468,6 +472,8 @@
       return sessionStorage.getItem('adblock_is_paused') === "true";
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
+    if (_myfilters.styleSheetRegistrar)
+      _myfilters.styleSheetRegistrar.pause(newValue);
   }
 
   // INFO ABOUT CURRENT PAGE
@@ -641,31 +647,32 @@
     return add_custom_filter(filter);
   }
 
-  // TODO: make better.
   // Inputs: options object containing:
   //           domain:string the domain of the calling frame.
   get_content_script_data = function(options, sender) {
-    var disabled = page_is_unblockable(sender.tab.url);
     var settings = get_settings();
+    var runnable = !adblock_is_paused() && !page_is_unblockable(sender.tab.url);
+    var running = runnable && !page_is_whitelisted(sender.tab.url);
+    var hiding = running && !page_is_whitelisted(sender.tab.url,
+                                                        ElementTypes.elemhide);
     var result = {
-      disabled_site: disabled,
-      adblock_is_paused: adblock_is_paused(),
       settings: settings,
-      selectors: []
+      runnable: runnable,
+      running: running,
+      hiding: hiding
     };
-    if (!disabled) {
-      result.page_is_whitelisted = page_is_whitelisted(sender.tab.url);
+    if (_myfilters.styleSheetRegistrar) {
+      _myfilters.styleSheetRegistrar.prepareFor(options.domain);
+      result.avoidHidingClass = StyleSheetRegistrar.avoidHidingClass;
+      if (settings.debug_logging && hiding) {
+        var filters = _myfilters.styleSheetRegistrar._filters;
+        var filterset = FilterSet.fromFilters(filters);
+        result.selectors = filterset.filtersFor(options.domain);
+      }
     }
-    if (disabled || result.adblock_is_paused || result.page_is_whitelisted)
-      return result;
-
-    // Not whitelisted, and running on adblock_start. We have to send the
-    // CSS-hiding rules.
-    if (!page_is_whitelisted(sender.tab.url, ElementTypes.elemhide)) {
-      result.selectors = _myfilters.hiding.
-        filtersFor(options.domain);
+    if (!_myfilters.styleSheetRegistrar && hiding) {
+      result.selectors = _myfilters.hiding.filtersFor(options.domain);
     }
-
     return result;
   };
 
@@ -789,10 +796,7 @@
   })();
 
   if (get_settings().debug_logging)
-    log = function() {
-      if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]') // comment out for verbosity
-        console.log.apply(console, arguments);
-    };
+    logging(true);
 
   _myfilters = new MyFilters();
 

@@ -45,40 +45,28 @@ Filter.isComment = function(text) {
          (text[0] === '(' && /^\(adblock/i.test(text));
 }
 
-// Given a comma-separated list of domain includes and excludes, return
-// { applied_on:array, not_applied_on:array }.  An empty applied_on array
-// means "on all domains except those in the not_applied_on array."  An
-// empty not_applied_on array means "defer to the applied_on array."
-//
-// If a rule runs on *all* domains:
-//   { applied_on: [], not_applied_on: [] }
-// If a rule runs on *some* domains:
-//   { applied_on: [d1, d2,...], not_applied_on: [] }
-// If a rule is not run on *some* domains:
-//   { applied_on: [], not_applied_on: [ d1, d2, d3... ] }
-// If a rule runs on *some* domains but not on *other* domains:
-//   { applied_on: [ d1, d2,...], not_applied_on: [ d1, d2,...] }
-Filter._domainInfo = function(domainText, divider) {
+// Convert a comma-separated list of domain includes and excludes into a
+// DomainSet.
+Filter._toDomainSet = function(domainText, divider) {
   var domains = domainText.split(divider);
 
-  var result = {
-    applied_on: [],
-    not_applied_on: []
-  };
+  var data = {};
+  data[DomainSet.ALL] = true;
 
   if (domains == '')
-    return result;
+    return new DomainSet(data);
 
   for (var i = 0; i < domains.length; i++) {
     var domain = domains[i];
     if (domain[0] == '~') {
-      result.not_applied_on.push(domain.substring(1));
+      data[domain.substring(1)] = false;
     } else {
-      result.applied_on.push(domain);
+      data[domain] = true;
+      data[DomainSet.ALL] = false;
     }
   }
 
-  return result;
+  return new DomainSet(data);
 }
 
 // Filters that block by CSS selector.
@@ -86,13 +74,35 @@ var SelectorFilter = function(text) {
   Filter.call(this); // call base constructor
 
   var parts = text.match(/(^.*?)\#\@?\#(.+$)/);
-  this._domains = Filter._domainInfo(parts[1], ',');
+  this._domains = Filter._toDomainSet(parts[1], ',');
   this.selector = parts[2];
   // Preserve _text for resourceblock. Don't do so in Safari, where
   // resources aren't recorded
   if (document.location.pathname === '/pages/resourceblock.html')
     this._text = text;
 };
+
+// If !|excludeFilters|, returns filter.
+// Otherwise, returns a new SelectorFilter that is the combination of
+// |filter| and each selector exclusion filter in the given list.  
+SelectorFilter.merge = function(filter, excludeFilters) {
+  if (!excludeFilters)
+    return filter;
+
+  var domains = filter._domains.clone();
+  for (var i = 0; i < excludeFilters.length; i++) {
+    domains.subtract(excludeFilters[i]._domains);
+  }
+
+  var result = new SelectorFilter("_##_");
+  result.selector = filter.selector;
+  if (filter._text)
+    result._text = filter._text;
+  result._domains = domains;
+
+  return result;
+};
+
 SelectorFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
@@ -108,7 +118,9 @@ PatternFilter.fromData = function(data) {
   result._rule = new RegExp(data[0]);
   result._allowedElementTypes = data[1];
   result._options = data[2];
-  result._domains = { applied_on: [], not_applied_on: [] };
+  var data = {};
+  data[DomainSet.ALL] = true;
+  result._domains = new DomainSet(data);
   return result;
 }
 // Text is the original filter text of a blocking or whitelist filter.
@@ -117,7 +129,7 @@ PatternFilter.fromText = function(text) {
   var data = PatternFilter._parseRule(text);
 
   var result = new PatternFilter();
-  result._domains = Filter._domainInfo(data.domainText, '|');
+  result._domains = Filter._toDomainSet(data.domainText, '|');
   result._allowedElementTypes = data.allowedElementTypes;
   result._options = data.options;
   result._rule = data.rule;

@@ -21,25 +21,37 @@ BGcall = function() {
   var has_callback = (typeof args[args.length - 1] == "function");
   var callback = (has_callback ? args.pop() : function() {});
   chrome.extension.sendRequest({command: "call", fn:fn, args:args}, callback);
-}
+};
 
-// These are replaced with console.log in adblock_start_common.js and
-// background.js if the user chooses.
-log = function() { };
+// Enabled in adblock_start_common.js and background.js if the user wants
+logging = function(enabled) {
+  if (enabled) {
+    log = function() {
+      if (VERBOSE_DEBUG || arguments[0] != '[DEBUG]') // comment out for verbosity
+        console.log.apply(console, arguments);
+    };
+    logGroup = function() { console.group.apply(console, arguments); };
+    logGroupEnd = function() { console.groupEnd(); };
+  }
+  else {
+    log = logGroup = logGroupEnd = function() {};
+  }
+};
+logging(false); // disabled by default
 
 // Behaves very similarly to $.ready() but does not require jQuery.
-function onReady(callback) {
+onReady = function(callback) {
   if (document.readyState === "complete")
     window.setTimeout(callback, 0);
   else
     window.addEventListener("load", callback, false);
-}
+};
 
-function translate(messageID, args) {
+translate = function(messageID, args) {
   return chrome.i18n.getMessage(messageID, args);
-}
+};
 
-function localizePage() {
+localizePage = function() {
   //translate a page into the users language
   $("[i18n]:not(.i18n-replaced)").each(function() {
     $(this).html(translate($(this).attr("i18n")));
@@ -64,7 +76,7 @@ function localizePage() {
     // clobber our work
     $(this).addClass("i18n-replaced");
   });
-}
+};
 
 // Parse a URL. Based upon http://blog.stevenlevithan.com/archives/parseuri
 // parseUri 1.2.2, (c) Steven Levithan <stevenlevithan.com>, MIT License
@@ -98,7 +110,7 @@ parseUri.parseSearch = function(search) {
 parseUri.secondLevelDomainOnly = function(domain, keepDot) {
   var match = domain.match(/([^\.]+\.(?:co\.)?[^\.]+)\.?$/) || [domain, domain];
   return match[keepDot ? 0 : 1].toLowerCase();
-}
+};
 
 // TODO: move back into background.js since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
@@ -116,7 +128,7 @@ storage_get = function(key) {
     log("Couldn't parse json for " + key);
     return undefined;
   }
-}
+};
 
 // Inputs: key:string, value:object.
 // If value === undefined, removes key from storage.
@@ -137,4 +149,11 @@ storage_set = function(key, value) {
       openTab("options/index.html#ui-tabs-2");
     }
   }
-}
+};
+
+// Return obj[value], first setting it to |defaultValue| if it is undefined.
+setDefault = function(obj, value, defaultValue) {
+  if (obj[value] === undefined)
+    obj[value] = defaultValue;
+  return obj[value];
+};
