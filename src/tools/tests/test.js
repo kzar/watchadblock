@@ -101,6 +101,61 @@ test("subtract", function() {
 
 });
 
+test("_computedHas", function() {
+  var set1 = new DomainSet({"": false, "s.a": true});
+  var set2 = new DomainSet({"": false, "a": true});
+  ok(!set1._computedHas("a"), "subdomains don't imply their parents");
+  ok(set2._computedHas("s.a"), "domains imply their children");
+});
+
+module("FilterNormalizer");
+
+test("normalizeLine", function() {
+  var nl = FilterNormalizer.normalizeLine;
+  equal(nl("a##z"), "a##z", "Simple SelectorFilters are OK");
+  equal(nl("##[style]"), "~mail.google.com,~mail.yahoo.com##[style]", "[style] bug is handled");
+  equal(nl("google.com##[style]"), "~mail.google.com,google.com##[style]", "[style] bug is handled subtlely");
+  raises(function() { nl("google.com####[style]"); }, "Bad SelectorFilter throws an exception");
+});
+
+test("_ensureExcluded", function() {
+  var entries = [
+    { text: "a##z",   domains: [],           expected: "a##z" },
+    { text: "##z",    domains: [],           expected: "##z" },
+    { text: "##z",    domains: ["a"],        expected: "~a##z" },
+    { text: "##z",    domains: ["a", "b"],   expected: "~a,~b##z" },
+
+    { text: "a##z",   domains: [],           expected: "a##z" },
+    { text: "a##z",   domains: ["a"],        expected: "~a,a##z" },
+    { text: "a##z",   domains: ["a", "b"],   expected: "~a,a##z" },
+
+    { text: "a##z",   domains: ["s.a"],      expected: "~s.a,a##z" },
+    { text: "a##z",   domains: ["s.a", "b"], expected: "~s.a,a##z" },
+    { text: "a##z",   domains: ["a", "s.b"], expected: "~a,a##z" },
+
+    { text: "s.a##z", domains: [],           expected: "s.a##z" },
+    { text: "s.a##z", domains: ["b"],        expected: "s.a##z" },
+    { text: "s.a##z", domains: ["a", "b"],   expected: "s.a##z" },
+    { text: "s.a##z", domains: ["s.s.a"],    expected: "~s.s.a,s.a##z" },
+
+    { text: "a,b##z", domains: ["a"],        expected: "~a,a,b##z" },
+    { text: "a,b##z", domains: ["a"],        expected: "~a,a,b##z" },
+
+    // Excluding a parent of an included child doesn't exclude the child.  This
+    // is probably fine.
+    { text: "mail.google.com##div[style]", domains: ["google.com"], expected: "mail.google.com##div[style]" },
+    { text: "##div[style]", domains: ["mail.google.com", "mail.yahoo.com"], expected: "~mail.google.com,~mail.yahoo.com##div[style]" },
+    { text: "ex.com##div[style]", domains: ["mail.google.com", "mail.yahoo.com"], expected: "ex.com##div[style]" },
+    { text: "google.com##div[style]", domains: ["mail.google.com", "mail.yahoo.com"], expected: "~mail.google.com,google.com##div[style]" },
+  ];
+
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i];
+    equal(FilterNormalizer._ensureExcluded(entry.text, entry.domains), entry.expected,
+          "_ensureExcluded('" + entry.text + "', ...) -> '" + entry.expected + "'");
+  }
+});
+
 module("SelectorFilter");
 
 test("merge", function() {
