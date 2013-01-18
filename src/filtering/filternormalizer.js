@@ -73,12 +73,12 @@ var FilterNormalizer = {
 
       // On a few sites, we have to ignore [style] rules.
       // Affects Chrome (crbug 68705) and Safari (issue 6225).
+      // Don't exclude the sites unless the filter would apply to them, or
+      // loading the site will hang in Safari 6 while Safari creates a bunch of
+      // one-off style sheets (issue 7356).
       if (/style([\^\$\*]?=|\])/.test(filter)) {
-        var ignoreStyleRulesOnTheseSites = "~mail.google.com,~mail.yahoo.com";
-        if (filter.indexOf(ignoreStyleRulesOnTheseSites) == -1) {
-          if (filter[0] != "#") ignoreStyleRulesOnTheseSites += ",";
-          filter = ignoreStyleRulesOnTheseSites + filter;
-        }
+        var excludedDomains = ["mail.google.com", "mail.yahoo.com"];
+        filter = FilterNormalizer._ensureExcluded(filter, excludedDomains);
       }
 
       var parsedFilter = new SelectorFilter(filter);
@@ -111,6 +111,24 @@ var FilterNormalizer = {
 
     // Nothing's wrong with the filter.
     return filter;
+  },
+
+  // Return |selectorFilterText| modified if necessary so that it applies to no
+  // domain in the |excludedDomains| list.
+  // Throws if |selectorFilterText| is not a valid filter.
+  // Example: ("a.com##div", ["sub.a.com", "b.com"]) -> "a.com,~sub.a.com##div"
+  _ensureExcluded: function(selectorFilterText, excludedDomains) {
+    var text = selectorFilterText;
+    var filter = new SelectorFilter(text);
+    var mustExclude = excludedDomains.filter(function(domain) {
+      return filter._domains._computedHas(domain);
+    });
+    if (mustExclude.length > 0) {
+      var toPrepend = "~" + mustExclude.join(",~");
+      if (text[0] != "#") toPrepend += ",";
+      text = toPrepend + text;
+    }
+    return text;
   },
 
   // Convert an old-style hiding rule to a new one.
