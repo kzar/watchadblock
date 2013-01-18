@@ -35,6 +35,10 @@
     "message": "AdBlock je nyní nainstalován!",
     "description": "Title for the installation success page"
   },
+  "chromebutton_how_to_hide2": {
+    "message": "Chcete-li skrýt tlačítko, klikněte na něj pravým tlačítkem myši a vyberte příkaz Skrýt tlačítko. Můžete jej opět zobrazit zde chrome://chrome/extensions.",
+    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
   "sliderexplanation": {
     "message": "Nastavte posuvník tak, aby reklama na stránce byla blokována a zbytek stránky stále vypadal uspokojivě.",
     "description": "Blacklister slider page message"
@@ -212,6 +216,14 @@
   "betalabel": {
     "message": "Beta",
     "description": "Option on first tab page"
+  },
+  "use_experimental_feature_to_speed_up_adblock": {
+    "message": "Zrychlit Adblock pomocí experimentální funkce v prohlížeči Safari.",
+    "description": "Option on first tab page"
+  },
+  "if_this_breaks_let_us_know": {
+    "message": "Pokusná funkce. Pokud po zapnutí dojde ke zpomalení Safari nebo se začne chovat podivně, nahlašte to prosím.",
+    "description": "Warning shown when use_experimental_feature_to_speed_up_adblock is enabled by the user."
   },
   "googletextads": {
     "message": "Líbí se mi textové reklamy ve výsledcích vyhledávání Google, zobrazuj je.",
@@ -694,11 +706,11 @@
     "description": "telling a user who won't report an ad to us how to handle it for herself"
   },
   "updatefromoldversion": {
-    "message": "Používáte zastaralou verzi AdBlock. Prosím, nejprve musíte $updatelink$ AdBlock na nejnovější verzi",
-    "description": "ad report page instruction",
+    "message": "Používáte zastaralou verzi AdBlock. Prosím, nejprve $updatelink$ AdBlock na nejnovější verzi",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
-        "content": "$1aktualizovat$2",
+        "content": "$1aktualizujte$2",
         "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
       }
     }
@@ -1021,6 +1033,10 @@
     "message": "Jsem zkušený uživatel, ukaž mi pokročilé možnosti.",
     "description": "Options page checkbox"
   },
+  "work_around_hulu_problems": {
+    "message": "Zástupné řešení pro nefunkční video na Hulu.com (vyžaduje restartování prohlížeče)",
+    "description": "Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
+  },
   "subscribe_unsubscribe_all": {
     "message": "$subscribe$ nebo $unsubscribe$ všechny seznamy.",
     "description": "Link in the button",
@@ -1200,5 +1216,31 @@
   "opera_120_options": {
     "message": "V Opeře před verzí 12.10, jsou některé možnosti zašedivělé, protože nejsou ve starších verzích podporovány.",
     "description": "Opera < 12.10 warning above options page"
+},
+  "filterorigin": {
+    "message": "Původ filtrování:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "firefox_explanation": {
+    "message": "Smyslem této otázky je určit, kdo by měl dostat vaše hlášení. Pokud odpovíte na tuto otázku chybně, může být zpráva zaslána nesprávným lidem a pak může být ignorována.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
+  "opera_secure_pages": {
+    "message": "Zabezpečené stránky",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "Klikněte na Extensions (v menu) &rArr; Manage Extensions &rArr; vyhledejte AdBlock a klikněte na ikonu klíče vedle něj &rArr; klikněte na Privacy.<br/>Je povolena možnost přístupu k zabezpečeným stránkám?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
+  "opera_allow_secure": {
+    "message": "Pokud chcete používat AdBlock na zabezpečených stránkách (stránky s ikonou zámku v panelu nástrojů), musíte nejprve povolit možnost pro přístupu k zabezpečeným stránkám.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   }
 }
