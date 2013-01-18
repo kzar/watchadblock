@@ -166,7 +166,7 @@ StyleSheetRegistrar.prototype = {
   // Returns the hiding stylesheet for the given array of selectors.
   _sheetFor: function(selectors) {
     var prefix = 'html:not(.' + StyleSheetRegistrar.avoidHidingClass + ') ';
-    var suffix = ' { display: none; orphans: 4321; }';
+    var suffix = ' { display: none !important; orphans: 4321; }';
     return prefix + selectors.join(", " + prefix) + suffix;
   }
 };
