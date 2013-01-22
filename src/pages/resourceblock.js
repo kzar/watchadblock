@@ -307,7 +307,7 @@ function createResourceblockFilterset(id, text) {
       h[filter.id] = filter;
     else if (Filter.isWhitelistFilter(text[i]))
       w[filter.id] = filter;
-    else
+    else if (text[i])
       b[filter.id] = filter;
   }
   local_filtersets[id].hiding = FilterSet.fromFilters(h);
