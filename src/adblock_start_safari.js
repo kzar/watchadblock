@@ -1,9 +1,9 @@
 // If the background image is an ad, remove it.
 function blockBackgroundImageAd() {
   var bgImage = window.getComputedStyle(document.body)["background-image"] || "";
-  var match = bgImage.match(/^url\((.*)\)$/);
-  if (match)
-    bgImage = match[1];
+  bgImage = bgImage.match(/^url\(\s*(?:\'|\")?(.+)(?:\'|\")?\s*\)$/);
+  if (bgImage)
+    bgImage = bgImage[1].trim();
   if (bgImage && bgImage !== "none") {
     var hiddenImage = document.createElement("img");
       hiddenImage.src = bgImage;
