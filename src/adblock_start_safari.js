@@ -4,9 +4,8 @@ function blockBackgroundImageAd() {
   var match = bgImage.match(/^url\((.+)\)$/);
   if (!match)
     return;
-  bgImage = match[1];
   var hiddenImage = document.createElement("img");
-    hiddenImage.src = bgImage;
+    hiddenImage.src = match[1];
     hiddenImage.setAttribute("width", "0");
     hiddenImage.setAttribute("height", "0");
     hiddenImage.style.setProperty("display", "none");
