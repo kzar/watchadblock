@@ -709,6 +709,7 @@ $(function() {
                 window.close();
                 return;
               }
+              $("#legend").show();
             } else
               $("#resourceslist input").click();
             $("#choosedifferentresource").remove();
