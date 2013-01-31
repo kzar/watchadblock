@@ -27,9 +27,9 @@ $("#enable_show_google_search_text_ads").change(function() {
 
 if (SAFARI6) {
   $("#new_safari_hiding_option").show();
-  $("#new_safari_hiding_warning").toggle(optionalSettings.new_safari_hiding);
+  $("#let_me_know").toggle(optionalSettings.new_safari_hiding);
   $("#enable_new_safari_hiding").change(function() {
-    $("#new_safari_hiding_warning").toggle(this.checked);
+    $("#let_me_know").toggle(this.checked);
   });
 }
 
