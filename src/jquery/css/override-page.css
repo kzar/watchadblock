@@ -56,6 +56,14 @@
 .ui-dialog label {
   cursor: pointer;
 }
+.ui-dialog .ui-dialog-buttonpane { 
+  display: block !important; 
+}
+.ui-icon.ui-icon-closethick {
+  background-position: -96px -128px !important;
+  height: auto !important;
+  width: auto !important;
+}
 
 
 /* Specific parts of the pages */
@@ -92,14 +100,6 @@
 .ui-dialog #filter_warning {
   font-weight: bold;
   color: red;
-}
-.ui-dialog .ui-dialog-buttonpane { 
-  display: block !important; 
-}
-.ui-icon.ui-icon-closethick {
-  background-position: -96px -128px !important;
-  height: auto !important;
-  width: auto !important;
 }
 
 
