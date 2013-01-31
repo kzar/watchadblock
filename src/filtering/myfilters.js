@@ -473,7 +473,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "russian": { // Additional Russian filters
-      url: "https://ruadlist.googlecode.com/svn/trunk/advblock.txt",
+      url: "https://ruadlist.googlecode.com/hg/advblock.txt",
       requiresList: "easylist",
     },
     "chinese": { // Additional Chinese filters
