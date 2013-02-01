@@ -394,7 +394,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
     var language = navigator.language.match(/^([a-z]+).*/i)[1];
     switch(language) {
       case 'bg': return 'easylist_plus_bulgarian';
-      case 'cs': return 'czechoslovak';
+      case 'cs': return 'czech';
       case 'cu': return 'easylist_plus_bulgarian';
       case 'da': return 'danish';
       case 'de': return 'easylist_plus_german';
@@ -411,7 +411,6 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
-      case 'sk': return 'czechoslovak';
       case 'uk': return 'russian';
       case 'zh': return 'chinese';
       default: return '';
@@ -481,8 +480,8 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       requiresList: "easylist",
     },
-    "czechoslovak": { // Czech and Slovak filters
-      url: "https://adblock-czechoslovaklist.googlecode.com/svn/filters.txt",
+    "czech": { // Czech filters
+      url: "http://adblock.dajbych.net/adblock.txt",
     },
     "danish": { // Danish filters
       url: "http://adblock.schack.dk/block.txt",
