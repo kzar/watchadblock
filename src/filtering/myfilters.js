@@ -411,6 +411,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
+      case 'sk': return 'czech';
       case 'uk': return 'russian';
       case 'zh': return 'chinese';
       default: return '';
@@ -480,8 +481,8 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       requiresList: "easylist",
     },
-    "czech": { // Czech filters
-      url: "http://adblock.dajbych.net/adblock.txt",
+    "czech": { // Czech and Slovak filters
+      url: "https://adblock-czechoslovaklist.googlecode.com/svn/filters.txt",
     },
     "danish": { // Danish filters
       url: "http://adblock.schack.dk/block.txt",
