@@ -38,18 +38,18 @@ function MyFilters() {
 
     sub.initialUrl = sub.initialUrl || official.url;
     sub.url = sub.url || official.url;
-    if (sub.initialUrl != official.url) {
+    if (sub.initialUrl !== official.url) {
       // The official URL was changed. Use it. In case of a redirect, this
       // doesn't happen as only sub.url is changed, not sub.initialUrl.
       sub.initialUrl = official.url;
       sub.url = official.url;
     }
 
-    var missingRequiredList = (sub.requiresList != official.requiresList);
-    if (official.requiresList && missingRequiredList && sub.subscribed) {
+    var isMissingRequiredList = (sub.requiresList !== official.requiresList);
+    if (official.requiresList && isMissingRequiredList && sub.subscribed) {
       // A required list was added.  Make sure main list subscribers get it.
       if (this._subscriptions[official.requiresList])
-        this._subscriptions[official.requiresList].subscribed = true;
+        this.changeSubscription(official.requiresList, {subscribed: true});
     }
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
