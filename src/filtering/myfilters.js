@@ -44,6 +44,13 @@ function MyFilters() {
       sub.initialUrl = official.url;
       sub.url = official.url;
     }
+
+    var missingRequiredList = (sub.requiresList != official.requiresList);
+    if (official.requiresList && missingRequiredList && sub.subscribed) {
+      // A required list was added.  Make sure main list subscribers get it.
+      if (this._subscriptions[official.requiresList])
+        this._subscriptions[official.requiresList].subscribed = true;
+    }
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
   }
@@ -481,8 +488,9 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       requiresList: "easylist",
     },
-    "czech": { // Czech and Slovak filters
+    "czech": { // Additional Czech and Slovak filters
       url: "https://adblock-czechoslovaklist.googlecode.com/svn/filters.txt",
+      requiresList: "easylist",
     },
     "danish": { // Danish filters
       url: "http://adblock.schack.dk/block.txt",
