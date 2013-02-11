@@ -38,11 +38,18 @@ function MyFilters() {
 
     sub.initialUrl = sub.initialUrl || official.url;
     sub.url = sub.url || official.url;
-    if (sub.initialUrl != official.url) {
+    if (sub.initialUrl !== official.url) {
       // The official URL was changed. Use it. In case of a redirect, this
       // doesn't happen as only sub.url is changed, not sub.initialUrl.
       sub.initialUrl = official.url;
       sub.url = official.url;
+    }
+
+    var isMissingRequiredList = (sub.requiresList !== official.requiresList);
+    if (official.requiresList && isMissingRequiredList && sub.subscribed) {
+      // A required list was added.  Make sure main list subscribers get it.
+      if (this._subscriptions[official.requiresList])
+        this.changeSubscription(official.requiresList, {subscribed: true});
     }
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
@@ -411,6 +418,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
+      case 'sk': return 'czech';
       case 'uk': return 'russian';
       case 'zh': return 'chinese';
       default: return '';
@@ -480,8 +488,9 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
       requiresList: "easylist",
     },
-    "czech": { // Czech filters
-      url: "http://adblock.dajbych.net/adblock.txt",
+    "czech": { // Additional Czech and Slovak filters
+      url: "https://adblock-czechoslovaklist.googlecode.com/svn/filters.txt",
+      requiresList: "easylist",
     },
     "danish": { // Danish filters
       url: "http://adblock.schack.dk/block.txt",
