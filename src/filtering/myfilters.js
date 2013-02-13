@@ -382,10 +382,6 @@ MyFilters.prototype.customToDefaultId = function(id) {
   for (var defaultList in this._official_options)
     if (this._official_options[defaultList].url == urlOfCustomList)
       return defaultList;
-  // We use a mirror of EasyList. However, to prevent users from getting
-  // subscribed to both the mirror as the official one, have this check...
-  if (urlOfCustomList == "https://easylist-downloads.adblockplus.org/easylist.txt")
-    return "easylist";
   return id;
 }
 
@@ -446,7 +442,7 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://chromeadblock.com/filters/adblock_custom.txt",
     },
     "easylist": { // EasyList
-      url: "http://adblockplus.mozdev.org/easylist/easylist.txt"
+      url: "https://easylist-downloads.adblockplus.org/easylist.txt"
     },
     "easylist_plus_bulgarian": { // Additional Bulgarian filters
       url: "http://stanev.org/abp/adblock_bg.txt",
