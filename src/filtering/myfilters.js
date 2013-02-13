@@ -461,7 +461,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_german": { // Additional German filters
-      url: "http://adblockplus.mozdev.org/easylist/easylistgermany.txt",
+      url: "https://easylist-downloads.adblockplus.org/easylistgermany.txt",
       requiresList: "easylist",
     },
     "easylist_plus_greek": { // Additional Greek filters
