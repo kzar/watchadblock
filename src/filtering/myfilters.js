@@ -288,6 +288,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
     cache: false,
     headers: {
       "Accept": "text/plain",
+      "X-Client-ID": "AdBlock/" + STATS.version,
       "If-Modified-Since": this._subscriptions[id].last_modified || undefined
     },
     success: function(text, status, xhr) {
@@ -343,7 +344,7 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
       if (!Filter.isComment(checkLines[i]))
         continue;
       var match = checkLines[i].match(redirectRegex);
-      if (match) {
+      if (match && match[1] !== this._subscriptions[id].url) {
         this._subscriptions[id].url = match[1]; //assuming the URL is always correct
         // Force an update.  Even if our refetch below fails we'll have to 
         // fetch the new URL in the future until it succeeds.
