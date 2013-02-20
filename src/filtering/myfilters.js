@@ -5,6 +5,8 @@
 // Constructor: merge the stored subscription data and the total possible
 // list of subscriptions into this._subscriptions.  Store to disk.
 // Inputs: none.
+var HOUR_IN_MS = 1000 * 60 * 60;
+
 function MyFilters() {
   this._subscriptions = storage_get('filter_lists');
   this._official_options = this._make_subscription_options();
@@ -235,15 +237,17 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
-      var HOUR_IN_MS = 1000 * 60 * 60;
       if (forceFetch) return true;
       // After a failure, wait at least a day to refetch (overridden below if
       // it's a new filter list, having no .text)
       var failed_at = subscription.last_update_failed_at || 0;
       if (Date.now() - failed_at < HOUR_IN_MS * 24)
         return false;
+      // Don't let expiresAfterHours delay indefinitely (Issue 7443)
+      var hardStop = subscription.expiresAfterHoursHard || 240;
+      var smallerExpiry = Math.min(subscription.expiresAfterHours, hardStop);
       var millis = Date.now() - subscription.last_update;
-      return (millis > HOUR_IN_MS * subscription.expiresAfterHours);
+      return (millis > HOUR_IN_MS * smallerExpiry);
     }
 
     if (!this._subscriptions[id].text || out_of_date(this._subscriptions[id]))
@@ -361,6 +365,10 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
         this._subscriptions[id].expiresAfterHours = Math.min(hours, 21*24); // 3 week maximum
       }
     }
+    // Smear expiry (Issue 7443)
+    this._subscriptions[id].expiresAfterHoursHard = this._subscriptions[id].expiresAfterHours * 2;
+    var smear = Math.random() * 0.4 + 0.8;
+    this._subscriptions[id].expiresAfterHours *= smear;
   }
 
   this._subscriptions[id].text = FilterNormalizer.normalizeList(text);
@@ -373,6 +381,21 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
 // Checks if subscriptions have to be updated
 // Inputs: force? (boolean), true if every filter has to be updated
 MyFilters.prototype.checkFilterUpdates = function(force) {
+  var key = 'last_subscriptions_check';
+  var now = Date.now();
+  var delta = now - (storage_get(key) || now);
+  var delta_hours = delta / HOUR_IN_MS;
+  storage_set(key, now);
+  if (delta_hours > 24) {
+    // Extend expiration of subscribed lists (Issue 7443)
+    for (var id in this._subscriptions) {
+      if (this._subscriptions[id].subscribed) {
+        this._subscriptions[id].expiresAfterHours += delta_hours;
+      }
+    }
+    this._onSubscriptionChange(); // Store the change
+  }
+
   for (var id in this._subscriptions) {
     if (this._subscriptions[id].subscribed) {
       this.changeSubscription(id, {}, force);
@@ -532,5 +555,6 @@ last_modified (string): time of the last change on the server
 last_update_failed_at (date): if set, when the last update attempt failed
 text (string): the filters of the subscription
 expiresAfterHours (int): the time after which the subscription expires
+expiresAfterHoursHard (int): we must redownload subscription after this delay
 deleteMe (bool): if the subscription has to be deleted
 */
