@@ -235,9 +235,15 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
+      var HOUR_IN_MS = 1000 * 60 * 60;
       if (forceFetch) return true;
+      // After a failure, wait at least a day to refetch (overridden below if
+      // it's a new filter list, having no .text)
+      var failed_at = subscription.last_update_failed_at || 0;
+      if (Date.now() - failed_at < HOUR_IN_MS * 24)
+        return false;
       var millis = Date.now() - subscription.last_update;
-      return (millis > 1000 * 60 * 60 * subscription.expiresAfterHours);
+      return (millis > HOUR_IN_MS * subscription.expiresAfterHours);
     }
 
     if (!this._subscriptions[id].text || out_of_date(this._subscriptions[id]))
@@ -248,7 +254,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     delete this._subscriptions[id].text;
     delete this._subscriptions[id].last_update;
     delete this._subscriptions[id].expiresAfterHours;
-    delete this._subscriptions[id].last_update_failed;
+    delete this._subscriptions[id].last_update_failed_at;
     delete this._subscriptions[id].last_modified;
     if (this._subscriptions[id].deleteMe)
       delete this._subscriptions[id];
@@ -271,7 +277,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
   var url = this._subscriptions[id].url;
   var that = this;
   function onError() {
-    that._subscriptions[id].last_update_failed = true;
+    that._subscriptions[id].last_update_failed_at = Date.now();
     that._onSubscriptionChange();
     if (isNewList) {
       // Delete the list. The user subscribed to an invalid list URL.
@@ -324,7 +330,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
 // The xhr variable can be used to search the response headers
 MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
   this._subscriptions[id].last_update = Date.now();
-  delete this._subscriptions[id].last_update_failed;
+  delete this._subscriptions[id].last_update_failed_at;
 
   // In case the resource wasn't modified, there is no need to reparse this.
   // xhr isn't send in this case. Do reparse .text, in case we had some update
@@ -523,7 +529,7 @@ requiresList (string): id of a list required for this list
 subscribed (bool): if you are subscribed to the list or not
 last_update (date): time of the last succesfull update
 last_modified (string): time of the last change on the server
-last_update_failed (bool): true if the last update attempt failed
+last_update_failed_at (date): if set, when the last update attempt failed
 text (string): the filters of the subscription
 expiresAfterHours (int): the time after which the subscription expires
 deleteMe (bool): if the subscription has to be deleted
