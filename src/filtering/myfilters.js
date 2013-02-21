@@ -237,7 +237,6 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
-      var HOUR_IN_MS = 1000 * 60 * 60;
       if (forceFetch) return true;
       // After a failure, wait at least a day to refetch (overridden below if
       // it's a new filter list, having no .text)
