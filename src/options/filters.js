@@ -155,9 +155,9 @@ function updateSubscriptionInfoAll() {
       if (infoLabel.text() == translate("unsubscribedlabel"))
         continue;
       text = "";
-    } else if (!subscription.last_update_failed && !subscription.last_update) {
+    } else if (!subscription.last_update_failed_at && !subscription.last_update) {
       text = translate("fetchinglabel");
-    } else if (subscription.last_update_failed && !subscription.last_update) {
+    } else if (subscription.last_update_failed_at && !subscription.last_update) {
       text = translate("failedtofetchfilter");
     } else {
       var how_long_ago = Date.now() - subscription.last_update;
@@ -165,7 +165,7 @@ function updateSubscriptionInfoAll() {
       var minutes = Math.round(seconds / 60);
       var hours = Math.round(minutes / 60);
       var days = Math.round(hours / 24);
-      if (subscription.last_update_failed)
+      if (subscription.last_update_failed_at)
         text = translate("last_update_failed");
       if (seconds < 10)
         text += translate("updatedrightnow");
