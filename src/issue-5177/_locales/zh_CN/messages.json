@@ -1,0 +1,756 @@
+﻿{
+   "adalreadyblocked": {
+      "description": "on the ad report page, telling a user there is nothing to do",
+      "message": "广告已经被拦截,你什么都不用做了!"
+   },
+   "adblockreportinganad": {
+      "description": "title of ad report page",
+      "message": "AdBlock - 提交广告"
+   },
+   "adstillappear": {
+      "description": "question on ad reporting page",
+      "message": "广告依然显示吗?"
+   },
+   "advanced": {
+      "description": "Section label for advanced options",
+      "message": "高级选项"
+   },
+   "betalabel": {
+      "description": "Option on first tab page",
+      "message": "测试版本,可能会出现问题"
+   },
+   "blacklistclickmessage": {
+      "description": "Message at the top of the blacklist options tab",
+      "message": "右键点击网页上的广告以拦截或在这里手动拦截"
+   },
+   "blacklisterattrwillbe": {
+      "description": "Checkbox label",
+      "message": "$attribute$ 将被 $value$",
+      "placeholders": {
+         "attribute": {
+            "content": "$1",
+            "example": "class"
+         },
+         "value": {
+            "content": "$2",
+            "example": "AdBanner"
+         }
+      }
+   },
+   "blacklisterblockedelement": {
+      "description": "Tells the user what the blocked element is on the slider page",
+      "message": "被拦截的元素:"
+   },
+   "blacklisterblocksalloftype": {
+      "description": "Warns the user that all elements of type X will be blocked",
+      "message": "注意:这个过滤器将拦截网页上的所有 $elementtype$ 元素",
+      "placeholders": {
+         "elementtype": {
+            "content": "$1",
+            "example": "DIV"
+         }
+      }
+   },
+   "blacklistereditfilter": {
+      "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text.",
+      "message": "请在下面输入正确的过滤器,然后点击确定"
+   },
+   "blacklistermatches": {
+      "description": "Tells the user multiple matches were found",
+      "message": "在该页面上有 $matchcount$ 个匹配项目",
+      "placeholders": {
+         "matchcount": {
+            "content": "$1",
+            "example": "5"
+         }
+      }
+   },
+   "blacklisternofilter": {
+      "description": "Warning if the user hasn't specified a filter",
+      "message": "没有指定过滤器!"
+   },
+   "blacklisternotsure": {
+      "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message.",
+      "message": "<b>不确定?</b>直接点击'拦截'按钮吧."
+   },
+   "blacklisteroptions1": {
+      "description": "Blacklister attribute choosing page message",
+      "message": "当您每次访问这个页面的时候,这个广告的哪些属性是不变的?"
+   },
+   "blacklisteroptionstitle": {
+      "description": "Blacklister options page title",
+      "message": "最后一步:(高级)"
+   },
+   "blacklistersinglematch": {
+      "description": "Tells the user only one match was found",
+      "message": "符合此过滤器的有 <b>1</b> 项"
+   },
+   "blacklisterthefilter": {
+      "description": "Blacklister attribute choosing page message",
+      "message": "该过滤器可以在\"选项\"中修改:"
+   },
+   "blacklistertype": {
+      "description": "node name is called 'Type'",
+      "message": "类型"
+   },
+   "blacklisterwarningnofilter": {
+      "description": "Warns the user that no filter was specified",
+      "message": "警告:没有指定过滤器"
+   },
+   "blockanadtitle": {
+      "description": "Title of the first two dialogs of the blacklister",
+      "message": "拦截广告"
+   },
+   "blockdomain": {
+      "description": "Message of the url and css -blocking area",
+      "message": "应用于域名"
+   },
+   "blockurlwithtext": {
+      "description": "Message of the url-blocking area",
+      "message": "拦截包含该文本的网址"
+   },
+   "buttonback": {
+      "description": "Back to previous wizard page button",
+      "message": "上一步"
+   },
+   "buttonblockit": {
+      "description": "Block button",
+      "message": "拦截"
+   },
+   "buttoncancel": {
+      "description": "Cancel button",
+      "message": "放弃"
+   },
+   "buttonedit": {
+      "description": "Edit filter manually button",
+      "message": "编辑"
+   },
+   "buttonexclude": {
+      "description": "Button for excluding a domain in the whitelister dialog (see 'whitelistertitle' message)",
+      "message": "排除"
+   },
+   "buttonlooksgood": {
+      "description": "Looks good button",
+      "message": "确定"
+   },
+   "buttonok": {
+      "description": "OK button",
+      "message": "确定"
+   },
+   "cantblockflash": { 
+      "message": "目前还无法阻挡在Flash 或其他外挂程式中的广告。此功能尚在等待浏览器与WebKit 支援。", 
+      "description": "Result of the final ad report question" 
+   },
+   "cantblockflashwarning": { 
+      "message": "该广告是出现在影片或Flash 游戏等外挂程式中？", 
+      "description": "Text of the final ad report question" 
+   },
+   "checkinfirefox": {
+      "description": "tell a user to see if a reported ad also appears in firefox",
+      "message": "在FireFox中检查"
+   },
+   "checkinfirefox1": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "如果你没有FireFox,请安装."
+   },
+   "checkinfirefox2": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "如果你的FireFox没有Adblock Plus,请安装."
+   },
+   "checkinfirefox3": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "请在Firefox中订阅相同的广告过滤器列表 (Adblock的自定义过滤器除外)"
+   },
+   "checkinfirefox4": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "在Firefox中浏览此广告页"
+   },
+   "checkinfirefox5": {
+      "description": "instruction for how to check Firefox for a reported ad",
+      "message": "在Firefox中,广告依然显示吗?"
+   },
+   "chromebutton_showoption": {
+      "description": "Message on installation success page",
+      "message": "在工具栏上显示按钮"
+   },
+   "clickthead": {
+      "description": "When you have to click the ad to continue",
+      "message": "点击广告，我会带着你拦截它."
+   },
+   "clickupdatefilters": {
+      "description": "instruction on ad report page",
+      "message": "请点击此按钮:<a>更新广告过滤器</a>"
+   },
+   "contextmenuexcludedomain": {
+      "description": "Context menu entry",
+      "message": "将本域名添加到白名单..."
+   },
+   "block_an_ad_on_this_page": {
+      "description": "Context menu entry",
+      "message": "拦截此页上的广告"
+   },
+   "correctfilters": {
+      "description": "on the ad report page, label describing having the right set of filters",
+      "message": "选择正确过滤器"
+   },
+   "csstomatch": {
+      "description": "Message of the css-hiding area",
+      "message": "匹配的CSS"
+   },
+   "debuginlogoption": {
+      "description": "Option on first tab page",
+      "message": "在控制台日志里显示调试信息(Debug)(将会减缓Adblock的运行)"
+   },
+   "description1": {
+      "message": "最受欢迎的Google 浏览器扩充功能，拥有超过150 万位使用者！阻挡网路上所有的广告。",
+      "description": "Extension description in manifest"
+   },
+   "donaterequest2": { 
+      "message": "为了全力投入AdBlock，Michael 最近辞去了工作！现在完全依靠各位的<a>捐助</a>来支持家庭。", 
+      "description": "Donation request on installation success page" 
+   },
+   "enterurloflist": {
+      "description": "Error messagebox",
+      "message": "请输入正确的过滤器网址来订阅"
+   },
+   "failedtofetchfilter": {
+      "description": "Error messagebox",
+      "message": "无法获得该过滤器"
+   },
+   "fetchinglabel": {
+      "description": "Status label",
+      "message": "获取中...请稍后"
+   },
+   "filecleanerwarning": { 
+      "message": "如果您每次开启AdBlock 都看到此讯息，请确认您使用的档案清理程式不会清除「localStorage」 档案。 ",
+      "description": "Help for users who use hyperactive file cleaners"
+   },
+   "filteradblock_custom": {
+      "description": "A filter list. Don't translate 'AdBlock'",
+      "message": "Adblock自定义过滤器(推荐)"
+   },
+   "filterchinese": {
+      "description": "A filter list",
+      "message": "中国过滤器"
+   },
+   "filterczech": {
+      "description": "A filter list",
+      "message": "捷克过滤器"
+   },
+   "filterdanish": {
+      "description": "A filter list",
+      "message": "丹麦过滤器"
+   },
+   "filterdutch": {
+      "description": "A filter list",
+      "message": "荷兰过滤器"
+   },
+   "filtereasylist": {
+      "description": "A filter list. Don't translate 'EasyList'",
+      "message": "EasyList(推荐)"
+   },
+   "filtereasylist_plun_korean": {
+      "description": "A filter list",
+      "message": "韩国过滤器"
+   },
+   "filtereasylist_plus_bulgarian": {
+      "description": "A filter list",
+      "message": "保加利亚过滤器"
+   },
+   "filtereasylist_plus_finnish": {
+      "description": "A filter list",
+      "message": "芬兰过滤器"
+   },
+   "filtereasylist_plus_french": {
+      "description": "A filter list",
+      "message": "法国过滤器"
+   },
+   "filtereasylist_plus_german": {
+      "description": "A filter list",
+      "message": "德国过滤器"
+   },
+   "filtereasylist_plus_norwegian": {
+      "description": "A filter list",
+      "message": "挪威过滤器"
+   },
+   "filtereasylist_plus_polish": {
+      "description": "A filter list",
+      "message": "波兰过滤器"
+   },
+   "filtereasylist_plus_romanian": {
+      "description": "A filter list",
+      "message": "罗马尼亚过滤器"
+   },
+   "filtereasylist_plus_spanish": {
+      "description": "A filter list",
+      "message": "西班牙过滤器"
+   },
+   "filtereasylist_plus_vietnamese": {
+      "description": "A filter list",
+      "message": "越南过滤器"
+   },
+   "filterhungarian": {
+      "description": "A filter list",
+      "message": "匈牙利过滤器"
+   },
+   "filterisraeli": {
+      "description": "A filter list",
+      "message": "以色列过滤器"
+   },
+   "filteritalian": {
+      "description": "A filter list",
+      "message": "意大利过滤器"
+   },
+   "filterjapanese": {
+      "description": "A filter list",
+      "message": "日本过滤器"
+   },
+   "filterlistlink": {
+      "description": "Explanation of the filter lists",
+      "message": "不要订阅您不需要的过滤器--每个过滤器都会拖慢您的程序!若需要其他更多的过滤器请<a>点击这里</a>."
+   },
+   "filterpolish": {
+      "description": "A filter list",
+      "message": "波兰过滤器"
+   },
+   "filterrussian": {
+      "description": "A filter list",
+      "message": "俄罗斯过滤器"
+   },
+   "filtersavewarning": {
+      "description": "Warning when blacklisting manually",
+      "message": "注意:如果下面的内容有错误,这将会导致广告过滤器失效!<br/>请<a>阅读过滤器语法教程</a>来学习如何添加高级的白名单和黑名单过滤器"
+   },
+   "filterstabtitle": {
+      "description": "Title of the filter list tab",
+      "message": "订阅到过滤器列表"
+   },
+   "filterukranian": {
+      "description": "A filter list",
+      "message": "乌克兰过滤器"
+   },
+   "findingads": {
+      "description": "When you press ctrl-shift-K the blacklister searches for ads",
+      "message": "寻找广告中...<br/><br/><i>请您稍等</i>"
+   },
+   "fixityourself": {
+      "description": "telling a user who won't report an ad to us how to handle it for herself",
+      "message": "好吧,您依然可以在选项里拦截该广告。谢谢使用!"
+   }, 
+   "flashads": { 
+      "message": "影片和 Flash", 
+      "description": "Title of the final ad report question if the ad didn't appear in FF" 
+   },
+   "free_description": { 
+      "message": "最受欢迎的Google 浏览器扩充功能-- 请支付$1.99 美金购买AdBlock", 
+      "description": "Extension description used in free version manifest" 
+   }, 
+   "generaloptions": {
+      "description": "Title of first tab page",
+      "message": "基本"
+   },
+   "googletextads": {
+      "description": "Option on first tab page",
+      "message": "不拦截Google搜索结果中的广告"
+   },
+   "installedtitle": {
+      "description": "Title for the installation success page",
+      "message": "你现在已经成功安装了 Adblock!"
+   },
+   "installisdone": {
+      "description": "Message on the installation success page",
+      "message": "重新加载(刷新)所有打开的标签，然后看看广告是不是已经消失了呢?"
+   },
+   "labelshow": {
+      "description": "The label when you click the 'show links to filter lists' option",
+      "message": "查看"
+   },
+   "lang_bulgarian": {
+      "description": "language",
+      "message": "保加利亚语"
+   },
+   "lang_chinese": {
+      "description": "language",
+      "message": "中文"
+   },
+   "lang_czech": {
+      "description": "language",
+      "message": "捷克语"
+   },
+   "lang_danish": {
+      "description": "language",
+      "message": "丹麦语"
+   },
+   "lang_dutch": {
+      "description": "language",
+      "message": "荷兰语"
+   },
+   "lang_english": {
+      "description": "language",
+      "message": "英语"
+   },
+   "lang_finnish": {
+      "description": "language",
+      "message": "芬兰语"
+   },
+   "lang_french": {
+      "description": "language",
+      "message": "法国语"
+   },
+   "lang_german": {
+      "description": "language",
+      "message": "德国语"
+   },
+   "lang_hungarian": {
+      "description": "language",
+      "message": "匈牙利语"
+   },
+   "lang_israeli": {
+      "description": "language",
+      "message": "以色列语"
+   },
+   "lang_italian": {
+      "description": "language",
+      "message": "意大利语"
+   },
+   "lang_japanese": {
+      "description": "language",
+      "message": "日语"
+   },
+   "lang_korean": {
+      "description": "language",
+      "message": "韩国语"
+   },
+   "lang_norwegian": {
+      "description": "language",
+      "message": "挪威语"
+   },
+   "lang_polish": {
+      "description": "language",
+      "message": "波兰语"
+   },
+   "lang_romanian": {
+      "description": "language",
+      "message": "罗马尼亚语"
+   },
+   "lang_russian": {
+      "description": "language",
+      "message": "俄语"
+   },
+   "lang_spanish": {
+      "description": "language",
+      "message": "西班牙语"
+   },
+   "lang_ukranian": {
+      "description": "language",
+      "message": "乌克兰语"
+   },
+   "lang_vietnamese": {
+      "description": "language",
+      "message": "越南语"
+   },
+   "linkblockadbyurl": {
+      "description": "Link on the third tab",
+      "message": "根据网址拦截广告"
+   },
+   "linkhidesection": {
+      "description": "Link on the third tab",
+      "message": "拦截网页上的内容"
+   },
+   "manualfilteredit": {
+      "description": "Subtitle on the third tab",
+      "message": "手动编辑过滤器:"
+   },
+   "no": {
+      "description": "A negative response to a question",
+      "message": "否"
+   },
+   "nolisturllabel": {
+      "description": "Status label",
+      "message": "这不是过滤器的网址"
+   },
+   "optionschangelog": {
+      "description": "changelog link",
+      "message": "更新日志"
+   },
+   "optionstitle": {
+      "description": "Title for the options page",
+      "message": "AdBlock 选项"
+   },
+   "optionsversion": {
+      "description": "Version number",
+      "message": "版本号:$version$",
+      "placeholders": {
+         "version": {
+            "content": "$1",
+            "example": "2.0.9"
+         }
+      }
+   },
+   "orenteraurl": {
+      "description": "link for custom subscription",
+      "message": "或者输入一个网址:"
+   },
+   "other": {
+      "description": "multiple choice option",
+      "message": "其他"
+   },
+   "pagelanguagecheck": {
+      "description": "question on ad report page",
+      "message": "请问带有广告的网页是什么语言的?"
+   },
+   "refusetocheck": {
+      "description": "user is telling us they don't wish to investigate something for us",
+      "message": "我不想这样做"
+   },
+   "reloadadpage": {
+      "description": "instruction on ad report page",
+      "message": "重新加载带有广告的页面"
+   },
+   "removedlabel": {
+      "description": "Status label",
+      "message": "删除"
+   },
+   "removefromlist": {
+      "description": "Label to remove a custom filter",
+      "message": "从列表中删除"
+   },
+   "reportanad": {
+      "description": "A link for users who found an ad somewhere and want to report it",
+      "message": "<a>提交未拦截的广告</a>给Adblock或者广告过滤器制作者"
+   },
+   "reportfilterlistproblem": {
+      "description": "telling the user to report an ad to a filter list maintainer",
+      "message": "这是广告过滤器的问题,请在这里报告:$link$",
+      "placeholders": {
+         "link": {
+            "content": "$1",
+            "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+         }
+      }
+   },
+   "reporttous1": { 
+      "message": "您可以在$in_the_issue_tracker_link$回报广告。", 
+      "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us $in_the_issue_tracker_link$.'", 
+      "placeholders": {
+         "in_the_issue_tracker_link": {
+            "content": "$1问题追踪页面$2",
+            "example": "<a href='issuetracker.html'>in the issue tracker</a>"
+         }
+      }
+   },
+   "retryaftersubscribe": {
+      "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+      "message": "请先订阅过滤器: $list_title$，然后看看广告是否依旧存在.",
+      "placeholders": {
+         "list_title": {
+            "content": "$1",
+            "example": "French filters"
+         }
+      }
+   },
+   "savebutton": {
+      "description": "Save button",
+      "message": "保存"
+   },
+   "savereminder": {
+      "description": "Reminder to press save",
+      "message": "别忘了保存哦!"
+   },
+   "setotheroptions": {
+      "description": "Message on installation success page",
+      "message": "您可以通过点击 菜单->工具->扩展程序->Adblock->选项 以设置订阅过滤器列表或其他选项"
+   },
+   "showcontextmenus": {
+      "description": "Option on first tab page",
+      "message": "添加到右键菜单"
+   },
+   "showlinkstolists": {
+      "description": "Option on second tab page",
+      "message": "显示过滤器的地址:"
+   },
+   "sliderexplanation": {
+      "description": "Blacklister slider page message",
+      "message": "滑动滑块,直到广告被正确的拦截,并且网页其他内容没有影响"
+   },
+   "slidertitle": {
+      "description": "Blacklister slider page title",
+      "message": "第一步:找出要拦截的广告"
+   },
+   "somequicksetup": {
+      "description": "Title of the options on the installation succes page",
+      "message": "快速设置"
+   },
+   "subscribebutton": {
+      "description": "subscribe to a list button",
+      "message": "订阅"
+   },
+   "subscribedlabel": {
+      "description": "Status label",
+      "message": "订阅成功"
+   },
+   "subscribetoall": {
+      "description": "option on second tab page",
+      "message": "订阅所有的过滤器:"
+   },
+   "subscribetonone": {
+      "description": "option on second tab page",
+      "message": "取消订阅所有的过滤器:"
+   },
+   "subscribingfailed": {
+      "description": "abp: link subscriber result",
+      "message": "失败!"
+   },
+   "subscribingfinished": {
+      "description": "abp: link subscriber result",
+      "message": "完成!"
+   },
+   "subscribingtitle": {
+      "description": "abp: link subscriber title",
+      "message": "订阅到过滤列表..."
+   },
+   "tabfilterlists": {
+      "description": "A tab on the options page",
+      "message": "过滤器"
+   },
+   "tabgeneral": {
+      "description": "A tab on the options page",
+      "message": "基本设置"
+   },
+   "unsubscribedlabel": {
+      "description": "Status label",
+      "message": "取消订阅成功"
+   },
+   "updateddayago": {
+      "description": "Label for subscription",
+      "message": "更新于 1 天前"
+   },
+   "updateddaysago": {
+      "description": "Label for subscription",
+      "message": "更新于 $days$ 天前",
+      "placeholders": {
+         "days": {
+            "content": "$1",
+            "example": "15"
+         }
+      }
+   },
+   "updatedhourago": {
+      "description": "Label for subscription",
+      "message": "更新于 1 天前"
+   },
+   "updatedhoursago": {
+      "description": "Label for subscription",
+      "message": "更新于 $hours$ 天前",
+      "placeholders": {
+         "hours": {
+            "content": "$1",
+            "example": "15"
+         }
+      }
+   },
+   "updatedminuteago": {
+      "description": "Label for subscription",
+      "message": "更新于 1 分钟前"
+   },
+   "updatedminutesago": {
+      "description": "Label for subscription",
+      "message": "更新于 $minutes$ 分钟前",
+      "placeholders": {
+         "minutes": {
+            "content": "$1",
+            "example": "15"
+         }
+      }
+   },
+   "updatedrightnow": {
+      "description": "Label for subscription",
+      "message": "刚刚更新"
+   },
+   "updatedsecondsago": {
+      "description": "Label for subscription",
+      "message": "更新于 $seconds$ 秒钟前",
+      "placeholders": {
+         "seconds": {
+            "content": "$1",
+            "example": "15"
+         }
+      }
+   },
+   "updatefromoldversion": {
+      "description": "ad report page instruction",
+      "message": "您使用的是旧版本的AdBlock,请先$updatelink$到最新版",
+      "placeholders": {
+         "updatelink": {
+            "content": "$1升级$2",
+            "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+         }
+      }
+   },
+   "updatenowmessage": {
+      "description": "update filters text + button",
+      "message": "AdBlock 将会自动升级过滤器,你也可以<a>现在升级</a>."
+   },
+   "updateyourlists": {
+      "description": "instruction on ad report page",
+      "message": "请确保您的广告过滤器已经是最新版本"
+   },
+   "whitelistertext": {
+      "description": "The message of the whitelister dialog, putting the domain name on a separate line",
+      "message": "Adblock 将不会拦截此域名上的广告:<br/>$domain$",
+      "placeholders": {
+         "domain": {
+            "content": "'<i>$1</i>'",
+            "example": "'<i>live.msn.com</i>'"
+         }
+      }
+   },
+   "whitelistertitle": {
+      "description": "The title of the whitelister dialog",
+      "message": "将此域名添加到白名单?"
+   },
+   "yes": {
+      "description": "A positive response to a question",
+      "message": "是"
+   },
+   "youtubeads": {
+      "description": "Option on first tab page",
+      "message": "拦截YouTube视频中的广告"
+   },
+   "youtubevideomessage": {
+      "description": "Message on the YouTube video page that tells you that it might be the option that blocks the video.  $link$'s text is the title of the AdBlock Options page.",
+      "message": "没有视频?试着重新加载(刷新)页面看看。若此情况经常发生,请在 $link$ 里停用YouTube广告拦截.",
+      "placeholders": {
+         "link": {
+            "content": "$1",
+            "example": "AdBlock Options"
+         }
+      }
+   },
+   "pause_adblock": {
+    "message": "暂停AdBlock",
+    "description": "Menu entry to pause AdBlock."
+  },
+  "dont_run_on_this_page": {
+    "message": "不在本页上运行AdBlock",
+    "description": "Menu entry to whitelist a page"
+  },
+  "dont_run_on_domain": {
+    "message": "不在$domain$上运行AdBlock",
+    "description": "Menu entry whitelisting the domain of the current tab.",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "www.google.com"
+      }
+    }
+  },
+  "options": {
+    "message": "选项",
+    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+  },
+  "hide_this_button": {
+    "message": "隐藏此按钮",
+    "description": "Toolbar button menu entry to hide the AdBlock button"
+  }
+}

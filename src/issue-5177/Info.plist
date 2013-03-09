@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Michael Gundlach</string>
+	<key>CFBundleDisplayName</key>
+	<string>AdBlock</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.betafish.adblockforsafari</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.3.11</string>
+	<key>CFBundleVersion</key>
+	<string>102.3.11</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Global Page</key>
+		<string>background.html</string>
+		<key>Toolbar Items</key>
+		<array>
+			<dict>
+				<key>Command</key>
+				<string></string>
+				<key>Identifier</key>
+				<string>AdBlockOptions</string>
+				<key>Image</key>
+				<string>img/icon16-grayscale.png</string>
+				<key>Label</key>
+				<string>Options</string>
+				<key>Palette Label</key>
+				<string></string>
+				<key>Tool Tip</key>
+				<string>AdBlock Options</string>
+			</dict>
+		</array>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>End</key>
+			<array>
+                <string>blacklisting/overlay.js</string>
+                <string>blacklisting/clickwatcher.js</string>
+                <string>blacklisting/elementchain.js</string>
+                <string>blacklisting/blacklistui.js</string>
+				<string>blacklister.js</string>
+				<string>whitelister.js</string>
+				<string>adblock.js</string>
+			</array>
+			<key>Start</key>
+			<array>
+				<string>port.js</string>
+				<string>jquery/jquery.min.js</string>
+				<string>functions.js</string>
+				<string>broadcast_channel.js</string>
+                <string>filtering/filteroptions.js</string>
+				<string>adblock_start.js</string>
+			</array>
+		</dict>
+	</dict>
+	<key>Description</key>
+	<string>Port of AdBlock for Chrome to Safari</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Include Secure Pages</key>
+			<true/>
+			<key>Level</key>
+			<string>All</string>
+		</dict>
+	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://safariadblock.com/update.plist</string>
+	<key>Website</key>
+	<string>http://safariadblock.com</string>
+</dict>
+</plist>

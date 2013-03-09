@@ -1,0 +1,118 @@
+#!/bin/bash
+
+function usage() {
+    echo "Usage:"
+    echo "$0 shipit"
+    echo "$0 freeship"
+    echo "$0 filterdiff"
+    echo "$0 updatefilters"
+    echo "$0 bump"
+    echo
+    echo "This may be useful:"
+    echo
+    echo "    http://adblockforchrome.googlecode.com/svn/trunk/filters/adblock_custom.txt"
+    echo
+    exit 1
+}
+
+function freeship() {
+    version=$(basename $(pwd))
+    [ "$(basename $(dirname $(pwd)))" = 'tags' ] || {
+      echo "Sorry, you must run this from tags/[some version]."
+      exit 1
+    }
+
+    cd ../..
+
+    cp tags/$version/manifest.json _manifest_temp.txt
+    sed -i 's/"name": "AdBlock".*$/"name": "AdBlock Free",/' tags/$version/manifest.json
+    sed -i 's/"description": "__MSG_.*$/"description": "__MSG_free_description",/' tags/$version/manifest.json
+
+    rm -f FREE_afc_version.zip && (cd tags; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r ../FREE_afc_version.zip $version)
+    mv _manifest_temp.txt tags/$version/manifest.json
+
+    echo
+    echo "Version: $version"
+    echo "Go push the new FREE_afc_version.zip up to the Store."
+}
+
+function shipit() {
+    grep 'debug_id.*true;' functions.js && {
+      echo "Fix debug_id, stupid"
+      exit 1
+    }
+
+    [ "$(basename $(pwd))" = 'trunk' ] || {
+      echo "Sorry, you must run this from trunk."
+      exit 1
+    }
+
+    v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    echo Zipping...
+    rm -f ../adblockforchrome-*.zip && (cd ..; zip -x '*/.svn/*' -x '*/tools/*' -x '*/filters/*' -r "adblockforchrome-$v.zip" trunk/ >/dev/null )
+    echo
+
+    version=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    svn up ../wiki/Changelog.wiki >/dev/null 2>&1
+    grep "$version" ../wiki/Changelog.wiki && {
+        echo -n "Did you forget to bump the version in manifest.json (y/n)? "
+        read answer
+        [ "$answer" = "y" ] && exit 1
+        skip_changelog=1
+    }
+
+    if [ "$skip_changelog" != 1 ]; then
+        echo -n "Changelog entry: *$version*: "
+        read description
+        sed -i "s/== Versions ==/== Versions ==\n\n*$version*: $description/" ../wiki/Changelog.wiki
+    fi
+    echo
+    grep -A 3 -B 3 "$version" ../wiki/Changelog.wiki
+    echo
+    echo -n "Check in wiki and code, and make a tag for the release (y/n)? "
+    read answer
+    [ "$answer" = y ] && {
+      cd ..
+      svn cp trunk tags/$version || {
+        echo "Couldn't make tags/$version.  Aborting checkin."
+        exit 1
+      }
+      svn ci wiki/Changelog.wiki trunk tags/$version -m "Release new version $version: $description"
+    }
+
+    echo "Last step: go push the new adblockforchrome-$v.zip up to the Store, and ship Safari if you want."
+}
+
+function bump() {
+    v=$(grep '"version"' manifest.json | cut -d '"' -f 4)
+    [ -z "$v" ] && { echo "No version found."; exit 1; }
+    nextv=$(echo $v | cut -d '.' -f 1,2).$(( $(echo $v | cut -d . -f 3) + 1 ))
+    sed -i "s/$v/$nextv/g" manifest.json Info.plist
+    echo "Before and after:"
+    echo
+    svn diff manifest.json Info.plist | egrep '^ *[-+]'
+    echo
+    echo "svn revert -R manifest.json Info.plist # if you aren't happy."
+    echo
+}
+
+function main() {
+    if [ $1 = "shipit" ]; then shipit
+    elif [ $1 = "freeship" ]; then freeship
+    elif [ $1 = "filterdiff" ]; then diff -b <(curl http://chromeadblock.com/filters/adblock_custom.txt 2>/dev/null) filters/adblock_custom.txt | less
+    elif [ $1 = "updatefilters" ]; then 
+        sed -i 's%^! Last update: .*$%! Last update: '"$(date)%" filters/adblock_custom.txt
+        head -3 filters/adblock_custom.txt
+        echo -n "Press enter to proceed or Ctrl-C to abort: "
+        read
+        svn ci filters/adblock_custom.txt -m "Shipping AdBlock Custom filter list to deployment" && \
+        scp filters/adblock_custom.txt nathanlong@chromeadblock.com:webapps/mg_chromeadblock_com/filters/
+    elif [ $1 = "bump" ]; then bump
+    else usage
+    fi
+}
+
+cd $(dirname $0)
+cd ..
+[ $# != 1 ] && usage
+main "$1"
