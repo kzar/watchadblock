@@ -137,39 +137,43 @@ $(function() {
   });
 });
 
-// Payment wrapper open/close click handlers
+// Share open/close click handlers
 $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
-  var payHref = "https://chromeadblock.com/share";
-  $("#pay_open").click(function() {
+  var linkHref = "https://chromeadblock.com/share";
+  $("#link_open").click(function() {
     if (state === "initial") {
       $("<iframe>").
         attr("frameBorder", 0).
-        attr("src", payHref).
+        attr("src", linkHref).
         width("100%").
         height("100%").
-        appendTo("#payment_wrapper");
+        appendTo("#slideout_wrapper");
     }
     if (state === "open")
       return;
     state = "open";
-    $("#pay_close").show();
-    $("body").animate({width: 780, height: 490}, {queue:false});
+    $("#link_close").show();
+    var slideoutWidth = parseInt($("#div_slideout").data("width"));
+    var slideoutHeight = parseInt($("#div_slideout").data("height"));
+    $("body").animate({width: slideoutWidth, height: slideoutHeight},
+                      {queue:false});
     $("#menu-items").slideUp();
-    $("#payment_wrapper").
+    $("#slideout_wrapper").
       width(0).height(0).show().
-      animate({width: 730, height: 450}, {queue:false});
+      animate({width: slideoutWidth-50, height: slideoutHeight-40}, 
+              {queue:false});
   });
-  $("#pay_close").click(function() {
+  $("#link_close").click(function() {
     if (state != "open")
       return;
     state = "closed";
     $("body").animate(bodysize, {queue:false});
     $("#menu-items").slideDown();
-    $("#payment_wrapper").animate({width: 0, height: 0}, {queue:false});
-    $("#pay_close").hide();
-    $("#payment_wrapper").slideUp();
+    $("#slideout_wrapper").animate({width: 0, height: 0}, {queue:false});
+    $("#link_close").hide();
+    $("#slideout_wrapper").slideUp();
   });
 });
 
