@@ -142,6 +142,9 @@ $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
   var linkHref = "https://chromeadblock.com/share";
+  // TODO temp
+  linkHref = chrome.extension.getURL("/tools/share/index.html");
+  // end TODO
   $("#link_open").click(function() {
     if (state === "initial") {
       $("<iframe>").
