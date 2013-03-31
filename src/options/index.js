@@ -47,7 +47,7 @@ function displayVersionNumber() {
 
 $('#paymentlink').click(function() {
   BGcall("storage_get", "userid", function(userId) {
-    var href = "https://chromeadblock.com/pay/?source=O&u=" + userId;
+    var href = "https://chromeadblock.com/share";
     BGcall("openTab", href);
   });
   return false;
