@@ -1,20 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:fb="http://ogp.me/ns/fb#">
- <head> 
-  <title>Please, share AdBlock :)</title>
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="css/site_global.css?89652228"/>
-  <link rel="stylesheet" type="text/css" href="css/index.css?279198822" id="pagesheet"/>
-    <!--FB like button-->
+<head>
+<meta http-equiv="Content-Type" content="html/css; charset=utf-8">
+<title i18n="adblock_share_page"></title>
+
+<!--FB like button-->
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-    <!--Google + button-->
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      channelUrl : '//www.getadblock.com', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+<!--Google + button-->
 <script type="text/javascript">
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -22,57 +32,109 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 </script>
-    <!--Twitter button-->
+<!--Twitter button-->
 <script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
- </head>
- <body>
 
-  <div class="clearfix" id="page"><!-- group -->
-   <div class="shadow gradient rounded-corners clearfix grpelem" id="u74-14"><!-- Adblock share page -->
-    <p>&nbsp;</p>
-    <p id="u74-7"><span id="u74-3">Do you</span><span id="u74-4">&nbsp;</span><span id="u74-5">love</span><span id="u74-6">&nbsp;AdBlock?</span></p>
-    <p>&nbsp;</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Make me<span id="u74-10">&nbsp;happy</span><span id="u74-11">&nbsp;and share your opinion on... </span></p>
-   </div>
-   <div class="shadow rounded-corners clearfix grpelem" id="u96-3">
-    <p>&nbsp;</p>
-   </div>
-   <div class="rounded-corners shadow grpelem" id="u97-3">
-    <div class="_u97-3 f3s_top" id="_u97-3-f3s_top"></div>
-    <div class="_u97-3 f3s_mid clearfix" id="_u97-3-f3s_mid">
-     <div class="position_content clearfix" id="u97-3position_content">
-      <p>&nbsp;</p>
-     </div>
-    </div>
-    <div class="_u97-3 f3s_bot" id="_u97-3-f3s_bot"></div>
-   </div>
-   <div class="clearfix grpelem" id="u126-14"><!-- Donate -->
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <p>&nbsp; If you <span id="u126-4">really</span><span id="u126-5">&nbsp;love </span><span id="u126-6">AdBlock</span><span id="u126-7">,</span>&nbsp;you can <a class="nonblock" href="https://chromeadblock.com/pay/">donate</a>&nbsp;:)</p>
-   </div>
-   <div class="shadow rounded-corners clearfix grpelem" id="u133-3">
-    <p>&nbsp;</p>
-   </div>
-   <div class="grpelem" id="u142"><!-- FB like a href -->
-    <fb:like href="http://www.getadblock.com" send="true" width="450" show_faces="false"></fb:like>
-</div>
-   <div class="grpelem" id="u150"><!-- Twitter a href -->
-    <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fgetadblock.com&text=Hey%21%20I%27ve%20found%20a%20great%20extension%20for%20Chrome%2C%20Safari%20and%20Opera.%20Want%20to%20check%20it%20out%3F" class="twitter-share-button" data-lang="en">Tweet</a>
-</div>
-   <div class="grpelem" id="u157"><!-- Google+ a href -->
+<style type="text/css"> 
+
+#body {
+	width: 460px;
+	height: 400px;
+	background-color: #F0F0F0;
+	color: black;
+	border: 1px solid black;
+	border-radius: 1em;
+	border-width: thin;
+	-webkit-box-shadow: 0px 1px 5px 0px #444444;
+	margin: 0px;
+}
+
+#box1 {
+	width: 375px;
+	height: 80px;
+	border: 1px solid #C80000;
+	border-radius: 1em;
+	border-width: medium;
+	-webkit-box-shadow: 0px 1px 5px 0px #444444;
+	margin-top: 20px;
+	margin-bottom: 5px;
+	margin-left: 25px;
+}
+
+#box2 {
+	width: 375px;
+	height: 80px;
+	border: 1px solid blue;
+	border-radius: 1em;
+	border-width: medium;
+	-webkit-box-shadow: 0px 1px 5px 0px #444444;
+	margin-bottom: 5px;
+	margin-left: 25px;
+}
+
+#box3 {
+	width: 375px;
+	height: 80px;
+	border: 1px solid #3CF;
+	border-radius: 1em;
+	border-width: medium;
+	-webkit-box-shadow: 0px 1px 5px 0px #444444;
+	margin-bottom: 5px;
+	margin-left: 25px;
+}
+
+.donate {
+	 margin-left: 25px;
+	 font-family: Georgia, "Times New Roman", Times, serif;
+	 font-size: 14px;
+}
+
+.header { 
+     font-size: 24px;
+	 margin-left: 115px;
+	 height: 35px;
+}
+
+.twitter { 
+     margin-left: 100px;
+	 margin-top: -55px;	  
+}
+
+#g { 
+     margin-top: -55px;
+     margin-left: 100px;
+}
+</style>
+</head>
+
+<body>
+ <div id="body"> 
+  <div class="header" i18n="share_page">Do you love AdBlock?  </div>
+   <div class="donate" i18n="share_sentence">Make me happy and share your opinion on...</div>
+   
+   
+   
+   <div id="box1">
+    <img src="images/googleplus.png" vspace="15" hspace="15" />
+    <div id="g">
     <div class="g-plusone" data-size="tall" data-annotation="inline" data-width="300" data-href="http://www.getadblock.com"></div>
-</div>
-   <div class="grpelem" id="u164"><!-- Twitter image -->
-    <img class="block" id="u164_img" src="images/twitter.png" alt="" width="72" height="72"/>
-   </div>
-   <div class="grpelem" id="u169"><!-- G+ image -->
-    <img class="block" id="u169_img" src="images/googleplus.png" alt="" width="72" height="72"/>
-   </div>
-   <div class="grpelem" id="u174"><!-- FB image -->
-    <img class="block" id="u174_img" src="images/facebook.png" alt="" width="72" height="72"/>
-   </div>
-   <div class="verticalspacer"></div>
+    </div>
   </div>
-   </body>
+  
+  <div id="box2">
+   <img src="images/facebook.png" vspace="15" hspace="15" />
+    <div class="fb-like" data-href="http://www.getadblock.com" data-send="true" data-width="450" data-show-faces="true"></div>
+  </div>
+ 
+  <div id="box3">
+   <img src="images/twitter.png"  vspace="15" hspace="15" />
+    <div class="twitter">
+    <a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fgetadblock.com&text=Hey%21%20I%27ve%20found%20a%20great%20extension%20for%20Chrome%2C%20Safari%20and%20Opera.%20Want%20to%20check%20it%20out%3F" class="twitter-share-button" data-lang="en">Tweet</a></div>
+  </div>
+   
+ <span class="donate" i18n="donate">Ak chcete naozaj</span>
+  
+
+</div>
+</body>
 </html>
