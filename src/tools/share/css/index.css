@@ -1,18 +1,16 @@
-@charset "utf-8";
-<style type="text/css"> 
-#body {
-	width: 460px;
-	height: 400px;
+    .big {
+	width: 395px;
+	height: 370px;
 	background: -webkit-gradient(linear, center top, center bottom, from(#F3F3F3),color-stop(150%, #E1E1E1));
 	color: black;
 	border: 1px solid black;
 	border-radius: 1em;
 	border-width: thin;
 	-webkit-box-shadow: 0px 1px 5px 0px #444444;
-	margin: 0px;
 }
+
 #box1 {
-	width: 375px;
+	width: 340px;
 	height: 80px;
 	border: 1px solid #C80000;
 	border-radius: 1em;
@@ -22,8 +20,9 @@
 	margin-bottom: 5px;
 	margin-left: 25px;
 }
+
 #box2 {
-	width: 375px;
+	width: 340px;
 	height: 80px;
 	border: 1px solid blue;
 	border-radius: 1em;
@@ -33,7 +32,7 @@
 	margin-left: 25px;
 }
 #box3 {
-	width: 375px;
+	width: 340px;
 	height: 80px;
 	border: 1px solid #3CF;
 	border-radius: 1em;
@@ -42,28 +41,33 @@
 	margin-bottom: 5px;
 	margin-left: 25px;
 }
-.donate {
-	 margin-left: 25px;
-	 font-family: Georgia, "Times New Roman", Times, serif;
-	 font-size: 14px;
+.donate, .text {
+	margin-left: 25px;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
 }
-.header { 
-     font-size: 24px;
-	 margin-left: 115px;
-	 height: 35px;
+.header {
+	font-size: 24px;
+	margin-left: 80px;
+	height: 35px;
+	font-weight: normal;
+	font-family: "Comic Sans MS", cursive;
 }
 .twitter { 
      margin-top: -55px;
      margin-left: 100px;  
 }
-#g { 
-     margin-top: -55px;
-     margin-left: 100px;
+#g {
+	margin-top: -55px;
+	margin-left: 100px;
 }
 #facebook {
-	 margin-top: -55px;
-     margin-left: 100px;
+	margin-top: -55px;
+	margin-left: 100px;
+}
+.text {
+	margin-bottom: -10px;
+	padding-top: 3px;
+	padding-right: 0px;
 }
 </style>
-
-
