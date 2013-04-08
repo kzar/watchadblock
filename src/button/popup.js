@@ -141,16 +141,13 @@ $(function() {
 $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
-  var linkHref = "https://chromeadblock.com/share";
-  // TODO temp
-  linkHref = chrome.extension.getURL("tools/share/index.html");
-  // end TODO  
+  var linkHref = "http://adblock.studenthosting.sk/index.html";
   $("#link_open").click(function() {
     if (state === "initial") {
       $("<iframe>").
         attr("frameBorder", 0).
         attr("src", linkHref).
-        width("100%").
+        width("120%").
         height("100%").
         appendTo("#slideout_wrapper");
     }
