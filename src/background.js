@@ -85,7 +85,7 @@
         chrome.tabs.create({url: url});
       } else {
         chrome.windows.getCurrent(function(currentWindow) {
-          chrome.tabs.query({active: true, windowId: currentWindow.id}, function(tabs) {
+          chrome.tabs.query({active: true, currentWindow : true}, function(tabs) {
             chrome.tabs.create({ url: url, index: (tabs[0] ? tabs[0].index + 1 : undefined) });
           });
         });
@@ -490,7 +490,7 @@
   //   }
   // Returns: null (asynchronous)
   getCurrentTabInfo = function(callback, secondTime) {
-    chrome.tabs.query({active: true, windowId: chrome.windows.WINDOW_ID_CURRENT}, function(tabs) {
+    chrome.tabs.query({active: true, currentWindow : true}, function(tabs) {
       if (tabs.length === 0)
         return; // For example: only the background devtools or a popup are opened
       var tab = tabs[0];
