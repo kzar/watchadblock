@@ -69,6 +69,7 @@
       <h2 i18n="updateyourlists"></h2>
       <ol>
         <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters"></li>
+		<!--<li i18n="disableallextensions" class="afterExtentionsDiabled"></li> -->
         <li i18n="reloadadpage" class="afterFilterUpdate"></li>
       </ol>
       <input type="button" value="Update my filters!" id="UpdateFilters" />
@@ -82,7 +83,35 @@
     </div>
 
 
-    <!--STEP 2: language-->
+	<!----------- CHANGES MADE HERE ------------->
+	
+	<!--STEP 2: disable all extension except AdBlock-->
+	<div class="section" id="step_disable_extensions_DIV">
+		<h2 i18n="disableallextensions"></h2><br />
+		<span i18n="stepstodisableextensions"></span><br /><br />
+
+		<div i18n="disableforchromeinstructions" class="chrome_only"></div>
+		<div i18n="disableforsafariinstructions" class="safari_only"></div>
+		
+		<br />
+	
+		<span i18n="adstillappear" class="afterDisableExtensions"></span><br/>
+		<div class="form" id="step_disable_extensions">
+			<input type="radio" id="step_disable_extensions_yes" name="step_disable_extensions" />
+			<label for="step_disable_extensions_yes" i18n="yes"></label>
+			<input type="radio" id="step_disable_extensions_no" name="step_disable_extensions" />
+			<label for="step_disable_extensions_no" i18n="no"></label>
+		</div>	
+	</div>
+
+	
+	
+	<!------------- CHANGES END HERE ------------>
+	
+	
+	
+	
+    <!--STEP 3: language-->
     <div class="section" id="step_language_DIV">
       <h2 i18n="correctfilters"></h2>
       <span i18n="pagelanguagecheck"></span>
@@ -116,7 +145,8 @@
     </div>
 
     
-    <!--STEP 3: malware-->
+    <!--STEP 4: malware-->
+	<!--
     <div class="section" id="step_malware_DIV">
       <h2 i18n="oneverysitetitle"></h2>
       <span i18n="adsoneverysite"></span>
@@ -129,7 +159,8 @@
         <label for="step_malware_wontcheck" i18n="refusetocheck"></label>
       </div>
     </div>
-
+	-->
+	
     <!--STEP 4: also in Firefox-->
     <div class="section" id="step_firefox_DIV">
       <h2 id="checkinfirefox"></h2>
