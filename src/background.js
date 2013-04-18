@@ -84,10 +84,8 @@
       if (!nearActive) {
         chrome.tabs.create({url: url});
       } else {
-        chrome.windows.getCurrent(function(currentWindow) {
-          chrome.tabs.query({active: true, currentWindow : true}, function(tabs) {
-            chrome.tabs.create({ url: url, index: (tabs[0] ? tabs[0].index + 1 : undefined) });
-          });
+        chrome.tabs.query({active: true, currentWindow : true}, function(tabs) {
+           chrome.tabs.create({ url: url, index: (tabs[0] ? tabs[0].index + 1 : undefined) });
         });
       }
     } else {
