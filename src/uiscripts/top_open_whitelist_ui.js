@@ -25,15 +25,15 @@ function top_open_whitelist_ui() {
   // defined in blacklister.js
   load_jquery_ui(function() {
     var btns = {};
-    btns[translate("buttoncancel")] = function() { page.dialog('close');}
-    btns[translate("buttonexclude")] = 
+	btns[translate("buttonexclude")] = 
         function() {
           var filter = '@@||' + generateUrl() + '$document';
           BGcall('add_custom_filter', filter, function() {
             document.location.reload();
           });
         }
-
+    btns[translate("buttoncancel")] = function() { page.dialog('close');}
+    
     var page = $("<div>").
       append('<span>' + translate("adblock_wont_run_on_pages_matching") + 
              '</span>').
