@@ -1,15 +1,13 @@
 //Binds all first buttons in ui-dialog-buttonset 
 //to perform its function when enter is pressed.
-$('html').bind('keypress', function(e){
-	if(e.keyCode === 10 || e.keyCode === 13){
-		e.preventDefault();
-		var container = $('.ui-dialog-buttonset').find('button');
-		if(container){
-			container.filter(':visible:first').click();
-		}
-			
-	}
-});
+function bind_enter_click_to_default(){
+  $('html').bind('keypress', function(e){
+    if(e.keyCode === 13){
+      e.preventDefault();
+      var container = $('.default_button').filter(':visible').click();
+    }
+  });
+}
 
 function load_jquery_ui(callback) {
   function load_css(src) {
