@@ -75,7 +75,8 @@ if (SAFARI) {
     console.trace();
     return { 
       dispatchMessage: function(msg, data) {
-        console.warning("Failed to call dispatchMessage(", msg, ",", data, ")");
+        console.warn("Failed to call dispatchMessage(", msg, ",", data, ")");
+        console.trace();
       }
     };
   };
