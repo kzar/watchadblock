@@ -4,7 +4,7 @@ function bind_enter_click_to_default(){
   $('html').bind('keypress', function(e){
     if(e.keyCode === 13){
       e.preventDefault();
-      var container = $('.default_button').filter(':visible').click();
+      $('.default_button').filter(':visible').click();
     }
   });
 }
