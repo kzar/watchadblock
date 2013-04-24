@@ -28,14 +28,14 @@ function top_open_whitelist_ui() {
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
     btns[default_button_text] = {
-          text: default_button_text,
-          'class': 'default_button',
-          click: function() {
-            var filter = '@@||' + generateUrl() + '$document';
-            BGcall('add_custom_filter', filter, function() {
-              document.location.reload();
-            });
-          }
+      text: default_button_text,
+      'class': 'default_button',
+      click: function() {
+        var filter = '@@||' + generateUrl() + '$document';
+        BGcall('add_custom_filter', filter, function() {
+          document.location.reload();
+        });
+      }
     }
     
     var page = $("<div>").
