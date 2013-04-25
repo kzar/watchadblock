@@ -24,12 +24,12 @@ function top_open_whitelist_ui() {
   
   // defined in blacklister.js
   load_jquery_ui(function() {
-    var default_button_text = translate("buttonexclude");
+    var adblock_default_button_text = translate("buttonexclude");
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
-    btns[default_button_text] = {
-      text: default_button_text,
-      'class': 'default_button',
+    btns[adblock_default_button_text] = {
+      text: adblock_default_button_text,
+      'class': 'adblock_default_button',
       click: function() {
         var filter = '@@||' + generateUrl() + '$document';
         BGcall('add_custom_filter', filter, function() {

@@ -1,10 +1,13 @@
 //Binds all first buttons in ui-dialog-buttonset 
 //to perform its function when enter is pressed.
 function bind_enter_click_to_default(){
+  if (window.GLOBAL_ran_bind_enter_click_to_default)
+    return;
+  GLOBAL_ran_bind_enter_click_to_default = true;
   $('html').bind('keypress', function(e){
-    if(e.keyCode === 13){
+    if (e.keyCode === 13){
       e.preventDefault();
-      $('.default_button').filter(':visible').click();
+      $('.adblock_default_button').filter(':visible').click();
     }
   });
 }

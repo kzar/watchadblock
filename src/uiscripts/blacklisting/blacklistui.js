@@ -168,10 +168,10 @@ BlacklistUi.prototype._build_page1 = function() {
     append(link_to_block);
 
   var btns = {};
-  var default_button_text = translate("buttonlooksgood");
-  btns[default_button_text] = {
-    text: default_button_text,
-    'class': 'default_button',
+  var adblock_default_button_text = translate("buttonlooksgood");
+  btns[adblock_default_button_text] = {
+    text: adblock_default_button_text,
+    'class': 'adblock_default_button',
     click: function() {
       that._cancelled = false;
       that._ui_page1.dialog('close');
@@ -238,10 +238,10 @@ BlacklistUi.prototype._build_page2 = function() {
     "</div>");
 
   var btns = {};
-  var default_button_text = translate("buttonblockit");
-  btns[default_button_text] = {
-    text: default_button_text,
-    'class': 'default_button',
+  var adblock_default_button_text = translate("buttonblockit");
+  btns[adblock_default_button_text] = {
+    text: adblock_default_button_text,
+    'class': 'adblock_default_button',
     click: function() {
       var rule = $("#summary", that._ui_page2).text();
       if (rule.length > 0) {
