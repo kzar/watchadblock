@@ -78,7 +78,7 @@ var delayed = /[&?]delayed/.test(document.location.search);
 var userId = (document.location.search.match(/\u\=(\w+)/) || [])[1];
 var iframe = $("<iframe>").
   attr("src", "https://chromeadblock.com/pay/?source=I&header=install&u=" + 
-       userId + (delayed ? "&delayed" : "") + "&x=33").
+       userId + (delayed ? "&delayed" : "") + "&x=45").
   attr("frameBorder", 0).
   attr("scrolling", "no").
   width(750).

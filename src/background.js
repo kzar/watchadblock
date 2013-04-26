@@ -802,9 +802,14 @@
   STATS.startPinging();
 
   if (STATS.firstRun) { // show the walkthrough
-    // Safari has race condition where userId may not be available inside
-    // index.html, so pass it in explicitly.
-    openTab("pages/install/index.html?u=" + STATS.userId);
+    if (Math.random() < 0.5) { // X45G1
+      // Safari has race condition where userId may not be available inside
+      // index.html, so pass it in explicitly.
+      openTab("pages/install/index.html?u=" + STATS.userId);
+    }
+    else { // X45G2
+      openTab("https://getadblock.com/installed/?u=" + STATS.userId);
+    }
   }
   else {
     show_delayed_payment_request_at(storage_get("show_delayed_payment_request_at"));
