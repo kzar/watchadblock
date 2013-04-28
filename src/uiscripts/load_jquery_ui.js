@@ -1,11 +1,12 @@
-//Binds all first buttons in ui-dialog-buttonset 
-//to perform its function when enter is pressed.
+//Binds keypress enter to trigger click action on
+//default button or trigger click action on focused
+//button.
 function bind_enter_click_to_default(){
   if (window.GLOBAL_ran_bind_enter_click_to_default)
     return;
   GLOBAL_ran_bind_enter_click_to_default = true;
   $('html').bind('keypress', function(e){
-    if (e.keyCode === 13){
+    if(e.keyCode === 13 && $('button:focus').size() <= 0){
       e.preventDefault();
       $('.adblock_default_button').filter(':visible').click();
     }
