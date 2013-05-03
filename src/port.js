@@ -56,7 +56,8 @@ if (SAFARI) {
   };
   // Return the object on which you can dispatch messages -- globally, or on the
   // messageEvent if specified.  If there isn't one, don't explode.
-  var dispatchContext = function(messageEvent) {
+  // Make this globally available (don't use 'var') as it is used outside port.js
+  dispatchContext = function(messageEvent) {
     // Can we dispatch on the messageEvent target?
     var m = messageEvent;
     if (m && m.target && m.target.page && m.target.page.dispatchMessage)
@@ -73,7 +74,10 @@ if (SAFARI) {
     console.log("No dispatchMessage possible at this location!");
     console.trace();
     return { 
-      dispatchMessage: function() {}
+      dispatchMessage: function(msg, data) {
+        console.warn("Failed to call dispatchMessage(", msg, ",", data, ")");
+        console.trace();
+      }
     };
   };
 
