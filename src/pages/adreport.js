@@ -1,26 +1,6 @@
 $(function() {
   localizePage();
   
-  
-  
-  
-  //Shows the instructions for how to enable all extensions according to the browser of the user
-  if(SAFARI) {
-	$(".chrome_only").hide();
-    } else {
-	$(".safari_only").hide();
-    
-    var messageElement = $("li[i18n='disableforchromestepone']");
-    
-    var theLink = messageElement.find("a");
-    
-    messageElement.find("a").click(function() {
-                chrome.tabs.create({url: 'chrome://chrome/extensions/'});
-              });
-           
-}
-  
-  
   // Sort the languages list
   var languageOptions = $("#step_language_lang option");
   languageOptions.sort(function(a,b) {
@@ -133,26 +113,12 @@ $("#step_update_filters_no").click(function() {
 });
 $("#step_update_filters_yes").click(function() {
   $("#step_update_filters").html("<span class='answer'>" + translate("yes") + "</span>");
-  $("#step_disable_extensions_DIV").css("display", "block");
-});
-
-// STEP 2: disable all extensions
-//Code for displaying the div is in the $function() that contains localize()
-
-
-//after user disables all extensions except for AdBlock
-//if the user clicks a radio button
-$("#step_disable_extensions_no").click(function() {
-  $("#step_disable_extensions").html("<span class='answer'>" + translate("no") + "</span>");
-  $("#whattodo").text(translate("reenableadsonebyone"));
-});
-$("#step_disable_extensions_yes").click(function() {
-  $("#step_disable_extensions").html("<span class='answer'>" + translate("yes") + "</span>");
   $("#step_language_DIV").css("display", "block");
 });
 
 
-// STEP 3: language
+
+// STEP 2: language
 
 //if the user clicks an item
 var contact = "";
@@ -173,17 +139,32 @@ $("#step_language_lang").change(function() {
     }
   }
   contact = required_lists[required_lists.length-1];
-  //if (sessionStorage.getItem("errorOccurred")) {
+  if (sessionStorage.getItem("errorOccurred")) {
     // Skip the malware step if an error has occurred. We don't want to scare
     // users if we have a bug in our code
-	
     $("#step_firefox_DIV").css("display", "block");
+  } else {
+    $("#step_malware_DIV").css("display", "block");
+  }
 
   var hideChromeInChrome = (SAFARI?['','']:['<span style="display:none;">', '</span>']);
   $("#checkinfirefox1").html(translate("checkinfirefox_1", hideChromeInChrome));
   $("#checkinfirefox2").html(translate("checkinfirefox_2", hideChromeInChrome));
   $("#checkinfirefox").html(translate("checkinfirefoxtitle", hideChromeInChrome));
 });
+
+
+// STEP 3: malware
+//if the user clicks a radio button
+$("#step_malware_no, #step_malware_wontcheck").click(function() {
+  $("#step_malware").html("<span class='answer'>" + $(this).next("label").text() + "</span>");
+  $("#step_firefox_DIV").css("display", "block");
+});
+$("#step_malware_yes").click(function() {
+  $("#step_malware").html("<span class='answer'>" + translate("yes") + "</span>");
+  $("#whattodo").text(translate("maybemalware"));
+});
+
 
 // STEP 4: also in Firefox
 

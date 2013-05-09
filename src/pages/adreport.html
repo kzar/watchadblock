@@ -81,39 +81,8 @@
       </div>
     </div>
 
-	
-	<!--STEP 2: disable all extension except AdBlock-->
-	<div class="section" id="step_disable_extensions_DIV">
-		<h2 i18n="disableallextensions"></h2><br />
-		<div class="chrome_only">
-            <ol>
-                <li i18n="disableforchromestepone"></li>
-                <li i18n="disableforchromesteptwo"></li>
-                <li i18n="reloadadpage"></li>
-            </ol>
-        </div>
-		<div class="safari_only">
-            <ol>
-                <li i18n="disableforsafaristepone"></li>
-                <li i18n="disableforchromesteptwo"></li>
-                <li i18n="reloadadpage"></li>
-                
-            </ol>
-        </div>
-		
-		<br />
-	
-		<span i18n="adstillappear" class="afterDisableExtensions"></span><br/>
-		<div class="form" id="step_disable_extensions">
-			<input type="radio" id="step_disable_extensions_yes" name="step_disable_extensions" />
-			<label for="step_disable_extensions_yes" i18n="yes"></label>
-			<input type="radio" id="step_disable_extensions_no" name="step_disable_extensions" />
-			<label for="step_disable_extensions_no" i18n="no"></label>
-		</div>	
-	</div>
 
-		
-    <!--STEP 3: language-->
+    <!--STEP 2: language-->
     <div class="section" id="step_language_DIV">
       <h2 i18n="correctfilters"></h2>
       <span i18n="pagelanguagecheck"></span>
@@ -145,7 +114,22 @@
         </select>
       </div>
     </div>
-	
+
+    
+    <!--STEP 3: malware-->
+    <div class="section" id="step_malware_DIV">
+      <h2 i18n="oneverysitetitle"></h2>
+      <span i18n="adsoneverysite"></span>
+      <div class="form" id="step_malware">
+        <input type="radio" id="step_malware_yes" name="step_malware"/>
+        <label for="step_malware_yes" i18n="yes"></label>
+        <input type="radio" id="step_malware_no" name="step_malware" />
+        <label for="step_malware_no" i18n="no"></label>
+        <input type="radio" id="step_malware_wontcheck" name="step_malware" />
+        <label for="step_malware_wontcheck" i18n="refusetocheck"></label>
+      </div>
+    </div>
+
     <!--STEP 4: also in Firefox-->
     <div class="section" id="step_firefox_DIV">
       <h2 id="checkinfirefox"></h2>
