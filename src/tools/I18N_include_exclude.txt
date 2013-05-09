@@ -1,8 +1,13 @@
-This file contains all I18N strings that could not be detected as the strings
-are build up with variables, like translate("filter" + filterid). These have to
-be hard-coded. Also, some strings are not necessary to translate like 
-EasyPrivacy. EasyPrivacy however may be translated. For example if a translator
-wants to make it 'EasyPrivacy (privacy protection list)'.
+This file contains all required I18N strings that could not be detected.  These
+have to be hard-coded. 
+Examples:
+  The strings are built up as variables, like translate("filter" + filterid)
+  The strings are used outside the extension, like getadblock.com/installed/
+  The strings are no longer used but may be again later, like "betalabel"
+
+Also, some strings are not necessary to translate like EasyPrivacy. 
+EasyPrivacy however may be translated. For example if a translator wants to
+make it 'EasyPrivacy (privacy protection list)'.
 
 The syntax is very easy. Start a line with a + and it will include this as if it
 was detected in the source files. Start a line with a - and it will not report
@@ -62,3 +67,13 @@ Opera strings
 +opera_secure_pages
 +opera_secure_pages_enabled
 +opera_allow_secure
+
+Strings from getadblock.com/installed/
++filecleanerwarning
++installedtitle
++now_you_have_adblock_hooray
++any_new_tabs_you_open_Will_be_automatically_ad_free
++for_more_options_right_click
++installing_adblock
++done
++seeing_this_every_time_you_start_your_browser
