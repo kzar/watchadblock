@@ -24,20 +24,16 @@ function top_open_whitelist_ui() {
   
   // defined in blacklister.js
   load_jquery_ui(function() {
-    var adblock_default_button_text = translate("buttonexclude");
     var btns = {};
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
-    btns[adblock_default_button_text] = {
-      text: adblock_default_button_text,
-      'class': 'adblock_default_button',
-      click: function() {
-        var filter = '@@||' + generateUrl() + '$document';
-        BGcall('add_custom_filter', filter, function() {
-          document.location.reload();
-        });
-      }
-    }
-    
+    btns[translate("buttonexclude")] = 
+        function() {
+          var filter = '@@||' + generateUrl() + '$document';
+          BGcall('add_custom_filter', filter, function() {
+            document.location.reload();
+          });
+        }
+
     var page = $("<div>").
       append('<span>' + translate("adblock_wont_run_on_pages_matching") + 
              '</span>').
@@ -131,8 +127,6 @@ function top_open_whitelist_ui() {
       } else
         return result;
     }
-
-    bind_enter_click_to_default();
   });
 }
 
