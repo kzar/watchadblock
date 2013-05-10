@@ -3,17 +3,14 @@ $(function() {
   
   //Shows the instructions for how to enable all extensions according to the browser of the user
   if(SAFARI) {
-	$(".chrome_only").hide();
-    } else {
-	$(".safari_only").hide();
-    
+    $(".chrome_only").hide();
+  } else {
+    $(".safari_only").hide();
     var messageElement = $("li[i18n='disableforchromestepone']");
-    
-    var theLink = messageElement.find("a");
-    
     messageElement.find("a").click(function() {
-                chrome.tabs.create({url: 'chrome://chrome/extensions/'});
-              });
+      chrome.tabs.create({url: 'chrome://chrome/extensions/'});
+    });
+  }
            
 }
   
@@ -134,7 +131,7 @@ $("#step_update_filters_yes").click(function() {
 });
 
 // STEP 2: disable all extensions
-//Code for displaying the div is in the $function() that contains localize()
+//Code for displaying the div is in the $function() that contains localizePage()
 
 
 //after user disables all extensions except for AdBlock
@@ -170,11 +167,8 @@ $("#step_language_lang").change(function() {
     }
   }
   contact = required_lists[required_lists.length-1];
-  //if (sessionStorage.getItem("errorOccurred")) {
-    // Skip the malware step if an error has occurred. We don't want to scare
-    // users if we have a bug in our code
 	
-    $("#step_firefox_DIV").css("display", "block");
+  $("#step_firefox_DIV").css("display", "block");
 
   var hideChromeInChrome = (SAFARI?['','']:['<span style="display:none;">', '</span>']);
   $("#checkinfirefox1").html(translate("checkinfirefox_1", hideChromeInChrome));
