@@ -69,7 +69,6 @@
       <h2 i18n="updateyourlists"></h2>
       <ol>
         <li i18n="clickupdatefilters" i18n_replacement_el="UpdateFilters"></li>
-		<!--<li i18n="disableallextensions" class="afterExtentionsDiabled"></li> -->
         <li i18n="reloadadpage" class="afterFilterUpdate"></li>
       </ol>
       <input type="button" value="Update my filters!" id="UpdateFilters" />
@@ -86,10 +85,21 @@
 	<!--STEP 2: disable all extension except AdBlock-->
 	<div class="section" id="step_disable_extensions_DIV">
 		<h2 i18n="disableallextensions"></h2><br />
-		<span i18n="stepstodisableextensions"></span><br /><br />
-
-		<div i18n="disableforchromeinstructions" class="chrome_only"></div>
-		<div i18n="disableforsafariinstructions" class="safari_only"></div>
+		<div class="chrome_only">
+            <ol>
+                <li i18n="disableforchromestepone"></li>
+                <li i18n="disableforchromesteptwo"></li>
+                <li i18n="reloadadpage"></li>
+            </ol>
+        </div>
+		<div class="safari_only">
+            <ol>
+                <li i18n="disableforsafaristepone"></li>
+                <li i18n="disableforchromesteptwo"></li>
+                <li i18n="reloadadpage"></li>
+                
+            </ol>
+        </div>
 		
 		<br />
 	
