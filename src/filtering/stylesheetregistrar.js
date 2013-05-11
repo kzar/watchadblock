@@ -85,7 +85,8 @@ StyleSheetRegistrar.prototype = {
     logGroupEnd();
     
     // Prep for current tab.  Other tabs prepped for when activated
-    dispatchContext().dispatchMessage("send-domain");
+    var t = ((safari.application.activeBrowserWindow || {}).activeTab || {});
+    if (t) t.page.dispatchMessage("send-domain");
     logGroupEnd();
   },
 
