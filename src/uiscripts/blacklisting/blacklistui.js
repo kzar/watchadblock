@@ -120,7 +120,6 @@ BlacklistUi.prototype.show = function() {
       that._clicked_item = element;
       that.show();
     });
-    preview("*", 0);
     clickWatcher.show();
     return;
   }

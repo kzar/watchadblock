@@ -10,6 +10,14 @@ function Highlighter() {
   var box = $("<div class='adblock-highlight-node'></div>");
   box.appendTo("body");
   
+  function maxParentZIndex(el) {
+      if (!el) return 0;
+      var s = getComputedStyle(el) || {};
+      var z = s['z-index'] || 0;
+      var zInt = (z === 'auto' ? 0 : parseInt(z));
+      return Math.max(zInt, maxParentZIndex(el.parentNode));
+  }
+  
   function handler(e) {
     var offset, el = e.target;
     var now = Date.now();
@@ -20,6 +28,9 @@ function Highlighter() {
     if (el === box[0]) {
       box.hide();
       el = document.elementFromPoint(e.clientX, e.clientY);
+    }
+    else {
+        box[0].style.setProperty("z-index", maxParentZIndex(el), "important");
     }
     if (el === document.body || el.className === "adblock-killme-overlay") {
       box.hide(); 
@@ -33,8 +44,6 @@ function Highlighter() {
       left: offset.left, 
       top: offset.top 
     });
-    var zIndex = (parseInt(target.css("z-index")) || 1);
-    box[0].style.setProperty("z-index", zIndex, "important");
     box.show(); 
   }
   
@@ -58,7 +67,7 @@ function Highlighter() {
     this.disable();
     if (box) {
       box.remove();
-      delete box;
+      box = null;
     }
   };
 }
