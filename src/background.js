@@ -435,8 +435,7 @@
   subscribe = function(options) {
     _myfilters.changeSubscription(options.id, {
       subscribed: true,
-      requiresList: options.requires,
-      multiple_subscriptions: options.multiple_subscriptions
+      requiresList: options.requires
     });
   }
 
@@ -448,7 +447,7 @@
     _myfilters.changeSubscription(options.id, {
       subscribed: false,
       deleteMe: (options.del ? true : undefined),
-      multiple_subscriptions: options.multiple_subscriptions
+      unsubscribe: true
     });
   }
 

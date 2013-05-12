@@ -85,7 +85,7 @@ function MyFilters() {
 
 // When a subscription property changes, this function stores it
 // Inputs: rebuild? boolean, true if the filterset should be rebuilt
-MyFilters.prototype._onSubscriptionChange = function(rebuild, multiple_subscriptions) {
+MyFilters.prototype._onSubscriptionChange = function(rebuild, unsubscribe) {
   storage_set('filter_lists', this._subscriptions);
   
   // The only reasons to (re)build the filter set are
@@ -93,8 +93,8 @@ MyFilters.prototype._onSubscriptionChange = function(rebuild, multiple_subscript
   // - when a filter list text is changed ([un]subscribed or updated a list)
   if (rebuild)
     this.rebuild();
-    
-  if(!multiple_subscriptions)
+  
+  if(!unsubscribe)
     chrome.extension.sendRequest({command: "filters_updated"});
 }
 
@@ -264,10 +264,10 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     if (this._subscriptions[id].deleteMe)
       delete this._subscriptions[id];
   }
-
+  
   // Notify of change.  If we subscribed, we rebuilt above; so we
   // only force a rebuild if we unsubscribed.
-  this._onSubscriptionChange(subData.subscribed === false, subData.multiple_subscriptions);
+  this._onSubscriptionChange(subData.subscribed === false, subData.unsubscribe);
 
   // Subscribe to a required list if nessecary
   if (subscribeRequiredListToo && this._subscriptions[id].requiresList){
