@@ -1,0 +1,1250 @@
+{
+  "adalreadyblocked": {
+    "message": "Не предприемайте нищо, защото рекламата вече е блокирана",
+    "description": "on the ad report page, telling a user there is nothing to do"
+  },
+  "adblock_auto_removes_ads_thats_all": {
+    "message": "AdBlock автоматично премахва рекламите. И това е всичко, което прави.",
+    "description": "Install page: explaining how to use adblock."
+  },
+  "adblock_is_paused": {
+    "message": "Задържан AdBlock. Няма установени ресурси и използване на страницата е невъзможно. Първо осовободете AdBlock и опитайте отново.",
+    "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Ползвате стара версия на AdBlock. Моля, отворете <a href='#'>страницата за разширения</a>, разрешете „Режим за програмисти“ и натиснете „Актуализирайте разширенията сега“.",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
+  "adblock_wont_run_on_pages_matching": {
+    "message": "AdBlock няма да се изпълнява в страници, съвпадащи с:",
+    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockreportinganad": {
+    "message": "Докладване на реклама пред AdBlock",
+    "description": "title of ad report page"
+  },
+  "addthisfilter": {
+    "message": "Добави филтъра",
+    "description": "resourceblocking page string"
+  },
+  "adreport2": {
+    "message": "Току-що сте открили реклама в страница? Добре, ще ви съдействаме да намерите правилното място, за да я докладвате!<br/> Запомнете: докладването на реклами е доброволно. Ако не желаете да го правите можете да затворите този прозорец и да я блокирате самостоятелно, като добавите филтър за нея към преградка „Нагласяване“ в страницата с настройки!",
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
+  },
+  "adsoneverysite": {
+    "message": "Виждате реклами в повечето посещавани сайтове (началната страница, служебния сайт и т.н.), но ако ги посетите от чужд компютър те са без реклами?",
+    "description": "On the ad report page, text of the item asking if they see ads on most sites (which may be due to malware)"
+  },
+  "adstillappear": {
+    "message": "Продължавате ли да я виждате?",
+    "description": "question on ad reporting page"
+  },
+  "advanced_options": {
+    "message": "Показвай разширените настройки (аз съм опитен потребител)",
+    "description": "Options page checkbox"
+  },
+  "any_new_tabs_you_open_Will_be_automatically_ad_free": {
+    "message": "Всички нови преградки, които отваряте ще бъдат автоматично почиствани от реклама.",
+    "description": "Install page subtitle"
+  },
+  "anysite": {
+    "message": "кой да е сайт",
+    "description": "resourceblocking page string"
+  },
+  "appliedwhenbrowsing": {
+    "message": "Филтърът се прилага при разглеждане на:",
+    "description": "resourceblocking page string"
+  },
+  "betalabel": {
+    "message": "(бета)",
+    "description": "Option on first tab page"
+  },
+  "blacklistclickmessage": {
+    "message": "Щракнете с десен по реклама в страницата, за да я блокирате или я блокирайте тук наръка.",
+    "description": "Message at the top of the blacklist options tab"
+  },
+  "blacklisterattrwillbe": {
+    "message": "$attribute$ ще бъде $value$",
+    "description": "Checkbox label",
+    "placeholders": {
+      "attribute": {
+        "content": "$1",
+        "example": "class"
+      },
+      "value": {
+        "content": "$2",
+        "example": "AdBanner"
+      }
+    }
+  },
+  "blacklisterblockedelement": {
+    "message": "Блокиран елемент:",
+    "description": "Tells the user what the blocked element is on the slider page"
+  },
+  "blacklisterblocksalloftype": {
+    "message": "Внимание: филтърът блокира всички елементи $elementtype$ в страницата!",
+    "description": "Warns the user that all elements of type X will be blocked",
+    "placeholders": {
+      "elementtype": {
+        "content": "$1",
+        "example": "DIV"
+      }
+    }
+  },
+  "blacklistereditfilter": {
+    "message": "Моля, въведете правилния филтър по-долу и натиснете ДА:",
+    "description": "Text if the user wants to manually edit a filter.  'OK' is the standard javascript popup button text."
+  },
+  "blacklistereditinvalid1": {
+    "message": "Недействителен филтър: $exception$",
+    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.",
+    "placeholders": {
+      "exception": {
+        "content": "$1",
+        "example": "This filter is not supported"
+      }
+    }
+  },
+  "blacklistermatches": {
+    "message": "Съвпада с $matchcount$ елемента в страницата.",
+    "description": "Tells the user multiple matches were found",
+    "placeholders": {
+      "matchcount": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "blacklisternofilter": {
+    "message": "Няма указан филтър!",
+    "description": "Warning if the user hasn't specified a filter"
+  },
+  "blacklisternotsure": {
+    "message": "<b>Не сте сигурен?</b> — натиснете „Блокирай!“ по-долу.",
+    "description": "Blacklister attribute choosing page message.  'Block it!' must be the same as the text of the 'buttonblockit' message."
+  },
+  "blacklisteroptions1": {
+    "message": "Как смятате, дали ще бъде вярно за рекламата всеки път, когато посещавате страницата?",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklisteroptionstitle": {
+    "message": "Последна стъпка: кое превръща елемента в реклама?",
+    "description": "Blacklister options page title"
+  },
+  "blacklistersinglematch": {
+    "message": "Съвпада с <b>1</b> елемент в страницата.",
+    "description": "Tells the user only one match was found"
+  },
+  "blacklisterthefilter": {
+    "message": "Филтър, който може да бъде променен от страницата с настройки:",
+    "description": "Blacklister attribute choosing page message"
+  },
+  "blacklistertype": {
+    "message": "Вид",
+    "description": "node name is called 'Type'"
+  },
+  "blacklisterwarningnofilter": {
+    "message": "Внимание: няма указан филтър!",
+    "description": "Warns the user that no filter was specified"
+  },
+  "block_an_ad_on_this_page": {
+    "message": "Блокирай реклама в страницата",
+    "description": "Toolbar button menu entry and context menu entry"
+  },
+  "block_by_url_instead": {
+    "message": "Разширено блокиране по адрес",
+    "description": "Link on blacklister slider page"
+  },
+  "block_this_ad": {
+    "message": "Блокирай рекламата",
+    "description": "Context and popup menu entry"
+  },
+  "blockanadtitle": {
+    "message": "Блокиране на реклама",
+    "description": "Title of the first two dialogs of the blacklister"
+  },
+  "blockdomain": {
+    "message": "Домейн на страницата:",
+    "description": "Message of the url and css -blocking area"
+  },
+  "blockeverycontaining": {
+    "message": "Блокирай всеки ресурс, съдържащ:",
+    "description": "resourceblocking page string"
+  },
+  "blockmoreads": {
+    "message": "Да блокирате още реклами:",
+    "description": "Section header on third tab"
+  },
+  "blockurlwithtext": {
+    "message": "Блокиране на адреси, съдържащи текста:",
+    "description": "Message of the url-blocking area"
+  },
+  "buttonback": {
+    "message": "Назад",
+    "description": "Back to previous wizard page button"
+  },
+  "buttonblockit": {
+    "message": "Блокирай!",
+    "description": "Block button"
+  },
+  "buttoncancel": {
+    "message": "Отказ",
+    "description": "Cancel button"
+  },
+  "buttonedit": {
+    "message": "Редактирай",
+    "description": "Edit filter manually button"
+  },
+  "buttonexclude": {
+    "message": "Изключи",
+    "description": "Button for excluding a domain in the whitelister dialog"
+  },
+  "buttonlooksgood": {
+    "message": "Става",
+    "description": "Looks good button"
+  },
+  "buttonok": {
+    "message": "ДА!",
+    "description": "OK button"
+  },
+  "cantblockflash": {
+    "message": "Все още не блокираме реклами, съдържащи се във флаш или в други плъгини. Чакаме такава поддръжка да се появи в браузъра и в WebKit.",
+    "description": "Result of the final ad report question"
+  },
+  "cantblockflashwarning": {
+    "message": "Показва ли се рекламата във или преди филм или друг плъгин, като флаш игра?",
+    "description": "Text of the final ad report question"
+  },
+  "casesensitive": {
+    "message": "Филтърът отчита малки и главни букви:",
+    "description": "resourceblocking page string"
+  },
+  "changelabel": {
+    "message": "промени",
+    "description": "link to change resources on the resourceblock page"
+  },
+  "checkinfirefox_1": {
+    "message": "Инсталирайте Firefox $chrome$, ако го нямате.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1или Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_2": {
+    "message": "Инсталирайте Adblock Plus за Firefox $chrome$, ако го нямате.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1или AdBlockforChrome за Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_3": {
+    "message": "Абонирайте се за същите филтри в браузъра (с изключение на потребителските филтри на AdBlock за FireFox).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_4": {
+    "message": "Заредете страницата с рекламата в браузъра.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_5": {
+    "message": "Продължавате ли да я виждате в браузъра?",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefoxtitle": {
+    "message": "Проверка във Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1или Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "chromebutton_how_to_hide2": {
+    "message": "За да скриете бутона, щракнете с десен по него и посочете Скрий бутона. Можете да го покажете от chrome://chrome/extensions.",
+    "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
+  "cleanuplist": {
+    "message": "Оптимизирай филтрите:",
+    "description": "Option at the bottom of the third options tab"
+  },
+  "clickthead": {
+    "message": "Щракнете по реклама, за да изминете пътя до нейното блокиране.",
+    "description": "When you have to click the ad to continue"
+  },
+  "clickupdatefilters": {
+    "message": "Щракнете по: <a>Обнови филтрите!</a>",
+    "description": "instruction on ad report page"
+  },
+  "close": {
+    "message": "Затвори",
+    "description": "resourceblocking page string"
+  },
+  "close_tab_begin_browsing": {
+    "message": "Можете вече да затворете преградката и да сърфирате без реклами. Забавлявайте се!",
+    "description": "Install page string"
+  },
+  "correctfilters": {
+    "message": "Правилни филтри",
+    "description": "on the ad report page, label describing having the right set of filters"
+  },
+  "csstomatch": {
+    "message": "Съвпадащ каскаден лист със стилове [CSS]:",
+    "description": "Message of the css-hiding area"
+  },
+  "custompattern": {
+    "message": "потребителски:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
+  },
+  "debuginlogoption": {
+    "message": "Показвай предпроверочните декларации в дневника на Конзола (води до забавяне на AdBlock)",
+    "description": "Option on first tab page"
+  },
+  "description2": {
+    "message": "Най-популярното разширение за Chrome с над 15 милиона потребители! Блокира реклами в цялата мрежа.",
+    "description": "Extension description in manifest"
+  },
+  "did_you_know_this_is_my_full_time_job": {
+    "message": "Знаете ли, че това е моята постоянна работа?",
+    "description": "Text of a payment request link"
+  },
+  "disabled_by_filter_lists": {
+    "message": "За съжаление, AdBlock е забранен за страницата в някой от вашите филтри.",
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
+  },
+  "disabled_on_this_page": {
+    "message": "AdBlock е забранен за страницата.",
+    "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "doesntmatchoriginal": {
+    "message": "Въведеният пример не съвпада с ресурса, който опитвате да блокирате. Продължавате ли?",
+    "description": "resourceblocking page string"
+  },
+  "done": {
+    "message": "готово.",
+    "description": "Install page: appended to the 'installing_adblock' message once the progress bar reaches 100%"
+  },
+  "dont_run_on_pages_on_domain": {
+    "message": "Не изпълнявай за домейна",
+    "description": "Menu entry to open the whitelist wizard."
+  },
+  "dont_run_on_this_page": {
+    "message": "Не изпълнявай за страницата",
+    "description": "Menu entry to whitelist a page"
+  },
+  "enable": {
+    "message": "Разреши",
+    "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
+  },
+  "excludedomainorurl": {
+    "message": "Домейн или адрес, за които AdBlock не блокира нищо:",
+    "description": "Message of the exclude area"
+  },
+  "excludefilterremoved": {
+    "message": "Филтърът беше премахнат. Моля, презаредете оригиналната страница, за да генерирате списък с ресурсите.",
+    "description": "Warning when a page exclusion rule was removed in resourceblock.html"
+  },
+  "failedtofetchfilter": {
+    "message": "Провалено извличане на филтъра!",
+    "description": "Error messagebox"
+  },
+  "faq": {
+    "message": "ЧЗВ",
+    "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
+  },
+  "fetchinglabel": {
+    "message": "Извличане… моля, изчакайте.",
+    "description": "Status label"
+  },
+  "filecleanerwarning": {
+    "message": "Ако виждате това съобщение при всяко пускане на AdBlock, моля, уверете се, че не ползвате програма за почистване на ненужни файлове, която чисти файловете в „localStorage“.",
+    "description": "Help for users who use hyperactive file cleaners"
+  },
+  "filteradblock_custom": {
+    "message": "потребителски филтри на AdBlock (препоръчително)",
+    "description": "A filter list. Don't translate 'AdBlock'"
+  },
+  "filterchinese": {
+    "message": "— допълнителни китайски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterczech": {
+    "message": "— допълнителни чешки и словашки филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterdanish": {
+    "message": "датски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterdutch": {
+    "message": "— допълнителни холандски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist": {
+    "message": "филтри EasyList (препоръчително)",
+    "description": "A filter list. Don't translate 'EasyList'"
+  },
+  "filtereasylist_plun_korean": {
+    "message": "корейски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_bulgarian": {
+    "message": "— допълнителни български филтри (препоръчително)",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_finnish": {
+    "message": "— допълнителни фински филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_french": {
+    "message": "— допълнителни френски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_german": {
+    "message": "— допълнителни немски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_greek": {
+    "message": "— допълнителни гръцки филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_polish": {
+    "message": "— допълнителни полски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_romanian": {
+    "message": "— допълнителни румънски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasylist_plus_spanish": {
+    "message": "испански филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtereasyprivacy": {
+    "message": "филтри EasyPrivacy (лична неприкосновеност)",
+    "description": "A filter list. Don't translate the name 'EasyPrivacy'."
+  },
+  "filterhasbeenadded": {
+    "message": "Филтърът беше добавен успешно!\nПрезаредете страницата, за да видите резултата!",
+    "description": "resourceblocking page string (the 'slash n' is a line break)"
+  },
+  "filterhungarian": {
+    "message": "унгарски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterisraeli": {
+    "message": "еврейски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filteritalian": {
+    "message": "италиански филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterjapanese": {
+    "message": "японски филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filterlistlink": {
+    "message": "Не се абонирайте за повече, отколкото са ви необходими — всеки нов ще ви забавя малко повече! Признания и допълнителни списъци можете да намерите <a>тук</a>.",
+    "description": "Explanation of the filter lists"
+  },
+  "filterlistsrock": {
+    "message": "Филтрите блокират повечето реклами в мрежата. Можете също така:",
+    "description": "Header text on the Customize tab.  'Filter lists' should be the same text as the tabfilterlists message."
+  },
+  "filterorigin": {
+    "message": "Филтърът се намира в:\n$list$",
+    "description": "Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "placeholders": {
+      "list": {
+        "content": "$1",
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "filterrussian": {
+    "message": "— допълнителни руски и украински филтри",
+    "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
+  },
+  "filtersavewarning": {
+    "message": "Внимание: ако допуснете грешка много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!<br/>Прочетете <a>ръководството по синтаксис на филтрите</a>, за да научите как да добавяте разширени черни и бели филтри.",
+    "description": "Warning when blacklisting manually"
+  },
+  "filterstabtitle": {
+    "message": "Абониране за филтри",
+    "description": "Title of the filter list tab"
+  },
+  "findingads": {
+    "message": "Намиране на реклами…<br/><br/><i>Това ще отнеме известно време.</i>",
+    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+  },
+  "firefox_explanation": {
+    "message": "Въпросът определя кой трябва да получи вашия доклад. Ако отговорите неправилно, докладът ви ще получат неподходящите хора и може да не бъде взет под внимание.",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
+  "fixityourself": {
+    "message": "ДОБРЕ, можете да я блокирате самостоятелно в страницата с настройки. Благодарим!",
+    "description": "telling a user who won't report an ad to us how to handle it for herself"
+  },
+  "flashads": {
+    "message": "Клипове и флаш",
+    "description": "Title of the final ad report question if the ad didn't appear in FF"
+  },
+  "for_more_options_right_click": {
+    "message": "За допълнителни настройки, щракнете с десен бутон в страницата или щракнете по бутона $img$ в лентата.",
+    "description": "Install page: explaining how to use adblock in more detail.",
+    "placeholders": {
+      "img": {
+        "content": "<img src=\"../../img/icon19.png\"/>",
+        "example": "A small picture of the toolbar button.  Do not translate."
+      }
+    }
+  },
+  "format_site1_site2_site3": {
+    "message": "Формат: ~сайт1.бг|~сайт2.бг|~новини.сайт3.бг",
+    "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
+  },
+  "generaloptions": {
+    "message": "Общи настройки",
+    "description": "Title of first tab page"
+  },
+  "googletextads": {
+    "message": "Показвай текстови реклами към резултатите от Google (харесват ми)",
+    "description": "Option on first tab page"
+  },
+  "headerfilter": {
+    "message": "Съвпадащ филтър",
+    "description": "resourceblocking page string"
+  },
+  "headerresource": {
+    "message": "Ресурс",
+    "description": "resourceblocking page string"
+  },
+  "headertype": {
+    "message": "Вид",
+    "description": "resourceblocking page string"
+  },
+  "help": {
+    "message": "Помощ",
+    "description": "Text of link to a page with fixes to common problems and a list of known issues"
+  },
+  "hide_this_button": {
+    "message": "Скрий бутона",
+    "description": "Toolbar button menu entry to hide the AdBlock button"
+  },
+  "how_to_use_adblock": {
+    "message": "Използване на AdBlock:",
+    "description": "Install page section title"
+  },
+  "installedtitle": {
+    "message": "AdBlock е инсталиран!",
+    "description": "Title for the installation success page"
+  },
+  "installing_adblock": {
+    "message": "Инсталиране на AdBlock…",
+    "description": "Install page: shown while progress bar loads"
+  },
+  "invalidListUrl": {
+    "message": "Недействителен адрес на списъка. Списъкът ще бъде изтрит.",
+    "description": "Message when you subscribe to a non-list URL"
+  },
+  "labelshow": {
+    "message": "покажи",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
+  "lang_bulgarian": {
+    "message": "български",
+    "description": "language"
+  },
+  "lang_chinese": {
+    "message": "китайски",
+    "description": "language"
+  },
+  "lang_czech": {
+    "message": "чешки",
+    "description": "language"
+  },
+  "lang_danish": {
+    "message": "датски",
+    "description": "language"
+  },
+  "lang_dutch": {
+    "message": "холандски",
+    "description": "language"
+  },
+  "lang_english": {
+    "message": "английски",
+    "description": "language"
+  },
+  "lang_finnish": {
+    "message": "фински",
+    "description": "language"
+  },
+  "lang_french": {
+    "message": "френски",
+    "description": "language"
+  },
+  "lang_german": {
+    "message": "немски",
+    "description": "language"
+  },
+  "lang_greek": {
+    "message": "гръцки",
+    "description": "language"
+  },
+  "lang_hungarian": {
+    "message": "унгарски",
+    "description": "language"
+  },
+  "lang_israeli": {
+    "message": "еврейски",
+    "description": "language"
+  },
+  "lang_italian": {
+    "message": "италиански",
+    "description": "language"
+  },
+  "lang_japanese": {
+    "message": "японски",
+    "description": "language"
+  },
+  "lang_korean": {
+    "message": "корейски",
+    "description": "language"
+  },
+  "lang_polish": {
+    "message": "полски",
+    "description": "language"
+  },
+  "lang_romanian": {
+    "message": "румънски",
+    "description": "language"
+  },
+  "lang_russian": {
+    "message": "руски",
+    "description": "language"
+  },
+  "lang_slovak": {
+    "message": "словашки",
+    "description": "language"
+  },
+  "lang_spanish": {
+    "message": "испански",
+    "description": "language"
+  },
+  "lang_ukranian": {
+    "message": "украински",
+    "description": "language"
+  },
+  "last_update_failed": {
+    "message": "провалено:",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
+  "let_me_know_how_it_is_working": {
+    "message": "Искате ли да помогнете? Пробвайте експерименталната настройка и <a>пишете</a> дали работи добре при вас.",
+    "description": "Shown to users who use_experimental_feature_to_speed_up_adblock, politely encouraging them to click the link, taking them to a survey about their experience with the feature."
+  },
+  "linkblockadbyurl": {
+    "message": "Блокиране на реклама по адрес",
+    "description": "Link on the third tab"
+  },
+  "linkhidesection": {
+    "message": "Скриване на раздел в страница",
+    "description": "Link on the third tab"
+  },
+  "linkunblock": {
+    "message": "Показване на реклами в страница или домейн",
+    "description": "Link on the third tab"
+  },
+  "loading": {
+    "message": "ЗАРЕЖДАНЕ…",
+    "description": "resourceblocking page string"
+  },
+  "manualfilteredit": {
+    "message": "Да редактирате филтрите наръка:",
+    "description": "Subtitle on the third tab"
+  },
+  "maybemalware": {
+    "message": "Не всяка страница в интернет съдържа реклами. Възможно е фактът, че виждате толкова много да означава, че в компютъра ви има нежелан софтуер. Опитайте да забраните всички разширения едно по едно и проверете дали тази неизправност ще изчезне. Ако продължи, опитайте да пуснете (пълно) сканиране на системата с обновен антивирусен софутуер, защото е вероятно това да се дължи на зловредна програма.",
+    "description": "Ad report page string, telling them they *may* have malware. Please make sure you don't translate it as if you say 'you DO have malware' but as 'you MAY have malware'"
+  },
+  "modifydomain": {
+    "message": "Сайт:",
+    "description": "Caption for the whitelist wizard slider that modifies the domain part of a URL"
+  },
+  "modifypath": {
+    "message": "Страница:",
+    "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "multipledomainshint": {
+    "message": "Отделете множеството домейни със запетаи или с интервали",
+    "description": "resourceblocking page string"
+  },
+  "nextstep": {
+    "message": "Следваща стъпка",
+    "description": "resourceblocking page string"
+  },
+  "no": {
+    "message": "Не",
+    "description": "A negative response to a question"
+  },
+  "nodefaultfilter1": {
+    "message": "Не разполагаме с филтри по подразбиране за езика.<br/>Моля, опитайте да намерите подходящ $link$, който да поддържа езика или блокирайте рекламата самостоятелно от преградка „Нагласяване“.",
+    "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
+    "placeholders": {
+      "link": {
+        "content": "$1тук$2",
+        "example": "<a href='http://abp.org'>here</a>"
+      }
+    }
+  },
+  "noresourcessend2": {
+    "message": "Нещо се обърка. Не са изпращани никакви ресурси. Сега страницата ще се затвори. Опитайте да презаредите сайта.",
+    "description": "resourceblocking page string"
+  },
+  "nosearchresults": {
+    "message": "Няма намерени ресурси.",
+    "description": "Text in resourceblock shown if no results are found after searching"
+  },
+  "novalidurlpattern": {
+    "message": "Моля, въведете действително съвпадащ пример на адрес!",
+    "description": "resourceblocking page string"
+  },
+  "now_you_have_adblock_hooray": {
+    "message": "Ура! Вече имате AdBlock!",
+    "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
+  },
+  "oneverysitetitle": {
+    "message": "Гъмжи от реклами!",
+    "description": "On the ad report page, title of the item asking if it could be caused by malware."
+  },
+  "only_block_ads_on_these_sites": {
+    "message": "Блокиране на реклами само за сайтовете:",
+    "description": "Label for textbox where user enters a list of sites on Customize tab"
+  },
+  "onlyondomains": {
+    "message": "страници САМО от следните домейни:",
+    "description": "resourceblocking page string"
+  },
+  "onlyresourcetypes": {
+    "message": "Филтърът се прилага към ресурси от следния вид:",
+    "description": "resourceblocking page string"
+  },
+  "opera_120_install": {
+    "message": "Във версиите на Opera до 12.10 някои реклами могат да не бъдат блокирани, тъй като е невъзможно да бъде направен разбор на всички правила. Ограничението ще отпадне с обновяване на Opera до версия 12.10 и същите реклами вече ще се блокират правилно.",
+    "description": "Opera < 12.10 warning during installation"
+  },
+  "opera_120_options": {
+    "message": "Във версиите на Opera до 12.10 някои от настройките са в сиво, защото не се поддържат.",
+    "description": "Opera < 12.10 warning above options page"
+  },
+  "opera_allow_secure": {
+    "message": "Ако искате да ползвате AdBlock в защитени страници (такива с икона катинар в лентата), първо разрешете настройката за достъп до защитени страници.",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
+  "opera_can_also_change_setting": {
+    "message": "Увеличете стойността на\n$setting$",
+    "description": "Message when the storage quota is reached, for advanced users in Opera",
+    "placeholders": {
+      "setting": {
+        "content": "$1",
+        "example": "opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
+      }
+    }
+  },
+  "opera_donations_button": {
+    "message": "Харесва ви разширението? Ако е така, помислете за дарение от страницата с настройки!",
+    "description": "Opera donate request in the button"
+  },
+  "opera_donations_install": {
+    "message": "Ако харесвате разширението, помислете за дарение чрез страницата с настройки.",
+    "description": "Opera donate request in the install page"
+  },
+  "opera_enabledin": {
+    "message": "Разрешено в $browserversion$",
+    "description": "Hover text of items disabled in an older browser version",
+    "placeholders": {
+      "browserversion": {
+        "content": "$1",
+        "example": "Opera 12.10"
+      }
+    }
+  },
+  "opera_excludedomainorurl": {
+    "message": "Домейн, за който AdBlock не блокира нищо:",
+    "description": "Opera version of the 'excludedomainorurl' string"
+  },
+  "opera_for_more_options": {
+    "message": "За допълнителни настройки щракнете бутона в лентата или отворете настройките чрез Opera &rArr; Разширения &rArr; Организиране на разширенията &rArr; икона ключ &rArr; Предпочитания",
+    "description": "Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
+  },
+  "opera_linkunblock": {
+    "message": "Показване на реклами в домейна",
+    "description": "Opera version of the 'linkunblock' string"
+  },
+  "opera_reenable_button": {
+    "message": "Можете да разрешите бутона повторно от настройките на разширението",
+    "description": "Opera browser button message when you click 'hide this button'"
+  },
+  "opera_secure_pages": {
+    "message": "Защитени страници",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
+  "opera_secure_pages_enabled": {
+    "message": "От менюто отворете Разширения &rArr; Организиране на разширенията &rArr; AdBlock (и там до него щракнете по иконата ключ) &rArr; Лични данни.<br/>Разрешена ли е настройката за достъп до защитени страници?",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
+  "opera_show_toolbar_button": {
+    "message": "Показвай бутон в лентата",
+    "description": "Opera option to show/hide the button"
+  },
+  "options": {
+    "message": "Настройки",
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
+  },
+  "optionschangelog": {
+    "message": "списък с изменения",
+    "description": "changelog link"
+  },
+  "optionstitle": {
+    "message": "Настройки на AdBlock",
+    "description": "Title for the options page"
+  },
+  "optionsversion": {
+    "message": "Версия $version$",
+    "description": "Version number",
+    "placeholders": {
+      "version": {
+        "content": "$1",
+        "example": "2.0.9"
+      }
+    }
+  },
+  "orenteraurl": {
+    "message": "Или въведете адрес:",
+    "description": "link for custom subscription"
+  },
+  "other": {
+    "message": "друг",
+    "description": "multiple choice option"
+  },
+  "pagelanguagecheck": {
+    "message": "Какъв е езикът на страницата?",
+    "description": "question on ad report page"
+  },
+  "pause_adblock": {
+    "message": "Задръж AdBlock",
+    "description": "Menu entry to pause AdBlock."
+  },
+  "project_home": {
+    "message": "Страница на проекта",
+    "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "refusetocheck": {
+    "message": "Не желая да правя такава проверка",
+    "description": "user is telling us they don't wish to investigate something for us"
+  },
+  "reloadadpage": {
+    "message": "Презаредете страницата с рекламата.",
+    "description": "instruction on ad report page"
+  },
+  "removefromlist": {
+    "message": "Премахни от списъка",
+    "description": "Label to remove a custom filter"
+  },
+  "removelabel": {
+    "message": "Премахни",
+    "description": "link to remove a filter"
+  },
+  "report_ad_on_page": {
+    "message": "Докладвай реклама в страницата",
+    "description": "Link in the button"
+  },
+  "reportfilterlistproblem": {
+    "message": "Това е неизправност на филтрите. Докладвайте я на: $link$",
+    "description": "telling the user to report an ad to a filter list maintainer",
+    "placeholders": {
+      "link": {
+        "content": "$1",
+        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+      }
+    }
+  },
+  "reportpubliclyavailable": {
+    "message": "Забележка: достъпът до вашия доклад може да бъде публичен. Имайте го предвид, ако включвате лични данни.",
+    "description": "Ad report page string, when you're about to submit a report"
+  },
+  "reporttous2": {
+    "message": "Можете да ни докладвате (на английски) за реклама <a>в тракера за неизправности</a>.",
+    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
+  },
+  "resourceblocklegend1": {
+    "message": "Легенда:",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend2": {
+    "message": "блокирани ресурси",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend3": {
+    "message": "ресурси от белия списък",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend4": {
+    "message": "блокируеми ресурси",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocklegend5": {
+    "message": "приложени правила за скриване",
+    "description": "resourceblocking page string"
+  },
+  "resourceblocktitle": {
+    "message": "Блокиране на ресурс",
+    "description": "resourceblocking page string"
+  },
+  "resourcedomain": {
+    "message": "Зареден в страницата от домейн:\n$domain$",
+    "description": "Text shown when hovering over an item in the third-party column",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "resourceiswhitelisted": {
+    "message": "Избраният ресурс е част от белия списък. Затова не можете да го блокирате.",
+    "description": "resourceblocking page string"
+  },
+  "retryaftersubscribe": {
+    "message": "Абонирайте се за филтри, след което опитайте отново: $list_title$",
+    "description": "instructions on ad report page telling users to subscribe to a filter list and then check again to see whether the ad exists",
+    "placeholders": {
+      "list_title": {
+        "content": "$1",
+        "example": "French filters"
+      }
+    }
+  },
+  "safari50_updatenotice": {
+    "message": "Ползвате стара версия на Safari. Осигурете си най-новата, за да използвате бутона на AdBlock в лентата на браузъра за задържане на AdBlock, за изключване на сайт от филтриране и за докладване на реклама. <a>Обновете сега</a>.",
+    "description": "A message shown to Safari 5.0 users urging them to upgrade"
+  },
+  "savebutton": {
+    "message": "Запиши",
+    "description": "Save button"
+  },
+  "savereminder": {
+    "message": "Не забравяйте да запишете!",
+    "description": "Reminder to press save"
+  },
+  "searchexplanation": {
+    "message": "Тук можете да ползвате * за означаване на нула или повече знаци. Например „картина банер*.gif“ ще върне съвпадения с „банер.gif“,  „банер123.gif“ и „банерабв.gif“.",
+    "description": "Text in resourceblock when you hover your mouse over the search textbox"
+  },
+  "searchplaceholder": {
+    "message": "Търсене на ресурси…",
+    "description": "Text in resourceblock shown in the search textbox before you type something"
+  },
+  "seeing_this_every_time_you_start_your_browser": {
+    "message": "Виждате ли това при всяко пускане на браузъра?",
+    "description": "Install page: link to click for help"
+  },
+  "selectresources": {
+    "message": "Изберете кой ресурс блокирате или деблокирате:",
+    "description": "resourceblocking page string"
+  },
+  "show_ads_except_for": {
+    "message": "Показване на реклами <i>навсякъде</i> без домейна",
+    "description": "Section title for blacklisting section of Customize tab"
+  },
+  "show_resourcelist": {
+    "message": "Покажи ресурсите",
+    "description": "Link in the button"
+  },
+  "showcontextmenus": {
+    "message": "Добави елементи към дясното контекстно меню",
+    "description": "Option on first tab page"
+  },
+  "showlinkstolists": {
+    "message": "Показвай препратки към филтрите:",
+    "description": "Option on second tab page"
+  },
+  "sliderexplanation": {
+    "message": "Движете плъзгача, докато рекламата в страницата бъде блокирана правилно и блокираният елемент се окаже подходящ.",
+    "description": "Blacklister slider page message"
+  },
+  "slidertitle": {
+    "message": "Първа стъпка: решете какво блокирате",
+    "description": "Blacklister slider page title"
+  },
+  "status_disabled": {
+    "message": "Невъзможно изпълнение на AdBlock за домейна.",
+    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
+  },
+  "status_paused": {
+    "message": "Задържан AdBlock.",
+    "description": "Message shown in toolbar button when AdBlock is paused."
+  },
+  "stop_blocking_ads": {
+    "message": "Да спрете блокирането на реклами:",
+    "description": "Section header on third tab"
+  },
+  "storage_quota_exceeded": {
+    "message": "Надхвърляте квотата, която AdBlock ползва за съхраняване на данни. Моля, прекратете абонамента си за някои от филтрите!",
+    "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ или $unsubscribe$ от всеки по отделно.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Абонирайте се</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>се отпишете</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
+  "subscribebutton": {
+    "message": "Абонирай",
+    "description": "subscribe to a list button"
+  },
+  "subscribingfailed": {
+    "message": "Провалено!",
+    "description": "abp: link subscriber result"
+  },
+  "subscribingfinished": {
+    "message": "Готово!",
+    "description": "abp: link subscriber result"
+  },
+  "subscribingtitle": {
+    "message": "Абониране за филтри",
+    "description": "abp: link subscriber title"
+  },
+  "tabcustomize": {
+    "message": "Нагласяване",
+    "description": "A tab on the options page"
+  },
+  "tabcustomizetitle": {
+    "message": "Нагласяване на AdBlock",
+    "description": "Title of the third tab"
+  },
+  "tabfilterlists": {
+    "message": "Филтри",
+    "description": "A tab on the options page"
+  },
+  "tabgeneral": {
+    "message": "Общи",
+    "description": "A tab on the options page"
+  },
+  "thats_it": {
+    "message": "Това беше!",
+    "description": "Install page string"
+  },
+  "thirdparty": {
+    "message": "от трета страна",
+    "description": "Resource list column title telling if the resource originates from a different domain"
+  },
+  "thirdpartycheckbox": {
+    "message": "всеки сайт БЕЗ сайтове от домейна: $domain$",
+    "description": "resourceblocking page string",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "example.com"
+      }
+    }
+  },
+  "translator_credit": {
+    "message": "Превод на български език: $translator_names$",
+    "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
+    "placeholders": {
+      "translator_names": {
+        "content": "Николай Филипов",
+        "example": "Michael G, Drew R"
+      }
+    }
+  },
+  "typehiding": {
+    "message": "скрит обект",
+    "description": "A resource type"
+  },
+  "typeimage": {
+    "message": "картина",
+    "description": "A resource type"
+  },
+  "typemedia": {
+    "message": "звук/видео",
+    "description": "A resource type"
+  },
+  "typeobject": {
+    "message": "интерактивен обект",
+    "description": "A resource type"
+  },
+  "typeobject_subrequest": {
+    "message": "заявка object_subrequest",
+    "description": "A resource type"
+  },
+  "typeother": {
+    "message": "друго",
+    "description": "A resource type"
+  },
+  "typepage": {
+    "message": "страница",
+    "description": "A resource type"
+  },
+  "typepopup": {
+    "message": "изскачащ обект",
+    "description": "A resource type"
+  },
+  "typescript": {
+    "message": "скрипт",
+    "description": "A resource type"
+  },
+  "typestylesheet": {
+    "message": "определение за стил",
+    "description": "A resource type"
+  },
+  "typesubdocument": {
+    "message": "рамка",
+    "description": "A resource type"
+  },
+  "typeunknown": {
+    "message": "неизвестно",
+    "description": "A resource type"
+  },
+  "typexmlhttprequest": {
+    "message": "заявка xmlhttprequest",
+    "description": "A resource type"
+  },
+  "undo_last_block": {
+    "message": "Отмени блокирането",
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  },
+  "unpause": {
+    "message": "Освободи",
+    "description": "Link text to unpause AdBlock, displayed immediately after 'status_paused'."
+  },
+  "unsubscribedlabel": {
+    "message": "Без абонамент.",
+    "description": "Status label"
+  },
+  "updateddayago": {
+    "message": "обновен преди 1 ден",
+    "description": "Label for subscription"
+  },
+  "updateddaysago": {
+    "message": "обновен преди $days$ дни",
+    "description": "Label for subscription",
+    "placeholders": {
+      "days": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedhourago": {
+    "message": "обновен преди 1 час",
+    "description": "Label for subscription"
+  },
+  "updatedhoursago": {
+    "message": "обновен преди $hours$ часа",
+    "description": "Label for subscription",
+    "placeholders": {
+      "hours": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedminuteago": {
+    "message": "обновен преди 1 минута",
+    "description": "Label for subscription"
+  },
+  "updatedminutesago": {
+    "message": "обновен преди $minutes$ минути",
+    "description": "Label for subscription",
+    "placeholders": {
+      "minutes": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatedrightnow": {
+    "message": "обновен сега",
+    "description": "Label for subscription"
+  },
+  "updatedsecondsago": {
+    "message": "обновен преди $seconds$ секунди",
+    "description": "Label for subscription",
+    "placeholders": {
+      "seconds": {
+        "content": "$1",
+        "example": "15"
+      }
+    }
+  },
+  "updatefromoldversion": {
+    "message": "Ползвате стара версия на AdBlock. Моля, първо $updatelink$ AdBlock до най-новата версия",
+    "description": "Ad report page instructions to update AdBlock in Safari",
+    "placeholders": {
+      "updatelink": {
+        "content": "$1обновете$2",
+        "example": "<a href='http://chrome.com/update_here.ctx'>update</a>"
+      }
+    }
+  },
+  "updatenowmessage": {
+    "message": "Обновяванията се извличат автоматично, но бихте могли да ги <a>обновите</a> и сега.",
+    "description": "update filters text + button"
+  },
+  "updateyourlists": {
+    "message": "Уверете се вашите филтри са обновени",
+    "description": "instruction on ad report page"
+  },
+  "use_experimental_feature_to_speed_up_adblock": {
+    "message": "Ускори AdBlock с експериментална настройка за Safari",
+    "description": "Option on first tab page"
+  },
+  "warning_overrules_filters": {
+    "message": "Внимание: във всички други сайтове ще виждате реклами!<br>Настройката изключва всички останали филтри за сайтовете.",
+    "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whitelistertitle2": {
+    "message": "Изключване на AdBlock…",
+    "description": "The title of the whitelister dialog"
+  },
+  "whitelisteverycontaining": {
+    "message": "Включи в белия списък всеки ресурс, съдържащ:",
+    "description": "resourceblocking page string"
+  },
+  "wildcardhint": {
+    "message": "Забележка: тук можете да ползвате * за означаване на всичко",
+    "description": "resourceblocking page string"
+  },
+  "work_around_hulu_problems": {
+    "message": "Ползвай заобиколен начин за нетръгващи клипове от Hulu.com (след повторен пуск на браузъра)",
+    "description": "Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
+  },
+  "yes": {
+    "message": "Да",
+    "description": "A positive response to a question"
+  },
+  "you_can_slide_to_change": {
+    "message": "Движете плъзгача, докато включите страниците, за които AdBlock няма да се изпълнява.",
+    "description": "Instructions for how to use the whitelister slider controls.  Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+  },
+  "you_know_thats_a_bad_idea_right": {
+    "message": "Колкото повече филтри ползвате, толкова по-бавно ще работи AdBlock. Ползването на твърде много може да предизвика забиване на браузъра в определени сайтове. Натиснете ДА за абониране въпреки всичко.",
+    "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }
+}

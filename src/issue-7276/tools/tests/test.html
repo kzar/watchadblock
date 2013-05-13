@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr" id="html">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>AdBlockforChrome test cases</title>
+  <link rel="Stylesheet" media="screen" href="qunit.css" />
+
+  
+  <script src="/port.js" type="text/javascript"></script>
+  <script src="/functions.js" type="text/javascript"></script>
+  <script src="/filtering/filteroptions.js" type="text/javascript"></script>
+  <script src="/adblock_start_common.js" type="text/javascript"></script>
+  <script src="/adblock_start_chrome.js" type="text/javascript"></script>
+  
+  
+  <script src="qunit.js" type="text/javascript"></script>
+
+  <script type="text/javascript"><!--
+    module("Checking for dumb developers");
+    test("Using extension domain", 1, function() {
+      ok(window.chrome && chrome.extension, "This test suite must be running on an extension URL!");
+    });
+
+    module("Parsing URLs: parseURI");
+    test("parseUri", 17, function() {
+      deepEqual(parseUri("https://foo.bar/"), {"hash": "", "host": "foo.bar", "hostname": "foo.bar", "href": "https://foo.bar/", "origin": "https://foo.bar", "pathname": "/", "port": "", "protocol": "https:", "search": ""});
+      deepEqual(parseUri("https://foo.bar:80/"), {"hash": "", "host": "foo.bar:80", "hostname": "foo.bar", "href": "https://foo.bar:80/", "origin": "https://foo.bar:80", "pathname": "/", "port": "80", "protocol": "https:", "search": ""});
+      deepEqual(parseUri("https://foo.bar/?http://www.google.nl/search?"), {"hash": "", "host": "foo.bar", "hostname": "foo.bar", "href": "https://foo.bar/?http://www.google.nl/search?", "origin": "https://foo.bar", "pathname": "/", "port": "", "protocol": "https:", "search": "?http://www.google.nl/search?"});
+      deepEqual(parseUri("https:foo.bar/?http://www.google.nl/search?"), {"hash": "", "host": "foo.bar", "hostname": "foo.bar", "href": "https:foo.bar/?http://www.google.nl/search?", "origin": "https:foo.bar", "pathname": "/", "port": "", "protocol": "https:", "search": "?http://www.google.nl/search?"});
+      deepEqual(parseUri("http://usr:@www.test.com:81/dir/dir.2/index.htm?q1=0&&test1&test2=value#top"), {"hash": "#top", "host": "www.test.com:81", "hostname": "www.test.com", "href": "http://usr:@www.test.com:81/dir/dir.2/index.htm?q1=0&&test1&test2=value#top", "origin": "http://usr:@www.test.com:81", "pathname": "/dir/dir.2/index.htm", "port": "81", "protocol": "http:", "search": "?q1=0&&test1&test2=value"});
+      deepEqual(parseUri("http://usr:pass@www.test.com:81/dir/dir.2/index.htm?q1=0&&test1&test2=value#top"), {"hash": "#top", "host": "www.test.com:81", "hostname": "www.test.com", "href": "http://usr:pass@www.test.com:81/dir/dir.2/index.htm?q1=0&&test1&test2=value#top", "origin": "http://usr:pass@www.test.com:81", "pathname": "/dir/dir.2/index.htm", "port": "81", "protocol": "http:", "search": "?q1=0&&test1&test2=value"});
+      deepEqual(parseUri("http://usr:pass@www.test.com/dir/dir.2/index.htm?q1=0&&test1&test2=value#top"), {"hash": "#top", "host": "www.test.com", "hostname": "www.test.com", "href": "http://usr:pass@www.test.com/dir/dir.2/index.htm?q1=0&&test1&test2=value#top", "origin": "http://usr:pass@www.test.com", "pathname": "/dir/dir.2/index.htm", "port": "", "protocol": "http:", "search": "?q1=0&&test1&test2=value"});
+      deepEqual(parseUri("http://www.test.com/dir/dir.2/index.htm?q1=0&&test1&test2=value#top"), {"hash": "#top", "host": "www.test.com", "hostname": "www.test.com", "href": "http://www.test.com/dir/dir.2/index.htm?q1=0&&test1&test2=value#top", "origin": "http://www.test.com", "pathname": "/dir/dir.2/index.htm", "port": "", "protocol": "http:", "search": "?q1=0&&test1&test2=value"});
+      deepEqual(parseUri("http://www.test.com/dir/dir@2/index.htm#top"), {"hash": "#top", "host": "www.test.com", "hostname": "www.test.com", "href": "http://www.test.com/dir/dir@2/index.htm#top", "origin": "http://www.test.com", "pathname": "/dir/dir@2/index.htm", "port": "", "protocol": "http:", "search": ""});
+      deepEqual(parseUri("http://www.test.com/dir/dir@2/index#top"), {"hash": "#top", "host": "www.test.com", "hostname": "www.test.com", "href": "http://www.test.com/dir/dir@2/index#top", "origin": "http://www.test.com", "pathname": "/dir/dir@2/index", "port": "", "protocol": "http:", "search": ""});
+      deepEqual(parseUri("http://test.com/dir/dir@2/#top"), {"hash": "#top", "host": "test.com", "hostname": "test.com", "href": "http://test.com/dir/dir@2/#top", "origin": "http://test.com", "pathname": "/dir/dir@2/", "port": "", "protocol": "http:", "search": ""});
+      deepEqual(parseUri("http://www.test.com/dir/dir@2/?top"), {"hash": "", "host": "www.test.com", "hostname": "www.test.com", "href": "http://www.test.com/dir/dir@2/?top", "origin": "http://www.test.com", "pathname": "/dir/dir@2/", "port": "", "protocol": "http:", "search": "?top"});
+      deepEqual(parseUri("http://www.test.com/dir/dir@2/"), {"hash": "", "host": "www.test.com", "hostname": "www.test.com", "href": "http://www.test.com/dir/dir@2/", "origin": "http://www.test.com", "pathname": "/dir/dir@2/", "port": "", "protocol": "http:", "search": ""});
+      deepEqual(parseUri("feed:https://www.test.com/dir/dir@2/"), {"hash": "", "host": "www.test.com", "hostname": "www.test.com", "href": "feed:https://www.test.com/dir/dir@2/", "origin": "feed:https://www.test.com", "pathname": "/dir/dir@2/", "port": "", "protocol": "feed:", "search": ""});
+      deepEqual(parseUri("feed:https://www.test.com:80/dir/dir@2/"), {"hash": "", "host": "www.test.com:80", "hostname": "www.test.com", "href": "feed:https://www.test.com:80/dir/dir@2/", "origin": "feed:https://www.test.com:80", "pathname": "/dir/dir@2/", "port": "80", "protocol": "feed:", "search": ""});
+      deepEqual(parseUri("feed:https://www.test.com/dir/dir2/?http://foo.bar/"), {"hash": "", "host": "www.test.com", "hostname": "www.test.com", "href": "feed:https://www.test.com/dir/dir2/?http://foo.bar/", "origin": "feed:https://www.test.com", "pathname": "/dir/dir2/", "port": "", "protocol": "feed:", "search": "?http://foo.bar/"});
+      deepEqual(parseUri("chrome-extension://longidentifier/tools/tests/index.html?notrycatch=true"), {"hash": "", "host": "longidentifier", "hostname": "longidentifier", "href": "chrome-extension://longidentifier/tools/tests/index.html?notrycatch=true", "origin": "chrome-extension://longidentifier", "pathname": "/tools/tests/index.html", "port": "", "protocol": "chrome-extension:", "search": "?notrycatch=true"});
+    });
+    test("parseSearch", 11, function() {
+      deepEqual(parseUri.parseSearch("?hello=world&ext=adblock&time=bedtime"), {"ext": "adblock", "hello": "world", "time": "bedtime"});
+      deepEqual(parseUri.parseSearch(""), {});
+      deepEqual(parseUri.parseSearch("?"), {});
+      deepEqual(parseUri.parseSearch("?hello"), {"hello": ""});
+      deepEqual(parseUri.parseSearch("?hello=world"), {"hello": "world"});
+      deepEqual(parseUri.parseSearch("?hello&ext=adblock"), {"ext": "adblock", "hello": ""});
+      deepEqual(parseUri.parseSearch("?ext=adblock&hello"), {"ext": "adblock", "hello": ""});
+      deepEqual(parseUri.parseSearch("?hello=world&hello=earth"), {"hello": "earth"});
+      deepEqual(parseUri.parseSearch("?hello=&ext=adblock"), {"ext": "adblock", "hello": ""});
+      deepEqual(parseUri.parseSearch("?hello=world&&ext=adblock"), {"ext": "adblock", "hello": "world"});
+      deepEqual(parseUri.parseSearch("?hello&&&&ext=adblock"), {"ext": "adblock", "hello": ""});
+    });
+    
+    if (/Chrome/.test(navigator.userAgent)) {
+      // CHROME ONLY
+      (function() {
+        module("Purging the remainders of ads using CSS selectors");
+        
+        function runme(page, url) {
+          elementPurger._page_location = parseUri(page);
+          return elementPurger._srcsFor(url);
+        }
+        
+        test("Fragments behind URLs", 4, function() {
+          deepEqual(runme("http://a.com/b/c/d.html#e", "http://a.com/b/c/d.html#f"), [
+                    {"op": "$=", "text": "//a.com/b/c/d.html#f"},
+                    {"op": "=", "text": "/b/c/d.html#f"},
+                    {"op": "=", "text": "d.html#f"},
+                    {"op": "=", "text": "./d.html#f"}]);
+          deepEqual(runme("http://a.com/b/c/d.html#e/f/g", "http://a.com/b/c/d.html#a/b/c/d/e/f"), [
+                    {"op": "$=", "text": "//a.com/b/c/d.html#a/b/c/d/e/f"},
+                    {"op": "=", "text": "/b/c/d.html#a/b/c/d/e/f"},
+                    {"op": "=", "text": "d.html#a/b/c/d/e/f"},
+                    {"op": "=", "text": "./d.html#a/b/c/d/e/f"}]);
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/b/c/e.html#f"), [
+                    {"op": "$=", "text": "//a.com/b/c/e.html#f"},
+                    {"op": "=", "text": "/b/c/e.html#f"},
+                    {"op": "=", "text": "e.html#f"},
+                    {"op": "=", "text": "./e.html#f"}]);
+          deepEqual(runme("http://a.com/b/c/#", "http://a.com/b/c/d/#"), [
+                    {"op": "$=", "text": "//a.com/b/c/d/#"},
+                    {"op": "=", "text": "/b/c/d/#"},
+                    {"op": "=", "text": "d/#"},
+                    {"op": "=", "text": "./d/#"}]);
+        });
+        
+        test("Ignore queryparameters in page but not in url", 2, function() {
+          deepEqual(runme("http://a.com/b/c/d.html?e/f/g/h#i/j", "http://a.com/b/c/k.html?l/m#n#o"), [
+                    {"op": "$=", "text": "//a.com/b/c/k.html?l/m#n#o"},
+                    {"op": "=", "text": "/b/c/k.html?l/m#n#o"},
+                    {"op": "=", "text": "k.html?l/m#n#o"},
+                    {"op": "=", "text": "./k.html?l/m#n#o"}]);
+          deepEqual(runme("http://a.com/b/c/d.html?e/f/g/h#i/j", "http://a.com/b/c/k.html?/l/m#n#o"), [
+                    {"op": "$=", "text": "//a.com/b/c/k.html?/l/m#n#o"},
+                    {"op": "=", "text": "/b/c/k.html?/l/m#n#o"},
+                    {"op": "=", "text": "k.html?/l/m#n#o"},
+                    {"op": "=", "text": "./k.html?/l/m#n#o"}]);
+        });
+        
+        test("Different domains", 2, function() {
+          deepEqual(runme("http://a.com/b/c/d.html", "http://e.com/f.html"), [
+                    {"op": "$=", "text": "//e.com/f.html"}]);
+          deepEqual(runme("http://a.com/b/c/d.html", "http://e.com/f.html#http://g.com/h/i/#j#k#l"), [
+                    {"op": "$=", "text": "//e.com/f.html#http://g.com/h/i/#j#k#l"}]);
+        });
+        
+        test("Same directory", 2, function() {
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/b/c/d.html"), [
+                    {"op": "$=", "text": "//a.com/b/c/d.html"},
+                    {"op": "=", "text": "/b/c/d.html"},
+                    {"op": "=", "text": "d.html"},
+                    {"op": "=", "text": "./d.html"}]);
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/b/c/e.html"), [
+                    {"op": "$=", "text": "//a.com/b/c/e.html"},
+                    {"op": "=", "text": "/b/c/e.html"},
+                    {"op": "=", "text": "e.html"},
+                    {"op": "=", "text": "./e.html"}]);
+        });
+        
+        test("Different documents in parent directories", 3, function() {
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/b/e.html"), [
+                    {"op": "$=", "text": "//a.com/b/e.html"},
+                    {"op": "=", "text": "/b/e.html"},
+                    {"op": "$=", "text": "../e.html"}]);
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/e.html"), [
+                    {"op": "$=", "text": "//a.com/e.html"},
+                    {"op": "=", "text": "/e.html"},
+                    {"op": "$=", "text": "../../e.html"}]);
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/"), [
+                    {"op": "$=", "text": "//a.com/"},
+                    {"op": "=", "text": "/"},
+                    {"op": "$=", "text": "../../"}]);
+        });
+        
+        test("Different doc in subdirs of same or parent dir", 2, function() {
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/b/c/e/f/g.html"), [
+                    {"op": "$=", "text": "//a.com/b/c/e/f/g.html"},
+                    {"op": "=", "text": "/b/c/e/f/g.html"},
+                    {"op": "=", "text": "e/f/g.html"},
+                    {"op": "=", "text": "./e/f/g.html"}]);
+          deepEqual(runme("http://a.com/b/c/d.html", "http://a.com/b/e/f/g.html"), [
+                    {"op": "$=", "text": "//a.com/b/e/f/g.html"},
+                    {"op": "=", "text": "/b/e/f/g.html"},
+                    {"op": "$=", "text": "../e/f/g.html"}]);
+        });
+        
+        test("Empty page dir", 3, function() {
+          deepEqual(runme("http://a.com/b/c/", "http://a.com/b/c/d/e.html"), [
+                    {"op": "$=", "text": "//a.com/b/c/d/e.html"},
+                    {"op": "=", "text": "/b/c/d/e.html"},
+                    {"op": "=", "text": "d/e.html"},
+                    {"op": "=", "text": "./d/e.html"}]);
+          deepEqual(runme("http://a.com/b/c/", "http://a.com/b/c/d.html"), [
+                    {"op": "$=", "text": "//a.com/b/c/d.html"},
+                    {"op": "=", "text": "/b/c/d.html"},
+                    {"op": "=", "text": "d.html"},
+                    {"op": "=", "text": "./d.html"}]);
+          deepEqual(runme("http://a.com/b/c/", "http://a.com/b/"), [
+                    {"op": "$=", "text": "//a.com/b/"},
+                    {"op": "=", "text": "/b/"},
+                    {"op": "$=", "text": "../"}]);
+        });
+        
+        test("Lack of trailing url slash", 2, function() {
+          deepEqual(runme("http://a.com/b/c/", "http://a.com/b"), [
+                    {"op": "$=", "text": "//a.com/b"},
+                    {"op": "=", "text": "/b"},
+                    {"op": "$=", "text": "../../b"}]);
+          deepEqual(runme("http://a.com/b/c/", "http://a.com/b/c"), [
+                    {"op": "$=", "text": "//a.com/b/c"},
+                    {"op": "=", "text": "/b/c"},
+                    {"op": "$=", "text": "../c"}]);
+        });
+      })();
+      
+      // END CHROME ONLY
+    } else {
+      // SAFARI ONLY
+      
+      // END SAFARI ONLY
+    }
+  --></script>
+</head>
+
+<body id="body">
+  <h1 id="qunit-header">AdBlockforChrome test suit</h1>
+  <h2 id="qunit-banner"></h2>
+  <div id="qunit-testrunner-toolbar"></div>
+  <h2 id="qunit-userAgent"></h2>
+  <ol id="qunit-tests"></ol>
+</body>
+</html>
+
+
+

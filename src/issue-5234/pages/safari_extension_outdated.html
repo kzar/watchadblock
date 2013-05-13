@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+  <head>
+    <title i18n="adblock_is_out_of_date"></title>
+    <script src="../jquery/jquery.min.js"></script>
+    <script src="../port.js" type="text/javascript"></script>
+    <script src="../functions.js"></script>
+    <style>
+      html {
+        height: 100%
+      }
+      body {
+        font-family: verdana, sans-serif;
+        width: 800px;
+        margin: auto;
+        background: -webkit-gradient(linear, left top, left bottom, from(#bbf), to(#fff), color-stop(.5, #fff))
+                    no-repeat;
+      }
+      #header {
+        margin: 50px 0;
+        background: url('../img/icon48.png') no-repeat;
+        padding-top: 5px;
+        padding-left: 55px;
+        z-index: 10;
+      }
+      h1 {
+        margin: 0;
+        padding-bottom: 5px;
+      }
+      h3 {
+        margin-top: 0px;
+      }
+      .card {
+        background: -webkit-gradient(radial, 15% 25%, 20, 15% 25%, 700, from(#fff), to(#ddf));
+        position: absolute; /* so it can slide */
+        padding: 20px 40px;
+        border-radius: 30px;
+        border: 1px solid white;
+        width: 700px;
+        -webkit-box-shadow: 2px 2px 5px gray;
+      }
+      .nav {
+        float: right;
+        clear:both;
+        margin: 5px auto;
+      }
+      .nav a {
+        border: 1px solid gray;
+        border-radius: 15px;
+        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccf));
+        -webkit-box-shadow: 1px 1px 5px #AAA;
+        padding: 5px 10px;
+        float:left;
+        margin-left: 45px;
+        font-size: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: Georgia;
+        color: #33D;
+      }
+      .nav a:hover {
+        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddf));
+      }
+      .nav a:active {
+        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#aad));
+      }
+    </style>
+    <script src="safari_extension_outdated.js"></script>
+  </head>
+  <body>
+    <div id="header">
+      <h1 i18n="adblock_is_out_of_date"></h1>
+    </div>
+
+    <div id="wrapper">
+      <div class="card">
+        <img src="install/autoupdate.png" style="float:right; margin-left: 20px; margin-bottom: 30px;">
+        <h3 i18n="you_should_enable_autoupdate"></h3>
+        <h3 i18n="to_turn_on_autoupdate"></h3>
+        <ol>
+          <li i18n="click_safari_prefs"></li>
+          <li i18n="click_extensions"></li>
+          <li i18n="click_updates"></li>
+          <li i18n="click_install_update_automatically"></li>
+        </ol>
+        <div class="nav">
+          <a href="#" id="disable_update_check"><span i18n="never_remind_again_button"></span></a>
+          <a href="#" id="close"><span i18n="close"></span></a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
