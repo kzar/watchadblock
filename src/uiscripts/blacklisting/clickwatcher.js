@@ -29,22 +29,25 @@ function Highlighter() {
       box.hide();
       el = document.elementFromPoint(e.clientX, e.clientY);
     }
-    else {
-        box[0].style.setProperty("z-index", maxParentZIndex(el), "important");
-    }
-    if (el === document.body || el.className === "adblock-killme-overlay") {
-      box.hide(); 
+    if (el === target) {
+      box.show();
       return;
     }
-    target = $(el);
-    offset = target.offset();
+    if (el === document.body || el.className === "adblock-killme-overlay") {
+      box.hide();
+      return;
+    }
+    box[0].style.setProperty("z-index", maxParentZIndex(el), "important");
+    el = $(el);
+    target = el[0];
+    offset = el.offset();
     box.css({
-      height: target.outerHeight(), 
-      width: target.outerWidth(), 
-      left: offset.left, 
-      top: offset.top 
+      height: el.outerHeight(),
+      width: el.outerWidth(),
+      left: offset.left,
+      top: offset.top
     });
-    box.show(); 
+    box.show();
   }
   
   this.getCurrentNode = function(el) {
