@@ -33,7 +33,7 @@ function customize_for_this_tab() {
       show(["div_undo", "separator0"]);
 
     if (!BG.get_settings().show_advanced_options)
-      hide(["separator3", "div_show_resourcelist", "div_report_an_ad"]);
+      hide(["div_show_resourcelist"]);
 
     for (var div in shown)
       if (shown[div]) 
