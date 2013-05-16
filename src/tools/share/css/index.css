@@ -2,9 +2,8 @@ body {
   margin: 1px;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
-
 .big {
-  background: -webkit-gradient(linear, center top, center bottom, from(#F3F3F3),color-stop(150%, #E1E1E1));
+  background: -webkit-gradient(linear, center top, center bottom, from(white),color-stop(120%,#e3e3e3));
   color: black;
   border: 1px solid black;
   border-radius: 1em;
@@ -21,6 +20,7 @@ body {
 }
 .main {
   height: 80px;
+  width: 550px;
   border-radius: 1em;
   border-width: medium;
   -webkit-box-shadow: 0px 1px 5px 0px #444444;
@@ -28,6 +28,7 @@ body {
 }
 .box1 {
   border: 2px solid #C80000;
+  display: inline-block;
 }
 .box2 {
   border: 2px solid blue;
@@ -36,8 +37,12 @@ body {
   border: 2px solid #3CF;
 }
 .button {
-  margin-top: -55px;
+  margin-top: -50px;
   margin-left: 100px;
+}
+.button2 {
+  margin-top: -43px;
+  margin-left: 340px;
 }
 #pay a {
   color: blue;
