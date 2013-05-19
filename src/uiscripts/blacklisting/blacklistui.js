@@ -422,7 +422,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
 
     checkbox.find("input").change(function() {
       updateFilter();
-      preview.call(that, $("#summary", this._ui_page2).text(), 2);
+      preview.call(that, $("#summary", this._ui_page2).text());//2
     });
 
     detailsDiv.append(checkbox);
