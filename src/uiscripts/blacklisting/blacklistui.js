@@ -115,7 +115,7 @@ BlacklistUi.prototype.show = function() {
     var clickWatcher = new ClickWatcher();
     var that = this;
     clickWatcher.cancel(function() {
-      preview(null);
+      preview.call(that, null);
       that._fire('cancel');
     });
     clickWatcher.click(function(element) {
@@ -422,7 +422,7 @@ BlacklistUi.prototype._redrawPage2 = function() {
 
     checkbox.find("input").change(function() {
       updateFilter();
-      preview($("#summary", this._ui_page2).text(), 2);
+      preview.call(that, $("#summary", this._ui_page2).text(), 2);
     });
 
     detailsDiv.append(checkbox);
