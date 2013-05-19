@@ -1,288 +1,260 @@
-var global_cached_subscriptions;
-
-// Update the list with all subscriptions. If new lists are added, refresh
-// the full list.
-function updateSubscriptionList() {
-  BGcall('get_subscriptions_minus_text', function(subs) {
-    global_cached_subscriptions = subs;
-
-    for (var id in subs) {
-      var sub = subs[id];
-      var checkbox = $('.subscription[name="' + id + '"] input');
-      if (checkbox.length === 1) {
-        // The subscription already exists. Just update it
-        checkbox[0].checked = sub.subscribed;
-      } else {
-        // new subscription, or the list didn't exist yet. (Re)build it.
-        $('#add_blocking_list').empty();
-        $('#other_filters').empty();
-        $('#custom_filters').empty();
-        reset_language_select();
-
-        setSubscriptionList(subs);
-        break;
-      }
-    }
-
-    // In case they subscribed to an invalid list, it will be deleted
-    // automatically in the background. However, allow them to copy the url
-    // so they can modify it, before it's permanently removed.
-    var removedSubs = $('.subscription[name]').filter(function() {
-      return !subs[$(this).attr("name")];
-    });
-    if (removedSubs.length > 0) {
-      $(".subscription_info", removedSubs[0]).text(translate("invalidListUrl"));
-      $("input", removedSubs[0]).attr("disabled", "disabled");
-    }
-    
-    updateSubscriptionInfoAll();
-    
-  });
-}
-
-var start_index = 0;
-
-// Creates the full list with subscriptions.
-// Inputs: subscriptions: the list with all subscriptions and their properties
-function setSubscriptionList(subscriptions) {
-  //sorting the list
-  //1, 2: AB custom and easylist
-  //3: additional easylist filters
-  //4: other default filters
-  //5: EasyPrivacy
-  //6: custom filter lists
-  //var sorted_list = [];
-  var adblock_list = [];
-  var others_list = [];
-  var custom_list = [];
-  var language_list = [];
-  start_index = 0;
+CheckboxUtil = (function() {
+  //event binders should be handled separately
+  var create_container = function(parent_name, filter_type) {
+    var div = $("<div></div>").
+      addClass("subscription").
+      addClass(filter_type).
+      attr("name", parent_name);
+    return div;
+  };
   
-  for (var id in subscriptions) {
-    var entry = subscriptions[id];
-    if (id === 'adblock_custom') {
-      entry.order = "1adblock_custom";
-      adblock_list.push(entry);
-      start_index++;
-    } else if (id === 'easylist') {
-      entry.order = "2easylist";
-      adblock_list.push(entry);
-      start_index++;
-    } else if (id === 'easyprivacy') {
-      entry.order = "5easyprivacy";
-      others_list.push(entry);
-    } else if (entry.user_submitted) {
-      entry.order = "6" +
-          (translate("filter" + id) || entry.url).toLowerCase();
-      custom_list.push(entry);
-    } else if (entry.requiresList) {
-      entry.order = "3" +
-          (translate("filter" + id) || entry.url).toLowerCase();
-      entry.language_filter = true;
-      language_list.push(entry);
-    } else {
-      entry.order = "4" +
-          (translate("filter" + id) || entry.url).toLowerCase();
-      entry.language_filter = true;
-      language_list.push(entry);
-    }
-    entry.id = id;
+  var create_checkbox = function(index, chkbox_id, is_subscribed) {
+    var checkbox = $('<input />').
+      attr("type", "checkbox").
+      attr("id", chkbox_id).
+      attr("checked", is_subscribed ? 'checked' : null);
+    
+    return checkbox;
+  };
+  
+  var create_label = function(label_display, url, chkbox_id){
+    var label = $("<label></label>").
+      text(label_display).
+      attr("title", url).
+      attr("for", chkbox_id);
+     
+    return label;
+  };
+  
+  var create_link = function(label_display, url) {
+    var link = $("<a></a>").
+      text(label_display).
+      css("margin-left", "6px").
+      css("font-size", "10px").
+      css("display", $("#btnShowLinks").prop("disabled") ? "inline" : "none").
+      attr("target", "_blank").
+      attr("class", "linkToList").
+      attr("href", url);
+  };
+  
+  var create_infospan = function() {
+    var infospan = $("<span></span>").
+      addClass("subscription_info");
+    
+    return infospan;
   }
   
-  sort_array(adblock_list);
-  sort_array(others_list);
-  sort_array(custom_list);
-  sort_array(language_list);
-  
-  organize_div(adblock_list, $('#add_blocking_list'), 'adblock');
-  organize_div(others_list, $('#other_filters'), 'other');
-  organize_div(custom_list, $('#custom_filters'), 'custom');
-  add_options_for_language_select(language_list, start_index);
-  
-  show_custom_div();
-}
-
-//Sort arrays according to the items order
-function sort_array(arr){
-  arr.sort(function(a,b) {
-    return a.order > b.order ? 1 : (a.order === b.order ? 0 : -1);
-  });
-}
-
-function addCheckbox(indx, entry, container, chkbox){
-  var div = $("<div></div>").
-      addClass("subscription").
-      attr("name", entry.id);
-  div.attr("id", entry.order);
-  var checkbox = $('<input />').
-    attr("type", "checkbox").
-    attr("id", chkbox + "_" + indx).
-    attr("checked", entry.subscribed ? 'checked' : null).
-    change(function() {
-      // Subscribe or unsubscribe from a list
-      var parent = $(this).parent();
-      var checked = $(this).is(":checked");
-      $(".remove_filter", parent).
-        css("display", checked ? "none" : "inline");
-      var id = parent.attr("name");
-      if (checked) {
-        $(".subscription_info", parent).text(translate("fetchinglabel"));
-        subscribe(id);
-      } else {
-        unsubscribe(id, false);
-        $(".subscription_info", parent).
-            text(translate("unsubscribedlabel"));
-        if(entry.language_filter){
-          $(parent).fadeOut();
-          recreate_language_select($(parent));
-          setTimeout(function(){
-            $(parent).empty().remove();
-          }, 1000);
-        }
-      }
-      //$(this).attr('disabled','disabled');
-    });
-
-  var name = $("<label>").
-    text(translate("filter" + entry.id) || entry.url).
-    attr("title", entry.url).
-    attr("for", chkbox + "_" + indx);
-  var link_to_list = $("<a>").
-    text(translate('labelshow')).
-    css("margin-left", "6px").
-    css("font-size", "10px").
-    css("display", $("#btnShowLinks").prop("disabled") ? "inline" : "none").
-    attr("target", "_blank").
-    attr("class", "linkToList").
-    attr("href", entry.url);
-   
-  var infospan = $("<span></span>").
-    addClass("subscription_info");
-    
-  if (entry.user_submitted) {
-    var remove_filter_label = $("<a>").
+  var create_remove_filter_label = function() {
+    var remove_anchor = $("<a>").
       css("font-size", "10px").
       css("display", entry.subscribed ? "none" : "inline").
       attr("href", "#").
       text(translate("removefromlist")).
-      addClass("remove_filter").
-      click(function(event) {
-        // Remove this filter list from the page.
-        event.preventDefault();
-        var parent = $(this).parent();
-        var id = parent.attr("name");
-        unsubscribe(id, true);
-        parent.remove();
-      });
-  } else
-    var remove_filter_label = null;
-  
-  div.
-    append(checkbox).
-    append(name).
-    append(link_to_list).
-    append(infospan).
-    append(remove_filter_label);
-
-  container.
-    append(div);
-}
-
-function recreate_language_select(removed_span){
-  var options = $('#language_select').find('option');
-  var language_list = [];
-  $.each(options, function (indx, option) {
-    var $option = $(option);
-    if($option.val()){
-      var entry = {
-        url: $option.val(),
-        id: $option.attr('id'),
-        order: $option.attr('name')
+      addClass("remove_filter");
+    
+    return remove_anchor
+  }
+      
+  return {
+    createCheckbox: function(entry, index, filter_type) {
+      var chkbox_id = filter_type + "_" + index;
+      //generate checkbox and all containers
+      var container = create_container(entry.id, filter_type);
+      var chckbox = create_checkbox(index, chkbox_id, entry.subscribed);
+      
+      var label_display = translate("filter" + entry.id);
+      console.log(label_display);
+      //NOT WORKING
+      var label = create_label(label_display, entry.url, chkbox_id);
+      //NOT WORKING
+      var link = create_link(label_display, entry.url);
+      var infospan = create_infospan();
+      
+      container.
+        append(chckbox).
+        append(label).
+        append(link).
+        append(infospan);
+       
+      if (entry.user_submitted) {
+        var remove_label = create_remove_filter_label();
+        container.append(remove_label);
       }
-      language_list.push(entry);
+      
+      return container;
     }
-  });
+  }
+}());
+
+SelectboxUtil = (function(){
+  var $language_select = $("#language_select");
   
-  var entry = {
-    id: removed_span.attr('name'),
-    url: removed_span.find('label').attr('title'),
-    order: removed_span.attr('id')
+  var create_option = function(text_value, id, url, position) {
+    var data_container = {
+      id: id,
+      url: url,
+      index: position
+    };
+    
+    var option = $("<option>", {
+      value: text_value,
+      text: text_valus
+    }).data("values", data_container);
+    
+    return option;
   };
   
-  language_list.push(entry);
-  sort_array(language_list);
-  reset_language_select();
-  add_options_for_language_select(language_list);
-}
-
-//add array contents to passed in div
-function organize_div(arr, container, chkbox){
-  for (var i = 0; i < arr.length; i++) {
-    var entry = arr[i];
-    if(!entry.language_filter)
-      addCheckbox(i, entry, container, chkbox);
-  }
-}
-
-//Show custom_filters div if not empty
-function show_custom_div(){
-  var custom_filters = $('#custom_filters');
-  var custom_filters_header = custom_filters.prev('h3');
-  custom_filters.find('div').size() > 0?custom_filters_header.show():custom_filters_header.hide();
-}
-
-function reset_language_select(){
-  $('#language_select').children()
-    .remove()
-    .end()
-    .append($('<option>', { 
-      value: '',
-      text : ' -- Select Language -- ',
-      id: 'sampling'
-    }));
-}
-
-function add_options_for_language_select(arr){
-  $.each(arr, function (i, item) {
-    var indx = i + start_index;
-    if(!item.subscribed){
-      $('#language_select').append($('<option>', { 
-          value: item.url,
-          text : translate("filter" + item.id),
-          id: item.id,
-          name: item.order
-      }).attr('data-index', indx));
-    }else{
-      addCheckbox(indx, item, $('#add_blocking_list'), 'adblock');
+  //hope this works
+  var insert_option = function(option, position) {
+    $language_select.find("option").each(function(){
+      var $this = $(this);
+      var this_values = $this.data("values");
+      var next_values = $this.next().data("values");
+      
+      var base_obj = { index: position };
+      
+      if(is_greater(base_obj, this_values) 
+        && is_greater(next_values, base_obj)) {
+        $this.next(option);
+        return false;
+      }
+    })
+  };
+  
+  var is_greater = function(obj, comp_obj) {
+    var bool = false;
+    if(obj && (!comp_obj || obj.index > comp_obj.index)){
+      bool = true;
     }
-  });
-}
-// Update the infolabel from all subscriptions (last update time etcetera)
-function updateSubscriptionInfoAll() {
-  for (var id in global_cached_subscriptions) {
-    var div = $("[name='" + id + "']");
-    var subscription = global_cached_subscriptions[id];
-    var infoLabel = $(".subscription_info", div);
-    var text = "";
-    if (!$("input", div).is(":checked")) {
-      if (infoLabel.text() === translate("unsubscribedlabel"))
-        continue;
-      text = "";
-    } else if (!subscription.last_update_failed_at && !subscription.last_update) {
-      text = translate("fetchinglabel");
-    } else if (subscription.last_update_failed_at && !subscription.last_update) {
-      text = translate("failedtofetchfilter");
-      var unfetched_url = div.find("label").attr("title");
-      var error_message = translate("languagedropdowndescription") + " " + unfetched_url;
-      var error_message_span = $("<span></span>").
-        text(error_message);
-      $("#message_holder").html(error_message_span).show();
-    } else {
-      var how_long_ago = Date.now() - subscription.last_update;
-      var seconds = Math.round(how_long_ago / 1000);
-      var minutes = Math.round(seconds / 60);
-      var hours = Math.round(minutes / 60);
-      var days = Math.round(hours / 24);
+    return bool;
+  };
+  
+  return {
+    initSelect: function(language_list) {
+      for(var x = 0; x < languange_list.length; x++){
+        var language_filter = language_list[x];
+        addOption(language_filter, position);
+      }
+    },
+    
+    addOption: function(language_filter, position) {
+      var text_value = translate("filter" + item.id);
+      var option = create_option(text_value, language_filter.id, language_filter.url, position);
+      insert_option(option, position);
+    }
+  }
+}());
+
+//TODO: Get all major functions, design in semi object oriented manner...
+FilterManager = (function (){
+  var global_cached_subscriptions;
+  var adblock_filters = [];
+  var language_filters = [];
+  var other_filters = [];
+  var custom_filters = [];
+  
+  var filter_types = {
+    ADBLOCK: "adblock_filter",
+    LANGUAGE: "language_filter",
+    OTHERS: "other_filter",
+    CUSTOM: "custom_filter"
+  };
+  
+  var filter_array = [{
+      array: adblock_filters, 
+      type: filter_types.ADBLOCK,
+      container: $("#add_blocking_list")
+    },{
+      array: language_filters,
+      type: filter_types.LANGUAGE,
+      container: $("#languange_list")
+    },{
+      array: other_filters,
+      type: filter_types.OTHERS,
+      container: $("#other_filters")
+    },{
+      array: custom_filters,
+      type: filter_types.CUSTOM,
+      container: $("#custom_filters")
+    }];
+    
+  var prepare_subscriptions = function (arr) {
+    for(var id in arr){
+      var entry = arr[id];
+      if (id === "adblock_custom" || id === "easylist") {
+        adblock_filters.push(entry);
+      } else if (id === "easy_privacy") {
+        other_filters.push(entry);
+      } else if (entry.user_submitted) {
+        custom_filters.push(entry);
+      } else{
+        language_filters.push(entry);
+      }
+      entry.id = id;
+    }
+    sort_arrays();
+  };
+  
+  //populate div with data from array
+  var organizeDiv = function (arr, container, chkbox){
+    for(var x = 0; x < arr.length; x++){
+      var checkbox = CheckboxUtil.createCheckbox(arr[x], x, chkbox);
+      container.append(checkbox);
+    }
+  };
+  //sorts array of subscriptions by using order attribute
+  var sort_arrays = function() {
+    for (var x = 0; x < filter_array; x++){
+      var arr = filter_array[x].array;
+      arr.sort(function(a,b) {
+        return a.order > b.order ? 1 : (a.order === b.order ? 0 : -1);
+      });
+    }
+  };
+  
+  var bind_controls = function() {
+    //bind select options,
+    //bind checkbox options,
+    //bind unsubscribe all options,
+    //bind subscribe all options
+    //bind remove filter span,
+    //bind links for filter list,
+    //bind listeners
+  };
+  
+  var subscribe = function(id) {
+    var parameters = {id: id};
+    if (global_cached_subscriptions[id] && global_cached_subscriptions[id].requiresList){
+      parameters.requires = global_cached_subscriptions[id].requiresList;
+    }
+
+    BGcall("subscribe", parameters);
+  };
+  
+  var validate_over_subscription = function() {
+    if ($(":checked", "#filter_subscriptions").length <= 6)
+      return true;
+    if (optionalSettings.show_advanced_options) {
+    // In case of an advanced user, only warn once every 30 minutes, even
+    // if the options page wasn't open all the time. 30 minutes = 1/48 day
+    if ($.cookie('noOversubscriptionWarning'))
+      return true;
+    else
+      $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
+    }
+    return confirm(translate("you_know_thats_a_bad_idea_right"));
+  };
+  
+  var unsubscribe = function(id, del) {
+    BGcall("unsubscribe", {id:id, del:del});
+  };
+  
+  var get_last_update_value = function(last_update) {
+    var how_long_ago = Date.now() - last_update;
+    var seconds = Math.round(how_long_ago / 1000);
+    var minutes = Math.round(seconds / 60);
+    var hours = Math.round(minutes / 60);
+    var days = Math.round(hours / 24);
       if (subscription.last_update_failed_at)
         text = translate("last_update_failed");
       if (seconds < 10)
@@ -301,167 +273,52 @@ function updateSubscriptionInfoAll() {
         text += translate("updateddayago");
       else
         text += translate("updateddaysago", [days]);
-    }
-    infoLabel.text(text);
+    return text;
   }
-}
-
-// Unsubscribe from the given filterlist id.
-// 'del' determines if it should be deleted too
-function unsubscribe(id, del, multiple_subscriptions) {
-  BGcall("unsubscribe", {id:id, del:del});
-}
-
-// Subscribe to the given filterlist id, and a required list if it is known.
-// Inputs: id: either a well-known id, or "url:xyz", where xyz is the URL of
-// a user-specified filter list.
-function subscribe(id, multiple_subscriptions) {
-  // Avoid over-subscription
-  if (!validateOverSubscription()) {
-    window.location.reload();
-    return;
-  }
-  
-  var parameters = {id: id};
-  if (global_cached_subscriptions[id] && global_cached_subscriptions[id].requiresList){
-    parameters.requires = global_cached_subscriptions[id].requiresList;
-  }
-
-  BGcall("subscribe", parameters);
-}
-
-// If the user is about to subscribe to too many filters, make
-// them agree that they know what they're doing.
-// Returns true if validated.
-function validateOverSubscription() {
-  if ($(":checked", "#filter_subscriptions").length <= 6)
-    return true;
-  if (optionalSettings.show_advanced_options) {
-    // In case of an advanced user, only warn once every 30 minutes, even
-    // if the options page wasn't open all the time. 30 minutes = 1/48 day
-    if ($.cookie('noOversubscriptionWarning'))
-      return true;
-    else
-      $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
-  }
-  return confirm(translate("you_know_thats_a_bad_idea_right"));
-}
-
-$(function() {
-  // Build the subscription list
-  updateSubscriptionList();
-
-  // Every second, redisplay "last update" times on subscriptions.
-  window.setInterval(function() {
-    updateSubscriptionInfoAll();
-  }, 1000);
-
-  // If the user presses the update now button, update all subscriptions
-  $("#btnUpdateNow").click(function() {
-    $(this).attr("disabled", "disabled");
-    BGcall("update_subscriptions_now");
-    setTimeout(function() {
-      $("#btnUpdateNow").removeAttr("disabled");
-    }, 300000); //re-enable after 5 minutes
-  });
-
-  // Add a new subscription URL
-  $("#btnNewSubscriptionUrl").click(function() {
-    var url = $("#txtNewSubscriptionUrl").val();
-    var abp_regex = /^abp.*\Wlocation=([^\&]+)/i;
-    if (abp_regex.test(url)) {
-      url = url.match(abp_regex)[1]; // the part after 'location='
-      url = unescape(url);
-    }
-    url = url.trim();
-    if (/^https?\:\/\/[^\<]+$/.test(url)) {
-      subscribe("url:" + url);
-      $("#txtNewSubscriptionUrl").val("");
-    } else
-      alert(translate("failedtofetchfilter"));
-  });
-
-  // Pressing enter will add the list too
-  $('#txtNewSubscriptionUrl').keypress(function(event) {
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      $("#btnNewSubscriptionUrl").click();
-    }
-  });
-
-  // In case a subscription changed (updated or subscribed via subscribe.html)
-  // then update the subscription list.
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if (request.command !== "filters_updated")
-      return;
-    updateSubscriptionList();
-    sendResponse({});
-  });
-
-  $("#subscribeAll").on("click", function(e) {
-    var inputs = $("input:not(:checked)", ".subscription");
-    for (var i=0; i<inputs.length; i++) {
-      //window.setTimeout((function() { // Catch i in closure
-        var input = $(inputs[i]);
-        //input.attr('disabled', 'disabled');
-        //return (function() { //input.click().change(); });
-          var parent = input.parent();
-          var id = parent.attr("name");
-          $(".subscription_info", parent).text(translate("fetchinglabel"));
-          subscribe(id, true);
-        //});
-      //})(), 1000 * i);
-    }
+  //TODO: create binder for checkbox, span and selectbox
+  return {
+    initializePage: function(){
+      BGcall('get_subscriptions_minus_text', function(subs) {
+        //initialize page using subscriptions from the background
+        //copy from update subscription list + setsubscriptionlist
+        prepare_subscriptions(subs);
+        for(obj in filter_array){
+          var filter = filter_array[obj];
+          organizeDiv(filter.array, filter.container, filter.type);
+        }
+        bind_controls();
+      });
+    },
     
-    var language_select_options = $('#language_select').find('option');
-    language_select_options.attr('disabled', 'disabled');
-    language_select_options.each(function(ind){
-      var selected_option = $(language_select_options[ind]);
-      if(selected_option.val() !== ''){
-        subscribe(selected_option.attr('id'), true);
+    //update information for each subscription
+    updateSubscriptionInfoAll: function() {
+      //copy from update subscription info all
+      for(var id in global_cached_subscriptions){
+        var div = $("[name='" + id + "']");
+        var subscription = global_cached_subscriptions[id];
+        var infoLabel = $(".subscription_info", div);
+        var text = "";
+        if (!$("input", div).is(":checked")) {
+          if (infoLabel.text() === translate("unsubscribedlabel"))
+            continue;
+          text = "";
+        } else if (!subscription.last_update_failed_at && !subscription.last_update) {
+          text = translate("fetchinglabel");
+        } else if (subscription.last_update_failed_at && !subscription.last_update) {
+          text = translate("failedtofetchfilter");
+        } else {
+          text = get_last_update_value(subscription.last_update);
+        }
+        infoLabel.text(text);
       }
-    });
-    updateSubscriptionList(); 
-    e.preventDefault();
-  });
-  
-  
-  $("#unsubscribeAll").on("click", function(e) {
-    $("input", ".subscription").each(function(i, el) {
-      if (el.checked){
-        var option = $(el);
-        //option.attr('disabled', 'disabled');
-        var parent = option.parent();
-        var id = parent.attr("name");
-        unsubscribe(id, false, true);
-        $(".subscription_info", parent).
-          text(translate("unsubscribedlabel"));
-      }
-      //  $(el).click().change();
-    });
-    updateSubscriptionList();
-    e.preventDefault();
-  });
-
-  $("#btnShowLinks").click(function() {
-    $(".linkToList").css("display", "inline");
-    $("#btnShowLinks").attr("disabled", "disabled");
-  });
-  
-  $('#language_select').on('change', function(){
-    var selected_option = $('#language_select option').filter(':selected');
-    if(selected_option.val() !== ''){
-      var selected_element = {
-        id: selected_option.attr('id'),
-        url: selected_option.val()
-      };
-      var indx = selected_option.data('index');
-      addCheckbox(indx, selected_element, $('#add_blocking_list'), 'adblock');
-      //add_language_to_adblock_subsribed(selected_element);
-      $('#adblock_' + indx).trigger('click');
-      $(this).find('option:first').attr('selected','selected');
-      selected_option.remove();
     }
-    $(this).val('');
-  });
+  }
+}());
+
+$(function(){
+  FilterManager.initializePage();
+  
+  window.setInterval(function() {
+    FilterManager.updateSubscriptionInfoAll();
+  }, 1000);
 });
