@@ -10,14 +10,6 @@ function Highlighter() {
   var box = $("<div class='adblock-highlight-node'></div>");
   box.appendTo("body");
   
-  function maxParentZIndex(el) {
-      if (!el) return 0;
-      var s = getComputedStyle(el) || {};
-      var z = s['z-index'] || 0;
-      var zInt = (z === 'auto' ? 0 : parseInt(z));
-      return Math.max(zInt, maxParentZIndex(el.parentNode));
-  }
-  
   function handler(e) {
     var offset, el = e.target;
     var now = Date.now();
@@ -37,7 +29,6 @@ function Highlighter() {
       box.hide();
       return;
     }
-    box[0].style.setProperty("z-index", maxParentZIndex(el), "important");
     el = $(el);
     target = el[0];
     offset = el.offset();
@@ -98,7 +89,6 @@ ClickWatcher.prototype.show = function() {
   var wait = $("<div></div>").
     append(translate("findingads")).
     dialog({
-      zIndex: 11000000, 
       position: [50, 50],
       height: 120,
       minHeight: 120,
@@ -176,8 +166,7 @@ ClickWatcher.prototype._build_ui = function() {
     append(translate("clickthead")).
     append("<br/><br/>").
     dialog({
-      dialogClass: "adblock-blacklist-page0",
-      zIndex:10000000, 
+      dialogClass: "adblock-blacklist-dialog",
       position:[50, 50],
       width:400,
       minHeight:125,
