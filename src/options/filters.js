@@ -1,3 +1,5 @@
+//TODO: Create label field on entry object :)
+
 CheckboxUtil = (function() {
   //event binders should be handled separately
   var create_container = function(parent_name, filter_type) {
@@ -18,8 +20,9 @@ CheckboxUtil = (function() {
   };
   
   var create_label = function(label_display, url, chkbox_id){
+    var display = label_display || url;
     var label = $("<label></label>").
-      text(label_display).
+      text(display).
       attr("title", url).
       attr("for", chkbox_id);
      
@@ -44,7 +47,7 @@ CheckboxUtil = (function() {
     return infospan;
   }
   
-  var create_remove_filter_label = function() {
+  var create_remove_filter_label = function(entry) {
     var remove_anchor = $("<a>").
       css("font-size", "10px").
       css("display", entry.subscribed ? "none" : "inline").
@@ -62,11 +65,9 @@ CheckboxUtil = (function() {
       var container = create_container(entry.id, filter_type);
       var chckbox = create_checkbox(index, chkbox_id, entry.subscribed);
       
-      var label_display = translate("filter" + entry.id);
-      console.log(label_display);
-      //NOT WORKING
+      var label_display = entry.label;
+      
       var label = create_label(label_display, entry.url, chkbox_id);
-      //NOT WORKING
       var link = create_link(label_display, entry.url);
       var infospan = create_infospan();
       
@@ -77,7 +78,7 @@ CheckboxUtil = (function() {
         append(infospan);
        
       if (entry.user_submitted) {
-        var remove_label = create_remove_filter_label();
+        var remove_label = create_remove_filter_label(entry);
         container.append(remove_label);
       }
       
@@ -98,7 +99,7 @@ SelectboxUtil = (function(){
     
     var option = $("<option>", {
       value: text_value,
-      text: text_valus
+      text: text_value
     }).data("values", data_container);
     
     return option;
@@ -106,19 +107,24 @@ SelectboxUtil = (function(){
   
   //hope this works
   var insert_option = function(option, position) {
-    $language_select.find("option").each(function(){
+    var options = $language_select.find("option");
+    var failed_insert = true;
+    failed_insert = $.each(options, function(){
       var $this = $(this);
+      
       var this_values = $this.data("values");
       var next_values = $this.next().data("values");
       
       var base_obj = { index: position };
-      
       if(is_greater(base_obj, this_values) 
         && is_greater(next_values, base_obj)) {
-        $this.next(option);
+        $this.after(option);
         return false;
       }
     })
+    if(failed_insert){
+      $language_select.append(option);
+    }
   };
   
   var is_greater = function(obj, comp_obj) {
@@ -130,17 +136,22 @@ SelectboxUtil = (function(){
   };
   
   return {
+    addOption: function(language_filter, position) {
+      var option = create_option(language_filter.label, language_filter.id, language_filter.url, position);
+      insert_option(option, position);
+    },
+    
     initSelect: function(language_list) {
-      for(var x = 0; x < languange_list.length; x++){
+      for(var x = 0; x < language_list.length; x++){
         var language_filter = language_list[x];
-        addOption(language_filter, position);
+        if(!language_filter.subscribed){
+          this.addOption(language_filter, x);
+        }
       }
     },
     
-    addOption: function(language_filter, position) {
-      var text_value = translate("filter" + item.id);
-      var option = create_option(text_value, language_filter.id, language_filter.url, position);
-      insert_option(option, position);
+    getSelectbox: function(){
+      return $language_select;
     }
   }
 }());
@@ -183,13 +194,14 @@ FilterManager = (function (){
       var entry = arr[id];
       if (id === "adblock_custom" || id === "easylist") {
         adblock_filters.push(entry);
-      } else if (id === "easy_privacy") {
+      } else if (id === "easyprivacy") {
         other_filters.push(entry);
       } else if (entry.user_submitted) {
         custom_filters.push(entry);
       } else{
         language_filters.push(entry);
       }
+      entry.label = translate("filter" + id);
       entry.id = id;
     }
     sort_arrays();
@@ -197,6 +209,11 @@ FilterManager = (function (){
   
   //populate div with data from array
   var organizeDiv = function (arr, container, chkbox){
+    if(chkbox === filter_types.LANGUAGE){
+      arr = $(arr).filter(function(index){
+        return arr[index].subscribed;
+      });
+    }
     for(var x = 0; x < arr.length; x++){
       var checkbox = CheckboxUtil.createCheckbox(arr[x], x, chkbox);
       container.append(checkbox);
@@ -204,15 +221,28 @@ FilterManager = (function (){
   };
   //sorts array of subscriptions by using order attribute
   var sort_arrays = function() {
-    for (var x = 0; x < filter_array; x++){
-      var arr = filter_array[x].array;
-      arr.sort(function(a,b) {
-        return a.order > b.order ? 1 : (a.order === b.order ? 0 : -1);
+    for (var x = 0; x < filter_array.length; x++){
+      filter_array[x].array.sort(function(a,b) {
+        return a.label > b.label ? 1 : (a.label === b.label ? 0 : -1);
       });
     }
   };
   
+  //TODO: Bind the controls lol
   var bind_controls = function() {
+    var selectbox = SelectboxUtil.getSelectbox();
+    selectbox.on("change", function(){
+      var $this = $(this)
+      var selected_option = $this.find('option').filter(':selected');
+      var index = $(selected_option).data("values").index;
+      var entry = language_filters[index];
+      if(entry){
+        var checkbox = CheckboxUtil.createCheckbox(entry, index, filter_types.LANGUAGE);
+        filter_array[1].container.append(checkbox);
+        $this.find('option:first').attr('selected','selected');
+        selected_option.remove();
+      }
+    });
     //bind select options,
     //bind checkbox options,
     //bind unsubscribe all options,
@@ -235,12 +265,12 @@ FilterManager = (function (){
     if ($(":checked", "#filter_subscriptions").length <= 6)
       return true;
     if (optionalSettings.show_advanced_options) {
-    // In case of an advanced user, only warn once every 30 minutes, even
-    // if the options page wasn't open all the time. 30 minutes = 1/48 day
-    if ($.cookie('noOversubscriptionWarning'))
-      return true;
-    else
-      $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
+      // In case of an advanced user, only warn once every 30 minutes, even
+      // if the options page wasn't open all the time. 30 minutes = 1/48 day
+      if ($.cookie('noOversubscriptionWarning'))
+        return true;
+      else
+        $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
     }
     return confirm(translate("you_know_thats_a_bad_idea_right"));
   };
@@ -249,13 +279,14 @@ FilterManager = (function (){
     BGcall("unsubscribe", {id:id, del:del});
   };
   
-  var get_last_update_value = function(last_update) {
+  var get_last_update_value = function(last_update, last_failed) {
     var how_long_ago = Date.now() - last_update;
     var seconds = Math.round(how_long_ago / 1000);
     var minutes = Math.round(seconds / 60);
     var hours = Math.round(minutes / 60);
     var days = Math.round(hours / 24);
-      if (subscription.last_update_failed_at)
+    var text = "";
+      if (last_failed)
         text = translate("last_update_failed");
       if (seconds < 10)
         text += translate("updatedrightnow");
@@ -281,11 +312,13 @@ FilterManager = (function (){
       BGcall('get_subscriptions_minus_text', function(subs) {
         //initialize page using subscriptions from the background
         //copy from update subscription list + setsubscriptionlist
-        prepare_subscriptions(subs);
+        global_cached_subscriptions = subs;
+        prepare_subscriptions(global_cached_subscriptions);
         for(obj in filter_array){
           var filter = filter_array[obj];
           organizeDiv(filter.array, filter.container, filter.type);
         }
+        SelectboxUtil.initSelect(language_filters);
         bind_controls();
       });
     },
@@ -307,7 +340,7 @@ FilterManager = (function (){
         } else if (subscription.last_update_failed_at && !subscription.last_update) {
           text = translate("failedtofetchfilter");
         } else {
-          text = get_last_update_value(subscription.last_update);
+          text = get_last_update_value(subscription.last_update, subscription.last_update_failed_at);
         }
         infoLabel.text(text);
       }
@@ -317,7 +350,6 @@ FilterManager = (function (){
 
 $(function(){
   FilterManager.initializePage();
-  
   window.setInterval(function() {
     FilterManager.updateSubscriptionInfoAll();
   }, 1000);

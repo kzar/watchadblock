@@ -85,17 +85,16 @@ function MyFilters() {
 
 // When a subscription property changes, this function stores it
 // Inputs: rebuild? boolean, true if the filterset should be rebuilt
-MyFilters.prototype._onSubscriptionChange = function(rebuild, unsubscribe) {
+MyFilters.prototype._onSubscriptionChange = function(rebuild) {
   storage_set('filter_lists', this._subscriptions);
-  
+
   // The only reasons to (re)build the filter set are
   // - when AdBlock starts
   // - when a filter list text is changed ([un]subscribed or updated a list)
   if (rebuild)
     this.rebuild();
-  
-  if(!unsubscribe)
-    chrome.extension.sendRequest({command: "filters_updated"});
+
+  chrome.extension.sendRequest({command: "filters_updated"});
 }
 
 // get filters that are defined in the extension
@@ -264,15 +263,14 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     if (this._subscriptions[id].deleteMe)
       delete this._subscriptions[id];
   }
-  
+
   // Notify of change.  If we subscribed, we rebuilt above; so we
   // only force a rebuild if we unsubscribed.
-  this._onSubscriptionChange(subData.subscribed === false, subData.unsubscribe);
+  this._onSubscriptionChange(subData.subscribed == false);
 
   // Subscribe to a required list if nessecary
-  if (subscribeRequiredListToo && this._subscriptions[id].requiresList){
+  if (subscribeRequiredListToo && this._subscriptions[id].requiresList)
     this.changeSubscription(this._subscriptions[id].requiresList, {subscribed:true});
-  }
 }
 
 // Fetch a filter list and parse it
