@@ -1,5 +1,3 @@
-//TODO: Create label field on entry object :)
-
 CheckboxUtil = (function() {
   //event binders should be handled separately
   var create_container = function(parent_name, filter_type) {
@@ -10,11 +8,12 @@ CheckboxUtil = (function() {
     return div;
   };
   
-  var create_checkbox = function(index, chkbox_id, is_subscribed) {
+  var create_checkbox = function(index, chkbox_id, is_subscribed, checked) {
     var checkbox = $('<input />').
       attr("type", "checkbox").
       attr("id", chkbox_id).
-      attr("checked", is_subscribed ? 'checked' : null);
+      attr("checked", is_subscribed || checked ? 'checked' : null).
+      addClass("filter_control");
     
     return checkbox;
   };
@@ -59,11 +58,11 @@ CheckboxUtil = (function() {
   }
       
   return {
-    createCheckbox: function(entry, index, filter_type) {
+    createCheckbox: function(entry, index, filter_type, checked) {
       var chkbox_id = filter_type + "_" + index;
       //generate checkbox and all containers
       var container = create_container(entry.id, filter_type);
-      var chckbox = create_checkbox(index, chkbox_id, entry.subscribed);
+      var chckbox = create_checkbox(index, chkbox_id, entry.subscribed, checked);
       
       var label_display = entry.label;
       
@@ -76,7 +75,7 @@ CheckboxUtil = (function() {
         append(label).
         append(link).
         append(infospan);
-       
+      
       if (entry.user_submitted) {
         var remove_label = create_remove_filter_label(entry);
         container.append(remove_label);
@@ -228,28 +227,94 @@ FilterManager = (function (){
     }
   };
   
+  var selectbox_action = function($this) {
+    var selected_option = $this.find('option').filter(':selected');
+    var index = $(selected_option).data("values").index;
+    var entry = language_filters[index];
+    if(entry){
+      var checkbox = CheckboxUtil.createCheckbox(entry, index, filter_types.LANGUAGE, true);
+      filter_array[1].container.append(checkbox);
+      $this.find('option:first').attr('selected','selected');
+      selected_option.remove();
+    }
+    subscribe(entry.id);
+  }
+  
+  var checkbox_action = function($this, language_filter){
+    var $parent = $this.parent();
+    var checked = $this.is(":checked");
+    var id = $parent.attr("name");
+    if(checked){
+      $(".subscription_info", $parent).text(translate("fetchinglabel"));
+      subscribe(id);
+    } else {
+      unsubscribe(id, false);
+      $(".subscription_info", $parent).
+            text(translate("unsubscribedlabel"));
+      if(language_filter){
+        //TODO: re insert in select box
+        $parent.fadeOut();
+        setTimeout(function(){
+          $parent.empty().remove();
+        }, 1000);
+      }
+    }
+  }
   //TODO: Bind the controls lol
   var bind_controls = function() {
     var selectbox = SelectboxUtil.getSelectbox();
     selectbox.on("change", function(){
-      var $this = $(this)
-      var selected_option = $this.find('option').filter(':selected');
-      var index = $(selected_option).data("values").index;
-      var entry = language_filters[index];
-      if(entry){
-        var checkbox = CheckboxUtil.createCheckbox(entry, index, filter_types.LANGUAGE);
-        filter_array[1].container.append(checkbox);
-        $this.find('option:first').attr('selected','selected');
-        selected_option.remove();
-      }
+      selectbox_action($(this));
     });
-    //bind select options,
+    
+    $('.language_filter > .filter_control').change(function(){
+      checkbox_action($(this), true);
+    });
+    
+    $('.filter_control').not('.language_filter > .filter_control').change(function(){
+      checkbox_action($(this));
+    });
+    
+    // In case a subscription changed (updated or subscribed via subscribe.html)
+    // then update the subscription list.
+    chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+      if (request.command !== "filters_updated")
+        return;
+      update_subscription_list();
+      sendResponse({});
+    });
     //bind checkbox options,
     //bind unsubscribe all options,
     //bind subscribe all options
     //bind remove filter span,
     //bind links for filter list,
     //bind listeners
+  };
+  
+  var update_list_item = function(id, entry, update_entry){
+    for(var prop in entry){
+      if(update_entry[prop] !== entry[prop]){
+        update_entry[prop] = entry[prop];
+        if(entry.subscribed && prop === 'last_update'){
+          var div = $("[name='" + id + "']");
+          $(".subscription_info", div).text("");
+        }
+      };
+    }
+  };
+  
+  var update_subscription_list = function(){
+    BGcall("get_subscriptions_minus_text", function(subs) {
+      for(var id in global_cached_subscriptions){
+        var entry = subs[id];
+        if(entry){
+          var update_entry = global_cached_subscriptions[id];
+          update_list_item(id, entry, update_entry);
+        }else{
+          //promp user that there is an update and ask to reload
+        }
+      }
+    });
   };
   
   var subscribe = function(id) {
@@ -279,15 +344,13 @@ FilterManager = (function (){
     BGcall("unsubscribe", {id:id, del:del});
   };
   
-  var get_last_update_value = function(last_update, last_failed) {
+  var get_last_update_value = function(last_update) {
     var how_long_ago = Date.now() - last_update;
     var seconds = Math.round(how_long_ago / 1000);
     var minutes = Math.round(seconds / 60);
     var hours = Math.round(minutes / 60);
     var days = Math.round(hours / 24);
     var text = "";
-      if (last_failed)
-        text = translate("last_update_failed");
       if (seconds < 10)
         text += translate("updatedrightnow");
       else if (seconds < 60)
@@ -306,7 +369,7 @@ FilterManager = (function (){
         text += translate("updateddaysago", [days]);
     return text;
   }
-  //TODO: create binder for checkbox, span and selectbox
+  
   return {
     initializePage: function(){
       BGcall('get_subscriptions_minus_text', function(subs) {
@@ -331,6 +394,7 @@ FilterManager = (function (){
         var subscription = global_cached_subscriptions[id];
         var infoLabel = $(".subscription_info", div);
         var text = "";
+        var fetching = translate("fetchinglabel");
         if (!$("input", div).is(":checked")) {
           if (infoLabel.text() === translate("unsubscribedlabel"))
             continue;
@@ -340,7 +404,11 @@ FilterManager = (function (){
         } else if (subscription.last_update_failed_at && !subscription.last_update) {
           text = translate("failedtofetchfilter");
         } else {
-          text = get_last_update_value(subscription.last_update, subscription.last_update_failed_at);
+          if(infoLabel.text() === fetching){
+            text = fetching;
+            continue;
+          }
+          text = get_last_update_value(subscription.last_update);
         }
         infoLabel.text(text);
       }
