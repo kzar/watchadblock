@@ -1,6 +1,6 @@
 CheckboxUtil = (function() {
   //event binders should be handled separately
-  var create_container = function(parent_name, filter_type) {
+  var _createContainer = function(parent_name, filter_type) {
     var div = $("<div></div>").
       addClass("subscription").
       addClass(filter_type).
@@ -8,7 +8,7 @@ CheckboxUtil = (function() {
     return div;
   };
   
-  var create_checkbox = function(index, chkbox_id, is_subscribed, checked) {
+  var _createCheckbox = function(index, chkbox_id, is_subscribed, checked) {
     var checkbox = $('<input />').
       attr("type", "checkbox").
       attr("id", chkbox_id).
@@ -18,7 +18,7 @@ CheckboxUtil = (function() {
     return checkbox;
   };
   
-  var create_label = function(label_display, url, chkbox_id){
+  var _createLabel = function(label_display, url, chkbox_id){
     var display = label_display || url;
     var label = $("<label></label>").
       text(display).
@@ -28,7 +28,7 @@ CheckboxUtil = (function() {
     return label;
   };
   
-  var create_link = function(label_display, url) {
+  var _createLink = function(label_display, url) {
     var link = $("<a></a>").
       text(label_display).
       css("margin-left", "6px").
@@ -39,14 +39,14 @@ CheckboxUtil = (function() {
       attr("href", url);
   };
   
-  var create_infospan = function() {
+  var _createInfospan = function() {
     var infospan = $("<span></span>").
       addClass("subscription_info");
     
     return infospan;
   }
   
-  var create_remove_filter_label = function(entry) {
+  var _createRemoveFilterLabel = function(entry) {
     var remove_anchor = $("<a>").
       css("font-size", "10px").
       css("display", entry.subscribed ? "none" : "inline").
@@ -61,14 +61,14 @@ CheckboxUtil = (function() {
     createCheckbox: function(entry, index, filter_type, checked) {
       var chkbox_id = filter_type + "_" + index;
       //generate checkbox and all containers
-      var container = create_container(entry.id, filter_type);
-      var chckbox = create_checkbox(index, chkbox_id, entry.subscribed, checked);
+      var container = _createContainer(entry.id, filter_type);
+      var chckbox = _createCheckbox(index, chkbox_id, entry.subscribed, checked);
       
       var label_display = entry.label;
       
-      var label = create_label(label_display, entry.url, chkbox_id);
-      var link = create_link(label_display, entry.url);
-      var infospan = create_infospan();
+      var label = _createLabel(label_display, entry.url, chkbox_id);
+      var link = _createLink(label_display, entry.url);
+      var infospan = _createInfospan();
       
       container.
         append(chckbox).
@@ -77,202 +77,194 @@ CheckboxUtil = (function() {
         append(infospan);
       
       if (entry.user_submitted) {
-        var remove_label = create_remove_filter_label(entry);
+        var remove_label = _createRemoveFilterLabel(entry);
         container.append(remove_label);
       }
       
       return container;
     }
   }
-}());
+})();
 
 SelectboxUtil = (function(){
-  var $language_select = $("#language_select");
+  var $_language_select = $("#language_select");
   
-  var create_option = function(text_value, id, url, position) {
-    var data_container = {
-      id: id,
-      url: url,
-      index: position
-    };
+  var _createOption = function(text_value, id, url, index) {
     
     var option = $("<option>", {
       value: text_value,
       text: text_value
-    }).data("values", data_container);
+    }).data("index", index);
     
     return option;
   };
   
   //hope this works
-  var insert_option = function(option, position) {
-    var options = $language_select.find("option");
-    var failed_insert = true;
-    failed_insert = $.each(options, function(){
-      var $this = $(this);
-      
-      var this_values = $this.data("values");
-      var next_values = $this.next().data("values");
-      
-      var base_obj = { index: position };
-      if(is_greater(base_obj, this_values) 
-        && is_greater(next_values, base_obj)) {
-        $this.after(option);
-        return false;
+  var _insertOption = function(option, index) {
+    var options = $_language_select.find("option");
+    var i;
+    for(i = 0; i < options.length; i++){
+      var list_option_index = options.eq(i).data("index");
+      if(list_option_index && parseInt(list_option_index) > parseInt(index)){
+        break;
       }
-    })
-    if(failed_insert){
-      $language_select.append(option);
     }
-  };
-  
-  var is_greater = function(obj, comp_obj) {
-    var bool = false;
-    if(obj && (!comp_obj || obj.index > comp_obj.index)){
-      bool = true;
+    if(options.eq(i).length > 0){
+      options.eq(i).before(option);
+    }else{
+      $_language_select.append(option);
     }
-    return bool;
   };
   
   return {
-    addOption: function(language_filter, position) {
-      var option = create_option(language_filter.label, language_filter.id, language_filter.url, position);
-      insert_option(option, position);
+    addOption: function(language_filter, index) {
+      var option = _createOption(language_filter.label, language_filter.id, language_filter.url, index);
+      _insertOption(option, index);
     },
     
     initSelect: function(language_list) {
-      for(var x = 0; x < language_list.length; x++){
-        var language_filter = language_list[x];
+      for(var i = 0; i < language_list.length; i++){
+        var language_filter = language_list[i];
         if(!language_filter.subscribed){
-          this.addOption(language_filter, x);
+          this.addOption(language_filter, i);
         }
       }
     },
     
     getSelectbox: function(){
-      return $language_select;
+      return $_language_select;
     }
   }
-}());
+})();
 
 //TODO: Get all major functions, design in semi object oriented manner...
 FilterManager = (function (){
-  var global_cached_subscriptions;
-  var adblock_filters = [];
-  var language_filters = [];
-  var other_filters = [];
-  var custom_filters = [];
+  var _cached_subscriptions;
   
-  var filter_types = {
-    ADBLOCK: "adblock_filter",
-    LANGUAGE: "language_filter",
-    OTHERS: "other_filter",
-    CUSTOM: "custom_filter"
+  var _filterlist_sections = {
+    adblock_filter: {
+      array: [],
+      container: $("#add_blocking_list"),
+      type: "adblock_filter"
+    },
+    language_filter: {
+      array: [],
+      container: $("#languange_list"),
+      type: "language_filter"
+    },
+    other_filter: {
+      array: [],
+      container: $("#other_filters"),
+      type: "other_filter"
+    },
+    custom_filter: {
+      array: [],
+      container: $("#custom_filters"),
+      type: "custom_filter"
+    }
   };
-  
-  var filter_array = [{
-      array: adblock_filters, 
-      type: filter_types.ADBLOCK,
-      container: $("#add_blocking_list")
-    },{
-      array: language_filters,
-      type: filter_types.LANGUAGE,
-      container: $("#languange_list")
-    },{
-      array: other_filters,
-      type: filter_types.OTHERS,
-      container: $("#other_filters")
-    },{
-      array: custom_filters,
-      type: filter_types.CUSTOM,
-      container: $("#custom_filters")
-    }];
     
-  var prepare_subscriptions = function (arr) {
+  var _prepareSubscriptions = function (arr) {
     for(var id in arr){
       var entry = arr[id];
       if (id === "adblock_custom" || id === "easylist") {
-        adblock_filters.push(entry);
+        _filterlist_sections.adblock_filter.array.push(entry);
       } else if (id === "easyprivacy") {
-        other_filters.push(entry);
+        _filterlist_sections.other_filter.array.push(entry);
       } else if (entry.user_submitted) {
-        custom_filters.push(entry);
+        _filterlist_sections.custom_filter.array.push(entry);
       } else{
-        language_filters.push(entry);
+        _filterlist_sections.language_filter.array.push(entry);
       }
       entry.label = translate("filter" + id);
       entry.id = id;
     }
-    sort_arrays();
+    _sortArrays();
   };
   
-  //populate div with data from array
-  var organizeDiv = function (arr, container, chkbox){
-    if(chkbox === filter_types.LANGUAGE){
-      arr = $(arr).filter(function(index){
-        return arr[index].subscribed;
-      });
+  //duplicate organize div exclusive for language filters
+  var _organizeDivForLanguage = function(arr, container, filter_type){
+    for(var i = 0; i < arr.length; i++){
+      if(arr[i].subscribed){
+        var checkbox = CheckboxUtil.createCheckbox(arr[i], i, filter_type);
+        container.append(checkbox);
+      }
     }
-    for(var x = 0; x < arr.length; x++){
-      var checkbox = CheckboxUtil.createCheckbox(arr[x], x, chkbox);
-      container.append(checkbox);
+  }
+  //populate div with data from array
+  var _organizeDiv = function (arr, container, filter_type){
+    if(filter_type === _filterlist_sections.language_filter.type){
+      _organizeDivForLanguage(arr, container, filter_type);
+    }else{
+      for(var i = 0; i < arr.length; i++){
+        var checkbox = CheckboxUtil.createCheckbox(arr[i], i, filter_type);
+        container.append(checkbox);
+      }
     }
   };
   //sorts array of subscriptions by using order attribute
-  var sort_arrays = function() {
-    for (var x = 0; x < filter_array.length; x++){
-      filter_array[x].array.sort(function(a,b) {
+  var _sortArrays = function() {
+    for (var id in _filterlist_sections){
+      _filterlist_sections[id].array.sort(function(a,b) {
         return a.label > b.label ? 1 : (a.label === b.label ? 0 : -1);
       });
     }
   };
   
-  var selectbox_action = function($this) {
+  var _selectboxAction = function($this) {
+    var language_filter_section = _filterlist_sections.language_filter;
+    //TODO: change to native filter
     var selected_option = $this.find('option').filter(':selected');
-    var index = $(selected_option).data("values").index;
-    var entry = language_filters[index];
+    var index = $(selected_option).data("index");
+    var entry = language_filter_section.array[index];
     if(entry){
-      var checkbox = CheckboxUtil.createCheckbox(entry, index, filter_types.LANGUAGE, true);
-      filter_array[1].container.append(checkbox);
+      var checkbox = CheckboxUtil.createCheckbox(entry, index, language_filter_section.type, true);
+      language_filter_section.container.append(checkbox);
       $this.find('option:first').attr('selected','selected');
       selected_option.remove();
     }
-    subscribe(entry.id);
-  }
+    _subscribe(entry.id);
+  };
   
-  var checkbox_action = function($this, language_filter){
+  var _checkboxAction = function($this){
     var $parent = $this.parent();
     var checked = $this.is(":checked");
     var id = $parent.attr("name");
     if(checked){
       $(".subscription_info", $parent).text(translate("fetchinglabel"));
-      subscribe(id);
+      _subscribe(id);
     } else {
-      unsubscribe(id, false);
+      _unsubscribe(id, false);
       $(".subscription_info", $parent).
             text(translate("unsubscribedlabel"));
-      if(language_filter){
-        //TODO: re insert in select box
-        $parent.fadeOut();
-        setTimeout(function(){
-          $parent.empty().remove();
-        }, 1000);
-      }
     }
-  }
+  };
+  
+  var _languageCheckboxAction = function(parent) {
+    var $parent = parent;
+    $parent.fadeOut();
+    setTimeout(function(){
+      var option = $parent.find("input");
+      var index = $(option).attr("id").split("_")[2];
+      var filter = _filterlist_sections.language_filter.array[index];
+      SelectboxUtil.addOption(filter, index);
+      $parent.empty().remove();
+    }, 1000);
+  };
+  
   //TODO: Bind the controls lol
-  var bind_controls = function() {
+  var _bindControls = function() {
     var selectbox = SelectboxUtil.getSelectbox();
     selectbox.on("change", function(){
-      selectbox_action($(this));
+      _selectboxAction($(this));
     });
     
-    $('.language_filter > .filter_control').change(function(){
-      checkbox_action($(this), true);
+    $("body").on("change", ".language_filter > .filter_control", function(){
+      _languageCheckboxAction($(this).parent());
     });
     
-    $('.filter_control').not('.language_filter > .filter_control').change(function(){
-      checkbox_action($(this));
+    $("body").on("click", ".filter_control", function(){
+      _checkboxAction($(this));
     });
     
     // In case a subscription changed (updated or subscribed via subscribe.html)
@@ -280,7 +272,7 @@ FilterManager = (function (){
     chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       if (request.command !== "filters_updated")
         return;
-      update_subscription_list();
+      _updateSubscriptionList();
       sendResponse({});
     });
     //bind checkbox options,
@@ -291,11 +283,12 @@ FilterManager = (function (){
     //bind listeners
   };
   
-  var update_list_item = function(id, entry, update_entry){
+  var _updateListitem = function(id, entry, update_entry){
     for(var prop in entry){
       if(update_entry[prop] !== entry[prop]){
         update_entry[prop] = entry[prop];
         if(entry.subscribed && prop === 'last_update'){
+          //work around to remove Fetching Label since fetching label is not remove automatically
           var div = $("[name='" + id + "']");
           $(".subscription_info", div).text("");
         }
@@ -303,30 +296,30 @@ FilterManager = (function (){
     }
   };
   
-  var update_subscription_list = function(){
+  var _updateSubscriptionList = function(){
     BGcall("get_subscriptions_minus_text", function(subs) {
-      for(var id in global_cached_subscriptions){
+      for(var id in _cached_subscriptions){
         var entry = subs[id];
         if(entry){
-          var update_entry = global_cached_subscriptions[id];
-          update_list_item(id, entry, update_entry);
+          var update_entry = _cached_subscriptions[id];
+          _updateListitem(id, entry, update_entry);
         }else{
-          //promp user that there is an update and ask to reload
+          //TODO: promp user that there is an update and ask to reload
         }
       }
     });
   };
   
-  var subscribe = function(id) {
+  var _subscribe = function(id) {
     var parameters = {id: id};
-    if (global_cached_subscriptions[id] && global_cached_subscriptions[id].requiresList){
-      parameters.requires = global_cached_subscriptions[id].requiresList;
+    if (_cached_subscriptions[id] && _cached_subscriptions[id].requiresList){
+      parameters.requires = _cached_subscriptions[id].requiresList;
     }
 
     BGcall("subscribe", parameters);
   };
   
-  var validate_over_subscription = function() {
+  var _validateOverSubscription = function() {
     if ($(":checked", "#filter_subscriptions").length <= 6)
       return true;
     if (optionalSettings.show_advanced_options) {
@@ -340,11 +333,11 @@ FilterManager = (function (){
     return confirm(translate("you_know_thats_a_bad_idea_right"));
   };
   
-  var unsubscribe = function(id, del) {
+  var _unsubscribe = function(id, del) {
     BGcall("unsubscribe", {id:id, del:del});
   };
   
-  var get_last_update_value = function(last_update) {
+  var _getLastUpdateValue = function(last_update) {
     var how_long_ago = Date.now() - last_update;
     var seconds = Math.round(how_long_ago / 1000);
     var minutes = Math.round(seconds / 60);
@@ -375,23 +368,24 @@ FilterManager = (function (){
       BGcall('get_subscriptions_minus_text', function(subs) {
         //initialize page using subscriptions from the background
         //copy from update subscription list + setsubscriptionlist
-        global_cached_subscriptions = subs;
-        prepare_subscriptions(global_cached_subscriptions);
-        for(obj in filter_array){
-          var filter = filter_array[obj];
-          organizeDiv(filter.array, filter.container, filter.type);
+        _cached_subscriptions = subs;
+        _prepareSubscriptions(_cached_subscriptions);
+        
+        for(var id in _filterlist_sections){
+          var filter_section = _filterlist_sections[id];
+          _organizeDiv(filter_section.array, filter_section.container, filter_section.type);
         }
-        SelectboxUtil.initSelect(language_filters);
-        bind_controls();
+        SelectboxUtil.initSelect(_filterlist_sections.language_filter.array);
+        _bindControls();
       });
     },
     
     //update information for each subscription
     updateSubscriptionInfoAll: function() {
       //copy from update subscription info all
-      for(var id in global_cached_subscriptions){
+      for(var id in _cached_subscriptions){
         var div = $("[name='" + id + "']");
-        var subscription = global_cached_subscriptions[id];
+        var subscription = _cached_subscriptions[id];
         var infoLabel = $(".subscription_info", div);
         var text = "";
         var fetching = translate("fetchinglabel");
@@ -408,13 +402,13 @@ FilterManager = (function (){
             text = fetching;
             continue;
           }
-          text = get_last_update_value(subscription.last_update);
+          text = _getLastUpdateValue(subscription.last_update);
         }
         infoLabel.text(text);
       }
     }
   }
-}());
+})();
 
 $(function(){
   FilterManager.initializePage();
