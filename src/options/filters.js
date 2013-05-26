@@ -54,7 +54,7 @@ CheckboxUtil = (function() {
       text(translate("removefromlist")).
       addClass("remove_filter");
     
-    return remove_anchor
+    return remove_anchor;
   }
       
   return {
@@ -137,7 +137,6 @@ SelectboxUtil = (function(){
   }
 })();
 
-//TODO: Get all major functions, design in semi object oriented manner...
 FilterManager = (function (){
   var _cached_subscriptions;
   
@@ -190,7 +189,8 @@ FilterManager = (function (){
         container.append(checkbox);
       }
     }
-  }
+  };
+  
   //populate div with data from array
   var _organizeDiv = function (arr, container, filter_type){
     if(filter_type === _filterlist_sections.language_filter.type){
@@ -213,17 +213,16 @@ FilterManager = (function (){
   
   var _selectboxAction = function($this) {
     var language_filter_section = _filterlist_sections.language_filter;
-    //TODO: change to native filter
-    var selected_option = $this.find('option').filter(':selected');
+    var selected_option = $this.find(':selected');
     var index = $(selected_option).data("index");
     var entry = language_filter_section.array[index];
     if(entry){
-      var checkbox = CheckboxUtil.createCheckbox(entry, index, language_filter_section.type, true);
-      language_filter_section.container.append(checkbox);
       $this.find('option:first').attr('selected','selected');
       selected_option.remove();
+      var checkbox = CheckboxUtil.createCheckbox(entry, index, language_filter_section.type, true);
+      language_filter_section.container.append(checkbox);
+      _subscribe(entry.id);
     }
-    _subscribe(entry.id);
   };
   
   var _checkboxAction = function($this){
@@ -236,7 +235,7 @@ FilterManager = (function (){
     } else {
       _unsubscribe(id, false);
       $(".subscription_info", $parent).
-            text(translate("unsubscribedlabel"));
+        text(translate("unsubscribedlabel"));
     }
   };
   
@@ -250,6 +249,45 @@ FilterManager = (function (){
       SelectboxUtil.addOption(filter, index);
       $parent.empty().remove();
     }, 1000);
+  };
+  
+  var _createCustomCheckbox = function(entry){
+    var custom_filter = _filterlist_sections.custom_filter;
+    var index = custom_filter.length;
+    var checkbox = CheckboxUtil.createCheckbox(entry, index, custom_filter.type, true);
+    custom_filter.container.append(checkbox);
+  };
+  
+  var _uploadAction = function(){
+    var url = $("#txtNewSubscriptionUrl").val();
+    var abp_regex = /^abp.*\Wlocation=([^\&]+)/i;
+    if (abp_regex.test(url)) {
+      url = url.match(abp_regex)[1]; // the part after 'location='
+      url = unescape(url);
+    }
+    url = url.trim();
+    var subscribe_to = "url:" + url;
+    if (/^https?\:\/\/[^\<]+$/.test(url)) {
+      _subscribe(subscribe_to);
+      $("#txtNewSubscriptionUrl").val("");
+      var entry = {
+        id: subscribe_to,
+        url: url,
+        subscribed: true,
+        unsubscribe: true,
+        user_submitted: true,
+        label: ""
+      };
+      _createCustomCheckbox(entry);
+    } else
+      alert(translate("failedtofetchfilter"));
+  };
+  
+  var _removeAction = function($this){
+    var parent = $this.parent();
+    var id = parent.attr("name");
+    _unsubscribe(id, true);
+    parent.remove();
   };
   
   //TODO: Bind the controls lol
@@ -275,7 +313,41 @@ FilterManager = (function (){
       _updateSubscriptionList();
       sendResponse({});
     });
-    //bind checkbox options,
+    
+    // If the user presses the update now button, update all subscriptions
+    $("#btnUpdateNow").click(function() {
+      $(this).attr("disabled", "disabled");
+      BGcall("update_subscriptions_now");
+      setTimeout(function() {
+        $("#btnUpdateNow").removeAttr("disabled");
+      }, 300000); //re-enable after 5 minutes
+    });
+    
+    // Add a new subscription URL
+    $("#btnNewSubscriptionUrl").click(function() {
+      _uploadAction();
+    });
+    
+    // Pressing enter will add the list too
+    $('#txtNewSubscriptionUrl').keypress(function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        $("#btnNewSubscriptionUrl").click();
+      }
+    });
+    
+    // Pressing enter will add the list too
+    $('#txtNewSubscriptionUrl').keypress(function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        $("#btnNewSubscriptionUrl").click();
+      }
+    });
+    
+    $('.remove_filter').click(function(event) {
+      event.preventDefault();
+      _removeAction($(this));
+    });
     //bind unsubscribe all options,
     //bind subscribe all options
     //bind remove filter span,
@@ -311,6 +383,10 @@ FilterManager = (function (){
   };
   
   var _subscribe = function(id) {
+    if(!_validateOverSubscription()){
+      return;
+    }
+    
     var parameters = {id: id};
     if (_cached_subscriptions[id] && _cached_subscriptions[id].requiresList){
       parameters.requires = _cached_subscriptions[id].requiresList;

@@ -203,15 +203,13 @@ MyFilters.prototype.rebuild = function() {
 MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   var subscribeRequiredListToo = false;
   var listDidntExistBefore = false;
-  
-  var update_entry = this._subscriptions[id];
-  
+
   // Working with an unknown list: create the list entry
-  if (update_entry) {
+  if (!this._subscriptions[id]) {
     id = this.customToDefaultId(id);
     if (/^url\:.*/.test(id)) {
       listDidntExistBefore = true;
-      update_entry = {
+      this._subscriptions[id] = {
         user_submitted: true,
         url: id.substr(4)
       };
@@ -220,23 +218,23 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   }
 
   // Subscribing to a well known list should also subscribe to a required list
-  if (!update_entry.subscribed && subData.subscribed)
+  if (!this._subscriptions[id].subscribed && subData.subscribed)
     subscribeRequiredListToo = true;
 
   // Apply all changes from subData
   for (var property in subData)
     if (subData[property] !== undefined)
-      update_entry[property] = subData[property];
+      this._subscriptions[id][property] = subData[property];
 
   // Check if the required list is a well known list, but only if it is changed
   if (subData.requiresList)
-    update_entry.requiresList = 
-                   this.customToDefaultId(update_entry.requiresList);
+    this._subscriptions[id].requiresList = 
+                   this.customToDefaultId(this._subscriptions[id].requiresList);
 
   if (forceFetch)
-    delete update_entry.last_modified;
+    delete this._subscriptions[id].last_modified;
 
-  if (update_entry.subscribed) {
+  if (this._subscriptions[id].subscribed) {
     // Check if the list has to be updated
     function out_of_date(subscription) {
       if (forceFetch) return true;
@@ -252,18 +250,18 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
       return (millis > HOUR_IN_MS * smallerExpiry);
     }
 
-    if (!update_entry.text || out_of_date(update_entry))
+    if (!this._subscriptions[id].text || out_of_date(this._subscriptions[id]))
       this.fetch_and_update(id, listDidntExistBefore);
 
   } else {
     // If unsubscribed, remove some properties
-    delete update_entry.text;
-    delete update_entry.last_update;
-    delete update_entry.expiresAfterHours;
-    delete update_entry.last_update_failed_at;
-    delete update_entry.last_modified;
-    if (update_entry.deleteMe)
-      delete update_entry;
+    delete this._subscriptions[id].text;
+    delete this._subscriptions[id].last_update;
+    delete this._subscriptions[id].expiresAfterHours;
+    delete this._subscriptions[id].last_update_failed_at;
+    delete this._subscriptions[id].last_modified;
+    if (this._subscriptions[id].deleteMe)
+      delete this._subscriptions[id];
   }
 
   // Notify of change.  If we subscribed, we rebuilt above; so we
@@ -271,8 +269,8 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   this._onSubscriptionChange(subData.subscribed == false);
 
   // Subscribe to a required list if nessecary
-  if (subscribeRequiredListToo && update_entry.requiresList)
-    this.changeSubscription(update_entry.requiresList, {subscribed:true});
+  if (subscribeRequiredListToo && this._subscriptions[id].requiresList)
+    this.changeSubscription(this._subscriptions[id].requiresList, {subscribed:true});
 }
 
 // Fetch a filter list and parse it
