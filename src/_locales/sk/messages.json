@@ -1,4 +1,4 @@
-﻿{
+{
   "adalreadyblocked": {
     "message": "Už nemusíte spraviť nič, pretože reklama je už zablokovaná",
     "description": "on the ad report page, telling a user there is nothing to do"
@@ -309,6 +309,10 @@
     "message": "Vedeli ste, že toto je moje zamestnanie?",
     "description": "Text of a payment request link"
   },
+  "disableallextensions": {
+    "message": "Vypnite všetky rozšírenia okrem AdBlocku",
+    "description": "instruction on ad report page"
+  },
   "disabled_by_filter_lists": {
     "message": "Prepáčte, ale AdBlock je na tejto stránke zakázaný jedným z vašich filtrov.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -316,6 +320,26 @@
   "disabled_on_this_page": {
     "message": "AdBlock je na tejto stránke zakázaný",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "disableforchromeandsafaristeptwo": {
+    "message": "Odčiarknite všetky 'Povolené' políčka <b>okrem</b> AdBlocku.  <b>Nechajte AdBlock zapnutý</b>.",
+    "description": "Step 2 for disabling chrome and safari extensions"
+  },
+  "disableforchromestepone": {
+    "message": "Otvorte <a href='#'>stránku s rozšíreniami</a>",
+    "description": "Step 1 for disabling chrome extensions"
+  },
+  "disableforopera": {
+    "message": "Pre Operu",
+    "description": "Opera instructions"
+  },
+  "disableforoperainstructions": {
+    "message": "Kliknite na menu v ľavom hornom rohu. Potom choďte do Rozšírenia -> Spravovať rozšírenia. Zakážte všetky rozšírenia okrem AdBlocku!",
+    "description": "shows user how to disable all their extensions in Opera."
+  },
+  "disableforsafaristepone": {
+    "message": "Kliknite v Safari menu -> Predvoľby -> Rozšírenia.",
+    "description": "Step 1 for disabling safari extensions"
   },
   "doesntmatchoriginal": {
     "message": "Vzor, ktorý ste zadali nezodpovedá prvku ktorý má byť blokovaný! Chcete napriek tomu pokračovať?",
@@ -833,6 +857,10 @@
     "message": "Hlavná stránka projektu",
     "description": "Text of link to the AdBlock open source project homepage (not the install page)"
   },
+  "reenableadsonebyone": {
+    "message": "Ak sa teraz reklama nezobrazuje, musíte nájsť to rozšírenie, ktoré zobrazuje reklamy. Začnite tým, že budete zapínať jedno rozšírenie za druhým. Rozšírenie, ktoré prinesie reklamu naspäť na web, musíte zmazať aby sa vám reklamy už naďalej nezobrazovali.",
+    "description": "tells the user to reenable the extensions one by one."
+  },
   "refusetocheck": {
     "message": "Nechcem to takto kontrolovať",
     "description": "user is telling us they don't wish to investigate something for us"
@@ -971,13 +999,13 @@
     "message": "Krok 1: Určte, čo sa bude blokovať",
     "description": "Blacklister slider page title"
   },
-  "status_disabled": {
-    "message": "AdBlock sa nedá spustiť na tejto doméne",
-    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
-  },
   "spread_the_word": {
     "message": "Zdieľaj ma!",
     "description": "Text of a share link"
+  },
+  "status_disabled": {
+    "message": "AdBlock sa nedá spustiť na tejto doméne",
+    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank."
   },
   "status_paused": {
     "message": "AdBlock je pozastavený.",
