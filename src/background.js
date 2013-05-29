@@ -795,7 +795,8 @@
     chrome.webRequest.onBeforeRequest.addListener(onBeforeRequestHandler, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
     chrome.tabs.onRemoved.addListener(frameData.onTabClosedHandler);
     // Popup blocking
-    chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
+    if (chrome.webNavigation)
+      chrome.webNavigation.onCreatedNavigationTarget.addListener(onCreatedNavigationTargetHandler);
 
     var handleEarlyOpenedTabs = function(tabs) {
       log("Found", tabs.length, "tabs that were already opened");
