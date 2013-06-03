@@ -198,8 +198,14 @@ FilterListUtil.updateSubscriptionInfoAll = function(){
       text = "";
     } else if (!subscription.last_update_failed_at && !last_update) {
       text = translate("fetchinglabel");
-    } else if (subscription.last_update_failed_at && last_update) {
-      text = translate("failedtofetchfilter");
+    } else if(subscription.last_update_failed_at && !last_update){
+      if(translate("failedtofetchfilter") === infoLabel.text() &&
+        div.parent()[0] === filterListSections.custom_filter.container[0]){
+        text = translate("invalidListUrl");
+        $("input", div).attr("disabled", "disabled");
+      }else{
+        text = translate("failedtofetchfilter");
+      }
     } else {
       if(infoLabel.text() === fetching){
         text = fetching;
@@ -335,6 +341,7 @@ $(function() {
   });
   
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    //TODO investigate this portion and the backend
     if (request.command !== "filters_updated")
       return;
     BGcall("get_subscriptions_minus_text", function(subs) {
@@ -342,15 +349,12 @@ $(function() {
         var entry = subs[id];
         if(entry){
           var update_entry = FilterListUtil.cached_subscriptions[id];
-          for(var prop in entry){
-            if(update_entry[prop] !== entry[prop]){
-              update_entry[prop] = entry[prop];
-              if(entry.subscribed && prop === 'last_update'){
-                //work around to remove Fetching Label since fetching label is not remove automatically
-                var div = $("[name='" + id + "']");
-                $(".subscription_info", div).text("");
-              }
-            };
+          if(entry.subscribed && (update_entry.last_update !== entry.last_update
+            || update_entry.last_update_failed_at !== entry.last_update_failed_at)){
+            var div = $("[name='" + id + "']");
+            $(".subscription_info", div).text("");
+            entry.last_update && (update_entry.last_update = entry.last_update);
+            entry.last_update_failed_at && (update_entry.last_update_failed_at = entry.last_update_failed_at);
           }
         }else{
           //TODO: promp user that there is an update and ask to reload
@@ -388,7 +392,7 @@ $(function() {
         user_submitted: true,
         label: ""
       };
-      
+      FilterListUtil.cached_subscriptions[entry.id] = entry;
       var custom_filter = filterListSections.custom_filter;
       var checkbox = new CheckboxForFilter(entry, "custom_filter", custom_filter.array.length, custom_filter.container, true);
       checkbox.createCheckbox();
