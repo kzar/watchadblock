@@ -32,7 +32,8 @@ function CheckboxForFilter(filter, filter_type, index, container, checked){
       attr("href", this._filter.url);
       
   this._infospan = $("<span></span>").
-      addClass("subscription_info");
+      addClass("subscription_info").
+      text(this._filter.subscribed ? (translate("fetchinglabel")) : "");
       
   this._remove_filter_label = this._filter.user_submitted ?  $("<a>").
       css("font-size", "10px").
@@ -87,7 +88,7 @@ CheckboxForFilter.prototype = {
     };
   },
   
-  createCheckbox: function(){
+  createCheckbox: function(isChecked){
     this._div.
       append(this._check_box).
       append(this._label).
@@ -98,6 +99,11 @@ CheckboxForFilter.prototype = {
     this._container.append(this._div);
     
     this._bindActions();
+    
+    if(isChecked){
+      this._check_box.attr("checked", "checked");
+      this._check_box.trigger("change");
+    }
   }
 };
 
@@ -189,28 +195,20 @@ FilterListUtil.updateSubscriptionInfoAll = function(){
     var div = $("[name='" + id + "']");
     var subscription = cached_subscriptions[id];
     var infoLabel = $(".subscription_info", div);
-    var text = "";
-    var fetching = translate("fetchinglabel");
+    var text = infoLabel.text();
     var last_update = subscription.last_update;
-    if (!$("input", div).is(":checked")) {
-      if (infoLabel.text() === translate("unsubscribedlabel"))
-        continue;
-      text = "";
-    } else if (!subscription.last_update_failed_at && !last_update) {
-      text = translate("fetchinglabel");
-    } else if(subscription.last_update_failed_at && !last_update){
-      if(translate("failedtofetchfilter") === infoLabel.text() &&
-        div.parent()[0] === filterListSections.custom_filter.container[0]){
+    if(infoLabel.text() === translate("invalidListUrl")){
+      continue;
+    }
+    if(subscription.last_update_failed_at){
+      if(subscription.user_submitted && 
+        translate("failedtofetchfilter") === infoLabel.text()){
         text = translate("invalidListUrl");
         $("input", div).attr("disabled", "disabled");
       }else{
         text = translate("failedtofetchfilter");
       }
-    } else {
-      if(infoLabel.text() === fetching){
-        text = fetching;
-        continue;
-      }
+    } else if(last_update) {
       var how_long_ago = Date.now() - last_update;
       var seconds = Math.round(how_long_ago / 1000);
       var minutes = Math.round(seconds / 60);
@@ -233,7 +231,7 @@ FilterListUtil.updateSubscriptionInfoAll = function(){
           text += translate("updateddayago");
         else
           text += translate("updateddaysago", [days]);
-    }
+    } 
     infoLabel.text(text);
   }
 };
@@ -270,17 +268,15 @@ LanguageSelectUtil.init = function(language_filter_section){
   
   $("#language_select").change( function(){
     var $this = $(this);
-    var language_filter_section = filterListSections.language_filter;
     var selected_option = $this.find(':selected');
     var index = $(selected_option).data("index");
-    var entry = language_filter_section.array[index];
+    var entry = language_filters[index];
     if(entry){
       $this.find('option:first').attr('selected','selected');
       selected_option.remove();
       var $checkbox = $("[name='" + entry.id + "']").find("input");
       $checkbox.attr("checked", "checked");
       $checkbox.trigger("change");
-      SubscriptionUtil.subscribe(entry.id);
     }
   });
 };
@@ -308,10 +304,20 @@ SubscriptionUtil.subscribe = function(id){
   if (FilterListUtil.cached_subscriptions[id] && FilterListUtil.cached_subscriptions[id].requiresList){
     parameters.requires = FilterListUtil.cached_subscriptions[id].requiresList;
   }
+  SubscriptionUtil._updateCacheValue(id);
   BGcall("subscribe", parameters);
 };
 SubscriptionUtil.unsubscribe = function(id, del){
+  SubscriptionUtil._updateCacheValue(id);
   BGcall("unsubscribe", {id:id, del:del});
+};
+SubscriptionUtil._updateCacheValue = function(id){
+  var cached_subscriptions = FilterListUtil.cached_subscriptions;
+  var sub = cached_subscriptions[id];
+  if(sub){
+    delete cached_subscriptions[id].last_update_failed_at;
+    delete cached_subscriptions[id].last_update;
+  }
 };
 
 $(function() {
@@ -329,7 +335,7 @@ $(function() {
   });
   
   window.setInterval(function() {
-    FilterListUtil.updateSubscriptionInfoAll();
+   FilterListUtil.updateSubscriptionInfoAll();
   }, 1000);
   
   $('.remove_filter').click(function(event) {
@@ -340,29 +346,7 @@ $(function() {
     $parent.remove();
   });
   
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    //TODO investigate this portion and the backend
-    if (request.command !== "filters_updated")
-      return;
-    BGcall("get_subscriptions_minus_text", function(subs) {
-      for(var id in FilterListUtil.cached_subscriptions){
-        var entry = subs[id];
-        if(entry){
-          var update_entry = FilterListUtil.cached_subscriptions[id];
-          if(entry.subscribed && (update_entry.last_update !== entry.last_update
-            || update_entry.last_update_failed_at !== entry.last_update_failed_at)){
-            var div = $("[name='" + id + "']");
-            $(".subscription_info", div).text("");
-            entry.last_update && (update_entry.last_update = entry.last_update);
-            entry.last_update_failed_at && (update_entry.last_update_failed_at = entry.last_update_failed_at);
-          }
-        }else{
-          //TODO: promp user that there is an update and ask to reload
-        }
-      }
-    });
-    sendResponse({});
-  });
+  
   
   $("#btnUpdateNow").click(function() {
     $(this).attr("disabled", "disabled");
@@ -394,8 +378,8 @@ $(function() {
       };
       FilterListUtil.cached_subscriptions[entry.id] = entry;
       var custom_filter = filterListSections.custom_filter;
-      var checkbox = new CheckboxForFilter(entry, "custom_filter", custom_filter.array.length, custom_filter.container, true);
-      checkbox.createCheckbox();
+      var checkbox = new CheckboxForFilter(entry, "custom_filter", custom_filter.array.length, custom_filter.container);
+      checkbox.createCheckbox(true);
       
     } else
       alert(translate("failedtofetchfilter"));
@@ -412,5 +396,38 @@ $(function() {
   $("#btnShowLinks").click(function() {
     $(".linkToList").css("display", "inline");
     $("#btnShowLinks").attr("disabled", "disabled");
+  });
+  
+  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+    //TODO investigate this portion and the backend
+    if (request.command !== "filters_updated")
+      return;
+    BGcall("get_subscriptions_minus_text", function(subs) {
+      var cached_subscriptions = FilterListUtil.cached_subscriptions;
+      for(var id in cached_subscriptions){
+        var entry = subs[id];
+        var update_entry = cached_subscriptions[id];
+        if(entry && update_entry){
+          if(entry.subscribed){
+            if(entry.last_update && entry.last_update_failed_at){
+              if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)){
+                delete subs[id].last_update_failed_at;
+              }else{
+                delete subs[id].last_update;
+              }
+            } 
+            
+            if(entry.last_update_failed_at){
+              cached_subscriptions[id].last_update_failed_at = entry.last_update_failed_at;
+            } else if(entry.last_update){
+              cached_subscriptions[id].last_update = entry.last_update;
+            }
+          }
+        }
+        
+        //TODO: promp user that there is an update and ask to reload
+      }
+    });
+    sendResponse({});
   });
 });
