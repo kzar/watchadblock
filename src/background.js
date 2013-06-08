@@ -21,14 +21,23 @@
         data.start = Date.now();
       if (data.total === undefined)
         data.total = 0;
+      if(data.domain_count === undefined)
+        data.domain_count = {};
       data.version = 1;
       storage_set(key, data);
 
       return {
-        recordOneAdBlocked: function() {
+        recordOneAdBlocked: function(domain) {
           var data = storage_get(key);
+          
+          if(data.domain_count[domain])
+            data.domain_count[domain] += 1;
+          else
+            data.domain_count[domain] = 1;
+            
           data.total += 1;
           storage_set(key, data);
+          chrome.extension.sendRequest({command: "filter_blocked"});
         },
         get: function() { 
           return storage_get(key); 
@@ -249,8 +258,10 @@
         chrome.tabs.sendRequest(tabId, data); 
       }
 
-      if (blocked)
-        blockCounts.recordOneAdBlocked();
+      if (blocked){
+        var domain = frameData.get(details.tabId, 0).domain;
+        blockCounts.recordOneAdBlocked(domain);
+      }
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
       if (blocked && elType === ElementTypes.image) {
         // 1x1 px transparant image.
@@ -409,7 +420,7 @@
     }
     return result;
   }
-
+  
   // Subscribes to a filter subscription.
   // Inputs: id: id to which to subscribe.  Either a well-known
   //             id, or "url:xyz" pointing to a user-specified list.
@@ -488,10 +499,23 @@
       }
 
       var disabled_site = page_is_unblockable(tab.url);
-
+      
+      var statistics = storage_get("blockage_stats");
+      var total_blocked = statistics.total;
+      var url_blocked = statistics.domain_count[parseUri(tab.url).hostname];
+      
+      var display_stats = storage_get("display_stats");
+      
+      if(display_stats === undefined){
+        storage_set("display_stats", true);
+      }
+      
       var result = {
         tab: tab,
-        disabled_site: disabled_site
+        disabled_site: disabled_site,
+        total_blocked: total_blocked,
+        url_blocked: url_blocked,
+        display_stats: display_stats
       };
       if (!disabled_site)
         result.whitelisted = page_is_whitelisted(tab.url);
@@ -499,7 +523,7 @@
       callback(result);
     });
   }
-
+  
   // Returns true if anything in whitelist matches the_domain.
   //   url: the url of the page
   //   type: one out of ElementTypes, default ElementTypes.document,
@@ -515,7 +539,30 @@
     return whitelist.matches(url, type, parseUri(url).hostname, false);
   }
 
+  updateDisplayStats = function(isChecked) {
+    storage_set("display_stats", isChecked);
+    updateBadges();
+  }
+  
   if (!SAFARI) {
+    updateBadges = function() {
+      chrome.tabs.query({}, function(tabs){
+        var display = storage_get("display_stats");
+        for(var i = 0; i < tabs.length; i++){
+          var badge_text = "";
+          var id = tabs[i].id;
+          if(display){
+            var domain = parseUri(tabs[i].url).hostname;
+            if(domain !== "newtab" && domain !== "extensions"){
+              var count = storage_get("blockage_stats").domain_count[domain];
+              badge_text = count ? count.toString(): "0";
+            }
+          }
+          chrome.browserAction.setBadgeText({text: badge_text, tabId: id});
+        }
+      });
+    }
+    
     // Set the button image and context menus according to the URL
     // of the current tab.
     updateButtonUIAndContextMenus = function() {
@@ -757,21 +804,23 @@
       }
     );
   })();
-
-
+  
   // BROWSER ACTION AND CONTEXT MENU UPDATES
   (function() {
     if (SAFARI)
       return;
-
+    
     //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
     //Otherwise the extension doesn't work (e.g. doesn't block ads)
     if (chrome.tabs) {
+      updateBadges();
       chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
+        updateBadges();
         if (tab.active && changeInfo.status === "loading")
           updateButtonUIAndContextMenus();
       });
       chrome.tabs.onActivated.addListener(function() {
+        updateBadges();
         updateButtonUIAndContextMenus();
       });
     }

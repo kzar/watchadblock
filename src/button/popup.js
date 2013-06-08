@@ -9,7 +9,8 @@ function customize_for_this_tab() {
     function show(L) { L.forEach(function(x) { shown[x] = true;  }); }
     function hide(L) { L.forEach(function(x) { shown[x] = false; }); }
 
-    show(["div_options", "separator2"]);
+    show(["div_options", "separator2","ad_blocks_div","separator4","toggle_badge", "separator5"]);
+    show([]);
     var paused = BG.adblock_is_paused();
     if (paused) {
       show(["div_status_paused", "separator0", "div_options"]);
@@ -34,7 +35,23 @@ function customize_for_this_tab() {
 
     if (!BG.get_settings().show_advanced_options)
       hide(["div_show_resourcelist"]);
-
+    
+    var ad_blocked_spans = $("#ad_blocks_div").find("span");
+    var $page_span = $(ad_blocked_spans[0]);
+    var $total_span = $(ad_blocked_spans[1]);
+    
+    var blocked_for_page = $page_span.text() + (info.url_blocked || "0");
+    var total_blocked = $total_span.text() + info.total_blocked;
+    
+    $page_span.html(blocked_for_page);
+    $total_span.text(total_blocked);
+    
+    if(!info.display_stats){
+      $("#toggle_badge_checkbox").attr("checked",false);
+    }else{
+      $("#toggle_badge_checkbox").attr("checked",true);
+    }
+    
     for (var div in shown)
       if (shown[div]) 
         $('#' + div).show();
@@ -44,7 +61,11 @@ function customize_for_this_tab() {
 
 // Click handlers
 $(function() {
-
+  $("#toggle_badge_checkbox").click(function(){
+    var checked = $(this).is(":checked");
+    BG.updateDisplayStats(checked);
+  });
+  
   $("#titletext span").click(function() {
     var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
     BG.openTab(url);
