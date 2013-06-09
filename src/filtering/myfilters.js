@@ -525,7 +525,7 @@ MyFilters.prototype._make_subscription_options = function() {
     "hungarian": { // Hungarian filters
       url: "http://pete.teamlupus.hu/hufilter.txt",
     },
-"indonesian": { // Indonesian filters
+    "indonesian": { // Indonesian filters
       url: "https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt",
     },
     "israeli": { // Israeli filters
