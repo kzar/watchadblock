@@ -437,6 +437,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'fr': return 'easylist_plus_french';
       case 'he': return 'israeli';
       case 'hu': return 'hungarian';
+	  case 'id': return 'indonesian';
       case 'it': return 'italian';
       case 'ja': return 'japanese';
       case 'ko': return 'easylist_plun_korean';
@@ -523,6 +524,9 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "hungarian": { // Hungarian filters
       url: "http://pete.teamlupus.hu/hufilter.txt",
+    },
+	"indonesian": { // Indonesian filters
+      url: "https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt",
     },
     "israeli": { // Israeli filters
       url: "https://secure.fanboy.co.nz/israelilist/IsraelList.txt",
