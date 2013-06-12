@@ -189,6 +189,15 @@ FilterListUtil.prepareSubscriptions = function(subs){
   }
   FilterListUtil.sortFilterArrays();
 };
+FilterListUtil.checkUrlForExistingFilter = function(url){
+  var cached_subscriptions = FilterListUtil.cached_subscriptions
+  for(var id in cached_subscriptions){
+    if(url === cached_subscriptions[id].url){
+      return cached_subscriptions[id];
+    }
+  }
+  return;
+};
 FilterListUtil.updateSubscriptionInfoAll = function(){
   var cached_subscriptions = FilterListUtil.cached_subscriptions;
   for(var id in cached_subscriptions){
@@ -346,8 +355,6 @@ $(function() {
     $parent.remove();
   });
   
-  
-  
   $("#btnUpdateNow").click(function() {
     $(this).attr("disabled", "disabled");
     BGcall("update_subscriptions_now");
@@ -365,6 +372,14 @@ $(function() {
     }
     url = url.trim();
     var subscribe_to = "url:" + url;
+    
+    var existingFilter = FilterListUtil.checkUrlForExistingFilter(url);
+    
+    if(existingFilter){
+      alert(translate("urlexistforfilter", [url, translate(existingFilter.label) || existingFilter.id]));
+      return;
+    }
+    
     if (/^https?\:\/\/[^\<]+$/.test(url)) {
       SubscriptionUtil.subscribe(subscribe_to);
       $("#txtNewSubscriptionUrl").val("");
