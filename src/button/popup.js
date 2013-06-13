@@ -33,7 +33,7 @@ function customize_for_this_tab() {
       var $page_span = $(ad_blocked_spans[0]);
       var $total_span = $(ad_blocked_spans[1]);
       
-      var blocked_for_page = $page_span.text() + (info.url_blocked || "0");
+      var blocked_for_page = $page_span.text() + (info.tab_blocked || "0");
       var total_blocked = $total_span.text() + info.total_blocked;
        
       $page_span.html(blocked_for_page);

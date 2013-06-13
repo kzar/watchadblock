@@ -21,20 +21,12 @@
         data.start = Date.now();
       if (data.total === undefined)
         data.total = 0;
-      if(data.domain_count === undefined)
-        data.domain_count = {};
       data.version = 1;
       storage_set(key, data);
 
       return {
-        recordOneAdBlocked: function(domain) {
+        recordOneAdBlocked: function() {
           var data = storage_get(key);
-          
-          if(data.domain_count[domain])
-            data.domain_count[domain] += 1;
-          else
-            data.domain_count[domain] = 1;
-            
           data.total += 1;
           storage_set(key, data);
           chrome.extension.sendRequest({command: "filter_blocked"});
@@ -56,6 +48,7 @@
       show_context_menu_items: true,
       show_advanced_options: false,
       new_safari_hiding: false,
+      display_stats: true
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
@@ -151,7 +144,7 @@
           fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
         }
       },
-
+      
       // Watch for requests for new tabs and frames, and track their URLs.
       // Inputs: details: object from onBeforeRequest callback
       // Returns false if this request's tab+frame are not trackable.
@@ -164,6 +157,8 @@
         if (details.type == 'main_frame') { // New tab
           delete fd[tabId];
           fd.record(tabId, 0, details.url);
+          fd[tabId].blockCount = 0;
+          updateBadge();
           log("\n-------", fd.get(tabId, 0).domain, ": loaded in tab", tabId, "--------\n\n");
           return true;
         }
@@ -210,12 +205,6 @@
 
     // When a request starts, perhaps block it.
     function onBeforeRequestHandler(details) {
-      // Support blockCounts app... can't talk to external apps w/o sendMessageExternal which causes a permission warning.
-      if (details.type === "sub_frame" && details.url.indexOf('https://chromeadblock.com/app/channel.html') === 0)
-        window.app_channel_iframe = details.frameId;
-      if (window.app_channel_iframe === details.frameId && details.url.indexOf('https://chromeadblock.com/app/magic_script.js') === 0)
-        return { redirectUrl: "data:,go(" + JSON.stringify(blockCounts.get()) + ");" };
-
       if (adblock_is_paused())
         return { cancel: false };
 
@@ -259,8 +248,9 @@
       }
 
       if (blocked){
-        var domain = frameData.get(details.tabId, 0).domain;
-        blockCounts.recordOneAdBlocked(domain);
+        blockCounts.recordOneAdBlocked();
+        frameData[tabId].blockCount++;
+        updateBadge();
       }
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
       if (blocked && elType === ElementTypes.image) {
@@ -500,21 +490,18 @@
 
       var disabled_site = page_is_unblockable(tab.url);
       
-      var statistics = storage_get("blockage_stats");
-      var total_blocked = statistics.total;
-      var url_blocked = statistics.domain_count[parseUri(tab.url).hostname];
+      var total_blocked = blockCounts.get().total;
+      var tab_blocked = 0;
+      if(frameData[tab.id])
+         tab_blocked = frameData[tab.id].blockCount;
       
-      var display_stats = storage_get("display_stats");
-      
-      if(display_stats === undefined){
-        storage_set("display_stats", true);
-      }
+      var display_stats = get_settings().display_stats;
       
       var result = {
         tab: tab,
         disabled_site: disabled_site,
         total_blocked: total_blocked,
-        url_blocked: url_blocked,
+        tab_blocked: tab_blocked,
         display_stats: display_stats
       };
       if (!disabled_site)
@@ -540,26 +527,23 @@
   }
 
   updateDisplayStats = function(isChecked) {
-    storage_set("display_stats", isChecked);
-    updateBadges();
+    set_setting("display_stats", isChecked);
+    updateBadge();
   }
   
   if (!SAFARI) {
-    updateBadges = function() {
-      chrome.tabs.query({}, function(tabs){
-        var display = storage_get("display_stats");
-        for(var i = 0; i < tabs.length; i++){
-          var badge_text = "";
-          var id = tabs[i].id;
-          if(display){
-            var domain = parseUri(tabs[i].url).hostname;
-            if(domain !== "newtab" && domain !== "extensions"){
-              var count = storage_get("blockage_stats").domain_count[domain];
-              badge_text = count ? count.toString(): "0";
-            }
-          }
-          chrome.browserAction.setBadgeText({text: badge_text, tabId: id});
+    updateBadge = function() {
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+        if (tabs.length === 0)
+          return; // For example: only the background devtools or a popup are opened
+        var tab = tabs[0];
+        var display = get_settings().display_stats;
+        var badge_text = "";
+        if(display && frameData[tab.id]){
+          var count = frameData[tab.id].blockCount;
+          badge_text = count ? count.toString() : "0";
         }
+        chrome.browserAction.setBadgeText({text: badge_text, tabId: tab.id});
       });
     }
     
@@ -813,14 +797,11 @@
     //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
     //Otherwise the extension doesn't work (e.g. doesn't block ads)
     if (chrome.tabs) {
-      updateBadges();
       chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
-        updateBadges();
         if (tab.active && changeInfo.status === "loading")
           updateButtonUIAndContextMenus();
       });
       chrome.tabs.onActivated.addListener(function() {
-        updateBadges();
         updateButtonUIAndContextMenus();
       });
     }
