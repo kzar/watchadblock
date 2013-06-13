@@ -55,10 +55,12 @@ CheckboxForFilter.prototype = {
         if (checked) {
           $(".subscription_info", parent).text(translate("fetchinglabel"));
           SubscriptionUtil.subscribe(id);
+          delete FilterListUtil.cached_subscriptions[id].unsubscribed;
         } else {
           SubscriptionUtil.unsubscribe(id, false);
           $(".subscription_info", parent).
             text(translate("unsubscribedlabel"));
+          delete FilterListUtil.cached_subscriptions[id].subscribed;
         }
       });
       
@@ -289,6 +291,11 @@ LanguageSelectUtil.init = function(language_filter_section){
     }
   });
 };
+LanguageSelectUtil.triggerChange = function(filter){
+  var $language_select = $("#language_select");
+  $language_select.val(filter.id);
+  $language_select.trigger("change");
+};  
 
 function SubscriptionUtil(){};
 SubscriptionUtil.prototype = {};
@@ -363,6 +370,22 @@ $(function() {
     }, 300000); //re-enable after 5 minutes
   });
   
+  var _prompUsersThatFilterExists = function(filter){
+    if(filter.subscribed){
+      alert(translate("alreadysubscribedtofilter"));
+    }else if(confirm(translate("urlexistforfilter"))){
+      var containing_div = $("div[name='" + filter.id + "']");
+      if(containing_div.is(":visible")){
+        var checkbox = containing_div.find("input");
+        console.log(checkbox);
+        checkbox.attr("checked", "checked");
+        checkbox.trigger("change");
+      }else{
+        LanguageSelectUtil.triggerChange(filter);
+      }
+    }
+  };
+  
   $("#btnNewSubscriptionUrl").click(function() {
     var url = $("#txtNewSubscriptionUrl").val();
     var abp_regex = /^abp.*\Wlocation=([^\&]+)/i;
@@ -376,28 +399,28 @@ $(function() {
     var existingFilter = FilterListUtil.checkUrlForExistingFilter(url);
     
     if(existingFilter){
-      alert(translate("urlexistforfilter", [url, translate(existingFilter.label) || existingFilter.id]));
-      return;
-    }
-    
-    if (/^https?\:\/\/[^\<]+$/.test(url)) {
-      SubscriptionUtil.subscribe(subscribe_to);
-      $("#txtNewSubscriptionUrl").val("");
-      var entry = {
-        id: subscribe_to,
-        url: url,
-        subscribed: true,
-        unsubscribe: true,
-        user_submitted: true,
-        label: ""
-      };
-      FilterListUtil.cached_subscriptions[entry.id] = entry;
-      var custom_filter = filterListSections.custom_filter;
-      var checkbox = new CheckboxForFilter(entry, "custom_filter", custom_filter.array.length, custom_filter.container);
-      checkbox.createCheckbox(true);
+      _prompUsersThatFilterExists(existingFilter);
+    } else {
       
-    } else
-      alert(translate("failedtofetchfilter"));
+      if (/^https?\:\/\/[^\<]+$/.test(url)) {
+        SubscriptionUtil.subscribe(subscribe_to);
+        var entry = {
+          id: subscribe_to,
+          url: url,
+          subscribed: true,
+          unsubscribe: true,
+          user_submitted: true,
+          label: ""
+        };
+        FilterListUtil.cached_subscriptions[entry.id] = entry;
+        var custom_filter = filterListSections.custom_filter;
+        var checkbox = new CheckboxForFilter(entry, "custom_filter", custom_filter.array.length, custom_filter.container);
+        checkbox.createCheckbox(true);
+        
+      } else
+        alert(translate("failedtofetchfilter"));
+    }
+    $("#txtNewSubscriptionUrl").val("");
   });
   
   // Pressing enter will add the list too
@@ -414,7 +437,6 @@ $(function() {
   });
   
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    //TODO investigate this portion and the backend
     if (request.command !== "filters_updated")
       return;
     BGcall("get_subscriptions_minus_text", function(subs) {
@@ -422,7 +444,7 @@ $(function() {
       for(var id in cached_subscriptions){
         var entry = subs[id];
         var update_entry = cached_subscriptions[id];
-        if(entry && update_entry){
+        if(entry){
           if(entry.subscribed){
             if(entry.last_update && entry.last_update_failed_at){
               if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)){
@@ -438,8 +460,9 @@ $(function() {
               cached_subscriptions[id].last_update = entry.last_update;
             }
           }
+        }else if(confirm(translate("thereisanupdate"))){
+          window.location.reload();
         }
-        
         //TODO: promp user that there is an update and ask to reload
       }
     });
