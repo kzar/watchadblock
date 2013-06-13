@@ -369,23 +369,7 @@ $(function() {
       $("#btnUpdateNow").removeAttr("disabled");
     }, 300000); //re-enable after 5 minutes
   });
-  
-  var _prompUsersThatFilterExists = function(filter){
-    if(filter.subscribed){
-      alert(translate("alreadysubscribedtofilter"));
-    }else if(confirm(translate("urlexistforfilter"))){
-      var containing_div = $("div[name='" + filter.id + "']");
-      if(containing_div.is(":visible")){
-        var checkbox = containing_div.find("input");
-        console.log(checkbox);
-        checkbox.attr("checked", "checked");
-        checkbox.trigger("change");
-      }else{
-        LanguageSelectUtil.triggerChange(filter);
-      }
-    }
-  };
-  
+ 
   $("#btnNewSubscriptionUrl").click(function() {
     var url = $("#txtNewSubscriptionUrl").val();
     var abp_regex = /^abp.*\Wlocation=([^\&]+)/i;
@@ -398,10 +382,7 @@ $(function() {
     
     var existingFilter = FilterListUtil.checkUrlForExistingFilter(url);
     
-    if(existingFilter){
-      _prompUsersThatFilterExists(existingFilter);
-    } else {
-      
+    if (!existingFilter){  
       if (/^https?\:\/\/[^\<]+$/.test(url)) {
         SubscriptionUtil.subscribe(subscribe_to);
         var entry = {
@@ -419,6 +400,16 @@ $(function() {
         
       } else
         alert(translate("failedtofetchfilter"));
+    } else if(!existingFilter.subscribed){
+      var containing_div = $("div[name='" + existingFilter.id + "']");
+      if(containing_div.is(":visible")){
+        var checkbox = containing_div.find("input");
+        console.log(checkbox);
+        checkbox.attr("checked", "checked");
+        checkbox.trigger("change");
+      }else{
+        LanguageSelectUtil.triggerChange(existingFilter);
+      }
     }
     $("#txtNewSubscriptionUrl").val("");
   });
