@@ -158,7 +158,6 @@
           delete fd[tabId];
           fd.record(tabId, 0, details.url);
           fd[tabId].blockCount = 0;
-          updateBadge();
           log("\n-------", fd.get(tabId, 0).domain, ": loaded in tab", tabId, "--------\n\n");
           return true;
         }
@@ -250,7 +249,7 @@
       if (blocked){
         blockCounts.recordOneAdBlocked();
         frameData[tabId].blockCount++;
-        updateBadge();
+        updateBadge(tabId);
       }
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
       if (blocked && elType === ElementTypes.image) {
@@ -526,25 +525,21 @@
     return whitelist.matches(url, type, parseUri(url).hostname, false);
   }
 
-  updateDisplayStats = function(isChecked) {
+  updateDisplayStats = function(isChecked, tabId) {
     set_setting("display_stats", isChecked);
-    updateBadge();
+    updateBadge(tabId);
   }
   
   if (!SAFARI) {
-    updateBadge = function() {
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        if (tabs.length === 0)
-          return; // For example: only the background devtools or a popup are opened
-        var tab = tabs[0];
+    updateBadge = function(tabId) {
         var display = get_settings().display_stats;
-        var badge_text = "";
-        if(display && frameData[tab.id]){
-          var count = frameData[tab.id].blockCount;
-          badge_text = count ? count.toString() : "0";
+        var badge_text = "0";
+        if(!display){
+          badge_text = "";
+        } else if(frameData[tabId]){
+          badge_text = frameData[tabId].blockCount.toString();
         }
-        chrome.browserAction.setBadgeText({text: badge_text, tabId: tab.id});
-      });
+        chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
     }
     
     // Set the button image and context menus according to the URL
@@ -609,6 +604,7 @@
       getCurrentTabInfo(function(info) {
         setContextMenus(info);
         setBrowserButton(info);
+        updateBadge(info.tab.id);
       });
     }
   }
@@ -832,8 +828,9 @@
       log("Found", tabs.length, "tabs that were already opened");
       for (var i=0; i<tabs.length; i++) {
         var currentTab = tabs[i], tabId = currentTab.id;
-        if (frameData[tabId]) continue; // Known tab
-        frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
+        if (!frameData[tabId]) // unknown tab
+          frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
+        updateBadge(tabId);
         // TODO: once we're able to get the parentFrameId, call
         // chrome.webNavigation.getAllFrames to 'load' the subframes
       }

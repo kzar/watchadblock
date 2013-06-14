@@ -66,7 +66,9 @@ function customize_for_this_tab() {
 $(function() {
   $("#toggle_badge_checkbox").click(function(){
     var checked = $(this).is(":checked");
-    BG.updateDisplayStats(checked);
+    BG.getCurrentTabInfo(function(info) {
+      BG.updateDisplayStats(checked, info.tab.id);
+    });
   });
   
   $("#titletext span").click(function() {
