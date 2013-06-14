@@ -537,7 +537,12 @@
         if(!display){
           badge_text = "";
         } else if(frameData[tabId]){
-          badge_text = frameData[tabId].blockCount.toString();
+          var main_frame = frameData.get(tabId, 0);
+          if(page_is_unblockable(main_frame.url) || page_is_whitelisted(main_frame.url)){
+            badge_text = "";
+          }else{
+            badge_text = frameData[tabId].blockCount.toString();
+          }
         }
         chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
     }
