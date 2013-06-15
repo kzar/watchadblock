@@ -219,6 +219,26 @@
     "message": "cambia",
     "description": "link to change resources on the resourceblock page"
   },
+  "checkinfirefox_1": {
+    "message": "Installa Firefox $chrome$ se non ce l'hai.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1o Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_2": {
+    "message": "Installa Adblock Plus per Firefox $chrome$ se non ce l'hai.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1o AdBlockforChrome per Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
   "checkinfirefox_3": {
     "message": "In questo browser, sottoscrivi le stesse liste filtri che ho qui (eccetto i filtri personalizzati di AdBlock in FireFox).",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
@@ -230,6 +250,16 @@
   "checkinfirefox_5": {
     "message": "La pubblicità continua ad apparire in questo browser?",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefoxtitle": {
+    "message": "Controlla in Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1o Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
   "chromebutton_how_to_hide2": {
     "message": "Per nascondere il bottone, cliccaci sopra col destro e scegli Nascondi Bottone. Puoi farlo apparire di nuovo andando in chrome://chrome/extensions.",
@@ -684,7 +714,7 @@
     "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders": {
       "link": {
-        "content": "$1here$2",
+        "content": "$1qui$2",
         "example": "<a href='http://abp.org'>here</a>"
       }
     }
