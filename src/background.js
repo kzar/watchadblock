@@ -25,14 +25,28 @@
       storage_set(key, data);
 
       return {
-        recordOneAdBlocked: function() {
+        recordOneAdBlocked: function(tabId) {
           var data = storage_get(key);
           data.total += 1;
           storage_set(key, data);
+          
+          //code for incrementing ad blocks
+          currentTab = frameData.get(tabId);
+          if(currentTab){
+            currentTab.blockCount++;
+          }
+          
           chrome.extension.sendRequest({command: "filter_blocked"});
         },
         get: function() { 
           return storage_get(key); 
+        },
+        getTotalAdsBlocked: function(tabId){
+          if(tabId){
+            currentTab = frameData.get(tabId);
+            return currentTab ? currentTab.blockCount : 0;
+          }
+          return this.get().total;
         }
       };
     })();
@@ -247,8 +261,7 @@
       }
 
       if (blocked){
-        blockCounts.recordOneAdBlocked();
-        frameData[tabId].blockCount++;
+        blockCounts.recordOneAdBlocked(tabId);
         updateBadge(tabId);
       }
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
@@ -489,10 +502,9 @@
 
       var disabled_site = page_is_unblockable(tab.url);
       
-      var total_blocked = blockCounts.get().total;
-      var tab_blocked = 0;
-      if(frameData[tab.id])
-         tab_blocked = frameData[tab.id].blockCount;
+      var total_blocked = blockCounts.getTotalAdsBlocked();
+
+      var tab_blocked = blockCounts.getTotalAdsBlocked(tab.id);
       
       var display_stats = get_settings().display_stats;
       
@@ -532,19 +544,13 @@
   
   if (!SAFARI) {
     updateBadge = function(tabId) {
-        var display = get_settings().display_stats;
-        var badge_text = "0";
-        if(display && frameData[tabId]){
-          var main_frame = frameData.get(tabId, 0);
-          if(page_is_unblockable(main_frame.url) || page_is_whitelisted(main_frame.url)){
-            badge_text = "";
-          }else{
-            badge_text = frameData[tabId].blockCount.toString();
-          }
-        } else {
-          badge_text = "";
-        }
-        chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
+      var display = get_settings().display_stats;
+      var badge_text = "";
+      var main_frame = frameData.get(tabId, 0);
+      if(display && (main_frame && (!page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url)))){
+        badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
+      }
+      chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
     }
     
     // Set the button image and context menus according to the URL
@@ -833,7 +839,7 @@
       log("Found", tabs.length, "tabs that were already opened");
       for (var i=0; i<tabs.length; i++) {
         var currentTab = tabs[i], tabId = currentTab.id;
-        if (!frameData[tabId]) // unknown tab
+        if (!frameData.get(tabId)) // unknown tab
           frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
         updateBadge(tabId);
         // TODO: once we're able to get the parentFrameId, call
