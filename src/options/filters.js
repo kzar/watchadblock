@@ -221,7 +221,7 @@ FilterListUtil.updateSubscriptionInfoAll = function() {
         translate("failedtofetchfilter") === infoLabel.text()) {
         text = translate("invalidListUrl");
         $("input", div).attr("disabled", "disabled");
-      }else{
+      } else {
         text = translate("failedtofetchfilter");
       }
     } else if(last_update) {
@@ -252,10 +252,7 @@ FilterListUtil.updateSubscriptionInfoAll = function() {
   }
 };
 
-function LanguageSelectUtil() {
-};
-LanguageSelectUtil.prototype = {
-};
+function LanguageSelectUtil() {};
 LanguageSelectUtil.insertOption = function(option, index) {
   var $language_select = $("#language_select");
   var options = $language_select.find("option");
@@ -268,7 +265,7 @@ LanguageSelectUtil.insertOption = function(option, index) {
   }
   if(options.eq(i).length > 0) {
     options.eq(i).before(option);
-  }else{
+  } else {
     $language_select.append(option);
   }
 };
@@ -282,7 +279,7 @@ LanguageSelectUtil.init = function(language_filter_list_section) {
     }
   }
   
-  $("#language_select").change( function() {
+  $("#language_select").change(function() {
     var $this = $(this);
     var selected_option = $this.find(':selected');
     var index = $(selected_option).data("index");
@@ -315,7 +312,7 @@ SubscriptionUtil.validateOverSubscription = function() {
       $.cookie('noOversubscriptionWarning', 'true', {expires: (1/48)});
   }
   return confirm(translate("you_know_thats_a_bad_idea_right"));
-}
+};
 SubscriptionUtil.subscribe = function(id) {
   if(!SubscriptionUtil.validateOverSubscription()) {
     return;
@@ -332,11 +329,10 @@ SubscriptionUtil.unsubscribe = function(id, del) {
   BGcall("unsubscribe", {id:id, del:del});
 };
 SubscriptionUtil._updateCacheValue = function(id) {
-  var cached_subscriptions = FilterListUtil.cached_subscriptions;
-  var sub = cached_subscriptions[id];
+  var sub = FilterListUtil.cached_subscriptions[id];
   if(sub) {
-    delete cached_subscriptions[id].last_update_failed_at;
-    delete cached_subscriptions[id].last_update;
+    delete sub.last_update_failed_at;
+    delete sub.last_update;
   }
 };
 
@@ -350,11 +346,11 @@ CustomFilterListUploadUtil._performUpload = function(url, subscribe_to) {
     unsubscribe: true,
     user_submitted: true,
     label: ""
-    };
-    FilterListUtil.cached_subscriptions[entry.id] = entry;
-    var custom_filter_list = filterListSections.custom_filter_list;
-    var checkbox = new CheckboxForFilterList(entry, "custom_filter_list", custom_filter_list.array.length, custom_filter_list.container);
-    checkbox.createCheckbox(true);
+  };
+  FilterListUtil.cached_subscriptions[entry.id] = entry;
+  var custom_filter_list = filterListSections.custom_filter_list;
+  var checkbox = new CheckboxForFilterList(entry, "custom_filter_list", custom_filter_list.array.length, custom_filter_list.container);
+  checkbox.createCheckbox(true);
 };
 CustomFilterListUploadUtil._updateExistingFilterList = function(existing_filter_list) {
   var containing_div = $("div[name='" + existing_filter_list.id + "']");
@@ -362,7 +358,7 @@ CustomFilterListUploadUtil._updateExistingFilterList = function(existing_filter_
   if(!checkbox.is(":checked")) {
     if(checkbox.attr("id").indexOf("language_filter_list") > 0) {
       LanguageSelectUtil.triggerChange(existing_filter_list);
-    }else{
+    } else {
       checkbox.attr("checked", "checked");
       checkbox.trigger("change");
     }
@@ -448,7 +444,7 @@ $(function() {
             if(entry.last_update && entry.last_update_failed_at) {
               if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
                 delete subs[id].last_update_failed_at;
-              }else{
+              } else {
                 delete subs[id].last_update;
               }
             } 
