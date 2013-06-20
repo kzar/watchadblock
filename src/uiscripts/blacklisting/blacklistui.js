@@ -426,8 +426,8 @@ BlacklistUi.prototype._preview = function(selector) {
     css_preview.innerText += selector + " {display:none!important;}";
   }
   
-  // Finally, raise the UI.
-  css_preview.innerText += " " + d + " {z-index:100000000!important;}";
+  // Finally, raise the UI above *all* website UI, using max 32-bit signed int.
+  css_preview.innerText += " " + d + " {z-index:2147483647!important;}";
 
   document.documentElement.appendChild(css_preview);
 }
