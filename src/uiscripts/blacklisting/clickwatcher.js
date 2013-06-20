@@ -21,20 +21,23 @@ function Highlighter() {
       box.hide();
       el = document.elementFromPoint(e.clientX, e.clientY);
     }
+    if (el === target) {
+      box.show();
+      return;
+    }
     if (el === document.body || el.className === "adblock-killme-overlay") {
       box.hide(); 
       return;
     }
-    target = $(el);
-    offset = target.offset();
+    el = $(el);
+    target = el[0];
+    offset = el.offset();
     box.css({
-      height: target.outerHeight(), 
-      width: target.outerWidth(), 
+      height: el.outerHeight(),
+      width: el.outerWidth(),
       left: offset.left, 
       top: offset.top 
     });
-    var zIndex = (parseInt(target.css("z-index")) || 1);
-    box[0].style.setProperty("z-index", zIndex, "important");
     box.show(); 
   }
   
@@ -58,7 +61,7 @@ function Highlighter() {
     this.disable();
     if (box) {
       box.remove();
-      delete box;
+      box = null;
     }
   };
 }
@@ -86,7 +89,6 @@ ClickWatcher.prototype.show = function() {
   var wait = $("<div></div>").
     append(translate("findingads")).
     dialog({
-      zIndex: 10000000, 
       position: [50, 50],
       height: 120,
       minHeight: 120,
@@ -164,7 +166,7 @@ ClickWatcher.prototype._build_ui = function() {
     append(translate("clickthead")).
     append("<br/><br/>").
     dialog({
-      zIndex:10000000, 
+      dialogClass: "adblock-blacklist-dialog",
       position:[50, 50],
       width:400,
       minHeight:125,
