@@ -25,26 +25,15 @@ function customize_for_this_tab() {
       show(["div_pause_adblock", "div_blacklist", "div_whitelist", 
             "div_whitelist_page", "div_show_resourcelist", 
             "div_report_an_ad", "separator1", "div_options", 
-            "div_help_hide_start", "separator3","ad_blocks_div",
-            "separator4","toggle_badge", "separator5"]);
+            "div_help_hide_start", "separator3","block_counts"]);
       
+      var page_count = info.tab_blocked || "0";
+      $("#page_blocked_count").text(page_count);
+      $("#total_blocked_count").text(info.total_blocked);
       
-      var ad_blocked_spans = $("#ad_blocks_div").find("span");
-      var $page_span = $(ad_blocked_spans[0]);
-      var $total_span = $(ad_blocked_spans[1]);
-      
-      var blocked_for_page = $page_span.text() + (info.tab_blocked || "0");
-      var total_blocked = $total_span.text() + info.total_blocked;
-       
-      $page_span.html(blocked_for_page);
-      $total_span.text(total_blocked);
-      
-      if(!info.display_stats){
-        $("#toggle_badge_checkbox").attr("checked",false);
-      }else{
-        $("#toggle_badge_checkbox").attr("checked",true);
-      }
-    
+      $("#toggle_badge_checkbox").attr("checked", info.display_stats);
+      // Don't show the checkbox when clicking it will do nothing obvious.
+      $("#block_counts_controls").toggle(page_count !== "0");
     }
 
     var eligible_for_undo = !paused && (info.disabled_site || !info.whitelisted);

@@ -549,6 +549,8 @@
       var main_frame = frameData.get(tabId, 0);
       if(display && (main_frame && (!page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url)))){
         badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
+        if (badge_text === "0")
+          badge_text = ""; // Only show the user when we've done something useful
       }
       chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
     }
