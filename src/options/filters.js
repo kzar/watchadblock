@@ -1,4 +1,4 @@
-function CheckboxForFilterList(filter_list, filter_list_type, index, container, checked) {
+function CheckboxForFilterList(filter_list, filter_list_type, index, container, checked){
   this._container = container;
   this._filter_list = filter_list;
   this._filter_list_type = filter_list_type;
@@ -40,7 +40,7 @@ function CheckboxForFilterList(filter_list, filter_list_type, index, container, 
       css("display", this._filter_list.subscribed ? "none" : "inline").
       attr("href", "#").
       text(translate("removefromlist")).
-      click(function(e) {
+      click(function(e){
         event.preventDefault();
         var $parent = $(this).parent();
         var id = $parent.attr("name");
@@ -50,7 +50,7 @@ function CheckboxForFilterList(filter_list, filter_list_type, index, container, 
 };
 
 CheckboxForFilterList.prototype = {
-  _bindActions: function() {
+  _bindActions: function(){
     this._check_box.
       change(function() {
         var parent = $(this).parent();
@@ -115,7 +115,6 @@ CheckboxForFilterList.prototype = {
   }
 };
 
-
 function OptionForFilterList(filter_list, index) {
   this._filter_list = filter_list;
   this._index = index;
@@ -125,6 +124,7 @@ function OptionForFilterList(filter_list, index) {
     text: this._filter_list.label,
   }).data("index", this._index);
 };
+
 OptionForFilterList.prototype = {
   get: function() {
     return this._option;
@@ -376,7 +376,7 @@ CustomFilterListUploadUtil.bindControls = function () {
     var subscribe_to = "url:" + url;
     
     var existing_filter_list = FilterListUtil.checkUrlForExistingFilterList(url);
-    
+
     if (existing_filter_list) {  
       CustomFilterListUploadUtil._updateExistingFilterList(existing_filter_list);
     } else {
