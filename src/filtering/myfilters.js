@@ -507,7 +507,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "russian": { // Additional Russian filters
-      url: "https://ruadlist.googlecode.com/hg/advblock.txt",
+      url: "https://easylist-downloads.adblockplus.org/advblock.txt",
       requiresList: "easylist",
     },
     "chinese": { // Additional Chinese filters
