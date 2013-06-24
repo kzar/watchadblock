@@ -327,7 +327,7 @@ LanguageSelectUtil.init = function() {
     var $this = $(this);
     var selected_option = $this.find(':selected');
     var index = $(selected_option).data("index");
-    var entry = language_filter_lists[index];
+    var entry = language_filter_list_arr[index];
     if(entry) {
       $this.find('option:first').attr('selected','selected');
       selected_option.remove();
