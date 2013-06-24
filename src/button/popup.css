@@ -57,13 +57,9 @@ body {
   text-decoration: underline;
 }
 
-.box-wrapper {
-  margin: 5px 5px 5px 0px;
-}
-
 .box {
+  margin: 5px 5px 5px 0px;
   background:white; 
-  border-radius: 5px;
   border: 1px solid black; 
   padding: 10px;
 }
@@ -75,4 +71,20 @@ body {
 #link_close {
   margin: -7px 0px 0px 0px;
   font-family: "Courier", sans-serif;
+}
+
+
+#block_counts {
+  display: none;
+  margin-bottom: 1em;
+}
+.header {
+  font-weight: bold;
+}
+.block_count_number {
+  font-weight: bold;
+  color: red;
+}
+#block_counts_controls {
+  margin-top: 1em;
 }

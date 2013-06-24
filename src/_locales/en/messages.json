@@ -1266,5 +1266,33 @@
   "opera_allow_secure": {
     "message": "If you want to use AdBlock on secure pages (pages with a lock icon in the toolbar), you first have to enable the option to allow access to secure pages.",
     "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
+  "blocked_ads": {
+    "message": "Blocked ads:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ on this page",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "blocked_n_in_total": {
+    "message": "$count$ in total",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "show_on_adblock_button": {
+    "message": "Show on AdBlock button",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   }
 }

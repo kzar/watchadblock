@@ -25,13 +25,26 @@
       storage_set(key, data);
 
       return {
-        recordOneAdBlocked: function() {
+        recordOneAdBlocked: function(tabId) {
           var data = storage_get(key);
           data.total += 1;
           storage_set(key, data);
+          
+          //code for incrementing ad blocks
+          currentTab = frameData.get(tabId);
+          if(currentTab){
+            currentTab.blockCount++;
+          }
         },
         get: function() { 
           return storage_get(key); 
+        },
+        getTotalAdsBlocked: function(tabId){
+          if(tabId){
+            currentTab = frameData.get(tabId);
+            return currentTab ? currentTab.blockCount : 0;
+          }
+          return this.get().total;
         }
       };
     })();
@@ -47,6 +60,7 @@
       show_context_menu_items: true,
       show_advanced_options: false,
       new_safari_hiding: false,
+      display_stats: true
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
@@ -142,7 +156,7 @@
           fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
         }
       },
-
+      
       // Watch for requests for new tabs and frames, and track their URLs.
       // Inputs: details: object from onBeforeRequest callback
       // Returns false if this request's tab+frame are not trackable.
@@ -155,6 +169,7 @@
         if (details.type == 'main_frame') { // New tab
           delete fd[tabId];
           fd.record(tabId, 0, details.url);
+          fd[tabId].blockCount = 0;
           log("\n-------", fd.get(tabId, 0).domain, ": loaded in tab", tabId, "--------\n\n");
           return true;
         }
@@ -201,12 +216,6 @@
 
     // When a request starts, perhaps block it.
     function onBeforeRequestHandler(details) {
-      // Support blockCounts app... can't talk to external apps w/o sendMessageExternal which causes a permission warning.
-      if (details.type === "sub_frame" && details.url.indexOf('https://chromeadblock.com/app/channel.html') === 0)
-        window.app_channel_iframe = details.frameId;
-      if (window.app_channel_iframe === details.frameId && details.url.indexOf('https://chromeadblock.com/app/magic_script.js') === 0)
-        return { redirectUrl: "data:,go(" + JSON.stringify(blockCounts.get()) + ");" };
-
       if (adblock_is_paused())
         return { cancel: false };
 
@@ -249,8 +258,10 @@
         chrome.tabs.sendRequest(tabId, data); 
       }
 
-      if (blocked)
-        blockCounts.recordOneAdBlocked();
+      if (blocked){
+        blockCounts.recordOneAdBlocked(tabId);
+        updateBadge(tabId);
+      }
       log("[DEBUG]", "Block result", blocked, details.type, frameDomain, details.url.substring(0, 100));
       if (blocked && elType === ElementTypes.image) {
         // 1x1 px transparant image.
@@ -409,7 +420,7 @@
     }
     return result;
   }
-
+  
   // Subscribes to a filter subscription.
   // Inputs: id: id to which to subscribe.  Either a well-known
   //             id, or "url:xyz" pointing to a user-specified list.
@@ -466,9 +477,11 @@
   //   info object passed to callback: {
   //     tab: Tab object
   //     whitelisted: bool - whether the current tab's URL is whitelisted.
-  //     domain: string
   //     disabled_site: bool - true if the url is e.g. about:blank or the
   //                           Extension Gallery, where extensions don't run.
+  //     total_blocked: int - # of ads blocked since install
+  //     tab_blocked: int - # of ads blocked on this tab
+  //     display_stats: bool - whether block counts are displayed on button
   //   }
   // Returns: null (asynchronous)
   getCurrentTabInfo = function(callback, secondTime) {
@@ -488,10 +501,16 @@
       }
 
       var disabled_site = page_is_unblockable(tab.url);
-
+      var total_blocked = blockCounts.getTotalAdsBlocked();
+      var tab_blocked = blockCounts.getTotalAdsBlocked(tab.id);
+      var display_stats = get_settings().display_stats;
+      
       var result = {
         tab: tab,
-        disabled_site: disabled_site
+        disabled_site: disabled_site,
+        total_blocked: total_blocked,
+        tab_blocked: tab_blocked,
+        display_stats: display_stats
       };
       if (!disabled_site)
         result.whitelisted = page_is_whitelisted(tab.url);
@@ -499,7 +518,7 @@
       callback(result);
     });
   }
-
+  
   // Returns true if anything in whitelist matches the_domain.
   //   url: the url of the page
   //   type: one out of ElementTypes, default ElementTypes.document,
@@ -515,7 +534,24 @@
     return whitelist.matches(url, type, parseUri(url).hostname, false);
   }
 
+  updateDisplayStats = function(isChecked, tabId) {
+    set_setting("display_stats", isChecked);
+    updateBadge(tabId);
+  }
+  
   if (!SAFARI) {
+    updateBadge = function(tabId) {
+      var display = get_settings().display_stats;
+      var badge_text = "";
+      var main_frame = frameData.get(tabId, 0);
+      if(display && (main_frame && (!page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url)))){
+        badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
+        if (badge_text === "0")
+          badge_text = ""; // Only show the user when we've done something useful
+      }
+      chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
+    }
+    
     // Set the button image and context menus according to the URL
     // of the current tab.
     updateButtonUIAndContextMenus = function() {
@@ -578,6 +614,7 @@
       getCurrentTabInfo(function(info) {
         setContextMenus(info);
         setBrowserButton(info);
+        updateBadge(info.tab.id);
       });
     }
   }
@@ -757,13 +794,12 @@
       }
     );
   })();
-
-
+  
   // BROWSER ACTION AND CONTEXT MENU UPDATES
   (function() {
     if (SAFARI)
       return;
-
+    
     //TEMP: until crbug.com/60435 is fixed, check if chrome.tabs exists.
     //Otherwise the extension doesn't work (e.g. doesn't block ads)
     if (chrome.tabs) {
@@ -802,8 +838,9 @@
       log("Found", tabs.length, "tabs that were already opened");
       for (var i=0; i<tabs.length; i++) {
         var currentTab = tabs[i], tabId = currentTab.id;
-        if (frameData[tabId]) continue; // Known tab
-        frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
+        if (!frameData.get(tabId)) // unknown tab
+          frameData.track({url: currentTab.url, tabId: tabId, type: "main_frame"});
+        updateBadge(tabId);
         // TODO: once we're able to get the parentFrameId, call
         // chrome.webNavigation.getAllFrames to 'load' the subframes
       }

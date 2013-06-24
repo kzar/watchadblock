@@ -24,7 +24,15 @@ function customize_for_this_tab() {
       show(["div_pause_adblock", "div_blacklist", "div_whitelist", 
             "div_whitelist_page", "div_show_resourcelist", 
             "div_report_an_ad", "separator1", "div_options", 
-            "div_help_hide_start", "separator3"]);
+            "div_help_hide_start", "separator3","block_counts"]);
+      
+      var page_count = info.tab_blocked || "0";
+      $("#page_blocked_count").text(page_count);
+      $("#total_blocked_count").text(info.total_blocked);
+      
+      $("#toggle_badge_checkbox").attr("checked", info.display_stats);
+      // Don't show the checkbox when clicking it will do nothing obvious.
+      $("#block_counts_controls").toggle(page_count !== "0");
     }
 
     var eligible_for_undo = !paused && (info.disabled_site || !info.whitelisted);
@@ -34,7 +42,7 @@ function customize_for_this_tab() {
 
     if (!BG.get_settings().show_advanced_options)
       hide(["div_show_resourcelist"]);
-
+    
     for (var div in shown)
       if (shown[div]) 
         $('#' + div).show();
@@ -44,7 +52,13 @@ function customize_for_this_tab() {
 
 // Click handlers
 $(function() {
-
+  $("#toggle_badge_checkbox").click(function(){
+    var checked = $(this).is(":checked");
+    BG.getCurrentTabInfo(function(info) {
+      BG.updateDisplayStats(checked, info.tab.id);
+    });
+  });
+  
   $("#titletext span").click(function() {
     var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
     BG.openTab(url);
@@ -66,6 +80,8 @@ $(function() {
     BG.adblock_is_paused(false);
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
+    $("#toggle_badge_checkbox").attr("checked",true);
+    $("#toggle_badge_checkbox").trigger("click");
     window.close();
   });
 
@@ -81,6 +97,8 @@ $(function() {
   $("#div_pause_adblock").click(function() {
     BG.adblock_is_paused(true);
     BG.updateButtonUIAndContextMenus();
+    $("#toggle_badge_checkbox").attr("checked",false);
+    $("#toggle_badge_checkbox").trigger("click");
     window.close();
   });
 
