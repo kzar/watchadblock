@@ -154,7 +154,7 @@ OptionForFilterList.prototype = {
 var filterListSections = {
   adblock_filter_list: {
     array: [],
-    container: $("#add_blocking_list")
+    container: $("#ad_blocking_list")
   },
   language_filter_list: {
     array: [],
