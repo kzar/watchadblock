@@ -59,7 +59,8 @@ function CheckboxForFilterList(filter_list, filter_list_type, index, container){
 };
 
 CheckboxForFilterList.prototype = {
-  //bind checkbox on change to handle subscribing and unsubscribing to different filter lists
+  // Bind checkbox on change to handle subscribing and unsubscribing to
+  // different filter lists
   _bindActions: function(){
     this._check_box.
       change(function() {
@@ -106,9 +107,9 @@ CheckboxForFilterList.prototype = {
     };
   },
   
-  //create the actual check box div and append in the container
-  //Inputs:
-  //isChecked:boolean - flag that will indicate that this checkbox is checked by default.
+  // Create the actual check box div and append in the container.
+  // Inputs:
+  //   isChecked:boolean - flag that will indicate that this checkbox is checked by default.
   createCheckbox: function(isChecked) {
     this._div.
       append(this._check_box).
@@ -149,7 +150,7 @@ OptionForFilterList.prototype = {
   }
 };
 
-//This is a map that contains all filter lists and it's respective container
+// Contains all filter lists and their respective containers.
 var filterListSections = {
   adblock_filter_list: {
     array: [],
@@ -169,7 +170,7 @@ var filterListSections = {
   }
 };
 
-// This class is in charge of creating the display per filter type.
+// This class is in charge of creating the display per filter list type.
 // Inputs:
 //   filter_list_section:object - one of the objects in filterListSections.
 //   filter_list_type:string - will serve as the identifier for the corresponding filter list,
@@ -181,7 +182,7 @@ function SectionHandler(filter_list_section, filter_list_type) {
 };
 
 SectionHandler.prototype = {
-  //organize each container for checkboxes
+  // Organize each container for checkboxes.
   _organize: function() {
     for(var i = 0; i < this._cached_subscriptions.length; i++) {
       var filter_list = this._cached_subscriptions[i];
@@ -189,13 +190,13 @@ SectionHandler.prototype = {
       checkbox.createCheckbox();
     }
   },
-  //initialization calll for SectionHandler objects, calls _organize to start displaying  things.
+  // Initialization call, calls _organize to start displaying things.
   initSection: function() {
     this._organize();
   }
 };
 
-//Utility class for fitler lists
+// Utility class for filter lists.
 function FilterListUtil() {};
 FilterListUtil.sortFilterListArrays = function() {
   for(var filter_list in filterListSections) {
@@ -204,8 +205,8 @@ FilterListUtil.sortFilterListArrays = function() {
     });
   }
 };
-//prepare filterListSections
-//inputs:
+// Prepare filterListSections.
+// Inputs:
 //    subs:object - map for subscription lists taken from the background
 FilterListUtil.prepareSubscriptions = function(subs) {
   FilterListUtil.cached_subscriptions = subs;
@@ -225,11 +226,12 @@ FilterListUtil.prepareSubscriptions = function(subs) {
   }
   FilterListUtil.sortFilterListArrays();
 };
-//checks if uploaded custom filter already exists
-//Inputs:
-//   url:string - url for uploaded custom filter
+// Returns the subscription info object for the custom filter list specified by |url|,
+// or undefined if that custom filter list does not exist.
+// Inputs:
+//   url:string - url for uploaded custom filter list
 FilterListUtil.checkUrlForExistingFilterList = function(url) {
-  var cached_subscriptions = FilterListUtil.cached_subscriptions
+  var cached_subscriptions = FilterListUtil.cached_subscriptions;
   for(var id in cached_subscriptions) {
     if(url === cached_subscriptions[id].url) {
       return cached_subscriptions[id];
@@ -237,7 +239,7 @@ FilterListUtil.checkUrlForExistingFilterList = function(url) {
   }
   return;
 };
-//updates info text for each filter list
+// Updates info text for each filter list.
 FilterListUtil.updateSubscriptionInfoAll = function() {
   var cached_subscriptions = FilterListUtil.cached_subscriptions;
   for(var id in cached_subscriptions) {
@@ -246,7 +248,7 @@ FilterListUtil.updateSubscriptionInfoAll = function() {
     var infoLabel = $(".subscription_info", div);
     var text = infoLabel.text();
     var last_update = subscription.last_update;
-    //if filter list is invalid, skip it
+    // if filter list is invalid, skip it
     if(infoLabel.text() === translate("invalidListUrl")) {
       continue;
     }
@@ -285,12 +287,13 @@ FilterListUtil.updateSubscriptionInfoAll = function() {
     infoLabel.text(text);
   }
 };
-//Utility class for language select
+
+// Utility class for the language select.
 function LanguageSelectUtil() {};
-//insert option at specified index
-//Inputs:
-//    option:OptionForFilterList - instance of OptionForFilterList to be inserted
-//    index:int - indicates where to insert the option
+// Insert option at specified index in the language select.
+// Inputs:
+//   option:OptionForFilterList - option to be inserted
+//   index:int - where to insert the option
 LanguageSelectUtil.insertOption = function(option, index) {
   var $language_select = $("#language_select");
   var options = $language_select.find("option");
@@ -307,9 +310,9 @@ LanguageSelectUtil.insertOption = function(option, index) {
     $language_select.append(option);
   }
 };
-//Initializes language selectbox using language filter lists
-//Two things are happening here, 1st, insert each language filter
-//in the language selectbox, 2nd, bind onChange event on language select.
+// Puts all unsubscribed language filter lists into the language select,
+// and binds an onChange event on the select to subscribe to the selected
+// filter list.
 LanguageSelectUtil.init = function() {
   var language_filter_list_arr = filterListSections.language_filter_list.array;
   for(var i = 0; i < language_filter_list_arr.length; i++) {
@@ -334,17 +337,19 @@ LanguageSelectUtil.init = function() {
     }
   });
 };
-//Trigger change event to language select using one of the entries
-//Input:
-//    filter_list:object - filter list to select
+// Trigger change event to language select using one of the entries.
+// Input:
+//   filter_list:object - filter list to select
 LanguageSelectUtil.triggerChange = function(filter_list) {
   var $language_select = $("#language_select");
   $language_select.val(filter_list.id);
   $language_select.trigger("change");
 };  
-//Utility class for Subscriptions
+
+// Utility class for Subscriptions
 function SubscriptionUtil() {};
-//validates user inputs before uploading
+// Returns true if the user knows what they are doing, subscribing to many
+// filter lists.
 SubscriptionUtil.validateOverSubscription = function() {
   if ($(":checked", "#filter_list_subscriptions").length <= 6)
     return true;
@@ -358,9 +363,9 @@ SubscriptionUtil.validateOverSubscription = function() {
   }
   return confirm(translate("you_know_thats_a_bad_idea_right"));
 };
-//Subscribe filter list using its id
-//Input:
-//    id:string - id of the filter list to be subscribed to 
+// Subscribe to the filter list with the given |id|.
+// Input:
+//   id:string - id of the filter list to be subscribed to 
 SubscriptionUtil.subscribe = function(id) {
   if(!SubscriptionUtil.validateOverSubscription()) {
     return;
@@ -372,17 +377,17 @@ SubscriptionUtil.subscribe = function(id) {
   SubscriptionUtil._updateCacheValue(id);
   BGcall("subscribe", parameters);
 };
-//Unsubscribe filter list using its id
-//Input:
-//    id:string - id of the filter list to be subscribed to 
-//    del:boolean - flag to indicate if filter list for deletion in the background
+// Unsubscribe to the filter list with the given |id|.
+// Input:
+//   id:string - id of the filter list to be subscribed to 
+//   del:boolean - flag to indicate if filter list should be deleted in the background
 SubscriptionUtil.unsubscribe = function(id, del) {
   SubscriptionUtil._updateCacheValue(id);
   BGcall("unsubscribe", {id:id, del:del});
 };
-//Update filter list in the cached list
-//Input:
-//    id:string - id of the filter list to be updated
+// Update the given filter list in the cached list.
+// Input:
+//   id:string - id of the filter list to be updated
 SubscriptionUtil._updateCacheValue = function(id) {
   var sub = FilterListUtil.cached_subscriptions[id];
   if(sub) {
@@ -390,12 +395,13 @@ SubscriptionUtil._updateCacheValue = function(id) {
     delete sub.last_update;
   }
 };
-//Utility class for custom filters upload box
+
+// Utility class for custom filter list upload box.
 function CustomFilterListUploadUtil() {};
-//Perform the subscribing part and creating checkbox for custom filters
-//Inputs:
-//    url:String - url for the custom filter
-//    subscribe_to:String - the url appended with "url:"
+// Perform the subscribing part and creating checkbox for custom filter lists.
+// Inputs:
+//   url:string - url for the custom filter list
+//   subscribe_to:string - the id of the custom filter list
 CustomFilterListUploadUtil._performUpload = function(url, subscribe_to) {
   SubscriptionUtil.subscribe(subscribe_to);
   var entry = {
@@ -411,9 +417,10 @@ CustomFilterListUploadUtil._performUpload = function(url, subscribe_to) {
   var checkbox = new CheckboxForFilterList(entry, "custom_filter_list", custom_filter_list.array.length, custom_filter_list.container);
   checkbox.createCheckbox(true);
 };
-//Update existing filters that the user tried to upload
-//input:
-//    existing_filter_list:object - filter lists object
+// When a user enters a URL in the custom filter list textbox for a known filter list,
+// this method clicks the correct filter list checkbox/select option for him instead.
+// Input:
+//   existing_filter_list:object - filter list whose URL was entered by the user
 CustomFilterListUploadUtil._updateExistingFilterList = function(existing_filter_list) {
   var containing_div = $("div[name='" + existing_filter_list.id + "']");
   var checkbox = $(containing_div).find("input");
@@ -426,7 +433,7 @@ CustomFilterListUploadUtil._updateExistingFilterList = function(existing_filter_
     }
   }
 };
-//Binds events for key press 'enter' and click for upload box
+// Binds events for key press 'enter' and click for upload box.
 CustomFilterListUploadUtil.bindControls = function () {
   $("#btnNewSubscriptionUrl").click(function() {
     var url = $("#txtNewSubscriptionUrl").val();
@@ -462,10 +469,10 @@ CustomFilterListUploadUtil.bindControls = function () {
 };
 
 $(function() {
-  //retrieves list of filter lists from the background
+  // retrieves list of filter lists from the background
   BGcall('get_subscriptions_minus_text', function(subs) {
-    //initialize page using subscriptions from the background
-    //copy from update subscription list + setsubscriptionlist
+    // initialize page using subscriptions from the background
+    // copy from update subscription list + setsubscriptionlist
     FilterListUtil.prepareSubscriptions(subs);
     
     for(var id in filterListSections) {
