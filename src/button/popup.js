@@ -10,7 +10,6 @@ function customize_for_this_tab() {
     function hide(L) { L.forEach(function(x) { shown[x] = false; }); }
 
     show(["div_options", "separator2"]);
-    show([]);
     var paused = BG.adblock_is_paused();
     if (paused) {
       show(["div_status_paused", "separator0", "div_options"]);

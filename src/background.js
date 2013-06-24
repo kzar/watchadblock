@@ -35,8 +35,6 @@
           if(currentTab){
             currentTab.blockCount++;
           }
-          
-          chrome.extension.sendRequest({command: "filter_blocked"});
         },
         get: function() { 
           return storage_get(key); 
@@ -479,9 +477,11 @@
   //   info object passed to callback: {
   //     tab: Tab object
   //     whitelisted: bool - whether the current tab's URL is whitelisted.
-  //     domain: string
   //     disabled_site: bool - true if the url is e.g. about:blank or the
   //                           Extension Gallery, where extensions don't run.
+  //     total_blocked: int - # of ads blocked since install
+  //     tab_blocked: int - # of ads blocked on this tab
+  //     display_stats: bool - whether block counts are displayed on button
   //   }
   // Returns: null (asynchronous)
   getCurrentTabInfo = function(callback, secondTime) {
@@ -501,11 +501,8 @@
       }
 
       var disabled_site = page_is_unblockable(tab.url);
-      
       var total_blocked = blockCounts.getTotalAdsBlocked();
-
       var tab_blocked = blockCounts.getTotalAdsBlocked(tab.id);
-      
       var display_stats = get_settings().display_stats;
       
       var result = {
