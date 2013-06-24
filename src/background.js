@@ -60,7 +60,8 @@
       show_context_menu_items: true,
       show_advanced_options: false,
       new_safari_hiding: false,
-      display_stats: true
+      display_stats: true,
+      show_block_counts_help_link: true,
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);

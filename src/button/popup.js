@@ -33,6 +33,14 @@ function customize_for_this_tab() {
       $("#toggle_badge_checkbox").attr("checked", info.display_stats);
       // Don't show the checkbox when clicking it will do nothing obvious.
       $("#block_counts_controls").toggle(page_count !== "0");
+      // Show help link until it is clicked.
+      $("#block_counts_help").
+        toggle(BG.get_settings().show_block_counts_help_link).
+        click(function() {
+          BG.set_setting("show_block_counts_help_link", false);
+          BG.openTab($(this).attr("href"));
+          $(this).hide();
+        });
     }
 
     var eligible_for_undo = !paused && (info.disabled_site || !info.whitelisted);
