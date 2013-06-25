@@ -7,13 +7,25 @@
     "message": "AdBlock חוסם מודעות אוטומטי",
     "description": "Install page: explaining how to use adblock."
   },
+  "adblock_click_for_details": {
+    "message": "AdBlock - לחץ לפרטים",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
   "adblock_is_paused": {
     "message": "AdBlock מושבת :(\nבטל את ההשבתה",
     "description": "resourceblocking page string"
   },
+  "adblock_outdated_chrome": {
+    "message": "אתה משתמש בגרסה ישנה של Adblock. עבור בבקשה לפה <a href='#'>the extensions page</a>, אפשר'מצב מפתח' ולחץ על 'עדכן הרחבה כעת'",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock לא יופעל על דפי התאמה:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockinglist": {
+    "message": "רשימות חסימה של Adblock",
+    "description": "List for subscribed ad blocking fiters"
   },
   "adblockreportinganad": {
     "message": "AdBlock - דווח על מודעה",
@@ -145,6 +157,10 @@
     "message": "קישור לאישור",
     "description": "Message of the url and css -blocking area"
   },
+  "blocked_ads": {
+    "message": "פרסומות חסומות:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
   "blockeverycontaining": {
     "message": "חסום כל אלמנט שמכיל:\nעדיף לדווח לנו על המודעה ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
     "description": "resourceblocking page string"
@@ -213,6 +229,10 @@
     "message": "המודעה מופיעה גם פה ?",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
+  "chromebutton_how_to_hide2": {
+    "message": "בשביל להסתייר את הכפתור לחץ על הכפתור עם קליק ימני ובחר הסתר את הכפתור.\nאפשר להסתיר כם על ידי כניסה להגדרות ההרחבה תחת chrome://chrome/extensions",
+    "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
   "cleanuplist": {
     "message": "נקה רשימה:",
     "description": "Option at the bottom of the third options tab"
@@ -241,6 +261,10 @@
     "message": "יותר מדי CSS",
     "description": "Message of the css-hiding area"
   },
+  "customfilters": {
+    "message": "רשימות מותאמות אישית",
+    "description": "List for custom filters the user subscribed to"
+  },
   "custompattern": {
     "message": "מותאם אישית:",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
@@ -257,6 +281,10 @@
     "message": "אתה יודע שזאת העבודה המלאה שלי ?",
     "description": "Text of a payment request link"
   },
+  "disableallextensions": {
+    "message": "השבת את כל ההרחבות חוץ מ Adblock",
+    "description": "instruction on ad report page"
+  },
   "disabled_by_filter_lists": {
     "message": "מצטערים AdBlock מושבת באתר זה בגלל אחת הרשימות שלך",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -264,6 +292,18 @@
   "disabled_on_this_page": {
     "message": "AdBlock מושבת בעמוד זה",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "disableforchromeandsafaristeptwo": {
+    "message": "השבת את כל ההרחבות חוץ מ Adblock",
+    "description": "Step 2 for disabling chrome and safari extensions"
+  },
+  "disableforopera": {
+    "message": "עבור Opera",
+    "description": "Opera instructions"
+  },
+  "disableforoperainstructions": {
+    "message": "לחץ על כפתור התפריט לאחר מכן לך להרחבות והשבת של את ההרחבות חוץ מ Adblock",
+    "description": "shows user how to disable all their extensions in Opera."
   },
   "doesntmatchoriginal": {
     "message": "מה שעשית אולי לא טוב ויכול להיות מסוכן! להמשיך בכל זאת ? \nעדיף לדווח לנו על המודעה ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
@@ -413,6 +453,10 @@
     "message": "מוצא פרסומות <br/><br/><i>זה יקח כמה רגעים.</i>",
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   },
+  "firefox_explanation": {
+    "message": "מטרה של השאלה הזאת היא לקבוע מי אמור לקבל את הדוח אם תענה על שאלה זאת לא נכונה האיש הלא נכון יקבל את הדוח",
+    "description": "Explanation of the Check-in-FireFox step in the ad reporter"
+  },
   "fixityourself": {
     "message": "טוב אתה עדין יכול לחסום את המודעה לעצמך באפשרויות - התאמה אישית",
     "description": "telling a user who won't report an ad to us how to handle it for herself"
@@ -555,6 +599,14 @@
     "message": "אוקראינה",
     "description": "language"
   },
+  "languagedropdowndescription": {
+    "message": "הסוף רשימות לשפות אחרות:",
+    "description": "Dropdown list for language specific filters"
+  },
+  "let_me_know_how_it_is_working": {
+    "message": "עשה לי טובה נסה את אפשרות זאת לזמן מה <a>דווח לי</a> איך היא עובדת לך",
+    "description": "Shown to users who use_experimental_feature_to_speed_up_adblock, politely encouraging them to click the link, taking them to a survey about their experience with the feature."
+  },
   "linkblockadbyurl": {
     "message": "חסום מודעה בעזרת קישור",
     "description": "Link on the third tab"
@@ -615,6 +667,10 @@
     "message": "רק עמודים באתר זה:",
     "description": "resourceblocking page string"
   },
+  "opera_allow_secure": {
+    "message": "אם אתה רוצה להשתמש ב Adblock בעמודים מאובטחים אתה צריך קודם לאשר את האפשרות על ידי לחיצה על האיקון בסרגל הכתובות",
+    "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
   "opera_donations_button": {
     "message": "אם אתה אוהב את AdBlock אתה יכול לתרום לנו דרך עמוד האפשרויות",
     "description": "Opera donate request in the button"
@@ -649,13 +705,17 @@
     "message": "אתה יכול להפעיל מחדש את הכפתור בהעדפות של ההרחבה",
     "description": "Opera browser button message when you click 'hide this button'"
   },
+  "opera_secure_pages": {
+    "message": "מקורות העמוד",
+    "description": "Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
+  },
   "opera_show_toolbar_button": {
     "message": "הראה את הכפתור toolbar",
     "description": "Opera option to show/hide the button"
   },
   "options": {
     "message": "אפשריות",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "שינוים בגרסאות",
@@ -682,6 +742,10 @@
   "other": {
     "message": "אחר",
     "description": "multiple choice option"
+  },
+  "otherfilters": {
+    "message": "רשימות אחרות",
+    "description": "List for other filters the user subscribed to"
   },
   "pagelanguagecheck": {
     "message": "באיזה שפה העמוד הזה כתוב ?",
@@ -809,6 +873,14 @@
     "message": "הראה פרסומות <i>בכל מקום</i> חוץ מהאתר...",
     "description": "Section title for blacklisting section of Customize tab"
   },
+  "show_on_adblock_button": {
+    "message": "הראה את כפתור Adblock",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_resourcelist": {
+    "message": "הראה את מקורות הרשימה",
+    "description": "Link in the button"
+  },
   "showcontextmenus": {
     "message": "הוסף איטמים לקליק ימני בעכבר\nלא מומלץ לסמן ב V",
     "description": "Option on first tab page"
@@ -896,7 +968,7 @@
     "description": "Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
     "placeholders": {
       "translator_names": {
-        "content": "Barak Shem-Tov | ברק שם-טוב\nbarak@shemtov.com",
+        "content": "Barak ST",
         "example": "Michael G, Drew R"
       }
     }
@@ -1021,9 +1093,17 @@
     "message": "בדוק שהרשימות שלך מעודכנות",
     "description": "instruction on ad report page"
   },
+  "use_experimental_feature_to_speed_up_adblock": {
+    "message": "גרום ל Adblock לעבוד מהר יותר בעזרת מצד ניסיוני בדפדפן Safari.",
+    "description": "Option on first tab page"
+  },
   "warning_overrules_filters": {
     "message": "אזהרה! בכל שאר האתרים אתה תראה פרסומות!",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whats_this": {
+    "message": "מה זה ?",
+    "description": "Text of a link pointing to the explanation of a new feature"
   },
   "whitelistertitle2": {
     "message": "אל תפעיל את AdBlock ב...",
