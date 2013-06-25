@@ -7,6 +7,10 @@
     "message": "AdBlock автоматически удаляет рекламу.  Вот и все, что нужно сделать.",
     "description": "Install page: explaining how to use adblock."
   },
+  "adblock_click_for_details": {
+    "message": "AdBlock - нажмите, чтобы увидеть подробности",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
   "adblock_is_paused": {
     "message": "AdBlock приостановлен. В связи с тем, что ресурсы не перехватываются, эта страница не может использоваться. Возобновите работу AdBlock и повторите попытку.",
     "description": "resourceblocking page string"
@@ -18,6 +22,10 @@
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock не будет работать на соответствующих страницах:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockinglist": {
+    "message": "Списки фильтров блокировки рекламы",
+    "description": "List for subscribed ad blocking fiters"
   },
   "adblockreportinganad": {
     "message": "AdBlock - отчет о рекламе",
@@ -163,6 +171,30 @@
     "message": "Домен страницы",
     "description": "Message of the url and css -blocking area"
   },
+  "blocked_ads": {
+    "message": "Заблокирована реклама:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
+  "blocked_n_in_total": {
+    "message": "$count$ всего",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ на этой странице",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Блокировать все ресурсы, содержащие:",
     "description": "resourceblocking page string"
@@ -293,6 +325,10 @@
     "message": "Соответствующий CSS",
     "description": "Message of the css-hiding area"
   },
+  "customfilters": {
+    "message": "Пользовательские списки фильтров",
+    "description": "List for custom filters the user subscribed to"
+  },
   "custompattern": {
     "message": "Пользовательский:",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
@@ -372,6 +408,10 @@
   "failedtofetchfilter": {
     "message": "Не удалось извлечь этот фильтр!",
     "description": "Error messagebox"
+  },
+  "failedtofetchlanguagefilter": {
+    "message": "Не удалось получить",
+    "description": "Error message for failed fetch"
   },
   "faq": {
     "message": "ЧаВО",
@@ -657,6 +697,10 @@
     "message": "Украинский",
     "description": "language"
   },
+  "languagedropdowndescription": {
+    "message": "Добавить фильтры для другого языка:",
+    "description": "Dropdown list for language specific filters"
+  },
   "let_me_know_how_it_is_working": {
     "message": "Сделаете мне одолжение? Попробуйте эту экспериментальную функцию некоторое время, а затем <a>дайте мне знать</a>, насколько хорошо она работает у Вас.",
     "description": "Shown to users who use_experimental_feature_to_speed_up_adblock, politely encouraging them to click the link, taking them to a survey about their experience with the feature."
@@ -837,6 +881,10 @@
     "message": "Другой",
     "description": "multiple choice option"
   },
+  "otherfilters": {
+    "message": "Другие списки фильтров",
+    "description": "List for other filters the user subscribed to"
+  },
   "pagelanguagecheck": {
     "message": "На каком языке эта страница?",
     "description": "question on ad report page"
@@ -970,6 +1018,10 @@
   "show_ads_except_for": {
     "message": "Показывать рекламу <i>везде</i>, кроме этих доменов...",
     "description": "Section title for blacklisting section of Customize tab"
+  },
+  "show_on_adblock_button": {
+    "message": "Показать на кнопке AdBlock",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   },
   "show_resourcelist": {
     "message": "Показать список ресурсов",
@@ -1216,6 +1268,10 @@
   "warning_overrules_filters": {
     "message": "Внимание: на всех других сайтах Вы увидите рекламу!<br>Будут отменены все другие фильтры для этих сайтов.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whats_this": {
+    "message": "Что это?",
+    "description": "Text of a link pointing to the explanation of a new feature"
   },
   "whitelistertitle2": {
     "message": "Не запускать AdBlock на...",
