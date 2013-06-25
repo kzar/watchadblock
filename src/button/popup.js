@@ -88,8 +88,6 @@ $(function() {
     BG.adblock_is_paused(false);
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
-    $("#toggle_badge_checkbox").attr("checked",true);
-    $("#toggle_badge_checkbox").trigger("click");
     window.close();
   });
 
@@ -105,8 +103,6 @@ $(function() {
   $("#div_pause_adblock").click(function() {
     BG.adblock_is_paused(true);
     BG.updateButtonUIAndContextMenus();
-    $("#toggle_badge_checkbox").attr("checked",false);
-    $("#toggle_badge_checkbox").trigger("click");
     window.close();
   });
 
