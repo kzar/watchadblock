@@ -527,6 +527,10 @@
     "message": "Хибний URL списку. Його буде видалено.",
     "description": "Message when you subscribe to a non-list URL"
   },
+  "labelshow": {
+    "message": "показати",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
   "lang_bulgarian": {
     "message": "Болгарською",
     "description": "language"
@@ -606,6 +610,10 @@
   "lang_ukranian": {
     "message": "Українською",
     "description": "language"
+  },
+  "last_update_failed": {
+    "message": "Останнє оновлення пройшло невдало;",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "linkblockadbyurl": {
     "message": "Заблокувати рекламу за її URL",
@@ -932,6 +940,20 @@
   "storage_quota_exceeded": {
     "message": "Перевищено ліміт місця, яке для AdBlock виділяється веб-переглядачем. Будь ласка, скасуйте передплату кількох списків фільтрів!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ або $unsubscribe$ списків фільтрів.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Передплатіть усі</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>скасуйте передплату усіх</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
   },
   "subscribebutton": {
     "message": "Передплатити",

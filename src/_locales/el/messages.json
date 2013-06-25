@@ -531,6 +531,10 @@
     "message": "Άκυρη διεύθυνση λίστας. Θα διαγραφεί.",
     "description": "Message when you subscribe to a non-list URL"
   },
+  "labelshow": {
+    "message": "εμφάνιση σελίδας",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
   "lang_bulgarian": {
     "message": "Βουλγαρικά",
     "description": "language"
@@ -610,6 +614,10 @@
   "lang_ukranian": {
     "message": "Ουκρανικά",
     "description": "language"
+  },
+  "last_update_failed": {
+    "message": "Τελευταία ενημέρωση απέτυχε,",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "linkblockadbyurl": {
     "message": "Μπλοκάρετε μια διαφήμιση από την URL διεύθυνσή της",
@@ -936,6 +944,20 @@
   "storage_quota_exceeded": {
     "message": "Ξεπεράσατε το όριο αποθήκευσης που το AdBlock μπορεί να κάνει χρήση. Παρακαλώ καταργήστε συνδρομές από μερικές λίστες φίλτρων.",
     "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ ή $unsubscribe$ κάθε λίστα φίλτρων.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Συνδρομή σε</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>Κατάργηση συνδρομής σε</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
   },
   "subscribebutton": {
     "message": "Συνδρομή",

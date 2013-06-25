@@ -345,6 +345,10 @@
     "message": "Afficher les liens des listes de filtres :",
     "description": "Option on second tab page"
   },
+  "labelshow": {
+    "message": "voir",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
   "filteradblock_custom": {
     "message": "Filtres personnalisés AdBlock (recommandé)",
     "description": "A filter list. Don't translate 'AdBlock'"
@@ -1073,6 +1077,20 @@
     "message": "Contourner le problème des vidéos Hulu.com qui ne se lisent pas (nécessite un redémarrage de votre navigateur)",
     "description": "Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
   },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ ou $unsubscribe$ de toutes les listes.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>S'abonner</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>se désabonner</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
   "now_you_have_adblock_hooray": {
     "message": "AdBlock est maintenant installé !",
     "description": "Install page title.  'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
@@ -1118,6 +1136,10 @@
   "modifypath": {
     "message": "Page :",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
+  },
+  "last_update_failed": {
+    "message": "La dernière mise à jour a échoué ; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "show_ads_except_for": {
     "message": "Afficher les publicités <i>partout</i> sauf sur ces domaines...",
@@ -1292,6 +1314,10 @@
   "languagedropdowndescription": {
     "message": "Ajouter des filtres pour une autre langue : ",
     "description": "Dropdown list for language specific filters"
+  },
+  "failedtofetchlanguagefilter": {
+    "message": "Échec de la récupération",
+    "description": "Error message for failed fetch"
   },
   "whats_this": {
     "message": "Qu'est-ce que c'est ?",

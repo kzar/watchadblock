@@ -1,4 +1,4 @@
-﻿{
+{
   "buttoncancel": {
     "message": "取消",
     "description": "Cancel button"
@@ -312,6 +312,10 @@
   "showlinkstolists": {
     "message": "顯示過濾清單的網址：",
     "description": "Option on second tab page"
+  },
+  "labelshow": {
+    "message": "顯示",
+    "description": "The label when you click the 'show links to filter lists' option"
   },
   "filteradblock_custom": {
     "message": "AdBlock 自訂過濾清單 （推薦）",
@@ -651,6 +655,10 @@
     "message": "無效的清單網址。 它將會被刪除。",
     "description": "Message when you subscribe to a non-list URL"
   },
+  "last_update_failed": {
+    "message": "上次更新失敗; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "storage_quota_exceeded": {
     "message": "你超出了 AdBlock 能使用的儲存空間。 請取消訂閱一些清單!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
@@ -904,6 +912,20 @@
  "advanced_options": {
    "message": "我是高級的使用者, 顯示高級的選項。",
    "description": "Options page checkbox"
+ },
+ "subscribe_unsubscribe_all": {
+   "message": "$subscribe$ 或者 $unsubscribe$ 所有過濾清單。",
+   "description": "Link in the button",
+   "placeholders": {
+     "subscribe": {
+       "content": "<a href='#' id='subscribeAll'>訂閱</a>",
+       "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+     },
+     "unsubscribe": {
+       "content": "<a href='#' id='unsubscribeAll'>取消訂閱</a>",
+       "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+     }
+   }
  },
  "now_you_have_adblock_hooray": {
    "message": "現在你已經有 AdBlock! 太好了!",

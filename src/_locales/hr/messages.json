@@ -549,6 +549,10 @@
     "message": "Nepravilna lista URL. Bit će obrisana.",
     "description": "Message when you subscribe to a non-list URL"
   },
+  "labelshow": {
+    "message": "prikaži",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
   "lang_bulgarian": {
     "message": "Bugarski",
     "description": "language"
@@ -632,6 +636,10 @@
   "lang_ukranian": {
     "message": "Ukrajinski",
     "description": "language"
+  },
+  "last_update_failed": {
+    "message": "Posljednje ažuriranje je neuspjelo;",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
   },
   "let_me_know_how_it_is_working": {
     "message": "Želite mi pomoći? Pokušajte ovu eksperimentalnu funkciju neko vrijeme, onda <a>me obavijstite</a> kako vam radi.",
@@ -978,6 +986,20 @@
   "storage_quota_exceeded": {
     "message": "Prešli ste preko omogućene memorije koje AdBlock koristi. Molim Vas da se odjavite od nekih listi filtera!",
     "description": "Message shown when the user uses more storage than allowed by the browser"
+  },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ se ili $unsubscribe$ iz svih lista.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Prijavi</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>odjavi</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
   },
   "subscribebutton": {
     "message": "Prijavi",

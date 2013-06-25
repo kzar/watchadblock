@@ -341,6 +341,10 @@
     "message": "Odkazy pro zobrazení seznamu filtrů:",
     "description": "Option on second tab page"
   },
+  "labelshow": {
+    "message": "ukázat",
+    "description": "The label when you click the 'show links to filter lists' option"
+  },
   "filteradblock_custom": {
     "message": "AdBlock filtry (doporučeno)",
     "description": "A filter list. Don't translate 'AdBlock'"
@@ -1037,6 +1041,20 @@
     "message": "Zástupné řešení pro nefunkční video na Hulu.com (vyžaduje restartování prohlížeče)",
     "description": "Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
   },
+  "subscribe_unsubscribe_all": {
+    "message": "$subscribe$ nebo $unsubscribe$ všechny seznamy.",
+    "description": "Link in the button",
+    "placeholders": {
+      "subscribe": {
+        "content": "<a href='#' id='subscribeAll'>Přihlásit</a>",
+        "example": "<a href='#' id='subscribeAll'>Subscribe</a>. Only translate between the > and then <"
+      },
+      "unsubscribe": {
+        "content": "<a href='#' id='unsubscribeAll'>odhlásit</a>",
+        "example": "<a href='#' id='unsubscribeAll'>unsubscribe</a>. Only translate between the > and then <"
+      }
+    }
+  },
   "now_you_have_adblock_hooray": {
     "message": "Nyní máte AdBlock! Hurááá!",
     "description": "Install page title. 'Hooray' is a silly word shouted when you are excited, for example if your team just won a game."
@@ -1083,6 +1101,10 @@
     "message": "Stránka:",
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
 },
+  "last_update_failed": {
+    "message": "Poslední aktualizace se nezdařila; ",
+    "description": "Status of a filter list on the options page, it is followed by the message 'updated[seconds|minute(s)|hour(s)|day(s)]ago'"
+  },
   "show_ads_except_for": {
     "message": "Zobrazovat reklamy <i>všude</i> kromě těchto domén...",
     "description": "Section title for blacklisting section of Customize tab"
