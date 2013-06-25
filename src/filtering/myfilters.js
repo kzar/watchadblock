@@ -487,7 +487,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_french": { // Additional French filters
-      url: "https://listefr-adblock.googlecode.com/hg/liste_fr.txt",
+      url: "https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt",
       requiresList: "easylist",
     },
     "easylist_plus_german": { // Additional German filters
