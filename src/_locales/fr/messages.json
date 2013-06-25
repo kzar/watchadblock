@@ -3,6 +3,10 @@
     "message": "La plus populaire des extensions Chrome, avec plus de 15 millions d'utilisateurs ! Bloque les publicités sur Internet.",
     "description": "Extension description in manifest"
   },
+  "adblock_click_for_details": {
+    "message": "AdBlock - cliquez pour plus de détails",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
   "buttoncancel": {
     "message": "Annuler",
     "description": "Cancel button"
@@ -1266,5 +1270,57 @@
   "opera_allow_secure": {
     "message": "Si vous souhaitez utiliser AdBlock sur des pages sécurisées (pages avec un cadenas dans la barre d'outils), vous devez d'abord activer l'option pour permettre l'interaction avec les pages sécurisées.",
     "description": "Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
+  },
+  "blocked_ads": {
+    "message": "Pubs bloquées :",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ sur cette page",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "blocked_n_in_total": {
+    "message": "$count$ au total",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "show_on_adblock_button": {
+    "message": "Afficher sur le bouton AdBlock",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "adblockinglist": {
+    "message": "Listes de filtres pour le bloquage de publicités",
+    "description": "List for subscribed ad blocking fiters"
+  },
+  "otherfilters": {
+    "message": "Autres listes de filtres",
+    "description": "List for other filters the user subscribed to"
+  },
+  "customfilters": {
+    "message": "Listes de filtres personnalisées",
+    "description": "List for custom filters the user subscribed to"
+  },
+  "languagedropdowndescription": {
+    "message": "Ajouter des filtres pour une autre langue : ",
+    "description": "Dropdown list for language specific filters"
+  },
+  "failedtofetchlanguagefilter": {
+    "message": "Échec de la récupération",
+    "description": "Error message for failed fetch"
+  },
+  "whats_this": {
+    "message": "Qu'est-ce que c'est ?",
+    "description": "Text of a link pointing to the explanation of a new feature"
   }
 }
