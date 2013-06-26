@@ -7,6 +7,10 @@
     "message": "AdBlock tar automatiskt bort webbsidetillägg.  Så är det bara.",
     "description": "Install page: explaining how to use adblock."
   },
+  "adblock_click_for_details": {
+    "message": "AdBlock - Klicka för meny",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
   "adblock_is_paused": {
     "message": "AdBlock är pausad. Därför visas inga resurser, så den här sidan kan inte användas. Starta AdBlock och försök igen.",
     "description": "resourceblocking page string"
@@ -18,6 +22,10 @@
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock avaktiveras på alla sidor som matchar:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockinglist": {
+    "message": "Reklamblockerande filterlistor",
+    "description": "List for subscribed ad blocking fiters"
   },
   "adblockreportinganad": {
     "message": "AdBlock - Rapportera ett reklamtillägg",
@@ -163,6 +171,30 @@
     "message": "Domän som skall filtreras",
     "description": "Message of the url and css -blocking area"
   },
+  "blocked_ads": {
+    "message": "Blockerade tillägg:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
+  "blocked_n_in_total": {
+    "message": "$count$ totalt",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ på den här sidan",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Blockera varje resurs som innehåller:",
     "description": "resourceblocking page string"
@@ -293,6 +325,10 @@
     "message": "CSS att matcha",
     "description": "Message of the css-hiding area"
   },
+  "customfilters": {
+    "message": "Anpassade filterlistor",
+    "description": "List for custom filters the user subscribed to"
+  },
   "custompattern": {
     "message": "Anpassat:",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
@@ -372,6 +408,10 @@
   "failedtofetchfilter": {
     "message": "Kunde inte hämta detta filter!",
     "description": "Error messagebox"
+  },
+  "failedtofetchlanguagefilter": {
+    "message": "Kunde inte hämta",
+    "description": "Error message for failed fetch"
   },
   "faq": {
     "message": "Vanliga frågor och svar",
@@ -657,6 +697,10 @@
     "message": "Ukrinska",
     "description": "language"
   },
+  "languagedropdowndescription": {
+    "message": "Lägg till filter för andra språk",
+    "description": "Dropdown list for language specific filters"
+  },
   "let_me_know_how_it_is_working": {
     "message": "Vill du göra mig en tjänst? Testa den här experimentella funktionen ett tag, <a>låt mig sedan få veta</a> hur bra eller dåligt den fungerar för dig.",
     "description": "Shown to users who use_experimental_feature_to_speed_up_adblock, politely encouraging them to click the link, taking them to a survey about their experience with the feature."
@@ -837,6 +881,10 @@
     "message": "Annat",
     "description": "multiple choice option"
   },
+  "otherfilters": {
+    "message": "Andra filterlistor",
+    "description": "List for other filters the user subscribed to"
+  },
   "pagelanguagecheck": {
     "message": "På vilket språk är sidan skriven?",
     "description": "question on ad report page"
@@ -970,6 +1018,10 @@
   "show_ads_except_for": {
     "message": "Visa reklamtillägg <i>överallt</i> utom på dessa domäner...",
     "description": "Section title for blacklisting section of Customize tab"
+  },
+  "show_on_adblock_button": {
+    "message": "Visa på AdBlock-knappen",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   },
   "show_resourcelist": {
     "message": "Visa resurslistan",
@@ -1216,6 +1268,10 @@
   "warning_overrules_filters": {
     "message": "Varning: Du kommer att se tillägg på alla andra sidor!<br>Det här åsidosätter också alla andra filter för dessa sidor .",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whats_this": {
+    "message": "Vad är detta?",
+    "description": "Text of a link pointing to the explanation of a new feature"
   },
   "whitelistertitle2": {
     "message": "Avaktivera AdBlock på...",
