@@ -175,6 +175,26 @@
     "message": "Anzahl entfernter Werbung:",
     "description": "Title for popup menu section showing number of ads blocked."
   },
+  "blocked_n_in_total": {
+    "message": "$count$ gesamt",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ auf dieser Seite",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not translate."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Jedes Element entfernen, das folgendes enthält:",
     "description": "resourceblocking page string"
