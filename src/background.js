@@ -45,6 +45,12 @@
             return currentTab ? currentTab.blockCount : 0;
           }
           return this.get().total;
+        },
+        resetTotalAdsBlocked: function(tabId){
+          if(tabId){
+            currentTab = frameData.get(tabId);
+            if(currentTab) currentTab.blockCount = 0;
+          }
         }
       };
     })();
@@ -601,6 +607,7 @@
           chrome.browserAction.setIcon({path:{'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"}, tabId: info.tab.id});
         } else if (info.disabled_site &&
             !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
+            blockCounts.resetTotalAdsBlocked(info.tab.id);
           // Show non-disabled icon on the installation-success page so it
           // users see how it will normally look. All other disabled pages
           // will have the gray one
