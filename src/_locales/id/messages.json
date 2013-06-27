@@ -175,6 +175,26 @@
     "message": "Iklan yang terblokir:",
     "description": "Title for popup menu section showing number of ads blocked."
   },
+  "blocked_n_in_total": {
+    "message": "Total $count$",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ di halaman ini",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Blokir setiap sumber yang mengandung:",
     "description": "resourceblocking page string"
@@ -231,6 +251,26 @@
     "message": "ganti",
     "description": "link to change resources on the resourceblock page"
   },
+  "checkinfirefox_1": {
+    "message": "Pasang Firefox $chrome$ jika anda tidak memilikinya.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "checkinfirefox_2": {
+    "message": "Pasang AdBlock Plus untuk Firefox $chrome$ jika anda tidak memilikinya.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or AdBlockforChrome for Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
   "checkinfirefox_3": {
     "message": "Pada browser tersebut, berlanggananlah pada daftar filter yang sama seperti yang ada miliki disini (kecuali untuk filter buatan sendiri pada Firefox).",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
@@ -242,6 +282,16 @@
   "checkinfirefox_5": {
     "message": "Apakah iklannya muncul juga pada browser itu?",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefoxtitle": {
+    "message": "Periksa di Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
   },
   "chromebutton_how_to_hide2": {
     "message": "Untuk menyembunyikan tombolnya, klik kanan dan pilih Sembunyikan tombol. Anda dapat memunculkannya lagi di chrome://chrome/extensions.",
@@ -308,7 +358,7 @@
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
   },
   "disableforchromeandsafaristeptwo": {
-    "message": "Hilangkan centang 'Enabled' dipinggir setiap ekstensi <b>kecuali</b> untuk AdBlock. <b>Biarkan Adblock berjalan</b>.",
+    "message": "Hilangkan centang 'Enabled' dipinggir setiap ekstensi <b>kecuali</b> untuk AdBlock. <b>Biarkan AdBlock berjalan</b>.",
     "description": "Step 2 for disabling chrome and safari extensions"
   },
   "disableforchromestepone": {
@@ -844,7 +894,7 @@
     "description": "Menu entry to pause AdBlock."
   },
   "project_home": {
-    "message": "Project home",
+    "message": "Halaman awal Projek",
     "description": "Text of link to the AdBlock open source project homepage (not the install page)"
   },
   "reenableadsonebyone": {
