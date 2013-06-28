@@ -7,6 +7,10 @@
     "message": "AdBlock automatski uklanja reklame.  I to je najjednostavnije objašnjenje.",
     "description": "Install page: explaining how to use adblock."
   },
+  "adblock_click_for_details": {
+    "message": "AdBlock - kliknite za detalje",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
   "adblock_is_paused": {
     "message": "AdBlock je pauziran. Zbog toga nijedan resurs nije uhvaćen pa se ova stranica ne može koristiti. Prvo odpauzirajte Adblock pa probajte ponovno.",
     "description": "resourceblocking page string"
@@ -18,6 +22,10 @@
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock neće raditi na nijednoj stranici koja odgovara slijedećem:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockinglist": {
+    "message": "Liste filtera blokiranih reklama",
+    "description": "List for subscribed ad blocking fiters"
   },
   "adblockreportinganad": {
     "message": "AdBlock - Prijavljivanje reklame",
@@ -163,6 +171,30 @@
     "message": "Domena stranice na koju želite primijeniti",
     "description": "Message of the url and css -blocking area"
   },
+  "blocked_ads": {
+    "message": "Blokirane reklame:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
+  "blocked_n_in_total": {
+    "message": "Ukupno blokirano: $count$",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "Blokirano na ovoj stranici: $count$",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Blokiraj svaki resurs koji sadrži:",
     "description": "resourceblocking page string"
@@ -293,6 +325,10 @@
     "message": "Da odgovara CSS-u",
     "description": "Message of the css-hiding area"
   },
+  "customfilters": {
+    "message": "Lista prilagođenih filtera",
+    "description": "List for custom filters the user subscribed to"
+  },
   "custompattern": {
     "message": "Prilagođeno:",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
@@ -309,6 +345,10 @@
     "message": "Jeste li znali da mi je ovo redovni posao?",
     "description": "Text of a payment request link"
   },
+  "disableallextensions": {
+    "message": "Onemogući sva proširenja osim AdBlock-a.",
+    "description": "instruction on ad report page"
+  },
   "disabled_by_filter_lists": {
     "message": "Isprika, Adblock je onemogućen na ovoj stranici zbog neke od vaših lista filtera.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -316,6 +356,26 @@
   "disabled_on_this_page": {
     "message": "AdBlock je onemogućen na ovoj stranici.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "disableforchromeandsafaristeptwo": {
+    "message": "Poništite 'Omogućeno' kvačicu  pokraj svakog proširenja <b>osim</b> pokraj AdBlock-a. <b>Ostavite AdBlock omogućen</b>.",
+    "description": "Step 2 for disabling chrome and safari extensions"
+  },
+  "disableforchromestepone": {
+    "message": "Otvorite <a href='#'>stranicu proširenja</a>",
+    "description": "Step 1 for disabling chrome extensions"
+  },
+  "disableforopera": {
+    "message": "Za Opera",
+    "description": "Opera instructions"
+  },
+  "disableforoperainstructions": {
+    "message": "Kliknite menu ikonu u gornjem lijevom kutu. Nakon toga idite u Proširenja->Upravljanje proširenjima. Onemogućite sva proširenja tako da kliknete gumb za onemogućavanje. Zapamtite, NEMOJTE onemogućiti AdBlock!",
+    "description": "shows user how to disable all their extensions in Opera."
+  },
+  "disableforsafaristepone": {
+    "message": "Kliknite Safari menu &rarr; Postavke &rarr; Proširenja.",
+    "description": "Step 1 for disabling safari extensions"
   },
   "doesntmatchoriginal": {
     "message": "Uzorak koji ste unijeli ne odgovora resursu koji ste pokušali blokirati! Svejedno nastavite?",
@@ -348,6 +408,10 @@
   "failedtofetchfilter": {
     "message": "Neuspjelo dobavljanje ovog filtera!",
     "description": "Error messagebox"
+  },
+  "failedtofetchlanguagefilter": {
+    "message": "Neuspjeh u dohvaćanju",
+    "description": "Error message for failed fetch"
   },
   "faq": {
     "message": "Pitanja i odgovori",
@@ -633,6 +697,10 @@
     "message": "Ukrajinski",
     "description": "language"
   },
+  "languagedropdowndescription": {
+    "message": "Reklamni filteri za drugi jezik:",
+    "description": "Dropdown list for language specific filters"
+  },
   "let_me_know_how_it_is_working": {
     "message": "Želite mi pomoći? Pokušajte ovu eksperimentalnu funkciju neko vrijeme, onda <a>me obavijstite</a> kako vam radi.",
     "description": "Shown to users who use_experimental_feature_to_speed_up_adblock, politely encouraging them to click the link, taking them to a survey about their experience with the feature."
@@ -813,6 +881,10 @@
     "message": "Drugi",
     "description": "multiple choice option"
   },
+  "otherfilters": {
+    "message": "Ostale liste filtera",
+    "description": "List for other filters the user subscribed to"
+  },
   "pagelanguagecheck": {
     "message": "Na kojem je jeziku stranica napisana?",
     "description": "question on ad report page"
@@ -824,6 +896,10 @@
   "project_home": {
     "message": "Stranica projekta",
     "description": "Text of link to the AdBlock open source project homepage (not the install page)"
+  },
+  "reenableadsonebyone": {
+    "message": "Sad kad više nema reklama, pronađite koje proširenje je uzrok. Prođite kroz svako proširenje posebno, jedno po jedno ih omogućite. Proširenje koje vraća reklame je ono koje trebate obrisati da se riješite reklama.",
+    "description": "tells the user to reenable the extensions one by one."
   },
   "refusetocheck": {
     "message": "Ne želim ovo provjeravati",
@@ -943,6 +1019,10 @@
     "message": "Prikaži reklame <i>bilo gdje</i> osim na slijedećim domenama...",
     "description": "Section title for blacklisting section of Customize tab"
   },
+  "show_on_adblock_button": {
+    "message": "Prikaži na AdBlock gumbu",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
   "show_resourcelist": {
     "message": "Prikaži listu resursa",
     "description": "Link in the button"
@@ -962,6 +1042,10 @@
   "slidertitle": {
     "message": "Korak 1: Što blokirati?",
     "description": "Blacklister slider page title"
+  },
+  "spread_the_word": {
+    "message": "Molim, pomognite proširiti riječ!",
+    "description": "Text of a share link"
   },
   "status_disabled": {
     "message": "AdBlock se ne može pokrenuti na ovoj domeni.",
@@ -1184,6 +1268,10 @@
   "warning_overrules_filters": {
     "message": "Upozoranje: na svim drugim stranicama ćete vidjeti reklame!<br>Ovo nadilazi sve druge filtere za te stranice.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whats_this": {
+    "message": "Što je ovo?",
+    "description": "Text of a link pointing to the explanation of a new feature"
   },
   "whitelistertitle2": {
     "message": "Nemoj pokretati AdBlock na...",
