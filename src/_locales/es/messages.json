@@ -7,9 +7,25 @@
     "message": "AbBlock oculta los anuncios automáticamente. No tienes que hacer nada más.",
     "description": "Install page: explaining how to use adblock."
   },
+  "adblock_click_for_details": {
+    "message": "AdBlock - Haz click para más detalles",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
+  "adblock_is_paused": {
+    "message": "AdBlock está en pausa. Por lo tanto, no se captan recursos, y esta página no puede ser usada. Despausa AdBlock y vuelve a probar.",
+    "description": "resourceblocking page string"
+  },
+  "adblock_outdated_chrome": {
+    "message": "Estás usando una versión antigua de AdBlock. Por favor ve <a href='#'> al administrador de extensiones</a>, activa el modo para desarrolladores y haz click en \"Actualizar extensiones ahora\"",
+    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
+  },
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock no actuará en ninguna de estas páginas:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockinglist": {
+    "message": "Lista de filtros de bloqueo de publicidad",
+    "description": "List for subscribed ad blocking fiters"
   },
   "adblockreportinganad": {
     "message": "AdBlock - Informar de un anuncio",
@@ -20,7 +36,7 @@
     "description": "resourceblocking page string"
   },
   "adreport2": {
-    "message": "¿Así que acabas de encontrar un anuncio en una página web? ¡Bien, voy a ayudarte a encontrar el lugar correcto para informar de él!<br/> Recuerda: Informar sobre un anuncio es voluntario. ¡Si no deseas hacerlo simplemente cierra esta ventana y bloquéalo solo para ti añadiéndolo en la pestaña de \"Personalizar\" en las opciones!",
+    "message": "¿Así que acabas de encontrar un anuncio en una página web? ¡Bien, voy a ayudarte a encontrar el lugar correcto para reportarlo!<br/> Recuerda: Informar sobre un anuncio es voluntario. ¡Si no deseas hacerlo simplemente cierra esta ventana y bloquéalo solo para ti añadiéndolo en la pestaña de \"Personalizar\" en las opciones!",
     "description": "Instructions on ad reporting page. 'Customize' should be the same text as the 'tabcustomize' message."
   },
   "adstillappear": {
@@ -155,8 +171,12 @@
     "message": "Dominio de la página que bloquear",
     "description": "Message of the url and css -blocking area"
   },
+  "blocked_ads": {
+    "message": "Anuncios bloqueados:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
   "blockeverycontaining": {
-    "message": "Boquear todos los recursos que contengan:",
+    "message": "Bloquear todos los recursos que contengan:",
     "description": "resourceblocking page string"
   },
   "blockmoreads": {
@@ -192,16 +212,20 @@
     "description": "Looks good button"
   },
   "buttonok": {
-    "message": "Aceptar",
+    "message": "¡Ok!",
     "description": "OK button"
   },
   "cantblockflash": {
-    "message": "No podemos bloquear por el momento anuncios dentro de aplicaciones Flash u otros plugins. Estamos esperando apoyo del navegador y de WebKit.",
+    "message": "No podemos bloquear por el momento anuncios dentro de aplicaciones Flash u otros plugins. Estamos esperando que sea soportado por el navegador y WebKit.",
     "description": "Result of the final ad report question"
   },
   "cantblockflashwarning": {
     "message": "¿El anuncio aparece antes del vídeo o plugin (como un juego en Flash), o aparece en él?",
     "description": "Text of the final ad report question"
+  },
+  "casesensitive": {
+    "message": "Este filtro distingue entre mayúsculas y minúsculas:",
+    "description": "resourceblocking page string"
   },
   "changelabel": {
     "message": "cambiar",
@@ -227,12 +251,38 @@
       }
     }
   },
+  "checkinfirefox_3": {
+    "message": "En ese navegador, suscríbete a los mismos filtros que tienes aquí (excepto para los filtros personalizados de Firefox).",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
+  "checkinfirefox_4": {
+    "message": "En ese navegador, carga la página con el anuncio.",
+    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+  },
   "checkinfirefox_5": {
     "message": "¿Aparece el anuncio también en ese navegador?",
     "description": "instruction for how to check Firefox/Chrome for a reported ad"
   },
+  "checkinfirefoxtitle": {
+    "message": "Compruébalo en Firefox $chrome$",
+    "description": "tell a user to see if a reported ad also appears in Firefox/Chrome",
+    "placeholders": {
+      "chrome": {
+        "content": "$1or Chrome$2",
+        "example": "This will only be shown in Safari. Chrome users will not see this."
+      }
+    }
+  },
+  "chromebutton_how_to_hide2": {
+    "message": "Para ocultar el botón haz click derecho y elige \"Ocultar botón\". Puedes volverlo a mostrar en chrome://chrome/extensions.",
+    "description": "Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
+  "cleanuplist": {
+    "message": "Limpia esta lista:",
+    "description": "Option at the bottom of the third options tab"
+  },
   "clickthead": {
-    "message": "Haz clic en el anuncio, y te guiaré para bloquearlo.",
+    "message": "Haz clic en el anuncio, y te echaré una mano para bloquearlo.",
     "description": "When you have to click the ad to continue"
   },
   "clickupdatefilters": {
@@ -243,6 +293,10 @@
     "message": "Cerrar",
     "description": "resourceblocking page string"
   },
+  "close_tab_begin_browsing": {
+    "message": "Ya puede cerrar esta pestaña y navegar sin molestos anuncios. ¡Diviértete!",
+    "description": "Install page string"
+  },
   "correctfilters": {
     "message": "Filtros correctos",
     "description": "on the ad report page, label describing having the right set of filters"
@@ -250,6 +304,14 @@
   "csstomatch": {
     "message": "CSS que bloquear",
     "description": "Message of the css-hiding area"
+  },
+  "customfilters": {
+    "message": "Lista de filtros elegidos",
+    "description": "List for custom filters the user subscribed to"
+  },
+  "custompattern": {
+    "message": "Personalizado:",
+    "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
   "debuginlogoption": {
     "message": "Mostrar datos debug en la consola (lo que ralentiza Adblock)",
@@ -263,6 +325,10 @@
     "message": "¿Sabías que este es mi trabajo a jornada completa?",
     "description": "Text of a payment request link"
   },
+  "disableallextensions": {
+    "message": "Desactiva todas las extensiones excepto AdBlock.",
+    "description": "instruction on ad report page"
+  },
   "disabled_by_filter_lists": {
     "message": "Lo siento, AdBlock está desactivado en esta página por una de tus listas de filtros.",
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
@@ -270,6 +336,18 @@
   "disabled_on_this_page": {
     "message": "AdBlock está desactivado en esta página.",
     "description": "Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "disableforchromeandsafaristeptwo": {
+    "message": "Desmarca la casilla de \"Activado\" de cada extensión <b>excepto</b> la de AbBlock. <b>Deja AdBlock activado</b>.",
+    "description": "Step 2 for disabling chrome and safari extensions"
+  },
+  "disableforchromestepone": {
+    "message": "Abre <a href='#'>el administrador de extensiones</a>",
+    "description": "Step 1 for disabling chrome extensions"
+  },
+  "disableforopera": {
+    "message": "Para Opera",
+    "description": "Opera instructions"
   },
   "done": {
     "message": "Hecho.",
@@ -576,7 +654,7 @@
     "description": "instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders": {
       "link": {
-        "content": "$aquí$2",
+        "content": "$1aquí$2",
         "example": "<a href='http://abp.org'>here</a>"
       }
     }
@@ -599,7 +677,7 @@
   },
   "options": {
     "message": "Opciones",
-    "description": "The text of the link on chrome://extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
   },
   "optionschangelog": {
     "message": "Lista de cambios",
@@ -887,7 +965,7 @@
   },
   "updatefromoldversion": {
     "message": "Estás usando una versión antigua de AdBlock. Por favor $updatelink$ a la nueva versión de Firefox",
-    "description": "ad report page instruction",
+    "description": "Ad report page instructions to update AdBlock in Safari",
     "placeholders": {
       "updatelink": {
         "content": "$1actualiza$2",
