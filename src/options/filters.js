@@ -48,6 +48,7 @@ function CheckboxForFilterList(filter_list, filter_list_type, index, container){
       css("font-size", "10px").
       css("display", this._filter_list.subscribed ? "none" : "inline").
       attr("href", "#").
+      addClass("remove_filter_list").
       text(translate("removefromlist")).
       click(function(e){
         event.preventDefault();
@@ -208,21 +209,27 @@ FilterListUtil.sortFilterListArrays = function() {
 // Prepare filterListSections.
 // Inputs:
 //    subs:object - map for subscription lists taken from the background
+FilterListUtil.getFilterListType = function(filter_list) {
+  var filter_list_type;
+  if (filter_list.id === "adblock_custom" || filter_list.id === "easylist") {
+    filter_list_type = "adblock_filter_list";
+  } else if (filter_list.id === "easyprivacy") {
+    filter_list_type = "other_filter_list";
+  } else if (filter_list.user_submitted) {
+    filter_list_type = "custom_filter_list";
+  } else{
+    filter_list_type = "language_filter_list";
+  }
+  return filter_list_type;
+};
 FilterListUtil.prepareSubscriptions = function(subs) {
   FilterListUtil.cached_subscriptions = subs;
   for(var id in subs) {
     var entry = subs[id];
-    if (id === "adblock_custom" || id === "easylist") {
-      filterListSections.adblock_filter_list.array.push(entry);
-    } else if (id === "easyprivacy") {
-      filterListSections.other_filter_list.array.push(entry);
-    } else if (entry.user_submitted) {
-      filterListSections.custom_filter_list.array.push(entry);
-    } else{
-      filterListSections.language_filter_list.array.push(entry);
-    }
     entry.label = translate("filter" + id);
     entry.id = id;
+    var filter_list_type = FilterListUtil.getFilterListType(entry);
+    filterListSections[filter_list_type].array.push(entry);
   }
   FilterListUtil.sortFilterListArrays();
 };
@@ -423,7 +430,23 @@ CustomFilterListUploadUtil._performUpload = function(url, subscribe_to) {
 //   existing_filter_list:object - filter list whose URL was entered by the user
 CustomFilterListUploadUtil._updateExistingFilterList = function(existing_filter_list) {
   var containing_div = $("div[name='" + existing_filter_list.id + "']");
+  if(containing_div.length < 1){
+    //if the checkbox does not exist but there is an existing filter list
+    //then recreate the checkbox
+    var filter_list_type = FilterListUtil.getFilterListType(existing_filter_list);
+    var filter_list_array = filterListSections[filter_list_type].array
+    var index = filter_list_array.indexOf(existing_filter_list);
+    if(index < 0){
+      index = filter_list_array.length;
+      filter_list_array.push(existing_filter_list);
+    }
+    var checkboxForFilterList = new CheckboxForFilterList(existing_filter_list, filter_list_type, index, filterListSections[filter_list_type].container);
+    checkboxForFilterList.createCheckbox();
+    containing_div = $("div[name='" + existing_filter_list.id + "']");
+  }
+  
   var checkbox = $(containing_div).find("input");
+  
   if(!checkbox.is(":checked")) {
     if(checkbox.attr("id").indexOf("language_filter_list") > 0) {
       LanguageSelectUtil.triggerChange(existing_filter_list);
@@ -509,21 +532,19 @@ $(function() {
       for(var id in cached_subscriptions) {
         var entry = subs[id];
         var update_entry = cached_subscriptions[id];
-        if(entry) {
-          if(entry.subscribed) {
-            if(entry.last_update && entry.last_update_failed_at) {
-              if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
-                delete subs[id].last_update_failed_at;
-              } else {
-                delete subs[id].last_update;
-              }
-            } 
-            
-            if(entry.last_update_failed_at) {
-              cached_subscriptions[id].last_update_failed_at = entry.last_update_failed_at;
-            } else if(entry.last_update) {
-              cached_subscriptions[id].last_update = entry.last_update;
+        if(entry && entry.subscribed) {
+          if(entry.last_update && entry.last_update_failed_at) {
+            if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
+              delete subs[id].last_update_failed_at;
+            } else {
+              delete subs[id].last_update;
             }
+          } 
+          
+          if(entry.last_update_failed_at) {
+            cached_subscriptions[id].last_update_failed_at = entry.last_update_failed_at;
+          } else if(entry.last_update) {
+            cached_subscriptions[id].last_update = entry.last_update;
           }
         }
       }
