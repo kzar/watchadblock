@@ -27,6 +27,30 @@ function MyFilters() {
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
       this._subscriptions[id].user_submitted = !this._official_options[id];
+      //check if user submitted subscription is one of the official subscriptions
+      if(this._subscriptions[id].user_submitted){
+        var sub_to_check = this._subscriptions[id];
+        var isFound = false;
+        for(var official_id in this._official_options){
+          //if the subscription is now a part of the official list, set user submitted to false
+          //and replace the subscription using the official id
+          if(sub_to_check.initialUrl === this._official_options[official_id].url
+              || sub_to_check.url === this._official_options[official_id].url){
+            this._subscriptions[id].user_submitted = false; 
+            this._subscriptions[official_id] = this._subscriptions[id];
+            delete this._subscriptions[id];
+            isFound = true;
+            break;
+          }
+        }
+        if(!isFound) {
+          var new_key = "url:" + sub_to_check.url;
+          if(new_key !== id){
+            this._subscriptions[new_key] = this._subscriptions[id];
+            delete this._subscriptions[id];
+          }
+        }        
+      }
     }
   }
 
@@ -541,7 +565,7 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "easyprivacy": { // EasyPrivacy
       url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
-    },
+    }
   };
 }
 
