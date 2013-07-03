@@ -288,6 +288,33 @@ FilterListUtil.updateSubscriptionInfoAll = function() {
   }
 };
 
+// Update checkbox for the filter list according to it's current state.
+// Inputs:
+//    filter_list:object - Filter list that owns the check box to be updated.
+//    id:String - Id of the filter list to be updated, also the name of the containing div in display.
+FilterListUtil.updateCheckbox(filter_list, id) {
+  var containing_div = $("div[name='" + id + "']");
+  var checkbox = $(containing_div).find("input");
+  // Check if subscribed and checkbox staus is equal, if not, update checkbox status according to subscribed status.
+  if(checkbox.is(":checked") !== filter_list.subscribed) {
+    checkbox.attr("checked", filter_list.subscribed ? "checked" : null);
+    // Force update current info label since status is already updated in the background.
+    $(".subscription_info", containing_div).text(filter_list.subscribed ? translate("fetchinglabel") : translate("unsubscribedlabel"));
+    // If the filter is of language list type, check if subscribed and checkbox visibility matches, if not, update visibility.
+    if(containing_div.parent().attr("id") === "language_list" && filter_list.subscribed !== containing_div.is(":visible")) {
+      containing_div.toggle(500);
+      var index = checkbox.attr("id").split("_")[3];
+      // After updating visibility, update Language Selectbox too.
+      if(filter_list.subscribed) {
+        $("#language_select").find("option")[parseInt(index) + 1].remove();
+      } else {
+        var newOption = OptionForFilterList(filter_list, index);
+        LanguageSelectUtil.insertOption(newOption.get(), index);
+      }
+    }
+  }
+};
+
 // Utility class for the language select.
 function LanguageSelectUtil() {};
 // Insert option at specified index in the language select.
@@ -510,6 +537,8 @@ $(function() {
         var entry = subs[id];
         var update_entry = cached_subscriptions[id];
         if(entry) {
+          // Update checkbox if it does not match subscribed field
+          FilterListUtil.updateCheckbox(entry, id);
           if(entry.subscribed) {
             if(entry.last_update && entry.last_update_failed_at) {
               if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
