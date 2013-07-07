@@ -10,13 +10,15 @@ var HOUR_IN_MS = 1000 * 60 * 60;
 function MyFilters() {
   this._subscriptions = storage_get('filter_lists');
   this._official_options = this._make_subscription_options();
-  
+}
+
+MyFilters.prototype.init = function() {
   this._updateDefaultSubscriptions();
   this._updateFieldsFromOriginalOptions();
   
   // Build the filter list
-  this._onSubscriptionChange(true);
-
+  this._onSubscriptionChange(true); 
+  
   // On startup and then every hour, check if a list is out of date and has to
   // be updated
   var that = this;
@@ -66,6 +68,8 @@ MyFilters.prototype._updateFieldsFromOriginalOptions = function() {
     }
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
+    
+    this._subscriptions[id] = sub;
   }
 }
 
@@ -84,31 +88,34 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
     // Convert subscribed ex-official lists into user-submitted lists.
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
-      this._subscriptions[id].user_submitted = !this._official_options[id];
-      //check if user submitted subscription is one of the official subscriptions
-      if(this._subscriptions[id].user_submitted) {
         var sub_to_check = this._subscriptions[id];
-        var isFound = false;
+        var is_user_submitted = true;
         for(var official_id in this._official_options){
-          //if the subscription is now a part of the official list, set user submitted to false
-          //and replace the subscription using the official id
-          if(sub_to_check.initialUrl === this._official_options[official_id].url
-              || sub_to_check.url === this._official_options[official_id].url) {
-            this._subscriptions[id].user_submitted = false; 
+          // Set conditions for official subs
+          var initial_url_match = sub_to_check.initialUrl === this._official_options[official_id].url;
+          var url_match = sub_to_check.url === this._official_options[official_id].url;
+          
+          var is_not_user_submitted = initial_url_match || url_match;
+          
+          // If the subscription is now a part of the official list, set user submitted to false
+          // And replace the subscription using the official id
+          if(is_not_user_submitted) {
             this._subscriptions[official_id] = this._subscriptions[id];
-            delete this._subscriptions[id];
-            isFound = true;
+            if(official_id !== id)
+              delete this._subscriptions[id];
             break;
           }
-        }
-        if(!isFound) {
+        } 
+        
+        sub_to_check.user_submitted = !is_not_user_submitted;
+
+        if(sub_to_check.user_submitted) {
           var new_key = "url:" + sub_to_check.url;
           if(new_key !== id){
             this._subscriptions[new_key] = this._subscriptions[id];
             delete this._subscriptions[id];
           }
         }        
-      }
     }
   }
 }

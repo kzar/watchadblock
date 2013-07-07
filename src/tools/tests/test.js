@@ -198,6 +198,268 @@ test("merge", function() {
 
 module("MyFilters");
 
+test("Should Check MyFilters Instantiation", 3, function() {
+  //Tests if instance of MyFilters was instantiated successfully
+  var _myfilters = new MyFilters();
+  ok(_myfilters, "MyFilters created successfully");
+  ok(_myfilters._subscriptions, "_subscriptions is not null");
+  ok(_myfilters._official_options, "_official_options is not null");
+});
+
+test("Should test if ex-official list is deleted from subscriptions", 6, function() {
+  var _myfilters = new MyFilters();
+  _myfilters._subscriptions = {
+    foo: {
+      url: "http://foo.com/foo.txt",
+      initialUrl: "http://foo.com/foo.txt",
+      user_submitted: false,
+      subscribed: false
+    },
+    bar: {
+      url: "http://bar.com/bar.txt",
+      initialUrl: "http://bar.com/bar.txt",
+      user_submitted: true,
+      subscribed: true
+    },
+    minions: {
+      url: "https://banana.com/banana.txt",
+      initialUrl: "https://banana.com/banana.txt",
+      user_submitted: false,
+      subscribed: true
+    },
+    boo: {
+      url: "https://mu.com/mu.txt",
+      initialUrl: "https://mu.com/mu.txt",
+      user_submitted: true,
+      subscribed: false
+    },
+    cheeseburgers: {
+      url: "https://canihas.com/canihas.txt",
+      initialUrl: "https://canihas.com/canihas.txt",
+      user_submitted: false,
+      subscribed: false
+    },
+    "url:http://ramdomsub.com/randomsub.txt": {
+      url: "http://ramdomsub.com/randomsub.txt",
+      initialUrl: "http://ramdomsub.com/randomsub.txt",
+      user_submitted: true
+    }
+  }
+
+  _myfilters._official_options = {
+    bar: { url: "http://bar.com/bar.txt" },
+    minions: { url: "https://banana.com/banana.txt" },  
+    cheeseburgers: { url: "https://canihas.com/canihas.txt" }
+  }
+  
+  _myfilters._updateDefaultSubscriptions();
+  
+  var subscriptions = _myfilters._subscriptions;
+  ok(!subscriptions.foo, "Subscription foo should be deleted"); // Not in official list, not user submitted, not subscribed
+  ok(subscriptions.bar, "Subscription bar should still exist"); // In official list, user submitted, subscribed
+  ok(subscriptions.minions, "Subscription minions should still exist"); // In official list, not user submitted, subscribed
+  ok(subscriptions["url:https://mu.com/mu.txt"], "Subscription should change id since it is not in official list");
+  ok(subscriptions.cheeseburgers, "Subscription cheeseburger should still exist"); // In official list, not user submitted, not subscribed
+  ok(subscriptions["url:http://ramdomsub.com/randomsub.txt"], "Subscription with url as id should still exist"); // Not in official list, user submitted (subscribed is irrelevant)
+});
+
+test("Should change the id of a new official subscriptions", 12, function() { 
+  var _myfilters = new MyFilters();
+  _myfilters._subscriptions = {
+    "url:http://foo.com/foo.txt": {
+      url: "http://foo.com/foo.txt",
+      initialUrl: "http://foo.com/foo.txt",
+      user_submitted: true
+    },
+    "url:http://randomness.com/superrandom.txt": {
+      url: "http://randomness.com/superrandom123.txt",
+      initialUrl: "http://randomness.com/superrandom.txt",
+      user_submitted: true
+    },
+    "url:https://grue.com/banana.txt": {
+      url: "https://grue.com/banana.txt",
+      user_submitted: true
+    },
+    "url:https://banana.com/banana.txt": {
+      url: "https://banana.com/banana.txt",
+      user_submitted: true
+    },
+    bar: {
+      url: "http://bar.com/bar.txt",
+      initialUrl: "http://bar.com/bar.txt",
+      user_submitted: true
+    },
+    notmatch: {
+      url: "http://notmatch.com/notmatch.txt",
+      subscribed: true,
+      user_submitted: false
+    },
+  }
+
+  _myfilters._official_options = { 
+    foo: { url: "http://foo.com/foo.txt" },
+    grue: { url: "http://randomness.com/superrandom.txt" },
+    bar: { url: "http://bar.com/bar.txt" }, 
+    minions: { url: "https://grue.com/banana.txt" }
+  }
+  
+  _myfilters._updateDefaultSubscriptions();
+  
+  var subscriptions = _myfilters._subscriptions;
+  
+  ok(subscriptions.foo, "Entry should change id to foo"); // No id, url matches entry in official list
+  ok(!subscriptions.foo.user_submitted, "Foo should not be user submitted");
+  
+  ok(subscriptions.grue, "Entry should change id to grue"); // No id, initialUrl matches entry in official list
+  ok(!subscriptions.grue.user_submitted, "Grue should not be user submitted");
+  
+  ok(subscriptions.minions, "Entry should change id to minions"); // No id, url matches entry in official list
+  ok(!subscriptions.minions.user_submitted, "Minions should not be user submitted");
+  
+  ok(subscriptions["url:https://banana.com/banana.txt"], "Entry will not be changed"); // No id, url and initialUrl has no match in official list
+  ok(subscriptions["url:https://banana.com/banana.txt"].user_submitted, "'Url' should be user submitted");
+  
+  ok(subscriptions.bar, "Entry will not be changed"); //With Id, url matches entry in official list
+  ok(!subscriptions.bar.user_submitted, "Bar should not be user submitted");
+  
+  ok(subscriptions["url:http://notmatch.com/notmatch.txt"], "Entry should change id to url:url"); // With Id, subscribed, url and initial url does not match
+  ok(subscriptions["url:http://notmatch.com/notmatch.txt"].user_submitted, "'Url' should be user submitted");
+});
+
+test("Should add official subscription in _subscriptions object if missing", 2, function() {
+  // Mock changeSubscription() to avoid error
+  MyFilters.prototype.changeSubscription = function(arg1, arg2) {
+    this._subscriptions[arg1].subscribed = true;
+  };
+  
+  var _myfilters = new MyFilters();
+  
+  _myfilters._subscriptions = {
+    foo: {
+      url: "http://foo.com/foo.txt",
+      initialUrl: "http://foo.com/foo.txt",
+      user_submitted: false,
+      subscribed: false
+    }
+  }
+
+  _myfilters._official_options = { 
+    foo: { url: "http://foo.com/foo.txt" },
+    bar: { url: "http://bar.com/bar.txt" }
+  }
+  
+  _myfilters._updateFieldsFromOriginalOptions();
+  
+  var subscriptions = _myfilters._subscriptions;
+  
+  ok(subscriptions.bar, "Bar should be added in subscriptions");
+  ok(subscriptions.foo, "Foo should be retained in subscriptions");
+});
+
+test("Should update requires list", 4, function() {
+  // Mock changeSubscription() to avoid error
+  MyFilters.prototype.changeSubscription = function(arg1, arg2) {
+    this._subscriptions[arg1].subscribed = true;
+  };
+  
+  var _myfilters = new MyFilters();
+  
+  _myfilters._subscriptions = {
+    foo: {
+      url: "http://foo.com/foo.txt",
+      initialUrl: "http://foo.com/foo.txt",
+      user_submitted: false,
+      subscribed: false
+    },
+    
+    bar: {
+      url: "http://bar.com/bar.txt",
+      initialUrl: "http://bar.com/bar.txt",
+      user_submitted: true,
+      subscribed: true
+    },
+    
+    minions: {
+      url: "http://minions.com/minions.txt",
+      subscribed: false
+    },
+    
+    eddard: {
+      url: "http://starks.com/winteriscoming.txt",
+      subscribed: false
+    }
+  }
+  
+   _myfilters._official_options = { 
+    minions: { url: "http://minions.com/minions.txt" },
+    eddard: { url: "http://starks.com/winteriscoming.txt" },
+    foo: { url: "http://foo.com/foo.txt", requiresList: "minions" },
+    bar: { url: "http://bar.com/bar.txt", requiresList: "eddard" }
+  }
+  
+  _myfilters._updateFieldsFromOriginalOptions();
+  
+  var subscriptions = _myfilters._subscriptions;
+  
+  equal(subscriptions.foo.requiresList, "minions", "RequiresList should be minions");
+  equal(subscriptions.bar.requiresList, "eddard", "RequiresList should be eddard");
+  ok(!subscriptions.minions.requiresList, "Should retain subscribed status if dependent sub is not subscribed");
+  ok(subscriptions.eddard.subscribed, "Should be subscribed since dependent sub is subscribed");
+});
+
+test("Should update url and initial url if initial url does not match official url", 7, function() {
+  // Mock changeSubscription() to avoid error
+  MyFilters.prototype.changeSubscription = function(arg1, arg2) {
+    this._subscriptions[arg1].subscribed = true;
+  };
+  
+  var _myfilters = new MyFilters();
+  
+  _myfilters._subscriptions = {
+    foo: {
+      url: "http://ramsey.com/ramsey.txt",
+      initialUrl: "http://foo.com/foo.txt",
+      user_submitted: false,
+      subscribed: false
+    },
+    
+    bar: {
+      url: "http://bar.com/bar.txt",
+      initialUrl: "http://notme.com/notme.txt",
+      user_submitted: true,
+      subscribed: true
+    },
+    
+    grue: {
+      url: "http://randomthings.com/randomthings.txt",
+      initialUrl: "http://randomthings.com/randomgthings.txt"
+    }
+  }
+
+  _myfilters._official_options = { 
+    foo: { url: "http://foo.com/foo.txt", requiresList: "minions" },
+    bar: { url: "http://bar.com/bar.txt", requiresList: "eddard" },
+    grue: { url: "http://despicable.com/despicable.txt" },
+    minions: { url: "http://minions.com/minons.txt" }
+  }
+  
+  _myfilters._updateFieldsFromOriginalOptions();
+  
+  var subscriptions = _myfilters._subscriptions;
+  var officialSubs = _myfilters._official_options;
+  
+  equal(subscriptions.foo.initialUrl, officialSubs.foo.url, "Url should be equal");
+  
+  equal(subscriptions.bar.url, officialSubs.bar.url, "Url should be equal");
+  equal(subscriptions.bar.initialUrl, officialSubs.bar.url, "Url should be equal");
+  
+  equal(subscriptions.grue.url, officialSubs.grue.url, "Url should be equal");
+  equal(subscriptions.grue.initialUrl, officialSubs.grue.url, "Url should be equal");
+  
+  equal(subscriptions.minions.url, officialSubs.minions.url, "Missing subs should be added");
+  equal(subscriptions.minions.initialUrl, officialSubs.minions.url, "Missing subs should be added");
+});
+
 if (/Chrome/.test(navigator.userAgent)) {
   // CHROME ONLY
   (function() {
