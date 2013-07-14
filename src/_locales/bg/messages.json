@@ -7,6 +7,10 @@
     "message": "AdBlock автоматично премахва рекламите. И това е всичко, което прави.",
     "description": "Install page: explaining how to use adblock."
   },
+  "adblock_click_for_details": {
+    "message": "Натиснете бутона на AdBlock за подробности",
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
+  },
   "adblock_is_paused": {
     "message": "Задържан AdBlock. Няма установени ресурси и използване на страницата е невъзможно. Първо осовободете AdBlock и опитайте отново.",
     "description": "resourceblocking page string"
@@ -18,6 +22,10 @@
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock няма да се изпълнява в страници, съвпадащи с:",
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+  },
+  "adblockinglist": {
+    "message": "Блокиращи филтри",
+    "description": "List for subscribed ad blocking fiters"
   },
   "adblockreportinganad": {
     "message": "Докладване на реклама пред AdBlock",
@@ -163,6 +171,30 @@
     "message": "Домейн на страницата:",
     "description": "Message of the url and css -blocking area"
   },
+  "blocked_ads": {
+    "message": "Блокирани реклами:",
+    "description": "Title for popup menu section showing number of ads blocked."
+  },
+  "blocked_n_in_total": {
+    "message": "$count$ — общо",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ — в страницата",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Блокирай всеки ресурс, съдържащ:",
     "description": "resourceblocking page string"
@@ -293,6 +325,10 @@
     "message": "Съвпадащ каскаден лист със стилове [CSS]:",
     "description": "Message of the css-hiding area"
   },
+  "customfilters": {
+    "message": "Потребителски филтри",
+    "description": "List for custom filters the user subscribed to"
+  },
   "custompattern": {
     "message": "потребителски:",
     "description": "Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
@@ -373,6 +409,10 @@
     "message": "Провалено извличане на филтъра!",
     "description": "Error messagebox"
   },
+  "failedtofetchlanguagefilter": {
+    "message": "Провалено извличане",
+    "description": "Error message for failed fetch"
+  },
   "faq": {
     "message": "ЧЗВ",
     "description": "Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
@@ -390,19 +430,19 @@
     "description": "A filter list. Don't translate 'AdBlock'"
   },
   "filterchinese": {
-    "message": "— допълнителни китайски филтри",
+    "message": "китайски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterczech": {
-    "message": "— допълнителни чешки и словашки филтри",
+    "message": "чешки и словашки",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdanish": {
-    "message": "датски филтри",
+    "message": "датски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterdutch": {
-    "message": "— допълнителни холандски филтри",
+    "message": "холандски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist": {
@@ -410,39 +450,39 @@
     "description": "A filter list. Don't translate 'EasyList'"
   },
   "filtereasylist_plun_korean": {
-    "message": "корейски филтри",
+    "message": "корейски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_bulgarian": {
-    "message": "— допълнителни български филтри (препоръчително)",
+    "message": "български (препоръчително)",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_finnish": {
-    "message": "— допълнителни фински филтри",
+    "message": "фински",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_french": {
-    "message": "— допълнителни френски филтри",
+    "message": "френски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_german": {
-    "message": "— допълнителни немски филтри",
+    "message": "немски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_greek": {
-    "message": "— допълнителни гръцки филтри",
+    "message": "гръцки",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_polish": {
-    "message": "— допълнителни полски филтри",
+    "message": "полски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_romanian": {
-    "message": "— допълнителни румънски филтри",
+    "message": "румънски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasylist_plus_spanish": {
-    "message": "испански филтри",
+    "message": "испански",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtereasyprivacy": {
@@ -454,19 +494,19 @@
     "description": "resourceblocking page string (the 'slash n' is a line break)"
   },
   "filterhungarian": {
-    "message": "унгарски филтри",
+    "message": "унгарски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterisraeli": {
-    "message": "еврейски филтри",
+    "message": "еврейски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filteritalian": {
-    "message": "италиански филтри",
+    "message": "италиански",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterjapanese": {
-    "message": "японски филтри",
+    "message": "японски",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filterlistlink": {
@@ -488,7 +528,7 @@
     }
   },
   "filterrussian": {
-    "message": "— допълнителни руски и украински филтри",
+    "message": "руски и украински",
     "description": "A filter list. If it's the filter list for your language, please add '(recommended)'"
   },
   "filtersavewarning": {
@@ -656,6 +696,10 @@
   "lang_ukranian": {
     "message": "украински",
     "description": "language"
+  },
+  "languagedropdowndescription": {
+    "message": "Добави филтри за друг език:",
+    "description": "Dropdown list for language specific filters"
   },
   "let_me_know_how_it_is_working": {
     "message": "Искате ли да помогнете? Пробвайте експерименталната настройка и <a>пишете</a> дали работи добре при вас.",
@@ -837,6 +881,10 @@
     "message": "друг",
     "description": "multiple choice option"
   },
+  "otherfilters": {
+    "message": "Списък с други филтри",
+    "description": "List for other filters the user subscribed to"
+  },
   "pagelanguagecheck": {
     "message": "Какъв е езикът на страницата?",
     "description": "question on ad report page"
@@ -963,6 +1011,10 @@
     "message": "Виждате ли това при всяко пускане на браузъра?",
     "description": "Install page: link to click for help"
   },
+  "selectlanguage": {
+    "message": "— изберете език —",
+    "description": "Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
+  },
   "selectresources": {
     "message": "Изберете кой ресурс блокирате или деблокирате:",
     "description": "resourceblocking page string"
@@ -970,6 +1022,10 @@
   "show_ads_except_for": {
     "message": "Показване на реклами <i>навсякъде</i> без домейна",
     "description": "Section title for blacklisting section of Customize tab"
+  },
+  "show_on_adblock_button": {
+    "message": "Показвай върху бутона на AdBlock",
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   },
   "show_resourcelist": {
     "message": "Покажи ресурсите",
@@ -1216,6 +1272,10 @@
   "warning_overrules_filters": {
     "message": "Внимание: във всички други сайтове ще виждате реклами!<br>Настройката изключва всички останали филтри за сайтовете.",
     "description": "Message on the third tab of the options page, explaining the danger of adding a blacklisting filter"
+  },
+  "whats_this": {
+    "message": "Какво е това?",
+    "description": "Text of a link pointing to the explanation of a new feature"
   },
   "whitelistertitle2": {
     "message": "Изключване на AdBlock…",
