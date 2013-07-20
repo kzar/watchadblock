@@ -198,7 +198,7 @@ test("merge", function() {
 
 module("MyFilters");
 
-test("Should Check MyFilters Instantiation", 3, function() {
+test("Should instantiate a MyFilters object correctly", 3, function() {
   //Tests if instance of MyFilters was instantiated successfully
   var _myfilters = new MyFilters();
   ok(_myfilters, "MyFilters created successfully");
@@ -206,7 +206,7 @@ test("Should Check MyFilters Instantiation", 3, function() {
   ok(_myfilters._official_options, "_official_options is not null");
 });
 
-test("Should test if ex-official list is deleted from subscriptions", 6, function() {
+test("Should delete ex-official lists from subscriptions", 6, function() {
   var _myfilters = new MyFilters();
   _myfilters._subscriptions = {
     foo: {
@@ -263,7 +263,7 @@ test("Should test if ex-official list is deleted from subscriptions", 6, functio
   ok(subscriptions["url:http://ramdomsub.com/randomsub.txt"], "Subscription with url as id should still exist"); // Not in official list, user submitted (subscribed is irrelevant)
 });
 
-test("Should change the id of a new official subscriptions", 12, function() { 
+test("Should change the id of a new official subscriptions", function() { 
   var _myfilters = new MyFilters();
   _myfilters._subscriptions = {
     "url:http://foo.com/foo.txt": {
@@ -309,6 +309,7 @@ test("Should change the id of a new official subscriptions", 12, function() {
   
   ok(subscriptions.foo, "Entry should change id to foo"); // No id, url matches entry in official list
   ok(!subscriptions.foo.user_submitted, "Foo should not be user submitted");
+  ok(!subscriptions["url:htp://foo.com/foo.txt"], "Entry should be deleted since it is now and official list");
   
   ok(subscriptions.grue, "Entry should change id to grue"); // No id, initialUrl matches entry in official list
   ok(!subscriptions.grue.user_submitted, "Grue should not be user submitted");
@@ -324,9 +325,10 @@ test("Should change the id of a new official subscriptions", 12, function() {
   
   ok(subscriptions["url:http://notmatch.com/notmatch.txt"], "Entry should change id to url:url"); // With Id, subscribed, url and initial url does not match
   ok(subscriptions["url:http://notmatch.com/notmatch.txt"].user_submitted, "'Url' should be user submitted");
+  ok(!subscriptions.notmatch, "Entry should be deleted since it is no longer part of the official list")
 });
 
-test("Should add official subscription in _subscriptions object if missing", 2, function() {
+test("Should add official subscription in _subscriptions object if missing", function() {
   // Mock changeSubscription() to avoid error
   MyFilters.prototype.changeSubscription = function(arg1, arg2) {
     this._subscriptions[arg1].subscribed = true;
@@ -356,7 +358,7 @@ test("Should add official subscription in _subscriptions object if missing", 2, 
   ok(subscriptions.foo, "Foo should be retained in subscriptions");
 });
 
-test("Should update requires list", 4, function() {
+test("Should update requires list", function() {
   // Mock changeSubscription() to avoid error
   MyFilters.prototype.changeSubscription = function(arg1, arg2) {
     this._subscriptions[arg1].subscribed = true;
@@ -379,6 +381,14 @@ test("Should update requires list", 4, function() {
       subscribed: true
     },
     
+    randomEntry: {
+      url: "http://randomEntry.com/randomEntry.txt",
+      initialUrl: "http://randomEntry.com/randomEntry.txt",
+      user_submitted: false,
+      subscribed: false,
+      requiresList: "anaconda"
+    },
+    
     minions: {
       url: "http://minions.com/minions.txt",
       subscribed: false
@@ -387,10 +397,15 @@ test("Should update requires list", 4, function() {
     eddard: {
       url: "http://starks.com/winteriscoming.txt",
       subscribed: false
+    },
+    
+    anaconda: {
+      url: "http://anaconda.com/bigbigsnakes.txt",
+      subscribed: true
     }
   }
   
-   _myfilters._official_options = { 
+  _myfilters._official_options = { 
     minions: { url: "http://minions.com/minions.txt" },
     eddard: { url: "http://starks.com/winteriscoming.txt" },
     foo: { url: "http://foo.com/foo.txt", requiresList: "minions" },
@@ -403,8 +418,9 @@ test("Should update requires list", 4, function() {
   
   equal(subscriptions.foo.requiresList, "minions", "RequiresList should be minions");
   equal(subscriptions.bar.requiresList, "eddard", "RequiresList should be eddard");
-  ok(!subscriptions.minions.requiresList, "Should retain subscribed status if dependent sub is not subscribed");
+  ok(!subscriptions.minions.subscribed, "Should retain subscribed status if dependent sub is not subscribed");
   ok(subscriptions.eddard.subscribed, "Should be subscribed since dependent sub is subscribed");
+  ok(subscriptions.anaconda.subscribed, "Should remain subscribed even if dependent subscription is unsubscribed");
 });
 
 test("Should update url and initial url if initial url does not match official url", 7, function() {

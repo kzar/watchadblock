@@ -12,6 +12,8 @@ function MyFilters() {
   this._official_options = this._make_subscription_options();
 }
 
+// Update _subscriptions and _official_options in case there are changes.
+// Should be invoked right after creating a MyFilters object.
 MyFilters.prototype.init = function() {
   this._updateDefaultSubscriptions();
   this._updateFieldsFromOriginalOptions();
@@ -41,7 +43,7 @@ MyFilters.prototype.init = function() {
     60 * 60 * 1000
   );
 }
-
+// Update the url and requiresList for entries in _subscriptions using values from _official_options.
 MyFilters.prototype._updateFieldsFromOriginalOptions = function() {
   // Use the stored properties, and only add any new properties and/or lists
   // if they didn't exist in this._subscriptions
@@ -68,11 +70,12 @@ MyFilters.prototype._updateFieldsFromOriginalOptions = function() {
     }
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
-    
-    this._subscriptions[id] = sub;
   }
 }
-
+// Update default subscriptions in the browser storage.
+// Removes subscriptions that are no longer in the official list, not user submitted and no longer subscribed.
+// Also, converts user submitted subscriptions to recognized one if it is already added to the official list
+// and vice-versa.
 MyFilters.prototype._updateDefaultSubscriptions = function() {
   if (!this._subscriptions) {
     // Brand new user. Install some filters for them.
@@ -88,34 +91,36 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
     // Convert subscribed ex-official lists into user-submitted lists.
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
-        var sub_to_check = this._subscriptions[id];
-        var is_user_submitted = true;
-        for(var official_id in this._official_options){
-          // Set conditions for official subs
-          var initial_url_match = sub_to_check.initialUrl === this._official_options[official_id].url;
-          var url_match = sub_to_check.url === this._official_options[official_id].url;
+      var sub_to_check = this._subscriptions[id];
+      for (var official_id in this._official_options) {
+        // Set conditions for official subs
+        var initial_url_match = sub_to_check.initialUrl === this._official_options[official_id].url;
+        var url_match = sub_to_check.url === this._official_options[official_id].url;
           
-          var is_not_user_submitted = initial_url_match || url_match;
+        var is_not_user_submitted = initial_url_match || url_match;
           
-          // If the subscription is now a part of the official list, set user submitted to false
-          // And replace the subscription using the official id
-          if(is_not_user_submitted) {
-            this._subscriptions[official_id] = this._subscriptions[id];
-            if(official_id !== id)
-              delete this._subscriptions[id];
-            break;
-          }
-        } 
-        
-        sub_to_check.user_submitted = !is_not_user_submitted;
-
-        if(sub_to_check.user_submitted) {
-          var new_key = "url:" + sub_to_check.url;
-          if(new_key !== id){
-            this._subscriptions[new_key] = this._subscriptions[id];
+        // If an entry is not user submitted, update it's fields
+        if(is_not_user_submitted) {
+          // This will create two entries of the same url if official id and id in subscriptions do not match
+          this._subscriptions[official_id] = this._subscriptions[id];
+          // So delete the entry in id if it does not match the official id
+          if(official_id !== id)
             delete this._subscriptions[id];
-          }
-        }        
+          break;
+        }
+      } 
+        
+      sub_to_check.user_submitted = !is_not_user_submitted;
+      
+      // If subscription is formerly in the official list but was removed,
+      // update id to 'url:(subscription url)
+      if (sub_to_check.user_submitted) {
+        var new_key = "url:" + sub_to_check.url;
+        if (new_key !== id){
+          this._subscriptions[new_key] = this._subscriptions[id];
+          delete this._subscriptions[id];
+        }
+      }        
     }
   }
 }

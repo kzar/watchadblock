@@ -537,10 +537,13 @@ $(function() {
         var entry = subs[id];
         var update_entry = cached_subscriptions[id];
         if(entry) {
-          // Update checkbox if it does not match subscribed field
+          // Update checkbox according to the value of the subscribed field
           FilterListUtil.updateCheckbox(entry, id);
+          // If entry is subscribed, update last_update_failed_at and last_update field
           if(entry.subscribed) {
             if(entry.last_update && entry.last_update_failed_at) {
+              // If update is more recent than failed update, remove last_update_failed_at field,
+              // otherwise, remove last_update field
               if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
                 delete subs[id].last_update_failed_at;
               } else {
@@ -548,6 +551,7 @@ $(function() {
               }
             } 
             
+            // Update last_update_failed_at and last_update field for the entry in cached subscriptions
             if(entry.last_update_failed_at) {
               cached_subscriptions[id].last_update_failed_at = entry.last_update_failed_at;
             } else if(entry.last_update) {
