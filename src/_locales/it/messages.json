@@ -110,7 +110,7 @@
     }
   },
   "blacklistermatches": {
-    "message": "$matchcount$ elementi dello stesso tipo trovati sulla pagina",
+    "message": "$matchcount$ elementi dello stesso tipo trovati sulla pagina.",
     "description": "Tells the user multiple matches were found",
     "placeholders": {
       "matchcount": {
@@ -120,7 +120,7 @@
     }
   },
   "blacklisternofilter": {
-    "message": "Nessun filtro specificato",
+    "message": "Nessun filtro specificato!",
     "description": "Warning if the user hasn't specified a filter"
   },
   "blacklisternotsure": {
@@ -374,7 +374,7 @@
     "description": "Menu entry to whitelist a page"
   },
   "enable": {
-    "message": "abilitare",
+    "message": "abilitata",
     "description": "Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "excludedomainorurl": {
@@ -409,9 +409,61 @@
     "message": "Filtri personalizzati di AdBlock (raccomandato)",
     "description": "A filter list. Don't translate 'AdBlock'"
   },
+  "filterchinese": {
+    "message": "Cinese",
+    "description": "language"
+  },
+  "filterczech": {
+    "message": "Ceco e Slovacco",
+    "description": "Language names for a filter list"
+  },
+  "filterdanish": {
+    "message": "Danese",
+    "description": "language"
+  },
+  "filterdutch": {
+    "message": "Olandese",
+    "description": "language"
+  },
   "filtereasylist": {
     "message": "EasyList (raccomandato)",
     "description": "A filter list. Don't translate 'EasyList'"
+  },
+  "filtereasylist_plun_korean": {
+    "message": "Coreano",
+    "description": "language"
+  },
+  "filtereasylist_plus_bulgarian": {
+    "message": "Bulgaro",
+    "description": "language"
+  },
+  "filtereasylist_plus_finnish": {
+    "message": "Finlandese",
+    "description": "language"
+  },
+  "filtereasylist_plus_french": {
+    "message": "Francese",
+    "description": "language"
+  },
+  "filtereasylist_plus_german": {
+    "message": "Tedesco",
+    "description": "language"
+  },
+  "filtereasylist_plus_greek": {
+    "message": "Greco",
+    "description": "language"
+  },
+  "filtereasylist_plus_polish": {
+    "message": "Polacco",
+    "description": "language"
+  },
+  "filtereasylist_plus_romanian": {
+    "message": "Rumeno",
+    "description": "language"
+  },
+  "filtereasylist_plus_spanish": {
+    "message": "Spagnolo",
+    "description": "language"
   },
   "filtereasyprivacy": {
     "message": "EasyPrivacy (protezione della privacy)",
@@ -420,6 +472,22 @@
   "filterhasbeenadded": {
     "message": "Il filtro è stato aggiunto con successo!\nRicarica la pagina per vedere il risultato!",
     "description": "resourceblocking page string (the 'slash n' is a line break)"
+  },
+  "filterhungarian": {
+    "message": "Ungherese",
+    "description": "language"
+  },
+  "filterisraeli": {
+    "message": "Ebraico",
+    "description": "language"
+  },
+  "filteritalian": {
+    "message": "Italiano",
+    "description": "language"
+  },
+  "filterjapanese": {
+    "message": "Giapponese",
+    "description": "language"
   },
   "filterlistlink": {
     "message": "Non abbonarti a più liste di quante te ne servano -- ciascuna rallenta un po' (veramente poco) le prestazioni. Altre liste si trovano <a>qui</a>.",
@@ -438,6 +506,10 @@
         "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
       }
     }
+  },
+  "filterrussian": {
+    "message": "Russo e Ucraino",
+    "description": "Language names for a filter list"
   },
   "filtersavewarning": {
     "message": "Attenzione: Se fai un errore molti altri filtri, compresi quelli ufficiali, potrebbero smettere di funzionare!<br/>Leggi il <a>filter syntax tutorial</a> per imparare le funzionalità avanzate e scrivere da solo i tuoi filtri.",
@@ -521,68 +593,12 @@
     "message": "Lista URL non valida. Sarà cancellata.",
     "description": "Message when you subscribe to a non-list URL"
   },
-  "filtereasylist_plus_bulgarian": {
-    "message": "Bulgaro",
-    "description": "language"
-  },
-  "filterchinese": {
-    "message": "Cinese",
-    "description": "language"
-  },
   "lang_czech": {
     "message": "Ceco",
     "description": "language"
   },
-  "filterdanish": {
-    "message": "Danese",
-    "description": "language"
-  },
-  "filterdutch": {
-    "message": "Olandese",
-    "description": "language"
-  },
   "lang_english": {
     "message": "Inglese",
-    "description": "language"
-  },
-  "filtereasylist_plus_finnish": {
-    "message": "Finlandese",
-    "description": "language"
-  },
-  "filtereasylist_plus_french": {
-    "message": "Francese",
-    "description": "language"
-  },
-  "filtereasylist_plus_german": {
-    "message": "Tedesco",
-    "description": "language"
-  },
-  "filtereasylist_plus_greek": {
-    "message": "Greco",
-    "description": "language"
-  },
-  "filterhungarian": {
-    "message": "Ungherese",
-    "description": "language"
-  },
-  "filteritalian": {
-    "message": "Italiano",
-    "description": "language"
-  },
-  "filterjapanese": {
-    "message": "Giapponese",
-    "description": "language"
-  },
-  "filtereasylist_plun_korean": {
-    "message": "Coreano",
-    "description": "language"
-  },
-  "filtereasylist_plus_polish": {
-    "message": "Polacco",
-    "description": "language"
-  },
-  "filtereasylist_plus_romanian": {
-    "message": "Rumeno",
     "description": "language"
   },
   "lang_russian": {
@@ -591,10 +607,6 @@
   },
   "lang_slovak": {
     "message": "Slovacco",
-    "description": "language"
-  },
-  "filtereasylist_plus_spanish": {
-    "message": "Spagnolo",
     "description": "language"
   },
   "lang_ukranian": {
@@ -915,6 +927,10 @@
     "message": "Vedi questo tutte le volte che avvii il tuo browser?",
     "description": "Install page: link to click for help"
   },
+  "selectlanguage": {
+    "message": "-- Scegli una lingua --",
+    "description": "Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
+  },
   "selectresources": {
     "message": "Seleziona il contenuto che vuoi bloccare o sbloccare",
     "description": "resourceblocking page string"
@@ -940,7 +956,7 @@
     "description": "Option on second tab page"
   },
   "sliderexplanation": {
-    "message": "Sposta la barra di scorrimento fino a bloccare correttamente l'elemento selezionato e a dare alla pagina l'aspetto desiderato.",
+    "message": "Spostare il cursore fino a bloccare correttamente l'elemento selezionato e a dare alla pagina l'aspetto desiderato.",
     "description": "Blacklister slider page message"
   },
   "slidertitle": {
@@ -972,7 +988,7 @@
     "description": "subscribe to a list button"
   },
   "subscribingfailed": {
-    "message": "Si è verificato un problema!",
+    "message": "Fallito!",
     "description": "abp: link subscriber result"
   },
   "subscribingfinished": {
@@ -980,7 +996,7 @@
     "description": "abp: link subscriber result"
   },
   "subscribingtitle": {
-    "message": "Mi sto abbonando alla lista filtri...",
+    "message": "In abbonamento alla lista filtri...",
     "description": "abp: link subscriber title"
   },
   "tabcustomize": {
