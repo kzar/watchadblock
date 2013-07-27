@@ -175,6 +175,26 @@
     "message": "Pubblicità bloccate:",
     "description": "Title for popup menu section showing number of ads blocked."
   },
+  "blocked_n_in_total": {
+    "message": "$count$ in totale",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123,456</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
+  "blocked_n_on_this_page": {
+    "message": "$count$ su questa pagina",
+    "description": "Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
+    "placeholders": {
+      "count": {
+        "content": "<a>123</a>",
+        "example": "The number of ads blocked.  Do not make any changes to this string when translating."
+      }
+    }
+  },
   "blockeverycontaining": {
     "message": "Blocca ogni contenuto che contiene:",
     "description": "resourceblocking page string"
@@ -554,7 +574,7 @@
     "description": "Title of first tab page"
   },
   "googletextads": {
-    "message": "Desidero le pubblicità testuali nella ricerca Google; mostramele.",
+    "message": "Desidero le pubblicità testuali nella ricerca Google.",
     "description": "Option on first tab page"
   },
   "headerfilter": {
