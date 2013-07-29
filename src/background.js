@@ -807,15 +807,6 @@
       chrome.tabs.onUpdated.addListener(function(tabid, changeInfo, tab) {
         if (tab.active && changeInfo.status === "loading")
           updateButtonUIAndContextMenus();
-        // Issue 7715: accessing chrome://newtab in an already existing tab
-        // does not trigger onBeforeRequest, so frameData is not updated
-        var frame = frameData.get(tab.id, 0);
-        if(frame) {
-          if (frame.url.replace(/#.*$/, '') !== tab.url.replace(/#.*$/, '')) {
-            log("Deleting frameData for " + tab.url + " upon load of " + frame.url);
-            delete frameData[tab.id];
-          }
-        }
       });
       chrome.tabs.onActivated.addListener(function() {
         updateButtonUIAndContextMenus();
