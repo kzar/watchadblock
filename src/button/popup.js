@@ -31,8 +31,6 @@ function customize_for_this_tab() {
       $("#total_blocked_count").text(info.total_blocked);
       
       $("#toggle_badge_checkbox").attr("checked", info.display_stats);
-      // Don't show the checkbox when clicking it will do nothing obvious.
-      $("#block_counts_controls").toggle(page_count !== "0");
       // Show help link until it is clicked.
       $("#block_counts_help").
         toggle(BG.get_settings().show_block_counts_help_link).
