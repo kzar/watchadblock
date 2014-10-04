@@ -321,8 +321,11 @@
       return;
     frameData.storeResource(sender.tab.id, 0, selector, "HIDE");
     var data = frameData.get(sender.tab.id, 0);
-    if (data)
+    if (data) {
       log(data.domain, ": hiding rule", selector, "matched:\n", matches);
+      blockCounts.recordOneAdBlocked(sender.tab.id);
+      updateBadge(sender.tab.id);
+    }
   }
 
   // UNWHITELISTING

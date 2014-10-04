@@ -1,6 +1,12 @@
 const C_PROXY_SEARCH = "search.disconnect.me"; // "adblock.disconnect.me";
 const C_HOUR_IN_MS = 1000 * 60 * 60;
 const BG = chrome.extension.getBackgroundPage();
+var search_chkbox_counter_default = {
+  "popup":   { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0}, "private":{"on":0,"off":0} },
+  "welcome": { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} },
+  "dialog":  { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} }
+};
+var search_pitch_page_counter_default = { "yes":0,"no":0,"learn_more":0,"total":0,"paid":0,"trial":0 };
 
 function DMSP1() {
   this.page_focus = false;
@@ -30,12 +36,8 @@ DMSP1.prototype.search_init_variables = function() {
     localStorage['search_last_time_sr_show'] = "0";
 
     localStorage['search_pwyw'] = JSON.stringify({date: new Date(), bucket: "viewed"});
-    localStorage['search_chkbox_counter'] = JSON.stringify({
-      "popup":   { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0}, "private":{"on":0,"off":0} },
-      "welcome": { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} },
-      "dialog":  { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} }
-    });
-    localStorage['search_pitch_page_counter'] = JSON.stringify({"yes":0,"no":0,"learn_more":0,"total":0,"paid":0,"trial":0});
+    localStorage['search_chkbox_counter'] = JSON.stringify(search_chkbox_counter_default);
+    localStorage['search_pitch_page_counter'] = JSON.stringify(search_pitch_page_counter_default);
     localStorage['search_total'] = "0";
     localStorage['search_show_form'] = "false";
     localStorage['search_pitch_page_shown'] = "false";
@@ -111,8 +113,24 @@ DMSP1.prototype.reportUsage = function() {
     'cohort=' + localStorage.search_cohort
   ].join('&');
 
-  var search_chkbox_counter = JSON.parse(localStorage['search_chkbox_counter']);
-  var search_pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+  var search_chkbox_counter = {};
+  try {
+    search_chkbox_counter = JSON.parse(localStorage['search_chkbox_counter']);
+  } catch(e) {
+    // if there is some problem with counter we just reset the variable.
+    localStorage['search_chkbox_counter'] = JSON.stringify(search_chkbox_counter_default);
+    search_chkbox_counter = JSON.parse(localStorage['search_chkbox_counter']);
+  }
+  
+  var search_pitch_page_counter = {};
+  try {
+    search_pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+  } catch(e) {
+    // if there is some problem with counter we just reset the variable.
+    localStorage['search_pitch_page_counter'] = JSON.stringify(search_pitch_page_counter_default);
+    search_pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+  }
+
   var report_values_to_send = {
     first_update: firstUpdate || false,
     search_engine: localStorage.search_engines || 0,
