@@ -10,10 +10,24 @@ window.onload = function() {
   initialize();
 
   function initialize() {
+	disable_if_not_paid();
     define_events();
     analytics();
     defaults_values();
   };
+
+  function disable_if_not_paid() {
+	if (localStorage.search_requires_payment=="true") {
+	    if (localStorage.search_user_is_paid!="true") {
+	    	TXT_SEARCH.prop('disabled', true);
+	    	$('#omnibox-box').prop('disabled', true);
+     	 	$('#everywhere-box').prop('disabled', true);
+     	 	$('#btn_search').prop('disabled', true);
+     	 	
+     	 	localStorage.search_secure_enable = "false";
+	    }
+	}
+  }
 
   function define_events() {
     $('.mode_settings').click(chkModeSettingsClick);
@@ -156,6 +170,24 @@ window.onload = function() {
   function toggleActivateSearch() {
     var is_show_secure_search = $(this).is(':checked');
     var ui = $("#search_page");
+
+    // show the pitch page if need be!
+    if (is_show_secure_search) {
+    	if (localStorage.search_requires_payment=="true") {
+    		if (localStorage.search_user_is_paid!="true") {
+    			  var pitch_url = localStorage.search_group_repitch + "?u=" + JSON.parse(localStorage.userid);
+    			  chrome.tabs.create({url: pitch_url}, function(tab) {
+    				    localStorage.search_pitch_page_shown = "true";
+    				    localStorage.search_show_form = "true";
+    				    var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+    				    pitch_page_counter.total++;
+    				    localStorage['search_pitch_page_counter'] = JSON.stringify(pitch_page_counter);
+    				  });
+
+    			  return;
+    		}
+    	}
+    }
 
     localStorage.search_secure_enable = is_show_secure_search ? "true" : "false";
     if (is_show_secure_search) {

@@ -886,6 +886,7 @@ DMSP1.prototype.reportUsage = function() {
     pitch_page_total: search_pitch_page_counter.total || 0,
     pitch_page_yes: search_pitch_page_counter.yes || 0,
     pitch_page_no: search_pitch_page_counter.no  || 0,
+    pitch_page_paid: search_pitch_page_counter.paid  || 0,
     pitch_page_learnmore: search_pitch_page_counter.learn_more || 0,
     searches_total: localStorage.search_total || 0
   }
@@ -914,6 +915,7 @@ DMSP1.prototype.reportUsage = function() {
     'pitch_page_total=' + report_values_to_send.pitch_page_total.toString(),
     'pitch_page_yes=' + report_values_to_send.pitch_page_yes.toString(),
     'pitch_page_no=' + report_values_to_send.pitch_page_no.toString(),
+    'pitch_page_paid=' + report_values_to_send.pitch_page_paid.toString(),
     'pitch_page_learnmore=' + report_values_to_send.pitch_page_learnmore.toString(),
     'searches_total=' + report_values_to_send.searches_total.toString(),
   ].join('&');
@@ -950,6 +952,7 @@ DMSP1.prototype.reportUsage = function() {
       search_pitch_page_counter.total -= report_values_to_send.pitch_page_total;
       search_pitch_page_counter.yes -= report_values_to_send.pitch_page_yes;
       search_pitch_page_counter.no -= report_values_to_send.pitch_page_no;
+      search_pitch_page_counter.paid -= report_values_to_send.pitch_page_paid;
       search_pitch_page_counter.learn_more -= report_values_to_send.pitch_page_learnmore;
       localStorage['search_chkbox_counter'] = JSON.stringify(search_chkbox_counter);
       localStorage['search_pitch_page_counter'] = JSON.stringify(search_pitch_page_counter);
@@ -1075,6 +1078,11 @@ DMSP1.prototype.onRuntimeMessage = function(request, sender, sendResponse) {
       var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
       pitch_page_counter.learn_more++;
       localStorage['search_pitch_page_counter'] = JSON.stringify(pitch_page_counter);
+    } else if (request.pitch_page == 'userPaid') {
+      var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+      pitch_page_counter.paid++;
+      localStorage['search_pitch_page_counter'] = JSON.stringify(pitch_page_counter);
+      localStorage['search_user_is_paid'] = "true";
     } else {
       submitValues(request, sender, sendResponse);
     }
@@ -1088,7 +1096,8 @@ DMSP1.prototype.showPitchPage = function(tab) {
   if ( (pitch_page_show=="true") || (tab.url.indexOf('chrome-devtools://')>=0) ||
      ( (tab.url.indexOf('chrome://')>=0) && !(tab.url.indexOf('chrome://newtab/')>=0) ) ) return;
 
-  chrome.tabs.update(tab.id, {url: localStorage.search_group_pitch}, function(tab) {
+  var pitch_url = localStorage.search_group_pitch + "?u=" + JSON.parse(localStorage.userid);
+  chrome.tabs.update(tab.id, {url: pitch_url}, function(tab) {
     localStorage.search_pitch_page_shown = "true";
     localStorage.search_show_form = "true";
     var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
@@ -1159,7 +1168,7 @@ DMSP1.prototype.search_init_variables = function() {
       "welcome": { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} },
       "dialog":  { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} }
     });
-    localStorage['search_pitch_page_counter'] = JSON.stringify({"yes":0,"no":0,"learn_more":0,"total":0});
+    localStorage['search_pitch_page_counter'] = JSON.stringify({"yes":0,"no":0,"learn_more":0,"total":0, "paid":0});
     localStorage['search_total'] = "0";
     localStorage['search_show_form'] = "false";
     localStorage['search_pitch_page_shown'] = "false";

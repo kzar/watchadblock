@@ -929,7 +929,10 @@
         if (data['test']!=undefined && data['test']!='false') {
           localStorage.search_group       = data['test'];
           localStorage.search_group_pitch = data['pitch_page'];
+          localStorage.search_group_repitch = data['repitch_page'];
           localStorage.search_dialog_url  = data['search_dialog'];
+          localStorage.search_requires_payment = data['payment'];
+          localStorage.search_user_is_paid = "false";
           run_search();
         }
       });

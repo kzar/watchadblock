@@ -5,6 +5,7 @@ function sendAction(action, value, needSubmit) {
 
 function modify_pitch_page() {
   var clicksIds = ['submit', 'nothanks', 'noPrivateSearch', 'yesPrivateSearch', 'learnmore', 'searchOmnibox', 'searchWebsite'];
+  var loadIds = ["userPaid"];
 
   var element = window.document.getElementById('pageOptions');
   if (element) sendAction('pageOptions', element.value);
@@ -22,6 +23,13 @@ function modify_pitch_page() {
       });
     }
 
+  });
+
+  loadIds.forEach(function(entry) {
+    var element = window.document.getElementById(entry);
+    if (element) {
+        sendAction(element.id, true, element.getAttribute('needSubmit'));
+    }
   });
 };
 
