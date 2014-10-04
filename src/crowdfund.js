@@ -114,23 +114,21 @@ crowdfund.showNew = function(callback) {
 crowdfund.done = function() {
   var status = storage_get(crowdfund.storageTag);
   crowdfund.running = false;
-  if (status.status == "notifying") {
-    status.status = "done";
-    storage_set(crowdfund.storageTag, status);
-        if (crowdfund.timerBlink) {
-      clearTimeout(crowdfund.timerBlink);
-    }
-    if (crowdfund.timerNotifying) {
-      clearTimeout(crowdfund.timerNotifying); 
-    }
-    chrome.browserAction.setBadgeBackgroundColor({color: "#555"});
-    chrome.browserAction.setBadgeText({text: ""});
-    var BG = chrome.extension.getBackgroundPage();
-    crowdfund.eachTab(function(tabID) {
-      chrome.browserAction.setBadgeBackgroundColor({color: "#555", tabId: tabID});
-      BG.updateBadge(tabID);
-    });
+  status.status = "done";
+  storage_set(crowdfund.storageTag, status);
+      if (crowdfund.timerBlink) {
+    clearTimeout(crowdfund.timerBlink);
   }
+  if (crowdfund.timerNotifying) {
+    clearTimeout(crowdfund.timerNotifying); 
+  }
+  chrome.browserAction.setBadgeBackgroundColor({color: "#555"});
+  chrome.browserAction.setBadgeText({text: ""});
+  var BG = chrome.extension.getBackgroundPage();
+  crowdfund.eachTab(function(tabID) {
+    chrome.browserAction.setBadgeBackgroundColor({color: "#555", tabId: tabID});
+    BG.updateBadge(tabID);
+  });
 };
 
 crowdfund.scheduleBlink = function() {
