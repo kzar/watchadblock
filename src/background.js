@@ -675,7 +675,6 @@
     }
   }
 
-
   // These functions are usually only called by content scripts.
 
   // Add a new custom filter entry.

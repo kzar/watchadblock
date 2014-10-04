@@ -547,7 +547,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_greek": { // Additional Greek filters
-      url: "https://raw.github.com/kargig/greek-adblockplus-filter/master/void-gr-filters.txt",
+      url: "https://www.void.gr/kargig/void-gr-filters.txt",
       requiresList: "easylist",
     },
     "easylist_plus_indonesian": { // Additional Indonesian filters

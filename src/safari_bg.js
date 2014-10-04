@@ -89,6 +89,13 @@ safari.application.addEventListener("command", function(event) {
 // we can make the toolbar button display a proper menu with items from Chrome's popup.
 if (!LEGACY_SAFARI) {
   (function() {
+    // Added this function so that safari will have it's own way of retrieving custom filters.
+    // Return filters created by user in an array.
+    var getCustomFilters = function() {
+      var custom_filters = storage_get('custom_filters');
+      return custom_filters ? custom_filters.trimLeft() : '';
+    };
+
     // Unfortunately, Safari API kinda sucks. Command events sent from toolbar menu items don't include a
     // reference to the browser window that sent them, same goes for the Menu events. This unfortunately
     // means that we have to create a separate instance of menu for each browser window.
@@ -202,7 +209,7 @@ if (!LEGACY_SAFARI) {
         var whitelisted = page_is_whitelisted(url);
 
         var eligible_for_undo = !paused && (!canBlock || !whitelisted);
-        if (eligible_for_undo && has_last_custom_filter(canBlock ? url : undefined)) {
+        if (eligible_for_undo && getCustomFilters()) {
           appendMenuItem("undo-last-block", translate("undo_last_block"));
           menu.appendSeparator(itemIdentifier("separator0"));
         }
@@ -250,6 +257,6 @@ safari.application.addEventListener("contextmenu", function(event) {
 
   event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
   event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
-  if (has_last_custom_filter(url))
+  if (getCustomFilters())
     event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
 }, false);
