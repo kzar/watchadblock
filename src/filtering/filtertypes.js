@@ -85,7 +85,7 @@ var SelectorFilter = function(text) {
 
 // If !|excludeFilters|, returns filter.
 // Otherwise, returns a new SelectorFilter that is the combination of
-// |filter| and each selector exclusion filter in the given list.  
+// |filter| and each selector exclusion filter in the given list.
 SelectorFilter.merge = function(filter, excludeFilters) {
   if (!excludeFilters)
     return filter;
@@ -149,7 +149,7 @@ PatternFilter._parseRule = function(text) {
   var result = {
     domainText: '',
     // TODO: when working on this code again, consider making options a
-    // dictionary with boolean values instead of a bitset. This would 
+    // dictionary with boolean values instead of a bitset. This would
     // - make more sense, because these options are only checked individually
     // - collapse the two bitwise checks in Filter.matches into a single
     // boolean compare
@@ -203,7 +203,7 @@ PatternFilter._parseRule = function(text) {
       }
     }
     else if (option === 'third_party') {
-      result.options |= 
+      result.options |=
           (inverted ? FilterOptions.FIRSTPARTY : FilterOptions.THIRDPARTY);
     }
     else if (option === 'match_case') {
@@ -241,18 +241,18 @@ PatternFilter._parseRule = function(text) {
     return result;
   }
 
-  var key = rule.match(/\w{5,}/);
+  var key = rule.match(/[\w&=]{5,}/);
   if (key)
     result.key = new RegExp(key, matchcase);
 
   // ***** -> *
   //replace, excessive wildcard sequences with a single one
   rule = rule.replace(/\*-\*-\*-\*-\*/g, '*');
-  
+
   rule = rule.replace(/\*\*+/g, '*');
 
   // Some chars in regexes mean something special; escape it always.
-  // Escaped characters are also faster. 
+  // Escaped characters are also faster.
   // - Do not escape a-z A-Z 0-9 and _ because they can't be escaped
   // - Do not escape | ^ and * because they are handled below.
   rule = rule.replace(/([^a-zA-Z0-9_\|\^\*])/g, '\\$1');
@@ -282,7 +282,7 @@ PatternFilter.prototype = {
   // Inherit from Filter.
   __proto__: Filter.prototype,
 
-  // Returns true if an element of the given type loaded from the given URL 
+  // Returns true if an element of the given type loaded from the given URL
   // would be matched by this filter.
   //   url:string the url the element is loading.
   //   elementType:ElementTypes the type of DOM element.

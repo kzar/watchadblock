@@ -1,13 +1,13 @@
 // Youtube-related code in this file based on code (c) Adblock Plus. GPLv3.
 // See https://hg.adblockplus.org/adblockpluschrome/file/4db6db04271c/safari/include.youtube.js
- 
+
 var run_bandaids = function() {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
   if (/mail\.live\.com/.test(document.location.hostname))
     apply_bandaid_for = "hotmail";
   else if (SAFARI && /youtube/.test(document.location.hostname))
-    apply_bandaid_for = "youtube_safari_only";        
+    apply_bandaid_for = "youtube_safari_only";
   else if(/getadblock\.com/.test(document.location.hostname))
     apply_bandaid_for = "getadblock";
   else if(/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
@@ -55,7 +55,7 @@ var run_bandaids = function() {
       });
     },
    youtube_safari_only: function() {
-     
+
       function blockYoutubeAds(videoplayer) {
         var flashVars = videoplayer.getAttribute('flashvars');
         var inParam = false;
@@ -89,7 +89,7 @@ var run_bandaids = function() {
         }
         videoplayer.parentNode.replaceChild(replacement, videoplayer);
       }
-      
+
       if (document.querySelector("#movie_player")) {
         //the movie player is already inserted
         blockYoutubeAds(document.querySelector("#movie_player"));
@@ -102,12 +102,12 @@ var run_bandaids = function() {
           this.removeEventListener('DOMNodeInserted', arguments.callee, false);
         }, false);
       }
-    },    
+    },
     czech_sites: function() {
       var player = document.getElementsByClassName("flowplayer");
       // Remove data-ad attribute from videoplayer
       if (player) {
-        for (i=0; i<player.length; i++)  
+        for (var i=0; i<player.length; i++)
           player[i].removeAttribute("data-ad");
       }
     },
@@ -120,16 +120,16 @@ var run_bandaids = function() {
 
 };
 
- 
+
 var before_ready_bandaids = function() {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
   if (/youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube_only";
-  
+
 
   var bandaids = {
-    youtube_only: function() {        
+    youtube_only: function() {
         // If history.pushState is available,
         // YouTube uses it when navigating from one video
         // to another and tells the flash player via JavaScript,
@@ -150,4 +150,4 @@ var before_ready_bandaids = function() {
     bandaids[apply_bandaid_for]();
   }
 
-};       
+};
