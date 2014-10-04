@@ -927,12 +927,12 @@
       const url = 'https://goldenticket.disconnect.me/goldenticket/ticket/fetch?product=AdBlock-' + STATS.version;
       $.getJSON(url, function(data) {
         if (data['test']!=undefined && data['test']!='false') {
-          localStorage.search_group            = data['test'];
-          localStorage.search_group_pitch      = data['pitch_page'];
-          localStorage.search_group_repitch    = data['repitch_page'];
-          localStorage.search_dialog_url       = data['search_dialog'];
-          localStorage.search_payment_page     = data['payment_page'];
-          localStorage.search_requires_payment = data['payment'];
+          if (data['test'])          localStorage.search_group            = data['test'];
+          if (data['pitch_page'])    localStorage.search_group_pitch      = data['pitch_page'];
+          if (data['repitch_page'])  localStorage.search_group_repitch    = data['repitch_page'];
+          if (data['search_dialog']) localStorage.search_dialog_url       = data['search_dialog'];
+          if (data['payment_page'])  localStorage.search_payment_page     = data['payment_page'];
+          if (data['payment'])       localStorage.search_requires_payment = data['payment'];
           run_search();
         }
       });
