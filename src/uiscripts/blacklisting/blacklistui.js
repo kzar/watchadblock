@@ -179,7 +179,7 @@ BlacklistUi.prototype._build_page1 = function() {
   }
   $("#slider", page).
     attr("max", Math.max(depth - 1, 1)).
-    change(function() {
+    on("input change", function() { 
       that._chain.moveTo(this.valueAsNumber);
     });
 

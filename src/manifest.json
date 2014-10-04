@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.6.28",
+  "version": "2.6.29",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
@@ -61,7 +61,7 @@
       "all_frames": false
     }
   ],
-  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src *; frame-src 'self' https://chromeadblock.com https://getadblock.com",
+  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src *; frame-src 'self' https://chromeadblock.com https://getadblock.com",
   "default_locale": "en",
   "description": "__MSG_description2__",
   "icons": {

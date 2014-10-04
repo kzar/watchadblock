@@ -147,9 +147,8 @@ function handleABPLinkClicks() {
       var reqLoc = queryparts.requiresLocation;
       var reqList = (reqLoc ? "url:" + reqLoc : undefined);
       BGcall("subscribe", {id: "url:" + loc, requires: reqList});
-      window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
-                  "_blank",
-                  'scrollbars=0,location=0,resizable=0,width=450,height=140');
+      // Open subscribe popup
+      BGcall("launch_subscribe_popup", loc);
     }
   };
   for (var i=0; i<elems.length; i++) {

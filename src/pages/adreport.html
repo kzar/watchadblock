@@ -110,9 +110,38 @@
         <label for="step_disable_extensions_no" i18n="no"></label>
       </div>  
     </div>
+    
+  <!--STEP 3a: Similar ads in different places-->
+    <div class="section" id="step_everywhere_DIV">
+      <h2 i18n="similarAds"></h2>
+      <span i18n="sameAdsOnDifferentPages"></span>
+      <div class="form" id="step_everywhere">
+        <input type="radio" id="step_everywhere_yes" name="step_everywhere"/>
+        <label for="step_everywhere_yes" i18n="yes"></label>
+        <input type="radio" id="step_everywhere_no" name="step_everywhere" />
+        <label for="step_everywhere_no" i18n="no"></label>
+      </div>
+    </div>
+    
+  <!--STEP 3b: scan for malware-->
+    <div class="section" id="step_malware_DIV">
+      <h2 i18n="scancomputer"></h2>
+      <ol>
+        <li i18n="performscan"></li>
+        <li i18n="reloadadpage"></li>
+      </ol>
+      
+      <span i18n="adstillappear"></span>
+      <div class="form" id="step_malware">
+        <input type="radio" id="step_malware_yes" name="step_malware"/>
+        <label for="step_malware_yes" i18n="yes"></label>
+        <input type="radio" id="step_malware_no" name="step_malware" />
+        <label for="step_malware_no" i18n="no"></label>
+      </div>
+    </div>
 
 
-    <!--STEP 3: language-->
+    <!--STEP 4: language-->
     <div class="section" id="step_language_DIV">
       <h2 i18n="correctfilters"></h2>
       <span i18n="pagelanguagecheck"></span>
@@ -150,7 +179,7 @@
       </div>
     </div>
   
-    <!--STEP 4: also in Firefox-->
+    <!--STEP 5: also in Firefox-->
     <div class="section" id="step_firefox_DIV">
       <h2 id="checkinfirefox"></h2>
       <abbr id="whyFireFox" i18n_title="firefox_explanation">?</abbr>
@@ -172,7 +201,7 @@
     </div>
 
 
-    <!--STEP 5: video/flash ads-->
+    <!--STEP 6: video/flash ads-->
     <div class="section" id="step_flash_DIV">
       <h2 i18n="flashads"></h2>
       <span i18n="cantblockflashwarning"></span>

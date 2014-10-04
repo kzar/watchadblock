@@ -73,7 +73,7 @@ var run_bandaids = function() {
         log("Removing YouTube ads");
         var pairs = flashVars.split("&");
         for (var i = 0; i < pairs.length; i++) {
-            if (/^((ad|afv|adsense|iv)(_.*)?|(ad3|iv3|st)_module|prerolls|interstitial|infringe|invideo)=/.test(pairs[i])) {
+            if (/^((ad|afv|adsense)(_.*)?|(ad3|st)_module|prerolls|interstitial|infringe|invideo)=/.test(pairs[i])) {
                 pairs.splice(i--, 1);
             }
         }

@@ -86,7 +86,7 @@ function top_open_whitelist_ui() {
     $("#pathslider", page).
       attr("max", Math.max(pathparts.length - 1, 1));
     $("#pathslider, #domainslider", page).
-      change(onSliderChange);
+      on("input change", function() { onSliderChange(); }); 
 
     function onSliderChange() {
       generateUrl(true);

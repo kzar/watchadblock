@@ -1,5 +1,5 @@
 ! Chrome AdBlock auxiliarly filters
-! Last update: Wed Jan  1 18:28:28 EST 2014
+! Last update: Thu Apr 24 17:59:48 EST 2014
 
 ! Ad providers. Filter lists don't care they are blocked
 @@||advertising.apple.com^$domain=advertising.apple.com
@@ -44,3 +44,8 @@ wrzesnia.pl##img[src*="/ads_files/"]
 
 ! Should bypass pirateproxy.net's popup mechanism
 ||*^$popup,domain=pirateproxy.net
+
+! Unblock Mixpanel on our website
+@@||getadblock.com/js/mixpanel.js
+@@||mxpnl.com$domain=getadblock.com
+@@||mixpanel.com$domain=getadblock.com

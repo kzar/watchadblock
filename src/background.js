@@ -64,19 +64,12 @@
       whitelist_hulu_ads: false, // Issue 7178
       show_context_menu_items: true,
       show_advanced_options: false,
-      new_safari_hiding: false,
       display_stats: true,
       show_block_counts_help_link: true,
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
 
-    // new_safari_hiding should NEVER be set to true outside Safari 6.  Leaving
-    // this code here to remember this when we switch new_safari_hiding from
-    // opt-in to opt-out in Safari 6: even if somehow a non-Safari-6 user gets
-    // this set to true, it will be reset when they restart their browser.
-    if (!SAFARI6)
-      this._data.new_safari_hiding = false;
   };
   Settings.prototype = {
     set: function(name, is_enabled) {
@@ -449,9 +442,6 @@
 
     if (name === "debug_logging")
       logging(is_enabled);
-
-    if (name === "new_safari_hiding")
-      update_filters();
   }
 
   // MYFILTERS PASSTHROUGHS
@@ -524,8 +514,6 @@
       return sessionStorage.getItem('adblock_is_paused') === "true";
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
-    if (_myfilters.styleSheetRegistrar)
-      _myfilters.styleSheetRegistrar.pause(newValue);
   }
 
   // INFO ABOUT CURRENT PAGE
@@ -606,7 +594,7 @@
       // main_frame is undefined if the tab is a new one, so no use updating badge.
       if (!main_frame) return;
       
-      var isBlockable = !page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url);
+      var isBlockable = !page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url) && !/chrome\/newtab/.test(main_frame.url);
       
       if(display && (main_frame && isBlockable) && !adblock_is_paused()){
         badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
@@ -746,16 +734,8 @@
       running: running,
       hiding: hiding
     };
-    if (_myfilters.styleSheetRegistrar) {
-      _myfilters.styleSheetRegistrar.prepareFor(options.domain);
-      result.avoidHidingClass = StyleSheetRegistrar.avoidHidingClass;
-      if (settings.debug_logging && hiding) {
-        var filters = _myfilters.styleSheetRegistrar._filters;
-        var filterset = FilterSet.fromFilters(filters);
-        result.selectors = filterset.filtersFor(options.domain);
-      }
-    }
-    if (!_myfilters.styleSheetRegistrar && hiding) {
+
+    if (hiding) {
       result.selectors = _myfilters.hiding.filtersFor(options.domain);
     }
     return result;
@@ -830,6 +810,13 @@
   // Open the resource blocker when requested from the Chrome popup.
   launch_resourceblocker = function(query) {
     openTab("pages/resourceblock.html" + query, true);
+  }
+  
+  // Open subscribe popup when new filter list was subscribed from site
+  launch_subscribe_popup = function(loc) {
+    window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
+    "_blank",
+    'scrollbars=0,location=0,resizable=0,width=450,height=140');
   }
 
   // Get the framedata for resourceblock

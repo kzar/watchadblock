@@ -33,8 +33,6 @@ SAFARI = (function() {
 
 // Safari 5.0 (533.x.x) with no menu support
 LEGACY_SAFARI = SAFARI && (navigator.appVersion.match(/\sSafari\/(\d+)\./) || [null,0])[1] < 534;
-// Safari 6.0 implementing removeContentStyleSheet with no bugs
-SAFARI6 = SAFARI && (navigator.appVersion.match(/Version\/(\d+)/) || [null, 0])[1] >= 6;
 
 if (SAFARI) {
 

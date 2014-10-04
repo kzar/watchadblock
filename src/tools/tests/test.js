@@ -184,14 +184,6 @@ test("clone", function() {
   deepEqual(d, d2);
 });
 
-test("full", function() {
-  ok(new DomainSet({"": true}).full());
-  ok(new DomainSet({"": true, "a.com": true}).full());
-  ok(!new DomainSet({"": true, "a.com": false, "b.a.com": true}).full());
-  ok(!new DomainSet({"": false}).full());
-  ok(!new DomainSet({"": false, "a.com": true}).full());
-});
-
 test("subtract", function() {
 
   var _normalize = function(data) {
