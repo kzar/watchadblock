@@ -287,11 +287,11 @@ function generateFilterSuggestions() {
     $("#suggestions").find('input:first-child').prop('checked', true);
 
   if (!isBlocked && !isHidden)
-    $("#selectblockableurl b").text(translate("blockeverycontaining"));
+    $("#status").text(translate("blockeverycontaining"));
   else if (isHidden)
-    $("#selectblockableurl b").text(translate("thisfilterwillbedisabled"));
+    $("#status").text(translate("thisfilterwillbedisabled"));
   else
-    $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
+    $("#status").text(translate("whitelisteverycontaining"));
   
     $("label[for='disablefilter']").text(chosenResource.filter);
   
@@ -593,7 +593,7 @@ function finally_it_has_loaded_its_stuff() {
       $("#selectblockableurl br").remove();
       $("#selectblockableurl *:not(br):not(b)").prop("disabled", true);
       if ($("#disablefilter").is(":disabled")) {
-        $("#selectblockableurl b").text(translate("thisfilterwillbedisabled"));
+        $("#status").text(translate("thisfilterwillbedisabled"));
         $("label[for='domainis']").text(translate("onlypagesonthisdomain"));
         $("[i18n='appliedwhenbrowsing']").text(translate("disabledwhenbrowsing"));
         $("[i18n='ordisablefilter'], [i18n='casesensitive'], [i18n='onlyresourcetypes'], [id^='matchcase'], [for^='matchcase'], #chooseoptions br, #suggestions, #thirdparty, #types").remove();

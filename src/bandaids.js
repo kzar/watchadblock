@@ -8,10 +8,12 @@ var run_bandaids = function() {
     apply_bandaid_for = "hotmail";
   else if (SAFARI && /youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube_safari_only";
-  else if(/getadblock\.com/.test(document.location.hostname))
+  else if (/getadblock\.com/.test(document.location.hostname))
     apply_bandaid_for = "getadblock";
-  else if(/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
+  else if (/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
     apply_bandaid_for = "czech_sites";
+  else if (/thepiratebay/.test(document.location.hostname))
+    apply_bandaid_for = "the_pirate_bay_safari_only";
   else {
     var hosts = [ /mastertoons\.com$/ ];
     hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
@@ -58,7 +60,7 @@ var run_bandaids = function() {
         elemDiv.style.display = "none";
         document.body.appendChild(elemDiv);
       });
-
+      BGcall('set_first_run_to_false', null);
     },
    youtube_safari_only: function() {
 
@@ -116,6 +118,10 @@ var run_bandaids = function() {
         for (var i=0; i<player.length; i++)
           player[i].removeAttribute("data-ad");
       }
+    },
+    the_pirate_bay_safari_only: function() {
+      // Set cookie to prevent pop-ups from The Pirate Bay
+      document.cookie="tpbpop=1%7CSun%2C%2030%20Aug%202024%2006%3A21%3A49%20GMT; expires=Thu, 30 Aug 2034 12:00:00 GMT; path=/;";
     },
   }; // end bandaids
 

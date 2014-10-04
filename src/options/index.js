@@ -92,13 +92,11 @@ function displayVersionNumber() {
   } catch (ex) {} // silently fail
 }
 
-$("#paymentlink").click(function() {
-  BGcall("storage_get", "userid", function(userId) {
-    var href = "https://chromeadblock.com/pay/?source=O&u=" + userId;
-    BGcall("openTab", href);
-  });
-  return false;
+BGcall("storage_get", "userid", function(userId) {
+    var paymentHREFhref = "https://getadblock.com/pay/?source=O&u=" + userId;
+    $("#paymentlink").attr("href", paymentHREFhref);
 });
+
 
 function displayTranslationCredit() {
 if (navigator.language.substring(0, 2) != "en") {
