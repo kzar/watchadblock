@@ -4,7 +4,7 @@
     "description":"Extension description in manifest"
   },
   "adblock_click_for_details":{
-    "message":"AdBlock - click for details",
+    "message":"AdBlock - napsauta saadaksesi tietoja",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button.  Do not translate the beginning 'AdBlock - ' part."
   },
   "buttoncancel":{
@@ -16,7 +16,7 @@
     "description":"OK button"
   },
   "reportpubliclyavailable":{
-    "message":"Note: your report may become publicly available. Keep that in mind before including anything private.",
+    "message":"Huomautus: ilmoituksesi saatetaan julkaista. Pidä se mielessä ennen kuin sisällytät mitään yksityistä.",
     "description":"Ad report page string, when you're about to submit a report"
   },
   "buttonblockit":{
@@ -32,7 +32,7 @@
     "description":"Title for the options page"
   },
   "thirdparty":{
-    "message":"Third-party",
+    "message":"Kolmas osapuoli",
     "description":"Resource list column title telling if the resource originates from a different domain"
   },
   "installedtitle":{
@@ -40,7 +40,7 @@
     "description":"Title for the installation success page"
   },
   "chromebutton_how_to_hide2":{
-    "message":"To hide the button, right click it and choose Hide Button.  You can show it again under chrome:\/\/chrome\/extensions.",
+    "message":"Piilottaaksesi painikkeen, napsauta sitä hiiren oikealla ja napsauta Piilota painike. Voit ottaa sen takaisin käyttöön kohdassa chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "sliderexplanation":{
@@ -222,11 +222,11 @@
     "description":"Option on first tab page"
   },
   "use_experimental_feature_to_speed_up_adblock":{
-    "message":"Speed up AdBlock using an experimental feature in Safari.",
+    "message":"Napauta AdBlockia käyttämällä Safarin kokeellista ominaisuutta.",
     "description":"Option on first tab page"
   },
   "let_me_know_how_it_is_working":{
-    "message":"Do me a favor?  Try this experimental feature for a while, then <a>let me know<\/a> how well it works for you.",
+    "message":"Haluatko tehdä palveluksen? Kokeile tätä kokeellista ominaisuutta hetken, sitten <a>kerro minulle<\/a> kuinka se toimii sinulla.",
     "description":"Shown to users who use_experimental_feature_to_speed_up_adblock, politely encouraging them to click the link, taking them to a survey about their experience with the feature."
   },
   "googletextads":{
@@ -346,7 +346,11 @@
     "description":"Option on second tab page"
   },
   "filterantisocial":{
-    "message":"Antisocial filter list (removes social media buttons)",
+    "message":"Epäsosiaalinen suodatinluottelo (poistaa some-painikkeet)",
+    "description":"Name of the filter list"
+  },
+  "filterannoyances":{
+    "message":"Fanboy's Annoyances (removes annoyances on the Web)",
     "description":"Name of the filter list"
   },
   "filteradblock_custom":{
@@ -358,11 +362,11 @@
     "description":"A filter list. Don't translate 'EasyList'"
   },
   "filterrussian":{
-    "message":"Russian and Ukrainian",
+    "message":"Venäjä ja ukraina",
     "description":"Language names for a filter list"
   },
   "filterczech":{
-    "message":"Czech and Slovak",
+    "message":"Tshekki ja slovakia",
     "description":"Language names for a filter list"
   },
   "filtereasyprivacy":{
@@ -370,27 +374,27 @@
     "description":"A filter list. Don't translate the name 'EasyPrivacy'."
   },
   "filtereasylist_plus_indonesian":{
-    "message":"Indonesian",
+    "message":"Indonesia",
     "description":"A filter list."
   },
   "filtermalware":{
-    "message":"Malware protection",
+    "message":"Haittaohjelmien suodatus",
     "description":"A filter list."
   },
   "filterlatvian":{
-    "message":"Latvian",
+    "message":"Latvia",
     "description":"A filter list."
   },
   "filternorwegian":{
-    "message":"Norwegian",
+    "message":"Norja",
     "description":"A filter list."
   },
   "filterswedish":{
-    "message":"Swedish",
+    "message":"Ruotsi",
     "description":"A filter list."
   },
   "filterturkish":{
-    "message":"Turkish",
+    "message":"Turkki",
     "description":"A filter list."
   },
   "blacklistclickmessage":{
@@ -494,31 +498,31 @@
     "description":"on the ad report page, telling a user there is nothing to do"
   },
   "disableallextensions":{
-    "message":"Disable all extensions except for AdBlock.",
+    "message":"Poista kaikki laajennukset, paitsi AdBlock, käytöstä.",
     "description":"instruction on ad report page"
   },
   "disableforchromestepone":{
-    "message":"Open <a href='#'>the extensions page<\/a>",
+    "message":"Avaa <a href='#'>lisäosasivu<\/a>",
     "description":"Step 1 for disabling chrome extensions"
   },
   "disableforchromeandsafaristeptwo":{
-    "message":"Uncheck the 'Enabled' checkbox next to every extension <b>except<\/b> for AdBlock.  <b>Leave AdBlock enabled<\/b>.",
+    "message":"Poista rasti ruudusta 'Käytössä' jokaiselta lisäosalta <b>paitsi<\/b> AdBlockilta. <b>Jätä AdBlock käyttöön<\/b>.",
     "description":"Step 2 for disabling chrome and safari extensions"
   },
   "disableforsafaristepone":{
-    "message":"Click the Safari menu &rarr; Preferences &rarr; Extensions.",
+    "message":"Napsauta Safari-valikkoa &rarr; Asetukset &rarr; Lisäosat.",
     "description":"Step 1 for disabling safari extensions"
   },
   "disableforopera":{
-    "message":"For Opera",
+    "message":"Operalle",
     "description":"Opera instructions"
   },
   "disableforoperainstructions":{
-    "message":"Click the menu button in the top left hand corner. Then go to Extensions->Manage Extensions. Disable all extensions by clicking their respective disable buttons. Remember, DO NOT disable AdBlock!",
+    "message":"Napsauta valikkopainiketta ylhäällä vasemmassa nurkassa. Sitten siirry Lisäosat->Hallitse lisäosia. Poista kaikki lisäosat käytöstä napsauttamalla poista käytöstä -painikkeita. Muista, ÄLÄ poista AdBlockia käytöstä!",
     "description":"shows user how to disable all their extensions in Opera."
   },
   "reenableadsonebyone":{
-    "message":"Now that the ads are gone, you must find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one that you must delete to get rid of the ads.",
+    "message":"Nyt kun mainokset ovat poissa, sinun täytyy löytää lisäosa, joka aiheuttaa ongelmia. Käy lisäosat yksi kerrallaan läpi ottaen niitä käyttöön. Lisäosa, joka tuo mainokset takaisin on ongelmia aiheuttava, ja sinun kannattaa poistaa se.",
     "description":"tells the user to reenable the extensions one by one."
   },
   "correctfilters":{
@@ -574,7 +578,7 @@
     "description":"language"
   },
   "filterisraeli":{
-    "message":"Hebrew",
+    "message":"Heprea",
     "description":"language"
   },
   "filteritalian":{
@@ -602,7 +606,7 @@
     "description":"language"
   },
   "lang_slovak":{
-    "message":"Slovak",
+    "message":"Slovakki",
     "description":"language"
   },
   "filtereasylist_plus_spanish":{
@@ -712,7 +716,7 @@
     }
   },
   "adblock_outdated_chrome":{
-    "message":"You are using an old version of AdBlock. Please go to <a href='#'>the extensions page<\/a>, enable 'Developer mode' and click 'Update extensions now'",
+    "message":"Käytät vanhaa versiota AdBlockista. Siirry <a href='#'>lisäosasivulle<\/a>, ota 'Kehittäjätila' käyttöön ja napsauta 'Päivitä lisäosat nyt'",
     "description":"Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome:\/\/chrome\/extensions\/'"
   },
   "block_an_ad_on_this_page":{
@@ -796,7 +800,7 @@
     "description":"resourceblocking page string"
   },
   "doesntmatchoriginal":{
-    "message":"The pattern you entered doesn't match the resource you tried to block! Continue anyway?",
+    "message":"Syöttämäsi kaava ei vastaa resurssia, jota yritit estää! Jatka tästä huolimatta?",
     "description":"resourceblocking page string"
   },
   "thirdpartycheckbox":{
@@ -822,11 +826,11 @@
     "description":"Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend2":{
-    "message":"Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.",
+    "message":"Joku meni vikaan. Resursseja ei kuitenkaan ole lähetetty. Tämä sivu sulkeutuu nyt. Yritä päivittää verkkosivu.",
     "description":"resourceblocking page string"
   },
   "resourcedomain":{
-    "message":"Loaded on page with domain:\n$domain$",
+    "message":"Ladattiin sivu verkkotunnuksessa:\n$domain$",
     "description":"Text shown when hovering over an item in the third-party column",
     "placeholders":{
       "domain":{
@@ -968,7 +972,7 @@
     "description":"Menu entry to pause AdBlock."
   },
   "undo_last_block":{
-    "message":"Undo my blocks on this domain",
+    "message":"Kumoa estoni tässä verkkotunnuksessa",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard."
   },
   "dont_run_on_this_page":{
@@ -984,7 +988,7 @@
     "description":"Toolbar button menu entry to hide the AdBlock button"
   },
   "spread_the_word":{
-    "message":"Help spread the word!",
+    "message":"Auta välittämään sanaa!",
     "description":"Text of a share link"
   },
   "did_you_know_this_is_my_full_time_job":{
@@ -1030,7 +1034,7 @@
     "description":"Options page checkbox"
   },
   "work_around_hulu_problems":{
-    "message":"Work around Hulu.com videos not playing (requires restarting your browser)",
+    "message":"Korjaa ongelma, jssa Hulu.com-videot eivät toimi (vaatii selaimen uudelleenkäynnistyksen)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break.  It directs the user to restart their browser in order for changes to the checkbox to take effect"
   },
   "now_you_have_adblock_hooray":{
@@ -1104,39 +1108,39 @@
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
   },
   "searchexplanation":{
-    "message":"Use * to match zero or more letters.  For example, 'banner*.gif image' matches the images 'banner.gif', 'banner123.gif', and 'bannerxyz.gif'.",
+    "message":"Käytä * nollan tai useamman kirjan vastaamiseksi. Esimerkiksi 'banner*.gif kuva' vastaa kuvat 'banner.gif', 'banner123.gif' ja 'bannerxyz.gif'.",
     "description":"Text in resourceblock when you hover your mouse over the search textbox"
   },
   "searchplaceholder":{
-    "message":"Search resources...",
+    "message":"Etsi resursseja...",
     "description":"Text in resourceblock shown in the search textbox before you type something"
   },
   "nosearchresults":{
-    "message":"No resources found",
+    "message":"Ei resursseja löytynyt",
     "description":"Text in resourceblock shown if no results are found after searching"
   },
   "custompattern":{
-    "message":"Custom:",
+    "message":"Mukautettu:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
   "opera_reenable_button":{
-    "message":"You can re-enable the button in the preferences of this extension",
+    "message":"Voit ottaa painikkeen uudelleen käyttöön tämän lisäosan asetuksissa",
     "description":"Opera browser button message when you click 'hide this button'"
   },
   "opera_linkunblock":{
-    "message":"Show ads on a domain",
+    "message":"Näytä mainokset verkkotunnuksessa",
     "description":"Opera version of the 'linkunblock' string"
   },
   "opera_excludedomainorurl":{
-    "message":"The domain where AdBlock shouldn't block anything",
+    "message":"Verkkotunnus, jossa AdBlockin ei tulisi estää mitään",
     "description":"Opera version of the 'excludedomainorurl' string"
   },
   "opera_show_toolbar_button":{
-    "message":"Show the toolbar button",
+    "message":"Näytä työkalurivin painike",
     "description":"Opera option to show\/hide the button"
   },
   "opera_can_also_change_setting":{
-    "message":"You can also increase the value of\n$setting$",
+    "message":"Voit myös lisätä arvoa asetukselle\n$setting$",
     "description":"Message when the storage quota is reached, for advanced users in Opera",
     "placeholders":{
       "setting":{
@@ -1146,27 +1150,27 @@
     }
   },
   "opera_for_more_options":{
-    "message":"For more options, you can click the toolbar button or open the preferences via Extensions (in the menu) &rArr; Manage Extensions &rArr; wrench icon &rArr; Preferences",
+    "message":"Saadaksesi lisätietoja voit napsauttaa työkalurivin painiketta tai avata asetukset kohdassa Lisäosat (valikossa) &rArr; Hallitse lisäosia &rArr; jakoavainkuvake &rArr; Asetukset",
     "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
   },
   "thats_it":{
-    "message":"That's it!",
+    "message":"Siinä se!",
     "description":"Install page string"
   },
   "close_tab_begin_browsing":{
-    "message":"You can close this tab and begin browsing ad-free. Have fun!",
+    "message":"Voit sulkea tämän välilehden ja alkaa selata ilman mainoksia. Pidä hauskaa!",
     "description":"Install page string"
   },
   "opera_donations_install":{
-    "message":"If you really like this extension, please consider donating via the options page.",
+    "message":"Jos todella pidät tästä lisäosasta, harkitse lahjoittamista asetussivun kautta.",
     "description":"Opera donate request in the install page"
   },
   "opera_donations_button":{
-    "message":"Like this extension? If so, please consider donating in the options page!",
+    "message":"Pidätkö tästä lisäosasta? Harkitse lahjoittamista asetukset-sivulla!",
     "description":"Opera donate request in the button"
   },
   "opera_enabledin":{
-    "message":"Enabled in $browserversion$",
+    "message":"Käytössä selaimessa $browserversion$",
     "description":"Hover text of items disabled in an older browser version",
     "placeholders":{
       "browserversion":{
@@ -1176,15 +1180,15 @@
     }
   },
   "opera_120_install":{
-    "message":"In Opera versions before Opera 12.10, some ads may not be blocked as it is not possible to parse all rules in those versions. This will be fixed when Opera updates to version 12.10. From that moment, all ads will be correctly blocked.",
+    "message":"Opera-versioissa ennen 12.10 joitakin mainoksia ei estetä, sillä kaikkien sääntöjen jäsentäminen ei ole mahdollista. Tämä korjataan kun Opera päivittyy versioon 12.10 ja tällöin mainokset estetään oikein.",
     "description":"Opera < 12.10 warning during installation"
   },
   "opera_120_options":{
-    "message":"In Opera versions before Opera 12.10, some options are greyed out, because they can't be supported in those versions.",
+    "message":"Opera-versioissa ennen 12.10, jotkut asetukset on harmaana, sillä ne ei ole tuettuna ko. versioissa.",
     "description":"Opera < 12.10 warning above options page"
   },
   "filterorigin":{
-    "message":"Filter origin:\n$list$",
+    "message":"Suodattimen alkuperä:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
     "placeholders":{
       "list":{
@@ -1194,27 +1198,27 @@
     }
   },
   "firefox_explanation":{
-    "message":"The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.",
+    "message":"Tämän kysymyksen tarkoitus on se, kuka saa vastaanottaa raporttisi. Jos vastaat tähän kysymykseen väärin, raportti lähetetään väärille henkilöille, ja se saatetaan hylätä.",
     "description":"Explanation of the Check-in-FireFox step in the ad reporter"
   },
   "opera_secure_pages":{
-    "message":"Secure pages",
+    "message":"Turvalliset sivut",
     "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
   },
   "opera_secure_pages_enabled":{
-    "message":"Click Extensions (in the menu) &rArr; Manage Extensions &rArr; look for AdBlock and click the spanner icon near it &rArr; click Privacy.<br\/>Is the option to allow access to secure pages enabled?",
+    "message":"Napsauta Lisäosat (valikossa) &rArr; Hallitse lisäosia &rArr; etsi AdBlock ja napsauta avainkuvaketta sen vieressä &rArr; napsauta Tietosuoja.<br\/>Onko vaihtoehto, joka sallii pääsyn suojatuille sivuille, käytössä?",
     "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "opera_allow_secure":{
-    "message":"If you want to use AdBlock on secure pages (pages with a lock icon in the toolbar), you first have to enable the option to allow access to secure pages.",
+    "message":"Jos haluat käyttää AdBlockia suojatuilla sivuilla (lukkokuvake työkalurivillä), sinun täytyy ensin ottaa vaihtoehto käyttöön.",
     "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow"
   },
   "blocked_ads":{
-    "message":"Blocked ads:",
+    "message":"Estetyt mainokset:",
     "description":"Title for popup menu section showing number of ads blocked."
   },
   "blocked_n_on_this_page":{
-    "message":"$count$ on this page",
+    "message":"$count$ tällä sivulla",
     "description":"Shown below the 'blocked_ads' message.  Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.",
     "placeholders":{
       "count":{
@@ -1224,7 +1228,7 @@
     }
   },
   "blocked_n_in_total":{
-    "message":"$count$ in total",
+    "message":"$count$ yhteensä",
     "description":"Shown below the 'blocked_ads' message.  Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.",
     "placeholders":{
       "count":{
@@ -1234,35 +1238,35 @@
     }
   },
   "show_on_adblock_button":{
-    "message":"Show on AdBlock button",
+    "message":"Näytä AdBlock-painikkeessa",
     "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   },
   "adblockinglist":{
-    "message":"Ad Blocking Filter Lists",
+    "message":"Mainostenestolistat",
     "description":"List for subscribed ad blocking fiters"
   },
   "otherfilters":{
-    "message":"Other Filter Lists",
+    "message":"Muut suodatinlistat",
     "description":"List for other filters the user subscribed to"
   },
   "customfilters":{
-    "message":"Custom Filter Lists",
+    "message":"Mukautetut suodatinlistat",
     "description":"List for custom filters the user subscribed to"
   },
   "languagedropdowndescription":{
-    "message":"Add filters for another language: ",
+    "message":"Lisää suodattimia toiselle kielelle: ",
     "description":"Dropdown list for language specific filters"
   },
   "whats_this":{
-    "message":"What's this?",
+    "message":"Mikä tämä on?",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
-    "message":" -- Select Language -- ",
+    "message":" -- Valitse kieli -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
   },
   "confirm_undo_custom_filters":{
-    "message":"Are you sure you want to remove the $count$ blocks that you have created on $host$?",
+    "message":"Oletko varma, että haluat poistaa $count$ estoa, jotka olet estänyt verkkotunnuksessa $host$?",
     "description":"Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset",
     "placeholders":{
       "count":{

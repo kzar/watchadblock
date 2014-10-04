@@ -617,6 +617,9 @@ MyFilters.prototype._make_subscription_options = function() {
     "malware": { // Malware protection
       url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt",
     },
+	"annoyances": { // Fanboy's Annoyances
+      url: "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",
+	},
   };
 }
 

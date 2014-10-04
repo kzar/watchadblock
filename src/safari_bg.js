@@ -7,8 +7,13 @@ safari.application.addEventListener("message", function(messageEvent) {
   if (messageEvent.name != "canLoad")
     return;
 
-  if (adblock_is_paused() || page_is_unblockable(messageEvent.target.url) ||
-      page_is_whitelisted(messageEvent.target.url)) {
+  var tab = messageEvent.target;
+  var frameInfo = messageEvent.message.frameInfo;
+  chrome._tabInfo.notice(tab, frameInfo);
+  var sendingTab = chrome._tabInfo.info(tab, frameInfo.visible);
+
+  if (adblock_is_paused() || page_is_unblockable(sendingTab.url) ||
+      page_is_whitelisted(sendingTab.url)) {
     messageEvent.message = true;
     return;
   }
@@ -89,13 +94,6 @@ safari.application.addEventListener("command", function(event) {
 // we can make the toolbar button display a proper menu with items from Chrome's popup.
 if (!LEGACY_SAFARI) {
   (function() {
-    // Added this function so that safari will have it's own way of retrieving custom filters.
-    // Return filters created by user in an array.
-    var getCustomFilters = function() {
-      var custom_filters = storage_get('custom_filters');
-      return custom_filters ? custom_filters.trimLeft() : '';
-    };
-
     // Unfortunately, Safari API kinda sucks. Command events sent from toolbar menu items don't include a
     // reference to the browser window that sent them, same goes for the Menu events. This unfortunately
     // means that we have to create a separate instance of menu for each browser window.
@@ -207,9 +205,9 @@ if (!LEGACY_SAFARI) {
         var paused = adblock_is_paused();
         var canBlock = !page_is_unblockable(url);
         var whitelisted = page_is_whitelisted(url);
-
+        var host = parseUri(url).host;
         var eligible_for_undo = !paused && (!canBlock || !whitelisted);
-        if (eligible_for_undo && getCustomFilters()) {
+        if (eligible_for_undo && count_cache.getCustomFilterCount(host)) {
           appendMenuItem("undo-last-block", translate("undo_last_block"));
           menu.appendSeparator(itemIdentifier("separator0"));
         }
@@ -257,6 +255,8 @@ safari.application.addEventListener("contextmenu", function(event) {
 
   event.contextMenu.appendContextMenuItem("show-blacklist-wizard", translate("block_this_ad"));
   event.contextMenu.appendContextMenuItem("show-clickwatcher-ui", translate("block_an_ad_on_this_page"));
-  if (getCustomFilters())
+
+  var host = parseUri(url).host;
+  if (count_cache.getCustomFilterCount(host))
     event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
 }, false);

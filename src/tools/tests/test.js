@@ -37,6 +37,130 @@ test("parseSearch", 11, function() {
   deepEqual(parseUri.parseSearch("?hello&&&&ext=adblock"), {"ext": "adblock", "hello": ""});
 });
 
+test("parseSecondLevelDomain", 5, function() {
+  var secondLevelDomainOnly = parseUri.secondLevelDomainOnly;
+  deepEqual(secondLevelDomainOnly("appspot.google.com"), "google.com");
+  deepEqual(secondLevelDomainOnly("foo.bar.com"), "bar.com");
+  deepEqual(secondLevelDomainOnly("https://www.google.com.ph"), "com.ph");
+  deepEqual(secondLevelDomainOnly("http://usr:pass@www.test.com:81/dir"), "test.com:81/dir");
+  deepEqual(secondLevelDomainOnly("http://support.godaddy.com"), "godaddy.com");
+});
+
+module("Global Functions");
+test("storage get and storage set", function() {
+  var testObj = {
+    foo: "bar",
+    bar: "foo",
+  };
+  storage_set("testObj", testObj);
+  var testResultObj = storage_get("testObj");
+  deepEqual(testObj.foo, testResultObj.foo);
+  deepEqual(testObj.bar, testResultObj.bar);
+  deepEqual(testObj, testResultObj);
+  
+  notEqual(testObj, testResultObj);
+  
+  storage_set("foo", testObj.foo);
+  var foo = storage_get("foo");
+  deepEqual(testObj.foo, foo);
+  strictEqual(testObj.foo, foo);
+  equal(testObj.foo, foo);
+  
+  storage_set("foo", "not foo");
+  foo = storage_get("foo");
+  notDeepEqual(testObj.foo, foo);
+  notStrictEqual(testObj.foo, foo);
+  notEqual(testObj.foo, foo);
+  
+  testObj.foo = "not foo";
+  testObj.bar = "not bar";
+  testResultObj = storage_get("testObj");
+  notDeepEqual(testObj.foo, testResultObj.foo);
+  notDeepEqual(testObj.bar, testResultObj.bar);
+  notDeepEqual(testObj, testResultObj);
+});
+
+test("setDefault", function() {
+  var testObj = {
+    foo: "bar",
+    bar: "foo",
+  };
+  
+  var testMap = {
+    first: "one",
+    second: "two",
+    third: "three",
+  };
+  
+  var first = setDefault(testMap, "first", "noOne");
+  
+  strictEqual(testMap.first, first);
+  notStrictEqual(testMap.first, "noOne");
+  
+  first = setDefault(testMap, "notHere", testObj);
+  
+  deepEqual(testMap.notHere, testObj);
+  deepEqual(first, testObj);
+  deepEqual(first, testMap.notHere);
+  ok(testMap.notHere == testObj && testMap.notHere== first, "should be the same object");
+  
+  testObj = {
+    bar: "foo",
+  }
+  
+  first = setDefault(testMap, "notHere", testObj);
+  notDeepEqual(testMap.notHere, testObj);
+  notDeepEqual(first, testObj);
+  ok(testMap.notHere != testObj && first != testObj, "should not be the same");
+});
+
+module("FilterTypes");
+test("selector filter", function() {
+  var isSelectorFilter = Filter.isSelectorFilter;
+  ok(isSelectorFilter("www.foo.com##IMG[src='http://randomimg.com']"), "Is a selector filter");
+  ok(isSelectorFilter("www.foo.com#@#IMG[src='http://randomimg.com']"), "Is an exclude selector filter");
+  ok(!isSelectorFilter("www.foo.com#@IMG[src='http://randomimg.com']"), "Is not a selector filter");
+});
+
+test("exclude selector filter", function() {
+  var isSelectorExcludeFilter = Filter.isSelectorExcludeFilter;
+  ok(!isSelectorExcludeFilter("www.foo.com##IMG[src='http://randomimg.com']"), "Is not an exclude selector filter");
+  ok(isSelectorExcludeFilter("www.foo.com#@#IMG[src='http://randomimg.com']"), "Is an exclude selector filter");
+  ok(!isSelectorExcludeFilter("www.foo.com#@IMG[src='http://randomimg.com']"), "Is not an exclude selector filter");
+});
+
+test("whitelist filter", function() {
+  var isWhitelistFilter = Filter.isWhitelistFilter;
+  ok(!isWhitelistFilter("www.foo.com@@IMG[src='http://randomimg.com']"), "Is not a whitelist filter");
+  ok(isWhitelistFilter("@@IMG[src='http://randomimg.com']"), "Is a whitelist filter");
+});
+
+test("comment", function() {
+  var isComment = Filter.isComment;
+  ok(isComment("! foo comment"), "comment that starts with '!'");
+  ok(isComment("[adblock foo comment"), "comment that starts with '[adblock'");
+  ok(isComment("(adblock foo comment"), "comment that starts with '(adblock'");
+  
+  ok(!isComment(" ! foo comment"), "comment that does not start with '!'");
+  ok(!isComment(" [ adblock foo comment"), "comment that does not start with '[adblock'");
+  ok(!isComment(" ( adblock foo comment"), "comment that does not start with '(adblock'");
+});
+
+test("create selector filter from text", function() {
+  var fromText = Filter.fromText;
+  ok(fromText("www.foo.com##IMG[src='http://randomimg.com']") instanceof SelectorFilter, "is a SelectorFilter object");
+  ok(fromText("www.foo.com#@#IMG[src='http://randomimg.com']") instanceof SelectorFilter, "is a SelectorFilter object");
+  ok(!(fromText("www.foo.com#@IMG[src='http://randomimg.com']") instanceof SelectorFilter), "is not a SelectorFilter object");
+  
+  // Test selector filters
+  var selectorFilter = fromText("www.foo.com##IMG[src='http://randomimg.com']");
+  deepEqual(selectorFilter, fromText("www.foo.com##IMG[src='http://randomimg.com']"));
+  strictEqual(selectorFilter, Filter._cache["www.foo.com##IMG[src='http://randomimg.com']"], "should have a cached copy");
+  ok(selectorFilter._domains.has['www.foo.com'], "should have the domain");
+  strictEqual(selectorFilter.selector, "IMG[src='http://randomimg.com']", "selector should be equal");
+  
+});
+
 module("DomainSet");
 test("caching and immutable Filters", function() {
   var text = "safariadblock.com##div" 

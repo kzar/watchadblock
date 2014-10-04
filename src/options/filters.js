@@ -214,7 +214,7 @@ FilterListUtil.getFilterListType = function(filter_list) {
   var filter_list_type;
   if (filter_list.id === "adblock_custom" || filter_list.id === "easylist") {
     filter_list_type = "adblock_filter_list";
-  } else if (filter_list.id === "easyprivacy" || filter_list.id === "antisocial" || filter_list.id === "malware") {
+  } else if (filter_list.id === "easyprivacy" || filter_list.id === "antisocial" || filter_list.id === "malware" || filter_list.id === "annoyances") {
     filter_list_type = "other_filter_list";
   } else if (filter_list.user_submitted) {
     filter_list_type = "custom_filter_list";

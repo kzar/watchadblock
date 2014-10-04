@@ -42,7 +42,8 @@ beforeLoadHandler = function(event) {
   var data = { 
     url: relativeToAbsoluteUrl(event.url),
     elType: elType,
-    frameDomain: document.location.hostname
+    frameDomain: document.location.hostname,
+    frameInfo: chrome._tabInfo.gatherFrameInfo()
   };
   if (!safari.self.tab.canLoad(event, data)) {
 

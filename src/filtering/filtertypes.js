@@ -23,6 +23,7 @@ Filter.fromText = function(text) {
   return cache[text];
 }
 
+// Test if pattern#@#pattern or pattern##pattern
 Filter.isSelectorFilter = function(text) {
   // This returns true for both hiding rules as hiding whitelist rules
   // This means that you'll first have to check if something is an excluded rule
@@ -41,8 +42,8 @@ Filter.isWhitelistFilter = function(text) {
 Filter.isComment = function(text) {
   return text.length === 0 ||
          text[0] === '!' ||
-         (text[0] === '[' && /^\[adblock/i.test(text)) ||
-         (text[0] === '(' && /^\(adblock/i.test(text));
+         (/^\[adblock/i.test(text)) ||
+         (/^\(adblock/i.test(text));
 }
 
 // Convert a comma-separated list of domain includes and excludes into a
