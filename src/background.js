@@ -4,8 +4,19 @@
     var str = "Error: " +
              (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
              ":" + (e.lineno||"anywhere");
+    if (chrome && chrome.runtime && (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
+        var stack = "-" + ((e.error && e.error.message)||"") +
+                    "-" + ((e.error && e.error.stack)||"");
+        stack = stack.replace(/:/gi, ";").replace(/\n/gi, "");
+        //check to see if there's any URL info in the stack trace, if so remove it
+        if (stack.indexOf("http") >= 0) {
+           stack = "-removed URL-";
+        }
+        str += stack;
+    }
     STATS.msg(str);
     sessionStorage.setItem("errorOccurred", true);
+    log(str);
   });
 
   if (!SAFARI) {
@@ -55,16 +66,16 @@
   var get_adblock_user_id = function() {
     return storage_get("userid");
   };
-  
+
   //called from bandaids, for use on our getadblock.com site
   var get_first_run = function() {
     return STATS.firstRun;
-  };  
-  
+  };
+
   //called from bandaids, for use on our getadblock.com site
   var set_first_run_to_false = function() {
     STATS.firstRun = false;
-  };  
+  };
 
   // OPTIONAL SETTINGS
 
@@ -167,7 +178,7 @@
           fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
         }
       },
-      
+
       // Watch for requests for new tabs and frames, and track their URLs.
       // Inputs: details: object from onBeforeRequest callback
       // Returns false if this request's tab+frame are not trackable.
@@ -321,26 +332,37 @@
   // Inputs: url:string - a URL that may be whitelisted by a custom filter
   // Returns: true if a filter was found and removed; false otherwise.
   try_to_unwhitelist = function(url) {
-    url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
-    var custom_filters = get_custom_filters_text().split('\n');
-    for (var i = 0; i < custom_filters.length; i++) {
-      var text = custom_filters[i];
-      if (!Filter.isWhitelistFilter(text))
-        continue;
-      try {
-        var filter = PatternFilter.fromText(text);
-      } catch (ex) {
-        continue;
-      }
-      if (!filter.matches(url, ElementTypes.document, false))
-        continue;
+      url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
+      var custom_filters = get_custom_filters_text().split('\n');
+      for (var i = 0; i < custom_filters.length; i++) {
+          var text = custom_filters[i];
+          var whitelist = text.search(/@@\*\$document,domain=\~/);
+          // Blacklist site, which is whitelisted by global @@*&document,domain=~ filter
+          if (whitelist > -1) {
+              // Remove protocols
+              url = url.replace(/((http|https):\/\/)?(www.)?/, "").split(/[/?#]/)[0];
 
-      custom_filters.splice(i, 1); // Remove this whitelist filter text
-      var new_text = custom_filters.join('\n');
-      set_custom_filters_text(new_text);
-      return true;
-    }
-    return false;
+              text = text + "|~" + url;
+              set_custom_filters_text(text);
+              return true;
+          } else {
+              if (!Filter.isWhitelistFilter(text))
+                  continue;
+              try {
+                  var filter = PatternFilter.fromText(text);
+              } catch (ex) {
+                  continue;
+              }
+              if (!filter.matches(url, ElementTypes.document, false))
+                  continue;
+
+              custom_filters.splice(i, 1); // Remove this whitelist filter text
+              var new_text = custom_filters.join('\n');
+              set_custom_filters_text(new_text);
+              return true;
+          }
+      }
+      return false;
   }
 
   // Called when Chrome blocking needs to clear the in-memory cache.
@@ -377,7 +399,7 @@
     var custom_filters_arr = text ? text.split("\n"):[];
     var new_custom_filters_arr = [];
     var identifier = host;
-    
+
     for(var i = 0; i < custom_filters_arr.length; i++) {
       var entry = custom_filters_arr[i];
       //Make sure that the identifier is at the start of the entry
@@ -607,9 +629,9 @@
       var main_frame = frameData.get(tabId, 0);
       // main_frame is undefined if the tab is a new one, so no use updating badge.
       if (!main_frame) return;
-      
+
       var isBlockable = !page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url) && !/chrome\/newtab/.test(main_frame.url);
-      
+
       if(display && (main_frame && isBlockable) && !adblock_is_paused()){
         badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
         if (badge_text === "0")
@@ -741,7 +763,7 @@
     if (/channel/.test(url)) {
       var get_channel = url.match(/channel=([^]*)/)[1];
     } else {
-      var get_channel = url.split('/').pop(); 
+      var get_channel = url.split('/').pop();
     }
     var filter = '@@||youtube.com/*' + get_channel + '$document';
     return add_custom_filter(filter);
@@ -838,7 +860,7 @@
   launch_resourceblocker = function(query) {
     openTab("pages/resourceblock.html" + query, true);
   }
-  
+
   // Open subscribe popup when new filter list was subscribed from site
   launch_subscribe_popup = function(loc) {
     window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
@@ -865,7 +887,7 @@
           return; // not for us
         // +1 button in browser action popup loads a frame which
         // runs content scripts.  Ignore their cries for ad blocking.
-        if (sender.tab === null)
+        if ((sender.tab === undefined) || (sender.tab === null))
           return;
         var fn = window[request.fn];
         request.args.push(sender);
@@ -1005,7 +1027,7 @@
           chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
             if (tabs.length === 0)
                 return; // For example: only the background devtools or a popup are opened
-            
+
             run_yt_channel_whitelist(tabs[0].url);
           });
       });

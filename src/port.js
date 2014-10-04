@@ -10,7 +10,7 @@
 //
 // Then you can use chrome.* APIs as usual, and check the SAFARI
 // global boolean variable to see if you're in Safari or Chrome
-// for doing browser-specific stuff.  The safari.* APIs will 
+// for doing browser-specific stuff.  The safari.* APIs will
 // still be available in Safari, and the chrome.* APIs will be
 // unchanged in Chrome.
 
@@ -47,9 +47,9 @@ if (SAFARI) {
       return safari.application;
     console.log("No add/remove event listener possible at this location!");
     console.trace();
-    return { 
-      addEventListener: function() {}, 
-      removeEventListener: function() {} 
+    return {
+      addEventListener: function() {},
+      removeEventListener: function() {}
     };
   };
   var listenFor = function(messageName, handler) {
@@ -82,7 +82,7 @@ if (SAFARI) {
       return p;
     console.log("No dispatchMessage possible at this location!");
     console.trace();
-    return { 
+    return {
       dispatchMessage: function(msg, data) {
         console.warn("Failed to call dispatchMessage(", msg, ",", data, ")");
         console.trace();
@@ -97,7 +97,7 @@ if (SAFARI) {
         return safari.extension.globalPage.contentWindow;
       },
 
-      getURL: function(path) { 
+      getURL: function(path) {
         return safari.extension.baseURI + path;
       },
 
@@ -186,6 +186,16 @@ if (SAFARI) {
           // CHROME PORT LIBRARY: onRequestExternal not supported.
         }
       }
+    },
+
+    runtime: {
+        getManifest: function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", chrome.extension.getURL("manifest.json"), false);
+            xhr.send();
+            var object = JSON.parse(xhr.responseText);
+            return object;
+        }
     },
 
     // Helper object to ensure that tabs sending requests to the global page
@@ -371,7 +381,7 @@ if (SAFARI) {
 
         getMessage: function(messageID, args) {
           if (l10nData == undefined) {
-            // Assume that we're not in a content script, because content 
+            // Assume that we're not in a content script, because content
             // scripts are supposed to have set l10nData already
             chrome.i18n._setL10nData(chrome.i18n._getL10nData());
           }

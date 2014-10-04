@@ -39,10 +39,6 @@
     "message":"בשביל להסתייר את הכפתור לחץ על הכפתור עם קליק ימני ובחר הסתר את הכפתור.\nאפשר להסתיר כם על ידי כניסה להגדרות ההרחבה תחת chrome:\/\/chrome\/extensions",
     "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
-  "operabutton_how_to_hide2":{
-    "message":"To hide the button, go to opera:\/\/extensions and check the 'Hide from toolbar' option. You can show it again by unchecking that option.",
-    "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Opera displays on the Extensions page."
-  },
   "sliderexplanation":{
     "message":"הזז עד שהפרסומת נחסמה והאתר נראה בסדר\nעדיף לדווח לנו על הפרסומת ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
     "description":"Blacklister slider page message"
@@ -118,20 +114,6 @@
       "matchcount":{
         "content":"$1",
         "example":"5"
-      }
-    }
-  },
-  "blacklisterattrwillbe":{
-    "message":"$attribute$ will be $value$",
-    "description":"Checkbox label",
-    "placeholders":{
-      "attribute":{
-        "content":"$1",
-        "example":"class"
-      },
-      "value":{
-        "content":"$2",
-        "example":"AdBanner"
       }
     }
   },
@@ -215,14 +197,6 @@
   },
   "betalabel":{
     "message":"בבדיקה",
-    "description":"Option on first tab page"
-  },
-  "googletextads2":{
-    "message":"I like the text ads on Google search results; show me those",
-    "description":"Option on first tab page"
-  },
-  "showcontextmenus2":{
-    "message":"Add items to the right click menu",
     "description":"Option on first tab page"
   },
   "debuginlogoption":{
@@ -317,10 +291,6 @@
     "message":"אל תירשם ליותר רשימות ממה שאתה באמת צריך, כמה שפחות יותר טוב בגלל שכל רשימה מאיטה קצת את הדפדפן עוד רשימות אפשר למצוא <a>here<\/a>.",
     "description":"Explanation of the filter lists"
   },
-  "updatenowmessage2":{
-    "message":"I will fetch updates automatically; you can also <a>update now<\/a>",
-    "description":"update filters text + button"
-  },
   "orenteraurl":{
     "message":"או הכנס קישור:",
     "description":"link for custom subscription"
@@ -328,10 +298,6 @@
   "subscribebutton":{
     "message":"הרשמה",
     "description":"subscribe to a list button"
-  },
-  "showlinkstolists2":{
-    "message":"Show links to the filter lists",
-    "description":"Option on second tab page"
   },
   "filterantisocial":{
     "message":"אנטי חברתי (מחיקת כפתורי רשתות חברתיות)",
@@ -625,14 +591,6 @@
     "message":"אחר",
     "description":"multiple choice option"
   },
-  "orchrome":{
-    "message":"or Chrome",
-    "description":"used for placeholder in checkinfirefoxtitle and checkinfirefox_1 string"
-  },
-  "oradblockforchrome":{
-    "message":"or AdBlock for Chrome",
-    "description":"used for placeholder in checkinfirefox_2 string"
-  },
   "nodefaultfilter1":{
     "message":"אין לנו רשימה מעודפת לשפה זו.<br\/>בבקשה נסה למצוא רשימה שתומכת בשפה זו $link$ או חסום את הפרסומות הזאת בעצמך בעמוד ההתאמה האישית.",
     "description":"instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
@@ -650,16 +608,6 @@
       "list_title":{
         "content":"$1",
         "example":"French filters"
-      }
-    }
-  },
-  "checkinfirefoxtitle":{
-    "message":"Check in Firefox $chrome$",
-    "description":"tell a user to see if a reported ad also appears in Firefox\/Chrome",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='chrome1'><\/span>",
-        "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -751,14 +699,6 @@
   },
   "typesubdocument":{
     "message":"מסגרת",
-    "description":"A resource type"
-  },
-  "typeobject_subrequest":{
-    "message":"object_subrequest",
-    "description":"A resource type"
-  },
-  "typexmlhttprequest":{
-    "message":"xmlhttprequest",
     "description":"A resource type"
   },
   "typeother":{
@@ -921,22 +861,6 @@
     "message":"הוסף רשימה זאת",
     "description":"resourceblocking page string"
   },
-  "ordisablefilter":{
-    "message":"... or disable filter:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"This filter will be disabled:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"This filter will be disabled when you are browsing:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"ONLY pages on this domain:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
-  },
   "flashads":{
     "message":"ווידאו ופלאש",
     "description":"Title of the final ad report question if the ad didn't appear in FF"
@@ -948,10 +872,6 @@
   "cantblockflash":{
     "message":"עדין איי אפשר לחסום מודעות מסוג זה אנחנו מחכים ל WebKit בדפדפן ואז נוכל לחסום\nכשיהיה אפשרי המודעה הזאת תיחסם זה הכל ענין של זמן\nזכור כל יום אנחנו עובדים קשה בשביל לשפר את AdBlock!",
     "description":"Result of the final ad report question"
-  },
-  "cleanuplist2":{
-    "message":"Clean up this list",
-    "description":"Option at the bottom of the third options tab"
   },
   "disabled_by_filter_lists":{
     "message":"מצטערים AdBlock מושבת באתר זה בגלל אחת הרשימות שלך",
@@ -969,17 +889,9 @@
     "message":"AdBlock מושבת בעמוד זה",
     "description":"Message shown in toolbar button on web pages that have been whitelisted."
   },
-  "enable_adblock":{
-    "message":"Enable AdBlock on this page",
-    "description":"Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
-  },
   "status_paused":{
     "message":"AdBlock מושבת. :(",
     "description":"Message shown in toolbar button when AdBlock is paused."
-  },
-  "unpause_adblock":{
-    "message":"Unpause AdBlock",
-    "description":"Link text to unpause AdBlock, displayed immediately after 'status_paused'."
   },
   "pause_adblock":{
     "message":"השבת את AdBlock",
@@ -1005,10 +917,6 @@
     "message":"עזור להפיץ את השמועה!",
     "description":"Text of a share link"
   },
-  "pwyw":{
-    "message":"Pay what you want!",
-    "description":"Text of a payment request link"
-  },
   "removelabel":{
     "message":"מחק",
     "description":"link to remove a filter"
@@ -1029,10 +937,6 @@
     "message":"עמוד הבית של הפרויקט (האתר שלנו)",
     "description":"Text of link to the AdBlock open source project homepage (not the install page)"
   },
-  "tabsupport":{
-    "message":"Support",
-    "description":"Link to forum in options page"
-  },
   "report_ad_on_page":{
     "message":"דווח על פרסומת בעמוד זה",
     "description":"Link in the button"
@@ -1040,10 +944,6 @@
   "show_resourcelist":{
     "message":"הראה את מקורות הרשימה",
     "description":"Link in the button"
-  },
-  "advanced_options2":{
-    "message":"I'm an advanced user, show me advanced options",
-    "description":"Options page checkbox"
   },
   "work_around_hulu_problems":{
     "message":"עבודה בסביבת Hulu.com שהווידאו לא מתנגן (דורש הפעלה מחדש של הדפדפן)",
@@ -1169,16 +1069,6 @@
     "message":"בגרסות של דפדפן Opera לפני 12.10 חלק מפרסומות לא יחסמו זה בלתי אפשרי ממגבלות של הדפדפן. זה תוקן בכל הגרסאות אחרי 12.10.",
     "description":"Opera < 12.10 warning above options page"
   },
-  "filterorigin":{
-    "message":"Filter origin:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
-  },
   "firefox_explanation":{
     "message":"מטרה של השאלה הזאת היא לקבוע מי אמור לקבל את הדוח אם תענה על שאלה זאת לא נכונה האיש הלא נכון יקבל את הדוח",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
@@ -1247,14 +1137,6 @@
     "message":"  -- בחר שפה -- \n",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
   },
-  "allow_whitelisting_youtube_channels":{
-    "message":"Allow whitelisting of specific YouTube channels",
-    "description":"Option on first tab"
-  },
-  "whitelist_youtube_channel":{
-    "message":"Whitelist this YouTube channel",
-    "description":"Text which is displayed on YouTube in popup menu"
-  },
   "confirm_undo_custom_filters":{
     "message":"? אתה בטוח שאתה רוצה להסיר את $count$ שיצרת ב $host$?",
     "description":"Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset",
@@ -1268,51 +1150,5 @@
         "example":"code.google.ph, ph.msn.com, stackoverflow.com"
       }
     }
-  },
-  "latest_version":{
-    "message":"AdBlock is up-to-date!",
-    "description":"On the Options > Help page, shows when there are no updates available for AdBlock"
-  },
-  "here":{
-    "message":"here",
-    "description":"This message is injected in other strings as a link\/button"
-  },
-  "update_available":{
-    "message":"There's an update for AdBlock! Go $here$ to update. <br> Note: If you want to receive updates automatically, just click on Safari > Preferences > Extensions > Updates <br> and check option 'Install updates automatically'.",
-    "description":"On the Options > Support page, shows when there are updates available for AdBlock.",
-    "placeholders":{
-      "here":{
-        "content":"<a id='here'><\/a>",
-        "example":"<a>here<\/a>"
-      }
-    }
-  },
-  "adblocksupport":{
-    "message":"AdBlock Support",
-    "description":"A tab on the options page"
-  },
-  "support":{
-    "message":"Found a bug? Got a question? Got a new idea for AdBlock? Go to <a>our support site<\/a>!",
-    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
-  },
-  "seethecode":{
-    "message":"Want to see AdBlock's code? Check it out <a>here<\/a>.",
-    "description":"Link to code behind AdBlock"
-  },
-  "adblockcontributors":{
-    "message":"Do you want to find out who help make AdBlock? Take a look at our <a>contributors page<\/a>!",
-    "description":"Text for link to contributors page"
-  },
-  "checkforupdates":{
-    "message":"Checking for updates (should only take a few seconds)...",
-    "description":"Displayed when AdBlock is checking the newest available version"
-  },
-  "somethingwentwrong":{
-    "message":"Something went wrong while checking updates.",
-    "description":"Displayed when AdBlock is checking the newest available version and an error occurs"
-  },
-  "checkinternetconnection":{
-    "message":"To report an ad, you must be connected to the internet.",
-    "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }
 }

@@ -4,13 +4,7 @@ STATS = (function() {
   var stats_url = "https://ping.getadblock.com/stats/";
 
   //Get some information about the version, os, and browser
-  var version = (function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", chrome.extension.getURL('manifest.json'), false);
-    xhr.send();
-    var manifest = JSON.parse(xhr.responseText);
-    return manifest.version;
-  })();
+  var version = chrome.runtime.getManifest().version;
   var match = navigator.userAgent.match(/(CrOS\ \w+|Windows\ NT|Mac\ OS\ X|Linux)\ ([\d\._]+)?/);
   var os = (match || [])[1] || "Unknown";
   var osVersion = (match || [])[2] || "Unknown";
@@ -174,13 +168,13 @@ STATS = (function() {
     browserVersion: browserVersion,
     os: os,
     osVersion: osVersion,
-    
+
 
     // Ping the server when necessary.
     startPinging: function() {
       function sleepThenPing() {
         var delay = millisTillNextPing();
-        window.setTimeout(function() { 
+        window.setTimeout(function() {
           pingNow();
           scheduleNextPing();
           sleepThenPing();
@@ -216,7 +210,7 @@ STATS = (function() {
       };
       $.ajax(stats_url, {
         type: "POST",
-        data: data, 
+        data: data,
         complete: function(xhr) {
           var mph = parseInt(xhr.getResponseHeader("X-RateLimit-MPH"), 10);
           if (isNaN(mph) || mph < -1) // Server is sick
