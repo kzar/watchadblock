@@ -21,7 +21,7 @@ function top_open_whitelist_ui() {
 
   // Get Flash objects out of the way of our UI
   BGcall('emit_page_broadcast', {fn:'send_content_to_back', options:{}});
-  
+
   // defined in blacklister.js
   load_jquery_ui(function() {
     var adblock_default_button_text = translate("buttonexclude");
@@ -37,12 +37,12 @@ function top_open_whitelist_ui() {
       }
     }
     btns[translate("buttoncancel")] = function() { page.dialog('close');}
-    
+
     var page = $("<div>").
-      append('<span>' + translate("adblock_wont_run_on_pages_matching") + 
+      append('<span>' + translate("adblock_wont_run_on_pages_matching") +
              '</span>').
       append('<br/><br/><i id="domainpart"></i><i id="pathpart"></i>').
-      append("<br/><br/><br/><span id='whitelister_dirs'>" + 
+      append("<br/><br/><br/><span id='whitelister_dirs'>" +
              translate('you_can_slide_to_change') + "</span>").
       append('<br/><span id="modifydomain">' + translate('modifydomain') +
              "<input id='domainslider' type='range' min='0' value='0'/></span>").
@@ -60,7 +60,11 @@ function top_open_whitelist_ui() {
           page.remove();
         }
       });
-      changeTextDirection($("body .adblock-whitelist-dialog"));
+
+    changeTextDirection($("body .adblock-whitelist-dialog"));
+
+    $(".adblock-whitelist-dialog").parent().css({position: 'relative'});
+    $(".adblock-whitelist-dialog").css({top: 200, left: 200, position:'absolute'});
 
     var fixedDomainPart = parseUri.secondLevelDomainOnly(domain, true);
     var domainparts = domain.substr(0, domain.lastIndexOf(fixedDomainPart)).split('.');
@@ -86,7 +90,7 @@ function top_open_whitelist_ui() {
     $("#pathslider", page).
       attr("max", Math.max(pathparts.length - 1, 1));
     $("#pathslider, #domainslider", page).
-      on("input change", function() { onSliderChange(); }); 
+      on("input change", function() { onSliderChange(); });
 
     function onSliderChange() {
       generateUrl(true);
@@ -104,10 +108,10 @@ function top_open_whitelist_ui() {
         result = "*.";
 
       // Append the chosen parts of a domain
-      for (var i = domainsliderValue; i<=(domainparts.length - 2); i++) 
+      for (var i = domainsliderValue; i<=(domainparts.length - 2); i++)
         result += domainparts[i] + '.';
       result += domainparts[domainparts.length - 1];
-      for (var i = 1; i<=pathsliderValue; i++) 
+      for (var i = 1; i<=pathsliderValue; i++)
         result += '/' + pathparts[i];
 
       // Append a final slash for for example filehippo.com/download_dropbox/
