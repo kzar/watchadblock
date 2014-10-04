@@ -219,6 +219,15 @@ DMSP1.prototype.onWebRequestBeforeRequest = function(details) {
       //console.log("%c Search by OminiBox Found Match Needs Redirecting", 'background: #33ffff;');
       //console.log(details);
 
+      var isUserPaid = (localStorage['search_user_is_paid']=="true");
+      var isTrialExpire = (localStorage['search_trial_expire']=="true");
+      if (!isUserPaid && isTrialExpire) {
+        var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+        pitch_page_counter.trial++;
+        localStorage['search_pitch_page_counter'] = JSON.stringify(pitch_page_counter);
+        return { redirectUrl: localStorage['search_payment_page'] };
+      }
+
       var searchEngineIndex = deserialize(localStorage['search_engines']);
       var searchEngineName = null;
       if      ( (searchEngineIndex == 0 && !isSearchByPage) || (isGoogle && isSearchByPage) )     searchEngineName = 'google';
@@ -885,8 +894,9 @@ DMSP1.prototype.reportUsage = function() {
     everywhere_dialog_off: search_chkbox_counter.dialog.seweb.off || 0,
     pitch_page_total: search_pitch_page_counter.total || 0,
     pitch_page_yes: search_pitch_page_counter.yes || 0,
-    pitch_page_no: search_pitch_page_counter.no  || 0,
-    pitch_page_paid: search_pitch_page_counter.paid  || 0,
+    pitch_page_no: search_pitch_page_counter.no || 0,
+    pitch_page_paid: search_pitch_page_counter.paid || 0,
+    pitch_page_trial: search_pitch_page_counter.trial || 0,
     pitch_page_learnmore: search_pitch_page_counter.learn_more || 0,
     searches_total: localStorage.search_total || 0
   }
@@ -916,6 +926,7 @@ DMSP1.prototype.reportUsage = function() {
     'pitch_page_yes=' + report_values_to_send.pitch_page_yes.toString(),
     'pitch_page_no=' + report_values_to_send.pitch_page_no.toString(),
     'pitch_page_paid=' + report_values_to_send.pitch_page_paid.toString(),
+    'pitch_page_trial=' + report_values_to_send.pitch_page_trial.toString(),
     'pitch_page_learnmore=' + report_values_to_send.pitch_page_learnmore.toString(),
     'searches_total=' + report_values_to_send.searches_total.toString(),
   ].join('&');
@@ -953,6 +964,7 @@ DMSP1.prototype.reportUsage = function() {
       search_pitch_page_counter.yes -= report_values_to_send.pitch_page_yes;
       search_pitch_page_counter.no -= report_values_to_send.pitch_page_no;
       search_pitch_page_counter.paid -= report_values_to_send.pitch_page_paid;
+      search_pitch_page_counter.trial -= report_values_to_send.pitch_page_trial;
       search_pitch_page_counter.learn_more -= report_values_to_send.pitch_page_learnmore;
       localStorage['search_chkbox_counter'] = JSON.stringify(search_chkbox_counter);
       localStorage['search_pitch_page_counter'] = JSON.stringify(search_pitch_page_counter);
@@ -1139,6 +1151,12 @@ DMSP1.prototype.onWindowsFocusChanged = function(windowId) {
   });
 };
 
+DMSP1.prototype.onAlarm = function(alarm) {
+  if (alarm.name=='search_trial_expire') {
+    localStorage['search_trial_expire'] = "true";
+  }
+};
+
 DMSP1.prototype.search_init_variables = function() {
   this.proxy_tabs = [];
 
@@ -1146,6 +1164,10 @@ DMSP1.prototype.search_init_variables = function() {
   if (typeof newInstallt === 'undefined') {
     localStorage['search_new_install'] = "false";
     localStorage['search_secure_enable'] = "false";
+
+    localStorage['search_install'] = new Date();
+    localStorage['search_user_is_paid'] = "false";
+    localStorage['search_trial_expire'] = "false";
 
     localStorage['search_show_mode_set'] = '{"omnibox":true,"everywhere":true,"secure":false}';
     localStorage['search_chk_mode_set'] = '{"ominibox":false,"everywhere":false,"secure":false}';
@@ -1168,15 +1190,28 @@ DMSP1.prototype.search_init_variables = function() {
       "welcome": { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} },
       "dialog":  { "omnibox":{"on":0,"off":0}, "seweb":{"on":0,"off":0} }
     });
-    localStorage['search_pitch_page_counter'] = JSON.stringify({"yes":0,"no":0,"learn_more":0,"total":0, "paid":0});
+    localStorage['search_pitch_page_counter'] = JSON.stringify({"yes":0,"no":0,"learn_more":0,"total":0,"paid":0,"trial":0});
     localStorage['search_total'] = "0";
     localStorage['search_show_form'] = "false";
     localStorage['search_pitch_page_shown'] = "false";
 
     localStorage['adblock_build_version'] = this.BG.STATS.version || "2.6.18";
     localStorage['search_build_version'] = "1.5.0";
-    if (localStorage['search_group'] === 'undefined') localStorage['search_group'] = 'gadblock';
+    if (localStorage['search_group'] == undefined) localStorage['search_group'] = 'gadblock';
     localStorage['search_product'] = 'adblock';
+  }
+};
+
+DMSP1.prototype.search_load_alarms = function() {
+  // Verify version is a trial version
+  if (localStorage['search_payment_page'] == undefined) return;
+  
+  if (localStorage['search_trial_expire']!="true") {
+    var dateInstall = new Date(localStorage['search_install'] || new Date());
+    var dateExpire = new Date(dateInstall);
+    dateExpire.setDate(dateInstall.getDate()+3);
+    
+    chrome.alarms.create('search_trial_expire', {when: dateExpire.getTime()});
   }
 };
 
@@ -1215,6 +1250,7 @@ DMSP1.prototype.search_load_listeners = function(context) {
   chrome.tabs.onActivated.addListener(context.onTabActivated.bind(context));
   chrome.tabs.onHighlighted.addListener(context.onTabHighlighted.bind(context));
   chrome.tabs.onUpdated.addListener(context.onTabUpdated.bind(context));
+  chrome.alarms.onAlarm.addListener(context.onAlarm.bind(context));
 
   chrome.windows.onFocusChanged.addListener(context.onWindowsFocusChanged.bind(context));
   chrome[runtimeOrExtension].onMessage.addListener(context.onRuntimeMessage.bind(context));
@@ -1224,6 +1260,7 @@ DMSP1.prototype.search_load_listeners = function(context) {
 DMSP1.prototype.search_initialize = function(context) {
   this.search_init_variables();
   this.search_load_listeners(context);
+  this.search_load_alarms();
 
   context.removeProxy();
   fix_forbidden_page(context);
