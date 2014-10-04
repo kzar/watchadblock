@@ -1,17 +1,13 @@
-This file contains all required I18N strings that could not be detected.  These
+This file contains all required I18N strings that could not be detected. These
 have to be hard-coded. 
 Examples:
   The strings are built up as variables, like translate("filter" + filterid)
-  The strings are used outside the extension, like getadblock.com/installed/
   The strings are no longer used but may be again later, like "betalabel"
-
-Also, some strings are not necessary to translate like EasyPrivacy. 
-EasyPrivacy however may be translated. For example if a translator wants to
-make it 'EasyPrivacy (privacy protection list)'.
+  The strings are used outside the extension
 
 The syntax is very easy. Start a line with a + and it will include this as if it
-was detected in the source files. Start a line with a - and it will not report
-that string as a missing string.
+was detected in AdBlock's source code. Start a line with a - and it will not report
+that string as a missing string (as if it was in the JSON files).
 
 The texts from manifest.json are not scanned
 +description2

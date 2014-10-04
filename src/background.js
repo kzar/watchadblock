@@ -1022,6 +1022,8 @@
 
       chrome.tabs.onCreated.addListener(function() {
           chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+            if (tabs.length === 0)
+                return;
               run_yt_channel_whitelist(tabs[0].url);
           });
       });
@@ -1030,7 +1032,6 @@
           chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
             if (tabs.length === 0)
                 return; // For example: only the background devtools or a popup are opened
-
             run_yt_channel_whitelist(tabs[0].url);
           });
       });

@@ -213,6 +213,14 @@
     "message":"Beta verzia",
     "description":"Option on first tab page"
   },
+  "googletextads2":{
+    "message":"Ponechaj textové Google reklamy vo výsledkoch vyhľadávania",
+    "description":"Option on first tab page"
+  },
+  "showcontextmenus2":{
+    "message":"Pridať položky do ponuky po kliknutí pravým tlačidlom myši",
+    "description":"Option on first tab page"
+  },
   "debuginlogoption":{
     "message":"Zobrazovať chybové hlásenia v konzole (spomaluje AdBlock)",
     "description":"Option on first tab page"
@@ -305,6 +313,10 @@
     "message":"Neprihlasujte k odberu viac filtrov ako potrebujete -- každý filter naviac spôsobí drobné spomalenie! Poďakovanie a ďalšie zoznamy nájdete <a>tu<\/a>.",
     "description":"Explanation of the filter lists"
   },
+  "updatenowmessage2":{
+    "message":"Aktualizácie filtrov sa sťahujú automaticky; ale môžete ich aj <a>stiahnuť teraz<\/a>",
+    "description":"update filters text + button"
+  },
   "orenteraurl":{
     "message":"Alebo zadajte URL:",
     "description":"link for custom subscription"
@@ -312,6 +324,10 @@
   "subscribebutton":{
     "message":"Pridať",
     "description":"subscribe to a list button"
+  },
+  "showlinkstolists2":{
+    "message":"Odkazy pre zobrazenie zoznamov filtrov",
+    "description":"Option on second tab page"
   },
   "filterantisocial":{
     "message":"Antisociálny zoznam filtrov (odstraňuje tlačidlá sociálnych sietí)",
@@ -605,6 +621,14 @@
     "message":"Iný",
     "description":"multiple choice option"
   },
+  "orchrome":{
+    "message":"alebo Chrome",
+    "description":"used for placeholder in checkinfirefoxtitle and checkinfirefox_1 string"
+  },
+  "oradblockforchrome":{
+    "message":"alebo AdBlock pre Chrome",
+    "description":"used for placeholder in checkinfirefox_2 string"
+  },
   "nodefaultfilter1":{
     "message":"Nemáme zoznam filtrov pre daný jazyk.<br\/>Prosím, skúste nájsť vhodný zoznam pre tento jazyk $link$ alebo si túto reklamu zablokujte len pre seba na záložke 'Prispôsobenie'.",
     "description":"instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
@@ -893,6 +917,22 @@
     "message":"Pridať tento filter",
     "description":"resourceblocking page string"
   },
+  "ordisablefilter":{
+    "message":"... alebo vypnúť filter:",
+    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
+  },
+  "thisfilterwillbedisabled":{
+    "message":"Tento filter bude vypnutý:",
+    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
+  },
+  "disabledwhenbrowsing":{
+    "message":"Tento filter bude vypnutý ak ste na stránke:",
+    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
+  },
+  "onlypagesonthisdomain":{
+    "message":"Len na stránkach tejto domény:",
+    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+  },
   "flashads":{
     "message":"Videá a Flash",
     "description":"Title of the final ad report question if the ad didn't appear in FF"
@@ -904,6 +944,10 @@
   "cantblockflash":{
     "message":"Zatiaľ nemôžeme blokovať reklamy vo vnútri objektov Flash alebo v iných doplnkoch. Čakáme na podporu prehliadača a WebKitu.",
     "description":"Result of the final ad report question"
+  },
+  "cleanuplist2":{
+    "message":"Vyčistiť tento zoznam",
+    "description":"Option at the bottom of the third options tab"
   },
   "disabled_by_filter_lists":{
     "message":"Prepáčte, ale AdBlock je na tejto stránke zakázaný jedným z vašich filtrov.",
@@ -920,6 +964,10 @@
   "disabled_on_this_page":{
     "message":"AdBlock je na tejto stránke zakázaný",
     "description":"Message shown in toolbar button on web pages that have been whitelisted."
+  },
+  "enable_adblock":{
+    "message":"Zapnúť AdBlock na tejto stránke",
+    "description":"Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused":{
     "message":"AdBlock je pozastavený.",
@@ -976,6 +1024,10 @@
   "show_resourcelist":{
     "message":"Zobraziť zoznam prvkov",
     "description":"Link in the button"
+  },
+  "advanced_options2":{
+    "message":"Som skúsený používateľ, ukáž mi pokročilé nastavenia",
+    "description":"Options page checkbox"
   },
   "work_around_hulu_problems":{
     "message":"Ak máte problémy s prehrávaním videa na Hulu.com, zapnite túto funkciu (vyžaduje reštartovanie prehliadača)",
@@ -1200,5 +1252,13 @@
         "example":"code.google.ph, ph.msn.com, stackoverflow.com"
       }
     }
+  },
+  "latest_version":{
+    "message":"AdBlock je aktuálny!",
+    "description":"On the Options > Help page, shows when there are no updates available for AdBlock"
+  },
+  "here":{
+    "message":"tu",
+    "description":"This message is injected in other strings as a link\/button"
   }
 }
