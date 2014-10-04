@@ -1,0 +1,45 @@
+#!/bin/bash
+if [ ! -d "releases/" ] && [ ! -f ".git_cache_meta" ]; then
+  mkdir releases/
+  touch -t 197001010000.00 latest-release.txt
+  touch .git_cache_meta
+else
+  mkdir -p releases/
+  bin/git-cache-meta.sh --apply
+  touch -r `ls -lt releases/ | sed -n 2p | awk '{print "releases/"$9}'` latest-release.txt
+fi
+
+# Grab all the releases
+echo "Checking http://code.getadblock.com/releases/ for new releases... "
+wget -q -r -nd -l 1 -P releases/ -N -A zip --reject-regex 'Firefox' http://code.getadblock.com/releases/?C=M;O=D
+# Store the modified dates and md5sums in case anything has changed
+bin/git-cache-meta.sh --store
+md5sum releases/* | sort > md5sum.txt
+
+if [ -n "$(git status --porcelain)" ]; then
+    echo "New release(s) found..."
+    echo "Applying release changes..."
+    for f in `find releases/ -newer latest-release.txt -type f -printf '%T+ %p\n' | sort | awk '{print $2}'`; do
+        # Figure out version number of release
+        version=`echo "$f" | grep -E "[0-9\.]*[0-9]" -o --color=never`
+        # Update the source
+        rm -rf src/
+        unzip -q $f -d tmp
+        mv tmp/adblock src
+        rm -rf tmp/
+        # Commit the changes and tag
+        git add . && git add -u
+        git commit -F- <<EOF
+Release new version $version
+
+`git diff --diff-filter=M --staged --unified=0 src/CHANGELOG* | grep -P '^\+(?:(?!\+\+))|^-(?:(?!--))' --color=never`
+EOF
+        git tag $version -f
+    done
+
+    echo "Pushing changes..."
+    git push origin master
+    git push origin --tags -f
+else
+    echo "No new releases found"
+fi
