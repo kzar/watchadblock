@@ -163,14 +163,20 @@ function handleABPLinkClicks() {
 //               AdBlock should not be running.
 //   success?: function called at the end if AdBlock should run on the page.
 function adblock_begin(inputs) {
+    
   if (document.location.href === 'about:blank') // Safari does this
     return;
   if (!(document.documentElement instanceof HTMLElement))
     return; // Only run on HTML pages
+    
+  if (typeof before_ready_bandaids === "function") {
+        before_ready_bandaids("new"); 
+  } 
 
   inputs.startPurger();
 
   var opts = { domain: document.location.hostname };
+  
   BGcall('get_content_script_data', opts, function(data) {
     if (data.settings.debug_logging)
       logging(true);
@@ -188,11 +194,13 @@ function adblock_begin(inputs) {
       if (data.settings.debug_logging)
         debug_print_selector_matches(data.selectors || []);
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.
-      if (typeof run_bandaids === "function")
+      if (typeof run_bandaids === "function") {
         run_bandaids("new");
+      }
+        
       handleABPLinkClicks();
     });
-
+    
     if (inputs.success) inputs.success();
   });
 }

@@ -1,4 +1,4 @@
-// Check or uncheck each loaded DOM option checkbox according to the 
+// Check or uncheck each loaded DOM option checkbox according to the
 // user's saved settings.
 $(function() {
   for (var name in optionalSettings) {
@@ -20,7 +20,7 @@ $(function() {
 $("#enable_show_google_search_text_ads").change(function() {
   // Give the setting a sec to get saved by the other
   // change handler before recalculating filters.
-  window.setTimeout(function() { 
+  window.setTimeout(function() {
     BGcall("update_filters");
   }, 1000);
 });

@@ -14,22 +14,22 @@ function customize_for_this_tab() {
     if (paused) {
       show(["div_status_paused", "separator0", "div_options"]);
     } else if (info.disabled_site) {
-      show(["div_status_disabled", "separator0", "div_pause_adblock", 
+      show(["div_status_disabled", "separator0", "div_pause_adblock",
             "div_options", "div_help_hide_start"]);
     } else if (info.whitelisted) {
-      show(["div_status_whitelisted", "div_show_resourcelist", 
-            "separator0", "div_pause_adblock", "separator1", 
+      show(["div_status_whitelisted", "div_show_resourcelist",
+            "separator0", "div_pause_adblock", "separator1",
             "div_options", "div_help_hide_start"]);
     } else {
-      show(["div_pause_adblock", "div_blacklist", "div_whitelist", 
-            "div_whitelist_page", "div_show_resourcelist", 
-            "div_report_an_ad", "separator1", "div_options", 
+      show(["div_pause_adblock", "div_blacklist", "div_whitelist",
+            "div_whitelist_page", "div_show_resourcelist",
+            "div_report_an_ad", "separator1", "div_options",
             "div_help_hide_start", "separator3","block_counts"]);
-      
+
       var page_count = info.tab_blocked || "0";
       $("#page_blocked_count").text(page_count);
       $("#total_blocked_count").text(info.total_blocked);
-      
+
       $("#toggle_badge_checkbox").attr("checked", info.display_stats);
       // Show help link until it is clicked.
       $("#block_counts_help").
@@ -41,16 +41,22 @@ function customize_for_this_tab() {
         });
     }
 
+    var host = parseUri(info.tab.url).host;
     var eligible_for_undo = !paused && (info.disabled_site || !info.whitelisted);
-    var url_to_check_for_undo = info.disabled_site ? undefined : parseUri(info.tab.url).host;
+    var url_to_check_for_undo = info.disabled_site ? undefined : host;
     if (eligible_for_undo && BG.count_cache.getCustomFilterCount(url_to_check_for_undo))
       show(["div_undo", "separator0"]);
 
     if (!BG.get_settings().show_advanced_options)
       hide(["div_show_resourcelist"]);
-    
+
+    var path = info.tab.url;
+    if (host === "www.youtube.com" && /channel|user/.test(path) && eligible_for_undo && BG.get_settings().youtube_channel_whitelist) {
+      show(["div_whitelist_channel"]);
+    }
+ 
     for (var div in shown)
-      if (shown[div]) 
+      if (shown[div])
         $('#' + div).show();
 
     // Secure Search UI
@@ -80,7 +86,7 @@ $(function() {
       BG.updateDisplayStats(checked, info.tab.id);
     });
   });
-  
+
   $("#titletext span").click(function() {
     var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
     BG.openTab(url);
@@ -109,6 +115,14 @@ $(function() {
     BG.getCurrentTabInfo(function(info) {
       var host          = parseUri(info.tab.url).host;
       BG.confirm_removal_of_custom_filters_on_host(host);
+      window.close();
+    });
+  });
+
+  $("#div_whitelist_channel").click(function() {
+    BG.getCurrentTabInfo(function(info) {
+      BG.create_whitelist_filter_for_youtube_channel(info.tab.url);
+      chrome.tabs.reload();
       window.close();
     });
   });
@@ -197,7 +211,7 @@ $(function() {
     $("#menu-items").slideUp();
     $("#slideout_wrapper").
       width(0).height(0).show().
-      animate({width: slideoutWidth-50, height: slideoutHeight-40}, 
+      animate({width: slideoutWidth-50, height: slideoutHeight-40},
               {queue:false});
   });
   $("#link_close").click(function() {

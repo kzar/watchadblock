@@ -99,7 +99,7 @@ parseUri = function(url) {
   var keys = ["href", "origin", "protocol", "host", "hostname", "port",
               "pathname", "search", "hash"];
   var uri = {};
-  for (var i=0; i<keys.length; i++)
+  for (var i=0; (matches && i<keys.length); i++)
     uri[keys[i]] = matches[i] || "";
   return uri;
 };
