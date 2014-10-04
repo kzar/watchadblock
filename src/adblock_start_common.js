@@ -110,7 +110,7 @@ function block_list_via_css(selectors) {
     for (var i = 0; i < selectors.length; i += GROUPSIZE) {
       var line = selectors.slice(i, i + GROUPSIZE);
       var rule = line.join(",") + " { display:none !important; orphans: 4321 !important; }";
-      css_chunk.sheet.insertRule(rule);
+      css_chunk.sheet.insertRule(rule, 0);
     }
   }
   fill_in_css_chunk();
