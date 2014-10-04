@@ -121,27 +121,8 @@ sub check_new_locales {
                 next;
             }
             
-            if (-s $locale_dirs{$project}.$language."/messages.json"){
-                if ($project eq "adblock"){
-                    # read old file for this language
-                    my $strings_old = get_json($locale_dirs{$project}.$language."/messages.json");
-            
-                    # check if translator credits have changed
-                    my $credits_old = $strings_old->{translator_names}{message};
-                    my $credits_new = $strings_new->{translator_names}{message};
-                    if ($credits_new ne $credits_old){
-                        print colored("!", 'red'), " $language: translator_credit changed!\n";
-                        print "  '$credits_old' => '$credits_new'\n";
-                    }
-                }
-            } else {
-                if ($project eq "adblock"){
-                    # warn when a translation is added, we might already have had it in the past
-                    print colored("!", 'red'), " $language: new translation added, check credits manually!\n";
-                    print "  => '".$strings_new->{translator_names}{message}."'\n";
-                } else {
-                    print colored("!", 'red'), " $language: new translation added\n";
-                }
+            unless (-s $locale_dirs{$project}.$language."/messages.json"){
+                print colored("!", 'red'), " $language: new translation added, has the translator been added to the credits?\n";
             }
             
             foreach my $string (keys($strings_new)){

@@ -76,7 +76,7 @@
     "description":"Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter":{
-    "message":"Si us plau escriviu el filtre correcte a continuació i premeu D'acord",
+    "message":"Escriviu el filtre correcte a continuació i premeu 'D'acord'",
     "description":"Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid1":{
@@ -290,7 +290,7 @@
     "description":"Status label"
   },
   "fetchinglabel":{
-    "message":"S'està obtenint... espereu-vos si us plau.",
+    "message":"S'està obtenint... espereu-vos.",
     "description":"Status label"
   },
   "invalidListUrl":{
@@ -626,7 +626,7 @@
     "description":"Used for placeholder in checkinfirefox_2 string"
   },
   "nodefaultfilter1":{
-    "message":"No tenim una llista de filtres per a aquest idioma.<br\/>Si us plau intenteu trobar una llista que sigui compatible amb aquest idioma $link$ o bé bloquegi aquest anunci vostè mateix a la pestanya 'Personalitzar'.",
+    "message":"No tenim una llista de filtres per a aquest idioma.<br\/>Intenteu trobar una llista que sigui compatible amb aquest idioma $link$ o bé bloquegi aquest anunci vostè mateix a la pestanya 'Personalitzar'.",
     "description":"Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab.",
     "placeholders":{
       "link":{
@@ -710,7 +710,7 @@
     "description":"Telling users who won't report an ad to us how to handle it for themselves"
   },
   "adblock_outdated_chrome":{
-    "message":"Esteu utilitzant una versió antiga d'AdBlock. Si us plau aneu a la <a href='#'>pàgina d'extensions<\/a>, activeu el 'mode de desenvolupador' i cliqueu 'actualitza les extensions ara'",
+    "message":"Esteu utilitzant una versió antiga d'AdBlock. Aneu a la <a href='#'>pàgina d'extensions<\/a>, activeu el 'mode de desenvolupador' i cliqueu 'actualitza les extensions ara'",
     "description":"Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome:\/\/chrome\/extensions\/'"
   },
   "block_an_ad_on_this_page":{
@@ -786,7 +786,7 @@
     "description":"resourceblocking page string"
   },
   "novalidurlpattern":{
-    "message":"Si us plau, introduïu un patró d'URL vàlid a relacionar!",
+    "message":"Introduïu un patró d'URL vàlid a relacionar!",
     "description":"resourceblocking page string"
   },
   "doesntmatchoriginal":{
@@ -812,7 +812,7 @@
     "description":"resourceblocking page string"
   },
   "excludefilterremoved":{
-    "message":"S'ha eliminat el filtre. Si us plau torneu a carregar la pàgina original per generar la llista amb els recursos.",
+    "message":"S'ha eliminat el filtre. Torneu a carregar la pàgina original per generar la llista amb els recursos.",
     "description":"Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend2":{
@@ -1013,10 +1013,6 @@
     "message":"Traducció al català feta per:",
     "description":"Will be followed by a list of translator names (separate string)"
   },
-  "translator_names":{
-    "message":"CatTranslations",
-    "example":"The translator's names go here. Example: Michael G, Drew R"
-  },
   "tabsupport":{
     "message":"Suport",
     "description":"A tab on the options page"
@@ -1062,7 +1058,7 @@
     "description":"Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "storage_quota_exceeded":{
-    "message":"Heu sobrepassat el límit d'emmagatzematge que l'AdBlock pot fer servir. Si us plau deixeu la subscripció d'algunes llistes de filtres!",
+    "message":"Heu sobrepassat el límit d'emmagatzematge que l'AdBlock pot fer servir. Deixeu la subscripció d'algunes llistes de filtres!",
     "description":"Message shown when the user uses more storage than allowed by the browser"
   },
   "safari50_updatenotice":{
@@ -1182,7 +1178,7 @@
     "description":"This message is injected in other strings as a link\/button"
   },
   "update_available":{
-    "message":"Hi ha una actualització disponible per a AdBlock! Dirigiu-vos $here$ per dur-la a terme. <br> Atenció: si voleu rebre actualitzacions automàticament, cliqueu a Safari > Preferències  > Ampliacions <br> i marqueu l'opció  ' Instal·lar actualitzacions automàticament'.",
+    "message":"Hi ha una actualització disponible per a AdBlock! Dirigiu-vos $here$ per dur-la a terme. <br> Atenció: si voleu rebre actualitzacions automàticament, cliqueu a Safari > Preferències  > Ampliacions > Actualitzacions <br> i marqueu l'opció  ' Instal·lar actualitzacions automàticament'.",
     "description":"On the Options > Support page, shows when there are updates available for AdBlock",
     "placeholders":{
       "here":{
@@ -1250,5 +1246,9 @@
   "supportsite":{
     "message":"Feu-nos-ho saber en el nostre <a>lloc web de suport<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
+  },
+  "ad_report_please":{
+    "message":"Si veieu un anunci, no feu un informe d'errors, feu un <a>Informe d'anunci<\/a>!",
+    "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

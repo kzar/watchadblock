@@ -606,6 +606,9 @@ MyFilters.prototype._make_subscription_options = function() {
 	"annoyances": { // Fanboy's Annoyances
       url: "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",
 	},
+    "warning_removal": { // AdBlock warning removal
+      url: "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
+	}
   };
 }
 
