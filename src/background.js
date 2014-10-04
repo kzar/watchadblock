@@ -1014,18 +1014,6 @@
               openTab("https://getadblock.com/beta");
           }
       });
-
-      // Send us a bug report from beta page
-      chrome.runtime.onMessageExternal.addListener(
-          function(request, sender, sendResponse) {
-              if (request.bugreport) {
-                  var report = makeReport();
-                  var result = "http://support.getadblock.com/discussion/new" +
-                      "?category_id=problems&discussion[body]=" + report;
-                  chrome.tabs.create({url: result});
-              }
-          }
-      );
   }
 
   // DEBUG INFO
