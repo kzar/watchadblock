@@ -168,3 +168,5 @@ setDefault = function(obj, value, defaultValue) {
     obj[value] = defaultValue;
   return obj[value];
 };
+
+OPERA = navigator.userAgent.indexOf("OPR") > -1;
