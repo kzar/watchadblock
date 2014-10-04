@@ -125,11 +125,11 @@ var before_ready_bandaids = function() {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
   if (/youtube/.test(document.location.hostname))
-    apply_bandaid_for = "youtube_safari_only";
+    apply_bandaid_for = "youtube_only";
   
 
   var bandaids = {
-    youtube_safari_only: function() {        
+    youtube_only: function() {        
         // If history.pushState is available,
         // YouTube uses it when navigating from one video
         // to another and tells the flash player via JavaScript,
@@ -139,7 +139,7 @@ var before_ready_bandaids = function() {
         var s = document.createElement("script");
         s.type = "application/javascript";
         s.async = false;
-        s.textContent = "history.pushState = undefined;";
+        s.textContent = "History.prototype.pushState = undefined;";
         document.documentElement.appendChild(s);
         document.documentElement.removeChild(s);
     }
