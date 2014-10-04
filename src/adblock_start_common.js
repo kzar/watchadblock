@@ -191,7 +191,6 @@ function adblock_begin(inputs) {
     onReady(function() {
       // TODO: ResourceList could pull html.innerText from page instead: we
       // could axe this (and Safari's .selectors calculation in debug mode)
-      if (data.settings.debug_logging)
         debug_print_selector_matches(data.selectors || []);
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.
       if (typeof run_bandaids === "function") {

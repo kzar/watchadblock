@@ -45,14 +45,20 @@ var run_bandaids = function() {
     },
     getadblock: function() {
       BGcall('get_adblock_user_id', function(adblock_user_id) {
-        var user_id = adblock_user_id;
-        var div_id = "adblock_user_id";
         var elemDiv = document.createElement("div");
-        elemDiv.id = div_id;
-        elemDiv.innerText = user_id;
+        elemDiv.id = "adblock_user_id";
+        elemDiv.innerText = adblock_user_id;
         elemDiv.style.display = "none";
         document.body.appendChild(elemDiv);
       });
+      BGcall('get_first_run', function(first_run) {
+        var elemDiv = document.createElement("div");
+        elemDiv.id = "adblock_first_run_id";
+        elemDiv.innerText = first_run;
+        elemDiv.style.display = "none";
+        document.body.appendChild(elemDiv);
+      });
+
     },
    youtube_safari_only: function() {
 

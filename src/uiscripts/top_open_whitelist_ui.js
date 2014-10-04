@@ -26,7 +26,6 @@ function top_open_whitelist_ui() {
   load_jquery_ui(function() {
     var adblock_default_button_text = translate("buttonexclude");
     var btns = {};
-    btns[translate("buttoncancel")] = function() { page.dialog('close');}
     btns[adblock_default_button_text] = {
       text: adblock_default_button_text,
       'class': 'adblock_default_button',
@@ -37,6 +36,7 @@ function top_open_whitelist_ui() {
         });
       }
     }
+    btns[translate("buttoncancel")] = function() { page.dialog('close');}
     
     var page = $("<div>").
       append('<span>' + translate("adblock_wont_run_on_pages_matching") + 

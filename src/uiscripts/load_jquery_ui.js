@@ -50,7 +50,13 @@ var text_direction = (function() {
  return language === "ar" || language === "he" ? "rtl":"ltr";
 })();
 function changeTextDirection($selector) { 
- $selector.attr("dir", text_direction); 
+ $selector.attr("dir", text_direction);
+  if (text_direction === "rtl") {
+    $(".ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset").css("float", "left");
+    $(".ui-dialog .ui-dialog-title").css("float", "right");
+    $(".ui-dialog .ui-dialog-titlebar").css("background-position", "right center");
+    $(".ui-dialog .ui-dialog-titlebar-close").css({left: "0.3em", right: "initial"});
+}
 }
 
 //@ sourceURL=/uiscripts/load_jquery_ui.js

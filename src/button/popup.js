@@ -2,7 +2,7 @@ var BG = chrome.extension.getBackgroundPage();
 
 // Set menu entries appropriately for the selected tab.
 function customize_for_this_tab() {
-  $(".menu-entry, .separator").hide();
+  $(".menu-entry, .menu-status, .separator").hide();
 
   BG.getCurrentTabInfo(function(info) {
     var shown = {};
@@ -12,12 +12,12 @@ function customize_for_this_tab() {
     show(["div_options", "separator2"]);
     var paused = BG.adblock_is_paused();
     if (paused) {
-      show(["div_status_paused", "separator0", "div_options"]);
+      show(["div_status_paused", "separator0","div_paused_adblock", "div_options"]);
     } else if (info.disabled_site) {
       show(["div_status_disabled", "separator0", "div_pause_adblock",
             "div_options", "div_help_hide_start"]);
     } else if (info.whitelisted) {
-      show(["div_status_whitelisted", "div_show_resourcelist",
+      show(["div_status_whitelisted","div_enable_adblock_on_this_page", "div_show_resourcelist",
             "separator0", "div_pause_adblock", "separator1",
             "div_options", "div_help_hide_start"]);
     } else {
@@ -77,7 +77,6 @@ function customize_for_this_tab() {
   });
 }
 
-
 // Click handlers
 $(function() {
   $("#toggle_badge_checkbox").click(function(){
@@ -87,12 +86,17 @@ $(function() {
     });
   });
 
-  $("#titletext span").click(function() {
+  $("#titletext").click(function() {
     var url = "https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom";
+    var opera_url = "https://addons.opera.com/extensions/details/adblockforopera/";
+    if (OPERA) {
+    BG.openTab(opera_url);
+    } else {
     BG.openTab(url);
-  });
+   }
+   });
 
-  $("#div_status_whitelisted a").click(function() {
+  $("#div_enable_adblock_on_this_page").click(function() {
     BG.getCurrentTabInfo(function(info) {
       if (BG.try_to_unwhitelist(info.tab.url)) {
         chrome.tabs.reload();
@@ -104,7 +108,7 @@ $(function() {
     });
   });
 
-  $("#div_status_paused a").click(function() {
+  $("#div_paused_adblock").click(function() {
     BG.adblock_is_paused(false);
     BG.handlerBehaviorChanged();
     BG.updateButtonUIAndContextMenus();
@@ -182,16 +186,21 @@ $(function() {
 
 
   $("#div_help_hide").click(function() {
-    $("#help_hide_explanation").slideDown();
+    if (OPERA) {
+      $("#help_hide_explanation").text(translate("operabutton_how_to_hide2")).slideToggle();
+    } else {
+      $("#help_hide_explanation").slideToggle();
+    }
   });
 });
 
 // Share open/close click handlers
 $(function() {
   var state = "initial";
-  var bodysize = { width: $("body").width(), height: $("body").height() };
   var linkHref = "https://getadblock.com/share/";
+  var bodysize;
   $("#link_open").click(function() {
+    bodysize = { width: $("#wrapper").width(), height: $("#wrapper").height() };
     if (state === "initial") {
       $("<iframe>").
         attr("frameBorder", 0).
@@ -218,7 +227,7 @@ $(function() {
     if (state != "open")
       return;
     state = "closed";
-    $("body").animate(bodysize, {queue:false});
+    $("body").animate({width: bodysize.width, height: bodysize.height}, {queue:false});
     $("#menu-items").slideDown();
     $("#slideout_wrapper").animate({width: 0, height: 0}, {queue:false});
     $("#link_close").hide();

@@ -3,6 +3,7 @@
    chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/pages/adreport.html
    ?url={domain_href}
 -->
+<!doctype html>
 <html>
   <head>
     <title i18n="adblockreportinganad"></title>
@@ -10,40 +11,67 @@
     <script src="../jquery/jquery.min.js" type="text/javascript"></script>
     <script src="../port.js" type="text/javascript"></script>
     <script src="../functions.js" type="text/javascript"></script>
+    <script src="../checkupdates.js" type="text/javascript"></script>
     <style type="text/css">
+      body {
+      background-color: white;
+      }
+      .section {
+        padding: 10px;
+        padding-left: 162px;
+        margin: 0px -8px 0px -8px;
+      }
+      .white {
+        background-color: white;
+      }
       .section h2 {
         font-size: 1.2em;
-        margin-left: 10px;
+        margin-left: 15px;
       }
       label {
-        margin-right: 15px;
+        margin-right: 5px;
       }
       div.form {
         margin-left: 15px;
       }
-      #whattodo {
+      #info {
+        position: relative;
+        margin: 110px auto 30px;
+        max-width: 990px;
+        }
+      #checkupdate {
         font-weight: bold;
         color: red;
-        font-size: 15px;
-        margin-left: 20px;
-        margin-top: 20px;
       }
+      .result {
+        position: relative;
+        margin: 0px auto;
+        max-width: 1000px;
+        padding: 20px 20px 20px 30px;
+        background-color: white;
+        }
       #privacy {
         font-style: italic;
-        font-size: 12px;
-        margin-left: 20px;
         display: none;
       }
       .answer {
-        color: blue;
+        color: #4D7BD6;
         font-weight: bold;
+        margin-left: 5px;
       }
       .section {
-        display:none;
+        display: none;
       }
       .afterFilterUpdate, .afterFilterUpdate * {
         color: #CCC;
         cursor: auto;
+      }
+      a {
+        color: #4D7BD6;
+        text-decoration: none;
+      }
+      .radio {
+        margin-left: 4px;
       }
       #checkinfirefox {
         display: inline-block;
@@ -55,16 +83,52 @@
         margin-left: 18px;
         vertical-align: top;
       }
+      #step_disable_extensions_DIV {
+        position: relative;
+        margin: 0px auto;
+        max-width: 1000px;
+        padding: 20px 20px 20px 0px;
+        background-color: white;
+      }
+      #step_language_DIV, #step_update_filters_DIV, #step_firefox_DIV, #step_flash_DIV, #step_malware_DIV, #step_everywhere_DIV  {
+        position: relative;
+        margin: 0px auto;
+        max-width: 1000px;
+        padding: 20px 20px 20px 0px;
+      }
+      @media screen and (max-width: 1080px) {
+        .social {
+          display: none;
+        }
+        #step_update_filters_DIV, #step_disable_extensions_DIV, #step_language_DIV, #step_firefox_DIV, #step_flash_DIV, #step_malware_DIV, #step_everywhere_div   {
+          padding: 20px 20px 20px 0px;
+        }
+        #info {
+          margin: 110px auto 30px 15px;
+        }
+       .result {
+          padding: 20px;
+        }
+      }
     </style>
   </head>
   <body>
-    <h1 class="icon">AdBlock</h1>
-
+    <header id="header">
+      <div class="wrap">
+        <nav id="main_nav" class="right">
+          <li class="social"><a class="twitter" href="http://twitter.com/getadblock" target="_blank"></a></li>
+          <li class="social"><a class="gplus" href="http://plus.google.com/100807459477993641578" target="_blank" ></a></li>
+          <li class="social"><a class="facebook" href="http://facebook.com/heres.adblock" target="_blank" ></a></li>
+        </nav>
+        <a href="https://www.getadblock.com" class="left adblock-logo"><img src="../img/logo.png"></a>
+      </div>
+    </header>
 
     <!--STEP 0-->
-    <div style="padding-left:5px; margin-bottom:20px;" i18n="adreport2"></div>
+    <div id="info" i18n="adreport2"></div>
 
     <!--STEP 1: update filters-->
+    <div id="step" style="background-color: #f8f8f8;">
     <div class="section" id="step_update_filters_DIV" style="display:block;">
       <h2 i18n="updateyourlists"></h2>
       <ol>
@@ -72,7 +136,7 @@
         <li i18n="reloadadpage" class="afterFilterUpdate"></li>
       </ol>
       <input type="button" value="Update my filters!" id="UpdateFilters" />
-      <span i18n="adstillappear" class="afterFilterUpdate"></span><br/>
+      <span i18n="adstillappear" class="afterFilterUpdate" style="margin-left: 19px;"></span><br/>
       <div id="step_update_filters" class="form afterFilterUpdate">
         <input type="radio" id="step_update_filters_yes" name="step_update_filters" disabled="disabled" />
         <label for="step_update_filters_yes" i18n="yes"></label>
@@ -80,11 +144,12 @@
         <label for="step_update_filters_no" i18n="no"></label>
       </div>
     </div>
+    </div>
 
-  
   <!--STEP 2: disable all extension except AdBlock-->
+    <div id="step">
     <div class="section" id="step_disable_extensions_DIV">
-      <h2 i18n="disableallextensions"></h2><br />
+      <h2 i18n="disableallextensions"></h2>
       <div class="chrome_only">
       <ol>
         <li i18n="disableforchromestepone"></li>
@@ -100,21 +165,23 @@
       </ol>
       </div>
 
-      <br />
-  
-      <span i18n="adstillappear" class="afterDisableExtensions"></span><br/>
+
+      <span i18n="adstillappear" class="afterDisableExtensions" style="margin-left: 19px;"></span><br/>
       <div class="form" id="step_disable_extensions">
         <input type="radio" id="step_disable_extensions_yes" name="step_disable_extensions" />
         <label for="step_disable_extensions_yes" i18n="yes"></label>
         <input type="radio" id="step_disable_extensions_no" name="step_disable_extensions" />
         <label for="step_disable_extensions_no" i18n="no"></label>
-      </div>  
+      </div>
     </div>
-    
+    </div>
+
+   
   <!--STEP 3a: Similar ads in different places-->
+    <div id="step" style="background-color: #f8f8f8;">
     <div class="section" id="step_everywhere_DIV">
-      <h2 i18n="similarAds"></h2>
-      <span i18n="sameAdsOnDifferentPages"></span>
+      <h2 i18n="similarAds" style="margin-bottom: 15px;"></h2>
+      <span i18n="sameAdsOnDifferentPages" style="margin-left: 20px;"></span>
       <div class="form" id="step_everywhere">
         <input type="radio" id="step_everywhere_yes" name="step_everywhere"/>
         <label for="step_everywhere_yes" i18n="yes"></label>
@@ -122,8 +189,10 @@
         <label for="step_everywhere_no" i18n="no"></label>
       </div>
     </div>
+    </div>
     
   <!--STEP 3b: scan for malware-->
+    <div id="step">
     <div class="section" id="step_malware_DIV">
       <h2 i18n="scancomputer"></h2>
       <ol>
@@ -131,7 +200,7 @@
         <li i18n="reloadadpage"></li>
       </ol>
       
-      <span i18n="adstillappear"></span>
+      <span i18n="adstillappear" style="margin-left: 19px;"></span>
       <div class="form" id="step_malware">
         <input type="radio" id="step_malware_yes" name="step_malware"/>
         <label for="step_malware_yes" i18n="yes"></label>
@@ -139,14 +208,16 @@
         <label for="step_malware_no" i18n="no"></label>
       </div>
     </div>
+    </div>
 
 
     <!--STEP 4: language-->
+    <div id="step" style="background-color: #f8f8f8;">
     <div class="section" id="step_language_DIV">
-      <h2 i18n="correctfilters"></h2>
-      <span i18n="pagelanguagecheck"></span>
+      <h2 i18n="correctfilters" style="margin-bottom: 15px;"></h2>
+      <span i18n="pagelanguagecheck" style="margin-left: 20px;"></span>
       <div id="step_language" class="form">
-        <select id="step_language_lang">
+        <select id="step_language_lang" style="margin-left: 6px;">
           <option disabled="disabled" selected="selected"></option>
           <option value="easylist;http://forums.lanik.us/" i18n="lang_english"></option>
           <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org" i18n="filtereasylist_plus_bulgarian"></option>
@@ -178,8 +249,11 @@
         </select>
       </div>
     </div>
+    </div>
+
   
     <!--STEP 5: also in Firefox-->
+    <div id="step">
     <div class="section" id="step_firefox_DIV">
       <h2 id="checkinfirefox"></h2>
       <abbr id="whyFireFox" i18n_title="firefox_explanation">?</abbr>
@@ -189,7 +263,7 @@
         <li i18n="checkinfirefox_3"></li>
         <li i18n="checkinfirefox_4"></li>
       </ol>
-      <span i18n="checkinfirefox_5"></span>
+      <span i18n="checkinfirefox_5" style="margin-left: 19px;"></span>
       <div class="form" id="step_firefox">
         <input type="radio" id="step_firefox_yes" name="step_firefox"/>
         <label for="step_firefox_yes" i18n="yes"></label>
@@ -199,12 +273,14 @@
         <label for="step_firefox_wontcheck" i18n="refusetocheck"></label>
       </div>
     </div>
+    </div>
 
 
     <!--STEP 6: video/flash ads-->
+    <div id="step" style="background-color: #f8f8f8;">
     <div class="section" id="step_flash_DIV">
       <h2 i18n="flashads"></h2>
-      <span i18n="cantblockflashwarning"></span>
+      <span i18n="cantblockflashwarning" style="margin-left: 19px;"></span>
       <div class="form" id="step_flash">
         <input type="radio" id="step_flash_yes" name="step_flash"/>
         <label for="step_flash_yes" i18n="yes"></label>
@@ -212,9 +288,13 @@
         <label for="step_flash_no" i18n="no"></label>
       </div>
     </div>
+    </div>
 
-    <div id="whattodo"></div>
-    <div id="privacy" i18n="reportpubliclyavailable"></div>
+
+    <div class="result">
+     <div id="checkupdate"></div>
+     <div id="privacy" i18n="reportpubliclyavailable"></div>
+    </div>
 
     <script src="adreport.js"></script>
   </body>

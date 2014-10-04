@@ -36,8 +36,12 @@
     "description":"Resource list column title telling if the resource originates from a different domain"
   },
   "chromebutton_how_to_hide2":{
-    "message":"Pour cacher ce bouton, faites un clic droit dessus et choisissez 'Masquer le bouton'.  Pour l'afficher à nouveau, allez dans chrome:\/\/chrome\/extensions.",
+    "message":"Pour masquer ce bouton, faites un clic droit dessus et choisissez \"Masquer le bouton\".  Pour l'afficher à nouveau, allez dans chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
+  "operabutton_how_to_hide2":{
+    "message":"Pour masquer ce bouton, allez sur opera:\/\/extensions et cochez \"Cacher de la barre d'outils\". Vous pouvez l'afficher à nouveau en décochant cette option.",
+    "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Opera displays on the Extensions page."
   },
   "sliderexplanation":{
     "message":"Faites glisser le curseur jusqu'à ce que la pub disparaisse.",
@@ -213,12 +217,12 @@
     "message":"(expérimental)",
     "description":"Option on first tab page"
   },
-  "googletextads":{
-    "message":"Afficher les annonces textuelles des résultats Google",
+  "googletextads2":{
+    "message":"J'aime les annonces textuelles dans les recherches Google, affichez-les",
     "description":"Option on first tab page"
   },
-  "showcontextmenus":{
-    "message":"Ajouter les éléments AdBlock dans le menu du clic droit",
+  "showcontextmenus2":{
+    "message":"Afficher les éléments AdBlock dans le menu du clic droit",
     "description":"Option on first tab page"
   },
   "debuginlogoption":{
@@ -313,8 +317,8 @@
     "message":"Trop de filtres activés ralentissent la navigation, choisissez donc uniquement ceux qui vous sont utiles !<br\/>Les crédits et autres listes se trouvent <a>ici<\/a>.",
     "description":"Explanation of the filter lists"
   },
-  "updatenowmessage":{
-    "message":"Les listes seront mises à jour automatiquement. Vous pouvez aussi les <a>mettre à jour maintenant<\/a>.",
+  "updatenowmessage2":{
+    "message":"Les listes seront mises à jour automatiquement. Vous pouvez aussi les <a>mettre à jour maintenant<\/a>",
     "description":"update filters text + button"
   },
   "orenteraurl":{
@@ -325,8 +329,8 @@
     "message":"S'abonner",
     "description":"subscribe to a list button"
   },
-  "showlinkstolists":{
-    "message":"Afficher les liens des listes de filtres :",
+  "showlinkstolists2":{
+    "message":"Afficher les liens des listes de filtres",
     "description":"Option on second tab page"
   },
   "filterantisocial":{
@@ -618,16 +622,24 @@
     "description":"language"
   },
   "other":{
-    "message":"Autre",
+    "message":"autre",
     "description":"multiple choice option"
+  },
+  "orchrome":{
+    "message":"ou Chrome",
+    "description":"used for placeholder in checkinfirefoxtitle and checkinfirefox_1 string"
+  },
+  "oradblockforchrome":{
+    "message":"ou AdBlock pour Chrome",
+    "description":"used for placeholder in checkinfirefox_2 string"
   },
   "nodefaultfilter1":{
     "message":"Nous n'avons pas de liste de filtres pour cette langue.<br\/>Essayez de trouver une liste appropriée qui supporte cette langue $link$ ou bloquez cette publicité pour vous-même dans l'onglet 'Personnaliser'.",
     "description":"instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders":{
       "link":{
-        "content":"$1ici$2",
-        "example":"<a href='http:\/\/abp.org'>here<\/a>"
+        "content":"<a id='link'><\/a>",
+        "example":"<a>here<\/a>"
       }
     }
   },
@@ -646,8 +658,8 @@
     "description":"tell a user to see if a reported ad also appears in Firefox\/Chrome",
     "placeholders":{
       "chrome":{
-        "content":"$1ou Chrome$2",
-        "example":"This will only be shown in Safari. Chrome users will not see this."
+        "content":"<span id='chrome1'><\/span>",
+        "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -656,8 +668,8 @@
     "description":"instruction for how to check Firefox\/Chrome for a reported ad",
     "placeholders":{
       "chrome":{
-        "content":"$1ou Chrome$2",
-        "example":"This will only be shown in Safari. Chrome users will not see this."
+        "content":"<span id='chrome2'><\/span>",
+        "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -666,8 +678,8 @@
     "description":"instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
     "placeholders":{
       "chrome":{
-        "content":"$1ou AdBlockforChrome pour Chrome$2",
-        "example":"This will only be shown in Safari. Chrome users will not see this."
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -704,16 +716,6 @@
   "fixityourself":{
     "message":"D'accord, vous pouvez tout de même bloquer cette publicité pour vous-même dans les options.",
     "description":"telling a user who won't report an ad to us how to handle it for herself"
-  },
-  "updatefromoldversion":{
-    "message":"Vous utilisez une version obsolète d'AdBlock. Merci de commencer par la $updatelink$.",
-    "description":"Ad report page instructions to update AdBlock in Safari",
-    "placeholders":{
-      "updatelink":{
-        "content":"$1mettre à jour$2",
-        "example":"<a href='http:\/\/chrome.com\/update_here.ctx'>update<\/a>"
-      }
-    }
   },
   "adblock_outdated_chrome":{
     "message":"Vous utilisez une version obsolète d'AdBlock. Merci d'aller sur <a href='#'>la page des extensions<\/a>, activer le 'Mode développeur' et cliquer sur 'Mettre à jour les extensions maintenant'",
@@ -919,6 +921,22 @@
     "message":"Ajouter ce filtre",
     "description":"resourceblocking page string"
   },
+  "ordisablefilter":{
+    "message":"… ou désactiver un filtre :",
+    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
+  },
+  "thisfilterwillbedisabled":{
+    "message":"Ce filtre sera désactivé :",
+    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
+  },
+  "disabledwhenbrowsing":{
+    "message":"Ce filtre sera désactivé lorsque vous êtes :",
+    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
+  },
+  "onlypagesonthisdomain":{
+    "message":"UNIQUEMENT sur les pages sur ce domaine :",
+    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+  },
   "flashads":{
     "message":"Vidéos et Flash",
     "description":"Title of the final ad report question if the ad didn't appear in FF"
@@ -931,8 +949,8 @@
     "message":"Il est pour le moment impossible de bloquer les publicités dans Flash et les autres plugins.",
     "description":"Result of the final ad report question"
   },
-  "cleanuplist":{
-    "message":"Nettoyer cette liste :",
+  "cleanuplist2":{
+    "message":"Nettoyer cette liste",
     "description":"Option at the bottom of the third options tab"
   },
   "disabled_by_filter_lists":{
@@ -951,16 +969,16 @@
     "message":"AdBlock est désactivé pour cette page.",
     "description":"Message shown in toolbar button on web pages that have been whitelisted."
   },
-  "enable":{
-    "message":"Activer",
+  "enable_adblock":{
+    "message":"Activer AdBlock sur cette page",
     "description":"Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused":{
     "message":"AdBlock est désactivé.",
     "description":"Message shown in toolbar button when AdBlock is paused."
   },
-  "unpause":{
-    "message":"Réactiver",
+  "unpause_adblock":{
+    "message":"Réactiver AdBlock",
     "description":"Link text to unpause AdBlock, displayed immediately after 'status_paused'."
   },
   "pause_adblock":{
@@ -987,8 +1005,8 @@
     "message":"Faites passer le mot !",
     "description":"Text of a share link"
   },
-  "did_you_know_this_is_my_full_time_job":{
-    "message":"Saviez-vous que ceci est mon travail à temps plein ?",
+  "pwyw":{
+    "message":"Payez ce que vous voulez !",
     "description":"Text of a payment request link"
   },
   "removelabel":{
@@ -1000,22 +1018,20 @@
     "description":"link to change resources on the resourceblock page"
   },
   "translator_credit":{
-    "message":"Traduction par $translator_names$",
-    "description":"Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
-    "placeholders":{
-      "translator_names":{
-        "content":"Cash, Matthieu, Neelfyn",
-        "example":"Michael G, Drew R"
-      }
-    }
+    "message":"Traduction par :",
+    "description":"Will be followed by a list of translator names (separate string)"
+  },
+  "translator_names":{
+    "message":"Cash, Matthieu, Neelfyn",
+    "example":"The translator's names go here. Example: Michael G, Drew R"
   },
   "project_home":{
     "message":"Accueil du projet",
     "description":"Text of link to the AdBlock open source project homepage (not the install page)"
   },
-  "help":{
-    "message":"Aide",
-    "description":"Text of link to a page with fixes to common problems and a list of known issues"
+  "tabsupport":{
+    "message":"Support",
+    "description":"Link to forum in options page"
   },
   "report_ad_on_page":{
     "message":"Rapporter une publicité sur cette page",
@@ -1025,8 +1041,8 @@
     "message":"Afficher la liste des ressources",
     "description":"Link in the button"
   },
-  "advanced_options":{
-    "message":"Afficher les options avancées",
+  "advanced_options2":{
+    "message":"Je suis un utilisateur avancé, afficher les options avancées",
     "description":"Options page checkbox"
   },
   "work_around_hulu_problems":{
@@ -1165,7 +1181,7 @@
   },
   "firefox_explanation":{
     "message":"Le but de cette question est de déterminer qui doit recevoir votre rapport. Si vous répondez incorrectement à cette question, le rapport ne sera pas envoyé aux bonnes personnes, et il pourrait être ignoré.",
-    "description":"Explanation of the Check-in-FireFox step in the ad reporter"
+    "description":"Explanation of the Check-in-Firefox step in the ad reporter"
   },
   "opera_secure_pages":{
     "message":"Pages sécurisées",
@@ -1252,5 +1268,51 @@
         "example":"code.google.ph, ph.msn.com, stackoverflow.com"
       }
     }
+  },
+  "latest_version":{
+    "message":"AdBlock est à jour !",
+    "description":"On the Options > Help page, shows when there are no updates available for AdBlock"
+  },
+  "here":{
+    "message":"ici",
+    "description":"This message is injected in other strings as a link\/button"
+  },
+  "update_available":{
+    "message":"Il y a une mise à jour pour AdBlock ! Cliquez $here$ pour mettre à jour. <br>Note: si vous souhaitez recevoir des mises à jour automatiquement, il suffit de cliquer sur Safari > Préférences > Extensions > Mises à jour <br>et cocher l'option \"Installer automatiquement\".",
+    "description":"On the Options > Support page, shows when there are updates available for AdBlock.",
+    "placeholders":{
+      "here":{
+        "content":"<a id='here'><\/a>",
+        "example":"<a>here<\/a>"
+      }
+    }
+  },
+  "adblocksupport":{
+    "message":"Support AdBlock",
+    "description":"A tab on the options page"
+  },
+  "support":{
+    "message":"Avez-vous trouvé un bogue ? Une question ? Une nouvelle idée pour AdBlock ? Contactez-nous sur <a>notre site de support<\/a> ! (uniquement en anglais)",
+    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
+  },
+  "seethecode":{
+    "message":"Vous voulez consulter le code source d'AdBlock ? Téléchargez-le <a>ici<\/a>.",
+    "description":"Link to code behind AdBlock"
+  },
+  "adblockcontributors":{
+    "message":"Vous voulez savoir qui participe au projet AdBlock ? Jetez un œil à notre <a>liste de contributeurs<\/a> !",
+    "description":"Text for link to contributors page"
+  },
+  "checkforupdates":{
+    "message":"Recherche de mises à jour (ne devrait pas prendre plus de quelques secondes)…",
+    "description":"Displayed when AdBlock is checking the newest available version"
+  },
+  "somethingwentwrong":{
+    "message":"Quelque chose s'est mal passé lors de la vérification des mises à jour.",
+    "description":"Displayed when AdBlock is checking the newest available version and an error occurs"
+  },
+  "checkinternetconnection":{
+    "message":"Pour signaler une publicité, vous devez être connecté à Internet.",
+    "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }
 }

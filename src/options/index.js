@@ -3,7 +3,7 @@ function load_options() {
   BGcall("get_settings", function(settings) {
     optionalSettings = settings;
     $("#tabpages").
-      tabs({ 
+      tabs({
         spinner: "",
         cache: true,
         cookie: {},
@@ -31,6 +31,53 @@ function load_options() {
   });
 }
 
+var language = navigator.language.match(/^[a-z]+/i)[0];
+function rightToLeft() {
+  if (language === "ar" || language === "he" ) {
+    $(window).resize(function() {
+      if ($(".social").is(":hidden")) {
+        $("#translation_credits").css({margin: "0px 50%", width: "350px"});
+        $("#paymentlink").css({margin: "0px 50%", width: "350px"});
+        $("#version_number").css({margin: "20px 50%", width: "350px"});
+      } else {
+        $("#translation_credits").css("right", "0px");
+        $("#paymentlink").css("right", "0px");
+        $("#version_number").css({right: "0px", padding: "0px"});
+      }
+    });
+    $("li").css("float","right");
+    $("#small_nav").css({right: "initial", left: "45px"});
+    $(".ui-tabs .ui-tabs-nav li").css("float", "right");
+  } else {
+    $(".ui-tabs .ui-tabs-nav li").css("float", "left");
+  }
+}
+
+function showMiniMenu() {
+  $("#small_nav").click(function() {
+    if ($(".ui-tabs-nav").is(":hidden")) {
+      $(".ui-tabs .ui-tabs-nav li").css("float", "none");
+      $(".ui-tabs-nav").fadeIn("fast");
+      if (language === "ar" || language === "he" ) {
+        $(".ui-tabs-nav").css({right:"auto", left:"40px"});
+      }
+    } else
+      $(".ui-tabs-nav").fadeOut("fast");
+  });
+  $(window).resize(function() {
+    if ($(".ui-tabs-nav").is(":hidden") && $("#small_nav").is(":hidden")) {
+      if (language === "ar" || language === "he" ) {
+        $(".ui-tabs .ui-tabs-nav li").css("float", "right");
+        $(".ui-tabs-nav").css({right:"auto", left:"auto"});
+      } else {
+        $(".ui-tabs .ui-tabs-nav li").css("float", "left");
+      }
+      $(".ui-tabs-nav").show();
+    } else if ($("#small_nav").is(":visible"))
+      $(".ui-tabs-nav").hide();
+  });
+}
+
 function displayVersionNumber() {
   try {
     var xhr = new XMLHttpRequest();
@@ -45,7 +92,7 @@ function displayVersionNumber() {
   } catch (ex) {} // silently fail
 }
 
-$('#paymentlink').click(function() {
+$("#paymentlink").click(function() {
   BGcall("storage_get", "userid", function(userId) {
     var href = "https://chromeadblock.com/pay/?source=O&u=" + userId;
     BGcall("openTab", href);
@@ -53,8 +100,12 @@ $('#paymentlink').click(function() {
   return false;
 });
 
-if (navigator.language.substring(0, 2) != "en")
-  $("#translation_credits").text(translate("translator_credit"));
+function displayTranslationCredit() {
+if (navigator.language.substring(0, 2) != "en") {
+    $("#translator_credit").text(translate("translator_credit"));
+    $("#translator_names").text(translate("translator_names"));
+  }
+}
 
 if (SAFARI && LEGACY_SAFARI) {
   if (navigator.appVersion.indexOf("Mac OS X 10_5_") !== -1) {
@@ -65,6 +116,11 @@ if (SAFARI && LEGACY_SAFARI) {
 }
 
 var optionalSettings = {};
-load_options();
-displayVersionNumber();
-localizePage();
+$(document).ready(function(){
+  load_options();
+  rightToLeft();
+  showMiniMenu();
+  displayVersionNumber();
+  displayTranslationCredit();
+  localizePage();
+})

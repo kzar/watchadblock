@@ -57,6 +57,7 @@ STATS = (function() {
       f: flavor,
       o: os,
       g: get_settings().show_google_search_text_ads ? '1': '0',
+      l: determineUserLanguage(),
     };
 
     $.post(stats_url, data

@@ -23,6 +23,7 @@ function CheckboxForFilterList(filter_list, filter_list_type, index, container) 
   this._check_box = $('<input />').
       attr("type", "checkbox").
       attr("id", this._id).
+      css("margin-left", "2px").
       attr("checked", this._filter_list.subscribed ? 'checked' : null).
       addClass("filter_list_control");
       
@@ -548,10 +549,10 @@ $(function() {
   });
  
   $("#btnShowLinks").click(function() {
-    $(".linkToList").css("display", "inline");
-    $("#btnShowLinks").attr("disabled", "disabled");
+    $(".linkToList").fadeIn("slow");
+    $("#btnShowLinks").remove();
   });
-  
+   
   chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
     if (request.command !== "filters_updated")
       return;

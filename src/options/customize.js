@@ -176,9 +176,9 @@ $(function() {
     $("#btnEditAdvancedFilters").hide();
     $("#txtFiltersAdvanced").focus();
   });
-  
+
   // Update custom filter count in the background.
-  // Inputs: custom_filters_text:string - string representation of the custom filters 
+  // Inputs: custom_filters_text:string - string representation of the custom filters
   // delimited by new line.
   function updateCustomFiltersCount(custom_filters_text) {
     var custom_filters_array = custom_filters_text.split("\n");
@@ -187,7 +187,7 @@ $(function() {
     for(var i = 0; i < custom_filters_array.length; i++) {
       var filter = custom_filters_array[i]
       //Check if filter is a duplicate and that it is a hiding filter.
-      if(temp_filter_tracker.indexOf(filter) < 0 && filter.indexOf("##") > -1) { 
+      if(temp_filter_tracker.indexOf(filter) < 0 && filter.indexOf("##") > -1) {
         temp_filter_tracker.push(filter);
         var host = filter.split("##")[0];
         new_count[host] = (new_count[host] || 0) + 1;
@@ -199,13 +199,14 @@ $(function() {
   function saveFilters() {
     var custom_filters_text = $("#txtFiltersAdvanced").val();
     BGcall("set_custom_filters_text", custom_filters_text);
-    
+
     updateCustomFiltersCount(custom_filters_text);
-    
+
     $("#divAddNewFilter").slideDown();
     $("#txtFiltersAdvanced").attr("disabled", "disabled");
     $("#spanSaveButton").hide();
     $("#btnEditAdvancedFilters").show();
+    $("#btnCleanUp").show();
   }
   $("#btnSaveAdvancedFilters").click(saveFilters);
 

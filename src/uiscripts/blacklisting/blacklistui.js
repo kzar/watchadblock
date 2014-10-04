@@ -197,7 +197,7 @@ BlacklistUi.prototype._build_page2 = function() {
     "<div>" +
       "<br/>" + translate("blacklisternotsure") +
       "<br/><br/></div>" +
-    "<div style='clear:left; font-size:smaller'>" +
+    "<div style='clear:left; font-size:smaller; margin-top: -20px;'>" +
       "<br/>" + translate("blacklisterthefilter") +
       "<div style='margin-left:15px;margin-bottom:15px'>" +
         "<div>" +
@@ -225,10 +225,6 @@ BlacklistUi.prototype._build_page2 = function() {
       } else {alert(translate("blacklisternofilter"));}
     }
   }
-  btns[translate("buttoncancel")] =
-      function() {
-        that._ui_page2.dialog('close');
-      }
   if (that._advanced_user)
     btns[translate("buttonedit")] =
       function() {
@@ -254,6 +250,10 @@ BlacklistUi.prototype._build_page2 = function() {
         that._cancelled = true;
         that._redrawPage1();
         that._ui_page1.dialog('open');
+      }
+  btns[translate("buttoncancel")] =
+      function() {
+        that._ui_page2.dialog('close');
       }
 
   page.dialog({

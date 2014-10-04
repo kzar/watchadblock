@@ -54,6 +54,10 @@
   var get_adblock_user_id = function() {
     return storage_get("userid");
   };
+  
+  var get_first_run = function() {
+    return STATS.firstRun;
+  };  
 
   // OPTIONAL SETTINGS
 

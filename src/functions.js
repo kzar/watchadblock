@@ -8,6 +8,9 @@ if (window.location.origin + "/" === chrome.extension.getURL("")) {
     window.location.replace("about:blank");
 }
 
+// Global variable for Opera, so we can make specific things for Opera
+OPERA = navigator.userAgent.indexOf("OPR") > -1;
+
 // Run a function on the background page.
 // Inputs (positional):
 //   first, a string - the name of the function to call
@@ -80,6 +83,9 @@ localizePage = function() {
   // Make a right-to-left translation for Arabic and Hebrew languages
   var language = determineUserLanguage();
   if (language === "ar" || language === "he" ) {
+    $("#main_nav").removeClass("right").addClass("left");
+    $(".adblock-logo").removeClass("left").addClass("right");
+    $(".closelegend").css("float","left");
     document.documentElement.dir = "rtl";
   }
 };
@@ -168,5 +174,3 @@ setDefault = function(obj, value, defaultValue) {
     obj[value] = defaultValue;
   return obj[value];
 };
-
-OPERA = navigator.userAgent.indexOf("OPR") > -1;

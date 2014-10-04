@@ -39,6 +39,10 @@
     "message":"Sakrijte gumb tako da ga desnim klikom miša kliknete i odaberte Sakrij gumb. Možete gumb vratiti nazad u opcijama proširenja: chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
+  "operabutton_how_to_hide2":{
+    "message":"To hide the button, go to opera:\/\/extensions and check the 'Hide from toolbar' option. You can show it again by unchecking that option.",
+    "description":"Message explaining how to hide the AdBlock toolbar button.  'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
   "sliderexplanation":{
     "message":"Pomaknite klizač dok reklama nije blokirana ispravno na stranici te blokirani element ne izgleda upotrebljivo.",
     "description":"Blacklister slider page message"
@@ -213,12 +217,12 @@
     "message":"Beta",
     "description":"Option on first tab page"
   },
-  "googletextads":{
-    "message":"Želim da mi se prikažu tekstualne reklame kod pretraživanja Google-a.",
+  "googletextads2":{
+    "message":"I like the text ads on Google search results; show me those",
     "description":"Option on first tab page"
   },
-  "showcontextmenus":{
-    "message":"Dodaj stavke na izbornik desnog klika.",
+  "showcontextmenus2":{
+    "message":"Add items to the right click menu",
     "description":"Option on first tab page"
   },
   "debuginlogoption":{
@@ -313,8 +317,8 @@
     "message":"Nemojte se prijavljivati na više nego Vam je potrebno -- svaka stavka dodatno usporava AdBlock! Impresum i ostale liste možete pronaći <a>ovdje<\/a>.",
     "description":"Explanation of the filter lists"
   },
-  "updatenowmessage":{
-    "message":"Ažuriranja će se preuzimati automatski; također možete <a>ažurirati sada<\/a>.",
+  "updatenowmessage2":{
+    "message":"I will fetch updates automatically; you can also <a>update now<\/a>",
     "description":"update filters text + button"
   },
   "orenteraurl":{
@@ -325,8 +329,8 @@
     "message":"Prijavi",
     "description":"subscribe to a list button"
   },
-  "showlinkstolists":{
-    "message":"Prikaži linkove na liste filtera:",
+  "showlinkstolists2":{
+    "message":"Show links to the filter lists",
     "description":"Option on second tab page"
   },
   "filterantisocial":{
@@ -621,13 +625,21 @@
     "message":"Drugi",
     "description":"multiple choice option"
   },
+  "orchrome":{
+    "message":"or Chrome",
+    "description":"used for placeholder in checkinfirefoxtitle and checkinfirefox_1 string"
+  },
+  "oradblockforchrome":{
+    "message":"or AdBlock for Chrome",
+    "description":"used for placeholder in checkinfirefox_2 string"
+  },
   "nodefaultfilter1":{
     "message":"Nemamo zadanu listu filtera za taj jezik.<br\/>Molim pronađite odgovarajuću listu koja podržava ovaj jezik $link$ ili blokirajte reklamu samo za sebe na kartici 'Prilagodi'.",
     "description":"instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same message as 'tabcustomize'.",
     "placeholders":{
       "link":{
-        "content":"$1ovdje$2",
-        "example":"<a href='http:\/\/abp.org'>here<\/a>"
+        "content":"<a id='link'><\/a>",
+        "example":"<a>here<\/a>"
       }
     }
   },
@@ -646,8 +658,8 @@
     "description":"tell a user to see if a reported ad also appears in Firefox\/Chrome",
     "placeholders":{
       "chrome":{
-        "content":"$1ili Chrome$2",
-        "example":"This will only be shown in Safari. Chrome users will not see this."
+        "content":"<span id='chrome1'><\/span>",
+        "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -656,8 +668,8 @@
     "description":"instruction for how to check Firefox\/Chrome for a reported ad",
     "placeholders":{
       "chrome":{
-        "content":"$1ili Chrome$2",
-        "example":"This will only be shown in Safari. Chrome users will not see this."
+        "content":"<span id='chrome2'><\/span>",
+        "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -666,8 +678,8 @@
     "description":"instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'AdBlock Plus'.",
     "placeholders":{
       "chrome":{
-        "content":"$1ili AdBlockforChrome za Chrome$2",
-        "example":"This will only be shown in Safari. Chrome users will not see this."
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -704,16 +716,6 @@
   "fixityourself":{
     "message":"U redu, još možete blokirati ovu reklamu samo za sebe u Postavkama. Hvala!",
     "description":"telling a user who won't report an ad to us how to handle it for herself"
-  },
-  "updatefromoldversion":{
-    "message":"Koristite stariju verziju AdBlock-a. Molimo prvo $updatelink$ na najnoviju verziju AdBlock-a",
-    "description":"Ad report page instructions to update AdBlock in Safari",
-    "placeholders":{
-      "updatelink":{
-        "content":"$1ažurirajte$2",
-        "example":"<a href='http:\/\/chrome.com\/update_here.ctx'>update<\/a>"
-      }
-    }
   },
   "adblock_outdated_chrome":{
     "message":"Koristite staru verziju AdBlock-a. Molim Vas posjetite <a href='#'>stranicu proširenja<\/a>, omogućite 'Način za razvojne programere' i kliknite 'Ažuriraj proširenja sada'.",
@@ -919,6 +921,22 @@
     "message":"Dodaj ovaj filter",
     "description":"resourceblocking page string"
   },
+  "ordisablefilter":{
+    "message":"... or disable filter:",
+    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
+  },
+  "thisfilterwillbedisabled":{
+    "message":"This filter will be disabled:",
+    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
+  },
+  "disabledwhenbrowsing":{
+    "message":"This filter will be disabled when you are browsing:",
+    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
+  },
+  "onlypagesonthisdomain":{
+    "message":"ONLY pages on this domain:",
+    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+  },
   "flashads":{
     "message":"Video i Flash",
     "description":"Title of the final ad report question if the ad didn't appear in FF"
@@ -931,8 +949,8 @@
     "message":"Još ne možemo blokirati reklame unutar Flash ili drugih dodataka. Čekamo da to podrže preglednik ili WebKit.",
     "description":"Result of the final ad report question"
   },
-  "cleanuplist":{
-    "message":"Optimiraj filtere u ovoj listi:",
+  "cleanuplist2":{
+    "message":"Clean up this list",
     "description":"Option at the bottom of the third options tab"
   },
   "disabled_by_filter_lists":{
@@ -951,16 +969,16 @@
     "message":"AdBlock je onemogućen na ovoj stranici.",
     "description":"Message shown in toolbar button on web pages that have been whitelisted."
   },
-  "enable":{
-    "message":"omogući",
+  "enable_adblock":{
+    "message":"Enable AdBlock on this page",
     "description":"Link text to un-whitelist a page, displayed immediately after 'disabled_on_this_page'."
   },
   "status_paused":{
     "message":"AdBlock je pauziran.",
     "description":"Message shown in toolbar button when AdBlock is paused."
   },
-  "unpause":{
-    "message":"odpauziraj",
+  "unpause_adblock":{
+    "message":"Unpause AdBlock",
     "description":"Link text to unpause AdBlock, displayed immediately after 'status_paused'."
   },
   "pause_adblock":{
@@ -987,8 +1005,8 @@
     "message":"Pomozite proširiti ideju!",
     "description":"Text of a share link"
   },
-  "did_you_know_this_is_my_full_time_job":{
-    "message":"Jeste li znali da mi je ovo redovni posao?",
+  "pwyw":{
+    "message":"Pay what you want!",
     "description":"Text of a payment request link"
   },
   "removelabel":{
@@ -1000,22 +1018,20 @@
     "description":"link to change resources on the resourceblock page"
   },
   "translator_credit":{
-    "message":"Zasluga za prijevod: $translator_names$",
-    "description":"Credit for your translation with $translator_names$ being your own name below. Multiple names should be separated by a comma.",
-    "placeholders":{
-      "translator_names":{
-        "content":"Stjepan Treger",
-        "example":"Michael G, Drew R"
-      }
-    }
+    "message":"Zasluga za prijevod:",
+    "description":"Will be followed by a list of translator names (separate string)"
+  },
+  "translator_names":{
+    "message":"Stjepan Treger",
+    "example":"The translator's names go here. Example: Michael G, Drew R"
   },
   "project_home":{
     "message":"Stranica projekta",
     "description":"Text of link to the AdBlock open source project homepage (not the install page)"
   },
-  "help":{
-    "message":"Pomoć",
-    "description":"Text of link to a page with fixes to common problems and a list of known issues"
+  "tabsupport":{
+    "message":"Support",
+    "description":"Link to forum in options page"
   },
   "report_ad_on_page":{
     "message":"Prijavi reklamu na ovoj stranici",
@@ -1025,8 +1041,8 @@
     "message":"Prikaži listu resursa",
     "description":"Link in the button"
   },
-  "advanced_options":{
-    "message":"Ja sam napredni korisnik, prikaži mi napredne postavke.",
+  "advanced_options2":{
+    "message":"I'm an advanced user, show me advanced options",
     "description":"Options page checkbox"
   },
   "work_around_hulu_problems":{
@@ -1165,7 +1181,7 @@
   },
   "firefox_explanation":{
     "message":"Svrha ovog pitanja je da se utvrdi tko bi trebao primiti vaš izvještaj. Ako odgovorite netočno, izvještaj će biti poslan krivim ljudima pa tako možda i zanemaren.",
-    "description":"Explanation of the Check-in-FireFox step in the ad reporter"
+    "description":"Explanation of the Check-in-Firefox step in the ad reporter"
   },
   "opera_secure_pages":{
     "message":"Sigurne stranice",
@@ -1252,5 +1268,51 @@
         "example":"code.google.ph, ph.msn.com, stackoverflow.com"
       }
     }
+  },
+  "latest_version":{
+    "message":"AdBlock is up-to-date!",
+    "description":"On the Options > Help page, shows when there are no updates available for AdBlock"
+  },
+  "here":{
+    "message":"here",
+    "description":"This message is injected in other strings as a link\/button"
+  },
+  "update_available":{
+    "message":"There's an update for AdBlock! Go $here$ to update. <br> Note: If you want to receive updates automatically, just click on Safari > Preferences > Extensions > Updates <br> and check option 'Install updates automatically'.",
+    "description":"On the Options > Support page, shows when there are updates available for AdBlock.",
+    "placeholders":{
+      "here":{
+        "content":"<a id='here'><\/a>",
+        "example":"<a>here<\/a>"
+      }
+    }
+  },
+  "adblocksupport":{
+    "message":"AdBlock Support",
+    "description":"A tab on the options page"
+  },
+  "support":{
+    "message":"Found a bug? Got a question? Got a new idea for AdBlock? Go to <a>our support site<\/a>!",
+    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
+  },
+  "seethecode":{
+    "message":"Want to see AdBlock's code? Check it out <a>here<\/a>.",
+    "description":"Link to code behind AdBlock"
+  },
+  "adblockcontributors":{
+    "message":"Do you want to find out who help make AdBlock? Take a look at our <a>contributors page<\/a>!",
+    "description":"Text for link to contributors page"
+  },
+  "checkforupdates":{
+    "message":"Checking for updates (should only take a few seconds)...",
+    "description":"Displayed when AdBlock is checking the newest available version"
+  },
+  "somethingwentwrong":{
+    "message":"Something went wrong while checking updates.",
+    "description":"Displayed when AdBlock is checking the newest available version and an error occurs"
+  },
+  "checkinternetconnection":{
+    "message":"To report an ad, you must be connected to the internet.",
+    "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }
 }

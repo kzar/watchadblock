@@ -1,5 +1,4 @@
 var resources = {};
-var debug_enabled = false;
 var custom_filters = {};
 var chosenResource = {};
 var local_filtersets = {};
@@ -100,8 +99,7 @@ function generateTable() {
     }
 
     // TODO: When crbug 80230 is fixed, allow $other again
-    var disabled = (type.name === 'whitelisted' || type.name === 'hiding' ||
-                    typeName === 'other' || typeName === 'unknown');
+    var disabled = (typeName === 'other' || typeName === 'unknown');
 
     // We don't show the page URL unless it's excluded by $document or $elemhide
     if (typeName === 'page' && !matchingfilter)
@@ -112,7 +110,7 @@ function generateTable() {
       row.addClass(type.name);
 
     // Cell 1: Checkbox
-    var cell = $("<td><input type='checkbox'/></td>");
+    var cell = $("<td><input type='checkbox'/></td>").css("padding-left", "4px");
     if (disabled)
       cell.find("input").prop("disabled", true);
     row.append(cell);
@@ -127,19 +125,21 @@ function generateTable() {
     // Cell 3: Type
     $("<td>").
       attr("data-column", "type").
+      css("text-align", "center").
       text(translate('type' + typeName)).
       appendTo(row);
 
     // Cell 4: hidden sorting field and matching filter
     cell = $("<td>").
-      attr("data-column", "filter");
+      attr("data-column", "filter").
+      css("text-align", "center");
     $("<span>").
       addClass("sorter").
       text(type.name ? type.sort : 3).
       appendTo(cell);
     if (type.name)
       $("<span>").
-        text(custom_filters[matchingfilter] || matchingfilter).
+        text(truncateI(custom_filters[matchingfilter] || matchingfilter)).
         attr('title', translate("filterorigin", matchingListName)).
         appendTo(cell);
     row.append(cell);
@@ -153,7 +153,8 @@ function generateTable() {
     cell = $("<td>").
         text(isThirdParty ? translate('yes') : translate('no')).
         attr("title", translate("resourcedomain", resources[i].domain || resourceDomain)).
-        attr("data-column", "thirdparty");
+        attr("data-column", "thirdparty").
+        css("text-align", "center");
     row.append(cell);
     resources[i].isThirdParty = isThirdParty;
     resources[i].resourceDomain = resourceDomain;
@@ -175,7 +176,7 @@ function generateTable() {
   }
   if (!rows.length) {
     alert(translate('noresourcessend2'));
-    window.close();
+    self.close();
     return;
   }
   $("#loading").remove();
@@ -202,6 +203,11 @@ function generateTable() {
     });
   });
 }
+
+// Hide "change" button, when no item has been selected
+$(document).ready(function() {
+ $("#choosedifferentresource").css("opacity", "0");
+});
 
 // Converts the ElementTypes number back into an readable string
 // or hiding or 'unknown' if it wasn't in ElementTypes.
@@ -232,6 +238,7 @@ function generateFilterSuggestions() {
   var url = chosenResource.resource;
   url = url.replace(/\s{5}\(.*\)$/, '').replace(/\#.*$/, '');
   var isBlocked = ($(".selected").hasClass("blocked"));
+  var isHidden = ($(".selected").hasClass("hiding"));
   var blocksuggestions = [];
   var strippedUrl = url.replace(/^[a-z\-]+\:\/\/(www\.)?/, '');
   blocksuggestions.push(strippedUrl);
@@ -268,18 +275,26 @@ function generateFilterSuggestions() {
     suggestions.push(label);
     suggestions.push("<br/>");
   }
+  
   $("#suggestions").empty();
   for (var i = 0; i < suggestions.length; i++)
     $("#suggestions").append(suggestions[i]);
-  if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
+  if (isHidden)
+    $("#disable").find('input').prop('checked', true);
+  else if ($("#suggestions").find('input:first-child').val().indexOf('?') > 0)
     $($("#suggestions").children('input')[1]).prop('checked', true);
   else
     $("#suggestions").find('input:first-child').prop('checked', true);
 
-  if (!isBlocked)
+  if (!isBlocked && !isHidden)
     $("#selectblockableurl b").text(translate("blockeverycontaining"));
+  else if (isHidden)
+    $("#selectblockableurl b").text(translate("thisfilterwillbedisabled"));
   else
     $("#selectblockableurl b").text(translate("whitelisteverycontaining"));
+  
+    $("label[for='disablefilter']").text(chosenResource.filter);
+  
   var inputBox = $('<input>').
     attr("type", "text").
     attr("id", "customurl").
@@ -326,12 +341,33 @@ function validateUrl(url) {
 // Create the filter that will be applied from the chosen options
 // Returns the filter
 function createfilter() {
+  var matchedfilter = $("label[for='disablefilter']").text();
   var isBlocked = ($(".selected").hasClass("blocked"));
+  var isHidden = ($(".selected").hasClass("hiding"));
+  var filterwithoutdomain = '';
   var urlfilter = '';
-  if ($('#selectblockableurl #customurl').length)
+  
+  if ($('#selectblockableurl #customurl').length) {
     urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val();
-  else
+  } else if ($('#selectblockableurl label[for="disablefilter"]').length) {
+    if (isBlocked) {
+      urlfilter = '@@' + matchedfilter;
+    } else if (isHidden) {
+      var chosenfilter = chosenResource.filter.replace('##', '#@#');
+      var domain = chosenfilter.substr(0, chosenfilter.lastIndexOf("#@"));
+      filterwithoutdomain = chosenfilter.replace(domain,"");
+      if (domain === "") {
+        urlfilter = chosenfilter;
+      } else {
+        urlfilter = filterwithoutdomain;
+      }
+    } else {
+      urlfilter = matchedfilter.replace('@@', '');
+    }
+  } else {
     urlfilter = $('#selectblockableurl input').val();
+  }
+  
   if ((/^(\@\@)?\/.*\/$/).test(urlfilter))
     urlfilter += '*';
 
@@ -344,8 +380,26 @@ function createfilter() {
     if ($(this).val())
       options.push($(this).val());
   });
-
-  return urlfilter + (options.length ? '$' + options.join(',') : '');
+  
+  var option = '';
+  if (options.length && !($("#disablefilter").is(":disabled"))) { 
+    option = '$' + options.join(',');
+  } else if (options.length && $("#disablefilter").is(":disabled")) {
+    if (urlfilter.indexOf('$') !== -1 ) {
+      option = ',' + options.join(',')
+    } else if (!isHidden) {
+      option = '$' + options.join(',');
+    }
+    if (isHidden) {
+      var chosenfilter = chosenResource.filter;  
+      urlfilter = chosenResource.domain + filterwithoutdomain;
+      option = '';
+    }
+  } else { 
+    option = '';
+  }
+  
+  return urlfilter + option;
 }
 
 // Checks if the text in the domain list textbox is valid or not
@@ -383,27 +437,30 @@ function filterMatchesResource(filter, url, type, domain) {
 // finally start generating some content for the user, and allowing him to
 // do some things, instead of looking at 'LOADING'
 function finally_it_has_loaded_its_stuff() {
-  if (debug_enabled)
-    $(".onlyifdebug").show();
   // Create the table of resources
   generateTable();
-  // Add the dotted borders when hovering
+    
+  // Add another background color when hovering
   $("#resourceslist tbody tr").mouseenter(function() {
     if ($(this).hasClass('selected'))
       return;
     $(this).children(":not(:first-child)").
-      css("border-top", "black 1px dotted").
-      css("border-bottom", "black 1px dotted");
+      css("-webkit-transition", "all 0.3s ease-out").
+      css("background-color", "rgba(242, 242, 242, 0.3)");
   });
   $("#resourceslist tr").mouseleave(function() {
     $(this).children().
-      css("border", "none");
+      css("-webkit-transition", "all 0.3s ease-out").
+      css("background-color", "white");
+  });
+
+  // Make legend draggable
+  $(function() {
+    $("#legend").draggable();
   });
 
   // Close the legend
-  $("#legend a").click(function(event) {
-    event.preventDefault();
-    $("#search").val("").trigger('search');
+  $(".closelegend").click(function() {
     $("#legend").remove();
   });
 
@@ -462,11 +519,17 @@ function finally_it_has_loaded_its_stuff() {
     }
   });
 
+  // Auto-scroll to the bottom of the page
+  $("#confirmUrl").click(function(event) {
+    event.preventDefault();
+    $("html, body").animate({ scrollTop: 15000 }, 50);
+  });
+
   // An item has been selected
   $('.clickableRow, input:enabled', '#resourceslist').click(function() {
     if ($('.selected','#resourceslist').length > 0)
       return; //already selected a resource
-    $("#choosedifferentresource").show();
+    $("#choosedifferentresource").css("opacity", "1");
     $("#choosedifferentresource").click(function() {
       document.location.reload();
     });
@@ -476,14 +539,31 @@ function finally_it_has_loaded_its_stuff() {
       prop('checked', true).
       prop('disabled', true);
     $('.clickableRow').removeClass('clickableRow');
-    $('#resourceslist tr').css('border', 'black 1px dotted');
     $('#legend').remove();
     chosenResource = resources[$(".selected td[data-column='url']").prop('title')];
     $(".selected td[data-column='thirdparty']").text(
                     chosenResource.isThirdParty ? translate('thirdparty') : '');
-
+    
     // Show the 'choose url' area
-    $("#selectblockableurl").show();
+    $("#selectblockableurl").fadeIn();
+    $("#resourceslist tbody tr td").css("background-color", "white");
+    
+    var isBlocked = ($(".selected").hasClass("blocked"));
+    var isHidden = ($(".selected").hasClass("hiding"));
+    var isWhitelisted = ($(".selected").hasClass("whitelisted"));
+    if (isBlocked || isWhitelisted) {
+      $("#disable").css("display","block");
+      $("#confirmUrl").before("<br>");
+    } else if (isHidden) {
+      $("#disable").css("display","block");
+      $("#selectblockableurl br").remove();
+      $("[i18n='ordisablefilter'], #suggestions, #custom, label[for='custom']").remove();
+      $("[i18n='blockeverycontaining']").attr("i18n","thisfilterwillbedisabled");
+      $("#confirmUrl").before("<br>");
+    } else {
+      $("#disable").css("display","none");
+    }
+    
     generateFilterSuggestions();
     // If the user clicks the 'next' button
     $("#confirmUrl").click(function() {
@@ -506,15 +586,25 @@ function finally_it_has_loaded_its_stuff() {
       }
 
       // Hide unused stuff
-      $("#selectblockableurl input[type='radio']:not(:checked)").
-          nextUntil('input').remove();
+      $("#selectblockableurl input[type='radio']:not(:checked) + label").remove();
       $("#selectblockableurl input[type='radio']:not(:checked)").remove();
       $("#confirmUrl").next().remove();
       $("#confirmUrl").remove();
+      $("#selectblockableurl br").remove();
       $("#selectblockableurl *:not(br):not(b)").prop("disabled", true);
+      if ($("#disablefilter").is(":disabled")) {
+        $("#selectblockableurl b").text(translate("thisfilterwillbedisabled"));
+        $("label[for='domainis']").text(translate("onlypagesonthisdomain"));
+        $("[i18n='appliedwhenbrowsing']").text(translate("disabledwhenbrowsing"));
+        $("[i18n='ordisablefilter'], [i18n='casesensitive'], [i18n='onlyresourcetypes'], [id^='matchcase'], [for^='matchcase'], #chooseoptions br, #suggestions, #thirdparty, #types").remove();
+        $("#onEverySite, #domainis").before("<br>");
+        $("#addthefilter").before("<br><br>");
+      } else {
+        $("[i18n='ordisablefilter'], #suggestions br").remove();
+      }
 
       // Show the options
-      $("#chooseoptions").show();
+      $("#chooseoptions").fadeIn();
       var isThirdParty = chosenResource.isThirdParty;
       if (!isThirdParty) {
         $("#thirdparty + * + *, #thirdparty + *, #thirdparty").remove();
@@ -568,7 +658,7 @@ function finally_it_has_loaded_its_stuff() {
       // Add the filter
       $("#addthefilter").click(function() {
         var generated_filter = createfilter();
-        if (!filterMatchesResource(generated_filter, chosenResource.resource,
+        if (!isHidden && !filterMatchesResource(generated_filter, chosenResource.resource,
                                     chosenResource.type, chosenResource.domain))
           return;
         BGcall('add_custom_filter', generated_filter, function(ex) {
@@ -635,7 +725,6 @@ $(function() {
       createResourceblockFilterset("build_in_filters",
             MyFilters.prototype.getExtensionFilters(data.settings));
 
-      debug_enabled = data.settings.debug_logging;
       if (data.adblock_is_paused) {
         alert(translate("adblock_is_paused"));
         window.close();
@@ -736,7 +825,7 @@ sortTable = function() {
   var cellList = [];
   var rowList = [];
   $("td:nth-of-type(" + columnNumber + ")", table).each(function(index, element) {
-    cellList.push(element.innerHTML.toLowerCase() + 'ÿÿÿÿÿ' + (index+10000));
+    cellList.push(element.innerHTML.toLowerCase() + 'Ã¿Ã¿Ã¿Ã¿Ã¿' + (index+10000));
     rowList.push($(element).parent('tr').clone(true));
   });
   cellList.sort();
