@@ -542,15 +542,18 @@
   
   if (!SAFARI) {
     updateBadge = function(tabId) {
-      var display = get_settings().display_stats;
-      var badge_text = "";
-      var main_frame = frameData.get(tabId, 0);
-      if(display && (main_frame && (!page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url))) && !adblock_is_paused()){
-        badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
-        if (badge_text === "0")
-          badge_text = ""; // Only show the user when we've done something useful
+      if (!crowdfund.runningCampaign()) { 
+        var display = get_settings().display_stats;
+        var badge_text = "";
+        var main_frame = frameData.get(tabId, 0);
+        if(display && (main_frame && (!page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url))) && !adblock_is_paused()){
+          badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
+          if (badge_text === "0")
+            badge_text = ""; // Only show the user when we've done something useful
+        }
+        chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
+        chrome.browserAction.setBadgeBackgroundColor({ color: "#555" });
       }
-      chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
     }
     
     // Set the button image and context menus according to the URL
@@ -849,5 +852,6 @@
     chrome.tabs.query({url: "http://*/*"}, handleEarlyOpenedTabs);
     chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
   }
-  
+  //Added for crowdfunding 
+  crowdfund.init();
   log("\n===FINISHED LOADING===\n\n");

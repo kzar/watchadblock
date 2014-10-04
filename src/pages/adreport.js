@@ -48,8 +48,8 @@ BGcall("get_settings", function(settings) {
 
 //generate the URL to the issue tracker
 function generateReportURL() {
-  var result = "https://code.google.com/p/adblockforchrome/issues/entry" +
-               "?template=Ad%20report%20from%20user&summary=";
+  var result = "https://adblock.tenderapp.com/discussion/new" +
+               "?category_id=ad-report&discussion[title]=";
 
   var domain = "<enter URL of webpage here>";
   if (options.url)
@@ -61,6 +61,12 @@ function generateReportURL() {
   body.push("Last step -- point me to the ad so I can fix the bug! " +
       "Don't leave anything out or I'll probably " +
       "have to ignore your report. Thanks!");
+  body.push("");
+  body.push("Also, if you can put your name (or a screen name) " +
+      "and a contact email access in the boxes above, that would be great!");
+  body.push("");
+  body.push("We need the email so that we can contact you if we need more information " +
+      "than what you give us in your report. Otherwise, we might not be able to fix it.");
   body.push("");
   if (!options.url) {
     body.push(count + ". Paste the URL of the webpage showing an ad: ");
@@ -100,7 +106,7 @@ function generateReportURL() {
   body.push("=== Enabled settings ===");
   body.push(enabled_settings.join('\n'));
 
-  result = result + "&comment=" + encodeURIComponent(body.join('\n'));
+  result = result + "&discussion[body]=" + encodeURIComponent(body.join('\n'));
 
   return result;
 }
