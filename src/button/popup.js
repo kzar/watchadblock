@@ -160,7 +160,7 @@ $(function() {
 $(function() {
   var state = "initial";
   var bodysize = { width: $("body").width(), height: $("body").height() };
-  var linkHref = "https://chromeadblock.com/share/";
+  var linkHref = "https://getadblock.com/share/";
   $("#link_open").click(function() {
     if (state === "initial") {
       $("<iframe>").

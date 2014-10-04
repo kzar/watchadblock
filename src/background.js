@@ -282,6 +282,10 @@
         return;
       if (frameData.get(details.sourceTabId, 0).whitelisted)
         return;
+      // Change to opener's url in so that it would still be tested against the
+      // blocking filter's regex rule. Github issue # 69
+      if (details.url === "about:blank")
+        details.url = opener.url;
       var match = _myfilters.blocking.matches(details.url, ElementTypes.popup, opener.domain);
       if (match)
         chrome.tabs.remove(details.tabId);

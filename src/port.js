@@ -18,7 +18,18 @@ if (typeof SAFARI == "undefined") {
 (function() {
 
 // True in Safari, false in Chrome.
-SAFARI = (typeof safari !== "undefined");
+SAFARI = (function() {
+  if (typeof safari === "undefined" && typeof chrome === "undefined") {
+    // Safari bug: window.safari undefined in iframes with JS src in them.
+    // Must get it from an ancestor.
+    var w = window;
+    while (w.safari === undefined && w !== window.top) {
+      w = w.parent;
+    }
+    window.safari = w.safari;
+  }
+  return (typeof safari !== "undefined");
+})();
 
 // Safari 5.0 (533.x.x) with no menu support
 LEGACY_SAFARI = SAFARI && (navigator.appVersion.match(/\sSafari\/(\d+)\./) || [null,0])[1] < 534;

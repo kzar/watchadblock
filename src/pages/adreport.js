@@ -106,7 +106,7 @@ function generateReportURL() {
   body.push("=== Enabled settings ===");
   body.push(enabled_settings.join('\n'));
 
-  result = result + "&discussion[body]=" + encodeURIComponent(body.join('\n'));
+  result = result + "&discussion[body]=" + encodeURIComponent(body.join('  \n')); // Two spaces for Markdown newlines
 
   return result;
 }
