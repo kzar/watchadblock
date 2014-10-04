@@ -10,6 +10,7 @@
     <script src="../jquery/jquery-ui.custom.min.js"></script>
     <script src="../functions.js"></script>
     <script src="../checkupdates.js"></script>
+    <script src="../dropbox-datastores.js"></script>
     <script src="index.js"></script>
   </head>
   <body>
@@ -32,11 +33,11 @@
 
     <div id="tabpages">
       <ul>
-        <li><a href="general.html" data-scripts="general.js"><span i18n="tabgeneral"></span></a></li>
-        <li><a href="filters.html" data-scripts="filters.js"><span i18n="tabfilterlists"></span></a></li>
+        <li data-scripts="general.js"><a href="general.html"><span i18n="tabgeneral"></span></a></li>
+        <li data-scripts="filters.js"><a href="filters.html"><span i18n="tabfilterlists"></span></a></li>
         <!-- Safari requires ../filtering instead of /filtering because safari.extension.baseURI ends with /a/path/ -->
-        <li><a href="customize.html" data-scripts="../filtering/domainset.js ../filtering/filternormalizer.js ../filtering/filtertypes.js ../filtering/filteroptions.js customize.js"><span i18n="tabcustomize" class="menubuttons"></span></a></li>
-        <li><a href="support.html" data-scripts="support.js"><span i18n="tabsupport"></span></a></li>
+        <li data-scripts="../filtering/domainset.js ../filtering/filternormalizer.js ../filtering/filtertypes.js ../filtering/filteroptions.js customize.js"><a href="customize.html"><span i18n="tabcustomize" class="menubuttons"></span></a></li>
+        <li data-scripts="support.js"><a href="support.html"><span i18n="tabsupport"></span></a></li>
       </ul>
     </div>
 

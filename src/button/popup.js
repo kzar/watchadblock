@@ -30,7 +30,7 @@ function customize_for_this_tab() {
       $("#page_blocked_count").text(page_count);
       $("#total_blocked_count").text(info.total_blocked);
 
-      $("#toggle_badge_checkbox").attr("checked", info.display_stats);
+      $("#toggle_badge_checkbox").prop("checked", info.display_stats);
       // Show help link until it is clicked.
       $("#block_counts_help").
         toggle(BG.get_settings().show_block_counts_help_link).

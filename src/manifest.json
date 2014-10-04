@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.8.2",
+  "version": "2.9",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
@@ -15,6 +15,7 @@
       "filtering/filternormalizer.js",
       "idlehandler.js",
       "search/search-plus-one.js",
+      "dropbox-datastores.js",
       "background.js"
     ]
   },
@@ -80,7 +81,7 @@
   "minimum_chrome_version": "23",
   "options_page": "options/index.html",
   "permissions": [
-    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation", "alarms"
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation", "alarms", "storage"
   ],
   "web_accessible_resources": [
     "img/icon24.png",
@@ -88,6 +89,7 @@
     "jquery/css/images/ui-icons_056b93_256x240.png",
     "jquery/css/images/ui-icons_d8e7f3_256x240.png",
     "jquery/css/jquery-ui.custom.css",
-    "jquery/css/override-page.css"
+    "jquery/css/override-page.css",
+    "chrome_oauth_receiver.html"
   ]
 }

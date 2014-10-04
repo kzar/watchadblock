@@ -1,7 +1,7 @@
 {
   "description2":{
     "message":"Den mest populære Chrome-utvidelsen, med mer enn 15 millioner brukere! Blokkerer annonser på hele Internett.",
-    "description":"Extension description in manifest"
+    "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
     "message":"AdBlock - Klikk for mer informasjon",
@@ -38,6 +38,10 @@
   "chromebutton_how_to_hide2":{
     "message":"For å skjule knappen, høyreklikk og velg Skjul knappen. Du kan vise den igjen ved å skrive chrome:\/\/extensions\/ i adresselinjen.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  },
+  "operabutton_how_to_hide2":{
+    "message":"For å fjerne knappen, gå til opera:\/\/extensions og sett en markering i boksen ved menylinjen \"Skjul fra verktøylinjen\" . For å vise knappen igjen må markeringen du satte ved menylinjen fjernes .",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
   },
   "sliderexplanation":{
     "message":"Drag glidebryteren helt til annonsen(e) er blokkert riktig på nettsiden, og det blokkerte elementet ser brukbart ut.",
@@ -168,7 +172,7 @@
     "description":"The title of the whitelister dialog"
   },
   "buttonexclude":{
-    "message":"Eksluder",
+    "message":"Ekskluder",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
   "subscribingtitle":{
@@ -1009,6 +1013,10 @@
     "message":"Bidragsytere til oversettelsen:",
     "description":"Will be followed by a list of translator names (separate string)"
   },
+  "tabsupport":{
+    "message":"Støtte",
+    "description":"A tab on the options page"
+  },
   "report_ad_on_page":{
     "message":"Rapporter en annonse på denne siden",
     "description":"Entry in the AdBlock button menu"
@@ -1179,6 +1187,10 @@
       }
     }
   },
+  "adblocksupport":{
+    "message":"AdBlock Støtte",
+    "description":"Title of the support tab"
+  },
   "checkforupdates":{
     "message":"Ser etter oppdateringer (dette bør kun ta et par sekunder)...",
     "description":"Displayed when AdBlock is checking the newest available version"
@@ -1190,5 +1202,53 @@
   "checkinternetconnection":{
     "message":"For å rapportere en annonse, må du være tilkoblet Internett.",
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+  },
+  "whatsnew":{
+    "message":"Hva er nytt i den siste versjonen? Se  <a style='cursor:pointer;'>oppdateringloggen<\/a>!",
+    "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"Bare Engelsk",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Har du funnet en feil?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"AdBlock-oppdateringer",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"Vil du se hva som får AdBlock til å virke?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Har du et spørsmål eller en idé?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Kildekoden er <a>fritt tilgjengelig <\/a>!",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"Vi har en <a>side<\/a> som hjelper deg med å finne folkene bak AdBlock også!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Har vårt team etterspurt feilsøkingsinfo? Klikk <a href='#' id='debug'>her<\/a>for det!",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Hvorfor ikke sende oss en <a href='#' id='report'>feilrapport<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"La oss få vite det på vår <a>støtteside<\/a>!",
+    "description":"Link to the support site on the Support tab of the options"
+  },
+  "ad_report_please":{
+    "message":"Hvis du ser en annonse, ikke send en feilrapport. Send en <a>annonserapport<\/a> i stedet!",
+    "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

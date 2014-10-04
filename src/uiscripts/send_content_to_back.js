@@ -26,7 +26,6 @@ send_content_to_back = function() {
   }
 
   window.setTimeout(function() { 
-    log("showing");
     for (var i=0; i < all.length; i++) {
       all[i].style.display = all[i].oldDisplay;
     }

@@ -142,6 +142,13 @@ sub check_new_locales {
                     }
                 }
             }
+            
+            # Chrome Web Store descriptions shouldn't exceed 132 characters
+            if ($strings_new->{description2}{message}){
+                if (length($strings_new->{description2}{message}) > 132){
+                    print colored("!", 'red'), " $language: description2 is too long for CWS!\n";
+                }
+            }
         }
     }
     
@@ -309,7 +316,7 @@ sub print_unused_missing {
         }
         
         if (@{$strings{missing}}){
-            print colored("!", 'red'), " Found $unusedcount MISSING strings:\n";
+            print colored("!", 'red'), " Found $missingcount MISSING strings:\n";
             foreach my $string (@{$strings{missing}}){
                 print "  - $string\n";
             }

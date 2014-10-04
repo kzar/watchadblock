@@ -8,11 +8,11 @@
         var stack = "-" + ((e.error && e.error.message)||"") +
                     "-" + ((e.error && e.error.stack)||"");
         stack = stack.replace(/:/gi, ";").replace(/\n/gi, "");
-        //check to see if there's any URL info in the stack trace, if so remove it
-        if (stack.indexOf("http") >= 0) {
-           stack = "-removed URL-";
-        }
         str += stack;
+    }
+    //check to see if there's any URL info in the stack trace, if so, don't log it
+    if (str.indexOf("http") >= 0) {
+       return;
     }
     STATS.msg(str);
     sessionStorage.setItem("errorOccurred", true);
@@ -90,6 +90,8 @@
       show_advanced_options: false,
       display_stats: true,
       show_block_counts_help_link: true,
+      dropbox_sync: false,
+      show_survey: true,
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
@@ -301,6 +303,8 @@
 
     // Popup blocking
     function onCreatedNavigationTargetHandler(details) {
+      if (adblock_is_paused())
+          return;
       var opener = frameData.get(details.sourceTabId, details.sourceFrameId);
       if (opener === undefined)
         return;
@@ -394,6 +398,8 @@
     storage_set('custom_filters', filters);
     chrome.extension.sendRequest({command: "filters_updated"});
     _myfilters.rebuild();
+    if (!SAFARI && db_client.isAuthenticated())
+        settingstable.set("custom_filters", localStorage.custom_filters);
   }
 
   // Removes a custom filter entry.
@@ -477,11 +483,15 @@
     return _settings.get_all();
   }
 
-  set_setting = function(name, is_enabled) {
+  set_setting = function(name, is_enabled, sync) {
     _settings.set(name, is_enabled);
 
     if (name === "debug_logging")
       logging(is_enabled);
+
+    if (!SAFARI && sync) {
+        sync_setting(name, is_enabled);
+    }
   }
 
   // MYFILTERS PASSTHROUGHS
@@ -510,28 +520,45 @@
     return result;
   }
 
+  // Get subscribed filter lists
+  get_subscribed_filter_lists = function() {
+      var subs = get_subscriptions_minus_text();
+      var subscribed_filter_names = [];
+      for (var id in subs) {
+          if (subs[id].subscribed)
+              subscribed_filter_names.push(id);
+      }
+      return subscribed_filter_names;
+  }
+
   // Subscribes to a filter subscription.
   // Inputs: id: id to which to subscribe.  Either a well-known
   //             id, or "url:xyz" pointing to a user-specified list.
   //         requires: the id of a list if it is a supplementary list,
   //                   or null if nothing required
   // Returns: null, upon completion
-  subscribe = function(options) {
-    _myfilters.changeSubscription(options.id, {
-      subscribed: true,
-      requiresList: options.requires
-    });
+  subscribe = function(options, sync) {
+      _myfilters.changeSubscription(options.id, {
+          subscribed: true,
+          requiresList: options.requires
+      });
+      if (!SAFARI && sync !== true && db_client.isAuthenticated()) {
+          settingstable.set("filter_lists", get_subscribed_filter_lists().toString());
+      }
   }
 
   // Unsubscribes from a filter subscription.
   // Inputs: id: id from which to unsubscribe.
   //         del: (bool) if the filter should be removed or not
   // Returns: null, upon completion.
-  unsubscribe = function(options) {
-    _myfilters.changeSubscription(options.id, {
-      subscribed: false,
-      deleteMe: (options.del ? true : undefined)
-    });
+  unsubscribe = function(options, sync) {
+      _myfilters.changeSubscription(options.id, {
+          subscribed: false,
+          deleteMe: (options.del ? true : undefined)
+      });
+      if (!SAFARI && sync !== true && db_client.isAuthenticated()) {
+          settingstable.set("filter_lists", get_subscribed_filter_lists().toString());
+      }
   }
 
   // Returns true if the url cannot be blocked
@@ -1037,7 +1064,7 @@
 
       // Get total pings
       var adblock_pings = storage_get("total_pings");
-    
+
       // Get custom filters
       var adblock_custom_filters = storage_get("custom_filters");
 
@@ -1047,7 +1074,7 @@
       for (setting in settings)
           adblock_settings.push(setting+": "+get_settings()[setting] + "\n");
       adblock_settings = adblock_settings.join('');
- 
+
       // Create debug info for a bug report or an ad report
       var info = [];
       info.push("==== Filter Lists ====");
@@ -1061,7 +1088,7 @@
       info.push("==== Settings ====");
       info.push(adblock_settings);
       info.push("==== Other info: ====");
-      info.push("AdBlock version number: " + AdBlockVersion + 
+      info.push("AdBlock version number: " + AdBlockVersion +
                (chrome.runtime && chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk" ? " Beta" : ""));
       if (adblock_error)
           info.push("Last known error: " + adblock_error);
@@ -1097,7 +1124,7 @@
       body.push("");
       body.push("--- The questions below are optional but VERY helpful. ---");
       body.push("");
-      body.push("If unchecking all filter lists fixes the problem, which one filter" + 
+      body.push("If unchecking all filter lists fixes the problem, which one filter" +
                 "list must you check to cause the problem again after another restart?");
       body.push("");
       body.push("Technical Chrome users: Go to chrome://extensions ->" +
@@ -1111,5 +1138,142 @@
 
       return out;
   };
+
+  // SYNCHRONIZATION
+
+  // Sync settings, filter lists & custom filters
+  // after authentication with Dropbox
+  if (!SAFARI) {
+      var db_client = new Dropbox.Client({key: "3unh2i0le3dlzio"});
+      var settingstable = null;
+
+      // Return true, if user is authenticated
+      function dropboxauth() {
+          return db_client.isAuthenticated();
+      }
+
+      // Login with Dropbox
+      function dropboxlogin() {
+          db_client.authenticate(function(error, client) {
+              if (error) return;
+              set_setting("dropbox_sync", true);
+              settingssync();
+              chrome.runtime.sendMessage({message: "signedin"});
+          });
+      }
+
+      // Logout from Dropbox
+      function dropboxlogout() {
+          db_client.signOut(function(error, client) {
+              if (error) return;
+              set_setting("dropbox_sync", false);
+              chrome.runtime.sendMessage({message: "signedout"});
+          });
+      }
+
+      function settingssync() {
+          var datastoreManager = db_client.getDatastoreManager();
+          datastoreManager.openDefaultDatastore(function(error, datastore) {
+              if (error) return;
+
+              // Create table for sync
+              var table = datastore.getTable("AdBlock");
+
+              // Fill table with user's settings, filter lists & custom filters
+              settingstable = table.getOrInsert("settings", {
+                  filter_lists: get_subscribed_filter_lists().toString(),
+                  debug_logging: get_settings().debug_logging,
+                  youtube_channel_whitelist: get_settings().youtube_channel_whitelist,
+                  show_google_search_text_ads: get_settings().show_google_search_text_ads,
+                  whitelist_hulu_ads: get_settings().whitelist_hulu_ads,
+                  show_context_menu_items: get_settings().show_context_menu_items,
+                  show_advanced_options: get_settings().show_advanced_options,
+                  display_stats: get_settings().display_stats,
+                  show_block_counts_help_link: get_settings().show_block_counts_help_link
+              });
+
+              // Prevent deleting filters in some cases
+              var sync = settingstable.get("custom_filters");
+              var local = localStorage.custom_filters;
+              var filters;
+              if (sync === local) {
+                  filters = "";
+              } else if (local === undefined && sync !== "") {
+                  filters = sync;
+              } else if (sync !== "" && local) {
+                  filters = local + sync;
+              } else {
+                  filters = local;
+              }
+              if (filters !== "" && filters !== undefined) {
+                  filters = filters.replace(/\""/g, "");
+                  settingstable.set("custom_filters", filters);
+              }
+
+              // Listener, which fires when table has been updated
+              datastore.recordsChanged.addListener(function(event) {
+                  savesettings();
+              });
+
+              // Set resolution to remote changes
+              table.setResolutionRule("completed", "remote");
+              savesettings();
+
+              // Get settings, filter lists & custom filters and save them
+              function savesettings() {
+                  // Subscribe & unsubscribe filter lists
+                  var filterlists_sync = settingstable.get("filter_lists").split(",");
+                  var filterlists_local = get_subscribed_filter_lists();
+                  for (var i=0; i < filterlists_sync.length; i++)
+                      if (settingstable.get("filter_lists") !== "")
+                          subscribe({id: filterlists_sync[i]}, true);
+                  for (var i=0; i < filterlists_local.length; i++) {
+                      if (filterlists_sync.indexOf(filterlists_local[i]) === -1)
+                          unsubscribe({id: filterlists_local[i]}, true);
+                  }
+
+                  // Set custom filters
+                  var custom = settingstable.get("custom_filters");
+                  localStorage.custom_filters = custom;
+                  chrome.extension.sendRequest({command: "filters_updated"});
+
+                  // Set settings
+                  var advanced = settingstable.get("show_advanced_options");
+                  set_setting("show_advanced_options", advanced);
+                  var debug = settingstable.get("debug_logging");
+                  set_setting("debug_logging", debug);
+                  var ytchannel = settingstable.get("youtube_channel_whitelist");
+                  set_setting("youtube_channel_whitelist", ytchannel);
+                  var googleads = settingstable.get("show_google_search_text_ads");
+                  set_setting("show_google_search_text_ads", googleads);
+                  var huluads = settingstable.get("whitelist_hulu_ads");
+                  set_setting("whitelist_hulu_ads", huluads);
+                  var showcontextmenu = settingstable.get("show_context_menu_items");
+                  set_setting("show_context_menu_items", showcontextmenu);
+                  var stats = settingstable.get("display_stats");
+                  set_setting("display_stats", stats);
+                  var blockcountslink = settingstable.get("show_block_counts_help_link");
+                  set_setting("show_block_counts_help_link", blockcountslink);
+                  chrome.runtime.sendMessage({message: "update_checkbox"});
+              }
+          });
+      }
+
+      // Reset db_client, if it got in an error state
+      if (!SAFARI) {
+          chrome.runtime.onMessage.addListener(
+              function(request, sender, sendResponse) {
+                  if (request.message === "clienterror")
+                      db_client.reset();
+              }
+          );
+      }
+
+      // Sync value of changed setting
+      function sync_setting(name, is_enabled) {
+          if (settingstable && db_client.isAuthenticated())
+              settingstable.set(name, is_enabled);
+      }
+  }
 
   log("\n===FINISHED LOADING===\n\n");

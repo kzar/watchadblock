@@ -151,6 +151,10 @@ STATS = (function() {
     
     if (responseData.length ===  0)
       return;
+
+    if (get_settings().show_survey === false)
+      return;
+
     log('Pinging got some data', responseData);
     
     try {

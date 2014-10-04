@@ -95,7 +95,7 @@ function generateReportURL() {
   body.push(debug_info);
   body.push("");
   body.push("=== Question Responses ===");
-  var answers = $('[class="answer"]["chosen"]');
+  var answers = $('span[class="answer"]');
   var text = $('div[id^="step"][class="section"]:visible');
   for (var i=0, n=1; i<answers.length, i<text.length; i++, n++) {
       body.push(n+"."+text[i].id+": "+answers[i].getAttribute("chosen"));
@@ -118,9 +118,9 @@ $("input, select").change(function(event) {
 
 //Updating the users filters
 $("#UpdateFilters").click(function() {
-  $(this).attr("disabled", "disabled");
+  $(this).prop("disabled", true);
   BGcall("update_subscriptions_now", function() {
-    $(".afterFilterUpdate input").removeAttr('disabled');
+    $(".afterFilterUpdate input").prop('disabled', false);
     $(".afterFilterUpdate").removeClass('afterFilterUpdate');
   });
 });
