@@ -594,6 +594,8 @@
       var display = get_settings().display_stats;
       var badge_text = "";
       var main_frame = frameData.get(tabId, 0);
+      // main_frame is undefined if the tab is a new one, so no use updating badge.
+      if (!main_frame) return;
       
       var isBlockable = !page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url);
       

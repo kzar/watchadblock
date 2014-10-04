@@ -581,7 +581,7 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "http://pete.teamlupus.hu/hufilter.txt",
     },
     "israeli": { // Israeli filters
-      url: "https://raw.github.com/AdBlockPlusIsrael/EasyListIsrael/master/IsraelList.txt",
+      url: "https://easylist-downloads.adblockplus.org/israellist+easylist.txt",
     },
     "italian": { // Italian filters
       url: "http://mozilla.gfsolone.com/filtri.txt",
