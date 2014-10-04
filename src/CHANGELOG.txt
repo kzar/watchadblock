@@ -2,6 +2,12 @@
 
 UNRELEASED:
 
+2.9.3: Fixed an issue with DropBox sync process (#325)
+       Fixed an memory leak issue in Chrome where prerenderred tab information  was not removed when the tab id was changed. (#324)
+       Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of being loaded in the menu (#318)
+       Fixed an issue in Safari with un-whitelisting a site (blacklisting it)(#317)
+       Improved the string processing of debug information when users report an issue or ad to the AdBlock support site (#307)
+
 2.9.2: Fixed a JavaScript error in DropBox sync logic
        Added the new option 'show survey' to the options that are sync'd using Dropbox
 

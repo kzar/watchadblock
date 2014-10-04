@@ -202,48 +202,14 @@ $(function() {
       $("#help_hide_explanation").slideToggle();
     }
   });
+
+
+  $("#link_open").click(function() {
+      var linkHref = "https://getadblock.com/share/";
+      BG.openTab(linkHref);
+  });
 });
 
-// Share open/close click handlers
-$(function() {
-  var state = "initial";
-  var linkHref = "https://getadblock.com/share/";
-  var bodysize;
-  $("#link_open").click(function() {
-    bodysize = { width: $("#wrapper").width(), height: $("#wrapper").height() };
-    if (state === "initial") {
-      $("<iframe>").
-        attr("frameBorder", 0).
-        attr("src", linkHref).
-        width("100%").
-        height("100%").
-        appendTo("#slideout_wrapper");
-    }
-    if (state === "open")
-      return;
-    state = "open";
-    $("#link_close").show();
-    var slideoutWidth = parseInt($("#div_slideout").data("width"));
-    var slideoutHeight = parseInt($("#div_slideout").data("height"));
-    $("body").animate({width: slideoutWidth, height: slideoutHeight},
-                      {queue:false});
-    $("#menu-items").slideUp();
-    $("#slideout_wrapper").
-      width(0).height(0).show().
-      animate({width: slideoutWidth-50, height: slideoutHeight-40},
-              {queue:false});
-  });
-  $("#link_close").click(function() {
-    if (state != "open")
-      return;
-    state = "closed";
-    $("body").animate({width: bodysize.width, height: bodysize.height}, {queue:false});
-    $("#menu-items").slideDown();
-    $("#slideout_wrapper").animate({width: 0, height: 0}, {queue:false});
-    $("#link_close").hide();
-    $("#slideout_wrapper").slideUp();
-  });
-});
 
 $(function() {
   customize_for_this_tab();

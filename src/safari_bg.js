@@ -68,12 +68,8 @@ safari.application.addEventListener("command", function(event) {
     tab.url = tab.url;
   } else if (command === "unwhitelist-currentpage") {
     var tab = browserWindow.activeTab;
-    var unwhitelisted = false;
-    while (try_to_unwhitelist(tab.url)) {
-      unwhitelisted = true;
-    }
-    if (unwhitelisted) {
-      tab.url = tab.url;
+    if (try_to_unwhitelist(tab.url)) {
+       tab.url = tab.url;
     }
   } else if (command === "report-ad") {
     var url = "pages/adreport.html?url=" + escape(browserWindow.activeTab.url);

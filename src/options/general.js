@@ -15,11 +15,7 @@ $(function() {
       (settings.show_advanced_options && !SAFARI) ? $("#dropbox").show() : $("#dropbox").hide();
   });
 
-  if (!SAFARI) {
-      BGcall("dropboxauth", function(status) {
-          (status === true) ? $("#dbauth").addClass("authenticated") : $("#dbauth").addClass("not-authenticated");
-      });
-  }
+  update_db_icon();
 });
 
 // TODO: This is a dumb race condition, and still has a bug where
@@ -64,15 +60,24 @@ $("#dbauthinfo").click(function() {
            "http://support.getadblock.com/kb/technical-questions/how-do-i-use-the-dropbox-synchronization-feature");
 });
 
-// Change button according to the status of authentication,
-// change settings according to the synced settings
+// Change Dropbox button, when user has been logged in/out
+function update_db_icon() {
+    if (!SAFARI) {
+        BGcall("dropboxauth", function(status) {
+            if (status === true) {
+                $("#dbauth").addClass("authenticated");
+                $("#dbauth").removeClass("not-authenticated");
+            } else {
+                $("#dbauth").addClass("not-authenticated");
+                $("#dbauth").removeClass("authenticated");
+            }
+        });
+    }
+}
+// Listen for Dropbox sync changes
 if (!SAFARI) {
     chrome.runtime.onMessage.addListener(
         function(request, sender, sendResponse) {
-            if (request.message === "signedout")
-                $("#dbauth").css({background:"url(../img/dropbox1.png)", width:"186px"});
-            if (request.message === "signedin")
-                $("#dbauth").css({background:"url(../img/dropbox3.png)", width:"215px"});
             if (request.message === "update_checkbox") {
                 BGcall("get_settings", function(settings) {
                     $("input[id='enable_show_google_search_text_ads']").prop("checked", settings.show_google_search_text_ads);
@@ -84,6 +89,10 @@ if (!SAFARI) {
                     $("input[id='enable_show_survey']").prop("checked", settings.show_survey);
                 });
             }
+            if (request.message === "update_icon")
+                update_db_icon();
+            if (request.message === "update_page")
+                document.location.reload();
         }
     );
 }
