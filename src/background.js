@@ -1189,7 +1189,8 @@
                   show_context_menu_items: get_settings().show_context_menu_items,
                   show_advanced_options: get_settings().show_advanced_options,
                   display_stats: get_settings().display_stats,
-                  show_block_counts_help_link: get_settings().show_block_counts_help_link
+                  show_block_counts_help_link: get_settings().show_block_counts_help_link,
+                  show_survey: get_settings().show_survey
               });
 
               // Prevent deleting filters in some cases
@@ -1205,7 +1206,7 @@
               } else {
                   filters = local;
               }
-              if (filters !== "" && filters !== undefined) {
+              if (filters && filters !== "" && filters !== undefined) {
                   filters = filters.replace(/\""/g, "");
                   settingstable.set("custom_filters", filters);
               }
@@ -1254,6 +1255,8 @@
                   set_setting("display_stats", stats);
                   var blockcountslink = settingstable.get("show_block_counts_help_link");
                   set_setting("show_block_counts_help_link", blockcountslink);
+                  var showsurvey = settingstable.get("show_survey");
+                  set_setting("show_survey", showsurvey);
                   chrome.runtime.sendMessage({message: "update_checkbox"});
               }
           });

@@ -81,6 +81,7 @@ if (!SAFARI) {
                     $("input[id='enable_show_advanced_options']").prop("checked", settings.show_advanced_options);
                     $("input[id='enable_whitelist_hulu_ads']").prop("checked", settings.whitelist_hulu_ads);
                     $("input[id='enable_debug_logging']").prop("checked", settings.debug_logging);
+                    $("input[id='enable_show_survey']").prop("checked", settings.show_survey);
                 });
             }
         }
