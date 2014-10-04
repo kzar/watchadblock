@@ -246,6 +246,9 @@ PatternFilter._parseRule = function(text) {
     result.key = new RegExp(key, matchcase);
 
   // ***** -> *
+  //replace, excessive wildcard sequences with a single one
+  rule = rule.replace(/\*-\*-\*-\*-\*/g, '*');
+  
   rule = rule.replace(/\*\*+/g, '*');
 
   // Some chars in regexes mean something special; escape it always.
