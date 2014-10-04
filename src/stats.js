@@ -55,7 +55,8 @@ STATS = (function() {
       u: userId,
       v: version,
       f: flavor,
-      o: os
+      o: os,
+      g: get_settings().show_google_search_text_ads ? '1': '0',
     };
 
     $.post(stats_url, data
