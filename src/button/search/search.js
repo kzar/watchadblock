@@ -1,39 +1,41 @@
-/* Paints the UI. */
 window.onload = function() {
   const BG = chrome.extension.getBackgroundPage();
-  const DESERIALIZE = BG.deserialize;
-  const SEARCH_ENGINE_LABEL = 'search_engines';
-  const CHK_MODE_SETTINGS_LABEL = 'search_chk_mode_set';
   const TXT_SEARCH = $('#txt_search');
+  const SEARCH_ENGINE_LABEL = 'search_engines';
+  const INCOGNITO_LABEL = 'search_incognito';
+  const CHK_MODE_SETTINGS_LABEL = 'search_chk_mode_set';
   const TXT_DEFAULT_MESSAGE = 'Search privately';
 
   initialize();
 
   function initialize() {
-	disable_if_not_paid();
+    disable_if_not_paid();
     define_events();
     analytics();
     defaults_values();
   };
 
   function disable_if_not_paid() {
-	if (localStorage.search_requires_payment=="true") {
-	    if (localStorage.search_user_is_paid!="true") {
-	    	TXT_SEARCH.prop('disabled', true);
-	    	$('#omnibox-box').prop('disabled', true);
-     	 	$('#everywhere-box').prop('disabled', true);
-     	 	$('#btn_search').prop('disabled', true);
-     	 	
-     	 	localStorage.search_secure_enable = "false";
-	    }
-	}
-  }
+    if (localStorage.search_requires_payment=="true") {
+      if (localStorage.search_user_is_paid!="true") {
+        TXT_SEARCH.prop('disabled', true);
+        $('#omnibox-box').prop('disabled', true);
+        $('#everywhere-box').prop('disabled', true);
+        $('#btn_search').prop('disabled', true);
+        $('#incognito').prop('disabled', true);
+        
+        localStorage.search_secure_enable = "false";
+      }
+    }
+  };
 
   function define_events() {
     $('.mode_settings').click(chkModeSettingsClick);
     $('#btn_search').click(submitSearch);
     $('#txt_search').keyup(submitSearch);
     $('#enable_show_secure_search').change(toggleActivateSearch);
+    $('#incognito').change(chkIncognitoClick);
+    
     $(".question_mark").bind({
       mouseenter: showHelpImage,
       mouseleave: hideHelpImage
@@ -88,37 +90,31 @@ window.onload = function() {
     $('#omnibox-box').prop('disabled', disabled);
     $('#everywhere-box').prop('disabled', disabled);
     $('#btn_search').prop('disabled', disabled);
+    $('#incognito').prop('disabled', disabled);
 
-    var chkbox = '{"omnibox":false,"everywhere":false,"secure":false}';
-    try {
-      chkbox = JSON.parse(localStorage[CHK_MODE_SETTINGS_LABEL]);
-    }catch(e){};
+    var incognito = deserialize(localStorage[INCOGNITO_LABEL]);
+    if(incognito == undefined) {
+      localStorage[INCOGNITO_LABEL] = "false";
+    } else {
+      $("#incognito").attr('checked', incognito)
+    }
+
+    var chkbox = '{"omnibox":false,"everywhere":false}';
+    try { chkbox = JSON.parse(localStorage[CHK_MODE_SETTINGS_LABEL]); }catch(e){};
     $('#omnibox-box').attr('checked', chkbox['omnibox']);
     $('#everywhere-box').attr('checked', chkbox['everywhere']);
-
-    if (chkbox['secure'] == false)
-      $('#private_mode').attr('checked', true);
-    else
-      $('#secure_mode').attr('checked', true);
-
-    var show = '{"omnibox":true,"everywhere":true,"secure":false}';
-    try {
-      show = JSON.parse(localStorage['search_show_mode_set']);
-    }catch(e){};
-    if (show['omnibox'] == false) $('#omnibox-box').parent().remove();
-    if (show['everywhere'] == false) $('#everywhere-box').parent().remove();
-    if ($('#search_settings ul li').length == 0) $('#search_settings').remove();
 
     TXT_SEARCH.focus();
   };
 
   function submitSearch(e) {
+    const PREFIX_URL = "https://";
+
     e.which = e.which || e.keyCode;
     if (e.which != 13 && e.which != 1) return;
     if (TXT_SEARCH.val().trim() == "") return;
 
-    const PREFIX_URL = "https://";
-    var searchEngineIndex = DESERIALIZE(localStorage[SEARCH_ENGINE_LABEL]);
+    var searchEngineIndex = deserialize(localStorage[SEARCH_ENGINE_LABEL]);
     var uri = null;
 
     if (searchEngineIndex == 0) uri = 'www.google.com/search?q=';
@@ -136,57 +132,39 @@ window.onload = function() {
   function chkModeSettingsClick() {
     var omnibox = $('#omnibox-box');
     var everywhere = $('#everywhere-box');
-    var secure = $('#secure_mode');
 
     var chk_box = {
       'omnibox': omnibox.is(':checked'),
-      'everywhere': everywhere.is(':checked'),
-      'secure': secure.is(':checked')
+      'everywhere': everywhere.is(':checked')
     };
-
     localStorage[CHK_MODE_SETTINGS_LABEL] = JSON.stringify(chk_box);
 
     var mode = 0;
     if      (chk_box.everywhere==false && chk_box.omnibox==true) mode = 1;
     else if (chk_box.everywhere==true && chk_box.omnibox==false) mode = 2;
     else if (chk_box.everywhere==true && chk_box.omnibox==true)  mode = 3;
-    localStorage['search_mode_settings'] = DESERIALIZE(mode);
-
-    if (secure.is(':checked') == true) {
-      if (BG.bgPlusOne.hasProxy()) {
-        BG.bgPlusOne.setProxy();
-      }
-    } else {
-      chrome.tabs.query({active: true}, function (tabs) {
-        if (!BG.bgPlusOne.isProxyTab(tabs[0].id)) {
-          BG.bgPlusOne.removeProxy();
-        }
-      });
-    }
-
-    localStorage['search_full_secure'] = DESERIALIZE(secure.is(':checked'));
+    localStorage['search_mode_settings'] = deserialize(mode);
   };
 
   function toggleActivateSearch() {
     var is_show_secure_search = $(this).is(':checked');
     var ui = $("#search_page");
 
-    // show the pitch page if need be!
     if (is_show_secure_search) {
-    	if (localStorage.search_requires_payment=="true") {
-    		if (localStorage.search_user_is_paid!="true") {
-    			  var pitch_url = localStorage.search_group_repitch + "?u=" + JSON.parse(localStorage.userid);
-    			  chrome.tabs.create({url: pitch_url}, function(tab) {
-    				    localStorage.search_pitch_page_shown = "true";
-    				    localStorage.search_show_form = "true";
-    				    var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
-    				    pitch_page_counter.total++;
-    				    localStorage['search_pitch_page_counter'] = JSON.stringify(pitch_page_counter);
-    				  });
+      if (localStorage.search_requires_payment=="true") {
+        if (localStorage.search_user_is_paid!="true") {
+          var pitch_url = localStorage['search_group_pitch'] + "?u=" + BG.get_adblock_user_id();
+          chrome.tabs.create({url: pitch_url}, function(tab) {
+            localStorage['search_pitch_page_shown'] = "true";
+            localStorage['search_show_form'] = "true";
 
-    			  return;
-    		}
-    	}
+            var pitch_page_counter = JSON.parse(localStorage['search_pitch_page_counter']);
+            pitch_page_counter.total++;
+            localStorage['search_pitch_page_counter'] = JSON.stringify(pitch_page_counter);
+          });
+          return;
+        }
+      }
     }
 
     localStorage.search_secure_enable = is_show_secure_search ? "true" : "false";
@@ -201,22 +179,20 @@ window.onload = function() {
     $('#omnibox-box').prop('disabled', disabled);
     $('#everywhere-box').prop('disabled', disabled);
     $('#btn_search').prop('disabled', disabled);
-
+    $('#incognito').prop('disabled', disabled);
     // rebuild async filters
-    setTimeout(function() {
-      BG.update_filters();
-    }, 100);
+    setTimeout(function() { BG.update_filters(); }, 100);
   };
 
   function showHelpImage() {
-    var image = $(this).attr('id') == 'mode1_info' ? '#omnibox' : '#serp';
+    var image = $(this).attr('id') == 'mode1_info' ? '#omnibox' : '#everywhere';
     $(image).show().css("opacity",0).stop(true,true).animate({
       opacity: 1,
       marginTop: 0
     });
   };
   function hideHelpImage() {
-    var image = $(this).attr('id') == 'mode1_info' ? '#omnibox' : '#serp';
+    var image = $(this).attr('id') == 'mode1_info' ? '#omnibox' : '#everywhere';
     $(image).stop(true,true).animate({
       opacity: 0,
       marginTop: 0
@@ -224,5 +200,13 @@ window.onload = function() {
       $(this).hide();
     });
   };
+  
+  function chkIncognitoClick(){
+    var incognito_box = $("#incognito").is(":checked");
+    localStorage.search_incognito = JSON.stringify(incognito_box);
+  };
 
+  function deserialize(object) {
+    return (typeof object == 'string') ? JSON.parse(object) : object;
+  };
 };

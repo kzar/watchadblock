@@ -927,19 +927,25 @@
       const url = 'https://goldenticket.disconnect.me/goldenticket/ticket/fetch?product=AdBlock-' + STATS.version;
       $.getJSON(url, function(data) {
         if (data['test']!=undefined && data['test']!='false') {
-          if (data['test'])          localStorage.search_group            = data['test'];
-          if (data['pitch_page'])    localStorage.search_group_pitch      = data['pitch_page'];
-          if (data['repitch_page'])  localStorage.search_group_repitch    = data['repitch_page'];
-          if (data['search_dialog']) localStorage.search_dialog_url       = data['search_dialog'];
-          if (data['payment_page'])  localStorage.search_payment_page     = data['payment_page'];
-          if (data['payment'])       localStorage.search_requires_payment = data['payment'];
+          if (data['test'])            localStorage.search_group            = data['test'];
+          if (data['pitch_page'])      localStorage.search_group_pitch      = data['pitch_page'];
+          if (data['repitch_page'])    localStorage.search_group_repitch    = data['repitch_page'];
+          if (data['search_dialog'])   localStorage.search_dialog_url       = data['search_dialog'];
+          if (data['payment_page'])    localStorage.search_payment_page     = data['payment_page'];
+          if (data['payment'])         localStorage.search_requires_payment = data['payment'];
+          if (data['search_external']) localStorage.search_external         = data['search_external'];
+          if (data['adblock_ui'])      localStorage.search_adblock_ui       = data['adblock_ui'];
+          localStorage.search_ticket_received = "true";
           run_search();
         }
       });
     };
 
-    var received_ticket = localStorage.search_show_form;
-    (received_ticket=="true") ? run_search() : receive_ticket();
+    var isSearchExternal = (localStorage.search_external=="true" && localStorage.search_pitch_page_shown=="true");
+    if (!isSearchExternal) {
+      var received_ticket = (localStorage.search_ticket_received=="true" || localStorage.search_show_form=="true" || false);
+      (received_ticket) ? run_search() : receive_ticket();
+    }
   }
 
   log("\n===FINISHED LOADING===\n\n");

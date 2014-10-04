@@ -170,7 +170,7 @@ MyFilters.prototype.getExtensionFilters = function(settings) {
   }
   // Exclude private search results ads
   if (localStorage.search_secure_enable === "true")
-    texts.push("@@||adblock.disconnect.me/$document");
+    texts.push("@@||search.disconnect.me/$document");
 
   return texts;
 };

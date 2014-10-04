@@ -71,7 +71,7 @@ input#txt_search {
 .searches_checkbox {
     display: none;
 }
-.searches_checkbox ul {
+.incognito .searches_checkbox ul {
     position: absolute;
     width: 17px;
     left: 200px;
@@ -213,7 +213,7 @@ input#txt_search {
 }
 
 #search_page #omnibox,
-#search_page #serp {
+#search_page #everywhere {
   position: absolute;
   z-index: 1;
   width: 280px;
@@ -223,7 +223,7 @@ input#txt_search {
   height: 112px;
 }
 #search_page #omnibox img,
-#search_page #serp img {
+#search_page #everywhere img {
   width: 100%;
   padding: 0;
   margin-top: -10px;
@@ -233,4 +233,20 @@ input#txt_search {
 
 #search_page .hide {
     display: none;
+}
+
+.incognito{
+  position: relative;
+  font-size: 11px;
+  color: #999999;
+}
+
+.incognito .header {
+  background-color: #607c97;
+  color: #FFF;
+  padding: 8px;
+}
+
+.incognito input {
+  outline: none;
 }

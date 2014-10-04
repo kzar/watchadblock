@@ -1,5 +1,4 @@
 function sendFocus(focusActive) {
-  //document.title = focusActive ? 'focused' : 'not focused';
   var runtimeOrExtension = chrome.runtime && chrome.runtime.sendMessage ? 'runtime' : 'extension';
   chrome[runtimeOrExtension].sendMessage({page_focus: focusActive}, function(response){});
 };

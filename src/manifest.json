@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.6.26",
+  "version": "2.6.27",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
@@ -35,8 +35,7 @@
         "functions.js", 
         "filtering/filteroptions.js",
         "adblock_start_common.js",
-        "adblock_start_chrome.js",
-        "search/focus.js"
+        "adblock_start_chrome.js"
       ],
       "run_at": "document_start",
       "all_frames": true
@@ -75,7 +74,7 @@
   "minimum_chrome_version": "23",
   "options_page": "options/index.html",
   "permissions": [
-    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation", "proxy", "notifications", "alarms"
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation", "alarms"
   ],
   "web_accessible_resources": [
     "img/icon24.png",
