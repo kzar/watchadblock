@@ -571,7 +571,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "chinese": { // Additional Chinese filters
-      url: "https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt",
+      url: "https://easylist-downloads.adblockplus.org/easylistchina.txt",
       requiresList: "easylist",
     },
     "czech": { // Additional Czech and Slovak filters
