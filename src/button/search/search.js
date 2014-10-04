@@ -30,35 +30,28 @@ window.onload = function() {
   };
 
   function analytics() {
-    //temporary omnibox/everywhere/secure usage analytics
-    $('#omnibox-box').click(function() {
+    $('#enable_show_secure_search').click(function() {
+      var counter = JSON.parse(localStorage['search_chkbox_counter']);
       var is_checked = $(this).is(':checked');
-      localStorage.search_omnibox = is_checked ? "true" : "false";
-      if (is_checked) {
-        localStorage.search_omnibox_on = parseInt(localStorage.search_omnibox_on) + 1;
-      } else {
-        localStorage.search_omnibox_off = parseInt(localStorage.search_omnibox_off) + 1;
-      }
+      (is_checked) ? counter.popup.private.on++ : counter.popup.private.off++;
+      localStorage['search_chkbox_counter'] = JSON.stringify(counter);
+      localStorage['search_secure_enable'] = is_checked ? "true" : "false";
+    });
+
+    $('#omnibox-box').click(function() {
+      var counter = JSON.parse(localStorage['search_chkbox_counter']);
+      var is_checked = $(this).is(':checked');
+      (is_checked) ? counter.popup.omnibox.on++ : counter.popup.omnibox.off++;
+      localStorage['search_chkbox_counter'] = JSON.stringify(counter);
+      localStorage['search_omnibox'] = is_checked ? "true" : "false";
     });
 
     $('#everywhere-box').click(function() {
+      var counter = JSON.parse(localStorage['search_chkbox_counter']);
       var is_checked = $(this).is(':checked');
-      localStorage.search_everywhere = is_checked ? "true" : "false";
-      if (is_checked) {
-        localStorage.search_everywhere_on = parseInt(localStorage.search_everywhere_on) + 1;
-      } else {
-        localStorage.search_everywhere_off = parseInt(localStorage.search_everywhere_off) + 1;
-      }
-    });
-
-    $('#enable_show_secure_search').click(function() {
-      var is_checked = $(this).is(':checked');
-      localStorage.search_secure_enable = is_checked ? "true" : "false";
-      if (is_checked) {
-        localStorage.search_secure_on = parseInt(localStorage.search_secure_on) + 1;
-      } else {
-        localStorage.search_secure_off = parseInt(localStorage.search_secure_off) + 1;
-      }
+      (is_checked) ? counter.popup.seweb.on++ : counter.popup.seweb.off++;
+      localStorage['search_chkbox_counter'] = JSON.stringify(counter);
+      localStorage['search_everywhere'] = is_checked ? "true" : "false";
     });
   };
 

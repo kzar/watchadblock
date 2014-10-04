@@ -4,7 +4,7 @@ function sendAction(action, value, needSubmit) {
 };
 
 function modify_pitch_page() {
-  var clicksIds = ['submit', 'nothanks', 'noPrivateSearch', 'yesPrivateSearch', 'searchOmnibox', 'searchWebsite'];
+  var clicksIds = ['submit', 'nothanks', 'noPrivateSearch', 'yesPrivateSearch', 'learnmore', 'searchOmnibox', 'searchWebsite'];
 
   var element = window.document.getElementById('pageOptions');
   if (element) sendAction('pageOptions', element.value);
