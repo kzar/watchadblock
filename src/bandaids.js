@@ -64,23 +64,71 @@ var run_bandaids = function() {
       BGcall('set_first_run_to_false', null);
     },
     youtube_safari_only: function() {
-        // Remove ad container & ad progress, so user won't notice removal of ads
-        var adcontainer = document.querySelector(".video-ads");
-        adcontainer.parentNode.removeChild(adcontainer);
-        var adprogress = document.querySelector(".html5-ad-progress-list");
-        adprogress.parentNode.removeChild(adprogress);
         
-        // Disable some attributes in ytplayer object to disable ads in HTML5 video player
-        var elemScript = document.createElement("script");
-        elemScript.textContent = 
-         "var ytp = ytplayer['config']['args']; ytplayer['config'].loaded = false; ytp.ad3_module = 0;" + 
-         "ytp.ad_channel_code_instream = 0; ytp.ad_channel_code_overlay = 0; ytp.ad_device = 0; ytp.ad_eurl = 0;" +
-         "ytp.ad_host = 0; ytp.ad_host_tier = 0; ytp.ad_logging_flag = 0; ytp.ad_preroll = 0; ytp.ad_slots = 0;" +
-         "ytp.ad_tag = 0; ytp.ad_video_pub_id = 0; ytp.adsense_video_doc_id = 0; ytp.advideo = 0; ytp.afv = 0;" +
-         "ytp.afv_ad_tag = 0; ytp.afv_ad_tag_restricted_to_instream = 0; ytp.afv_instream_max = 0; ytp.allowed_ads = 0;" +
-         "ytp.afv_video_min_cpm = 0; ytp.allow_html5_ads = 0; ytp.excluded_ad = 0; ytp.dynamic_allocation_ad_tag = 0;";
-        document.body.appendChild(elemScript);
-        document.body.removeChild(elemScript);
+        function blockYoutubeAds(videoplayer) {
+        var flashVars = videoplayer.getAttribute('flashvars');
+        var inParam = false;
+        if (!flashVars) {
+            flashVars = videoplayer.querySelector('param[name="flashvars"]');
+            // HTML5 video player, remove ads also there
+            if (!flashVars) {
+                // Remove ad container & ad progress, so user won't notice removal of ads
+                var adcontainer = document.querySelector(".video-ads");
+                adcontainer.parentNode.removeChild(adcontainer);
+                var adprogress = document.querySelector(".html5-ad-progress-list");
+                adprogress.parentNode.removeChild(adprogress);
+
+                // Disable some attributes in ytplayer object to disable ads in HTML5 video player
+                var elemScript = document.createElement("script");
+                elemScript.textContent = 
+                    "var ytp = ytplayer['config']['args']; ytplayer['config'].loaded = false; ytp.ad3_module = 0;" + 
+                    "ytp.ad_channel_code_instream = 0; ytp.ad_channel_code_overlay = 0; ytp.ad_device = 0; ytp.ad_eurl = 0;" +
+                    "ytp.ad_host = 0; ytp.ad_host_tier = 0; ytp.ad_logging_flag = 0; ytp.ad_preroll = 0; ytp.ad_slots = 0;" +
+                    "ytp.ad_tag = 0; ytp.ad_video_pub_id = 0; ytp.adsense_video_doc_id = 0; ytp.advideo = 0; ytp.afv = 0;" +
+                    "ytp.afv_ad_tag = 0; ytp.afv_ad_tag_restricted_to_instream = 0; ytp.afv_instream_max = 0; ytp.allowed_ads = 0;" +
+                    "ytp.afv_video_min_cpm = 0; ytp.allow_html5_ads = 0; ytp.excluded_ad = 0; ytp.dynamic_allocation_ad_tag = 0;";
+                document.body.appendChild(elemScript);
+                document.body.removeChild(elemScript);
+                return;
+            }
+            inParam = true;
+            flashVars = flashVars.getAttribute("value");
+        }
+        var adRegex = /(^|\&)((ad_.+?|prerolls|interstitial)\=.+?|invideo\=true)(\&|$)/gi;
+        if (!adRegex.test(flashVars))
+            return;
+
+        log("Removing YouTube ads");
+        var pairs = flashVars.split("&");
+        for (var i = 0; i < pairs.length; i++) {
+            if (/^((ad|afv|adsense)(_.*)?|(ad3|st)_module|prerolls|interstitial|infringe|invideo)=/.test(pairs[i])) {
+                pairs.splice(i--, 1);
+            }
+        }
+        flashVars = pairs.join("&");
+        var replacement = videoplayer.cloneNode(true);
+        if (inParam) {
+            // Grab new <param> and set its flashvars
+            newParam = replacement.querySelector('param[name="flashvars"]');
+            newParam.setAttribute("value", flashVars);
+        } else {
+            replacement.setAttribute("flashvars", flashVars);
+        }
+        videoplayer.parentNode.replaceChild(replacement, videoplayer);
+      }
+
+      if (document.querySelector("#movie_player")) {
+        //the movie player is already inserted
+        blockYoutubeAds(document.querySelector("#movie_player"));
+      } else {
+        //otherwise it has to be inserted yet
+        document.addEventListener("DOMNodeInserted", function(e) {
+          if (e.target.id != "movie_player")
+            return;
+          blockYoutubeAds(e.target);
+          this.removeEventListener('DOMNodeInserted', arguments.callee, false);
+        }, false);
+      }
     },
     czech_sites: function() {
       var player = document.getElementsByClassName("flowplayer");

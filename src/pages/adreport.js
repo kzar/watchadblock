@@ -54,7 +54,7 @@ BGcall("get_settings", function(settings) {
 function generateReportURL() {
   var AdBlockVersion = chrome.runtime.getManifest().version;
   var result = "https://adblock.tenderapp.com/discussion/new" +
-               "?category_id=ad-report&discussion[title]=";
+               "?category_id=ad-report&discussion[private]=1&discussion[title]=";
 
   var domain = "<enter URL of webpage here>";
   if (options.url)
