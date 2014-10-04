@@ -53,6 +53,10 @@ STATS = (function() {
       g: get_settings().show_google_search_text_ads ? '1': '0',
       l: determineUserLanguage(),
     };
+    //only on Chrome
+    if (flavor === "E" && blockCounts) {
+        data["b"] = blockCounts.get().total;
+    }
 
     $.post(stats_url, data
       , maybeSurvey // TODO: Remove when we no longer do a/b tests
@@ -160,7 +164,6 @@ STATS = (function() {
   return {
     // True if AdBlock was just installed.
     firstRun: firstRun,
-
     userId: userId,
     version: version,
     flavor: flavor,
@@ -168,7 +171,6 @@ STATS = (function() {
     browserVersion: browserVersion,
     os: os,
     osVersion: osVersion,
-
 
     // Ping the server when necessary.
     startPinging: function() {

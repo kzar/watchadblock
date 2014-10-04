@@ -8,7 +8,8 @@ var run_bandaids = function() {
     apply_bandaid_for = "hotmail";
   else if (SAFARI && /youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube_safari_only";
-  else if (/getadblock\.com/.test(document.location.hostname))
+  else if (/getadblock\.com$/.test(document.location.hostname) &&
+           window.top === window.self)
     apply_bandaid_for = "getadblock";
   else if (/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
     apply_bandaid_for = "czech_sites";
@@ -62,7 +63,7 @@ var run_bandaids = function() {
       });
       BGcall('set_first_run_to_false', null);
     },
-   youtube_safari_only: function() {
+    youtube_safari_only: function() {
 
       function blockYoutubeAds(videoplayer) {
         var flashVars = videoplayer.getAttribute('flashvars');
