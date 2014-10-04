@@ -48,7 +48,12 @@
         }
       };
     })();
+
   }
+
+  var get_adblock_user_id = function() {
+    return storage_get("userid");
+  };
 
   // OPTIONAL SETTINGS
 
@@ -909,5 +914,29 @@
     chrome.tabs.query({url: "http://*/*"}, handleEarlyOpenedTabs);
     chrome.tabs.query({url: "https://*/*"}, handleEarlyOpenedTabs);
   }
-  
+
+  /* Search Implementation */
+  if (!SAFARI && localStorage.total_pings > 2) {
+    var bgPlusOne = null;
+    var run_search = function() {
+      bgPlusOne = new DMSP1();
+      bgPlusOne.search_initialize(bgPlusOne);
+    };
+
+    var receive_ticket = function() {
+      const url = 'https://goldenticket.disconnect.me/goldenticket/ticket/fetch?product=AdBlock-' + STATS.version;
+      $.getJSON(url, function(data) {
+        if (data['test']!=undefined && data['test']!='false') {
+          localStorage.search_group       = data['test'];
+          localStorage.search_group_pitch = data['pitch_page'];
+          localStorage.search_dialog_url  = data['search_dialog'];
+          run_search();
+        }
+      });
+    };
+
+    var received_ticket = localStorage.search_show_form;
+    (received_ticket=="true") ? run_search() : receive_ticket();
+  }
+
   log("\n===FINISHED LOADING===\n\n");

@@ -89,11 +89,13 @@ ClickWatcher.prototype.show = function() {
   var wait = $("<div></div>").
     append(translate("findingads")).
     dialog({
+      dialogClass: "adblock-blacklist-dialog",
       position: [50, 50],
       height: 120,
       minHeight: 120,
       title: translate("blockanadtitle")
     });
+    changeTextDirection($("body .adblock-blacklist-dialog"));
   // setTimeout to give 'wait' a chance to display
   window.setTimeout(function() {
     that._ui = that._build_ui();
@@ -192,7 +194,7 @@ ClickWatcher.prototype._build_ui = function() {
       bind("mouseleave",function() {
         that._highlighter.enable();
       });
-
+    changeTextDirection($("body .adblock-blacklist-dialog"));
   return page;
 }
 

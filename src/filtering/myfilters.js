@@ -168,6 +168,10 @@ MyFilters.prototype.getExtensionFilters = function(settings) {
     texts.push("@@||ll.a.hulu.com/published/*.flv");
     texts.push("@@||ll.a.hulu.com/published/*.mp4");
   }
+  // Exclude private search results ads
+  if (localStorage.search_secure_enable === "true")
+    texts.push("@@||search.disconnect.me/$document");
+
   return texts;
 };
 

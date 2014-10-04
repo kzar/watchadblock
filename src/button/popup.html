@@ -3,6 +3,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="popup.css"/>
+    <link rel="stylesheet" href="search/search.css">
     <script src="../jquery/jquery.min.js"></script>
     <script src="../functions.js"></script>
   </head>
@@ -10,7 +11,47 @@
     <div id="wrapper">
       <div id="menu-items">
 
-        <div id="titletext"><span>AdBlock</span></div>
+        <div id="titletext">
+          <div id="search_control">
+            <input type="checkbox" id="enable_show_secure_search" />
+            Activate private search
+          </div>
+          <span>AdBlock</span>
+        </div>
+
+        <!-- **************** BEGIN: Search UI ************** -->
+        <div id="search_page">
+          <div id="inactive_search"></div>
+          <div id="toolbar">
+            <input type="text" id="txt_search" value="" name="q" autocomplete="off" placeholder="">
+            <input type="submit" value="" id="btn_search">
+          </div>
+
+          <div id="search_settings">
+            <span class="setting_title">Search privately from:</span>
+            <ul>
+              <li>
+                <input id="omnibox-box" class="mode_settings" type="checkbox" value="1" name="mode_1">
+                The omnibox
+                <span class="question_mark" id="mode1_info">?</span>
+              </li>
+              <li>
+                <input id="everywhere-box" class="mode_settings" type="checkbox" value="2" name="mode_2">
+                Search engine websites
+                <span class="question_mark" id="mode2_info">?</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Help Popups -->
+          <div id="omnibox" actived="false" class="hide">
+            <img src="../img/search/search-omnibox-card_no-shadow.png" class="center_image"></img>
+          </div>
+          <div id="serp" actived="false" class="hide">
+            <img src="../img/search/search-engine-card_no-shadow.png" class="center_image"></img>
+          </div>
+        </div>
+        <!-- **************** END: Search UI ************** -->
 
         <!-- ************ Status messages *********** -->
 
@@ -71,10 +112,9 @@
         </div>
 
         <div id="div_report_an_ad" class="menu-entry" i18n="report_ad_on_page">
-        </div>        
+        </div>
 
         <div id="separator1" class="separator"></div>
-
 
         <!-- **************** Extras ************** -->
 
@@ -88,9 +128,9 @@
         </div>
 
         <div class="separator" id="separator2"></div>
-        
+
       </div> <!-- menu-items-->
-      
+
       <div id="div_slideout" data-width=675 data-height=480>
         <div style="margin: 5px 0">
           <div id="link_close" style="float:right; display:none;"><a href="#">x</a></div>
@@ -103,5 +143,6 @@
     </div> <!-- wrapper -->
 
     <script src="popup.js"></script>
+    <script src="search/search.js"></script>
   </body>
 </html>

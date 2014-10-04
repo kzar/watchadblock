@@ -5,6 +5,8 @@ var run_bandaids = function() {
     apply_bandaid_for = "hotmail";
   else if (/youtube/.test(document.location.hostname))
     apply_bandaid_for = "youtube_safari_only";
+  else if(/getadblock\.com/.test(document.location.hostname))
+    apply_bandaid_for = "getadblock";
   else {
     var hosts = [ /mastertoons\.com$/ ];
     hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
@@ -81,7 +83,18 @@ var run_bandaids = function() {
           this.removeEventListener('DOMNodeInserted', arguments.callee, false);
         }, false);
       }
-    }
+    },
+    getadblock: function() {
+      BGcall('get_adblock_user_id', function(adblock_user_id) {
+        var user_id = adblock_user_id;
+        var div_id = "adblock_user_id";
+        var elemDiv = document.createElement("div");
+        elemDiv.id = div_id;
+        elemDiv.innerText = user_id;
+        elemDiv.style.display = "none";
+        document.body.appendChild(elemDiv);
+      });
+    },
   }; // end bandaids
 
   if (apply_bandaid_for) {

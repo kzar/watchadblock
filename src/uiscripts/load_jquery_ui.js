@@ -44,4 +44,13 @@ function load_jquery_ui(callback) {
   }
 }
 
+// Set RTL for Arabic and Hebrew users in blacklist and whitelist wizards
+var text_direction = (function() { 
+ var language = navigator.language.match(/^[a-z]+/i)[0] ;
+ return language === "ar" || language === "he" ? "rtl":"ltr";
+})();
+function changeTextDirection($selector) { 
+ $selector.attr("dir", text_direction); 
+}
+
 //@ sourceURL=/uiscripts/load_jquery_ui.js

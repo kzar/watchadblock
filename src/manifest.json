@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.6.18",
+  "version": "2.6.20",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
@@ -15,6 +15,7 @@
       "filtering/myfilters.js",
       "filtering/filternormalizer.js",
       "idlehandler.js",
+      "search/search-plus-one.js",
       "background.js"
     ]
   },
@@ -34,7 +35,8 @@
         "functions.js", 
         "filtering/filteroptions.js",
         "adblock_start_common.js",
-        "adblock_start_chrome.js"
+        "adblock_start_chrome.js",
+        "search/focus.js"
       ],
       "run_at": "document_start",
       "all_frames": true
@@ -42,7 +44,8 @@
     {
       "matches": [
         "*://*.mail.live.com/*",
-        "*://*.mastertoons.com/*"
+        "*://*.mastertoons.com/*",
+        "*://*.getadblock.com/*"
       ],
       "js": [
         "bandaids.js"
@@ -72,7 +75,7 @@
   "minimum_chrome_version": "23",
   "options_page": "options/index.html",
   "permissions": [
-    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation"
+    "http://*/*", "https://*/*", "contextMenus", "tabs", "idle", "webRequest", "webRequestBlocking", "webNavigation", "proxy", "notifications"
   ],
   "web_accessible_resources": [
     "img/icon24.png",

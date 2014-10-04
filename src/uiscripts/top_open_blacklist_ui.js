@@ -40,9 +40,9 @@ function top_open_blacklist_ui(options) {
       });
       blacklist_ui.show();
     });
-  
     bind_enter_click_to_default();
   });
 }
+
 
 //@ sourceURL=/uiscripts/top_open_blacklist_ui.js

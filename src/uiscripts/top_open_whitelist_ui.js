@@ -50,6 +50,7 @@ function top_open_whitelist_ui() {
              "<input id='pathslider' type='range' min='0' value='0'/></span>").
       dialog({
         title: translate("whitelistertitle2"),
+        dialogClass: "adblock-whitelist-dialog",
         width: 600,
         minHeight: 130,
         buttons: btns,
@@ -59,6 +60,7 @@ function top_open_whitelist_ui() {
           page.remove();
         }
       });
+      changeTextDirection($("body .adblock-whitelist-dialog"));
 
     var fixedDomainPart = parseUri.secondLevelDomainOnly(domain, true);
     var domainparts = domain.substr(0, domain.lastIndexOf(fixedDomainPart)).split('.');

@@ -169,6 +169,7 @@ BlacklistUi.prototype._build_page1 = function() {
       }
     });
   page.dialog("widget").css("position", "fixed");
+  changeTextDirection($("body .adblock-blacklist-dialog"));
 
   var depth = 0;
   var guy = this._chain.current();
@@ -272,6 +273,7 @@ BlacklistUi.prototype._build_page2 = function() {
       }
     });
   page.dialog("widget").css("position", "fixed");
+  changeTextDirection($("body .adblock-blacklist-dialog"));
 
   return page;
 }
