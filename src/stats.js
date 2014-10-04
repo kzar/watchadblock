@@ -58,7 +58,59 @@ STATS = (function() {
       o: os
     };
 
-    $.post(stats_url, data);
+    $.post(stats_url, data
+      , maybeSurvey // TODO: Remove when we no longer do a/b tests
+    );
+  };
+
+  // TODO: Remove when we no longer do a/b tests
+  var maybeSurvey = function(responseData) {
+    if (responseData.length ===  0)
+      return;
+    console.log('Pinging got some data', responseData);
+
+    try {
+      var url_data = JSON.parse(responseData);
+      if (!url_data.open_this_url.match(/^\/survey\//))
+        throw "bad survey url.";
+    } catch (e) {
+      console.log("Something went wrong with opening a survey.");
+      console.log('error', e);
+      console.log('response data', responseData);
+      return;
+    }
+    function one_time_opener() {
+      if (SAFARI) {
+        safari.application.removeEventListener("open", one_time_opener, true);
+      } else {
+        chrome.tabs.onCreated.removeListener(one_time_opener);
+      }
+      if (!one_time_opener.running)
+        return; // one_time_opener was called multiple times
+      one_time_opener.running = false;
+      var open_the_tab = function() {
+        openTab('https://getadblock.com/' + url_data.open_this_url, true);
+      };
+      if (SAFARI) {
+        // Safari has a bug: if you open a new tab, it will shortly thereafter
+        // set the active tab's URL to "Top Sites". However, here, after the
+        // user opens a tab, we open another. It mistakenly thinks
+        // our tab is the one the user opened and clobbers our URL with "Top
+        // Sites."
+        // To avoid this, we wait a bit, let it update the user's tab, then
+        // open ours.
+        window.setTimeout(open_the_tab, 500);
+      } else {
+        open_the_tab();
+      }
+    }
+    one_time_opener.running = true;
+
+    if (SAFARI) {
+      safari.application.addEventListener("open", one_time_opener, true);
+    } else {
+      chrome.tabs.onCreated.addListener(one_time_opener);
+    }
   };
 
   // Called just after we ping the server, to schedule our next ping.

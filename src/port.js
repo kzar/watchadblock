@@ -1,6 +1,6 @@
 // Chrome to Safari port
 // Author: Michael Gundlach (gundlach@gmail.com)
-// License: GPLv3 as part of adblockforchrome.googlecode.com
+// License: GPLv3 as part of code.getadblock.com
 //          or MIT if GPLv3 conflicts with your code's license.
 //
 // Porting library to make Chrome extensions work in Safari.
