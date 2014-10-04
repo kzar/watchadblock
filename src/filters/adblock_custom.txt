@@ -1,5 +1,5 @@
 ! Chrome AdBlock auxiliarly filters
-! Last update: Thu Apr 24 17:59:48 EST 2014
+! Last update: Thu Sep 28 02:43:00 EST 2014
 
 ! Ad providers. Filter lists don't care they are blocked
 @@||advertising.apple.com^$domain=advertising.apple.com
@@ -49,3 +49,6 @@ wrzesnia.pl##img[src*="/ads_files/"]
 @@||getadblock.com/js/mixpanel.js
 @@||mxpnl.com$domain=getadblock.com
 @@||mixpanel.com$domain=getadblock.com
+
+! Don't break navigation on Flickr.com
+@@.com/ad?$domain=flickr.com
