@@ -953,7 +953,7 @@
   // Record that we exist.
   STATS.startPinging();
 
-  if (STATS.firstRun) {
+  if (STATS.firstRun && (SAFARI || OPERA || chrome.runtime.id !== "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
     openTab("https://getadblock.com/installed/?u=" + STATS.userId);
   }
 
@@ -1004,5 +1004,124 @@
           });
       });
   }
+
+  // BETA CODE
+
+  if (!SAFARI && chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk") {
+      // Display beta page after each update for beta-users only
+      chrome.runtime.onInstalled.addListener(function(details) {
+          if (details.reason === "update" || details.reason === "install") {
+              openTab("https://getadblock.com/beta");
+          }
+      });
+
+      // Send us a bug report from beta page
+      chrome.runtime.onMessageExternal.addListener(
+          function(request, sender, sendResponse) {
+              if (request.bugreport) {
+                  var report = makeReport();
+                  var result = "http://support.getadblock.com/discussion/new" +
+                      "?category_id=problems&discussion[body]=" + report;
+                  chrome.tabs.create({url: result});
+              }
+          }
+      );
+  }
+
+  // DEBUG INFO
+
+  // Get debug info for bug reporting and ad reporting
+  getDebugInfo = function() {
+
+      // Get AdBlock version
+      var AdBlockVersion = chrome.runtime.getManifest().version;
+
+      // Get subscribed filter lists
+      var subscribed_filter_names = [];
+      var get_subscriptions = get_subscriptions_minus_text();
+      for (var id in get_subscriptions) {
+          if (get_subscriptions[id].subscribed)
+              subscribed_filter_names.push(id);
+      }
+
+      // Get last known error
+      var adblock_error = storage_get("error");
+
+      // Get total pings
+      var adblock_pings = storage_get("total_pings");
+    
+      // Get custom filters
+      var adblock_custom_filters = storage_get("custom_filters");
+
+      // Get settings
+      var adblock_settings = [];
+      var settings = get_settings();
+      for (setting in settings)
+          adblock_settings.push(setting+": "+get_settings()[setting] + "\n");
+      adblock_settings = adblock_settings.join('');
+ 
+      // Create debug info for a bug report or an ad report
+      var info = [];
+      info.push("==== Filter Lists ====");
+      info.push(subscribed_filter_names.join('  \n'));
+      info.push("");
+      if (adblock_custom_filters) {
+          info.push("==== Custom Filters ====");
+          info.push(adblock_custom_filters);
+          info.push("");
+      }
+      info.push("==== Settings ====");
+      info.push(adblock_settings);
+      info.push("==== Other info: ====");
+      info.push("AdBlock version number: " + AdBlockVersion + 
+               (chrome.runtime && chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk" ? " Beta" : ""));
+      if (adblock_error)
+          info.push("Last known error: " + adblock_error);
+      info.push("Total pings: " + adblock_pings);
+      info.push("UserAgent: " + navigator.userAgent.replace(/;/,""));
+
+      return info.join('  \n');
+  }
+
+  // Code for making a bug report
+  makeReport = function() {
+      var body = [];
+      body.push(chrome.i18n.getMessage("englishonly") + "!");
+      body.push("");
+      body.push("Please answer the following questions so that we can process your bug report, otherwise, we may have to ignore it.");
+      body.push("Also, please put your name, or a screen name, and your email above so that we can contact you if needed.");
+      body.push("If you don't want your report to be made public, check that box, too.");
+      body.push("");
+      body.push("**Can you provide detailed steps on how to reproduce the problem?**");
+      body.push("");
+      body.push("1. ");
+      body.push("2. ");
+      body.push("3. ");
+      body.push("");
+      body.push("**What should happen when you do the above steps**");
+      body.push("");
+      body.push("");
+      body.push("**What actually happened?**");
+      body.push("");
+      body.push("");
+      body.push("**Do you have any other comments? If you can, can you please attach a screenshot of the bug?**");
+      body.push("");
+      body.push("");
+      body.push("--- The questions below are optional but VERY helpful. ---");
+      body.push("");
+      body.push("If unchecking all filter lists fixes the problem, which one filter" + 
+                "list must you check to cause the problem again after another restart?");
+      body.push("");
+      body.push("Technical Chrome users: Go to chrome://extensions ->" +
+                "Developer Mode -> Inspect views: background page -> Console. " +
+                "Paste the contents here:");
+      body.push("");
+      body.push("====== Do not touch below this line ======");
+      body.push("");
+      body.push(getDebugInfo());
+      var out = encodeURIComponent(body.join('  \n'));
+
+      return out;
+  };
 
   log("\n===FINISHED LOADING===\n\n");

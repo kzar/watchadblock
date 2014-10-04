@@ -2,7 +2,7 @@ $(function() {
   localizePage();
 
   //Shows the instructions for how to enable all extensions according to the browser of the user
-  if(SAFARI) {
+  if (SAFARI) {
     $(".chrome_only").hide();
   } else {
     $(".safari_only").hide();
@@ -28,31 +28,24 @@ $(function() {
   $("#step_language_lang").empty().append(languageOptions);
 });
 
-//fetching the options...
+// Fetching the options...
 var options = parseUri.parseSearch(document.location.search);
 
-//get the list of subscribed filters and
-//all unsubscribed default filters
+// Get the list of all unsubscribed default filters
 var unsubscribed_default_filters = [];
-var subscribed_filter_names = [];
 BGcall("get_subscriptions_minus_text", function(subs) {
   for (var id in subs)
     if (!subs[id].subscribed && !subs[id].user_submitted)
       unsubscribed_default_filters[id] = subs[id];
-    else if (subs[id].subscribed)
-      subscribed_filter_names.push(id);
 });
 
-var enabled_settings = [];
-BGcall("get_settings", function(settings) {
-  for (setting in settings)
-    if (settings[setting])
-      enabled_settings.push(setting);
-});
+// Get debug info
+  var debug_info = BGcall("getDebugInfo", function(info) {
+    debug_info = info;
+  });
 
 //generate the URL to the issue tracker
 function generateReportURL() {
-  var AdBlockVersion = chrome.runtime.getManifest().version;
   var result = "https://adblock.tenderapp.com/discussion/new" +
                "?category_id=ad-report&discussion[private]=1&discussion[title]=";
 
@@ -99,23 +92,7 @@ function generateReportURL() {
     body.push(options.url);
     body.push("");
   }
-  body.push("=== Subscribed filters ===");
-  body.push(subscribed_filter_names.join('\n'));
-  body.push("");
-  body.push("=== Browser" + (AdBlockVersion ? ' & AdBlock' : '') + ": ===");
-  var browser;
-  if (SAFARI)
-      browser = "Safari " + navigator.userAgent.match(/Version\/([0-9.]+)/)[1]
-  else if (OPERA)
-      browser = "Opera " + navigator.userAgent.match(/OPR\/([0-9.]+)/)[1]
-  else
-      browser = "Google Chrome " + navigator.userAgent.match(/Chrome\/([0-9.]+)/)[1];
-  body.push(browser);
-  if (AdBlockVersion)
-    body.push("AdBlock " + AdBlockVersion);
-  body.push("");
-  body.push("=== Enabled settings ===");
-  body.push(enabled_settings.join('\n'));
+  body.push(debug_info);
   body.push("");
   body.push("=== Question Responses ===");
   var answers = $('[class="answer"]["chosen"]');

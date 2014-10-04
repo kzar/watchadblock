@@ -1,6 +1,6 @@
 {
   "name": "AdBlock",
-  "version": "2.7.13",
+  "version": "2.8",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
@@ -89,5 +89,8 @@
     "jquery/css/images/ui-icons_d8e7f3_256x240.png",
     "jquery/css/jquery-ui.custom.css",
     "jquery/css/override-page.css"
-  ]
+  ],
+  "externally_connectable": {
+    "matches": ["https://getadblock.com/beta"]
+  }
 }
