@@ -4,8 +4,8 @@ function DMSP1() {
 
   // variables
   this.C_PROXY_INVISIBLE = "inv-adclick.disconnect.me:3000";
-  this.C_PROXY_PRESETTING = "search.disconnect.me/activation";
-  this.C_PROXY_SEARCH = "search.disconnect.me";
+  this.C_PROXY_PRESETTING = "adblock.disconnect.me/activation";
+  this.C_PROXY_SEARCH = "adblock.disconnect.me";
 
   // configuration to set our proxy server
   this.config_proxied = {
@@ -163,10 +163,10 @@ DMSP1.prototype.onWebRequestBeforeRequest = function(details) {
   var hasWsOrApi = (REQUESTED_URL.search("/ws") > -1) || (REQUESTED_URL.search("/api") > -1);
   var hasGoogleImgApi = (REQUESTED_URL.search("tbm=isch") > -1);
   var isDisconnect = this.isProxySearchUrl(REQUESTED_URL);
-  var isDisconnectSearchPage = (REQUESTED_URL.search("search.disconnect.me/stylesheets/injected.css") > -1);
+  var isAdBlockSearchPage = (REQUESTED_URL.search(this.C_PROXY_SEARCH+"/stylesheets/injected.css") > -1);
 
   if (localStorage.search_secure_enable === "false") return blockingResponse;
-  if (isDisconnectSearchPage) localStorage.search_total = parseInt(localStorage.search_total) + 1;
+  if (isAdBlockSearchPage) localStorage.search_total = parseInt(localStorage.search_total) + 1;
   if (isDisconnectSite) {
     var CONTROL = document.getElementById('input-type');
     var BUCKET = CONTROL && CONTROL.getAttribute('value');
