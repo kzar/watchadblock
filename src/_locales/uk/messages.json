@@ -509,14 +509,6 @@
     "message":"Клацніть на меню «Safari» &rarr; «Налаштування» &rarr; «Розширення».",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Для Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Натисніть на кнопку меню угорі ліворуч. Далі перейдіть до «Розширення»->«Керувати розширеннями». Відключіть усі розширення, клацаючи на відповідних кнопках відключення. Пам’ятайте, відключати AdBlock НЕ ПОТРІБНО!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Тепер, коли реклама зникла, вам слід з’ясувати, яке розширення спричиняло її появу. Пройдіться по списку, вмикаючи розширення одне за одним. Щоб позбутися реклами, видаліть розширення, після увімкнення якого реклама з’являється знов.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -1025,10 +1017,6 @@
     "message":"Юрій Жарков",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Домашня сторінка проекту",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "tabsupport":{
     "message":"Підтримка",
     "description":"A tab on the options page"
@@ -1048,14 +1036,6 @@
   "work_around_hulu_problems":{
     "message":"Полагодити відео з Hulu.com, що не хочуть відтворюватися (потребує перезапуску вашого переглядача)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Як користуватися AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock автоматично прибирає рекламу. Це, власне, і все.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Сайт:",
@@ -1105,70 +1085,6 @@
     "message":"Власний:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Ви можете знов активувати кнопку у настройках цього розширення",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Показувати рекламу на домені",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Домен, на якому AdBlock не діятиме",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Показувати кнопку на панелі інструментів",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Ви також можете збільшити обсяг \n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Для більш детальних настройок, ви можете натиснути кнопку на панелі інструментів або відкрити сторінку настройок, перейшовши до Opera &rArr; Розширення &rArr; Керувати розширеннями &rArr; розвідний ключ &rArr; Настройки",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Ось і все!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Ви можете закрити цей таб та розпочати вільний від реклами перегляд. Нехай щастить!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Якщо вам справді подобається це розширення, будь ласка, зробіть пожертву, скориставшись посиланням на сторінці настройок!",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Подобається це розширення? Якщо так, будь ласка, зробіть пожертву, скориставшись посиланням на сторінці настройок!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Доступно у $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"Якщо ви користуєтесь версіями Opera молодшими за Opera 12.10, деякі рекламні блоки не вдасться заблокувати через неможливість обробки усіх правил такими версіями. Проблему буде усунено щойно Opera оновиться до версії 12.10. Відтоді уся реклама блокуватиметься правильно.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"Якщо ви користуєтесь версіями Opera молодшими за Opera 12.10, деякі налаштування недоступні, оскільки вони не підтримуються у таких версіях.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Походить з фільтру:\n«$list$»",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1182,18 +1098,6 @@
   "firefox_explanation":{
     "message":"Мета цього питання визначити, хто має отримати вашу скаргу. Якщо ви дасте хибну відповідь, скарга потрапить не у ті руки і, у такому випадку, може бути проігнорована.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Захищені сторінки",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Клацніть на «Розширення» (у меню) &rArr; «Керування розширеннями» &rArr; знайдіть AdBlock та клацніть на піктограмку гаєчного ключа поряд з ним &rArr; клацніть «Безпека».<br\/> Чи дозволено доступ до захищених сторінок?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Якщо ви хочете використовувати AdBlock на захищених сторінках (сторінки, позначені замочком у панелі управління), вам спершу треба надати йому доступ до захищених сторінок.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Заблокована реклама:",
@@ -1290,18 +1194,6 @@
   "adblocksupport":{
     "message":"Підтримка користувачів AdBlock",
     "description":"Title of the support tab"
-  },
-  "support":{
-    "message":"Знайшли помилку? Виникло запитання? З’явилась ідея щодо AdBlock? Перейдіть на наш <a>сайт підтримки<\/a> користувачів!",
-    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
-  },
-  "seethecode":{
-    "message":"Хочете переглянути вихідний код AdBlock? Завітайте <a>сюди<\/a>.",
-    "description":"Link to AdBlock's source code"
-  },
-  "adblockcontributors":{
-    "message":"Хочете дізнатися, хто допомагає створювати AdBlock? Завітайте на нашу сторінку про <a>авторів та перекладачів<\/a>!",
-    "description":"Text for link to contributors page"
   },
   "checkforupdates":{
     "message":"Перевіряю оновлення (має зайняти лиш декілька секунд)...",

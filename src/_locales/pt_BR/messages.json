@@ -481,14 +481,6 @@
     "message":"Clicar no menu Safari &rarr Preferências &rarr Extensões.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Para Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Clique no botão menu no canto superior esquerdo. Vá em Extensões->Gerenciar Extensões. Desabilite todas as extensões clicando seus respectivos botões Desabilitar. Lembre-se, NÃO desabilite o AdBlock!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Agora que as propagandas se foram, você deve descobrir qual extensão é a causa. Ative cada extensão uma de cada vez. A extensão que traz de volta a(s) propaganda(s) é a que você deve deletar para se livrar das propagandas.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -949,10 +941,6 @@
     "message":"Philippe R., Jacques L., Matheus M.",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Home do projeto",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "report_ad_on_page":{
     "message":"Reportar uma propaganda nesta página",
     "description":"Entry in the AdBlock button menu"
@@ -964,14 +952,6 @@
   "work_around_hulu_problems":{
     "message":"Solução alternativa para vídeos que não rodam em Hulu.com (requer reinicialização do navegador)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Como usar o AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock remove propagandas automaticamente. Isso é tudo que há nisto.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Site:",
@@ -1021,70 +1001,6 @@
     "message":"Personalizado:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Você poder reabilitar o botão nas preferências desta extensão",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Mostrar propagandas em um domínio",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"O domínio onde o AdBlock não deve bloquear nada",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Mostrar botão na barra de ferramentas",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Você também pode aumentar o valor de\n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Para mais opções, você poder clicar no botão da barra de ferramentas ou abrir as preferências via Extensões (no menu) &rArr; Gerenciar extensões &rArr; ícone de chave inglesa &rArr; Preferências",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"É isso!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Você pode fechar esta aba e começar a navegar livre de propagadas. Divirta-se!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Se você realmente gosta dessa extensão, por favor considere fazer uma doação através da página de opções.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Gosta da extensão? Se sim, por favor considere fazer uma doação na página de opções!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Habilitado em $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"Em versões do Opera anteriores ao Opera 12.10, algumas propagandas podem não ser bloqueadas já que não é possível processar todas as regras nessas versões. Isso será concertado quando o Opera atualizar para a versão 12.10. A partir desse momento, todas as propagandas serão bloqueadas corretamente.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"Em versões do Opera anteriores ao Opera 12.10, algumas opções estão esmaecidas, pois não são suportadas nessas versões.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Origem do filtro:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1098,18 +1014,6 @@
   "firefox_explanation":{
     "message":"O propósito desta pergunta é determinar quem deve receber seu relatório. Se você responder esta pergunta incorretamente, o relatório sera enviado para as pessoas erradas, logo poderá ser ignorado.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Páginas seguras",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Clique em Extensões (no menu) &rArr; Gerenciar extensões &rArr; procure pelo AdBlock e clique no ícone de chave próximo dela &rArr; clique em Privacidade.<br\/>A opção de permitir acesso à páginas seguras está habilitada?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Se você quer usar o AdBlock em páginas seguras (páginas com um ícone de cadeado na barra de ferramentas), você deve antes habilitar a opção de permitir acesso à páginas seguras.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Propagandas bloqueadas:",

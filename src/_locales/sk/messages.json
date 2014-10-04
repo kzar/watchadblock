@@ -39,6 +39,10 @@
     "message":"Ak chcete skryť tlačidlo, kliknite naň pravým tlačidlom myši a vyberte Skryť tlačidlo. Tlačidlo môžete zobraziť znovu v chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
+  "operabutton_how_to_hide2":{
+    "message":"Ak chcete skryť tlačidlo, navštívte stránku opera:\/\/extensions a začiarknite voľbu \"Skryť z panela s nástrojmi\". Tlačidlo môžete zobraziť neskôr zrušením začiarknutia tejto možnosti.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
   "sliderexplanation":{
     "message":"Nastavte posuvník tak, aby reklama na stránke bola blokovaná a zbytok stránky stále vyzeral uspokojivo.",
     "description":"Blacklister slider page message"
@@ -505,14 +509,6 @@
     "message":"Kliknite v Safari menu -> Predvoľby -> Rozšírenia.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Pre Operu",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Kliknite na menu v ľavom hornom rohu. Potom choďte do Rozšírenia -> Spravovať rozšírenia. Zakážte všetky rozšírenia okrem AdBlocku!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Ak sa teraz reklama nezobrazuje, musíte nájsť to rozšírenie, ktoré zobrazuje reklamy. Začnite tým, že budete zapínať jedno rozšírenie za druhým. Rozšírenie, ktoré prinesie reklamu naspäť na web, musíte zmazať aby sa vám reklamy už naďalej nezobrazovali.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -973,6 +969,10 @@
     "message":"AdBlock je pozastavený.",
     "description":"Message shown in toolbar button when AdBlock is paused"
   },
+  "unpause_adblock":{
+    "message":"Spustiť AdBlock",
+    "description":"Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
+  },
   "pause_adblock":{
     "message":"Pozastaviť AdBlock",
     "description":"Menu entry to pause AdBlock"
@@ -997,6 +997,10 @@
     "message":"Zdieľajte nás!",
     "description":"Text of a share link"
   },
+  "pwyw":{
+    "message":"Zaplaťte, koľko chcete!",
+    "description":"Text of a payment request link"
+  },
   "removelabel":{
     "message":"Odstrániť",
     "description":"Link to remove a filter on the resourceblock page"
@@ -1013,9 +1017,9 @@
     "message":"Tomáš Taro, Ján Krasnovský",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Hlavná stránka projektu",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
+  "tabsupport":{
+    "message":"Podpora",
+    "description":"A tab on the options page"
   },
   "report_ad_on_page":{
     "message":"Nahlásiť reklamu na tejto stránke",
@@ -1032,14 +1036,6 @@
   "work_around_hulu_problems":{
     "message":"Ak máte problémy s prehrávaním videa na Hulu.com, zapnite túto funkciu (vyžaduje reštartovanie prehliadača)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Ako používať AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock slúži na to, aby automaticky odstraňoval reklamy.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Doména:",
@@ -1089,70 +1085,6 @@
     "message":"Vlastné:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Tlačidlo môžete znovu zobraziť v nastavení tohto rozšírenia",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Zobraz reklamy na doméne",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Doména, kde AdBlock nemôže nič blokovať",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Zobraz tlačidlo na paneli nástrojov",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Môžete tiež zvýšiť hodnotu $setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Pre viac možností, môžete kliknúť na tlačidlo alebo otvoriť nastavenia cez Opera ⇒ Rozšírenia ⇒ Správca rozšírení ⇒ Ikona kľúča ⇒ Predvoľby",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Už to je!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Teraz môžete zavrieť túto kartu a začať surfovať bez reklám!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Ak milujete toto rozšírenie, prosím prispejte darom cez stránku nastavení.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Máte radi toto rozšírenie? Ak áno, pomôžte nám darom na stránke nastavení!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Zapnuté v $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"Opera verzie nižšej ako 12.10 neblokuje všetky reklamy, pretože to nie je možné. Toto bude opravené, keď sa Opera aktualizuje na verziu 12.10. Od toho momentu budú blokované všetky reklamy.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"V Opere verzie nižšej ako 12.10 sú niektoré možnosti obmedzené, pretože v týchto verziách nie sú niektoré funkcie podporované.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Pôvod filtru:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1166,18 +1098,6 @@
   "firefox_explanation":{
     "message":"Účelom tejto otázky je určiť, komu má byť vaše hlásenie odoslané. Ak odpoviete na túto otázku nesprávne, hlásenie môže byť odoslané nesprávnej osobe, ktoré toto hlásenie môže ignorovať.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Zabezpečené stránky",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Klinite na tlačidlo Rozšírenia (v menu) ⇒ Správca rozšírení ⇒ nájdite AdBlock a kliknite na ikonu kľúča vedľa neho ⇒ kliknite na Súkromie.<br\/>Je nastavená možnosť povoliť prístup na zabezpečené stránky?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Ak chcete používať AdBlock na zabezpečených stránkach (stránky s ikonou zámku na paneli nástrojov), musíte najprv zapnúť možnosť k povoleniu prístupu na zabezpečené stránky.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Počet blokovaných reklám:",
@@ -1260,5 +1180,75 @@
   "here":{
     "message":"tu",
     "description":"This message is injected in other strings as a link\/button"
+  },
+  "update_available":{
+    "message":"K dispozícii je aktualizácia pre AdBlock! Choďte $here$ pre aktualizáciu AdBlocku. <br>Poznámka: Ak chcete dostávať aktualizácie automaticky, stačí ísť do Safari > Nastavenia... > Rozšírenia > Aktualizácie <br>a začiarknite možnosť \"Automaticky inštalovať aktualizácie\".",
+    "description":"On the Options > Support page, shows when there are updates available for AdBlock",
+    "placeholders":{
+      "here":{
+        "content":"<a id='here'><\/a>",
+        "example":"<a>here<\/a>"
+      }
+    }
+  },
+  "adblocksupport":{
+    "message":"Podpora",
+    "description":"Title of the support tab"
+  },
+  "checkforupdates":{
+    "message":"Kontrola aktualizácií (mala by trvať iba pár sekúnd)...",
+    "description":"Displayed when AdBlock is checking the newest available version"
+  },
+  "somethingwentwrong":{
+    "message":"Niečo sa pokazilo pri kontrole aktualizácií.",
+    "description":"Displayed when AdBlock is checking the newest available version and an error occurs"
+  },
+  "checkinternetconnection":{
+    "message":"Ak chcete nahlásiť reklamu, musíte byť pripojený na internet.",
+    "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+  },
+  "whatsnew":{
+    "message":"Čo je nové v najnovšej verzii? Pozri <a style='cursor:pointer;'> zoznam zmien<\/a>!",
+    "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"Iba v angličtine",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Našli ste chybu?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"Aktualizácie AdBlocku",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"Chcete vidieť, kto a čo stojí za AdBlockom?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Máte otázku alebo nový nápad?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Zdrojový kód je <a>voľne k dispozícii<\/a>!",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"Máme pre vás <a>stránku<\/a>, ktorá vám pomôže nájsť ľudí, ktorí pracujú na AdBlocku!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Vyžiadal si náš tím niektoré ladiace informácie? Kliknite <a href='#' id='debug'>sem<\/a> pre to!",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Prečo nám nepošlete <a href='#' id='report'> hlásenie o chybe<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"Dajte nám vedieť na našej <a>stránke podpory<\/a>!",
+    "description":"Link to the support site on the Support tab of the options"
   }
 }

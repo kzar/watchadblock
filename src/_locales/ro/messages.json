@@ -477,14 +477,6 @@
     "message":"Click pe meniul Safari &rarr; Preferințe &rarr; Extensii.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Pentru Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Faceți click pe butonul de meniu din colțul din stânga sus . Apoi du-te la Extensii -> Gestionare extensii. Dezactivați toate extensiile făcând click pe caseta corespunzătoare fiecărei extensie. NU dezactiva AdBlock!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Acum că reclamele numai apar, trebuie să găsești care extensie este problema. Activează extensiile una câte una. Extensia care aduce înapoi reclamele este cea pe care trebuie să o ștergi pentru a scăpa de ele.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -945,10 +937,6 @@
     "message":"Eli",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Pagina proiectului",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "report_ad_on_page":{
     "message":"Reportează o reclamă de pe această pagină",
     "description":"Entry in the AdBlock button menu"
@@ -960,14 +948,6 @@
   "work_around_hulu_problems":{
     "message":"Bifează pentru a putea folosi pe Hulu.com în cazul în care nu merge. Este necesară repornirea navigatorului.",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Cum să folosești AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock blochează automat reclamele. Aceasta este tot.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Site:",
@@ -1017,70 +997,6 @@
     "message":"Personalizare:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Poți reactiva butonul în preferințele extensiei",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Arată reclame pe un domeniu",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Domeniul pe care AdBlock nu blochează nimic",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Arată butonul din bara de instrumente",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"De asemenea, poți mări valoarea\n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Pentru mai multe opțiuni, poți face click pe butonul din bara de instrumente sau să deschizi preferințele prin Extensii (din meniu) &rArr; Gestionare extensii &rArr; pictograma cheie &rArr; Preferințe",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Asta e!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Poți închide acest tab și să începi o navigare fară reclame. Distrează-te!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Dacă vă place această extensie, vă rugăm să considerați o donație prin intermediul paginii de opțiuni.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Îți place această extensie? Dacă da, vă rugăm să considerați o donație prin intermediul paginii de opțiuni!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Activat în $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"În versiunile Opera mai mici decât 12.10, unele reclame nu vor fi blocate și nu este posibil să parcurgă corect regulile filtrelor. Aceste vor fi corectate când Opera se actualizează la versiunea 12.10. Din acel moment, toate reclamele vor fi corect blocate.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"În versiunile Opera mai mici decât 12.10, câteva opțiuni sunt marcate cu gri, deoarece nu sunt suportate.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Originea filtrului:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1094,18 +1010,6 @@
   "firefox_explanation":{
     "message":"Scopul acestei întrebări este de a determina cine primește raportul tău.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Pagini securizate",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Click pe Extensii (în meniu) &rArr; Gestionare extensii  &rArr; și uită-te după AdBlock și fă click pe pictograma cheie &rArr; Confidențialitate <br\/> Există o opțiune pentru a permite accesul paginilor securizate?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Dacă dorești să folosești AdBlock pe paginile securizate (paginile cu un lacăt în bara de instrumente), trebuie mai întâi să permiți accesul la paginile securizate.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Reclame blocate:",

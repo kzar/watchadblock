@@ -509,14 +509,6 @@
     "message":"Klicken Sie auf Safari (Menübar) &rarr; Einstellungen ... &rarr; Erweiterungen.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"In Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Klicken Sie oben links auf den Menü-Button -> Erweiterungen -> Erweiterungen verwalten. Deaktivieren Sie alle Erweiterungen (<b>außer<\/b> bei AdBlock) indem Sie auf den \"Deaktivieren\"-Button klicken.",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Da die Werbung nun zuverlässig entfernt wird, müssen Sie herausfinden welche Erweiterung das Problem verursacht. Dazu aktivieren Sie der Reihe nach eine Erweiterung nach der anderen und aktualisieren die Webseite. Die Erweiterung bei der die Werbung wieder erscheint muss deaktiviert werden damit Werbung zuverlässig entfernt werden kann.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -1025,10 +1017,6 @@
     "message":"John Rey",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Projektseite",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "tabsupport":{
     "message":"Support",
     "description":"A tab on the options page"
@@ -1048,14 +1036,6 @@
   "work_around_hulu_problems":{
     "message":"Übergangslösung für nicht startende Videos auf Hulu.com aktivieren (erfordert Neustart des Browsers)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"AdBlock benutzen:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock entfernt die Werbung automatisch. Es muss nichts weiter getan werden.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Domain:",
@@ -1105,70 +1085,6 @@
     "message":"benutzerdefiniert:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Sie können den Button in den Einstellungen dieser Erweiterung wieder aktivieren",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Werbung für eine Domain zulassen",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Domain auf der AdBlock nichts entfernen soll",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Toolbar-Button anzeigen",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Sie können auch den Wert $setting$ erhöhen",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Für weitere Einstellungen klicken Sie bitte auf den Toolbar-Button oder öffnen Sie die Einstellungen über Erweiterungen (im Menü) &rArr; Erweiterungen verwalten &rArr; Zahnrad-Symbol &rArr; Einstellungen",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Fertig!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Sie können diesen Tab schließen und nun ohne Werbung im Internet surfen. Viel Spaß!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Sollte Ihnen diese Erweiterung gefallen erwägen Sie bitte eine Spende über die Einstellungsseite.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Ihnen gefällt diese Erweiterung? Dann erwägen Sie eine Spende über die Einstellungsseite!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Funktion unterstützt ab $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"In Opera-Versionen vor Opera 12.10 kann es vorkommen, dass manche Werbung nicht entfernt wird, da es nicht möglich ist alle Filterregeln in diesen Versionen anzuwenden. Sobald Opera auf Version 12.10 aktualisiert wird besteht dieses Problem nicht mehr und Werbung wird komplett entfernt.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"In Opera-Versionen vor Opera 12.10 sind einige Optionen in grauer Schrift und deaktiviert, da diese erst ab Opera-Version 12.10 unterstützt werden.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Filterherkunft:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1182,18 +1098,6 @@
   "firefox_explanation":{
     "message":"Der Zweck dieser Frage ist herauszufinden wer Ihren Bericht erhalten soll. Sollten Sie diese Frage falsch beantworten wird der Bericht an die falschen Personen gesendet und möglicherweise ignoriert.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Sichere Seiten",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Klicken Sie auf Erweiterungen (im Menü) &rArr; Erweiterungen verwalten... &rArr; klicken Sie auf das Zahnradsymbol bei AdBlock &rArr; Privatsphäre.<br\/> Ist die Option 'Interaktion mit sicheren Seiten zulassen' aktiviert?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Wenn Sie AdBlock auf sicheren Seiten benutzen möchten (Seiten mit einem Vorhängeschloss links in der Adressleiste), müssen Sie zuerst die Option für die \"Interaktion mit sicheren Seiten\" aktivieren.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Anzahl entfernter Werbung:",
@@ -1291,18 +1195,6 @@
     "message":"AdBlock Support",
     "description":"Title of the support tab"
   },
-  "support":{
-    "message":"Haben Sie einen Fehler gefunden? Haben Sie eine Frage? Oder haben Sie eine neue Idee für AdBlock? <a>Unsere Support-Seite<\/a> (nur auf English) wird Ihnen weiterhelfen!",
-    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
-  },
-  "seethecode":{
-    "message":"Der Quelltext von AdBlock kann <a>hier<\/a> eingesehen werden.",
-    "description":"Link to AdBlock's source code"
-  },
-  "adblockcontributors":{
-    "message":"Eine Liste aller Mitwirkenden kann unter <a>'Mitwirkende'<\/a> eingesehen werden.",
-    "description":"Text for link to contributors page"
-  },
   "checkforupdates":{
     "message":"Updates werden abgefragt (dauert nur wenige Sekunden)...",
     "description":"Displayed when AdBlock is checking the newest available version"
@@ -1314,5 +1206,49 @@
   "checkinternetconnection":{
     "message":"Um Werbung zu melden muss eine Internetverbindung bestehen.",
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+  },
+  "whatsnew":{
+    "message":"Die Änderungen der aktuellen Version von AdBlock können im <a style='cursor:pointer;'>Changelog<\/a> eingesehen werden.",
+    "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"nur auf Englisch",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Haben Sie einen Fehler gefunden?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"AdBlock Updates",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"Wollen Sie wissen wer und was hinter AdBlock steckt?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Haben Sie eine Frage oder eine Idee für AdBlock?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Der Quellcode ist <a>frei verfügbar<\/a>.",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"Eine Liste der Mitwirkenden von AdBlock finden Sie unter <a>\"Mitwirkende\"<\/a>.",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Hat unser Team Sie nach Debug-Informationen gefragt? Klicken Sie  <a href='#' id='debug'>hier<\/a> um die Informationen anzuzeigen.",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Senden Sie uns einen <a href='#' id='report'>Fehlerbericht<\/a>.",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"Teilen Sie uns Ihre Idee oder Ihre Frage auf unserer <a>Support-Seite<\/a> mit.",
+    "description":"Link to the support site on the Support tab of the options"
   }
 }

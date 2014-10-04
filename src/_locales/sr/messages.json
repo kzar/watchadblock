@@ -449,14 +449,6 @@
     "message":"Kliknite na Safari meni &rarr; Podešavanja &rarr; Extenzije.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Za Operu",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Kliknite na dugme menija u levom gornjem uglu. Onda idite na Priključci->Podešavanja Priključaka. Onesposobite sve priključke tako što kliknete na taster za isključenje svake ponaosob. Ne zaboravite, NEMOJTE da isključite AdBlock!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Sada kada više nema reklama, morate saznati koje proširenje je uzrok. Pređite i omogućite svako proširenje jedno po jedno. Proširenje koje vrati reklamu\/reklame je ono koje morate da obrišete da bi se oslobodili reklama.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -909,10 +901,6 @@
     "message":"Stefan Bajić",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Početna stranica projekta",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "report_ad_on_page":{
     "message":"Prijavi reklamu na ovoj stranici",
     "description":"Entry in the AdBlock button menu"
@@ -924,14 +912,6 @@
   "work_around_hulu_problems":{
     "message":"Zaobiđite videe sa Hulu.com koji ne rade (zahteva restartovanje pretraživača)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Kako koristiti AdBlock;",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock automatski uklanja reklame. To je sve o njemu.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Sajt:",
@@ -981,70 +961,6 @@
     "message":"Prilagođenja:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Možete ponovo omogućiti dugme u podešavanjima ovog proširenja",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Prikaži reklame na domenu",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Domen gde AdBlock ne treba da blokira bilo šta",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Prikažite dugme panela sa alatkama",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Možete takođe da povećate vrednost \n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Za više opcija, možete da kliknete na dugme panela sa alatkama ili da otvorite podešavanja preko Proširenja (u meniju) &rArr; upravljanje Proširenjima &rArr; ikonica ključa &rArr; Podešavanja",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"To je to!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Možete da zatvorite ovaj tab i da započnete pretraživanje bez reklama. Zabavite se!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Ukoliko vam se mnogo sviđa ovaj priključak, molimo razmotrite donaciju preko stranice sa podešavanjima.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Svidja vam se ovaj priključak? Ukoliko je tako, molimo razmotrite donaciju na stranici sa podešavanjima!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Omogućeno u $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"U verzijama Opere pre Opere 12.10, neke reklame možda neće biti blokirane zato što razčlanjivanje svih pravila u tim verzijama nije moguće. Ovo će biti popravljeno kada se Opera ažurira do verzije 12.10. Od tog momenta, sve reklame će biti ispravno blokirane.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"U verzijama Opere pre Opere 12.10, neka podešavanja če biti nedostupna, jer nisu podržana u tim verzijama.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Poreklo filtera: \n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1058,18 +974,6 @@
   "firefox_explanation":{
     "message":"Svrha ovog pitanja je da se odredi ko bi trebao da primi vaš izveštaj. Ukoliko odgovorite na ovo pitanje pogrešno, izveštaj će biti poslat pogrešnim ljudima, pa može biti ignorisan.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Sigurne stranice",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Kliknite na Proširenja (u meniju)&rArr; upravljanje Proširenjima &rArr; nađite AdBlock i kliknite na ikonicu ključa blizu njega &rArr; kliknite Privatnost.<br\/>  Da li je opcija da omogući pristum sigurnim stranicama omogućena?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Ukoliko želite da koristite AdBlock na sigurnim stranama (strane sa ikonicom katanca u panelu sa alatkama), morate prvo da omogućite opciju prilaza sigurnim stranama.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Blokirane reklame:",

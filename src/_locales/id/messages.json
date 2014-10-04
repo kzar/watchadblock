@@ -441,14 +441,6 @@
     "message":"Klik pada menu Safari &rarr; Preferences &rarr; Extension.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Untuk Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Klik tombol menu di pojok kiri atas. Lalu pilih Extension->Manage Extension. Matikan semua ekstensi dengan mengklik tombol Disable mereka. Ingat, JANGAN mematikan AdBlock!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Sekarang iklannya sudah hilang, anda harus mencari tahu ekstensi mana yang jadi penyebab. Ulangi dan hidupkan ekstensinya satu per satu. Ekstensi yang membawa kembali iklannya adalah yang harus anda hapus untuk menghilangkan iklannya.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -897,10 +889,6 @@
     "message":"Ghie2lo",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Halaman awal Projek",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "report_ad_on_page":{
     "message":"Laporkan sebuah iklan pada halaman ini",
     "description":"Entry in the AdBlock button menu"
@@ -912,14 +900,6 @@
   "work_around_hulu_problems":{
     "message":"Membetulkan video Hulu.com yang tidak bisa dimainkan (harus muat ulang browser anda)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Bagaimana cara menggunakan AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock secara otomatis akan menghilangkan iklan. Semua ada disana untuk hal itu.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Situs:",
@@ -969,70 +949,6 @@
     "message":"Custom:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Anda dapat menyalakan kembali tombolnya pada Preferensi untuk ekstensi ini",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Tunjukan iklan pada sebuah alamat",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Alamat dimana AdBlock tidak boleh memblokir apapun",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Tunjukkan tombol toolbar",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Anda juga dapat menambah nilai dari\n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Untuk pengaturan lainnya, anda dapat mengklik tombol toolbar atau membuka preferensi melalui Extension (pada menu) &rArr; Manage Extensions &rArr; Ikon kunci &rArr; Preferences",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Itu saja!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Anda dapat menutup tab ini dan mulai menjelajah bebas iklan. Selamat bersenang-senang!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Jika anda benar-benar suka ekstensi ini, pertimbangkanlah menyumbang melalui halaman pengaturan.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Suka ekstensi ini? Jika benar, pertimbangkanlah untuk menyumbang di halaman pengaturan!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Dijalankan pada $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"Pada versi Opera sebelum Opera 12.10, beberapa iklan tidak terblokir dikarenakan ketidak mungkinan memilah aturan ada versi tersebut. Hal ini akan diperbaiki ketika Opera diperbaharui ke versi 12.10. Mulai dari saat itu, semua iklan akan terblokir dengan benar.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"Pada versi Opera sebelum Opera 12\/10, beberapa pengaturan tidak bisa dipakai, karena mereka tidak mendukung versi tersebut.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Filter asal:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1046,18 +962,6 @@
   "firefox_explanation":{
     "message":"Tujuan dari pertanyaan ini adalah untuk menentukan siapa yang harus menerima laporan anda. Jika anda menjawab pertanyaan dengan salah, laporannya akan terkirim kepada orang yang salah, jadi mungkin laporan anda akan diabaikan.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Halaman aman",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Klik Extensions (pada menu) &rArr; Manage Extensions &rArr; carilah AdBlock dan klik ikon kunci didekatnya &rArr; klik Privacy.<br\/>Apakah pilihan untuk mengijinkan akses ke halaman aman dihidupkan?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Jika anda ingin menggunakan AdBlock pada halaman aman (halaman dengan ikon kunci pada toolbar), anda harus menghidupkan pilihan tersebut dahulu untuk mengijinkan mengakses halaman aman.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Iklan yang terblokir:",

@@ -505,14 +505,6 @@
     "message":"Klikk på Safari-menyen &rarr; Innstillinger &rarr; Utvidelser.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"For Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Klikk på meny-knappen i det øverste venstre hjørnet. Gå så til Utvidelser->Administrer utvidelser. Deaktiver alle utvidelser ved å klikke på de respektive deaktiver-knappene. Husk, IKKE deaktiver AdBlock!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Nå som annonsene er borte, må du finne ut hvilken utvidelse som er årsaken. Gå gjennom og aktiver hver utvidelse, en etter en. Den utvidelsen som får annonsene til å komme tilbake, er den som må slettes for å bli kvitt annonsene.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -1021,10 +1013,6 @@
     "message":"Emil Broll, Martin Hoftun, Erling Stangnes",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Prosjektside",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "report_ad_on_page":{
     "message":"Rapporter en annonse på denne siden",
     "description":"Entry in the AdBlock button menu"
@@ -1040,14 +1028,6 @@
   "work_around_hulu_problems":{
     "message":"Rett en feil som gjør at video ikke spilles på Hulu.com (krever omstart av nettleseren)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Hvordan bruke AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":" AdBlock fjerner annonser automatisk. Det er alt.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Side:",
@@ -1097,70 +1077,6 @@
     "message":"Tilpasset:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Du kan reaktivere knappen under innstillingene for denne utvidelsen",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Vis annonser på et domene",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Domenet der AdBlock ikke skal blokkere noenting",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Vis knapp på verktøylinjen",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Du kan også øke verdien av\n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"For flere alternativer, kan du klikke på ikonet på verktøylinjen, eller åpne innstilingene via utvidelsesmenyen &rArr; Administrer utvidelser &rArr; skiftenøkkelen &rArr; Innstillinger",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Det var det!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Du kan nå lukke denne fanen, og begynne å surfe på nettet uten annonser. God fornøyelse!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Hvis du virkelig liker denne utvidelsen, ville jeg blitt veldig takknemlig for en donasjon via innstillinger-menyen.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Liker du denne utvidelsen? Hvis du gjør, kan du jo overveie å gi en donasjon via instillinger-menyen!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Aktivert i $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"I Opera-versjoner før Opera 12.10, det kan være at noen annonser ikke virker, da noen av skanningsreglene ikke virker i denne versjonen. Problemet er løst i Opera versjon 12.10, og fra da vil alle annonser bli korrekt blokkert.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"I Opera-versjoner før Opera 12.10, er noen alternativer deaktivert, fordi de ikke støttes av den versjonen.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Filteropprinnelse:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1174,18 +1090,6 @@
   "firefox_explanation":{
     "message":"Formålet med dette spørsmålet er å avgjøre hvem som skal motta rapporten. Hvis du svarer på dette spørsmålet feil, vil rapporten sendes til feil person, så det kan bli ignorert.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Sikre sider",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Klikk på Utvidelser (i menyen) &rArr; Administrer utvidelser &rArr; se etter AdBlock og klikk på skiftenøkkel-ikonet ved siden av &rArr; klikk personvern <br\/>Er alternativet for å tillate tilgang til sikre sider aktivert?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Hvis du vil bruke AdBlock på sikre sider (sider med en hengelås i verktøylinjen), må du først tillate tilgang til sikre sider.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Blokkerte annonser:",
@@ -1278,10 +1182,6 @@
         "example":"<a>here<\/a>"
       }
     }
-  },
-  "adblockcontributors":{
-    "message":"Vil du finne ut hvem som hjelper til med å lage AdBlock? Ta en titt på <a>Bidragsytere til AdBlock<\/a>!",
-    "description":"Text for link to contributors page"
   },
   "checkforupdates":{
     "message":"Ser etter oppdateringer (dette bør kun ta et par sekunder)...",

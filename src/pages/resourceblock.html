@@ -40,13 +40,9 @@
       }
       #choosedifferentresource {
         font-size: 14px;
-        display: block;
+        display: inline-block;
         cursor: pointer;
-        position: relative;
         margin: 0px auto;
-        max-width: 0px;
-        top: -70px;
-        right: 10px;
         text-decoration: none;
         color: #4D7BD6;
       }
@@ -155,10 +151,11 @@
         margin-left: 5px;
       }
       #selectresources {
+        display: inline-block;
         position: relative;
         margin: 0px auto;
         max-width: 990px;
-        padding: 120px 22px 20px 20px;
+        padding: 120px 10px 20px 18px;
         font-size: 20px;
       }
       #selectblockableurl {
@@ -167,7 +164,7 @@
         position: relative;
         margin: 0px auto;
         max-width: 915px;
-        padding: 0px 100px 40px 22px;
+        padding: 20px 100px 40px 22px;
       }
       #chooseoptions {
         position: relative;
@@ -199,8 +196,11 @@
       </div>
     </header>
 
-    <p id="selectresources" i18n="selectresources"></p>
-      <div id="legend" class="ui-widget-content"><b i18n="resourceblocklegend1"></b>
+    <div class="wrap">
+      <p id="selectresources" i18n="selectresources"></p>
+      <a href="#" id="choosedifferentresource" i18n="changelabel"></a>
+    </div>
+    <div id="legend" class="ui-widget-content"><b i18n="resourceblocklegend1"></b>
       <i style='color:red' i18n="resourceblocklegend2"></i>,
       <i style='color:green' i18n="resourceblocklegend3"></i> &amp;
       <i i18n="resourceblocklegend4"></i>;<a class="closelegend">x</a></br>
@@ -222,7 +222,6 @@
 
     <div style="background: #f8f8f8;">
     <form id="selectblockableurl" style="display:none;">
-     <a href="#" id="choosedifferentresource" i18n="changelabel"></a>
       <p id="status" i18n="blockeverycontaining" style="font-size: 20px;"></p>
       <div id="suggestions"></div>
       <input type='radio' name='urloption' id='custom' />

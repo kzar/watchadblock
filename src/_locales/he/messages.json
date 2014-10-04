@@ -475,14 +475,6 @@
     "message":"לחץ על תפריט הדפדפן &rarr; Preferences &rarr; הרחבות.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"עבור Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"לחץ על כפתור התפריט לאחר מכן לך להרחבות והשבת של את ההרחבות חוץ מ AdBlock",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"עכשיו שהפרסומות נעלמו, צריך לבדוק איזה הרחבה גורמת לבעיה.\nלך לעמוד ההרחבות והשבת את כל ההרחבות ובדוק מי ההרחבה הבעייתית ומחק אותה.\n",
     "description":"Tells the user to reenable the extensions one by one"
@@ -933,10 +925,6 @@
     "message":"BsT",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"עמוד הבית של הפרויקט (האתר שלנו)",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "report_ad_on_page":{
     "message":"דווח על פרסומת בעמוד זה",
     "description":"Entry in the AdBlock button menu"
@@ -948,14 +936,6 @@
   "work_around_hulu_problems":{
     "message":"עבודה בסביבת Hulu.com שהווידאו לא מתנגן (דורש הפעלה מחדש של הדפדפן)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"איך להשתמש ב AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock חוסם פרסומת אוטומטי. זה כל העניין.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"אתר:",
@@ -1005,85 +985,9 @@
     "message":"מותאם אישית:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"אתה יכול להפעיל מחדש את הכפתור בהעדפות של ההרחבה",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"הראה מודעות באתר:",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"האתר ש AdBlock לא אמור לחסום דבר",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"הראה את הכפתור toolbar",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"באפשרותך גם להגדיל את הערך של $setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"בשביל עוד הגדרות אתה יכול ללחוץ על הכפתור ב toolbar",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"זה הכל !",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"אתה יכול לסגור את הכרטיסה הזאת ולהתחיל לגלוש חופשי בלי פרסומות תהנה !",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"אם אתה אוהב את AdBlock אתה יכול לתרום לנו דרך עמוד האפשרויות",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"אם אתה אוהב את AdBlock אתה יכול לתרום לנו דרך עמוד האפשרויות",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"אפשר ב $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"בגרסות של דפדפן Opera לפני 12.10 חלק מפרסומות לא יחסמו זה בלתי אפשרי ממגבלות של הדפדפן. זה תוקן בכל הגרסאות אחרי 12.10.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"בגרסות של דפדפן Opera לפני 12.10 חלק מפרסומות לא יחסמו זה בלתי אפשרי ממגבלות של הדפדפן. זה תוקן בכל הגרסאות אחרי 12.10.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "firefox_explanation":{
     "message":"מטרה של השאלה הזאת היא לקבוע מי אמור לקבל את הדוח אם תענה על שאלה זאת לא נכונה האיש הלא נכון יקבל את הדוח",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"מקורות העמוד",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"לך לעמוד ההרחבות דרך התפריט חפש את AdBlock וסמן ב V \"אפשר במצב גלישה פרטית\"",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"אם אתה רוצה להשתמש ב AdBlock בעמודים מאובטחים אתה צריך קודם לאשר את האפשרות על ידי לחיצה על האיקון בסרגל הכתובות",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"פרסומות חסומות:",

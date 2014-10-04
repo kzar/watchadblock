@@ -16,6 +16,7 @@
     }
     STATS.msg(str);
     sessionStorage.setItem("errorOccurred", true);
+    storage_set("error", str);
     log(str);
   });
 

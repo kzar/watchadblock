@@ -509,14 +509,6 @@
     "message":"Safari menüsünü kullanarak; Tercihler &rarr; Uzantılar'a gidin.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Opera için",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Sol üst taraftaki menü butonuna basın. Daha sonra Eklentiler->Eklentileri Yönet menüsüne girin. Tüm eklentileri \"Devre dışı bırak\" butonlarını kullanarak kapatın. Unutmayın, AdBlock'u devre dışı BIRAKMAYIN!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Reklamlar kaybolduğuna göre, hangi eklentinin sorun çıkardığını bulmanız gerekir. Şimdi her seferinde bir eklentiyi aktif hale getirin. Reklamları geri getiren eklenti, silmeniz gereken eklentidir.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -1025,10 +1017,6 @@
     "message":"Necip Ateş",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Proje sayfası",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "tabsupport":{
     "message":"Destek",
     "description":"A tab on the options page"
@@ -1048,14 +1036,6 @@
   "work_around_hulu_problems":{
     "message":"Hulu.com videolarının oynatılmaması sorununu çöz (tarayıcınızı tekrar başlatmayı gerektirir)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"AdBlock nasıl kullanılır:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":"AdBlock otomatik olarak tüm reklamları engeller. Hepsi bu.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Site:",
@@ -1105,70 +1085,6 @@
     "message":"Özel:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Uzantının Tercihler menüsünü kullanarak bu butonu tekrar aktifleştirebilirsiniz.",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Bir alan adındaki reklamları göster",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"AdBlock'un hiç bir şeyi engellemesini istemediğiniz alan adı",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Araç çubuğu butonunu göster",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Ayrıca siz de şu seçenek için değeri artırabilirsiniz; $setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Daha fazla seçenek için, araç çubuğu butonuna tıklayabilir ya da Opera menüsü aracılığıyla, Eklentiler &rArr; Eklentileri Yönet &rArr; ayar simgesi &rArr; Tercihler menüsünü kullanabilirsiniz.",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"Hepsi bu kadar!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Bu sekmeyi kapatıp web sitelerini reklamsız gezmeye başlayabilirsiniz. İyi eğlenceler!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Eğer bu eklentiyi gerçekten seviyorsanız, seçenekler sayfasından bağış yapmayı düşününün.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Bu eklentiyi seviyor musunuz? Eğer öyleyse, lütfen seçenekler sayfasından bağış yapmayı düşünün!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Aktifleştirildiği sürüm; $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"Opera 12.10'dan önceki sürümlerde, AdBlock'un tüm kuralları doğru çalıştırılamadığından, tüm reklamlar engellenemeyebilir. Bu sorun , Opera, 12.10 güncellemesini yayınladığında düzelecektir. 12.10 sürümünden itibaren tüm reklamlar doğru şekilde engellenecektir.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"Opera 12.10'dan önceki sürümlerde, bazı seçenekler desteklenemediğinden, kullanılamaz durumda görünüyor.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Filtre kaynağı:\n$list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1182,18 +1098,6 @@
   "firefox_explanation":{
     "message":"Bu sorunun amacı bildiriminizi kimin alacağını belirlemek içindir. Eğer bu soruyu yanlış yanıtlarsanız, bildiriminiz yanlış insanlara ulaşıp, dikkate alınmayabilir.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Güvenli sayfalar",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Opera menüsü &rArr; Eklentiler &rArr; Eklentileri Yönet &rArr; AdBlock simgesinin yanındaki anahtar ikonu &rArr; ve Gizlilik seçeneğine tıklayın.<br\/> \"Güvenli sayfalarla etkileşime izin ver\" seçeneği işaretli mi?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"Eğer AdBlock'u güvenli sayfalarda (araç çubuğunda yeşil renkli kilit işareti olan sayfalar) kullanmak istiyorsanız, öncelikle güvenli sayfalara erişim seçeneğini aktif hale getirmelisiniz.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Engellenmiş Reklamlar:",
@@ -1291,18 +1195,6 @@
     "message":"AdBlock Destek",
     "description":"Title of the support tab"
   },
-  "support":{
-    "message":"Bir hata mı buldunuz? Bir sorunuz mu var? Ya da AdBlock için yeni bir fikriniz? <a>Destek sitemizi<\/a> ziyaret edin!",
-    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
-  },
-  "seethecode":{
-    "message":"AdBlock'un kaynak kodunu görmek ister misiniz? <a>Buradan<\/a> kontrol edin.",
-    "description":"Link to AdBlock's source code"
-  },
-  "adblockcontributors":{
-    "message":"AdBlock'un geliştirilmesine kimlerin katkı sağladığını öğrenmek ister misiniz? <a>Katkıda Bulunanlar<\/a> sayfamıza göz atın!",
-    "description":"Text for link to contributors page"
-  },
   "checkforupdates":{
     "message":"Güncelleştirmeler denetleniyor(sadece birkaç saniye sürer)...",
     "description":"Displayed when AdBlock is checking the newest available version"
@@ -1314,5 +1206,49 @@
   "checkinternetconnection":{
     "message":"Bir reklam bildirmek için internete bağlı olmanız gerekir.",
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+  },
+  "whatsnew":{
+    "message":"En son sürümde ne yenilikler var? <a style='cursor:pointer;'>Sürüm Notları<\/a>'nı inceleyin!",
+    "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"Yalnızca İngilizce",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Bir hata mı buldunuz?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"AdBlock güncellemeleri",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"AdBlock'un çalışmasını sağlayan şeyleri görmek ister misiniz?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Yeni bir fikriniz ya da bir sorunuz mu var?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Kaynak kodu <a>serbestçe kullanılabilir<\/a>!",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"AdBlock'un arkasında kimlerin olduğunu öğrenmeniz için bir <a>sayfamız<\/a> da var!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Ekibimiz sizden hata ayıklama bilgileri mi istedi? Onun için <a href='#' id='debug'>buraya<\/a> tıklayın!",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Neden bize bir <a href='#' id='report'>hata raporu<\/a> göndermiyorsunuz?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"<a>Destek sitemize<\/a> bildirin!",
+    "description":"Link to the support site on the Support tab of the options"
   }
 }

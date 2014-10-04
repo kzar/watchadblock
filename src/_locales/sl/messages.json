@@ -509,14 +509,6 @@
     "message":"Izberite Safari meni &rarr; Nastavitve &rarr; Razširitve.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"Za Opero",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"Odprite meni s klikom na gumb zgoraj desno. Nato pojdite v Orodja->Razširitve. Onemogočite vse razširitve (odznačite izbirne kvadratke pri vseh razširitvah), razen AdBlocku.",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"Zdaj ko oglasov ni več, morate najti razširitev, ki je povzročala te težave. Posebej preverite vsako razširitev, ki jo imate nameščeno. Razširitev, z aktivacijo katere se bodo ponovno prikazovali oglasi, je treba odstraniti, v kolikor se želite znebiti oglasov.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -1025,10 +1017,6 @@
     "message":"Gregory_K",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"Stran projekta",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "tabsupport":{
     "message":"Podpora",
     "description":"A tab on the options page"
@@ -1048,14 +1036,6 @@
   "work_around_hulu_problems":{
     "message":"Obidi težavo z nedelovanjem videov na Hulu.com (zahteva ponovni zagon brskalnika)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"Kako uporabljati AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":" AdBlock samodejno odstrani oglase. To je vse.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"Domena:",
@@ -1105,70 +1085,6 @@
     "message":"Po meri:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"Gumb lahko znova omogočite v nastavitvah te razširitve",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"Prikaži oglase na domeni",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"Domena, kjer AdBlock naj ne blokira ničesar",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"Pokaži gumb na orodni vrstici",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"Lahko tudi povečate vrednost\n$setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"Za več možnosti lahko izberete gumb na orodni vrstici ali pa odprete nastavitve preko: Opera &rArr; Razširitve &rArr; Upravljaj razširitve &rArr; Ikona ključa &rArr; Nastavitve",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"To je to!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"Ta zavihek lahko zaprete in začnete brskati brez nadležnih oglasov. Uživajte!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"Če vam je ta razširitev resnično všeč, prosimo razmislite o donaciji. Več o tem v možnostih razširitve.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"Ali vam je ta razširitev všeč? V kolikor je temu tako, prosimo razmislite o donaciji. Več o tem v možnostih razširitve.",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"Omogočeno v $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"V različicah brskalnika Opera pred verzijo 12.10 nekateri oglasi ne bodo blokirani zaradi tehničnih omejitev. Ta težava bo odpravljena z posodobitvijo Opere na različico 12.10. Od takrat naprej bodo vsi oglasi pravilno blokirani.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"V različicah brskalnika Opera pred verzijo 12.10 vse možnosti niso na voljo, saj niso podprte.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"Izvor filtra: $list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1182,18 +1098,6 @@
   "firefox_explanation":{
     "message":"Namen tega vprašanja je ugotoviti kdo naj prejme vaše poročilo. V kolikor na to vprašanje odgovorite nepravilno, bo bilo poročilo poslano napačni skupini in zaradi tega ne bo obravnavano.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"Varne strani",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"Izberite Razširitve (v meniju) &rArr; Upravljanje razširitev &rArr; najdite AdBlock in kliknite na ikono ključa, ki se nahaja zraven &rArr; izberite Zasebnost.<br\/>Ali je možnost, ki dovoljuje dostop do varnih strani, omogočena?",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"V kolikor želite uporabljati AdBlock na varnih straneh (strani z ikono ključavnice v orodni vrstici), morate razširitvi najprej omogočiti dostop v nastavitvah.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"Blokirani oglasi:",
@@ -1291,18 +1195,6 @@
     "message":"AdBlock podpora",
     "description":"Title of the support tab"
   },
-  "support":{
-    "message":"Ste našli hrošča? Imate vprašanje? Imate morda novo zamisel za AdBlock? Obiščite našo <a>stran s podporo<\/a>!",
-    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
-  },
-  "seethecode":{
-    "message":"Želite videti AdBlockovo izvorno kodo? Oglejte si jo <a>tukaj<\/a>.",
-    "description":"Link to AdBlock's source code"
-  },
-  "adblockcontributors":{
-    "message":"Ali želite izvedeti, kdo pomaga AdBlocku? Oglejte si našo <a>stran s sodelavci<\/a>!",
-    "description":"Text for link to contributors page"
-  },
   "checkforupdates":{
     "message":"Preverjanje posodobitev (moralo bi trajati le nekaj sekund)...",
     "description":"Displayed when AdBlock is checking the newest available version"
@@ -1314,5 +1206,49 @@
   "checkinternetconnection":{
     "message":"Za prijavo oglasa morate biti povezani na internet.",
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+  },
+  "whatsnew":{
+    "message":"Kaj je novega v zadnji izdaji? Oglejte si <a style='cursor:pointer;'>dnevnik sprememb<\/a>!",
+    "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"Na voljo le v angleščini",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Ste našli hrošča?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"Posodobitve AdBlocka",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"Ali želite videti, kako deluje AdBlock?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Imate vprašanje ali novo idejo?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Izvorna koda je <a>na voljo brezplačno<\/a>!",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"Imamo tudi <a>stran<\/a> kjer lahko najdete ljudi, ki so naredili AdBlock!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Ali naša ekipa potrebuje nekaj informacij za odpravljanje napak? Kliknite <a href='#' id='debug'>sem<\/a> za pridobitev le-teh.",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Zakaj nam ne pošljete <a href='#' id='report'>poročila o hrošču<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"Sporočite nam na naši <a>strani s podporo<\/a>!",
+    "description":"Link to the support site on the Support tab of the options"
   }
 }

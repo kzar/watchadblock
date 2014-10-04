@@ -92,10 +92,14 @@ var FilterNormalizer = {
       if (!Filter.isWhitelistFilter(filter) && hasWhitelistOptions)
         throw "$document and $elemhide may only be used on whitelist filters";
 
-      // Issue 7178
+      // We are ignoring Hulu whitelist filter, so user won't see ads in videos
+      // but just a message about using AdBlock - Issue 7178
+      // We are also ignoring Google whitelist filter to prevent whitelisting some ads
+      // e.g. on YouTube by Danish filter list - Issue #264
       if (!SAFARI && 
-          /^\@\@\|\|hulu\.com\/published\/\*\.(flv|mp4)$/.test(filter)) {
-        return null; // background.js implements this rule more specifically
+          (/^\@\@\|\|hulu\.com\/published\/\*\.(flv|mp4)$/.test(filter) ||
+         /^\@\@\googleads.g.doubleclick.net/.test(filter))) {
+        return null; // Hulu-only: background.js implements this rule more specifically
       }
     
       // In Safari, ignore rules with only Chrome-specific types (no-ops).

@@ -509,14 +509,6 @@
     "message":"انقر فوق القائمة Safari &rarr; تفضيلات &rarr; ملحقات.",
     "description":"Step 1 for disabling Safari extensions"
   },
-  "disableforopera":{
-    "message":"لي Opera",
-    "description":"Opera instructions"
-  },
-  "disableforoperainstructions":{
-    "message":"انقر فوق زر القائمة في أعلى في الزاوية اليسرى. ثم انتقل إلى ملحقات-> \"إدارة ملحقات\". تعطيل كافة ملحقات عن طريق النقر فوق الأزرار تعطيل كل منها لها. تذكر، لا تقم بتعطيل AdBlock!",
-    "description":"Shows user how to disable all their extensions in Opera"
-  },
   "reenableadsonebyone":{
     "message":"الآن أن الإعلانات قد ولت، يجب عليك معرفة أي تمديد هو السبب. من خلال الذهاب وتمكين كل ملحق واحداً تلو الآخر. الملحق الذي يعيد مستحق هو واحد التي يجب عليك حذف للتخلص من الإعلانات.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -1025,10 +1017,6 @@
     "message":"umar hoj",
     "example":"The translator's names go here. Example: Michael G, Drew R"
   },
-  "project_home":{
-    "message":"المشاريع الرئيسية",
-    "description":"Text of link to the AdBlock open source project homepage (not the install page)"
-  },
   "tabsupport":{
     "message":"الدعم",
     "description":"A tab on the options page"
@@ -1048,14 +1036,6 @@
   "work_around_hulu_problems":{
     "message":"عمل حول أشرطة الفيديو Hulu.com لا يعمل (يتطلب إعادة تشغيل المستعرض الخاص بك)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
-  },
-  "how_to_use_adblock":{
-    "message":"كيفية استخدام AdBlock:",
-    "description":"Install page section title"
-  },
-  "adblock_auto_removes_ads_thats_all":{
-    "message":" AdBlock تلقائياً بإزالة الإعلانات.  وهذا كل ما في الأمر.",
-    "description":"Install page: explaining how to use AdBlock"
   },
   "modifydomain":{
     "message":"الموقع:",
@@ -1105,70 +1085,6 @@
     "message":"مُخصّص:",
     "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
   },
-  "opera_reenable_button":{
-    "message":"يمكنك إعادة تمكين الزر في التفضيلات لهذا التمديد",
-    "description":"Opera browser button message when you click 'hide this button'"
-  },
-  "opera_linkunblock":{
-    "message":"وتظهر الإعلانات في مجال",
-    "description":"Opera version of the 'linkunblock' string"
-  },
-  "opera_excludedomainorurl":{
-    "message":"المجال حيث AdBlock لا ينبغي أن تمنع أي شيء",
-    "description":"Opera version of the 'excludedomainorurl' string"
-  },
-  "opera_show_toolbar_button":{
-    "message":"إظهار زر شريط الأدوات",
-    "description":"Opera option to show\/hide the button"
-  },
-  "opera_can_also_change_setting":{
-    "message":"يمكنك أيضا زيادة القيمة $setting$",
-    "description":"Message when the storage quota is reached, for advanced users in Opera",
-    "placeholders":{
-      "setting":{
-        "content":"$1",
-        "example":"opera:config#PersistentStorage|DomainQuotaForWidgetPreferences"
-      }
-    }
-  },
-  "opera_for_more_options":{
-    "message":"لمزيد من الخيارات، يمكنك انقر فوق زر شريط الأدوات أو فتح عبر ملحقات التفضيلات (في القائمة) &rArr; \"إدارة ملحقات\" &rArr; رمز وجع &rArr; تفضيلات",
-    "description":"Install page string telling where to find the preferences in Opera. &rArr; makes a right arrow (->)"
-  },
-  "thats_it":{
-    "message":"هذا كل شيء!",
-    "description":"Install page string"
-  },
-  "close_tab_begin_browsing":{
-    "message":"يمكنك إغلاق هذا التبويب وتبدأ التصفح خالية من الإعلانات. استمتع!",
-    "description":"Install page string"
-  },
-  "opera_donations_install":{
-    "message":"إذا كنت حقاً مثل هذا التمديد، يرجى النظر في التبرع عن طريق صفحة خيارات.",
-    "description":"Opera donate request in the install page"
-  },
-  "opera_donations_button":{
-    "message":"مثل هذا التمديد؟ إذا كان الأمر كذلك، يرجى النظر في التبرع في صفحة خيارات!",
-    "description":"Opera donate request in the button"
-  },
-  "opera_enabledin":{
-    "message":"تمكين في $browserversion$",
-    "description":"Hover text of items disabled in an older browser version",
-    "placeholders":{
-      "browserversion":{
-        "content":"$1",
-        "example":"Opera 12.10"
-      }
-    }
-  },
-  "opera_120_install":{
-    "message":"في إصدارات Opera قبل Opera 12.10، قد لا حظر بعض الإعلانات حيث أنه من غير الممكن لتحليل كافة القواعد في تلك الإصدارات. هذا سوف تكون ثابتة عند Opera  بتحديث النسخة 12.10. من تلك اللحظة، سيتم حظر جميع الإعلانات بشكل صحيح.",
-    "description":"Opera < 12.10 warning during installation"
-  },
-  "opera_120_options":{
-    "message":"في إصدارات Opera قبل Opera 12.10، بعض خيارات الرمادي خارج، نظراً لأنها لا يمكن أن تؤيد في هذه الإصدارات.",
-    "description":"Opera < 12.10 warning above options page"
-  },
   "filterorigin":{
     "message":"تصفية المنشأ: $list$",
     "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
@@ -1182,18 +1098,6 @@
   "firefox_explanation":{
     "message":"والغرض من هذا السؤال لتحديد الذين ينبغي أن تلقي التقرير الخاص بك. إذا كان يمكنك الإجابة على هذا السؤال بشكل غير صحيح، سيتم إرسال التقرير إلى الأشخاص الخطأ، حيث أنها قد تحصل على تجاهلها.",
     "description":"Explanation of the Check-in-Firefox step in the ad reporter"
-  },
-  "opera_secure_pages":{
-    "message":"تأمين الصفحات",
-    "description":"Title of an area in the ad report page in Opera. Only visible if the opener tab was a secure url (https)"
-  },
-  "opera_secure_pages_enabled":{
-    "message":"انقر فوق ملحقات (في القائمة) &rArr; \"إدارة ملحقات\" &rArr; ابحث عن AdBlock وانقر على أيقونة المفك بالقرب من &rArr; انقر فوق الخصوصية-<br\/>هو الخيار للسماح بالوصول تأمين الصفحات تمكين؟",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
-  },
-  "opera_allow_secure":{
-    "message":"إذا كنت ترغب في استخدام AdBlock في الصفحات الآمنة (الصفحات مع رمز قفل في شريط الأدوات)، عليك أولاً تمكين الخيار للسماح بالوصول تأمين الصفحات.",
-    "description":"Content of an area in the ad report page in Opera. &rArr; makes a right arrow."
   },
   "blocked_ads":{
     "message":"الإعلانات المحظورة:",
@@ -1291,18 +1195,6 @@
     "message":"دعم AdBlock",
     "description":"Title of the support tab"
   },
-  "support":{
-    "message":"عثرت على خطأ؟ حصلت على سؤال؟ حصلت على فكرة جديدة ل AdBlock؟ انتقل إلى <a>موقع الدعم الخاص بنا<\/a>!",
-    "description":"Instructions for help. Add '(in English only)' to your translation as we only offer support in English at this time."
-  },
-  "seethecode":{
-    "message":"تريد أن نرى التعليمات البرمجية ل AdBlock؟ التحقق من ذلك <a>هنا<\/a>.",
-    "description":"Link to AdBlock's source code"
-  },
-  "adblockcontributors":{
-    "message":"هل تريد معرفة ما الذي يساعد في جعل احسن AdBlock؟ إلقاء نظرة على موقعنا <a>صفحة المساهمين<\/a>!",
-    "description":"Text for link to contributors page"
-  },
   "checkforupdates":{
     "message":"التحقق من وجود تحديثات (ينبغي أن يستغرق بضع ثوان فقط)...",
     "description":"Displayed when AdBlock is checking the newest available version"
@@ -1317,6 +1209,6 @@
   },
   "whatsnew":{
     "message":"ما هو الجديد في الإصدار الأخير؟ راجع <a style='cursor:pointer;'> سجل التحديثات<\/a>!",
-    "description":"Text for link to changelog"
+    "description":"Link to display the changelog on the Support tab of the options"
   }
 }
