@@ -345,6 +345,10 @@
 		"message":"Mostra i collegamenti alle liste filtri:",
 		"description":"Option on second tab page"
 	},
+	"filterantisocial":{
+		"message":"Lista filtri Antisocial (rimuove i bottoni dei social media)",
+		"description":"Name of the filter list"
+	},
 	"filteradblock_custom":{
 		"message":"Filtri personalizzati di AdBlock (raccomandato)",
 		"description":"A filter list. Don't translate 'AdBlock'"
@@ -364,6 +368,30 @@
 	"filtereasyprivacy":{
 		"message":"EasyPrivacy (protezione della privacy)",
 		"description":"A filter list. Don't translate the name 'EasyPrivacy'."
+	},
+	"filtereasylist_plus_indonesian":{
+		"message":"Indonesiano",
+		"description":"A filter list."
+	},
+	"filtermalware":{
+		"message":"Protezione Malware",
+		"description":"A filter list."
+	},
+	"filterlatvian":{
+		"message":"Lettone",
+		"description":"A filter list."
+	},
+	"filternorwegian":{
+		"message":"Norvegese",
+		"description":"A filter list."
+	},
+	"filterswedish":{
+		"message":"Svedese",
+		"description":"A filter list."
+	},
+	"filterturkish":{
+		"message":"Turco",
+		"description":"A filter list."
 	},
 	"blacklistclickmessage":{
 		"message":"Clicca col tasto destro su una pubblicità per bloccarla -- oppure bloccala qui manualmente.",
@@ -940,7 +968,7 @@
 		"description":"Menu entry to pause AdBlock."
 	},
 	"undo_last_block":{
-		"message":"Elimina l'ultimo blocco",
+		"message":"Annulla i miei blocchi su questo dominio",
 		"description":"Menu entry to let the user cancel the result of running the blacklist wizard."
 	},
 	"dont_run_on_this_page":{
@@ -956,7 +984,7 @@
 		"description":"Toolbar button menu entry to hide the AdBlock button"
 	},
 	"spread_the_word":{
-		"message":"Per favore, aiutami a diffonderla!",
+		"message":"Aiuta a diffondere il messaggio!",
 		"description":"Text of a share link"
 	},
 	"did_you_know_this_is_my_full_time_job":{
@@ -988,10 +1016,6 @@
 	"help":{
 		"message":"Aiuto",
 		"description":"Text of link to a page with fixes to common problems and a list of known issues"
-	},
-	"faq":{
-		"message":"FAQ",
-		"description":"Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
 	},
 	"report_ad_on_page":{
 		"message":"Segnala una pubblicità su questa pagina",
@@ -1237,16 +1261,18 @@
 		"message":"-- Scegli una lingua --",
 		"description":"Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
 	},
-	"crowdfund_text":{
-		"message":"Venite a vedere la nostra incredibile campagna",
-		"description":"text for link to crowdfunding site"
-	},
-	"crowdfund_new":{
-		"message":"Novità",
-		"description":"text that says new; visual cue with New badge"
-	},
-	"crowdfund_intro":{
-		"message":"AdBlock sta acquistando pubblicità...per AdBlock!",
-		"description":"intro to crowdfund"
+	"confirm_undo_custom_filters":{
+		"message":"Sei sicuro di voler rimuovere i $count$ blocchi che hai creato su $host$?",
+		"description":"Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset",
+		"placeholders":{
+			"count":{
+				"content":"$1",
+				"example":"The number of custom blocks for a domain."
+			},
+			"host":{
+				"content":"$2",
+				"example":"code.google.ph, ph.msn.com, stackoverflow.com"
+			}
+		}
 	}
 }

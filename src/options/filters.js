@@ -214,7 +214,7 @@ FilterListUtil.getFilterListType = function(filter_list) {
   var filter_list_type;
   if (filter_list.id === "adblock_custom" || filter_list.id === "easylist") {
     filter_list_type = "adblock_filter_list";
-  } else if (filter_list.id === "easyprivacy") {
+  } else if (filter_list.id === "easyprivacy" || filter_list.id === "antisocial" || filter_list.id === "malware") {
     filter_list_type = "other_filter_list";
   } else if (filter_list.user_submitted) {
     filter_list_type = "custom_filter_list";
@@ -293,6 +293,33 @@ FilterListUtil.updateSubscriptionInfoAll = function() {
           text += translate("updateddaysago", [days]);
     } 
     infoLabel.text(text);
+  }
+};
+
+// Update checkbox for the filter list according to it's current state.
+// Inputs:
+//    filter_list:object - Filter list that owns the check box to be updated.
+//    id:String - Id of the filter list to be updated, also the name of the containing div in display.
+FilterListUtil.updateCheckbox = function(filter_list, id) {
+  var containing_div = $("div[name='" + id + "']");
+  var checkbox = $(containing_div).find("input");
+  // Check if subscribed and checkbox staus is equal, if not, update checkbox status according to subscribed status.
+  if(checkbox.is(":checked") !== filter_list.subscribed) {
+    checkbox.attr("checked", filter_list.subscribed ? "checked" : null);
+    // Force update current info label since status is already updated in the background.
+    $(".subscription_info", containing_div).text(filter_list.subscribed ? translate("fetchinglabel") : translate("unsubscribedlabel"));
+    // If the filter is of language list type, check if subscribed and checkbox visibility matches, if not, update visibility.
+    if(containing_div.parent().attr("id") === "language_list" && filter_list.subscribed !== containing_div.is(":visible")) {
+      containing_div.toggle(500);
+      var index = checkbox.attr("id").split("_")[3];
+      // After updating visibility, update Language Selectbox too.
+      if(filter_list.subscribed) {
+        $("#language_select").find("option")[parseInt(index) + 1].remove();
+      } else {
+        var newOption = OptionForFilterList(filter_list, index);
+        LanguageSelectUtil.insertOption(newOption.get(), index);
+      }
+    }
   }
 };
 
@@ -533,20 +560,28 @@ $(function() {
       for(var id in cached_subscriptions) {
         var entry = subs[id];
         var update_entry = cached_subscriptions[id];
-        if(entry && entry.subscribed) {
-          if(entry.last_update && entry.last_update_failed_at) {
-            if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
-              delete subs[id].last_update_failed_at;
-            } else {
-              delete subs[id].last_update;
+        if(entry) {
+          // Update checkbox according to the value of the subscribed field
+          FilterListUtil.updateCheckbox(entry, id);
+          // If entry is subscribed, update last_update_failed_at and last_update field
+          if(entry.subscribed) {
+            if(entry.last_update && entry.last_update_failed_at) {
+              // If update is more recent than failed update, remove last_update_failed_at field,
+              // otherwise, remove last_update field
+              if(parseInt(entry.last_update) > parseInt(entry.last_update_failed_at)) {
+                delete subs[id].last_update_failed_at;
+              } else {
+                delete subs[id].last_update;
+              }
+            } 
+            
+            // Update last_update_failed_at and last_update field for the entry in cached subscriptions
+            if(entry.last_update_failed_at) {
+              cached_subscriptions[id].last_update_failed_at = entry.last_update_failed_at;
+            } else if(entry.last_update) {
+              cached_subscriptions[id].last_update = entry.last_update;
             }
           } 
-          
-          if(entry.last_update_failed_at) {
-            cached_subscriptions[id].last_update_failed_at = entry.last_update_failed_at;
-          } else if(entry.last_update) {
-            cached_subscriptions[id].last_update = entry.last_update;
-          }
         }
       }
     });

@@ -147,6 +147,11 @@ PatternFilter._parseRule = function(text) {
 
   var result = {
     domainText: '',
+    // TODO: when working on this code again, consider making options a
+    // dictionary with boolean values instead of a bitset. This would 
+    // - make more sense, because these options are only checked individually
+    // - collapse the two bitwise checks in Filter.matches into a single
+    // boolean compare
     options: FilterOptions.NONE
   };
 

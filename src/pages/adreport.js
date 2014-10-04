@@ -170,7 +170,7 @@ $("#step_language_lang").change(function() {
     }
   }
   contact = required_lists[required_lists.length-1];
-	
+
   $("#step_firefox_DIV").css("display", "block");
 
   var hideChromeInChrome = (SAFARI?['','']:['<span style="display:none;">', '</span>']);

@@ -11,6 +11,7 @@
 }
 .ui-dialog span.ui-dialog-title {
   color: white !important;
+  display: block !important;
 }
 .ui-dialog .ui-dialog-titlebar {
   display: block !important;
@@ -39,6 +40,7 @@
 }
 .ui-dialog .ui-dialog-titlebar-close {
   background-image: none !important;
+  display: block !important;
 }
 .ui-dialog .ui-dialog-content div {
   display: block;
@@ -63,6 +65,9 @@
   background-position: -96px -128px !important;
   height: auto !important;
   width: auto !important;
+}
+.ui-dialog .ui-dialog-buttonset {
+    display: block !important;
 }
 
 
@@ -115,4 +120,5 @@
   background-color: transparent !important;
   position: absolute;
   z-index: 1000000;
+  display: block;
 }

@@ -10,26 +10,42 @@ var HOUR_IN_MS = 1000 * 60 * 60;
 function MyFilters() {
   this._subscriptions = storage_get('filter_lists');
   this._official_options = this._make_subscription_options();
-  
+}
+
+// Update _subscriptions and _official_options in case there are changes.
+// Should be invoked right after creating a MyFilters object.
+MyFilters.prototype.init = function() {
   var newUser = !this._subscriptions;
-  if (newUser) {
-    // Brand new user. Install some filters for them.
-    this._subscriptions = this._load_default_subscriptions();
-  }
+  this._updateDefaultSubscriptions();
+  this._updateFieldsFromOriginalOptions();
+  
+  // Build the filter list
+  this._onSubscriptionChange(true); 
+  
+  // On startup and then every hour, check if a list is out of date and has to
+  // be updated
+  var that = this;
+  if (newUser)
+    this.checkFilterUpdates();
+  else
+    idleHandler.scheduleItemOnce(
+      function() { 
+        that.checkFilterUpdates();
+      },
+      60
+    );
 
-  for (var id in this._subscriptions) {
-    // Delete unsubscribed ex-official lists.
-    if (!this._official_options[id] && !this._subscriptions[id].user_submitted
-        && !this._subscriptions[id].subscribed) {
-      delete this._subscriptions[id];
-    }
-    // Convert subscribed ex-official lists into user-submitted lists.
-    // Convert subscribed ex-user-submitted lists into official lists.
-    else {
-      this._subscriptions[id].user_submitted = !this._official_options[id];
-    }
-  }
-
+  window.setInterval(
+    function() { 
+      idleHandler.scheduleItemOnce(function() {
+        that.checkFilterUpdates();
+      });
+    }, 
+    60 * 60 * 1000
+  );
+}
+// Update the url and requiresList for entries in _subscriptions using values from _official_options.
+MyFilters.prototype._updateFieldsFromOriginalOptions = function() {
   // Use the stored properties, and only add any new properties and/or lists
   // if they didn't exist in this._subscriptions
   for (var id in this._official_options) {
@@ -56,33 +72,67 @@ function MyFilters() {
     sub.requiresList = official.requiresList;
     sub.subscribed = sub.subscribed || false;
   }
-
-  // Build the filter list
-  this._onSubscriptionChange(true);
-
-  // On startup and then every hour, check if a list is out of date and has to
-  // be updated
-  var that = this;
-  if (newUser) 
-    this.checkFilterUpdates();
-  else
-    idleHandler.scheduleItemOnce(
-      function() { 
-        that.checkFilterUpdates();
-      },
-      60
-    );
-
-  window.setInterval(
-    function() { 
-      idleHandler.scheduleItemOnce(function() {
-        that.checkFilterUpdates();
-      });
-    }, 
-    60 * 60 * 1000
-  );
 }
+// Update default subscriptions in the browser storage.
+// Removes subscriptions that are no longer in the official list, not user submitted and no longer subscribed.
+// Also, converts user submitted subscriptions to recognized one if it is already added to the official list
+// and vice-versa.
+MyFilters.prototype._updateDefaultSubscriptions = function() {
+  if (!this._subscriptions) {
+    // Brand new user. Install some filters for them.
+    this._subscriptions = this._load_default_subscriptions();
+    return;
+  }
 
+  for (var id in this._subscriptions) {
+    // Delete unsubscribed ex-official lists.
+    if (!this._official_options[id] && !this._subscriptions[id].user_submitted
+        && !this._subscriptions[id].subscribed) {
+      delete this._subscriptions[id];
+    }
+    // Convert subscribed ex-official lists into user-submitted lists.
+    // Convert subscribed ex-user-submitted lists into official lists.
+    else {
+      // Cache subscription that needs to be checked.
+      var sub_to_check = this._subscriptions[id];
+      var is_user_submitted = true;
+      var update_id = id;
+      if(!this._official_options[id]) {
+        // If id is not in official options, check if there's a matching url in the
+        // official list. If there is, then the subscription is not user submitted.
+        for(var official_id in this._official_options) {
+          var official_url = this._official_options[official_id].url;
+          if(sub_to_check.initialUrl === official_url
+            || sub_to_check.url === official_url) {
+            is_user_submitted = false;
+            update_id = official_id;
+            break;
+          }
+        }
+      } else {
+        is_user_submitted = false;
+      }
+      
+      sub_to_check.user_submitted = is_user_submitted;
+      
+      // Function that will add a new entry with updated id,
+      // and will remove old entry with outdated id.
+      var that = this;
+      var renameSubscription = function(old_id, new_id) {
+        that._subscriptions[new_id] = that._subscriptions[old_id];
+        delete that._subscriptions[old_id];
+      };
+      
+      // Create new id and check if new id is the same as id.
+      // If not, update entry in subscriptions.
+      var new_id = is_user_submitted ? ("url:" + sub_to_check.url) : update_id;
+      
+      if(new_id !== id) {
+        renameSubscription(id, new_id);
+      }        
+    }
+  }
+};
 // When a subscription property changes, this function stores it
 // Inputs: rebuild? boolean, true if the filterset should be rebuilt
 MyFilters.prototype._onSubscriptionChange = function(rebuild) {
@@ -211,6 +261,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
       listDidntExistBefore = true;
       this._subscriptions[id] = {
         user_submitted: true,
+        initialUrl: id.substr(4),
         url: id.substr(4)
       };
     }
@@ -421,10 +472,9 @@ MyFilters.prototype.customToDefaultId = function(id) {
 // Returns an object containing the subscribed lists
 MyFilters.prototype._load_default_subscriptions = function() {
   var result = {};
-
   // Returns the ID of the list appropriate for the user's locale, or ''
   function listIdForThisLocale() {
-    var language = navigator.language.match(/^([a-z]+).*/i)[1];
+    var language = determineUserLanguage();
     switch(language) {
       case 'bg': return 'easylist_plus_bulgarian';
       case 'cs': return 'czech';
@@ -438,27 +488,29 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'he': return 'israeli';
       case 'hu': return 'hungarian';
       case 'it': return 'italian';
+      case 'id': return 'easylist_plus_indonesian';
       case 'ja': return 'japanese';
       case 'ko': return 'easylist_plun_korean';
+      case 'lv': return 'latvian';
       case 'nl': return 'dutch';
+      case 'no': return 'norwegian';
       case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
       case 'sk': return 'czech';
+      case 'sv': return 'swedish';
+      case 'tr': return 'turkish';
       case 'uk': return 'russian';
       case 'zh': return 'chinese';
       default: return '';
     }
   }
-
   //Update will be done immediately after this function returns
   result["adblock_custom"] = { subscribed: true };
   result["easylist"] = { subscribed: true };
-  
   var list_for_lang = listIdForThisLocale();
   if (list_for_lang)
     result[list_for_lang] = { subscribed: true };
-
   return result;
 }
 
@@ -479,7 +531,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "dutch": { // Additional Dutch filters
-      url: "https://dutchadblockfilters.googlecode.com/svn/trunk/AdBlock_Dutch_hide.txt",
+      url: "https://easylist-downloads.adblockplus.org/easylistdutch.txt",
       requiresList: "easylist",
     },
     "easylist_plus_finnish": { // Additional Finnish filters
@@ -495,7 +547,11 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_greek": { // Additional Greek filters
-      url: "http://www.void.gr/kargig/void-gr-filters.txt",
+      url: "https://raw.github.com/kargig/greek-adblockplus-filter/master/void-gr-filters.txt",
+      requiresList: "easylist",
+    },
+    "easylist_plus_indonesian": { // Additional Indonesian filters
+      url: "https://indonesianadblockrules.googlecode.com/hg/subscriptions/abpindo.txt",
       requiresList: "easylist",
     },
     "easylist_plus_polish": { // Additional Polish filters
@@ -515,7 +571,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "czech": { // Additional Czech and Slovak filters
-      url: "https://adblock-czechoslovaklist.googlecode.com/svn/filters.txt",
+      url: "https://raw.github.com/tomasko126/easylistczechandslovak/master/filters.txt",
       requiresList: "easylist",
     },
     "danish": { // Danish filters
@@ -525,7 +581,7 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "http://pete.teamlupus.hu/hufilter.txt",
     },
     "israeli": { // Israeli filters
-      url: "https://secure.fanboy.co.nz/israelilist/IsraelList.txt",
+      url: "https://raw.github.com/AdBlockPlusIsrael/EasyListIsrael/master/IsraelList.txt",
     },
     "italian": { // Italian filters
       url: "http://mozilla.gfsolone.com/filtri.txt",
@@ -536,11 +592,30 @@ MyFilters.prototype._make_subscription_options = function() {
     "easylist_plun_korean": {  // Korean filters
       url: "https://secure.fanboy.co.nz/fanboy-korean.txt",
     },
+    "latvian": {  // Latvian filters
+      url: "https://gitorious.org/adblock-latvian/adblock-latvian/blobs/raw/master/lists/latvian-list.txt",
+    },
+    "norwegian": {  // Additional Norwegian filters
+      url: "http://home.fredfiber.no/langsholt/adblock.txt",
+      requiresList: "easylist",
+    },
     "easylist_plus_spanish": {  // Spanish filters
       url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
     },
+    "swedish": {  // Swedish filters
+      url: "http://fanboy.co.nz/fanboy-swedish.txt",
+    },
+    "turkish": {  // Turkish filters
+      url: "http://fanboy.co.nz/fanboy-turkish.txt",
+    },
     "easyprivacy": { // EasyPrivacy
       url: "https://easylist-downloads.adblockplus.org/easyprivacy.txt",
+    },
+    "antisocial": { // Antisocial
+      url: "https://adversity.googlecode.com/hg/Antisocial.txt",
+    },
+    "malware": { // Malware protection
+      url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt",
     },
   };
 }

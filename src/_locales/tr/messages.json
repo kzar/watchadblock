@@ -345,6 +345,10 @@
 		"message":"Filtre listeleri için linkleri göster:",
 		"description":"Option on second tab page"
 	},
+	"filterantisocial":{
+		"message":"Antisosyal filtre listesi (sosyal medya düğmelerini kaldırır)",
+		"description":"Name of the filter list"
+	},
 	"filteradblock_custom":{
 		"message":"AdBlock özel filtreleri (tavsiye edilir)",
 		"description":"A filter list. Don't translate 'AdBlock'"
@@ -364,6 +368,30 @@
 	"filtereasyprivacy":{
 		"message":"EasyPrivacy (gizlilik koruması)",
 		"description":"A filter list. Don't translate the name 'EasyPrivacy'."
+	},
+	"filtereasylist_plus_indonesian":{
+		"message":"Endonezce",
+		"description":"A filter list."
+	},
+	"filtermalware":{
+		"message":"Zararlı yazılımlara karşı koruma",
+		"description":"A filter list."
+	},
+	"filterlatvian":{
+		"message":"Letonca",
+		"description":"A filter list."
+	},
+	"filternorwegian":{
+		"message":"Norveççe",
+		"description":"A filter list."
+	},
+	"filterswedish":{
+		"message":"İsveççe",
+		"description":"A filter list."
+	},
+	"filterturkish":{
+		"message":"Türkçe",
+		"description":"A filter list."
 	},
 	"blacklistclickmessage":{
 		"message":"Reklamı engellemek için sağ tıklayın -- ya da buradan manuel olarak engelleyin.",
@@ -940,7 +968,7 @@
 		"description":"Menu entry to pause AdBlock."
 	},
 	"undo_last_block":{
-		"message":"Son değişiklikleri geri al",
+		"message":"Bu alan adında yaptığım engellemeleri geri al",
 		"description":"Menu entry to let the user cancel the result of running the blacklist wizard."
 	},
 	"dont_run_on_this_page":{
@@ -988,10 +1016,6 @@
 	"help":{
 		"message":"Yardım",
 		"description":"Text of link to a page with fixes to common problems and a list of known issues"
-	},
-	"faq":{
-		"message":"SSS",
-		"description":"Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
 	},
 	"report_ad_on_page":{
 		"message":"Bu sayfada bir reklam bildir",
@@ -1237,16 +1261,18 @@
 		"message":"-- Dilinizi Seçin --",
 		"description":"Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
 	},
-	"crowdfund_text":{
-		"message":"Gelin ve çılgın kampanyamızı görün",
-		"description":"text for link to crowdfunding site"
-	},
-	"crowdfund_new":{
-		"message":"Yeni",
-		"description":"text that says new; visual cue with New badge"
-	},
-	"crowdfund_intro":{
-		"message":"AdBlock reklam satın alıyor ... Adblock için!",
-		"description":"intro to crowdfund"
+	"confirm_undo_custom_filters":{
+		"message":"$host$ alan adında yaptığınız $count$ engellemeyi kaldırmak istediğinize emin misiniz?",
+		"description":"Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset",
+		"placeholders":{
+			"count":{
+				"content":"$1",
+				"example":"The number of custom blocks for a domain."
+			},
+			"host":{
+				"content":"$2",
+				"example":"code.google.ph, ph.msn.com, stackoverflow.com"
+			}
+		}
 	}
 }

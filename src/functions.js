@@ -76,6 +76,17 @@ localizePage = function() {
     // clobber our work
     $(this).addClass("i18n-replaced");
   });
+
+  // Make a right-to-left translation for Arabic and Hebrew languages
+  var language = determineUserLanguage();
+  if (language === "ar" || language === "he" ) {
+    document.documentElement.dir = "rtl";
+  }
+};
+
+// Determine what language the user's browser is set to use
+determineUserLanguage = function() {
+  return navigator.language.match(/^[a-z]+/i)[0];
 };
 
 // Parse a URL. Based upon http://blog.stevenlevithan.com/archives/parseuri

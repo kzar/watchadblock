@@ -70,8 +70,14 @@ safari.application.addEventListener("command", function(event) {
     var url = "pages/adreport.html?url=" + escape(browserWindow.activeTab.url);
     openTab(url, true, browserWindow);
   } else if (command === "undo-last-block") {
-    remove_last_custom_filter();
     var tab = browserWindow.activeTab;
+    var host = parseUri(tab.url).host;
+    var count = count_cache.getCustomFilterCount(host);
+    
+    var confirmation_text   = translate("confirm_undo_custom_filters", [count, host]);
+    if(!confirm(confirmation_text)) { return; }
+      
+    remove_custom_filter_for_host(host);
     if (!page_is_unblockable(tab.url))
       tab.url = tab.url;
   } else if (command in {"show-whitelist-wizard": 1, "show-blacklist-wizard": 1, "show-clickwatcher-ui": 1 }) {

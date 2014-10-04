@@ -15,9 +15,9 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <style>
       html {
-      	background-color: #EAEAEA;
-      	font-family: 'Arial', sans-serif;
-      	color: #414141;
+        background-color: #EAEAEA;
+        font-family: 'Arial', sans-serif;
+        color: #414141;
       }
       .translation_box {
         border: 2px solid grey;

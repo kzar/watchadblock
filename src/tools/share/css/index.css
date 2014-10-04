@@ -29,20 +29,34 @@ body {
 .box1 {
   border: 2px solid #C80000;
   display: inline-block;
+  opacity:0.7;
+  -webkit-transition: opacity .5s ease;
+  -moz-transition: opacity .5s ease;
+}
+.box1:hover {
+  opacity:1.0;
 }
 .box2 {
   border: 2px solid blue;
+  opacity: 0.7;
+  -webkit-transition: opacity .5s ease;
+  -moz-transition: opacity .5s ease;
+}
+.box2:hover {
+  opacity: 1.0;
 }
 .box3 {
   border: 2px solid #3CF;
+  opacity: 0.7;
+  -webkit-transition: opacity .5s ease;
+  -moz-transition: opacity .5s ease;
+}
+.box3:hover {
+  opacity: 1.0;
 }
 .button {
   margin-top: -50px;
   margin-left: 100px;
-}
-.button2 {
-  margin-top: -41px;
-  margin-left: 270px;
 }
 #pay a {
   color: blue;
@@ -55,4 +69,12 @@ body {
 }
 .text {
   margin-bottom: 10px;
+}
+.followfb {
+  margin-left: 270px;
+  margin-top: -20px;
+}
+.followtwitter {
+  margin-top:  -20px;
+  margin-left:  170px;
 }

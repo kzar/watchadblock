@@ -345,6 +345,10 @@
 		"message":"Odkazy pre zobrazenie zoznamu filtrov:",
 		"description":"Option on second tab page"
 	},
+	"filterantisocial":{
+		"message":"Antisociálny zoznam filtrov (odstraňuje tlačidlá sociálnych sietí)",
+		"description":"Name of the filter list"
+	},
 	"filteradblock_custom":{
 		"message":"AdBlock filter (odporúčané)",
 		"description":"A filter list. Don't translate 'AdBlock'"
@@ -364,6 +368,30 @@
 	"filtereasyprivacy":{
 		"message":"EasyPrivacy (ochrana súkromia)",
 		"description":"A filter list. Don't translate the name 'EasyPrivacy'."
+	},
+	"filtereasylist_plus_indonesian":{
+		"message":"Indonézština",
+		"description":"A filter list."
+	},
+	"filtermalware":{
+		"message":"Ochrana pred malvérom",
+		"description":"A filter list."
+	},
+	"filterlatvian":{
+		"message":"Lotyština",
+		"description":"A filter list."
+	},
+	"filternorwegian":{
+		"message":"Nórčina",
+		"description":"A filter list."
+	},
+	"filterswedish":{
+		"message":"Švédčina",
+		"description":"A filter list."
+	},
+	"filterturkish":{
+		"message":"Turečtina",
+		"description":"A filter list."
 	},
 	"blacklistclickmessage":{
 		"message":"Kliknite pravým tlačidlom myši na reklamu pre jej zablokovanie -- alebo ju zablokujte ručne tu.",
@@ -940,7 +968,7 @@
 		"description":"Menu entry to pause AdBlock."
 	},
 	"undo_last_block":{
-		"message":"Vrátiť späť poslednú zablokovanú reklamu",
+		"message":"Vrátiť blokovanie na tejto doméne",
 		"description":"Menu entry to let the user cancel the result of running the blacklist wizard."
 	},
 	"dont_run_on_this_page":{
@@ -956,7 +984,7 @@
 		"description":"Toolbar button menu entry to hide the AdBlock button"
 	},
 	"spread_the_word":{
-		"message":"Zdieľaj ma!",
+		"message":"Zdieľajte nás!",
 		"description":"Text of a share link"
 	},
 	"did_you_know_this_is_my_full_time_job":{
@@ -988,10 +1016,6 @@
 	"help":{
 		"message":"Nápoveda a pomoc",
 		"description":"Text of link to a page with fixes to common problems and a list of known issues"
-	},
-	"faq":{
-		"message":"FAQ",
-		"description":"Text of link to a page with answers to frequently asked questions.  The capitalization should be the same as for the 'help' and 'project_home' messages"
 	},
 	"report_ad_on_page":{
 		"message":"Nahlásiť reklamu na tejto stránke",
@@ -1237,16 +1261,18 @@
 		"message":"-- Zvoľte jazyk --",
 		"description":"Text for the first option in Langage Dropdown for Filter Lists tab in options.  Include the ' -- ' on either side of your translation."
 	},
-	"crowdfund_text":{
-		"message":"Pozrite sa na našu kampaň",
-		"description":"text for link to crowdfunding site"
-	},
-	"crowdfund_new":{
-		"message":"Nové",
-		"description":"text that says new; visual cue with New badge"
-	},
-	"crowdfund_intro":{
-		"message":"AdBlock kupuje reklamy.....pre AdBlock!",
-		"description":"intro to crowdfund"
+	"confirm_undo_custom_filters":{
+		"message":"Naozaj chcete odstrániť $count$ blokovania\/í, ktoré ste vytvorili na $host$?",
+		"description":"Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset",
+		"placeholders":{
+			"count":{
+				"content":"$1",
+				"example":"The number of custom blocks for a domain."
+			},
+			"host":{
+				"content":"$2",
+				"example":"code.google.ph, ph.msn.com, stackoverflow.com"
+			}
+		}
 	}
 }
