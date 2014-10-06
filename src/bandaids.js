@@ -170,14 +170,19 @@ var before_ready_bandaids = function() {
     youtube_only: function() {
         // If history.pushState is available,
         // YouTube uses it when navigating from one video
-        // to another and tells the HTML5 player via JavaScript,
-        // which ads to show next bypassing ytplayer object rewrite code.
-        // Disabling history.pushState on pages with YouTube's HTML5 player
-        // will force YouTube to not use history.pushState
-        var elemScript = document.createElement("script");
-        elemScript.textContent = "History.prototype.pushState = undefined;";
-        document.documentElement.appendChild(elemScript);
-        document.documentElement.removeChild(elemScript);
+        // to another and tells the HTML5 player/Flash player via JavaScript,
+        // which ads to show next bypassing ytplayer object/flashvars rewrite code.
+        // Because we cannot disable history.pushState directly,
+        // we need to reload the page user is navigating to.
+
+        // Track actual URL
+        var url = document.location.href;
+        setInterval(function() {
+            if (url !== document.location.href) {
+                history.go(0);
+                url = document.location.href;
+            }
+        }, 0);
     }
   }; // end bandaids
 
