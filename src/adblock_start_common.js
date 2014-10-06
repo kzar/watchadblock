@@ -166,6 +166,9 @@ function adblock_begin(inputs) {
     
   if (document.location.href === 'about:blank') // Safari does this
     return;
+  if (document.location.href === 'topsites://') // Safari does this
+    return;
+    
   if (!(document.documentElement instanceof HTMLElement))
     return; // Only run on HTML pages
     

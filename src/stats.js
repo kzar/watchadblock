@@ -73,7 +73,6 @@ STATS = (function() {
       success: maybeSurvey, // TODO: Remove when we no longer do a/b tests
       error: function(e) {
         console.log("Ping returned error: ", e.status);
-        pingAfterInterval(86400000); // show
       }, 
     });
   };

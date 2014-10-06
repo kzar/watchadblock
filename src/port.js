@@ -32,7 +32,7 @@ SAFARI = (function() {
 })();
 
 // Safari 5.0 (533.x.x) with no menu support
-LEGACY_SAFARI = SAFARI && (navigator.appVersion.match(/\sSafari\/(\d+)\./) || [null,0])[1] < 534;
+LEGACY_SAFARI = SAFARI && (navigator.appVersion.match(/\sSafari\/(\d+)\./) || [null,0])[1] <= 534;
 
 if (SAFARI) {
 

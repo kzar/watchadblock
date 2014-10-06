@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
-<!-- Chrome-only popup.  Safari popup is created programmatically in safari_bg.js -->
 <html>
   <head>
     <link rel="stylesheet" href="popup.css"/>
     <link rel="stylesheet" href="search/search.css">
+    <script src="../port.js"></script>
     <script src="../jquery/jquery.min.js"></script>
     <script src="../functions.js"></script>
   </head>
-  <body>
+  <body style="overflow:hidden;">
     <div id="wrapper">
       <div id="menu-items">
         <div id="titletext">
@@ -85,16 +85,16 @@
           </div>
         </div>
 
-        <div id="div_status_whitelisted" class="menu-status">
-          <span style="font-style:italic;" i18n="disabled_on_this_page"></span>
+        <div id="div_status_whitelisted" class="menu-status-italic">
+          <span i18n="disabled_on_this_page"></span>
         </div>
 
 
-        <div i18n="status_disabled" id="div_status_disabled" class="menu-status" style="font-style:italic;">
+        <div i18n="status_disabled" id="div_status_disabled" class="menu-status-italic">
         </div>
 
-        <div id="div_status_paused" class="menu-status">
-          <span i18n="status_paused" style="font-style:italic;"></span>
+        <div id="div_status_paused" class="menu-status-italic">
+          <span i18n="status_paused"></span>
         </div>
 
         <!-- ************ Standard menu entries *********** -->
@@ -151,13 +151,13 @@
 
       </div> <!-- menu-items-->
 
-      <div id="div_slideout">
-        <div style="margin:5px 0px">
-          <a id="link_open" style="cursor:pointer;" i18n="spread_the_word"></a>
-        </div>
+      <div id="div_slideout" style="cursor: pointer;">
+        <div style="margin: 5px 0px;">
+          <a id="link_open" i18n="spread_the_word"></a>
         </div>
       </div>
     </div> <!-- wrapper -->
+
 
     <script src="popup.js"></script>
     <script src="search/search.js"></script>
