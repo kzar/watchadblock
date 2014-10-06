@@ -79,6 +79,8 @@ var run_bandaids = function() {
             if (!flashVars) {
                 // Remove ad container & ad progress, so user won't notice removal of ads
                 var adcontainer = document.querySelector(".video-ads");
+                if (!adcontainer)
+                    return;
                 adcontainer.parentNode.removeChild(adcontainer);
                 var adprogress = document.querySelector(".html5-ad-progress-list");
                 adprogress.parentNode.removeChild(adprogress);
