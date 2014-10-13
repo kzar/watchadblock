@@ -2,8 +2,87 @@ emit_page_broadcast = function(request) {
     safari.application.activeBrowserWindow.activeTab.page.dispatchMessage('page-broadcast', request);
 };
 
+//frameData object for Safari
+frameData = (function() {
+    return {
+        // Get frameData for the tab.
+        // Input:
+        //   tabId: Integer - id of the tab you want to get
+        get: function(tabId) {
+            return frameData[tabId] || {};
+        },
+
+        // Create a new frameData
+        // Input:
+        //   tabId: Integerc - id of the tab you want to add in the frameData
+        create: function(tabId, url, domain) {
+            return frameData._initializeMap(tabId, url, domain);
+        },
+        // Reset a frameData
+        // Inputs:
+        //   tabId: Integer - id of the tab you want to add in the frameData
+        //   url: new URL for the tab
+        reset: function(tabId, url) {
+            var domain = parseUri(url).hostname;
+            return frameData._initializeMap(tabId, url, domain);
+        },
+        // Initialize map
+        // Inputs:
+        //   tabId: Integer - id of the tab you want to add in the frameData
+        //   url: new URL for the tab
+        //   domain: domain of the request
+        _initializeMap: function(tabId, url, domain) {
+            var tracker = frameData[tabId];
+
+            var shouldTrack = !tracker || tracker.url !== url;
+            if (shouldTrack) {
+                frameData[tabId] = {
+                    resources: {},
+                    domain: domain,
+                    url: url,
+                };
+            }
+            return tracker;
+        },
+        // Store resource
+        // Inputs:
+        //   tabId: Numeric - id of the tab you want to delete in the frameData
+        //   url: url of the resource
+        storeResource: function(tabId, url, elType) {
+            if (!get_settings().show_advanced_options)
+                return;
+            var data = this.get(tabId);
+            if (data !== undefined)
+                data.resources[elType + ':|:' + url] = null;
+        },
+        // Delete tabId from frameData
+        // Input:
+        //   tabId: Numeric - id of the tab you want to delete in the frameData
+        close: function(tabId) {
+            delete frameData[tabId];
+        }
+    }
+})();
+
 // True blocking support.
 safari.application.addEventListener("message", function(messageEvent) {
+
+  if (messageEvent.name === "request" && 
+      messageEvent.message.data.args.length >= 2 &&
+      messageEvent.message.data.args[0] &&
+      messageEvent.message.data.args[1] &&
+      messageEvent.message.data.args[1].tab &&
+      messageEvent.message.data.args[1].tab.url) {
+        var args = messageEvent.message.data.args;
+        if (!messageEvent.target.url || 
+            messageEvent.target.url === args[1].tab.url) {
+            frameData.create(messageEvent.target.id, args[1].tab.url, args[0].domain);
+        } else if (messageEvent.target.url === frameData.get(messageEvent.target.id).url) {
+            frameData.reset(messageEvent.target.id, args[1].tab.url);
+        }
+        return;
+    }
+
     if (messageEvent.name != "canLoad")
         return;
 
@@ -21,6 +100,8 @@ safari.application.addEventListener("message", function(messageEvent) {
     var url = messageEvent.message.url;
     var elType = messageEvent.message.elType;
     var frameDomain = messageEvent.message.frameDomain;
+
+    frameData.storeResource(tab.id, url, elType);
 
     var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
     if (isMatched)
@@ -155,3 +236,24 @@ safari.application.addEventListener("contextmenu", function(event) {
     if (count_cache.getCustomFilterCount(host) && !LEGACY_SAFARI)
         event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
 }, false);
+
+// On close event fires when tab is about to close,
+// not when tab was closed. Therefore we need to remove
+// frameData[tabId] after "close" event has been fired.
+safari.application.addEventListener("close", function(event) {
+    setTimeout(function() {
+        if (safari.application.activeBrowserWindow) {
+            var opened_tabs = [];
+            var safari_tabs = safari.application.activeBrowserWindow.tabs;
+
+            for (var i=0; i < safari_tabs.length; i++)
+                opened_tabs.push(safari_tabs[i].id);
+
+            for (tab in frameData) {
+                if (typeof frameData[tab] === "object" && opened_tabs.indexOf(parseInt(tab)) === -1) {
+                    frameData.close(parseInt(tab));
+                }
+            }
+        }
+    }, 150);
+}, true);

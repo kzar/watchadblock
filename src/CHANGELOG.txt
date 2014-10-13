@@ -2,7 +2,13 @@
 
 UNRELEASED:
 
-2.10.3: Added a work around to a Chrome bug which incorrectly sets the element type (#339) - see http://crbug.com/410382 
+2.11: In the 'Report an Ad' feature, the extension will now perform a check for known malware 
+      domains in the list of resources.  If resources from a known malware site are found, the 
+      users is notified, and the a link with more information is provided.  If no malware 
+      resources are found, the page continues to work as before. (#315)
+
+2.10.3: Added a work around to a Chrome bug which incorrectly sets the element type (#339) - 
+          see http://crbug.com/410382 
         Added the column number to the information sent when a JavaScript exception is caught
 
 2.10.2: Fixed Javascript error on YouTube in Safari
@@ -17,10 +23,13 @@ UNRELEASED:
 2.9.4: Updated Translastions
 
 2.9.3: Fixed an issue with DropBox sync process (#325)
-       Fixed an memory leak issue in Chrome where prerenderred tab information  was not removed when the tab id was changed. (#324)
-       Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of being loaded in the menu (#318)
+       Fixed an memory leak issue in Chrome where prerenderred tab information was not removed 
+       when the tab id was changed. (#324)
+       Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of 
+       being loaded in the menu (#318)
        Fixed an issue in Safari with un-whitelisting a site (blacklisting it)(#317)
-       Improved the string processing of debug information when users report an issue or ad to the AdBlock support site (#307)
+       Improved the string processing of debug information when users report an issue or ad to 
+       the AdBlock support site (#307)
 
 2.9.2: Fixed a JavaScript error in DropBox sync logic
        Added the new option 'show survey' to the options that are sync'd using Dropbox
@@ -35,7 +44,8 @@ UNRELEASED:
 
 2.8.2: Reverted translation because the line length exceeded the 132 character limit
 
-2.8.1: Removed externally_connectable permission from manifest.json file to avoid additional permissions needed for Beta version.
+2.8.1: Removed externally_connectable permission from manifest.json file to avoid additional 
+       permissions needed for Beta version.
 
 2.8:   Added logic for Chrome beta users only; opening a /beta tab on updates.
 
@@ -54,7 +64,8 @@ UNRELEASED:
 2.7.10: Corrected issue with 2.7.9 and the Safari / YouTube fix
 
 2.7.9: updated logic to correctly block video ads with the HTML 5 player on Safari, on youtube.com (#276)
-       improved the detection of getadblock.com website to ensure any injected extension information only occurs on the correct web site. (#274)
+       improved the detection of getadblock.com website to ensure any injected extension 
+       information only occurs on the correct web site. (#274)
        include the total number of ads blocked in the weekly ping statistics (#274)
 
 

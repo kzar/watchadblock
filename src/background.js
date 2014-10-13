@@ -153,6 +153,24 @@
     }
   };
 
+  // Reload already opened tab
+  // Input:
+  //   tabId: integer - id of the tab which should be reloaded
+  reloadTab = function(tabId) {
+      if (!SAFARI) {
+          chrome.tabs.reload(tabId, {bypassCache: true}, function() {
+              chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+                  if (changeInfo.status === "complete" &&
+                      tab.status === "complete") {
+                      setTimeout(function() {
+                          chrome.extension.sendRequest({command: "reloadcomplete"});
+                      }, 2000);
+                  }
+              });
+          });
+      }
+  }
+
   // Chrome 38 has bug in WebRequest API, see onBeforeRequestHandler
   var invalidChromeRequestType = /Chrome\/38/.test(navigator.userAgent);
 
@@ -235,7 +253,7 @@
           return;
         var data = frameData.get(tabId, frameId);
         if (data !== undefined)
-          data.resources[elType + ':|:' + url] = null;
+            data.resources[elType + ':|:' + url] = null;
       },
 
       onTabClosedHandler: function(tabId) {
@@ -522,6 +540,10 @@
     if (!SAFARI && sync) {
         sync_setting(name, is_enabled);
     }
+  }
+
+  disable_setting = function(name) {
+      _settings.set(name, false);
   }
 
   // MYFILTERS PASSTHROUGHS

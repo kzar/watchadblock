@@ -44,6 +44,7 @@ $(function() {
         }
 
         var host = parseUri(info.tab.url).host;
+        var advanced_option = BG.get_settings().show_advanced_options;
         var eligible_for_undo = !paused && (info.disabled_site || !info.whitelisted);
         var url_to_check_for_undo = info.disabled_site ? undefined : host;
         if (eligible_for_undo && 
@@ -51,8 +52,11 @@ $(function() {
             !LEGACY_SAFARI)
             show(["div_undo", "separator0"]);
 
-        if (SAFARI || !BG.get_settings().show_advanced_options)
+        if (SAFARI || !advanced_option)
             hide(["div_show_resourcelist"]);
+        
+        if (SAFARI && !advanced_option)
+            hide(["div_report_an_ad", "separator1"]);
 
         var path = info.tab.url;
         if (host === "www.youtube.com" && /channel|user/.test(path) && eligible_for_undo && BG.get_settings().youtube_channel_whitelist) {
@@ -201,11 +205,17 @@ $(function() {
         });
     });
 
-    $("#div_whitelist_page").click(function() {
+    $("#div_whitelist").click(function() {
         BG.getCurrentTabInfo(function(info) {
-            BG.create_page_whitelist_filter(info.tab.url);
+            if (!SAFARI) {
+                BG.emit_page_broadcast(
+                    {fn:'top_open_whitelist_ui', options:{}},
+                    { tab: info.tab } // fake sender to determine target page
+                );
+            } else {
+                BG.dispatchMessage("show-whitelist-wizard");
+            }
             closeAndReloadPopup();
-            !SAFARI ? chrome.tabs.reload() : activeTab.url = activeTab.url;
         });
     });
 
@@ -231,7 +241,7 @@ $(function() {
 
     $("#div_report_an_ad").click(function() {
         BG.getCurrentTabInfo(function(info) {
-            var url = "pages/adreport.html?url=" + escape(info.tab.url);
+            var url = "pages/adreport.html?url=" + escape(info.tab.url) + "&tabId=" + info.tab.id;
             BG.openTab(url, true);
         });
     });

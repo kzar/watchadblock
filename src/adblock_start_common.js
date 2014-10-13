@@ -2,17 +2,17 @@
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
   switch (el.nodeName.toUpperCase()) {
-    case 'INPUT': 
+    case 'INPUT':
     case 'IMG': return ElementTypes.image;
     case 'SCRIPT': return ElementTypes.script;
-    case 'OBJECT': 
+    case 'OBJECT':
     case 'EMBED': return ElementTypes.object;
-    case 'VIDEO': 
-    case 'AUDIO': 
+    case 'VIDEO':
+    case 'AUDIO':
     case 'SOURCE': return ElementTypes.media;
-    case 'FRAME': 
+    case 'FRAME':
     case 'IFRAME': return ElementTypes.subdocument;
-    case 'LINK': 
+    case 'LINK':
       // favicons are reported as 'other' by onBeforeRequest.
       // if this is changed, we should update this too.
       if (/(^|\s)icon($|\s)/i.test(el.rel))
@@ -45,7 +45,7 @@ function relativeToAbsoluteUrl(url) {
 
   // Remove filename and add relative URL to it
   var base = document.baseURI.match(/.+\//);
-  if (!base) 
+  if (!base)
     return document.baseURI + "/" + url;
   return base[0] + url;
 }
@@ -163,23 +163,26 @@ function handleABPLinkClicks() {
 //               AdBlock should not be running.
 //   success?: function called at the end if AdBlock should run on the page.
 function adblock_begin(inputs) {
-    
+
   if (document.location.href === 'about:blank') // Safari does this
     return;
   if (document.location.href === 'topsites://') // Safari does this
     return;
-    
+  if (document.location.href === 'favorites://') // Safari does this
+    return;
+
+
   if (!(document.documentElement instanceof HTMLElement))
     return; // Only run on HTML pages
-    
+
   if (typeof before_ready_bandaids === "function") {
-        before_ready_bandaids("new"); 
-  } 
+        before_ready_bandaids("new");
+  }
 
   inputs.startPurger();
 
   var opts = { domain: document.location.hostname };
-  
+
   BGcall('get_content_script_data', opts, function(data) {
     if (data && data.settings && data.settings.debug_logging)
       logging(true);
@@ -200,10 +203,10 @@ function adblock_begin(inputs) {
       if (typeof run_bandaids === "function") {
         run_bandaids("new");
       }
-        
+
       handleABPLinkClicks();
     });
-    
+
     if (inputs.success) inputs.success();
   });
 }
