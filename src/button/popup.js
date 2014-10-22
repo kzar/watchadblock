@@ -49,7 +49,7 @@ $(function() {
         var url_to_check_for_undo = info.disabled_site ? undefined : host;
         if (eligible_for_undo && 
             BG.count_cache.getCustomFilterCount(url_to_check_for_undo) &&
-            !LEGACY_SAFARI)
+            !LEGACY_SAFARI_51)
             show(["div_undo", "separator0"]);
 
         if (SAFARI || !advanced_option)
@@ -123,7 +123,7 @@ $(function() {
         var out = BG.makeReport();
         var result = "http://support.getadblock.com/discussion/new" +
             "?category_id=problems&discussion[body]=" + out;
-        openTab(result);
+        BG.openTab(result);
     });
 
     $("#toggle_badge_checkbox").click(function(){

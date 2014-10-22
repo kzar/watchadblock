@@ -248,7 +248,8 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
       this._subscriptions[id] = {
         user_submitted: true,
         initialUrl: id.substr(4),
-        url: id.substr(4)
+        url: id.substr(4),
+        title: subData.title
       };
     }
     subscribeRequiredListToo = true;
@@ -306,7 +307,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
   this._onSubscriptionChange(subData.subscribed == false);
 
   // Subscribe to a required list if nessecary
-  if (subscribeRequiredListToo && this._subscriptions[id].requiresList)
+  if (subscribeRequiredListToo && this._subscriptions[id] && this._subscriptions[id].requiresList)
     this.changeSubscription(this._subscriptions[id].requiresList, {subscribed:true});
 }
 

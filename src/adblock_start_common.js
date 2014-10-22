@@ -146,9 +146,18 @@ function handleABPLinkClicks() {
       var loc = queryparts.location;
       var reqLoc = queryparts.requiresLocation;
       var reqList = (reqLoc ? "url:" + reqLoc : undefined);
-      BGcall("subscribe", {id: "url:" + loc, requires: reqList});
+      var title = queryparts.title;
+      BGcall("subscribe", {id: "url:" + loc, requires: reqList, title: title});
       // Open subscribe popup
-      BGcall("launch_subscribe_popup", loc);
+      if (SAFARI) {
+          // In Safari, window.open() cannot be used 
+          // to open a new window from our global HTML file
+          window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
+                      "_blank",
+                      'scrollbars=0,location=0,resizable=0,width=450,height=150');
+      } else {
+          BGcall("launch_subscribe_popup", loc);
+      }
     }
   };
   for (var i=0; i<elems.length; i++) {

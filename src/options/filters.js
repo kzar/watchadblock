@@ -28,12 +28,12 @@ function CheckboxForFilterList(filter_list, filter_list_type, index, container) 
       addClass("filter_list_control");
       
   this._label = $("<label></label>").
-      text(this._filter_list.label || this._filter_list.url).
+      text(this._filter_list.label || this._filter_list.title || this._filter_list.url).
       attr("title", this._filter_list.url).
       attr("for", this._id);
       
   this._link = $("<a></a>").
-      text(this._filter_list.label).
+      text(this._filter_list.label || this._filter_list.title).
       css("margin-left", "6px").
       css("font-size", "10px").
       css("display", $("#btnShowLinks").prop("disabled") ? "inline" : "none").
@@ -405,11 +405,11 @@ SubscriptionUtil.validateOverSubscription = function() {
 // Subscribe to the filter list with the given |id|.
 // Input:
 //   id:string - Id of the filter list to be subscribed to.
-SubscriptionUtil.subscribe = function(id) {
+SubscriptionUtil.subscribe = function(id, title) {
   if(!SubscriptionUtil.validateOverSubscription()) {
     return;
   }
-  var parameters = {id: id};
+  var parameters = {id: id, title: title};
   if (FilterListUtil.cached_subscriptions[id] && FilterListUtil.cached_subscriptions[id].requiresList) {
     parameters.requires = FilterListUtil.cached_subscriptions[id].requiresList;
   }
