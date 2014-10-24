@@ -179,8 +179,10 @@ var before_ready_bandaids = function() {
         var url = document.location.href;
         setInterval(function() {
             if (url !== document.location.href) {
-                history.go(0);
-                url = document.location.href;
+                setTimeout(function() {
+                    history.go(0);
+                    url = document.location.href;
+                }, 250);
             }
         }, 0);
     }
