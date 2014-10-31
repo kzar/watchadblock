@@ -445,6 +445,10 @@
     "message":"Manually edit your filters:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Edit disabled filters:",
+    "description":"Subtitle on the 'Customize' tab"
+  },  
   "filtersavewarning":{
     "message":"Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!<br\/>Read the <a>filter syntax tutorial<\/a> to learn how to add advanced blacklist and whitelist filters.",
     "description":"Warning when blacklisting manually"
@@ -477,6 +481,10 @@
     "message":"Reload the page with the ad.",
     "description":"Instruction on ad report page"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Reload the page.",
+    "description":"Checkbox on whitelist wizard"
+  },  
   "adstillappear":{
     "message":"Does the ad still appear?",
     "description":"Question on ad report page"
@@ -949,6 +957,14 @@
     "message":"We can't block ads inside Flash and other plugins yet. We are awaiting support from the browser and WebKit.",
     "description":"Result of the final ad report question"
   },
+  "wizardcantrunonframesets1":{
+    "message":"This AdBlock feature does not work on this site because it uses out of date technology.",
+    "description":"A message (alert) to the user."
+  },
+  "wizardcantrunonframesets2":{
+    "message":"  You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.",
+    "description":"part two of the message (alert) to the user."
+  },
   "malwarewarning":{
     "message":"Your computer may be infected by malware.  Click <a id='malwarelink'>here<\/a> for more information.",
     "description":"Text of the malware warning on the adreport page"
@@ -956,7 +972,7 @@
   "malwarenotfound":{
     "message":"No known malware found.",
     "description":"Text of the malware not found message on the adreport page"
-  },    
+  },
   "cleanuplist2":{
     "message":"Clean up this list",
     "description":"Option at the bottom of the 'Customize' options tab"

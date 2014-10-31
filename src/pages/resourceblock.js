@@ -275,7 +275,7 @@ function generateFilterSuggestions() {
     suggestions.push(label);
     suggestions.push("<br/>");
   }
-  
+
   $("#suggestions").empty();
   for (var i = 0; i < suggestions.length; i++)
     $("#suggestions").append(suggestions[i]);
@@ -292,9 +292,9 @@ function generateFilterSuggestions() {
     $("#status").text(translate("thisfilterwillbedisabled"));
   else
     $("#status").text(translate("whitelisteverycontaining"));
-  
-    $("label[for='disablefilter']").text(chosenResource.filter);
-  
+
+  $("label[for='disablefilter']").text(chosenResource.filter);
+
   var inputBox = $('<input>').
     attr("type", "text").
     attr("id", "customurl").
@@ -346,7 +346,7 @@ function createfilter() {
   var isHidden = ($(".selected").hasClass("hiding"));
   var filterwithoutdomain = '';
   var urlfilter = '';
-  
+
   if ($('#selectblockableurl #customurl').length) {
     urlfilter = (isBlocked ? '@@' : '') + $('#customurl').val();
   } else if ($('#selectblockableurl label[for="disablefilter"]').length) {
@@ -362,12 +362,12 @@ function createfilter() {
         urlfilter = filterwithoutdomain;
       }
     } else {
-      urlfilter = matchedfilter.replace('@@', '');
+      urlfilter = matchedfilter;
     }
   } else {
     urlfilter = $('#selectblockableurl input').val();
   }
-  
+
   if ((/^(\@\@)?\/.*\/$/).test(urlfilter))
     urlfilter += '*';
 
@@ -380,9 +380,9 @@ function createfilter() {
     if ($(this).val())
       options.push($(this).val());
   });
-  
+
   var option = '';
-  if (options.length && !($("#disablefilter").is(":disabled"))) { 
+  if (options.length && !($("#disablefilter").is(":disabled"))) {
     option = '$' + options.join(',');
   } else if (options.length && $("#disablefilter").is(":disabled")) {
     if (urlfilter.indexOf('$') !== -1 ) {
@@ -391,14 +391,13 @@ function createfilter() {
       option = '$' + options.join(',');
     }
     if (isHidden) {
-      var chosenfilter = chosenResource.filter;  
+      var chosenfilter = chosenResource.filter;
       urlfilter = chosenResource.domain + filterwithoutdomain;
       option = '';
     }
-  } else { 
+  } else {
     option = '';
   }
-  
   return urlfilter + option;
 }
 
@@ -439,7 +438,7 @@ function filterMatchesResource(filter, url, type, domain) {
 function finally_it_has_loaded_its_stuff() {
   // Create the table of resources
   generateTable();
-    
+
   // Add another background color when hovering
   $("#resourceslist tbody tr").mouseenter(function() {
     if ($(this).hasClass('selected'))
@@ -543,11 +542,11 @@ function finally_it_has_loaded_its_stuff() {
     chosenResource = resources[$(".selected td[data-column='url']").prop('title')];
     $(".selected td[data-column='thirdparty']").text(
                     chosenResource.isThirdParty ? translate('thirdparty') : '');
-    
+
     // Show the 'choose url' area
     $("#selectblockableurl").fadeIn();
     $("#resourceslist tbody tr td").css("background-color", "white");
-    
+
     var isBlocked = ($(".selected").hasClass("blocked"));
     var isHidden = ($(".selected").hasClass("hiding"));
     var isWhitelisted = ($(".selected").hasClass("whitelisted"));
@@ -563,7 +562,7 @@ function finally_it_has_loaded_its_stuff() {
     } else {
       $("#disable").css("display","none");
     }
-    
+
     generateFilterSuggestions();
     // If the user clicks the 'next' button
     $("#confirmUrl").click(function() {
@@ -661,13 +660,25 @@ function finally_it_has_loaded_its_stuff() {
         if (!isHidden && !filterMatchesResource(generated_filter, chosenResource.resource,
                                     chosenResource.type, chosenResource.domain))
           return;
-        BGcall('add_custom_filter', generated_filter, function(ex) {
-          if (!ex) {
-            alert(translate("filterhasbeenadded"));
-            window.close();
-          } else
-            alert(translate("blacklistereditinvalid1", ex));
-        });
+        if (!isHidden && !isBlocked && isWhitelisted) {
+            BGcall("add_exclude_filter", generated_filter, function(ex) {
+                if (!ex) {
+                    alert(translate("filterhasbeenadded"));
+                    window.close();
+                } else {
+                    alert(translate("blacklistereditinvalid1", ex));
+                }
+            });
+        } else {
+            BGcall('add_custom_filter', generated_filter, function(ex) {
+                if (!ex) {
+                    alert(translate("filterhasbeenadded"));
+                    window.close();
+                } else {
+                    alert(translate("blacklistereditinvalid1", ex));
+                }
+            });
+        }
       });
     });
   });

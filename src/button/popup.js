@@ -219,17 +219,11 @@ $(function() {
         });
     });
 
-    $("#div_whitelist").click(function() {
+    $("#div_whitelist_page").click(function() {
         BG.getCurrentTabInfo(function(info) {
-            if (!SAFARI) {
-                BG.emit_page_broadcast(
-                    {fn:'top_open_whitelist_ui', options:{}},
-                    { tab: info.tab } // fake sender to determine target page
-                );
-            } else {
-                BG.dispatchMessage("show-whitelist-wizard");
-            }
+            BG.create_page_whitelist_filter(info.tab.url);
             closeAndReloadPopup();
+            !SAFARI ? chrome.tabs.reload() : activeTab.url = activeTab.url;
         });
     });
 

@@ -434,6 +434,34 @@
         settingstable.set("custom_filters", localStorage.custom_filters);
   }
 
+  // Get the user enterred exclude filters text as a \n-separated text string.
+  get_exclude_filters_text = function() {
+    return storage_get('exclude_filters') || '';
+  }
+  // Set the exclude filters to the given \n-separated text string, and
+  // rebuild the filterset.
+  // Inputs: filters:string the new filters.
+  set_exclude_filters = function(filters) {
+    filters = filters.trim();
+    filters = filters.replace(/\n\n/g, '\n');
+    storage_set('exclude_filters', filters);
+    FilterNormalizer.setExcludeFilters(filters);
+    update_subscriptions_now();
+    if (!SAFARI && db_client.isAuthenticated())
+        settingstable.set("exclude_filters", localStorage.exclude_filters);
+  }
+  // Add / concatenate the exclude filter to the existing excluded filters, and
+  // rebuild the filterset.
+  // Inputs: filter:string the new filter.
+  add_exclude_filter = function(filter) {
+    var currentExcludedFilters = get_exclude_filters_text();
+    if (currentExcludedFilters) {
+        set_exclude_filters(currentExcludedFilters + "\n" + filter);
+    } else {
+        set_exclude_filters(filter);
+    }
+  }
+
   // Removes a custom filter entry.
   // Inputs: host:domain of the custom filters to be reset.
   remove_custom_filter = function(host) {
@@ -1160,6 +1188,11 @@
           info.push(adblock_custom_filters);
           info.push("");
       }
+      if (get_exclude_filters_text()) {
+          info.push("==== Exclude Filters ====");
+          info.push(get_exclude_filters_text());
+          info.push("");
+      }
       info.push("==== Settings ====");
       info.push(adblock_settings);
       info.push("==== Other info: ====");
@@ -1269,6 +1302,7 @@
                   show_survey: get_settings().show_survey
               });
 
+              //custom filters
               // Prevent deleting filters in some cases
               var sync = settingstable.get("custom_filters");
               var local = localStorage.custom_filters;
@@ -1285,6 +1319,25 @@
               if (filters && filters !== "" && filters !== undefined) {
                   filters = filters.replace(/\""/g, "");
                   settingstable.set("custom_filters", filters);
+              }
+
+              //exclude filters
+              // Prevent deleting filters in some cases
+              var eXsync = settingstable.get("exclude_filters");
+              var eXlocal = localStorage.exclude_filters;
+              var eXfilters;
+              if (eXsync === eXlocal) {
+                  eXfilters = "";
+              } else if (eXlocal === undefined && eXsync !== "") {
+                  eXfilters = eXsync;
+              } else if (eXsync !== "" && eXlocal) {
+                  eXfilters = eXlocal + "\n" + eXsync;
+              } else {
+                  eXfilters = eXlocal;
+              }
+              if (eXfilters && eXfilters !== "" && eXfilters !== undefined) {
+                  eXfilters = eXfilters.replace(/\""/g, "");
+                  settingstable.set("exclude_filters", eXfilters);
               }
 
               // Listener, which fires when table has been updated
@@ -1337,6 +1390,14 @@
                   var showsurvey = settingstable.get("show_survey");
                   set_setting("show_survey", showsurvey);
                   chrome.runtime.sendMessage({message: "update_checkbox"});
+
+                  // Set custom filters
+                  var exFilters = settingstable.get("exclude_filters");
+                  localStorage.exclude_filters = exFilters;
+                  //since the exclude filters may have been updated,
+                  //rebuild / update the entire filters
+                  FilterNormalizer.setExcludeFilters(get_exclude_filters_text());
+                  update_subscriptions_now();
               }
           });
       }

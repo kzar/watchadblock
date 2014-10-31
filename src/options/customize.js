@@ -6,6 +6,9 @@ chrome.extension.onRequest.addListener(function(request) {
   BGcall("get_custom_filters_text", function(text) {
     $("#txtFiltersAdvanced").val(text);
   });
+  BGcall("get_exclude_filters_text", function(text) {
+    $("#txtExcludeFiltersAdvanced").val(text);
+  });
 });
 
 $(function() {
@@ -177,6 +180,15 @@ $(function() {
     $("#txtFiltersAdvanced").focus();
   });
 
+  $("#btnEditExcludeAdvancedFilters").click(function() {
+    $("#divAddNewFilter").slideUp();
+    $(".addControls").slideUp();
+    $("#txtExcludeFiltersAdvanced").removeAttr("disabled");
+    $("#spanSaveExcludeButton").show();
+    $("#btnEditExcludeAdvancedFilters").hide();
+    $("#txtExcludeFiltersAdvanced").focus();
+  });
+
   // Update custom filter count in the background.
   // Inputs: custom_filters_text:string - string representation of the custom filters
   // delimited by new line.
@@ -211,8 +223,36 @@ $(function() {
 
   $("#btnSaveAdvancedFilters").click(saveFilters);
 
+  function saveExcludeFilters() {
+    var exclude_filters_text = $("#txtExcludeFiltersAdvanced").val();
+    BGcall("set_exclude_filters", exclude_filters_text, function(ex) {
+      $("#divAddNewFilter").slideDown();
+      $("#txtExcludeFiltersAdvanced").attr("disabled", "disabled");
+      $("#spanSaveExcludeButton").hide();
+      $("#btnEditExcludeAdvancedFilters").show();
+      BGcall("get_exclude_filters_text", function(text) {
+        $("#txtExcludeFiltersAdvanced").val(text);
+        if (text)
+            $("#divExcludeFilters").show();
+        });      
+    });
+
+  }
+  $("#btnSaveExcludeAdvancedFilters").click(saveExcludeFilters);
+
   BGcall("get_custom_filters_text", function(text) {
     $("#txtFiltersAdvanced").val(text);
+  });
+
+  BGcall("get_settings", function(settings) {
+    if (settings.show_advanced_options)
+        $("#divExcludeFilters").show();    
+  });
+
+  BGcall("get_exclude_filters_text", function(text) {
+    $("#txtExcludeFiltersAdvanced").val(text);
+    if (text)
+        $("#divExcludeFilters").show();
   });
 
   $("#btnCleanUp").click(function() {

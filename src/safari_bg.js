@@ -52,8 +52,10 @@ frameData = (function() {
             if (!get_settings().show_advanced_options)
                 return;
             var data = this.get(tabId);
-            if (data !== undefined)
+            if (data !== undefined &&
+                data.resources !== undefined) {
                 data.resources[elType + ':|:' + url] = null;
+            }
         },
         // Delete tabId from frameData
         // Input:

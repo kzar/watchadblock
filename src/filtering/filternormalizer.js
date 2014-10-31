@@ -2,6 +2,16 @@
 // invalid filters.
 var FilterNormalizer = {
 
+  userExcludedFilterArray: [],
+
+  setExcludeFilters: function(text) {
+    if (text) {
+        userExcludedFilterArray = text.split('\n');
+    } else {
+        userExcludedFilterArray = null;
+    }
+  },
+
   // Normalize a set of filters.
   // Remove broken filters, useless comments and unsupported things.
   // Input: text:string filter strings separated by '\n'
@@ -56,6 +66,12 @@ var FilterNormalizer = {
       filter = FilterNormalizer._old_style_hiding_to_new(filter);
       log('Converted ' + oldFilter + ' to ' + filter);
     }
+    if (typeof userExcludedFilterArray !== 'undefined' &&
+        userExcludedFilterArray &&
+        userExcludedFilterArray.length > 0 &&
+        userExcludedFilterArray.indexOf(filter) >= 0) {
+            return null;
+    }
 
     // If it is a hiding rule...
     if (Filter.isSelectorFilter(filter)) {
@@ -96,12 +112,12 @@ var FilterNormalizer = {
       // but just a message about using AdBlock - Issue 7178
       // We are also ignoring Google whitelist filter to prevent whitelisting some ads
       // e.g. on YouTube by Danish filter list - Issue #264
-      if (!SAFARI && 
+      if (!SAFARI &&
           (/^\@\@\|\|hulu\.com\/published\/\*\.(flv|mp4)$/.test(filter) ||
          /^\@\@\googleads.g.doubleclick.net/.test(filter))) {
         return null; // Hulu-only: background.js implements this rule more specifically
       }
-    
+
       // In Safari, ignore rules with only Chrome-specific types (no-ops).
       if (SAFARI && types === (types & ElementTypes.CHROMEONLY))
         return null;
@@ -202,3 +218,5 @@ var FilterNormalizer = {
     }
   }
 }
+//Initialize the exclude filters at startup
+FilterNormalizer.setExcludeFilters(storage_get('exclude_filters'));
