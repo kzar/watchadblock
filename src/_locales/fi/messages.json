@@ -179,6 +179,14 @@
     "message":"Poista käytöstä",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Lataa sivu uudelleen.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Tämä AdBlock-ominaisuus ei toimi tällä sivustolla, koska sitä käytetään vanhentuneella tekniikalla. Voit lisätä kohteita mustalle tai valkoisille listalle manuaalisesti \"Mukauta\"-välilehdessä.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Otetaan suodatinlistaa käyttöön...",
     "description":"abp: link subscriber title"
@@ -394,7 +402,7 @@
     "description":"A filter list"
   },
   "blacklistclickmessage":{
-    "message":"Napsauta mainosta hiiren oikealla näppäimellä sivulla -- tai estä se tässä manuaalisesti.",
+    "message":"Klikkaa hiiren oikealla painikkeella mainosta sivulla -- tai estä se tässä manuaalisesti.",
     "description":"Message at the top of the blacklist options tab"
   },
   "tabcustomizetitle":{
@@ -445,6 +453,10 @@
     "message":"Muokkaa suodattimia manuaalisesti:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Muokkaa suodattimia, jotka poistettu käytöstä:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Ole varovainen: jos teet virheen tässä, myös viralliset suodattimet voivat lakata toimimasta!<br\/>Lue <a>suodattimen syntaksiopas<\/a> saadaksesi lisätietoja suodattimien muokkauksesta.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Löysitkö siis mainoksen joltain verkkosivulta? Nyt löydät oikean paikan siitä ilmoittamiseen!<br\/> Muista: mainosten ilmoittaminen on vapaaehtoista. Jos et halua tehdä tätä, voit sulkea tämän ikkunan ja estää mainoksen vain omalla tietokoneellasi 'Mukauta' -välilehden avulla asetussivulla!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Haittaohjelmien tarkistaminen",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Tietokoneesi voi olla haittaohjelman saastuttama. Klikkaa <a>tästä<\/a> saadaksesi lisää tietoja.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Tunnettuja haittaohjelmia ei löytynyt.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Varmista, että suodatinlistasi ovat ajan tasalla",
@@ -493,14 +517,6 @@
     "message":"Sinun  ei tarvitse tehdä mitään, jos mainos on jo estettynä",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Oletko nähnyt saman mainoksen tai samanlaisia mainoksia monilla muilla sivuilla, esim. omalla kotisivullasi, työpaikkasi sivustolla jne.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Sama\/samanlaisia mainoksia jokaisella sivulla",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Poista kaikki laajennukset, paitsi AdBlock, käytöstä.",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Nyt kun mainokset ovat poissa, sinun täytyy löytää lisäosa, joka aiheuttaa ongelmia. Käy lisäosat yksi kerrallaan läpi ottaen niitä käyttöön. Lisäosa, joka tuo mainokset takaisin on ongelmia aiheuttava, ja sinun kannattaa poistaa se.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Tarkista tietokone haittaohjelmien varalta",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Suorita täysi tarkastus virustorjunta- tai haittaohjelmatorjuntaohjelman avulla. Jotkut haittaohjelmat pesiytyvät verkkosivustoille, ja näihin AdBlock ei voi vaikuttaa.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Korjaa suodattimia",
@@ -1038,7 +1046,7 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "work_around_hulu_problems":{
-    "message":"Korjaa ongelma, jssa Hulu.com-videot eivät toimi (vaatii selaimen uudelleenkäynnistyksen)",
+    "message":"Korjaa ongelma, jossa Hulu.com-videot eivät toimi (vaatii selaimen uudelleenkäynnistyksen)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
   },
   "modifydomain":{
@@ -1050,7 +1058,7 @@
     "description":"Caption for the whitelist wizard slider that modifies the path part of a URL"
   },
   "show_ads_except_for":{
-    "message":"Näytä mainokset <i>kaikkialla<\/i> paitsi näissä domaineissa...",
+    "message":"Näytä mainokset <i>kaikkialla<\/i> paitsi näissä verkkotunnuksissa...",
     "description":"Section title for blacklisting section of Customize tab"
   },
   "only_block_ads_on_these_sites":{

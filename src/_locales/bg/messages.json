@@ -179,6 +179,14 @@
     "message":"Изключи",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Презареди страницата",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Функцията на AdBlock няма да работи тук, защото сайтът ползва остаряла технология. Можете да забраните или да изключите ресурсите наръка от преградка „Нагласяване“ в страницата с настройки.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Абониране за филтри",
     "description":"abp: link subscriber title"
@@ -445,6 +453,10 @@
     "message":"Да редактирате филтрите наръка:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Да редактирате забранените филтри:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Внимание: ако допуснете грешка много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!<br\/>Прочетете <a>ръководството по синтаксис на филтрите<\/a> за разширено добавяне на позволяващи и изключващи филтри.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Току-що сте открили реклама в страница? Добре, ще ви съдействаме да намерите правилното място, за да я докладвате!<br\/> Запомнете: докладването на реклами е доброволно. Ако не желаете да го правите можете да затворите този прозорец и да я блокирате самостоятелно, като добавите филтър за нея към преградка „Нагласяване“ в страницата с настройки!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Проверка за злонамерен софтуер",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Компютърът може да e заразен със злонамерен софтуер. <a>Щракнете <\/a> за повече информация.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Няма намерен злонамерен софтуер.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Уверете се, че вашите филтри са обновени",
@@ -493,14 +517,6 @@
     "message":"Не предприемайте нищо, защото рекламата вече е блокирана",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Виждате ли същите или сходни реклами в различни ресурси, като начална страница, служебен сайт и т.н.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Същите или сходни реклами навсякъде",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Забранете всички разширения без AdBlock.",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Сега след като вече няма реклами, нека разберем кое е разширението, което ги предизвиква. За целта започнете да разрешавате разширенията едно по едно. Това, което ги върне е разширението, което трябва да изтриете, за да се отървете от тях.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Сканирайте компютъра за зловреден софтуер.",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Извършете пълно сканиране на компютъра с антивирусна програма или такава за  зловреден софтуер. Някои видове зловреден софтуер инжектират реклами в страниците, заобикаляйки по този начин и AdBlock.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Поправете филтрите",

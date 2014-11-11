@@ -29,7 +29,7 @@ function top_open_blacklist_ui(options) {
     //check if we're running on website with a frameset, if so, tell
     //the user we can't run on it.
     if ($("frameset").length >= 1) {
-        alert(translate('wizardcantrunonframesets1') + translate('wizardcantrunonframesets2'));
+        alert(translate('wizardcantrunonframesets'));
         may_open_dialog_ui = true;
         $(".adblock-ui-stylesheet").remove();
         return;

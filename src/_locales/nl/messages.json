@@ -179,6 +179,10 @@
     "message":"Uitsluiten",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Laad de pagina opnieuw.",
+    "description":"Checkbox on whitelist wizard"
+  },
   "subscribingtitle":{
     "message":"Aanmelden voor filters",
     "description":"abp: link subscriber title"
@@ -318,7 +322,7 @@
     "description":"Title of the filter list tab"
   },
   "filterlistlink":{
-    "message":"Meld je niet aan voor meer filters dan je nodig hebt. Elke filter zal je browser iets vertragen! Credits en andere filters kunnen <a>hier<\/a> gevonden worden.",
+    "message":"Meld je niet aan voor meer filters dan je nodig hebt. Elke filter zal je browser iets vertragen! Credits en andere filters kan je <a>hier<\/a> terugvinden.",
     "description":"Explanation of the filter lists"
   },
   "updatenowmessage2":{
@@ -346,7 +350,7 @@
     "description":"Name of the filter list"
   },
   "filterwarning_removal":{
-    "message":"AdBlock Waarschuwingen Verwijder lijst (verwijdert meldingen over het gebruik van AdBlock)",
+    "message":"AdBlock Waarschuwing Verwijderende lijst (verwijdert meldingen over het gebruik van AdBlock)",
     "description":"Name of the filter list"
   },
   "filteradblock_custom":{
@@ -402,7 +406,7 @@
     "description":"Title of the customize tab"
   },
   "filterlistsrock":{
-    "message":"De filters blokkeren het meeste al. Je kunt ook zelf aanpassingen maken:",
+    "message":"De filters blokkeren al de meeste advertenties op het web. Je kan ook:",
     "description":"Header text on the Customize tab. 'Filter lists' should be the same text as the name of the 'Filter lists' tab."
   },
   "blockmoreads":{
@@ -442,11 +446,11 @@
     "description":"Message of the url and css -blocking area"
   },
   "manualfilteredit":{
-    "message":"Bewerk je filters handmatig:",
+    "message":"Je filters handmatig bewerken:",
     "description":"Subtitle on the 'Customize' tab"
   },
   "filtersavewarning":{
-    "message":"Pas op: als je hier een fout maakt dan kunnen de andere filters, inclusief de officiële, onbruikbaar worden!<br\/>Lees de <a>filter syntaxis uitleg (Engelstalig)<\/a> voor meer informatie over het maken van filters.",
+    "message":"Pas op: als je hier een fout maakt kunnen de andere filters, inclusief de officiële, onbruikbaar worden!<br\/>Lees de <a>filter syntaxis uitleg (Engelstalig)<\/a> voor meer informatie over het maken van filters.",
     "description":"Warning when blacklisting manually"
   },
   "savebutton":{
@@ -464,6 +468,14 @@
   "adreport2":{
     "message":"Dus je hebt een advertentie gevonden op een webpagina? We zullen je helpen om de juiste plaats te vinden om het te rapporteren!<br\/> Dit is vrijwillig. Als je dit niet wilt, dan kun je de advertentie ook voor jezelf blokkeren in de opties van AdBlock.",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarewarning":{
+    "message":"Uw computer is mogelijk besmet door malware. Klik <a>hier<\/a> voor meer informatie.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Geen gekende malware gevonden.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Zorg ervoor dat je filters bijgewerkt zijn",
@@ -493,14 +505,6 @@
     "message":"Je hoeft niets te doen aangezien deze advertentie al geblokkeerd is",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Zie je dezelfde of vergelijkbare advertenties op verschillende pagina's, bv. op je homepagina, op de website van je werkplek, enz.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Dezelfde\/vergelijkbare advertenties op elke pagina",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Schakel alle extensies uit behalve AdBlock",
     "description":"Instruction on ad report page"
@@ -520,14 +524,6 @@
   "reenableadsonebyone":{
     "message":"Nu dat de advertenties weg zijn moet je uitzoeken welke extensie de oorzaak is. Activeer alle extensies 1 per 1. De extensie die de advertentie(s) terug laat verschijnen is degene die je moet verwijderen om van de advertentie af te geraken.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Scan je computer op malware",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Voer een volledige scan uit van je computer door gebruik te maken van anti-virussoftware\/anti-malwaresoftware. Sommige types malware kunnen advertenties invoegen in webpagina's en dus AdBlock hinderen.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Juiste filters",
@@ -1220,7 +1216,7 @@
     "description":"Lets the user know that a link\/page is available in English only"
   },
   "foundbug":{
-    "message":"Heb je een bug gevonden?",
+    "message":"Heb je een fout gevonden?",
     "description":"Subtitle on the Support tab of the options"
   },
   "adblockupdates":{
@@ -1236,7 +1232,7 @@
     "description":"Subtitle on the Support tab of the options"
   },
   "sourcecode":{
-    "message":"The broncode is <a>gratis beschikbaar<\/a>!",
+    "message":"De broncode is <a>gratis beschikbaar<\/a>!",
     "description":"Link to the source code of AdBlock on the Support tab of the options"
   },
   "contributors":{
@@ -1248,15 +1244,15 @@
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
   "bugreport":{
-    "message":"Waarom stuur je ons geen <a href='#' id='report'>bug rapport<\/a>?",
+    "message":"Waarom stuur je ons geen <a href='#' id='report'>foutenrapport<\/a>?",
     "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{
-    "message":"Laat het ons weten op onze <a>ondersteuning website<\/a>!",
+    "message":"Laat het ons weten op onze <a>ondersteuningswebsite<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
   },
   "ad_report_please":{
-    "message":"Als je een advertentie ziet, maak dan geen bug rapport, maar een <a>advertentie rapport<\/a>!",
+    "message":"Als je een advertentie ziet, maak dan geen foutenrapport, maar een <a>advertentierapport<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

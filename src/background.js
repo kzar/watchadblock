@@ -5,9 +5,12 @@
              (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
              ":" + (e.lineno||"anywhere") +
              ":" + (e.colno||"anycol");
-    if (chrome && chrome.runtime && (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
-        var stack = "-" + ((e.error && e.error.message)||"") +
-                    "-" + ((e.error && e.error.stack)||"");
+
+    if (chrome && chrome.runtime && 
+       (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
+        var stack = "-" + (e.error ||"") +
+                    "-" + (e.message ||"") +
+                    "-" + (e.stack ||"");
         stack = stack.replace(/:/gi, ";").replace(/\n/gi, "");
         str += stack;
     }
@@ -874,13 +877,15 @@
   // Inputs: url:string url of the page
   // Returns: null if successful, otherwise an exception
   create_whitelist_filter_for_youtube_channel = function(url) {
-    if (/channel/.test(url)) {
-      var get_channel = url.match(/channel=([^]*)/)[1];
+    if (/channel=/.test(url)) {
+      var yt_channel = url.match(/channel=([^]*)/)[1];
     } else {
-      var get_channel = url.split('/').pop();
+      var yt_channel = url.split('/').pop();
     }
-    var filter = '@@||youtube.com/*' + get_channel + '$document';
-    return add_custom_filter(filter);
+    if (yt_channel) {
+        var filter = '@@||youtube.com/*' + yt_channel + '$document';
+        return add_custom_filter(filter);
+    }
   }
 
   // Inputs: options object containing:

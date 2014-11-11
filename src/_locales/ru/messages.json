@@ -179,6 +179,14 @@
     "message":"Исключить",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Перезагрузить страницу.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Эта функция AdBlock не работает на этом сайте, потому что он использует устаревшие технологии. Вы можете внести её в черный или белый список ресурсов вручную на вкладке «Настроить» страницы параметров.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Подписка на список фильтров...",
     "description":"abp: link subscriber title"
@@ -445,6 +453,10 @@
     "message":"Редактирование фильтров вручную:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Редактировать отключенные фильтры:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Осторожно: Если Вы сделаете здесь ошибку, много других фильтров, включая официальные фильтры, могут оказаться сломанными тоже! <br\/> Прочитайте <a>Учебник по синтаксису фильтров<\/a>, чтобы научиться дополнять черный и белый списки фильтров.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Итак, Вы только что нашли рекламу на веб-странице? Хорошо, я помогу Вам найти подходящее место, куда сообщить об этом!<br\/> Помните: отчет о рекламе является добровольным. Если Вы не хотите делать его, Вы можете просто закрыть это окно и блокировать рекламу только для себя, добавив её фильтр на вкладке 'Настройка' на странице Параметры!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Проверка на наличие вредоносных программ",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Ваш компьютер может быть заражен вредоносными программами.  Нажмите <a>здесь<\/a> для получения дополнительной информации.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Известных вредоносных программ не обнаружено.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Убедитесь, что списки фильтров обновлены",
@@ -493,14 +517,6 @@
     "message":"Вам не нужно ничего делать, так как реклама уже заблокирована",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Вы видите такую же или аналогичную рекламу на разных страницах, например на Вашей домашней странице, веб-сайте Вашей организации и т.д.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Такая же\/аналогичная реклама на каждой странице",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Отключить все расширения, кроме AdBlock.",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Теперь, когда реклама исчезла, Вы должны выяснить, какое расширение является причиной. Последовательно включите каждое расширение по одному. Расширение, которое возвращает рекламу является тем, которое необходимо удалить, чтобы избавиться от рекламы.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Проверьте Ваш компьютер на наличие вредоносных программ",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Выполните полную проверку Вашего компьютера с помощью антивируса\/защиты от вредоносных программ. Некоторые типы вредоносных программ могут вставлять рекламу на веб-страницы и таким образом обойти AdBlock.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Правильные фильтры",

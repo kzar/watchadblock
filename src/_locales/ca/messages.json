@@ -179,6 +179,14 @@
     "message":"Excloure",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Recarregar la pàgina.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Aquesta característica de l'AdBlock no s'executa en aquest lloc perquè utilitza tecnologia obsoleta. Podeu prohibir o permetre recursos manualment a la pestanya 'personalitzar' de la pàgina d'opcions.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Subscrivint-se a la llista de filtres...",
     "description":"abp: link subscriber title"
@@ -445,6 +453,10 @@
     "message":"Editar manualment els vostres filtres:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Editar els filtres desactivats:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Aneu amb compte: Si cometeu un error aquí molts filtres, incloent els oficials, es podrien malmetre!<br\/>Llegiu-vos el <a>tutorial de sintaxi per a filtres<\/a> per aprendre com afegir filtres avançats de restricció o permissió.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Acabeu de trobar un anunci en una pàgina web? Bé, us ajudaré a trobar el lloc correcte per informar-ne!<br\/>Recordeu: Informar sobre anuncis és voluntari. Si no voleu fer-ho podeu tancar aquesta finestra i bloquejar-lo només per a vostè afegint el seu filtre a la pestanya 'Personalitzar' de la pàgina d'opcions!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Comprovació de programari maliciós",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"El vostre ordinador potser està infectat per programari maliciós. Cliqueu <a>aquí<\/a> per obtenir més informació.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"No s'ha trobat programari maliciós conegut.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Assegureu-vos que les llistes de filtres estiguin actualitzades",
@@ -493,14 +517,6 @@
     "message":"No cal que feu res ja que l'anunci ja està bloquejat",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Veieu els mateixos anuncis o similars en diverses pàgines diferents, ex: la vostra pàgina d'inici, el lloc web de la vostra feina, etc.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Mateixos anuncis \/ anuncis similars a cada pàgina",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Desactiveu totes les extensions excepte l'AdBlock.",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Ara que els anuncis han desaparegut, heu de cercar quina extensió n'és la culpable. Activeu cada extensió per separat. L'extensió que fa tornar a aparèixer la publicitat és la que heu de suprimir.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Escanejeu el vostre ordinador per comprovar l'existència de programari maliciós",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Realitzeu un escanejat complet del vostre ordinador utilitzant el vostre antivirus\/antimalware. Algunes tipologies de programari maliciós poden inserir anuncis en pàgines web, i per tant esquivar l'AdBlock.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Filtres correctes",

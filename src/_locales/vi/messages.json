@@ -179,6 +179,14 @@
     "message":"Loại trừ",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Tải lại trang.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Tính năng này của AdBlock không hoạt động trên trang này bởi vì nó sử dụng công nghệ đã lỗi thời. Bạn có thể dùng danh sách đen hoặc danh sách trắng để chặn bằng tay trong thẻ 'Tùy Chỉnh' trên trang tùy chọn.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Đang đăng ký bộ lọc...",
     "description":"abp: link subscriber title"
@@ -425,6 +433,10 @@
     "message":"Chỉnh sửa bộ lọc bằng tay:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Chỉnh sửa bộ lọc bị vô hiệu hóa:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Hãy cẩn thận: Nếu bạn chỉnh sửa không chính xác, rất nhiều bộ lọc khác bao gồm cả bộ lọc chính thức cũng có thể bị lỗi!<br\/>Bạn có thể đọc thêm về <a>cú pháp bộ lọc<\/a> để biết cách chỉnh sửa bộ lọc.",
     "description":"Warning when blacklisting manually"
@@ -444,6 +456,18 @@
   "adreport2":{
     "message":"Bạn mới tìm thấy quảng cáo trên một trang web? Chúng tôi sẽ giúp bạn tìm chính xác nơi để báo cáo!<br\/>Hãy nhớ: việc báo cáo quảng cáo này là tự nguyện, nếu bạn không muốn làm điều này bạn chỉ cần đóng cửa sổ này lại và chặn nó bằng cách thêm vào bộ lọc trong thẻ 'Tùy chỉnh' ở trang Tùy chọn!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Kiểm tra mã độc",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Máy tính của bạn có thể đã bị nhiễm mã độc. Bấm <a>vào đây<\/a> để biết thêm chi tiết.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Không tim thấy mã độc đã được nhận dạng nào.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Hãy chắc chắn rằng bộ lọc của bạn luôn được cập nhật",
@@ -473,14 +497,6 @@
     "message":"Bạn không cần phải làm bất cứ điều gì nữa, quảng cáo đã bị chặn",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Bạn có thấy các quảng cáo giống hoặc tương tự trên các trang web khác không, ví dụ như trang chủ của bạn hoặc trang web nơi bạn làm việc, vv.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Quảng cáo giống\/tương tự trên tất cả các trang web",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Vô hiệu hóa tất cả các tiện ích khác ngoại trừ AdBlock.",
     "description":"Instruction on ad report page"
@@ -500,14 +516,6 @@
   "reenableadsonebyone":{
     "message":"Bây giờ quảng cáo đã biến mất, bạn cần tìm hiểu xem tiện ích mở rộng nào gây ra quảng cáo đó. Bật từng tiện ích mở rộng lên một, nếu tiện ích mở rộng nào hiển thị một (hoặc nhiều) quảng cáo thì bạn cần xóa đi để không phải nhận quảng cáo nữa.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Quét máy tính của bạn để nhận diện mã độc",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Dùng chương trình antivirus\/antimalware để quét toàn bộ máy tính của bạn. Một số loại mã độc có thể chèn quảng cáo vào trang web khiến AdBlock không thể chặn được.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Căn chỉnh bộ lọc",
@@ -841,6 +849,14 @@
     "message":"Bộ lọc đã khớp",
     "description":"resourceblocking page string"
   },
+  "close":{
+    "message":"Đóng",
+    "description":"resourceblocking page string"
+  },
+  "resourceblocklegend1":{
+    "message":"Chú thích:",
+    "description":"resourceblocking page string"
+  },
   "resourceblocklegend2":{
     "message":"nguồn đã bị chặn",
     "description":"resourceblocking page string"
@@ -851,6 +867,10 @@
   },
   "resourceblocklegend4":{
     "message":"nguồn có thể chặn được",
+    "description":"resourceblocking page string"
+  },
+  "resourceblocklegend5":{
+    "message":"quy tắc ẩn đã được áp dụng",
     "description":"resourceblocking page string"
   },
   "loading":{

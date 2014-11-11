@@ -179,6 +179,14 @@
     "message":"Undanta",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Uppdatera sidan.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Den här AdBlock-funktionen fungerar inte på denna sida eftersom den använder utdaterad teknologi. Du kan svart-\/vitlista resurser manuellt, under fliken \"Anpassa\" i inställningarna.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Prenumerera på filterlista...",
     "description":"abp: link subscriber title"
@@ -445,6 +453,10 @@
     "message":"Redigera dina filter manuellt:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Redigera inaktiverade filter:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"<b>Varning!<\/b> Ett misstag här, kan resultera i att andra filter, inklusive dom officiella, kan förstöras!<br\/>Läs '<a>syntax-guiden<\/a>' för att lära hur man skapar avancerade svart- och vitlistor.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Har du hittat ett reklamtillägg? Då skall vi försöka hitta rätt ställe att rapportera till!<br\/> Kom ihåg! Rapportera reklam är frivilligt! Om du inte vill göra detta, kan du bara stänga det här fönstret och istället blockera reklamen genom att lägga till ett eget filter under fliken 'Anpassa' i AdBlock-alternativ!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Malware-kontroll",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Din dator kan vara infekterad av skadlig kod. Klicka <a>här<\/a> för mer information.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Ingen känd, skadlig kod hittades.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Kontrollera att dina filterlistor är uppdaterade",
@@ -493,14 +517,6 @@
     "message":"Du behöver inte göra något, eftersom reklamen redan är blockerad",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Ser du samma eller liknande reklamtillägg på många olika sidor, exempelvis din hemsida eller din arbetsplats hemsida, etc?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Samma\/Liknande tillägg på alla sidor",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Inaktivera alla tillägg utom AdBlock",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Nu när alla tillägg är avaktiverade, måste du undersöka vilket tillägg som är orsakar felet. Aktivera nu tilläggen ett och ett. Det tillägg som får reklamen att visas igen, är det tillägg som du måste avinstallera för att bli av med reklamen.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Genomsök din dator efter skadlig kod",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Utför en fullständig genomsökning med ditt antivirus-\/antimalware-program.Vissa typer av skadlig kod kan injicera tillägg i webbsidor, och dessa tar sig förbi AdBlock.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Korrekt filter",
@@ -1256,7 +1264,7 @@
     "description":"Link to the support site on the Support tab of the options"
   },
   "ad_report_please":{
-    "message":"Om du ser en annons, skicka inte en felrapport. Rapportera ett<a>reklamtillägg<\/a>!",
+    "message":"Om du ser en annons, skicka inte en felrapport. Rapportera ett <a>reklamtillägg<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

@@ -19,16 +19,20 @@ if (/youtube/.test(document.location.hostname)) {
   function channel() {
     if ((url.search("channel=") < 0) && (/channel\/|watch/.test(url)) && (url.search("feed") < 0)) {
         var get_yt_name = document.querySelector("span[itemprop='author'] link");
-        var extracted_name = get_yt_name.getAttribute("href").split('/').pop();
-      if (/channel/.test(url)) {
+        if (get_yt_name) {
+            var extracted_name = get_yt_name.getAttribute("href").split('/').pop();
+        } else {
+            return;
+        }
+        if (/channel/.test(url)) {
           var new_url = url+"?&channel="+extracted_name;
-      } else {
+        } else {
           var new_url = url+"&channel="+extracted_name;
-      }
-      // Add the name of the channel to the end of URL
-      window.history.replaceState(null,null,new_url);
-      // Reload page from cache
-      document.location.reload(false);
+        }
+        // Add the name of the channel to the end of URL
+        window.history.replaceState(null,null,new_url);
+        // Reload page from cache
+        document.location.reload(false);
     }
   }
 }

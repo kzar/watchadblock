@@ -1,6 +1,6 @@
 // Youtube-related code in this file based on code (c) Adblock Plus. GPLv3.
 // See https://hg.adblockplus.org/adblockpluschrome/file/4db6db04271c/safari/include.youtube.js
-
+// and https://hg.adblockplus.org/adblockpluschrome/file/aed8fd38e824/safari/include.youtube.js
 var run_bandaids = function() {
   // Tests to determine whether a particular bandaid should be applied
   var apply_bandaid_for = "";
@@ -79,11 +79,13 @@ var run_bandaids = function() {
             if (!flashVars) {
                 // Remove ad container & ad progress, so user won't notice removal of ads
                 var adcontainer = document.querySelector(".video-ads");
-                if (!adcontainer)
-                    return;
-                adcontainer.parentNode.removeChild(adcontainer);
+                if (adcontainer) {
+                    adcontainer.parentNode.removeChild(adcontainer);
+                }
                 var adprogress = document.querySelector(".html5-ad-progress-list");
-                adprogress.parentNode.removeChild(adprogress);
+                if (adprogress) {
+                    adprogress.parentNode.removeChild(adprogress);
+                }
 
                 // Disable some attributes in ytplayer object to disable ads in HTML5 video player
                 var elemScript = document.createElement("script");
@@ -170,21 +172,66 @@ var before_ready_bandaids = function() {
     youtube_only: function() {
         // If history.pushState is available,
         // YouTube uses it when navigating from one video
-        // to another and tells the HTML5 player/Flash player via JavaScript,
-        // which ads to show next bypassing ytplayer object/flashvars rewrite code.
-        // Because we cannot disable history.pushState directly,
-        // we need to reload the page user is navigating to.
+        // to another and tells the HTML5 player via JavaScript,
+        // which ads to show next bypassing ytplayer object rewrite code.
+        // Disabling history.pushState on pages with YouTube's HTML5 player
+        // will force YouTube to not use history.pushState
+        var elemScript = document.createElement("script");
+        elemScript.textContent = "History.prototype.pushState = undefined;" +
+                                 "var badArgumentsRegex = /^((.*_)?(ad|ads|afv|adsense)(_.*)?|(ad3|st)_module|prerolls|interstitial|infringe|iv_cta_url)$/;" +
+                                 "var ytplayer = undefined;" +
+                                 "Object.defineProperty(window, 'ytplayer', { " +
+                                 "  configurable: true, " +
+                                 "  get: function() {" +
+                                 "    return ytplayer;" +
+                                 "  }," +
+                                 "  set: function(rawYtplayer) {" +
+                                 "    if (!rawYtplayer || typeof rawYtplayer != 'object') {" +
+                                 "      ytplayer = rawYtplayer;" +
+                                 "      return;" +
+                                 "    }" +
+                                 "    var config = undefined;" +
+                                 "    ytplayer = Object.create(rawYtplayer, {" +
+                                 "      config: {" +
+                                 "        enumerable: true," +
+                                 "          get: function() {" +
+                                 "            return config;" +
+                                 "          }," +
+                                 "          set: function(rawConfig) {" +
+                                 "            if (!rawConfig || typeof rawConfig != 'object') {" +
+                                 "              config = rawConfig;" +
+                                 "              return;" +
+                                 "            }" +
+                                 "          var args = undefined;" +
+                                 "          config = Object.create(rawConfig, {" +
+                                 "            args: {" +
+                                 "              enumerable: true," +
+                                 "              get: function() {" +
+                                 "                return args;" +
+                                 "              }," +
+                                 "              set: function(rawArgs) {" +
+                                 "                if (!rawArgs || typeof rawArgs != 'object') {" +
+                                 "                  args = rawArgs;" +
+                                 "                  return;" +
+                                 "                }" +
+                                 "                args = {};" +
+                                 "                for (var arg in rawArgs) {" +
+                                 "                  if (!badArgumentsRegex.test(arg))" +
+                                 "                    args[arg] = rawArgs[arg];" +
+                                 "                }" +
+                                 "              }" +
+                                 "            }" +
+                                 "          });" +
+                                 "          config.args = rawConfig.args;" +
+                                 "        }" +
+                                 "      }" +
+                                 "    });" +
+                                 "    ytplayer.config = rawYtplayer.config;" +
+                                 "  }" +
+                                 "}); ";
 
-        // Track actual URL
-        var url = document.location.href;
-        setInterval(function() {
-            if (url !== document.location.href) {
-                setTimeout(function() {
-                    history.go(0);
-                    url = document.location.href;
-                }, 250);
-            }
-        }, 0);
+        document.documentElement.appendChild(elemScript);
+        document.documentElement.removeChild(elemScript);
     }
   }; // end bandaids
 

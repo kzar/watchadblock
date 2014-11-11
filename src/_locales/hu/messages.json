@@ -179,6 +179,14 @@
     "message":"Kizárás",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Az oldal újratöltése.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Ez az AdBlock szolgáltatás nem működik ezen az oldalon, mert elavult technológiát használ. Az opciók oldal 'Testreszabás' fülén manuálisan fekete- vagy fehér listára teheti az erőforrásokat.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Feliratkozás szűrőlistára...",
     "description":"abp: link subscriber title"
@@ -445,6 +453,10 @@
     "message":"Szűrők manuális szerkesztése:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Letiltott szűrők szerkesztése:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Legyen óvatos: ha itt hibát vét, sok más szűrő, beleértve a hivatalosakat is, szintén meghibásodhatnak!<br\/>Olvassa el a <a>szűrő mondattan oktatóanyagot<\/a>, hogy megtudja hogyan kell összetett fekete lista és fehér lista szűrőket hozzáadni.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Szóval épp most talált egy hirdetést egy oldalon? Nos, én majd segítek megtalálni a megfelelő helyet a jelentéséhez!<br\/> Ne feledje: a hirdetések bejelentése önkéntes. Ha nem kívánja ezt tenni, egyszerűen bezárhatja ezt az ablakot, és blokkolja csak magának a \"Testreszabás\" fülön az opciók oldalon!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Malware ellenőrzés",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Lehet, hogy számítógépe malware-rel fertőzött. További információért kattintson <a>ide<\/a>.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Nem található ismert malware.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Győződjön meg róla, hogy szűrőlistái naprakészek",
@@ -493,14 +517,6 @@
     "message":"Nem kell tennie semmit, mivel a hirdetés már blokkolva van",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Ugyanolyan vagy hasonló reklámokat lát sok különböző oldalon, pl. a honlapján, a munkahelyének weboldalán, stb.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Ugyanolyan\/hasonló reklámok minden oldalon",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Minden bővítmény letiltása az AdBlock kivételével.",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Most, hogy a hirdetés(ek) eltűnt(ek), ki kell derítenie, hogy melyik bővítmény az előidéző. Nézze át és egyesével engedélyezze mindegyik bővítményt. Az, amelyik visszahozza ő(ke)t az, amelyiket törölnie kell, hogy megszabaduljon a hirdetés(ek)től.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"A számítógép átvizsgálása kártevők után",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Végezzen el egy teljes vizsgálatot számítógépén antivírus\/anti-malware programja használatával. Egyes malwaretípusok képesek hirdetéseket beadni a weboldalba, és így megerülik az AdBlock-ot.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Megfelelő szűrők",

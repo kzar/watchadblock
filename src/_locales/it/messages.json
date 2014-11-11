@@ -179,6 +179,14 @@
     "message":"Escludi",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Ricarica la pagina.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Questa funzione AdBlock non funziona su questo sito perché utilizza tecnologia antiquata. Può mettere manualente in blacklist o whitelist le risorse nella scheda 'Personalizza' della pagina opzioni.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"In abbonamento alla lista filtri...",
     "description":"abp: link subscriber title"
@@ -445,6 +453,10 @@
     "message":"Modificare manualmente i filtri:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Modifica i filtri disabilitati:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Attenzione: Se fai un errore molti altri filtri, compresi quelli ufficiali, potrebbero smettere di funzionare!<br\/>Leggi il <a>filter syntax tutorial<\/a> per imparare le funzionalità avanzate e scrivere da solo i tuoi filtri.",
     "description":"Warning when blacklisting manually"
@@ -464,6 +476,18 @@
   "adreport2":{
     "message":"Hai trovato una pubblicità su una pagina web? Bene, ti aiuterò a trovare il posto giusto per segnalarla!<br\/> Ricorda: riportare pubblicità è volontario. Se non desideri farlo basta chiudere questa finestra e bloccarla solo per te aggiungendo il suo filtro nel tab 'Personalizza' della pagina opzioni!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Controllo malware",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Il computer potrebbe essere infetto da malware.  Clicca <a>qui<\/a> per ulteriori informazioni.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Nessun malware noto trovato.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Aggiorna sempre i tuoi filtri",
@@ -493,14 +517,6 @@
     "message":"Non devi fare nulla se la pubblicità è già bloccata",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Vedi pubblicità simili o uguali su molte altre pagine, es. la tua homepage, il tuo sito web aziendale, ecc.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Pubblicità uguali\/simili su ogni pagina",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Disabilita tutte le estensioni tranne AdBlock.",
     "description":"Instruction on ad report page"
@@ -520,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Ora che le pubblicità sono sparite, dovresti cercare quale estensione ne è la causa. Per farlo abilita un estensione alla volta. L'estensione che fa ritornare la\/le pubblicità e una di quelle che dovresti eliminare per sbarazzarti delle pubblicità.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Scansiona il tuo computer per malware",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Esegui una scansione completa del tuo computer utilizzando il tuo programma antivirus\/antimalware. Alcuni tipi di malware possono iniettare gli annunci nelle pagine Web e quindi ignorare AdBlock.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Filtri corretti",

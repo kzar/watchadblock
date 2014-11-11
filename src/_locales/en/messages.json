@@ -179,6 +179,14 @@
     "message":"Exclude",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Reload the page.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Subscribing to filter list...",
     "description":"abp: link subscriber title"
@@ -448,7 +456,7 @@
   "manualexcludefilteredit":{
     "message":"Edit disabled filters:",
     "description":"Subtitle on the 'Customize' tab"
-  },  
+  },
   "filtersavewarning":{
     "message":"Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!<br\/>Read the <a>filter syntax tutorial<\/a> to learn how to add advanced blacklist and whitelist filters.",
     "description":"Warning when blacklisting manually"
@@ -469,6 +477,18 @@
     "message":"So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!<br\/> Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Customize' tab of the options page!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
   },
+  "malwarecheck":{
+    "message":"Malware check",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Your computer may be infected by malware.  Click <a>here<\/a> for more information.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"No known malware found.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
   "updateyourlists":{
     "message":"Make sure your filter lists are up to date",
     "description":"Section header on the ad report page"
@@ -481,10 +501,6 @@
     "message":"Reload the page with the ad.",
     "description":"Instruction on ad report page"
   },
-  "reloadpageafterwhitelist":{
-    "message":"Reload the page.",
-    "description":"Checkbox on whitelist wizard"
-  },  
   "adstillappear":{
     "message":"Does the ad still appear?",
     "description":"Question on ad report page"
@@ -501,20 +517,12 @@
     "message":"You don't have to do anything as the ad is already blocked",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
-  "sameAdsOnDifferentPages":{
-    "message":"Do you see the same or similar ads on many different pages, e.g. your homepage, your workplace's website, etc.?",
-    "description":"A question on the ad report page, asking if the user sees similar ads on different websites"
-  },
-  "similarAds":{
-    "message":"Same\/similar ads on every page",
-    "description":"Section header on the ad report page"
-  },
   "disableallextensions":{
     "message":"Disable all extensions except for AdBlock.",
     "description":"Instruction on ad report page"
   },
   "disableforchromestepone":{
-    "message":"Open <a href='#'>the extensions page<\/a>",
+    "message":"Open <a>the extensions page<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
   },
   "disableforchromeandsafaristeptwo":{
@@ -528,14 +536,6 @@
   "reenableadsonebyone":{
     "message":"Now that the ads are gone, you must find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one that you must delete to get rid of the ads.",
     "description":"Tells the user to reenable the extensions one by one"
-  },
-  "scancomputer":{
-    "message":"Scan your computer for malware",
-    "description":"Section header on the ad report page"
-  },
-  "performscan":{
-    "message":"Perform a full scan of your computer using your antivirus\/antimalware program. Some types of malware can inject ads into webpages, and thus bypass AdBlock.",
-    "description":"Instruction on ad report page"
   },
   "correctfilters":{
     "message":"Correct filters",
@@ -702,6 +702,30 @@
   "checkinfirefox_5":{
     "message":"Does the ad appear in that browser too?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Check in Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Install Chrome, if you don't have it.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Install AdBlock for Chrome, if you don't have it.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"In Chrome, subscribe to the same filter lists as you have here.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"In Chrome, load the page with the ad.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Does the ad appear in Chrome too?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"I don't want to check this",
@@ -957,22 +981,6 @@
     "message":"We can't block ads inside Flash and other plugins yet. We are awaiting support from the browser and WebKit.",
     "description":"Result of the final ad report question"
   },
-  "wizardcantrunonframesets1":{
-    "message":"This AdBlock feature does not work on this site because it uses out of date technology.",
-    "description":"A message (alert) to the user."
-  },
-  "wizardcantrunonframesets2":{
-    "message":"  You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.",
-    "description":"part two of the message (alert) to the user."
-  },
-  "malwarewarning":{
-    "message":"Your computer may be infected by malware.  Click <a id='malwarelink'>here<\/a> for more information.",
-    "description":"Text of the malware warning on the adreport page"
-  },
-  "malwarenotfound":{
-    "message":"No known malware found.",
-    "description":"Text of the malware not found message on the adreport page"
-  },
   "cleanuplist2":{
     "message":"Clean up this list",
     "description":"Option at the bottom of the 'Customize' options tab"
@@ -1125,7 +1133,7 @@
   },
   "firefox_explanation":{
     "message":"The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.",
-    "description":"Explanation of the Check-in-Firefox step in the ad reporter"
+    "description":"Explanation of the Check-in-Firefox or Chrome step in the ad reporter"
   },
   "blocked_ads":{
     "message":"Blocked ads:",
@@ -1268,11 +1276,11 @@
     "description":"Link to the contributors page on the Support tab of the options"
   },
   "debuginfo":{
-    "message":"Have our team requested some debug info? Click <a href='#' id='debug'>here<\/a> for that!",
+    "message":"Have our team requested some debug info? Click <a id='debug'>here<\/a> for that!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
   "bugreport":{
-    "message":"Why don't you send us a <a href='#' id='report'>bug report<\/a>?",
+    "message":"Why don't you send us a <a id='report'>bug report<\/a>?",
     "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{

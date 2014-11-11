@@ -161,7 +161,7 @@ var checkmalware = function() {
         if (infected) {
             $('#step_update_filters_DIV').hide();
             $("#malwarewarning").html(translate("malwarewarning"));
-            $('#malwarelink').attr("href", "http://support.getadblock.com/kb/im-seeing-an-ad/im-seeing-similar-ads-on-every-website/")
+            $("a", "#malwarewarning").attr("href", "http://support.getadblock.com/kb/im-seeing-an-ad/im-seeing-similar-ads-on-every-website/")
         } else {
             $('#step_update_filters_DIV').show();
             $("#malwarewarning").html(translate("malwarenotfound"));
