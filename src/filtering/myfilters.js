@@ -18,10 +18,10 @@ MyFilters.prototype.init = function() {
   var newUser = !this._subscriptions;
   this._updateDefaultSubscriptions();
   this._updateFieldsFromOriginalOptions();
-  
+
   // Build the filter list
-  this._onSubscriptionChange(true); 
-  
+  this._onSubscriptionChange(true);
+
   // On startup and then every hour, check if a list is out of date and has to
   // be updated
   var that = this;
@@ -29,18 +29,18 @@ MyFilters.prototype.init = function() {
     this.checkFilterUpdates();
   else
     idleHandler.scheduleItemOnce(
-      function() { 
+      function() {
         that.checkFilterUpdates();
       },
       60
     );
 
   window.setInterval(
-    function() { 
+    function() {
       idleHandler.scheduleItemOnce(function() {
         that.checkFilterUpdates();
       });
-    }, 
+    },
     60 * 60 * 1000
   );
 }
@@ -93,6 +93,11 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
     // Convert subscribed ex-official lists into user-submitted lists.
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
+      // TODO: Remove this logic after a few releases
+      if (id === "easylist_plus_spanish") {
+          delete this._subscriptions[id];
+          continue;
+      }
       // Cache subscription that needs to be checked.
       var sub_to_check = this._subscriptions[id];
       var is_user_submitted = true;
@@ -112,9 +117,9 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
       } else {
         is_user_submitted = false;
       }
-      
+
       sub_to_check.user_submitted = is_user_submitted;
-      
+
       // Function that will add a new entry with updated id,
       // and will remove old entry with outdated id.
       var that = this;
@@ -122,14 +127,14 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
         that._subscriptions[new_id] = that._subscriptions[old_id];
         delete that._subscriptions[old_id];
       };
-      
+
       // Create new id and check if new id is the same as id.
       // If not, update entry in subscriptions.
       var new_id = is_user_submitted ? ("url:" + sub_to_check.url) : update_id;
-      
+
       if(new_id !== id) {
         renameSubscription(id, new_id);
-      }        
+      }
     }
   }
 };
@@ -219,11 +224,11 @@ MyFilters.prototype.rebuild = function() {
   this.hiding = FilterSet.fromFilters(filters.hiding);
 
   this.blocking = new BlockingFilterSet(
-    FilterSet.fromFilters(filters.pattern), 
+    FilterSet.fromFilters(filters.pattern),
     FilterSet.fromFilters(filters.whitelist)
   );
   handlerBehaviorChanged(); // defined in background
-  
+
   // After 90 seconds, delete the cache. That way the cache is available when
   // rebuilding multiple times in a row (when multiple lists have to update at
   // the same time), but we save memory during all other times.
@@ -266,7 +271,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
 
   // Check if the required list is a well known list, but only if it is changed
   if (subData.requiresList)
-    this._subscriptions[id].requiresList = 
+    this._subscriptions[id].requiresList =
                    this.customToDefaultId(this._subscriptions[id].requiresList);
 
   if (forceFetch)
@@ -313,7 +318,7 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
 
 // Fetch a filter list and parse it
 // id:        the id of the list
-// isNewList: true when the list is completely new and must succeed or 
+// isNewList: true when the list is completely new and must succeed or
 //            otherwise it'll be deleted.
 MyFilters.prototype.fetch_and_update = function(id, isNewList) {
   var url = this._subscriptions[id].url;
@@ -341,7 +346,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
     },
     success: function(text, status, xhr) {
       // In case the subscription disappeared while we were out
-      if (!that._subscriptions[id] || 
+      if (!that._subscriptions[id] ||
           !that._subscriptions[id].subscribed)
         return;
 
@@ -394,7 +399,7 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
       var match = checkLines[i].match(redirectRegex);
       if (match && match[1] !== this._subscriptions[id].url) {
         this._subscriptions[id].url = match[1]; //assuming the URL is always correct
-        // Force an update.  Even if our refetch below fails we'll have to 
+        // Force an update.  Even if our refetch below fails we'll have to
         // fetch the new URL in the future until it succeeds.
         this._subscriptions[id].last_update = 0;
       }
@@ -468,7 +473,6 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'cu': return 'easylist_plus_bulgarian';
       case 'da': return 'danish';
       case 'de': return 'easylist_plus_german';
-      case 'es': return 'easylist_plus_spanish';
       case 'el': return 'easylist_plus_greek';
       case 'fi': return 'easylist_plus_finnish';
       case 'fr': return 'easylist_plus_french';
@@ -586,9 +590,6 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "http://home.fredfiber.no/langsholt/adblock.txt",
       requiresList: "easylist",
     },
-    "easylist_plus_spanish": {  // Spanish filters
-      url: "http://abp.mozilla-hispano.org/nauscopio/filtros.txt",
-    },
     "swedish": {  // Swedish filters
       url: "http://fanboy.co.nz/fanboy-swedish.txt",
     },
@@ -604,12 +605,12 @@ MyFilters.prototype._make_subscription_options = function() {
     "malware": { // Malware protection
       url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt",
     },
-	"annoyances": { // Fanboy's Annoyances
+    "annoyances": { // Fanboy's Annoyances
       url: "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",
-	},
+    },
     "warning_removal": { // AdBlock warning removal
       url: "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt",
-	}
+    }
   };
 }
 
