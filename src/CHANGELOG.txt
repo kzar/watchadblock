@@ -2,25 +2,26 @@
 
 UNRELEASED:
 
+2.14.2:  Removed unnecessary backup directory that was included in the zip and extz files.
+
 2.14.1:  Removed invalid character from the french message.json file
-         Removed unnecessary backup directory for Safari extz file
 
 2.14:  Removed the Spanish filter list from the options since it is no longer being supported. (#366)
-       Updated translation texts 
-       Update the version numbers (added 39 and 40) for a Chrome bug workaround (see crbug.com/410382) (#380)
+       Updated translation texts
+       Updated the version numbers (added 39 and 40) for a Chrome bug workaround (see crbug.com/410382) (#380)
 
 2.13.2:  Modified the YouTube specific logic to use ABP approach (#372)
          Corrected the logging of JavaScript errors in the Chrome Beta version (#367)
 
 2.13: Added the ability to exclude / disable filter list entries (#241)
       Fixed an issue with a missing click handler on the popup menu (#359)
-      Remove confusing message on popup menu (#360)
-      Fixed an Javascript error on the background page in Safari when several tabs 
+      Removed confusing message on popup menu (#360)
+      Fixed an Javascript error on the background page in Safari when several tabs
       are closed while still being renderred. (#357)
-      Added a user message that is displayed when the white list and black list 
+      Added a user message that is displayed when the white list and black list
       wizard can't run on older sites with framesets. (#352)
       Added a 'reload page' option to the white list wizard. (#349)
-      
+
 
 2.12.1:  Fixed an issue with the back button in Safari & YouTube. (#350)
 
@@ -29,14 +30,14 @@ UNRELEASED:
       Fixed an issue with Whitelist wizard not being displayed on certain sites. (#341)
       Fixed an issue with the AdBlock icon in Safari 5.0 (#342)
       On the AdBlock options page, Filter Lists tab, add the title of custom filters lists the users is subscribed to (if there is a title for the filter list). (##336)
-     
-2.11: In the 'Report an Ad' feature, the extension will now perform a check for known malware 
-      domains in the list of resources.  If resources from a known malware site are found, the 
-      users is notified, and the a link with more information is provided.  If no malware 
+
+2.11: In the 'Report an Ad' feature, the extension will now perform a check for known malware
+      domains in the list of resources.  If resources from a known malware site are found, the
+      users is notified, and the a link with more information is provided.  If no malware
       resources are found, the page continues to work as before. (#315)
 
-2.10.3: Added a work around to a Chrome bug which incorrectly sets the element type (#339) - 
-          see http://crbug.com/410382 
+2.10.3: Added a work around to a Chrome bug which incorrectly sets the element type (#339) -
+          see http://crbug.com/410382
         Added the column number to the information sent when a JavaScript exception is caught
 
 2.10.2: Fixed Javascript error on YouTube in Safari
@@ -51,12 +52,12 @@ UNRELEASED:
 2.9.4: Updated Translastions
 
 2.9.3: Fixed an issue with DropBox sync process (#325)
-       Fixed an memory leak issue in Chrome where prerenderred tab information was not removed 
+       Fixed an memory leak issue in Chrome where prerenderred tab information was not removed
        when the tab id was changed. (#324)
-       Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of 
+       Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of
        being loaded in the menu (#318)
        Fixed an issue in Safari with un-whitelisting a site (blacklisting it)(#317)
-       Improved the string processing of debug information when users report an issue or ad to 
+       Improved the string processing of debug information when users report an issue or ad to
        the AdBlock support site (#307)
 
 2.9.2: Fixed a JavaScript error in DropBox sync logic
@@ -72,7 +73,7 @@ UNRELEASED:
 
 2.8.2: Reverted translation because the line length exceeded the 132 character limit
 
-2.8.1: Removed externally_connectable permission from manifest.json file to avoid additional 
+2.8.1: Removed externally_connectable permission from manifest.json file to avoid additional
        permissions needed for Beta version.
 
 2.8:   Added logic for Chrome beta users only; opening a /beta tab on updates.
@@ -92,7 +93,7 @@ UNRELEASED:
 2.7.10: Corrected issue with 2.7.9 and the Safari / YouTube fix
 
 2.7.9: updated logic to correctly block video ads with the HTML 5 player on Safari, on youtube.com (#276)
-       improved the detection of getadblock.com website to ensure any injected extension 
+       improved the detection of getadblock.com website to ensure any injected extension
        information only occurs on the correct web site. (#274)
        include the total number of ads blocked in the weekly ping statistics (#274)
 
@@ -102,7 +103,7 @@ UNRELEASED:
        updated hiding style sheet configuration (#266)
 
 2.7.7: added support information to bug reports (#265, #263, #231)
-       filter unneccessary whitelist rules (#264) 
+       filter unneccessary whitelist rules (#264)
 
 2.7.6: Updated Translations
        Fixed font display issues in Chrome on certain OS'es (#255)
@@ -132,7 +133,7 @@ UNRELEASED:
 
 2.6.35: bug fix
 
-2.6.34: Bug fix 
+2.6.34: Bug fix
 
 2.6.33: Bug fix
 
@@ -171,7 +172,7 @@ UNRELEASED:
 2.6.10:
 - Bugfix for slow initial filter subscription.
 
-2.6.9 (beta channel only): 
+2.6.9 (beta channel only):
 - Added and updated filter lists based on user's localization, added Malware and Antisocial filter list
 - Added RTL function for Arabic and Hebrew users
 - Added language: Norwegian
