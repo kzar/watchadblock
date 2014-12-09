@@ -219,4 +219,8 @@ var FilterNormalizer = {
   }
 }
 //Initialize the exclude filters at startup
-FilterNormalizer.setExcludeFilters(storage_get('exclude_filters'));
+try { 
+    FilterNormalizer.setExcludeFilters(storage_get('exclude_filters'));
+} catch(e) {
+    //ignore exception in Safari on options / resource block pages
+}

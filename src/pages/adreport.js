@@ -151,7 +151,7 @@ var checkmalware = function() {
 
         // Compare domains of loaded resources with domain.json
         for (var i=0; i < extracted_domains.length; i++) {
-            if (malwareDomains.adware.indexOf(extracted_domains[i]) > -1) {
+            if (malwareDomains && malwareDomains.adware.indexOf(extracted_domains[i]) > -1) {
                 // User is probably infected by some kind of malware,
                 // because resource has been downloaded from malware/adware/spyware site.
                 var infected = true;
@@ -161,7 +161,7 @@ var checkmalware = function() {
         if (infected) {
             $('#step_update_filters_DIV').hide();
             $("#malwarewarning").html(translate("malwarewarning"));
-            $("a", "#malwarewarning").attr("href", "http://support.getadblock.com/kb/im-seeing-an-ad/im-seeing-similar-ads-on-every-website/")
+            $("a", "#malwarewarning").attr("href", "http://support.getadblock.com/kb/im-seeing-an-ad/im-seeing-similar-ads-on-every-website/");
         } else {
             $('#step_update_filters_DIV').show();
             $("#malwarewarning").html(translate("malwarenotfound"));
@@ -182,42 +182,48 @@ $("input, select").change(function(event) {
 
 // Fetch file with malware-known domains
 var xhr = new XMLHttpRequest();
-//the timestamp is add to the URL to prevent caching by the browser
-xhr.open("GET", "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime(), false);
-xhr.send();
-var malwareDomains = JSON.parse(xhr.responseText);
+var malwareDomains = null;
+
+// The timestamp is add to the URL to prevent caching by the browser
+xhr.open("GET", "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime(), true);
+xhr.onload = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        malwareDomains = JSON.parse(xhr.responseText);
+
+        // Check, if downloaded resources are available,
+        // if not, just reload tab with parsed tabId
+        BGcall("get_settings", "show_advanced_options", function(status) {
+            if (status.show_advanced_options) {
+                checkmalware();
+            } else {
+                BGcall("set_setting", "show_advanced_options");
+                BGcall("reloadTab", parseInt(tabId));
+                chrome.extension.onRequest.addListener(
+                    function(message, sender, sendResponse) {
+                        if (message.command  === "reloadcomplete") {
+                            BGcall("disable_setting", "show_advanced_options");
+                            checkmalware();
+                        }
+                    }
+                );
+            }
+        });
+    }
+};
+xhr.send(null);
 
 var domain = parseUri(options.url).hostname.replace(/((http|https):\/\/)?(www.)?/g, "");
 var tabId = options.tabId.replace(/[^0-9]/g,'');
-
-// Check, if downloaded resources are available,
-// if not, just reload tab with parsed tabId
-BGcall("get_settings", "show_advanced_options", function(status) {
-    if (status.show_advanced_options) {
-        checkmalware();
-    } else {
-        BGcall("set_setting", "show_advanced_options");
-        BGcall("reloadTab", parseInt(tabId));
-        chrome.extension.onRequest.addListener(
-            function(message, sender, sendResponse) {
-                if (message.command  === "reloadcomplete") {
-                    BGcall("disable_setting", "show_advanced_options");
-                    checkmalware();
-                }
-            }
-        );
-    }
-});
 
 // STEP 2: update filters
 
 //Updating the users filters
 $("#UpdateFilters").click(function() {
-  $(this).prop("disabled", true);
-  BGcall("update_subscriptions_now", function() {
-    $(".afterFilterUpdate input").prop('disabled', false);
-    $(".afterFilterUpdate").removeClass('afterFilterUpdate');
-  });
+    $(this).prop("disabled", true);
+    BGcall("update_subscriptions_now", function() {
+        $(".afterFilterUpdate input").prop('disabled', false);
+        $(".afterFilterUpdate").removeClass('afterFilterUpdate');
+    });
 });
 //if the user clicks a radio button
 $("#step_update_filters_no").click(function() {

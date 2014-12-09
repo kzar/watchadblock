@@ -19,7 +19,7 @@
     }
     STATS.msg(str);
     sessionStorage.setItem("errorOccurred", true);
-    storage_set("error", str);
+    storage_set("error", "Date added:" + new Date() + " " + str);
     log(str);
   });
 
@@ -627,6 +627,13 @@
       if (!SAFARI && sync !== true && db_client.isAuthenticated()) {
           settingstable.set("filter_lists", get_subscribed_filter_lists().toString());
       }
+  }
+
+  // Get the current (loaded) malware domains
+  // Returns: an object with all of the malware domains
+  // will return undefined, if the user is not subscribed to the Malware 'filter list'.
+  getMalwareDomains = function() {
+    return _myfilters.getMalwareDomains();
   }
 
   // Returns true if the url cannot be blocked
@@ -1433,3 +1440,4 @@
   }
 
   log("\n===FINISHED LOADING===\n\n");
+
