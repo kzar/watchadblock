@@ -68,23 +68,23 @@ function generateReportURL() {
               "than what you give us in your report. Otherwise, we might not be able to fix it.");
     body.push("");
     if (!options.url) {
-        body.push(count + ". Paste the URL of the webpage showing an ad: ");
+        body.push("**" + count + ". Paste the URL of the webpage showing an ad:** ");
         body.push("");
         body.push("");
         count++;
     }
-    body.push(count + ". Exactly where on that page is the ad? What does it " +
+    body.push("**" + count + ". Exactly where on that page is the ad? What does it " +
               "look like? Attach a screenshot, with the ad clearly marked, " +
-              "if you can.");
+              "if you can.**");
     body.push("");
     body.push("");
     count++;
-    body.push(count + ". If you have created the filter which removes reported ad, please paste it here: ");
+    body.push("**" + count + ". If you have created the filter which removes reported ad, please paste it here:** ");
     body.push("");
     body.push("");
     count++;
-    body.push(count + ". Any other information that would be helpful, besides " +
-              "what is listed below: ");
+    body.push("**" + count + ". Any other information that would be helpful, besides " +
+              "what is listed below:** ");
     body.push("");
     body.push("");
     body.push("-------- Please don't touch below this line. ---------");

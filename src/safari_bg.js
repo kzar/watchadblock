@@ -69,14 +69,14 @@ frameData = (function() {
 // True blocking support.
 safari.application.addEventListener("message", function(messageEvent) {
 
-  if (messageEvent.name === "request" && 
+  if (messageEvent.name === "request" &&
       messageEvent.message.data.args.length >= 2 &&
       messageEvent.message.data.args[0] &&
       messageEvent.message.data.args[1] &&
       messageEvent.message.data.args[1].tab &&
       messageEvent.message.data.args[1].tab.url) {
         var args = messageEvent.message.data.args;
-        if (!messageEvent.target.url || 
+        if (!messageEvent.target.url ||
             messageEvent.target.url === args[1].tab.url) {
             frameData.create(messageEvent.target.id, args[1].tab.url, args[0].domain);
         } else if (messageEvent.target.url === frameData.get(messageEvent.target.id).url) {
@@ -114,7 +114,7 @@ safari.application.addEventListener("message", function(messageEvent) {
 // Code for creating popover, not available on Safari 5.0
 if (!LEGACY_SAFARI) {
     var ABPopover = safari.extension.createPopover("AdBlock", safari.extension.baseURI + "button/popup.html");
-    
+
     function setPopover(popover) {
         for (var i = 0; i < safari.extension.toolbarItems.length; i++) {
             safari.extension.toolbarItems[i].popover = popover;
@@ -124,12 +124,12 @@ if (!LEGACY_SAFARI) {
             toolbarItem.command = null;
         }
     }
-    
+
     // Code for removing popover
     function removePopover(popover) {
         safari.extension.removePopover(popover);
     }
-    
+
     // Reload popover when opening/activating tab, or URL was changed
     safari.application.addEventListener("activate", function(event) {
         if (event.target instanceof SafariBrowserTab) {
@@ -139,11 +139,11 @@ if (!LEGACY_SAFARI) {
                 ABPopover.hide();
         }
     }, true);
-    
+
     safari.application.addEventListener("popover", function(event) {
         safari.extension.popovers[0].contentWindow.location.reload();
     }, true);
-    
+
     safari.application.addEventListener("validate", function(event) {
         if (event.target instanceof SafariExtensionToolbarItem) {
             var item = event.target;
@@ -173,18 +173,36 @@ if (!LEGACY_SAFARI) {
                 }
         }
     }, true);
-    
-    // Remove the popover when the window closes so we don't leak memory.
+
+
+    // Close event fires when tab/window is about to close,
+    // not when tab has been closed. Therefore we need to wait
+    // and then remove frameData[tabId] after close event.
     safari.application.addEventListener("close", function(event) {
+        setTimeout(function() {
+            var safari_tabs = safari.application.activeBrowserWindow.tabs;
+
+            var opened_tabs = [];
+            for (var i=0; i < safari_tabs.length; i++)
+                opened_tabs.push(safari_tabs[i].id);
+
+            for (tab in frameData) {
+                if (typeof frameData[tab] === "object" && opened_tabs.indexOf(parseInt(tab)) === -1) {
+                    frameData.close(parseInt(tab));
+                }
+            }
+        }, 150);
+
+        // Remove the popover when the window closes so we don't leak memory.
         if (event.target instanceof SafariBrowserWindow) { // don't handle tabs
             for (var i = 0; i < safari.extension.toolbarItems.length; i++) {
                 var item = safari.extension.toolbarItems[i];
                 if (item.browserWindow === event.target) {
                     var popover = item.popover;
-    
+
                     // Safari docs say that we must detach popover from toolbar items before removing.
                     item.popover = null;
-    
+
                     // Remove the popover.
                     removePopover(ABPopover);
                     break;
@@ -193,6 +211,15 @@ if (!LEGACY_SAFARI) {
         }
     }, true);
 }
+
+// YouTube Channel Whitelist
+safari.application.addEventListener("beforeNavigate", function(event) {
+    if (/youtube.com/.test(event.url) && get_settings().youtube_channel_whitelist && !parseUri.parseSearch(event.url).ab_channel) {
+        safari.extension.addContentScriptFromURL(safari.extension.baseURI + "ytchannel.js", [], [], false);
+    } else {
+        safari.extension.removeContentScript(safari.extension.baseURI + "ytchannel.js");
+    }
+}, true);
 
 // Set commands for whitelist, blacklist and undo my blocks wizards
 safari.application.addEventListener("command", function(event) {
@@ -242,24 +269,3 @@ safari.application.addEventListener("contextmenu", function(event) {
     if (count_cache.getCustomFilterCount(host) && !LEGACY_SAFARI_51)
         event.contextMenu.appendContextMenuItem("undo-last-block", translate("undo_last_block"));
 }, false);
-
-// On close event fires when tab is about to close,
-// not when tab was closed. Therefore we need to remove
-// frameData[tabId] after "close" event has been fired.
-safari.application.addEventListener("close", function(event) {
-    setTimeout(function() {
-        if (safari.application.activeBrowserWindow) {
-            var opened_tabs = [];
-            var safari_tabs = safari.application.activeBrowserWindow.tabs;
-
-            for (var i=0; i < safari_tabs.length; i++)
-                opened_tabs.push(safari_tabs[i].id);
-
-            for (tab in frameData) {
-                if (typeof frameData[tab] === "object" && opened_tabs.indexOf(parseInt(tab)) === -1) {
-                    frameData.close(parseInt(tab));
-                }
-            }
-        }
-    }, 150);
-}, true);

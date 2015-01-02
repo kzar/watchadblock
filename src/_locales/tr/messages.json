@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"40 milyondan fazla kullanıcısıyla en popüler Chrome eklentisi! İnternetteki tüm reklamları engeller.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock - ayrıntılar için tıklayın",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -174,6 +178,14 @@
   "buttonexclude":{
     "message":"İstisna",
     "description":"Button for excluding a domain in the whitelister dialog"
+  },
+  "reloadpageafterwhitelist":{
+    "message":"Sayfayı yeniden yükle.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"AdBlock'un bu özelliği buradaki sitede çalışmıyor çünkü bu site eskimiş bir teknoloji kullanıyor. Seçenekler sayfasındaki 'Özelleştir' seçeneğini kullanarak kaynakları izin verilenlere veya engellenenlere kendiniz ekleyebilirsiniz.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
   "subscribingtitle":{
     "message":"Filtre listelerine abone olunuyor...",
@@ -441,6 +453,10 @@
     "message":"Filtrelerinizi elle düzenleyin:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Engelli filtreleri düzenleyin:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Dikkat: eğer burada bir hata yaparsanız, abone olduğunuz filtreler de dahil, çoğu liste tamamen bozulabilir!<br\/> Gelişmiş \"izin verilenler\" ve \"engellenenler\" listesi oluşturmak için lütfen <a>filtre sözdizimi kuralları<\/a> bölümünü okuyun.",
     "description":"Warning when blacklisting manually"
@@ -460,6 +476,18 @@
   "adreport2":{
     "message":"Demek bu sayfada bir reklam buldunuz.. Bunu doğru yere bildirmenize yardımcı olacağım<br\/> Unutmayın: reklam bildirmek isteğe bağlıdır. Eğer bildirmek istemiyorsanız, bu pencereyi kapatabilir ve Ayarlar bölümünden Özelleştir seçeneğini kullanarak filtreyi sadece kendiniz için ekleyebilirsiniz.",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Zararlı yazılımları kontrol et",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Bilgisayarınıza kötü amaçlı yazılımlar bulaşmış olabilir. Daha çok bilgi için <a>buraya<\/a> tıklayın.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Bilinen bir zararlı yazılım bulunamadı.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Filtre listelerinin güncel olduğundan emin olun",
@@ -674,6 +702,30 @@
   "checkinfirefox_5":{
     "message":"Reklam o tarayıcıda da görünüyor mu?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Chrome'da Kontrol Edin",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Eğer daha önce yapmadıysanız, Chrome'u yükleyin.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Eğer daha önce yapmadıysanız, AdBlock'u Chrome için yükleyin.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"Chrome'da da buradaki aynı filtre listelerine abone olun.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"Chrome'da sayfayı reklamı gösterecek şekilde açın.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Reklam Chrome'da da gözüküyor mu?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Bunu kontrol etmek istemiyorum",
@@ -1106,10 +1158,6 @@
         "example":"The number of ads blocked. Do not make any changes to this placeholder when translating."
       }
     }
-  },
-  "show_on_adblock_button":{
-    "message":"AdBlock düğmesi üzerinde göster",
-    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   },
   "adblockinglist":{
     "message":"Reklam Engelleme Filtre Listeleri",

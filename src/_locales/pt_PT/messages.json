@@ -175,6 +175,10 @@
     "message":"Excluir",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Recarregue a página.",
+    "description":"Checkbox on whitelist wizard"
+  },
   "subscribingtitle":{
     "message":"Inscrevendo-se na lista de filtros...",
     "description":"abp: link subscriber title"
@@ -461,6 +465,14 @@
     "message":"Encontrou um anúncio numa página? Bem, eu vou ajudá-lo a encontrar o local correto para denunciá-lo!<br\/> Recorde: reportar anúncios é voluntário. Se não quiser fazer isso, pode simplesmente fechar esta janela e bloqueá-lo só para si, adicionando o seu filtro em 'Personalizar' na página das opções!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
   },
+  "malwarecheck":{
+    "message":"Verificação de malware",
+    "description":"Section header on the ad report page"
+  },
+  "malwarenotfound":{
+    "message":"Nenhum malware encontrado.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
   "updateyourlists":{
     "message":"Certifique-se que suas listas de filtros estão atualizados",
     "description":"Section header on the ad report page"
@@ -674,6 +686,14 @@
   "checkinfirefox_5":{
     "message":"O anúncio também aparece nesse browser?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Verifique no Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_5":{
+    "message":"O anúncio é exibido no Chrome também?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Não quero verificar isto",
@@ -1106,10 +1126,6 @@
         "example":"The number of ads blocked. Do not make any changes to this placeholder when translating."
       }
     }
-  },
-  "show_on_adblock_button":{
-    "message":"Exibir no botão AdBlock",
-    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   },
   "adblockinglist":{
     "message":"Listas de Filtros de Bloqueio de Anúncios",

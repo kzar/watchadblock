@@ -1103,10 +1103,6 @@
       }
     }
   },
-  "show_on_adblock_button":{
-    "message":"Zobraz na AdBlock tlačidle",
-    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
-  },
   "adblockinglist":{
     "message":"Zoznamy filtrov pre blokovanie reklám",
     "description":"List for subscribed ad blocking fiters"
@@ -1136,8 +1132,14 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Odblokuj tento YouTube kanál",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Odblokuj $name$ kanál",
+    "description":"Text which is displayed on YouTube in popup menu",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Naozaj chcete odstrániť $count$ blokovania\/í, ktoré ste vytvorili na $host$?",

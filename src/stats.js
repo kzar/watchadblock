@@ -159,7 +159,7 @@ STATS = (function() {
     try {
       var url_data = JSON.parse(responseData);
       if (!url_data.open_this_url.match(/^\/survey\//))
-        throw "bad survey url.";
+        throw new Error("bad survey url.");
     } catch (e) {
       console.log("Something went wrong with opening a survey.");
       console.log('error', e);

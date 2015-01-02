@@ -2,153 +2,165 @@
 
 UNRELEASED:
 
-2.15: Improved performace of extension when using the Malware filter list (#384)
-      Added the 'show the resource list' page to the Safari version of the extension (#385)
-      Added a timestamp to the JavaScript error text that is save in local storage (#390)
-      Added logic to determine the correct URL for the Filter list syntax link on the Custom tab based on the user's language (#387)
-      Updated the Japaneese filter list URL (#386)
-      
+2.16:
+- AdBlock now uses the YouTube API to retreive the channel name when users have the Whitelist a YouTube Channel feature enabled. (#392)
+- The 'Filter syntax tutorial' link on the AdBlock options / Customize tab now checks if the generated URL is valid. (#394)
+- Added a check for chrome.runtime.onMessage API, since it isn't available in Chrome 25 and older versions. (#395)
+- Added an option to the General options tab to not display the ads block counter on the AdBlock popup menu.
+  The option to display the # of ads block was moved from the AdBlock popup menu to the General tab as well. (#401)
+- Added logic to set focus on new tabs open by AdBlock (for example, the options pages), when the Chrome is running in incognito mode. (#405)
+- On the 'Report an Ad' page, all of the questions are now bolded. (#416)
+- Reformated the text and fixed typos in the change log. (#418)
+- Modified several JavaScript throws statements to now use an Error object. (#420)
 
-2.14.4:  Removed unnecessary backup directory that was included in the zip and extz files.
+2.15:
+- Improved performance of extension when using the Malware filter list (#384)
+- Added the 'show the resource list' page to the Safari version of the extension (#385)
+- Added a timestamp to the JavaScript error text that is saved in local storage (#390)
+- Added logic to determine the correct URL for the Filter list syntax link on the Custom tab based on the user's language (#387)
+- Updated the Japanese filter list URL (#386)
 
-2.14.1:  Removed invalid character from the french message.json file
+2.14.4: Removed unnecessary backup directory that was included in the zip and extz files.
 
-2.14:  Removed the Spanish filter list from the options since it is no longer being supported. (#366)
-       Updated translation texts
-       Updated the version numbers (added 39 and 40) for a Chrome bug workaround (see crbug.com/410382) (#380)
+2.14.1: Removed invalid character from the French message.json file
 
-2.13.2:  Modified the YouTube specific logic to use ABP approach (#372)
-         Corrected the logging of JavaScript errors in the Chrome Beta version (#367)
+2.14:
+- Removed the Spanish filter list from the options since it is no longer being supported (#366)
+- Updated translation texts
+- Updated the version numbers (added 39 and 40) for a Chrome bug workaround (see crbug.com/410382) (#380)
 
-2.13: Added the ability to exclude / disable filter list entries (#241)
-      Fixed an issue with a missing click handler on the popup menu (#359)
-      Removed confusing message on popup menu (#360)
-      Fixed an Javascript error on the background page in Safari when several tabs
-      are closed while still being renderred. (#357)
-      Added a user message that is displayed when the white list and black list
-      wizard can't run on older sites with framesets. (#352)
-      Added a 'reload page' option to the white list wizard. (#349)
+2.13.2:
+- Modified the YouTube specific logic to use ABP approach (#372)
+- Corrected the logging of JavaScript errors in the Chrome Beta version (#367)
 
+2.13:
+- Added the ability to exclude / disable filter list entries (#241)
+- Fixed an issue with a missing click handler on the popup menu (#359)
+- Removed confusing message on popup menu (#360)
+- Fixed a JavaScript error on the background page in Safari when several tabs are closed while still being rendered. (#357)
+- Added a user message that is displayed when the whitelist and blacklist wizard can't run on older sites with framesets. (#352)
+- Added a 'reload page' option to the white list wizard. (#349)
 
-2.12.1:  Fixed an issue with the back button in Safari & YouTube. (#350)
+2.12.1: Fixed an issue with the back button in Safari & YouTube. (#350)
 
-2.12: Fixed an issue in the Chrome Beta version in the 'report an issue' link in the popup menu. (#347)
-      In Chrome, improved the cleanup of old data when tabs are closed.(#345)
-      Fixed an issue with Whitelist wizard not being displayed on certain sites. (#341)
-      Fixed an issue with the AdBlock icon in Safari 5.0 (#342)
-      On the AdBlock options page, Filter Lists tab, add the title of custom filters lists the users is subscribed to (if there is a title for the filter list). (##336)
+2.12:
+- Fixed an issue in the Chrome Beta version in the 'report an issue' link in the popup menu. (#347)
+- In Chrome, improved the cleanup of old data when tabs are closed. (#345)
+- Fixed an issue with the whitelist wizard not being displayed on certain sites. (#341)
+- Fixed an issue with the AdBlock icon in Safari 5.0 (#342)
+- On the AdBlock options page, Filter Lists tab, add the title of custom filters lists the users is subscribed to (if there is a title for the filter list). (#336)
 
 2.11: In the 'Report an Ad' feature, the extension will now perform a check for known malware
       domains in the list of resources.  If resources from a known malware site are found, the
-      users is notified, and the a link with more information is provided.  If no malware
-      resources are found, the page continues to work as before. (#315)
+      user is notified, and a link with more information is provided.  If no malware resources
+      are found, the page continues to work as before. (#315)
 
-2.10.3: Added a work around to a Chrome bug which incorrectly sets the element type (#339) -
-          see http://crbug.com/410382
-        Added the column number to the information sent when a JavaScript exception is caught
+2.10.3:
+- Added a work around to a Chrome bug which incorrectly sets the element type (#339) - see http://crbug.com/410382
+- Added the column number to the information sent when a JavaScript exception is caught
 
-2.10.2: Fixed Javascript error on YouTube in Safari
+2.10.2: Fixed JavaScript error on YouTube in Safari
 
-2.10: Improved the Safari AdBlock menu (#291)
-      Fixed JavaScript error and ads showing on YouTube.com (#332)
-      Removed retry logic on ping failures (#331)
-      Modified text in buttons to  black (#329)
-      Added logic to determine the AdBlock version to help with support tickets (#328)
-      Removed survey opt out option (#326)
+2.10:
+- Improved the Safari AdBlock menu (#291)
+- Fixed JavaScript error and ads showing on YouTube.com (#332)
+- Removed retry logic on ping failures (#331)
+- Modified text in buttons to black (#329)
+- Added logic to determine the AdBlock version to help with support tickets (#328)
+- Removed survey opt out option (#326)
 
-2.9.4: Updated Translastions
+2.9.4: Updated Translations
 
-2.9.3: Fixed an issue with DropBox sync process (#325)
-       Fixed an memory leak issue in Chrome where prerenderred tab information was not removed
-       when the tab id was changed. (#324)
-       Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of
-       being loaded in the menu (#318)
-       Fixed an issue in Safari with un-whitelisting a site (blacklisting it)(#317)
-       Improved the string processing of debug information when users report an issue or ad to
-       the AdBlock support site (#307)
+2.9.3:
+- Fixed an issue with DropBox sync process (#325)
+- Fixed an memory leak issue in Chrome where pre-rendered tab information was not removed when the tab id was changed (#324)
+- Modified the 'Help Spread the Word' link in the popup menu to open a new tab instead of being loaded in the menu (#318)
+- Fixed an issue in Safari with un-whitelisting a site (blacklisting it) (#317)
+- Improved the string processing of debug information when users report an issue or ad to the AdBlock support site (#307)
 
-2.9.2: Fixed a JavaScript error in DropBox sync logic
-       Added the new option 'show survey' to the options that are sync'd using Dropbox
+2.9.2:
+- Fixed a JavaScript error in DropBox sync logic
+- Added the new option 'show survey' to the options that are synced using Dropbox
 
 2.9.1: Fixed a style issue on the whitelist and blacklist wizards
 
-2.9: Added a feature to allow users to synchronize their settings using DropBox
-     Added an option to allow users to opt out of AdBlock user surveys
-     Added logic to not log Javascript error if they contain URL information
-     Updated the version of jQuery and jQuery UI (2.1.1 and 1.10.3)
-     Fixed an issue when AdBlock is pause but still blocked popup windows
+2.9:
+- Added a feature to allow users to synchronize their settings using DropBox
+- Added an option to allow users to opt out of AdBlock user surveys
+- Added logic to not log JavaScript error if they contain URL information
+- Updated the version of jQuery and jQuery UI (2.1.1 and 1.10.3)
+- Fixed an issue when AdBlock was paused but still blocked popup windows
 
 2.8.2: Reverted translation because the line length exceeded the 132 character limit
 
-2.8.1: Removed externally_connectable permission from manifest.json file to avoid additional
-       permissions needed for Beta version.
+2.8.1: Removed externally_connectable permission from manifest.json file to avoid additional permissions needed for Beta version.
 
-2.8:   Added logic for Chrome beta users only; opening a /beta tab on updates.
+2.8: Added logic for Chrome beta users only; opening a /beta tab on updates.
 
-2.7.13: Added 'AdBlock Warning Removal' Filter list as an option on the Filter Lists option page. (#296)
-        Removed the logic to see if a user should be given a 'golden ticket'.  (#298)
+2.7.13:
+- Added 'AdBlock Warning Removal' Filter list as an option on the Filter Lists option page. (#296)
+- Removed the logic to see if a user should be given a 'golden ticket'. (#298)
 
-2.7.12: Fixed an issue with Safari and the new translation process (#292)
-        Added retry logic to the ping process, and enhanced survey processing (#290)
+2.7.12:
+- Fixed an issue with Safari and the new translation process (#292)
+- Added retry logic to the ping process, and enhanced survey processing (#290)
 
-2.7.11: Updated translations, and added translation credit file (#272)
-        Default ad reports to private on the support web site, to avoid spam bot issues (#281)
-        Added a link / option to the support page to show users how to report ads (#282)
-        Corrected an issue in Safari with YouTube ads (@284)
-        Removed 'beta' label from the Whitelist YouTube channels option (#288)
+2.7.11:
+- Updated translations, and added translation credit file (#272)
+- Default ad reports to private on the support web site, to avoid spam bot issues (#281)
+- Added a link / option to the support page to show users how to report ads (#282)
+- Corrected an issue in Safari with YouTube ads (@284)
+- Removed 'beta' label from the Whitelist YouTube channels option (#288)
 
 2.7.10: Corrected issue with 2.7.9 and the Safari / YouTube fix
 
-2.7.9: updated logic to correctly block video ads with the HTML 5 player on Safari, on youtube.com (#276)
-       improved the detection of getadblock.com website to ensure any injected extension
-       information only occurs on the correct web site. (#274)
-       include the total number of ads blocked in the weekly ping statistics (#274)
+2.7.9:
+- Updated logic to correctly block video ads with the HTML 5 player on Safari, on youtube.com (#276)
+- Improved the detection of getadblock.com website to ensure any injected extension information only occurs on the correct website (#274)
+- Include the total number of ads blocked in the weekly ping statistics (#274)
 
+2.7.8:
+- Added setting information to bug reports (#267)
+- Updated Finnish filter list URL (#270)
+- Updated hiding style sheet configuration (#266)
 
-2.7.8: added setting information to bug reports (#267)
-       updated Finnish filter list URL (#270)
-       updated hiding style sheet configuration (#266)
+2.7.7:
+- Added support information to bug reports (#265, #263, #231)
+- Filter unnecessary whitelist rules (#264)
 
-2.7.7: added support information to bug reports (#265, #263, #231)
-       filter unneccessary whitelist rules (#264)
+2.7.6:
+- Updated Translations
+- Fixed font display issues in Chrome on certain OS'es (#255)
 
-2.7.6: Updated Translations
-       Fixed font display issues in Chrome on certain OS'es (#255)
+2.7.5:
+- Fixed JavaScript error in search (#251)
+- Performance improvement (#248)
+- Fixed changelog I18N placeholder issue (#253)
 
-2.7.5: Fixed JavaScript error in search (#251)
-       Performance improvement (#248)
-       Fixed changelog I18N placeholder issue (#253)
+2.7.4:
+- Added Options to view the changelog on the support page (#244)
+- Corrected issue with Chrome badge counter not being incremented for hidden content (#237)
+- Fix JavaScript error in search (#249)
 
-2.7.4: Added Options to view the changelog on the support page (#244)
-       Corrected issue with Chrome badge counter not being incremted for hidden content (#237)
-       Fix JavaScript  error in search (#249)
-
-2.7.3: Added Extension version number to Ad Reports
-       Added font support for some specific characters
-       Improved Blacklist support on custom filters
-       Fixed JavaScript error on Chrome pop up menu
+2.7.3:
+- Added Extension version number to Ad Reports
+- Added font support for some specific characters
+- Improved Blacklist support on custom filters
+- Fixed JavaScript error on Chrome popup menu
 
 2.7.2: Issues #228, #220, #216, #219, #221, #227, #229
 
 2.7.1: Updated Translations
 
-2.7: Updated Options pages, popup menu
+2.7: New design for Options pages and popup menu
 
-2.6.37: bug fixes
-
-2.6.36: bug fix
-
-2.6.35: bug fix
-
-2.6.34: Bug fix
-
-2.6.33: Bug fix
+2.6.33-37: Bug fixes
 
 2.6.32: Bug fixes, and URL updates
 
 2.6.31: Bug fixes, and YouTube Channel Whitelisting
 
-2.6.30: removed unneccessary files
+2.6.30: Removed unnecessary files
 
 2.6.29: Bug fixes, remove Safari experimental feature, updated French filter URL
 
@@ -222,7 +234,7 @@ UNRELEASED:
 
 2.5.58: Small UI change, and change French list URL (famlam); survey for Safari 6 users
 
-2.5.57: Blacklister UI bugfix (John), corner-case Safari background image bugfix (famlam), new Russian+Ukranian URL
+2.5.57: Blacklister UI bugfix (John), corner-case Safari background image bugfix (famlam), new Russian+Ukrainian URL
 
 2.5.56: Minor Resource List bugfix (famlam), other minor bugfixes
 
@@ -322,7 +334,7 @@ UNRELEASED:
 
 2.5.8: Oops, disable popup blocking as adding it disables AdBlock.  Fix broken youtube ad blocking in Safari.
 
-2.5.7: Popup blocking (famlam), speed improvement (famlam), remove dead Ukranian list (John)
+2.5.7: Popup blocking (famlam), speed improvement (famlam), remove dead Ukrainian list (John)
 
 2.5.6: Remove instrumentation
 
@@ -376,7 +388,7 @@ UNRELEASED:
 
 2.4.16: Axe vietnamese filters; small bug fixes; helper wizard on Customize tab to run AdBlock on only a few sites (famlam)
 
-2.4.15: A pile of bugfixes by Famlam (Issues 5679 5380 699 5726), plus we added a Ukranian translation.
+2.4.15: A pile of bugfixes by Famlam (Issues 5679 5380 699 5726), plus we added a Ukrainian translation.
 
 2.4.14: Minor bugfixes (Famlam)
 
@@ -540,7 +552,7 @@ UNRELEASED:
 
 2.2.0: Add a browser button to AdBlock (integrating the Browser Button For AdBlock extension.)  Also add support for pausing Chrome AdBlock via the browser button.
 
-2.1.15: Add indonesian translation, and improve memory usage in Safari.
+2.1.15: Add Indonesian translation, and improve memory usage in Safari.
 
 2.1.14: Block background images even when they are specified in stylesheets (famlam).  Touchups to the UI for manual blacklist editing.  Fix typos in last release.
 
@@ -706,7 +718,7 @@ EasyList if you subscribe to an EasyList additional list (famlam)
 
 1.3.45: Add X icon to blacklister and whitelister dialogs.
 
-1.3.44: Switch back to RuAd russian filter list.
+1.3.44: Switch back to RuAd Russian filter list.
 
 1.3.43: Auto-complete the description field as well.
 
