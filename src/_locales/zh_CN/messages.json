@@ -1159,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"在AdBlock按钮上显示被屏蔽的广告数",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"在AdBlock菜单中显示被屏蔽的广告数",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"广告屏蔽过滤列表",
     "description":"List for subscribed ad blocking fiters"
@@ -1188,8 +1196,14 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"将此YouTube频道添加到白名单",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"将$name$频道添加到白名单",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"您确定要移除您在$host$上创建的$count$个屏蔽规则？",

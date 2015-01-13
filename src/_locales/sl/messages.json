@@ -183,6 +183,10 @@
     "message":"Ponovno naložite stran.",
     "description":"Checkbox on whitelist wizard"
   },
+  "wizardcantrunonframesets":{
+    "message":"Ta funkcija AdBlocka tukaj ne deluje, ker stran uporablja zastarelo tehnologijo. Vire lahko ročno blokirate ali dovolite v zavihku Prilagodi na strani z nastavitvami.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Poteka naročanje na seznam filtrov...",
     "description":"abp: link subscriber title"
@@ -350,7 +354,7 @@
     "description":"Name of the filter list"
   },
   "filterwarning_removal":{
-    "message":"Seznam odstranitve opozoril za AdBlock (odstrani sporočila o uporabi AdBlocka)",
+    "message":"Seznam odstranitve opozoril za AdBlock (odstrani sporočila spletnih strani o tem, da uporabljate AdBlock)",
     "description":"Name of the filter list"
   },
   "filteradblock_custom":{
@@ -473,8 +477,12 @@
     "message":"Ste ravnokar našli oglas na spletni strani? Pomagali vam bomo najti primeren kraj za prijavo!<br\/> Ne pozabite: prijavljanje oglasov je prostovoljno. V kolikor tega ne želite storiti, preprosto zaprite to okno in blokirajte oglas le zase. To storite tako, da dodate filter za oglas preko zavihka 'Prilagodi' na straneh z nastavitvami te razširitve.",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
   },
+  "malwarecheck":{
+    "message":"Preverjanje za zlonamerno programsko opremo",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
-    "message":"Vaš računalnik je morda okužen z nezaželeno programsko opremo. Kliknite <a>sem<\/a> za dodatne informacije.",
+    "message":"Vaš računalnik je morda okužen z zlonamerno programsko opremo. Kliknite <a>sem<\/a> za dodatne informacije.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
   },
   "malwarenotfound":{
@@ -1151,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Prikaži št. blokiranih oglasov na AdBlockovem gumbu",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Prikaži št. blokiranih oglasov v AdBlockovem meniju",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Seznami filtrov za blokiranje oglasov",
     "description":"List for subscribed ad blocking fiters"
@@ -1178,10 +1194,6 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Omogoči dodajanje nekaterih YouTube kanalov na seznam dovoljenih",
     "description":"Checkbox on the 'General' tab of the Options page"
-  },
-  "whitelist_youtube_channel":{
-    "message":"Dodajte ta YouTube kanal na seznam dovoljenih",
-    "description":"Text which is displayed on YouTube in popup menu"
   },
   "confirm_undo_custom_filters":{
     "message":"Ali ste prepričani, da želite odstraniti naslednje število blokad, ki ste jih ustvarili na $host$? Št. blokad: $count$",

@@ -731,7 +731,8 @@ $(function() {
   BGcall('storage_get', 'filter_lists', function(filter_lists) {
     for (var id in filter_lists) {
       if (filter_lists[id].subscribed &&
-          filter_lists[id].text) {
+          filter_lists[id].text &&
+          id !== "malware") {
         createResourceblockFilterset(id, filter_lists[id].text.split('\n'));
       } else if (id === "malware" &&
                  filter_lists[id].subscribed) {

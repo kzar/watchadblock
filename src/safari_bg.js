@@ -180,18 +180,24 @@ if (!LEGACY_SAFARI) {
     // and then remove frameData[tabId] after close event.
     safari.application.addEventListener("close", function(event) {
         setTimeout(function() {
-            var safari_tabs = safari.application.activeBrowserWindow.tabs;
+            if (safari && 
+                safari.application && 
+                safari.application.activeBrowserWindow && 
+                safari.application.activeBrowserWindow.tabs) {
+                    
+                var safari_tabs = safari.application.activeBrowserWindow.tabs;
 
-            var opened_tabs = [];
-            for (var i=0; i < safari_tabs.length; i++)
-                opened_tabs.push(safari_tabs[i].id);
+                var opened_tabs = [];
+                for (var i=0; i < safari_tabs.length; i++)
+                    opened_tabs.push(safari_tabs[i].id);
 
-            for (tab in frameData) {
-                if (typeof frameData[tab] === "object" && opened_tabs.indexOf(parseInt(tab)) === -1) {
-                    frameData.close(parseInt(tab));
+                for (tab in frameData) {
+                    if (typeof frameData[tab] === "object" && opened_tabs.indexOf(parseInt(tab)) === -1) {
+                        frameData.close(parseInt(tab));
+                    }
                 }
-            }
-        }, 150);
+            }//end of if
+        }, 150);//end of setTimeout
 
         // Remove the popover when the window closes so we don't leak memory.
         if (event.target instanceof SafariBrowserWindow) { // don't handle tabs

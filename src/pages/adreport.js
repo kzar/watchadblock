@@ -1,3 +1,4 @@
+var malwareDomains = null;
 $(function() {
     localizePage();
 
@@ -179,38 +180,50 @@ $("input, select").change(function(event) {
 
 
 // STEP 1: Malware/adware detection
+var checkAdvanceOptions = function() {
+     // Check, if downloaded resources are available,
+    // if not, just reload tab with parsed tabId
+    BGcall("get_settings", "show_advanced_options", function(status) {
+        if (status.show_advanced_options) {
+            checkmalware();
+        } else {
+            BGcall("set_setting", "show_advanced_options");
+            BGcall("reloadTab", parseInt(tabId));
+            chrome.extension.onRequest.addListener(
+                function(message, sender, sendResponse) {
+                    if (message.command  === "reloadcomplete") {
+                        BGcall("disable_setting", "show_advanced_options");
+                        checkmalware();
+                    }
+                }
+            );
+        }
+    });
+}
 
 // Fetch file with malware-known domains
-var xhr = new XMLHttpRequest();
-var malwareDomains = null;
-
-// The timestamp is add to the URL to prevent caching by the browser
-xhr.open("GET", "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime(), true);
-xhr.onload = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        malwareDomains = JSON.parse(xhr.responseText);
-
-        // Check, if downloaded resources are available,
-        // if not, just reload tab with parsed tabId
-        BGcall("get_settings", "show_advanced_options", function(status) {
-            if (status.show_advanced_options) {
-                checkmalware();
-            } else {
-                BGcall("set_setting", "show_advanced_options");
-                BGcall("reloadTab", parseInt(tabId));
-                chrome.extension.onRequest.addListener(
-                    function(message, sender, sendResponse) {
-                        if (message.command  === "reloadcomplete") {
-                            BGcall("disable_setting", "show_advanced_options");
-                            checkmalware();
-                        }
-                    }
-                );
-            }
-        });
+var fetchMalware = function() {
+    var xhr = new XMLHttpRequest();
+    // The timestamp is add to the URL to prevent caching by the browser
+    xhr.open("GET", "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime(), true);
+    xhr.onload = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            malwareDomains = JSON.parse(xhr.responseText);
+            checkAdvanceOptions();
+        }
+    };
+    xhr.send();
+}
+//Attempt to get the malwareDomains from the background page first
+//if the returned domains is null, then fetch them directly from the host.
+BGcall('getMalwareDomains', function(domains) {
+    if (domains) {
+        malwareDomains = domains;
+        checkAdvanceOptions();
+    } else {
+        fetchMalware();
     }
-};
-xhr.send(null);
+});
 
 var domain = parseUri(options.url).hostname.replace(/((http|https):\/\/)?(www.)?/g, "");
 var tabId = options.tabId.replace(/[^0-9]/g,'');

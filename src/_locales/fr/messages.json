@@ -1192,12 +1192,18 @@
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Permettre l'ajout en liste blanche de canaux YouTube spécifiques",
+    "message":"Autoriser la pub sur certaines chaînes YouTube uniquement",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Autoriser la pub sur ce canal YouTube",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Autoriser la pub sur la chaîne $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Êtes-vous sûr de vouloir supprimer les $count$ blocages que vous avez créé sur $host$ ?",

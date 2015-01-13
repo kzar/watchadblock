@@ -326,7 +326,7 @@
     "description":"Title of the filter list tab"
   },
   "filterlistlink":{
-    "message":"Prenumerera inte på mer än du behöver -- Varje lista gör Chrome en liten aning långsammare! Listornas ursprung, och fler listor hittas <a>här<\/a>.",
+    "message":"Prenumerera inte på mer än du behöver -- Varje lista gör webbläsaren en liten aning långsammare! Listornas ursprung, och fler listor hittas <a>här<\/a>.",
     "description":"Explanation of the filter lists"
   },
   "updatenowmessage2":{
@@ -1159,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Visa antal blockerade reklamtillägg, på AdBlock-ikonen",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Visa antal blockerade reklamtillägg, på AdBlock-menyn",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Reklamblockerande filterlistor",
     "description":"List for subscribed ad blocking fiters"
@@ -1188,8 +1196,14 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Vitlista den här YouTube-kanalen",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Vitlista $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Vill du verkligen ta bort $count$ blockering(ar) som du har skapat för $host$?",

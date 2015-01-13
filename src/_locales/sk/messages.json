@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"Najobľúbenejšie rozšírenie pre Chrome s viac ako 40 miliónmi používateľov! Blokuje reklamy na celom webe.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock - kliknite pre viac informácií",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -38,6 +42,10 @@
   "operabutton_how_to_hide2":{
     "message":"Ak chcete skryť tlačidlo, navštívte stránku opera:\/\/extensions a začiarknite voľbu \"Skryť z panela s nástrojmi\". Tlačidlo môžete zobraziť neskôr zrušením začiarknutia tejto možnosti.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
+  "safaributton_how_to_hide2":{
+    "message":"Aby ste skryli tlačidlo, kliknite pravým tlačidlom myši na Safari toolbar, zvoľte 'Prispôsobiť panel s nástrojmi' a odtiahnite AdBlock tlačidlo preč z toolbaru. Ak ho budete znovu chcieť zobraziť, stačí ho presunúť do toolbaru.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
   "sliderexplanation":{
     "message":"Nastavte posuvník tak, aby reklama na stránke bola blokovaná a zbytok stránky stále vyzeral uspokojivo.",
@@ -170,6 +178,14 @@
   "buttonexclude":{
     "message":"Vylúčiť",
     "description":"Button for excluding a domain in the whitelister dialog"
+  },
+  "reloadpageafterwhitelist":{
+    "message":"Obnoviť stránku",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Táto funkcia AdBlocku nefunguje na tejto stránke, pretože využíva zastarané technológie. Avšak stále môžete zablokovať alebo odblokovať zdroje manuálne v tabe 'Prispôsobenie' na stránke s nastaveniami.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
   "subscribingtitle":{
     "message":"Prihlasovanie k odberu zoznamu filtrov...",
@@ -437,6 +453,10 @@
     "message":"Ručne upraviť vlastné filtre:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Upraviť vypnuté filtre:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Buďte opatrní: pokiaľ tu urobíte chybu, veľa iných filtrov, vrátane oficiálnych, môžu byť tiež poškodené!<br\/>Prečítajte si <a>filter syntax tutorial (anglicky)<\/a> kde sa dozviete, ako pridávať pokročilé vlastné filtre a výnimky.",
     "description":"Warning when blacklisting manually"
@@ -456,6 +476,18 @@
   "adreport2":{
     "message":"Našli ste reklamu na web stránke? Dobre, pomôžem vám nájsť správne miesto, kde ju môžte nahlásiť!<br\/> Zapamätajte si: Nahlásenie reklamy je dobrovoľné. Pokiaľ si ju neprajete nahlásiť, môžete zavrieť toto okno a zablokovať ju len pre seba tým, že pridáte jej filter na záložke 'Prispôsobenie' na stránke s nastaveniami!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Kontrola malvéru",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Váš počítač môže byť napadnutý malwarom.  Kliknite <a>tu<\/a> pre viac informácií.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Malvér nebol nájdený.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Uistite sa, že zoznam filtrov je aktuálny",
@@ -670,6 +702,30 @@
   "checkinfirefox_5":{
     "message":"Tiež sa zobrazuje reklama v tomto prehliadači?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Skontrolujte v Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Nainštalujte Chrome, ak ho nemáte.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Nainštalujte AdBlock pre Chrome, ak ho nemáte.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"V Chrome, vyberte rovnaké zoznamy filtrov, aké máte tu.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"Načítajte stránku s reklamou v Chrome.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Tiež sa zobrazí reklama v Chrome?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Nechcem to takto kontrolovať",
@@ -1103,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Zobraziť počet zablokovaných reklám na AdBlock tlačidle",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Zobraziť počet zablokovaných reklám v AdBlock menu",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Zoznamy filtrov pre blokovanie reklám",
     "description":"List for subscribed ad blocking fiters"
@@ -1132,8 +1196,8 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Odblokuj $name$ kanál",
-    "description":"Text which is displayed on YouTube in popup menu",
+    "message":"Odblokuj kanál $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
     "placeholders":{
       "name":{
         "content":"$1",

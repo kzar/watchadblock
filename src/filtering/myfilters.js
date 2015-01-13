@@ -231,17 +231,12 @@ MyFilters.prototype.rebuild = function() {
   handlerBehaviorChanged(); // defined in background
 
   //if the user is subscribed to malware, then get it
+
   if (this._subscriptions &&
       this._subscriptions.malware &&
       this._subscriptions.malware.subscribed &&
       !this.getMalwareDomains()) {
-
-    this._loadMalwareDomains();
-
-    //TODO - remove this after a couple of releases
-    if (this._subscriptions['malware'].text) {
-        delete this._subscriptions['malware'].text;
-    }
+    this._initializeMalwareDomains();
   }
 
   // After 90 seconds, delete the cache. That way the cache is available when
@@ -285,25 +280,22 @@ MyFilters.prototype.changeSubscription = function(id, subData, forceFetch) {
     }
 
     if (this._subscriptions[id].subscribed) {
-        //check to see if we need to load the malware domains
-        if (!this.getMalwareDomains() || out_of_date(this._subscriptions[id])) {
-            this._loadMalwareDomains();
+        //if forceFetch, set the last update timestamp of the malware to zero, so it's updated now.
+        if (forceFetch) {
+            this._subscriptions.malware.last_update = 0;
         }
-        this._subscriptions[id].last_update = Date.now();
-        this._subscriptions[id].last_modified = Date.now();
-        delete this._subscriptions[id].last_update_failed_at;
-        this._subscriptions[id].expiresAfterHours = 120;
-        var smear = Math.random() * 0.4 + 0.8;
-        this._subscriptions[id].expiresAfterHours *= smear;
-        chrome.extension.sendRequest({command: "filters_updated"});
+        //load the malware domains
+        this._loadMalwareDomains();
     } else {
         this.blocking.setMalwareDomains(null);
         // If unsubscribed, remove properties
+        delete this._subscriptions[id].text;
         delete this._subscriptions[id].last_update;
         delete this._subscriptions[id].expiresAfterHours;
         delete this._subscriptions[id].last_update_failed_at;
         delete this._subscriptions[id].last_modified;
     }
+    this._onSubscriptionChange(subData.subscribed == false);
     return;
   }
 
@@ -473,6 +465,7 @@ MyFilters.prototype._updateSubscriptionText = function(id, text, xhr) {
 // Checks if subscriptions have to be updated
 // Inputs: force? (boolean), true if every filter has to be updated
 MyFilters.prototype.checkFilterUpdates = function(force) {
+
   var key = 'last_subscriptions_check';
   var now = Date.now();
   var delta = now - (storage_get(key) || now);
@@ -510,17 +503,60 @@ MyFilters.prototype.customToDefaultId = function(id) {
 //and set the response (list of domains) on the blocking
 //filter set for processing.
 MyFilters.prototype._loadMalwareDomains = function() {
-    // Fetch file with malware-known domains
-    var xhr = new XMLHttpRequest();
-    var that = this;
-    xhr.onload = function(e) {
-       that.blocking.setMalwareDomains(JSON.parse(xhr.responseText));
-    }
-    //the timestamp is add to the URL to prevent caching by the browser
-    xhr.open("GET", "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime());
-    xhr.send();
-}
 
+  function out_of_date(subscription) {
+    // After a failure, wait at least a day to refetch (overridden below if
+    // it has no .text)
+    var failed_at = subscription.last_update_failed_at || 0;
+    if (Date.now() - failed_at < HOUR_IN_MS * 24)
+      return false;
+    var hardStop = subscription.expiresAfterHoursHard || 240;
+    var smallerExpiry = Math.min((subscription.expiresAfterHours || 24), hardStop);
+    var millis = Date.now() - (subscription.last_update || 0);
+    return (millis > HOUR_IN_MS * smallerExpiry);
+  }
+
+    if (!this._subscriptions.malware.text ||
+        !this.getMalwareDomains() ||
+        out_of_date(this._subscriptions.malware)) {
+        //the timestamp is add to the URL to prevent caching by the browser
+        var url = "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime();
+        // Fetch file with malware-known domains
+        var xhr = new XMLHttpRequest();
+        var that = this;
+        xhr.onerror = function(e) {
+            //if the request fail, retry the next time
+            that._subscriptions.malware.last_update_failed_at = Date.now();
+        }
+        xhr.onload = function(e) {
+           that.blocking.setMalwareDomains(JSON.parse(xhr.responseText));
+           //set the response text on the 'text' property so it's persisted to storage
+           that._subscriptions.malware.text = JSON.parse(xhr.responseText);
+           that._subscriptions.malware.last_update = Date.now();
+           that._subscriptions.malware.last_modified = Date.now();
+           delete that._subscriptions.malware.last_update_failed_at;
+           //since the AdBlock Malware Domains.json file is only updated once a day
+           //on the server, expiration is around 24 hours.
+           that._subscriptions.malware.expiresAfterHours = 24;
+           var smear = Math.random() * 0.4 + 0.8;
+           that._subscriptions.malware.expiresAfterHours *= smear;
+           chrome.extension.sendRequest({command: "filters_updated"});
+           log("Fetched " + url);
+        }
+        xhr.open("GET",  url);
+        xhr.send();
+    }
+}
+//Retreive the list of malware domains from our site.
+//and set the response (list of domains) on the blocking
+//filter set for processing.
+MyFilters.prototype._initializeMalwareDomains = function() {
+    if (this._subscriptions.malware.text) {
+        this.blocking.setMalwareDomains(this._subscriptions.malware.text);
+    } else {
+        this._loadMalwareDomains();
+    }
+}
 //Get the current list of malware domains
 //will return undefined, if the user is not subscribed to the Malware 'filter list'.
 MyFilters.prototype.getMalwareDomains = function() {

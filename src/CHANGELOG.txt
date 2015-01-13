@@ -2,6 +2,15 @@
 
 UNRELEASED:
 
+2.16.3:
+- Added the saving of the malware filter list (same as other filter lists), so that we won't need to do a request when the browser starts up.(#432)
+
+2.16.2:
+- Added control logic to the getting of the malware filter lists (#430)
+
+2.16.1:
+- Fixed a bug in the Safari extension when a windows was closed (#428)
+
 2.16:
 - AdBlock now uses the YouTube API to retreive the channel name when users have the Whitelist a YouTube Channel feature enabled. (#392)
 - The 'Filter syntax tutorial' link on the AdBlock options / Customize tab now checks if the generated URL is valid. (#394)

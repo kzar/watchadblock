@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"Наиболее популярное расширение Chrome с более чем 40 миллионами пользователей! Блокирует рекламу по всему Интернету.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock - нажмите, чтобы увидеть подробности",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -699,6 +703,30 @@
     "message":"Реклама появляется в этом браузере тоже?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
+  "ff_checkinchrometitle":{
+    "message":"Проверить в Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Установить Chrome, если у Вас нет его.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Установить AdBlock для Chrome, если у Вас нет его.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"В Chrome подпишитесь на те же списки фильтров, как и здесь.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"В Chrome загрузите страницу с рекламой.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Реклама появляется в Chrome тоже?",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
   "refusetocheck":{
     "message":"Я не хочу проверять это",
     "description":"User is telling us they don't wish to investigate something for us"
@@ -1131,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Показать количество заблокированной рекламы на кнопке AdBlock",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Показать количество заблокированной рекламы в меню AdBlock",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Списки фильтров блокировки рекламы",
     "description":"List for subscribed ad blocking fiters"
@@ -1160,8 +1196,14 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Занести этот YouTube канал в белый список",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Канал $name$ белого списка",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Вы уверены, что хотите удалить $count$ блокировок, которые Вы создали на $host$?",

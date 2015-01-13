@@ -168,7 +168,7 @@
     "description":"Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com\/reader\/*'.  The URL will appear on the next line."
   },
   "you_can_slide_to_change":{
-    "message":"Voit raahata allaolevaa palkkia\/palkkeja määrittääksesi sivut, joilla AdBlock ei ole käytössä.",
+    "message":"Voit raahata alla olevaa palkkia määrittääksesi sivut, joilla AdBlock ei ole käytössä.",
     "description":"Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "whitelistertitle2":{
@@ -1159,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Näytä estettyjen mainosten määrän AdBlock-painikkeessa",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Näyttää estettyjen mainosten määrän AdBlock-valikossa",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Mainostenestolistat",
     "description":"List for subscribed ad blocking fiters"
@@ -1188,8 +1196,14 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Salli mainokset tällä YouTube-kanavalla",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Salli kanava $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Oletko varma, että haluat poistaa $count$ estoa, jotka olet estänyt verkkotunnuksessa $host$?",

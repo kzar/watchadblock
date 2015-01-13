@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"Ekstensi Chrome paling populer, dengan lebih dari 40 juta pengguna! Blokir iklan di seluruh web.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock - Klik untuk melihat detilnya",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -38,6 +42,10 @@
   "operabutton_how_to_hide2":{
     "message":"Untuk menyembunyikan tombol, pergi ke opera:\/\/extensions dan centang opsi 'Hide from toolbar'. Anda dapat menampilkannya lagi dengan tidak mencentang opsi tersebut.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
+  "safaributton_how_to_hide2":{
+    "message":"Untuk menyembunyikan tombol, klik kanan toolbar Safari dan pilih Customize Toolbar, kemudian tarik tombol AdBlock dari toolbar. Anda dapat menampilkannya lagi dengan menariknya kembali ke toolbar.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
   "sliderexplanation":{
     "message":"Geser pengatur hingga iklan terblokir dengan benar pada halaman, dan elemen yang terblokir tidak terlihat.",
@@ -170,6 +178,14 @@
   "buttonexclude":{
     "message":"Jangan sertakan",
     "description":"Button for excluding a domain in the whitelister dialog"
+  },
+  "reloadpageafterwhitelist":{
+    "message":"Muat ulang laman.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Fitur AdBlock ini tidak bekerja di situs ini karena menggunakan teknologi usang. Anda bisa memasukkannya ke sumber blacklist atau whitelist secara manual di tab 'Customize' halaman pengaturan.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
   "subscribingtitle":{
     "message":"Berlangganan daftar filter...",
@@ -337,6 +353,10 @@
     "message":"Fanboy's Annoyances (hapus gangguan di web)",
     "description":"Name of the filter list"
   },
+  "filterwarning_removal":{
+    "message":"AdBlock Warning Removal List (menghapus pesan tentang penggunaan AdBlock)",
+    "description":"Name of the filter list"
+  },
   "filteradblock_custom":{
     "message":"filter AdBlock yang diinginkan (dianjurkan)",
     "description":"A filter list"
@@ -345,12 +365,40 @@
     "message":"EasyList (dianjurkan)",
     "description":"A filter list"
   },
+  "filterrussian":{
+    "message":"Rusia dan Ukraina",
+    "description":"Language names for a filter list"
+  },
+  "filterczech":{
+    "message":"Ceko dan Slowakia",
+    "description":"Language names for a filter list"
+  },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (perlindungan privasi)",
     "description":"A filter list"
   },
+  "filtereasylist_plus_indonesian":{
+    "message":"Indonesia",
+    "description":"A filter list"
+  },
   "filtermalware":{
     "message":"Perlindungan Malware",
+    "description":"A filter list"
+  },
+  "filterlatvian":{
+    "message":"Latvia",
+    "description":"A filter list"
+  },
+  "filternorwegian":{
+    "message":"Norwegia",
+    "description":"A filter list"
+  },
+  "filterswedish":{
+    "message":"Swedia",
+    "description":"A filter list"
+  },
+  "filterturkish":{
+    "message":"Turki",
     "description":"A filter list"
   },
   "blacklistclickmessage":{
@@ -405,6 +453,10 @@
     "message":"Edit secara Manual filter anda:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Edit filter nonaktif:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Hati hati: jika anda membuat kesalahan disini banyak filter, termasuk filter resmi juga akan rusak!<br\/>Baca <a>Panduan filter syntax<\/a> untuk belajar bagaimana menambah filter daftar hitam dan daftar putih yang lebih maju.",
     "description":"Warning when blacklisting manually"
@@ -424,6 +476,18 @@
   "adreport2":{
     "message":"Anda menemukan sebuah iklan di sebuah halaman web? Saya akan membantu anda untuk menemukan tempat yang tepat untuk melaporkannya!<br\/> Ingat: melaporkan iklan adalah sukarela. Jika anda tidak ingin melakukan hal ini anda dapat menutup jendela ini dan blokir iklan tersebut hanya untuk anda sendiri dengan menambahkan filterny pada tab 'Penyesuaian' di halaman Pilihan!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Memeriksa malware",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Komputer Anda mungkin terinfeksi oleh malware. Klik <a>di sini<\/a> untuk informasi lebih lanjut.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Tidak ada malware yang diketahui ditemukan.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Yakinkan daftar filter anda sudah diperbaharui",
@@ -523,6 +587,10 @@
   },
   "filterhungarian":{
     "message":"Hungaria",
+    "description":"language"
+  },
+  "filterisraeli":{
+    "message":"Ibrani",
     "description":"language"
   },
   "filteritalian":{
@@ -634,6 +702,30 @@
   "checkinfirefox_5":{
     "message":"Apakah iklannya muncul juga pada browser itu?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Periksa di Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Pasang Chrome, jika Anda tidak memilikinya.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Pasang AdBlock untuk Chrome, jika Anda tidak memilikinya.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"Di Chrome, berlangganan ke daftar filter yang sama seperti yang Anda miliki di sini.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"Di Chrome, muat halaman dengan iklan.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Apakah iklan muncul di Chrome juga?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Saya tidak ingin memeriksa hal ini",
@@ -1067,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Tampilkan jumlah iklan yang diblokir di tombol AdBlock",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Tampilkan jumlah iklan yang diblokir di menu AdBlock",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Daftar filter pemblokiran iklan",
     "description":"List for subscribed ad blocking fiters"
@@ -1092,12 +1192,18 @@
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Membolehkan akses tertentu pada saluran Youtube",
+    "message":"Izinkan daftar putih pada saluran Youtube tertentu",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Whitelist YouTube ini saluran",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Daftar putih saluran $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Apakah Anda yakin ingin menghapus blok $count$ yang telah Anda buat pada $host$?",
@@ -1150,5 +1256,49 @@
   "whatsnew":{
     "message":"Apa baru dalam rilis terbaru? Lihat <a style='cursor:pointer;'>changelog<\/a>!",
     "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"Hanya Inggris",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Menemukan bug?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"Perbarui AdBlock",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"Ingin melihat bagaimana AdBlock bekerja?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Punya pertanyaan atau ide baru?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Kode sumber tersedia <a>secara gratis<\/a>!",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"Kami mempunyai sebuah <a>laman<\/a> untuk membantu Anda menemukan orang-orang di belakang AdBlock juga!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Tim kami meminta beberapa informasi debug? Klik <a href='#' id='debug'> di sini<\/a> untuk itu!",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Mengapa tidak Anda mengirimkan kami <a href='#' id='report'>laporan bugnya<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"Beritahukan kami di <a>situs dukungan<\/a> ini!",
+    "description":"Link to the support site on the Support tab of the options"
+  },
+  "ad_report_please":{
+    "message":"Jika Anda melihat iklan, jangan membuat laporan bug, melainkan buatlah <a>laporan iklan<\/a>!",
+    "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

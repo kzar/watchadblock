@@ -1159,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Toon het aantal geblokkeerde advertenties op de AdBlock knop",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Toon het aantal geblokkeerde advertenties in het AdBlock menu",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Advertentie Blokkerende Filters",
     "description":"List for subscribed ad blocking fiters"
@@ -1188,8 +1196,14 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
-    "message":"Sluit dit Youtube kanaal uit",
-    "description":"Text which is displayed on YouTube in popup menu"
+    "message":"Sluit $name$'s kanaal uit",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Weet je zeker dat je $count$ blokkeringen op $host$ wilt verwijderen?",
