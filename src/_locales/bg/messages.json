@@ -1159,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Показвай броя на блокираните реклами върху бутона на AdBlock",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Показвай броя на блокираните реклами в менюто на AdBlock",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Блокиращи филтри",
     "description":"List for subscribed ad blocking fiters"
@@ -1186,6 +1194,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Позволи изключения за определени канали в YouTube",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Изключи канал $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Сигурен ли сте, че премахвате $count$ от блокираните елементи за $host$?",

@@ -70,7 +70,7 @@ $(function() {
         }
 
         if (chrome.runtime && chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk")
-            show(["div_status_beta", "separator4"]);
+            show(["div_status_beta"]);
 
         for (var div in shown)
             if (shown[div])

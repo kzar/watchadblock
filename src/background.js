@@ -395,12 +395,18 @@
   debug_report_elemhide = function(selector, matches, sender) {
     if (!window.frameData)
       return;
-    frameData.storeResource(sender.tab.id, 0, selector, "HIDE");
+    if (SAFARI) {
+        frameData.storeResource(sender.tab.id, selector, "HIDE");
+    } else {
+        frameData.storeResource(sender.tab.id, 0, selector, "HIDE");
+    }
     var data = frameData.get(sender.tab.id, 0);
     if (data) {
       log(data.domain, ": hiding rule", selector, "matched:\n", matches);
-      blockCounts.recordOneAdBlocked(sender.tab.id);
-      updateBadge(sender.tab.id);
+      if (!SAFARI) {
+        blockCounts.recordOneAdBlocked(sender.tab.id);
+        updateBadge(sender.tab.id);
+      }
     }
   }
 

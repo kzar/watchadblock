@@ -126,12 +126,7 @@ function debug_print_selector_matches(selectors) {
         var el = elems[i];
         matches += "        " + el.nodeName + "#" + el.id + "." + el.className + "\n";
       }
-      if (SAFARI) {
-        log("Debug: CSS '" + selector + "' hid:");
-        log(matches);
-      }
-      else
-        BGcall("debug_report_elemhide", selector, matches);
+      BGcall("debug_report_elemhide", selector, matches);
     });
 }
 
@@ -150,7 +145,7 @@ function handleABPLinkClicks() {
       BGcall("subscribe", {id: "url:" + loc, requires: reqList, title: title});
       // Open subscribe popup
       if (SAFARI) {
-          // In Safari, window.open() cannot be used 
+          // In Safari, window.open() cannot be used
           // to open a new window from our global HTML file
           window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
                       "_blank",

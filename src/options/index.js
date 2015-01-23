@@ -18,7 +18,7 @@ function load_options() {
                     event.preventDefault();
                     return;
                 }
- 
+
                 ui.jqXHR.success(function() {
                     ui.tab.data("loaded", true);
                 });
@@ -32,6 +32,8 @@ function load_options() {
                     $(".advanced").hide();
                 if (SAFARI)
                     $(".chrome-only").hide();
+                if (!SAFARI)
+                    $(".safari-only").hide();
 
                 // Must load tab .js here: CSP won't let injected html inject <script>
                 // see index.html:data-scripts
@@ -136,7 +138,7 @@ function displayTranslationCredit() {
                               var name = text[lang].translators[translator].credit;
                               translators.push(" " + name);
                           }
-                       } 
+                       }
                     }
                 } else {
                     if (lang.substring(0, 2) === id) {
