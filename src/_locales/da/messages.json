@@ -1159,6 +1159,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Vis antal reklamer blokeret i AdBlock-knappen",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Vis antal reklamer blokeret i AdBlock-knappen",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Liste over reklamefiltre",
     "description":"List for subscribed ad blocking fiters"
@@ -1186,6 +1194,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Tillad whitelisting af bestemte YouTube-kanaler",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Whitelist kanalen $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Er du sikker på du vil fjerne $count$ blokeringer, som du har oprettet på $host$?",

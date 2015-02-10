@@ -167,6 +167,7 @@ BlockingFilterSet.prototype = {
         this.malwareDomains.adware.indexOf(urlDomain) > -1) {
       log("matched malware domain", urlDomain);
       this._matchCache[key] = (returnFilter ? urlDomain: true);
+      createMalwareNotification();
       return this._matchCache[key];
     }
     this._matchCache[key] = false;

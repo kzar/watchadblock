@@ -253,7 +253,6 @@
         if (tabId === -1) {
            return false;
         }
-
         if (details.type === 'main_frame') { // New tab
           delete fd[tabId];
           fd.record(tabId, 0, details.url);
@@ -390,6 +389,25 @@
     chrome.webNavigation.onTabReplaced.addListener(function(details) {
         frameData.onTabClosedHandler(details.replacedTabId);
     });
+
+    chrome.webNavigation.onHistoryStateUpdated.addListener(function(details) {
+        if (details &&
+            details.hasOwnProperty("frameId") &&
+            details.hasOwnProperty("tabId") &&
+            details.hasOwnProperty("url") &&
+            details.hasOwnProperty("transitionType") &&
+            details.transitionType === "link") {
+            //on some single page sites that update the URL using the History API pushState(),
+            //but they don't actually load a new page, we need to get notified when this happens
+            //and track these updates in the frameData object.
+            var tabData = frameData.get(details.tabId, details.frameId);
+            if (tabData &&
+                tabData.url !== details.url) {
+                details.type = 'main_frame';
+                frameData.track(details);
+            }
+        }
+    })
   }
 
   debug_report_elemhide = function(selector, matches, sender) {
@@ -1128,6 +1146,58 @@
     openTab("https://getadblock.com/installed/?u=" + STATS.userId);
   }
 
+  createMalwareNotification = function() {
+    if (!SAFARI &&
+        chrome &&
+        chrome.notifications &&
+        storage_get('malware-notification')) {
+
+        //get the current tab, so we only create 1 notification per tab
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            if (tabs.length === 0) {
+                return; // For example: only the background devtools or a popup are opened
+            }
+
+            var tab = tabs[0];
+            if (sessionStorage.getItem("malwareNotification" + tab.id)) {
+                //we've already notified the user, just return.
+                return;
+            } else {
+                sessionStorage.setItem("malwareNotification" + tab.id, true);
+            }
+            var notificationOptions = {
+                title: translate('malwarenotificationtitle'),
+                iconUrl: chrome.extension.getURL('img/icon48.png'),
+                type: 'basic',
+                priority: 2,
+                message: translate('malwarenotificationmessage'),
+                buttons: [{title:translate('malwarenotificationlearnmore'),
+                           iconUrl:chrome.extension.getURL('img/icon24.png')},
+                          {title:translate('malwarenotificationdisablethesemessages'),
+                           iconUrl:chrome.extension.getURL('img/icon24.png')}]
+            }
+            //OPERA currently doesn't support buttons on notifications, so remove them from the options.
+            if (OPERA) {
+                delete notificationOptions.buttons;
+            } else {
+            //But, Chrome does, so add button click handlers to process the button click events
+                chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
+                    if (buttonIndex === 0) {
+                        openTab("http://support.getadblock.com/kb/im-seeing-an-ad/im-seeing-similar-ads-on-every-website/");
+                    }
+                    if (buttonIndex === 1) {
+                        storage_set('malware-notification', false);
+                    }
+                });
+            }
+            // Pop up a notification to the user.
+            chrome.notifications.create((Math.floor(Math.random() * 3000)).toString(), notificationOptions, function(id) {
+                    //do nothing in callback
+            });
+        });//end of chrome.tabs.query
+    }//end of if
+  }//end of createMalwareNotification function
+
   if (!SAFARI) {
     // Chrome blocking code.  Near the end so synchronous request handler
     // doesn't hang Chrome while AdBlock initializes.
@@ -1375,15 +1445,23 @@
               var local = localStorage.custom_filters;
               var filters;
               if (sync === local) {
-                  filters = "";
-              } else if (local === undefined && sync !== "") {
+                  filters = null;
+              } else if (!local && sync && sync !== "") {
                   filters = sync;
-              } else if (sync !== "" && local) {
-                  filters = local + sync;
+              } else if (local && sync && sync !== "") {
+                  if (local.charAt(local.length - 1) === '"') {
+                    //remove the ending "
+                    local = local.substring(0, local.length - 1);
+                  }
+                  if (sync.charAt(0) === '"') {
+                    //remove the begining "
+                    sync = sync.substring(1);
+                  }
+                  filters = local + "\\" + "n" + sync;
               } else {
                   filters = local;
               }
-              if (filters && filters !== "" && filters !== undefined) {
+              if (filters) {
                   filters = filters.replace(/\""/g, "");
                   settingstable.set("custom_filters", filters);
               }
@@ -1394,15 +1472,23 @@
               var eXlocal = localStorage.exclude_filters;
               var eXfilters;
               if (eXsync === eXlocal) {
-                  eXfilters = "";
-              } else if (eXlocal === undefined && eXsync !== "") {
+                  eXfilters = null;
+              } else if (!eXlocal && eXsync && eXsync !== "") {
                   eXfilters = eXsync;
-              } else if (eXsync !== "" && eXlocal) {
-                  eXfilters = eXlocal + "\n" + eXsync;
+              } else if (eXlocal && eXsync && eXsync !== "") {
+                  if (eXlocal.charAt(eXlocal.length - 1) === '"') {
+                    //remove the ending "
+                    eXlocal = eXlocal.substring(0, eXlocal.length - 1);
+                  }
+                  if (eXsync.charAt(0) === '"') {
+                    //remove the begining "
+                    eXsync = eXsync.substring(1);
+                  }
+                  eXfilters = eXlocal + "\\" + "n" + eXsync;
               } else {
                   eXfilters = eXlocal;
               }
-              if (eXfilters && eXfilters !== "" && eXfilters !== undefined) {
+              if (eXfilters) {
                   eXfilters = eXfilters.replace(/\""/g, "");
                   settingstable.set("exclude_filters", eXfilters);
               }
