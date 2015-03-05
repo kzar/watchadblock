@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"Den mest populære Chrome utvidelsen med over 40 millioner brukere! Blokkerer annonser over hele internett.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock - Klikk for mer informasjon",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -38,6 +42,10 @@
   "operabutton_how_to_hide2":{
     "message":"For å fjerne knappen, gå til opera:\/\/extensions og sett en markering i boksen ved menylinjen \"Skjul fra verktøylinjen\" . For å vise knappen igjen må markeringen du satte ved menylinjen fjernes .",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
+  "safaributton_how_to_hide2":{
+    "message":"For å gjemme knappen, høyreklikk på Safaris verktøylinje og velg tilpass verktøylinje. Deretter dra AdBlockknappen ut av verktøylinjen. Du kan vise den igjen ved å dra den tilbake til verktøylinjen",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
   "sliderexplanation":{
     "message":"Drag glidebryteren helt til annonsen(e) er blokkert riktig på nettsiden, og det blokkerte elementet ser brukbart ut.",
@@ -171,6 +179,14 @@
     "message":"Ekskluder",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Last inn siden på nytt.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Denne AdBlock-funksjonen virker ikke fordi den bruker gammel teknologi. Du kan svarteliste eller hviteliste ressurser manuelt under Tilpass-fanen på Alternativer-siden.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"Abonner på filterlister...",
     "description":"abp: link subscriber title"
@@ -220,6 +236,10 @@
   "showcontextmenus2":{
     "message":"Legg til elementer på høyreklikkmenyen",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Aktiver kompatibilitetsmodus for ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Vis feilsøkningsopplysninger i Konsoll (som vil gjøre AdBlock tregere)",
@@ -437,6 +457,10 @@
     "message":"Manuelt endre dine filtere:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Rediger deaktiverte filtre:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Vær forsiktig: hvis du gjør en feil her kan mange andre filtere, inkludert de offisielle, bli ødelagt!<br\/>Les <a>filtersyntax-veiledningen<\/a> for å lære hvordan du kan legge til avanserte svarteliste- og hvitelistefiltere.",
     "description":"Warning when blacklisting manually"
@@ -456,6 +480,18 @@
   "adreport2":{
     "message":"Så du fant akkurat en annonse på en nettside? Vel, jeg skal hjelpe deg med å finne riktig sted å rapportere det!<br\/> Husk: rapportering av annonser er frivillig. Hvis du ikke ønsker å gjøre dette, kan du enkelt lukke vinduet og blokkere den kun for deg selv ved å legge til dets filter i 'Tilpass'-fanen av innstillingssiden!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"Sjekk for skadevare",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Datamaskinen din kan være infisert av skadevare. Klikk<a>her<\/a> for mer informasjon.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Vi kan ikke finne skadevare vi kjenner igjen.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Sørg for at filterlistene dine er oppdatert",
@@ -670,6 +706,30 @@
   "checkinfirefox_5":{
     "message":"Vises reklamen også i den nettleseren?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Sjekk i Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Installer Chrome hvis du ikke har gjort det.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Installer AdBlock for Chrome hvis du ikke har gjort det.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"Abonner på samme filterlister i Chrome som du har her.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"Last ned siden i Chrome med annonsen.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Kommer annonsen opp i Chrome også?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Jeg vil ikke sjekke dette.",
@@ -1103,6 +1163,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Vis antall annonser blokkert på AdBlock-knappen",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Vis antall annonser blokkert i AdBlock-menyen",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Liste over annonsefiltre",
     "description":"List for subscribed ad blocking fiters"
@@ -1130,6 +1198,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Ikke blokker annonser på bestemte YouTube-kanaler",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Hvitelist kanalen $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Er du sikker på at du vil ta bort $count$ blokkeringene som du har fjernet på $host$?",

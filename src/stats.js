@@ -42,14 +42,6 @@ STATS = (function() {
     return storage_get("userid");
   })();
   
-  var pingAfterInterval = function(millisInterval) {
-    storage_set("next_ping_time", Date.now() + millisInterval);
-    var delay = millisTillNextPing();
-    window.setTimeout(function() {
-        STATS.startPinging();
-    }, delay);
-  }
-
   // Tell the server we exist.
   var pingNow = function() {
     var data = {
@@ -135,19 +127,6 @@ STATS = (function() {
   
   // TODO: Remove when we no longer do a/b tests
   var maybeSurvey = function(responseData, textStatus, jqXHR) {
-    // check to see if the extension should change its ping interval
-    if (jqXHR && jqXHR.getResponseHeader("millis-to-ping"))  {
-        var millisPing = parseInt(jqXHR.getResponseHeader("millis-to-ping"), 10);
-        if (isNaN(millisPing) || millisPing < -1) // server is sick
-            millisPing = null;
-        if (millisPing === -1)
-            millisPing = null;
-        
-        if (millisPing !== null) {
-            pingAfterInterval(millisPing);
-        }
-    }
-    
     if (responseData.length ===  0)
       return;
 

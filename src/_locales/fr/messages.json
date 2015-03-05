@@ -47,6 +47,10 @@
     "message":"Pour masquer ce bouton, faites un clic droit dessus et choisissez \"Personnaliser la barre d'outils\". Vous pouvez ensuite le faire glisser hors de la barre d'outils. Pour l'afficher à nouveau, glissez-le dans la barre d'outils.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Pour masquer ce bouton, faites un clic droit dessus et choisissez \"Retirer de la barre d'outils\". Pour l'afficher à nouveau, allez dans le menu Firefox -> Personnaliser.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Faites glisser le curseur jusqu'à ce que la pub disparaisse.",
     "description":"Blacklister slider page message"
@@ -236,6 +240,10 @@
   "showcontextmenus2":{
     "message":"Afficher les éléments AdBlock dans le menu du clic droit",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Activer le mode de compatibilité ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Afficher les messages de débogage dans la Console (ralentit AdBlock)",
@@ -476,6 +484,22 @@
   "adreport2":{
     "message":"Vous venez de trouver une publicité sur une page web ? Et bien, nous allons trouver qui vous pouvez en informer.<br\/>Notez que signaler des publicités est purement volontaire. Si vous ne souhaitez pas le faire, vous pouvez simplement fermer cette fenêtre, et bloquer la publicité pour vous-même, en ajoutant le filtre approprié dans l'onglet \"Personnaliser\" des options AdBlock !",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Est-ce qu'AdBlock doit vous prévenir si un logiciel malveillant est détecté?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock a détecté un logiciel malveillant. Votre ordinateur pourrait être infecté.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Plus d'infos sur les logiciels malveillants",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Désactiver ces notifications",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Recherche de logiciels malveillants",

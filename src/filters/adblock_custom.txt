@@ -55,3 +55,8 @@ wrzesnia.pl##img[src*="/ads_files/"]
 
 ! whitelist to avoid AdBlock detection on CBS.com
 @@/adblock.js$domain=cbs.com
+
+! Whitelist the outlook office 365 site to prevent 
+! Safari users from send emails that are identified as
+! Spam (issue #444)
+@@||outlook.office365.com/$document

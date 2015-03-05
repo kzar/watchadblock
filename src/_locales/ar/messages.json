@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"الأضافة الأكثر شعبية في  Chrome، مع ما يزيد على 40 مليون مستخدم! تمنع الأعلانات في جميع أنحاء شبكة الإنترنت.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock-اضغط للتفاصيل",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -38,6 +42,10 @@
   "operabutton_how_to_hide2":{
     "message":"لأخفاء الزر, أذهب إلي opera:\/\/extensions و علم علي \"إخفاء من شريط الأدوات\". يمكنك إظهاره مرة اخري بأغلاء تحديد هذا الخيار.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
+  "safaributton_how_to_hide2":{
+    "message":"لإخفاء الزر،انقر على شريط الأدوات في Safari واختر \"تخصيص شريط الأدوات\"، ثم اسحب الزر AdBlock خارج شريط الأدوات . يمكنك إظهاره  مرة أخرى عن طريق سحبه إلى شريط الأدوات.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
   "sliderexplanation":{
     "message":"حرك مربع التمرير حتى يتم حظر الإعلان بشكل صحيح على الصفحة، ومنع العناصر تبدو غير مفيدة.",
@@ -171,6 +179,14 @@
     "message":"استبعاد",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"تحديث الصفحة.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"ميزات AdBlock لا تعمل على هذا الموقع لأنه يستخدم تكنولوجيا قديمة. يمكنك اضافة موارد إلي لقائمة السوداء أو البيضاء  يدوياً في علامة التبويب 'تخصيص' من الصفحة خيارات.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribingtitle":{
     "message":"الاشتراك في قائمة عامل التصفية...",
     "description":"abp: link subscriber title"
@@ -220,6 +236,10 @@
   "showcontextmenus2":{
     "message":"إضافة عناصر إلى القائمة الزر اليمين",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"تمكين وضع التوفق مع ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"إظهار بيانات التصحيح في \"سجل وحدة التحكم\" (الذي يبطئ AdBlock)",
@@ -337,6 +357,10 @@
     "message":"مضايقات Fanboy's (يزيل مضايقات على شبكة الإنترنت)",
     "description":"Name of the filter list"
   },
+  "filterwarning_removal":{
+    "message":"قائمة إزالة تحذير AdBlock (إزالة رسائل حول استخدام AdBlock)",
+    "description":"Name of the filter list"
+  },
   "filteradblock_custom":{
     "message":"عوامل التصفية المخصص لي AdBlock (مستحسن)",
     "description":"A filter list"
@@ -433,6 +457,10 @@
     "message":"تحرير عوامل التصفية الخاصة بك يدوياً:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"تعديل عوامل التصفية المعطلة:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"كن حذراً: إذا كنت تجعل من خطأ هنا الكثير من عوامل التصفية الأخرى، بما في ذلك عوامل التصفية الرسمية، يمكن الحصول على كسر جداً! <br\/>قراءة <a>دروس بناء جملة عوامل التصفية<\/a> لمعرفة كيفية إضافة خيارات متقدمة في عوامل التصفية القائمة السوداء و عوامل التصفية القائمة البيضاء .",
     "description":"Warning when blacklisting manually"
@@ -452,6 +480,18 @@
   "adreport2":{
     "message":"لذلك أنت فقط وجدت إعلانا على صفحة ويب؟ حسنا، سوف يساعدك لإيجاد المكان الصحيح تقرير ذلك! <br\/> تذكر: الإبلاغ عن الإعلانات طوعي. إذا كنت لا ترغب في القيام بذلك يمكنك إغلاق هذه النافذة ومنعة فقط لنفسك عن طريق إضافة تصفية في علامة التبويب 'تخصيص' من صفحة خيارات!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarecheck":{
+    "message":"التحقق من البرامج الضارة",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"قد يكون كمبيوترك مصاب ببرامج ضارة.  انقر <a>here<\/a> لمزيد من المعلومات.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"لم يتم العثور على malware معروف.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"تأكد من قوائم عوامل التصفية الخاصة بك حتى الآن",
@@ -666,6 +706,30 @@
   "checkinfirefox_5":{
     "message":"تظهر الإعلانات في هذا المتصفح أيضاً؟",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"تحقق في كروم",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"ثبت Chrome، إذا لم يكن لديك .",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"تثبيت AdBlock ل Chrome، إذا لم يكن لديك.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"في Chrome، اشترك في نفس قوائم التصفية كما لديك هنا.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"في Chrome، حمل الصفحة مع الإعلان.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"هل تظهر الإعلانات في كروم أيضا؟",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"لا ترغب في التحقق من ذلك",
@@ -1099,6 +1163,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"إظهار عدد إعلانات المحظورة على زر AdBlock",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"إظهار عدد إعلانات المحظورو على قائمة AdBlock",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"قوائم عوامل تصفية حظر الإعلان",
     "description":"List for subscribed ad blocking fiters"
@@ -1126,6 +1198,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"السماح لقنوات يوتيوب معينة",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"اضافة قناة $name$ لل القائمة البيضاء",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"هل أنت متأكد من أنك تريد إزالة $count$ المنع الذي قمت بإنشائه في $host$؟",

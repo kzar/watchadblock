@@ -1,6 +1,6 @@
 {
   "description2":{
-    "message":"The most popular Chrome extension, with over 40 million users!  Blocks ads all over the web.",
+    "message":"The most popular Chrome extension in the world, a customizable ad blocker that blocks ALL ads for free by default.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -46,6 +46,10 @@
   "safaributton_how_to_hide2":{
     "message":"To hide the button, right click Safari's toolbar and choose Customize Toolbar, then drag the AdBlock button out of the toolbar. You can show it again by dragging it back into the toolbar.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
+  },
+  "ff_button_how_to_hide":{
+    "message":"To hide the button, right click it and choose Remove from Toolbar.  You can show it again under Firefox menu -> Customize.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
   },
   "sliderexplanation":{
     "message":"Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
@@ -483,24 +487,20 @@
   },
   "malwarenotificationcheckboxmessage":{
     "message":"Should AdBlock notify you when it detects malware?",
-    "description":"Message to the user when subscribing to the Malware Filter list on the Options Filter tab."
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
-  "malwarenotificationtitle":{
-    "message":"AdBlock",
-    "description":"Title of the AdBlock message to the user"
-  }, 
   "malwarenotificationmessage":{
-    "message":"AdBlock has detected Malware.  Your computer may be infected with Malware.",
-    "description":"Message to the user when a Malware request has been blocked.  Message should be under 90 characters"
-  }, 
+    "message":"AdBlock has detected malware.  Your computer may be infected.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
   "malwarenotificationlearnmore":{
-    "message":"Learn more about Malware",
-    "description":"Button text, and when clicked it will take users to a link about malware on our website. Message should be under 45 characters"
-  },    
+    "message":"Learn more about malware",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
   "malwarenotificationdisablethesemessages":{
     "message":"Disable these notifications",
-    "description":"Button text on the malware notification message that disable future notifications.  Message should be under 45 characters"
-  },       
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
+  },
   "malwarecheck":{
     "message":"Malware check",
     "description":"Section header on the ad report page"

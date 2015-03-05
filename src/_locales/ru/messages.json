@@ -47,6 +47,10 @@
     "message":"Чтобы скрыть кнопку, щелкните правой кнопкой мыши по панели инструментов Safari и выберите Настроить панель инструментов, а затем перетащите кнопку AdBlock с панели инструментов. Вы можете показать её снова, перетащив обратно на панель инструментов.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Чтобы скрыть кнопку, щелкните правой кнопкой мыши и выберите Удалить в панели инструментов.  Вы можете отобразить её снова, используя меню Firefox -> Customize.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Сдвигайте ползунок до тех пор, пока реклама не будет заблокирована правильно, а заблокированный элемент выглядит пригодным.",
     "description":"Blacklister slider page message"
@@ -236,6 +240,10 @@
   "showcontextmenus2":{
     "message":"Добавить элементы в меню правой кнопки мыши",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Включить режим совместимости ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Показывать сообщения отладки в Журнале Консоли (замедляет AdBlock)",
@@ -476,6 +484,22 @@
   "adreport2":{
     "message":"Итак, Вы только что нашли рекламу на веб-странице? Хорошо, я помогу Вам найти подходящее место, куда сообщить об этом!<br\/> Помните: отчет о рекламе является добровольным. Если Вы не хотите делать его, Вы можете просто закрыть это окно и блокировать рекламу только для себя, добавив её фильтр на вкладке 'Настройка' на странице Параметры!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Следует ли AdBlock уведомляет Вас, когда он обнаруживает вредоносные программы?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock обнаружил вредоносные программы.  Ваш компьютер может быть заражен вредоносными программами.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Подробнее о вредоносных программах",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Отключить эти уведомления",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Проверка на наличие вредоносных программ",

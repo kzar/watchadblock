@@ -1166,7 +1166,7 @@
                 sessionStorage.setItem("malwareNotification" + tab.id, true);
             }
             var notificationOptions = {
-                title: translate('malwarenotificationtitle'),
+                title: "AdBlock",
                 iconUrl: chrome.extension.getURL('img/icon48.png'),
                 type: 'basic',
                 priority: 2,

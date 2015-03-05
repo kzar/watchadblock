@@ -237,6 +237,10 @@
     "message":"Adicionar itens ao menu de contexto",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
+  "disableyoutubestreamingads":{
+    "message":"Ativar o modo de compatibilidade ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
+  },
   "debuginlogoption":{
     "message":"Mostrar declarações de depuração no Log do Console (que deixa o AdBlock mais devagar)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -1159,6 +1163,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Mostrar o número de anúncios bloqueados no botão AdBlock",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Mostrar o número de anúncios bloqueador no menu AdBlock",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Listas de Filtro de Bloqueio de Propaganda",
     "description":"List for subscribed ad blocking fiters"
@@ -1186,6 +1198,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Permitir anúncios de canais específicos do YouTube",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Canal de lista branca $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Tem certeza que deseja remover os $count$ bloqueios que criou em $host$?",

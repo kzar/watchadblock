@@ -36,16 +36,20 @@
     "description":"Resource list column title telling if the resource originates from a different domain"
   },
   "chromebutton_how_to_hide2":{
-    "message":"Για απόκρυψη του κουμπιού, κάντε δεξί κλικ στο κουμπί και επιλογή Απόκρυψη κουμπιού. Μπορείτε να το επανεμφανίσετε από chrome:\/\/chrome\/extensions.",
+    "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στο κουμπί και επιλογή Απόκρυψη κουμπιού. Μπορείτε να το επανεμφανίσετε από chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
-    "message":"Για να κρύψετε αυτό το κουμπί, πηγαίνετε στο opera:\/\/extensions και επιλέξτε το 'Απόκρυψη από τη γραμμή εργαλείων'. Μπορείτε να το εμφανίσετε ξανά αναιρώντας αυτή την επιλογή.",
+    "message":"Για να κρύψετε το κουμπί, πηγαίνετε στο opera:\/\/extensions και επιλέξτε το 'Απόκρυψη από τη γραμμή εργαλείων'. Μπορείτε να το εμφανίσετε ξανά αναιρώντας αυτή την επιλογή.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
   },
   "safaributton_how_to_hide2":{
     "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στη γραμμή εργαλείων του Safari και επιλέξτε Προσαρμογή γραμμής εργαλείων, στη συνέχεια σύρετε το κουμπί AdBlock έξω από τη γραμμή εργαλείων. Μπορείτε να το εμφανίσετε ξανά σύροντάς το πίσω στην γραμμή εργαλείων.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
+  },
+  "ff_button_how_to_hide":{
+    "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στο κουμπί και επιλογή Αφαίρεση από τη γραμμή εργαλείων. Μπορείτε να το επανεμφανίσετε από Firefox Μενού -> Προσαρμογή.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
   },
   "sliderexplanation":{
     "message":"Σύρετε τον δείκτη ώσπου η διαφήμιση να μπλοκαριστεί σωστά στην σελίδα, και το μπλοκαρισμένο στοιχείο να φαίνεται εντάξει.",
@@ -156,7 +160,7 @@
     "description":"When you press ctrl-shift-K the blacklister searches for ads"
   },
   "blockanadtitle":{
-    "message":"Μπλοκάρετε μια διαφήμιση",
+    "message":"Μπλοκάρισμα μιας διαφήμισης",
     "description":"Title of the first two dialogs of the blacklister"
   },
   "clickthead":{
@@ -172,7 +176,7 @@
     "description":"Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "whitelistertitle2":{
-    "message":"Να μην τρέχει το AdBlock σε...",
+    "message":"Να μην λειτουργεί το AdBlock σε...",
     "description":"The title of the whitelister dialog"
   },
   "buttonexclude":{
@@ -230,12 +234,16 @@
     "description":"Label for beta features in AdBlock Options"
   },
   "googletextads2":{
-    "message":"Μου αρέσουν οι διαφημίσεις κειμένου στα αποτελέσματα αναζήτησης Google. εμφάνιζέ τες",
+    "message":"Μου αρέσουν οι διαφημίσεις κειμένου στα αποτελέσματα αναζήτησης Google, να εμφανίζονται",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "showcontextmenus2":{
     "message":"Προσθήκη στοιχείων στο μενού του δεξιού κλικ",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Ενεργοποίηση της λειτουργίας συμβατότητας του ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Εμφάνιση στοιχείων αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί το AdBlock)",
@@ -422,11 +430,11 @@
     "description":"Section header on the 'Customize' tab"
   },
   "linkblockadbyurl":{
-    "message":"Μπλοκάρετε μια διαφήμιση από την URL διεύθυνσή της",
+    "message":"Μπλοκάρισμα μιας διαφήμισης από την διεύθυνση URL",
     "description":"Link on the 'Customize' tab"
   },
   "linkhidesection":{
-    "message":"Αποκρύψτε μια περιοχή μιας ισοσελίδας",
+    "message":"Απόκρυψη μιας περιοχής της ιστοσελίδας",
     "description":"Link on the 'Customize' tab"
   },
   "linkunblock":{
@@ -450,7 +458,7 @@
     "description":"Message of the url and css -blocking area"
   },
   "manualfilteredit":{
-    "message":"Επεξεργαστείτε χειρόγραφα τα φίλτρα σας:",
+    "message":"Επεξεργαστείτε χειροκίνητα τα φίλτρα σας:",
     "description":"Subtitle on the 'Customize' tab"
   },
   "manualexcludefilteredit":{
@@ -476,6 +484,22 @@
   "adreport2":{
     "message":"Βρήκατε μια διαφήμιση σε μια ιστοσελίδα; Λοιπόν, θα σας δείξω το σωστό μέρος να την αναφέρετε!<br\/> Θυμηθείτε: η αναφορά διαφημίσεων είναι προαιρετική. Αν δε θέλετε να το κάνετε, απλά κλείστε αυτό το παράθυρο και μπλοκάρετέ την μόνο για εσάς προσθέτοντας ένα φίλτρο στην καρτέλα 'Μαύρη λίστα' της σελίδας επιλογών!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Να σας ειδοποιεί το AdBlock όταν ανιχνεύει κακόβουλο λογισμικό;",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"Το AdBlock έχει ανιχνεύσει κακόβουλο λογισμικό. Ο υπολογιστής σας μπορεί να μολύνθηκε με κακόβουλο λογισμικό.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Μάθετε περισσότερα για το κακόβουλο λογισμικό",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Απενεργοποιήστε αυτές τις ειδοποιήσεις",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Έλεγχος κακόβουλου λογισμικού",
@@ -754,11 +778,11 @@
     "description":"Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome:\/\/chrome\/extensions\/'"
   },
   "block_an_ad_on_this_page":{
-    "message":"Μπλοκάρετε μία διαφήμιση σε αυτή τη σελίδα",
+    "message":"Μπλοκάρισμα μίας διαφήμισης σε αυτή τη σελίδα",
     "description":"Toolbar button menu entry and context menu entry"
   },
   "block_this_ad":{
-    "message":"Μπλοκάρετε αυτή τη διαφήμιση",
+    "message":"Μπλοκάρισμα αυτής της διαφήμισης",
     "description":"Context and popup menu entry"
   },
   "typehiding":{
@@ -814,11 +838,11 @@
     "description":"A resource type"
   },
   "blockeverycontaining":{
-    "message":"Μπλόκαρε κάθε πηγή που περιέχει:",
+    "message":"Μπλοκάρισμα κάθε πόρου που περιέχει:",
     "description":"resourceblocking page string"
   },
   "whitelisteverycontaining":{
-    "message":"Στην λευκή λίστα κάθε πηγή που περιέχει:",
+    "message":"Στη λευκή λίστα κάθε πόρος που περιέχει:",
     "description":"resourceblocking page string"
   },
   "wildcardhint":{
@@ -830,7 +854,7 @@
     "description":"resourceblocking page string"
   },
   "doesntmatchoriginal":{
-    "message":"Το πρότυπο που εισαγάγατε δεν ταιριάζει με την πηγή που προσπαθήσατε να μπλοκάρετε! Συνέχεια οπωσδήποτε;",
+    "message":"Το πρότυπο που εισαγάγατε δεν ταιριάζει με τον πόρο που προσπαθήσατε να μπλοκάρετε! Θέλετε να συνεχίσετε;",
     "description":"resourceblocking page string"
   },
   "thirdpartycheckbox":{
@@ -848,15 +872,15 @@
     "description":"resourceblocking page string"
   },
   "adblock_is_paused":{
-    "message":"Το AdBlock είναι σε παύση. Αφού δεν υπάρχουν πηγές, αυτή η σελίδα δεν μπορεί να χρησιμοποιηθεί. Αναιρέστε την παύση του AdBlock πρώτα και ξαναδοκιμάστε.",
+    "message":"Το AdBlock είναι σε παύση. Αφού δεν υπάρχουν πόροι, αυτή η σελίδα δεν μπορεί να χρησιμοποιηθεί. Αναιρέστε την παύση του AdBlock πρώτα και ξαναδοκιμάστε.",
     "description":"resourceblocking page string"
   },
   "excludefilterremoved":{
-    "message":"Το φίλτρο αφαιρέθηκε. Παρακαλώ ανανεώστε την πρωτότυπη σελίδα για να δημιουργήσετετη λίστα με πηγές.",
+    "message":"Το φίλτρο αφαιρέθηκε. Παρακαλώ ανανεώστε την πρωτότυπη σελίδα για να δημιουργήσετε τη λίστα με πόρους.",
     "description":"Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend2":{
-    "message":"Κάτι πήγε λάθος. Καμία από τις πηγές δεν έχει αποσταλεί. Η ιστοσελίδα θα κλείσει. Δοκιμάστε να επαναφορτώσετε τον ιστότοπο.",
+    "message":"Κάτι πήγε λάθος. Κανένας πόρος δεν έχει αποσταλεί. Αυτή η σελίδα θα κλείσει τώρα. Δοκιμάστε να φορτώσετε ξανά την ιστοσελίδα.",
     "description":"resourceblocking page string"
   },
   "resourcedomain":{
@@ -870,19 +894,19 @@
     }
   },
   "resourceiswhitelisted":{
-    "message":"Η επιλεγμένη πηγή είναι στη λευκή λίστα. Συνεπώς δε μπορείτε να την μπλοκάρετε.",
+    "message":"Ο επιλεγμένος πόρος είναι στη λευκή λίστα. Συνεπώς δε μπορείτε να τον μπλοκάρετε.",
     "description":"resourceblocking page string"
   },
   "selectresources":{
-    "message":"Επιλέξτε την πηγή τη οποία θα θέλατε να μπλοκάρετε ή να ξεμπλοκάρετε",
+    "message":"Επιλέξτε τον πόρο τον οποίο θα θέλατε να μπλοκάρετε ή να ξεμπλοκάρετε",
     "description":"resourceblocking page string"
   },
   "resourceblocktitle":{
-    "message":"Μπλοκάρετε μια πηγή",
+    "message":"Μπλοκάρισμα πόρου",
     "description":"resourceblocking page string"
   },
   "headerresource":{
-    "message":"Πηγή",
+    "message":"Πόρος",
     "description":"resourceblocking page string"
   },
   "headertype":{
@@ -902,15 +926,15 @@
     "description":"resourceblocking page string"
   },
   "resourceblocklegend2":{
-    "message":"μπλοκαρισμένες πηγές",
+    "message":"μπλοκαρισμένοι πόροι",
     "description":"resourceblocking page string"
   },
   "resourceblocklegend3":{
-    "message":"πηγές στην λευκή λίστα",
+    "message":"πόροι στη λευκή λίστα",
     "description":"resourceblocking page string"
   },
   "resourceblocklegend4":{
-    "message":"πηγές με δυνατότητα μπλοκ",
+    "message":"πόροι με δυνατότητα μπλοκαρίσματος",
     "description":"resourceblocking page string"
   },
   "resourceblocklegend5":{
@@ -946,7 +970,7 @@
     "description":"resourceblocking page string"
   },
   "onlyresourcetypes":{
-    "message":"Αυτό το φίλτρο εφαρμόζει σε πηγές τύπου:",
+    "message":"Αυτό το φίλτρο εφαρμόζεται σε πόρους αυτών των τύπων:",
     "description":"resourceblocking page string"
   },
   "addthisfilter":{
@@ -1038,7 +1062,7 @@
     "description":"Text of a share link"
   },
   "pwyw":{
-    "message":"Πληρώστε όσα θέλετε!",
+    "message":"Πληρώστε ότι θέλετε!",
     "description":"Text of a payment request link"
   },
   "removelabel":{
@@ -1062,7 +1086,7 @@
     "description":"Entry in the AdBlock button menu"
   },
   "show_resourcelist":{
-    "message":"Εμφάνιση της λίστας πηγής",
+    "message":"Εμφάνιση της λίστας πόρων",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{
@@ -1110,11 +1134,11 @@
     "description":"Text in resourceblock when you hover your mouse over the search textbox"
   },
   "searchplaceholder":{
-    "message":"Αναζήτηση πηγών...",
+    "message":"Αναζήτηση πόρων...",
     "description":"Text in resourceblock shown in the search textbox before you type something"
   },
   "nosearchresults":{
-    "message":"Δεν βρέθηκαν πηγές",
+    "message":"Δεν βρέθηκαν πόροι",
     "description":"Text in resourceblock shown if no results are found after searching"
   },
   "custompattern":{
@@ -1270,7 +1294,7 @@
     "description":"Subtitle on the Support tab of the options"
   },
   "whatmakesadblocktick":{
-    "message":"Θέλετε να δείτε τι κάνει το AdBlock τσιμπούρι;",
+    "message":"Θέλετε να δείτε τι κάνει το AdBlock να ξεχωρίζει;",
     "description":"Subtitle on the Support tab of the options"
   },
   "questionoridea":{
@@ -1282,7 +1306,7 @@
     "description":"Link to the source code of AdBlock on the Support tab of the options"
   },
   "contributors":{
-    "message":"Έχουμε μια <a>σελίδα<\/a> για να σας βοηθήσει να ανακαλύψετε τους ανθρώπους πίσω από το AdBlock, επίσης!",
+    "message":"Επίσης, έχουμε μια <a>σελίδα<\/a> για να σας βοηθήσει να ανακαλύψετε τους ανθρώπους πίσω από το AdBlock!",
     "description":"Link to the contributors page on the Support tab of the options"
   },
   "debuginfo":{

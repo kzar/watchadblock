@@ -36,16 +36,20 @@
     "description":"Resource list column title telling if the resource originates from a different domain"
   },
   "chromebutton_how_to_hide2":{
-    "message":"Om de knop te verbergen, klik er met de rechtermuisknop op en kies dan voor 'Knop verbergen'. Je kunt het opnieuw tonen op de volgende pagina: chrome:\/\/chrome\/extensions",
+    "message":"Om deze knop te verbergen, klik er met de rechtermuisknop op en kies dan voor 'Knop verbergen'. Je kan de knop opnieuw weergeven door naar de volgende pagina te gaan: chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
-    "message":"Om de knop te verbergen, ga naar opera:\/\/extensions en selecteer de optie 'Verberg van knoppenbalk'. Je kan het opnieuw tonen door deze optie te deselecteren.",
+    "message":"Om deze knop te verbergen, ga naar opera:\/\/extensions en selecteer de optie 'Verberg van knoppenbalk'. Je kan de knop opnieuw weergeven door deze optie te deselecteren.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
   },
   "safaributton_how_to_hide2":{
-    "message":"Als je deze knop wilt verbergen, klik dan met de rechtermuisknop op de Safari werkbalk, kies pas knoppenbalk aan en sleep hierna de AdBlock knop uit de knoppenbalk. Je kan de knop opnieuw weergeven door het terug naar de werkbalk te slepen.",
+    "message":"Om deze knop te verbergen, klik dan met de rechtermuisknop op de Safari werkbalk, kies pas knoppenbalk aan en sleep hierna de AdBlock knop uit de knoppenbalk. Je kan de knop opnieuw weergeven door het terug naar de werkbalk te slepen.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
+  },
+  "ff_button_how_to_hide":{
+    "message":"Om de knop te verbergen, klik er met de rechtermuisknop op en kies verwijderen van de werkbalk. Je kan het opnieuw weergeven door naar het Firefox menu -> Customize te gaan.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
   },
   "sliderexplanation":{
     "message":"Verplaats de schuifbalk tot de advertentie verdwenen is, en het geblokkeerde element bruikbaar lijkt.",
@@ -236,6 +240,10 @@
   "showcontextmenus2":{
     "message":"Voeg items toe aan het rechterklik menu",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Activeer de ClickToFlash compatibiliteitsmodus",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Toon debug resultaten in de Console Logs (dit vertraagt AdBlock).",
@@ -476,6 +484,22 @@
   "adreport2":{
     "message":"Dus je hebt een advertentie gevonden op een webpagina? We zullen je helpen om deze op de juiste plek te rapporteren!<br\/> Dit is vrijwillig. Als je dit niet wilt, kan je deze pagina gewoon sluiten en de advertentie voor jezelf blokkeren in het 'Personaliseren' menu van de opties pagina!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Moet AdBlock je waarschuwen als het malware detecteert?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock heeft malware gedetecteerd. Je computer is mogelijk besmet met malware.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Leer meer over malware",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Deze meldingen uitschakelen",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Malware controle",

@@ -47,6 +47,10 @@
     "message":"A gomb elrejtéséhez kattintson jobb gombbal a Safari eszköztárára, majd válassza az Eszköztár testreszabása menüpontot, aztán húzza le az AdBlock gombját az eszköztárról. Az eszköztárra való visszahúzásával újra megjelenítheti.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"A gomb elrejtéséhez jobb klikkeljen arra rá, majd válassza az Eltávolítás az eszköztárról lehetőséget. Újból megjelenítheti a Firefox menü > Testreszabás menüpontonból.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Csúsztassa addig a csúszkát, amíg a reklám megfelelően nincs blokkolva az oldalon, és a blokkolt elem hasznosan néz ki.",
     "description":"Blacklister slider page message"
@@ -236,6 +240,10 @@
   "showcontextmenus2":{
     "message":"Elemek hozzáadása a jobb klikk menühöz",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"ClickToFlash kompatibilitási üzemmód engedélyezése",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Hibakeresési kijelentések megjelenítése a Konzolnaplóban (ami lelassítja az AdBlock-ot)",
@@ -476,6 +484,22 @@
   "adreport2":{
     "message":"Szóval épp most talált egy hirdetést egy oldalon? Nos, én majd segítek megtalálni a megfelelő helyet a jelentéséhez!<br\/> Ne feledje: a hirdetések bejelentése önkéntes. Ha nem kívánja ezt tenni, egyszerűen bezárhatja ezt az ablakot, és blokkolja csak magának a \"Testreszabás\" fülön az opciók oldalon!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Értesítsen az AdBlock, ha kártevőt észlel?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"Az AdBlock kartevőt észlelt. Lehet, hogy a számítógépe megfertőződött.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Tudjon meg többet a kártevökröl",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Ezen értesítések letiltása",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Malware ellenőrzés",
@@ -1054,7 +1078,7 @@
     "description":"Will be followed by a list of translator names (separate string)"
   },
   "tabsupport":{
-    "message":"Ügyfélszolgálat",
+    "message":"Támogatás",
     "description":"A tab on the options page"
   },
   "report_ad_on_page":{
