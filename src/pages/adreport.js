@@ -194,9 +194,9 @@ var checkAdvanceOptions = function() {
                     if (message.command  === "reloadcomplete") {
                         BGcall("disable_setting", "show_advanced_options");
                         checkmalware();
+                        sendResponse({});
                     }
-                }
-            );
+             });
         }
     });
 }

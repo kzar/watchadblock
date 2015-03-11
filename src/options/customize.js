@@ -1,4 +1,4 @@
-chrome.extension.onRequest.addListener(function(request) {
+chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   if (request.command != "filters_updated")
     return;
   if ($("#txtFiltersAdvanced").prop("disabled") === false)
@@ -9,6 +9,7 @@ chrome.extension.onRequest.addListener(function(request) {
   BGcall("get_exclude_filters_text", function(text) {
     $("#txtExcludeFiltersAdvanced").val(text);
   });
+  sendResponse({});
 });
 
 $(function() {

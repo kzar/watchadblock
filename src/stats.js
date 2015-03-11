@@ -41,7 +41,7 @@ STATS = (function() {
 
     return storage_get("userid");
   })();
-  
+
   // Tell the server we exist.
   var pingNow = function() {
     var data = {
@@ -57,30 +57,35 @@ STATS = (function() {
     if (flavor === "E" && blockCounts) {
         data["b"] = blockCounts.get().total;
     }
+    //if available, add the install Date to ping data
+    var block_stats = storage_get("blockage_stats");
+    if (block_stats && block_stats.start) {
+        data["i"] = block_stats.start;
+    }
 
     $.ajax({
       type: 'POST',
-      url: stats_url, 
+      url: stats_url,
       data: data,
       success: maybeSurvey, // TODO: Remove when we no longer do a/b tests
       error: function(e) {
         console.log("Ping returned error: ", e.status);
-      }, 
+      },
     });
   };
-  
+
   var shouldShowSurvey = function(survey_data) {
     var data = {
       cmd: "survey",
       u: userId,
       sid: survey_data.survey_id
     };
-    
+
     function handle_should_survey(responseData) {
       if (responseData.length ===  0)
         return;
       log('Pinging got some data', responseData);
-  
+
       try {
         var data = JSON.parse(responseData);
         if (data.should_survey === 'true') {
@@ -91,10 +96,10 @@ STATS = (function() {
         return;
       }
     }
-    
+
     $.post(stats_url, data, handle_should_survey);
   }
-  
+
   var survey_data = null;
   function one_time_opener() {
     if (SAFARI) {
@@ -124,9 +129,10 @@ STATS = (function() {
       open_the_tab();
     }
   }
-  
+
   // TODO: Remove when we no longer do a/b tests
   var maybeSurvey = function(responseData, textStatus, jqXHR) {
+
     if (responseData.length ===  0)
       return;
 
@@ -134,7 +140,7 @@ STATS = (function() {
       return;
 
     log('Pinging got some data', responseData);
-    
+
     try {
       var url_data = JSON.parse(responseData);
       if (!url_data.open_this_url.match(/^\/survey\//))

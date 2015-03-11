@@ -210,9 +210,6 @@
       }
   }
 
-  // Chrome 38+ has bug in WebRequest API, see onBeforeRequestHandler
-  var invalidChromeRequestType = /Chrome\/(38|39|40)?/.test(navigator.userAgent);
-
   // Implement blocking via the Chrome webRequest API.
   if (!SAFARI) {
     // Stores url, whitelisting, and blocking info for a tabid+frameid
@@ -299,6 +296,34 @@
       }
     };
 
+    var normalizeRequestType = function(details) {
+        // normalize type, because of issue with Chrome 38+
+        var type = details.type;
+        if (type !== 'other') {
+            return type;
+        }
+        var url = parseUri(details.url);
+        if (url && url.pathname) {
+            var pos = url.pathname.lastIndexOf('.');
+            if (pos === -1) {
+                return type;
+            }
+        }
+        var ext = url.pathname.slice(pos) + '.';
+        if ('.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1) {
+            return 'font';
+        }
+        // Still need this because often behind-the-scene requests are wrongly
+        // categorized as 'other'
+        if ('.ico.png.gif.jpg.jpeg.webp.'.indexOf(ext) !== -1) {
+            return 'image';
+        }
+        // https://code.google.com/p/chromium/issues/detail?id=410382
+        if (type === 'other') {
+            return 'object';
+        }
+    };
+
     // When a request starts, perhaps block it.
     function onBeforeRequestHandler(details) {
       if (adblock_is_paused())
@@ -308,7 +333,7 @@
         return { cancel: false };
 
       var tabId = details.tabId;
-      var reqType = details.type;
+      var reqType = normalizeRequestType({url: details.url, type: details.type});
 
       if (frameData.get(tabId, 0).whitelisted) {
         log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
@@ -319,11 +344,6 @@
       // But for iframe loads, we consider the request to be sent by the outer
       // frame, while Chrome claims it's sent by the new iframe.  Adjust accordingly.
       var requestingFrameId = (reqType === 'sub_frame' ? details.parentFrameId : details.frameId);
-
-      // Because of bug in WebRequest API on Chrome 38,
-      // requests of type "object" are reported as type "other", see crbug.com/410382
-      if (invalidChromeRequestType && reqType === "other")
-          reqType = "object";
 
       var elType = ElementTypes.fromOnBeforeRequestType(reqType);
 
@@ -813,6 +833,17 @@
   }
 
   if (!SAFARI) {
+    var setBrowserActions = function(options) {
+        var iconCallback = function() {
+            if (chrome.runtime.lastError) {
+                return;
+            }
+            chrome.browserAction.setBadgeText({text: options.badge_text, tabId: options.tabId});
+            chrome.browserAction.setBadgeBackgroundColor({ color: options.color });
+        };
+        chrome.browserAction.setIcon({ tabId: options.tabId, path: options.iconPaths }, iconCallback);
+    }
+
     updateBadge = function(tabId) {
       var display = get_settings().display_stats;
       var badge_text = "";
@@ -822,13 +853,18 @@
 
       var isBlockable = !page_is_unblockable(main_frame.url) && !page_is_whitelisted(main_frame.url) && !/chrome\/newtab/.test(main_frame.url);
 
-      if(display && (main_frame && isBlockable) && !adblock_is_paused()){
-        badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
+      if (display && (main_frame && isBlockable) && !adblock_is_paused()) {
+        var browsersBadgeOptions = {};
+        browsersBadgeOptions.tabId = tabId;
+        browsersBadgeOptions.color = "#555";
+        var badge_text = blockCounts.getTotalAdsBlocked(tabId).toString();
         if (badge_text === "0")
-          badge_text = ""; // Only show the user when we've done something useful
+            badge_text = ""; // Only show the user when we've done something useful
+        browsersBadgeOptions.badge_text = badge_text;
+        browsersBadgeOptions.iconPaths = {'19': 'img/icon19.png', '38': 'img/icon38.png'};
+        //see for more details - https://code.google.com/p/chromium/issues/detail?id=410868#c8
+        setBrowserActions(browsersBadgeOptions);
       }
-      chrome.browserAction.setBadgeText({text: badge_text, tabId: tabId});
-      chrome.browserAction.setBadgeBackgroundColor({ color: "#555" });
     };
 
     // Set the button image and context menus according to the URL
@@ -874,21 +910,25 @@
       }
 
       function setBrowserButton(info) {
-        var tabId = info.tab.id;
-        chrome.browserAction.setBadgeText({text: "", tabId: tabId});
+        var browsersBadgeOptions = {};
+        browsersBadgeOptions.tabId = info.tab.id;
+        browsersBadgeOptions.color = "#555";
+        browsersBadgeOptions.badge_text = "";
         if (adblock_is_paused()) {
-          chrome.browserAction.setIcon({path:{'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"}, tabId: tabId});
+          browsersBadgeOptions.iconPaths = {'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"};
+          setBrowserActions(browsersBadgeOptions);
         } else if (info.disabled_site &&
             !/^chrome-extension:.*pages\/install\//.test(info.tab.url)) {
           // Show non-disabled icon on the installation-success page so it
           // users see how it will normally look. All other disabled pages
           // will have the gray one
-          chrome.browserAction.setIcon({path:{'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"}, tabId: tabId});
+          browsersBadgeOptions.iconPaths = {'19': "img/icon19-grayscale.png", '38': "img/icon38-grayscale.png"};
+          setBrowserActions(browsersBadgeOptions);
         } else if (info.whitelisted) {
-          chrome.browserAction.setIcon({path:{'19': "img/icon19-whitelisted.png", '38': "img/icon38-whitelisted.png"}, tabId: tabId});
+          browsersBadgeOptions.iconPaths = {'19': "img/icon19-whitelisted.png", '38': "img/icon38-whitelisted.png"};
+          setBrowserActions(browsersBadgeOptions);
         } else {
-          chrome.browserAction.setIcon({path:{'19': "img/icon19.png", '38': "img/icon38.png"}, tabId: tabId});
-          updateBadge(tabId);
+          updateBadge(info.tab.id);
         }
       }
 
@@ -1239,12 +1279,14 @@
           });
       });
 
-      chrome.tabs.onUpdated.addListener(function(tabId) {
+      chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+        if (changeInfo.status === "loading") {
           chrome.tabs.get(tabId, function(tabs) {
-              if (tabs && tabs.url && tabs.id) {
-                  runChannelWhitelist(tabs.url, tabs.id);
-              }
+            if (tabs && tabs.url && tabs.id) {
+              runChannelWhitelist(tabs.url, tabs.id);
+            }
           });
+        }
       });
   }
 
