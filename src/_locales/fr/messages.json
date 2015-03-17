@@ -52,7 +52,7 @@
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
   },
   "sliderexplanation":{
-    "message":"Faites glisser le curseur jusqu'à ce que la pub disparaisse.",
+    "message":"Faites glisser le curseur jusqu'à ce que la pub disparaisse, et que l'élément bloqué semble correct.",
     "description":"Blacklister slider page message"
   },
   "block_by_url_instead":{
@@ -64,11 +64,11 @@
     "description":"Blacklister slider page title"
   },
   "blacklisteroptions1":{
-    "message":"Quelles caractéristiques vont systématiquement correspondre à cette pub ?",
+    "message":"Quelles caractéristiques vont systématiquement correspondre à cette pub, à chaque fois que vous visiterez cette page ?",
     "description":"Blacklister attribute choosing page message"
   },
   "blacklisternotsure":{
-    "message":"<b>Vous ne savez pas ?<\/b> Appuyez simplement sur 'Bloquer' ci-dessous.",
+    "message":"<b>Vous ne savez pas ?<\/b> Appuyez simplement sur \"Bloquer\" ci-dessous.",
     "description":"Blacklister attribute choosing page message"
   },
   "blacklisterthefilter":{
@@ -84,7 +84,7 @@
     "description":"Warning if the user hasn't specified a filter"
   },
   "blacklistereditfilter":{
-    "message":"Merci d'entrer le filtre correct :",
+    "message":"Merci d'entrer le filtre correct ci-dessous et appuyer sur OK",
     "description":"Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid1":{
@@ -116,11 +116,11 @@
     }
   },
   "blacklistersinglematch":{
-    "message":"Ce qui s'applique à <b>1<\/b> élément sur cette page.",
+    "message":"Ceci s'applique à <b>1<\/b> élément sur cette page.",
     "description":"Tells the user only one match was found"
   },
   "blacklistermatches":{
-    "message":"Ce qui s'applique à $matchcount$ éléments sur cette page.",
+    "message":"Ceci s'applique à $matchcount$ éléments sur cette page.",
     "description":"Tells the user multiple matches were found",
     "placeholders":{
       "matchcount":{
@@ -326,7 +326,7 @@
     "description":"Label to remove a custom filter"
   },
   "you_know_thats_a_bad_idea_right":{
-    "message":"Plus vous utilisez de listes, plus AdBlock sera lent. Utiliser trop de listes peut même faire planter votre navigateur. Appuyez sur OK si vous êtes certain de vouloir s'abonner à cette liste.",
+    "message":"Plus vous utilisez de listes, plus AdBlock sera lent. Utiliser trop de listes peut même faire planter votre navigateur. Appuyez sur OK si vous êtes certain de vouloir vous abonner à cette liste.",
     "description":"Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
   },
   "filterstabtitle":{
@@ -486,7 +486,7 @@
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
   },
   "malwarenotificationcheckboxmessage":{
-    "message":"Est-ce qu'AdBlock doit vous prévenir si un logiciel malveillant est détecté?",
+    "message":"Est-ce qu'AdBlock doit vous prévenir si un logiciel malveillant est détecté ?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
   "malwarenotificationmessage":{
@@ -654,7 +654,7 @@
     "description":"language"
   },
   "other":{
-    "message":"autre",
+    "message":"Autre",
     "description":"Multiple choice option"
   },
   "orchrome":{
@@ -786,7 +786,7 @@
     "description":"Context and popup menu entry"
   },
   "typehiding":{
-    "message":"caché",
+    "message":"masqué",
     "description":"A resource type"
   },
   "typescript":{
@@ -798,7 +798,7 @@
     "description":"A resource type"
   },
   "typestylesheet":{
-    "message":"définition du style",
+    "message":"définition de style",
     "description":"A resource type"
   },
   "typeobject":{
@@ -826,7 +826,7 @@
     "description":"A resource type"
   },
   "typemedia":{
-    "message":"audio\/video",
+    "message":"audio\/vidéo",
     "description":"A resource type"
   },
   "typepage":{
@@ -846,7 +846,7 @@
     "description":"resourceblocking page string"
   },
   "wildcardhint":{
-    "message":"Note: vous pouvez utiliser * comme substituant",
+    "message":"Note: vous pouvez utiliser * comme joker",
     "description":"resourceblocking page string"
   },
   "novalidurlpattern":{
@@ -938,7 +938,7 @@
     "description":"resourceblocking page string"
   },
   "resourceblocklegend5":{
-    "message":"règles de dissimulation appliquées",
+    "message":"règles de masquage appliquées",
     "description":"resourceblocking page string"
   },
   "loading":{
@@ -1022,7 +1022,7 @@
     "description":"Menu entry to open the whitelist wizard"
   },
   "disabled_on_this_page":{
-    "message":"AdBlock est désactivé pour cette page.",
+    "message":"AdBlock est désactivé sur cette page.",
     "description":"Message shown in toolbar button on web pages that have been whitelisted"
   },
   "enable_adblock":{
@@ -1070,7 +1070,7 @@
     "description":"Link to remove a filter on the resourceblock page"
   },
   "changelabel":{
-    "message":"Changer",
+    "message":"modifier",
     "description":"Link to change resources on the resourceblock page"
   },
   "translator_credit":{
@@ -1082,7 +1082,7 @@
     "description":"A tab on the options page"
   },
   "report_ad_on_page":{
-    "message":"Rapporter une publicité sur cette page",
+    "message":"Signaler une publicité sur cette page",
     "description":"Entry in the AdBlock button menu"
   },
   "show_resourcelist":{
@@ -1122,7 +1122,7 @@
     "description":"Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "storage_quota_exceeded":{
-    "message":"Vous avez dépassé la quantité de stockage que peut utiliser AdBlock! Désabonnez-vous de quelques listes de filtres.",
+    "message":"Vous avez dépassé la quantité de stockage que peut utiliser AdBlock. Désabonnez-vous de quelques listes de filtres !",
     "description":"Message shown when the user uses more storage than allowed by the browser"
   },
   "safari50_updatenotice":{

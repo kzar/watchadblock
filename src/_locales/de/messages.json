@@ -47,6 +47,10 @@
     "message":"Um den Button auszublenden klicken Sie mit einem Rechtsklick auf die Safari Symbolleiste, klicken auf \"Symbolleiste anpassen ...\" und ziehen dann den AdBlock Button aus der Symbolleiste. Um den Button wieder einzublenden ziehen Sie den Button einfach wieder zurück auf die Symbolleiste.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Um den Button zu verbergen, klicken Sie mit einem Rechtsklick auf den Button und wählen Sie 'Aus Symbolleiste entfernen'. Der Button kann unter Firefox Menü -> Anpassen wieder aktiviert werden.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Verschieben Sie den Regler so lange nach rechts, bis die Werbung komplett entfernt ist und der restliche Teil der Seite noch normal aussieht.",
     "description":"Blacklister slider page message"
@@ -236,6 +240,10 @@
   "showcontextmenus2":{
     "message":"AdBlock-Rechtsklickmenü aktivieren",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"ClickToFlash Kompatibilitätsmodus aktivieren",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Debug-Berichte in der Fehlerkonsole anzeigen (verlangsamt AdBlock)",
@@ -476,6 +484,22 @@
   "adreport2":{
     "message":"Sie haben Werbung auf einer Seite gefunden? Dieser Assistent wird Ihnen dabei helfen, diese Werbung zu melden!<br\/> Hinweis: Das Melden von Werbung ist freiwillig. Sollten Sie keine Werbung melden wollen, können Sie dieses Fenster schließen und die Werbung über einen Filter im Tab 'Anpassen' der AdBlock-Einstellungen hinzufügen.",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Soll AdBlock Sie benachrichtigen falls Malware entdeckt wird?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock hat Malware entdeckt. Ihr computer ist möglicherweise mit Malware infiziert.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Mehr über Malware erfahren",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Diese Benachrichtigungen deaktivieren",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Malware-Überprüfung",
@@ -1159,6 +1183,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Anzahl geblockter Werbung am AdBlock Button anzeigen",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Anzahl geblockter Werbung im AdBlock Menü anzeigen",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Filterlisten für Werbung",
     "description":"List for subscribed ad blocking fiters"
@@ -1186,6 +1218,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Zulassen von Werbung auf bestimmten YouTube-Kanälen aktivieren",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Werbung auf $name$ Kanal zulassen",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Sind Sie sicher, dass Sie $count$ Filter entfernen wollen, die Sie für $host$ erstellt haben?",
