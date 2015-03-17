@@ -1186,8 +1186,8 @@
     openTab("https://getadblock.com/installed/?u=" + STATS.userId);
   }
   if (chrome.runtime.setUninstallURL) {
-    chrome.runtime.setUninstallURL("https://getadblock.com/uninstalled?u=" + STATS.userId);
-  }  
+    chrome.runtime.setUninstallURL("https://getadblock.com/uninstall/?u=" + STATS.userId);
+  }
 
   createMalwareNotification = function() {
     if (!SAFARI &&
