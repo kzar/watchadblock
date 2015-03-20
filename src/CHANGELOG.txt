@@ -2,13 +2,16 @@
 
 UNRELEASED:
 
+2.21.1:
+- For Safari users, added a user confirmation prompt when subscribing to a new filter lists using the ABP syntax. (#502)
+
 2.21:
 - Removed the Norwegian filter list since it is no longer active. (#489)
 - For each subscribe filter list, added the last update timestamp to debug data. (#482)
 - Added the malware notification setting to debug data. (#458)
 - Added additional CSS to whitelist/blacklist dialogs to avoid display issues on some websites. (#460)
 - Removed an unnecessary call to sendResponse. (#484)
-- Added a user confirmation prompt when subscribing to a new filter lists using the ABP syntax. (#486)
+- For Chrome users, added a user confirmation prompt when subscribing to a new filter lists using the ABP syntax. (#486)
 - Fixed an issue when the request URL didn't contain a '.' (#500)
 - Updated the Chrome web store description.(#501)
 
