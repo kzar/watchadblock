@@ -94,7 +94,7 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
       // TODO: Remove this logic after a few releases
-      if (id === "easylist_plus_spanish") {
+      if (id === "easylist_plus_spanish" || id === "norwegian") {
           delete this._subscriptions[id];
           continue;
       }
@@ -592,7 +592,6 @@ MyFilters.prototype._load_default_subscriptions = function() {
       case 'ko': return 'easylist_plun_korean';
       case 'lv': return 'latvian';
       case 'nl': return 'dutch';
-      case 'no': return 'norwegian';
       case 'pl': return 'easylist_plus_polish';
       case 'ro': return 'easylist_plus_romanian';
       case 'ru': return 'russian';
@@ -693,10 +692,6 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "latvian": {  // Latvian filters
       url: "https://gitorious.org/adblock-latvian/adblock-latvian/blobs/raw/master/lists/latvian-list.txt",
-    },
-    "norwegian": {  // Additional Norwegian filters
-      url: "http://home.fredfiber.no/langsholt/adblock.txt",
-      requiresList: "easylist",
     },
     "swedish": {  // Swedish filters
       url: "http://fanboy.co.nz/fanboy-swedish.txt",

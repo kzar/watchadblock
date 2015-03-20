@@ -9,7 +9,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   BGcall("get_exclude_filters_text", function(text) {
     $("#txtExcludeFiltersAdvanced").val(text);
   });
-  sendResponse({});
+  // a call to sendResponse is not needed because of the call in filters.js
 });
 
 $(function() {

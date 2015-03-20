@@ -1,3 +1,6 @@
+//cache a reference to window.confirm
+//so that web sites can not clobber the default implementation
+var abConfirm = window.confirm;
 // Return the ElementType element type of the given element.
 function typeForElement(el) {
   // TODO: handle background images that aren't just the BODY.
@@ -142,16 +145,18 @@ function handleABPLinkClicks() {
       var reqLoc = queryparts.requiresLocation;
       var reqList = (reqLoc ? "url:" + reqLoc : undefined);
       var title = queryparts.title;
-      BGcall("subscribe", {id: "url:" + loc, requires: reqList, title: title});
-      // Open subscribe popup
-      if (SAFARI) {
+      if (abConfirm(translate("subscribeconfirm", (title || loc)))) {
+        BGcall("subscribe", {id: "url:" + loc, requires: reqList, title: title});
+        // Open subscribe popup
+        if (SAFARI) {
           // In Safari, window.open() cannot be used
           // to open a new window from our global HTML file
           window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
                       "_blank",
                       'scrollbars=0,location=0,resizable=0,width=450,height=150');
-      } else {
+        } else {
           BGcall("launch_subscribe_popup", loc);
+        }
       }
     }
   };

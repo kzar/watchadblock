@@ -217,16 +217,19 @@ sub strings_in_use {
 }
 
 sub html_js_files {
-    # take path to a folder to search as input
-    my $folder = shift(@_);
+    # take paths to folders to search as input
+    my @folders = @_;
     
-    # search for html and js files and store list
     my @files;
-    find(sub{
-        return unless -f;
-        return unless (/\.html$/ || /\.js$/);
-        push(@files,$File::Find::name);
-    },$folder);
+    
+    foreach my $folder (@folders){
+        # search for html and js files and store list
+        find(sub{
+            return unless -f;
+            return unless (/\.html$/ || /\.js$/);
+            push(@files,$File::Find::name);
+        },$folder);
+    }
     
     # return list of files found
     return @files;
@@ -241,8 +244,12 @@ sub missing_unused {
     my @files, my @strings;
     
     # get a list of used strings in the correct project
-    if ($project eq "contributors" || $project eq "installed"){
+    if ($project eq "contributors"){
         @files = html_js_files("$locale_dirs{$project}/../../");
+        @strings = strings_in_use(@files);
+    } elsif ($project eq "installed"){
+        # l10n for /installed also contains l10n for /pay
+        @files = html_js_files("$locale_dirs{$project}/../../", "$locale_dirs{$project}/../../../pay/");
         @strings = strings_in_use(@files);
     } elsif ($project eq "getadblock_com"){
         find(sub{

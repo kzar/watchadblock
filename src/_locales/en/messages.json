@@ -1,6 +1,6 @@
 {
   "description2":{
-    "message":"The most popular Chrome extension in the world, a customizable ad blocker that blocks ALL ads for free by default.",
+    "message":"AdBlock. The #1 ad blocker with over 200 million downloads. Blocks YouTube, Facebook and ALL ads by default (unlike Adblock Plus).",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -190,6 +190,16 @@
   "wizardcantrunonframesets":{
     "message":"This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
+  "subscribeconfirm":{
+    "message":"Are you sure that you want to subscribe to the $title$ filter list?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
   },
   "subscribingtitle":{
     "message":"Subscribing to filter list...",
