@@ -1,12 +1,13 @@
 {
   "name": "AdBlock",
-  "version": "2.21.1",
+  "version": "2.22",
   "background": {
     "scripts": [
       "jquery/jquery.min.js",
       "port.js",
       "functions.js",
       "stats.js",
+      "survey.js",
       "filtering/domainset.js",
       "filtering/filteroptions.js",
       "filtering/filtertypes.js",
@@ -62,7 +63,8 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "js": [
-        "uiscripts/blacklisting/rightclick_hook.js"
+        "uiscripts/blacklisting/rightclick_hook.js",
+        "notificationoverlay.js"
       ],
       "run_at": "document_end",
       "all_frames": false

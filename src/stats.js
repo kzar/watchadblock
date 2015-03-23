@@ -52,117 +52,27 @@ STATS = (function() {
       o: os,
       g: get_settings().show_google_search_text_ads ? '1': '0',
       l: determineUserLanguage(),
+      st: SURVEY.types()
     };
+
     //only on Chrome
     if (flavor === "E" && blockCounts) {
         data["b"] = blockCounts.get().total;
-    }
-    //if available, add the install Date to ping data
-    var block_stats = storage_get("blockage_stats");
-    if (block_stats && block_stats.start) {
-        data["i"] = block_stats.start;
     }
 
     $.ajax({
       type: 'POST',
       url: stats_url,
       data: data,
-      success: maybeSurvey, // TODO: Remove when we no longer do a/b tests
+      success: handlePingResponse, // TODO: Remove when we no longer do a/b tests
       error: function(e) {
         console.log("Ping returned error: ", e.status);
       },
     });
   };
 
-  var shouldShowSurvey = function(survey_data) {
-    var data = {
-      cmd: "survey",
-      u: userId,
-      sid: survey_data.survey_id
-    };
-
-    function handle_should_survey(responseData) {
-      if (responseData.length ===  0)
-        return;
-      log('Pinging got some data', responseData);
-
-      try {
-        var data = JSON.parse(responseData);
-        if (data.should_survey === 'true') {
-          openTab('https://getadblock.com/' + survey_data.open_this_url, true);
-        }
-      } catch (e) {
-        console.log('Error parsing JSON: ', responseData, " Error: ", e);
-        return;
-      }
-    }
-
-    $.post(stats_url, data, handle_should_survey);
-  }
-
-  var survey_data = null;
-  function one_time_opener() {
-    if (SAFARI) {
-      safari.application.removeEventListener("open", one_time_opener, true);
-    } else {
-      chrome.tabs.onCreated.removeListener(one_time_opener);
-    }
-    if (!one_time_opener.running)
-      return; // one_time_opener was called multiple times
-    if (survey_data == null)
-      return;
-    one_time_opener.running = false;
-    var open_the_tab = function() {
-      // see if survey should still be shown before opening tab
-      shouldShowSurvey(survey_data);
-    };
-    if (SAFARI) {
-      // Safari has a bug: if you open a new tab, it will shortly thereafter
-      // set the active tab's URL to "Top Sites". However, here, after the
-      // user opens a tab, we open another. It mistakenly thinks
-      // our tab is the one the user opened and clobbers our URL with "Top
-      // Sites."
-      // To avoid this, we wait a bit, let it update the user's tab, then
-      // open ours.
-      window.setTimeout(open_the_tab, 500);
-    } else {
-      open_the_tab();
-    }
-  }
-
-  // TODO: Remove when we no longer do a/b tests
-  var maybeSurvey = function(responseData, textStatus, jqXHR) {
-
-    if (responseData.length ===  0)
-      return;
-
-    if (get_settings().show_survey === false)
-      return;
-
-    log('Pinging got some data', responseData);
-
-    try {
-      var url_data = JSON.parse(responseData);
-      if (!url_data.open_this_url.match(/^\/survey\//))
-        throw new Error("bad survey url.");
-    } catch (e) {
-      console.log("Something went wrong with opening a survey.");
-      console.log('error', e);
-      console.log('response data', responseData);
-      return;
-    }
-    one_time_opener.running = true;
-    // overwrites the current survey if one exists
-    survey_data = url_data;
-
-    if (SAFARI) {
-      //safari.application.removeEventListener("open", one_time_opener, true);
-      safari.application.addEventListener("open", one_time_opener, true);
-    } else {
-      if (chrome.tabs.onCreated.hasListener(one_time_opener))
-          chrome.tabs.onCreated.removeListener(one_time_opener);
-      chrome.tabs.onCreated.addListener(one_time_opener);
-    }
+  var handlePingResponse = function(responseData, textStatus, jqXHR) {
+    SURVEY.maybeSurvey(responseData);
   };
 
   // Called just after we ping the server, to schedule our next ping.
@@ -223,7 +133,7 @@ STATS = (function() {
     browserVersion: browserVersion,
     os: os,
     osVersion: osVersion,
-
+    statsUrl: stats_url,
     // Ping the server when necessary.
     startPinging: function() {
       function sleepThenPing() {
