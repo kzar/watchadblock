@@ -191,6 +191,16 @@
     "message":"由于该网站使用了过时的技术，AdBlock的这项功能无法在此网站使用。您可以在在选项中的“自定义”标签下手工添加黑名单或白名单。",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"您确定要订阅 $title$ 过滤列表？",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"正在订阅过滤列表...",
     "description":"abp: link subscriber title"

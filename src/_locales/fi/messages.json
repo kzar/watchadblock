@@ -191,6 +191,16 @@
     "message":"Tämä AdBlock-ominaisuus ei toimi tällä sivustolla, koska sitä käytetään vanhentuneella tekniikalla. Voit lisätä kohteita mustalle tai valkoisille listalle manuaalisesti \"Mukauta\"-välilehdessä.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"Oletko varma, että haluat tilata suodatinlistan $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Otetaan suodatinlistaa käyttöön...",
     "description":"abp: link subscriber title"
@@ -240,6 +250,10 @@
   "showcontextmenus2":{
     "message":"Lisää kohteet oikean klikkauksen valikkoon",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"ClickToFlash-yhteensopivuustila",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Näytä virheilmoitukset Virhekonsolissa (hidastaa AdBlockin toimintaa)",

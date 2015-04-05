@@ -76,10 +76,17 @@ SURVEY = (function() {
     var showOverlayIfAllowed = function(tab) {
       shouldShowSurvey(surveyData, function() {
         var data = { command: "showoverlay", overlayURL: surveyData.open_this_url, tabURL:tab.url};
+        var validateResponseFromTab = function(response) {
+          if (chrome.runtime.lastError) {
+            recordErrorMessage('overlay message error ' + chrome.runtime.lastError);
+          } else if (!response || response.ack !== data.command) {
+            recordErrorMessage('invalid response from notification overlay script' + response);
+          }
+        };
         if (SAFARI) {
-          chrome.extension.sendRequest(data);
+          chrome.extension.sendRequest(data, validateResponseFromTab);
         } else {
-          chrome.tabs.sendRequest(tab.id, data);
+          chrome.tabs.sendRequest(tab.id, data, validateResponseFromTab);
         }
       });
     };
@@ -139,7 +146,7 @@ SURVEY = (function() {
         var surveyData = JSON.parse(responseData);
         if (!surveyData.open_this_url ||
             !surveyData.open_this_url.match ||
-            !surveyData.open_this_url.match(/^\/survey\//)) {        
+            !surveyData.open_this_url.match(/^\/survey\//)) {
           log("bad survey data", responseData);
           return null;
         }

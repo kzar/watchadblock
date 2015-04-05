@@ -47,6 +47,10 @@
     "message":"لإخفاء الزر،انقر على شريط الأدوات في Safari واختر \"تخصيص شريط الأدوات\"، ثم اسحب الزر AdBlock خارج شريط الأدوات . يمكنك إظهاره  مرة أخرى عن طريق سحبه إلى شريط الأدوات.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"لإخفاء الزر، انقر على زر الفأرة اليمين واختر إزالة من شريط الأدوات.  يمكنك إظهار ذلك مرة أخرى ضمن قائمة فايرفوكس-> تخصيص.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"حرك مربع التمرير حتى يتم حظر الإعلان بشكل صحيح على الصفحة، ومنع العناصر تبدو غير مفيدة.",
     "description":"Blacklister slider page message"
@@ -186,6 +190,16 @@
   "wizardcantrunonframesets":{
     "message":"ميزات AdBlock لا تعمل على هذا الموقع لأنه يستخدم تكنولوجيا قديمة. يمكنك اضافة موارد إلي لقائمة السوداء أو البيضاء  يدوياً في علامة التبويب 'تخصيص' من الصفحة خيارات.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
+  "subscribeconfirm":{
+    "message":"هل أنت متأكد من أنك تريد الاشتراك في قائمة تصفية $title$؟",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
   },
   "subscribingtitle":{
     "message":"الاشتراك في قائمة عامل التصفية...",
@@ -480,6 +494,22 @@
   "adreport2":{
     "message":"لذلك أنت فقط وجدت إعلانا على صفحة ويب؟ حسنا، سوف يساعدك لإيجاد المكان الصحيح تقرير ذلك! <br\/> تذكر: الإبلاغ عن الإعلانات طوعي. إذا كنت لا ترغب في القيام بذلك يمكنك إغلاق هذه النافذة ومنعة فقط لنفسك عن طريق إضافة تصفية في علامة التبويب 'تخصيص' من صفحة خيارات!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"هل ينبغي علي AdBlock إعلامك عند الكشف عن البرامج الضارة؟",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock كشفت عن برامج ضارة.  جهاز الكمبيوتر الخاص بك قد يكون مصاب.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"معرفة المزيد حول البرامج الضارة",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"قم بتعطيل هذه الإعلامات",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"التحقق من البرامج الضارة",

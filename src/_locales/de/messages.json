@@ -191,6 +191,16 @@
     "message":"Diese AdBlock Funktion funktioniert auf dieser Seite nicht, da die Seite eine veraltete Technologie nutzt. Sie können Ressourcen manuell unter \"AdBlock anpassen\" in den AdBlock Einstellungen aktivieren und deaktivieren.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"Sind Sie sicher, dass Sie die $title$ Filterliste abonnieren möchten?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Filterliste abonnieren...",
     "description":"abp: link subscriber title"

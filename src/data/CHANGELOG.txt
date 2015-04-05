@@ -1,0 +1,70 @@
+## Versions ##
+
+UNRELEASED:
+
+2.1:
+- Removed the Norwegian filter list since it is no longer active. (#133)
+- For each subscribe filter list, added the last update timestamp to debug data. (#129)
+- Added the malware notification setting to debug data. (#134)
+- Added a check for undefined tabs / active tab / active tab url. (#138)
+- Fixed a JavaScript exception when a Firefox window is closed. (#124)
+- Enhanced the AdBlock Options / Support tab with a version check. (#117)
+- Added a user confirmation prompt when subscribing to a new filter lists using the ABP syntax. (#127)
+- Updated the HTTP 'GET' request for filter Lists (#116)
+- Fixed a problem when trying to open a wizard a second time during the same browser session .(#113)
+- Improved the survey processing logic (#111)
+- Removed unnecessary code for other browsers (#108)
+- Fixed a display issue of the wizards on certain sites (#137, #114, #103)
+- Cleaned up and formatted the code (#87)
+- Fixed an issue with the exclude filters (#97)
+- Added badge text, showing how many ads were blocked (#95)
+- Added the extension install date to the ping data (#93)
+- Fixed a JavaScript exception during browser shutdown (#91)
+- Added context menu support (#78)
+- Added an option to hide number the of ads blocked shown in the popup menu (#81)
+- Added YouTube Channel white-list feature (#84)
+- Updated the Israel/Hebrew filter list forum link on the 'Report an Ad' page (#86)
+- Improved the performance of the Add-on when using the Malware filter list.  Also added an option to notify
+      the user when subscribed to the Malware filter list, and Malware is detected. (#75)
+- Updated the Japanese filter list URL (#73)
+- Added a user message that is displayed when the white-list and blacklist wizard can't run on older sites with framesets. (#49)
+- Added the display of the custom subscription URL to filters page (#31)
+- Added a 'reload page' option to the white list wizard. (#50)
+- Added Firefox specific messages to the 'Report an Ad' page. (#64)
+- Implemented a common debug function to be used when users report an issue or ad to the AdBlock support site (#45)
+- Fixed a bug in the logic to update the AdBlock icon whenever a tab is updated (#61)
+- In the 'Report an Ad' feature, the extension will now perform a check for known malware
+      domains in the list of resources.  If resources from a known malware site are found, the
+      user is notified, and a link with more information is provided.  If no malware resources
+      are found, the page continues to work as before. (#32)
+- Removed the Spanish filter list from the options since it is no longer being supported (#51)
+
+2.0:
+- Improved performance of extension
+- Added a user message when the whitelist and blacklist wizard can't run on older sites (#49)
+- Removed confusing message on the popup menu (#48)
+- Added logic to allow the getadblock.com web site to set show_survey option (#40)
+- Fixed the style issue on the whitelist and blacklist wizards (#36)
+- Modified the color of buttons on option pages to a darker black (#34)
+- Fixed an issue when subscribing to new filters list using the abp: syntax (#27)
+- Added AdBlock warning removal filter list (#21)
+- Removed Chrome and Safari browser specific code (#20)
+
+1.1:
+- Added support for Firefox Mobile (Fennec)
+- Fixed version reporting (#10)
+- Added YouTube whitelisting feature (#5)
+- Added Hide this button feature (#6)
+- Made several UI improvements to the options pages
+- Added total block ad count to ping data
+- Updated GetAdBlock site detection
+- Added remove listener to wizard close processing
+- Added a check so that only 1 options page is shown
+- Corrected the getadblock.com URL, removed the leading www
+- Updated translations, and added translation credit file
+- Default ad reports to private on the support web site, to avoid spam bot issues
+- Added an option to the support page to show users how to report ads
+- Added retry logic to ping process
+- Added survey id, and check logic to survey logic
+- Removed the Resource Block page
+- Remove unsafe usage of .html() and innerHTML() functions

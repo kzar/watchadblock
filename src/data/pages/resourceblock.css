@@ -1,0 +1,192 @@
+body {
+    background-color: white;
+}
+input:disabled + label {
+    cursor: default;
+}
+th {
+    cursor: pointer;
+}
+[i18n="appliedwhenbrowsing"], [i18n="blockeverycontaining"], [i18n="casesensitive"],
+[i18n="ordisablefilter"], [i18n="onlyresourcetypes"] {
+    font-size: 20px;
+}
+[i18n="headerfilter"], [i18n="thirdparty"] {
+    text-align: center;
+}
+#addthefilter {
+    font-size: 15px;
+}
+#choosedifferentresource {
+    font-size: 14px;
+    display: block;
+    cursor: pointer;
+    position: relative;
+    margin: 0px auto;
+    max-width: 0px;
+    top: -70px;
+    right: 10px;
+    text-decoration: none;
+    color: #4D7BD6;
+}
+#choosedifferentresource:hover {
+    color: red;
+    -webkit-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+#chooseoptions {
+    position: relative;
+    margin: 0px auto;
+    max-width: 990px;
+    padding: 35px 23px;
+    display: none;
+}
+#customurl {
+    margin-left: 5px;
+}
+#filterpreview {
+    font-size: 12px;
+    font-style: italic;
+}
+#legend {
+    font-size: 12px;
+    position: relative;
+    border: 1px solid #EEE;
+    width: 460px;
+    cursor: move;
+    top: -5px;
+    margin: -20px 52% 0px;
+    padding: 5px;
+    border-radius: 2px;
+}
+#loading  {
+    text-align: center;
+    color: blue;
+    font-size: 22px;
+    font-weight: bold;
+}
+#nosearchresults {
+    text-align: center;
+    font-style: italic;
+    color: red;
+    line-height: 40px;
+}
+#resourceslist {
+    cursor: default;
+    position: relative;
+    margin: 0px auto;
+    padding: 0px 15px 25px;
+    min-width: 1020px;
+    border-spacing: 0px;
+}
+#resourceslist td {
+    font-size: 12px;
+    padding: 0px;
+    margin-left: 7px;
+}
+#resourceslist > thead > tr > th:nth-child(2):hover {
+    color: red;
+}
+#resourceslist > thead > tr > th:nth-child(3):hover {
+    color: red;
+}
+#resourceslist > thead > tr > th:nth-child(4):hover {
+    color: red;
+}
+#resourceslist > thead > tr > th:nth-child(5):hover {
+    color: red;
+}
+#search {
+    width: 100%;
+}
+#selectblockableurl {
+    cursor: default;
+    background: #f8f8f8;
+    position: relative;
+    margin: 0px auto;
+    max-width: 915px;
+    padding: 0px 100px 40px 22px;
+    display: none;
+}
+#selectblockableurl #suggestions label {
+    margin-left: 6px;
+    display: inline-flex;
+    max-width: 850px;
+}
+#selectresources {
+    position: relative;
+    margin: 0px auto;
+    max-width: 990px;
+    padding: 120px 22px 20px 20px;
+    font-size: 20px;
+}
+#types input, #types label {
+    position: absolute;
+}
+#types label {
+    margin-left: 20px;
+    margin-top: -4px;
+}
+#types input:nth-of-type(4n+1), #types label:nth-of-type(4n+1) {
+    left: 29px;
+}
+#types input:nth-of-type(4n+2), #types label:nth-of-type(4n+2) {
+    left: 190px;
+}
+#types input:nth-of-type(4n+3), #types label:nth-of-type(4n+3) {
+    left: 360px;
+}
+#types input:nth-of-type(4n+4), #types label:nth-of-type(4n+4) {
+    left: 560px;
+}
+.background {
+    background: #f8f8f8;
+}
+.blocked {
+    color: red;
+}
+.blue {
+    color: blue;
+}
+.clickableRow {
+    cursor: pointer;
+}
+.closelegend {
+    float: right;
+    cursor: pointer;
+    margin-top: -4px;
+}
+.deleterule {
+    cursor: pointer;
+    background-image: url(../img/delete.gif);
+    background-repeat: no-repeat;
+    background-position: center left;
+    width: 9px;
+}
+.gifloader {
+    background-image: url(../img/gifloader.gif);
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+}
+.green {
+    color: green;
+}
+.hiding {
+    color: blue;
+}
+.initialHide {
+    visibility: hidden;
+}
+.noSearchMatch {
+    display: none;
+}
+.red {
+    color: red;
+}
+.sorter {
+    display: none;
+}
+.whitelisted {
+    color: green;
+}

@@ -12,7 +12,7 @@ if (window.top === window) {
           request.overlayURL &&
           request.tabURL === document.location.href) {
           showOverlay(request.overlayURL);
-          sendResponse({});
+          sendResponse({ ack: request.command });
       }
     });
     //create the DIV and IFRAME and insert them into the DOM
@@ -90,11 +90,11 @@ if (window.top === window) {
     };
 
     var receiveMessage = function(event){
-      //WARNING: We do not verify the sender of this message.  
-      //The sender of the message could be a website instead of AdBlock.  
-      //This isn't dangerous now because all we do is close an overlay, 
+      //WARNING: We do not verify the sender of this message.
+      //The sender of the message could be a website instead of AdBlock.
+      //This isn't dangerous now because all we do is close an overlay,
       //but don't add any dangerous functionality without
-      //addressing this issue.      
+      //addressing this issue.
        if (event.data=="removethe_ABoverlay"){
           removeOverlay();
        }

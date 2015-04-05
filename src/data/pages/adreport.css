@@ -1,0 +1,125 @@
+a {
+    color: #4D7BD6;
+    text-decoration: none;
+}
+body {
+    background-color: white;
+}
+div.form {
+    margin-left: 15px;
+}
+h2 {
+    font-size: 1.3em;
+    margin-left: 15px;
+    font-weight: 300;
+}
+label {
+    margin-right: 5px;
+}
+[i18n="correctfilters"] {
+    margin-bottom: 15px;
+}
+[i18n="malwarecheck"] {
+    display: inline-block;
+}
+[i18n="pagelanguagecheck"] {
+    margin-left: 20px;
+}
+#checkinchrome {
+    display: inline-block;
+}
+#checkupdate {
+    font-weight: bold;
+    color: red;
+}
+#info {
+    position: relative;
+    margin: 110px auto 30px;
+    max-width: 990px;
+}
+#malwarewarning {
+    display: none;
+    margin: 15px 0px 15px 19px;
+}
+#privacy {
+    font-style: italic;
+    display: none;
+}
+#step_disable_extensions_DIV {
+    position: relative;
+    margin: 0px auto;
+    max-width: 1000px;
+    padding: 20px 20px 20px 0px;
+}
+#step_malware_checking_DIV, #step_language_DIV, #step_update_filters_DIV, #step_chrome_DIV, #step_flash_DIV  {
+    position: relative;
+    margin: 0px auto;
+    max-width: 1000px;
+    padding: 20px 20px 20px 0px;
+}
+#step_language_lang {
+    margin-left: 6px;
+}
+#whyChrome {
+    text-decoration: none;
+    border-bottom: 1px dotted;
+    color: grey;
+    margin-left: 18px;
+    vertical-align: top;
+}
+.afterFilterUpdate, .afterFilterUpdate * {
+    color: #CCC;
+    cursor: auto;
+}
+.afterDisableExtensions, [i18n="adstillappear"], [i18n="ff_checkinchrome_5"] {
+    margin-left: 19px;
+}
+.answer {
+    color: #4D7BD6;
+    font-weight: bold;
+    margin-left: 5px;
+}
+.background {
+    background-color: #f8f8f8;
+}
+.gifloader {
+    background-image: url(../img/gifloader.gif);
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    position: absolute;
+}
+.radio {
+    margin-left: 4px;
+}
+.result {
+    position: relative;
+    margin: 0px auto;
+    max-width: 1000px;
+    padding: 20px 20px 20px 30px;
+    background-color: white;
+}
+.section {
+    display: none;
+    padding: 10px;
+    padding-left: 162px;
+    margin: 0px -8px 0px -8px;
+}
+.white {
+    background-color: white;
+}
+@media screen and (max-width: 1080px) {
+    .social {
+        display: none;
+    }
+    #step_update_filters_DIV, #step_disable_extensions_DIV, #step_language_DIV, #step_chrome_DIV, #step_flash_DIV, #step_malware_DIV   {
+        padding: 20px 20px 20px 0px;
+    }
+    #info {
+        margin: 110px auto 30px 15px;
+    }
+    .result {
+        padding: 20px;
+    }
+}

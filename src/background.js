@@ -1171,6 +1171,46 @@
     }
   })();
 
+  // Log an 'error' message on GAB log server.
+  var recordErrorMessage = function(msg, callback) {
+    recordMessageUrl(msg, 'type=error', callback);
+  };
+
+  // Log an 'status' related message on GAB log server.
+  var recordStatusMessage = function(msg, callback) {
+    recordMessageUrl(msg, 'type=stats', callback);
+  };
+
+  // Log a 'general' message on GAB log server.
+  var recordGeneralMessage = function(msg, callback) {
+    recordMessageUrl(msg, 'type=general', callback);
+  };
+
+  // Log a message on GAB log server.  The user's userid will be prepended to the message.
+  // If callback() is specified, call callback() after logging has completed
+  var recordMessageUrl = function(msg, queryType, callback) {
+    if (!msg || !queryType) {
+      return;
+    }
+    // Include user ID in message
+    var fullUrl = 'https://log.getadblock.com/record_log.php?' + 
+                  queryType + 
+                  '&message=' + 
+                  encodeURIComponent(STATS.userId + " " + msg);
+    $.ajax({
+      type: 'GET',
+      url: fullUrl,
+      success: function(responseData, textStatus, jqXHR) {
+        if (callback) {
+          callback();
+        }
+      },
+      error: function(e) {
+        log("message server returned error: ", e.status);
+      },
+    });
+  };
+
   if (get_settings().debug_logging)
     logging(true);
 
@@ -1180,10 +1220,53 @@
   STATS.startPinging();
 
   if (STATS.firstRun && (SAFARI || OPERA || chrome.runtime.id !== "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
-    openTab("https://getadblock.com/installed/?u=" + STATS.userId);
+    var installedURL = "https://getadblock.com/installed/?u=" + STATS.userId;
+    if (SAFARI) {
+      openTab(installedURL);
+    } else {
+      //if Chrome, open the /installed tab,
+      //check the status of the tab after 30 seconds
+      //if it failed to loaded, send a message
+      var tabStatus = "";
+      chrome.tabs.create({url: installedURL}, function(tab) {
+        tabStatus = tab.status;
+        var installedTabId = tab.id;
+        var installedTabListener = function(tabId, changeInfo, tab) {
+          if (tabId !== installedTabId) {
+            return;
+          }
+          tabStatus = tab.status;
+        };
+        chrome.tabs.onUpdated.addListener(installedTabListener);
+        //wait 30 seconds, then check to see if the tabStatus is complete.
+        //if not, send a message
+        setTimeout(function() {
+          if (tabStatus !== "complete") {
+            recordErrorMessage('installed tab not complete, last status ' + tabStatus);
+          }
+          chrome.tabs.onUpdated.removeListener(installedTabListener);
+        }, 30000);
+      });
+    }
   }
   if (chrome.runtime.setUninstallURL) {
     chrome.runtime.setUninstallURL("https://getadblock.com/uninstall/?u=" + STATS.userId);
+  }
+
+  //validate STATS.firstRun against Chrome's Runtime API onInstalled
+  if (chrome.runtime.onInstalled) {
+    var validInstall = false;
+    chrome.runtime.onInstalled.addListener(function(details) {
+      validInstall = (details.reason === "install");
+    });
+    //wait 10 seconds, then check to see if validInstall is not equal to STATS.firstRun
+    //both booleans should match (either true or false).
+    //if they don't match, send a message
+    setTimeout(function() {
+      if (STATS.firstRun !== validInstall) {
+        recordErrorMessage('invalid install - firstRun = ' + STATS.firstRun + ' valid install = ' + validInstall);
+      }
+    }, 10000);
   }
 
   createMalwareNotification = function() {
@@ -1352,7 +1435,7 @@
       var adblock_settings = [];
       var settings = get_settings();
       for (setting in settings)
-          adblock_settings.push(setting + ": "+ get_settings()[setting] + "\n");
+          adblock_settings.push(setting + ": " + JSON.stringify(settings[setting]) + "\n");
       // We need to hardcode malware-notification setting,
       // because it isn't included in _settings object, but just in localStorage
       adblock_settings.push("malware-notification: " + storage_get('malware-notification') + "\n");

@@ -191,6 +191,16 @@
     "message":"Эта функция AdBlock не работает на этом сайте, потому что он использует устаревшие технологии. Вы можете внести её в черный или белый список ресурсов вручную на вкладке «Настроить» страницы параметров.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"Вы уверены, что хотите подписаться на список фильтров $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Подписка на список фильтров...",
     "description":"abp: link subscriber title"

@@ -47,6 +47,10 @@
     "message":"Para ocultar o botão, clique com o botão direito na barra de ferramentas do Safari e escolha Personalizar Barra de Ferramentas e, em seguida, arraste o botão do AdBlock para fora da Barra de Ferramentas. Você pode mostrar o botão novamente, arrastando-o para a barra de ferramentas.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Para ocultar o botão, clique com o botão direito e escolha \"Remover da barra de ferramentas\". Você pode voltar a ver o botão se clicar em \"Personalizar\" no menu do Firefox.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Deslize o cursor até que a propaganda esteja bloqueada corretamente na página, e o elemento bloqueado pareça útil.",
     "description":"Blacklister slider page message"
@@ -186,6 +190,16 @@
   "wizardcantrunonframesets":{
     "message":"Esse recurso do AdBlock não funciona neste site poque ele usa tecnologia desatualizada. Você pode colocar na lista negra ou na lista branca os recursos manualmente pela guia 'Personalizar' da página de opções.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
+  "subscribeconfirm":{
+    "message":"Você tem certeza que deseja assinar a lista de filtro $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
   },
   "subscribingtitle":{
     "message":"Subscrevendo-se a lista de filtros...",
@@ -480,6 +494,22 @@
   "adreport2":{
     "message":"Então você encontrou uma propaganda em uma página da web? Bem, eu irei ajudá-lo a encontrar o lugar certo para reportá-lo!<br\/> Lembre-se: reportar propagandas é voluntário. Se você não deseja fazer isso você pode simplesmente fechar esta janela e bloqueá-la somente pra você adicionando um filtro na aba 'Personalizar' na página de opções!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"O AdBlock deve notificá-lo quando detectar malware?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"O AdBlock detectou malware. Seu computador pode estar infectado.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Saber mais sobre malware",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Desativar estas notificações",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Verificação de malware",

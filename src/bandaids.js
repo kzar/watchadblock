@@ -51,14 +51,6 @@ var run_bandaids = function() {
         elemDiv.style.display = "none";
         document.body.appendChild(elemDiv);
       });
-      BGcall('get_first_run', function(first_run) {
-        var elemDiv = document.createElement("div");
-        elemDiv.id = "adblock_first_run_id";
-        elemDiv.innerText = first_run;
-        elemDiv.style.display = "none";
-        document.body.appendChild(elemDiv);
-      });
-      BGcall('set_first_run_to_false', null);
       if (document.getElementById("enable_show_survey")) {
         document.getElementById("enable_show_survey").onclick = function(event) {
             BGcall("set_setting", "show_survey", !document.getElementById("enable_show_survey").checked, true);

@@ -50,6 +50,8 @@ STATS = (function() {
       v: version,
       f: flavor,
       o: os,
+      bv: browserVersion,
+      ov: osVersion,
       g: get_settings().show_google_search_text_ads ? '1': '0',
       l: determineUserLanguage(),
       st: SURVEY.types()
@@ -58,6 +60,9 @@ STATS = (function() {
     //only on Chrome
     if (flavor === "E" && blockCounts) {
         data["b"] = blockCounts.get().total;
+    }
+    if (chrome.runtime.id) {
+      data["extid"] = chrome.runtime.id;
     }
 
     $.ajax({
@@ -149,6 +154,11 @@ STATS = (function() {
         storage_set("next_ping_time", 1);
         if (storage_get("next_ping_time") != 1)
           return;
+      }
+      //if this is the first time we've run,
+      //send a message
+      if (firstRun && !storage_get("total_pings")) {
+        recordGeneralMessage('new install');
       }
       // This will sleep, then ping, then schedule a new ping, then
       // call itself to start the process over again.

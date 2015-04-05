@@ -191,6 +191,16 @@
     "message":"Ez az AdBlock szolgáltatás nem működik ezen az oldalon, mert elavult technológiát használ. Az opciók oldal 'Testreszabás' fülén manuálisan fekete- vagy fehér listára teheti az erőforrásokat.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"Biztos abban, hogy fel akar iratkozni a(z) $title$ szűrőlistára?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Feliratkozás szűrőlistára...",
     "description":"abp: link subscriber title"
