@@ -2,6 +2,11 @@
 
 UNRELEASED:
 
+2.24:
+- Fixed JavaScript stack exception processing. (#515)
+- Modified the new install check logic to only send a message when first run is true. (#513)
+- Modified the survey acknowledgement processing to log the 'message' property of chrome.runtime.lastError (if it exists). (#516)
+
 2.23:
 - Added browser and os version information to ping data (#510)
 - Added validation logic to help detect an invalid installation state (#510)

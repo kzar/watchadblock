@@ -5,11 +5,10 @@
              (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
              ":" + (e.lineno||"anywhere") +
              ":" + (e.colno||"anycol");
-    if (chrome && chrome.runtime &&
-       (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
-        var stack = "-" + (e.error ||"") +
-                    "-" + (e.message ||"") +
-                    "-" + (e.stack ||"");
+    if (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk" &&
+        e.error) {
+        var stack = "-" + (e.error.message ||"") +
+                    "-" + (e.error.stack ||"");
         stack = stack.replace(/:/gi, ";").replace(/\n/gi, "");
         str += stack;
     }
@@ -1193,9 +1192,9 @@
       return;
     }
     // Include user ID in message
-    var fullUrl = 'https://log.getadblock.com/record_log.php?' + 
-                  queryType + 
-                  '&message=' + 
+    var fullUrl = 'https://log.getadblock.com/record_log.php?' +
+                  queryType +
+                  '&message=' +
                   encodeURIComponent(STATS.userId + " " + msg);
     $.ajax({
       type: 'GET',
@@ -1259,11 +1258,11 @@
     chrome.runtime.onInstalled.addListener(function(details) {
       validInstall = (details.reason === "install");
     });
-    //wait 10 seconds, then check to see if validInstall is not equal to STATS.firstRun
-    //both booleans should match (either true or false).
-    //if they don't match, send a message
+    //wait 10 seconds, then check
+    //if extension and Chrome don't agree that this is a new installation send a message.
+    //we only check if 'firstRun' is true because that is when the extension creates a new user id and opens /installed
     setTimeout(function() {
-      if (STATS.firstRun !== validInstall) {
+      if (STATS.firstRun && !validInstall) {
         recordErrorMessage('invalid install - firstRun = ' + STATS.firstRun + ' valid install = ' + validInstall);
       }
     }, 10000);
