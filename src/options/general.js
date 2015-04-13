@@ -24,6 +24,7 @@ $(function() {
   });
 
   update_db_icon();
+  getDropboxMessage();
 });
 
 // TODO: This is a dumb race condition, and still has a bug where
@@ -85,6 +86,15 @@ function update_db_icon() {
         });
     }
 }
+
+function getDropboxMessage() {
+  BGcall('sessionstorage_get', 'dropboxerror', function(messagecode) {
+    //if the message exists, it should already be translated.
+    if (messagecode) {
+      $("#dbmessage").text(translate(messagecode));
+    }
+  });
+}
 // Listen for Dropbox sync changes
 if (!SAFARI &&
    chrome &&
@@ -101,11 +111,24 @@ if (!SAFARI &&
                     $("input[id='enable_whitelist_hulu_ads']").prop("checked", settings.whitelist_hulu_ads);
                     $("input[id='enable_debug_logging']").prop("checked", settings.debug_logging);
                 });
+                sendResponse({});
             }
-            if (request.message === "update_icon")
+            if (request.message === "update_icon") {
                 update_db_icon();
-            if (request.message === "update_page")
+                sendResponse({});
+            }
+            if (request.message === "update_page") {
                 document.location.reload();
+                sendResponse({});
+            }
+            if (request.message === "dropboxerror" && request.messagecode) {
+              $("#dbmessage").text(translate(request.messagecode));
+              sendResponse({});
+            }
+            if (request.message === "cleardropboxerror") {
+              $("#dbmessage").text("");
+              sendResponse({});
+            }
         }
     );
 }

@@ -191,6 +191,16 @@
     "message":"Deze AdBlock functie werkt niet op deze website omdat deze verouderde technologie gebruikt. Je kan items op deze website manueel blokkeren of uitsluiten in het 'Personaliseren' menu van de opties pagina.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"Weet je zeker dat je je wilt abonneren op de $title$ filter lijst?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Aanmelden voor filters",
     "description":"abp: link subscriber title"
@@ -874,6 +884,10 @@
   "adblock_is_paused":{
     "message":"AdBlock is gepauzeerd. Daarom is er niet bijgehouden wat er geladen is. Deze pagina zal nu sluiten. Zet de pauzeer mode af en probeer opnieuw.",
     "description":"resourceblocking page string"
+  },
+  "excludefilterremoved":{
+    "message":"Het filter is verwijdert. Herlaadt de pagina om de lijst met geladen items te genereren.",
+    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
   },
   "noresourcessend2":{
     "message":"Er is iets fout gegaan. De geladen items op de pagina zijn niet doorgestuurd. Deze pagina zal nu sluiten. Probeer de website opnieuw te laden.",

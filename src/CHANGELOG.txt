@@ -2,6 +2,11 @@
 
 UNRELEASED:
 
+2.25:
+- Fixed an issue with the DropBox sync processing duplicating filters during browser start. (#442)
+- Added a message to the options page when the DropBox sync processing failed due to a large number of custom filters. (#474)
+- Updated Translations
+
 2.24:
 - Fixed JavaScript stack exception processing. (#515)
 - Modified the new install check logic to only send a message when first run is true. (#513)

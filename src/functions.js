@@ -182,3 +182,34 @@ setDefault = function(obj, value, defaultValue) {
     obj[value] = defaultValue;
   return obj[value];
 };
+
+// Inputs: key:string.
+// Returns value if key exists, else undefined.
+sessionstorage_get = function(key) {
+  var json = sessionStorage.getItem(key);
+  if (json == null)
+    return undefined;
+  try {
+    return JSON.parse(json);
+  } catch (e) {
+    log("Couldn't parse json for " + key);
+    return undefined;
+  }
+};
+
+// Inputs: key:string.
+// Returns value if key exists, else undefined.
+sessionstorage_set = function(key, value) {
+  if (value === undefined) {
+    sessionStorage.removeItem(key);
+    return;
+  }
+  try {
+    sessionStorage.setItem(key, JSON.stringify(value));
+  } catch (ex) {
+    if (ex.name == "QUOTA_EXCEEDED_ERR" && !SAFARI) {
+      alert(translate("storage_quota_exceeded"));
+      openTab("options/index.html#ui-tabs-2");
+    }
+  }
+};
