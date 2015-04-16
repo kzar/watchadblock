@@ -1174,17 +1174,17 @@
 
   // Log an 'error' message on GAB log server.
   var recordErrorMessage = function(msg, callback) {
-    recordMessageUrl(msg, 'type=error', callback);
+    recordMessageUrl(msg, 'error', callback);
   };
 
   // Log an 'status' related message on GAB log server.
   var recordStatusMessage = function(msg, callback) {
-    recordMessageUrl(msg, 'type=stats', callback);
+    recordMessageUrl(msg, 'stats', callback);
   };
 
   // Log a 'general' message on GAB log server.
   var recordGeneralMessage = function(msg, callback) {
-    recordMessageUrl(msg, 'type=general', callback);
+    recordMessageUrl(msg, 'general', callback);
   };
 
   // Log a message on GAB log server.  The user's userid will be prepended to the message.
@@ -1194,7 +1194,7 @@
       return;
     }
     // Include user ID in message
-    var fullUrl = 'https://log.getadblock.com/record_log.php?' +
+    var fullUrl = 'https://log.getadblock.com/record_log.php?type=' +
                   queryType +
                   '&message=' +
                   encodeURIComponent(STATS.userId + " " + msg);
@@ -1226,32 +1226,36 @@
       openTab(installedURL);
     } else {
       //if Chrome, open the /installed tab,
-      //check the status of the tab after 30 seconds
-      //if it failed to loaded, send a message
-      var tabStatus = "";
+      //check the URL of the tab
+      //if it's a mismatch, send an error message
       chrome.tabs.create({url: installedURL}, function(tab) {
-        tabStatus = tab.status;
-        var installedTabId = tab.id;
-        var installedTabListener = function(tabId, changeInfo, tab) {
-          if (tabId !== installedTabId) {
-            return;
-          }
-          tabStatus = tab.status;
-        };
-        chrome.tabs.onUpdated.addListener(installedTabListener);
-        //wait 30 seconds, then check to see if the tabStatus is complete.
-        //if not, send a message
-        setTimeout(function() {
-          if (tabStatus !== "complete") {
-            recordErrorMessage('installed tab not complete, last status ' + tabStatus);
-          }
-          chrome.tabs.onUpdated.removeListener(installedTabListener);
-        }, 30000);
+        if (!tab || !tab.url) {
+          recordErrorMessage('installed tab or URL null');
+        } else if (tab.url && installedURL !== tab.url) {
+          recordErrorMessage('installed tab URL mismatch');
+        }
+        if (chrome.runtime.lastError && chrome.runtime.lastError.message) {
+          recordErrorMessage('installed tab open error ' + chrome.runtime.lastError.message);
+        }
       });
     }
   }
   if (chrome.runtime.setUninstallURL) {
-    chrome.runtime.setUninstallURL("https://getadblock.com/uninstall/?u=" + STATS.userId);
+    var uninstallURL = "https://getadblock.com/uninstall/?u=" + STATS.userId;
+    //if the start property of blockCount exists (which is the AdBlock installation timestamp)
+    //use it to calculate the approximate length of time that user has AdBlock installed
+    if (blockCounts && blockCounts.get().start) {
+      var fiveMinutes = 5 * 60 * 1000;
+      var updateUninstallURL = function() {
+        var installedDuration = (Date.now() - blockCounts.get().start);
+        chrome.runtime.setUninstallURL(uninstallURL + "&t=" + installedDuration);
+      };
+      //start an interval timer that will update the Uninstall URL every 5 minutes
+      setInterval(updateUninstallURL, fiveMinutes);
+      updateUninstallURL();
+    } else {
+      chrome.runtime.setUninstallURL(uninstallURL + "&t=-1");
+    }
   }
 
   //validate STATS.firstRun against Chrome's Runtime API onInstalled

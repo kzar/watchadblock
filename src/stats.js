@@ -182,6 +182,9 @@ STATS = (function() {
         o: os,
         ov: osVersion
       };
+      if (chrome.runtime.id) {
+        data["extid"] = chrome.runtime.id;
+      }
       $.ajax(stats_url, {
         type: "POST",
         data: data,

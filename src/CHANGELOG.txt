@@ -2,6 +2,11 @@
 
 UNRELEASED:
 
+2.26:
+- Added the extension Id to the data included with the JavaScript error message.  (#523)
+- For Chrome only, improved / fixed the logic that is checking if the '/installed' page is opened correctly. (#522)
+- For Chrome only, added the approximate installation duration to the uninstall URL. (#522)
+
 2.25:
 - Fixed an issue with the DropBox sync processing duplicating filters during browser start. (#442)
 - Added a message to the options page when the DropBox sync processing failed due to a large number of custom filters. (#474)
