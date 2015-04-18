@@ -1225,19 +1225,25 @@
     if (SAFARI) {
       openTab(installedURL);
     } else {
+      var numInstalledAttempts = 0;
       //if Chrome, open the /installed tab,
-      //check the URL of the tab
-      //if it's a mismatch, send an error message
-      chrome.tabs.create({url: installedURL}, function(tab) {
-        if (!tab || !tab.url) {
-          recordErrorMessage('installed tab or URL null');
-        } else if (tab.url && installedURL !== tab.url) {
-          recordErrorMessage('installed tab URL mismatch');
+      //if tab doesn't exist for any reason
+      // send an error message and retry in 5 minutes
+      var openInstalledTab = function() {
+        if (numInstalledAttempts > 10) {
+          return;
         }
-        if (chrome.runtime.lastError && chrome.runtime.lastError.message) {
-          recordErrorMessage('installed tab open error ' + chrome.runtime.lastError.message);
-        }
-      });
+        numInstalledAttempts++;
+        chrome.tabs.create({url: installedURL}, function(tab) {
+          if (!tab || !tab.url) {
+            recordErrorMessage('installed tab or URL null');
+            var fiveMinutes = 5 * 60 * 1000;
+            setTimeout(function() {
+              openInstalledTab();
+            }, fiveMinutes);
+          }
+        });
+      }();
     }
   }
   if (chrome.runtime.setUninstallURL) {

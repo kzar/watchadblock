@@ -2,6 +2,10 @@
 
 UNRELEASED:
 
+2.27:
+- For Chrome, added retry logic when the '/installed' page fails to open.  (#525)
+- For Chrome, added a message to include installation type, when AdBlock is installed.  (#526)
+
 2.26:
 - Added the extension Id to the data included with the JavaScript error message.  (#523)
 - For Chrome only, improved / fixed the logic that is checking if the '/installed' page is opened correctly. (#522)
