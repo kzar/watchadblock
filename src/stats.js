@@ -64,8 +64,7 @@ STATS = (function() {
     if (chrome.runtime.id) {
       data["extid"] = chrome.runtime.id;
     }
-
-    $.ajax({
+    var ajaxOptions = {
       type: 'POST',
       url: stats_url,
       data: data,
@@ -73,7 +72,15 @@ STATS = (function() {
       error: function(e) {
         console.log("Ping returned error: ", e.status);
       },
-    });
+    };
+    if (chrome.management && chrome.management.getSelf) {
+      chrome.management.getSelf(function(info) {
+        data["it"] = info.installType.charAt(0);
+        $.ajax(ajaxOptions);
+      });
+    } else {
+      $.ajax(ajaxOptions);
+    }
   };
 
   var handlePingResponse = function(responseData, textStatus, jqXHR) {
