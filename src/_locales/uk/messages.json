@@ -1,4 +1,8 @@
 {
+  "description2":{
+    "message":"Найпопулярніше розширення для Chrome, яким користуються понад 40 мільйонів людей! Заблокуйте рекламу по всьому інтернету.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "adblock_click_for_details":{
     "message":"AdBlock — натисніть для додаткових можливостей",
     "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
@@ -38,6 +42,14 @@
   "operabutton_how_to_hide2":{
     "message":"Щоб сховати цю кнопку, перейдіть на сторінку opera:\/\/extensions і позначте «Приховати з панелі інструментів». Кнопку можна буде повернути, знявши позначку.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
+  },
+  "safaributton_how_to_hide2":{
+    "message":"Щоб приховати кнопку, клацніть правою кнопкою мишки по панелі інструментів Safari і виберіть Кастомізувати Тулбар, а потім перетягніть кнопку AdBlock з панелі інструментів. Ви можете відобразити її знову, перетягнувши назад на панель інструментів.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
+  },
+  "ff_button_how_to_hide":{
+    "message":"Щоб приховати кнопку, натисніть правою кнопкою мишки і виберіть Видалити з Тулбару. Ви можете знову відобразити її, для цього потрібно зайти в меню Firefox ->Кастомізувати.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
   },
   "sliderexplanation":{
     "message":"Перетягуйте повзунок доти, доки реклама не зникне, проте не переборщіть.",
@@ -171,6 +183,24 @@
     "message":"Виключити",
     "description":"Button for excluding a domain in the whitelister dialog"
   },
+  "reloadpageafterwhitelist":{
+    "message":"Перезавантажте сторінку.",
+    "description":"Checkbox on whitelist wizard"
+  },
+  "wizardcantrunonframesets":{
+    "message":"Ця функція AdBlock не працює на цьому сайті, тому що він використовує застарілі технології. Ви можете додати в чорний або білий список самостійно через вкладку 'Налаштування' на сторінці налаштувань.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
+  "subscribeconfirm":{
+    "message":"Ви впевнені, що бажаєте підписатися на список фільтрів $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Підписка на список фільтрів...",
     "description":"abp: link subscriber title"
@@ -220,6 +250,10 @@
   "showcontextmenus2":{
     "message":"Керувати AdBlock за допомогою контекстного меню",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Увімкнути режим сумісності ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Показувати інформацію для налагодження у Консольному лозі (уповільнює роботу AdBlock)",
@@ -337,6 +371,10 @@
     "message":"Fanboy's Annoyances (видаляє дратуючий вміст)",
     "description":"Name of the filter list"
   },
+  "filterwarning_removal":{
+    "message":"Список видалення попереджень AdBlock (видаляє повідомлення про використання AdBlock)",
+    "description":"Name of the filter list"
+  },
   "filteradblock_custom":{
     "message":"Власні фільтри AdBlock (радимо)",
     "description":"A filter list"
@@ -433,6 +471,10 @@
     "message":"Налаштувати фільтри вручну:",
     "description":"Subtitle on the 'Customize' tab"
   },
+  "manualexcludefilteredit":{
+    "message":"Відредагуйте вимкнені фільтри:",
+    "description":"Subtitle on the 'Customize' tab"
+  },
   "filtersavewarning":{
     "message":"Будьте обережні: якщо тут припуститися помилки, багато інших фільтрів, включаючи офіційні, можуть працювати некоректно!<br\/>Читайте <a>порадник із синтаксису фільтрів (англ.)<\/a>, аби навчитися керувати чорними та білими списками фільтрів.",
     "description":"Warning when blacklisting manually"
@@ -452,6 +494,34 @@
   "adreport2":{
     "message":"Тож ви щойно побачили рекламу на веб-сторінці? Ну, то я допоможу вам поскаржитись на неї куди треба!<br\/> Пам’ятайте: подача скарги — справа добровільна. Якщо ви не хочете цього робити, просто закрийте це вікно та заблокуйте рекламу лише для себе, додавши відповідний фільтр на вкладці «Налаштувати» сторінки параметрів!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Чи показувати сповіщення AdBlock при виявленні шкідливих програм?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock виявив шкідливу програму. Ваш комп'ютер може бути заражено.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Дізнатися більше про шкідливі програми",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Відключити ці сповіщення",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
+  },
+  "malwarecheck":{
+    "message":"Перевірка на наявність шкідливих програм",
+    "description":"Section header on the ad report page"
+  },
+  "malwarewarning":{
+    "message":"Ваш комп'ютер може бути заражений шкідливими програмами. Натисніть <a>тут<\/a> для отримання додаткової інформації.",
+    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
+  },
+  "malwarenotfound":{
+    "message":"Не знайдено жодної відомої шкідливої програми.",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "updateyourlists":{
     "message":"Переконайтеся, що списки фільтрів свіжі",
@@ -666,6 +736,30 @@
   "checkinfirefox_5":{
     "message":"Чи з’являється реклама на нововідкритій сторінці?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Перевірте в Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Встановіть Chrome, якщо його у вас нема.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Встановіть AdBlock для Chrome, якщо у вас його нема.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"У Chrome підпишіться на ті ж списки фільтрів, як і тут.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"В Chrome, завантажте сторінку з рекламою.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Реклама з'являється в Chrome теж?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Мені ліньки перевіряти",
@@ -1099,6 +1193,14 @@
       }
     }
   },
+  "show_on_adblock_button":{
+    "message":"Показати кількість заблокованих оголошень на кнопці AdBlock",
+    "description":"Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  },
+  "show_on_adblock_menu":{
+    "message":"Показати кількість заблокованих оголошень в меню AdBlock",
+    "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+  },
   "adblockinglist":{
     "message":"Списки фільтрів реклами",
     "description":"List for subscribed ad blocking fiters"
@@ -1126,6 +1228,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Дозволити рекламу на вподобаних вами каналах YouTube",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Додати $name$ в білий список",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Ви впевнені, що хочете видалити блокування, створені на $host$? Кількість створених блокувань: $count$",
@@ -1174,5 +1286,53 @@
   "checkinternetconnection":{
     "message":"Щоб надіслати скаргу на рекламу, потрібне підключення до інтернету.",
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+  },
+  "whatsnew":{
+    "message":"Що нового в останній версії? Дивіться  <a style='cursor:pointer;'>список змін<\/a>!",
+    "description":"Link to display the changelog on the Support tab of the options"
+  },
+  "englishonly":{
+    "message":"Лише англійською мовою",
+    "description":"Lets the user know that a link\/page is available in English only"
+  },
+  "foundbug":{
+    "message":"Знайшли помилку?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "adblockupdates":{
+    "message":"Оновлення AdBlock",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "whatmakesadblocktick":{
+    "message":"Хочете побачити, хто робить AdBlock живим?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "questionoridea":{
+    "message":"Є питання чи нова ідея?",
+    "description":"Subtitle on the Support tab of the options"
+  },
+  "sourcecode":{
+    "message":"Вихідний код знаходиться у <a>вільному доступі<\/a>!",
+    "description":"Link to the source code of AdBlock on the Support tab of the options"
+  },
+  "contributors":{
+    "message":"Ми маємо <a>сторінку<\/a>, яка допоможе вам дізнатись про людей, які створили AdBlock!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Наша команда запросила деяку налагоджувальну інформацію? Натисніть <a href='#' id='debug'>тут<\/a>!",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Чому б Вам не відправити нам <a href='#' id='report'> звіт про помилку <\/a> ?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
+  "supportsite":{
+    "message":"Дайте нам знати на нашому <a>сайті підтримки<\/a>!",
+    "description":"Link to the support site on the Support tab of the options"
+  },
+  "ad_report_please":{
+    "message":"Якщо Ви бачите рекламу, не відправляйте звіт про помилки, відправте <a> звіт про рекламу <\/a> !",
+    "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

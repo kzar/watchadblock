@@ -191,6 +191,16 @@
     "message":"Esta característica de AdBlock no funciona en este sitio porque utiliza tecnología obsoleta. Puedes prohibir o permitir recursos manualmente en la pestaña 'Personalizar' de la página de opciones.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"¿Estás seguro de que deseas suscribirte a la lista de filtros $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Subscribiéndose a la lista de filtros...",
     "description":"abp: link subscriber title"

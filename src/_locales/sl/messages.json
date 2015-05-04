@@ -47,6 +47,10 @@
     "message":"Če želite skriti gumb, z desno miškino tipko kliknite na orodno vrstico, izberite 'Prilagodi orodno vrstico' in povlecite AdBlockov gumb iz orodne vrstice. Znova ga omogočite tako, da ga povlečete nazaj v orodno vrstico.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Če želite skriti gumb, kliknite nanj z desno miškino tipko in izberite Odstrani iz orodne vrstice. Ponovno ga lahko prikažete v Firefoxovem meniju  -> Prilagodi.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Premikajte drsnik dokler oglas ni pravilno blokiran in blokirani elementi izgledajo uporabno.",
     "description":"Blacklister slider page message"
@@ -187,6 +191,16 @@
     "message":"Ta funkcija AdBlocka tukaj ne deluje, ker stran uporablja zastarelo tehnologijo. Vire lahko ročno blokirate ali dovolite v zavihku Prilagodi na strani z nastavitvami.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
   },
+  "subscribeconfirm":{
+    "message":"Ali ste prepričani, da se želite naročiti na filter $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
+  },
   "subscribingtitle":{
     "message":"Poteka naročanje na seznam filtrov...",
     "description":"abp: link subscriber title"
@@ -236,6 +250,10 @@
   "showcontextmenus2":{
     "message":"Dodaj elemente na meni desnega miškinega klika",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Omogoči združljivost s ClickToFlash",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Pokaži izjave za odpravljanje napak v dnevniku konzole (upočasni AdBlock)",
@@ -476,6 +494,22 @@
   "adreport2":{
     "message":"Ste ravnokar našli oglas na spletni strani? Pomagali vam bomo najti primeren kraj za prijavo!<br\/> Ne pozabite: prijavljanje oglasov je prostovoljno. V kolikor tega ne želite storiti, preprosto zaprite to okno in blokirajte oglas le zase. To storite tako, da dodate filter za oglas preko zavihka 'Prilagodi' na straneh z nastavitvami te razširitve.",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Ali vas naj AdBlock obvesti, kadar zazna zlonamerno programsko opremo?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock je zaznal zlonamerno programsko opremo. Vaš računalnik je morda okužen.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Izvedite več o zlonamerni programski opremi",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Izključi ta sporočila",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Preverjanje za zlonamerno programsko opremo",
@@ -1194,6 +1228,16 @@
   "allow_whitelisting_youtube_channels":{
     "message":"Omogoči dodajanje nekaterih YouTube kanalov na seznam dovoljenih",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_youtube_channel":{
+    "message":"Dovoli oglase na kanalu $name$",
+    "description":"Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option",
+    "placeholders":{
+      "name":{
+        "content":"$1",
+        "example":"Name of channel"
+      }
+    }
   },
   "confirm_undo_custom_filters":{
     "message":"Ali ste prepričani, da želite odstraniti naslednje število blokad, ki ste jih ustvarili na $host$? Št. blokad: $count$",

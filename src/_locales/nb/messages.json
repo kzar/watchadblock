@@ -47,6 +47,10 @@
     "message":"For å gjemme knappen, høyreklikk på Safaris verktøylinje og velg tilpass verktøylinje. Deretter dra AdBlockknappen ut av verktøylinjen. Du kan vise den igjen ved å dra den tilbake til verktøylinjen",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"For å skjule knappen, høyreklikk og velg Fjern fra verktøylinje. Du kan vise den igjen ved å åpne menyen og velge Tilpass.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Drag glidebryteren helt til annonsen(e) er blokkert riktig på nettsiden, og det blokkerte elementet ser brukbart ut.",
     "description":"Blacklister slider page message"
@@ -186,6 +190,16 @@
   "wizardcantrunonframesets":{
     "message":"Denne AdBlock-funksjonen virker ikke fordi den bruker gammel teknologi. Du kan svarteliste eller hviteliste ressurser manuelt under Tilpass-fanen på Alternativer-siden.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
+  "subscribeconfirm":{
+    "message":"Er du sikker på at du vil abonnere på filterlisten $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
   },
   "subscribingtitle":{
     "message":"Abonner på filterlister...",
@@ -480,6 +494,22 @@
   "adreport2":{
     "message":"Så du fant akkurat en annonse på en nettside? Vel, jeg skal hjelpe deg med å finne riktig sted å rapportere det!<br\/> Husk: rapportering av annonser er frivillig. Hvis du ikke ønsker å gjøre dette, kan du enkelt lukke vinduet og blokkere den kun for deg selv ved å legge til dets filter i 'Tilpass'-fanen av innstillingssiden!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Skal AdBlock varsle deg når skadelig programvare oppdages?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock har oppdaget skadelig programvare. PC-en kan være infisert.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Lær mer om skadelig programvare",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Skru av disse varslene",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Sjekk for skadevare",

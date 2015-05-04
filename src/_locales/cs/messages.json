@@ -47,6 +47,10 @@
     "message":"Pro skrytí tlačítka klikněte pravým tlačítkem na nástroje Safari a vyberte Upravit panel nástrojů, poté táhněte s AdBlock tlačítkem pryč z panelu nástrojů. Můžete jej znovu zobrazit táhnutím zpět do panelu nástrojů.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Pro skrytí tlačítka, klepněte pravým tlačítkem myši a zvolte Skrýt tlačítko. Můžete jej znovu vyvolat pod Firefox menu > Customize",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Nastavte posuvník tak, aby reklama na stránce byla blokována a zbytek stránky stále vypadal uspokojivě.",
     "description":"Blacklister slider page message"
@@ -186,6 +190,16 @@
   "wizardcantrunonframesets":{
     "message":"Tato funkce AdBlock-u nebude fungovat na tomto webu, protože používá zastaralou technologii. Můžete povolit nebo zakázat zdroje ručně v panelu 'Přizpůsobit' na stránce Možností.",
     "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
+  "subscribeconfirm":{
+    "message":"Jste si jist, že se chcete přihlásit k odběru $title$?",
+    "description":"Prompt question before subscribing to the filter list",
+    "placeholders":{
+      "title":{
+        "content":"$1",
+        "example":"Prebake"
+      }
+    }
   },
   "subscribingtitle":{
     "message":"Přihlašování k odběru seznamu filtrů...",
@@ -480,6 +494,22 @@
   "adreport2":{
     "message":"Našli jste reklamu na webové stránce? Dobrá, pomohu vám najít správné místo, kde ji nahlásit!<br\/> Pamatujte: Nahlášení reklamy je dobrovolné. Pokud si ji nepřejete nahlásit, můžete zavřít toto okno a zablokovat ji pouze pro sebe tím, že přidáte její filtr na záložce 'Prizpůsobení' na stránce s nastavením!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Chcete upozornit, když AdBlock detekuje malware?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock detekoval malware. Váš počítač může být infikován!",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"Další informace o malware",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+  },
+  "malwarenotificationdisablethesemessages":{
+    "message":"Zakázat tato upozornění",
+    "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
     "message":"Kontrola malware-u",
