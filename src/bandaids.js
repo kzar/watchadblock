@@ -6,9 +6,13 @@ var run_bandaids = function() {
   if (/mail\.live\.com/.test(document.location.hostname))
     apply_bandaid_for = "hotmail";
   else if (/getadblock\.com$/.test(document.location.hostname) &&
-           window.top === window.self)
-    apply_bandaid_for = "getadblock";
-  else if (/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
+           window.top === window.self) {
+    if (/\/question\/$/.test(document.location.pathname)) {
+      apply_bandaid_for = "getadblockquestion";   
+    } else {
+      apply_bandaid_for = "getadblock";
+    }
+  } else if (/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
     apply_bandaid_for = "czech_sites";
   else if (/thepiratebay/.test(document.location.hostname))
     apply_bandaid_for = "the_pirate_bay_safari_only";
@@ -18,7 +22,6 @@ var run_bandaids = function() {
     if (hosts.length > 0)
       apply_bandaid_for = "noblock";
   }
-
   var bandaids = {
     noblock: function() {
       var styles = document.querySelectorAll("style");
@@ -41,6 +44,26 @@ var run_bandaids = function() {
         el.style.setProperty("display", "none", null);
         el.style.setProperty("position", "absolute", null);
         el.style.setProperty("right", "0px", null);
+      }
+    },
+    getadblockquestion: function() {
+      BGcall('addGABTabListeners');
+      var personalBtn = document.getElementById("personal-use");
+      var enterpriseBtn = document.getElementById("enterprise-use");
+      var buttonListener = function(event) {
+        BGcall('removeGABTabListeners', true);
+        if (enterpriseBtn) {
+          enterpriseBtn.removeEventListener("click", buttonListener);
+        }
+        if (personalBtn) {
+          personalBtn.removeEventListener("click", buttonListener);
+        }
+      };
+      if (personalBtn) {
+        personalBtn.addEventListener("click", buttonListener);
+      }
+      if (enterpriseBtn) {
+        enterpriseBtn.addEventListener("click", buttonListener);
       }
     },
     getadblock: function() {

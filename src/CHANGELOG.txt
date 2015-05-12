@@ -2,6 +2,15 @@
 
 UNRELEASED:
 
+2.32:
+- Fixed a bug in the retry logic when trying to open the "/installed" page on getadblock.com. (#548)
+- Added retry logic when the user is the "/question" page on getadblock.com. (#543)
+- Added the filter text to the JavaScript exception message when an invalid option is found in a filter. (#537)
+- Fixed the logic for creating a YouTube whitelist channel filter to avoid white-listing other channels. (#534)
+- Fixed an issue with the whitelist / blacklist wizards not being displayed correctly on certain sites. (#527)
+- Added support for Internationalized domains (IDN) throughout AdBlock. (#495)
+- Updated Translations
+
 2.31:
 - New language: Gujarati
 

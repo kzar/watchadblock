@@ -59,6 +59,7 @@ FilterSet.prototype = {
   // domain, and return it with the given map function applied. This function
   // is for hiding rules only
   filtersFor: function(domain) {
+    domain = getUnicodeDomain(domain);
     var limited = this._viewFor(domain);
     var data = {};
     // data = set(limited.items)
@@ -142,7 +143,7 @@ BlockingFilterSet.prototype = {
   //   if returnFilter is false:
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, frameDomain, returnFilter) {
-    var urlDomain = parseUri(url).hostname;
+    var urlDomain = getUnicodeDomain(parseUri(url).hostname);
     var isThirdParty = BlockingFilterSet.checkThirdParty(urlDomain, frameDomain);
 
     // matchCache approach taken from ABP

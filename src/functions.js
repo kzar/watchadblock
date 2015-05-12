@@ -137,6 +137,27 @@ parseUri.secondLevelDomainOnly = function(domain, keepDot) {
   return match[keepDot ? 0 : 1].toLowerCase();
 };
 
+// Return |domain| encoded in Unicode
+getUnicodeDomain = function(domain) {
+    if (domain) {
+        return punycode.toUnicode(domain);
+    } else {
+        return domain;
+    }
+}
+
+// Return |url| encoded in Unicode
+getUnicodeUrl = function(url) {
+    // URLs encoded in Punycode contain xn-- prefix
+    if (url && url.indexOf("xn--") > 0) {
+        var parsed = parseUri(url);
+        // IDN domains have just hostnames encoded in punycode
+        parsed.href = parsed.href.replace(parsed.hostname, punycode.toUnicode(parsed.hostname));
+      return parsed.href;
+    }
+    return url;
+};
+
 // TODO: move back into background.js since Safari can't use this
 // anywhere but in the background.  Do it after merging 6101 and 6238
 // and 5912 to avoid merge conflicts.

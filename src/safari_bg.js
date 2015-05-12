@@ -34,6 +34,10 @@ frameData = (function() {
         _initializeMap: function(tabId, url, domain) {
             var tracker = frameData[tabId];
 
+            // We need to handle IDN URLs properly
+            url = getUnicodeUrl(url);
+            domain = getUnicodeDomain(domain);
+
             var shouldTrack = !tracker || tracker.url !== url;
             if (shouldTrack) {
                 frameData[tabId] = {
@@ -99,9 +103,9 @@ safari.application.addEventListener("message", function(messageEvent) {
         return;
     }
 
-    var url = messageEvent.message.url;
+    var url = getUnicodeUrl(messageEvent.message.url);
     var elType = messageEvent.message.elType;
-    var frameDomain = messageEvent.message.frameDomain;
+    var frameDomain = getUnicodeDomain(messageEvent.message.frameDomain);
 
     frameData.storeResource(tab.id, url, elType);
 
@@ -180,11 +184,11 @@ if (!LEGACY_SAFARI) {
     // and then remove frameData[tabId] after close event.
     safari.application.addEventListener("close", function(event) {
         setTimeout(function() {
-            if (safari && 
-                safari.application && 
-                safari.application.activeBrowserWindow && 
+            if (safari &&
+                safari.application &&
+                safari.application.activeBrowserWindow &&
                 safari.application.activeBrowserWindow.tabs) {
-                    
+
                 var safari_tabs = safari.application.activeBrowserWindow.tabs;
 
                 var opened_tabs = [];

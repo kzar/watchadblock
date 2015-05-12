@@ -248,7 +248,7 @@ if (SAFARI) {
         }
 
         if (info.top_level) {
-          tab[info.visible ? 'visible_url' : 'invisible_url'] = info.url;
+          tab[info.visible ? 'visible_url' : 'invisible_url'] = getUnicodeUrl(info.url);
         }
       },
 
@@ -261,7 +261,7 @@ if (SAFARI) {
       info: function(tab, visible) {
         return {
           id: tab.id,
-          url: (visible ? tab.visible_url : tab.invisible_url)
+          url: (visible ? getUnicodeUrl(tab.visible_url) : getUnicodeUrl(tab.invisible_url))
         };
       }
     },

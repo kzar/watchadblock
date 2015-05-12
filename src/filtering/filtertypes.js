@@ -220,7 +220,7 @@ PatternFilter._parseRule = function(text) {
       // option, without returning that the filter was invalid.
     }
     else {
-      throw new Error("Unknown option in filter " + option);
+      throw new Error("Unknown option '" + option + "' in filter '" + text + "'");
     }
   }
   // If no element types are mentioned, the default set is implied.
