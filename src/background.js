@@ -1236,7 +1236,7 @@
   var addGABTabListeners = function(sender) {
     gabQuestion.addGABTabListeners(sender);
   };
-  
+
   var removeGABTabListeners = function(saveState) {
     gabQuestion.removeGABTabListeners(saveState);
   }
@@ -1246,26 +1246,15 @@
     if (SAFARI) {
       openTab(installedURL);
     } else {
-      var numInstalledAttempts = 0;
-      //if Chrome, open the /installed tab,
-      //if tab doesn't exist for any reason
-      // send an error message and retry in 5 minutes
-      var openInstalledTab = function() {
-        if (numInstalledAttempts > 10) {
-          return;
-        }
-        numInstalledAttempts++;
-        chrome.tabs.create({url: installedURL}, function(tab) {
-          if (!tab || !tab.url) {
-            recordErrorMessage('installed tab or URL null');
-            var fiveMinutes = 5 * 60 * 1000;
-            setTimeout(function() {
-              openInstalledTab();
-            }, fiveMinutes);
+      chrome.tabs.create({url: installedURL}, function(tab) {
+        if (chrome.runtime.lastError) {
+          if (chrome.runtime.lastError.message) {
+            recordErrorMessage('/installed open error ' + chrome.runtime.lastError.message);
+          } else {
+            recordErrorMessage('/installed open error ' + JSON.stringify(chrome.runtime.lastError));
           }
-        });
-      };
-      openInstalledTab();
+        }
+      });
     }
   }
   if (chrome.runtime.setUninstallURL) {
