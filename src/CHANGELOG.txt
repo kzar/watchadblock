@@ -2,6 +2,17 @@
 
 UNRELEASED:
 
+2.34:
+- On the 'Report an Ad' page, the support / forum URLs for three filter lists (Korean, Sweden, Turkish) were updated. (#560)
+- In Chrome, removed the normalizing of the type on URL requests for fonts since it is not needed.  (#553)
+- In Safari, improved the removal of pre-roll ads on YouTube.  (#552)
+- On the Custom tab, under AdBlock options, added the display of error messages when an invalid filter is found during a save of custom filters. (#545)
+- Added the ability to whitelist frames. (#521 & #518)
+- Improved the YouTube channel whitelist feature, so that a YouTube page is only reloaded when required.  (#504)
+- In Chrome, the 'number of ads blocked' counter is incremented when a popup is blocked. (#497)
+- In Chrome, on the 'Report an Ad' page, an option was added to enable and disable other extensions to help find the source of an ad.  Also, The debug information from the 'Report an Ad' page, and the Support tab, will include other extension information (if allowed by the user) to help us better resolve issues. (#462)
+
+
 2.33:
 - Removed the retry logic when the "/installed" page open on getadblock.com. (#551)
 

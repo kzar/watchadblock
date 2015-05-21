@@ -222,8 +222,13 @@ if (!LEGACY_SAFARI) {
     }, true);
 }
 
-// YouTube Channel Whitelist
+
 safari.application.addEventListener("beforeNavigate", function(event) {
+    //remove bandaids.js from YouTube.com when a user pauses AdBlock or if the enabled click to flash compatibility mode
+    if (/youtube.com/.test(event.url) && (is_adblock_paused() || (get_settings().clicktoflash_compatibility_mode === true))) {
+      safari.extension.removeContentScript(safari.extension.baseURI + "bandaids.js");
+    } 
+    // YouTube Channel Whitelist 
     if (/youtube.com/.test(event.url) && get_settings().youtube_channel_whitelist && !parseUri.parseSearch(event.url).ab_channel) {
         safari.extension.addContentScriptFromURL(safari.extension.baseURI + "ytchannel.js", [], [], false);
     } else {

@@ -148,12 +148,17 @@ $(function() {
 
     if (blacklist)
       blacklist = "@@*$document,domain=" + blacklist;
-
+    var filterErrorMessage = "";
+    $("#messageBlacklist").html(filterErrorMessage);
+    $("#messageBlacklist").hide();
     try {
       FilterNormalizer.normalizeLine(blacklist);
       $("#btnAddBlacklist").prop("disabled", false);
     } catch(ex) {
       $("#btnAddBlacklist").prop("disabled", true);
+      filterErrorMessage = translate("customfilterserrormessage", [$("#txtBlacklist").val(), ex.message]);
+      $("#messageBlacklist").html(filterErrorMessage);
+      $("#messageBlacklist").show();
     }
   });
 
@@ -241,7 +246,7 @@ $(function() {
     var new_count = {};
     var temp_filter_tracker = [];
     for(var i = 0; i < custom_filters_array.length; i++) {
-      var filter = custom_filters_array[i]
+      var filter = custom_filters_array[i];
       //Check if filter is a duplicate and that it is a hiding filter.
       if(temp_filter_tracker.indexOf(filter) < 0 && filter.indexOf("##") > -1) {
         temp_filter_tracker.push(filter);
@@ -254,15 +259,30 @@ $(function() {
 
   function saveFilters() {
     var custom_filters_text = $("#txtFiltersAdvanced").val();
-    BGcall("set_custom_filters_text", custom_filters_text);
-
-    updateCustomFiltersCount(custom_filters_text);
-
-    $("#divAddNewFilter").slideDown();
-    $("#txtFiltersAdvanced").prop("disabled", true);
-    $("#spanSaveButton").hide();
-    $("#btnEditAdvancedFilters").show();
-    $("#btnCleanUp").show();
+    var custom_filters_array = custom_filters_text.split("\n");
+    var filterErrorMessage = "";
+    $("#messagecustom").html(filterErrorMessage);
+    $("#messagecustom").hide();
+    for(var i = 0; (!filterErrorMessage && i < custom_filters_array.length); i++) {
+      var filter = custom_filters_array[i];
+      try {
+        FilterNormalizer.normalizeLine(filter);
+      } catch(ex) {
+        filterErrorMessage = translate("customfilterserrormessage", [filter, ex.message]);
+      }
+    }
+    if (!filterErrorMessage) {
+      BGcall("set_custom_filters_text", custom_filters_text);
+      updateCustomFiltersCount(custom_filters_text);
+      $("#divAddNewFilter").slideDown();
+      $("#txtFiltersAdvanced").prop("disabled", true);
+      $("#spanSaveButton").hide();
+      $("#btnEditAdvancedFilters").show();
+      $("#btnCleanUp").show();
+    } else {
+      $("#messagecustom").html(filterErrorMessage);
+      $("#messagecustom").show();
+    }
   }
 
   $("#btnSaveAdvancedFilters").click(saveFilters);

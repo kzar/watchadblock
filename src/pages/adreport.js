@@ -1,4 +1,5 @@
 var malwareDomains = null;
+var extensionsDisabled = [];
 $(function() {
     localizePage();
 
@@ -254,12 +255,79 @@ $("#step_update_filters_yes").click(function() {
 //after user disables all extensions except for AdBlock
 //if the user clicks a radio button
 $("#step_disable_extensions_no").click(function() {
-    $("#step_disable_extensions").html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
-    $("#checkupdate").text(translate("reenableadsonebyone"));
+  $("#step_disable_extensions").html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
+  $("#checkupdate").text(translate("reenableadsonebyone"));
 });
 $("#step_disable_extensions_yes").click(function() {
-    $("#step_disable_extensions").html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
-    $("#step_language_DIV").fadeIn().css("display", "block");
+  $("#step_disable_extensions").html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
+  $("#step_language_DIV").fadeIn().css("display", "block");
+  if (extensionsDisabled.length > 0) {
+    chrome.permissions.request({
+        permissions: ['management']
+    }, function(granted) {
+        // The callback argument will be true if the user granted the permissions.
+        if (granted) {
+          for (var i = 0; i < extensionsDisabled.length; i++) {
+            chrome.management.setEnabled(extensionsDisabled[i], true);
+          }
+          alert(translate('enableotherextensionscomplete'));
+        } else {
+          alert(translate('manuallyenableotherextensions'));
+        }
+    });
+  }
+});
+//Automatically disable / enable other extensions
+$("#OtherExtensions").click(function() {
+    $("#OtherExtensions").prop("disabled", true);
+    if (!SAFARI) {
+      chrome.permissions.request({
+          permissions: ['management']
+      }, function(granted) {
+          // The callback argument will be true if the user granted the permissions.
+          if (granted) {
+            //remove the Yes/No buttons, so users don't click them to soon.
+            $("#step_disable_extensions").fadeOut().css("display", "none");
+            chrome.management.getAll(function(result) {
+              for (var i = 0; i < result.length; i++) {
+                if (result[i].enabled &&
+                    result[i].mayDisable &&
+                    result[i].id !== "gighmmpiobklfepjocnamgkkbiglidom" &&
+                    result[i].id !== "aobdicepooefnbaeokijohmhjlleamfj" &&
+                    result[i].id !== "pljaalgmajnlogcgiohkhdmgpomjcihk") {
+                  //if the extension is a developer version, continue, don't disable.
+                  if (result[i].installType === "development" &&
+                      result[i].type === "extension" &&
+                      result[i].name === "AdBlock") {
+                    continue;
+                  }
+                  chrome.management.setEnabled(result[i].id, false);
+                  extensionsDisabled.push(result[i].id);
+                }
+              }
+              chrome.permissions.remove({
+                  permissions: ['management']
+              }, function(removed) { });
+              var alertDisplayed = false;
+              alert(translate('disableotherextensionscomplete'));
+              chrome.extension.onRequest.addListener(
+                function(message, sender, sendResponse) {
+                  if (!alertDisplayed && message.command  === "reloadcomplete") {
+                    alertDisplayed = true;
+                    alert(translate('tabreloadcomplete'));
+                    //we're done, redisplay the Yes/No buttons
+                    $("#step_disable_extensions").fadeIn().css("display", "block");
+                    sendResponse({});
+                  }
+                }
+              );
+              BGcall("reloadTab", parseInt(tabId));
+            });// end of chrome.management.getAll()
+          } else {
+            $("#OtherExtensions").prop("disabled", false);
+          }
+      });// end of chrome.permissions.request()
+    }
 });
 
 // STEP 4: language
@@ -313,8 +381,62 @@ $("#step_firefox_no").click(function() {
         $("#step_flash_DIV").fadeIn().css("display", "block");
     } else {
         $("#checkupdate").html(translate("reporttous2"));
-        $("a", "#checkupdate").attr("href", generateReportURL());
         $("#privacy").show();
+        $("a", "#checkupdate").attr("href", generateReportURL());
+        $("a", "#checkupdate").click(function(event) {
+          //we have our own click handler for the anchor tag, so that we
+          //can ask retrieve other extension info.
+          event.preventDefault();
+          var currentHREF = $("a", "#checkupdate").attr("href");
+          var askUserToGatherExtensionInfo = function() {
+            chrome.permissions.request({
+              permissions: ['management']
+            }, function(granted) {
+              // The callback argument will be true if the user granted the permissions.
+              if (granted) {
+                chrome.management.getAll(function(result) {
+                  var extInfo = [];
+                  extInfo.push("");
+                  extInfo.push("==== Extension and App Information ====");
+                  for (var i = 0; i < result.length; i++) {
+                    extInfo.push("Number " + (i + 1));
+                    extInfo.push("  name: " + result[i].name);
+                    extInfo.push("  id: " + result[i].id);
+                    extInfo.push("  version: " + result[i].version);
+                    extInfo.push("  enabled: " + result[i].enabled)
+                    extInfo.push("  type: " + result[i].type);
+                    extInfo.push("");
+                  }
+                  currentHREF = currentHREF + encodeURIComponent(extInfo.join('  \n'));
+                  chrome.permissions.remove({
+                    permissions: ['management']
+                  }, function(removed) {});
+                  document.location.href = currentHREF;
+                });
+              } else {
+                //user didn't grant us permission, just go to site...
+                document.location.href = currentHREF;
+              }
+            });
+        };//end of permission request
+        if (chrome &&
+            chrome.tabs &&
+            chrome.tabs.detectLanguage) {
+          chrome.tabs.detectLanguage(parseInt(tabId), function(language) {
+            if (language) {
+              var extInfo = [];
+              extInfo.push("");
+              extInfo.push("Detected language of page: ");
+              extInfo.push(language);
+              extInfo.push("");
+              currentHREF = currentHREF + encodeURIComponent(extInfo.join('  \n'));
+            }
+            askUserToGatherExtensionInfo();
+          });//end of detectLanguage
+        } else {
+          askUserToGatherExtensionInfo();
+        }
+      });//end of click handler
     }
 });
 $("#step_firefox_wontcheck").click(function() {

@@ -234,9 +234,7 @@
           domain: parseUri(url).hostname,
           resources: {}
         };
-        if (frameId === 0) {
-          fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
-        }
+        fd[tabId][frameId].whitelisted = page_is_whitelisted(url);
       },
 
       // Watch for requests for new tabs and frames, and track their URLs.
@@ -307,9 +305,6 @@
           var pos = url.pathname.lastIndexOf('.');
           if (pos > -1) {
             var ext = url.pathname.slice(pos) + '.';
-            if ('.eot.ttf.otf.svg.woff.woff2.'.indexOf(ext) !== -1) {
-              return 'font';
-            }
             // Still need this because often behind-the-scene requests are wrongly
             // categorized as 'other'
             if ('.ico.png.gif.jpg.jpeg.webp.'.indexOf(ext) !== -1) {
@@ -335,8 +330,17 @@
       var tabId = details.tabId;
       var reqType = normalizeRequestType({url: details.url, type: details.type});
 
-      if (frameData.get(tabId, 0).whitelisted) {
+      var top_frame = frameData.get(tabId, 0);
+      var sub_frame = (details.frameId !== 0 ? frameData.get(tabId, details.frameId) : null);
+
+      // If top frame is whitelisted, don't process anything
+      if (top_frame.whitelisted) {
         log("[DEBUG]", "Ignoring whitelisted tab", tabId, details.url.substring(0, 100));
+        return { cancel: false };
+      // If request comes from whitelisted sub_frame and
+      // top frame is not whitelisted, don't process the request
+      } else if (sub_frame && sub_frame.whitelisted) {
+        log("[DEBUG]", "Ignoring whitelisted frame", tabId, details.url.substring(0, 100));
         return { cancel: false };
       }
 
@@ -400,8 +404,11 @@
         details.url = opener.url;
       var url = getUnicodeUrl(details.url);
       var match = _myfilters.blocking.matches(url, ElementTypes.popup, opener.domain);
-      if (match)
-        chrome.tabs.remove(details.tabId);
+      if (match) {
+          chrome.tabs.remove(details.tabId);
+          blockCounts.recordOneAdBlocked(details.sourceTabId);
+          updateBadge(details.sourceTabId);
+      }
       frameData.storeResource(details.sourceTabId, details.sourceFrameId, url, ElementTypes.popup);
     };
 
@@ -1015,9 +1022,17 @@
   //           domain:string the domain of the calling frame.
   get_content_script_data = function(options, sender) {
     var settings = get_settings();
-    var runnable = !adblock_is_paused() && !page_is_unblockable(sender.tab.url);
-    var running = runnable && !page_is_whitelisted(sender.tab.url);
-    var hiding = running && !page_is_whitelisted(sender.tab.url, ElementTypes.elemhide);
+    var runnable = !adblock_is_paused() && !page_is_unblockable(sender.url);
+    var running_top = runnable && !page_is_whitelisted(sender.tab.url);
+    var running = runnable && !page_is_whitelisted(sender.url);
+    var hiding = running && !page_is_whitelisted(sender.url, ElementTypes.elemhide);
+
+    // Don't run in frame, when top frame is whitelisted
+    if (!running_top && running) {
+      running = false;
+      hiding = false;
+    }
+
     var result = {
       settings: settings,
       runnable: runnable,
@@ -1373,7 +1388,9 @@
   // Script injection logic for Safari is done in safari_bg.js
   if (!SAFARI) {
       var runChannelWhitelist = function(tabUrl, tabId) {
-          if (/youtube.com/.test(tabUrl) && get_settings().youtube_channel_whitelist && !parseUri.parseSearch(tabUrl).ab_channel) {
+          if (parseUri(tabUrl).hostname === "www.youtube.com" &&
+              get_settings().youtube_channel_whitelist &&
+              !parseUri.parseSearch(tabUrl).ab_channel) {
               chrome.tabs.executeScript(tabId, {file: "ytchannel.js", runAt: "document_start"});
           }
       }

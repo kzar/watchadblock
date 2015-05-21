@@ -172,6 +172,8 @@ if (SAFARI) {
               var frameInfo = messageEvent.message.frameInfo;
               chrome._tabInfo.notice(tab, frameInfo);
               sender.tab = chrome._tabInfo.info(tab, frameInfo.visible);
+              // Filled with URL of frame.
+              sender.url = frameInfo.url;
             }
 
             var sendResponse = function(dataToSend) {
