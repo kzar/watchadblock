@@ -91,7 +91,7 @@ function getDropboxMessage() {
   BGcall('sessionstorage_get', 'dropboxerror', function(messagecode) {
     //if the message exists, it should already be translated.
     if (messagecode) {
-      $("#dbmessage").text(translate(messagecode));
+      $("#dbmessage").text(messagecode);
     }
   });
 }
@@ -122,7 +122,7 @@ if (!SAFARI &&
                 sendResponse({});
             }
             if (request.message === "dropboxerror" && request.messagecode) {
-              $("#dbmessage").text(translate(request.messagecode));
+              $("#dbmessage").text(request.messagecode);
               sendResponse({});
             }
             if (request.message === "cleardropboxerror") {

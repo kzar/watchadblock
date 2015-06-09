@@ -407,10 +407,6 @@
     "message":"Letó",
     "description":"A filter list"
   },
-  "filternorwegian":{
-    "message":"Noruec",
-    "description":"A filter list"
-  },
   "filterswedish":{
     "message":"Suec",
     "description":"A filter list"
@@ -714,20 +710,6 @@
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
-  },
-  "checkinfirefox_2":{
-    "message":"Instal·leu-vos l'Adblock Plus per a Firefox $chrome$ si no el teniu.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_3":{
-    "message":"En aquell navegador, subscriviu-vos a les mateixes llistes de filtres que teniu aquí (excepte els filtres personalitzats d'AdBlock al Firefox).",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
   "checkinfirefox_4":{
     "message":"En aquell navegador, carregueu la pàgina amb l'anunci.",
@@ -1277,7 +1259,7 @@
   },
   "ff_adblock_outdated":{
     "message":"Esteu fent servir una versió antiga d'AdBlock. Cliqueu el botó del menú de Firefox i escolliu Complements. Tot seguit, a la pàgina de Complements, cliqueu a l'engranatge i seleccioneu 'Cerca actualitzacions'.",
-    "description":"On the Options > Support page, shows when there is an update available for AdBlock"
+    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   },
   "adblocksupport":{
     "message":"Suport d'AdBlock",

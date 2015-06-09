@@ -2,6 +2,13 @@
 
 UNRELEASED:
 
+2.35:
+- For Safari users, AdBlock will now block popups on Safari. (#547)
+- For Safari users, the deleting of cached resource data when a tab or window is closed has been simplified and improved.  (#546)
+- For Chrome users, AdBlock will ping upon browser startup when the installation type is 'admin'.  (#566)
+- For Chrome users, AdBlock will retry to open the 'getadblock.com/installed' page when it fails to open initially.  (#564)
+- Modified the translation of the DropBox error message to be easier for the translation team.  (#562)
+
 2.34:
 - On the 'Report an Ad' page, the support / forum URLs for three filter lists (Korean, Sweden, Turkish) were updated. (#560)
 - In Chrome, removed the normalizing of the type on URL requests for fonts since it is not needed.  (#553)

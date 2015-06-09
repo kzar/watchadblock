@@ -8,7 +8,7 @@ var run_bandaids = function() {
   else if (/getadblock\.com$/.test(document.location.hostname) &&
            window.top === window.self) {
     if (/\/question\/$/.test(document.location.pathname)) {
-      apply_bandaid_for = "getadblockquestion";   
+      apply_bandaid_for = "getadblockquestion";
     } else {
       apply_bandaid_for = "getadblock";
     }
@@ -35,16 +35,11 @@ var run_bandaids = function() {
     },
     hotmail: function() {
       //removing the space remaining in Hotmail/WLMail
-      el = document.querySelector(".Unmanaged .WithSkyscraper #MainContent");
-      if (el) {el.style.setProperty("margin-right", "1px", null);}
-      el = document.querySelector(".Managed .WithSkyscraper #MainContent");
-      if (el) {el.style.setProperty("right", "1px", null);}
-      el = document.getElementById("SkyscraperContent");
-      if (el) {
-        el.style.setProperty("display", "none", null);
-        el.style.setProperty("position", "absolute", null);
-        el.style.setProperty("right", "0px", null);
-      }
+      var css_chunk = document.createElement("style");
+      css_chunk.type = "text/css";
+      (document.head || document.documentElement).insertBefore(css_chunk, null);
+      css_chunk.sheet.insertRule(".WithRightRail { right:0px !important; }", 0);
+      css_chunk.sheet.insertRule("#RightRailContainer  { display:none !important; visibility: none !important; orphans: 4321 !important; }" , 0);
     },
     getadblockquestion: function() {
       BGcall('addGABTabListeners');

@@ -1256,22 +1256,59 @@
     gabQuestion.removeGABTabListeners(saveState);
   }
 
+  var installedURL = "https://getadblock.com/installed/?u=" + STATS.userId;
   if (STATS.firstRun && (SAFARI || OPERA || chrome.runtime.id !== "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
-    var installedURL = "https://getadblock.com/installed/?u=" + STATS.userId;
     if (SAFARI) {
       openTab(installedURL);
     } else {
-      chrome.tabs.create({url: installedURL}, function(tab) {
-        if (chrome.runtime.lastError) {
-          if (chrome.runtime.lastError.message) {
-            recordErrorMessage('/installed open error ' + chrome.runtime.lastError.message);
-          } else {
-            recordErrorMessage('/installed open error ' + JSON.stringify(chrome.runtime.lastError));
+      var openInstalledTab = function() {
+        chrome.tabs.create({url: installedURL}, function(tab) {
+          //if we couldn't open a tab to '/installed', save that fact, so we can retry later at startup
+          if (chrome.runtime.lastError) {
+            storage_set("/installed_error", { retry_count: 0 } );
           }
-        }
-      });
+        });
+      };
+      if (chrome.management && chrome.management.getSelf) {
+        chrome.management.getSelf(function(info) {
+          if (info && info.installType !== "admin") {
+            openInstalledTab();
+          }
+        });
+      } else {
+        openInstalledTab();
+      }
     }
   }
+  //retry logic for '/installed' - retries on browser / AdBlock startup
+  var installError = storage_get("/installed_error");
+  if (installError && installError.retry_count >= 0 && !SAFARI) {
+    //append the retry count to the URL
+    installError.retry_count += 1;
+    var retryInstalledURL = installedURL + "&r=" + installError.retry_count;
+    chrome.tabs.create({url: retryInstalledURL}, function(tab) {
+      if (chrome.runtime.lastError) {
+        //if there is an error (again), log a message and re-save.
+        if (chrome.runtime.lastError.message) {
+          recordErrorMessage('/installed open error count: ' +
+                              installError.retry_count +
+                              " error: " +
+                              chrome.runtime.lastError.message);
+        } else {
+          recordErrorMessage('/installed open error count: ' +
+                              installError.retry_count +
+                              " error: " +
+                              JSON.stringify(chrome.runtime.lastError));
+        }
+        storage_set("/installed_error", installError);
+      } else {
+        //if we successfully opened the tab,
+        // delete the 'installed error' so we don't display it again
+        storage_set("/installed_error");
+      }
+    });
+  }
+
   if (chrome.runtime.setUninstallURL) {
     var uninstallURL = "https://getadblock.com/uninstall/?u=" + STATS.userId;
     //if the start property of blockCount exists (which is the AdBlock installation timestamp)
@@ -1765,8 +1802,8 @@
             log(ex);
             //since the most likely exception at this point is a size exceeded message,
             //store the message code.
-            sessionstorage_set("dropboxerror", "dropboxerrorforfilters");
-            chrome.runtime.sendMessage({message: "dropboxerror", messagecode: "dropboxerrorforfilters"});
+            sessionstorage_set("dropboxerror", translate("dropboxerrorforfilters"));
+            chrome.runtime.sendMessage({message: "dropboxerror", messagecode: translate("dropboxerrorforfilters") });
           }
           if (!syncError) {
             //sync was successful, remove any previous error messages.

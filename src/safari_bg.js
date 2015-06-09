@@ -93,6 +93,7 @@ safari.application.addEventListener("message", function(messageEvent) {
         return;
 
     var tab = messageEvent.target;
+    var isPopup = messageEvent.message.isPopup;
     var frameInfo = messageEvent.message.frameInfo;
     chrome._tabInfo.notice(tab, frameInfo);
     var sendingTab = chrome._tabInfo.info(tab, frameInfo.visible);
@@ -102,16 +103,27 @@ safari.application.addEventListener("message", function(messageEvent) {
         messageEvent.message = true;
         return;
     }
+    
+    // Popup blocking support
+    if (!isPopup) {
+        var url = getUnicodeUrl(messageEvent.message.url);
+        var elType = messageEvent.message.elType;
+        var frameDomain = getUnicodeDomain(messageEvent.message.frameDomain);
 
-    var url = getUnicodeUrl(messageEvent.message.url);
-    var elType = messageEvent.message.elType;
-    var frameDomain = getUnicodeDomain(messageEvent.message.frameDomain);
+        var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
+        if (isMatched) {
+            log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
+        }
+    } else {
+        var isMatched = _myfilters.blocking.matches(sendingTab.url, ElementTypes.popup,
+                                                    parseUri(getUnicodeUrl(messageEvent.message.referrer)).hostname);
+        if (isMatched) {
+            tab.close();
+        }
+    }
 
     frameData.storeResource(tab.id, url, elType);
 
-    var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
-    if (isMatched)
-        log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
     messageEvent.message = !isMatched;
 }, false);
 
@@ -179,29 +191,11 @@ if (!LEGACY_SAFARI) {
     }, true);
 
 
-    // Close event fires when tab/window is about to close,
-    // not when tab has been closed. Therefore we need to wait
-    // and then remove frameData[tabId] after close event.
+    // Remove the popover when the window closes and
+    // cached data stored in frameData
     safari.application.addEventListener("close", function(event) {
-        setTimeout(function() {
-            if (safari &&
-                safari.application &&
-                safari.application.activeBrowserWindow &&
-                safari.application.activeBrowserWindow.tabs) {
-
-                var safari_tabs = safari.application.activeBrowserWindow.tabs;
-
-                var opened_tabs = [];
-                for (var i=0; i < safari_tabs.length; i++)
-                    opened_tabs.push(safari_tabs[i].id);
-
-                for (tab in frameData) {
-                    if (typeof frameData[tab] === "object" && opened_tabs.indexOf(parseInt(tab)) === -1) {
-                        frameData.close(parseInt(tab));
-                    }
-                }
-            }//end of if
-        }, 150);//end of setTimeout
+        // Remove cached data for tab
+        frameData.close(event.target.id);
 
         // Remove the popover when the window closes so we don't leak memory.
         if (event.target instanceof SafariBrowserWindow) { // don't handle tabs

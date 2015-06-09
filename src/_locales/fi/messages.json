@@ -407,10 +407,6 @@
     "message":"Latvia",
     "description":"A filter list"
   },
-  "filternorwegian":{
-    "message":"Norja",
-    "description":"A filter list"
-  },
   "filterswedish":{
     "message":"Ruotsi",
     "description":"A filter list"
@@ -714,20 +710,6 @@
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
-  },
-  "checkinfirefox_2":{
-    "message":"Asenna AdBlock Plus Firefoxille $chrome$ jos sinulla ei ole sitä.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_3":{
-    "message":"Liity siinä selaimessa samoihin suodatinlistoihin kuin nyt (paitsi AdBlockin mukautetut suodattimet Firefoxissa).",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
   "checkinfirefox_4":{
     "message":"Lataa sivu, jolla on mainos, sillä selaimella.",
@@ -1212,6 +1194,10 @@
   "customfilters":{
     "message":"Mukautetut suodatinlistat",
     "description":"List for custom filters the user subscribed to"
+  },
+  "dropboxerrorforfilters":{
+    "message":"Olet ylittänyt Dropboxin kokorajoituksen. Poista kohteita mukautetuista tai käytöstä poistetuista suodattimista ja yritä uudelleen.",
+    "description":"Message to Dropbox sync users on the Customize tab, custom filters \/ disabled."
   },
   "languagedropdowndescription":{
     "message":"Lisää suodattimia toiselle kielelle: ",

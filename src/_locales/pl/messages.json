@@ -36,7 +36,7 @@
     "description":"Resource list column title telling if the resource originates from a different domain"
   },
   "chromebutton_how_to_hide2":{
-    "message":"Aby ukryć przycisk, kliknij PPM na ikonie AdBlock'a a następnie wybierz \"Ukryj przycisk\". Możesz ponownie włączyć pokazywanie go pod adresem chrome:\/\/extensions.",
+    "message":"Aby ukryć przycisk, kliknij prawym przyciskiem myszy na ikonie AdBlocka a następnie wybierz \"Ukryj przycisk\". Możesz ponownie włączyć pokazywanie go pod adresem chrome:\/\/extensions\/.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
@@ -407,10 +407,6 @@
     "message":"Łotewski",
     "description":"A filter list"
   },
-  "filternorwegian":{
-    "message":"Norweski",
-    "description":"A filter list"
-  },
   "filterswedish":{
     "message":"Szwedzki",
     "description":"A filter list"
@@ -714,20 +710,6 @@
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
-  },
-  "checkinfirefox_2":{
-    "message":"Zainstaluj Adblock Plus dla Firefoksa $chrome$ jeśli go nie posiadasz.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_3":{
-    "message":"W tej przeglądarce subskrybuj te same filtry jak tu (oprócz własnych filtrów w Firefoksie).",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
   "checkinfirefox_4":{
     "message":"Otwórz w niej stronę na której widzisz reklamę.",
@@ -1213,6 +1195,10 @@
     "message":"Własne listy filtrów",
     "description":"List for custom filters the user subscribed to"
   },
+  "dropboxerrorforfilters":{
+    "message":"Przekroczyłeś limit rozmiaru Dropbox. Proszę usunąć niektóre wpisy z własnych lub wyłączonych filtrów i spróbuj ponownie.",
+    "description":"Message to Dropbox sync users on the Customize tab, custom filters \/ disabled."
+  },
   "languagedropdowndescription":{
     "message":"Dodaj filtry dla innego języka: ",
     "description":"Dropdown list for language-specific filters"
@@ -1270,6 +1256,10 @@
         "example":"<a>here<\/a>"
       }
     }
+  },
+  "ff_adblock_outdated":{
+    "message":"Używaj starej wersji AdBlocka. Proszę kliknąć przycisk menu Firefoksa i wybrać \"Dodatki\". Następnie na stronie dodatków, kliknij ikonę koła zębatego (narzędzia dla wszystkich dodatków) i wybierz \"Sprawdź aktualizacje\".",
+    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   },
   "adblocksupport":{
     "message":"Wsparcie dla AdBlock'a",

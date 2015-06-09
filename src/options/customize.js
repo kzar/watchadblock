@@ -330,6 +330,6 @@ $(function() {
 
   BGcall("sessionstorage_get", "dropboxerror", function(text) {
     if (text)
-      $("#dbmessagecustom").text(translate(text));
+      $("#dbmessagecustom").text(text);
   });
 });

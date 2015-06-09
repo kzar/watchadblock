@@ -407,10 +407,6 @@
     "message":"Latvian",
     "description":"A filter list"
   },
-  "filternorwegian":{
-    "message":"Norwegian",
-    "description":"A filter list"
-  },
   "filterswedish":{
     "message":"Swedish",
     "description":"A filter list"
@@ -561,24 +557,24 @@
   },
   "clickdisableotherextensions":{
     "message":"<b>OR<\/b>, just click this button for us to do all of the above: <a>Disable all other extensions<\/a>",
-    "description":"button text to disable other extensions on ad report page"
+    "description":"On the ad report page, an alternative way to disable other extensions"
   },
   "disableotherextensionscomplete":{
     "message":"All other extensions have been disabled.  We'll now reload the tab.",
-    "description":"alert text notifying users that we've disabled all other extensions on ad report page"
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"The extensions that were previously disabled have been re-enabled.",
-    "description":"alert text notifying users that we've re-enabled extensions that were previously disabled on ad report page"
-  },  
+    "description":"On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
+  },
   "manuallyenableotherextensions":{
     "message":"Open the extensions page to enable the extensions that were previously disabled.",
-    "description":"alert text notifying users that they will need to manually reenable the extensions on the ad report page."
-  },  
+    "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
+  },
   "tabreloadcomplete":{
     "message":"The tab with the ad has been reloaded, please check that tab to see if the ad is still displayed.  Then answer the Yes or No question below.",
-    "description":"alert text notifying users that we've disabled all other extensions on ad report page"
-  },    
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"Uncheck the 'Enabled' checkbox next to every extension <b>except<\/b> for AdBlock.  <b>Leave AdBlock enabled<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -1234,8 +1230,8 @@
     "description":"List for custom filters the user subscribed to"
   },
   "customfilterserrormessage":{
-    "message":"The following filter:<br/> $filter$ <br/> has an error: <br/> $message$",
-    "description":"Error message to custome filter users on the Customize tab, custom filters.",
+    "message":"The following filter:<br\/> $filter$ <br\/> has an error: <br\/> $message$",
+    "description":"Error message when there is an issue with a custom filter on the 'Customize' tab of the Options page",
     "placeholders":{
       "filter":{
         "content":"$1",
@@ -1311,7 +1307,7 @@
   },
   "ff_adblock_outdated":{
     "message":"You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.",
-    "description":"On the Options > Support page, shows when there is an update available for AdBlock"
+    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   },
   "adblocksupport":{
     "message":"AdBlock Support",
