@@ -144,6 +144,15 @@ BlockingFilterSet.prototype = {
   //       true if the resource should be blocked, false otherwise
   matches: function(url, elementType, frameDomain, returnFilter) {
     var urlDomain = getUnicodeDomain(parseUri(url).hostname);
+    if (SAFARI && (!urlDomain || !frameDomain)) {
+    	var fullUrl = 'https://log.getadblock.com/record_log.php?type=error' +
+                  '&message=' +
+                  encodeURIComponent(" safari debug, url: " + url + " , frameDomain: " + frameDomain);
+    	$.ajax({
+      		type: 'GET',
+      		url: fullUrl
+    	});    
+    }      
     var isThirdParty = BlockingFilterSet.checkThirdParty(urlDomain, frameDomain);
 
     // matchCache approach taken from ABP
