@@ -2,7 +2,6 @@
 <html>
   <head>
     <link rel="stylesheet" href="popup.css"/>
-    <link rel="stylesheet" href="search/search.css">
     <script src="../punycode.min.js"></script>
     <script src="../port.js"></script>
     <script src="../jquery/jquery.min.js"></script>
@@ -16,49 +15,6 @@
           </div>
 
         <!-- ************ Status messages and block counter *********** -->
-          <div id="search_control">
-            <input type="checkbox" id="enable_show_secure_search" />
-            Activate private search
-          </div>
-        <!-- **************** BEGIN: Search UI ************** -->
-        <div id="search_page">
-          <div id="inactive_search"></div>
-          <div id="toolbar">
-            <input type="text" id="txt_search" value="" name="q" autocomplete="off" placeholder="">
-            <input type="submit" value="" id="btn_search">
-          </div>
-
-          <div id="search_settings">
-            <span class="setting_title">Search privately from:</span>
-            <ul>
-              <li>
-                <input id="omnibox-box" class="mode_settings" type="checkbox" value="1" name="mode_1">
-                <label for="omnibox-box">The omnibox</label>
-                <span class="question_mark" id="mode1_info">?</span>
-              </li>
-              <li>
-                <input id="everywhere-box" class="mode_settings" type="checkbox" value="2" name="mode_2">
-                <label for="everywhere-box">Search engine websites</label>
-                <span class="question_mark" id="mode2_info">?</span>
-              </li>
-            </ul>
-          </div>
-          <div class="incognito">
-            <div class="header">
-              <input type="checkbox" name="incognito" id="incognito">
-              <label for="incognito">Private search results in incognito window</label>
-            </div>
-          </div>
-
-          <!-- Help Popups -->
-          <div id="omnibox" actived="false" class="hide">
-            <img src="../img/search/search-omnibox-card_no-shadow.png" class="center_image"></img>
-          </div>
-          <div id="everywhere" actived="false" class="hide">
-            <img src="../img/search/search-engine-card_no-shadow.png" class="center_image"></img>
-          </div>
-        </div>
-        <!-- **************** END: Search UI ************** -->
 
         <!-- ************ Status messages *********** -->
 
@@ -152,6 +108,5 @@
 
 
     <script src="popup.js"></script>
-    <script src="search/search.js"></script>
   </body>
 </html>

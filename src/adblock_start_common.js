@@ -154,14 +154,14 @@ function handleABPLinkClicks() {
             // to open a new window from our global HTML file
             window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
                         "_blank",
-                        'scrollbars=0,location=0,resizable=0,width=450,height=150');
+                        'scrollbars=0,location=0,resizable=0,width=460,height=150');
           } else {
             BGcall("launch_subscribe_popup", loc);
           }
         }
       });
     }
-  };
+  }
   for (var i=0; i<elems.length; i++) {
     elems[i].addEventListener("click", abplinkhandler, false);
   }

@@ -5,16 +5,18 @@
              (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
              ":" + (e.lineno||"anywhere") +
              ":" + (e.colno||"anycol");
-    if (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk" &&
-        e.error) {
+    if (e.error) {
         var stack = "-" + (e.error.message ||"") +
                     "-" + (e.error.stack ||"");
         stack = stack.replace(/:/gi, ";").replace(/\n/gi, "");
-        str += stack;
-    }
-    //check to see if there's any URL info in the stack trace, if so, don't log it
-    if (str.indexOf("http") >= 0) {
-       return;
+        //only append the stack info if there isn't any URL info in the stack trace
+        if (stack.indexOf("http") === -1) {
+           str += stack;
+        }
+        //don't send large stack traces
+        if (str.length > 64) {
+          str = str.substr(0,63);
+        }
     }
     STATS.msg(str);
     sessionStorage.setItem("errorOccurred", true);
@@ -1123,7 +1125,7 @@
   launch_subscribe_popup = function(loc) {
     window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
     "_blank",
-    'scrollbars=0,location=0,resizable=0,width=450,height=150');
+    'scrollbars=0,location=0,resizable=0,width=460,height=150');
   }
 
   // Get the framedata for resourceblock

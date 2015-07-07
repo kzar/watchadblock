@@ -2,6 +2,15 @@
 
 UNRELEASED:
 
+2.36:
+- Added an if check to verify that domain is not undefined when processing URLs. (#579)
+- Changed the order of evaluation in the Survey processing. (#576)
+- Update the JavaScript error processing to include the stack trace information if it doesn't include an HTTP URL. (#575)
+- Updated the white-list filters for showing ads on Google Search when the 'show Google ads' option is enabled. (#573)
+- Removed Disconnect search code from AdBlock. (#568)
+- Update the height of the Subscribe popup. (#491)
+
+
 2.35.2:
 - Removed debug logging messages for Safari users. (#578)
 - Updated translations.

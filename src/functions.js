@@ -133,8 +133,12 @@ parseUri.parseSearch = function(search) {
 //         keepDot: true if trailing dots should be preserved in the domain
 // Returns: the parsed domain
 parseUri.secondLevelDomainOnly = function(domain, keepDot) {
-  var match = domain.match(/([^\.]+\.(?:co\.)?[^\.]+)\.?$/) || [domain, domain];
-  return match[keepDot ? 0 : 1].toLowerCase();
+  if (domain) {
+    var match = domain.match(/([^\.]+\.(?:co\.)?[^\.]+)\.?$/) || [domain, domain];
+    return match[keepDot ? 0 : 1].toLowerCase();
+  } else {
+    return domain;
+  }
 };
 
 // Return |domain| encoded in Unicode
