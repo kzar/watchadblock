@@ -103,18 +103,33 @@ safari.application.addEventListener("message", function(messageEvent) {
         messageEvent.message = true;
         return;
     }
-    
+
     // Popup blocking support
     if (!isPopup) {
         var url = getUnicodeUrl(messageEvent.message.url);
         var elType = messageEvent.message.elType;
         var frameDomain = getUnicodeDomain(messageEvent.message.frameDomain);
-
+        if (!frameDomain) {
+          var fullUrl = 'https://log.getadblock.com/record_log.php?type=error&message=' +
+                        encodeURIComponent(" safari debug, undefined frameDomain");
+      	  $.ajax({
+        		type: 'GET',
+        		url: fullUrl
+      	  });
+        }
         var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
         if (isMatched) {
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
         }
     } else {
+        if (!messageEvent.message.referrer) {
+          var fullUrl = 'https://log.getadblock.com/record_log.php?type=error&message=' +
+                        encodeURIComponent(" safari popup debug, undefined referrer");
+      	  $.ajax({
+        		type: 'GET',
+        		url: fullUrl
+      	  });
+        }
         var isMatched = _myfilters.blocking.matches(sendingTab.url, ElementTypes.popup,
                                                     parseUri(getUnicodeUrl(messageEvent.message.referrer)).hostname);
         if (isMatched) {
@@ -221,8 +236,8 @@ safari.application.addEventListener("beforeNavigate", function(event) {
     //remove bandaids.js from YouTube.com when a user pauses AdBlock or if the enabled click to flash compatibility mode
     if (/youtube.com/.test(event.url) && (is_adblock_paused() || (get_settings().clicktoflash_compatibility_mode === true))) {
       safari.extension.removeContentScript(safari.extension.baseURI + "bandaids.js");
-    } 
-    // YouTube Channel Whitelist 
+    }
+    // YouTube Channel Whitelist
     if (/youtube.com/.test(event.url) && get_settings().youtube_channel_whitelist && !parseUri.parseSearch(event.url).ab_channel) {
         safari.extension.addContentScriptFromURL(safari.extension.baseURI + "ytchannel.js", [], [], false);
     } else {
