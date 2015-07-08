@@ -104,36 +104,22 @@ safari.application.addEventListener("message", function(messageEvent) {
         return;
     }
 
-    // Popup blocking support
     if (!isPopup) {
         var url = getUnicodeUrl(messageEvent.message.url);
         var elType = messageEvent.message.elType;
         var frameDomain = getUnicodeDomain(messageEvent.message.frameDomain);
-        if (!frameDomain) {
-          var fullUrl = 'https://log.getadblock.com/record_log.php?type=error&message=' +
-                        encodeURIComponent(" safari debug, undefined frameDomain");
-      	  $.ajax({
-        		type: 'GET',
-        		url: fullUrl
-      	  });
-        }
         var isMatched = url && (_myfilters.blocking.matches(url, elType, frameDomain));
         if (isMatched) {
             log("SAFARI TRUE BLOCK " + url + ": " + isMatched);
         }
     } else {
-        if (!messageEvent.message.referrer) {
-          var fullUrl = 'https://log.getadblock.com/record_log.php?type=error&message=' +
-                        encodeURIComponent(" safari popup debug, undefined referrer");
-      	  $.ajax({
-        		type: 'GET',
-        		url: fullUrl
-      	  });
-        }
-        var isMatched = _myfilters.blocking.matches(sendingTab.url, ElementTypes.popup,
-                                                    parseUri(getUnicodeUrl(messageEvent.message.referrer)).hostname);
-        if (isMatched) {
-            tab.close();
+        // Popup blocking support
+        if (messageEvent.message.referrer) {
+          var isMatched = _myfilters.blocking.matches(sendingTab.url, ElementTypes.popup,
+                                                      parseUri(getUnicodeUrl(messageEvent.message.referrer)).hostname);
+          if (isMatched) {
+              tab.close();
+          }
         }
     }
 
