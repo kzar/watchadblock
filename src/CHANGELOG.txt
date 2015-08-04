@@ -2,6 +2,16 @@
 
 UNRELEASED:
 
+2.37:
+- Added an user enabled option to anonymously send filter list usage metrics to us to help improvement the functionality and performance of AdBlock.  (#610)
+- For new installation, users will be subscribed to the malware filter list. (#606)
+- For users that have a locale of 'en-us', the 'Help Spread the Word' link in the AdBlock popup has been replace with an Amazon affiliate link. (#604)
+- Updated the malware notification text. (#598)
+- Removed old log messages. (#589)
+- Fixed a bug - Unicode domains in filter lists are now correctly processed. (#588)
+- Changed the CSS rules from 'visibility: none' to 'visibility: hidden'. (#585)
+- Fixed an issue with the AdBlock white-list and black-list wizards not appearing on certain sites. (#582)
+
 2.36.2:
 - Removed debug logging messages for Safari users. (#591)
 

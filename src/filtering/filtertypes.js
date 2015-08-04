@@ -83,6 +83,10 @@ var SelectorFilter = function(text) {
       document.location.pathname.indexOf('/pages/resourceblock.html') >= 0) {
     this._text = text;
   }
+  if ((typeof(get_settings) === "function") &&
+      get_settings().data_collection) {
+    this._text = text;
+  }
 };
 
 // If !|excludeFilters|, returns filter.
@@ -141,6 +145,10 @@ PatternFilter.fromText = function(text) {
   if (document.location &&
       document.location.pathname &&
       document.location.pathname.indexOf('/pages/resourceblock.html') >= 0) {
+    result._text = text;
+  }
+  if ((typeof(get_settings) === "function") &&
+      get_settings().data_collection) {
     result._text = text;
   }
   return result;

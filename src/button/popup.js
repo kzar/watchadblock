@@ -88,6 +88,14 @@ $(function() {
             info.whitelisted) {
             $("#block_counts").hide();
         }
+
+        if (window.navigator.language &&
+            window.navigator.language.toLowerCase &&
+            "en-us" === window.navigator.language.toLowerCase()) {
+          $("#wrapper").css( "width", "330px");
+          $("#link_open").text("Support AdBlock by shopping on Amazon");
+          $("#span_open_why").css( "display", "inline");
+        }
     });
 
     if (SAFARI) {
@@ -95,7 +103,13 @@ $(function() {
         $(window).load(function() {
             var popupheight = $("body").outerHeight();
             safari.extension.popovers[0].height = popupheight + 5;
-            safari.extension.popovers[0].width = 270;
+            if (window.navigator.language &&
+                window.navigator.language.toLowerCase &&
+                "en-us" === window.navigator.language.toLowerCase()) {
+              safari.extension.popovers[0].width = 330;
+            } else {
+              safari.extension.popovers[0].width = 270;
+            }
         });
 
         // Store info about active tab
@@ -241,7 +255,19 @@ $(function() {
 
     $("#link_open").click(function() {
         var linkHref = "https://getadblock.com/share/";
+        if (window.navigator.language &&
+            window.navigator.language.toLowerCase &&
+            "en-us" === window.navigator.language.toLowerCase()) {
+          linkHref = "http://amazon.com/?_encoding=UTF8&camp=1789&creative=9325&linkCode=ur2&tag=adb09-20";
+          BG.recordStatusMessage("link click amazon");
+        }
         BG.openTab(linkHref);
+        closeAndReloadPopup();
+        return;
+    });
+
+    $('#link_open_why').click(function() {
+        BG.openTab('http://support.getadblock.com/kb/about-the-project/how-can-i-support-adblock#shop-on-amazon');
         closeAndReloadPopup();
         return;
     });

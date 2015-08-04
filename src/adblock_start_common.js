@@ -112,7 +112,7 @@ function block_list_via_css(selectors) {
     var GROUPSIZE = 1000; // Hide in smallish groups to isolate bad selectors
     for (var i = 0; i < selectors.length; i += GROUPSIZE) {
       var line = selectors.slice(i, i + GROUPSIZE);
-      var rule = line.join(",") + " { display:none !important; visibility: none !important; orphans: 4321 !important; }";
+      var rule = line.join(",") + " { display:none !important; visibility: hidden !important; orphans: 4321 !important; }";
       css_chunk.sheet.insertRule(rule, 0);
     }
   }
@@ -208,8 +208,9 @@ function adblock_begin(inputs) {
     onReady(function() {
       // TODO: ResourceList could pull html.innerText from page instead: we
       // could axe this (and Safari's .selectors calculation in debug mode)
-      if (data && data.settings && data.settings.debug_logging)
+      if (data && data.settings && (data.settings.debug_logging || data.settings.data_collection)) {
         debug_print_selector_matches(data.selectors || []);
+      }
       // Chrome doesn't load bandaids.js unless the site needs a bandaid.
       if (typeof run_bandaids === "function") {
         run_bandaids("new");

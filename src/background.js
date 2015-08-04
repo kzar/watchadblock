@@ -357,7 +357,17 @@
 
       // May the URL be loaded by the requesting frame?
       var frameDomain = frameData.get(tabId, requestingFrameId).domain;
-      var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
+      if (get_settings().data_collection) {
+        var blockedData = _myfilters.blocking.matches(details.url, elType, frameDomain, true, true);
+        if (blockedData !== false) {
+          DataCollection.addItem(blockedData.text);
+          var blocked = blockedData.blocked;
+        } else {
+          var blocked = blockedData;
+        }
+      } else {
+        var blocked = _myfilters.blocking.matches(details.url, elType, frameDomain);
+      }
 
       // Issue 7178
       if (blocked && frameDomain === "www.hulu.com") {
@@ -451,6 +461,7 @@
     var data = frameData.get(sender.tab.id, 0);
     if (data) {
       log(data.domain, ": hiding rule", selector, "matched:\n", matches);
+      DataCollection.addItem(selector);
       if (!SAFARI) {
         blockCounts.recordOneAdBlocked(sender.tab.id);
         updateBadge(sender.tab.id);
@@ -1203,22 +1214,22 @@
 
   // Log an 'error' message on GAB log server.
   var recordErrorMessage = function(msg, callback) {
-    recordMessageUrl(msg, 'error', callback);
+    recordMessageWithUserID(msg, 'error', callback);
   };
 
   // Log an 'status' related message on GAB log server.
   var recordStatusMessage = function(msg, callback) {
-    recordMessageUrl(msg, 'stats', callback);
+    recordMessageWithUserID(msg, 'stats', callback);
   };
 
   // Log a 'general' message on GAB log server.
   var recordGeneralMessage = function(msg, callback) {
-    recordMessageUrl(msg, 'general', callback);
+    recordMessageWithUserID(msg, 'general', callback);
   };
 
   // Log a message on GAB log server.  The user's userid will be prepended to the message.
   // If callback() is specified, call callback() after logging has completed
-  var recordMessageUrl = function(msg, queryType, callback) {
+  var recordMessageWithUserID = function(msg, queryType, callback) {
     if (!msg || !queryType) {
       return;
     }
@@ -1227,6 +1238,29 @@
                   queryType +
                   '&message=' +
                   encodeURIComponent(STATS.userId + " " + msg);
+    sendMessageToLogServer(fullUrl, callback);
+  };
+
+  // Log a message on GAB log server.
+  // If callback() is specified, call callback() after logging has completed
+  var recordAnonymousMessage = function(msg, queryType, callback) {
+    if (!msg || !queryType) {
+      return;
+    }
+    // Include user ID in message
+    var fullUrl = 'https://log.getadblock.com/record_log.php?type=' +
+                  queryType +
+                  '&message=' +
+                  encodeURIComponent(msg);
+    sendMessageToLogServer(fullUrl, callback);
+  };
+
+  // Log a message on GAB log server.  The user's userid will be prepended to the message.
+  // If callback() is specified, call callback() after logging has completed
+  var sendMessageToLogServer = function(fullUrl, callback) {
+    if (!fullUrl) {
+      return;
+    }
     $.ajax({
       type: 'GET',
       url: fullUrl,
@@ -1287,28 +1321,24 @@
   if (installError && installError.retry_count >= 0 && !SAFARI) {
     //append the retry count to the URL
     installError.retry_count += 1;
-    var retryInstalledURL = installedURL + "&r=" + installError.retry_count;
-    chrome.tabs.create({url: retryInstalledURL}, function(tab) {
-      if (chrome.runtime.lastError) {
-        //if there is an error (again), log a message and re-save.
-        if (chrome.runtime.lastError.message) {
-          recordErrorMessage('/installed open error count: ' +
-                              installError.retry_count +
-                              " error: " +
-                              chrome.runtime.lastError.message);
+    if (installError.retry_count > 10) {
+      //if we've retried 10 or more times, give up...
+      // send a message, and delete the 'installed error'
+      recordErrorMessage("/installed open error count > 10");
+      storage_set("/installed_error");
+    } else {
+      var retryInstalledURL = installedURL + "&r=" + installError.retry_count;
+      chrome.tabs.create({url: retryInstalledURL}, function(tab) {
+        if (chrome.runtime.lastError) {
+          //if there is an error (again) and re-save.
+          storage_set("/installed_error", installError);
         } else {
-          recordErrorMessage('/installed open error count: ' +
-                              installError.retry_count +
-                              " error: " +
-                              JSON.stringify(chrome.runtime.lastError));
+          //if we successfully opened the tab,
+          //delete the 'installed error' so we don't display it again
+          storage_set("/installed_error");
         }
-        storage_set("/installed_error", installError);
-      } else {
-        //if we successfully opened the tab,
-        // delete the 'installed error' so we don't display it again
-        storage_set("/installed_error");
-      }
-    });
+      });
+    }
   }
 
   if (chrome.runtime.setUninstallURL) {

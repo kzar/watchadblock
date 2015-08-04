@@ -205,14 +205,15 @@ MyFilters.prototype.rebuild = function() {
                   pattern: {}, whitelist: {} };
   for (var text in unique) {
     var filter = Filter.fromText(text);
-    if (Filter.isSelectorExcludeFilter(text))
+    if (Filter.isSelectorExcludeFilter(text)) {
       setDefault(filters.exclude, filter.selector, []).push(filter);
-    else if (Filter.isSelectorFilter(text))
+    } else if (Filter.isSelectorFilter(text)) {
       filters.hidingUnmerged.push(filter);
-    else if (Filter.isWhitelistFilter(text))
+    } else if (Filter.isWhitelistFilter(text)) {
       filters.whitelist[filter.id] = filter;
-    else
+    } else {
       filters.pattern[filter.id] = filter;
+    }
   }
   for (var i = 0; i < filters.hidingUnmerged.length; i++) {
     filter = filters.hidingUnmerged[i];
@@ -605,6 +606,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
   //Update will be done immediately after this function returns
   result["adblock_custom"] = { subscribed: true };
   result["easylist"] = { subscribed: true };
+  result["malware"] = { subscribed: true }; 
   var list_for_lang = listIdForThisLocale();
   if (list_for_lang)
     result[list_for_lang] = { subscribed: true };
