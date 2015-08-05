@@ -14,8 +14,8 @@
            str += stack;
         }
         //don't send large stack traces
-        if (str.length > 64) {
-          str = str.substr(0,63);
+        if (str.length > 512) {
+          str = str.substr(0,511);
         }
     }
     STATS.msg(str);
