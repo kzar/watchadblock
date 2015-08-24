@@ -496,7 +496,7 @@
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
   "malwarenotificationmessage":{
-    "message":"AdBlock har upptäckt skadlig kod.  Din dator kan vara infekterad med skadlig kod.",
+    "message":"AdBlock har blockerat en nedladdning från en plats, känd för skadlig kod.",
     "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
@@ -1091,14 +1091,6 @@
     "message":"Betala vad du vill!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Ta bort",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"Ändra",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"Översättning till Svenska:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1146,6 @@
   "safari50_updatenotice":{
     "message":"Du använder en gammal version av Safari. Uppgradera till senaste version för att kunna använda AdBlocks verktygsikon till att pausa AdBlock, vitlista webbsidor och rapportera reklamtillägg. <a>Uppgradera nu<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Använd * för att matcha noll eller fler tecken. Exempel: 'banner*.gif' matchar bilderna 'banner.gif', 'banner123.gif', och 'bannerxyz.gif'.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Sök resurser...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Inga resurser hittades",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"Anpassat:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Filterlista:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Syftet med denna fråga, är att avgöra vem som skall ta emot din rapport. Besvarar du denna fråga felaktigt, kommer rapporten att skickas till fel personer och riskerar därmed att ignoreras.",

@@ -43,6 +43,7 @@ STATS = (function() {
   })();
 
   var getPingData = function() {
+    var total_pings = storage_get("total_pings") || 0;    
     var data = {
       u: userId,
       v: version,
@@ -52,7 +53,8 @@ STATS = (function() {
       ov: osVersion,
       g: get_settings().show_google_search_text_ads ? '1': '0',
       l: determineUserLanguage(),
-      st: SURVEY.types()
+      st: SURVEY.types(),
+      pc: total_pings
     };
     //only on Chrome
     if (flavor === "E" && blockCounts) {

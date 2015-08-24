@@ -177,21 +177,37 @@ BlockingFilterSet.prototype = {
       return this._matchCache[key];
     }
     if (this.malwareDomains &&
-        this.malwareDomains.adware &&
-        this.malwareDomains.adware.indexOf(urlDomain) > -1) {
+        this.malwareDomains[urlDomain.charAt(0)] &&
+        this.malwareDomains[urlDomain.charAt(0)].indexOf(urlDomain) > -1) {
       log("matched malware domain", urlDomain);
       this._matchCache[key] = (returnFilter ? urlDomain: true);
-      createMalwareNotification();
+      // createMalwareNotification is not defined outside of BG page
+      if (typeof createMalwareNotification === "function") {
+          createMalwareNotification(frameDomain);
+      }
       return this._matchCache[key];
     }
     this._matchCache[key] = false;
     return this._matchCache[key];
   },
   setMalwareDomains: function(malwareDoms) {
-    this.malwareDomains = malwareDoms;
+    if (malwareDoms === null) {
+        this.malwareDomains = null;
+        return;
+    }
+    var domains = malwareDoms.adware;
+    var result = {};
+    for (var i=0; i < domains.length; i++) {
+        var domain = domains[i];
+        var char = domain.charAt(0);
+        if (!result[char]) {
+            result[char] = [];
+        }
+        result[char].push(domain);
+    }
+    this.malwareDomains = result;
   },
   getMalwareDomains: function() {
     return this.malwareDomains;
   },
 }
-

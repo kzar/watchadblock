@@ -14,8 +14,6 @@ var run_bandaids = function() {
     }
   } else if (/mobilmania\.cz|zive\.cz|doupe\.cz|e15\.cz|sportrevue\.cz|autorevue\.cz/.test(document.location.hostname))
     apply_bandaid_for = "czech_sites";
-  else if (/thepiratebay/.test(document.location.hostname))
-    apply_bandaid_for = "the_pirate_bay_safari_only";
   else {
     var hosts = [ /mastertoons\.com$/ ];
     hosts = hosts.filter(function(host) { return host.test(document.location.hostname); });
@@ -82,11 +80,7 @@ var run_bandaids = function() {
         for (var i=0; i<player.length; i++)
           player[i].removeAttribute("data-ad");
       }
-    },
-    the_pirate_bay_safari_only: function() {
-      // Set cookie to prevent pop-ups from The Pirate Bay
-      document.cookie="tpbpop=1%7CSun%2C%2030%20Aug%202024%2006%3A21%3A49%20GMT; expires=Thu, 30 Aug 2034 12:00:00 GMT; path=/;";
-    },
+    }
   }; // end bandaids
 
   if (apply_bandaid_for) {

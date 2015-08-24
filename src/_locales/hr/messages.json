@@ -496,7 +496,7 @@
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
   "malwarenotificationmessage":{
-    "message":"AdBlock je otkrio zločudni softver. Vaše računalo možda je zaraženo zloćudnim softverom.",
+    "message":"AdBlock je blokirao preuzimanje sa web stranice poznate po držanju zločudnih programa.",
     "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
@@ -1091,14 +1091,6 @@
     "message":"Plati koliko želiš!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Ukloni",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"promjeni",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"Zasluga za prijevod:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1146,6 @@
   "safari50_updatenotice":{
     "message":"Koristite staru verziju preglednika Safari. Nabavite zadnju verziju da biste mogi koristiti AdBlock dugme alatne trake za pauziranje AdBlock-a, da onemogućite AdBlock-a na nekim web stranicama ili prijavite reklame. <a>Ažurirajte sad<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Koristite * da bi ste zamijenili nula i više slova. Npr. 'banner*.gif' slika odgovara slikama 'banner.gif', 'banner123.gif' i 'bannerxyz.gif'.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Pretražite resurse...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Resursi nisu pronađeni",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"Prilagođeno:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Podrijetlo filtera:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Svrha ovog pitanja je da se utvrdi tko bi trebao primiti vaš izvještaj. Ako odgovorite netočno, izvještaj će biti poslan krivim ljudima pa tako možda i zanemaren.",

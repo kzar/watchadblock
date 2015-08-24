@@ -495,10 +495,6 @@
     "message":"هل ينبغي علي AdBlock إعلامك عند الكشف عن البرامج الضارة؟",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
-  "malwarenotificationmessage":{
-    "message":"AdBlock كشفت عن برامج ضارة.  جهاز الكمبيوتر الخاص بك قد يكون مصاب.",
-    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
-  },
   "malwarenotificationlearnmore":{
     "message":"معرفة المزيد حول البرامج الضارة",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -863,162 +859,6 @@
     "message":"غير معروف",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"منع كل الموارد التي تحتوي على:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"القائمة البيضاء لكل الموارد التي تحتوي على:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"ملاحظة: يمكنك استخدام * البديل هنا",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"الرجاء إدخال نمط URL صالح التطابق!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"لا يطابق النمط الذي قمت بإدخاله في الموارد التي حاولت عرقلته! هل تريد المتابعة على أية حال؟",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"أي المواقع استثناء موقع على شبكة الإنترنت في مجال $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"عوامل التصفية تمت إضافته بنجاح! إعادة تحميل الصفحة لترى النتيجة!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock متوقفة مؤقتاً. لذلك اشتعلت أية موارد، حيث لا يمكن استخدام هذه الصفحة. إلغاء الإيقاف المؤقت AdBlock أولاً ثم حاول مرة أخرى.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"تمت إزالة عوامل التصفية. الرجاء إعادة تحميل الصفحة الأصلية لإنشاء القائمة بالموارد.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"حدث خطأ ما. وقد تم إرسال أي موارد من خلال. سيتم الآن إغلاق هذه الصفحة. حاول إعادة تحميل الموقع.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"تحميل الصفحة مع المجال: $domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"وكان المورد المحدد اللائحة البيضاء. ولذلك لا يمكن منعه.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"حدد الموارد ترغب في حظر أو إلغاء حظره",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"مانع المورد",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"المورد",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"نوع",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"تطابق عوامل التصفية",
-    "description":"resourceblocking page string"
-  },
-  "close":{
-    "message":"إغلاق",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"شرح:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"الموارد الممنوعة",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"الموارد اللائحة البيضاء",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"تعديل الموارد",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"إخفاء القواعد المطبقة",
-    "description":"resourceblocking page string"
-  },
-  "loading":{
-    "message":"تحميل...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"الخطوة التالية",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"سيتم تطبيق عوامل التصفية هذا عند تصفح:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"أي موقع على شبكة الإنترنت",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"الصفحات فقط في هذه المجالات: ",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"منفصلة المجالات متعددة بفواصل أو مسافات",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"عوامل التصفية هذا تحسس حالة الأحرف:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"وينطبق عوامل التصفية هذا على الموارد من هذه الأنواع:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"إضافة عوامل التصفية هذة",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":".. أو قم بتعطيل عامل التصفية:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"سيتم تعطيل عامل التصفية:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"سيتم تعطيل عامل التصفية هذا عند تصفح:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"فقط الصفحات في هذا الموقع:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
-  },
   "flashads":{
     "message":"أشرطة الفيديو وفلاش",
     "description":"Title of the final ad report question if the ad didn't appear in Firefox"
@@ -1256,7 +1096,7 @@
     "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
-    "message":" --حدد اللغة -- ",
+    "message":" --حدد اللغة -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{

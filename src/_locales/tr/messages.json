@@ -495,10 +495,6 @@
     "message":"AdBlock kötü amaçlı yazılım algıladığında size bildirsin mi?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
-  "malwarenotificationmessage":{
-    "message":"AdBlock zararlı yazılım tespit etti.  Bilgisayarınıza bulaşmış olabilir.",
-    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
-  },
   "malwarenotificationlearnmore":{
     "message":"Kötü amaçlı yazılım hakkında daha fazla bilgi edinin",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -863,162 +859,6 @@
     "message":"bilinmeyen",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Şu içerik bulunan tüm kaynakları engelle:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Şu öğeleri içeren tüm kaynaklara izin ver:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Not: * işaretini burada joker olarak kullanabilirsiniz",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Lütfen eşleşme için geçerli bir URL kalıbı seçin!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Verdiğiniz tanım engellemeye çalıştığınız kaynakla uyuşmuyor! Yine de devam etmek ister misiniz?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Bu alan adlarındaki web siteleri hariç $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Filtre başarıyla eklendi!\nSonucu görmek için sayfayı yenileyin!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock duraklatıldı. Hiç bir kaynak olmadığı için, bu sayfa kullanılamaz. AdBlock'u tekrar başlatıp yeniden deneyin.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Filtre silindi. Listeyi geri yüklemek için orijinal sayfayı yenileyin.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Bir şeyler ters gitti. Hiç bir kaynak gönderilmedi. Bu sayfa şimdi kapanacak. Web sitesini tekrar yüklemeyi deneyin.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Şu alan adındaki sayfa yüklendi:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Seçilen kaynak izin verilenler bölümüne eklenmiş. Bu yüzden engelleyemezsiniz.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Engellemek ya da engellemesini kaldırmak istediğiniz kaynağı seçin",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Bir kaynağı engelle",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Kaynak",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Tip",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Eşleşen filtre",
-    "description":"resourceblocking page string"
-  },
-  "close":{
-    "message":"Kapat",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Lejant",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"engellenmiş kaynaklar",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"izin verilen kaynaklar",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"engellenebilir kaynaklar",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"uygulanmış gizleme kuralları",
-    "description":"resourceblocking page string"
-  },
-  "loading":{
-    "message":"YÜKLENİYOR...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Sonraki adım",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Bu filtre şu sayfaları gezerken kullanılacak:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Herhangi bir web sitesi",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"Sadece bu alan adlarındaki sayfalar:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Farklı alan adlarını virgülle ya da boşlukla ayırın",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Bu filtre BÜYÜK\/küçük harf duyarlıdır:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Bu filtre şu tipteki kaynaklara uygulanır:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Bu filtreyi ekleyin",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"veya filtreyi devre dışı bırak:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Bu filtre devre dışı bırakılacak:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Bu filtre gezinmeniz sırasında devre dışı bırakılacak:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"YALNIZCA bu alan adındaki sayfaları:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
-  },
   "flashads":{
     "message":"Video ve Flash",
     "description":"Title of the final ad report question if the ad didn't appear in Firefox"
@@ -1091,14 +931,6 @@
     "message":"İstediğiniz kadar ödeyin!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Sil",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"değiştir",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"Çeviri:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +986,6 @@
   "safari50_updatenotice":{
     "message":"Safari'nin eski bir sürümünü kullanıyorsunuz. AdBlock araç çubuğu butonunu kullanabilmek, bir web sitesine izin verebilmek ya da reklam bildirebilmek istiyorsanız, son sürüme geçin.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Kelimeyi olduğu gibi ve başka harfler ekli şekilleriyle birlikte bulmak için * kullanın.   Örneğin, \"banner*.gif resim\" araması, \"banner.gif\", \"banner123.gif\" ve \"bannerxyz.gif\" gibi sonuçlarla eşleşir.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Kaynaklar içinde ara...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Hiç bir kaynak bulunamadı",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"Özel:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Filtre kaynağı:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Bu sorunun amacı bildiriminizi kimin alacağını belirlemek içindir. Eğer bu soruyu yanlış yanıtlarsanız, bildiriminiz yanlış insanlara ulaşıp, dikkate alınmayabilir.",

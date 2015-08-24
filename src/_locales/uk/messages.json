@@ -495,10 +495,6 @@
     "message":"Чи показувати сповіщення AdBlock при виявленні шкідливих програм?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
-  "malwarenotificationmessage":{
-    "message":"AdBlock виявив шкідливу програму. Ваш комп'ютер може бути заражено.",
-    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
-  },
   "malwarenotificationlearnmore":{
     "message":"Дізнатися більше про шкідливі програми",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -1091,14 +1087,6 @@
     "message":"Заплатіть стільки, скільки готові!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Видалити",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"змінити",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"Переклад українською:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1142,6 @@
   "safari50_updatenotice":{
     "message":"Ви користуєтесь застарілою версією Safari. Встановіть найновішу версію, аби користуватися кнопкою на панелі інструментів для призупинки AdBlock, занесення сайтів у білий список, та подання скарг на рекламу. <a>Оновити зараз<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Вживайте * щоб позначити нуль чи більше знаків. Приміром 'banner*.gif image' знайде зображення 'banner.gif', 'banner123.gif', та 'bannerxyz.gif'.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Шукати у ресурсах...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Ресурси не знайдено",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"Власний:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Походить з фільтру:\n«$list$»",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Мета цього питання визначити, хто має отримати вашу скаргу. Якщо ви дасте хибну відповідь, скарга потрапить не у ті руки і, у такому випадку, може бути проігнорована.",

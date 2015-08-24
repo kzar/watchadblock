@@ -496,7 +496,7 @@
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
   "malwarenotificationmessage":{
-    "message":"Az AdBlock kartevőt észlelt. Lehet, hogy a számítógépe megfertőződött.",
+    "message":"Az AdBlock egy olyan oldalról származó letöltést blokkolt, amely közismerten malware-t tartalmaz.",
     "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
@@ -1091,14 +1091,6 @@
     "message":"Fizess, amennyit akarsz!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Eltávolítás",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"módosítás",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"A fordításért járó elismerést illeti:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1146,6 @@
   "safari50_updatenotice":{
     "message":"A Safari egy régebbi verzióját használja. Szerezze be a legújabbat az AdBlock eszköztár gomb használata érdekében, az AdBlock, a fehér listás eboldalak és a hirdetés jelentések szüneteltetésére, <a>Frissítsen most<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Használja a *-ot nulla, vagy annál több betű egyeztetésére. Például a \"felirat*.gif kép\" a \"felirat.gif\", \"felirat123.gif'  és 'feliratxyz.gif' képeket egyezteti.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Erőforrások keresése...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Nem találhatók erőforrások",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"Egyéni:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Szűrőered: $list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Ezen kérdésnek célja, hogy meghatározza, ki kapja meg az Ön jelentését. Ha helytelenül válaszolja meg e kérdést, a jelentés rossz embereknek lesz elküldve, így lehet, hogy figyelembe se lesz véve.",

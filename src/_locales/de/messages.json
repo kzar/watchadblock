@@ -496,7 +496,7 @@
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
   "malwarenotificationmessage":{
-    "message":"AdBlock hat Malware entdeckt. Ihr computer ist möglicherweise mit Malware infiziert.",
+    "message":"AdBlock hat einen Download von einer Website blockiert die für die Verbreitung von Malware bekannt ist.",
     "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
@@ -1091,14 +1091,6 @@
     "message":"Zahlen Sie, was Sie möchten!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Entfernen",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"anderes Element auswählen",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"Übersetzung von:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1146,6 @@
   "safari50_updatenotice":{
     "message":"Sie benutzen eine veraltete Version von Safari. Laden Sie sich die neueste Version von Safari herunter um mit dem AdBlock Toolbar-Button AdBlock pausieren, Ausnahmeregeln für Webseiten erstellen und Werbung melden zu können. <a>Jetzt herunterladen<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Benutzen Sie * für Unbekanntes (ersetzt keine oder mehrere Zeichen).  Beispiel: 'banner*.gif grafik' trifft auf die Grafiken 'banner.gif', 'banner123.gif', und 'bannerxyz.gif' zu.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Element suchen...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Keine Elemente gefunden",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"benutzerdefiniert:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Filterherkunft:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Der Zweck dieser Frage ist herauszufinden wer Ihren Bericht erhalten soll. Sollten Sie diese Frage falsch beantworten wird der Bericht an die falschen Personen gesendet und möglicherweise ignoriert.",

@@ -25,12 +25,12 @@ $(function() {
             show(["div_status_disabled", "separator0", "div_pause_adblock",
                   "div_options", "div_help_hide_start"]);
         } else if (info.whitelisted) {
-            show(["div_status_whitelisted","div_enable_adblock_on_this_page", "div_show_resourcelist",
+            show(["div_status_whitelisted","div_enable_adblock_on_this_page",
                   "separator0", "div_pause_adblock", "separator1",
                   "div_options", "div_help_hide_start"]);
         } else {
             show(["div_pause_adblock", "div_blacklist", "div_whitelist",
-                  "div_whitelist_page", "div_show_resourcelist",
+                  "div_whitelist_page",
                   "div_report_an_ad", "separator1", "div_options",
                   "div_help_hide_start", "separator3", "block_counts"]);
 
@@ -57,9 +57,6 @@ $(function() {
             BG.count_cache.getCustomFilterCount(url_to_check_for_undo) &&
             !LEGACY_SAFARI_51)
             show(["div_undo", "separator0"]);
-
-        if (!advanced_option)
-            hide(["div_show_resourcelist"]);
 
         if (SAFARI && !advanced_option)
             hide(["div_report_an_ad", "separator1"]);
@@ -206,11 +203,6 @@ $(function() {
         BG.create_page_whitelist_filter(tab.unicodeUrl);
         closeAndReloadPopup();
         !SAFARI ? chrome.tabs.reload() : activeTab.url = activeTab.url;
-    });
-
-    $("#div_show_resourcelist").click(function() {
-        BG.launch_resourceblocker("?tabId=" + tab.id);
-        closeAndReloadPopup();
     });
 
     $("#div_report_an_ad").click(function() {

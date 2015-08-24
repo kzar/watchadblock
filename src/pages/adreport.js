@@ -90,6 +90,8 @@ function generateReportURL() {
     body.push("");
     body.push("");
     body.push("-------- Please don't touch below this line. ---------");
+    body.push("");
+    body.push("```");
     if (options.url) {
         body.push("=== URL with ad ===");
         body.push(options.url);
@@ -103,6 +105,7 @@ function generateReportURL() {
     for (var i=0, n=1; i<answers.length, i<text.length; i++, n++) {
         body.push(n+"."+text[i].id+": "+answers[i].getAttribute("chosen"));
     }
+    body.push("```");
     body.push("");
 
     result = result + "&discussion[body]=" + encodeURIComponent(body.join('  \n')); // Two spaces for Markdown newlines
@@ -112,7 +115,7 @@ function generateReportURL() {
 
 // Check every domain of downloaded resource against malware-known domains
 var checkmalware = function() {
-    BGcall("resourceblock_get_frameData", tabId, function(tab) {
+    BGcall("get_frameData_adreport", tabId, function(tab) {
         if (!tab)
             return;
 
@@ -153,7 +156,10 @@ var checkmalware = function() {
 
         // Compare domains of loaded resources with domain.json
         for (var i=0; i < extracted_domains.length; i++) {
-            if (malwareDomains && malwareDomains.adware.indexOf(extracted_domains[i]) > -1) {
+            if (malwareDomains &&
+                extracted_domains[i] &&
+                malwareDomains[extracted_domains[i].charAt(0)] &&
+                malwareDomains[extracted_domains[i].charAt(0)].indexOf(extracted_domains[i]) > -1) {
                 // User is probably infected by some kind of malware,
                 // because resource has been downloaded from malware/adware/spyware site.
                 var infected = true;
@@ -209,7 +215,18 @@ var fetchMalware = function() {
     xhr.open("GET", "https://data.getadblock.com/filters/domains.json?timestamp=" + new Date().getTime(), true);
     xhr.onload = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            malwareDomains = JSON.parse(xhr.responseText);
+            var parsedText = JSON.parse(xhr.responseText);
+            var domains = parsedText.adware;
+            var result = {};
+            for (var i=0; i < domains.length; i++) {
+                var domain = domains[i];
+                var char = domain.charAt(0);
+                if (!result[char]) {
+                    result[char] = [];
+                }
+                result[char].push(domain);
+            }
+            malwareDomains = result;
             checkAdvanceOptions();
         }
     };
@@ -397,6 +414,7 @@ $("#step_firefox_no").click(function() {
                 chrome.management.getAll(function(result) {
                   var extInfo = [];
                   extInfo.push("");
+                  extInfo.push("```");
                   extInfo.push("==== Extension and App Information ====");
                   for (var i = 0; i < result.length; i++) {
                     extInfo.push("Number " + (i + 1));
@@ -407,6 +425,8 @@ $("#step_firefox_no").click(function() {
                     extInfo.push("  type: " + result[i].type);
                     extInfo.push("");
                   }
+                  extInfo.push("```");
+                  extInfo.push("");
                   currentHREF = currentHREF + encodeURIComponent(extInfo.join('  \n'));
                   chrome.permissions.remove({
                     permissions: ['management']
@@ -426,8 +446,10 @@ $("#step_firefox_no").click(function() {
             if (language) {
               var extInfo = [];
               extInfo.push("");
+              extInfo.push("```");
               extInfo.push("Detected language of page: ");
               extInfo.push(language);
+              extInfo.push("```");
               extInfo.push("");
               currentHREF = currentHREF + encodeURIComponent(extInfo.join('  \n'));
             }

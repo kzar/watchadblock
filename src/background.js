@@ -1127,11 +1127,6 @@
     })();
   }
 
-  // Open the resource blocker when requested from the Chrome popup.
-  launch_resourceblocker = function(query) {
-    openTab("pages/resourceblock.html" + query, true);
-  }
-
   // Open subscribe popup when new filter list was subscribed from site
   launch_subscribe_popup = function(loc) {
     window.open(chrome.extension.getURL('pages/subscribe.html?' + loc),
@@ -1139,8 +1134,8 @@
     'scrollbars=0,location=0,resizable=0,width=460,height=150');
   }
 
-  // Get the framedata for resourceblock
-  resourceblock_get_frameData = function(tabId) {
+  // Get the framedata for the 'Report an Ad' page
+  get_frameData_adreport = function(tabId) {
     return frameData.get(tabId);
   }
 
@@ -1346,13 +1341,24 @@
     //if the start property of blockCount exists (which is the AdBlock installation timestamp)
     //use it to calculate the approximate length of time that user has AdBlock installed
     if (blockCounts && blockCounts.get().start) {
-      var fiveMinutes = 5 * 60 * 1000;
+      var twoMinutes = 2 * 60 * 1000;
       var updateUninstallURL = function() {
         var installedDuration = (Date.now() - blockCounts.get().start);
-        chrome.runtime.setUninstallURL(uninstallURL + "&t=" + installedDuration);
+        var url = uninstallURL + "&t=" + installedDuration;
+        var bc = blockCounts.get().total;
+        url = url + "&bc=" + bc;
+        if (_myfilters &&
+            _myfilters._subscriptions &&
+            _myfilters._subscriptions.adblock_custom &&
+            _myfilters._subscriptions.adblock_custom.last_update) {
+          url = url + "&abc-lt=" + _myfilters._subscriptions.adblock_custom.last_update;
+        } else {
+          url = url + "&abc-lt=-1"
+        }
+        chrome.runtime.setUninstallURL(url);
       };
-      //start an interval timer that will update the Uninstall URL every 5 minutes
-      setInterval(updateUninstallURL, fiveMinutes);
+      //start an interval timer that will update the Uninstall URL every 2 minutes
+      setInterval(updateUninstallURL, twoMinutes);
       updateUninstallURL();
     } else {
       chrome.runtime.setUninstallURL(uninstallURL + "&t=-1");
@@ -1611,9 +1617,9 @@
                 "Developer Mode -> Inspect views: background page -> Console. " +
                 "Paste the contents here:");
       body.push("");
-      body.push("```");
       body.push("====== Do not touch below this line ======");
       body.push("");
+      body.push("```");
       body.push(getDebugInfo());
       body.push("```");
       var out = encodeURIComponent(body.join('  \n'));

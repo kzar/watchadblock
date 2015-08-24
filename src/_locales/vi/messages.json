@@ -495,10 +495,6 @@
     "message":"Bạn có muốn AdBlock thông báo cho bạn khi phát hiện ra malware không?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
-  "malwarenotificationmessage":{
-    "message":"AdBlock đã phát hiện ra malware. Máy tính của bạn có thể đã bị lây nhiễm.",
-    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
-  },
   "malwarenotificationlearnmore":{
     "message":"Tìm hiểu thêm về malware",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -1091,14 +1087,6 @@
     "message":"Trả bất cứ thứ gì bạn muốn!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"Gỡ bỏ",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"thay đổi",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"Dịch sang Tiếng Việt bởi:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1142,6 @@
   "safari50_updatenotice":{
     "message":"Bạn đang sử dụng phiên bản cũ của Safari. Hãy cài đặt phiên bản mới nhất để sử dụng nút AdBlock trên thanh công cụ để tạm dừng AdBlock, tạo danh sách trắng, và báo cáo quảng cáo. <a>Nâng cấp ngay<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"Sử dụng dấu * để thay cho ký tự trống hoặc nhiều ký tự hơn. Ví dụ, ảnh 'banner*.gif' sẽ khớp với ảnh 'banner.gif', 'banner123.gif', và 'bannerxyz.gif'.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"Tìm kiếm nguồn...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"Nguồn không tìm thấy",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"Tùy chỉnh:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"Bộ lọc gốc:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"Mục đích của câu hỏi này là để xác định ai sẽ nhận được báo cáo của bạn. Nếu bạn trả lời câu hỏi này không chính xác, báo cáo sẽ được gửi đến nhầm người. do đó nó có thể bị bỏ qua.",

@@ -495,10 +495,6 @@
     "message":"AdBlock在检测到恶意软件时是否显示通知？",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
-  "malwarenotificationmessage":{
-    "message":"AdBlock检测到了恶意软件。您的计算机可能遭受感染。",
-    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
-  },
   "malwarenotificationlearnmore":{
     "message":"了解更多关于恶意软件的信息",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -1091,14 +1087,6 @@
     "message":"自愿捐款！",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"移除",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"修改",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"翻译贡献者:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1154,32 +1142,6 @@
   "safari50_updatenotice":{
     "message":"您正在使用旧版本的Safari浏览器。升级到新版本可以获得AdBlock工具栏按钮、广告白名单、报告广告等功能。 <a>现在升级<\/a>。",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"使用*来代表零个或多个字符。例如，“banner*.gif”可以匹配图像“banner.gif”，“banner123.gif”和 “bannerxyz.gif”。",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"搜索资源...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"没有发现资源",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"自定义：",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"过滤规则来源：\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"这个问题的目的是确定谁应当接收您的报告。如果您没有正确地回答这个问题，您的报告会送至错误的人手中，以致它被忽略。",

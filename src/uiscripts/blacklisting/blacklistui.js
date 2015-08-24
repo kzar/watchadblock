@@ -100,39 +100,11 @@ BlacklistUi.prototype.show = function() {
 BlacklistUi.prototype._build_page1 = function() {
   var that = this;
 
-  var link_to_block = $("<a>").
-    attr("id", "block_by_url_link").
-    attr("href", "#").
-    attr("tabIndex", "-1").
-    text(translate("block_by_url_instead")).
-    click(function(e) {
-      var el = that._chain.current();
-      var elType = typeForElement(el[0]);
-      var type = ElementTypes.NONE;
-      if (elType == ElementTypes.image)
-        type = "image";
-      else if (elType == ElementTypes.object)
-        type = "object";
-      else if (elType == ElementTypes.media)
-        type = "media";
-      else if (elType == ElementTypes.subdocument)
-        type = "subdocument";
-      var srcUrl = getUnicodeUrl(relativeToAbsoluteUrl(el.attr("src") || el.attr("data")));
-      var tabUrl = getUnicodeUrl(document.location.href);
-      var query = '?itemType=' + type + '&itemUrl=' + escape(srcUrl) +
-                  '&url=' + escape(tabUrl);
-      BGcall("launch_resourceblocker", query);
-      e.preventDefault();
-      that._ui_page1.dialog('close');
-      return false;
-    });
-
   var page = $("<div>").
     append(translate("sliderexplanation")).
     append("<br/>").
     append("<input id='slider' type='range' min='0' value='0'/>").
-    append("<div id='selected_data'></div>").
-    append(link_to_block);
+    append("<div id='selected_data'></div>");
 
   var btns = {};
   var adblock_default_button_text = translate("buttonlooksgood");
@@ -279,9 +251,6 @@ BlacklistUi.prototype._build_page2 = function() {
 }
 BlacklistUi.prototype._redrawPage1 = function() {
   var el = this._chain.current();
-  var show_link = (this._advanced_user &&
-    /^https?\:\/\//.test(getUnicodeUrl(relativeToAbsoluteUrl(el.attr("src") || el.attr("data")))));
-  $("#block_by_url_link", this._ui_page1).toggle(show_link);
 
   var selected_data = $("#selected_data", this._ui_page1);
   selected_data.html("<b>" + translate("blacklisterblockedelement") + "</b><br/>");

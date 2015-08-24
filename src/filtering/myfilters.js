@@ -93,11 +93,6 @@ MyFilters.prototype._updateDefaultSubscriptions = function() {
     // Convert subscribed ex-official lists into user-submitted lists.
     // Convert subscribed ex-user-submitted lists into official lists.
     else {
-      // TODO: Remove this logic after a few releases
-      if (id === "easylist_plus_spanish" || id === "norwegian") {
-          delete this._subscriptions[id];
-          continue;
-      }
       // Cache subscription that needs to be checked.
       var sub_to_check = this._subscriptions[id];
       var is_user_submitted = true;
