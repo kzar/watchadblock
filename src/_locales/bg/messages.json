@@ -31,10 +31,6 @@
     "message":"Настройки на AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"от трета страна",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"За да го скриете, щракнете с десен по бутона и посочете Скрий бутона. Можете да го покажете от chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Движете плъзгача до пълно блокиране на рекламата в страницата и добра ползваемост на блокирания елемент.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Разширено блокиране по адрес",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Първа стъпка: решете какво блокирате",
@@ -863,161 +855,13 @@
     "message":"неизвестно",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Блокирай всеки ресурс, съдържащ:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Изключи всеки ресурс, съдържащ:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Забележка: тук можете да ползвате * за означаване на всичко",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Моля, въведете действително съвпадащ пример на адрес!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Въведеният пример не съвпада с ресурса, който опитвате да блокирате. Продължавате ли?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"всеки сайт БЕЗ сайтове от домейна: $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Филтърът беше добавен успешно!\nПрезаредете страницата, за да видите резултата!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"Задържан AdBlock. Няма установени ресурси и използване на страницата е невъзможно. Първо освободете AdBlock и опитайте отново.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Филтърът беше премахнат. Моля, презаредете оригиналната страница, за да генерирате списък с ресурсите.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Нещо се обърка. Не са изпращани никакви ресурси. Сега страницата ще се затвори. Опитайте да презаредите сайта.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Зареден в страницата от домейн:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Избраният ресурс е част от изключенията. Затова не можете да го блокирате.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Ресурс за блокиране или деблокиране:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Блокирани ресурси",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Ресурс",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Вид",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Съвпадащ филтър",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Затвори",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Легенда:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"блокирани ресурси",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"ресурси в изключение",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"блокируеми ресурси",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"приложени правила за скриване",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"ЗАРЕЖДАНЕ…",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Следваща стъпка",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Филтърът се прилага при разглеждане на:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"кой да е сайт",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"страници САМО от следните домейни:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Отделете множеството домейни със запетаи или с интервали",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Филтърът отчита малки и главни букви:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Филтърът се прилага към ресурси от следния вид:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Добави филтъра",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"… или забрани филтъра:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Филтърът ще бъде забранен:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Филтърът ще бъде забранен при преглед на:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"страници САМО от следния домейн:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Клипове и флаш",
@@ -1101,10 +945,6 @@
   },
   "report_ad_on_page":{
     "message":"Докладвай реклама в страницата",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Покажи ресурсите",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

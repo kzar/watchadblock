@@ -31,10 +31,6 @@
     "message":"AdBlockin asetukset",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Kolmas osapuoli",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Piilottaaksesi painikkeen, napsauta sitä hiiren oikealla ja napsauta Piilota painike. Voit ottaa sen takaisin käyttöön kohdassa chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Raahaa säädintä oikealle niin kauan, että mainos häviää näkyvistä ja sivu näyttää hyvältä.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Kehittyneet käyttäjät: estä osoitteen avulla",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Vaihe 1: määritä, mitä estetään",
@@ -859,161 +851,13 @@
     "message":"tuntematon",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Estä kaikki kohteet, jotka sisältävät:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Näytä kaikki kohteet, jotka sisältävät:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Huomautus: voit käyttää merkkiä * jokerimerkkinä",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Syötä kelvollinen osoitemalli!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Syöttämäsi kaava ei vastaa resurssia, jota yritit estää! Jatka tästä huolimatta?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Mikä tahansa verkkosivusto PAITSI verkkosivustot verkkotunnuksessa $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Suodatin lisättiin onnistuneesti!\nPäivitä sivu nähdäksesi tuloksen!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlockin toiminta on keskeytetty. Tämän takia mainoksia ei estetä, joten tätä sivua ei voi käyttää. Ota AdBlockin toiminta uudelleen käyttöön ensin ja yritä sitten uudelleen.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Suodatin poistettiin. Päivitä alkuperäinen sivu luodaksesi listan resursseista.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Joku meni vikaan. Resursseja ei kuitenkaan ole lähetetty. Tämä sivu sulkeutuu nyt. Yritä päivittää verkkosivu.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Ladattiin sivu verkkotunnuksessa:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Valittu kohde on sallittu. Tämän takia et voi estää sitä.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Valitse kohde, jonka haluat estää tai sallia",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Estä kohde",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Kohde",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Tyyppi",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Vastaava suodatin",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Sulje",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Selite:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"estetyt kohteet",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"sallitut kohteet",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"estettävät kohteet",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"piilotussäännöt käytetty",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"LADATAAN...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Seuraava vaihe",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Tämä suodatin otetaan käyttöön kun selaat:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Mikä tahansa verkkosivusto",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"VAIN näiden verkkotunnuksien sivut:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Erottele useat verkkotunnukset pilkuilla tai välilyönneillä",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Tämä suodatin on kirjainten koosta riippuvainen:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Tämä suodatin vaikuttaa tämäntyyppisiin kohteisiin:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Lisää tämä suodatin",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... tai poista suodatin käytöstä:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Tämä suodatin poistetaan käytöstä:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Tämä suodatin poistetaan käytöstä, kun selaat:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"VAIN sivut verkkotunnuksessa:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Videot ja Flash",
@@ -1097,10 +941,6 @@
   },
   "report_ad_on_page":{
     "message":"Raportoi mainoksesta tällä sivulla",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Näytä lähdelista",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

@@ -31,10 +31,6 @@
     "message":"خيارات AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"الطرف الثالث",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"لإخفاء الزر، انقر على الزر الأيمن عليه واختر \"زر إخفاء\".  يمكنك إظهار ذلك مرة أخرى في chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"حرك مربع التمرير حتى يتم حظر الإعلان بشكل صحيح على الصفحة، ومنع العناصر تبدو غير مفيدة.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"متقدم: حظر بواسطة URL بدلاً من ذلك",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"الخطوة 1: معرفة ما يجب منع",
@@ -859,6 +851,14 @@
     "message":"غير معروف",
     "description":"A resource type"
   },
+  "close":{
+    "message":"إغلاق",
+    "description":"Generic message for buttons that close a view or window"
+  },
+  "loading":{
+    "message":"تحميل...",
+    "description":"Generic message displayed during processes that take some time"
+  },
   "flashads":{
     "message":"أشرطة الفيديو وفلاش",
     "description":"Title of the final ad report question if the ad didn't appear in Firefox"
@@ -931,14 +931,6 @@
     "message":"ادفع ما تريد!",
     "description":"Text of a payment request link"
   },
-  "removelabel":{
-    "message":"إزالة",
-    "description":"Link to remove a filter on the resourceblock page"
-  },
-  "changelabel":{
-    "message":"تغيير",
-    "description":"Link to change resources on the resourceblock page"
-  },
   "translator_credit":{
     "message":"الائتمان للترجمة يذهب إلى:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -949,10 +941,6 @@
   },
   "report_ad_on_page":{
     "message":"تقرير مخصص في هذه الصفحة",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"إظهار قائمة الموارد",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{
@@ -994,32 +982,6 @@
   "safari50_updatenotice":{
     "message":"أنك تستخدم نسخة قديمة من Safari. الحصول على أحدث إصدار من أجل استخدام زر شريط الأدوات \"AdBlock\" إلى وقفه AdBlock والمواقع القائمة البيضاء، وإعلان التقرير. <a>الترقية الآن<\/a>.",
     "description":"A message shown to Safari 5.0 users urging them to upgrade"
-  },
-  "searchexplanation":{
-    "message":"استخدام * لمطابقة أحرف عددها صفر أو أكثر.  على سبيل المثال، يطابق 'شعار*.gif الصورة' الصور 'شعار.gif' و 'شعار123.gif' و 'شعارxyz.gif'.",
-    "description":"Text in resourceblock when you hover your mouse over the search textbox"
-  },
-  "searchplaceholder":{
-    "message":"البحث في الموارد...",
-    "description":"Text in resourceblock shown in the search textbox before you type something"
-  },
-  "nosearchresults":{
-    "message":"الموارد لم يتم العثور على",
-    "description":"Text in resourceblock shown if no results are found after searching"
-  },
-  "custompattern":{
-    "message":"مُخصّص:",
-    "description":"Label in front of the 'custom block pattern' textbox in resourceblock, after clicking a resource"
-  },
-  "filterorigin":{
-    "message":"تصفية المنشأ: $list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
-    "placeholders":{
-      "list":{
-        "content":"$1",
-        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
   },
   "firefox_explanation":{
     "message":"والغرض من هذا السؤال لتحديد الذين ينبغي أن تلقي التقرير الخاص بك. إذا كان يمكنك الإجابة على هذا السؤال بشكل غير صحيح، سيتم إرسال التقرير إلى الأشخاص الخطأ، حيث أنها قد تحصل على تجاهلها.",
@@ -1096,7 +1058,7 @@
     "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
-    "message":" --حدد اللغة -- ",
+    "message":" --حدد اللغة -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{

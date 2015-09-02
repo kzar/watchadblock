@@ -31,10 +31,6 @@
     "message":"Opções do AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Terceiros",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Para esconder o botão, clique com o botão direito e escolha Esconder Botão. Você pode mostrá-lo novamente em chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Deslize o cursor até que a propaganda esteja bloqueada corretamente na página, e o elemento bloqueado pareça útil.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Avançado: bloqueie uma URL em vez disso",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Passo 1: Descubra o que bloquear",
@@ -495,6 +487,10 @@
     "message":"O AdBlock deve notificá-lo quando detectar malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
+  "malwarenotificationmessage":{
+    "message":"O AdBlock bloqueou um download de um site conhecido por conter malware.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
   "malwarenotificationlearnmore":{
     "message":"Saber mais sobre malware",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -859,161 +855,13 @@
     "message":"desconhecido",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Bloqueie todo recurso contendo:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Colocar na lista branca todo recurso contendo:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Nota: você poder usar * como caractere curinga aqui",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Por favor insira um padrão de URL válido para corresponder!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"O padrão que você introduziu não corresponde ao recurso que você tentou bloquear! Continuar mesmo assim?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Qualquer site da web EXCETO sites no domínio $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"O filtro foi adicionado com sucesso!\nRecarregue a página para ver o resultado!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock está pausado. Portanto nenhum recurso é capturado, logo esta página não pode ser usada. Despause o AdBlock primeiro e tente novamente.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"O filtro foi removido. Por favor recarregue a página original para gerar uma lista com recursos.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Algo deu errado. Nenhum recurso foi enviado. Esta página irá fechar. Tente recarregar o site da web.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Carregado na página com domínio:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"O recurso selecionado foi adicionado à lista branca. Logo, você não pode bloqueá-lo.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Selecione o recurso que você gostaria de bloquear ou desbloquear",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Bloqueie um recurso",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Recurso",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Tipo",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Filtro correspondente",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Fechar",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Legenda:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"recursos bloqueados",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"recursos na lista branca",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"recursos bloqueáveis",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"regras de ocultamento aplicadas",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"CARREGANDO...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Próximo passo",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Este filtro será aplicado quando você estiver navegando:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Qualquer site da web",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"SOMENTE páginas nesses domínios:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Separe múltiplos domínios com vírgulas ou espaços",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Este filtro diferencia maiúsculas de minúsculas:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Este filtro aplica-se a recursos desses tipos:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Adicionar este filtro",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... ou desabilite o filtro:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Este filtro será desativado:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Este filtro será desativado enquanto você estiver navegando:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"SOMENTE páginas deste domínio:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Vídeos e Flash",
@@ -1097,10 +945,6 @@
   },
   "report_ad_on_page":{
     "message":"Reportar uma propaganda nesta página",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Mostrar a lista de recursos",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

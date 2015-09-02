@@ -31,10 +31,6 @@
     "message":"AdBlock Nastavení",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Od jinud",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Chcete-li skrýt tlačítko, klikněte na něj pravým tlačítkem myši a vyberte příkaz Skrýt tlačítko. Můžete jej opět zobrazit zde chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Nastavte posuvník tak, aby reklama na stránce byla blokována a zbytek stránky stále vypadal uspokojivě.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Pro zkušené: Blokovat podle URL místo tohoto",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Krok 1: Určete, co se bude blokovat",
@@ -825,161 +817,13 @@
     "message":"neznámý",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Blokovat každý prvek obsahující:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Povolit každý prvek obsahující:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Pozn.: zde můžete použít * jako zástupný znak",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Prosím zadejte platnou vzorovou adresu URL!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Vzor, který jste zadali, neodpovídá prvku, který se pokoušíte zablokovat! Chcete přesto pokračovat?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Jakékoliv webové stránky, s výjimkou stránek na doméně $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Filtr byl úspěšně přidán!\nNačtěte znovu stránku pro zobrazení výsledku!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock je pozastaven. Protože nebyly zachyceny žádné prvky, není možné tuto stránku použít. Nejprve spusťte AdBlock a pak to zkuste znovu.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Filtr byl odstraněn. Prosím, obnovte původní stránku pro vytvoření seznamu prvků.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Něco se pokazilo. Žádné prvky nebyly přeposlány. Tato stránka se nyní zavře. Zkuste webovou stránku načíst znovu.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Načteno na stránce s doménou:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Vybraný prvek je na seznamu povolených. Proto ho nemůžete blokovat.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Vyberte prvek, který chcete blokovat nebo povolit",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Blokovat prvek",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Prvek",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Typ",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Odpovídající filtr",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Zavřít",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Legenda:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"blokované prvky",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"povolené prvky",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"prvky, které je možné blokovat",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"uplatňovaná pravidla",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"NAČÍTÁM...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Další krok",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Tento filtr se použije při prohlížení:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Jakákoliv webová stránka",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"POUZE stránky na těchto doménách: ",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Oddělte více domén čárkami nebo mezerami",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Tento filtr rozlišuje malá a velká písmena:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Tento filtr se vztahuje na prvky těchto typů:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Přidat tento filtr",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... nebo zrušte filtr:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Tento filtr bude zakázán:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Tento filtr bude zakázán, když budete brouzdat:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"POUZE stránky na této doméně:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Videa a Flash",
@@ -1063,10 +907,6 @@
   },
   "report_ad_on_page":{
     "message":"Nahlásit reklamu na této stránce",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Zobrazit seznam prvků",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

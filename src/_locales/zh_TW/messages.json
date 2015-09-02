@@ -31,10 +31,6 @@
     "message":"AdBlock 選項",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"第三方",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"如要隱藏按鈕，請按滑鼠右鍵並選擇隱藏按鈕。在 chrome:\/\/chrome\/extensions 下，你可以再次顯示它。",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -50,10 +46,6 @@
   "sliderexplanation":{
     "message":"滑動控制器直到頁面上的廣告已被正確地阻擋。",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"高級: 使用網址阻擋",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"第一步:找出要阻擋的目標",
@@ -711,135 +703,13 @@
     "message":"unknown",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"阻擋資源包含:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"略過物件包含:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"注意: 你可以使用 * 作為通配符",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"請輸入有效的網址!",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"任何網站 『除了』 此網域 $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"過濾規則已加入!\n請重新載入頁面!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock 暫停。 這個頁面不可用。 啟用 AdBlock 並再試一次。",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"過濾規則已移除。請重新載入獲得新的過濾資源頁面。",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "resourceiswhitelisted":{
-    "message":"這個資源已被加入白名單。所以你不能阻擋它。",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"選擇你要阻擋或是取消阻擋的資源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"阻擋一個資源",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"資源",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"類型",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"符合的過濾規則",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"關閉",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"欄位:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"已阻擋的資源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"已加入白名單的資源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"可阻擋的資源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"隱藏規則已套用",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"載入中...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"下一步",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"當你瀏覽時，這個過濾規則將被套用:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"任何網站",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"『只有』這些網域的頁面: ",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"使用空白或是逗號分開多個網域",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"這個規則分大小寫:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"這個規則套用在這些類型的資源:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"加入這個規則",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... 或者是停用過濾器",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"此過濾器即將被停用",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"影片和 Flash",
@@ -919,10 +789,6 @@
   },
   "report_ad_on_page":{
     "message":"回報這個頁面的廣告",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"顯示資源清單",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

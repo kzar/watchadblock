@@ -31,10 +31,6 @@
     "message":"AdBlock-alternativ",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Tredje-part",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Du kan dölja knappen genom att högerklicka på den och välja 'Dölj knapp'. Visa den igen under chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Dra i skjutreglaget tills reklamen är korrekt blockerad, och sidan förövrigt ser använbar ut.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Avancerat: Blockera via URL istället",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Steg 1: Ta reda på vad som skall blockeras",
@@ -863,161 +855,13 @@
     "message":"okänd",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Blockera varje resurs som innehåller:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Vitlista varje resurs som innehåller:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Notis: Du kan använda * som jokertecken här",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Ange en giltig URL-mall att matcha!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Strängen du matat in, matchar inte den resurs du försöker blockera! Vill du fortsätta ändå?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Alla webbsidor FÖRUTOM webbsidor på domänen $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Filtret blev korrekt aktiverat!\nUppdatera sidan för att se resultatet!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock är pausad. Därför visas inga resurser, så den här sidan kan inte användas. Starta AdBlock och försök igen.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Filtret togs bort. Uppdatera originalsidan för att generera lista med resurser.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Något blev fel. Inga resurser skickades. Denna sida kommer att stängas. Försök att uppdatera webbsidan.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Inläst från domänen:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Dom valda resurserna är vitlistade. Därför går dom inte att blockera.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Välj den resurs du vill blockera eller undanta",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Blockera en resurs",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Resurs",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Typ",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Matchat filter",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Stäng",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Förklaring:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"Blockerade resurser",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"Vitlistade resurser",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"Blockerbara resurser",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"Visningsfilter tillämpas",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"LÄSER IN...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Nästa steg",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Detta filter skall användas när du besöker:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Alla webbsidor",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"ENDAST sidor under den här domänen:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Separera multipla domäner med komma eller blanksteg",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Detta filter är skiftlägeskänsligt:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Detta filter används för resurser av den här typen:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Lägg till detta filter",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... eller inaktivera filtret:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Detta filter inaktiveras:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Detta filter kommer att inaktiveras när du surfar:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"BARA sidor på domänen:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Video och Flash",
@@ -1101,10 +945,6 @@
   },
   "report_ad_on_page":{
     "message":"Rapportera ett tillägg på den här sidan",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Visa resurslistan",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

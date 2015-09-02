@@ -31,10 +31,6 @@
     "message":"Opțiuni AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Părți terțe",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Pentru a ascunde butonul, click dreapta, iar apoi alege 'Ascundeți butonul'. Pentru a-l arăta trebuie să accesați managerul de extensii.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Glisează cursorul până când reclama este blocată corect și arată bine.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Avansat: blochează introducând link-ul",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Pasul 1: Găsește ce vrei să blochezi",
@@ -825,161 +817,13 @@
     "message":"necunoscut",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Blochează orice resursă care conține:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Permite orice resursă care conține:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Notă: Poți folosi * ca metacaracter",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Vă rugăm să introduceți un link valid model pentru a se potrivi!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Modelul introdus nu se potrivește cu resursa pe care doriți să o blocați! Continuați oricum?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Orice site EXCEPTÂND site-urile de pe domeniul $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Filtrul a fost adăugat cu succes!\nReîncarcă pagina pentru a vedea rezultatul!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock este pauzat. Deoarece nicio resursă nu a fost capturată, această pagină nu poate fi folosită. Pornește AdBlock și încearcă din nou.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Filtrul a fost îndepărtat. Reîncărcați pagina originală pentru a genera lista cu resurse.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Ceva nu a mers corect. Nicio resursă nu a trimisă. Această pagină se va închide. Încearcă să reîncarci site-ul.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Încarcate pe pagina cu domeniul:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Resursele selectate au fost permise, de aceea nu le poți bloca.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Selectează resursa pe care vrei să o blochezi\/deblochezi",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Blocheză o resursă",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Resursă",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Tip",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Filtru care se potrivește",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Închide",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Legendă:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"resurse blocate",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"Resurse permise",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"Resurse care pot fi blocate",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"Reguli de ascundere aplicate",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"Încărcare...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Următorul pas",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Filtrul va fi aplicat când navighezi:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Orice site web",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"DOAR pagini de pe aceste domenii:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Desparte mai multe domenii folosind virgule sau spații",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Acest filtru este sensibil la majuscule:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Filtrul se aplică resurselor de tipul:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Adaugă acest filtru",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... sau dezactivează filtrul:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Acest filtru va fi dezactivat:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Acest filtru va fi dezactivat în momentul navigării:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"DOAR paginile din acest domeniu:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Video și Flash",
@@ -1063,10 +907,6 @@
   },
   "report_ad_on_page":{
     "message":"Raportează o reclamă de pe această pagină",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Arată lista resurselor",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

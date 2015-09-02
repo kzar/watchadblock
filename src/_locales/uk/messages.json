@@ -31,10 +31,6 @@
     "message":"Настройки AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Третіх сторін",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Щоб сховати цю кнопку, клацніть на ній правою кнопкою миші та оберіть «Сховати кнопку». Її можна будет повернути на сторінці chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Перетягуйте повзунок доти, доки реклама не зникне, проте не переборщіть.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Просунуте: натомість заблокувати URL",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Крок 1: З’ясуймо, що слід заблокувати",
@@ -859,161 +851,13 @@
     "message":"невідомо",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Заблокувати всі ресурси, що містять:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Заносити до білого списку всі ресурси, що містять:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Зауважте: ви можете використовувати тут оператор * для позначення послідовності будь-яких символів",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Будь ласка, уведіть правильну послідовність фільтрування URL!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Уведена вами послідовність не захоплює ресурси, який ви намагалися заблокувати! Все одно продовжити?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Будь-який веб-сайт ЗА ВИКЛЮЧЕННЯМ сайтів на домені $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Фільтр додано успішно!\nПерезавантажте сторінку, щоб побачити його вплив!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock призупинено. Оскільки жодні ресурси не використовуються, користування цією сторінкою неможливе. Запустіть AdBlock та спробуйте знову.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Фільтр видалено. Будь ласка, перезавантажте вихідну сторінку, щоб згенерувати список ресурсів.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Щось зламалося. Не було передано жодних ресурсів. Цю сторінку буде закрито. Спробуйте перезавантажити сайт.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Завантажено зі сторінки із доменом:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Обраний ресурс додано до білого списку. Тож його неможливо заблокувати.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Виберіть ресурс, який слід заблокувати або розблокувати",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Заблокувати ресурс",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Ресурс",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Тип",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Підпадає під фільтр",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Закрити",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Легенда:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"заблоковані ресурси",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"дозволені ресурси",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"ресурси, що підлягають блокуванню",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"застосовано правила приховування",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"ЗАВАНТАЖЕННЯ...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Наступний крок",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Цей фільтр буде застосовано під час перегляду:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Усіх веб-сайтів",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"ЛИШЕ сторінок на таких доменах:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Відділяйте різні домени комами або пробілами",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Цей фільтр чутливий до регістру:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Цей фільтр застосовується до ресурсів таких типів:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Додати цей фільтр",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... або відключіть такий фільтр:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Цей фільтр буде відключено:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Цей фільтр буде відключено, коли ви переглядатимите:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"ЛИШЕ сторінки із цього домену:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Відео та Flash",
@@ -1097,10 +941,6 @@
   },
   "report_ad_on_page":{
     "message":"Поскаржитись на рекламу на цій сторінці",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Показати список ресурсів",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

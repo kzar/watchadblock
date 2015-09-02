@@ -31,10 +31,6 @@
     "message":"Opcije AdBlock-a",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Treća-strana",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Ako želite da sakrijte dugme, kliknite na njega desnim klikom i izaberite Sakrij Dugme. Možete ga prikazati opet pod chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Pomerite klizač dok je reklama ispravno blokirana na stranici, i blokirani element izgleda korisno.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Napredno: blokiraj preko URL-a",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Korak 1: Odredite šta da blokirate",
@@ -859,161 +851,13 @@
     "message":"nepoznato",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Blokiraj svaki resurs koji sadrži:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Dopusti svaki resurs koji sadrži:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Beleška: možete koristiti * kao višeznačnik ovde",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Molimo unesite validan URL obrazac za proveru!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Obrazac koji ste uneli ne odgovara resursu koji ste pokušali da blokirate! Nastaviti svejedno?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Bilo koji veb sajt OSIM veb sajtova na domenu $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Filter je uspešno dodat!\nUčitajte stranicu ponovo da vidite rezultat!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock je pauziran. Zbog toga resursi nisu zahvaćeni, pa se ova strana ne može koristiti. Prvo isljučite pauzu pa pokušajte ponovo.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Filter je uklonjen. Molimo ponovo učitajte originalnu stranu radi generisanja liste sa resursima.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Nešto je krenulo naopako. Nijedan resurs nije prošao. Ova strana će se sada zatvoriti. Pokušajte da ponovo učitate sajt.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Učitano na stranici sa domenom:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Izabran resurs je dopušten. Zbog toga ga ne možete blokirati.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Izaberite resurs koji bi hteli da blokirate ili dopustite",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"blokiraj resurs",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Resurs",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Tip",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Odgovarajući filter",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Zatvori",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Legenda:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"blokirani resursi",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"dopušteni resursi",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"resurski koji se mogu blokirati",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"pravila skrivanja su primenjena",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"UČITAVANJE...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Sledeći korak",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Ovaj filter će biti primenjen kada posećujete:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Bilo koji sajt",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"SAMO strane na ovim domenima:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Odvojite više domena sa zarezima ili razmacima",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Ovaj filter je osetljiv na veličinu slova:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Ovaj filter se primenjuje na resurse ove vrste:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Dodajte ovaj filter",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... ili onemogući filter:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Ovaj filter će biti onemogućen:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Ovaj filter će biti onemogućen kada budete surfovali internetom:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"SAMO stranice ovog domena:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Videi i Flash",
@@ -1097,10 +941,6 @@
   },
   "report_ad_on_page":{
     "message":"Prijavi reklamu na ovoj stranici",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Prikaži listu resursa",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

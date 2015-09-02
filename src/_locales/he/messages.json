@@ -27,10 +27,6 @@
     "message":"אפשריות AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"צד שלישי",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"בשביל להסתייר את הכפתור לחץ על הכפתור עם קליק ימני ובחר הסתר את הכפתור.\nאפשר להסתיר כם על ידי כניסה להגדרות ההרחבה תחת chrome:\/\/chrome\/extensions",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -38,10 +34,6 @@
   "sliderexplanation":{
     "message":"הזז עד שהפרסומת נחסמה והאתר נראה בסדר\nעדיף לדווח לנו על הפרסומת ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"מתקדם: חסום על ידי קישור\nעדיף לדווח לנו על הפרסומת ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"צעד 1: להבין מה לחסום",
@@ -675,145 +667,13 @@
     "message":"לא ידוע",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"חסום כל אלמנט שמכיל:\nעדיף לדווח לנו על הפרסומת ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"רשימה לבנה",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"ניתן להשתמש בתווים כללים פה",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"בבקשה הכנס קישור תקין",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"מה שעשית אולי לא טוב ויכול להיות מסוכן! להמשיך בכל זאת ? \nעדיף לדווח לנו על הפרסומת ואנו נדאג לחסום אותה אם אתה לא יודע מה אתה עושה ואתה עושה טעות זה יכול להרוס את הרשימה",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"כל אתר חוץ מ $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"הרשימה נוספה בהצלחה\nטען את העמוד מחדש וראה את התוצאות",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock מושבת :(\nבטל את ההשבתה",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"הרשימה נמחקה בבקשה טען את העמוד מחדש",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"משהו לא בסדר נסה לטעון מחדש",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"טעון עמוד עם קישור\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"האלמנט נבחר כ\"מותר\" ולכן אתה לא יכול לחסום אותו.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"בחר את המשאב שברצונך לחסום או לבטל את החסימה",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"חסום אלמנט",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"אלמנט",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"כתוב",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"מוסיף רשימה",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"סגור",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"כתובת",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"חסום אלמנטים",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"הרשה אלמנטים",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"חסום אלמנטים",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"הסתר חוקים מיושמים",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"טוען... אנא המתן...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"צעד הבא",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"הוספת רשימה זאת בהצלחה ! :)\nזכור ! אל תוסיף יותר רשימות ממה שאתה צריך כמה שפחות יותר טוב כל רשימה מאיטה קצת את הדפדפן ולכן תירשם רק למה שאתה צריך",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"בכל אתר",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"רק עמודים באתר זה:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"הפרידו שמות מתחם מרובים בעזרת פסיקים\/רווח",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"חוק זה רגיש:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"מסנן זה חל על משאבים מסוגים אלה:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"הוסף רשימה זאת",
-    "description":"resourceblocking page string"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"ווידאו ופלאש",
@@ -877,10 +737,6 @@
   },
   "report_ad_on_page":{
     "message":"דווח על פרסומת בעמוד זה",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"הראה את מקורות הרשימה",
     "description":"Entry in the AdBlock button menu"
   },
   "work_around_hulu_problems":{

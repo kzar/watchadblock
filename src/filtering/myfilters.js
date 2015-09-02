@@ -615,7 +615,7 @@ MyFilters.prototype._make_subscription_options = function() {
   // When modifying a list, IDs mustn't change!
   return {
     "adblock_custom": { // AdBlock custom filters
-      url: "https://data.getadblock.com/filters/adblock_custom.txt",
+      url: "https://adblockcdn.com/filters/adblock_custom.txt",
     },
     "easylist": { // EasyList
       url: "https://easylist-downloads.adblockplus.org/easylist.txt"

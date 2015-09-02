@@ -27,10 +27,6 @@
     "message":"AdBlock ఆప్షన్స్",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"మూడవ పార్టీ",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"బటన్ ని దాచిపెట్టడానికి, రైట్ క్లిక్ చేసి 'Hide Button' నొక్కండి. chrome:\/\/chrome\/extensions లో బటన్ ని మళ్లి చూపించగలరు.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -38,10 +34,6 @@
   "sliderexplanation":{
     "message":"పేజీ లో ప్రకటన సరిగ్గా బ్లాక్ అయ్యేంతవరకు స్లైడర్ ను స్లయిడ్ చేయండి, అప్పుడు బ్లాక్ అయిన అంశం  ఉపయోగకరంగా కనిపిస్తోంది.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"అడ్వాన్స్డ్ : URL ద్వారా తొలగించు.",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"స్టెప్ 1: ఏమి బ్లాక్ చేయాలో నిర్ణయించుకొండి",
@@ -671,145 +663,13 @@
     "message":"తెలియనిది",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"ఈ అంశాలు ఉన్నవన్నీ తొలగించబడతాయి:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"ఇవి ఉన్న రిసోర్సెస్ లన్నిటిని వైట్ లిస్టు చేయి:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"గమనిక: మీరు ఇక్కడ * వైల్డ్ కార్డు లాగ ఉపయోగించవచ్చు",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"చెల్లుబాటు అయ్యే URL పాటర్న్ ని  ఎంటర్ చేయండి మ్యాచ్ చేయటానికి!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"మీరు ఎంటర్ చేసిన పాటర్న్, మీరు బ్లాక్  చేయడానికి ప్రయత్నించిన రిసోర్స్ తో మ్యాచ్ అవటం లేదు! పర్వాలేదా?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"$domain$ డొమైన్ లోని వెబ్ సైట్స్ కాకుండా, ఏ వెబ్ సైట్ అయినా",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"ఫిల్టర్ విజయవంతంగా చేర్చబడినది! \nఫలితం చూడటానికి పేజీని మళ్లి లోడ్ చేయండి!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock పాజ్ చేయబడింది, అందుకే మీరు ఈ పేజి ని వాడలేరు. AdBlock పాజ్ తీసివేసి మల్లి ప్రయత్నించండి.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"ఫిల్టర్ తీసివేయబడింది. రిసోర్స్ ఉన్న లిస్ట్లు తయారు చేయడానికి పేజీని మళ్లి లోడ్ చేయండి.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"ఏదో తప్పు జరిగింది. రిసోర్సెస్ ఏమీ వెళ్ళలేదు. ఈ పేజి ఇప్పుడు క్లోజ్ చేస్తాం. ఈ వెబ్ సైట్ ను మళ్లి రీలోడ్ చేయండి.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"ఈ డొమైన్ లోని పేజీ లో లోడ్ అయింది:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"మీరు ఎంపిక చేసిన రిసోర్స్ వైట్ లిస్టు చేయబడింది. కాబట్టి మీరు దాన్ని బ్లాక్ చేయలేరు.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"బ్లాక్ లేదా అన్-బ్లాక్ చేయడానికి రిసోర్సెస్ ఎంచుకోండి.",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"ఒక రిసోర్స్ బ్లాక్ చేయి",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"రిసోర్స్",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"రకము",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"మ్యాచ్ అయిన ఫిల్టర్లు",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"మూసివేయి.",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"లెజెండ్:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"బ్లాక్ చేయబడిన రిసోర్సెస్",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"వైట్ లిస్టు చేయబడిన రిసోర్సెస్",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"బ్లాక్ చేయగలిగిన రిసోర్సెస్",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"దాచే రూల్స్ అమలు చేయబడినవి.",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"లోడ్ అవుతుంది ...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"తదుపరి స్టెప్",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"మీరు బ్రౌజింగ్ చేస్తున్నప్పుడు ఈ ఫిల్టర్ వీటికి ఉపయోగించబడుతుంది:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"ఏదైనా వెబ్ సైట్",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"ఈ దొమైన్స్ లోని పేజీలు మాత్రమే:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"డొమైన్లను కామా లేదా స్పేస్ తో విడతీయు",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"ఈ ఫిల్టర్ కేస్ సెన్సిటివ్:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"ఈ ఫిల్టర్ క్రింది రిసోర్సెస్ కు అనువర్తిస్తుంది :",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"ఈ ఫిల్టర్ని చేర్చు",
-    "description":"resourceblocking page string"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"వీడియోలు మరియు ఫ్లాష్",
@@ -865,10 +725,6 @@
   },
   "report_ad_on_page":{
     "message":"ఈ పేజీలోని ప్రకటనను రిపోర్ట్ చేయి",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"రిసోర్స్ లిస్టు చూపించు",
     "description":"Entry in the AdBlock button menu"
   },
   "work_around_hulu_problems":{

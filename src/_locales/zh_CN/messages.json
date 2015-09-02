@@ -31,10 +31,6 @@
     "message":"AdBlock选项",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"第三方",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"要隐藏按钮，请右键单击它并选择\"隐藏按钮\"。您可以在 chrome:\/\/chrome\/extensions 中选择重新显示按钮。",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"移动滑块直到页面上的广告被正确地屏蔽。",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"高级: 按网址屏蔽",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"第一步:找出要屏蔽的目标",
@@ -495,6 +487,10 @@
     "message":"AdBlock在检测到恶意软件时是否显示通知？",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
   },
+  "malwarenotificationmessage":{
+    "message":"AdBlock已阻止了一个从已知包含恶意软件的网站进行的下载。",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
+  },
   "malwarenotificationlearnmore":{
     "message":"了解更多关于恶意软件的信息",
     "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
@@ -859,161 +855,13 @@
     "message":"未知",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"屏蔽包含以下内容的资源:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"略过包含以下内容的资源:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"注意: 您可以使用*作为通配符",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"请输入有效的网址!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"您输入的规则与您试图屏蔽的资源不匹配！是否继续?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"任何网站『除了』 此网域$domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"过滤规则已加入!\n请重新载入页面查看结果!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock已暂停。因此没有资源被抓取，这个页面不可用。 请先启用AdBlock 并再试一次。",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"过滤规则已移除。请重新载入原页面以建立资源列表。",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"出错了。没有资源被发送。页面即将关闭。请尝试重新加载该网站。",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"在以下网域上加载：\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"选中的资源已被加入白名单。所以您不能屏蔽它。",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"选择您要屏蔽或是取消屏蔽的资源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"屏蔽资源",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"资源",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"类型",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"符合的过滤规则",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"关闭",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"图例：",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"已屏蔽的资源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"已加入白名单的资源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"可屏蔽的资源",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"隐藏规则已应用",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"载入中...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"下一步",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"这个过滤规则将在你浏览以下网站时被应用:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"任何网站",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"『只有』此网域上的页面：",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"使用逗号或空格分隔多个网域",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"这个规则分大小写:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"这个规则应用在这些类型的资源:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"添加规则",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"...或禁用筛选规则：",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"以下规则将被禁用：",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"此规则将在您浏览以下页面时禁用：",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"『只有』此网域上的页面：",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"视频或Flash",
@@ -1097,10 +945,6 @@
   },
   "report_ad_on_page":{
     "message":"报告这个页面上的广告",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"显示资源列表",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{

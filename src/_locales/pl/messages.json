@@ -31,10 +31,6 @@
     "message":"Opcje AdBlocka",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Zasoby zewnętrzne",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Aby ukryć przycisk, kliknij prawym przyciskiem myszy na ikonie AdBlocka a następnie wybierz \"Ukryj przycisk\". Możesz ponownie włączyć pokazywanie go pod adresem chrome:\/\/extensions\/.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -47,13 +43,13 @@
     "message":"Aby ukryć przycisk, kliknij prawym przyciskiem myszy na pasek narzędzi Safari i wybierz \"Dostosuj pasek narzędzi\", a następnie przesuń przycisk AdBlocka poza pasek narzędzi. Możesz go przywrócić poprzez przeciągnięcie z powrotem na pasek.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Aby ukryć przycisk, kliknij prawym przyciskiem myszy na przycisku i wybierz „Usuń z paska narzędzi”. Możesz przywrócić ten przycisk otwierając menu Firefoksa i przechodząc do „Dostosowywanie”.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Przeciągaj suwak dopóki reklama nie zostanie właściwie zablokowana, a inne elementy witryny pozostaną nienaruszone.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Zaawansowane: blokowanie poprzez URL",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Krok 1: Określ co zablokować",
@@ -183,6 +179,10 @@
     "message":"Przeładuj stronę.",
     "description":"Checkbox on whitelist wizard"
   },
+  "wizardcantrunonframesets":{
+    "message":"Ta funkcja AdBlocka nie działa na tej stronie, ponieważ wykorzystuje starą technologię. Możesz dodać zasoby do czarnej lub białej listy ręcznie w zakładce „Dostosuj” na stronie opcji.",
+    "description":"Message (alert) shown when the user tries to use a blacklist\/whitelist wizard on an old website"
+  },
   "subscribeconfirm":{
     "message":"Czy na pewno chcesz subskrybować listę filtrów o nazwie $title$?",
     "description":"Prompt question before subscribing to the filter list",
@@ -242,6 +242,10 @@
   "showcontextmenus2":{
     "message":"Dodaj pozycję do menu pod prawym przyciskiem",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"Włącz tryb zgodności „ClickToFlash”",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"Pokazuj komunikaty debugowania w logach konsoli (spowalnia to jednak AdBlock'a)",
@@ -359,6 +363,10 @@
     "message":"Kłopoty fanboy'ów (usuwa kłopoty w internecie)",
     "description":"Name of the filter list"
   },
+  "filterwarning_removal":{
+    "message":"Lista usuwania ostrzeżenia o AdBlocku (usuwa wiadomości o korzystaniu z AdBlocka)",
+    "description":"Name of the filter list"
+  },
   "filteradblock_custom":{
     "message":"Własne filtry AdBlock'a (zalecane)",
     "description":"A filter list"
@@ -474,6 +482,14 @@
   "adreport2":{
     "message":"Zobaczyłeś jakieś reklamy na stronie? Dobrze, pomogę Ci znaleźć miejsce gdzie będziesz mógł je zgłosić!<br\/> Pamiętaj: zgłaszanie reklam jest dobrowolne. Jeśli nie chcesz tego robić po prostu zamknij tą kartę i zablokuj je tylko dla siebie, dodając własny filtr w zakładce 'Dostosuj' na stronie opcji!",
     "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  },
+  "malwarenotificationcheckboxmessage":{
+    "message":"Czy AdBlock ma powiadamiać Cię, gdy wykryje złośliwe oprogramowanie?",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock zablokował pobieranie z tej strony, ponieważ jest znana z posiadania złośliwego oprogramowania.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
     "message":"Dowiedz się więcej o złośliwym oprogramowaniu",
@@ -741,6 +757,10 @@
     "message":"Zainstaluj AdBlock dla Chrome, jeśli go nie masz.",
     "description":"Instruction for how to check Chrome for a reported ad"
   },
+  "ff_checkinchrome_3":{
+    "message":"W Chromie'ie, subskrybuj tę samą listę filtrów, które masz tutaj.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
   "ff_checkinchrome_4":{
     "message":"W Chrome, załaduj strony z reklamami.",
     "description":"Instruction for how to check Chrome for a reported ad"
@@ -835,161 +855,13 @@
     "message":"nieznane",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Zablokuj wszystkie elementy zawierające:",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Nie blokuj żadnego elementu zawierającego:",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Uwaga: możesz użyć tutaj * jako wieloznacznika",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Proszę wpisać prawidłowy URL pasujący do wzorca!",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Podany wzór nie pasuje do elementu który próbowałeś zablokować! Kontynuować?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"Na każdej stronie OPRÓCZ stron z domeny  $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Filtr został dodany!\nOdśwież stronę, aby zobaczyć rezultat!",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"Działanie AdBlock'a jest wstrzymane. Ta strona nie może być używana, ze względu na brak zasobów. Wznów działanie AdBlock'a i spróbuj ponownie.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Filtr został usunięty. Odśwież oryginalną stronę, aby wygenerować listę elementów.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Coś poszło nie tak. Żadne zasoby nie zostały wysłane. Ta strona zostanie zamknięta. Spróbuj załadować stronę ponownie.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Załadowano na stronie z domeny:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Wybrany element został dodany do białej listy. Dlatego nie możesz go zablokować.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Wybierz element który chcesz zablokować lub odblokować",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Zablokuj element",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Element",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Typ",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Dobrany filtr",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Zamknij",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Legenda:",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"zablokowane elementy",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"biała lista elementów",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"element możliwy do zablokowania",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"reguły ukrywania",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"ŁADOWANIE...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Następny krok",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Ten filtr będzie stosowany podczas przeglądania:",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Każda strona",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"TYLKO strony w tych domenach:",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Oddziel wiele domen z przecinkami lub spacjami",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Ten filtr rozróżnia wielkość liter:",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Filtr ma zastosowanie do tego typu elementów:",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Dodaj ten filtr",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"... lub wyłącz filtr:",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Ten filtr zostanie wyłączony:",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Ten filtr zostanie wyłączony, podczas gdy przeglądasz:",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"TYLKO strony w tej domenie:",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Filmy i Flash",
@@ -1073,10 +945,6 @@
   },
   "report_ad_on_page":{
     "message":"Zgłoś reklamę na stronie",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Pokaż listę elementów",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{
@@ -1181,6 +1049,10 @@
       }
     }
   },
+  "dropboxerrorforfilters":{
+    "message":"Przekroczyłeś limit rozmiaru Dropboksa. Proszę usunąć niektóre wpisy z własnych lub wyłączonych filtrów i spróbować ponownie.",
+    "description":"Message to Dropbox sync users on the Customize tab, custom filters \/ disabled."
+  },
   "languagedropdowndescription":{
     "message":"Dodaj filtry dla innego języka: ",
     "description":"Dropdown list for language-specific filters"
@@ -1239,6 +1111,10 @@
       }
     }
   },
+  "ff_adblock_outdated":{
+    "message":"Używasz starej wersji AdBlocka. Proszę kliknąć przycisk menu Firefoksa i wybrać „Dodatki”. Następnie na stronie dodatków, kliknij ikonę koła zębatego (narzędzia dla wszystkich dodatków) i wybierz „Sprawdź aktualizacje”.",
+    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
+  },
   "adblocksupport":{
     "message":"Wsparcie dla AdBlock'a",
     "description":"Title of the support tab"
@@ -1267,6 +1143,10 @@
     "message":"Znalazłeś błąd?",
     "description":"Subtitle on the Support tab of the options"
   },
+  "adblockupdates":{
+    "message":"Aktualizacje AdBlocka",
+    "description":"Subtitle on the Support tab of the options"
+  },
   "whatmakesadblocktick":{
     "message":"Chcesz zobaczyć, co sprawia, że AdBlock działa?",
     "description":"Subtitle on the Support tab of the options"
@@ -1279,8 +1159,24 @@
     "message":"Kod źródłowy jest <a>swobodnie dostępny<\/a>!",
     "description":"Link to the source code of AdBlock on the Support tab of the options"
   },
+  "contributors":{
+    "message":"Mamy <a>stronę<\/a>, aby pomóc Ci dowiedzieć się o ludziach pracujących nad AdBlockiem!",
+    "description":"Link to the contributors page on the Support tab of the options"
+  },
+  "debuginfo":{
+    "message":"Czy nasz zespół poprosił o pewne informacje debugowania? Kliknij <a href='#' id='debug'>tutaj<\/a>, aby je uzyskać!",
+    "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Dlaczego nie możesz nam wysłać <a href='#' id='report'>zgłoszenia błędu<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
+  },
   "supportsite":{
     "message":"Daj nam znać na naszej <a>witrynie pomocy technicznej<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
+  },
+  "ad_report_please":{
+    "message":"Jeśli widzisz reklamę, nie twórz zgłoszenia błędu, stwórz <a>zgłoszenie reklamy<\/a>!",
+    "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   }
 }

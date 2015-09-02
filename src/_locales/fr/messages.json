@@ -31,10 +31,6 @@
     "message":"Options AdBlock",
     "description":"Title for the options page"
   },
-  "thirdparty":{
-    "message":"Tierce partie",
-    "description":"Resource list column title telling if the resource originates from a different domain"
-  },
   "chromebutton_how_to_hide2":{
     "message":"Pour masquer ce bouton, faites un clic droit dessus et choisissez \"Masquer le bouton\".  Pour l'afficher à nouveau, allez dans chrome:\/\/chrome\/extensions.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -54,10 +50,6 @@
   "sliderexplanation":{
     "message":"Faites glisser le curseur jusqu'à ce que la pub disparaisse, et que l'élément bloqué semble correct.",
     "description":"Blacklister slider page message"
-  },
-  "block_by_url_instead":{
-    "message":"Avancé : bloquer par URL",
-    "description":"Link on blacklister slider page"
   },
   "slidertitle":{
     "message":"Étape 1 : Indiquer quoi bloquer",
@@ -257,6 +249,10 @@
   },
   "debuginlogoption":{
     "message":"Afficher les messages de débogage dans la Console (ralentit AdBlock)",
+    "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "datacollectionoption":{
+    "message":"Autoriser AdBlock à recueillir des données anonymes sur l'utilisation des listes de filtres",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "updatedrightnow":{
@@ -863,161 +859,13 @@
     "message":"inconnu",
     "description":"A resource type"
   },
-  "blockeverycontaining":{
-    "message":"Bloquer chaque ressource contenant :",
-    "description":"resourceblocking page string"
-  },
-  "whitelisteverycontaining":{
-    "message":"Autoriser chaque ressource contenant :",
-    "description":"resourceblocking page string"
-  },
-  "wildcardhint":{
-    "message":"Note: vous pouvez utiliser * comme joker",
-    "description":"resourceblocking page string"
-  },
-  "novalidurlpattern":{
-    "message":"Entrez un modèle d'URL valide !",
-    "description":"resourceblocking page string"
-  },
-  "doesntmatchoriginal":{
-    "message":"Le modèle que vous avez entré ne correspond pas à la ressouce que vous souhaitez bloquer ! Continuer tout de même ?",
-    "description":"resourceblocking page string"
-  },
-  "thirdpartycheckbox":{
-    "message":"N'importe quel site SAUF les sites sur le domaine $domain$",
-    "description":"resourceblocking page string",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "filterhasbeenadded":{
-    "message":"Le filtre a été ajouté avec succès !\nActualisez la page pour voir le résultat !",
-    "description":"resourceblocking page string"
-  },
-  "adblock_is_paused":{
-    "message":"AdBlock est désactivé. Cette page ne peut donc pas être utilisée. Réactivez AdBlock et essayez à nouveau.",
-    "description":"resourceblocking page string"
-  },
-  "excludefilterremoved":{
-    "message":"Le filtre a été retiré. Actualisez la page originale pour générer la liste des ressources.",
-    "description":"Warning when a page exclusion rule was removed in resourceblock.html"
-  },
-  "noresourcessend2":{
-    "message":"Quelque chose s'est mal passé. Aucune ressource n'a été envoyée. Cette page va maintenant se fermer. Essayez de recharger le site web.",
-    "description":"resourceblocking page string"
-  },
-  "resourcedomain":{
-    "message":"Chargé sur la page avec le domaine :\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
-    "placeholders":{
-      "domain":{
-        "content":"$1",
-        "example":"example.com"
-      }
-    }
-  },
-  "resourceiswhitelisted":{
-    "message":"Les ressources sélectionnées ont été autorisées. Vous ne pouvez donc pas les bloquer.",
-    "description":"resourceblocking page string"
-  },
-  "selectresources":{
-    "message":"Sélectionnez la ressource que vous souhaitez bloquer ou autoriser",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocktitle":{
-    "message":"Bloquer une ressource",
-    "description":"resourceblocking page string"
-  },
-  "headerresource":{
-    "message":"Ressource",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Type",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Filtre correspondant",
-    "description":"resourceblocking page string"
-  },
   "close":{
     "message":"Fermer",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend1":{
-    "message":"Légende :",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend2":{
-    "message":"ressources bloquées",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend3":{
-    "message":"ressources autorisées",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend4":{
-    "message":"ressources bloquables",
-    "description":"resourceblocking page string"
-  },
-  "resourceblocklegend5":{
-    "message":"règles de masquage appliquées",
-    "description":"resourceblocking page string"
+    "description":"Generic message for buttons that close a view or window"
   },
   "loading":{
     "message":"Chargement...",
-    "description":"resourceblocking page string"
-  },
-  "nextstep":{
-    "message":"Prochaine étape",
-    "description":"resourceblocking page string"
-  },
-  "appliedwhenbrowsing":{
-    "message":"Ce filtre sera appliqué lorsque vous naviguez :",
-    "description":"resourceblocking page string"
-  },
-  "anysite":{
-    "message":"Sur n'importe quel site",
-    "description":"resourceblocking page string"
-  },
-  "onlyondomains":{
-    "message":"UNIQUEMENT sur les pages de ces domaines : ",
-    "description":"resourceblocking page string"
-  },
-  "multipledomainshint":{
-    "message":"Séparez les domaines multiples par des virgules ou espaces",
-    "description":"resourceblocking page string"
-  },
-  "casesensitive":{
-    "message":"Ce filtre est sensible à la casse :",
-    "description":"resourceblocking page string"
-  },
-  "onlyresourcetypes":{
-    "message":"Ce filtre s'applique aux ressources de ces types :",
-    "description":"resourceblocking page string"
-  },
-  "addthisfilter":{
-    "message":"Ajouter ce filtre",
-    "description":"resourceblocking page string"
-  },
-  "ordisablefilter":{
-    "message":"… ou désactiver un filtre :",
-    "description":"On the resourceblocking page, choice to disable a filter instead of allowing or blocking a specific resource"
-  },
-  "thisfilterwillbedisabled":{
-    "message":"Ce filtre sera désactivé :",
-    "description":"On the resourceblocking page, followed by the filter the user chose to disable"
-  },
-  "disabledwhenbrowsing":{
-    "message":"Ce filtre sera désactivé lorsque vous êtes :",
-    "description":"On the resourceblocking page, choose on which sites the filter should be disabled"
-  },
-  "onlypagesonthisdomain":{
-    "message":"UNIQUEMENT sur les pages sur ce domaine :",
-    "description":"On the resourceblocking page, option to disable a filter only on a specific domain"
+    "description":"Generic message displayed during processes that take some time"
   },
   "flashads":{
     "message":"Vidéos et Flash",
@@ -1101,10 +949,6 @@
   },
   "report_ad_on_page":{
     "message":"Signaler une publicité sur cette page",
-    "description":"Entry in the AdBlock button menu"
-  },
-  "show_resourcelist":{
-    "message":"Afficher la liste des ressources",
     "description":"Entry in the AdBlock button menu"
   },
   "advanced_options2":{
