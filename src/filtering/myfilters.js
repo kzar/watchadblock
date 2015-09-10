@@ -371,9 +371,8 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
       }, 500);
     }
   }
-  $.ajax({
+  var ajaxRequest = {
     url: url,
-    cache: false,
     headers: {
       "Accept": "text/plain",
       "X-Client-ID": "AdBlock/" + STATS.version,
@@ -405,7 +404,12 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
         onError();
       log("Error fetching " + url);
     }
-  });
+  };
+  //add the cache option for items NOT coming from the AdBlock CDN
+  if (url.indexOf("adblockcdn.com") === -1) {
+    ajaxRequest["cache"] = false;
+  }
+  $.ajax(ajaxRequest);
 }
 
 // Record that subscription_id is subscribed, was updated now, and has
@@ -601,7 +605,7 @@ MyFilters.prototype._load_default_subscriptions = function() {
   //Update will be done immediately after this function returns
   result["adblock_custom"] = { subscribed: true };
   result["easylist"] = { subscribed: true };
-  result["malware"] = { subscribed: true }; 
+  result["malware"] = { subscribed: true };
   var list_for_lang = listIdForThisLocale();
   if (list_for_lang)
     result[list_for_lang] = { subscribed: true };
