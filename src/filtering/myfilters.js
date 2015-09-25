@@ -521,8 +521,7 @@ MyFilters.prototype._loadMalwareDomains = function() {
     if (!this._subscriptions.malware.text ||
         !this.getMalwareDomains() ||
         out_of_date(this._subscriptions.malware)) {
-        //the timestamp is add to the URL to prevent caching by the browser
-        var url = this._subscriptions.malware.url + "?timestamp=" + new Date().getTime();
+        var url = this._subscriptions.malware.url;
         // Fetch file with malware-known domains
         var xhr = new XMLHttpRequest();
         var that = this;
