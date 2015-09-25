@@ -706,7 +706,7 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://easylist-downloads.adblockplus.org/fanboy-social.txt",
     },
     "malware": { // Malware protection
-      url: "https://data.getadblock.com/filters/domains.json",
+      url: "https://adblockcdn.com/filters/domains.json",
     },
     "annoyances": { // Fanboy's Annoyances
       url: "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",
