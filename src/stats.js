@@ -43,7 +43,7 @@ STATS = (function() {
   })();
 
   var getPingData = function() {
-    var total_pings = storage_get("total_pings") || 0;    
+    var total_pings = storage_get("total_pings") || 0;
     var data = {
       u: userId,
       v: version,
@@ -51,7 +51,6 @@ STATS = (function() {
       o: os,
       bv: browserVersion,
       ov: osVersion,
-      g: get_settings().show_google_search_text_ads ? '1': '0',
       l: determineUserLanguage(),
       st: SURVEY.types(),
       pc: total_pings
@@ -62,6 +61,18 @@ STATS = (function() {
     }
     if (chrome.runtime.id) {
       data["extid"] = chrome.runtime.id;
+    }
+    var subs = get_subscriptions_minus_text();
+    if (subs["acceptable_ads"]) {
+      data["aa"] = subs["acceptable_ads"].subscribed ? '1': '0';
+    } else {
+      data["aa"] = '-1';
+    }
+    var acceptableAdsShown = storage_get("acceptableAdsShown");
+    if (acceptableAdsShown === undefined) {
+      data["aas"] = '0';
+    } else {
+      data["aas"] = acceptableAdsShown ? '1': '0';
     }
     return data;
   };

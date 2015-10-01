@@ -88,7 +88,6 @@
     var defaults = {
       debug_logging: false,
       youtube_channel_whitelist: false,
-      show_google_search_text_ads: false,
       whitelist_hulu_ads: false, // Issue 7178
       show_context_menu_items: true,
       show_advanced_options: false,
@@ -1287,7 +1286,7 @@
     gabQuestion.removeGABTabListeners(saveState);
   }
 
-  var installedURL = "https://getadblock.com/installed/?u=" + STATS.userId;
+  var installedURL = "https://getadblock.com/installed/?aa=true&u=" + STATS.userId;
   if (STATS.firstRun && (SAFARI || OPERA || chrome.runtime.id !== "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
     if (SAFARI) {
       openTab(installedURL);
@@ -1675,7 +1674,6 @@
                   filter_lists: get_subscribed_filter_lists().toString(),
                   debug_logging: get_settings().debug_logging,
                   youtube_channel_whitelist: get_settings().youtube_channel_whitelist,
-                  show_google_search_text_ads: get_settings().show_google_search_text_ads,
                   whitelist_hulu_ads: get_settings().whitelist_hulu_ads,
                   show_context_menu_items: get_settings().show_context_menu_items,
                   show_advanced_options: get_settings().show_advanced_options,
@@ -1779,8 +1777,6 @@
                   set_setting("debug_logging", debug);
                   var ytchannel = settingstable.get("youtube_channel_whitelist");
                   set_setting("youtube_channel_whitelist", ytchannel);
-                  var googleads = settingstable.get("show_google_search_text_ads");
-                  set_setting("show_google_search_text_ads", googleads);
                   var huluads = settingstable.get("whitelist_hulu_ads");
                   set_setting("whitelist_hulu_ads", huluads);
                   var showcontextmenu = settingstable.get("show_context_menu_items");

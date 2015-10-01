@@ -1,6 +1,23 @@
+// Temp code to handle incoming clicks from acceptable-ads-announcement.html
+try {
+  if (parseUri.parseSearch(location.search).aadisabled === "true") {
+    $("#acceptable_ads_info").show();
+  }
+}
+catch(ex) {}
+
 // Check or uncheck each loaded DOM option checkbox according to the
 // user's saved settings.
 $(function() {
+
+  BGcall("get_subscriptions_minus_text", function(subs) {
+    //if the user is currently subscribed to AA
+    //then 'check' the acceptable ads button.
+    if (subs["acceptable_ads"].subscribed) {
+      $("#acceptable_ads").prop("checked", true);
+    }
+  });
+
   for (var name in optionalSettings) {
     $("#enable_" + name).
       prop("checked", optionalSettings[name]);
@@ -9,10 +26,10 @@ $(function() {
     var is_enabled = $(this).is(':checked');
     var name = this.id.substring(7); // TODO: hack
     BGcall("set_setting", name, is_enabled, true);
-    // if the user enables/disable data collection update the filter lists, so that the 
+    // if the user enables/disable data collection update the filter lists, so that the
     // filter list data is retained, and any cached responses are cleared
     if (name === "data_collection") {
-      BGcall("update_subscriptions_now");          
+      BGcall("update_subscriptions_now");
     }
   });
 
@@ -32,16 +49,13 @@ $(function() {
   getDropboxMessage();
 });
 
-// TODO: This is a dumb race condition, and still has a bug where
-// if the user reloads/closes the options page within a second
-// of clicking this, the filters aren't rebuilt. Call this inside
-// the feature change handler if it's this checkbox being clicked.
-$("#enable_show_google_search_text_ads").change(function() {
-  // Give the setting a sec to get saved by the other
-  // change handler before recalculating filters.
-  window.setTimeout(function() {
-    BGcall("update_filters");
-  }, 1000);
+$("#acceptable_ads").change(function() {
+  var is_enabled = $(this).is(':checked');
+  if (is_enabled) {
+    BGcall("subscribe", {id: "acceptable_ads"});
+  } else {
+    BGcall("unsubscribe", {id:"acceptable_ads", del:false});
+  }
 });
 
 $("#enable_show_advanced_options").change(function() {
@@ -109,7 +123,6 @@ if (!SAFARI &&
         function(request, sender, sendResponse) {
             if (request.message === "update_checkbox") {
                 BGcall("get_settings", function(settings) {
-                    $("input[id='enable_show_google_search_text_ads']").prop("checked", settings.show_google_search_text_ads);
                     $("input[id='enable_youtube_channel_whitelist']").prop("checked", settings.youtube_channel_whitelist);
                     $("input[id='enable_show_context_menu_items']").prop("checked", settings.show_context_menu_items);
                     $("input[id='enable_show_advanced_options']").prop("checked", settings.show_advanced_options);

@@ -222,7 +222,9 @@ FilterListUtil.sortFilterListArrays = function() {
 //    subs:object - Map for subscription lists taken from the background.
 FilterListUtil.getFilterListType = function(filter_list) {
   var filter_list_type;
-  if (filter_list.id === "adblock_custom" || filter_list.id === "easylist") {
+  if (filter_list.id === "adblock_custom" ||
+      filter_list.id === "easylist" ||
+      filter_list.id === "acceptable_ads") {
     filter_list_type = "adblock_filter_list";
   } else if (filter_list.id === "easyprivacy" || filter_list.id === "antisocial"
              || filter_list.id === "malware" || filter_list.id === "annoyances"
@@ -424,6 +426,9 @@ SubscriptionUtil.subscribe = function(id, title) {
   }
   SubscriptionUtil._updateCacheValue(id);
   BGcall("subscribe", parameters);
+  if (id === "acceptable_ads") {
+    $("#acceptable_ads").prop("checked", true);
+  }
 };
 // Unsubscribe to the filter list with the given |id|.
 // Input:
@@ -432,6 +437,9 @@ SubscriptionUtil.subscribe = function(id, title) {
 SubscriptionUtil.unsubscribe = function(id, del) {
   SubscriptionUtil._updateCacheValue(id);
   BGcall("unsubscribe", {id:id, del:del});
+  if (id === "acceptable_ads") {
+    $("#acceptable_ads").prop("checked", false);
+  }
 };
 // Update the given filter list in the cached list.
 // Input:

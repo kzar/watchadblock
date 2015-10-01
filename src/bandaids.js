@@ -72,6 +72,14 @@ var run_bandaids = function() {
             BGcall("set_setting", "show_survey", !document.getElementById("enable_show_survey").checked, true);
          };
       }
+      if (document.getElementById("disableacceptableads")) {
+        document.getElementById("disableacceptableads").onclick = function(event) {
+          event.preventDefault();
+          BGcall("unsubscribe", {id:"acceptable_ads", del:false}, function() {
+            BGcall("openTab",  "options/index.html?tab=0&aadisabled=true");
+          });
+        }
+      }
     },
     czech_sites: function() {
       var player = document.getElementsByClassName("flowplayer");
