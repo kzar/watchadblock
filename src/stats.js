@@ -66,11 +66,11 @@ STATS = (function() {
     if (subs["acceptable_ads"]) {
       data["aa"] = subs["acceptable_ads"].subscribed ? '1': '0';
     } else {
-      data["aa"] = '-1';
+      data["aa"] = 'u';
     }
     var acceptableAdsShown = storage_get("acceptableAdsShown");
     if (acceptableAdsShown === undefined) {
-      data["aas"] = '0';
+      data["aas"] = 'u';
     } else {
       data["aas"] = acceptableAdsShown ? '1': '0';
     }

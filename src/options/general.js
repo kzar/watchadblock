@@ -52,8 +52,10 @@ $(function() {
 $("#acceptable_ads").change(function() {
   var is_enabled = $(this).is(':checked');
   if (is_enabled) {
+    $("#acceptable_ads_info").slideUp();
     BGcall("subscribe", {id: "acceptable_ads"});
   } else {
+    $("#acceptable_ads_info").slideDown();
     BGcall("unsubscribe", {id:"acceptable_ads", del:false});
   }
 });

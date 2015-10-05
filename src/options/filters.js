@@ -427,6 +427,7 @@ SubscriptionUtil.subscribe = function(id, title) {
   SubscriptionUtil._updateCacheValue(id);
   BGcall("subscribe", parameters);
   if (id === "acceptable_ads") {
+    $("#acceptable_ads_info").slideUp();
     $("#acceptable_ads").prop("checked", true);
   }
 };
@@ -438,6 +439,7 @@ SubscriptionUtil.unsubscribe = function(id, del) {
   SubscriptionUtil._updateCacheValue(id);
   BGcall("unsubscribe", {id:id, del:del});
   if (id === "acceptable_ads") {
+    $("#acceptable_ads_info").slideDown();
     $("#acceptable_ads").prop("checked", false);
   }
 };
