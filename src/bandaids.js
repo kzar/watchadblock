@@ -76,7 +76,9 @@ var run_bandaids = function() {
         document.getElementById("disableacceptableads").onclick = function(event) {
           event.preventDefault();
           BGcall("unsubscribe", {id:"acceptable_ads", del:false}, function() {
-            BGcall("openTab",  "options/index.html?tab=0&aadisabled=true");
+            BGcall("recordGeneralMessage", "disableacceptableads clicked", undefined, function() {
+              BGcall("openTab",  "options/index.html?tab=0&aadisabled=true");
+            });
           });
         }
       }
