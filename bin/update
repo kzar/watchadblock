@@ -11,7 +11,7 @@ fi
 
 # Grab all the releases
 echo "Checking http://code.getadblock.com/releases/ for new releases... "
-wget -q -r -nd -l 1 -P releases/ -N -A zip --reject-regex 'Firefox' http://code.getadblock.com/releases/?C=M;O=D
+wget -q -r -nd -l 1 -P releases/ -N -A zip --accept-regex 'AdBlock-v[0-9\.]+\.zip' http://code.getadblock.com/releases/?C=M;O=D
 # Store the modified dates and md5sums in case anything has changed
 bin/git-cache-meta.sh --store
 md5sum releases/* | sort > md5sum.txt
