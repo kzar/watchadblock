@@ -68,12 +68,6 @@ STATS = (function() {
     } else {
       data["aa"] = 'u';
     }
-    var acceptableAdsShown = storage_get("acceptableAdsShown");
-    if (acceptableAdsShown === undefined) {
-      data["aas"] = 'u';
-    } else {
-      data["aas"] = acceptableAdsShown ? '1': '0';
-    }
     return data;
   };
   // Tell the server we exist.

@@ -483,9 +483,13 @@
     "message":"AdBlock - Reporting an ad",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!<br\/> Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Customize' tab of the options page!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  "adreportintro":{
+    "message":"Found an ad on a web page? We'll help you find the right place to report it!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"Reporting ads is voluntary. It helps other people by enabling the filter list maintainers to block the ad for everyone. If you're not feeling altruistic right now, that's okay. Close this page and <a>block the ad<\/a> just for yourself.",
+    "description":"Introduction of the ad reporting page"
   },
   "malwarenotificationcheckboxmessage":{
     "message":"Should AdBlock notify you when it detects malware?",
@@ -504,7 +508,7 @@
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
   "malwarecheck":{
-    "message":"Malware check",
+    "message":"Check for malware that could be injecting ads:",
     "description":"Section header on the ad report page"
   },
   "malwarewarning":{
@@ -515,8 +519,24 @@
     "message":"No known malware found.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
+  "disableaa":{
+    "message":"Check the Acceptable Ads filters:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Click this: <a>Disable Acceptable Ads<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"If you'd rather not see ads like this one, you may want to leave the Acceptable Ads filter list turned off.",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Find out more about the Acceptable Ads program.",
+    "description":"Acceptable Ads link message on ad report page"
+  },
   "updateyourlists":{
-    "message":"Make sure your filter lists are up to date",
+    "message":"Make sure your filter lists are up to date:",
     "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
@@ -540,15 +560,15 @@
     "description":"A negative response to a question"
   },
   "adalreadyblocked":{
-    "message":"You don't have to do anything as the ad is already blocked",
+    "message":"Great! You're all set.",
     "description":"On the ad report page, telling a user there is nothing to do"
   },
   "disableallextensions":{
-    "message":"Disable all extensions except for AdBlock.",
+    "message":"Disable all extensions except for AdBlock:",
     "description":"Instruction on ad report page"
   },
   "disableforchromestepone":{
-    "message":"Open <a href='#'>the extensions page<\/a>",
+    "message":"Open the <a href='#'>extensions page<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
@@ -556,7 +576,7 @@
     "description":"On the ad report page, an alternative way to disable other extensions"
   },
   "disableotherextensionscomplete":{
-    "message":"All other extensions have been disabled.  We'll now reload the tab.",
+    "message":"We've disabled all other extensions. Now we'll reload the page with the ad. One second, please.",
     "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
@@ -568,7 +588,7 @@
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
   "tabreloadcomplete":{
-    "message":"The tab with the ad has been reloaded, please check that tab to see if the ad is still displayed.  Then answer the Yes or No question below.",
+    "message":"Done! We reloaded the page with the ad. Please check that page to see whether the ad is gone. Then come back to this page and answer the question below.",
     "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "disableforchromeandsafaristeptwo":{
@@ -580,11 +600,11 @@
     "description":"Step 1 for disabling Safari extensions"
   },
   "reenableadsonebyone":{
-    "message":"Now that the ads are gone, you must find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one that you must delete to get rid of the ads.",
+    "message":"Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.",
     "description":"Tells the user to reenable the extensions one by one"
   },
   "correctfilters":{
-    "message":"Correct filters",
+    "message":"Make sure you're using the right language filter(s):",
     "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
@@ -675,6 +695,22 @@
     "message":"Ukrainian",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"Arabic",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"Estonian",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"Icelandic",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"Lithuanian",
+    "description":"language"
+  },
   "other":{
     "message":"Other",
     "description":"Multiple choice option"
@@ -728,7 +764,7 @@
     }
   },
   "checkinfirefox_2":{
-    "message":"Install AdBlock for Firefox $chrome$ if you don't have it.",
+    "message":"Install Adblock Plus $chrome$ if you don't have it.",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
     "placeholders":{
       "chrome":{
@@ -1136,7 +1172,7 @@
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs"
   },
   "checkinternetconnection":{
-    "message":"To report an ad, you must be connected to the internet.",
+    "message":"To report an ad, you must be connected to the Internet.",
     "description":"Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   },
   "whatsnew":{
@@ -1186,34 +1222,6 @@
   "ad_report_please":{
     "message":"If you're seeing an ad, don't make a bug report, make an <a>ad report<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
-  },
-  "acceptableadsheader1":{
-    "message":"Announcing the Acceptable Ads program",
-    "description":"first H1 on page"
-  },
-  "acceptableadspart1":{
-    "message":"Hi, it's Michael, the creator of AdBlock. Pardon the interruption!<br\/><br\/>For years I have wanted to help make it easy for you to see useful ads and block annoying ones.  I am excited to tell you that it's finally happening.<br\/><br\/>AdBlock is now participating in the <b>Acceptable Ads program<\/b>.  Acceptable Ads defines strict guidelines to identify non-annoying ads, which AdBlock now shows by default.  This way, you can help support your favorite websites -- and if you still want to block every ad, you can <a href='#' id='disableacceptableads'>disable this<\/a> easily.<br\/><br\/>",
-    "description":"first paragraph on page"
-  },
-  "acceptableadsmoredetails":{
-    "message":"Want more details?",
-    "description":"more details question"
-  },
-  "acceptableadsheader2":{
-    "message":"More about Acceptable Ads",
-    "description":"second header (H2) on page"
-  },
-  "acceptableadsdetails":{
-    "message":"With Acceptable Ads, you are allowing some advertising that’s not considered annoying to be shown. By doing this you support websites that rely on advertising but who choose to do it in a non-intrusive way.<br\/><br\/>The Acceptable Ads program is a plea to advertisers, their ad agencies, online ad networks and websites to stop making bad online advertising -- ads that are obnoxious, annoying and obtrusive. Specifically:<br\/><br\/>- Acceptable Ads are not annoying.<br\/>- Acceptable Ads do not disrupt or distort the page content we’re trying to read.<br\/>- Acceptable Ads are transparent with us about being an ad.<br\/>- Acceptable Ads are effective without shouting at us.<br\/>- Acceptable Ads are appropriate to the site that we are on.<br\/><br\/>You can learn more about Acceptable Ads <a id='moreinformation' href='#'>here<\/a>. Like I said: AdBlock has enabled this feature by default, but you can can <a id='disableacceptableads2' href='#'>disable it<\/a> in AdBlock’s Options if you ever want to block every ad.",
-    "description":"details div on page"
-  },
-  "acceptableadspart2":{
-    "message":"I think you'll really like the change. Happy surfing!<br\/><br\/>Michael",
-    "description":"signature"
-  },
-  "acceptableadspartsmallprint":{
-    "message":"PS: Why now? Well, I have always shared similar goals for the Web with the ad blocker Adblock Plus, who created the Acceptable Ads program. But I did not like the fact that they also control the program, because they are supported by some Acceptable Ads advertisers. Now, Adblock Plus will be transferring custodianship of Acceptable Ads to an impartial group of experts. I love this idea -- in fact, it was my wife Katie’s suggestion! Due to this change, I'm happy for AdBlock to join the program. As a result, I am selling my company, and the buyer is turning on Acceptable Ads. My long-time managing director will keep working with the new company. I believe this is a great thing for you users.<br\/><br\/>It's been an honor to make the Web a better place for you! :)",
-    "description":"small print at the bottom of the page"
   },
   "acceptableadsdisable_done": {
     "message":"Acceptable Ads has been disabled.",

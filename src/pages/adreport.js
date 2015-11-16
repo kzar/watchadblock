@@ -29,6 +29,11 @@ $(function() {
     });
     $("#step_language_lang").empty().append(languageOptions);
     languageOptions[0].selected = true;
+
+    // add the link to the anchor in "adreport2"
+    $("a", "#info").
+      attr("href", "http://support.getadblock.com/kb/im-seeing-an-ad/how-do-i-block-an-ad").
+      attr("target", "_blank");
 });
 
 // Fetching the options...
@@ -263,10 +268,45 @@ $("#step_update_filters_no").click(function() {
 });
 $("#step_update_filters_yes").click(function() {
     $("#step_update_filters").html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
+    // If the user is subscribed to Acceptable Ads, ask them to unsubscribe, and recheck the page
+    BGcall('get_subscriptions_minus_text', function(subs) {
+        //if the user is subscribed to Acceptable-Ads, ask them to disable it
+        if (subs && subs["acceptable_ads"] && subs["acceptable_ads"].subscribed) {
+          $('#step_update_aa_DIV').show();
+          $(".odd").css("background-color", "#f8f8f8");
+        } else {
+          $("#step_disable_extensions_DIV").fadeIn().css("display", "block");
+          $(".even").css("background-color", "#f8f8f8");
+        }
+        $("#malwarewarning").html(translate("malwarenotfound"));
+    });
+});
+
+// STEP 3: disable AA - IF enabled...
+
+$("#DisableAA").click(function() {
+    $(this).prop("disabled", true);
+    BGcall("unsubscribe", {id:"acceptable_ads", del:false}, function() {
+        // display the Yes/No buttons
+        $(".afterDisableAA input").prop('disabled', false);
+        $(".afterDisableAA").removeClass('afterDisableAA');
+    });
+});
+
+//if the user clicks a radio button
+$("#step_update_aa_no").click(function() {
+    $("#step_update_aa").html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
+    $("#checkupdate").text(translate("aamessageadreport"));
+    $("#checkupdatelink").text(translate("aalinkadreport"));
+    $("#checkupdatelink_DIV").fadeIn().css("display", "block");
+
+});
+$("#step_update_aa_yes").click(function() {
+    $("#step_update_aa").html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
     $("#step_disable_extensions_DIV").fadeIn().css("display", "block");
 });
 
-// STEP 3: disable all extensions
+// STEP 4: disable all extensions
 
 //Code for displaying the div is in the $function() that contains localizePage()
 //after user disables all extensions except for AdBlock
@@ -347,7 +387,7 @@ $("#OtherExtensions").click(function() {
     }
 });
 
-// STEP 4: language
+// STEP 5: language
 
 //if the user clicks an item
 var contact = "";
@@ -380,7 +420,7 @@ $("#step_language_lang").change(function() {
     }
 });
 
-// STEP 5: also in Firefox
+// STEP 6: also in Firefox
 
 //If the user clicks a radio button
 $("#step_firefox_yes").click(function() {
@@ -472,7 +512,7 @@ $("#step_firefox_wontcheck").click(function() {
     $("#step_firefox").html("<span class='answer' chosen='wont_check'>" + translate("refusetocheck") + "</span>");
 });
 
-// STEP 6: video/flash ad (Safari-only)
+// STEP 7: video/flash ad (Safari-only)
 
 //If the user clicks a radio button
 $("#step_flash_yes").click(function() {

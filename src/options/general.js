@@ -1,4 +1,4 @@
-// Temp code to handle incoming clicks from acceptable-ads-announcement.html
+// Handle incoming clicks from bandaids.js & '/installed'
 try {
   if (parseUri.parseSearch(location.search).aadisabled === "true") {
     $("#acceptable_ads_info").show();

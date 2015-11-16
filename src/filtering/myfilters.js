@@ -563,20 +563,24 @@ MyFilters.prototype._load_default_subscriptions = function() {
   function listIdForThisLocale() {
     var language = determineUserLanguage();
     switch(language) {
+      case 'ar': return 'easylist_plus_arabic';
       case 'bg': return 'easylist_plus_bulgarian';
       case 'cs': return 'czech';
       case 'cu': return 'easylist_plus_bulgarian';
       case 'da': return 'danish';
       case 'de': return 'easylist_plus_german';
       case 'el': return 'easylist_plus_greek';
+      case 'et': return 'easylist_plus_estonian';
       case 'fi': return 'easylist_plus_finnish';
       case 'fr': return 'easylist_plus_french';
       case 'he': return 'israeli';
       case 'hu': return 'hungarian';
+      case 'is': return 'icelandic';
       case 'it': return 'italian';
       case 'id': return 'easylist_plus_indonesian';
       case 'ja': return 'japanese';
       case 'ko': return 'easylist_plun_korean';
+      case 'lt': return 'easylist_plus_lithuania';
       case 'lv': return 'latvian';
       case 'nl': return 'dutch';
       case 'pl': return 'easylist_plus_polish';
@@ -622,7 +626,7 @@ MyFilters.prototype._make_subscription_options = function() {
       requiresList: "easylist",
     },
     "easylist_plus_finnish": { // Additional Finnish filters
-      url: "https://raw.githubusercontent.com/wiltteri/wiltteri.txt/master/wiltteri.txt",
+      url: "http://adb.juvander.net/Finland_adb.txt",
       requiresList: "easylist",
     },
     "easylist_plus_french": { // Additional French filters
@@ -671,7 +675,8 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://easylist-downloads.adblockplus.org/israellist+easylist.txt",
     },
     "italian": { // Italian filters
-      url: "http://mozilla.gfsolone.com/filtri.txt",
+      url: "https://easylist-downloads.adblockplus.org/easylistitaly.txt",
+      requiresList: "easylist",
     },
     "japanese": { // Japanese filters
       url: "https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt",
@@ -705,6 +710,21 @@ MyFilters.prototype._make_subscription_options = function() {
     },
     "acceptable_ads": { // Acceptable Ads
       url: "https://easylist-downloads.adblockplus.org/exceptionrules.txt",
+    },
+    "easylist_plus_estonian": { // Estonian filters
+      url: "http://gurud.ee/ab.txt",
+      requiresList: "easylist"
+    },
+    "easylist_plus_lithuania": { // Lithuania filters
+      url: "http://margevicius.lt/easylistlithuania.txt",
+      requiresList: "easylist"
+    },
+    "easylist_plus_arabic": { // Arabic filters
+      url: "https://easylist-downloads.adblockplus.org/Liste_AR.txt",
+      requiresList: "easylist"
+    },
+    "icelandic": { // Icelandic filters
+      url: "http://adblock.gardar.net/is.abp.txt"
     }
   };
 }

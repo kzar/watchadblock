@@ -42,7 +42,6 @@
         }
       #checkupdate {
         font-weight: bold;
-        color: red;
       }
       .result {
         position: relative;
@@ -64,6 +63,10 @@
         display: none;
       }
       .afterFilterUpdate, .afterFilterUpdate * {
+        color: #CCC;
+        cursor: auto;
+      }
+      .afterDisableAA, .afterDisableAA * {
         color: #CCC;
         cursor: auto;
       }
@@ -90,7 +93,7 @@
         max-width: 1000px;
         padding: 20px 20px 20px 0px;
       }
-      #step_language_DIV, #step_update_filters_DIV, #step_firefox_DIV, #step_flash_DIV, #step_malware_DIV, #step_everywhere_DIV, #step_malware_checking_DIV  {
+      #step_update_aa_DIV, #step_language_DIV, #step_update_filters_DIV, #step_firefox_DIV, #step_flash_DIV, #step_malware_DIV, #step_everywhere_DIV, #step_malware_checking_DIV  {
         position: relative;
         margin: 0px auto;
         max-width: 1000px;
@@ -108,7 +111,7 @@
         .social {
           display: none;
         }
-        #step_update_filters_DIV, #step_disable_extensions_DIV, #step_language_DIV, #step_firefox_DIV, #step_flash_DIV, #step_malware_DIV, #step_everywhere_div, #step_malware_checking_DIV   {
+        #step_update_aa_DIV, #step_update_filters_DIV, #step_disable_extensions_DIV, #step_language_DIV, #step_firefox_DIV, #step_flash_DIV, #step_malware_DIV, #step_everywhere_div, #step_malware_checking_DIV   {
           padding: 20px 20px 20px 0px;
         }
         #info {
@@ -133,7 +136,10 @@
     </header>
 
     <!--STEP 0-->
-    <div id="info" i18n="adreport2"></div>
+    <div id="info">
+      <p i18n="adreportintro"></p>
+      <p i18n="adreportvoluntary"></p>
+    </div>
 
     <!--STEP 1: malware check-->
     <div class="step" style="background-color: #f8f8f8;">
@@ -146,7 +152,7 @@
     </div>
 
     <!--STEP 2: update filters-->
-    <div class="step">
+    <div class="step" >
     <div class="section" id="step_update_filters_DIV">
       <h2 i18n="updateyourlists"></h2>
       <ol>
@@ -164,14 +170,33 @@
     </div>
     </div>
 
-  <!--STEP 3: disable all extension except AdBlock-->
-    <div class="step" style="background-color: #f8f8f8;">
+    <!--STEP 3: acceptable ads check-->
+    <div class="step odd">
+    <div class="section" id="step_update_aa_DIV">
+      <h2 i18n="disableaa"></h2>
+      <ol>
+        <li i18n="clickdisableaa" i18n_replacement_el="DisableAA"></li>
+        <li i18n="reloadadpage" class="afterDisableAA"></li>
+      </ol>
+      <input type="button" value="Unsubscribe to Acceptable Ads" id="DisableAA" />
+      <span i18n="adstillappear" class="afterDisableAA" style="margin-left: 19px;"></span><br/>
+      <div id="step_update_aa" class="form afterDisableAA">
+        <input type="radio" id="step_update_aa_yes" name="step_update_aa" disabled="disabled" />
+        <label for="step_update_aa_yes" i18n="yes"></label>
+        <input type="radio" id="step_update_aa_no" name="step_update_aa" disabled="disabled" />
+        <label for="step_update_aa_no" i18n="no"></label>
+      </div>
+    </div>
+    </div>
+
+  <!--STEP 4: disable all extension except AdBlock-->
+    <div class="step even" >
     <div class="section" id="step_disable_extensions_DIV">
       <h2 i18n="disableallextensions"></h2>
       <div class="chrome_only">
       <ol>
         <li i18n="disableforchromestepone"></li>
-        <li i18n="disableforchromeandsafaristeptwo"></li>        
+        <li i18n="disableforchromeandsafaristeptwo"></li>
         <li i18n="reloadadpage"></li>
       </ol>
       <div style="margin: 15px 0px 15px 19px;">
@@ -197,8 +222,8 @@
     </div>
     </div>
 
-    <!--STEP 4: language-->
-    <div class="step">
+    <!--STEP 5: language-->
+    <div class="step odd" >
     <div class="section" id="step_language_DIV">
       <h2 i18n="correctfilters" style="margin-bottom: 15px;"></h2>
       <span i18n="pagelanguagecheck" style="margin-left: 20px;"></span>
@@ -206,21 +231,25 @@
         <select id="step_language_lang" style="margin-left: 6px;">
           <option disabled="disabled" selected="selected"></option>
           <option value="easylist;http://forums.lanik.us/" i18n="lang_english"></option>
+          <option value="easylist;easylist_plus_arabic;https://forums.lanik.us/viewforum.php?f=98" i18n="filtereasylist_plus_arabic"></option>
           <option value="easylist;easylist_plus_bulgarian;mailto:alex at stanev.org" i18n="filtereasylist_plus_bulgarian"></option>
           <option value="chinese;http://abpchina.org/forum" i18n="filterchinese"></option>
           <option value="czech;http://adblock.sk/forum" i18n="lang_czech"></option>
           <option value="danish;mailto:henrik at schack.dk" i18n="filterdanish"></option>
           <option value="easylist;dutch;http://forums.lanik.us/viewforum.php?f=100" i18n="filterdutch"></option>
-          <option value="easylist;easylist_plus_finnish;https://github.com/wiltteri/wiltteri.txt" i18n="filtereasylist_plus_finnish"></option>
+          <option value="easylist;easylist_plus_estonian;mailto:adblock at gurud.ee" i18n="filtereasylist_plus_estonian"></option>
+          <option value="easylist;easylist_plus_finnish;https://www.juvander.fi/AdblockFinland" i18n="filtereasylist_plus_finnish"></option>
           <option value="easylist;easylist_plus_french;http://forums.lanik.us/viewforum.php?f=91" i18n="filtereasylist_plus_french"></option>
           <option value="easylist;easylist_plus_german;http://forums.lanik.us/viewforum.php?f=90" i18n="filtereasylist_plus_german"></option>
           <option value="easylist;easylist_plus_greek;mailto:kargig at void.gr" i18n="filtereasylist_plus_greek"></option>
           <option value="hungarian;mailto:pete at teamlupus.hu" i18n="filterhungarian"></option>
           <option value="easylist;easylist_plus_indonesian;http://forums.lanik.us/viewforum.php?f=94" i18n="filtereasylist_plus_indonesian"></option>
+          <option value="icelandic;mailto:adblock at gardar.net" i18n="filtericelandic"></option>
           <option value="israeli;https://github.com/AdBlockPlusIsrael/EasyListHebrew/issues" i18n="filterisraeli"></option>
-          <option value="italian;mailto:giovanni at gfsolone.com" i18n="filteritalian"></option>
+          <option value="italian;https://forums.lanik.us/viewforum.php?f=96" i18n="filteritalian"></option>
           <option value="japanese;https://groups.google.com/forum/#!forum/adblock-plus-japanese-filter" i18n="filterjapanese"></option>
           <option value="easylist_plun_korean;http://forums.lanik.us/" i18n="filtereasylist_plun_korean"></option>
+          <option value="easylist_plus_lithuania;https://forums.lanik.us/viewforum.php?f=101" i18n="filtereasylist_plus_lithuania"></option>
           <option value="easylist;easylist_plus_polish;mailto:adblockpolska at gmail.com" i18n="filtereasylist_plus_polish"></option>
           <option value="easylist;easylist_plus_romanian;mailto:mail at zoso.ro" i18n="filtereasylist_plus_romanian"></option>
           <option value="latvian;http://forums.lanik.us/viewforum.php?f=99" i18n="filterlatvian"></option>
@@ -235,8 +264,8 @@
     </div>
     </div>
 
-    <!--STEP 5: also in Firefox-->
-    <div class="step" style="background-color: #f8f8f8;">
+    <!--STEP 6: also in Firefox-->
+    <div class="step even" >
     <div class="section" id="step_firefox_DIV">
       <h2 id="checkinfirefox"></h2>
       <abbr id="whyFireFox" i18n_title="firefox_explanation">?</abbr>
@@ -258,8 +287,8 @@
     </div>
     </div>
 
-    <!--STEP 6: video/flash ads-->
-    <div class="step">
+    <!--STEP 7: video/flash ads-->
+    <div class="step odd" >
     <div class="section" id="step_flash_DIV">
       <h2 i18n="flashads"></h2>
       <span i18n="cantblockflashwarning" style="margin-left: 19px;"></span>
@@ -274,6 +303,9 @@
 
     <div class="result">
      <div id="checkupdate"></div>
+     <div id="checkupdatelink_DIV">
+        <a id="checkupdatelink" href="https://adblockplus.org/acceptable-ads" target="_blank"></a>
+     </div>
      <div id="privacy" i18n="reportpubliclyavailable"></div>
     </div>
 
