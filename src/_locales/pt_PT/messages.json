@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Eu gosto dos anúncios nos resultados de pesquisa do Google; mostrar-me esses",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Adicionar itens ao menu do botão direito",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Denunciar um anúncio",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Encontrou um anúncio numa página? Bem, eu vou ajudá-lo a encontrar o local correto para denunciá-lo!<br\/> Recorde: reportar anúncios é voluntário. Se não quiser fazer isso, pode simplesmente fechar esta janela e bloqueá-lo só para si, adicionando o seu filtro em 'Personalizar' na página das opções!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"O AdBlock deve notificá-lo quando detecta malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Desativar estas notificações",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Verificação de malware",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"O seu computador pode estar infectado por um malware.  Clique <a>aqui<\/a> para obter mais informações.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Nenhum malware encontrado.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Certifique-se que suas listas de filtros estão atualizados",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Clica aqui: <a>Actualizar os meus filtros!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Não",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Não precisa de fazer nada porque o anúncio já se encontra bloqueado",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Desactive todas as extensões à excepção do AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Abrir <a href='#'>página das extensões<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>OU<\/b>, simplesmente clique neste botão para que façamos tudo o que precede: <a>Desactivar todas as outras extensões<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Todas as outras extensões foram desactivadas.  Vamos agora recarregar o separador.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"As extensões que foram desactivadas anteriormente foram reactivadas.",
@@ -567,10 +539,6 @@
     "message":"Abra a página de extensões para activar as extensões que foram desactivadas anteriormente.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"O separador com o anúncio foi recarregado, por favor verifique se o anúncio ainda aparece nesse separador. Depois responda Sim ou Não na pergunta abaixo.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Desactive a opção 'Activado' ao lado de cada extensão <b>excepto<\/b> para o AdBlock.  <b>Deixe o AdBlock activado<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Clique no menu Safari &rarr; Preferências &rarr; Extensões.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Agora que os anúncios não aparecem, você tem que encontrar qual é a extensão que provoca o erro. Vá às extensões e active as extensões uma por uma. A extensão que provocar o aparecimento de anúncio(s) é aquela que você tem apagar de modo a livrar-se dos anúncios.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Corrigir os filtros",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Em que idioma está a página escrita?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Caso não esteja instalado, instale o AdBlock no Firefox $chrome$.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

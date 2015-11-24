@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Îmi plac reclamele text în căutarea Google; arată-mi-le",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Adaugă elemente la meniul clic dreapta",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Reportare reclamă",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Tocmai ai găsit o reclamă? Ei bine, eu te voi ajuta să găsești locul corect pentru a-l reporta! <br\/> Reține: reportarea reclamelor este voluntară. Dacă nu dorești să faci aceasta, poți închide această fereastră și să îl blochezi doar pentru tine adăugând un filtru în tabul 'Personalizare' din pagina de opțiuni.",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Ar trebui să vă notifice AdBlock atunci când detectează malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Dezactivaţi aceste notificări",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Control de malware",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Computerul poate fi infectat cu malware.  Faceţi clic <a>aici<\/a> pentru mai multe informaţii.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Nici un malware cunoscut găsit.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Asigură-te că filtrele sunt actualizate",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Click aici: <a>Actualizează filtrele<\/a>",
@@ -539,14 +523,6 @@
     "message":"Nu",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Nu trebuie să faci nimic, deoarece reclama este deja blocată",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Dezactivează toate extensiile cu excepția AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Deschide <a href='#'>managerul de extensii<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>Sau<\/b>, doar faceţi click pe acest buton pentru ca noi să facem toate cele de mai sus: <a>Dezactivaţi toate celelalte extensii<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Toate celelalte extensii au fost dezactivate. Noi vom reîncărca acum fila.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Extensiile care au fost dezactivate anterior acum au fost re-activate.",
@@ -567,10 +539,6 @@
     "message":"Deschideţi pagina de extensii pentru a activa extensiile care au fost dezactivate anterior.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Fila cu anunţul a fost reîncărcate, vă rugăm să verificaţi această filă pentru a vedea dacă încă mai este afişat anunţul.  Apoi răspundeți la întrebare Da sau Nu mai jos.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Debizează caseta de selectare 'Activată' de lângă fiecare extensie, <b>cu excepția<\/b> AdBlock. <b>Lasă AdBlock activat<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Click pe meniul Safari &rarr; Preferințe &rarr; Extensii.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Acum că reclamele numai apar, trebuie să găsești care extensie este problema. Activează extensiile una câte una. Extensia care aduce înapoi reclamele este cea pe care trebuie să o ștergi pentru a scăpa de ele.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Filtre corecte",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"În ce limbă este scrisă pagina?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Instalează AdBlock pentru Firefox sau $chrome$ dacă nu îl ai.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

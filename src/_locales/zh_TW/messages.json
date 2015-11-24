@@ -43,6 +43,10 @@
     "message":"如需隱藏此按鈕，請到  opera:\/\/extensions 並且點選 『從工具列上隱藏』選項。 你可以取消該選項以再次顯示此按鈕",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"若要隱藏按鈕，請在上面按右鍵，從工具列中選擇刪除。 你可以在 Firefox功能表-> 自訂 中將它再次顯示。",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"滑動控制器直到頁面上的廣告已被正確地阻擋。",
     "description":"Blacklister slider page message"
@@ -231,13 +235,13 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"我喜歡由 Google  搜尋提供的文字廣告。 請顯示這些廣告",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"在右鍵清單中顯示",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "disableyoutubestreamingads":{
+    "message":"啟用 ClickToFlash 相容性模式",
+    "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
   "debuginlogoption":{
     "message":"在 Console Log 中顯示除錯資訊（將會降低 AdBlock 效能）",
@@ -355,8 +359,28 @@
     "message":"EasyList （推薦）",
     "description":"A filter list"
   },
+  "filterrussian":{
+    "message":"俄羅斯和烏克蘭",
+    "description":"Language names for a filter list"
+  },
+  "filterczech":{
+    "message":"捷克和斯洛伐克",
+    "description":"Language names for a filter list"
+  },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (隱私保護)",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_indonesian":{
+    "message":"印尼文",
+    "description":"A filter list"
+  },
+  "filtermalware":{
+    "message":"惡意軟體防護",
+    "description":"A filter list"
+  },
+  "filterlatvian":{
+    "message":"拉脫維亞文",
     "description":"A filter list"
   },
   "filterswedish":{
@@ -439,17 +463,21 @@
     "message":"AdBlock - 廣告回報",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"你發現頁面上的廣告? 好, 我會幫你找到正確的地方來回報!<br\/> 記得: 回報廣告是自願的。 如果你不想這麼做，關閉這個視窗。並且自行在選項中『自訂』分頁加入過濾規則!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  "malwarenotificationcheckboxmessage":{
+    "message":"在 AdBlock 檢測到惡意軟體時發出通知",
+    "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationlearnmore":{
+    "message":"瞭解更多惡意軟體的相關資訊",
+    "description":"Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
   },
   "malwarenotificationdisablethesemessages":{
     "message":"停用這些通知",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "updateyourlists":{
-    "message":"確認您的過濾清單都已在最新狀態",
-    "description":"Section header on the ad report page"
+  "malwarenotfound":{
+    "message":"沒有偵測到已知的惡意軟體",
+    "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
   },
   "clickupdatefilters":{
     "message":"點選: <a>更新過濾清單！<\/a>",
@@ -471,21 +499,29 @@
     "message":"否",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"您不用做任何事，因為廣告已被阻擋",
-    "description":"On the ad report page, telling a user there is nothing to do"
+  "disableforchromestepone":{
+    "message":"打開 <a href='#'> 擴充功能分頁 <\/a>",
+    "description":"Step 1 for disabling Chrome extensions"
+  },
+  "clickdisableotherextensions":{
+    "message":"<b> 或者 <\/b>, 按下此按鈕以便完成上述所有操作: <a> 停用所有擴充 <\/a>",
+    "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "enableotherextensionscomplete":{
+    "message":"所有先前停用的擴充已重新啟用",
+    "description":"On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
   },
   "manuallyenableotherextensions":{
     "message":"請至擴充頁面來啟用您以前曾經停用的擴充",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"有廣告的分頁已經被重新載入了。 請確認該分頁是否仍有廣告，然後在下方回答 Yes 或 No",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  "disableforchromeandsafaristeptwo":{
+    "message":"除了<b> AdBlock 維持勾選<\/b>以外，<b>取消所有其他擴充<\/b>的『啟用』核取方塊",
+    "description":"Step 2 for disabling Chrome and Safari extensions"
   },
-  "correctfilters":{
-    "message":"正確的過濾清單",
-    "description":"On the ad report page, label describing having the right set of filters"
+  "disableforsafaristepone":{
+    "message":"選擇 Safari 選單 &rarr; 設定 &rarr; 擴充",
+    "description":"Step 1 for disabling Safari extensions"
   },
   "pagelanguagecheck":{
     "message":"此頁面使用什麼語言？",
@@ -579,6 +615,14 @@
     "message":"其他",
     "description":"Multiple choice option"
   },
+  "orchrome":{
+    "message":"或是 Chrome",
+    "description":"Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
+  },
+  "oradblockforchrome":{
+    "message":"或是 Chrome 版 AdBlock",
+    "description":"Used for placeholder in checkinfirefox_2 string"
+  },
   "nodefaultfilter1":{
     "message":"我們沒有這個語言的預設過濾清單。<br\/>請嘗試尋找一個適合的清單來支援這個語言 $link$ 或者 自行在選項中『自訂』分頁加入過濾規則。",
     "description":"Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab.",
@@ -605,6 +649,16 @@
     "placeholders":{
       "chrome":{
         "content":"<span id='chrome1'><\/span>",
+        "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_1":{
+    "message":"如果您尚未安裝的話，請先安裝 Firefox $chrome$",
+    "description":"instruction for how to check Firefox\/Chrome for a reported ad",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
@@ -722,6 +776,10 @@
   "cantblockflash":{
     "message":"目前還無法阻擋在 Flash 或其他外掛程式中的廣告。此功能尚在等待瀏覽器與 WebKit 支援。",
     "description":"Result of the final ad report question"
+  },
+  "cleanuplist2":{
+    "message":"清空此清單",
+    "description":"Option at the bottom of the 'Customize' options tab"
   },
   "disabled_by_filter_lists":{
     "message":"抱歉, 因為你的一個過濾清單，AdBlock 在這個頁面被關閉",
@@ -904,6 +962,10 @@
   "latest_version":{
     "message":"AdBlock 是最新的！",
     "description":"On the Options > Support page, shows when there are no updates available for AdBlock"
+  },
+  "here":{
+    "message":"這裡 ",
+    "description":"This message is injected in other strings as a link\/button"
   },
   "update_available":{
     "message":"AdBlock 有更新摟！ 請至 $here$ 更新. <br> 注意： 如果你想要自動取得這些更新，您只需要點選 Safari > 設定 >  擴充 > 更新 <br> 然後選擇 『自動安裝更新』",

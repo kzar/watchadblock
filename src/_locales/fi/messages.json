@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Pidän Google-haun tekstimainoksista; näytä ne minulle",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Lisää kohteet oikean klikkauksen valikkoon",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Mainoksen ilmoittaminen",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Löysitkö siis mainoksen joltain verkkosivulta? Nyt löydät oikean paikan siitä ilmoittamiseen!<br\/> Muista: mainosten ilmoittaminen on vapaaehtoista. Jos et halua tehdä tätä, voit sulkea tämän ikkunan ja estää mainoksen vain omalla tietokoneellasi 'Mukauta' -välilehden avulla asetussivulla!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Ilmoita, kun haittaohjelma havaitaan",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -499,10 +491,6 @@
     "message":"Poista nämä ilmoitukset käytöstä",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Haittaohjelmien tarkistaminen",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Tietokoneesi voi olla haittaohjelman saastuttama. Klikkaa <a>tästä<\/a> saadaksesi lisää tietoja.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -510,10 +498,6 @@
   "malwarenotfound":{
     "message":"Tunnettuja haittaohjelmia ei löytynyt.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Varmista, että suodatinlistasi ovat ajan tasalla",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Napsauta tästä: <a>Päivitä suodattimeni!<\/a>",
@@ -535,14 +519,6 @@
     "message":"Ei",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Sinun  ei tarvitse tehdä mitään, jos mainos on jo estettynä",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Poista kaikki laajennukset, paitsi AdBlock, käytöstä.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Avaa <a href='#'>lisäosasivu<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -550,10 +526,6 @@
   "clickdisableotherextensions":{
     "message":"<b>TAI<\/b>, klikkaa tätä painiketta, niin teemme kaiken puolestasi: <a>Poista kaikki muut laajennukset käytöstä<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Kaikki muut laajennukset on poistettu käytöstä. Välilehti päivitetään nyt.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Laajennukset, jotka oli aiemmin poistettu käytöstä, on nyt otettu takaisin käyttöön.",
@@ -563,10 +535,6 @@
     "message":"Avaa laajennukset-sivu ottaaksesi käyttöön laajennukset, jotka oli poistettu aiemmin käytöstä.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Mainoksen sisältävä välilehti on päivitetty. Tarkista nyt, näkyykö kyseinen mainos edelleen välilehdellä. Sitten vastaa kysymykseen alla kyllä tai ei.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Poista rasti ruudusta 'Käytössä' jokaiselta lisäosalta <b>paitsi<\/b> AdBlockilta. <b>Jätä AdBlock käyttöön<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -574,14 +542,6 @@
   "disableforsafaristepone":{
     "message":"Napsauta Safari-valikkoa &rarr; Asetukset &rarr; Lisäosat.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Nyt kun mainokset ovat poissa, sinun täytyy löytää lisäosa, joka aiheuttaa ongelmia. Käy lisäosat yksi kerrallaan läpi ottaen niitä käyttöön. Lisäosa, joka tuo mainokset takaisin on ongelmia aiheuttava, ja sinun kannattaa poistaa se.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Korjaa suodattimia",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Millä kielellä sivu on kirjoitettu?",
@@ -720,16 +680,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Asenna AdBlock Firefoxille $chrome$, jos sinulla ei ole sitä.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

@@ -235,10 +235,6 @@
     "message":"Béta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Tetszenek a szöveges hirdetések a Google keresési eredményein; azok jelenjenek meg",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Elemek hozzáadása a jobb klikk menühöz",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Egy hirdetés bejelentése",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Szóval épp most talált egy hirdetést egy oldalon? Nos, én majd segítek megtalálni a megfelelő helyet a jelentéséhez!<br\/> Ne feledje: a hirdetések bejelentése önkéntes. Ha nem kívánja ezt tenni, egyszerűen bezárhatja ezt az ablakot, és blokkolja csak magának a \"Testreszabás\" fülön az opciók oldalon!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Értesítsen az AdBlock, ha kártevőt észlel?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Ezen értesítések letiltása",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Kártevőkeresés",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Lehet, hogy számítógépe kártevővel fertőzött. További információért kattintson <a>ide<\/a>.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Nem található ismert kártevő.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Győződjön meg róla, hogy szűrőlistái naprakészek",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Kattintson erre: <a>Frissítse a szűrőimet!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Nem",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Nem kell tennie semmit, mivel a hirdetés már blokkolva van",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Minden bővítmény letiltása az AdBlock kivételével.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"A <a href='#'>bővítmények oldal<\/a> megnyitása",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>VAGY<\/b>, csak kattintson erre a gombra, hogy a fent említetteket mi végezzük el: <a>Minden egyéb bővítmény letiltása<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Minden egyéb bővítmény letiltásra került. Most újratöltjük a lapot.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Az előzetesen letiltott bővítmények újraengedélyezésre kerültek.",
@@ -567,10 +539,6 @@
     "message":"Nyissa meg a bővítmények oldalt az előzetesen letiltott bővítmények engedélyezéséhez.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"A lap rajta a hirdetéssel újra lett töltve, kérjük ellenőrizze le, hogy a hirdetés továbbra is megjelenik-e. Aztán alul válaszolja meg az Igen\/Nem kérdést.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Törölje a jelölést az összes bővítmény melletti \"Engedélyezve\" jelölőnégyzetből az AdBlock <b>kivételével<\/b>. <b>Hagyja az AdBlock-ot engedélyezve<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Kattintson a Safari menüben &rarr; a Környezeti beállítások &rarr; Bővítmények menüpontjára.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Most, hogy a hirdetés(ek) eltűnt(ek), ki kell derítenie, hogy melyik bővítmény az előidéző. Nézze át és egyesével engedélyezze mindegyik bővítményt. Az, amelyik visszahozza ő(ke)t az, amelyiket törölnie kell, hogy megszabaduljon a hirdetés(ek)től.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Megfelelő szűrők",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Milyen nyelven van írva az az oldal?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Telepítse az AdBlock-ot Firefox $chrome$ alá, ha nem lenne meg.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

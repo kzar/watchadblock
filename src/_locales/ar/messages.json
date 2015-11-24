@@ -235,10 +235,6 @@
     "message":"الإصدار التجريبي",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"أنا أحب الإعلانات النصية في نتائج بحث Google؛ أظهرهم لي",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"إضافة عناصر إلى القائمة الزر اليمين",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -249,6 +245,10 @@
   },
   "debuginlogoption":{
     "message":"إظهار بيانات التصحيح في \"سجل وحدة التحكم\" (الذي يبطئ AdBlock)",
+    "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "datacollectionoption":{
+    "message":"السماح لـ AdBlock بجمع بيانات واستخدام مجهولة الهوية عن قائمة التصفية",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "updatedrightnow":{
@@ -479,13 +479,13 @@
     "message":"AdBlock-الإبلاغ عن الإعلان",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"لذلك أنت فقط وجدت إعلانا على صفحة ويب؟ حسنا، سوف يساعدك لإيجاد المكان الصحيح تقرير ذلك! <br\/> تذكر: الإبلاغ عن الإعلانات طوعي. إذا كنت لا ترغب في القيام بذلك يمكنك إغلاق هذه النافذة ومنعة فقط لنفسك عن طريق إضافة تصفية في علامة التبويب 'تخصيص' من صفحة خيارات!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"هل ينبغي علي AdBlock إعلامك عند الكشف عن البرامج الضارة؟",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"قد حظر AdBlock تنزيل من موقع معروف باحتوائه على برامج ضارة.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
     "message":"معرفة المزيد حول البرامج الضارة",
@@ -495,10 +495,6 @@
     "message":"قم بتعطيل هذه الإعلامات",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"التحقق من البرامج الضارة",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"قد يكون كمبيوترك مصاب ببرامج ضارة.  انقر <a>here<\/a> لمزيد من المعلومات.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -506,10 +502,6 @@
   "malwarenotfound":{
     "message":"لم يتم العثور على malware معروف.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"تأكد من قوائم عوامل التصفية الخاصة بك حتى الآن",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"انقر فوق هذا الخيار: <a>تحديث عوامل تصفيتي!<\/a>",
@@ -531,14 +523,6 @@
     "message":"لا",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"لم يكن لديك إلى القيام بأي شيء كما سبق يتم حظر الإعلان",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"تعطيل كافة ملحقات باستثناء AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"فتح <a href='#'> صفحة الإضافات<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -546,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>أو<\/b>، فقط انقر فوق هذا الزر لتمكيننا من القيام بكل ما ورد أعلاه: <a>تعطيل كافة ملحقات أخرى<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"تم تعطيل كافة ملحقات أخرى.  ونحن سنقوم الآن تحديث الصفحة.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"تم إعادة تمكين الملحقات التي تم تعطيل مسبقاً.",
@@ -559,10 +539,6 @@
     "message":"افتح صفحة الملحقات لتشغيل الملحقات التي تم تعطيل مسبقاً.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"تم إعادة تحميل صفحة الإعلان، يرجى التحقق من هذه الصفحة  لمعرفة إذا كان لا يزال يتم عرض الإعلان.  ثم الإجابة على السؤال \"نعم\" أو \"لا\" أدناه.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"قم بإلغاء تحديد خانة الاختيار 'تمكين' بجوار كل ملحق <b>باستثناء<\/b> ل AdBlock.  <b>تمكين ترك AdBlock<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -570,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"انقر فوق القائمة Safari &rarr; تفضيلات &rarr; ملحقات.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"الآن أن الإعلانات قد ولت، يجب عليك معرفة أي تمديد هو السبب. من خلال الذهاب وتمكين كل ملحق واحداً تلو الآخر. الملحق الذي يعيد مستحق هو واحد التي يجب عليك حذف للتخلص من الإعلانات.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"عوامل التصفية الصحيحة",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"ما هي لغة المكتوبة في تلك الصفحة؟",
@@ -716,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"ثبت AdBlock علي Firefox $chrome$ اذا لم يكن لديك.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

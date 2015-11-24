@@ -362,6 +362,7 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
   }
   var ajaxRequest = {
     url: url,
+    cache: false,
     headers: {
       "Accept": "text/plain",
       "X-Client-ID": "AdBlock/" + STATS.version,
@@ -394,10 +395,6 @@ MyFilters.prototype.fetch_and_update = function(id, isNewList) {
       log("Error fetching " + url);
     }
   };
-  //add the cache option for items NOT coming from the AdBlock CDN
-  if (url.indexOf("adblockcdn.com") === -1) {
-    ajaxRequest["cache"] = false;
-  }
   $.ajax(ajaxRequest);
 }
 
@@ -612,7 +609,7 @@ MyFilters.prototype._make_subscription_options = function() {
   // When modifying a list, IDs mustn't change!
   return {
     "adblock_custom": { // AdBlock custom filters
-      url: "https://adblockcdn.com/filters/adblock_custom.txt",
+      url: "https://cdn.adblockcdn.com/filters/adblock_custom.txt",
     },
     "easylist": { // EasyList
       url: "https://easylist-downloads.adblockplus.org/easylist.txt"
@@ -700,7 +697,7 @@ MyFilters.prototype._make_subscription_options = function() {
       url: "https://easylist-downloads.adblockplus.org/fanboy-social.txt",
     },
     "malware": { // Malware protection
-      url: "https://adblockcdn.com/filters/domains.json",
+      url: "https://cdn.adblockcdn.com/filters/domains.json",
     },
     "annoyances": { // Fanboy's Annoyances
       url: "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",

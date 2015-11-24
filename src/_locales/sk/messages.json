@@ -235,10 +235,6 @@
     "message":"Beta verzia",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Ponechaj textové Google reklamy vo výsledkoch vyhľadávania",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Pridať položky do ponuky po kliknutí pravým tlačidlom myši",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Nahlásenie reklamy",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Našli ste reklamu na web stránke? Dobre, pomôžem vám nájsť správne miesto, kde ju môžte nahlásiť!<br\/> Zapamätajte si: Nahlásenie reklamy je dobrovoľné. Pokiaľ si ju neprajete nahlásiť, môžete zavrieť toto okno a zablokovať ju len pre seba tým, že pridáte jej filter na záložke 'Prispôsobenie' na stránke s nastaveniami!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Má Vás AdBlock upozorniť, keď zistí malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Vypnúť tieto notifikácie",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Kontrola malvéru",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Váš počítač môže byť napadnutý malwarom.  Kliknite <a>tu<\/a> pre viac informácií.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Malvér nebol nájdený.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Uistite sa, že zoznam filtrov je aktuálny",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Kliknite tu: <a>Aktualizovať filtre!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Nie",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Už nemusíte spraviť nič, pretože reklama je už zablokovaná",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Vypnite všetky rozšírenia okrem AdBlocku",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Otvorte <a href='#'>stránku s rozšíreniami<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>alebo<\/b>, kliknite na toto tlačidlo a my urobíme všetky veci uvedené vyššie: <a>Zakázať všetky ostatné rožšírenia<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Všetky ostatné rozšírenia boli zakázané. Teraz obnovíme stránku.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Rozšírenia ktoré sú zakázané boli znovu povolené.",
@@ -567,10 +539,6 @@
     "message":"Otvorte stránku s rozšíreniami aby ste ich mohli znovu povoliť.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Stránka s reklamou bola obnovená, prosím skontrolujte či sa reklama ešte zobrazuje. Potom odpovedzte na otázku nižšie.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Odčiarknite všetky 'Povolené' políčka <b>okrem<\/b> AdBlocku.  <b>Nechajte AdBlock zapnutý<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Kliknite v Safari menu -> Predvoľby -> Rozšírenia.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Ak sa teraz reklama nezobrazuje, musíte nájsť to rozšírenie, ktoré zobrazuje reklamy. Začnite tým, že budete zapínať jedno rozšírenie za druhým. Rozšírenie, ktoré prinesie reklamu naspäť na web, musíte zmazať aby sa vám reklamy už naďalej nezobrazovali.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Opraviť filtre",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"V akom jazyku je stránka napísaná?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Nainštalujte si AdBlock pre Firefox $chrome$ ak ho ešte nemáte.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

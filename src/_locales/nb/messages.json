@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Jeg liker tekstannonsene på Google sine søkeresultater; vis meg disse",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Legg til elementer på høyreklikkmenyen",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -479,10 +475,6 @@
     "message":"AdBlock - Rapporter en annonse",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Så du fant akkurat en annonse på en nettside? Vel, jeg skal hjelpe deg med å finne riktig sted å rapportere det!<br\/> Husk: rapportering av annonser er frivillig. Hvis du ikke ønsker å gjøre dette, kan du enkelt lukke vinduet og blokkere den kun for deg selv ved å legge til dets filter i 'Tilpass'-fanen av innstillingssiden!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Skal AdBlock varsle deg når skadelig programvare oppdages?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -495,10 +487,6 @@
     "message":"Skru av disse varslene",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Sjekk for skadevare",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Datamaskinen din kan være infisert av skadevare. Klikk<a>her<\/a> for mer informasjon.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -506,10 +494,6 @@
   "malwarenotfound":{
     "message":"Vi kan ikke finne skadevare vi kjenner igjen.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Sørg for at filterlistene dine er oppdatert",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Trykk her: <a>Oppdater filtere!<\/a>",
@@ -531,14 +515,6 @@
     "message":"Nei",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Du trenger ikke gjøre noe, reklamen er allerede blokkert",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Slå av alle utvidelser, utenom AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Åpne <a href='#'>utvidelser<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -546,10 +522,6 @@
   "clickdisableotherextensions":{
     "message":"<b>ELLER<\/b> så kan du bare klikke på denne knappen, så fikser vi alt: <a>Deaktiver alle andre utvidelser<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Alle andre utvidelser har blitt deaktivert. Nå laster vi inn sida på nytt.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"De tidligere deaktiverte utvidelsene har blitt aktivert igjen.",
@@ -559,10 +531,6 @@
     "message":"Åpne utvidelses-siden for å aktivere utvidelser som har vært deaktivert.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Fanen med annonsen har blitt lastet inn igjen, vennligst undersøk om annonsen fortsatt vises. Så kan du svare på Ja\/Nei-spørsmålet under.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Fjern krysset ved Aktiver ved alle utvidelser <b>unntatt<\/b> for AdBlock. <b>La AdBlock være aktivert<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -570,14 +538,6 @@
   "disableforsafaristepone":{
     "message":"Klikk på Safari-menyen &rarr; Innstillinger &rarr; Utvidelser.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Nå som annonsene er borte, må du finne ut hvilken utvidelse som er årsaken. Gå gjennom og aktiver hver utvidelse, en etter en. Den utvidelsen som får annonsene til å komme tilbake, er den som må slettes for å bli kvitt annonsene.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Riktige filtere",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Hvilket språk er siden skrevet på?",
@@ -716,16 +676,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Installer AdBlock til Firefox $chrome$ hvis du ikke har det.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

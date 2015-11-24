@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Google arama sonuçlarında çıkan reklamları seviyorum; onları engelleme",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Sağ tıklama menüsüne AdBlock seçeneklerini ekle",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Reklam bildirme",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Demek bu sayfada bir reklam buldunuz.. Bunu doğru yere bildirmenize yardımcı olacağım<br\/> Unutmayın: reklam bildirmek isteğe bağlıdır. Eğer bildirmek istemiyorsanız, bu pencereyi kapatabilir ve Ayarlar bölümünden Özelleştir seçeneğini kullanarak filtreyi sadece kendiniz için ekleyebilirsiniz.",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"AdBlock kötü amaçlı yazılım algıladığında size bildirsin mi?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Bu bildirimleri devre dışı bırak",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Zararlı yazılımları kontrol et",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Bilgisayarınıza kötü amaçlı yazılımlar bulaşmış olabilir. Daha çok bilgi için <a>buraya<\/a> tıklayın.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Bilinen bir zararlı yazılım bulunamadı.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Filtre listelerinin güncel olduğundan emin olun",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Buraya tıklayın: <a>Filtrelerimi güncelleştir!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Hayır",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Reklam zaten engellendiği için bir şey yapmanıza gerek yok",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"AdBlock hariç, tüm eklentileri devre dışı bırakın.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"<a href='#'>Uzantılar sayfasını<\/a> açın.",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>VEYA<\/b> bu tuşa tıklayarak hepsini sizin yerinize yapmamızı sağlayabilirsiniz: <a>Tüm diğer eklentileri devre dışı bırak<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Tüm diğer uzantılar devre dışı kaldı. Şimdi sekmeyi yenileyeceğiz.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Daha önce devre dışı bıraktığınız uzantılar tekrar etkinleştirildi.",
@@ -567,10 +539,6 @@
     "message":"Devre dışı bıraktığınız uzantıları etkinleştirmek için uzantılar sayfasını açın.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Reklam bulunan sekme güncellendi, sayfada reklamın hala görünüp görünmediğini kontrol edin ve aşağıdaki soruya Evet veya Hayır cevabı verin.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"AdBlock <b>hariç<\/b>, tüm eklentilerin yanında bulunan \"Etkinleştirildi\" işaretini kaldırın. <b>AdBlock'u açık bırakın<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Safari menüsünü kullanarak; Tercihler &rarr; Uzantılar'a gidin.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Reklamlar kaybolduğuna göre, hangi eklentinin sorun çıkardığını bulmanız gerekir. Şimdi her seferinde bir eklentiyi aktif hale getirin. Reklamları geri getiren eklenti, silmeniz gereken eklentidir.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Filtreleri düzelt",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Bu sayfa hangi dilde yazılmış?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Eğer yüklü değilse, Firefox için AdBlock $chrome$ yükleyin.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

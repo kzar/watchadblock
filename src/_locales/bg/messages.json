@@ -235,10 +235,6 @@
     "message":"(бета)",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Показвай текстови реклами към резултатите от Google (харесват ми)",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Добави елементи към дясното контекстно меню",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"Докладване на реклама пред AdBlock",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Току-що сте открили реклама в страница? Добре, ще ви съдействаме да намерите правилното място, за да я докладвате!<br\/> Запомнете: докладването на реклами е доброволно. Ако не желаете да го правите можете да затворите този прозорец и да я блокирате самостоятелно, като добавите филтър за нея към преградка „Нагласяване“ в страницата с настройки!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Уведомявай за установен от AdBlock злонамерен софтуер",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Забрани уведомяването",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Проверка за злонамерен софтуер",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Компютърът може да e заразен със злонамерен софтуер. <a>Щракнете <\/a> за повече информация.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Няма намерен злонамерен софтуер.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Уверете се, че вашите филтри са обновени",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Щракнете по: <a>Обнови филтрите!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Не",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Не предприемайте нищо, защото рекламата вече е блокирана",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Забранете всички разширения без AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Отворете <a href='#'>страницата за разширения<\/a>.",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>ИЛИ<\/b> натиснете този бутон за: <a>забраняване на другите разширения<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Другите разширения са забранени. Преградката ще бъде презаредена.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Забранените досега разширения са повторно разрешени.",
@@ -567,10 +539,6 @@
     "message":"Отворете страницата за разширения и разрешете забранените досега разширения.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Преградката е презаредена. Моля, проверете дали извежда същата реклама и отговорете с „Да“ или с „Не“ на зададения по-долу въпрос.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Снемете отметката пред всяко от разширенията <b>без<\/b> AdBlock. <b>Оставете AdBlock разрешено<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Натиснете Safari &rarr; Настройки &rarr; Разширения.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Сега след като вече няма реклами, нека разберем кое е разширението, което ги предизвиква. За целта започнете да разрешавате разширенията едно по едно. Това, което ги върне е разширението, което трябва да изтриете, за да се отървете от тях.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Поправете филтрите",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Какъв е езикът на страницата?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":" Инсталирайте AdBlock за Firefox $chrome$, ако го нямате.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -932,7 +882,7 @@
     "description":"Toolbar button menu entry to hide the AdBlock button"
   },
   "spread_the_word":{
-    "message":"Нека и другите да чуят!",
+    "message":"Нека и другите чуят!",
     "description":"Text of a share link"
   },
   "pwyw":{

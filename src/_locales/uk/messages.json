@@ -235,10 +235,6 @@
     "message":"Бета",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Я не проти текстової реклами у результатах пошуку Google; нехай лишається",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Керувати AdBlock за допомогою контекстного меню",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock — скарга на рекламу",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Тож ви щойно побачили рекламу на веб-сторінці? Ну, то я допоможу вам поскаржитись на неї куди треба!<br\/> Пам’ятайте: подача скарги — справа добровільна. Якщо ви не хочете цього робити, просто закрийте це вікно та заблокуйте рекламу лише для себе, додавши відповідний фільтр на вкладці «Налаштувати» сторінки параметрів!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Чи показувати сповіщення AdBlock при виявленні шкідливих програм?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Відключити ці сповіщення",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Перевірка на наявність шкідливих програм",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Ваш комп'ютер може бути заражений шкідливими програмами. Натисніть <a>тут<\/a> для отримання додаткової інформації.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Не знайдено жодної відомої шкідливої програми.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Переконайтеся, що списки фільтрів свіжі",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Натисніть: <a>Оновити мої списки фільтрів!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Ні",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Нічого не треба робити, адже рекламу вже заблоковано",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Вимкніть усі розширення, окрім AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Відкрити <a href='#'>сторінку розширень<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>ЧИ<\/b>, просто натисніть цю кнопку щоб ми зробили все що вище: <a>Вимкнути всі інші розширення<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Усі інші розширення було вимкнено. Зараз ми перезавантажимо вкладку.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Розширення, які були раніше вимкнуті були повторно увімкнено.",
@@ -567,10 +539,6 @@
     "message":"Відкрийте сторінку розширень, щоб увімкнути розширення, які раніше були відключені.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Вкладку з рекламою було перезавантажено, будь ласка перевірте її, щоб побачити, чи реклама все ще відображається, та дайте відповідь \"Так\" чи \"Ні\" на питання нижче.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Зніміть позначку «Увімкнено» навпроти кожного розширення <b>за виключенням<\/b> AdBlock. <b>Залиште AdBlock увімкненим<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Клацніть на меню «Safari» &rarr; «Налаштування» &rarr; «Розширення».",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Тепер, коли реклама зникла, вам слід з’ясувати, яке розширення спричиняло її появу. Пройдіться по списку, вмикаючи розширення одне за одним. Щоб позбутися реклами, видаліть розширення, після увімкнення якого реклама з’являється знов.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Правильні фільтри",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Якою мовою складено цю сторінку?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Встановіть AdBlock для Firefox $chrome$, якщо він не встановлений.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

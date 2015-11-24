@@ -235,10 +235,6 @@
     "message":"Funkcja w wersji beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Lubię reklamy tekstowe na liście wyników wyszukiwania Google, pokazuj mi je",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Dodaj pozycję do menu pod prawym przyciskiem",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Zgłaszanie reklam",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Zobaczyłeś jakieś reklamy na stronie? Dobrze, pomogę Ci znaleźć miejsce gdzie będziesz mógł je zgłosić!<br\/> Pamiętaj: zgłaszanie reklam jest dobrowolne. Jeśli nie chcesz tego robić po prostu zamknij tą kartę i zablokuj je tylko dla siebie, dodając własny filtr w zakładce 'Dostosuj' na stronie opcji!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Czy AdBlock ma powiadamiać Cię, gdy wykryje złośliwe oprogramowanie?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Zablokuj te powiadomienia",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Sprawdź pod kątem złośliwego oprogramowania",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Twój komputer może być zainfekowany przez złośliwe oprogramowanie.  Kliknij <a>tutaj<\/a> aby uzyskać więcej informacji.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Nie znaleziono znanego złośliwego oprogramowania.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Upewnij się, że twoje listy filtrów są aktualne.",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Kliknij: <a>Zaktualizuj filtry!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Nie",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Nie musisz nic robić, ponieważ reklama jest już zablokowana.",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Wyłącz wszystkie rozszerzenia za wyjątkiem AdBlock'a.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Otwórz <a href='#'> stronę rozszerzeń<\/a>.",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>LUB<\/b>, po prostu kliknij ten przycisk, aby wykonać wszystkie z powyższych: <a>Wyłącz wszystkie inne rozszerzenia<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Wszystkie inne rozszerzenia zostały wyłączone. Karta zostanie teraz odświeżona.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Rozszerzenia, które zostały poprzednio wyłączone, zostały włączone ponownie.",
@@ -567,10 +539,6 @@
     "message":"Otwórz stronę rozszerzeń, aby włączyć rozszerzenia, które zostały poprzednio wyłączone.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Karta z reklamą została załadowana ponownie, sprawdź tę kartę, aby zobaczyć czy reklama dalej się wyświetla. Po tym odpowiedz Tak lub Nie w pytaniu poniżej.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Wyłącz wszystkie rozszerzenia <b>za wyjątkiem<\/b> AdBlock'a odznaczając pole wyboru 'Włączone'. <b>Pozostaw AdBlock'a włączonego<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Kliknij w menu Safari &rarr; Ustawienia &rarr; Rozszerzenia.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Teraz, gdy reklamy już nie ma, musisz dowiedzieć się które rozszerzenie jest przyczyną problemów. Włączaj rozszerzenia jedno po drugim. Rozszerzenie, które przywraca reklamę jest jedynym jakie należy usunąć, aby pozbyć się reklam.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Właściwe filtry",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"W jakim języku jest ta strona?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Zainstaluj AdBlock dla Firefoxa $chrome$, jeśli go nie posiadasz.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Saya suka iklan teks di laman hasil Google; tunjukkan saya itu",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Tambahkan barang ke menu klik kanan",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Laporkan sebuah iklan",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Anda menemukan sebuah iklan di sebuah halaman web? Saya akan membantu anda untuk menemukan tempat yang tepat untuk melaporkannya!<br\/> Ingat: melaporkan iklan adalah sukarela. Jika anda tidak ingin melakukan hal ini anda dapat menutup jendela ini dan blokir iklan tersebut hanya untuk anda sendiri dengan menambahkan filterny pada tab 'Penyesuaian' di halaman Pilihan!",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Haruskah AdBlock memberitahu Anda ketika mendeteksi malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Nonaktifkan pemberitahuan ini",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Memeriksa malware",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Komputer Anda mungkin terinfeksi oleh malware. Klik <a>di sini<\/a> untuk informasi lebih lanjut.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Tidak ada malware yang diketahui ditemukan.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Yakinkan daftar filter anda sudah diperbaharui",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Klik ini: <a>Perbaharui filter saya!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Tidak",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Anda tidak perlu berbuat apa apa karena iklannya sudah terblokir",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Matikan semua ekstensi kecuali AdBlock.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Buka <a href='#'>halaman ekstensi<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>ATAU<\/b>, cukup klik tombol ini untuk kita untuk melakukan semua hal di atas: <a>Nonaktifkan semua ekstensi lainnya<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Semua ekstensi lainnya telah dinonaktifkan.  Kita sekarang akan memuat ulang tab.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Ekstensi yang telah dinonaktifkan sebelumnya telah diaktifkan kembali.",
@@ -567,10 +539,6 @@
     "message":"Buka laman ekstensi untuk mngaktifkan ekstensi yang telah dinonaktifkan sebelumnya.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Tab dengan iklan telah dimuat ulang, periksa bahwa tab untuk melihat jika iklan masih ditampilkan.  Kemudian jawab pertanyaan Ya atau Tidak di bawah ini.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Hilangkan centang 'Enabled' dipinggir setiap ekstensi <b>kecuali<\/b> untuk AdBlock. <b>Biarkan AdBlock berjalan<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Klik pada menu Safari &rarr; Preferences &rarr; Extension.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Sekarang iklannya sudah hilang, anda harus mencari tahu ekstensi mana yang jadi penyebab. Ulangi dan hidupkan ekstensinya satu per satu. Ekstensi yang membawa kembali iklannya adalah yang harus anda hapus untuk menghilangkan iklannya.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Filter yang benar",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Ditulis dalam bahasa apa halaman itu?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Pasang AdBlock untuk Firefox $chrome$ jika Anda tidak memilikinya.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

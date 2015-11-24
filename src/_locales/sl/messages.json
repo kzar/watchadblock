@@ -235,10 +235,6 @@
     "message":"Beta",
     "description":"Label for beta features in AdBlock Options"
   },
-  "googletextads2":{
-    "message":"Všeč so mi besedilni oglasi na rezultatih iskanja Google; želim, da so prikazani",
-    "description":"Checkbox on the 'General' tab of the Options page"
-  },
   "showcontextmenus2":{
     "message":"Dodaj elemente na meni desnega miškinega klika",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -483,10 +479,6 @@
     "message":"AdBlock - Prijava oglasa",
     "description":"Title of the ad report page"
   },
-  "adreport2":{
-    "message":"Ste ravnokar našli oglas na spletni strani? Pomagali vam bomo najti primeren kraj za prijavo!<br\/> Ne pozabite: prijavljanje oglasov je prostovoljno. V kolikor tega ne želite storiti, preprosto zaprite to okno in blokirajte oglas le zase. To storite tako, da dodate filter za oglas preko zavihka 'Prilagodi' na straneh z nastavitvami te razširitve.",
-    "description":"Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
-  },
   "malwarenotificationcheckboxmessage":{
     "message":"Ali vas naj AdBlock obvesti, kadar zazna zlonamerno programsko opremo?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -503,10 +495,6 @@
     "message":"Izključi ta sporočila",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
-  "malwarecheck":{
-    "message":"Preverjanje za zlonamerno programsko opremo",
-    "description":"Section header on the ad report page"
-  },
   "malwarewarning":{
     "message":"Vaš računalnik je morda okužen z zlonamerno programsko opremo. Kliknite <a>sem<\/a> za dodatne informacije.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -514,10 +502,6 @@
   "malwarenotfound":{
     "message":"Zlonamerna programska oprema ni bila najdena.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
-  },
-  "updateyourlists":{
-    "message":"Poskrbite, da bodo vaši seznami filtrov posodobljeni",
-    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Kliknite to: <a>Posodobi moje filtre!<\/a>",
@@ -539,14 +523,6 @@
     "message":"Ne",
     "description":"A negative response to a question"
   },
-  "adalreadyblocked":{
-    "message":"Ničesar ne rabite storiti, saj je oglas že blokiran",
-    "description":"On the ad report page, telling a user there is nothing to do"
-  },
-  "disableallextensions":{
-    "message":"Onemogočite vse razširitve razen AdBlocka.",
-    "description":"Instruction on ad report page"
-  },
   "disableforchromestepone":{
     "message":"Odprite <a href='#'>stran z razširitvami<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -554,10 +530,6 @@
   "clickdisableotherextensions":{
     "message":"<b>ALI<\/b> pa preprosto kliknite na ta gumb, da se vse zgoraj napisano stori samodejno: <a>Onemogoči vse druge razširitve<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
-  },
-  "disableotherextensionscomplete":{
-    "message":"Vse druge razširitve so bile onemogočene. Zavihek se bo zdaj ponovno naložil.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Predhodno onemogočene razširitve so zdaj ponovno omogočene.",
@@ -567,10 +539,6 @@
     "message":"Odprite stran z razširitvami in omogočite tiste, ki so bile prej onemogočene.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
-  "tabreloadcomplete":{
-    "message":"Zavihek z oglasom je bil ponovno naložen. Prosimo, preverite ali se oglas še vedno prikazuje in nato odgovorite na spodnje vprašanje.",
-    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
-  },
   "disableforchromeandsafaristeptwo":{
     "message":"Odznačite potrditveno polje 'Omogočeno' pri vsaki razširitvi, <b>razen<\/b> AdBlocku. <b>AdBlock pustite omogočen<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -578,14 +546,6 @@
   "disableforsafaristepone":{
     "message":"Izberite Safari meni &rarr; Nastavitve &rarr; Razširitve.",
     "description":"Step 1 for disabling Safari extensions"
-  },
-  "reenableadsonebyone":{
-    "message":"Zdaj ko oglasov ni več, morate najti razširitev, ki je povzročala te težave. Posebej preverite vsako razširitev, ki jo imate nameščeno. Razširitev, z aktivacijo katere se bodo ponovno prikazovali oglasi, je treba odstraniti, v kolikor se želite znebiti oglasov.",
-    "description":"Tells the user to reenable the extensions one by one"
-  },
-  "correctfilters":{
-    "message":"Pravilni filtri",
-    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"V katerem jeziku je napisana stran?",
@@ -724,16 +684,6 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
-  },
-  "checkinfirefox_2":{
-    "message":"Namestite AdBlock za Firefox $chrome$, v kolikor ga še nimate.",
-    "description":"Instruction for how to check Firefox\/Chrome for a reported ad.",
-    "placeholders":{
-      "chrome":{
-        "content":"<span id='adblockforchrome'><\/span>",
-        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
