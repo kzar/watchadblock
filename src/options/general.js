@@ -26,6 +26,11 @@ $(function() {
     var is_enabled = $(this).is(':checked');
     var name = this.id.substring(7); // TODO: hack
     BGcall("set_setting", name, is_enabled, true);
+    // Rebuild filters, so matched filter text is returned
+    // when using resource viewer page
+    if (name === "show_advanced_options") {
+      BGcall("update_filters");
+    }
     // if the user enables/disable data collection update the filter lists, so that the
     // filter list data is retained, and any cached responses are cleared
     if (name === "data_collection") {

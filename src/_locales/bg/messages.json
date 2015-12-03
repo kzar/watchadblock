@@ -367,6 +367,10 @@
     "message":"Разреши анти-AdBlock пакета (чисти съобщенията за ползване на AdBlock)",
     "description":"Name of the filter list"
   },
+  "filteracceptable_ads":{
+    "message":"Разреши Приемливи реклами (препоръчително)",
+    "description":"A filter list"
+  },
   "filteradblock_custom":{
     "message":"Разреши собствен пакет на AdBlock (препоръчително)",
     "description":"A filter list"
@@ -479,6 +483,14 @@
     "message":"Докладване на реклама пред AdBlock",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"Открихте реклама в страницата? Нека ви помогнем да я докладвате на правилното място!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"Докладването е доброволно. Така помагате и на другите, защото позволявате доброволецът, поддържащ конкретния филтър, да я блокира за всички. Но ако не сте настроен алтруистично, всичко е наред. Затворете тази страница и <a>блокирайте рекламата<\/a> само за себе си.",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"Уведомявай за установен от AdBlock злонамерен софтуер",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -495,6 +507,10 @@
     "message":"Забрани уведомяването",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"Проверете за злонамерен софтуер, инжектиращ реклами:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"Компютърът може да e заразен със злонамерен софтуер. <a>Щракнете <\/a> за повече информация.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -502,6 +518,26 @@
   "malwarenotfound":{
     "message":"Няма намерен злонамерен софтуер.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"Да проверите филтъра Приемливи реклами:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Щракнете по: <a>Забрани Приемливи реклами<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"Ако не желаете да виждате реклами като тази, вероятно ще оставите филтър Приемливи реклами изключен.",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Повече за програмата Приемливи реклами",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"Уверете се, че филтрите са обновени:",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Щракнете по: <a>Обнови филтрите!<\/a>",
@@ -523,13 +559,25 @@
     "message":"Не",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"Чудесно! Всичко е настроено.",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"Забранете другите разширения без AdBlock:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
-    "message":"Отворете <a href='#'>страницата за разширения<\/a>.",
+    "message":"Отворете <a href='#'>Разширения<\/a> в браузъра.",
     "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
-    "message":"<b>ИЛИ<\/b> натиснете този бутон за: <a>забраняване на другите разширения<\/a>",
+    "message":"<b>ИЛИ<\/b> щракнете по: <a>Забрани другите разширения<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "disableotherextensionscomplete":{
+    "message":"Всички други разширения са забранени. Предстои презареждане на страницата с рекламата. Само секунда, моля.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Забранените досега разширения са повторно разрешени.",
@@ -539,13 +587,25 @@
     "message":"Отворете страницата за разширения и разрешете забранените досега разширения.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
+  "tabreloadcomplete":{
+    "message":"Готово! Страницата с рекламата е презаредена. Моля, прегледайте я дали е изчезнала. После се върнете тук и отговорете на въпроса по-долу.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
-    "message":"Снемете отметката пред всяко от разширенията <b>без<\/b> AdBlock. <b>Оставете AdBlock разрешено<\/b>.",
+    "message":"Снемете отметките пред разширенията <b>без<\/b> тази пред AdBlock. <b>Оставете AdBlock разрешено<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
   },
   "disableforsafaristepone":{
     "message":"Натиснете Safari &rarr; Настройки &rarr; Разширения.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"Чудесно! А сега нека определим разширението, което я допуска. Проверете всяко, разрешавайки само по едно от тях. Това, което я върне, е това, което трябва да бъде премахнато, за да се отървете от рекламите.",
+    "description":"Tells the user to reenable the extensions one by one"
+  },
+  "correctfilters":{
+    "message":"Уверете се, че ползвате правилния филтър за езика:",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Какъв е езикът на страницата?",
@@ -635,6 +695,22 @@
     "message":"украински",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"арабски",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"естонски",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"исландски",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"литовски",
+    "description":"language"
+  },
   "other":{
     "message":"друг",
     "description":"Multiple choice option"
@@ -684,6 +760,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"Инсталирайте Adblock Plus за Firefox $chrome$, ако го нямате.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -900,6 +986,10 @@
   "report_ad_on_page":{
     "message":"Докладвай реклама в страницата",
     "description":"Entry in the AdBlock button menu"
+  },
+  "acceptableadsoption":{
+    "message":"Позволи определени ненатрапчиви реклами",
+    "description":"option on the 'General' tab"
   },
   "advanced_options2":{
     "message":"Показвай разширените настройки (аз съм опитен потребител)",
@@ -1132,5 +1222,17 @@
   "ad_report_please":{
     "message":"Ако видите реклама, попълнете <a>доклад за реклама<\/a>, а не доклад за грешка!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
+  },
+  "acceptableadsdisable_done":{
+    "message":"Филтърът Приемливи реклами е забранен.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Винаги можете да го разрешите повторно като отметнете „Позволи определени ненатрапчиви реклами“ по-долу.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_please_reenable":{
+    "message":"Приемливи реклами е начин за подкрепа на определени сайтове, харесвани от вас, които се ангажират да показват недосаждащи и направени с вкус реклами.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

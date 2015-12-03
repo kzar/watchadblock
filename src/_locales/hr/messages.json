@@ -367,6 +367,10 @@
     "message":"Lista uklanjanja upozorenja AdBlock-a (uklanja poruke o korištenju AdBlock-a)",
     "description":"Name of the filter list"
   },
+  "filteracceptable_ads":{
+    "message":"Prihvatljivi oglasi (preporučeno)",
+    "description":"A filter list"
+  },
   "filteradblock_custom":{
     "message":"AdBlock prilagodljivi filteri (preporučeno)",
     "description":"A filter list"
@@ -479,6 +483,14 @@
     "message":"AdBlock - Prijavljivanje reklame",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"Pronašli ste oglas na web-stranici? Pomoći ćemo Vam da pronađete pravo mjesto za prijaviti!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"Prijavljivanje oglasa je dobrovoljno. Pomaže drugima da također ne vide reklame tako što održavatelji lista filtera blokiraju oglas za sve. Ako se ne osjećate altruistički, to je isto u redu. Zatvorite ovu stranicu i <a>blokirajte oglas<\/a> samo sebi.",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"Treba li vas AdBlock obavijestiti kada pronađe zloćudni softver?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -495,6 +507,10 @@
     "message":"Onemogući ove obavijesti",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"Provjeri za zloćudni softver koji možda umeće oglase:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"Vaše računalo je možda zaraženo sa zlonamjernim softverom. Kliknite <a>ovdje<\/a> za više informacija.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -502,6 +518,26 @@
   "malwarenotfound":{
     "message":"Nije pronađen poznati zlonamjerni softver.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"Provjeri filtere Prihvatljivih oglasa:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Kliknite ovo: <a>Onemogući Prihvatljive oglase<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"Ako ne želite vidjeti oglase poput ovog, možete napustiti filter listu Prihvatljivih oglasa.",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Naučite više o programu Prihvatljivih oglasa.",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"Provjerite stanje ažuriranja vaših filter lista:",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Klikni ovo: <a>Ažuriraj moje filtere!<\/a>",
@@ -523,6 +559,14 @@
     "message":"Ne",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"Savršeno! Sve je kompletno namješteno.",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"Onemogućite sva proširenja osim AdBlock-a:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
     "message":"Otvorite <a href='#'>stranicu proširenja<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -530,6 +574,10 @@
   "clickdisableotherextensions":{
     "message":"<b>ILI<\/b>, samo kliknite ovaj gumb kako bi uradili sve ovo iznad: <a>Onemogući sva druga proširenja<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "disableotherextensionscomplete":{
+    "message":"Onemogućili smo sva proširenja. Sada ćemo ponovno pokrenuti stranicu sa oglasom. Jednu sekundu, molim.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Proširenja koja su prije bila onemogućena sada su omogućena.",
@@ -539,6 +587,10 @@
     "message":"Otvori stranicu proširenja kako bi omogućili proširenja koja su bila onemogućena.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
+  "tabreloadcomplete":{
+    "message":"Gotovo! Ponovo smo pokrenuli stranicu sa reklamom. Molimo provjerite tu stranicu i je li oglas nestao. Onda se vratite na ovu stranicu i odgovorite na pitanje ispod.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"Poništite 'Omogućeno' kvačicu  pokraj svakog proširenja <b>osim<\/b> pokraj AdBlock-a. <b>Ostavite AdBlock omogućen<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -546,6 +598,14 @@
   "disableforsafaristepone":{
     "message":"Kliknite Safari menu &rarr; Postavke &rarr; Proširenja.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"Odlično! Pronađimo sada koje proširenje je uzrok. Prođite kroz listu i omogućite svako proširenje posebno. Proširenje koje donosi oglase nazad je ono koje bi trebali maknuti da se riješite reklama.",
+    "description":"Tells the user to reenable the extensions one by one"
+  },
+  "correctfilters":{
+    "message":"Provjerite je li koristite ispravni filter za jezik:",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Na kojem je jeziku stranica napisana?",
@@ -635,6 +695,22 @@
     "message":"Ukrajinski",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"Arapski",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"Estonski",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"Islandski",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"Litvanski",
+    "description":"language"
+  },
   "other":{
     "message":"Drugi",
     "description":"Multiple choice option"
@@ -684,6 +760,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"Instalirajte AdBlock Plus za Firefox $chrome$ ako ga nemate.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -900,6 +986,10 @@
   "report_ad_on_page":{
     "message":"Prijavi reklamu na ovoj stranici",
     "description":"Entry in the AdBlock button menu"
+  },
+  "acceptableadsoption":{
+    "message":"Dopusti neke nenametljive reklame",
+    "description":"option on the 'General' tab"
   },
   "advanced_options2":{
     "message":"Ja sam napredni korisnik, prikaži mi napredne postavke",
@@ -1132,5 +1222,17 @@
   "ad_report_please":{
     "message":"Ako vidite reklamu, nemojte napraviti prijavu greške, napravite prijavu <a>reklame<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
+  },
+  "acceptableadsdisable_done":{
+    "message":"Prihvatljivi oglasi su onemogućeni.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Možete ih ponovo omogućiti u bilo koje vrijeme klikom na potvrdni okvir \"Dopusti neke nenametljive reklame\".",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_please_reenable":{
+    "message":"Omogućavanjem Prihvatljivih oglasa podržavate web-stranice koje volite koje su se obvezale prikazivati samo prihvatljive i ne-iritantne oglase.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

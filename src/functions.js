@@ -169,6 +169,9 @@ getUnicodeUrl = function(url) {
 // Returns value if key exists, else undefined.
 storage_get = function(key) {
   var store = (window.SAFARI ? safari.extension.settings : localStorage);
+  if (store === undefined) {
+      return undefined;
+  }
   var json = store.getItem(key);
   if (json == null)
     return undefined;

@@ -483,6 +483,14 @@
     "message":"AdBlock - Werbung melden",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"Haben Sie Werbung auf einer Webseite entdeckt? Wir werden Ihnen helfen den richtigen Ort zu finden um diese zu melden!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"Werbung zu melden ist freiwillig. Es hilft Anderen da Filterlisten-Betreiber die Werbung für alle anderen Benutzer blocken können. Es ist in Ordnung falls Sie dies derzeit nicht tun möchten. Schließen Sie einfach diese Seiten und <a>entfernen Sie die Werbung<\/a> nur für Sie selbst.",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"Soll AdBlock Sie benachrichtigen falls Malware entdeckt wird?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -499,6 +507,10 @@
     "message":"Diese Benachrichtigungen deaktivieren",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"Überprüfung auf Malware die Werbung einfügen könnte:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"Ihr Computer ist möglicherweise mit Malware infiziert.  Klicken Sie <a>hier<\/a> für weitere Informationen.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -506,6 +518,26 @@
   "malwarenotfound":{
     "message":"Keine bekannte Malware gefunden.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"Überprüfung der \"Akzeptable Werbung\"-Filter:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Klicken Sie hier: <a>\"Akzeptable Werbung\" deaktivieren<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"Falls Sie Werbung wie diese nicht angezeigt bekommen möchten, dann sollten Sie möglicherweise die \"Akzeptable Werbung\"-Filter deaktiviert lassen.",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Erfahren Sie mehr über das \"Akzeptable Werbung-Programm\".",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"Stellen Sie sicher, dass Ihre Filterlisten auf aktuellem Stand sind:",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Aktualisieren Sie Ihre Filterlisten: <a>Filterlisten aktualisieren<\/a>",
@@ -527,6 +559,14 @@
     "message":"Nein",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"Toll! Alles klar!",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"Deaktivieren Sie alle Erweiterungen außer AdBlock:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
     "message":"Öffnen Sie die <a href='#'>Erweiterungen-Seite<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -534,6 +574,10 @@
   "clickdisableotherextensions":{
     "message":"<b>Oder<\/b> klicken Sie einfach auf diesen Button um alles oben genannte zu tun: <a>Alle anderen Erweiterungen deaktivieren<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "disableotherextensionscomplete":{
+    "message":"Alle anderen Erweiterungen wurden deaktiviert. Die Seite mit Werbung wird nun neu geladen. Eine Sekunde bitte.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Die zuvor deaktivierten Erweiterungen wurden wieder aktiviert.",
@@ -543,6 +587,10 @@
     "message":"Öffnen Sie Erweiterungen-Seite um die zuvor deaktivierten Erweiterungen wieder zu aktivieren.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
+  "tabreloadcomplete":{
+    "message":"Fertig! Die Seite mit der Werbung wurde neu geladen. Bitte überprüfen Sie, ob die Werbung nun von der Seite entfernt ist. Kommen Sie dann zurück auf diese Seite und beantworten Sie die untenstehende Frage.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"Entfernen Sie bei allen Erweiterungen das Häkchen der \"Aktiviert\"-Checkbox <b>außer<\/b> bei AdBlock.  <b>Lassen Sie AdBlock aktiviert<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -550,6 +598,14 @@
   "disableforsafaristepone":{
     "message":"Klicken Sie auf Safari (Menübar) &rarr; Einstellungen ... &rarr; Erweiterungen.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"Gut! Lassen Sie uns nun herausfinden welche Erweiterung das Problem verursacht. Aktivieren Sie eine Erweiterung nach der anderen. Die Erweiterung die die Werbung wieder erscheinen lässt muss deinstalliert werden um die Werbung endgültig zu entfernen.",
+    "description":"Tells the user to reenable the extensions one by one"
+  },
+  "correctfilters":{
+    "message":"Stellen Sie sicher, dass Sie die richtige Sprach-Filterliste(n) benutzen:",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"In welcher Sprache ist die Seite verfasst?",
@@ -639,6 +695,22 @@
     "message":"ukrainisch",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"Arabisch",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"Estnisch",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"Isländisch",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"Litauisch",
+    "description":"language"
+  },
   "other":{
     "message":"nichtgelistete Sprache",
     "description":"Multiple choice option"
@@ -688,6 +760,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"Installieren Sie Adblock Plus für Firefox $chrome$, falls Sie es noch nicht installiert haben.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },

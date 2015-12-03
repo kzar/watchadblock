@@ -483,6 +483,14 @@
     "message":"AdBlock - 报告广告",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"您发现页面上有广告? 我们会帮您找到正确的地方来报告!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"报告广告是自愿的。它有助于让过滤列表的维护人员帮助所有人屏蔽这个广告。如果您现在不想帮助他人，没关系。关闭这个页面然后自行<a>屏蔽这个广告<\/a>。",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"AdBlock在检测到恶意软件时是否显示通知？",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -499,6 +507,10 @@
     "message":"禁用通知",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"检查可以注入广告的恶意软件:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"您的计算机可能感染了恶意软件。单击 <a>此处<\/a> 了解更多信息。",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -506,6 +518,26 @@
   "malwarenotfound":{
     "message":"没有发现已知的恶意软件。",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"检查可接受广告规则:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"单击此选项: <a>禁用可接受广告<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"如果您不想看到这样的广告，您可能希望禁用可接受广告列表。",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"了解更多关于可接受广告计划的情况。",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"请确认您的过滤列表都已是最新的：",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"点击这里：<a>更新我的过滤列表！<\/a>",
@@ -527,6 +559,14 @@
     "message":"否",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"太好了! 您已经完成全部设置。",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"禁用除AdBlock之外的所有扩展:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
     "message":"打开 <a href='#'> 扩展管理页面<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -534,6 +574,10 @@
   "clickdisableotherextensions":{
     "message":"<b>或者<\/b>，单击此按钮来完成以上所有步骤： <a>禁用其他所有扩展<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "disableotherextensionscomplete":{
+    "message":"我们已经禁用了所有其他扩展。现在含广告的页面将重新载入。请稍等。",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"被禁用的扩展已重新启用。",
@@ -543,6 +587,10 @@
     "message":"请打开扩展管理页面，启用先前被禁用的扩展。",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
+  "tabreloadcomplete":{
+    "message":"完成了! 含广告的页面已重新载入。请检查该页面广告是否消失。然后回到此页面并回答下面的问题。",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"取消<b>除了<\/b>AdBlock之外所有扩展的“已启用”复选框。<b>保持AdBlock启用<\/b>。",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -550,6 +598,14 @@
   "disableforsafaristepone":{
     "message":"单击Safari菜单 &rarr; 选项 &rarr; 扩展程序。",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"太好了! 现在让我们找出是哪个扩展带来了广告。逐个启用每个扩展。带出广告的那个扩展就是您必须删除的。",
+    "description":"Tells the user to reenable the extensions one by one"
+  },
+  "correctfilters":{
+    "message":"请确保您正在使用正确语言的过滤列表:",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"此页面使用什么语言？",
@@ -639,6 +695,22 @@
     "message":"乌克兰文",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"阿拉伯文",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"爱沙尼亚文",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"冰岛文",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"立陶宛文",
+    "description":"language"
+  },
   "other":{
     "message":"其它",
     "description":"Multiple choice option"
@@ -688,6 +760,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"安装Firefox上的Adblock Plus $chrome$。",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -1146,11 +1228,11 @@
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_how_to_reenable":{
-    "message":"你可以重新启用它在任何时候通过点击“允许一些非侵入式广告”下面的复选框。",
+    "message":"您可以在任何时候通过勾选下面的“允许一些非侵入式广告”来重新启用它。",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_please_reenable":{
-    "message":"启用可接受广告是一种方式来支持你喜欢的网站，它们只展现 有品位的、不烦人的广告。",
+    "message":"启用可接受广告是一种用来支持您喜欢的网站的方式，它们只展现有品位的、不那么烦人的广告。",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

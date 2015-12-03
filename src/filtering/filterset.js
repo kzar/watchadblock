@@ -146,7 +146,7 @@ BlockingFilterSet.prototype = {
   //   if returnTuple is true and returnFilter is true:
   //       returns an object containing two properties:
   //          'blocked' - true or false
-  //          'text' - text of matching pattern/whitelist filter, null if no match 
+  //          'text' - text of matching pattern/whitelist filter, null if no match
   matches: function(url, elementType, frameDomain, returnFilter, returnTuple) {
     var urlDomain = getUnicodeDomain(parseUri(url).hostname);
     var isThirdParty = BlockingFilterSet.checkThirdParty(urlDomain, frameDomain);
@@ -173,10 +173,11 @@ BlockingFilterSet.prototype = {
         this._matchCache[key] = { blocked: true, text: match._text};
       } else {
         this._matchCache[key] = (returnFilter ? match._text : true);
-      }      
+      }
       return this._matchCache[key];
     }
     if (this.malwareDomains &&
+        urlDomain &&
         this.malwareDomains[urlDomain.charAt(0)] &&
         this.malwareDomains[urlDomain.charAt(0)].indexOf(urlDomain) > -1) {
       log("matched malware domain", urlDomain);

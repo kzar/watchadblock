@@ -367,6 +367,10 @@
     "message":"Lista Rimozione Avvisi di AdBlock (rimuove i messaggi d'uso di AdBlock)",
     "description":"Name of the filter list"
   },
+  "filteracceptable_ads":{
+    "message":"Annunci Accettabili (consigliato)",
+    "description":"A filter list"
+  },
   "filteradblock_custom":{
     "message":"Filtri personalizzati di AdBlock (raccomandato)",
     "description":"A filter list"
@@ -479,6 +483,14 @@
     "message":"AdBlock - Segnala una pubblicità",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"Trovato un annuncio su una pagina web? Ti aiuteremo a trovare il posto giusto per segnalarlo!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"Segnalare un annuncio è facoltativo. Aiuta altri utenti abilitando la lista filtri manutentori per bloccare l'annuncio per tutti. Se adesso non ti senti altruistia destra, va bene. Chiudi questa pagina e <a>blocca l'annuncio<\/a> solo per te stesso.",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"Permetti ad AdBolck di notificarti quando rileva un malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -495,6 +507,10 @@
     "message":"Disattiva queste notifiche",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"Verifica malware che potrebbero essere responsabili dell'inserzione di annunci:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"Il computer potrebbe essere infetto da malware.  Clicca <a>qui<\/a> per ulteriori informazioni.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -502,6 +518,26 @@
   "malwarenotfound":{
     "message":"Nessun malware noto trovato.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"Controlla i filtri degli Annunci Accettabili:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Fare clic qua: <a>Disabilitare Annunci Accettabili<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"Se preferisci non visualizzare annunci come questo, è possibile lasciare disattivato l'elenco dei filtri Annunci Accettabili.",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Scopri maggiori informazioni sul programma Annunci Accettabili.",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"Assicurati che gli elenchi dei filtri siano aggiornati:",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Clicca qui: <a>Aggiorna i miei filtri!<\/a>",
@@ -523,6 +559,14 @@
     "message":"No",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"Grande! Sei a posto.",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"Disabilita tutte le estensioni tranne AdBlock:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
     "message":"Apri <a href='#'>the extensions page<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -530,6 +574,10 @@
   "clickdisableotherextensions":{
     "message":"<b>O<\/b>, clicca su questo pulsante per fare tutto quanto indicato sopra: <a>disattiva tutte le altre estensioni<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "disableotherextensionscomplete":{
+    "message":"Abbiamo disabilitato tutte le altre estensioni. Ora ricaricaricheremo la pagina con l'annuncio. Un secondo, prego.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Le estensioni che sono state precedentemente disattivate sono state riattivate.",
@@ -539,6 +587,10 @@
     "message":"Apri la pagina delle estensioni per attivare le estensioni precedentemente disabilitate.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
+  "tabreloadcomplete":{
+    "message":"Fatto! Abbiamo ricaricato la pagina con l'annuncio. Controlla questa pagina per vedere se l'annuncio è apparso. Poi torna su questa pagina e rispondi alla domanda qui sotto.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"Deseleziona 'Abilitata' vicino ad ogni estensione <b>eccetto<\/b> AdBlock. <b>Lascia abilitata AdBlock<\/b>",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -546,6 +598,14 @@
   "disableforsafaristepone":{
     "message":"Clicca il menu Safari &rarr; Preferenze &rarr; Estensioni.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"Grande! Ora andiamo a scoprire quale estensione ne è la causa. Abilita ogni estensione una per una. L'estensione che fa ricomparire l'annuncio è quello che avete bisogno di disinstallare per sbarazzarvi degli annunci.",
+    "description":"Tells the user to reenable the extensions one by one"
+  },
+  "correctfilters":{
+    "message":"Assicurati di utilizzare i filtri della lingua giusta:",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"In che lingua è scritta questa pagina?",
@@ -635,6 +695,22 @@
     "message":"Ucraino",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"Arabo",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"Estone",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"Islandese",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"Lituano",
+    "description":"language"
+  },
   "other":{
     "message":"Altra",
     "description":"Multiple choice option"
@@ -684,6 +760,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"Installa Adblock Plus per Firefox $chrome$ se non ce l'hai.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -900,6 +986,10 @@
   "report_ad_on_page":{
     "message":"Segnala una pubblicità su questa pagina",
     "description":"Entry in the AdBlock button menu"
+  },
+  "acceptableadsoption":{
+    "message":"Permetti alcuni annunci non invadenti",
+    "description":"option on the 'General' tab"
   },
   "advanced_options2":{
     "message":"Sono un utente esperto, mostrami le opzioni avanzate",
@@ -1132,5 +1222,17 @@
   "ad_report_please":{
     "message":"Se visualizzi una pubblicità, non riportare un bug, fai una <a>segnalazione di pubblicità<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
+  },
+  "acceptableadsdisable_done":{
+    "message":"Annunci Accettabili è stato disattivato.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"È possibile riattivarlo in qualsiasi momento facendo clic sulla casella \"Consenti alcuni annunci non intrusivi\".",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_please_reenable":{
+    "message":"Attivare Annunci Accettabili è un modo per sostenere i siti Web che ami i quali assicurano di mostrarti solo annunci discreti, non fastidiosi.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }
