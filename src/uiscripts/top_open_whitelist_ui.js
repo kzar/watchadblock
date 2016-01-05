@@ -81,7 +81,7 @@ function top_open_whitelist_ui() {
     changeTextDirection($("body .adblock-whitelist-dialog"));
 
     $(".adblock-whitelist-dialog").parent().css({position: 'relative'});
-    $(".adblock-whitelist-dialog").css({top: 200, left: 200, position:'absolute'});
+    $(".adblock-whitelist-dialog").css({top: 200, left: 200, position: 'fixed'});
 
     var fixedDomainPart = parseUri.secondLevelDomainOnly(domain, true);
     var domainparts = domain.substr(0, domain.lastIndexOf(fixedDomainPart)).split('.');

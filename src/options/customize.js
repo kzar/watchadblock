@@ -309,8 +309,13 @@ $(function() {
   });
 
   BGcall("get_settings", function(settings) {
-    if (settings.show_advanced_options)
+    if (settings.show_advanced_options &&
+        !settings.safari_content_blocking) {
         $("#divExcludeFilters").show();
+    }
+    if (settings.safari_content_blocking) {
+        $("#safariwarning").text(translate("contentblockingwarning")).show();
+    }
   });
 
   BGcall("get_exclude_filters_text", function(text) {

@@ -625,19 +625,22 @@
   }
 
   remove_custom_filter_for_host = function(host) {
-    if(count_cache.getCustomFilterCount(host)) {
+    if (count_cache.getCustomFilterCount(host)) {
       remove_custom_filter(host);
       count_cache.removeCustomFilterCount(host);
     }
   }
 
-  confirm_removal_of_custom_filters_on_host = function(host) {
+  confirm_removal_of_custom_filters_on_host = function(host, activeTab) {
     var custom_filter_count = count_cache.getCustomFilterCount(host);
     var confirmation_text   = translate("confirm_undo_custom_filters", [custom_filter_count, host]);
     if (!confirm(confirmation_text)) { return; }
     remove_custom_filter_for_host(host);
-    if (!SAFARI)
+    if (!SAFARI) {
         chrome.tabs.reload();
+    } else {
+        activeTab.url = activeTab.url;
+    }
   };
 
   get_settings = function() {
@@ -678,7 +681,7 @@
     for (var id in _myfilters._subscriptions) {
       result[id] = {};
       for (var attr in _myfilters._subscriptions[id]) {
-        if (attr === "text") continue;
+        if ((attr === "text") || (attr === "rules")) continue;
         result[id][attr] = _myfilters._subscriptions[id][attr];
       }
     }
@@ -824,7 +827,6 @@
       var browserWindow = safari.application.activeBrowserWindow;
       var tab = browserWindow.activeTab;
       tab.unicodeUrl = getUnicodeUrl(tab.url); // GH #472
-
       var disabled_site = page_is_unblockable(tab.unicodeUrl);
 
       var result = {
@@ -846,6 +848,11 @@
   page_is_whitelisted = function(url, type) {
     if (!url) { // Safari empty/bookmarks/top sites page
       return true;
+    }
+    // In Safari with content blocking enabled,
+    // whitelisting of domains is not currently supported.
+    if (get_settings().safari_content_blocking) {
+      return false;
     }
     url = getUnicodeUrl(url);
     url = url.replace(/\#.*$/, ''); // Remove anchors
@@ -1047,7 +1054,11 @@
       hiding: hiding
     };
 
-    if (hiding) {
+    if (hiding &&
+        _myfilters &&
+        _myfilters.hiding &&
+        settings &&
+        !settings.safari_content_blocking) {
       result.selectors = _myfilters.hiding.filtersFor(options.domain);
     }
     return result;
@@ -1305,6 +1316,11 @@
   if (get_settings().debug_logging)
     logging(true);
 
+  // Enable content blocking by default for new installations
+  if (STATS.firstRun && isSafariContentBlockingAvailable()) {
+    set_setting("safari_content_blocking", true);
+  }
+
   _myfilters = new MyFilters();
   _myfilters.init();
   // Record that we exist.
@@ -1319,19 +1335,40 @@
     gabQuestion.removeGABTabListeners(saveState);
   }
 
-  var installedURL = "https://getadblock.com/installed/?aa=true&u=" + STATS.userId;
-  if (STATS.firstRun && (SAFARI || OPERA || chrome.runtime.id !== "pljaalgmajnlogcgiohkhdmgpomjcihk")) {
+  var installedURL = "https://getadblock.com/installed/?u=" + STATS.userId;
+  var openInstalledTab = function() {
+    chrome.tabs.create({url: installedURL}, function(tab) {
+      // if we couldn't open a tab to '/installed', save that fact, so we can retry later at startup
+      if (chrome.runtime.lastError) {
+        storage_set("/installed_error", { retry_count: 0 } );
+      }
+    });
+  };
+  // If the Chrome API 'onInstalled' is available, and
+  // reason is 'install' and
+  // AdBlock wasn't installed using an 'admin' group policy then
+  // Open the install tab.
+  if (chrome.runtime.onInstalled) {
+    chrome.runtime.onInstalled.addListener(function(details) {
+      if (details.reason === "install") {
+        if (chrome.management && chrome.management.getSelf) {
+          chrome.management.getSelf(function(info) {
+            if (info && info.installType !== "admin") {
+              openInstalledTab();
+            }
+          });
+        } else {
+          openInstalledTab();
+        }
+      }
+    });
+  } else if (STATS.firstRun) {
+    // If the Chrome API 'onInstalled' is not available, and
+    // it's AdBlock's firstRun
+    // Open the install tab.
     if (SAFARI) {
       openTab(installedURL);
     } else {
-      var openInstalledTab = function() {
-        chrome.tabs.create({url: installedURL}, function(tab) {
-          //if we couldn't open a tab to '/installed', save that fact, so we can retry later at startup
-          if (chrome.runtime.lastError) {
-            storage_set("/installed_error", { retry_count: 0 } );
-          }
-        });
-      };
       if (chrome.management && chrome.management.getSelf) {
         chrome.management.getSelf(function(info) {
           if (info && info.installType !== "admin") {
@@ -1341,30 +1378,6 @@
       } else {
         openInstalledTab();
       }
-    }
-  }
-  //retry logic for '/installed' - retries on browser / AdBlock startup
-  var installError = storage_get("/installed_error");
-  if (installError && installError.retry_count >= 0 && !SAFARI) {
-    //append the retry count to the URL
-    installError.retry_count += 1;
-    if (installError.retry_count > 10) {
-      //if we've retried 10 or more times, give up...
-      // send a message, and delete the 'installed error'
-      recordErrorMessage("/installed open error count > 10");
-      storage_set("/installed_error");
-    } else {
-      var retryInstalledURL = installedURL + "&r=" + installError.retry_count;
-      chrome.tabs.create({url: retryInstalledURL}, function(tab) {
-        if (chrome.runtime.lastError) {
-          //if there is an error (again) and re-save.
-          storage_set("/installed_error", installError);
-        } else {
-          //if we successfully opened the tab,
-          //delete the 'installed error' so we don't display it again
-          storage_set("/installed_error");
-        }
-      });
     }
   }
 
@@ -1395,22 +1408,6 @@
     } else {
       chrome.runtime.setUninstallURL(uninstallURL + "&t=-1");
     }
-  }
-
-  //validate STATS.firstRun against Chrome's Runtime API onInstalled
-  if (chrome.runtime.onInstalled) {
-    var validInstall = false;
-    chrome.runtime.onInstalled.addListener(function(details) {
-      validInstall = (details.reason === "install");
-    });
-    //wait 10 seconds, then check
-    //if extension and Chrome don't agree that this is a new installation send a message.
-    //we only check if 'firstRun' is true because that is when the extension creates a new user id and opens /installed
-    setTimeout(function() {
-      if (STATS.firstRun && !validInstall) {
-        recordErrorMessage('invalid install - firstRun = ' + STATS.firstRun + ' valid install = ' + validInstall);
-      }
-    }, 10000);
   }
 
   createMalwareNotification = function() {
@@ -1531,6 +1528,15 @@
           }
       });
   }
+
+  //used by the Options pages, since they don't have access to setContentBlocker
+  function isSafariContentBlockingAvailable() {
+    return (SAFARI &&
+            safari &&
+            safari.extension &&
+            (typeof safari.extension.setContentBlocker === 'function'));
+  }
+
 
   // DEBUG INFO
 

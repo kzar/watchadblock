@@ -77,6 +77,14 @@ $(function() {
         if (chrome.runtime && chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk")
             show(["div_status_beta"]);
 
+        // In Safari with content blocking enabled,
+        // whitelisting of domains is not currently supported.
+        if (SAFARI &&
+            BG.get_settings().safari_content_blocking) {
+          hide(["div_paused_adblock", "div_whitelist_page", "div_whitelist"]);
+        }
+
+
         for (var div in shown)
             if (shown[div])
                 $('#' + div).show();
@@ -160,9 +168,8 @@ $(function() {
 
     $("#div_undo").click(function() {
         var host = parseUri(tab.unicodeUrl).host;
-        BG.confirm_removal_of_custom_filters_on_host(host);
+        BG.confirm_removal_of_custom_filters_on_host(host, activeTab);
         closeAndReloadPopup();
-        if (SAFARI) activeTab.url = activeTab.url;
     });
 
     $("#div_whitelist_channel").click(function() {
@@ -171,12 +178,17 @@ $(function() {
         !SAFARI ? chrome.tabs.reload() : activeTab.url = activeTab.url;
     });
 
-    $("#div_pause_adblock").click(function() {
-        BG.adblock_is_paused(true);
-        if (!SAFARI)
-            BG.updateButtonUIAndContextMenus();
+     $("#div_pause_adblock").click(function() {
+        if (BG.get_settings().safari_content_blocking) {
+          alert(translate('safaricontentblockingpausemessage'));
+        } else {
+          BG.adblock_is_paused(true);
+          if (!SAFARI) {
+              BG.updateButtonUIAndContextMenus();
+          }
+        }
         closeAndReloadPopup();
-    });
+     });
 
     $("#div_blacklist").click(function() {
         if (!SAFARI) {

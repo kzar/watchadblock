@@ -14,7 +14,7 @@
       <label for="acceptable_ads" i18n="acceptableadsoption"></label>
     </p>
 
-    <p>
+    <p class="exclude_safari_content_blocking">
       <input type="checkbox" class="feature" id="enable_youtube_channel_whitelist"/>
       <label for="enable_youtube_channel_whitelist" i18n="allow_whitelisting_youtube_channels"></label>
     </p>
@@ -24,7 +24,7 @@
       <label for="enable_show_context_menu_items" i18n="showcontextmenus2"></label>
     </p>
 
-    <p class="safari-only">
+    <p class="safari-only exclude_safari_content_blocking">
       <input type="checkbox" class="feature" id="enable_clicktoflash_compatibility_mode" />
       <label for="enable_clicktoflash_compatibility_mode" i18n="disableyoutubestreamingads"></label>
     </p>
@@ -34,9 +34,13 @@
       <label  for="enable_display_stats" i18n="show_on_adblock_button"></label>
     </p>
 
-    <p class="chrome-only">
-      <input type="checkbox" class="feature" id="enable_display_menu_stats" />
-      <label for="enable_display_menu_stats" i18n="show_on_adblock_menu"></label>
+    <p class="safari-only" style="display:none" id="safari_content_blocking">
+      <input type="checkbox" class="feature" id="enable_safari_content_blocking" />
+      <label for="enable_safari_content_blocking" i18n="safaricontentblocking"></label>
+      <sup>
+        [<a i18n="whats_this" href="http://support.getadblock.com/kb/technical-questions/what-is-safari-content-blocking" target="_blank"></a>]
+      </sup>
+      <div id="safari_content_blocking_bmessage" class="dbmessage"></div>
     </p>
 
     <p>
@@ -54,7 +58,7 @@
       <label for="enable_debug_logging" i18n="debuginlogoption"></label>
     </p>
 
-    <p class="advanced">
+    <p class="advanced exclude_safari_content_blocking">
       <input type="checkbox" class="feature" id="enable_data_collection" />
       <label for="enable_data_collection" i18n="datacollectionoption"></label>
       <sup>

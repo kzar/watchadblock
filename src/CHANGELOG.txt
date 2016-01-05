@@ -2,6 +2,14 @@
 
 UNRELEASED:
 
+2.46:
+ - Fixed a typo in the description of the AdBlock Warning Removal list, it should be a lowercased 'b' (#658).
+ - Added a new parameter to the ping data to indicate if the advance setting is enabled (#660).
+ - Fixed an issue with the blocking assistant on some sites (#644). 
+ - For Chrome users, modified the "/installed" logic to use the Chrome specific chrome.runtime.onInstalled API (#656).
+ - For Safari users, AdBlock will now use the WebKit content blocking feature on new installations. (#619).
+ - For Safari users, fix a bug with the "Undo my blocks on this domain" feature (#570).
+
 2.45:
 - Added a new, advanced feature to view all HTTP Requests for a tab (#653).
 
@@ -30,13 +38,13 @@ UNRELEASED:
 
 2.41.1:
  - Added missing image file for Safari.
- 
+
 2.41:
  - Added Acceptable Ads filter list. (#627)
 
 2.40.1:
  - Remove the timestamp query string from the Malware filter list URL
- 
+
 2.40:
  - Updated Translations
  - Updated Malware filter list URL

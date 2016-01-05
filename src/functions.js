@@ -241,3 +241,16 @@ sessionstorage_set = function(key, value) {
     }
   }
 };
+
+// Create a user notification on Safari
+//
+var createRuleLimitExceededSafariNotification = function() {
+  if (SAFARI && ("Notification" in window)) {
+    sessionstorage_set("contentblockingerror", translate("safaricontentblockinglimitexceeded"));
+    chrome.extension.sendRequest({command: "contentblockingmessageupdated"});
+    var note = new Notification(translate("safarinotificationtitle") , { 'body' : translate("safarinotificationbody"), 'tag' : 1 });
+    note.onclick = function() {
+      openTab("options/index.html?tab=0");
+    };
+  }
+};

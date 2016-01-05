@@ -519,6 +519,18 @@
     "message":"Otevřít <a href='#'>panel rozšíření<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
   },
+  "clickdisableotherextensions":{
+    "message":"<b>NEBO<\/b>, prostě klikněte na toto tlačítko a my vše uděláme za Vás: <a>Zakázat všechna ostatní rozšíření<\/a>",
+    "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "enableotherextensionscomplete":{
+    "message":"Doplňky, které byly předtím vypnuty, byly opět zapnuty.",
+    "description":"On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
+  },
+  "manuallyenableotherextensions":{
+    "message":"Otevřete stránku s doplňky pro zapnutí těch, které byly předtím zakázány.",
+    "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"Odškrtněte 'Povoleno' vedle každého rozšíření <b>kromě<\/b> AdBlocku. <b>Nechte AdBlock zapnutý.<\/b>",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -666,6 +678,10 @@
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
+  },
+  "checkinfirefox_3":{
+    "message":"V kýženém prohlížeči se přihlašte ke stejnému seznamu filtrů, jaký máte zde.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
   "checkinfirefox_4":{
     "message":"V uvedeném prohlížeči načtěte stránku s reklamou.",
@@ -965,6 +981,24 @@
     "message":"Vlastní seznamy filtrů",
     "description":"List for custom filters the user subscribed to"
   },
+  "customfilterserrormessage":{
+    "message":"Následující filtr:<br\/> $filter$ <br\/> obsahuje chybu: <br\/> $message$",
+    "description":"Error message when there is an issue with a custom filter on the 'Customize' tab of the Options page",
+    "placeholders":{
+      "filter":{
+        "content":"$1",
+        "example":"@@.ad"
+      },
+      "message":{
+        "content":"$2",
+        "example":"invalid filter"
+      }
+    }
+  },
+  "dropboxerrorforfilters":{
+    "message":"Překročili jste limit velikosti Dropboxu. Prosíme, odstraňte některé položky z Vašeho vlastního, či zakázaného filtru a zkuste to znovu.",
+    "description":"Message to Dropbox sync users on the Customize tab, custom filters \/ disabled."
+  },
   "languagedropdowndescription":{
     "message":"Přidat filtry pro jiný jazyk: ",
     "description":"Dropdown list for language-specific filters"
@@ -1022,6 +1056,10 @@
         "example":"<a>here<\/a>"
       }
     }
+  },
+  "ff_adblock_outdated":{
+    "message":"Používáte zastaralou verzi AdBlocku. Prosím, klikněte na tlačítko menu ve Firefoxu a vyberte Doplňky. Poté na stránce Doplňky klikněte na ikonku ozubeného kolečka a zvolte \"Vyhledat aktualizace\".",
+    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   },
   "adblocksupport":{
     "message":"Podpora AdBlock",

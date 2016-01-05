@@ -79,6 +79,10 @@ var run_bandaids = function() {
             BGcall("recordGeneralMessage", "disableacceptableads clicked", undefined, function() {
               BGcall("openTab",  "options/index.html?tab=0&aadisabled=true");
             });
+            // Rebuild the rules if running in Safari
+            if (SAFARI) {
+              BGcall("update_subscriptions_now");
+            }
           });
         }
       }

@@ -243,6 +243,10 @@
     "message":"Enable ClickToFlash compatibility mode",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Enable Safari Content Blocking",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Show debug statements in Console Log (which slows down AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -364,7 +368,7 @@
     "description":"Name of the filter list"
   },
   "filterwarning_removal":{
-    "message":"AdBlock Warning Removal list (removes messages about using AdBlock)",
+    "message":"Adblock Warning Removal list (removes warnings about using ad blockers)",
     "description":"Name of the filter list"
   },
   "filteracceptable_ads":{
@@ -470,6 +474,10 @@
   "filtersavewarning":{
     "message":"Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!<br\/>Read the <a>filter syntax tutorial<\/a> to learn how to add advanced blacklist and whitelist filters.",
     "description":"Warning when blacklisting manually"
+  },
+  "contentblockingwarning":{
+    "message":"Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.",
+    "description":"message to Safari content blocking users on Custom tab"
   },
   "savebutton":{
     "message":"Save",
@@ -950,6 +958,26 @@
   "pause_adblock":{
     "message":"Pause AdBlock",
     "description":"Menu entry to pause AdBlock"
+  },
+  "safaricontentblockingpausemessage":{
+    "message":"To pause AdBlock with Content Blocking enabled, please select Safari (in the menu bar) > Preferences > Extensions > AdBlock, and uncheck 'Enable AdBlock'.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"The number of filter list rules exceeds the 50,000 limit, and has been automatically reduced. Please unsubscribe from some filter lists or disable Safari Content Blocking!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Disabling this feature requires restarting your browser.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Content Blocking rule limit exceeded",
+    "description":"Title of a notification to user"
+  },
+  "safarinotificationbody":{
+    "message":"Please disable some filter lists. More information in AdBlock's Options.",
+    "description":"Body of a notification to user"
   },
   "undo_last_block":{
     "message":"Undo my blocks on this domain",
