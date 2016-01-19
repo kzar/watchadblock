@@ -1253,31 +1253,31 @@
   },
   "resourceblocktitle":{
     "message":"All Resources",
-    "description":"resourceblocking page string"
+    "description":"Resource list page name"
   },
   "headerresource":{
     "message":"Resource",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: title of a column"
   },
   "headertype":{
     "message":"Type",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: title of a column"
   },
   "headerfilter":{
     "message":"Matched filter",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: title of a column"
   },
   "show_resourcelist":{
     "message":"Show all requests",
-    "description":"Entry in the AdBlock button menu"
+    "description":"Menu entry to open the resource list page"
   },
   "noresourcessend2":{
     "message":"Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: error message"
   },
   "resourcedomain":{
     "message":"Loaded on page with domain:\n$domain$",
-    "description":"Text shown when hovering over an item in the third-party column",
+    "description":"Resource list page: text shown when hovering over an item in the third-party column",
     "placeholders":{
       "domain":{
         "content":"$1",
@@ -1287,7 +1287,7 @@
   },
   "filterorigin":{
     "message":"Filter origin:\n$list$",
-    "description":"Tooltip of matching filter in resources list, telling which filter list contains the filter",
+    "description":"Resource list page: tooltip of matching filter, telling which filter list contains the filter",
     "placeholders":{
       "list":{
         "content":"$1",
@@ -1299,112 +1299,60 @@
     "message":"selector",
     "description":"A resource type"
   },
-  "typescript":{
-    "message":"script",
-    "description":"A resource type"
-  },
-  "typeimage":{
-    "message":"image",
-    "description":"A resource type"
-  },
-  "typestylesheet":{
-    "message":"style definition",
-    "description":"A resource type"
-  },
-  "typeobject":{
-    "message":"interactive object",
-    "description":"A resource type"
-  },
   "typesub_frame":{
     "message":"frame",
-    "description":"A resource type"
-  },
-  "typeobject_subrequest":{
-    "message":"object_subrequest",
-    "description":"A resource type"
-  },
-  "typexmlhttprequest":{
-    "message":"xmlhttprequest",
-    "description":"A resource type"
-  },
-  "typeother":{
-    "message":"other",
-    "description":"A resource type"
-  },
-  "typepopup":{
-    "message":"popup",
-    "description":"A resource type"
-  },
-  "typemedia":{
-    "message":"audio\/video",
     "description":"A resource type"
   },
   "typemain_frame":{
     "message":"page",
     "description":"A resource type"
   },
-  "headerresource":{
-    "message":"Resource",
-    "description":"resourceblocking page string"
-  },
-  "headertype":{
-    "message":"Type",
-    "description":"resourceblocking page string"
-  },
   "topframe":{
     "message":"Top frame",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: frame type"
   },
   "subframe":{
     "message":"Subframe",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: frame type"
   },
   "frametype":{
     "message":"Frame type: ",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: followed by frame type (e.g. top frame, subframe)"
   },
   "framedomain":{
     "message":"Frame domain: ",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: domain name of the frame"
   },
   "frameurl":{
-    "message":"Frame url: ",
-    "description":"resourceblocking page string"
+    "message":"Frame URL: ",
+    "description":"Resource list page: full URL of the frame"
   },
   "legend":{
     "message":"Legend: ",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   },
   "blockedresource":{
     "message":"Blocked resource",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: resource status"
   },
   "whitelistedresource":{
     "message":"Whitelisted resource",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: resource status"
   },
   "hiddenelement":{
     "message":"Hidden element",
-    "description":"resourceblocking page string"
-  },
-  "headerfilter":{
-    "message":"Matched filter",
-    "description":"resourceblocking page string"
+    "description":"Resource list page: resource status"
   },
   "thirdparty":{
     "message":"Third-party",
-    "description":"Resource list column title telling if the resource originates from a different domain"
+    "description":"Resource list page: column title telling if the resource originates from a different domain"
   },
   "acceptableadsdisable_done":{
-    "message":"Acceptable Ads has been disabled.",
+    "message":"You're no longer subscribed to the Acceptable Ads filter list.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_how_to_reenable":{
-    "message":"You can re-enable it at any time by clicking the \"Allow some non-intrusive advertising\" checkbox below.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_please_reenable":{
-    "message":"Enabling Acceptable Ads is a way to support the websites you love who promise to only show you tasteful, non-annoying ads.",
+    "message":"You can turn this back on and support the websites you love by selecting \"Allow some non-intrusive advertising\" below.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

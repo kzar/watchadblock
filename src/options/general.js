@@ -32,6 +32,16 @@ $(function() {
 
   $("input.feature[type='checkbox']").change(function() {
     var is_enabled = $(this).is(':checked');
+    if (this.id === "acceptable_ads") {
+      if (is_enabled) {
+        $("#acceptable_ads_info").slideUp();
+        BGcall("subscribe", {id: "acceptable_ads"});
+      } else {
+        $("#acceptable_ads_info").slideDown();
+        BGcall("unsubscribe", {id:"acceptable_ads", del:false});
+      }
+      return;
+    }
     var name = this.id.substring(7); // TODO: hack
     BGcall("set_setting", name, is_enabled, true);
     // Rebuild filters, so matched filter text is returned
@@ -101,6 +111,7 @@ $("#acceptable_ads").change(function() {
     }
   });
 });
+
 
 $("#enable_show_advanced_options").change(function() {
   // Reload the page to show or hide the advanced options on the

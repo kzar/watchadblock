@@ -1316,11 +1316,6 @@
   if (get_settings().debug_logging)
     logging(true);
 
-  // Enable content blocking by default for new installations
-  if (STATS.firstRun && isSafariContentBlockingAvailable()) {
-    set_setting("safari_content_blocking", true);
-  }
-
   _myfilters = new MyFilters();
   _myfilters.init();
   // Record that we exist.

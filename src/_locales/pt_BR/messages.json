@@ -1223,6 +1223,102 @@
     "message":"Se você está vendo um anúncio, não faça um relatório de erro, faça um <a>relatório de anúncio<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   },
+  "resourceblocktitle":{
+    "message":"Todos os recursos",
+    "description":"Resource list page name"
+  },
+  "headerresource":{
+    "message":"Recursos",
+    "description":"Resource list page: title of a column"
+  },
+  "headertype":{
+    "message":"Tipo",
+    "description":"Resource list page: title of a column"
+  },
+  "headerfilter":{
+    "message":"Filtro correspondente",
+    "description":"Resource list page: title of a column"
+  },
+  "show_resourcelist":{
+    "message":"Mostrar todas as solicitações",
+    "description":"Menu entry to open the resource list page"
+  },
+  "noresourcessend2":{
+    "message":"Algo deu errado. Nenhum recurso foi enviado. Esta página irá fechar. Tente recarregar a página.",
+    "description":"Resource list page: error message"
+  },
+  "resourcedomain":{
+    "message":"Carregado na página com domínio: $domain$",
+    "description":"Resource list page: text shown when hovering over an item in the third-party column",
+    "placeholders":{
+      "domain":{
+        "content":"$1",
+        "example":"example.com"
+      }
+    }
+  },
+  "filterorigin":{
+    "message":"Origem do Filtro: $list$",
+    "description":"Resource list page: tooltip of matching filter, telling which filter list contains the filter",
+    "placeholders":{
+      "list":{
+        "content":"$1",
+        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "typeselector":{
+    "message":"seletor",
+    "description":"A resource type"
+  },
+  "typesub_frame":{
+    "message":"moldura",
+    "description":"A resource type"
+  },
+  "typemain_frame":{
+    "message":"página",
+    "description":"A resource type"
+  },
+  "topframe":{
+    "message":"Moldura superior",
+    "description":"Resource list page: frame type"
+  },
+  "subframe":{
+    "message":"Submoldura",
+    "description":"Resource list page: frame type"
+  },
+  "frametype":{
+    "message":"Tipo de moldura: ",
+    "description":"Resource list page: followed by frame type (e.g. top frame, subframe)"
+  },
+  "framedomain":{
+    "message":"Domínio da moldura: ",
+    "description":"Resource list page: domain name of the frame"
+  },
+  "frameurl":{
+    "message":"URL da moldura: ",
+    "description":"Resource list page: full URL of the frame"
+  },
+  "legend":{
+    "message":"Legenda: ",
+    "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
+  },
+  "blockedresource":{
+    "message":"Recurso bloqueado",
+    "description":"Resource list page: resource status"
+  },
+  "whitelistedresource":{
+    "message":"Recurso na lista branca",
+    "description":"Resource list page: resource status"
+  },
+  "hiddenelement":{
+    "message":"Elemento oculto",
+    "description":"Resource list page: resource status"
+  },
+  "thirdparty":{
+    "message":"Terceiros",
+    "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
   "acceptableadsdisable_done":{
     "message":"Os Anúncios Aceitáveis foram desativados.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."

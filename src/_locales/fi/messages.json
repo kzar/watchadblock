@@ -367,6 +367,10 @@
     "message":"AdBlock-varoitusten poistoluettelo (poistaa ilmoitukset AdBlockin käyttämisestä)",
     "description":"Name of the filter list"
   },
+  "filteracceptable_ads":{
+    "message":"Hyväksyttävät mainokset (suositus)",
+    "description":"A filter list"
+  },
   "filteradblock_custom":{
     "message":"AdBlockin mukautetut listat (suositeltu)",
     "description":"A filter list"
@@ -479,9 +483,21 @@
     "message":"AdBlock - Mainoksen ilmoittaminen",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"Löysitkö mainoksen netistä? Autamme sinua ilmoittamaan siitä!",
+    "description":"Introduction of the ad reporting page"
+  },
+  "adreportvoluntary":{
+    "message":"Mainoksista ilmoittaminen on vapaaehtoista. Mainoksista ilmoittamalla autat suodatinlistojen ylläpidossa, jolloin mainos piilotetaan jatkossa myös muilta. Jos et halua ilmoittaa nyt, asia on ok. Sulje tämä sivu ja <a>estä mainos<\/a> vain itseltäsi.",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"Ilmoita, kun haittaohjelma havaitaan",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+  },
+  "malwarenotificationmessage":{
+    "message":"AdBlock esti latauksen sivustolta, joka on levittänyt haittaohjelmia.",
+    "description":"Notification when a malware request has been blocked. This message should be under 90 characters!"
   },
   "malwarenotificationlearnmore":{
     "message":"Lisätietoja haittaohjelmista",
@@ -491,6 +507,10 @@
     "message":"Poista nämä ilmoitukset käytöstä",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"Mainoksia lisäävien haittaohjelmien tarkistus:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"Tietokoneesi voi olla haittaohjelman saastuttama. Klikkaa <a>tästä<\/a> saadaksesi lisää tietoja.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -498,6 +518,26 @@
   "malwarenotfound":{
     "message":"Tunnettuja haittaohjelmia ei löytynyt.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"Tarkista hyväksyttävien mainosten suodatinlistat:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Klikkaa tästä: <a>poista hyväksyttävät mainokset käytöstä<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"Jos et myöskään halua nähdä tällaisia mainoksia, voit jättää hyväksyttävien mainosten suodatinlistan pois päältä.",
+    "description":"Acceptable Ads message on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Lisätietoja hyväksyttävistä mainoksista.",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"Varmista, että suodatinlistasi ovat ajan tasalla:",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Napsauta tästä: <a>Päivitä suodattimeni!<\/a>",
@@ -519,6 +559,14 @@
     "message":"Ei",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"Upeaa! Olet valmis.",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"Poista kaikki laajennukset käytöstä, paitsi AdBlock:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
     "message":"Avaa <a href='#'>lisäosasivu<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -526,6 +574,10 @@
   "clickdisableotherextensions":{
     "message":"<b>TAI<\/b>, klikkaa tätä painiketta, niin teemme kaiken puolestasi: <a>Poista kaikki muut laajennukset käytöstä<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
+  },
+  "disableotherextensionscomplete":{
+    "message":"Kaikki muut laajennukset on nyt poistettu käytöstä. Sivu, jolla mainos on, päivitetään nyt. Hetki vain.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "enableotherextensionscomplete":{
     "message":"Laajennukset, jotka oli aiemmin poistettu käytöstä, on nyt otettu takaisin käyttöön.",
@@ -535,6 +587,10 @@
     "message":"Avaa laajennukset-sivu ottaaksesi käyttöön laajennukset, jotka oli poistettu aiemmin käytöstä.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   },
+  "tabreloadcomplete":{
+    "message":"Valmista! Mainoksen sisältänyt sivu on nyt päivitetty. Tarkista, onko mainos edelleen sivulla. Tule sitten takaisin tälle sivulle ja vastaa alla olevaan kysymykseen.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "disableforchromeandsafaristeptwo":{
     "message":"Poista rasti ruudusta 'Käytössä' jokaiselta lisäosalta <b>paitsi<\/b> AdBlockilta. <b>Jätä AdBlock käyttöön<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
@@ -542,6 +598,14 @@
   "disableforsafaristepone":{
     "message":"Napsauta Safari-valikkoa &rarr; Asetukset &rarr; Lisäosat.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"Hienoa! Selvitetäänpä nyt, mistä laajennuksesta ongelma johtuu. Ota laajennukset yksi kerrallaan käyttöön. Laajennus, jonka käyttöönoton myötä mainos palaa, on sellainen, joka sinun tulee poistaa päästäksesi eroon mainoksesta.",
+    "description":"Tells the user to reenable the extensions one by one"
+  },
+  "correctfilters":{
+    "message":"Varmista, että käytät oikean kielen suodatinlistaa\/-listoja:",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Millä kielellä sivu on kirjoitettu?",
@@ -631,6 +695,22 @@
     "message":"ukraina",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"arabia",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"viro",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"islanti",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"liettua",
+    "description":"language"
+  },
   "other":{
     "message":"Muu",
     "description":"Multiple choice option"
@@ -680,6 +760,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"Asenna AdBlock Plus Firefoxille $chrome$ jos sinulla ei ole sitä.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -896,6 +986,10 @@
   "report_ad_on_page":{
     "message":"Raportoi mainoksesta tällä sivulla",
     "description":"Entry in the AdBlock button menu"
+  },
+  "acceptableadsoption":{
+    "message":"Salli osa ei-häiritsevästä mainonnasta",
+    "description":"option on the 'General' tab"
   },
   "advanced_options2":{
     "message":"Olen edistynyt käyttäjä, näytä edistyneet asetukset",
@@ -1128,5 +1222,113 @@
   "ad_report_please":{
     "message":"Jos näet mainoksen, ethän tee virheilmoitusta, vaan tee <a>ilmoitus mainoksesta<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
+  },
+  "resourceblocktitle":{
+    "message":"Kaikki resurssit",
+    "description":"Resource list page name"
+  },
+  "headerresource":{
+    "message":"Resurssi",
+    "description":"Resource list page: title of a column"
+  },
+  "headertype":{
+    "message":"Tyyppi",
+    "description":"Resource list page: title of a column"
+  },
+  "headerfilter":{
+    "message":"Vastaava suodatin",
+    "description":"Resource list page: title of a column"
+  },
+  "show_resourcelist":{
+    "message":"Näytä kaikki pyynnöt",
+    "description":"Menu entry to open the resource list page"
+  },
+  "noresourcessend2":{
+    "message":"Joku meni vikaan. Resursseja ei kuitenkaan ole lähetetty. Tämä sivu sulkeutuu nyt. Yritä päivittää verkkosivu.",
+    "description":"Resource list page: error message"
+  },
+  "resourcedomain":{
+    "message":"Ladattiin sivu verkkotunnuksessa:\n$domain$",
+    "description":"Resource list page: text shown when hovering over an item in the third-party column",
+    "placeholders":{
+      "domain":{
+        "content":"$1",
+        "example":"example.com"
+      }
+    }
+  },
+  "filterorigin":{
+    "message":"Suodattimen alkuperä:\n$list$",
+    "description":"Resource list page: tooltip of matching filter, telling which filter list contains the filter",
+    "placeholders":{
+      "list":{
+        "content":"$1",
+        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "typeselector":{
+    "message":"valitsin",
+    "description":"A resource type"
+  },
+  "typesub_frame":{
+    "message":"kehys",
+    "description":"A resource type"
+  },
+  "typemain_frame":{
+    "message":"sivu",
+    "description":"A resource type"
+  },
+  "topframe":{
+    "message":"Pääkehys",
+    "description":"Resource list page: frame type"
+  },
+  "subframe":{
+    "message":"Alikehys",
+    "description":"Resource list page: frame type"
+  },
+  "frametype":{
+    "message":"Kehystyyppi: ",
+    "description":"Resource list page: followed by frame type (e.g. top frame, subframe)"
+  },
+  "framedomain":{
+    "message":"Kehysverkkotunnus: ",
+    "description":"Resource list page: domain name of the frame"
+  },
+  "frameurl":{
+    "message":"Kehyksen osoite: ",
+    "description":"Resource list page: full URL of the frame"
+  },
+  "legend":{
+    "message":"Selite: ",
+    "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
+  },
+  "blockedresource":{
+    "message":"Estetty resurssi",
+    "description":"Resource list page: resource status"
+  },
+  "whitelistedresource":{
+    "message":"Sallittu resurssi",
+    "description":"Resource list page: resource status"
+  },
+  "hiddenelement":{
+    "message":"Piilotettu elementti",
+    "description":"Resource list page: resource status"
+  },
+  "thirdparty":{
+    "message":"Kolmas osapuoli",
+    "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Hyväksyttävät mainokset on poistettu käytöstä.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Voit ottaa sen uudelleen käyttöön milloin vain klikkaamalla \"Salli osa ei-häiritsevästä mainoksista\" alla.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_please_reenable":{
+    "message":"Hyväksyttävien mainosten sallimisen avulla voit tukea sivustoja, joista pidät. Sivut näyttävät vain ei-ärsyttäviä mainoksia.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

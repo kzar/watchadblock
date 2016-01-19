@@ -1223,6 +1223,102 @@
     "message":"如果您看到广告，不要在此提交bug报告，请转到<a>报告广告<\/a>！",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
   },
+  "resourceblocktitle":{
+    "message":"所有资源",
+    "description":"Resource list page name"
+  },
+  "headerresource":{
+    "message":"资源",
+    "description":"Resource list page: title of a column"
+  },
+  "headertype":{
+    "message":"类型",
+    "description":"Resource list page: title of a column"
+  },
+  "headerfilter":{
+    "message":"符合的过滤规则",
+    "description":"Resource list page: title of a column"
+  },
+  "show_resourcelist":{
+    "message":"显示资源列表",
+    "description":"Menu entry to open the resource list page"
+  },
+  "noresourcessend2":{
+    "message":"出错了。没有资源被发送。页面即将关闭。请尝试重新加载该网站。",
+    "description":"Resource list page: error message"
+  },
+  "resourcedomain":{
+    "message":"在以下网域上加载：\n$domain$",
+    "description":"Resource list page: text shown when hovering over an item in the third-party column",
+    "placeholders":{
+      "domain":{
+        "content":"$1",
+        "example":"example.com"
+      }
+    }
+  },
+  "filterorigin":{
+    "message":"过滤规则来源：\n$list$",
+    "description":"Resource list page: tooltip of matching filter, telling which filter list contains the filter",
+    "placeholders":{
+      "list":{
+        "content":"$1",
+        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "typeselector":{
+    "message":"选择器",
+    "description":"A resource type"
+  },
+  "typesub_frame":{
+    "message":"框架",
+    "description":"A resource type"
+  },
+  "typemain_frame":{
+    "message":"页面",
+    "description":"A resource type"
+  },
+  "topframe":{
+    "message":"顶部框架",
+    "description":"Resource list page: frame type"
+  },
+  "subframe":{
+    "message":"辅助框架",
+    "description":"Resource list page: frame type"
+  },
+  "frametype":{
+    "message":"框架类型： ",
+    "description":"Resource list page: followed by frame type (e.g. top frame, subframe)"
+  },
+  "framedomain":{
+    "message":"框架所在网域： ",
+    "description":"Resource list page: domain name of the frame"
+  },
+  "frameurl":{
+    "message":"框架URL: ",
+    "description":"Resource list page: full URL of the frame"
+  },
+  "legend":{
+    "message":"图例： ",
+    "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
+  },
+  "blockedresource":{
+    "message":"已屏蔽的资源",
+    "description":"Resource list page: resource status"
+  },
+  "whitelistedresource":{
+    "message":"已加入白名单的资源",
+    "description":"Resource list page: resource status"
+  },
+  "hiddenelement":{
+    "message":"隐藏元素",
+    "description":"Resource list page: resource status"
+  },
+  "thirdparty":{
+    "message":"第三方",
+    "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
   "acceptableadsdisable_done":{
     "message":"可接受广告已被禁用。",
     "description":"Message shown to users after disabling Acceptable Ads via update page."

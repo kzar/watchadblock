@@ -367,6 +367,10 @@
     "message":"Lista de Remoção de Avisos AdBlock (remove mensagens acerca do uso do AdBlock)",
     "description":"Name of the filter list"
   },
+  "filteracceptable_ads":{
+    "message":"Anúncios aceitáveis (recomendado)",
+    "description":"A filter list"
+  },
   "filteradblock_custom":{
     "message":"AdBlock filtros personalizados (recomendado)",
     "description":"A filter list"
@@ -479,6 +483,10 @@
     "message":"AdBlock - Denunciar um anúncio",
     "description":"Title of the ad report page"
   },
+  "adreportintro":{
+    "message":"Encontrou um anúncio numa página da web? Nós vamos ajudá-lo a encontrar o lugar certo para denunciá-lo!",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"O AdBlock deve notificá-lo quando detecta malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -495,6 +503,10 @@
     "message":"Desativar estas notificações",
     "description":"Button on the malware notification to disable future notifications. Message should be under 45 characters!"
   },
+  "malwarecheck":{
+    "message":"Verificação de malware que poderá estar a injectar anúncios:",
+    "description":"Section header on the ad report page"
+  },
   "malwarewarning":{
     "message":"O seu computador pode estar infectado por um malware.  Clique <a>aqui<\/a> para obter mais informações.",
     "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
@@ -502,6 +514,22 @@
   "malwarenotfound":{
     "message":"Nenhum malware encontrado.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
+  },
+  "disableaa":{
+    "message":"Verifique os filtros de Anúncios Aceitáveis:",
+    "description":"Section header on the ad report page"
+  },
+  "clickdisableaa":{
+    "message":"Clique aqui: <a>Desativar Anúncios Aceitáveis<\/a>",
+    "description":"Instruction on ad report page"
+  },
+  "aalinkadreport":{
+    "message":"Saiba mais acerca do programa de Anúncios Aceitáveis.",
+    "description":"Acceptable Ads link message on ad report page"
+  },
+  "updateyourlists":{
+    "message":"Certifique-se que as suas listas de filtros estão actualizadas:",
+    "description":"Section header on the ad report page"
   },
   "clickupdatefilters":{
     "message":"Clica aqui: <a>Actualizar os meus filtros!<\/a>",
@@ -523,6 +551,14 @@
     "message":"Não",
     "description":"A negative response to a question"
   },
+  "adalreadyblocked":{
+    "message":"Ótimo! Está tudo pronto.",
+    "description":"On the ad report page, telling a user there is nothing to do"
+  },
+  "disableallextensions":{
+    "message":"Desactive todas as extensões à excepção do AdBlock:",
+    "description":"Instruction on ad report page"
+  },
   "disableforchromestepone":{
     "message":"Abrir <a href='#'>página das extensões<\/a>",
     "description":"Step 1 for disabling Chrome extensions"
@@ -531,6 +567,10 @@
     "message":"<b>OU<\/b>, simplesmente clique neste botão para que façamos tudo o que precede: <a>Desactivar todas as outras extensões<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
   },
+  "disableotherextensionscomplete":{
+    "message":"Desactivámos todas as outras extensões. Vamos agora recarregar a página com o anúncio. Um segundo, por favor.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
+  },
   "enableotherextensionscomplete":{
     "message":"As extensões que foram desactivadas anteriormente foram reactivadas.",
     "description":"On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -538,6 +578,10 @@
   "manuallyenableotherextensions":{
     "message":"Abra a página de extensões para activar as extensões que foram desactivadas anteriormente.",
     "description":"On the ad report page, alert notifying users that they will need to manually reenable the extensions"
+  },
+  "tabreloadcomplete":{
+    "message":"Feito! Recarregámos a página com o anúncio. Por favor, verifique essa página para confirmar se o anúncio desapareceu. Em seguida, volte a esta página e responda à pergunta abaixo.",
+    "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "disableforchromeandsafaristeptwo":{
     "message":"Desactive a opção 'Activado' ao lado de cada extensão <b>excepto<\/b> para o AdBlock.  <b>Deixe o AdBlock activado<\/b>.",
@@ -635,6 +679,22 @@
     "message":"Ucraniano",
     "description":"language"
   },
+  "filtereasylist_plus_arabic":{
+    "message":"Árabe",
+    "description":"language"
+  },
+  "filtereasylist_plus_estonian":{
+    "message":"Estoniano",
+    "description":"language"
+  },
+  "filtericelandic":{
+    "message":"Islandês",
+    "description":"language"
+  },
+  "filtereasylist_plus_lithuania":{
+    "message":"Lituano",
+    "description":"language"
+  },
   "other":{
     "message":"Outro",
     "description":"Multiple choice option"
@@ -684,6 +744,16 @@
       "chrome":{
         "content":"<span id='chrome2'><\/span>",
         "example":"'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
+      }
+    }
+  },
+  "checkinfirefox_2":{
+    "message":"Instale o Adblock Plus no Firefox $chrome$ caso não o tenha instalado.",
+    "description":"Instruction for how to check Firefox\/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.",
+    "placeholders":{
+      "chrome":{
+        "content":"<span id='adblockforchrome'><\/span>",
+        "example":"'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
       }
     }
   },
@@ -900,6 +970,10 @@
   "report_ad_on_page":{
     "message":"Denunciar um anúncio nesta página",
     "description":"Entry in the AdBlock button menu"
+  },
+  "acceptableadsoption":{
+    "message":"Permitir alguma publicidade não intrusiva",
+    "description":"option on the 'General' tab"
   },
   "advanced_options2":{
     "message":"Visualizar opções avançadas",
@@ -1132,5 +1206,81 @@
   "ad_report_please":{
     "message":"Se está a ver um anúncio, não faça um relatório de erro, faça um <a>relatório de anúncio<\/a>!",
     "description":"Link to the ad report page on our support site. This is found on the Support tab of the options."
+  },
+  "resourceblocktitle":{
+    "message":"Todos os recursos",
+    "description":"Resource list page name"
+  },
+  "headerresource":{
+    "message":"Recurso",
+    "description":"Resource list page: title of a column"
+  },
+  "headertype":{
+    "message":"Tipo",
+    "description":"Resource list page: title of a column"
+  },
+  "headerfilter":{
+    "message":"Filtro correspondente",
+    "description":"Resource list page: title of a column"
+  },
+  "show_resourcelist":{
+    "message":"Mostrar todos os pedidos",
+    "description":"Menu entry to open the resource list page"
+  },
+  "noresourcessend2":{
+    "message":"Alguma coisa aconteceu de errado. Nenhum recurso foi enviado. Esta página vai ser fechada. Tente recarregar o site.",
+    "description":"Resource list page: error message"
+  },
+  "resourcedomain":{
+    "message":"Carregado na página do domínio:\n$domain$",
+    "description":"Resource list page: text shown when hovering over an item in the third-party column",
+    "placeholders":{
+      "domain":{
+        "content":"$1",
+        "example":"example.com"
+      }
+    }
+  },
+  "filterorigin":{
+    "message":"Origem do filtro:\n$list$",
+    "description":"Resource list page: tooltip of matching filter, telling which filter list contains the filter",
+    "placeholders":{
+      "list":{
+        "content":"$1",
+        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "typeselector":{
+    "message":"selector",
+    "description":"A resource type"
+  },
+  "typesub_frame":{
+    "message":"frame",
+    "description":"A resource type"
+  },
+  "typemain_frame":{
+    "message":"página",
+    "description":"A resource type"
+  },
+  "legend":{
+    "message":"Legenda: ",
+    "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
+  },
+  "blockedresource":{
+    "message":"Recurso bloqueado",
+    "description":"Resource list page: resource status"
+  },
+  "hiddenelement":{
+    "message":"Elemento oculto",
+    "description":"Resource list page: resource status"
+  },
+  "thirdparty":{
+    "message":"Terceiros",
+    "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Anúncios Aceitáveis foi desativado.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }
