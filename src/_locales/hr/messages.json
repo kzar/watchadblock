@@ -243,6 +243,10 @@
     "message":"Omogući način kompatibilnosti ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Omogući blokiranje sadržaja za Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Prikaži izjave uklanjanja pogreške u zapisu konzole (usporava AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -357,15 +361,15 @@
   },
   "filterantisocial":{
     "message":"Antisocijalna lista filtera (uklanja gumbe društevnih mreža)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Fanboy's Annoyances (uklanja dosadne smetnje sa Weba)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterwarning_removal":{
-    "message":"Lista uklanjanja upozorenja AdBlock-a (uklanja poruke o korištenju AdBlock-a)",
-    "description":"Name of the filter list"
+    "message":"AdBlock lista uklanjanja upozorenja (uklanja upozorenja o korištenju blokera oglasa)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Prihvatljivi oglasi (preporučeno)",
@@ -470,6 +474,10 @@
   "filtersavewarning":{
     "message":"Budite oprezni: ako ovdje napravite pogrešku mnogo drugih filtera, uključujući službene, se može pokvariti!<br\/>Pročitajte <a>sintaksni vodič za filtere<\/a> kako bi naučili dodavati napredne filtere zabranjujućih i dopuštajućih lista.",
     "description":"Warning when blacklisting manually"
+  },
+  "contentblockingwarning":{
+    "message":"Napomena: Dodavanjem na listu dopuštenog (dopuštanje oglasa) stranice nije podržano sa blokiranjem sadržaja za Safari.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   },
   "savebutton":{
     "message":"Spremi",
@@ -951,6 +959,26 @@
     "message":"Pauziraj AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Kako bi pauzirali AdBlock sa omogućenim blokiranjem sadržaja, molimo odaberite Safari (u traci izbornika) > Postavke > Proširenja > AdBlock i odbilježite 'Omogući AdBlock'.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"Broj pravila filter listi prešao je granicu od 50.000 i automatski je smanjen. Molimo odjavite se sa nekih listi ili onemogućite blokiranje sadržaja za Safari!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Onemogućavanje ove mogućnosti zahtjeva ponovno pokretanje vašeg preglednika.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Granica pravila blokiranog sadržaja je premašena",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Molimo onemogućite neke liste filtera. Više informacija u AdBlock postavkama.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Vrati moja blokiranja na ovoj domeni",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1320,15 +1348,11 @@
     "description":"Resource list page: column title telling if the resource originates from a different domain"
   },
   "acceptableadsdisable_done":{
-    "message":"Prihvatljivi oglasi su onemogućeni.",
+    "message":"Više niste pretplaćeni na liste prihvatljivih oglasa.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_how_to_reenable":{
-    "message":"Možete ih ponovo omogućiti u bilo koje vrijeme klikom na potvrdni okvir \"Dopusti neke nenametljive reklame\".",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_please_reenable":{
-    "message":"Omogućavanjem Prihvatljivih oglasa podržavate web-stranice koje volite koje su se obvezale prikazivati samo prihvatljive i ne-iritantne oglase.",
+    "message":"Možete ovo omogućite i podržati stranice koje volite odabiranjem \"Dopusti neke nenametljive reklame\" ispod.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

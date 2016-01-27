@@ -243,6 +243,10 @@
     "message":"Activeer de ClickToFlash compatibiliteitsmodus",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Schakel Safari Content Blocking in",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Toon debug resultaten in de Console Logs (dit vertraagt AdBlock).",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -357,15 +361,15 @@
   },
   "filterantisocial":{
     "message":"Antisocial filter (verwijdert social media knoppen)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Fanboy's Annoyances (verwijdert ergernissen)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterwarning_removal":{
-    "message":"AdBlock Waarschuwing Verwijderende lijst (verwijdert meldingen over het gebruik van AdBlock)",
-    "description":"Name of the filter list"
+    "message":"AdBlock Waarschuwing Verwijder Lijst (verwijdert waarschuwingen over het gebruik van ad blockers)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Aanvaardbare Advertenties (aanbevolen)",
@@ -951,6 +955,10 @@
     "message":"Pauzeer AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "browserestartrequired":{
+    "message":"Om deze functie uit te schakelen moet je je browser opnieuw opstarten.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
   "undo_last_block":{
     "message":"Maak mijn blokkeringen ongedaan op dit domein",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -996,7 +1004,7 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "work_around_hulu_problems":{
-    "message":"Los problemen op Hulu.com (alleen beschikbaar in de VS) op (vereist het opnieuw opstarten van de browser)",
+    "message":"Los problemen met Hulu.com op (vereist het opnieuw opstarten van de browser)",
     "description":"Advanced Options page checkbox, which users only need to use if Hulu.com videos break. It directs the user to restart their browser in order for changes to the checkbox to take effect."
   },
   "modifydomain":{
@@ -1320,15 +1328,7 @@
     "description":"Resource list page: column title telling if the resource originates from a different domain"
   },
   "acceptableadsdisable_done":{
-    "message":"Aanvaardbare advertenties zijn uitgeschakeld.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_how_to_reenable":{
-    "message":"Je kan dit op elk moment terug activeren door te klikken op het \"Laat sommige, niet-opdringerige advertenties toe\" selectievakje onderaan.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_please_reenable":{
-    "message":"Het inschakelen van de Aanvaardbare Advertenties is een manier om de websites te helpen die je wilt ondersteunen door enkel stijlvolle, niet vervelende advertenties te tonen.",
+    "message":"Je bent niet langer geabonneerd op de aanvaardbare advertenties filter.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

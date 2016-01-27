@@ -243,6 +243,10 @@
     "message":"Разреши режим на съвместимост с ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Разреши блокиране на съдържание в Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Показвай предпроверочните декларации в дневника на Конзола (води до забавяне на AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -357,15 +361,15 @@
   },
   "filterantisocial":{
     "message":"Разреши противосоциалния пакет (чисти бутоните на социални мрежи)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Разреши Fanboy Annoyances (премахва досадните неща)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterwarning_removal":{
-    "message":"Разреши противопремахващия пакет (чисти съобщенията за ползване на AdBlock)",
-    "description":"Name of the filter list"
+    "message":"Разреши противоадблоковия пакет (чисти предупрежденията за рекламни блокери)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Разреши Приемливи реклами (препоръчително)",
@@ -388,7 +392,7 @@
     "description":"Language names for a filter list"
   },
   "filtereasyprivacy":{
-    "message":"Разреши EasyPrivacy (защитава лична неприкосновеност)",
+    "message":"Разреши EasyPrivacy (защитава личната неприкосновеност)",
     "description":"A filter list"
   },
   "filtereasylist_plus_indonesian":{
@@ -470,6 +474,10 @@
   "filtersavewarning":{
     "message":"Внимание: ако допуснете грешка много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!<br\/>Прочетете ръководството <a>Синтаксис на филтрите<\/a> за разширено добавяне на позволяващи и изключващи филтри.",
     "description":"Warning when blacklisting manually"
+  },
+  "contentblockingwarning":{
+    "message":"Забележка: позволяването на изключения в страница или сайт (за реклами) не се поддържа при разрешено блокиране на съдържание вSafari.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   },
   "savebutton":{
     "message":"Запиши",
@@ -724,7 +732,7 @@
     "description":"Used for placeholder in checkinfirefox_2 string"
   },
   "nodefaultfilter1":{
-    "message":"Не разполагаме с филтри по подразбиране за езика.<br\/>Моля, опитайте да намерите подходящ $link$, който да поддържа езика или блокирайте рекламата самостоятелно от преградка „Нагласяване“.",
+    "message":"Не разполагаме с филтър по подразбиране за езика.<br\/>Моля, опитайте да намерите подходящия за езика $link$, или блокирайте рекламата самостоятелно от преградка „Нагласяване“.",
     "description":"Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab.",
     "placeholders":{
       "link":{
@@ -951,6 +959,26 @@
     "message":"Задръж AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"За задържане на AdBlock при разрешено блокиране на съдържание, моля, изберете Safari (от менюто) > Настройки > Разширения > AdBlock и снемете отметката пред „Разреши AdBlock“.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"Надхвърляте ограничението от 50 000 правила и броят им автоматично беше намален. Моля, прекратете абонамента си за някои от филтрите или забранете блокиране на съдържание в Safari!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Забраняването му изисква повторен пуск на браузъра.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Надхвърлена квота към блокиране на съдържание",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Моля, забранете някои от филтрите. За повече вж. Настройки на AdBlock.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Отмени блокираните за домейна",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1094,7 +1122,7 @@
     }
   },
   "dropboxerrorforfilters":{
-    "message":"Надхвърляте ограничението за размер на файла в Dropbox. Моля, премахнете определени записи от потребителските или от изключващите филтри и опитайте отново.",
+    "message":"Надхвърляте ограничението за размер на файла в Dropbox. Моля, премахнете някои записи от потребителските или от изключващите филтри и опитайте отново.",
     "description":"Message to Dropbox sync users on the Customize tab, custom filters \/ disabled."
   },
   "languagedropdowndescription":{
@@ -1320,15 +1348,11 @@
     "description":"Resource list page: column title telling if the resource originates from a different domain"
   },
   "acceptableadsdisable_done":{
-    "message":"Филтърът Приемливи реклами е забранен.",
+    "message":"Абонаментът ви за Приемливи реклами е прекратен.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_how_to_reenable":{
-    "message":"Винаги можете да го разрешите повторно като отметнете „Позволи определени ненатрапчиви реклами“ по-долу.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_please_reenable":{
-    "message":"Приемливи реклами е начин за подкрепа на определени сайтове, харесвани от вас, които се ангажират да показват недосаждащи и направени с вкус реклами.",
+    "message":"Можете да го включите в подкрепа на любимите си сайтовете пак, като по-долу изберете „Позволи определени ненатрапчиви реклами“.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

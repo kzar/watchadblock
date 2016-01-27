@@ -1442,7 +1442,7 @@
             //But, Chrome does, so add button click handlers to process the button click events
                 chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex) {
                     if (buttonIndex === 0) {
-                        openTab("http://support.getadblock.com/kb/im-seeing-an-ad/im-seeing-similar-ads-on-every-website/");
+                        openTab("http://help.getadblock.com/support/solutions/articles/6000055822-i-m-seeing-similar-ads-on-every-website-");
                     }
                     if (buttonIndex === 1) {
                         storage_set('malware-notification', false);
@@ -1535,86 +1535,90 @@
 
   // DEBUG INFO
 
-  // Get debug info for bug reporting and ad reporting
+  // Get debug info for bug reporting and ad reporting - returns an object
   getDebugInfo = function() {
+
+      // An object, which contains info about AdBlock like
+      // subscribed filter lists, settings and other settings
+      var the_debug_info = {
+          filter_lists: [],
+          settings: [],
+          other_info: []
+      }
+
+      // Process subscribed filter lists
+      var get_subscriptions = get_subscriptions_minus_text();
+      for (var id in get_subscriptions) {
+          if (get_subscriptions[id].subscribed) {
+              the_debug_info.filter_lists.push(id);
+              the_debug_info.filter_lists.push("  last updated: " + new Date(get_subscriptions[id].last_update).toUTCString());
+          }
+      }
+
+      // Format info about filter lists properly
+      the_debug_info.filter_lists = the_debug_info.filter_lists.join('\n');
+
+      // Process custom filters & excluded filters
+      var adblock_custom_filters = storage_get("custom_filters");
+
+      if (adblock_custom_filters) {
+          the_debug_info.custom_filters = adblock_custom_filters;
+      }
+      if (get_exclude_filters_text()) {
+          the_debug_info.exclude_filters = get_exclude_filters_text();
+      }
+
+      // Process settings
+      var settings = get_settings();
+      for (setting in settings) {
+          the_debug_info.settings.push(setting + ": " + JSON.stringify(settings[setting]) + "\n");
+      }
+
+      // We need to hardcode malware-notification setting,
+      // because it isn't included in _settings object, but just in localStorage
+      the_debug_info.settings.push("malware-notification: " + storage_get('malware-notification') + "\n");
+      the_debug_info.settings = the_debug_info.settings.join('');
+
+      // Find out AdBlock version
+      var AdBlockVersion = chrome.runtime.getManifest().version;
 
       // Is this installed build of AdBlock the official one?
       var AdBlockBuild = function() {
           if (!SAFARI) {
               if (chrome.runtime.id === "pljaalgmajnlogcgiohkhdmgpomjcihk") {
-                  return " Beta";
+                  return "Beta";
               } else if (chrome.runtime.id === "gighmmpiobklfepjocnamgkkbiglidom" ||
                          chrome.runtime.id === "aobdicepooefnbaeokijohmhjlleamfj") {
-                  return " Stable";
+                  return "Stable";
               } else {
-                  return " Unofficial";
+                  return "Unofficial";
               }
           } else {
               if (safari.extension.baseURI.indexOf("com.betafish.adblockforsafari-UAMUU4S2D9") > -1) {
-                  return " Stable";
+                  return "Stable";
               } else {
-                  return " Unofficial";
+                  return "Unofficial";
               }
           }
       }
 
-      // Get AdBlock version
-      var AdBlockVersion = chrome.runtime.getManifest().version;
+      // Push AdBlock version and build to |the_debug_info| object
+      the_debug_info.other_info.push("AdBlock version number: " + AdBlockVersion + " " + AdBlockBuild());
 
-      // Get subscribed filter lists
-      var subscribed_filter_names = [];
-      var get_subscriptions = get_subscriptions_minus_text();
-      for (var id in get_subscriptions) {
-          if (get_subscriptions[id].subscribed) {
-              subscribed_filter_names.push(id);
-              subscribed_filter_names.push("  last updated: " + new Date(get_subscriptions[id].last_update).toUTCString());
-          }
-      }
-
-      // Get last known error
+      // Get & process last known error
       var adblock_error = storage_get("error");
+      if (adblock_error) {
+          the_debug_info.other_info.push("Last known error: " + adblock_error);
+      }
 
-      // Get total pings
+      // Get & process total pings
       var adblock_pings = storage_get("total_pings");
+      the_debug_info.other_info.push("Total pings: " + adblock_pings);
 
-      // Get custom filters
-      var adblock_custom_filters = storage_get("custom_filters");
-
-      // Get settings
-      var adblock_settings = [];
-      var settings = get_settings();
-      for (setting in settings)
-          adblock_settings.push(setting + ": " + JSON.stringify(settings[setting]) + "\n");
-      // We need to hardcode malware-notification setting,
-      // because it isn't included in _settings object, but just in localStorage
-      adblock_settings.push("malware-notification: " + storage_get('malware-notification') + "\n");
-      adblock_settings = adblock_settings.join('');
-
-      // Create debug info for a bug report or an ad report
-      var info = [];
-      info.push("==== Filter Lists ====");
-      info.push(subscribed_filter_names.join('  \n'));
-      info.push("");
-      if (adblock_custom_filters) {
-          info.push("==== Custom Filters ====");
-          info.push(adblock_custom_filters);
-          info.push("");
-      }
-      if (get_exclude_filters_text()) {
-          info.push("==== Exclude Filters ====");
-          info.push(get_exclude_filters_text());
-          info.push("");
-      }
-      info.push("==== Settings ====");
-      info.push(adblock_settings);
-      info.push("==== Other info: ====");
-      info.push("AdBlock version number: " + AdBlockVersion + AdBlockBuild());
-      if (adblock_error)
-          info.push("Last known error: " + adblock_error);
-      info.push("Total pings: " + adblock_pings);
-      info.push("UserAgent: " + navigator.userAgent.replace(/;/,""));
-
-      return info.join('  \n');
+      // Get & process userAgent
+      the_debug_info.other_info.push("UserAgent: " + navigator.userAgent.replace(/;/,""));
+      the_debug_info.other_info = the_debug_info.other_info.join("\n");
+      return the_debug_info;
   }
 
   // Code for making a bug report
@@ -1632,7 +1636,7 @@
       body.push("2. ");
       body.push("3. ");
       body.push("");
-      body.push("**What should happen when you do the above steps**");
+      body.push("**What is supposed to happen when you do the above steps**");
       body.push("");
       body.push("");
       body.push("**What actually happened?**");

@@ -243,6 +243,10 @@
     "message":"ClickToFlash Kompatibilitätsmodus aktivieren",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Safari Content Blocking aktivieren",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Debug-Berichte in der Fehlerkonsole anzeigen (verlangsamt AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -357,15 +361,15 @@
   },
   "filterantisocial":{
     "message":"Antisocial Filterliste (entfernt Buttons von sozialen Netzwerken)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Fanboy's Annoyances (entfernt störende\/lästige Inhalte auf Webseiten)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterwarning_removal":{
-    "message":"AdBlock Warnhinweis Liste (entfernt Hinweise über die Verwendung von AdBlock)",
-    "description":"Name of the filter list"
+    "message":"'Adblock Warning Removal'-Filterliste (entfernt Warnungen über die Benutzung von Werbe-Blockern)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Acceptable Ads (empfohlen)",
@@ -470,6 +474,10 @@
   "filtersavewarning":{
     "message":"Achtung: Sollten Sie hier einen Fehler machen, können viele andere Filter sowie die Filter der Filterlisten beschädigt werden!<br\/>Lesen Sie zuerst das <a>Filtersyntax-Tutorial<\/a>, um zu lernen, wie man eigene Black- und Whitelistfilter erstellt und hinzufügt.",
     "description":"Warning when blacklisting manually"
+  },
+  "contentblockingwarning":{
+    "message":"Hinweis: Whitelisting (Werbung zulassen auf) einer Seite oder Webseite wird nicht unterstützt wenn Safari Content Blocking aktiviert ist.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   },
   "savebutton":{
     "message":"Speichern",
@@ -951,6 +959,26 @@
     "message":"AdBlock pausieren",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Um AdBlock mit aktiviertem Content Blocking zu pausieren, klicken Sie bitte auf Safari (in der Menüleiste) > Einstellungen ... > Erweiterungen > AdBlock, und entfernen Sie den Haken unter \"AdBlock aktivieren\".",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"Die Zahl der Filterlistenregeln überschreitet das Limit von 50.000 und wurde automatisch reduziert. Bitte deaktivieren Sie einige Filterlisten oder deaktivieren Sie Safari Content Blocking!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Deaktivieren dieser Funktion erfordert einen Neustart des Browsers.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Content Blocking Filterlimit überschritten",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Bitte deaktivieren Sie einige Filterlisten. Mehr Informationen dazu finden Sie in den AdBlock-Einstellungen.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Selbst erstellte Filter für diese Domain wieder entfernen",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1102,7 +1130,7 @@
     "description":"Dropdown list for language-specific filters"
   },
   "whats_this":{
-    "message":"Was ist das?",
+    "message":"Mehr Informationen",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
@@ -1320,15 +1348,11 @@
     "description":"Resource list page: column title telling if the resource originates from a different domain"
   },
   "acceptableadsdisable_done":{
-    "message":"Acceptable Ads ist ausgeschaltet.",
+    "message":"Die \"Akzeptable Werbung\"-Filterliste ist nicht länger abonniert.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_how_to_reenable":{
-    "message":"Du kannst dies jederzeit mit einem Klick auf die \"Einige nicht aufdringliche Werbung zulassen\" Checkbox unten wieder einschalten.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_please_reenable":{
-    "message":"Die Acceptable Ads Option erlaubt es Dir Webseiten zu unterstützen, welche sich verpflichtet haben Dir weniger aufdringliche Werbung anzuzeigen.",
+    "message":"Sie können dies wieder aktivieren und die Webseiten die Sie mögen unterstützen indem Sie weiter unten \"Einige nicht aufdringliche Werbung zulassen\" aktivieren.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

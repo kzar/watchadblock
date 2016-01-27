@@ -40,6 +40,12 @@ $(function() {
         $("#acceptable_ads_info").slideDown();
         BGcall("unsubscribe", {id:"acceptable_ads", del:false});
       }
+      // If the user has Safari content blocking enabled, then update the filter lists when
+      // a user subscribes to AA
+      if (optionalSettings &&
+          optionalSettings.safari_content_blocking) {
+        BGcall("update_subscriptions_now");
+      }
       return;
     }
     var name = this.id.substring(7); // TODO: hack
@@ -92,26 +98,6 @@ $(function() {
   update_db_icon();
   getDropboxMessage();
 });
-
-$("#acceptable_ads").change(function() {
-  var is_enabled = $(this).is(':checked');
-  if (is_enabled) {
-    $("#acceptable_ads_info").slideUp();
-    BGcall("subscribe", {id: "acceptable_ads"});
-  } else {
-    $("#acceptable_ads_info").slideDown();
-    BGcall("unsubscribe", {id:"acceptable_ads", del:false});
-  }
-  // If the user has Safari content blocking enabled, then update the filter lists when
-  // a user subscribes to AA
-  BGcall("get_settings", function(settings) {
-    if (settings &&
-        settings.safari_content_blocking) {
-      BGcall("update_subscriptions_now");
-    }
-  });
-});
-
 
 $("#enable_show_advanced_options").change(function() {
   // Reload the page to show or hide the advanced options on the
@@ -171,7 +157,7 @@ $("#dbauth").click(function() {
 
 $("#dbauthinfo").click(function() {
     BGcall("openTab",
-           "http://support.getadblock.com/kb/technical-questions/how-do-i-use-the-dropbox-synchronization-feature");
+           "http://help.getadblock.com/support/solutions/articles/6000087888-how-do-i-use-dropbox-synchronization-");
 });
 
 // Change Dropbox button, when user has been logged in/out

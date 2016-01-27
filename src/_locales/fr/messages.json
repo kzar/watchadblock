@@ -243,6 +243,10 @@
     "message":"Activer le mode de compatibilité ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Activer le Blocage de Contenu Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Afficher les messages de débogage dans la Console (ralentit AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -357,15 +361,15 @@
   },
   "filterantisocial":{
     "message":"Liste de filtres Antisocial (supprime les boutons de réseaux sociaux)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Fanboy's Annoyances (supprime les éléments agaçants sur le Web)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterwarning_removal":{
-    "message":"Avertissements AdBlock (supprime les messages au sujet de l'utilisation d'AdBlock)",
-    "description":"Name of the filter list"
+    "message":"Avertissements Adblock (supprime les messages au sujet de l'utilisation de bloqueurs de publicité)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Publicités Acceptables (recommandé)",
@@ -470,6 +474,10 @@
   "filtersavewarning":{
     "message":"Attention : faire une erreur ici peut entraîner un mauvais fonctionnement des filtres officiels.<br\/>Consultez le <a>tutoriel de syntaxe<\/a> pour apprendre à ajouter des filtres avancés.",
     "description":"Warning when blacklisting manually"
+  },
+  "contentblockingwarning":{
+    "message":"Note : Autoriser la pub sur une page ou un site n'est pas supporté lorsque le Blocage de Contenu Safari est activé.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   },
   "savebutton":{
     "message":"Enregistrer",
@@ -951,6 +959,26 @@
     "message":"Désactiver AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Pour désactiver AdBlock lorsque le Blocage de Contenu est activé, cliquez sur Safari (dans la barre des menus) > Préférences > Extensions > AdBlock, et désélectionnez \"Activer AdBlock\".",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"La quantité de règles dans vos listes de filtres excède 50 000 et a été automatiquement réduite. Merci de vous désabonner de quelques listes ou de désactiver le Blocage de Contenu Safari !",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Désactiver cette option nécessite de relancer votre navigateur.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Limite de Blocage de Contenu dépassée",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Désactivez quelques listes de filtres. Plus d'infos dans les Options AdBlock.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Annuler mes blocages sur ce domaine",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1320,15 +1348,11 @@
     "description":"Resource list page: column title telling if the resource originates from a different domain"
   },
   "acceptableadsdisable_done":{
-    "message":"Les Publicités Acceptables ont été désactivées.",
+    "message":"Vous n'êtes plus abonné à la liste de filtres Publicités Acceptables.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptableadsdisable_how_to_reenable":{
-    "message":"Vous pouvez les réactiver à tout moment en cliquant sur la case \"Autoriser certaines publicités non-intrusives\" ci-dessous.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
-  },
-  "acceptableadsdisable_please_reenable":{
-    "message":"Activer les Publicités Acceptables est un moyen de soutenir les sites que vous aimez qui promettent de ne vous montrer que des publicités de bon goût, et non-gênantes.",
+    "message":"Vous pouvez vous y réabonner et soutenir les sites que vous aimez en sélectionnant \"Autoriser certaines publicités non-intrusives\" ci-dessous.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }

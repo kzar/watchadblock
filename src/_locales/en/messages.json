@@ -361,15 +361,15 @@
   },
   "filterantisocial":{
     "message":"Antisocial filter list (removes social media buttons)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Fanboy's Annoyances (removes annoyances on the Web)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterwarning_removal":{
     "message":"Adblock Warning Removal list (removes warnings about using ad blockers)",
-    "description":"Name of the filter list"
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Acceptable Ads (recommended)",
@@ -477,7 +477,7 @@
   },
   "contentblockingwarning":{
     "message":"Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.",
-    "description":"message to Safari content blocking users on Custom tab"
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   },
   "savebutton":{
     "message":"Save",
@@ -576,7 +576,7 @@
     "description":"Instruction on ad report page"
   },
   "disableforchromestepone":{
-    "message":"Open the <a href='#'>extensions page<\/a>",
+    "message":"Open the <a href='#'>extensions page<\/a>.",
     "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
@@ -600,7 +600,7 @@
     "description":"On the ad report page, alert notifying users that we've disabled all other extensions"
   },
   "disableforchromeandsafaristeptwo":{
-    "message":"Uncheck the 'Enabled' checkbox next to every extension <b>except<\/b> for AdBlock.  <b>Leave AdBlock enabled<\/b>.",
+    "message":"Uncheck the \"Enabled\" checkbox next to every extension <b>except<\/b> for AdBlock.  <b>Leave AdBlock enabled<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
   },
   "disableforsafaristepone":{
@@ -973,11 +973,11 @@
   },
   "safarinotificationtitle":{
     "message":"Content Blocking rule limit exceeded",
-    "description":"Title of a notification to user"
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
   },
   "safarinotificationbody":{
     "message":"Please disable some filter lists. More information in AdBlock's Options.",
-    "description":"Body of a notification to user"
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
   },
   "undo_last_block":{
     "message":"Undo my blocks on this domain",
@@ -1133,6 +1133,10 @@
     "message":"What's this?",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
+  "how":{
+    "message":"How?",
+    "description":"Text of a link pointing to instructions on how to do something"
+  },
   "selectlanguage":{
     "message":" -- Select Language -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
@@ -1240,7 +1244,7 @@
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
   "bugreport":{
-    "message":"Why don't you send us a <a href='#' id='report'>bug report<\/a>?",
+    "message":"Why don't you send us a <a>bug report<\/a>?",
     "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{
@@ -1354,5 +1358,101 @@
   "acceptableadsdisable_how_to_reenable":{
     "message":"You can turn this back on and support the websites you love by selecting \"Allow some non-intrusive advertising\" below.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "adreport_laststep":{
+    "message":"Last step: report the issue to us.",
+    "description":"Heading on the ad report page for the last step when the user needs to send us an ad report."
+  },
+  "adreport_name":{
+    "message":"What's your name?",
+    "description":"On the ad report page, when we need to ask the user for their name to submit a report."
+  },
+  "adreport_email":{
+    "message":"What's your email address?",
+    "description":"When we ask the user for their email address so that we can respond to their ad report."
+  },
+  "adreport_email_privacy":{
+    "message":"We'll only use this to contact you if we need more information.",
+    "description":"When we ask the user for their email address so that we can respond to their ad report."
+  },
+  "adreport_location":{
+    "message":"Exactly where on that page is the ad? What does it look like?",
+    "description":"This is a question on the ad report page shown when the user has to report the ad to us. This helps us find where on the page the ad is located"
+  },
+  "adreport_screen_cap_upload":{
+    "message":"Attach a screenshot:",
+    "description":"This is a file upload button on the ad report page shown when the user has to report the ad to us. This helps us find where on the page the ad is located"
+  },
+  "adreport_filter":{
+    "message":"If you have created a working filter using the \"block an ad\" wizard, paste it in the box below:",
+    "description":"This is a question on the report an ad page shown when the user has to report an ad to us. This question lets us know what ad blocking rule might block the ad."
+  },
+  "bug_adreport_otherinfo":{
+    "message":"Any other info that might be helpful? (Details about your browser &amp; your AdBlock settings will be sent with your report)",
+    "description":"Shown on the bug report page and the ad report page. This lets the user supply any info that we didn't ask about, but is 100% optional."
+  },
+  "buttonsubmit":{
+    "message":"Submit",
+    "description":"Shown at the end of a bug or ad report wizard. When the user clicks the button, their report is sent to us."
+  },
+  "adreport_error_heading":{
+    "message":"ERROR!",
+    "description":"Subheading for the section of the ad report page shown when the connection to the support site for reporting ads breaks."
+  },
+  "adreport_error_1":{
+    "message":"Oops. The ad report didn't submit properly.",
+    "description":"This is shown when the user tries to report an ad but the connection breaks."
+  },
+  "adreport_error_2":{
+    "message":"Please go to <a>our support website<\/a> then copy &amp; paste this into the \"Fill in any details you think will help us understand your issue\" section.",
+    "description":"Shown when the connection to the support site for reporting an ad breaks."
+  },
+  "adreport_error_3":{
+    "message":"You will also need to add your name &amp; email again.",
+    "description":"Shown when the connection to the support site for reporting an ad breaks."
+  },
+  "adreport_missing_info":{
+    "message":"Required information is missing or invalid.  Please fill in the questions that have a red border.",
+    "description":"Shown when the user does enter all of the required information."
+  },
+  "adreport_missing_screenshot":{
+    "message":"You forgot to attach a screenshot! We can't help you without seeing the ad(s) you're reporting.",
+    "description":"Shown when the user does enter all of the required information."
+  },
+  "adreport_response_success":{
+    "message":"All set!  We'll be in touch soon, most likely within a day, two if it's a holiday. In the meantime, look for an email from AdBlock. You'll find a link to your ticket on our help site there. If you prefer to follow along by email, you can do that, too!",
+    "description":"Shown when the user does enter all of the required information."
+  },
+  "adreport_response_invalid_file":{
+    "message":"That's not an image file. Please upload a .png, .gif, or .jpg file.",
+    "description":"Shown when the user uploads an invalid file type (not an image file)."
+  },
+  "adreport_response_large_file":{
+    "message":"That file is too big. Please make sure your file is less than 10 MB.",
+    "description":"Shown when the user uploads a large image file."
+  },
+  "adreport_response_save_error":{
+    "message":"Error saving the uploaded file.",
+    "description":"Shown when the server could not save the file on the server."
+  },
+  "adreport_response_file_name":{
+    "message":"That file name is too long. Please give your file a shorter name.",
+    "description":"Shown when the image file name is greater than 255 characters."
+  },
+  "adreport_all_debug_info":{
+    "message":"The following information will also be included in the ad report.",
+    "description":"Shown when the user does enter all of the required information."
+  },
+  "adreport_server_response_error_msg":{
+    "message":"There was an error processing your request.",
+    "description":"Shown when an new problem ticket is submit from the 'Report an Ad' page, and the server had problem processing the data."
+  },
+  "adreport_server_response_error__manual_msg_step1":{
+    "message":"Please go to <a>our support website<\/a>.",
+    "description":"Shown when the server has an unrecoverable error"
+  },
+  "adreport_server_response_error__manual_msg_step2":{
+    "message":"And manually create a ticket, and copy and paste the information below into the \"Fill in any details you think will help us understand your issue\" section",
+    "description":"Shown when the server has an unrecoverable error"
   }
 }

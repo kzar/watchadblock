@@ -519,7 +519,7 @@
         cursor: default;
         -webkit-user-select: none;
       }
-      input[type=text], textarea {
+      input[type=text], input[type=email], textarea {
         transition: all 0.30s ease-in-out;
         -webkit-transition: all 0.30s ease-in-out;
         border: #fff 1px solid;
@@ -528,7 +528,7 @@
         margin: 5px 1px 3px 0px;
         border: 1px solid #DDDDDD;
       }
-      input[type=text]:focus, textarea:focus {
+      input[type=email]:focus, input[type=text]:focus, textarea:focus {
         box-shadow: 0px 0px 5px #dfdfdf;
         -webkit-box-shadow: 0 0 5px #dfdfdf;
         padding: 3px 0px 3px 3px;

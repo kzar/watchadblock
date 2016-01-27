@@ -127,10 +127,7 @@ $(function() {
 
     // Click handlers
     $("#bugreport").click(function() {
-        var out = BG.makeReport();
-        var result = "http://support.getadblock.com/discussion/new" +
-            "?category_id=problems&discussion[body]=" + out;
-        BG.openTab(result);
+        BG.openTab("http://help.getadblock.com/support/tickets/new");
         closeAndReloadPopup();
     });
 

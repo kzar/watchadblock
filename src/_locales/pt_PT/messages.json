@@ -357,15 +357,11 @@
   },
   "filterantisocial":{
     "message":"Lista de filtros anti-social (remove os botões dos meios de comunicação social)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filterannoyances":{
     "message":"Fanboy's Annoyances (remove os aborrecimentos da Web)",
-    "description":"Name of the filter list"
-  },
-  "filterwarning_removal":{
-    "message":"Lista de Remoção de Avisos AdBlock (remove mensagens acerca do uso do AdBlock)",
-    "description":"Name of the filter list"
+    "description":"A filter list"
   },
   "filteracceptable_ads":{
     "message":"Anúncios aceitáveis (recomendado)",
@@ -590,6 +586,10 @@
   "disableforsafaristepone":{
     "message":"Clique no menu Safari &rarr; Preferências &rarr; Extensões.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "correctfilters":{
+    "message":"Verifique se está a usar o(s) filtro(s) de idioma correto(s):",
+    "description":"On the ad report page, label describing having the right set of filters"
   },
   "pagelanguagecheck":{
     "message":"Em que idioma está a página escrita?",
@@ -1263,12 +1263,36 @@
     "message":"página",
     "description":"A resource type"
   },
+  "topframe":{
+    "message":"Frame superior",
+    "description":"Resource list page: frame type"
+  },
+  "subframe":{
+    "message":"Subframe",
+    "description":"Resource list page: frame type"
+  },
+  "frametype":{
+    "message":"Tipo de frame: ",
+    "description":"Resource list page: followed by frame type (e.g. top frame, subframe)"
+  },
+  "framedomain":{
+    "message":"Domínio de frame: ",
+    "description":"Resource list page: domain name of the frame"
+  },
+  "frameurl":{
+    "message":"URL da frame: ",
+    "description":"Resource list page: full URL of the frame"
+  },
   "legend":{
     "message":"Legenda: ",
     "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   },
   "blockedresource":{
     "message":"Recurso bloqueado",
+    "description":"Resource list page: resource status"
+  },
+  "whitelistedresource":{
+    "message":"Recursos com permissão",
     "description":"Resource list page: resource status"
   },
   "hiddenelement":{
@@ -1278,9 +1302,5 @@
   "thirdparty":{
     "message":"Terceiros",
     "description":"Resource list page: column title telling if the resource originates from a different domain"
-  },
-  "acceptableadsdisable_done":{
-    "message":"Anúncios Aceitáveis foi desativado.",
-    "description":"Message shown to users after disabling Acceptable Ads via update page."
   }
 }
