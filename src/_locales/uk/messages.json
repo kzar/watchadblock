@@ -243,6 +243,10 @@
     "message":"Увімкнути режим сумісності ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Увімкнути блокування вмісту в Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Показувати інформацію для налагодження в Журналі Консолі (уповільнює роботу AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -562,10 +566,6 @@
   "disableallextensions":{
     "message":"Вимкніть усі розширення, окрім AdBlock:",
     "description":"Instruction on ad report page"
-  },
-  "disableforchromestepone":{
-    "message":"Відкрити <a href='#'>сторінку розширень<\/a>",
-    "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
     "message":"<b>ЧИ<\/b>, просто натисніть цю кнопку щоб ми зробили все що вище: <a>Вимкнути всі інші розширення<\/a>",
@@ -947,6 +947,14 @@
     "message":"Призупинити AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "browserestartrequired":{
+    "message":"Відключення цієї функції вимагає перезавантаження браузера.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationbody":{
+    "message":"Будь ласка, вимкніть деякі списки фільтрів. Більше інформації дивіться в Параметрах AdBlock.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Скасувати обмеження, запроваджені мною на цьому домені",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1207,10 +1215,6 @@
     "message":"Наша команда запросила деяку налагоджувальну інформацію? Натисніть <a href='#' id='debug'>тут<\/a>!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
-  "bugreport":{
-    "message":"Чому б Вам не відправити нам <a href='#' id='report'> звіт про помилку <\/a> ?",
-    "description":"Link to send a bug report on the Support tab of the options"
-  },
   "supportsite":{
     "message":"Дайте нам знати на нашому <a>сайті підтримки<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
@@ -1239,6 +1243,24 @@
     "message":"Показати всі запити",
     "description":"Menu entry to open the resource list page"
   },
+  "noresourcessend2":{
+    "message":"Щось пішло не так. Не було відпревлено жодних ресурсів. Цю сторінку буде закрито. Спробуйте перезавантажити сайт.",
+    "description":"Resource list page: error message"
+  },
+  "filterorigin":{
+    "message":"Походження фільтру: $list$",
+    "description":"Resource list page: tooltip of matching filter, telling which filter list contains the filter",
+    "placeholders":{
+      "list":{
+        "content":"$1",
+        "example":"A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
+  },
+  "typeselector":{
+    "message":"селектор",
+    "description":"A resource type"
+  },
   "typesub_frame":{
     "message":"фрейм",
     "description":"A resource type"
@@ -1246,6 +1268,30 @@
   "typemain_frame":{
     "message":"сторінка",
     "description":"A resource type"
+  },
+  "topframe":{
+    "message":"Топ фрейм",
+    "description":"Resource list page: frame type"
+  },
+  "subframe":{
+    "message":"Субфрейм",
+    "description":"Resource list page: frame type"
+  },
+  "frametype":{
+    "message":"Тип фрейму: ",
+    "description":"Resource list page: followed by frame type (e.g. top frame, subframe)"
+  },
+  "framedomain":{
+    "message":"Домен фрейму: ",
+    "description":"Resource list page: domain name of the frame"
+  },
+  "frameurl":{
+    "message":"URL фрейму: ",
+    "description":"Resource list page: full URL of the frame"
+  },
+  "legend":{
+    "message":"Умовні позначення: ",
+    "description":"Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   },
   "blockedresource":{
     "message":"Заблокований ресурс",
@@ -1258,5 +1304,21 @@
   "hiddenelement":{
     "message":"Прихований елемент",
     "description":"Resource list page: resource status"
+  },
+  "thirdparty":{
+    "message":"Сторонні",
+    "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Ви більше не підписані на список фільтрів Прийнятної реклами.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Ви можете знову увімкнути це і підтримати улюблені веб-сайти, просто оберіть \"Дозволити деяку ненав’язливу рекламу\" нижче.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "buttonsubmit":{
+    "message":"Надіслати",
+    "description":"Button to send a form."
   }
 }

@@ -968,7 +968,7 @@
     "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
   },
   "browserestartrequired":{
-    "message":"Disabling this feature requires restarting your browser.",
+    "message":"Please restart Safari to finish turning off content blocking.",
     "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   },
   "safarinotificationtitle":{
@@ -1359,100 +1359,88 @@
     "message":"You can turn this back on and support the websites you love by selecting \"Allow some non-intrusive advertising\" below.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
+  "acceptable_ads_content_blocking_disbled_message":{
+    "message":"We unsubscribed you from Acceptable Ads because you turned on content blocking.  You can only select one at a time. <a>(Why?)<\/a>",
+    "description":"Message shown to Safari users when content blocking is enabled OR AA is enabled"
+  },
+  "content_blocking_acceptable_ads_disbled_message":{
+    "message":"We turned off content blocking because you opted to allow non-intrusive ads. You can only select one at a time. <a>(Why?)<\/a>",
+    "description":"Message shown to Safari users when content blocking is enabled OR AA is enabled"
+  },
   "adreport_laststep":{
     "message":"Last step: report the issue to us.",
-    "description":"Heading on the ad report page for the last step when the user needs to send us an ad report."
+    "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
   },
   "adreport_name":{
     "message":"What's your name?",
-    "description":"On the ad report page, when we need to ask the user for their name to submit a report."
+    "description":"Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
   },
   "adreport_email":{
     "message":"What's your email address?",
-    "description":"When we ask the user for their email address so that we can respond to their ad report."
+    "description":"Label for a textbox where the user enters their email address to submit a bug or ad report."
   },
   "adreport_email_privacy":{
     "message":"We'll only use this to contact you if we need more information.",
-    "description":"When we ask the user for their email address so that we can respond to their ad report."
+    "description":"Let the user know that their email address won't be used for reasons other than contacting them about their bug or ad report."
   },
   "adreport_location":{
     "message":"Exactly where on that page is the ad? What does it look like?",
-    "description":"This is a question on the ad report page shown when the user has to report the ad to us. This helps us find where on the page the ad is located"
+    "description":"Question on the ad report page asking the user to describe the ad and its location on a webpage."
   },
   "adreport_screen_cap_upload":{
     "message":"Attach a screenshot:",
-    "description":"This is a file upload button on the ad report page shown when the user has to report the ad to us. This helps us find where on the page the ad is located"
+    "description":"Label next to a file upload button."
   },
   "adreport_filter":{
     "message":"If you have created a working filter using the \"block an ad\" wizard, paste it in the box below:",
-    "description":"This is a question on the report an ad page shown when the user has to report an ad to us. This question lets us know what ad blocking rule might block the ad."
-  },
-  "bug_adreport_otherinfo":{
-    "message":"Any other info that might be helpful? (Details about your browser &amp; your AdBlock settings will be sent with your report)",
-    "description":"Shown on the bug report page and the ad report page. This lets the user supply any info that we didn't ask about, but is 100% optional."
+    "description":"Optional question on the ad report page when the ad needs to be reported to AdBlock."
   },
   "buttonsubmit":{
     "message":"Submit",
-    "description":"Shown at the end of a bug or ad report wizard. When the user clicks the button, their report is sent to us."
-  },
-  "adreport_error_heading":{
-    "message":"ERROR!",
-    "description":"Subheading for the section of the ad report page shown when the connection to the support site for reporting ads breaks."
-  },
-  "adreport_error_1":{
-    "message":"Oops. The ad report didn't submit properly.",
-    "description":"This is shown when the user tries to report an ad but the connection breaks."
-  },
-  "adreport_error_2":{
-    "message":"Please go to <a>our support website<\/a> then copy &amp; paste this into the \"Fill in any details you think will help us understand your issue\" section.",
-    "description":"Shown when the connection to the support site for reporting an ad breaks."
-  },
-  "adreport_error_3":{
-    "message":"You will also need to add your name &amp; email again.",
-    "description":"Shown when the connection to the support site for reporting an ad breaks."
+    "description":"Button to send a form."
   },
   "adreport_missing_info":{
     "message":"Required information is missing or invalid.  Please fill in the questions that have a red border.",
-    "description":"Shown when the user does enter all of the required information."
+    "description":"Error message shown when the user doesn't enter anything in some of the text fields."
   },
   "adreport_missing_screenshot":{
     "message":"You forgot to attach a screenshot! We can't help you without seeing the ad(s) you're reporting.",
-    "description":"Shown when the user does enter all of the required information."
+    "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
   },
   "adreport_response_success":{
     "message":"All set!  We'll be in touch soon, most likely within a day, two if it's a holiday. In the meantime, look for an email from AdBlock. You'll find a link to your ticket on our help site there. If you prefer to follow along by email, you can do that, too!",
-    "description":"Shown when the user does enter all of the required information."
+    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   },
   "adreport_response_invalid_file":{
     "message":"That's not an image file. Please upload a .png, .gif, or .jpg file.",
-    "description":"Shown when the user uploads an invalid file type (not an image file)."
+    "description":"Error message shown when the user uploads an invalid file type."
   },
   "adreport_response_large_file":{
     "message":"That file is too big. Please make sure your file is less than 10 MB.",
-    "description":"Shown when the user uploads a large image file."
+    "description":"Error message shown when the user tries to upload a large image file."
   },
   "adreport_response_save_error":{
     "message":"Error saving the uploaded file.",
-    "description":"Shown when the server could not save the file on the server."
+    "description":"Error message shown when the server could not save an attached file."
   },
   "adreport_response_file_name":{
     "message":"That file name is too long. Please give your file a shorter name.",
-    "description":"Shown when the image file name is greater than 255 characters."
+    "description":"Error message shown when the file name of an attachement the user is trying to submit in a report is longer than 255 characters."
   },
   "adreport_all_debug_info":{
     "message":"The following information will also be included in the ad report.",
-    "description":"Shown when the user does enter all of the required information."
+    "description":"Shows the user the debug information that will be sent along with their report."
   },
   "adreport_server_response_error_msg":{
     "message":"There was an error processing your request.",
-    "description":"Shown when an new problem ticket is submit from the 'Report an Ad' page, and the server had problem processing the data."
+    "description":"Error message shown when an new ticket is sumbitted for an ad or bug report, and the server had an issue while processing the data."
   },
   "adreport_server_response_error__manual_msg_step1":{
     "message":"Please go to <a>our support website<\/a>.",
-    "description":"Shown when the server has an unrecoverable error"
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   },
   "adreport_server_response_error__manual_msg_step2":{
-    "message":"And manually create a ticket, and copy and paste the information below into the \"Fill in any details you think will help us understand your issue\" section",
-    "description":"Shown when the server has an unrecoverable error"
+    "message":"And manually create a ticket, and copy and paste the information below into the \"Fill in any details you think will help us understand your issue\" section.",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }
 }

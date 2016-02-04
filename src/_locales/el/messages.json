@@ -243,6 +243,10 @@
     "message":"Ενεργοποίηση της λειτουργίας συμβατότητας του ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Ενεργοποίηση αποκλεισμού περιεχομένου Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Εμφάνιση στοιχείων αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί το AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -363,6 +367,10 @@
     "message":"Fanboy's Annoyances (αφαιρεί ενοχλήσεις στον ιστό)",
     "description":"A filter list"
   },
+  "filterwarning_removal":{
+    "message":"Λίστα αφαίρεσης Προειδοποιήσεων AdBlock (αφαιρεί τα μηνύματα που αφορούν τη χρήση AdBlock)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  },
   "filteracceptable_ads":{
     "message":"Αποδεκτές διαφημίσεις (προτείνεται)",
     "description":"A filter list"
@@ -467,6 +475,10 @@
     "message":"ΠΡΟΣΟΧΗ: αν κάνετε ένα λάθος εδώ, πολλά άλλα φίλτρα, συμπεριλαμβανομένων των επίσημων, μπορεί να πάθουν ζημιά! <br\/>Διαβάστε τις<a> οδηγίες για σύνταξη φίλτρων<\/a> για να μάθετε πώς να προσθέσετε προηγμένες μαύρες και λευκές λίστες φίλτρων.",
     "description":"Warning when blacklisting manually"
   },
+  "contentblockingwarning":{
+    "message":"Σημείωση: η καταχώρηση στη λευκή λίστα (που επιτρέπει διαφημίσεις) μιας σελίδας ή ενός ιστότοπου, δεν υποστηρίζεται με ενεργοποιημένο αποκλεισμό περιεχομένου Safari.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  },
   "savebutton":{
     "message":"Αποθήκευση",
     "description":"Save button"
@@ -562,10 +574,6 @@
   "disableallextensions":{
     "message":"Απενεργοποίηση όλων των επεκτάσεων εκτός από το AdBlock:",
     "description":"Instruction on ad report page"
-  },
-  "disableforchromestepone":{
-    "message":"Άνοιγμα <a href='#'>της σελίδας επεκτάσεων<\/a>",
-    "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
     "message":"<b>Ή<\/b>, απλά κάντε κλικ σε αυτό το κουμπί για να κάνουμε όλα τα παραπάνω: <a>Απενεργοποίηση όλων των άλλων επεκτάσεων<\/a>",
@@ -947,6 +955,26 @@
     "message":"Παύση του AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Για παύση του AdBlock με ενεργοποιημένο αποκλεισμό περιεχομένου Safari, παρακαλούμε επιλέξτε Safari (στο μενού) > Προτιμήσεις > Επεκτάσεις > AdBlock, και αποεπιλέξτε το 'Ενεργοποίηση AdBlock'.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"Ο αριθμός των κανόνων στη λίστα φίλτρου υπερβαίνει το όριο των 50.000, και έχει μειωθεί αυτόματα. Παρακαλώ διαγραφτείτε από μερικές λίστες φίλτρων ή απενεργοποιήστε τον αποκλεισμό περιεχομένου Safari!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Η απενεργοποίηση αυτής της λειτουργίας απαιτεί επανεκκίνηση του περιηγητή σας.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Υπέρβαση ορίου κανόνων αποκλεισμού περιεχομένου",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Παρακαλούμε απενεργοποιήστε ορισμένες λίστες φίλτρων. Περισσότερες πληροφορίες στις επιλογές του AdBlock.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Αναίρεση των μπλοκ μου σε αυτόν τον τομέα",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1207,10 +1235,6 @@
     "message":"Έχει ζητήσει η ομάδα μας κάποιες πληροφορίες εντοπισμού σφαλμάτων; Κάντε κλικ <a href='#' id='debug'>εδώ<\/a> για αυτό!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
-  "bugreport":{
-    "message":"Γιατί δεν μας στέλνετε μια <a href='#' id='report'>αναφορά σφάλματος<\/a>;",
-    "description":"Link to send a bug report on the Support tab of the options"
-  },
   "supportsite":{
     "message":"Ενημερώστε μας στην <a>ιστοσελίδα υποστήριξης<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
@@ -1314,5 +1338,17 @@
   "thirdparty":{
     "message":"Τρίτων",
     "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Δεν είστε πλέον συνδρομητής στη λίστα φίλτρου αποδεκτών διαφημίσεων.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Μπορείτε να το ενεργοποιήσετε ξανά παρακάτω και να υποστηρίζετε τις ιστοσελίδες που αγαπάτε επιλέγοντας \"Να επιτρέπονται ορισμένες μη-παρεμβατικές διαφημίσεις\".",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "buttonsubmit":{
+    "message":"Αποστολή",
+    "description":"Button to send a form."
   }
 }

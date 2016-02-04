@@ -1621,49 +1621,6 @@
       return the_debug_info;
   }
 
-  // Code for making a bug report
-  makeReport = function() {
-      var body = [];
-      body.push(chrome.i18n.getMessage("englishonly") + "!");
-      body.push("");
-      body.push("Please answer the following questions so that we can process your bug report, otherwise, we may have to ignore it.");
-      body.push("Also, please put your name, or a screen name, and your email above so that we can contact you if needed.");
-      body.push("If you don't want your report to be made public, check that box, too.");
-      body.push("");
-      body.push("**Can you provide detailed steps on how to reproduce the problem?**");
-      body.push("");
-      body.push("1. ");
-      body.push("2. ");
-      body.push("3. ");
-      body.push("");
-      body.push("**What is supposed to happen when you do the above steps**");
-      body.push("");
-      body.push("");
-      body.push("**What actually happened?**");
-      body.push("");
-      body.push("");
-      body.push("**Do you have any other comments? If you can, can you please attach a screenshot of the bug?**");
-      body.push("");
-      body.push("");
-      body.push("--- The questions below are optional but VERY helpful. ---");
-      body.push("");
-      body.push("If unchecking all filter lists fixes the problem, which one filter" +
-                "list must you check to cause the problem again after another restart?");
-      body.push("");
-      body.push("Technical Chrome users: Go to chrome://extensions ->" +
-                "Developer Mode -> Inspect views: background page -> Console. " +
-                "Paste the contents here:");
-      body.push("");
-      body.push("====== Do not touch below this line ======");
-      body.push("");
-      body.push("```");
-      body.push(getDebugInfo());
-      body.push("```");
-      var out = encodeURIComponent(body.join('  \n'));
-
-      return out;
-  };
-
   // SYNCHRONIZATION
 
   // Sync settings, filter lists & custom filters

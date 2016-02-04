@@ -243,6 +243,10 @@
     "message":"ClickToFlash-yhteensopivuustila",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Ota Safarin sisällönesto käyttöön",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Näytä virheilmoitukset Virhekonsolissa (hidastaa AdBlockin toimintaa)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -363,6 +367,10 @@
     "message":"Fanboy's Annoyances (poistaa ärsyttävät kohteet verkosta)",
     "description":"A filter list"
   },
+  "filterwarning_removal":{
+    "message":"Mainostenestovaroitusten poisto (poistaa varoitukset mainostenestäjistä)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  },
   "filteracceptable_ads":{
     "message":"Hyväksyttävät mainokset (suositus)",
     "description":"A filter list"
@@ -467,6 +475,10 @@
     "message":"Ole varovainen: jos teet virheen tässä, myös viralliset suodattimet voivat lakata toimimasta!<br\/>Lue <a>suodattimen syntaksiopas<\/a> saadaksesi lisätietoja suodattimien muokkauksesta.",
     "description":"Warning when blacklisting manually"
   },
+  "contentblockingwarning":{
+    "message":"Huomaa: mainosten salliminen tietyillä sivuilla ei ole mahdollista, kun Safarin sisällönesto on käytössä.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  },
   "savebutton":{
     "message":"Tallenna",
     "description":"Save button"
@@ -562,10 +574,6 @@
   "disableallextensions":{
     "message":"Poista kaikki laajennukset käytöstä, paitsi AdBlock:",
     "description":"Instruction on ad report page"
-  },
-  "disableforchromestepone":{
-    "message":"Avaa <a href='#'>lisäosasivu<\/a>",
-    "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
     "message":"<b>TAI<\/b>, klikkaa tätä painiketta, niin teemme kaiken puolestasi: <a>Poista kaikki muut laajennukset käytöstä<\/a>",
@@ -947,6 +955,26 @@
     "message":"Pysäytä AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Jos haluat keskeyttää AdBlockin toiminnan, kun sisällönesto on käytössä, valitse Safari (valikkopalkista) > Asetukset > Laajennukset > AdBlock ja poista rasti ruudusta 'Ota AdBlock käyttöön'.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"Suodatinlistojen kohteiden määrä ylittää rajan 50 000, ja kohteita on poistettu automaattisesti. Poista joidenkin suodatinlistojen tilaus tai poista Safarin sisällönesto käytöstä!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Jos poistat tämän toiminnon käytöstä, selain täytyy käynnistää uudelleen.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Sisällöneston sääntöjen raja ylitetty",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Poista joitakin suodatinlistoja käytöstä. Lisätietoja AdBlockin asetuksissa.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Kumoa estoni tässä verkkotunnuksessa",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1207,10 +1235,6 @@
     "message":"Onko tiimi pyytänyt vianratkaisutietoja? Napsauta <a href='#' id='debug'>tästä<\/a> saadaksesi ne!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
-  "bugreport":{
-    "message":"Miksi et lähettäisi meille <a href='#' id='report'>vikailmoitusta<\/a>?",
-    "description":"Link to send a bug report on the Support tab of the options"
-  },
   "supportsite":{
     "message":"Kerro meille <a>tukisivustolla<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
@@ -1314,5 +1338,17 @@
   "thirdparty":{
     "message":"Kolmas osapuoli",
     "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Et enää tilaa hyväksyttävät mainokset -suodatinlistaa.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Voit kytkeä tämän takaisin päälle ja tukea sivustoja, joista pidät, valitsemalla \"Salli osa ei-häiritsevästä mainonnasta\" alla.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "buttonsubmit":{
+    "message":"Lähetä",
+    "description":"Button to send a form."
   }
 }

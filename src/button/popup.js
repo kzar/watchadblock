@@ -58,10 +58,10 @@ $(function() {
             !LEGACY_SAFARI_51)
             show(["div_undo", "separator0"]);
 
-        if (SAFARI || !advanced_option)
+        if (SAFARI || !advanced_option || !tab.id)
             hide(["div_show_resourcelist"]);
 
-        if (SAFARI && !advanced_option)
+        if ((SAFARI && !advanced_option) || !tab.id)
             hide(["div_report_an_ad", "separator1"]);
 
         if (host === "www.youtube.com" &&

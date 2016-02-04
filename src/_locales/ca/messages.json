@@ -243,6 +243,10 @@
     "message":"Activeu el mode de compatibilitat amb ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Activar el bloqueig de contingut de Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Mostrar les dades de depuració al registre de la consola (això alentirà l'AdBlock)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -363,6 +367,10 @@
     "message":"Fanboy's Annoyances (elimina les molèsties de la xarxa)",
     "description":"A filter list"
   },
+  "filterwarning_removal":{
+    "message":"Llista d'eliminació d'avisos d'AdBlocks (elimina els avisos sobre l'utilització de bloquejadors de publicitat)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  },
   "filteracceptable_ads":{
     "message":"Anuncis Acceptables (recomanat)",
     "description":"A filter list"
@@ -467,6 +475,10 @@
     "message":"Aneu amb compte: Si cometeu un error aquí molts filtres, incloent els oficials, es podrien malmetre!<br\/>Llegiu-vos el <a>tutorial de sintaxi per a filtres<\/a> per aprendre com afegir filtres avançats de restricció o permissió.",
     "description":"Warning when blacklisting manually"
   },
+  "contentblockingwarning":{
+    "message":"Avís: La permissivitat (permetre anuncis) a una pàgina o lloc no és compatible tenint activat el bloqueig de continguts de Safari.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  },
   "savebutton":{
     "message":"Desar",
     "description":"Save button"
@@ -562,10 +574,6 @@
   "disableallextensions":{
     "message":"Desactiveu totes les extensions excepte l'AdBlock:",
     "description":"Instruction on ad report page"
-  },
-  "disableforchromestepone":{
-    "message":"Obriu <a href='#'>la pàgina de les extensions<\/a>",
-    "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
     "message":"<b>O BÉ<\/b>, només cliqueu aquest botó per fer tot el que figura anteriorment: <a>Desactivar totes les altres extensions<\/a>",
@@ -947,6 +955,26 @@
     "message":"Pausar l'AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Per posar en pausa l'AdBlock amb el bloqueig de continguts activat, seleccioneu Safari (a la barra de menús) > Preferències > Extensions > AdBlock, i desmarqueu 'Activar AdBlock'.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"El nombre de normes de filtres de llista sobrepassa el límit de 50.000, i ha estat reduïda automàticament. Deixeu algunes subscripcions a llistes de filtres o desactiveu el bloqueig de continguts de Safari!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"La desactivació d'aquesta característica requereix el reinici del navegador.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Límit de normes de bloqueig sobrepassat",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Desactiveu algunes llistes de filtres. Més informació a les opcions d'AdBlock.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Desfer els meus blocatges en aquest domini",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1207,10 +1235,6 @@
     "message":"El nostre equip ha solicitat informació de depuració? Cliqueu <a href='#' id='debug'>aquí<\/a> per satisfer la sol·licitud!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
-  "bugreport":{
-    "message":"Per què no ens envieu un <a href='#' id='report'>informe d'errors<\/a>?",
-    "description":"Link to send a bug report on the Support tab of the options"
-  },
   "supportsite":{
     "message":"Feu-nos-ho saber en el nostre <a>lloc web de suport<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
@@ -1314,5 +1338,17 @@
   "thirdparty":{
     "message":"de tercers",
     "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Ja no esteu subscrits a la llista de filtres dels Anuncis Acceptables.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Podeu reactivar-ho i donar suport a les vostres pàgines web preferides seleccionant \"Permetre publicitat no intrusiva\".",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "buttonsubmit":{
+    "message":"Enviar",
+    "description":"Button to send a form."
   }
 }

@@ -475,6 +475,10 @@
     "message":"Pas op: als je hier een fout maakt kunnen de andere filters, inclusief de officiële, onbruikbaar worden!<br\/>Lees de <a>filter syntaxis uitleg (Engelstalig)<\/a> voor meer informatie over het maken van filters.",
     "description":"Warning when blacklisting manually"
   },
+  "contentblockingwarning":{
+    "message":"Opmerking: Het whitelisten (toelaten van advertenties) op een pagina of website is niet ondersteund met Safari Inhoud Blokkering geactiveerd.",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  },
   "savebutton":{
     "message":"Opslaan",
     "description":"Save button"
@@ -572,7 +576,7 @@
     "description":"Instruction on ad report page"
   },
   "disableforchromestepone":{
-    "message":"Open <a href=\"#\">de extensies pagina<\/a>",
+    "message":"Open de <a href='#'>extensies pagina<\/a>.",
     "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
@@ -955,9 +959,25 @@
     "message":"Pauzeer AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Om AdBlock te pauzeren met de Inhoud Blokkering geactiveerd, selecteer Safari (in de menubalk) > Voorkeuren > Extensies > AdBlock en schakel 'Schakel AdBlock in' uit.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"De lijst met filter regels overschrijft de limiet van 50 000 en is automatisch verkleind. Meld je aub af voor enkele filters of schakel de Safari Inhoud Blokkering uit!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
   "browserestartrequired":{
     "message":"Om deze functie uit te schakelen moet je je browser opnieuw opstarten.",
     "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Inhoud blokkering regels limiet overschreden",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Schakel aub enkele filters uit. Meer informatie in de AdBlock Opties.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
   },
   "undo_last_block":{
     "message":"Maak mijn blokkeringen ongedaan op dit domein",
@@ -1113,6 +1133,10 @@
     "message":"Wat is dit?",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
+  "how":{
+    "message":"Hoe?",
+    "description":"Text of a link pointing to instructions on how to do something"
+  },
   "selectlanguage":{
     "message":"-- Selecteer Taal --",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
@@ -1220,7 +1244,7 @@
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
   "bugreport":{
-    "message":"Waarom stuur je ons geen <a href='#' id='report'>foutenrapport<\/a>?",
+    "message":"Waarom verstuur je ons geen <a>foutrapport<\/a>?",
     "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{
@@ -1330,5 +1354,85 @@
   "acceptableadsdisable_done":{
     "message":"Je bent niet langer geabonneerd op de aanvaardbare advertenties filter.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Je kan dit terug activeren en de websites waar je van houdt ondersteunen door het selectievakje 'Laat sommige, niet-opdringerige advertenties toe' weer in te schakelen.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "adreport_laststep":{
+    "message":"Laatste stap: meld het probleem aan ons.",
+    "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
+  },
+  "adreport_name":{
+    "message":"Hoe heet je?",
+    "description":"Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
+  },
+  "adreport_email":{
+    "message":"Wat is je e-mailadres?",
+    "description":"Label for a textbox where the user enters their email address to submit a bug or ad report."
+  },
+  "adreport_email_privacy":{
+    "message":"We gebruiken dit enkel indien we contact met je moeten opnemen voor als we nog meer informatie nodig hebben.",
+    "description":"Let the user know that their email address won't be used for reasons other than contacting them about their bug or ad report."
+  },
+  "adreport_location":{
+    "message":"Waar precies op de pagina bevindt de advertentie zich? Hoe ziet hij eruit?",
+    "description":"Question on the ad report page asking the user to describe the ad and its location on a webpage."
+  },
+  "adreport_screen_cap_upload":{
+    "message":"Voeg een schermafbeelding toe:",
+    "description":"Label next to a file upload button."
+  },
+  "adreport_filter":{
+    "message":"Als je een werkende filter hebt kunnen creëren met de \"Blokkeer een advertentie\" wizard, kopieer deze dan in het vak hieronder:",
+    "description":"Optional question on the ad report page when the ad needs to be reported to AdBlock."
+  },
+  "buttonsubmit":{
+    "message":"Verstuur",
+    "description":"Button to send a form."
+  },
+  "adreport_missing_info":{
+    "message":"Vereiste informatie ontbreekt of is ongeldig. Vul aub alle vragen in met een rode rand.",
+    "description":"Error message shown when the user doesn't enter anything in some of the text fields."
+  },
+  "adreport_missing_screenshot":{
+    "message":"Je bent vergeten een schermafbeelding toe te voegen! We kunnen je niet helpen zonder dat we de advertentie(s) zien die je aan ons wilt rapporteren.",
+    "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
+  },
+  "adreport_response_success":{
+    "message":"Klaar! We zullen binnenkort contact met je opnemen, waarschijnlijk binnen één dag, of 2 indien het een feestdag is. Ga in de tussentijd eens op zoek naar een e-mail van AdBlock. Daarin vind je namelijk een link naar je ticket op de help site. Als je liever het gesprek via e-mail volgt, is dat natuurlijk ook mogelijk!",
+    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
+  },
+  "adreport_response_invalid_file":{
+    "message":"Dat is geen afbeeldingsbestand. Upload aub een .png, .gif of .jpg bestand.",
+    "description":"Error message shown when the user uploads an invalid file type."
+  },
+  "adreport_response_large_file":{
+    "message":"Dit bestand is te groot. Zorg ervoor dat het bestand minder dan 10 MB groot is.",
+    "description":"Error message shown when the user tries to upload a large image file."
+  },
+  "adreport_response_save_error":{
+    "message":"Fout bij het bewaren van het ge-uploade bestand.",
+    "description":"Error message shown when the server could not save an attached file."
+  },
+  "adreport_response_file_name":{
+    "message":"Deze bestandsnaam is te lang. Geef aub een kortere bestandsnaam.",
+    "description":"Error message shown when the file name of an attachement the user is trying to submit in a report is longer than 255 characters."
+  },
+  "adreport_all_debug_info":{
+    "message":"De volgende informatie zal ook opgenomen worden in het advertentierapport.",
+    "description":"Shows the user the debug information that will be sent along with their report."
+  },
+  "adreport_server_response_error_msg":{
+    "message":"Er is een fout opgetreden bij de verwerking van je aanvraag.",
+    "description":"Error message shown when an new ticket is sumbitted for an ad or bug report, and the server had an issue while processing the data."
+  },
+  "adreport_server_response_error__manual_msg_step1":{
+    "message":"Ga aub naar <a>onze support website<\/a>.",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "adreport_server_response_error__manual_msg_step2":{
+    "message":"En maak handmatig een ticket aan. Kopieer en plak de onderstaande gegevens in de \"Fill in any details you think will help us understand your issue\" sectie.",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }
 }

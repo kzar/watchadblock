@@ -461,14 +461,12 @@ SubscriptionUtil.subscribe = function(id, title) {
   if (id === "acceptable_ads") {
     $("#acceptable_ads_info").slideUp();
     $("#acceptable_ads").prop("checked", true);
-    // If the user has Safari content blocking enabled, then update the filter lists when
-    // a user subscribes to AA
-    BGcall("get_settings", function(settings) {
-      if (settings &&
-          settings.safari_content_blocking) {
-        BGcall("update_subscriptions_now");
-      }
-    });
+    // If the user has Safari content blocking enabled, then
+    // disable content blocking (on general tab) due to incompatiblity issues between AA and content blocking
+  if (optionalSettings &&
+        optionalSettings.safari_content_blocking) {
+        $("#enable_safari_content_blocking").trigger("click");
+    }
   }
 };
 // Unsubscribe to the filter list with the given |id|.

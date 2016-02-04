@@ -243,6 +243,10 @@
     "message":"Ativar o modo de compatibilidade ClickToFlash",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"Ativar o Bloqueio de Conteúdo do Safari",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"Mostar as operações na Consola de Logs (torna o AdBlock lento)",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -362,6 +366,10 @@
   "filterannoyances":{
     "message":"Fanboy's Annoyances (remove os aborrecimentos da Web)",
     "description":"A filter list"
+  },
+  "filterwarning_removal":{
+    "message":"Lista de Remoção de Avisos Adblock (remove avisos acerca do uso de bloqueadores de anúncios)",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
     "message":"Anúncios aceitáveis (recomendado)",
@@ -483,6 +491,10 @@
     "message":"Encontrou um anúncio numa página da web? Nós vamos ajudá-lo a encontrar o lugar certo para denunciá-lo!",
     "description":"Introduction of the ad reporting page"
   },
+  "adreportvoluntary":{
+    "message":"Reportar anúncios é voluntário. Ajuda outras pessoas ao permitir que os responsáveis pela lista de filtro bloqueiem o anúncio para todos. Se não te sentes altruísta agora, tudo okay. Feche esta página e <a>bloqueie o anúncio<\/a> apenas para si mesmo.",
+    "description":"Introduction of the ad reporting page"
+  },
   "malwarenotificationcheckboxmessage":{
     "message":"O AdBlock deve notificá-lo quando detecta malware?",
     "description":"Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
@@ -518,6 +530,10 @@
   "clickdisableaa":{
     "message":"Clique aqui: <a>Desativar Anúncios Aceitáveis<\/a>",
     "description":"Instruction on ad report page"
+  },
+  "aamessageadreport":{
+    "message":"Se preferir não ver anúncios como este, pode desativar a lista de filtros de Anúncios Aceitáveis.",
+    "description":"Acceptable Ads message on ad report page"
   },
   "aalinkadreport":{
     "message":"Saiba mais acerca do programa de Anúncios Aceitáveis.",
@@ -555,10 +571,6 @@
     "message":"Desactive todas as extensões à excepção do AdBlock:",
     "description":"Instruction on ad report page"
   },
-  "disableforchromestepone":{
-    "message":"Abrir <a href='#'>página das extensões<\/a>",
-    "description":"Step 1 for disabling Chrome extensions"
-  },
   "clickdisableotherextensions":{
     "message":"<b>OU<\/b>, simplesmente clique neste botão para que façamos tudo o que precede: <a>Desactivar todas as outras extensões<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
@@ -586,6 +598,10 @@
   "disableforsafaristepone":{
     "message":"Clique no menu Safari &rarr; Preferências &rarr; Extensões.",
     "description":"Step 1 for disabling Safari extensions"
+  },
+  "reenableadsonebyone":{
+    "message":"Ótimo! Agora vamos descobrir qual é extensão que está a dar problemas. Habilite as extensões uma de cada vez. A extensão que fizer aparecer o anúncio(s) é aquela que precisa de desinstalar de maneira a livrar-se dos anúncios.",
+    "description":"Tells the user to reenable the extensions one by one"
   },
   "correctfilters":{
     "message":"Verifique se está a usar o(s) filtro(s) de idioma correto(s):",
@@ -935,6 +951,22 @@
     "message":"Parar AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"Para pausar o AdBlock com Bloqueio de Conteúdo ativado, por favor selecione Safari (na barra de menus) > Preferências > Extensões > AdBlock e desmarque a opção 'Ativar AdBlock'.",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "browserestartrequired":{
+    "message":"Desativar este recurso requer reiniciar o seu navegador.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"Limite da regra de Bloqueio de Conteúdo ultrapassado",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"Por favor, desinscreva-se de algumas listas de filtros. Mais informações nas opções do AdBlock.",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"Desfazer os meus bloqueios neste domínio",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1195,10 +1227,6 @@
     "message":"A nossa equipa solicitou algumas informações de depuração? Clique <a href='#' id='debug'>aqui<\/a> para isso!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
-  "bugreport":{
-    "message":"Porque é que não nos envia um <a href='#' id='report'>relatório de erro<\/a>?",
-    "description":"Link to send a bug report on the Support tab of the options"
-  },
   "supportsite":{
     "message":"Deixe-nos saber no nosso <a>site de suporte<\/a>!",
     "description":"Link to the support site on the Support tab of the options"
@@ -1302,5 +1330,17 @@
   "thirdparty":{
     "message":"Terceiros",
     "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"Já não se encontra inscrito na lista de filtros de Anúncios Aceitáveis.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"Pode ligar isto novamente e suportar os sites que ama bastando selecionar \"Permitir alguma publicidade não intrusiva\" abaixo.",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "buttonsubmit":{
+    "message":"Enviar",
+    "description":"Button to send a form."
   }
 }

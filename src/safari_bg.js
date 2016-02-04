@@ -94,7 +94,7 @@ safari.application.addEventListener("message", function(messageEvent) {
 
     // In theory, this code shouldn't be needed...
     if (get_settings().safari_content_blocking) {
-    		return;
+        return;
     }
 
     var tab = messageEvent.target;
@@ -225,14 +225,26 @@ if (!LEGACY_SAFARI) {
 // Add and remove the specific content script based on the safari_content_blocking setting
 function set_content_scripts() {
   if (get_settings().safari_content_blocking) {
-  	 safari.extension.addContentScriptFromURL(safari.extension.baseURI + "adblock_safari_contentblocking.js", [], [], false);
-  	 safari.extension.removeContentScript(safari.extension.baseURI + "adblock_safari_beforeload.js");
+     safari.extension.addContentScriptFromURL(safari.extension.baseURI + "adblock_safari_contentblocking.js", [], [], false);
+     safari.extension.removeContentScript(safari.extension.baseURI + "adblock_safari_beforeload.js");
   } else {
-  	 safari.extension.addContentScriptFromURL(safari.extension.baseURI + "adblock_safari_beforeload.js", [], [], false);
-  	 safari.extension.removeContentScript(safari.extension.baseURI + "adblock_safari_contentblocking.js");
+     safari.extension.addContentScriptFromURL(safari.extension.baseURI + "adblock_safari_beforeload.js", [], [], false);
+     safari.extension.removeContentScript(safari.extension.baseURI + "adblock_safari_contentblocking.js");
   }
 }
 set_content_scripts();
+
+// Check if the user has Safari content blocking enabled and subscribed to AA
+// If so, unsubscribe to AA, due to conflicts between AA and Content Blocking
+function checkContentBlocking() {
+  var subs = get_subscriptions_minus_text();
+  if (subs["acceptable_ads"].subscribed &&
+      get_settings().safari_content_blocking) {
+      unsubscribe({id:"acceptable_ads", del:false});
+      log("automatically unsubscribed to AA");
+  }
+}
+checkContentBlocking();
 
 safari.application.addEventListener("beforeNavigate", function(event) {
 

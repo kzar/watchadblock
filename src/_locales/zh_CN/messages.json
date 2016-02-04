@@ -243,6 +243,10 @@
     "message":"启用ClickToFlash兼容模式",
     "description":"Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   },
+  "safaricontentblocking":{
+    "message":"启用Safari内容屏蔽",
+    "description":"Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
+  },
   "debuginlogoption":{
     "message":"在控制台日志中显示调试信息（这将会降低AdBlock的效能）",
     "description":"Checkbox on the 'General' tab of the Options page"
@@ -363,6 +367,10 @@
     "message":"Fanboy's Annoyances（去除网页上令人心烦的干扰）",
     "description":"A filter list"
   },
+  "filterwarning_removal":{
+    "message":"Adblock警告移除列表（移除使用广告屏蔽软件时网站显示的警告信息）",
+    "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  },
   "filteracceptable_ads":{
     "message":"可接受广告 (推荐)",
     "description":"A filter list"
@@ -467,6 +475,10 @@
     "message":"请小心: 如果您在这里设置出错，许多其它过滤规则，包括官方的过滤规则，可能会失效！<br\/>参阅<a>过滤规则语法教程<\/a>来学习正确地添加高级黑名单、白名单规则。",
     "description":"Warning when blacklisting manually"
   },
+  "contentblockingwarning":{
+    "message":"注意: 启用Safari内容屏蔽将无法支持将网页或网站加入白名单 (允许显示广告) 功能。",
+    "description":"Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  },
   "savebutton":{
     "message":"保存",
     "description":"Save button"
@@ -562,10 +574,6 @@
   "disableallextensions":{
     "message":"禁用除AdBlock之外的所有扩展:",
     "description":"Instruction on ad report page"
-  },
-  "disableforchromestepone":{
-    "message":"打开 <a href='#'> 扩展管理页面<\/a>",
-    "description":"Step 1 for disabling Chrome extensions"
   },
   "clickdisableotherextensions":{
     "message":"<b>或者<\/b>，单击此按钮来完成以上所有步骤： <a>禁用其他所有扩展<\/a>",
@@ -947,6 +955,26 @@
     "message":"暂停AdBlock",
     "description":"Menu entry to pause AdBlock"
   },
+  "safaricontentblockingpausemessage":{
+    "message":"要在启用内容屏蔽的情况下暂停AdBlock，请选择 Safari (菜单栏中) > 偏好设置 > 扩展 > AdBlock，并取消\"启用AdBlock\"。",
+    "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+  },
+  "safaricontentblockinglimitexceeded":{
+    "message":"过滤列表中规则的数量超出了50,000条的限制，并已自动删减。请取消订阅一些过滤列表或禁用Safari内容屏蔽!",
+    "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+  },
+  "browserestartrequired":{
+    "message":"禁用此功能需要重新启动您的浏览器。",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
+  "safarinotificationtitle":{
+    "message":"内容屏蔽规则数量超出限制",
+    "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
+  "safarinotificationbody":{
+    "message":"请禁用一些过滤列表。更多详细信息请参阅AdBlock的选项。",
+    "description":"Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+  },
   "undo_last_block":{
     "message":"撤销我在此域上设置的屏蔽",
     "description":"Menu entry to let the user cancel the result of running the blacklist wizard"
@@ -1207,10 +1235,6 @@
     "message":"我们的团队向您请求调试信息？点击<a href='#' id='debug'>这里<\/a>获取它们！",
     "description":"Users can click this link to provide debug information to AdBlock staff"
   },
-  "bugreport":{
-    "message":"为什么不向我们发送一份<a href='#' id='report'>bug报告<\/a>呢？",
-    "description":"Link to send a bug report on the Support tab of the options"
-  },
   "supportsite":{
     "message":"到我们的<a>技术支持网站<\/a>上告诉我们！",
     "description":"Link to the support site on the Support tab of the options"
@@ -1314,5 +1338,17 @@
   "thirdparty":{
     "message":"第三方",
     "description":"Resource list page: column title telling if the resource originates from a different domain"
+  },
+  "acceptableadsdisable_done":{
+    "message":"您不再订阅可接受广告列表。",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptableadsdisable_how_to_reenable":{
+    "message":"您可以通过勾选下面的“允许一些非侵入式广告”来重新启用它并支持一些您喜爱的网站。",
+    "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "buttonsubmit":{
+    "message":"提交",
+    "description":"Button to send a form."
   }
 }

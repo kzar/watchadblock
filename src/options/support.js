@@ -28,12 +28,6 @@ $(document).ready(function() {
         debug_info = content.join("\n");
     });
 
-    // Make a bug-report
-    var report = null;
-    BGcall("makeReport", function(info) {
-        report = info;
-    });
-
     // Check for updates
     $("#checkupdate").html(translate("checkforupdates"));
     checkupdates("help");
