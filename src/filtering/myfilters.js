@@ -653,17 +653,43 @@ MyFilters.prototype._loadMalwareDomains = function() {
             that._subscriptions.malware.last_update_failed_at = Date.now();
         }
         xhr.onload = function(e) {
+            if (!xhr.responseText) {
+              that._subscriptions.malware.last_update_failed_at = Date.now();
+              return;
+            }
+            // Convert the filter list to an array of domains
+            var domains = [];
+            var lines = xhr.responseText.split('\n');
+            for (var i = 0; i < lines.length; i++) {
+              var line = lines[i];
+              // The entries we're interested in, should be of the form: ||domain.org^
+              // Ignore all others
+              if (line.charAt(0) !== '!' &&
+                  line.charAt(0) !== '[' &&
+                  line.charAt(0) === '|' &&
+                  line.charAt(1) === '|') {
+
+                  line = line.substr(2); // remove preceeding ||
+                  line = line.substring(0, line.length - 1); // # remove ending ^
+                  //convert any non-ascii characters to ascii (punycode)
+                  line = getUnicodeDomain(line.toLowerCase());
+                  domains.push(line);
+                }
+            }
+            var malwareObj = {};
+            malwareObj["adware"] = domains;
+
            //make sure the blocking filter set exists (it may not in Safari 9)
            if (that.blocking) {
-              that.blocking.setMalwareDomains(JSON.parse(xhr.responseText));
+              that.blocking.setMalwareDomains(malwareObj);
            }
-           //set the response text on the 'text' property so it's persisted to storage
-           that._subscriptions.malware.text = JSON.parse(xhr.responseText);
+           //set the malware object on the 'text' property so it's persisted to storage
+           that._subscriptions.malware.text = malwareObj;
            that._subscriptions.malware.last_update = Date.now();
            that._subscriptions.malware.last_modified = Date.now();
            delete that._subscriptions.malware.last_update_failed_at;
-           //since the AdBlock Malware Domains.json file is only updated once a day
-           //on the server, expiration is around 24 hours.
+           // since the Malware file is updated ~1 day
+           // expiration is around 24 hours.
            that._subscriptions.malware.expiresAfterHours = 24;
            var smear = Math.random() * 0.4 + 0.8;
            that._subscriptions.malware.expiresAfterHours *= smear;
@@ -867,7 +893,7 @@ MyFilters.prototype._make_subscription_options = function() {
       safariJSON_URL: "https://cdn.adblockcdn.com/filters/antisocial.json",
     },
     "malware": { // Malware protection
-      url: "https://cdn.adblockcdn.com/filters/domains.json",
+      url: "https://easylist-downloads.adblockplus.org/malwaredomains_full.txt"
     },
     "annoyances": { // Fanboy's Annoyances
       url: "https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt",

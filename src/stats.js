@@ -59,7 +59,9 @@ STATS = (function() {
     };
     //only on Chrome
     if (flavor === "E" && blockCounts) {
-        data["b"] = blockCounts.get().total;
+        var bc = blockCounts.get();
+        data["b"] = bc.total;
+        data["mt"] = bc.malware_total;
     }
     if (chrome.runtime.id) {
       data["extid"] = chrome.runtime.id;

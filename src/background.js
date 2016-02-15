@@ -37,6 +37,8 @@
         data.start = Date.now();
       if (data.total === undefined)
         data.total = 0;
+      if (data.malware_total === undefined)
+        data.malware_total = 0;
       data.version = 1;
       storage_set(key, data);
 
@@ -51,6 +53,11 @@
           if(currentTab){
             currentTab.blockCount++;
           }
+        },
+        recordOneMalwareBlocked: function() {
+          var data = storage_get(key);
+          data.malware_total += 1;
+          storage_set(key, data);
         },
         get: function() {
           return storage_get(key);

@@ -575,6 +575,10 @@
     "message":"Απενεργοποίηση όλων των επεκτάσεων εκτός από το AdBlock:",
     "description":"Instruction on ad report page"
   },
+  "disableforchromestepone":{
+    "message":"Ανοίξτε τη <a href='#'>σελίδα επεκτάσεων<\/a>.",
+    "description":"Step 1 for disabling Chrome extensions"
+  },
   "clickdisableotherextensions":{
     "message":"<b>Ή<\/b>, απλά κάντε κλικ σε αυτό το κουμπί για να κάνουμε όλα τα παραπάνω: <a>Απενεργοποίηση όλων των άλλων επεκτάσεων<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
@@ -1129,6 +1133,10 @@
     "message":"Τι είναι αυτό;",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
+  "how":{
+    "message":"Πώς;",
+    "description":"Text of a link pointing to instructions on how to do something"
+  },
   "selectlanguage":{
     "message":" -- Επιλέξτε γλώσσα -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
@@ -1234,6 +1242,10 @@
   "debuginfo":{
     "message":"Έχει ζητήσει η ομάδα μας κάποιες πληροφορίες εντοπισμού σφαλμάτων; Κάντε κλικ <a href='#' id='debug'>εδώ<\/a> για αυτό!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Γιατί δεν μας στέλνετε μια <a>αναφορά σφάλματος<\/a>;",
+    "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{
     "message":"Ενημερώστε μας στην <a>ιστοσελίδα υποστήριξης<\/a>!",
@@ -1347,8 +1359,80 @@
     "message":"Μπορείτε να το ενεργοποιήσετε ξανά παρακάτω και να υποστηρίζετε τις ιστοσελίδες που αγαπάτε επιλέγοντας \"Να επιτρέπονται ορισμένες μη-παρεμβατικές διαφημίσεις\".",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
+  "adreport_laststep":{
+    "message":"Τελευταίο βήμα: αναφέρετε το πρόβλημα σε εμάς.",
+    "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
+  },
+  "adreport_name":{
+    "message":"Ποιό είναι το όνομά σας;",
+    "description":"Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
+  },
+  "adreport_email":{
+    "message":"Ποιά είναι η διεύθυνση του ηλεκτρονικού ταχυδρομείου σας;",
+    "description":"Label for a textbox where the user enters their email address to submit a bug or ad report."
+  },
+  "adreport_email_privacy":{
+    "message":"Θα το χρησιμοποιήσουμε μόνο για να επικοινωνήσουμε μαζί σας εάν χρειαστούμε περισσότερες πληροφορίες.",
+    "description":"Let the user know that their email address won't be used for reasons other than contacting them about their bug or ad report."
+  },
+  "adreport_location":{
+    "message":"Ακριβώς που στη συγκεκριμένη σελίδα είναι η διαφήμιση; Πως μοιάζει;",
+    "description":"Question on the ad report page asking the user to describe the ad and its location on a webpage."
+  },
+  "adreport_screen_cap_upload":{
+    "message":"Επισυνάψτε στιγμιότυπο οθόνης:",
+    "description":"Label next to a file upload button."
+  },
+  "adreport_filter":{
+    "message":"Εάν έχετε δημιουργήσει ένα φίλτρο εργασίας, χρησιμοποιώντας τον οδηγό \"μπλοκάρισμα μίας διαφήμισης\", επικολλήστε το στο παρακάτω πλαίσιο:",
+    "description":"Optional question on the ad report page when the ad needs to be reported to AdBlock."
+  },
   "buttonsubmit":{
     "message":"Αποστολή",
     "description":"Button to send a form."
+  },
+  "adreport_missing_info":{
+    "message":"Λείπουν οι απαιτούμενες πληροφορίες ή είναι άκυρες.  Παρακαλούμε συμπληρώστε τις ερωτήσεις που έχουν κόκκινο περίγραμμα.",
+    "description":"Error message shown when the user doesn't enter anything in some of the text fields."
+  },
+  "adreport_missing_screenshot":{
+    "message":"Ξεχάσατε να επισυνάψετε ένα στιγμιότυπο οθόνης! Δεν μπορούμε να σας βοηθήσουμε χωρίς να δούμε την διαφήμιση που θέλετε να αναφέρετε.",
+    "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
+  },
+  "adreport_response_success":{
+    "message":"Όλα έτοιμα!  Θα έρθουμε σε επαφή σύντομα, πιθανότατα μέσα σε μια μέρα, δύο αν είναι διακοπές. Εν τω μεταξύ, αναζητήστε ένα μήνυμα ηλεκτρονικού ταχυδρομείου από το AdBlock. Εκεί θα βρείτε έναν σύνδεσμο για το εισιτήριο σας στην ιστοσελίδα βοήθειας. Εάν προτιμάτε να ακολουθήσετε με ηλεκτρονικό ταχυδρομείο, μπορείτε να το κάνετε και αυτό!",
+    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
+  },
+  "adreport_response_invalid_file":{
+    "message":"Αυτό δεν είναι αρχείο εικόνας. Παρακαλούμε αποστείλτε ένα αρχείο .png, .gif ή .jpg.",
+    "description":"Error message shown when the user uploads an invalid file type."
+  },
+  "adreport_response_large_file":{
+    "message":"Αυτό το αρχείο είναι πολύ μεγάλο. Παρακαλούμε βεβαιωθείτε ότι το αρχείο είναι μικρότερο από 10 MB.",
+    "description":"Error message shown when the user tries to upload a large image file."
+  },
+  "adreport_response_save_error":{
+    "message":"Σφάλμα αποθήκευσης του μεταφορτωμένου αρχείου.",
+    "description":"Error message shown when the server could not save an attached file."
+  },
+  "adreport_response_file_name":{
+    "message":"Αυτό το όνομα αρχείου είναι πολύ μεγάλο. Παρακαλούμε δώστε στο αρχείο σας ένα μικρότερο όνομα.",
+    "description":"Error message shown when the file name of an attachement the user is trying to submit in a report is longer than 255 characters."
+  },
+  "adreport_all_debug_info":{
+    "message":"Οι ακόλουθες πληροφορίες θα συμπεριληφθούν επίσης στην αναφορά διαφήμισης.",
+    "description":"Shows the user the debug information that will be sent along with their report."
+  },
+  "adreport_server_response_error_msg":{
+    "message":"Παρουσιάστηκε ένα σφάλμα κατά την επεξεργασία του αιτήματός σας.",
+    "description":"Error message shown when an new ticket is sumbitted for an ad or bug report, and the server had an issue while processing the data."
+  },
+  "adreport_server_response_error__manual_msg_step1":{
+    "message":"Παρακαλούμε μεταβείτε στην <a>ιστοσελίδα υποστήριξης<\/a>.",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "adreport_server_response_error__manual_msg_step2":{
+    "message":"Και δημιουργήστε ένα εισιτήριο χειροκίνητα, και αντιγράψτε και επικολλήστε τις παρακάτω πληροφορίες στην ενότητα \"Σημπληρώστε τυχόν λεπτομέρειες που νομίζετε ότι θα μας βοηθήσουν να κατανοήσουμε το πρόβλημά σας\".",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }
 }

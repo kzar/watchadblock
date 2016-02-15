@@ -575,6 +575,10 @@
     "message":"Disabilita tutte le estensioni tranne AdBlock:",
     "description":"Instruction on ad report page"
   },
+  "disableforchromestepone":{
+    "message":"Apri la <a href='#'> pagina delle estensioni<\/a>.",
+    "description":"Step 1 for disabling Chrome extensions"
+  },
   "clickdisableotherextensions":{
     "message":"<b>O<\/b>, clicca su questo pulsante per fare tutto quanto indicato sopra: <a>disattiva tutte le altre estensioni<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
@@ -1129,6 +1133,10 @@
     "message":"Cos'è?",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
+  "how":{
+    "message":"Come?",
+    "description":"Text of a link pointing to instructions on how to do something"
+  },
   "selectlanguage":{
     "message":"-- Scegli una lingua --",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
@@ -1234,6 +1242,10 @@
   "debuginfo":{
     "message":"Il nostro team richiede alcune informazioni di debug? Clicca <a href='#' id='debug'> qui<\/a>!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Perché non ci invii una <a>segnalazione di bug<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{
     "message":"Fatecele sapere sul nostro <a>sito di supporto tecnico<\/a>!",
@@ -1347,8 +1359,80 @@
     "message":"Puoi tornare indietro e supportare i siti Web che ami selezionando l'opzione \"Consenti alcune pubblicità non intrusive\" sotto.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
+  "adreport_laststep":{
+    "message":"Ultimo passo: segnalaci il problema.",
+    "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
+  },
+  "adreport_name":{
+    "message":"Come ti chiami?",
+    "description":"Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
+  },
+  "adreport_email":{
+    "message":"Qual è il tuo indirizzo email?",
+    "description":"Label for a textbox where the user enters their email address to submit a bug or ad report."
+  },
+  "adreport_email_privacy":{
+    "message":"Lo useremo per contattarti solo se avremo bisogno di ulteriori informazioni.",
+    "description":"Let the user know that their email address won't be used for reasons other than contacting them about their bug or ad report."
+  },
+  "adreport_location":{
+    "message":"Esattamente dov'é in quella pagina è l'annuncio? Che cosa ti sembra?",
+    "description":"Question on the ad report page asking the user to describe the ad and its location on a webpage."
+  },
+  "adreport_screen_cap_upload":{
+    "message":"Allega uno screenshot:",
+    "description":"Label next to a file upload button."
+  },
+  "adreport_filter":{
+    "message":"Se hai creato un filtro funzionante utilizzando la procedura guidata \"blocca un annuncio\", incollalo nel box sottostante:",
+    "description":"Optional question on the ad report page when the ad needs to be reported to AdBlock."
+  },
   "buttonsubmit":{
     "message":"Invia",
     "description":"Button to send a form."
+  },
+  "adreport_missing_info":{
+    "message":"Le informazioni richieste sono incomplete o non valide.  Compila le domande che hanno un bordo rosso.",
+    "description":"Error message shown when the user doesn't enter anything in some of the text fields."
+  },
+  "adreport_missing_screenshot":{
+    "message":"Hai dimenticato di allegare uno screenshot! Non possiamo aiutarti senza vedere l'annuncio(i) che stai segnalando.",
+    "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
+  },
+  "adreport_response_success":{
+    "message":"Tutti a posto!  Ti contatteremo presto, probabilmente entro un giorno, due se si tratta di un giorno festivo. Nel frattempo, controlla se è arrivata un'email da AdBlock. Ci troverai un link per un posto sul nostro sito di assistenza. Se preferisci seguirci via email, puoi ancora farlo!",
+    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
+  },
+  "adreport_response_invalid_file":{
+    "message":"Non è un file immagine. Carica un file .png, .gif o .jpg.",
+    "description":"Error message shown when the user uploads an invalid file type."
+  },
+  "adreport_response_large_file":{
+    "message":"Questo file è troppo grande. Assicurarti che il file sia più piccolo di 10 MB.",
+    "description":"Error message shown when the user tries to upload a large image file."
+  },
+  "adreport_response_save_error":{
+    "message":"Errore di salvataggio del file caricato.",
+    "description":"Error message shown when the server could not save an attached file."
+  },
+  "adreport_response_file_name":{
+    "message":"Il nome del file è troppo lungo. Assegna al file un nome più breve.",
+    "description":"Error message shown when the file name of an attachement the user is trying to submit in a report is longer than 255 characters."
+  },
+  "adreport_all_debug_info":{
+    "message":"Le seguenti informazioni appariranno anche nella segnalazione dell'annuncio.",
+    "description":"Shows the user the debug information that will be sent along with their report."
+  },
+  "adreport_server_response_error_msg":{
+    "message":"C'è stato un errore di elaborazione della tua richiesta.",
+    "description":"Error message shown when an new ticket is sumbitted for an ad or bug report, and the server had an issue while processing the data."
+  },
+  "adreport_server_response_error__manual_msg_step1":{
+    "message":"Vai sul <a>nostro sito di supporto<\/a>.",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "adreport_server_response_error__manual_msg_step2":{
+    "message":"E manualmente crea un biglietto, copiando e incollando le informazioni qui di seguito nella sezione \"Aggiungi qualunque dettaglio che pensi ci aiuterà a capire il tuo problema\".",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }
 }

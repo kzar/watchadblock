@@ -575,6 +575,10 @@
     "message":"Отключите все расширения, кроме AdBlock:",
     "description":"Instruction on ad report page"
   },
+  "disableforchromestepone":{
+    "message":"Откройте <a href='#'>страницу расширений<\/a>.",
+    "description":"Step 1 for disabling Chrome extensions"
+  },
   "clickdisableotherextensions":{
     "message":"<b>ИЛИ<\/b>, просто нажмите эту кнопку для нас, чтобы сделать все вышеперечисленное: <a>Отключить все другие расширения<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
@@ -1129,6 +1133,10 @@
     "message":"Что это?",
     "description":"Text of a link pointing to the explanation of a new feature"
   },
+  "how":{
+    "message":"Как?",
+    "description":"Text of a link pointing to instructions on how to do something"
+  },
   "selectlanguage":{
     "message":"-- Выберите язык --",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
@@ -1234,6 +1242,10 @@
   "debuginfo":{
     "message":"Наша команда запросила некоторую отладочную информацию? Нажмите <a href='#' id='debug'>здесь<\/a>!",
     "description":"Users can click this link to provide debug information to AdBlock staff"
+  },
+  "bugreport":{
+    "message":"Почему бы Вам не отправить нам <a>сообщение об ошибке<\/a>?",
+    "description":"Link to send a bug report on the Support tab of the options"
   },
   "supportsite":{
     "message":"Дайте нам знать на нашем <a>сайте поддержки<\/a>!",
@@ -1347,8 +1359,80 @@
     "message":"Вы можете снова включить это и поддерживать веб-сайты, которые Вы любите, выбрав «Разрешить некоторую ненавязчивую рекламу» ниже.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
+  "adreport_laststep":{
+    "message":"Последний шаг: сообщите нам о проблеме.",
+    "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
+  },
+  "adreport_name":{
+    "message":"Как Вас зовут?",
+    "description":"Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
+  },
+  "adreport_email":{
+    "message":"Ваш адрес электронной почты?",
+    "description":"Label for a textbox where the user enters their email address to submit a bug or ad report."
+  },
+  "adreport_email_privacy":{
+    "message":"Мы будем использовать его только для связи с Вами, если нам нужно будет больше информации.",
+    "description":"Let the user know that their email address won't be used for reasons other than contacting them about their bug or ad report."
+  },
+  "adreport_location":{
+    "message":"Где именно на этой странице появляется реклама? Как это выглядит?",
+    "description":"Question on the ad report page asking the user to describe the ad and its location on a webpage."
+  },
+  "adreport_screen_cap_upload":{
+    "message":"Приложите скриншот:",
+    "description":"Label next to a file upload button."
+  },
+  "adreport_filter":{
+    "message":"Если Вы создали рабочий фильтр с помощью мастера «блокировка рекламы», вставьте его в поле ниже:",
+    "description":"Optional question on the ad report page when the ad needs to be reported to AdBlock."
+  },
   "buttonsubmit":{
     "message":"Отправить",
     "description":"Button to send a form."
+  },
+  "adreport_missing_info":{
+    "message":"Необходимая информация отсутствует или недопустима.  Ответьте, пожалуйста, на вопросы в красных рамках.",
+    "description":"Error message shown when the user doesn't enter anything in some of the text fields."
+  },
+  "adreport_missing_screenshot":{
+    "message":"Вы забыли приложить скриншот! Мы не можем помочь Вам не видя рекламу, о которой Вы сообщаете.",
+    "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
+  },
+  "adreport_response_success":{
+    "message":"Все готово!  Мы скоро свяжемся с Вами, наиболее вероятно в течение одного-двух дней, если это не праздники. Также, найдите в электронной почте письмо от AdBlock. Вы найдете там ссылку на Ваш запрос на нашем сайте помощи. Если Вы предпочитаете следить за результатами по электронной почте, Вы можете делать это тоже!",
+    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
+  },
+  "adreport_response_invalid_file":{
+    "message":"Это не файл изображения. Пожалуйста, загрузите файл .png, .gif или .jpg.",
+    "description":"Error message shown when the user uploads an invalid file type."
+  },
+  "adreport_response_large_file":{
+    "message":"Этот файл слишком большой. Пожалуйста, убедитесь, что ваш файл менее 10 МБ.",
+    "description":"Error message shown when the user tries to upload a large image file."
+  },
+  "adreport_response_save_error":{
+    "message":"Ошибка при сохранении загружаемого файла.",
+    "description":"Error message shown when the server could not save an attached file."
+  },
+  "adreport_response_file_name":{
+    "message":"Это имя файла слишком длинное. Пожалуйста, дайте Вашему файлу более короткое имя.",
+    "description":"Error message shown when the file name of an attachement the user is trying to submit in a report is longer than 255 characters."
+  },
+  "adreport_all_debug_info":{
+    "message":"Следующие сведения будут также включены в отчет о рекламе.",
+    "description":"Shows the user the debug information that will be sent along with their report."
+  },
+  "adreport_server_response_error_msg":{
+    "message":"Произошла ошибка при обработке вашего запроса.",
+    "description":"Error message shown when an new ticket is sumbitted for an ad or bug report, and the server had an issue while processing the data."
+  },
+  "adreport_server_response_error__manual_msg_step1":{
+    "message":"Пожалуйста, перейдите на <a>наш сайт поддержки<\/a>.",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "adreport_server_response_error__manual_msg_step2":{
+    "message":"И вручную создать карточку, и копировать и вставить информацию ниже в раздел «Fill in any details you think will help us understand your issue».",
+    "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }
 }

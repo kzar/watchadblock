@@ -181,6 +181,9 @@ BlockingFilterSet.prototype = {
         this.malwareDomains[urlDomain.charAt(0)] &&
         this.malwareDomains[urlDomain.charAt(0)].indexOf(urlDomain) > -1) {
       log("matched malware domain", urlDomain);
+      if (blockCounts) {
+        blockCounts.recordOneMalwareBlocked();
+      }
       this._matchCache[key] = (returnFilter ? urlDomain: true);
       // createMalwareNotification is not defined outside of BG page
       if (typeof createMalwareNotification === "function") {
