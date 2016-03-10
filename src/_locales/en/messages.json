@@ -43,10 +43,6 @@
     "message":"To hide the button, right click Safari's toolbar and choose Customize Toolbar, then drag the AdBlock button out of the toolbar. You can show it again by dragging it back into the toolbar.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
-  "ff_button_how_to_hide":{
-    "message":"To hide the button, right click it and choose Remove from Toolbar.  You can show it again under Firefox menu -> Customize.",
-    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
-  },
   "sliderexplanation":{
     "message":"Slide the slider until the ad is blocked correctly on the page, and the blocked element looks useful.",
     "description":"Blacklister slider page message"
@@ -793,30 +789,6 @@
     "message":"Does the ad appear in that browser too?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
-  "ff_checkinchrometitle":{
-    "message":"Check in Chrome",
-    "description":"Tell a user to see if a reported ad also appears in Chrome"
-  },
-  "ff_checkinchrome_1":{
-    "message":"Install Chrome, if you don't have it.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_2":{
-    "message":"Install AdBlock for Chrome, if you don't have it.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_3":{
-    "message":"In Chrome, subscribe to the same filter lists as you have here.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_4":{
-    "message":"In Chrome, load the page with the ad.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_5":{
-    "message":"Does the ad appear in Chrome too?",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
   "refusetocheck":{
     "message":"I don't want to check this",
     "description":"User is telling us they don't wish to investigate something for us"
@@ -830,10 +802,6 @@
         "example":"EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe<\/a>  EXAMPLE 2: <a href='http:\/\/easylist.org'>EasyList forums<\/a>"
       }
     }
-  },
-  "reporttous2":{
-    "message":"You can report the ad to us <a>in the issue tracker<\/a>.",
-    "description":"NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker<\/a>.'"
   },
   "fixityourself":{
     "message":"OK, you can still block this ad for yourself on the Options page. Thanks!",
@@ -930,10 +898,6 @@
   "disabled_by_filter_lists":{
     "message":"Sorry, AdBlock is disabled on this page by one of your filter lists.",
     "description":"Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
-  },
-  "status_disabled":{
-    "message":"AdBlock can not run on this domain.",
-    "description":"Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
   },
   "dont_run_on_pages_on_domain":{
     "message":"Don't run on pages on this domain",
@@ -1187,10 +1151,6 @@
       }
     }
   },
-  "ff_adblock_outdated":{
-    "message":"You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.",
-    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  },
   "adblocksupport":{
     "message":"AdBlock Support",
     "description":"Title of the support tab"
@@ -1360,12 +1320,12 @@
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
   "acceptable_ads_content_blocking_disbled_message":{
-    "message":"We unsubscribed you from Acceptable Ads because you turned on content blocking.  You can only select one at a time. <a>(Why?)<\/a>",
-    "description":"Message shown to Safari users when content blocking is enabled OR AA is enabled"
+    "message":"We unsubscribed you from Acceptable Ads because you turned on Safari Content Blocking. You can only select one at a time. (<a>Why?<\/a>)",
+    "description":"Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   },
   "content_blocking_acceptable_ads_disbled_message":{
-    "message":"We turned off content blocking because you opted to allow non-intrusive ads. You can only select one at a time. <a>(Why?)<\/a>",
-    "description":"Message shown to Safari users when content blocking is enabled OR AA is enabled"
+    "message":"We turned off Safari Content Blocking because you opted to allow non-intrusive ads. You can only select one at a time. (<a>Why?<\/a>)",
+    "description":"Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   },
   "adreport_laststep":{
     "message":"Last step: report the issue to us.",
@@ -1442,5 +1402,66 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"And manually create a ticket, and copy and paste the information below into the \"Fill in any details you think will help us understand your issue\" section.",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "AI_title":{
+    "message":"Today is World Day Against Cyber Censorship!",
+    "description": "Title of an overlay message."
+  },
+  "AI_stop_showing":{
+    "message":"Stop showing me these banners!",
+    "description": "Text of a button a user can click. 'Banners' refers to banner advertisements on a website."
+  },
+  "AI_why":{
+    "message":"WHY DID ADBLOCK ALLOW THIS \"AD\" TODAY?",
+    "description": "Text of a link a user can click. The word 'AdBlock' should not be translated."
+  },
+  "AI_ok_no_more":{
+    "message":"OK, you won't see any more banners about World Day Against Cyber Censorship!",
+    "description": "'Banners' refers to banner advertisements on a website."
+  },
+  "AI_new":{
+    "message":"Today only!",
+    "description": "Meaning this setting is only applicable today."
+  },
+  "AI_new_after":{
+    "message":"Re-enable the Amnesty banners.",
+    "description": "This appears next to a checkbox setting a user can check and uncheck. This setting is used to show banner advertisements again. 'Amnesty' should not be translated."
+  },
+  "AI_enable_picreplacement":{
+    "message":"For 24 hours, replace certain ads with banners supporting World Day Against Cyber Censorship. <a id=\"adblock_link\" target=\"_blank\">Why is AdBlock doing this today?</a>",
+    "description": "This appears next to a checkbox setting a user can check and uncheck. The word 'AdBlock' should not be translated. HTML tags should not be modified."
+  },
+  "AI_enable_picreplacement_after":{
+    "message":"Temporarily bring back the World Day Against Cyber Censorship ads unblocked on March 12. (This option will expire soon.)
+<a id=\"adblock_link\" target=\"_blank\">Why did AdBlock do this?</a>",
+    "description": "This appears next to a checkbox setting a user can check and uncheck. The word 'AdBlock' should not be translated. HTML tags should not be modified."
+  },
+  "AI_learn_more":{
+    "message":"Read it on Amnesty.org >",
+    "description": "Text of a link a user can click. A '>' sign should be appended to the end of the string. 'Amnesty.org' should not be translated."
+  },
+  "AI_snowden":{
+    "message":"\"Even If You're Not Doing Anything Wrong, You're Being Watched And Recorded\" - by Edward Snowden",
+    "description": "Title and author of an essay. 'Edward Snowden' should not be translated."
+  },
+  "AI_aiweiwei":{
+    "message":"\"Without Freedom Of Speech There Is No Modern World, Just A Barbaric One\" - by Ai Wei Wei",
+    "description": "Title and author of an essay. 'Ai Wei Wei' should not be translated."
+  },
+  "AI_pussyriot":{
+    "message":"\"Authorities Don't Just Use Handcuffs And Arrests, But Also Media Attacks\" - by Pussy Riot",
+    "description": "Title and author of an essay. 'Pussy Riot' should not be translated."
+  },
+  "AI_northkorea":{
+    "message":"\"Without A Phone To Call Out Of The Country, I'd Never Have Learnt My Parents Were Alive; I'd Have Lived And Died In North Korea\" - by Choi Ji-woo",
+    "description": "Title and author of an essay. 'Choi Ji-woo' should not be translated."
+  },
+  "AI_cuba":{
+    "message": "\"Freedom Of Expression Can Land You In Jail In Cuba\" - by James Burke",
+    "description": "Title and author of an essay. 'James Burke' should not be translated."
+  },
+  "AI_adblock":{
+    "message":"\"Why AdBlock Is 'Un-Blocking' Amnesty Banners Today\" - by Gabriel Cubbage",
+    "description": "Title and author of an essay. Gabriel Cubbage, AdBlock, and Amnesty should not be translated."
   }
 }

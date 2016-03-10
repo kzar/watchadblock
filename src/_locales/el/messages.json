@@ -43,10 +43,6 @@
     "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στη γραμμή εργαλείων του Safari και επιλέξτε Προσαρμογή γραμμής εργαλείων, στη συνέχεια σύρετε το κουμπί AdBlock έξω από τη γραμμή εργαλείων. Μπορείτε να το εμφανίσετε ξανά σύροντάς το πίσω στην γραμμή εργαλείων.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
-  "ff_button_how_to_hide":{
-    "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στο κουμπί και επιλογή Αφαίρεση από τη γραμμή εργαλείων. Μπορείτε να το επανεμφανίσετε από Firefox Μενού -> Προσαρμογή.",
-    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
-  },
   "sliderexplanation":{
     "message":"Σύρετε τον δείκτη ώσπου η διαφήμιση να μπλοκαριστεί σωστά στην σελίδα, και το μπλοκαρισμένο στοιχείο να φαίνεται εντάξει.",
     "description":"Blacklister slider page message"
@@ -793,30 +789,6 @@
     "message":"Εμφανίζεται η διαφήμιση και σε άλλον περιηγητή;",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
-  "ff_checkinchrometitle":{
-    "message":"Ελέγξτε στο Chrome",
-    "description":"Tell a user to see if a reported ad also appears in Chrome"
-  },
-  "ff_checkinchrome_1":{
-    "message":"Εγκαταστήσετε το Chrome, αν δεν το έχετε.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_2":{
-    "message":"Εγκαταστήσετε το AdBlock για Chrome, αν δεν το έχετε.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_3":{
-    "message":"Στο Chrome, εγγραφείτε στις ίδιες λίστες φίλτρων όπως έχετε εδώ.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_4":{
-    "message":"Στο Chrome, φόρτωση της σελίδας με τη διαφήμιση.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_5":{
-    "message":"Η διαφήμιση εμφανίζεται και στο Chrome;",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
   "refusetocheck":{
     "message":"Δεν θέλω να το ελέγξω αυτό",
     "description":"User is telling us they don't wish to investigate something for us"
@@ -830,10 +802,6 @@
         "example":"EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe<\/a>  EXAMPLE 2: <a href='http:\/\/easylist.org'>EasyList forums<\/a>"
       }
     }
-  },
-  "reporttous2":{
-    "message":"Αν μιλάτε Αγγλικά, μπορείτε να αναφέρετε την διαφήμιση σε εμας <a>στην παρακολούθηση συμβάντων<\/a>.",
-    "description":"NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker<\/a>.'"
   },
   "fixityourself":{
     "message":"Εντάξει, μπορείτε ακόμα να μπλοκάρετε αυτή τη διαφήμιση μόνο για εσάς στην σελίδα επιλογών. Ευχαριστούμε!",
@@ -931,10 +899,6 @@
     "message":"Συγνώμη, το AdBlock απενεργοποιήθηκε σε αυτήν την σελίδα λόγω μιας από τις λίστες φίλτρων σας.",
     "description":"Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   },
-  "status_disabled":{
-    "message":"Το AdBlock δεν μπορεί να λειτουργήσει σε αυτόν τον τομέα.",
-    "description":"Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
-  },
   "dont_run_on_pages_on_domain":{
     "message":"Εκτός λειτουργίας σε σελίδες αυτού του τομέα",
     "description":"Menu entry to open the whitelist wizard"
@@ -964,11 +928,11 @@
     "description":"Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
   },
   "safaricontentblockinglimitexceeded":{
-    "message":"Ο αριθμός των κανόνων στη λίστα φίλτρου υπερβαίνει το όριο των 50.000, και έχει μειωθεί αυτόματα. Παρακαλώ διαγραφτείτε από μερικές λίστες φίλτρων ή απενεργοποιήστε τον αποκλεισμό περιεχομένου Safari!",
+    "message":"Ο αριθμός των κανόνων στη λίστα φίλτρου υπερβαίνει το όριο των 50.000, και έχει μειωθεί αυτόματα. Παρακαλώ αναιρέστε την εγγραφή σας από μερικές λίστες φίλτρων ή απενεργοποιήστε τον Αποκλεισμό Περιεχομένου Safari!",
     "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
   },
   "browserestartrequired":{
-    "message":"Η απενεργοποίηση αυτής της λειτουργίας απαιτεί επανεκκίνηση του περιηγητή σας.",
+    "message":"Παρακαλούμε κάντε επανεκκίνηση το Safari για να ολοκληρώσετε την απενεργοποίηση φραγής περιεχομένου.",
     "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   },
   "safarinotificationtitle":{
@@ -1000,7 +964,7 @@
     "description":"Text of a share link"
   },
   "pwyw":{
-    "message":"Πληρώστε ότι θέλετε!",
+    "message":"Πληρώστε ό,τι θέλετε!",
     "description":"Text of a payment request link"
   },
   "translator_credit":{
@@ -1052,7 +1016,7 @@
     "description":"Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
   },
   "storage_quota_exceeded":{
-    "message":"Ξεπεράσατε το όριο αποθήκευσης που το AdBlock μπορεί να κάνει χρήση. Παρακαλώ αναιρέστε την εγγραφή σας από μερικές λίστες φίλτρων.",
+    "message":"Ξεπεράσατε το όριο αποθήκευσης που το AdBlock μπορεί να κάνει χρήση. Παρακαλούμε αναιρέστε την εγγραφή σας από μερικές λίστες φίλτρων.",
     "description":"Message shown when the user uses more storage than allowed by the browser"
   },
   "safari50_updatenotice":{
@@ -1186,10 +1150,6 @@
         "example":"<a>here<\/a>"
       }
     }
-  },
-  "ff_adblock_outdated":{
-    "message":"Χρησιμοποιείτε μια παλιά έκδοση του AdBlock. Παρακαλώ κάντε κλικ στο κουμπί μενού του Firefox και επιλέξτε Add-ons. Στη συνέχεια στη σελίδα Add-ons, κάντε κλικ στο εικονίδιο με το γρανάζι (Εργαλεία για όλα τα πρόσθετα) και επιλέξτε 'Έλεγχος για ενημερώσεις'.",
-    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   },
   "adblocksupport":{
     "message":"Υποστήριξη AdBlock",
@@ -1358,6 +1318,14 @@
   "acceptableadsdisable_how_to_reenable":{
     "message":"Μπορείτε να το ενεργοποιήσετε ξανά παρακάτω και να υποστηρίζετε τις ιστοσελίδες που αγαπάτε επιλέγοντας \"Να επιτρέπονται ορισμένες μη-παρεμβατικές διαφημίσεις\".",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptable_ads_content_blocking_disbled_message":{
+    "message":"Αναιρέσαμε την εγγραφή σας από τις αποδεκτές διαφημίσεις, διότι έχετε ενεργοποιήσει την Φραγή Περιεχομένου Safari. Μπορείτε να επιλέξετε μόνο ένα κάθε φορά. (<a>Γιατί;<\/a>)",
+    "description":"Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
+  },
+  "content_blocking_acceptable_ads_disbled_message":{
+    "message":"Απενεργοποιήσαμε την Φραγή Περιεχομένου Safari επειδή έχετε επιλέξει να επιτρέπονται μη παρεμβατικές διαφημίσεις. Μπορείτε να επιλέξετε μόνο ένα κάθε φορά. (<a>Γιατί;<\/a>)",
+    "description":"Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   },
   "adreport_laststep":{
     "message":"Τελευταίο βήμα: αναφέρετε το πρόβλημα σε εμάς.",

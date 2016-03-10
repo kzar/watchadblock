@@ -13,7 +13,6 @@ var elementPurger = {
     var elType = request.elType;
     var url = getUnicodeUrl(request.url);
 
-    log("[DEBUG]", "Purging:", lastTry, elType, url);
 
     var tags = {};
     tags[ElementTypes.image] = { IMG:1 };
@@ -31,12 +30,14 @@ var elementPurger = {
         log("[DEBUG]", "  ", results.length, "results for selector:", selector);
         if (results.length) {
           for (var j=0; j < results.length; j++) {
+            if (request.picreplacement_enabled) {
+              picreplacement.augmentIfAppropriate({el: results[j], elType: elType, blocked: true});
+            }            
             destroyElement(results[j], elType);
           }
           var externalId = "kodkhcagmjcidjgljmbfiaconnbnohho";
           request.selector = selector;
           chrome.extension.sendRequest(externalId, request);
-
           return; // I doubt the same URL was loaded via 2 different src attrs.
         }
       }

@@ -43,10 +43,6 @@
     "message":"Чтобы скрыть кнопку, щелкните правой кнопкой мыши по панели инструментов Safari и выберите Настроить панель инструментов, а затем перетащите кнопку AdBlock с панели инструментов. Вы можете показать её снова, перетащив обратно на панель инструментов.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
-  "ff_button_how_to_hide":{
-    "message":"Чтобы скрыть кнопку, щелкните правой кнопкой мыши и выберите Удалить в панели инструментов.  Вы можете отобразить её снова, используя меню Firefox -> Customize.",
-    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
-  },
   "sliderexplanation":{
     "message":"Сдвигайте ползунок до тех пор, пока реклама не будет заблокирована правильно, а заблокированный элемент выглядит пригодным.",
     "description":"Blacklister slider page message"
@@ -793,30 +789,6 @@
     "message":"Реклама появляется в этом браузере тоже?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
-  "ff_checkinchrometitle":{
-    "message":"Проверить в Chrome",
-    "description":"Tell a user to see if a reported ad also appears in Chrome"
-  },
-  "ff_checkinchrome_1":{
-    "message":"Установить Chrome, если у Вас нет его.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_2":{
-    "message":"Установить AdBlock для Chrome, если у Вас нет его.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_3":{
-    "message":"В Chrome подпишитесь на те же списки фильтров, как и здесь.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_4":{
-    "message":"В Chrome загрузите страницу с рекламой.",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_5":{
-    "message":"Реклама появляется в Chrome тоже?",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
   "refusetocheck":{
     "message":"Я не хочу проверять это",
     "description":"User is telling us they don't wish to investigate something for us"
@@ -830,10 +802,6 @@
         "example":"EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe<\/a>  EXAMPLE 2: <a href='http:\/\/easylist.org'>EasyList forums<\/a>"
       }
     }
-  },
-  "reporttous2":{
-    "message":"Если Вы знаете английский, Вы можете сообщить нам о рекламе <a>в трекер вопросов<\/a>.",
-    "description":"NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker<\/a>.'"
   },
   "fixityourself":{
     "message":"OK, Вы все равно можете заблокировать эту рекламу для себя на странице Параметры. Спасибо!",
@@ -931,10 +899,6 @@
     "message":"Извените, AdBlock отключен на этой странице одним из списков фильтров.",
     "description":"Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   },
-  "status_disabled":{
-    "message":"AdBlock не работает на этом домене.",
-    "description":"Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
-  },
   "dont_run_on_pages_on_domain":{
     "message":"Не запускать на страницах этого домена",
     "description":"Menu entry to open the whitelist wizard"
@@ -968,7 +932,7 @@
     "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
   },
   "browserestartrequired":{
-    "message":"Отключение этой функции требует перезапуска браузера.",
+    "message":"Пожалуйста, перезапустите Safari для завершения отключения блокировки содержимого.",
     "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   },
   "safarinotificationtitle":{
@@ -1187,10 +1151,6 @@
       }
     }
   },
-  "ff_adblock_outdated":{
-    "message":"Вы используете старую версию AdBlock. Пожалуйста, нажмите на кнопку меню Firefox и выберите Дополнения. Затем на странице Дополнений, нажмите на значок шестеренки (инструменты для всех Дополнений) и выберите «Проверить наличие обновлений».",
-    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  },
   "adblocksupport":{
     "message":"Поддержка AdBlock",
     "description":"Title of the support tab"
@@ -1359,6 +1319,14 @@
     "message":"Вы можете снова включить это и поддерживать веб-сайты, которые Вы любите, выбрав «Разрешить некоторую ненавязчивую рекламу» ниже.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
+  "acceptable_ads_content_blocking_disbled_message":{
+    "message":"Мы отписался Вас от Приемлемой Рекламы, потому что Вы включили Блокировку Содержимого в Safari. Одновременно можно выбрать только одно. (<a>Почему?<\/a>)",
+    "description":"Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
+  },
+  "content_blocking_acceptable_ads_disbled_message":{
+    "message":"Мы отключить Блокировку Содержимого в Safari потому, что Вы решили разрешить ненавязчивую рекламу. Одновременно можно выбрать только одно. (<a>Почему?<\/a>)",
+    "description":"Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
+  },
   "adreport_laststep":{
     "message":"Последний шаг: сообщите нам о проблеме.",
     "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
@@ -1434,5 +1402,50 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"И вручную создать карточку, и копировать и вставить информацию ниже в раздел «Fill in any details you think will help us understand your issue».",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
-  }
+  },
+  "AI_title": {
+    "message": "Сегодня Всемирный день борьбы против кибер-цензуры!"
+  },
+  "AI_stop_showing": {
+    "message": "Перестаньте показывать мне эти баннеры!"
+  },
+  "AI_why": {
+    "message": "ПОЧЕМУ ADBLOCK ПРОПУСТИЛ ЭТУ \"РЕКЛАМУ\" СЕГОДНЯ?"
+  },
+  "AI_ok_no_more": {
+    "message": "Хорошо, вы больше не увидите никаких баннеров о Всемирном Дне борьбы против кибер-цензуры!"
+  },
+  "AI_new": {
+    "message": "Только сегодня!"
+  },
+  "AI_new_after": {
+    "message": "Разрешите баннеры Amnesty."
+  },
+  "AI_enable_picreplacement": {
+    "message": "В течение 24 часов заменить некоторую рекламу баннерами в поддержку Всемирного Дня борьбы против кибер-цензуры. <a id=\"adblock_link\" target=\"_blank\">Почему AdBlock делает это сегодня?</a>"
+  },
+  "AI_enable_picreplacement_after": {
+    "message": "Временно вернуть рекламу Всемирного Дня борьбы против кибер-цензуры, разблокированную 12 марта. (Срок действия этой функции истекает в ближайшее время). <a id=\"adblock_link\" target=\"_blank\">Почему AdBlock сделал это?</a>"
+  },
+  "AI_learn_more": {
+    "message": "Узнайте это на Amnesty.org >"
+  },
+  "AI_snowden": {
+    "message": "\"Даже если вы не делаете ничего плохого, за вами следят и записывают\" - Эдвард Сноуден"
+  },
+  "AI_aiweiwei": {
+    "message": "\"Без свободы слова — нет современного мира, но только варварский мир\" - Ай Вэйвэй"
+  },
+  "AI_pussyriot": {
+    "message": "\"Власти используют не только наручники и аресты, но и атаки СМИ\" - Pussy Riot"
+  },
+  "AI_northkorea": {
+    "message": "\"Без телефона, чтобы позвонить заграницу, я никогда не узнала бы, что мои родители живы, я жила бы и умерла в Северной Корее\" - Чхве Джиу"
+  },
+  "AI_cuba": {
+    "message": "\"Свобода слова может привести вас в тюрьму на Кубе\" - Джеймс Берк"
+  },
+  "AI_adblock": {
+    "message": "\"Почему AdBlock 'разблокирует' сегодня баннеры Amnesty\" - Габриэль Каббэдж"
+  }  
 }

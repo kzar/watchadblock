@@ -103,6 +103,7 @@
       show_block_counts_help_link: true,
       dropbox_sync: false,
       show_survey: true,
+      do_picreplacement: false,
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
@@ -389,7 +390,8 @@
         // receive this or not.  Because the #anchor of a page can change without navigating
         // the frame, ignore the anchor when matching.
         var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
-        var data = { command: "purge-elements", tabId: tabId, frameUrl: frameUrl, url: details.url, elType: elType };
+        var picreplacement_enabled = picreplacement_checker.enabled(frameUrl);
+        var data = { command: "purge-elements", tabId: tabId, frameUrl: frameUrl, url:details.url, elType: elType, picreplacement_enabled: picreplacement_enabled };
         chrome.tabs.sendRequest(tabId, data);
       }
       if (blocked) {
@@ -1856,5 +1858,7 @@
           _sync_filters(eXfilters, "exclude_filters");
       }
   }
+
+  picreplacementOneTimer();
 
   log("\n===FINISHED LOADING===\n\n");

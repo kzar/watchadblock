@@ -43,10 +43,6 @@
     "message":"若要隐藏按钮，请右键单击Safari的工具栏并选择“自定义工具栏“，然后将AdBlock按钮拖出工具栏。若要再次显示按钮，您可以将它拖放回工具栏。",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
-  "ff_button_how_to_hide":{
-    "message":"要隐藏按钮，请右键单击它并选择“从工具栏移除”。您可以在Firefox菜单->定制中选择重新显示按钮。",
-    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
-  },
   "sliderexplanation":{
     "message":"移动滑块直到页面上的广告被正确地屏蔽。",
     "description":"Blacklister slider page message"
@@ -793,30 +789,6 @@
     "message":"广告是否仍在浏览器中显示？",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
-  "ff_checkinchrometitle":{
-    "message":"使用Chrome查看",
-    "description":"Tell a user to see if a reported ad also appears in Chrome"
-  },
-  "ff_checkinchrome_1":{
-    "message":"如果您还没有Chrome，请先安装Chrome。",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_2":{
-    "message":"如果您的Chrome没有AdBlock，请为Chrome安装AdBlock扩展。",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_3":{
-    "message":"在Chrome中，订阅与您现在正使用的相同的过滤列表。",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_4":{
-    "message":"在Chrome中打开含有广告的页面。",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
-  "ff_checkinchrome_5":{
-    "message":"该广告是否也在Chrome中出现？",
-    "description":"Instruction for how to check Chrome for a reported ad"
-  },
   "refusetocheck":{
     "message":"我不想检查这个",
     "description":"User is telling us they don't wish to investigate something for us"
@@ -830,10 +802,6 @@
         "example":"EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe<\/a>  EXAMPLE 2: <a href='http:\/\/easylist.org'>EasyList forums<\/a>"
       }
     }
-  },
-  "reporttous2":{
-    "message":"您可以到<a>问题追踪页面（仅英文）<\/a>向我们报告广告。",
-    "description":"NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker<\/a>.'"
   },
   "fixityourself":{
     "message":"好了。您仍然可以在选项中手动屏蔽此广告。 谢谢！",
@@ -931,10 +899,6 @@
     "message":"抱歉, 因为您的一个过滤列表，AdBlock在这个页面被禁用了",
     "description":"Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   },
-  "status_disabled":{
-    "message":"AdBlock无法在这个网域上运行。",
-    "description":"Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
-  },
   "dont_run_on_pages_on_domain":{
     "message":"不要在这个网域的页面上运行",
     "description":"Menu entry to open the whitelist wizard"
@@ -968,7 +932,7 @@
     "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
   },
   "browserestartrequired":{
-    "message":"禁用此功能需要重新启动您的浏览器。",
+    "message":"请重启Safari以关闭内容屏蔽。",
     "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   },
   "safarinotificationtitle":{
@@ -1187,10 +1151,6 @@
       }
     }
   },
-  "ff_adblock_outdated":{
-    "message":"您正在使用旧版本的AdBlock 。请单击Firefox菜单按钮，并选择\"附加组件\"。在附加组件管理器页面，单击右上角的均衡器图标 (用于所有附加组件的工具)，然后选择\"检查更新\"。",
-    "description":"On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  },
   "adblocksupport":{
     "message":"AdBlock技术支持",
     "description":"Title of the support tab"
@@ -1358,6 +1318,14 @@
   "acceptableadsdisable_how_to_reenable":{
     "message":"您可以通过勾选下面的“允许一些非侵入式广告”来重新启用它并支持一些您喜爱的网站。",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptable_ads_content_blocking_disbled_message":{
+    "message":"因为您开启了Safari内容屏蔽，我们为您取消订阅了可接受广告列表。这两者您只能选择其一。(<a>为什么?<\/a>)",
+    "description":"Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
+  },
+  "content_blocking_acceptable_ads_disbled_message":{
+    "message":"因为您选择允许非侵入式的广告，我们为您关闭了Safari内容屏蔽。这两者您只能选择其一。(<a>为什么?<\/a>)",
+    "description":"Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   },
   "adreport_laststep":{
     "message":"最后一步: 向我们报告问题",
