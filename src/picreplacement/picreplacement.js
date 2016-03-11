@@ -265,7 +265,7 @@ _placementFor: function(el) {
 
   var result = this._fit(pic, t);
   result.url = "https://cdn.adblockcdn.com/img/" + pic.filename + selectedTheme + "_" + this._determineLanguage() + ".png";
-  result.info_url = "http://getadblock.com/amnesty_url/?l=" + this._determineLanguage() + "&v=" + selectedTheme + "&s=" + pic.x + "x" + pic.y;
+  result.info_url = "http://getadblock.com/amnesty_url/?l=" + this._determineLanguage(true) + "&v=" + selectedTheme + "&s=" + pic.x + "x" + pic.y;
   result.text = pic.text;
   result.color = selectedTheme;
   result.type = t.type;
@@ -325,13 +325,17 @@ _replace: function(el) {
   return newPic;
 },
 
-_determineLanguage: function() {
+_determineLanguage: function(includeAR) {
     var lang = determineUserLanguage();
     if (lang === "en" ||
         lang === "fr" ||
         lang === "es" ||
         lang === "ru") {
         return lang;
+    }
+    if (includeAR === true &&
+        lang === "ar") {
+      return lang;
     }
     return "en";
 },
