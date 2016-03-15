@@ -299,10 +299,10 @@ function createTable(domain, url, frameId) {
                     '<th style="height: 10px;"></th>' +
                 '<\/tr>' +
                 '<tr>' +
-                    '<th i18n="headerresource" data-column="url"><\/th>' +
-                    '<th i18n="headertype" data-column="type"><\/th>' +
-                    '<th i18n="headerfilter" data-column="filter" style="text-align: center;"><\/th>' +
-                    '<th i18n="thirdparty" data-column="thirdparty" style="text-align: center;"><\/th>' +
+                    '<th data-column="url">' + translate("headerresource") + '<\/th>' +
+                    '<th data-column="type">' + translate("headertype") + '<\/th>' +
+                    '<th data-column="filter" style="text-align: center;">' + translate("headerfilter") + '<\/th>' +
+                    '<th data-column="thirdparty" style="text-align: center;">' + translate("thirdparty") + '<\/th>' +
                 '<\/tr>' +
             '<\/thead>' +
             '<tbody>' +

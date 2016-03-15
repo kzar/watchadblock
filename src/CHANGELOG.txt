@@ -1,6 +1,15 @@
 ## Versions ##
 
 UNRELEASED:
+
+2.52:
+- Modified the 'Show Resources' page to use the translate() function instead of HTML tags.  (#689)
+- Added Spanish as a new option for language specific filter lists.  (#695)
+- Changed the description of 'Fanboy's Annoyances list'.  (#687)
+- Fixed a bug in the 'try_to_unwhitelist' function.  It will no longer remove all other custom filters when a user has a blacklist domains entry: @@*$document,domain=.  (#690)
+- Updated the language list contact information on the 'Report an Ad' page.  (#685)
+- Removed the Beta DropBox synchronize feature. (#696)
+
 2.51.2:
 - Updated Translations.
 - Added Arabic as a supported language for the links about World Day Against Cyber Censorship
