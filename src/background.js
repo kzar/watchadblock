@@ -1,4 +1,4 @@
-  // Send the file name and line number of any error message. This will help us
+ // Send the file name and line number of any error message. This will help us
   // to trace down any frequent errors we can't confirm ourselves.
   window.addEventListener("error", function(e) {
     var str = "Error: " +
@@ -101,8 +101,7 @@
       display_stats: true,
       display_menu_stats: true,
       show_block_counts_help_link: true,
-      show_survey: true,
-      do_picreplacement: false,
+      show_survey: true
     };
     var settings = storage_get('settings') || {};
     this._data = $.extend(defaults, settings);
@@ -389,8 +388,7 @@
         // receive this or not.  Because the #anchor of a page can change without navigating
         // the frame, ignore the anchor when matching.
         var frameUrl = frameData.get(tabId, requestingFrameId).url.replace(/#.*$/, "");
-        var picreplacement_enabled = picreplacement_checker.enabled(frameUrl);
-        var data = { command: "purge-elements", tabId: tabId, frameUrl: frameUrl, url:details.url, elType: elType, picreplacement_enabled: picreplacement_enabled };
+        var data = { command: "purge-elements", tabId: tabId, frameUrl: frameUrl, url:details.url, elType: elType };
         chrome.tabs.sendRequest(tabId, data);
       }
       if (blocked) {

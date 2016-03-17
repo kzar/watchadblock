@@ -137,6 +137,9 @@ function handleABPLinkClicks() {
   // Subscribe to the list when you click an abp: link
   var elems = document.querySelectorAll('[href^="abp:"], [href^="ABP:"]');
   var abplinkhandler = function(event) {
+    if (event.isTrusted === false) {
+      return;
+    }    
     event.preventDefault();
     var searchquery = this.href.replace(/^.+?\?/, '?');
     if (searchquery) {
@@ -212,16 +215,6 @@ function adblock_begin(inputs) {
       if (typeof run_bandaids === "function") {
         run_bandaids("new");
       }
-      BGcall('picreplacement_is_happening', function(response) {
-        if (response === true) {
-          var googleAds = document.getElementsByClassName("adsbygoogle");
-          if (googleAds &&
-              googleAds.length > 0) {
-            picreplacement.augmentIfAppropriate({el: googleAds[0], elType: ElementTypes.image, blocked: true});
-          }
-        }
-      });
-
       handleABPLinkClicks();
     });
     if (inputs.success) inputs.success();

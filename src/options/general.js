@@ -9,48 +9,6 @@ catch(ex) {}
 // Check or uncheck each loaded DOM option checkbox according to the
 // user's saved settings.
 $(function() {
-
-  function init_picreplacement() {
-    BGcall("picreplacement_show_on_options_page", function(show) {
-      var p = $("#picreplacement");
-      p.toggle(show);
-      p.find("[i18n]").each(function() {
-        var today = new Date();
-        var key = $(this).attr("i18n");
-        if (today >= new Date(2016, 2, 13)) {
-          key = $(this).attr("i18nafter") || $(this).attr("i18n");
-        }
-        $(this).html(picreplacement.translate(key));
-      });
-      $("#wikipedia_link").prop("href", "https://www.wikipedia.org/wiki/World_Day_Against_Cyber_Censorship");
-      var _determineLanguage = function() {
-          var lang = determineUserLanguage();
-          if (lang === "en" ||
-              lang === "fr" ||
-              lang === "es" ||
-              lang === "ru") {
-              return lang;
-          }
-          return "en";
-      };
-      $("#adblock_link").prop("href", "http://getadblock.com/amnesty_url/?l=" + _determineLanguage() + "&v=adblock&s=");
-    });
-  }
-  init_picreplacement();
-  // Labels fall off on tab change for some reason: redo them.
-  $( "#tabpages" ).on( "tabsactivate", init_picreplacement);
-
-  // Don't use standard enable_ machinery: this is too complicated.
-  BGcall("picreplacement_is_happening", function(enabled) {
-    var cb = $("#picreplacement").find(":checkbox");
-    cb.
-      attr("checked", enabled).
-      change(function() {
-        var is_enabled = $(this).is(':checked');
-        BGcall("set_setting", "do_picreplacement", is_enabled);
-      });
-  });
-
   BGcall("get_subscriptions_minus_text", function(subs) {
     //if the user is currently subscribed to AA
     //then 'check' the acceptable ads button.

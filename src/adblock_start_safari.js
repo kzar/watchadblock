@@ -53,9 +53,6 @@ beforeLoadHandler = function(event) {
   };
   var result = safari.self.tab.canLoad(event, data);
   if (!result.can_load) {
-    if (result.picreplacement_enabled) {
-      picreplacement.augmentIfAppropriate({el: event.target, elType: data.elType, blocked: !result.can_load});    
-    }
     // Work around bugs.webkit.org/show_bug.cgi?id=65412
     // Allow the resource to load, but hide it afterwards.
     // Probably a normal site will never reach 250.
