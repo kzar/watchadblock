@@ -51,8 +51,7 @@ beforeLoadHandler = function(event) {
     frameDomain: document.location.hostname,
     frameInfo: chrome._tabInfo.gatherFrameInfo()
   };
-  var result = safari.self.tab.canLoad(event, data);
-  if (!result.can_load) {
+  if (!safari.self.tab.canLoad(event, data)) {
     // Work around bugs.webkit.org/show_bug.cgi?id=65412
     // Allow the resource to load, but hide it afterwards.
     // Probably a normal site will never reach 250.
