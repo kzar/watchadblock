@@ -931,6 +931,10 @@
     "message":"Broj pravila filter listi prešao je granicu od 50.000 i automatski je smanjen. Molimo odjavite se sa nekih listi ili onemogućite blokiranje sadržaja za Safari!",
     "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
   },
+  "browserestartrequired":{
+    "message":"Ponovno pokrenite Safari kako bi završili isključivanje blokiranje sadržaja.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
   "safarinotificationtitle":{
     "message":"Granica pravila blokiranog sadržaja je premašena",
     "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
@@ -1314,6 +1318,14 @@
   "acceptableadsdisable_how_to_reenable":{
     "message":"Možete ovo omogućite i podržati stranice koje volite odabiranjem \"Dopusti neke nenametljive reklame\" ispod.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptable_ads_content_blocking_disbled_message":{
+    "message":"Isključili smo vas iz Prihvatljivih oglasa zato što ste uključili Safari blokiranje sadržaja. Možete odabrati samo jedno po jedno. (<a>Zašto?<\/a>)",
+    "description":"Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
+  },
+  "content_blocking_acceptable_ads_disbled_message":{
+    "message":"Isključili smo Safari blokiranje sadržaja jer ste odlučili dopustiti prihvatljive oglase. Možete odabrati samo jedno po jedno. (<a>Zašto?<\/a>)",
+    "description":"Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   },
   "adreport_laststep":{
     "message":"Zadnji korak: prijavite grešku nama.",

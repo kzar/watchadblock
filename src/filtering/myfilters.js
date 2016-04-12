@@ -874,8 +874,9 @@ MyFilters.prototype._make_subscription_options = function() {
       safariJSON_URL: "https://cdn.adblockcdn.com/filters/easylist_plun_korean.json",
     },
     "latvian": {  // Latvian filters
-      url: "https://gitorious.org/adblock-latvian/adblock-latvian/blobs/raw/master/lists/latvian-list.txt",
+      url: "https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt",
       safariJSON_URL: "https://cdn.adblockcdn.com/filters/latvian.json",
+      requiresList: "easylist",
     },
     "swedish": {  // Swedish filters
       url: "http://fanboy.co.nz/fanboy-swedish.txt",

@@ -87,6 +87,24 @@ STATS = (function() {
         console.log("Ping returned error: ", e.status);
       },
     };
+    // attempt to stop users that are pinging us 'alot'
+    // by checking the current ping count,
+    // if the ping count is above a theshold,
+    // then only ping 'occasionally'
+    if (data.pc > 5000)
+    {
+      if (data.pc > 5000 &&
+          data.pc < 100000 &&
+          ((data.pc % 5000) !== 0))
+      {
+        return;
+      }
+      if (data.pc >= 100000 &&
+         ((data.pc % 50000) !== 0))
+      {
+        return;
+      }
+    }
     if (chrome.management && chrome.management.getSelf) {
       chrome.management.getSelf(function(info) {
         data["it"] = info.installType.charAt(0);

@@ -931,6 +931,10 @@
     "message":"De lijst met filter regels overschrijft de limiet van 50 000 en is automatisch verkleind. Meld je aub af voor enkele filters of schakel de Safari Inhoud Blokkering uit!",
     "description":"Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
   },
+  "browserestartrequired":{
+    "message":"Herstart Safari aub om content blocking volledig uit te schakelen.",
+    "description":"Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+  },
   "safarinotificationtitle":{
     "message":"Inhoud blokkering regels limiet overschreden",
     "description":"Title of a notification shown to Safari Content Blocking users with too many filter list rules"
@@ -1314,6 +1318,14 @@
   "acceptableadsdisable_how_to_reenable":{
     "message":"Je kan dit terug activeren en de websites waar je van houdt ondersteunen door het selectievakje 'Laat sommige, niet-opdringerige advertenties toe' weer in te schakelen.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
+  },
+  "acceptable_ads_content_blocking_disbled_message":{
+    "message":"We hebben je afgemeld van de aanvaardbare advertenties omdat u safari content blocking hebt ingeschakeld. Je kan slechts 1 van deze 2 opties tegelijk selecteren. (<a>Waarom?<\/a>)",
+    "description":"Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
+  },
+  "content_blocking_acceptable_ads_disbled_message":{
+    "message":"We hebben Safari Content Blocking uitgeschakeld omdat je opteerde om niet-opdringerige advertenties toe te staan. Je kan slechts 1 van deze 2 opties tegelijk selecteren. (<a>Waarom?<\/a>)",
+    "description":"Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   },
   "adreport_laststep":{
     "message":"Laatste stap: meld het probleem aan ons.",
