@@ -750,6 +750,18 @@
       return sessionStorage.getItem('adblock_is_paused') === "true";
     }
     sessionStorage.setItem('adblock_is_paused', newValue);
+    // To prevent certain web site issues that occur with the "beforeload" event listener
+    // remove the Safari specific "beforeload" script when AdBlock is paused, and
+    // add it back when AdBlock is un-paused
+    if (SAFARI &&
+        newValue === true &&
+        !get_settings().safari_content_blocking) {
+       safari.extension.removeContentScript(safari.extension.baseURI + "adblock_safari_beforeload.js");
+    } else if (SAFARI &&
+            newValue === false &&
+            !get_settings().safari_content_blocking) {
+       safari.extension.addContentScriptFromURL(safari.extension.baseURI + "adblock_safari_beforeload.js", [], [], false);
+    }
   }
 
   // Get if AdBlock is paused
