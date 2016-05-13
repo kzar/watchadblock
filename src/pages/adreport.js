@@ -1,7 +1,16 @@
 var malwareDomains = null;
 var extensionsDisabled = [];
+
+var recordMessage = function(msg) {
+  if (!msg) {
+    return;
+  }
+  BGcall("recordAdreportMessage", msg);
+}
+
 $(function() {
     localizePage();
+    recordMessage("open");
 
     //Shows the instructions for how to enable all extensions according to the browser of the user
     if (SAFARI) {
@@ -401,21 +410,15 @@ var checkmalware = function() {
         for (var i = 0; i < loaded_resources.length; i++) {
             for (var key in loaded_resources[i]) {
                 // Push just domains, which are not already in extracted_domains array
-                if (SAFARI) {
-                    var resource = key.split(':|:');
-                    if (resource &&
-                        resource.length === 2 &&
-                        extracted_domains.indexOf(parseUri(resource[1])
-                            .hostname) === -1) {
-                        extracted_domains.push(parseUri(resource[1])
-                            .hostname);
-                    }
-                } else {
-                    if (extracted_domains.indexOf(parseUri(key)
-                            .hostname) === -1) {
-                        extracted_domains.push(parseUri(key)
-                            .hostname);
-                    }
+                if (key.indexOf(':|:') > -1) {
+                  var resources = key.split(':|:');
+                  if (resources &&
+                      resources.length >= 2) {
+                    key = parseUri(resources[1]).hostname;
+                  }
+                }
+                if (extracted_domains.indexOf(key) === -1) {
+                    extracted_domains.push(key);
                 }
             }
         }
@@ -434,6 +437,7 @@ var checkmalware = function() {
         $('.loader')
             .hide();
         if (infected) {
+            recordMessage("malware");
             $('#step_update_filters_DIV')
                 .hide();
             $("#malwarewarning")
@@ -553,6 +557,7 @@ $("#UpdateFilters")
 //if the user clicks a radio button
 $("#step_update_filters_no")
     .click(function() {
+        recordMessage("update_filters");
         $("#step_update_filters")
             .html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
         $("#checkupdate")
@@ -603,6 +608,7 @@ $("#DisableAA")
 //if the user clicks a radio button
 $("#step_update_aa_no")
     .click(function() {
+        recordMessage("update_aa");
         $("#step_update_aa")
             .html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
         $("#checkupdate")
@@ -630,6 +636,7 @@ $("#step_update_aa_yes")
 //if the user clicks a radio button
 $("#step_disable_extensions_no")
     .click(function() {
+        recordMessage("disable_extensions");
         $("#step_disable_extensions")
             .html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
         $("#checkupdate")
@@ -735,6 +742,7 @@ $("#step_language_lang")
             $("#link")
                 .html(translate("here"))
                 .attr("href", "https://adblockplus.org/en/subscriptions");
+            recordMessage("language");
             return;
         } else {
             var required_lists = selected.attr('value')
@@ -743,6 +751,7 @@ $("#step_language_lang")
                 if (unsubscribed_default_filters[required_lists[i]]) {
                     $("#checkupdate")
                         .text(translate("retryaftersubscribe", [translate("filter" + required_lists[i])]));
+                    recordMessage("language");
                     return;
                 }
             }
@@ -771,6 +780,7 @@ $("#step_language_lang")
 //If the user clicks a radio button
 $("#step_firefox_yes")
     .click(function() {
+        recordMessage("filterlistproblem");
         $("#step_firefox")
             .html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
         if (/^mailto\:/.test(contact))
@@ -791,6 +801,7 @@ $("#step_firefox_no")
                 .fadeIn()
                 .css("display", "block");
         } else {
+            recordMessage("adblockissue");
             $("#step_report_DIV")
                 .fadeIn()
                 .css("display", "block");
@@ -805,6 +816,7 @@ $("#step_firefox_no")
 
 $("#step_firefox_wontcheck")
     .click(function() {
+        recordMessage("firefox_wontcheck");
         if (!SAFARI) {
             // Chrome blocking is good enough to assume the answer is 'yes'
             $("#step_firefox_yes")
@@ -823,6 +835,7 @@ $("#step_firefox_wontcheck")
 //If the user clicks a radio button
 $("#step_flash_yes")
     .click(function() {
+        recordMessage("flash_yes");
         $("#step_flash")
             .html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
         $("#checkupdate")
@@ -830,6 +843,7 @@ $("#step_flash_yes")
     });
 $("#step_flash_no")
     .click(function() {
+        recordMessage("flash_no");
         $("#step_flash")
             .html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
         $("#step_report_DIV")
@@ -846,6 +860,7 @@ $("#step_flash_no")
 // STEP 7: Ad Report
 $("#step_report_submit")
     .click(function() {
+        recordMessage("sendReport");
         sendReport();
     });
 

@@ -206,12 +206,15 @@ STATS = (function() {
     // Ping the server when necessary.
     startPinging: function() {
       function sleepThenPing() {
-        var delay = millisTillNextPing();
+        // Wait 10 seconds to allow the previous 'set' to finish
         window.setTimeout(function() {
-          pingNow();
-          scheduleNextPing();
-          sleepThenPing();
-        }, delay );
+          var delay = millisTillNextPing();
+          window.setTimeout(function() {
+            pingNow();
+            scheduleNextPing();
+            sleepThenPing();
+          }, delay );
+        }, 10000 );
       };
       // Try to detect corrupt storage and thus avoid ping floods.
       if (! (millisTillNextPing() > 0) ) {

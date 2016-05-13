@@ -3,14 +3,14 @@ function load_options() {
     BGcall("get_settings", function(settings) {
         optionalSettings = settings;
         var activeTab  = $.cookie('activetab');
-        if (window.location && 
+        if (window.location &&
             window.location.search) {
             var searchQuery = parseUri.parseSearch(window.location.search);
             if (searchQuery &&
                 searchQuery.tab) {
                 activeTab = searchQuery.tab;
             }
-        }        
+        }
         $("#tabpages").
         tabs({
             // Go to the last opened tab
@@ -37,7 +37,8 @@ function load_options() {
                 localizePage();
 
                 // Toggle won't handle .advanced.chrome-only
-                if (!optionalSettings.show_advanced_options)
+                if (optionalSettings &&
+                    !optionalSettings.show_advanced_options)
                     $(".advanced").hide();
                 if (SAFARI)
                     $(".chrome-only").hide();

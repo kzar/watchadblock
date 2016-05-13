@@ -22,7 +22,8 @@ $(function() {
       prop("checked", optionalSettings[name]);
   }
   //uncheck any incompatible options with the new safari content blocking, and then hide them
-  if (optionalSettings["safari_content_blocking"]) {
+  if (optionalSettings &&
+      optionalSettings["safari_content_blocking"]) {
     $(".exclude_safari_content_blocking > input").each(function(index) {
       $(this).prop("checked", false);
     });

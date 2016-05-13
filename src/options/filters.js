@@ -435,7 +435,8 @@ function SubscriptionUtil() {};
 SubscriptionUtil.validateOverSubscription = function() {
   if ($(":checked", "#filter_list_subscriptions").length <= 6)
     return true;
-  if (optionalSettings.show_advanced_options) {
+  if (optionalSettings &&
+      optionalSettings.show_advanced_options) {
     // In case of an advanced user, only warn once every 30 minutes, even
     // if the options page wasn't open all the time. 30 minutes = 1/48 day
     if ($.cookie('noOversubscriptionWarning'))

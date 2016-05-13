@@ -1254,6 +1254,10 @@
       }
     }
   })();
+  // Log an 'adreport' related message on GAB log server.
+  var recordAdreportMessage = function(msg) {
+    recordMessageWithUserID(msg, 'adreport');
+  };
 
   // Log an 'error' message on GAB log server.
   var recordErrorMessage = function(msg, callback) {
