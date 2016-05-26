@@ -593,6 +593,7 @@ $("#DisableAA")
     .click(function() {
         $(this)
             .prop("disabled", true);
+        recordMessage("disable_aa_click");
         BGcall("unsubscribe", {
             id: "acceptable_ads",
             del: false
@@ -608,7 +609,7 @@ $("#DisableAA")
 //if the user clicks a radio button
 $("#step_update_aa_no")
     .click(function() {
-        recordMessage("update_aa");
+        recordMessage("disable_aa_no");
         $("#step_update_aa")
             .html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
         $("#checkupdate")
@@ -622,6 +623,7 @@ $("#step_update_aa_no")
     });
 $("#step_update_aa_yes")
     .click(function() {
+        recordMessage("disable_aa_yes");
         $("#step_update_aa")
             .html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
         $("#step_disable_extensions_DIV")
