@@ -1,5 +1,6 @@
 var malwareDomains = null;
 var extensionsDisabled = [];
+var updateFiltersClicked = false;
 
 var recordMessage = function(msg) {
   if (!msg) {
@@ -11,7 +12,11 @@ var recordMessage = function(msg) {
 $(function() {
     localizePage();
     recordMessage("open");
-
+    $( window ).unload(function() {
+      if (!updateFiltersClicked) {
+        recordMessage("update_filters_not_clicked");
+      }
+    });
     //Shows the instructions for how to enable all extensions according to the browser of the user
     if (SAFARI) {
         $(".chrome_only")
@@ -438,6 +443,7 @@ var checkmalware = function() {
             .hide();
         if (infected) {
             recordMessage("malware");
+            updateFiltersClicked = true;
             $('#step_update_filters_DIV')
                 .hide();
             $("#malwarewarning")
@@ -545,6 +551,8 @@ var tabId = options.tabId.replace(/[^0-9]/g, '');
 //Updating the users filters
 $("#UpdateFilters")
     .click(function() {
+        recordMessage("update_filters_click");
+        updateFiltersClicked = true;
         $(this)
             .prop("disabled", true);
         BGcall("update_subscriptions_now", function() {
@@ -557,7 +565,7 @@ $("#UpdateFilters")
 //if the user clicks a radio button
 $("#step_update_filters_no")
     .click(function() {
-        recordMessage("update_filters");
+        recordMessage("update_filters_no");
         $("#step_update_filters")
             .html("<span class='answer' chosen='no'>" + translate("no") + "</span>");
         $("#checkupdate")
@@ -565,6 +573,7 @@ $("#step_update_filters_no")
     });
 $("#step_update_filters_yes")
     .click(function() {
+        recordMessage("update_filters_yes");
         $("#step_update_filters")
             .html("<span class='answer' chosen='yes'>" + translate("yes") + "</span>");
         // If the user is subscribed to Acceptable Ads, ask them to unsubscribe, and recheck the page

@@ -37,7 +37,7 @@ send_content_to_back = function() {
   for (var i = 0; i < zIndexes.length; i++) {
     var el = zIndexes[i];
     if (el.style["z-index"] >= 1000000)
-      el.style["z-index"] = 999999;
+      el.style["z-index"] = 999;
   }
 }
 
