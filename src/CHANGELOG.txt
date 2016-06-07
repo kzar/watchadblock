@@ -2,69 +2,8 @@
 
 UNRELEASED:
 
-2.62.0:
-- Updated Translations.
-- Re-added code to enable user survey's.  (#738)
-
-2.61.0:
-- Updated Translations.
-- Fixed the contact information for the Hebrew Filter list. (#729)
-- Fixed an issue on the AdBlock popup menu. The Donation link text now wraps nicely when text is longer than 1 line. (#732)
-- Update the URL for the donation link on the AdBlock popup menu. (#736)
-
-2.60.1:
-- Moved log message when the popup menu is opened to avoid unnecessary calls. (#727)
-
-2.60:
-- Updated Translations.
-- Changed the 'Spread the word' link on the AdBlock menu to 'Donate to help support AdBlock!', and added a log message when the popup menu is opened. (# 726)
-
-2.59:
-- Updated the logging messages on the "Report an Ad" page to help understand usage. (#720)
-- Updated the z-Index of the white-list wizard to make it visible on as many sites as possible. (#718)
-
-2.58:
-- Updated the logging messages on the "Report an Ad" page to help understand usage. (#717)
-
-2.57:
-- Updated Translations.
-- Added logging to the "Report an Ad" page to help understand usage. (#711)
-- Fixed a JavaScript error on the AdBlock Options page. (#710)
-- For Chrome users, updated the "hide this button" text on AdBlock popup menu. (#712)
-- Added a minimum delay of 10 seconds between ping intervals.
-
-2.56:
-
-- For Safari users, when AdBlock is paused, the content script "adblock_safari_beforeload" is now removed from all tabs.  (#709)
-
-2.55:
-- Updated Translations.
-- Updated Latvian filter list URL. (#706)
-- Added throttle logic to the ping processing. (#705)
-
-2.54:
-- Fixed a bug in the adblock_start_safari.js file that was introduced in #698.  (#704)
-- Corrected the version number in the Safari Info.plist file.  (#703)
-
-2.53:
-- Removed the code related to World Day Against Cyber Censorship.  (#698)
-- Added 'isTrusted' check to the click event handler for ABP link subscriptions.  (#701)
-
-2.52:
-- Modified the 'Show Resources' page to use the translate() function instead of HTML tags.  (#689)
-- Added Spanish as a new option for language specific filter lists.  (#695)
-- Changed the description of 'Fanboy's Annoyances list'.  (#687)
-- Fixed a bug in the 'try_to_unwhitelist' function.  It will no longer remove all other custom filters when a user has a blacklist domains entry: @@*$document,domain=.  (#690)
-- Updated the language list contact information on the 'Report an Ad' page.  (#685)
-- Removed the Beta DropBox synchronize feature. (#696)
-
-2.51.2:
-- Updated Translations.
-- Added Arabic as a supported language for the links about World Day Against Cyber Censorship
-
-2.51.1:
-- Updated Translations.
-- Added support for World Day Against Cyber Censorship
+3.0:
+- Migrated AdBlock to use Adblock Plus (ABP)'s open-source core.
 
 2.50:
 - Updated Translations.
@@ -81,7 +20,7 @@ UNRELEASED:
 
 2.48:
 - Updated Translations.
-- Updated the place-holder text in the "Show ads on web page or domain" example URL (#669).
+- Updated the placehodler text in the "Show ads on web page or domain" example URL (#669).
 - Removed duplicate logic on the General tab of the AdBlock Options page (#671).
 - Migrated links to the new AdBlock help site (#632).
 - Updated the "Report an Ad" and "Bug Report" pages to use the new AdBlock help site (#632).
@@ -89,16 +28,16 @@ UNRELEASED:
 2.47:
 - Updated Translations
 - Removed duplicate strings from the translation (message) files (#666).
-- Added a time stamp query string to the Malware URL to prevent caching by the browser (#668).
+- Added a timestamp query string to the Malware URL to prevent caching by the browser (#668).
 - For Safari users, content blocking will not be enabled by default (#665).
 - Updated the Polish filter list URL (#651).
 - Updated the Acceptable Ads un-subscribe message on Options page, General tab (#657).
 - Updated the AdBlock image files (#654).
 
 2.46:
- - Fixed a typo in the description of the AdBlock Warning Removal list, it should be a lower case 'b' (#658).
+ - Fixed a typo in the description of the AdBlock Warning Removal list, it should be a lowercased 'b' (#658).
  - Added a new parameter to the ping data to indicate if the advance setting is enabled (#660).
- - Fixed an issue with the blocking assistant on some sites (#644).
+ - Fixed an issue with the blocking assistant on some sites (#644). 
  - For Chrome users, modified the "/installed" logic to use the Chrome specific chrome.runtime.onInstalled API (#656).
  - For Safari users, AdBlock will now use the WebKit content blocking feature on new installations. (#619).
  - For Safari users, fix a bug with the "Undo my blocks on this domain" feature (#570).
@@ -136,7 +75,7 @@ UNRELEASED:
  - Added Acceptable Ads filter list. (#627)
 
 2.40.1:
- - Remove the time stamp query string from the Malware filter list URL
+ - Remove the timestamp query string from the Malware filter list URL
 
 2.40:
  - Updated Translations
@@ -151,12 +90,12 @@ UNRELEASED:
  - Update translations, remove unused entries. (#624)
 
 2.38:
- - Made a run time performance improvement for users subscribed to the Malware filter list. (#597)
+ - Made a runtime performance improvement for users subscribed to the Malware filter list. (#597)
  - Removed some temporary, cleanup code related to old filter lists. (#594)
- - Added the total block count and the AdBlock custom filter list update time stamp to the un-install URL to help determine why users are un-installing after just a few minutes of use. (621)
+ - Added the total block count and the AdBlock custom filter list update timestamp to the un-install URL to help determine why users are un-installing after just a few minutes of use. (621)
  - Added the ping count to the ping data. (#618)
  - Removed the 'View the Resource' page. (#614)
- - Added formatting lines for the debug information for Tender support tickets. (#613)
+ - Added formatting lines for the debug informating for Tender support tickets. (#613)
  - Removed a site specific 'bandaid' for 'thepiratebay'.  (#593)
 
 2.37.3:
@@ -277,9 +216,9 @@ UNRELEASED:
 
 2.21:
 - Removed the Norwegian filter list since it is no longer active. (#489)
-- For each subscribe filter list, added the last update time stamp to debug data. (#482)
+- For each subscribe filter list, added the last update timestamp to debug data. (#482)
 - Added the malware notification setting to debug data. (#458)
-- Added additional CSS to whitelist/blacklist wizards to avoid display issues on some websites. (#460)
+- Added additional CSS to whitelist/blacklist dialogs to avoid display issues on some websites. (#460)
 - Removed an unnecessary call to sendResponse. (#484)
 - For Chrome users, added a user confirmation prompt when subscribing to a new filter lists using the ABP syntax. (#486)
 - Fixed an issue when the request URL didn't contain a '.' (#500)
@@ -336,7 +275,7 @@ UNRELEASED:
 2.15:
 - Improved performance of extension when using the Malware filter list (#384)
 - Added the 'show the resource list' page to the Safari version of the extension (#385)
-- Added a time stamp to the JavaScript error text that is saved in local storage (#390)
+- Added a timestamp to the JavaScript error text that is saved in local storage (#390)
 - Added logic to determine the correct URL for the Filter list syntax link on the Custom tab based on the user's language (#387)
 - Updated the Japanese filter list URL (#386)
 
