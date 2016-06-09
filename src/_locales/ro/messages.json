@@ -304,10 +304,6 @@
       }
     }
   }, 
-  "blockedresource": {
-    "message": "Blocked resource", 
-    "description": "Resource list page: resource status"
-  }, 
   "blockmoreads": {
     "message": "Blochează mai multe reclame:", 
     "description": "Section header on the 'Customize' tab"
@@ -804,16 +800,6 @@
     "message": "Protecție malware", 
     "description": "A filter list"
   }, 
-  "filterorigin": {
-    "message": "Filter origin:\n$list$", 
-    "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
-    "placeholders": {
-      "list": {
-        "content": "$1", 
-        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
-  }, 
   "filterrussian": {
     "message": "Rusă și ucraineană", 
     "description": "Language names for a filter list"
@@ -967,18 +953,6 @@
     "message": "Ai găsit un bug?", 
     "description": "Subtitle on the Support tab of the options"
   }, 
-  "framedomain": {
-    "message": "Frame domain: ", 
-    "description": "Resource list page: domain name of the frame"
-  }, 
-  "frametype": {
-    "message": "Frame type: ", 
-    "description": "Resource list page: followed by frame type (e.g. top frame, subframe)"
-  }, 
-  "frameurl": {
-    "message": "Frame URL: ", 
-    "description": "Resource list page: full URL of the frame"
-  }, 
   "general": {
     "message": "General"
   }, 
@@ -1007,25 +981,9 @@
   "global_subscription_invalid_location": {
     "message": "Locaţia pentru filtre nu este validă"
   }, 
-  "headerfilter": {
-    "message": "Matched filter", 
-    "description": "Resource list page: title of a column"
-  }, 
-  "headerresource": {
-    "message": "Resource", 
-    "description": "Resource list page: title of a column"
-  }, 
-  "headertype": {
-    "message": "Type", 
-    "description": "Resource list page: title of a column"
-  }, 
   "here": {
     "message": "aici", 
     "description": "This message is injected in other strings as a link/button"
-  }, 
-  "hiddenelement": {
-    "message": "Hidden element", 
-    "description": "Resource list page: resource status"
   }, 
   "hide_this_button": {
     "message": "Ascunde acest buton", 
@@ -1097,10 +1055,6 @@
   "latest_version": {
     "message": "AdBlock este actualizat!", 
     "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
-  "legend": {
-    "message": "Legend: ", 
-    "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   }, 
   "line": {
     "message": "Linie $number$", 
@@ -1184,6 +1138,10 @@
   "name_devbuild": {
     "message": "Versiune de test AdBlock"
   }, 
+  "new_resourcelist_explanation": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl-Shft-I), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  }, 
   "no": {
     "message": "Nu", 
     "description": "A negative response to a question"
@@ -1197,10 +1155,6 @@
         "example": "<a>here</a>"
       }
     }
-  }, 
-  "noresourcessend2": {
-    "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
-    "description": "Resource list page: error message"
   }, 
   "notification_configure": {
     "message": "Configuraţi setările de notificare"
@@ -1341,20 +1295,6 @@
   "reporttous2": {
     "message": "If you can speak English, you can report the ad to us <a>in the issue tracker</a>.", 
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
-  }, 
-  "resourceblocktitle": {
-    "message": "All Resources", 
-    "description": "Resource list page name"
-  }, 
-  "resourcedomain": {
-    "message": "Loaded on page with domain:\n$domain$", 
-    "description": "Resource list page: text shown when hovering over an item in the third-party column", 
-    "placeholders": {
-      "domain": {
-        "content": "$1", 
-        "example": "example.com"
-      }
-    }
   }, 
   "retryaftersubscribe": {
     "message": "Adaugă acest filtru, iar apoi încearcă din nou: $list_title$", 
@@ -1513,10 +1453,6 @@
     "message": "Ai depășit spațiul de stocare pe care AdBlock îl poate folosi. Vă rugăm ștergeți câteva filtre!", 
     "description": "Message shown when the user uses more storage than allowed by the browser"
   }, 
-  "subframe": {
-    "message": "Subframe", 
-    "description": "Resource list page: frame type"
-  }, 
   "subscribebutton": {
     "message": "Adaugă", 
     "description": "Subscribe to a list button"
@@ -1580,14 +1516,6 @@
     "message": "Suport", 
     "description": "A tab on the options page"
   }, 
-  "thirdparty": {
-    "message": "Third-party", 
-    "description": "Resource list page: column title telling if the resource originates from a different domain"
-  }, 
-  "topframe": {
-    "message": "Top frame", 
-    "description": "Resource list page: frame type"
-  }, 
   "translator_credit": {
     "message": "Mulțumiri:", 
     "description": "Will be followed by a list of translator names (separate string)"
@@ -1598,10 +1526,6 @@
   }, 
   "typeimage": {
     "message": "imagine", 
-    "description": "A resource type"
-  }, 
-  "typemain_frame": {
-    "message": "page", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1632,16 +1556,8 @@
     "message": "script", 
     "description": "A resource type"
   }, 
-  "typeselector": {
-    "message": "selector", 
-    "description": "A resource type"
-  }, 
   "typestylesheet": {
     "message": "definire de stil", 
-    "description": "A resource type"
-  }, 
-  "typesub_frame": {
-    "message": "frame", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
@@ -1776,10 +1692,6 @@
   }, 
   "whitelisted_domains": {
     "message": "Domenii permise"
-  }, 
-  "whitelistedresource": {
-    "message": "Whitelisted resource", 
-    "description": "Resource list page: resource status"
   }, 
   "whitelistertitle2": {
     "message": "Nu rula AdBlock pe...", 

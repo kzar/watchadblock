@@ -304,10 +304,6 @@
       }
     }
   }, 
-  "blockedresource": {
-    "message": "Blocked resource", 
-    "description": "Resource list page: resource status"
-  }, 
   "blockmoreads": {
     "message": "阻擋更多廣告:", 
     "description": "Section header on the 'Customize' tab"
@@ -788,16 +784,6 @@
     "message": "惡意軟體防護", 
     "description": "A filter list"
   }, 
-  "filterorigin": {
-    "message": "Filter origin:\n$list$", 
-    "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
-    "placeholders": {
-      "list": {
-        "content": "$1", 
-        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
-  }, 
   "filterrussian": {
     "message": "俄羅斯和烏克蘭", 
     "description": "Language names for a filter list"
@@ -957,18 +943,6 @@
     "message": "發現了bug？", 
     "description": "Subtitle on the Support tab of the options"
   }, 
-  "framedomain": {
-    "message": "Frame domain: ", 
-    "description": "Resource list page: domain name of the frame"
-  }, 
-  "frametype": {
-    "message": "Frame type: ", 
-    "description": "Resource list page: followed by frame type (e.g. top frame, subframe)"
-  }, 
-  "frameurl": {
-    "message": "Frame URL: ", 
-    "description": "Resource list page: full URL of the frame"
-  }, 
   "general": {
     "message": "一般設定"
   }, 
@@ -994,25 +968,9 @@
   "global_subscription_invalid_location": {
     "message": "條件集網址或檔案名稱無效。"
   }, 
-  "headerfilter": {
-    "message": "Matched filter", 
-    "description": "Resource list page: title of a column"
-  }, 
-  "headerresource": {
-    "message": "Resource", 
-    "description": "Resource list page: title of a column"
-  }, 
-  "headertype": {
-    "message": "Type", 
-    "description": "Resource list page: title of a column"
-  }, 
   "here": {
     "message": "這裡 ", 
     "description": "This message is injected in other strings as a link/button"
-  }, 
-  "hiddenelement": {
-    "message": "Hidden element", 
-    "description": "Resource list page: resource status"
   }, 
   "hide_this_button": {
     "message": "隱藏這個按鈕", 
@@ -1084,10 +1042,6 @@
   "latest_version": {
     "message": "AdBlock 是最新的！", 
     "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
-  "legend": {
-    "message": "Legend: ", 
-    "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   }, 
   "line": {
     "message": "行$number$", 
@@ -1171,6 +1125,10 @@
   "name_devbuild": {
     "message": "AdBlock 開發版"
   }, 
+  "new_resourcelist_explanation": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl-Shft-I), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  }, 
   "no": {
     "message": "否", 
     "description": "A negative response to a question"
@@ -1184,10 +1142,6 @@
         "example": "<a>here</a>"
       }
     }
-  }, 
-  "noresourcessend2": {
-    "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
-    "description": "Resource list page: error message"
   }, 
   "notification_configure": {
     "message": "設置通知設定"
@@ -1328,20 +1282,6 @@
   "reporttous2": {
     "message": "您可以在<a>問題追蹤頁面</a>回報廣告。", 
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
-  }, 
-  "resourceblocktitle": {
-    "message": "All Resources", 
-    "description": "Resource list page name"
-  }, 
-  "resourcedomain": {
-    "message": "Loaded on page with domain:\n$domain$", 
-    "description": "Resource list page: text shown when hovering over an item in the third-party column", 
-    "placeholders": {
-      "domain": {
-        "content": "$1", 
-        "example": "example.com"
-      }
-    }
   }, 
   "retryaftersubscribe": {
     "message": "先訂閱此過濾清單，然後重試一次：$list_title$", 
@@ -1500,10 +1440,6 @@
     "message": "你超出了 AdBlock 能使用的儲存空間。 請取消訂閱一些清單!", 
     "description": "Message shown when the user uses more storage than allowed by the browser"
   }, 
-  "subframe": {
-    "message": "Subframe", 
-    "description": "Resource list page: frame type"
-  }, 
   "subscribebutton": {
     "message": "訂閱", 
     "description": "Subscribe to a list button"
@@ -1567,14 +1503,6 @@
     "message": "支援與協助", 
     "description": "A tab on the options page"
   }, 
-  "thirdparty": {
-    "message": "Third-party", 
-    "description": "Resource list page: column title telling if the resource originates from a different domain"
-  }, 
-  "topframe": {
-    "message": "Top frame", 
-    "description": "Resource list page: frame type"
-  }, 
   "translator_credit": {
     "message": "翻譯貢獻:", 
     "description": "Will be followed by a list of translator names (separate string)"
@@ -1585,10 +1513,6 @@
   }, 
   "typeimage": {
     "message": "image", 
-    "description": "A resource type"
-  }, 
-  "typemain_frame": {
-    "message": "page", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1619,16 +1543,8 @@
     "message": "script", 
     "description": "A resource type"
   }, 
-  "typeselector": {
-    "message": "selector", 
-    "description": "A resource type"
-  }, 
   "typestylesheet": {
     "message": "style definition", 
-    "description": "A resource type"
-  }, 
-  "typesub_frame": {
-    "message": "frame", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
@@ -1763,10 +1679,6 @@
   }, 
   "whitelisted_domains": {
     "message": "白名單"
-  }, 
-  "whitelistedresource": {
-    "message": "Whitelisted resource", 
-    "description": "Resource list page: resource status"
   }, 
   "whitelistertitle2": {
     "message": "不要在此網域使用 AdBlock...", 

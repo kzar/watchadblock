@@ -304,10 +304,6 @@
       }
     }
   }, 
-  "blockedresource": {
-    "message": "Blocked resource", 
-    "description": "Resource list page: resource status"
-  }, 
   "blockmoreads": {
     "message": "Block more ads:", 
     "description": "Section header on the 'Customize' tab"
@@ -764,16 +760,6 @@
     "message": "Malware protection", 
     "description": "A filter list"
   }, 
-  "filterorigin": {
-    "message": "Filter origin:\n$list$", 
-    "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
-    "placeholders": {
-      "list": {
-        "content": "$1", 
-        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
-      }
-    }
-  }, 
   "filterrussian": {
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
@@ -825,18 +811,6 @@
     "message": "Found a bug?", 
     "description": "Subtitle on the Support tab of the options"
   }, 
-  "framedomain": {
-    "message": "Frame domain: ", 
-    "description": "Resource list page: domain name of the frame"
-  }, 
-  "frametype": {
-    "message": "Frame type: ", 
-    "description": "Resource list page: followed by frame type (e.g. top frame, subframe)"
-  }, 
-  "frameurl": {
-    "message": "Frame URL: ", 
-    "description": "Resource list page: full URL of the frame"
-  }, 
   "general": {
     "message": "Pangkalahatan"
   }, 
@@ -844,25 +818,9 @@
     "message": "General options", 
     "description": "Title of first tab page"
   }, 
-  "headerfilter": {
-    "message": "Matched filter", 
-    "description": "Resource list page: title of a column"
-  }, 
-  "headerresource": {
-    "message": "Resource", 
-    "description": "Resource list page: title of a column"
-  }, 
-  "headertype": {
-    "message": "Type", 
-    "description": "Resource list page: title of a column"
-  }, 
   "here": {
     "message": "here", 
     "description": "This message is injected in other strings as a link/button"
-  }, 
-  "hiddenelement": {
-    "message": "Hidden element", 
-    "description": "Resource list page: resource status"
   }, 
   "hide_this_button": {
     "message": "Hide this button", 
@@ -934,10 +892,6 @@
   "latest_version": {
     "message": "AdBlock is up-to-date!", 
     "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
-  "legend": {
-    "message": "Legend: ", 
-    "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   }, 
   "line": {
     "message": "Linya $number$", 
@@ -1021,6 +975,10 @@
   "name_devbuild": {
     "message": "pagbuo ng AdBlock"
   }, 
+  "new_resourcelist_explanation": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl-Shft-I), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  }, 
   "no": {
     "message": "No", 
     "description": "A negative response to a question"
@@ -1034,10 +992,6 @@
         "example": "<a>here</a>"
       }
     }
-  }, 
-  "noresourcessend2": {
-    "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
-    "description": "Resource list page: error message"
   }, 
   "notification_configure": {
     "message": "I-configure ang mga setting ng notification"
@@ -1159,20 +1113,6 @@
   "reportpubliclyavailable": {
     "message": "Note: your report may become publicly available. Keep that in mind before including anything private.", 
     "description": "Ad report page string, when you're about to submit a report"
-  }, 
-  "resourceblocktitle": {
-    "message": "All Resources", 
-    "description": "Resource list page name"
-  }, 
-  "resourcedomain": {
-    "message": "Loaded on page with domain:\n$domain$", 
-    "description": "Resource list page: text shown when hovering over an item in the third-party column", 
-    "placeholders": {
-      "domain": {
-        "content": "$1", 
-        "example": "example.com"
-      }
-    }
   }, 
   "retryaftersubscribe": {
     "message": "Subscribe to this filter list, then try again: $list_title$", 
@@ -1327,10 +1267,6 @@
     "message": "You exceeded the amount of storage AdBlock can use. Please unsubscribe from some filter lists!", 
     "description": "Message shown when the user uses more storage than allowed by the browser"
   }, 
-  "subframe": {
-    "message": "Subframe", 
-    "description": "Resource list page: frame type"
-  }, 
   "subscribebutton": {
     "message": "Subscribe", 
     "description": "Subscribe to a list button"
@@ -1388,14 +1324,6 @@
     "message": "Support", 
     "description": "A tab on the options page"
   }, 
-  "thirdparty": {
-    "message": "Third-party", 
-    "description": "Resource list page: column title telling if the resource originates from a different domain"
-  }, 
-  "topframe": {
-    "message": "Top frame", 
-    "description": "Resource list page: frame type"
-  }, 
   "translator_credit": {
     "message": "Credit for translation goes to:", 
     "description": "Will be followed by a list of translator names (separate string)"
@@ -1406,10 +1334,6 @@
   }, 
   "typeimage": {
     "message": "image", 
-    "description": "A resource type"
-  }, 
-  "typemain_frame": {
-    "message": "page", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1440,16 +1364,8 @@
     "message": "script", 
     "description": "A resource type"
   }, 
-  "typeselector": {
-    "message": "selector", 
-    "description": "A resource type"
-  }, 
   "typestylesheet": {
     "message": "style definition", 
-    "description": "A resource type"
-  }, 
-  "typesub_frame": {
-    "message": "frame", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
@@ -1581,10 +1497,6 @@
         "example": "Name of channel"
       }
     }
-  }, 
-  "whitelistedresource": {
-    "message": "Whitelisted resource", 
-    "description": "Resource list page: resource status"
   }, 
   "whitelistertitle2": {
     "message": "Don't run AdBlock on...", 
