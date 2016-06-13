@@ -223,12 +223,15 @@ MigrateLegacyData = (function()
   }
 
   // Convert legacy AdBlock FilterLists to ABP Subscriptions
-  function migrateLegacyFilterLists()
+  function migrateLegacyFilterLists(callback)
   {
     var mySubs = storage_get('filter_lists');
     if (!mySubs || mySubs.length < 1)
     {
       SubscriptionInit.init();
+      if (callback) {
+        callback();
+      }
       return;
     }
 
@@ -256,6 +259,9 @@ MigrateLegacyData = (function()
       storage_set('last_subscriptions_check', undefined);
       migrateLog('Done migrating subscriptions.  Migrated count: ', subscriptions.length);
       SubscriptionInit.init();
+      if (callback) {
+        callback();
+      }
       return subscriptions;
     });
   }
@@ -276,7 +282,6 @@ MigrateLegacyData = (function()
     });
     custom = originalFilterArray.join('\n');
     var response = parseFilters(custom);
-
     if (response && response.filters)
     {
       for (var i = 0; i < response.filters.length; i++)
@@ -288,6 +293,7 @@ MigrateLegacyData = (function()
         }
       }
       migrateLog('Migrated custom filters, count: ', response.filters.length);
+      storage_set('custom_filters', undefined);
     }
     if (response &&
         response.errors &&
@@ -311,7 +317,6 @@ MigrateLegacyData = (function()
       migrateLog(errorMsg);
       ext.storage.set('custom_filters_errors', errorMsg);
     }
-    storage_set('custom_filters', undefined);
   }
 
   // Convert exclude / disable filters
@@ -344,16 +349,11 @@ MigrateLegacyData = (function()
 
   function init()
   {
-    var onFilterAction = function(action)
+    var onFilterAction = function()
     {
-      if (action == "load")
-      {
-        FilterNotifier.removeListener(onFilterAction);
-        filtersLoaded = true;
-        migrateLegacyCustomFilters();
-        migrateLegacyCustomFilterCount();
-        migrateLegacyExcludeFilters();
-      }
+      migrateLegacyCustomFilters();
+      migrateLegacyCustomFilterCount();
+      migrateLegacyExcludeFilters();
     };
 
     var onPrefsLoaded = function()
@@ -362,8 +362,7 @@ MigrateLegacyData = (function()
       migrateLegacySettings();
     };
 
-    migrateLegacyFilterLists();
-    FilterNotifier.addListener(onFilterAction);
+    migrateLegacyFilterLists(onFilterAction);
     Prefs.untilLoaded.then(onPrefsLoaded);
     migrateLegacyStats();
   }
