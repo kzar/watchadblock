@@ -55,7 +55,7 @@
 
   require.scopes.info = {
     addonName: "adblockforchrome",
-    addonVersion: "3.0.3",
+    addonVersion: "3.0.4",
 
     application: application,
     applicationVersion: applicationVersion,

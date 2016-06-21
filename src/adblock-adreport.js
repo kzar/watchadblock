@@ -372,6 +372,14 @@ $(function () {
                 .split(';');
             for (var i = 0; i < requiredLists.length - 1; i++)
             {
+              // If the user selected English, but they're subscribed to
+              // language specific filter list that includes Easylist
+              // continue...
+              if ($selected.text() == translate('lang_english') &&
+                  requiredLists[i].indexOf('easylist') >= 0)
+              {
+                continue;
+              }
               if (unsubscribedDefaultFilters[requiredLists[i]])
               {
                 $('#checkupdate')

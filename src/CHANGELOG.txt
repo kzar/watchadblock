@@ -2,6 +2,12 @@
 
 UNRELEASED:
 
+3.0.4:
+- Fixed a bug on 'Options' page when the page was openned prior to the background page being initialized. (#112)
+- Fixed a bug when the AdBlock context menu option was enabled / disabled on the Options page.  (#111)
+- Fixed a bug on 'Report an Ad' page for non-English users reporting an ad on English site.  (#108)
+- Updated the descriptions for certain language specific filter lists to include 'EasyList'.  (#107)
+
 3.0.3:
 - Fixed a bug in the data migration logic.  (#114)
 
@@ -46,7 +52,7 @@ UNRELEASED:
 2.46:
  - Fixed a typo in the description of the AdBlock Warning Removal list, it should be a lowercased 'b' (#658).
  - Added a new parameter to the ping data to indicate if the advance setting is enabled (#660).
- - Fixed an issue with the blocking assistant on some sites (#644). 
+ - Fixed an issue with the blocking assistant on some sites (#644).
  - For Chrome users, modified the "/installed" logic to use the Chrome specific chrome.runtime.onInstalled API (#656).
  - For Safari users, AdBlock will now use the WebKit content blocking feature on new installations. (#619).
  - For Safari users, fix a bug with the "Undo my blocks on this domain" feature (#570).

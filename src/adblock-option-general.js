@@ -57,6 +57,12 @@ $(function ()
     }
 
     var name = this.id.substring(7); // TODO: hack
+    // if the user enables/disables the context menu
+    // update the pages
+    if (name === 'shouldShowBlockElementMenu')
+    {
+      backgroundPage.updateButtonUIAndContextMenus();
+    }
     if (abpPrefs.indexOf(name) >= 0) {
       backgroundPage.Prefs[name] = isEnabled;
       return;
