@@ -2,10 +2,16 @@
 // to trace down any frequent errors we can't confirm ourselves.
 window.addEventListener("error", function(e) 
 {
+  if (!e.filename && !e.lineno && !e.colno && !e.error && !e.message) {
+    return;
+  }
   var str = "Error: " +
            (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
            ":" + (e.lineno||"anywhere") +
            ":" + (e.colno||"anycol");
+  if (e.message) {
+    str += ": " + e.message;
+  }
   if (e.error) 
   {
       var stack = "-" + (e.error.message ||"") +

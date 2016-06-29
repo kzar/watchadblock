@@ -133,16 +133,17 @@ $(function ()
 var acceptableAdsClicked = function (isEnabled)
 {
   var subscription = Subscription.fromURL(Prefs.subscriptions_exceptionsurl);
-
-  // simulate a click on the AA Checkbox on the Filters tab
-  var $checkbox = $('#adblock_filter_list_0');
-  $checkbox.prop('checked', isEnabled);
-  $checkbox.trigger('change');
   if (isEnabled)
   {
+    FilterStorage.addSubscription(subscription);
+    if (subscription instanceof DownloadableSubscription)
+    {
+      Synchronizer.execute(subscription);
+    }
     $('#acceptable_ads_info').slideUp();
   } else
   {
+    FilterStorage.removeSubscription(subscription);
     $('#acceptable_ads_info').slideDown();
   }
 

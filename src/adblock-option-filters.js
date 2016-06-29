@@ -411,31 +411,6 @@ FilterListUtil.updateCheckbox = function (filterList, id)
 
     // Force update current info label since status is already updated in the background.
     $('.subscription_info', $containingDiv).text(filterList.subscribed ? translate('fetchinglabel') : translate('unsubscribedlabel'));
-
-    // If the filter is of language list type, check if subscribed and checkbox visibility matches, if not, update visibility.
-    if ($containingDiv.parent().attr('id') === 'language_list' && filterList.subscribed !== $containingDiv.is(':visible'))
-    {
-      $containingDiv.toggle(500);
-      var index = checkbox.attr('id').split('_')[3];
-
-      // After updating visibility, update Language Selectbox too.
-      if (filterList.subscribed)
-      {
-        $('#language_select').find('option')[parseInt(index) + 1].remove();
-      } else
-      {
-        if (!filterList.label)
-        {
-          filterList.label = translate('filter' + id);
-        }
-
-        var newOption = new OptionForFilterList(filterList, index);
-        if (newOption)
-        {
-          LanguageSelectUtil.insertOption(newOption.get(), index);
-        }
-      }
-    }
   }
 };
 
@@ -708,10 +683,9 @@ CustomFilterListUploadUtil._updateExistingFilterList = function (existingFilterL
   }
 
   var checkbox = $($containingDiv).find('input');
-
   if (!checkbox.is(':checked'))
   {
-    if (checkbox.attr('id').indexOf('language_filter_list') > 0)
+    if (checkbox.attr('id').indexOf('language_filter_list') >= 0)
     {
       LanguageSelectUtil.triggerChange(existingFilterList);
     }
@@ -784,6 +758,14 @@ function onFilterChange(action, item, param1, param2)
           FilterListUtil.cachedSubscriptions[entry.id][properties[i]] = entry[properties[i]];
         }
       }
+      if (action &&
+          action === "subscription.added") {
+        FilterListUtil.cachedSubscriptions[entry.id].subscribed = true;
+      }
+      if (action &&
+          action === "subscription.removed") {
+        FilterListUtil.cachedSubscriptions[entry.id].subscribed = false;
+      }
 
       // Update checkbox according to the value of the subscribed field
       FilterListUtil.updateCheckbox(FilterListUtil.cachedSubscriptions[entry.id], entry.id);
@@ -850,10 +832,8 @@ function onFilterChange(action, item, param1, param2)
     }
   }
 }
-
 $(function ()
 {
-
   // Retrieves list of filter lists from the background.
   var subs = backgroundPage.getAllSubscriptionsMinusText();
 

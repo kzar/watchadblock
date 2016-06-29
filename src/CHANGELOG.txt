@@ -2,6 +2,10 @@
 
 UNRELEASED:
 
+3.0.7:
+- Fixed a bug on the 'Options' page.  Under certain circumstances the "Allow some non-intrusive advertising" option on the General tab was not being saved.  (#123)
+- Added a check for data on the error object in the Error Reporting logic.  (#126)
+
 3.0.4:
 - Fixed a bug on 'Options' page when the page was openned prior to the background page being initialized. (#112)
 - Fixed a bug when the AdBlock context menu option was enabled / disabled on the Options page.  (#111)
