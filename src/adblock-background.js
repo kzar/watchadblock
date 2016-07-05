@@ -735,6 +735,20 @@ var getDebugInfo = function (callback)
   {
     response.other_info.blockCounts = blockCounts.get();
   }
+  if (localStorage &&
+      localStorage.length) {
+    response.other_info.localStorageInfo = {};
+    response.other_info.localStorageInfo['length'] = localStorage.length;
+    var inx = 1;
+    for (var key in localStorage) {
+      response.other_info.localStorageInfo['key'+inx]= key;
+      inx++;
+    }
+  }
+  else
+  {
+    response.other_info.localStorageInfo = "no data";
+  }
 
   // Get total pings
   ext.storage.get('total_pings', function (storageResponse)
@@ -782,11 +796,6 @@ function updateFilterLists()
       Synchronizer.execute(subscription, true, true);
     }
   }
-
-  if (malwareList)
-  {
-    malwareList.checkFilterUpdates(true);
-  }
 }
 
 function getUserFilters()
@@ -820,8 +829,5 @@ function getUserFilters()
 // Remove comment when migration code is removed
 // STATS = STATS();
 // STATS.startPinging();
-
-// malwareList = new MalwareList();
-// malwareList.init();
 
 log('\n===FINISHED LOADING===\n\n');

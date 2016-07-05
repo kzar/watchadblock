@@ -548,12 +548,6 @@ SubscriptionUtil.subscribe = function (id, title)
     }
   }
 
-  if (id === 'malware')
-  {
-    backgroundPage.malwareList.changeSubscription({ subscribed: true });
-    return;
-  }
-
   FilterStorage.addSubscription(subscription);
   if (subscription instanceof DownloadableSubscription)
   {
@@ -585,11 +579,6 @@ SubscriptionUtil.unsubscribe = function (id)
   SubscriptionUtil._updateCacheValue(id);
   var subscription = FilterListUtil.cachedSubscriptions[id];
   subscription     = Subscription.fromURL(subscription.url);
-  if (id === 'malware')
-  {
-    backgroundPage.malwareList.changeSubscription({ subscribed: false });
-    return;
-  }
 
   setTimeout(function ()
   {
@@ -743,9 +732,9 @@ CustomFilterListUploadUtil.bindControls = function ()
   });
 };
 
-function onFilterChange(action, item, param1, param2)
+function onFilterChangeHandler(action, item, param1, param2)
 {
-  var updateEntry = function (entry)
+  var updateEntry = function (entry, eventAction)
   {
     if (entry)
     {
@@ -758,20 +747,21 @@ function onFilterChange(action, item, param1, param2)
           FilterListUtil.cachedSubscriptions[entry.id][properties[i]] = entry[properties[i]];
         }
       }
-      if (action &&
-          action === "subscription.added") {
+
+      if (eventAction &&
+          eventAction === "subscription.added") {
         FilterListUtil.cachedSubscriptions[entry.id].subscribed = true;
       }
-      if (action &&
-          action === "subscription.removed") {
+      if (eventAction &&
+          eventAction === "subscription.removed") {
         FilterListUtil.cachedSubscriptions[entry.id].subscribed = false;
       }
 
       // Update checkbox according to the value of the subscribed field
       FilterListUtil.updateCheckbox(FilterListUtil.cachedSubscriptions[entry.id], entry.id);
 
-      // If entry is subscribed, update lastUpdate_failed_at and lastUpdate field
-      if (entry.subscribed)
+      // If sub is subscribed, update lastUpdate_failed_at or lastUpdate field
+      if (FilterListUtil.cachedSubscriptions[entry.id].subscribed)
       {
         FilterListUtil.updateSubscriptionInfoForId(entry.id);
       }
@@ -789,7 +779,7 @@ function onFilterChange(action, item, param1, param2)
       var updateItem = function (item, id)
       {
         item.id = id;
-        updateEntry(item);
+        updateEntry(item, action);
       };
 
       var id = backgroundPage.getIdFromURL(item.url);
@@ -821,7 +811,6 @@ function onFilterChange(action, item, param1, param2)
         }
       }
     }
-
     // If we didn't get an entry or id, loop through all of the subscriptions.
     var subs = backgroundPage.getAllSubscriptionsMinusText();
     var cachedSubscriptions = FilterListUtil.cachedSubscriptions;
@@ -850,7 +839,7 @@ $(function ()
   LanguageSelectUtil.init();
   CustomFilterListUploadUtil.bindControls();
 
-  FilterNotifier.addListener(onFilterChange);
+  FilterNotifier.addListener(onFilterChangeHandler);
 
   FilterListUtil.updateSubscriptionInfoAll();
 

@@ -101,15 +101,11 @@ STATS = (function()
       {
         data["b"] = Prefs.blocked_total;
       }
-      if (flavor === "E" && malwareBlockCounts)
-      {
-        data["mt"] = malwareBlockCounts.getMalwareBlockedTotal();
-      }
       if (chrome.runtime.id)
       {
         data["extid"] = chrome.runtime.id;
       }
-      var subs = getSubscriptionsMinusText();
+      var subs = getAllSubscriptionsMinusText();
       if (subs["acceptable_ads"])
       {
         data["aa"] = subs["acceptable_ads"].subscribed ? '1' : '0';

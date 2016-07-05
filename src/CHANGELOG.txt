@@ -2,6 +2,11 @@
 
 UNRELEASED:
 
+3.0.8:
+- Fixed a bug on the 'Options' page, 'Filter List' tab.  All of the checkboxes would be inadvertently checked when a user clicked the 'Update Now' button, or other similar actions.  (#129) 
+- Added any remaining localStorage keys to the debug data, to help resolve any data migration issues.  (#132).
+- Fixed a bug with the ping processing incorrectly sending the wrong value for the aa parameter.  (#134).
+
 3.0.7:
 - Fixed a bug on the 'Options' page.  Under certain circumstances the "Allow some non-intrusive advertising" option on the General tab was not being saved.  (#123)
 - Added a check for data on the error object in the Error Reporting logic.  (#126)

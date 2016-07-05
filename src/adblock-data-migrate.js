@@ -136,8 +136,6 @@ MigrateLegacyData = (function()
     // pingDelay is set to 1 when there is no data to be migrated (new user)
     window.setTimeout(function()
     {
-      malwareList = new MalwareList();
-      malwareList.init();
       STATS.startPinging();
       uninstallInit();
     }, pingDelay);
@@ -245,14 +243,9 @@ MigrateLegacyData = (function()
       for (var id in mySubs)
       {
         var sub = mySubs[id];
-        if (sub.subscribed && sub.url && (id !== "malware"))
+        if (sub.subscribed && sub.url)
         {
           subscriptions.push(Subscription.fromURL(sub.url));
-        }
-        if (id === "malware" &&
-            !sub.subscribed)
-        {
-          ext.storage.set("malware_list", {subscribed: false});
         }
       }
       storage_set('filter_lists', undefined);
@@ -347,6 +340,25 @@ MigrateLegacyData = (function()
     storage_set(key, undefined);
   }
 
+  function migrateMalware()
+  {
+    ext.storage.get("malware_list", function(response)
+    {
+      if (response &&
+          response.malware_list) {
+        ext.storage.remove("malware_list");
+        if (response.malware_list.subscribed === true) {
+          var malwareSub = Subscription.fromURL("https://easylist-downloads.adblockplus.org/malwaredomains_full.txt");
+          FilterStorage.addSubscription(malwareSub);
+          if (malwareSub instanceof DownloadableSubscription)
+          {
+            Synchronizer.execute(malwareSub);
+          }
+        }
+      }
+    });
+  }
+
   function init()
   {
     var onFilterAction = function()
@@ -354,6 +366,7 @@ MigrateLegacyData = (function()
       migrateLegacyCustomFilters();
       migrateLegacyCustomFilterCount();
       migrateLegacyExcludeFilters();
+      migrateMalware();
     };
 
     var onPrefsLoaded = function()

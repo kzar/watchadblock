@@ -188,9 +188,6 @@ $(function () {
             $('.even')
                 .css('background-color', '#f8f8f8');
           }
-
-          $('#malwarewarning')
-                  .html(translate('malwarenotfound'));
         });
 
   // STEP 3: disable AA - IF enabled...
