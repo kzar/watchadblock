@@ -183,7 +183,7 @@
       result.push("type=invalid");
       if (filter.reason)
       {
-        result.push("hasReason");
+        result.push("reason=" + filter.reason);
       }
     }
     else if (filter instanceof CommentFilter)
@@ -360,24 +360,14 @@
   });
   test("Invalid filters", function()
   {
-    compareFilter("/??/", ["type=invalid", "text=/??/", "hasReason"]);
-    compareFilter("#dd(asd)(ddd)", ["type=invalid", "text=#dd(asd)(ddd)", "hasReason"]);
-    {
-      var result = Filter.fromText("#dd(asd)(ddd)").reason;
-      equal(result, Utils.getString("filter_elemhide_duplicate_id"), "#dd(asd)(ddd).reason");
-    }
-    compareFilter("#*", ["type=invalid", "text=#*", "hasReason"]);
-    {
-      var result = Filter.fromText("#*").reason;
-      equal(result, Utils.getString("filter_elemhide_nocriteria"), "#*.reason");
-    }
+    compareFilter("/??/", ["type=invalid", "text=/??/", "reason=filter_invalid_regexp"]);
+    compareFilter("#dd(asd)(ddd)", ["type=invalid", "text=#dd(asd)(ddd)", "reason=filter_elemhide_duplicate_id"]);
+    compareFilter("#*", ["type=invalid", "text=#*", "reason=filter_elemhide_nocriteria"]);
 
     function compareCSSRule(domains)
     {
       var filterText = domains + "##[-abp-properties='abc']";
-      compareFilter(filterText, ["type=invalid", "text=" + filterText, "hasReason"]);
-      var reason = Filter.fromText(filterText).reason;
-      equal(reason, Utils.getString("filter_cssproperty_nodomain"), filterText + ".reason");
+      compareFilter(filterText, ["type=invalid", "text=" + filterText, "reason=filter_cssproperty_nodomain"]);
     }
     compareCSSRule("");
     compareCSSRule("~foo.com");
@@ -432,12 +422,12 @@
     compareFilter("@@bla$~script,~other,elemhide", ["type=whitelist", "text=@@bla$~script,~other,elemhide", "regexp=bla", "contentType=" + (defaultTypes & ~ (t.SCRIPT | t.OTHER) | t.ELEMHIDE)]);
     compareFilter("@@bla$~script,~other,~elemhide", ["type=whitelist", "text=@@bla$~script,~other,~elemhide", "regexp=bla", "contentType=" + (defaultTypes & ~ (t.SCRIPT | t.OTHER))]);
     compareFilter("@@bla$elemhide", ["type=whitelist", "text=@@bla$elemhide", "regexp=bla", "contentType=" + t.ELEMHIDE]);
-    compareFilter("@@bla$~script,~other,donottrack", ["type=invalid", "text=@@bla$~script,~other,donottrack", "hasReason"]);
-    compareFilter("@@bla$~script,~other,~donottrack", ["type=invalid", "text=@@bla$~script,~other,~donottrack", "hasReason"]);
-    compareFilter("@@bla$donottrack", ["type=invalid", "text=@@bla$donottrack", "hasReason"]);
-    compareFilter("@@bla$foobar", ["type=invalid", "text=@@bla$foobar", "hasReason"]);
-    compareFilter("@@bla$image,foobar", ["type=invalid", "text=@@bla$image,foobar", "hasReason"]);
-    compareFilter("@@bla$foobar,image", ["type=invalid", "text=@@bla$foobar,image", "hasReason"]);
+    compareFilter("@@bla$~script,~other,donottrack", ["type=invalid", "text=@@bla$~script,~other,donottrack", "reason=filter_unknown_option"]);
+    compareFilter("@@bla$~script,~other,~donottrack", ["type=invalid", "text=@@bla$~script,~other,~donottrack", "reason=filter_unknown_option"]);
+    compareFilter("@@bla$donottrack", ["type=invalid", "text=@@bla$donottrack", "reason=filter_unknown_option"]);
+    compareFilter("@@bla$foobar", ["type=invalid", "text=@@bla$foobar", "reason=filter_unknown_option"]);
+    compareFilter("@@bla$image,foobar", ["type=invalid", "text=@@bla$image,foobar", "reason=filter_unknown_option"]);
+    compareFilter("@@bla$foobar,image", ["type=invalid", "text=@@bla$foobar,image", "reason=filter_unknown_option"]);
   });
   test("Element hiding rules", function()
   {
@@ -1239,29 +1229,29 @@
     var matcher = new CombinedMatcher();
     matcher.add(Filter.fromText("abc$image"));
     matcher.add(Filter.fromText("abc$script"));
-    matcher.add(Filter.fromText("abc$~image,~script,~media,~ping"));
+    matcher.add(Filter.fromText("abc$~image,~script,~object,~ping"));
     matcher.add(Filter.fromText("cba$third-party"));
     matcher.add(Filter.fromText("cba$~third-party,~script"));
     matcher.add(Filter.fromText("http://def$image"));
     matcher.add(Filter.fromText("http://def$script"));
-    matcher.add(Filter.fromText("http://def$~image,~script,~media,~ping"));
+    matcher.add(Filter.fromText("http://def$~image,~script,~object,~ping"));
     matcher.add(Filter.fromText("http://fed$third-party"));
     matcher.add(Filter.fromText("http://fed$~third-party,~script"));
     cacheCheck(matcher, "http://abc", "IMAGE", null, false, "abc$image");
     cacheCheck(matcher, "http://abc", "SCRIPT", null, false, "abc$script");
-    cacheCheck(matcher, "http://abc", "OTHER", null, false, "abc$~image,~script,~media,~ping");
+    cacheCheck(matcher, "http://abc", "OTHER", null, false, "abc$~image,~script,~object,~ping");
     cacheCheck(matcher, "http://cba", "IMAGE", null, false, "cba$~third-party,~script");
     cacheCheck(matcher, "http://cba", "IMAGE", null, true, "cba$third-party");
     cacheCheck(matcher, "http://def", "IMAGE", null, false, "http://def$image");
     cacheCheck(matcher, "http://def", "SCRIPT", null, false, "http://def$script");
-    cacheCheck(matcher, "http://def", "OTHER", null, false, "http://def$~image,~script,~media,~ping");
+    cacheCheck(matcher, "http://def", "OTHER", null, false, "http://def$~image,~script,~object,~ping");
     cacheCheck(matcher, "http://fed", "IMAGE", null, false, "http://fed$~third-party,~script");
     cacheCheck(matcher, "http://fed", "IMAGE", null, true, "http://fed$third-party");
-    cacheCheck(matcher, "http://abc_cba", "MEDIA", null, false, "cba$~third-party,~script");
-    cacheCheck(matcher, "http://abc_cba", "MEDIA", null, true, "cba$third-party");
+    cacheCheck(matcher, "http://abc_cba", "OBJECT", null, false, "cba$~third-party,~script");
+    cacheCheck(matcher, "http://abc_cba", "OBJECT", null, true, "cba$third-party");
     cacheCheck(matcher, "http://abc_cba", "SCRIPT", null, false, "abc$script");
-    cacheCheck(matcher, "http://def?http://fed", "MEDIA", null, false, "http://fed$~third-party,~script");
-    cacheCheck(matcher, "http://def?http://fed", "MEDIA", null, true, "http://fed$third-party");
+    cacheCheck(matcher, "http://def?http://fed", "OBJECT", null, false, "http://fed$~third-party,~script");
+    cacheCheck(matcher, "http://def?http://fed", "OBJECT", null, true, "http://fed$third-party");
     cacheCheck(matcher, "http://def?http://fed", "SCRIPT", null, false, "http://def$script");
   });
 })();
@@ -1751,7 +1741,7 @@
   });
   test("Subscriptions with state", function()
   {
-    compareSubscription("~fl~", ["url=~fl~", "title=" + Utils.getString("newGroup_title")]);
+    compareSubscription("~fl~", ["url=~fl~"]);
     compareSubscription("http://test/default", ["url=http://test/default", "title=http://test/default"]);
     compareSubscription("http://test/default_titled", ["url=http://test/default_titled", "title=test"], function(subscription)
     {

@@ -42,20 +42,29 @@ if ("ext" in window && document instanceof HTMLDocument)
         return;
       }
     }
+    var queryString = null;
     if (link.protocol == "http:" || link.protocol == "https:")
     {
-      if (link.host != "subscribe.adblockplus.org" || link.pathname != "/")
+      if (link.host == "subscribe.adblockplus.org" && link.pathname == "/")
       {
-        return;
+        queryString = link.search.substr(1);
       }
     }
-    else if (!/^abp:\/*subscribe\/*\?/i.test(link.href))
+    else
+    {
+      var match = /^abp:\/*subscribe\/*\?(.*)/i.exec(link.href);
+      if (match)
+      {
+        queryString = match[1];
+      }
+    }
+    if (!queryString)
     {
       return;
     }
     event.preventDefault();
     event.stopPropagation();
-    var params = link.search.substr(1).split("&");
+    var params = queryString.split("&");
     var title = null;
     var url = null;
     for (var i = 0; i < params.length; i++)

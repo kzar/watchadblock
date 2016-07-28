@@ -36,8 +36,10 @@ function splitSelector(selector)
   return selectors;
 }
 
-function CSSPropertyFilters(window, addSelectorsFunc) {
+function CSSPropertyFilters(window, getFiltersFunc, addSelectorsFunc)
+{
   this.window = window;
+  this.getFiltersFunc = getFiltersFunc;
   this.addSelectorsFunc = addSelectorsFunc;
 }
 
@@ -56,8 +58,26 @@ CSSPropertyFilters.prototype = {
     return styles.join(" ");
   },
 
-  findSelectors: function(stylesheet, selectors)
+  isSameOrigin: function(stylesheet)
   {
+    try
+    {
+      return new URL(stylesheet.href).origin == this.window.location.origin;
+    }
+    catch (e)
+    {
+      // Invalid URL, assume that it is first-party.
+      return true;
+    }
+  },
+
+  findSelectors: function(stylesheet, selectors, filters)
+  {
+    // Explicitly ignore third-party stylesheets to ensure consistent behavior
+    // between Firefox and Chrome.
+    if (!this.isSameOrigin(stylesheet))
+      return;
+
     var rules = stylesheet.cssRules;
     if (!rules)
       return;
@@ -82,6 +102,7 @@ CSSPropertyFilters.prototype = {
           var subSelectors = splitSelector(rule.selectorText);
           for (var k = 0; k < subSelectors.length; k++)
             selectors.push(pattern.prefix + subSelectors[k] + pattern.suffix);
+          filters[pattern.text] = true;
         }
       }
     }
@@ -90,9 +111,10 @@ CSSPropertyFilters.prototype = {
   addSelectors: function(stylesheets)
   {
     var selectors = [];
+    var filters = {};
     for (var i = 0; i < stylesheets.length; i++)
-      this.findSelectors(stylesheets[i], selectors);
-    this.addSelectorsFunc(selectors);
+      this.findSelectors(stylesheets[i], selectors, filters);
+    this.addSelectorsFunc(selectors, Object.keys(filters));
   },
 
   onLoad: function(event)
@@ -104,17 +126,11 @@ CSSPropertyFilters.prototype = {
 
   load: function(callback)
   {
-    ext.backgroundPage.sendMessage(
-      {
-        type: "filters.get",
-        what: "cssproperties"
-      },
-      function(patterns)
-      {
-        this.patterns = patterns;
-        callback();
-      }.bind(this)
-    );
+    this.getFiltersFunc(function(patterns)
+    {
+      this.patterns = patterns;
+      callback();
+    }.bind(this));
   },
 
   apply: function()

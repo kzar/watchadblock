@@ -16,7 +16,7 @@
  */
 
 var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-var SELECTOR_GROUP_SIZE = 20;
+var SELECTOR_GROUP_SIZE = 200;
 
 var typeMap = {
   "img": "IMAGE",
@@ -400,7 +400,16 @@ function init(document)
   var style = null;
   var observer = null;
   var tracer = null;
-  var propertyFilters = new CSSPropertyFilters(window, addElemHideSelectors);
+
+  function getPropertyFilters(callback)
+  {
+    ext.backgroundPage.sendMessage({
+      type: "filters.get",
+      what: "cssproperties"
+    }, callback);
+  }
+  var propertyFilters = new CSSPropertyFilters(window, getPropertyFilters,
+                                               addElemHideSelectors);
 
   // Use Shadow DOM if available to don't mess with web pages that rely on
   // the order of their own <style> tags (#309).
@@ -457,11 +466,14 @@ function init(document)
       selectors = preparedSelectors;
     }
 
-    // WebKit (and Blink?) apparently chokes when the selector list in a
-    // CSS rule is huge. So we split the elemhide selectors into groups.
-    while (selectors.length > 0)
+    // Safari only allows 8192 primitive selectors to be injected at once[1], we
+    // therefore chunk the inserted selectors into groups of 200 to be safe.
+    // (Chrome also has a limit, larger... but we're not certain exactly what it
+    //  is! Edge apparently has no such limit.)
+    // [1] - https://github.com/WebKit/webkit/blob/1cb2227f6b2a1035f7bdc46e5ab69debb75fc1de/Source/WebCore/css/RuleSet.h#L68
+    for (var i = 0; i < selectors.length; i += SELECTOR_GROUP_SIZE)
     {
-      var selector = selectors.splice(0, SELECTOR_GROUP_SIZE).join(", ");
+      var selector = selectors.slice(i, i + SELECTOR_GROUP_SIZE).join(", ");
       style.sheet.addRule(selector, "display: none !important;");
     }
   };

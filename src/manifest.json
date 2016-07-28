@@ -1,5 +1,7 @@
 {
+  "author": "Eyeo GmbH", 
   "background": {
+    "persistent": true, 
     "scripts": [
       "lib/polyfills/url.js", 
       "lib/polyfills/promise.js", 
@@ -8,9 +10,8 @@
       "ext/background.js", 
       "lib/compat.js", 
       "lib/info.js", 
-      "lib/adblockplus.js", 
-      "lib/punycode.js", 
       "lib/publicSuffixList.js", 
+      "lib/adblockplus.js", 
       "lib/sha1.js", 
       "lib/jsbn.js", 
       "lib/rsa.js", 
@@ -110,7 +111,7 @@
   "storage": {
     "managed_schema": "managed-storage-schema.json"
   }, 
-  "version": "3.0.8", 
+  "version": "3.1", 
   "web_accessible_resources": [
     "adblock-jquery-ui.custom.css", 
     "adblock-jquery-ui.override-page.css", 

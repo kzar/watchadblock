@@ -56,7 +56,12 @@ function wrapper(baseMessage /* , [paramKeys] */)
         message[paramKeys[i]] = arguments[i];
     }
 
-    ext.backgroundPage.sendMessage(message, callback);
+    // Chrome 30 throws an exception when sendMessage is called with a callback
+    // parameter of undefined, so we work around that here. (See issue 4052)
+    if (callback)
+      ext.backgroundPage.sendMessage(message, callback);
+    else
+      ext.backgroundPage.sendMessage(message);
   };
 }
 
@@ -84,7 +89,7 @@ var delayedSubscriptionSelection = null;
 
 var acceptableAdsUrl;
 
-// Loads options and sets UI elements accordingly
+// Loads options from localStorage and sets UI elements accordingly
 function loadOptions()
 {
   // Set page title to i18n version of "Adblock Plus Options"
@@ -141,18 +146,23 @@ function loadOptions()
   // Popuplate option checkboxes
   initCheckbox("shouldShowBlockElementMenu");
   initCheckbox("show_devtools_panel");
-  initCheckbox("shouldShowNotifications", {
-    key: "notifications_ignoredcategories",
-    get: function(ignoredcategories)
-    {
-      return ignoredcategories.indexOf("*") == -1;
-    }
-  });
+  initCheckbox("shouldShowNotifications", "notifications_ignoredcategories");
+  initCheckbox("safariContentBlocker");
 
   getInfo("features", function(features)
   {
     if (!features.devToolsPanel)
       document.getElementById("showDevtoolsPanelContainer").hidden = true;
+
+    // Only show the option for Safari content blocking API if the user is
+    // running Safari and both the legacy and content blocking APIs are
+    // available.
+    document.getElementById("safariContentBlockerContainer").hidden = !(
+      features.safariContentBlocker &&
+      typeof safari != "undefined" &&
+      "canLoad" in safari.self.tab &&
+      "onbeforeload" in Element.prototype
+    );
   });
   getPref("notifications_showui", function(notifications_showui)
   {
@@ -174,7 +184,7 @@ function loadOptions()
   {
     type: "prefs.listen",
     filter: ["notifications_ignoredcategories", "notifications_showui",
-             "safari_contentblocker", "show_devtools_panel",
+             "safariContentBlocker", "show_devtools_panel",
              "shouldShowBlockElementMenu"]
   });
   ext.backgroundPage.sendMessage(
@@ -238,22 +248,18 @@ function reloadFilters()
   });
 }
 
-function initCheckbox(id, descriptor)
+function initCheckbox(id, key)
 {
+  key = key || id;
   var checkbox = document.getElementById(id);
-  var key = descriptor && descriptor.key || id;
+
   getPref(key, function(value)
   {
-    if (descriptor && descriptor.get)
-      checkbox.checked = descriptor.get(value);
-    else
-      checkbox.checked = value;
+    onPrefMessage(key, value);
   });
 
   checkbox.addEventListener("click", function()
   {
-    if (descriptor && descriptor.toggle)
-      checkbox.checked = descriptor.toggle();
     togglePref(key);
   }, false);
 }
@@ -501,8 +507,21 @@ function onPrefMessage(key, value)
       key = "shouldShowNotifications";
       value = value.indexOf("*") == -1;
       break;
+    case "safariContentBlocker":
+      var restartMessage = document.getElementById("restart-safari");
+      restartMessage.hidden = true;
+      // When the user has chosen to use the legacy APIs but Safari has disabled
+      // them we need to show a "Please restart Safari" message.
+      if (!value)
+      {
+        ext.backgroundPage.sendMessage({type: "safari.contentBlockingActive"},
+        function(contentBlockingActive)
+        {
+          if (contentBlockingActive)
+            restartMessage.hidden = false;
+        });
+      }
   }
-
   var checkbox = document.getElementById(key);
   if (checkbox)
     checkbox.checked = value;

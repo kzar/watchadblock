@@ -293,7 +293,7 @@ BlacklistUi.prototype._makeFilter = function() {
   var attrs = ['id', 'class', 'name', 'src', 'href', 'data'];
   for (var i in attrs) {
     if ($("input[type='checkbox']#ck" + attrs[i], detailsDiv).is(':checked'))
-      result.push('[' + attrs[i] + '=' + getUnicodeUrl(JSON.stringify(el.attr(attrs[i]))) + ']');
+      result.push('[' + attrs[i] + '=' + JSON.stringify(el.attr(attrs[i])) + ']');
   }
 
   var warningMessage;
