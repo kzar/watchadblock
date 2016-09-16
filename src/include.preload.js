@@ -128,8 +128,6 @@ function getURLsFromElement(element)
 
 function checkCollapse(element)
 {
-  window.collapsing = true;
-
   var mediatype = typeMap[element.localName];
   if (!mediatype)
     return;
@@ -150,16 +148,22 @@ function checkCollapse(element)
     {
       function collapseElement()
       {
+        var propertyName = "display";
+        var propertyValue = "none";
         if (element.localName == "frame")
-          element.style.setProperty("visibility", "hidden", "important");
-        else
-          element.style.setProperty("display", "none", "important");
+        {
+          propertyName = "visibility";
+          propertyValue = "hidden";
+        }
+
+        if (element.style.getPropertyValue(propertyName) != propertyValue ||
+            element.style.getPropertyPriority(propertyName) != "important")
+          element.style.setProperty(propertyName, propertyValue, "important");
       }
 
-      if (collapse && !element._collapsed)
+      if (collapse)
       {
         collapseElement();
-        element._collapsed = true;
 
         if (MutationObserver)
           new MutationObserver(collapseElement).observe(
@@ -177,7 +181,7 @@ function checkSitekey()
 {
   var attr = document.documentElement.getAttribute("data-adblockkey");
   if (attr)
-    ext.backgroundPage.sendMessage({type: "filter.addKey", token: attr});
+    ext.backgroundPage.sendMessage({type: "filters.addKey", token: attr});
 }
 
 function getContentDocument(element)
@@ -333,65 +337,99 @@ ElementHidingTracer.prototype = {
   }
 };
 
-function reinjectStyleSheetWhenRemoved(document, style)
+function runInDocument(document, fn, arg)
 {
-  if (!MutationObserver)
-    return null;
-
-  var parentNode = style.parentNode;
-  var observer = new MutationObserver(function()
-  {
-    if (style.parentNode != parentNode)
-      parentNode.appendChild(style);
-  });
-
-  observer.observe(parentNode, {childList: true});
-  return observer;
-}
-
-function protectStyleSheet(document, style)
-{
-  var id = Math.random().toString(36).substr(2)
-  style.id = id;
-
-  var code = [
-    "(function()",
-    "{",
-    '  var style = document.getElementById("' + id + '") ||',
-    '              document.documentElement.shadowRoot.getElementById("' + id + '");',
-    '  style.removeAttribute("id");'
-  ];
-
-  var disableables = ["style", "style.sheet"];
-  for (var i = 0; i < disableables.length; i++)
-  {
-    code.push("  Object.defineProperty(" + disableables[i] + ', "disabled", '
-                                         + "{value: false, enumerable: true});");
-  }
-
-  var methods = ["deleteRule", "removeRule"];
-  for (var j = 0; j < methods.length; j++)
-  {
-    var method = methods[j];
-    if (method in CSSStyleSheet.prototype)
-    {
-      var origin = "CSSStyleSheet.prototype." + method;
-      code.push("  var " + method + " = " + origin + ";",
-                "  " + origin + " = function(index)",
-                "  {",
-                "    if (this != style.sheet)",
-                "      " + method + ".call(this, index);",
-                "  }");
-    }
-  }
-
-  code.push("})();");
-
   var script = document.createElement("script");
+  script.type = "application/javascript";
   script.async = false;
-  script.textContent = code.join("\n");
+  script.textContent = "(" + fn + ")(" + JSON.stringify(arg) + ");";
   document.documentElement.appendChild(script);
   document.documentElement.removeChild(script);
+}
+
+// Neither Chrome[1] nor Safari allow us to intercept WebSockets, and therefore
+// some ad networks are misusing them as a way to serve adverts and circumvent
+// us. As a workaround we wrap WebSocket, preventing blocked WebSocket
+// connections from being opened.
+// [1] - https://bugs.chromium.org/p/chromium/issues/detail?id=129353
+function wrapWebSocket(document)
+{
+  if (typeof WebSocket == "undefined")
+    return;
+
+  var eventName = "abpws-" + Math.random().toString(36).substr(2);
+
+  document.addEventListener(eventName, function(event)
+  {
+    ext.backgroundPage.sendMessage({
+      type: "request.websocket",
+      url: event.detail.url
+    }, function (block)
+    {
+      document.dispatchEvent(
+        new CustomEvent(eventName + "-" + event.detail.url, {detail: block})
+      );
+    });
+  });
+
+  runInDocument(document, function(eventName)
+  {
+    // As far as possible we must track everything we use that could be
+    // sabotaged by the website later in order to circumvent us.
+    var RealWebSocket = WebSocket;
+    var closeWebSocket = Function.prototype.call.bind(RealWebSocket.prototype.close);
+    var addEventListener = document.addEventListener.bind(document);
+    var removeEventListener = document.removeEventListener.bind(document);
+    var dispatchEvent = document.dispatchEvent.bind(document);
+    var CustomEvent = window.CustomEvent;
+
+    function checkRequest(url, callback)
+    {
+      var incomingEventName = eventName + "-" + url;
+      function listener(event)
+      {
+        callback(event.detail);
+        removeEventListener(incomingEventName, listener);
+      }
+      addEventListener(incomingEventName, listener);
+
+      dispatchEvent(new CustomEvent(eventName, {
+        detail: {url: url}
+      }));
+    }
+
+    function WrappedWebSocket(url)
+    {
+      // Throw correct exceptions if the constructor is used improperly.
+      if (!(this instanceof WrappedWebSocket)) return RealWebSocket();
+      if (arguments.length < 1) return new RealWebSocket();
+
+      var websocket;
+      if (arguments.length == 1)
+        websocket = new RealWebSocket(url);
+      else
+        websocket = new RealWebSocket(url, arguments[1]);
+
+      checkRequest(websocket.url, function(blocked)
+      {
+        if (blocked)
+          closeWebSocket(websocket);
+      });
+
+      return websocket;
+    }
+    WrappedWebSocket.prototype = RealWebSocket.prototype;
+    WebSocket = WrappedWebSocket.bind();
+    Object.defineProperties(WebSocket, {
+      CONNECTING: {value: RealWebSocket.CONNECTING, enumerable: true},
+      OPEN: {value: RealWebSocket.OPEN, enumerable: true},
+      CLOSING: {value: RealWebSocket.CLOSING, enumerable: true},
+      CLOSED: {value: RealWebSocket.CLOSED, enumerable: true},
+      prototype: {value: RealWebSocket.prototype}
+    });
+
+    RealWebSocket.prototype.constructor = WebSocket;
+  }, eventName);
 }
 
 function init(document)
@@ -400,6 +438,8 @@ function init(document)
   var style = null;
   var observer = null;
   var tracer = null;
+
+  wrapWebSocket(document);
 
   function getPropertyFilters(callback)
   {
@@ -424,6 +464,25 @@ function init(document)
   {
     shadow = document.documentElement.createShadowRoot();
     shadow.appendChild(document.createElement("shadow"));
+
+    // Stop the website from messing with our shadowRoot
+    if ("shadowRoot" in Element.prototype)
+    {
+      runInDocument(document, function()
+      {
+        var ourShadowRoot = document.documentElement.shadowRoot;
+        var desc = Object.getOwnPropertyDescriptor(Element.prototype, "shadowRoot");
+        var shadowRoot = Function.prototype.call.bind(desc.get);
+
+        Object.defineProperty(Element.prototype, "shadowRoot", {
+          configurable: true, enumerable: true, get: function()
+          {
+            var shadow = shadowRoot(this);
+            return shadow == ourShadowRoot ? null : shadow;
+          }
+        });
+      }, null);
+    }
   }
 
   function addElemHideSelectors(selectors)
@@ -446,9 +505,6 @@ function init(document)
       // <style> element to the shadow DOM.
       if (!style.sheet)
         return;
-
-      observer = reinjectStyleSheetWhenRemoved(document, style);
-      protectStyleSheet(document, style);
     }
 
     // If using shadow DOM, we have to add the ::content pseudo-element
@@ -527,6 +583,15 @@ function init(document)
     checkCollapse(event.target);
   }, true);
 
+  // The CSS property filters approach won't work because we cannot find an
+  // unambiguous CSS3 selector for an arbitrary element. We need to remove the
+  // filters from the style sheet and apply them via JS.
+
+  // For Yandex it should suffice to do this on document load, but in theory
+  // it's possible to circumvent this by adding the element to the DOM
+  // dynamically. Same issue with CSS property filters. How do we tackle it
+  // there? If at all.
+
   document.addEventListener("load", function(event)
   {
     var element = event.target;
@@ -549,15 +614,6 @@ function init(document)
           // So we have to apply element hiding from the parent frame.
           if (!("init" in contentWindow))
             init(contentDocument);
-
-          // Moreover, "load" and "error" events aren't dispatched for elements
-          // in dynamically created frames due to https://crbug.com/442107.
-          // So we also have to apply element collpasing from the parent frame.
-          if (!contentWindow.collapsing)
-            Array.prototype.forEach.call(
-              contentDocument.querySelectorAll(Object.keys(typeMap).join(",")),
-              checkCollapse
-            );
         }
       }
     }

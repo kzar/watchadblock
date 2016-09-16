@@ -511,7 +511,7 @@ require.scopes["icon"] = (function()
     }
     else
     {
-      chrome.browserAction.setIcon(
+      page.browserAction._safeSetIcon(
       {
         tabId: page.id,
         imageData: frames["" + opacity + whitelisted]
@@ -533,16 +533,32 @@ require.scopes["icon"] = (function()
     {
       return Promise.resolve(null);
     }
-    return Promise.all([loadImage("icons/abp-19.png"), loadImage("icons/abp-19-whitelisted.png"), loadImage("icons/abp-19-notification-" + notificationType + ".png"), loadImage("icons/abp-38.png"), loadImage("icons/abp-38-whitelisted.png"), loadImage("icons/abp-38-notification-" + notificationType + ".png")]).then(function(images)
+    return Promise.all([loadImage("icons/abp-16.png"), loadImage("icons/abp-16-whitelisted.png"), loadImage("icons/abp-16-notification-" + notificationType + ".png"), loadImage("icons/abp-19.png"), loadImage("icons/abp-19-whitelisted.png"), loadImage("icons/abp-19-notification-" + notificationType + ".png"), loadImage("icons/abp-20.png"), loadImage("icons/abp-20-whitelisted.png"), loadImage("icons/abp-20-notification-" + notificationType + ".png"), loadImage("icons/abp-32.png"), loadImage("icons/abp-32-whitelisted.png"), loadImage("icons/abp-32-notification-" + notificationType + ".png"), loadImage("icons/abp-38.png"), loadImage("icons/abp-38-whitelisted.png"), loadImage("icons/abp-38-notification-" + notificationType + ".png"), loadImage("icons/abp-40.png"), loadImage("icons/abp-40-whitelisted.png"), loadImage("icons/abp-40-notification-" + notificationType + ".png")]).then(function(images)
     {
       var images = {
-        19: {
+        16: {
           base: [images[0], images[1]],
           overlay: images[2]
         },
-        38: {
+        19: {
           base: [images[3], images[4]],
           overlay: images[5]
+        },
+        20: {
+          base: [images[6], images[7]],
+          overlay: images[8]
+        },
+        32: {
+          base: [images[9], images[10]],
+          overlay: images[11]
+        },
+        38: {
+          base: [images[12], images[13]],
+          overlay: images[14]
+        },
+        40: {
+          base: [images[15], images[16]],
+          overlay: images[17]
         }
       };
       var frames = {};
@@ -554,9 +570,10 @@ require.scopes["icon"] = (function()
         for (var i = 0, opacity = 0; i <= 10; opacity = ++i / 10)
         {
           var imageData = {};
-          for (var _loopIndex8 = 0; _loopIndex8 < [19, 38].length; ++_loopIndex8)
+          var sizes = [16, 19, 20, 32, 38, 40];
+          for (var _loopIndex8 = 0; _loopIndex8 < sizes.length; ++_loopIndex8)
           {
-            var size = [19, 38][_loopIndex8];
+            var size = sizes[_loopIndex8];
             canvas.width = size;
             canvas.height = size;
             context.globalAlpha = 1;
@@ -921,6 +938,10 @@ require.scopes["notificationHelper"] = (function()
 
   function notificationButtonClick(buttonIndex)
   {
+    if (!(activeButtons && buttonIndex in activeButtons))
+    {
+      return;
+    }
     switch (activeButtons[buttonIndex].type)
     {
     case "link":
@@ -1101,37 +1122,6 @@ require.scopes["popupBlocker"] = (function()
     }
   }
 
-  function getFrame(tabId, processId, frameId, callback)
-  {
-    chrome.webNavigation.getFrame(
-    {
-      tabId: tabId,
-      processId: processId,
-      frameId: frameId
-    }, function(details)
-    {
-      var _tempVar15 = details;
-      var url = _tempVar15.url;
-      var parentFrameId = _tempVar15.parentFrameId;
-      var frame = {
-        url: new URL(url),
-        parent: null
-      };
-      if (parentFrameId != -1)
-      {
-        getFrame(tabId, processId, parentFrameId, function(parentFrame)
-        {
-          frame.parent = parentFrame;
-          callback(frame);
-        });
-      }
-      else
-      {
-        callback(frame);
-      }
-    }.bind(this));
-  }
-
   function checkPotentialPopup(tabId, popup)
   {
     var urlObj = new URL(popup.url || "about:blank");
@@ -1167,23 +1157,6 @@ require.scopes["popupBlocker"] = (function()
       forgetPopup(details.tabId);
     }
   }
-
-  function onSourceFrameRetrieved(tabId, frame)
-  {
-    var popup = loadingPopups[tabId];
-    if (popup)
-    {
-      if (checkWhitelisted(popup.sourcePage, frame))
-      {
-        forgetPopup(tabId);
-      }
-      else
-      {
-        popup.sourceFrame = frame;
-        checkPotentialPopup(tabId, popup);
-      }
-    }
-  }
   chrome.webNavigation.onCreatedNavigationTarget.addListener(function(details)
   {
     if (!hasLoadingPopups())
@@ -1196,7 +1169,8 @@ require.scopes["popupBlocker"] = (function()
       chrome.webNavigation.onCompleted.addListener(onCompleted);
       chrome.tabs.onRemoved.addListener(forgetPopup);
     }
-    loadingPopups[details.tabId] = {
+    var tabId = details.tabId;
+    var popup = loadingPopups[tabId] = {
       url: details.url,
       sourcePage: new ext.Page(
       {
@@ -1204,7 +1178,16 @@ require.scopes["popupBlocker"] = (function()
       }),
       sourceFrame: null
     };
-    getFrame(details.sourceTabId, details.sourceProcessId, details.sourceFrameId, onSourceFrameRetrieved.bind(null, details.tabId));
+    var frame = ext.getFrame(details.sourceTabId, details.sourceFrameId);
+    if (checkWhitelisted(popup.sourcePage, frame))
+    {
+      forgetPopup(tabId);
+    }
+    else
+    {
+      popup.sourceFrame = frame;
+      checkPotentialPopup(tabId, popup);
+    }
   });
   return exports;
 });
@@ -1651,21 +1634,21 @@ require.scopes["requestBlocker"] = (function()
 {
   "use strict";
   var exports = {};
-  var _tempVar16 = require("filterClasses");
-  var Filter = _tempVar16.Filter;
-  var RegExpFilter = _tempVar16.RegExpFilter;
-  var BlockingFilter = _tempVar16.BlockingFilter;
+  var _tempVar15 = require("filterClasses");
+  var Filter = _tempVar15.Filter;
+  var RegExpFilter = _tempVar15.RegExpFilter;
+  var BlockingFilter = _tempVar15.BlockingFilter;
   var Subscription = require("subscriptionClasses").Subscription;
   var defaultMatcher = require("matcher").defaultMatcher;
   var FilterNotifier = require("filterNotifier").FilterNotifier;
   var Prefs = require("prefs").Prefs;
-  var _tempVar17 = require("whitelisting");
-  var checkWhitelisted = _tempVar17.checkWhitelisted;
-  var getKey = _tempVar17.getKey;
-  var _tempVar18 = require("url");
-  var stringifyURL = _tempVar18.stringifyURL;
-  var extractHostFromFrame = _tempVar18.extractHostFromFrame;
-  var isThirdParty = _tempVar18.isThirdParty;
+  var _tempVar16 = require("whitelisting");
+  var checkWhitelisted = _tempVar16.checkWhitelisted;
+  var getKey = _tempVar16.getKey;
+  var _tempVar17 = require("url");
+  var stringifyURL = _tempVar17.stringifyURL;
+  var extractHostFromFrame = _tempVar17.extractHostFromFrame;
+  var isThirdParty = _tempVar17.isThirdParty;
   var port = require("messaging").port;
   var devtools = require("devtools");
   ext.webRequest.getIndistinguishableTypes().forEach(function(types)
@@ -1713,9 +1696,9 @@ require.scopes["requestBlocker"] = (function()
     var sitekey = getKey(sender.page, sender.frame);
     var blocked = false;
     var specificOnly = checkWhitelisted(sender.page, sender.frame, RegExpFilter.typeMap.GENERICBLOCK);
-    for (var _loopIndex19 = 0; _loopIndex19 < message.urls.length; ++_loopIndex19)
+    for (var _loopIndex18 = 0; _loopIndex18 < message.urls.length; ++_loopIndex18)
     {
-      var url = message.urls[_loopIndex19];
+      var url = message.urls[_loopIndex18];
       var urlObj = new URL(url, message.baseURL);
       var filter = defaultMatcher.matchesAny(stringifyURL(urlObj), typeMask, documentHost, isThirdParty(urlObj, documentHost), sitekey, specificOnly);
       if (filter instanceof BlockingFilter)
@@ -1771,6 +1754,10 @@ require.scopes["requestBlocker"] = (function()
     return onFilterChange(arg, true);
   });
   FilterNotifier.on("load", onFilterChange);
+  port.on("request.websocket", function(msg, sender)
+  {
+    return ext.webRequest.onBeforeRequest._dispatch(new URL(msg.url), "OTHER", sender.page, sender.frame).indexOf(false) != -1;
+  });
   return exports;
 });
 require.scopes["stats"] = (function()
@@ -1833,10 +1820,10 @@ require.scopes["subscriptionInit"] = (function()
 {
   "use strict";
   var exports = {};
-  var _tempVar20 = require("subscriptionClasses");
-  var Subscription = _tempVar20.Subscription;
-  var DownloadableSubscription = _tempVar20.DownloadableSubscription;
-  var SpecialSubscription = _tempVar20.SpecialSubscription;
+  var _tempVar19 = require("subscriptionClasses");
+  var Subscription = _tempVar19.Subscription;
+  var DownloadableSubscription = _tempVar19.DownloadableSubscription;
+  var SpecialSubscription = _tempVar19.SpecialSubscription;
   var FilterStorage = require("filterStorage").FilterStorage;
   var FilterNotifier = require("filterNotifier").FilterNotifier;
   var Prefs = require("prefs").Prefs;
@@ -1858,9 +1845,9 @@ require.scopes["subscriptionInit"] = (function()
 
   function shouldAddDefaultSubscription()
   {
-    for (var _loopIndex21 = 0; _loopIndex21 < FilterStorage.subscriptions.length; ++_loopIndex21)
+    for (var _loopIndex20 = 0; _loopIndex20 < FilterStorage.subscriptions.length; ++_loopIndex20)
     {
-      var subscription = FilterStorage.subscriptions[_loopIndex21];
+      var subscription = FilterStorage.subscriptions[_loopIndex20];
       if (subscription instanceof DownloadableSubscription && subscription.url != Prefs.subscriptions_exceptionsurl && subscription.url != Prefs.subscriptions_antiadblockurl)
       {
         return false;
@@ -1876,9 +1863,9 @@ require.scopes["subscriptionInit"] = (function()
   function getSubscriptions()
   {
     var subscriptions = [];
-    for (var _loopIndex22 = 0; _loopIndex22 < Prefs.additional_subscriptions.length; ++_loopIndex22)
+    for (var _loopIndex21 = 0; _loopIndex21 < Prefs.additional_subscriptions.length; ++_loopIndex21)
     {
-      var url = Prefs.additional_subscriptions[_loopIndex22];
+      var url = Prefs.additional_subscriptions[_loopIndex21];
       subscriptions.push(Subscription.fromURL(url));
     }
     if (firstRun)
@@ -1924,9 +1911,9 @@ require.scopes["subscriptionInit"] = (function()
     {
       subscriptions = subscriptionsCallback(subscriptions);
     }
-    for (var _loopIndex23 = 0; _loopIndex23 < subscriptions.length; ++_loopIndex23)
+    for (var _loopIndex22 = 0; _loopIndex22 < subscriptions.length; ++_loopIndex22)
     {
-      var subscription = subscriptions[_loopIndex23];
+      var subscription = subscriptions[_loopIndex22];
       FilterStorage.addSubscription(subscription);
       if (subscription instanceof DownloadableSubscription && !subscription.lastDownload)
       {
@@ -2156,11 +2143,11 @@ require.scopes["whitelisting"] = (function()
   var RegExpFilter = require("filterClasses").RegExpFilter;
   var DownloadableSubscription = require("subscriptionClasses").DownloadableSubscription;
   var FilterNotifier = require("filterNotifier").FilterNotifier;
-  var _tempVar24 = require("url");
-  var stringifyURL = _tempVar24.stringifyURL;
-  var getDecodedHostname = _tempVar24.getDecodedHostname;
-  var extractHostFromFrame = _tempVar24.extractHostFromFrame;
-  var isThirdParty = _tempVar24.isThirdParty;
+  var _tempVar23 = require("url");
+  var stringifyURL = _tempVar23.stringifyURL;
+  var getDecodedHostname = _tempVar23.getDecodedHostname;
+  var extractHostFromFrame = _tempVar23.extractHostFromFrame;
+  var isThirdParty = _tempVar23.isThirdParty;
   var port = require("messaging").port;
   var devtools = require("devtools");
   var sitekeys = new ext.PageMap();
@@ -2215,9 +2202,9 @@ require.scopes["whitelisting"] = (function()
     ext.pages.query(
     {}, function(pages)
     {
-      for (var _loopIndex25 = 0; _loopIndex25 < pages.length; ++_loopIndex25)
+      for (var _loopIndex24 = 0; _loopIndex24 < pages.length; ++_loopIndex24)
       {
-        var page = pages[_loopIndex25];
+        var page = pages[_loopIndex24];
         revalidateWhitelistingState(page);
       }
     });
@@ -2274,9 +2261,9 @@ require.scopes["whitelisting"] = (function()
     {
       id: details.tabId
     });
-    for (var _loopIndex26 = 0; _loopIndex26 < details.responseHeaders.length; ++_loopIndex26)
+    for (var _loopIndex25 = 0; _loopIndex25 < details.responseHeaders.length; ++_loopIndex25)
     {
-      var header = details.responseHeaders[_loopIndex26];
+      var header = details.responseHeaders[_loopIndex25];
       if (header.name.toLowerCase() == "x-adblock-key" && header.value)
       {
         recordKey(header.value, page, new URL(details.url));
@@ -2325,9 +2312,9 @@ require.scopes["antiadblockInit"] = (function()
     function addAntiAdblockNotification(subscription)
     {
       var urlFilters = [];
-      for (var _loopIndex27 = 0; _loopIndex27 < subscription.filters.length; ++_loopIndex27)
+      for (var _loopIndex26 = 0; _loopIndex26 < subscription.filters.length; ++_loopIndex26)
       {
-        var filter = subscription.filters[_loopIndex27];
+        var filter = subscription.filters[_loopIndex26];
         if (filter instanceof ActiveFilter)
         {
           for (var domain in filter.domains)
@@ -2401,9 +2388,9 @@ require.scopes["cssRules"] = (function()
     {
       var result = [];
       var keys = Object.getOwnPropertyNames(filters);
-      for (var _loopIndex28 = 0; _loopIndex28 < keys.length; ++_loopIndex28)
+      for (var _loopIndex27 = 0; _loopIndex27 < keys.length; ++_loopIndex27)
       {
-        var key = keys[_loopIndex28];
+        var key = keys[_loopIndex27];
         var filter = Filter.fromText(key);
         if (filter.isActiveOnDomain(domain) && !ElemHide.getException(filter, domain))
         {
@@ -2449,9 +2436,9 @@ require.scopes["downloader"] = (function()
     _doCheck: function()
     {
       var now = Date.now();
-      for (var _loopIndex29 = 0; _loopIndex29 < this.dataSource().length; ++_loopIndex29)
+      for (var _loopIndex28 = 0; _loopIndex28 < this.dataSource().length; ++_loopIndex28)
       {
-        var downloadable = this.dataSource()[_loopIndex29];
+        var downloadable = this.dataSource()[_loopIndex28];
         if (downloadable.lastCheck && now - downloadable.lastCheck > this.maxAbsenceInterval)
         {
           downloadable.softExpiration += now - downloadable.lastCheck;
@@ -2494,13 +2481,13 @@ require.scopes["downloader"] = (function()
     },
     getDownloadUrl: function(downloadable)
     {
-      var _tempVar30 = require("info");
-      var addonName = _tempVar30.addonName;
-      var addonVersion = _tempVar30.addonVersion;
-      var application = _tempVar30.application;
-      var applicationVersion = _tempVar30.applicationVersion;
-      var platform = _tempVar30.platform;
-      var platformVersion = _tempVar30.platformVersion;
+      var _tempVar29 = require("info");
+      var addonName = _tempVar29.addonName;
+      var addonVersion = _tempVar29.addonVersion;
+      var application = _tempVar29.application;
+      var applicationVersion = _tempVar29.applicationVersion;
+      var platform = _tempVar29.platform;
+      var platformVersion = _tempVar29.platformVersion;
       var url = downloadable.redirectURL || downloadable.url;
       if (url.indexOf("?") >= 0)
       {
@@ -2733,9 +2720,9 @@ require.scopes["elemHide"] = (function()
           var unconditionalFilters = filtersBySelector[selector];
           if (unconditionalFilters)
           {
-            for (var _loopIndex31 = 0; _loopIndex31 < unconditionalFilters.length; ++_loopIndex31)
+            for (var _loopIndex30 = 0; _loopIndex30 < unconditionalFilters.length; ++_loopIndex30)
             {
-              var f = unconditionalFilters[_loopIndex31];
+              var f = unconditionalFilters[_loopIndex30];
               this._addToFiltersByDomain(f);
             }
             delete filtersBySelector[selector];
@@ -2919,7 +2906,7 @@ require.scopes["elemHide"] = (function()
     },
     _generateCSSContent: function()
     {
-      var _generatorResult32 = [];
+      var _generatorResult31 = [];
       var domains = Object.create(null);
       var hasFilters = false;
       for (var key in filterByKey)
@@ -2960,19 +2947,19 @@ require.scopes["elemHide"] = (function()
         var list = domains[domain];
         if (domain)
         {
-          _generatorResult32.push(("@-moz-document domain(\"" + domain.split(",").join("\"),domain(\"") + "\"){").replace(/[^\x01-\x7F]/g, escapeChar));
+          _generatorResult31.push(("@-moz-document domain(\"" + domain.split(",").join("\"),domain(\"") + "\"){").replace(/[^\x01-\x7F]/g, escapeChar));
         }
         else
         {
-          _generatorResult32.push("@-moz-document url-prefix(\"http://\"),url-prefix(\"https://\")," + "url-prefix(\"mailbox://\"),url-prefix(\"imap://\")," + "url-prefix(\"news://\"),url-prefix(\"snews://\"){");
+          _generatorResult31.push("@-moz-document url-prefix(\"http://\"),url-prefix(\"https://\")," + "url-prefix(\"mailbox://\"),url-prefix(\"imap://\")," + "url-prefix(\"news://\"),url-prefix(\"snews://\"){");
         }
         for (var selector in list)
         {
-          _generatorResult32.push(selector.replace(/[^\x01-\x7F]/g, escapeChar) + "{" + cssTemplate.replace("%ID%", list[selector]) + "}");
+          _generatorResult31.push(selector.replace(/[^\x01-\x7F]/g, escapeChar) + "{" + cssTemplate.replace("%ID%", list[selector]) + "}");
         }
-        _generatorResult32.push("}");
+        _generatorResult31.push("}");
       }
-      return _generatorResult32;
+      return _generatorResult31;
     },
     unapply: function()
     {
@@ -3102,9 +3089,9 @@ require.scopes["events"] = (function()
         args.push(arguments[i]);
       }
       var listeners = this.listeners(name);
-      for (var _loopIndex33 = 0; _loopIndex33 < listeners.length; ++_loopIndex33)
+      for (var _loopIndex32 = 0; _loopIndex32 < listeners.length; ++_loopIndex32)
       {
-        var listener = listeners[_loopIndex33];
+        var listener = listeners[_loopIndex32];
         listener.apply(null, args);
       }
     }
@@ -3200,10 +3187,10 @@ require.scopes["filterClasses"] = (function()
     }
     else if (Filter.elemhideRegExp.test(text))
     {
-      var _tempVar34 = /^(.*?)(#\@?#?)(.*)$/.exec(text);
-      var domain = _tempVar34[1];
-      var separator = _tempVar34[2];
-      var selector = _tempVar34[3];
+      var _tempVar33 = /^(.*?)(#\@?#?)(.*)$/.exec(text);
+      var domain = _tempVar33[1];
+      var separator = _tempVar33[2];
+      var selector = _tempVar33[3];
       return domain.replace(/\s/g, "") + separator + selector.trim();
     }
     else
@@ -3562,9 +3549,9 @@ require.scopes["filterClasses"] = (function()
     {
       options = match[1].toUpperCase().split(",");
       text = match.input.substr(0, match.index);
-      for (var _loopIndex35 = 0; _loopIndex35 < options.length; ++_loopIndex35)
+      for (var _loopIndex34 = 0; _loopIndex34 < options.length; ++_loopIndex34)
       {
-        var option = options[_loopIndex35];
+        var option = options[_loopIndex34];
         var value = null;
         var separatorIndex = option.indexOf("=");
         if (separatorIndex >= 0)
@@ -3718,9 +3705,9 @@ require.scopes["filterClasses"] = (function()
       if (attrRules)
       {
         attrRules = attrRules.match(/\([\w\-]+(?:[$^*]?=[^\(\)"]*)?\)/g);
-        for (var _loopIndex36 = 0; _loopIndex36 < attrRules.length; ++_loopIndex36)
+        for (var _loopIndex35 = 0; _loopIndex35 < attrRules.length; ++_loopIndex35)
         {
-          var rule = attrRules[_loopIndex36];
+          var rule = attrRules[_loopIndex35];
           rule = rule.substr(1, rule.length - 2);
           var separatorPos = rule.indexOf("=");
           if (separatorPos > 0)
@@ -3827,11 +3814,11 @@ require.scopes["filterListener"] = (function()
   var ElemHide = require("elemHide").ElemHide;
   var CSSRules = require("cssRules").CSSRules;
   var defaultMatcher = require("matcher").defaultMatcher;
-  var _tempVar37 = require("filterClasses");
-  var ActiveFilter = _tempVar37.ActiveFilter;
-  var RegExpFilter = _tempVar37.RegExpFilter;
-  var ElemHideBase = _tempVar37.ElemHideBase;
-  var CSSPropertyFilter = _tempVar37.CSSPropertyFilter;
+  var _tempVar36 = require("filterClasses");
+  var ActiveFilter = _tempVar36.ActiveFilter;
+  var RegExpFilter = _tempVar36.RegExpFilter;
+  var ElemHideBase = _tempVar36.ElemHideBase;
+  var CSSPropertyFilter = _tempVar36.CSSPropertyFilter;
   var Prefs = require("prefs").Prefs;
   var batchMode = false;
   var isDirty = 0;
@@ -4126,9 +4113,9 @@ require.scopes["filterListener"] = (function()
     defaultMatcher.clear();
     ElemHide.clear();
     CSSRules.clear();
-    for (var _loopIndex38 = 0; _loopIndex38 < FilterStorage.subscriptions.length; ++_loopIndex38)
+    for (var _loopIndex37 = 0; _loopIndex37 < FilterStorage.subscriptions.length; ++_loopIndex37)
     {
-      var subscription = FilterStorage.subscriptions[_loopIndex38];
+      var subscription = FilterStorage.subscriptions[_loopIndex37];
       if (!subscription.disabled)
       {
         addFilters(subscription.filters);
@@ -4175,13 +4162,13 @@ require.scopes["filterStorage"] = (function()
   var exports = {};
   var IO = require("io").IO;
   var Prefs = require("prefs").Prefs;
-  var _tempVar39 = require("filterClasses");
-  var Filter = _tempVar39.Filter;
-  var ActiveFilter = _tempVar39.ActiveFilter;
-  var _tempVar40 = require("subscriptionClasses");
-  var Subscription = _tempVar40.Subscription;
-  var SpecialSubscription = _tempVar40.SpecialSubscription;
-  var ExternalSubscription = _tempVar40.ExternalSubscription;
+  var _tempVar38 = require("filterClasses");
+  var Filter = _tempVar38.Filter;
+  var ActiveFilter = _tempVar38.ActiveFilter;
+  var _tempVar39 = require("subscriptionClasses");
+  var Subscription = _tempVar39.Subscription;
+  var SpecialSubscription = _tempVar39.SpecialSubscription;
+  var ExternalSubscription = _tempVar39.ExternalSubscription;
   var FilterNotifier = require("filterNotifier").FilterNotifier;
   var Utils = require("utils").Utils;
   var formatVersion = 4;
@@ -4236,9 +4223,9 @@ require.scopes["filterStorage"] = (function()
     getGroupForFilter: function(filter)
     {
       var generalSubscription = null;
-      for (var _loopIndex41 = 0; _loopIndex41 < FilterStorage.subscriptions.length; ++_loopIndex41)
+      for (var _loopIndex40 = 0; _loopIndex40 < FilterStorage.subscriptions.length; ++_loopIndex40)
       {
-        var subscription = FilterStorage.subscriptions[_loopIndex41];
+        var subscription = FilterStorage.subscriptions[_loopIndex40];
         if (subscription instanceof SpecialSubscription && !subscription.disabled)
         {
           if (subscription.isDefaultFor(filter))
@@ -4429,9 +4416,9 @@ require.scopes["filterStorage"] = (function()
           filters.push(Filter.knownFilters[text]);
         }
       }
-      for (var _loopIndex42 = 0; _loopIndex42 < filters.length; ++_loopIndex42)
+      for (var _loopIndex41 = 0; _loopIndex41 < filters.length; ++_loopIndex41)
       {
-        var filter = filters[_loopIndex42];
+        var filter = filters[_loopIndex41];
         filter.hitCount = 0;
         filter.lastHit = 0;
       }
@@ -4462,9 +4449,9 @@ require.scopes["filterStorage"] = (function()
             sourceFile = this.sourceFile;
             if (sourceFile)
             {
-              var _tempVar43 = /^(.*)(\.\w+)$/.exec(sourceFile.leafName) || [null, sourceFile.leafName, ""];
-              var part1 = _tempVar43[1];
-              var part2 = _tempVar43[2];
+              var _tempVar42 = /^(.*)(\.\w+)$/.exec(sourceFile.leafName) || [null, sourceFile.leafName, ""];
+              var part1 = _tempVar42[1];
+              var part2 = _tempVar42[2];
               sourceFile = sourceFile.clone();
               sourceFile.leafName = part1 + "-backup" + ++backupIndex + part2;
               IO.statFile(sourceFile, function(e, statData)
@@ -4560,9 +4547,9 @@ require.scopes["filterStorage"] = (function()
     },
     _generateFilterData: function(subscriptions)
     {
-      var _generatorResult32 = [];
-      _generatorResult32.push("# Adblock Plus preferences");
-      _generatorResult32.push("version=" + formatVersion);
+      var _generatorResult31 = [];
+      _generatorResult31.push("# Adblock Plus preferences");
+      _generatorResult31.push("version=" + formatVersion);
       var saved = Object.create(null);
       var buf = [];
       for (var i = 0; i < subscriptions.length; i++)
@@ -4577,7 +4564,7 @@ require.scopes["filterStorage"] = (function()
             saved[filter.text] = filter;
             for (var k = 0; k < buf.length; k++)
             {
-              _generatorResult32.push(buf[k]);
+              _generatorResult31.push(buf[k]);
             }
             buf.splice(0);
           }
@@ -4586,7 +4573,7 @@ require.scopes["filterStorage"] = (function()
       for (var i = 0; i < subscriptions.length; i++)
       {
         var subscription = subscriptions[i];
-        _generatorResult32.push("");
+        _generatorResult31.push("");
         subscription.serialize(buf);
         if (subscription.filters.length)
         {
@@ -4595,11 +4582,11 @@ require.scopes["filterStorage"] = (function()
         }
         for (var k = 0; k < buf.length; k++)
         {
-          _generatorResult32.push(buf[k]);
+          _generatorResult31.push(buf[k]);
         }
         buf.splice(0);
       }
-      return _generatorResult32;
+      return _generatorResult31;
     },
     _saving: false,
     _needsSave: false,
@@ -4665,9 +4652,9 @@ require.scopes["filterStorage"] = (function()
             }
             else
             {
-              var _tempVar44 = /^(.*)(\.\w+)$/.exec(targetFile.leafName) || [null, targetFile.leafName, ""];
-              var part1 = _tempVar44[1];
-              var part2 = _tempVar44[2];
+              var _tempVar43 = /^(.*)(\.\w+)$/.exec(targetFile.leafName) || [null, targetFile.leafName, ""];
+              var part1 = _tempVar43[1];
+              var part2 = _tempVar43[2];
               var newestBackup = targetFile.clone();
               newestBackup.leafName = part1 + "-backup1" + part2;
               IO.statFile(newestBackup, function(e, statData)
@@ -4726,9 +4713,9 @@ require.scopes["filterStorage"] = (function()
     getBackupFiles: function()
     {
       var result = [];
-      var _tempVar45 = /^(.*)(\.\w+)$/.exec(FilterStorage.sourceFile.leafName) || [null, FilterStorage.sourceFile.leafName, ""];
-      var part1 = _tempVar45[1];
-      var part2 = _tempVar45[2];
+      var _tempVar44 = /^(.*)(\.\w+)$/.exec(FilterStorage.sourceFile.leafName) || [null, FilterStorage.sourceFile.leafName, ""];
+      var part1 = _tempVar44[1];
+      var part2 = _tempVar44[2];
       for (var i = 1;; i++)
       {
         var file = FilterStorage.sourceFile.clone();
@@ -4752,9 +4739,9 @@ require.scopes["filterStorage"] = (function()
     {
       return;
     }
-    for (var _loopIndex46 = 0; _loopIndex46 < subscription.filters.length; ++_loopIndex46)
+    for (var _loopIndex45 = 0; _loopIndex45 < subscription.filters.length; ++_loopIndex45)
     {
-      var filter = subscription.filters[_loopIndex46];
+      var filter = subscription.filters[_loopIndex45];
       filter.subscriptions.push(subscription);
     }
   }
@@ -4765,9 +4752,9 @@ require.scopes["filterStorage"] = (function()
     {
       return;
     }
-    for (var _loopIndex47 = 0; _loopIndex47 < subscription.filters.length; ++_loopIndex47)
+    for (var _loopIndex46 = 0; _loopIndex46 < subscription.filters.length; ++_loopIndex46)
     {
-      var filter = subscription.filters[_loopIndex47];
+      var filter = subscription.filters[_loopIndex46];
       var i = filter.subscriptions.indexOf(subscription);
       if (i >= 0)
       {
@@ -4831,9 +4818,9 @@ require.scopes["filterStorage"] = (function()
               if (this.subscriptions.length)
               {
                 var subscription = this.subscriptions[this.subscriptions.length - 1];
-                for (var _loopIndex48 = 0; _loopIndex48 < this.curObj.length; ++_loopIndex48)
+                for (var _loopIndex47 = 0; _loopIndex47 < this.curObj.length; ++_loopIndex47)
                 {
-                  var text = this.curObj[_loopIndex48];
+                  var text = this.curObj[_loopIndex47];
                   var filter = Filter.fromText(text);
                   subscription.filters.push(filter);
                   filter.subscriptions.push(subscription);
@@ -4891,10 +4878,10 @@ require.scopes["filterStorage"] = (function()
 require.scopes["matcher"] = (function()
 {
   var exports = {};
-  var _tempVar49 = require("filterClasses");
-  var Filter = _tempVar49.Filter;
-  var RegExpFilter = _tempVar49.RegExpFilter;
-  var WhitelistFilter = _tempVar49.WhitelistFilter;
+  var _tempVar48 = require("filterClasses");
+  var Filter = _tempVar48.Filter;
+  var RegExpFilter = _tempVar48.RegExpFilter;
+  var WhitelistFilter = _tempVar48.WhitelistFilter;
 
   function Matcher()
   {
@@ -5200,20 +5187,20 @@ require.scopes["notification"] = (function()
 {
   var exports = {};
   var Prefs = require("prefs").Prefs;
-  var _tempVar50 = require("downloader");
-  var Downloader = _tempVar50.Downloader;
-  var Downloadable = _tempVar50.Downloadable;
-  var MILLIS_IN_MINUTE = _tempVar50.MILLIS_IN_MINUTE;
-  var MILLIS_IN_HOUR = _tempVar50.MILLIS_IN_HOUR;
-  var MILLIS_IN_DAY = _tempVar50.MILLIS_IN_DAY;
+  var _tempVar49 = require("downloader");
+  var Downloader = _tempVar49.Downloader;
+  var Downloadable = _tempVar49.Downloadable;
+  var MILLIS_IN_MINUTE = _tempVar49.MILLIS_IN_MINUTE;
+  var MILLIS_IN_HOUR = _tempVar49.MILLIS_IN_HOUR;
+  var MILLIS_IN_DAY = _tempVar49.MILLIS_IN_DAY;
   var Utils = require("utils").Utils;
-  var _tempVar51 = require("matcher");
-  var Matcher = _tempVar51.Matcher;
-  var defaultMatcher = _tempVar51.defaultMatcher;
-  var _tempVar52 = require("filterClasses");
-  var Filter = _tempVar52.Filter;
-  var RegExpFilter = _tempVar52.RegExpFilter;
-  var WhitelistFilter = _tempVar52.WhitelistFilter;
+  var _tempVar50 = require("matcher");
+  var Matcher = _tempVar50.Matcher;
+  var defaultMatcher = _tempVar50.defaultMatcher;
+  var _tempVar51 = require("filterClasses");
+  var Filter = _tempVar51.Filter;
+  var RegExpFilter = _tempVar51.RegExpFilter;
+  var WhitelistFilter = _tempVar51.WhitelistFilter;
   var INITIAL_DELAY = 1 * MILLIS_IN_MINUTE;
   var CHECK_INTERVAL = 1 * MILLIS_IN_HOUR;
   var EXPIRATION_INTERVAL = 1 * MILLIS_IN_DAY;
@@ -5265,7 +5252,7 @@ require.scopes["notification"] = (function()
     },
     _getDownloadables: function()
     {
-      var _generatorResult32 = [];
+      var _generatorResult31 = [];
       var downloadable = new Downloadable(Prefs.notificationurl);
       if (typeof Prefs.notificationdata.lastError === "number")
       {
@@ -5291,8 +5278,8 @@ require.scopes["notification"] = (function()
       {
         downloadable.downloadCount = Prefs.notificationdata.downloadCount;
       }
-      _generatorResult32.push(downloadable);
-      return _generatorResult32;
+      _generatorResult31.push(downloadable);
+      return _generatorResult31;
     },
     _onExpirationChange: function(downloadable)
     {
@@ -5306,9 +5293,9 @@ require.scopes["notification"] = (function()
       try
       {
         var data = JSON.parse(responseText);
-        for (var _loopIndex53 = 0; _loopIndex53 < data.notifications.length; ++_loopIndex53)
+        for (var _loopIndex52 = 0; _loopIndex52 < data.notifications.length; ++_loopIndex52)
         {
-          var notification = data.notifications[_loopIndex53];
+          var notification = data.notifications[_loopIndex52];
           if ("severity" in notification)
           {
             if (!("type" in notification))
@@ -5328,9 +5315,9 @@ require.scopes["notification"] = (function()
       }
       Prefs.notificationdata.lastError = 0;
       Prefs.notificationdata.downloadStatus = "synchronize_ok";
-      var _tempVar54 = downloader.processExpirationInterval(EXPIRATION_INTERVAL);
-      Prefs.notificationdata.softExpiration = _tempVar54[0];
-      Prefs.notificationdata.hardExpiration = _tempVar54[1];
+      var _tempVar53 = downloader.processExpirationInterval(EXPIRATION_INTERVAL);
+      Prefs.notificationdata.softExpiration = _tempVar53[0];
+      Prefs.notificationdata.hardExpiration = _tempVar53[1];
       Prefs.notificationdata.downloadCount = downloadable.downloadCount;
       saveNotificationData();
       Notification.showNext();
@@ -5374,17 +5361,17 @@ require.scopes["notification"] = (function()
       {
         return null;
       }
-      var _tempVar55 = require("info");
-      var addonName = _tempVar55.addonName;
-      var addonVersion = _tempVar55.addonVersion;
-      var application = _tempVar55.application;
-      var applicationVersion = _tempVar55.applicationVersion;
-      var platform = _tempVar55.platform;
-      var platformVersion = _tempVar55.platformVersion;
+      var _tempVar54 = require("info");
+      var addonName = _tempVar54.addonName;
+      var addonVersion = _tempVar54.addonVersion;
+      var application = _tempVar54.application;
+      var applicationVersion = _tempVar54.applicationVersion;
+      var platform = _tempVar54.platform;
+      var platformVersion = _tempVar54.platformVersion;
       var notificationToShow = null;
-      for (var _loopIndex56 = 0; _loopIndex56 < notifications.length; ++_loopIndex56)
+      for (var _loopIndex55 = 0; _loopIndex55 < notifications.length; ++_loopIndex55)
       {
-        var notification = notifications[_loopIndex56];
+        var notification = notifications[_loopIndex55];
         if (typeof notification.type === "undefined" || notification.type !== "critical")
         {
           var shown = Prefs.notificationdata.shown;
@@ -5416,9 +5403,9 @@ require.scopes["notification"] = (function()
               continue;
             }
             var matcher = new Matcher();
-            for (var _loopIndex57 = 0; _loopIndex57 < notification.urlFilters.length; ++_loopIndex57)
+            for (var _loopIndex56 = 0; _loopIndex56 < notification.urlFilters.length; ++_loopIndex56)
             {
-              var urlFilter = notification.urlFilters[_loopIndex57];
+              var urlFilter = notification.urlFilters[_loopIndex56];
               matcher.add(Filter.fromText(urlFilter));
             }
             if (!matcher.matchesAny(url, RegExpFilter.typeMap.DOCUMENT, host, false, null))
@@ -5434,9 +5421,9 @@ require.scopes["notification"] = (function()
         if (notification.targets instanceof Array)
         {
           var match = false;
-          for (var _loopIndex58 = 0; _loopIndex58 < notification.targets.length; ++_loopIndex58)
+          for (var _loopIndex57 = 0; _loopIndex57 < notification.targets.length; ++_loopIndex57)
           {
-            var target = notification.targets[_loopIndex58];
+            var target = notification.targets[_loopIndex57];
             if (checkTarget(target, "extension", addonName, addonVersion) && checkTarget(target, "application", application, applicationVersion) && checkTarget(target, "platform", platform, platformVersion))
             {
               match = true;
@@ -5460,9 +5447,9 @@ require.scopes["notification"] = (function()
       var notification = Notification._getNextToShow(url);
       if (notification)
       {
-        for (var _loopIndex59 = 0; _loopIndex59 < showListeners.length; ++_loopIndex59)
+        for (var _loopIndex58 = 0; _loopIndex58 < showListeners.length; ++_loopIndex58)
         {
-          var showListener = showListeners[_loopIndex59];
+          var showListener = showListeners[_loopIndex58];
           showListener(notification);
         }
       }
@@ -5486,9 +5473,9 @@ require.scopes["notification"] = (function()
       locale = locale || Utils.appLocale;
       var textKeys = ["title", "message"];
       var localizedTexts = [];
-      for (var _loopIndex60 = 0; _loopIndex60 < textKeys.length; ++_loopIndex60)
+      for (var _loopIndex59 = 0; _loopIndex59 < textKeys.length; ++_loopIndex59)
       {
-        var key = textKeys[_loopIndex60];
+        var key = textKeys[_loopIndex59];
         if (key in notification)
         {
           if (typeof notification[key] == "string")
@@ -5552,9 +5539,9 @@ require.scopes["notification"] = (function()
         return;
       }
       var listeners = questionListeners[id];
-      for (var _loopIndex61 = 0; _loopIndex61 < listeners.length; ++_loopIndex61)
+      for (var _loopIndex60 = 0; _loopIndex60 < listeners.length; ++_loopIndex60)
       {
-        var listener = listeners[_loopIndex61];
+        var listener = listeners[_loopIndex60];
         listener(approved);
       }
     },
@@ -5580,11 +5567,11 @@ require.scopes["notification"] = (function()
 require.scopes["subscriptionClasses"] = (function()
 {
   var exports = {};
-  var _tempVar62 = require("filterClasses");
-  var ActiveFilter = _tempVar62.ActiveFilter;
-  var BlockingFilter = _tempVar62.BlockingFilter;
-  var WhitelistFilter = _tempVar62.WhitelistFilter;
-  var ElemHideBase = _tempVar62.ElemHideBase;
+  var _tempVar61 = require("filterClasses");
+  var ActiveFilter = _tempVar61.ActiveFilter;
+  var BlockingFilter = _tempVar61.BlockingFilter;
+  var WhitelistFilter = _tempVar61.WhitelistFilter;
+  var ElemHideBase = _tempVar61.ElemHideBase;
   var FilterNotifier = require("filterNotifier").FilterNotifier;
 
   function Subscription(url, title)
@@ -5665,9 +5652,9 @@ require.scopes["subscriptionClasses"] = (function()
     },
     serializeFilters: function(buffer)
     {
-      for (var _loopIndex63 = 0; _loopIndex63 < this.filters.length; ++_loopIndex63)
+      for (var _loopIndex62 = 0; _loopIndex62 < this.filters.length; ++_loopIndex62)
       {
-        var filter = this.filters[_loopIndex63];
+        var filter = this.filters[_loopIndex62];
         buffer.push(filter.text.replace(/\[/g, "\\["));
       }
     },
@@ -5776,9 +5763,9 @@ require.scopes["subscriptionClasses"] = (function()
     {
       if (this.defaults && this.defaults.length)
       {
-        for (var _loopIndex64 = 0; _loopIndex64 < this.defaults.length; ++_loopIndex64)
+        for (var _loopIndex63 = 0; _loopIndex63 < this.defaults.length; ++_loopIndex63)
         {
-          var type = this.defaults[_loopIndex64];
+          var type = this.defaults[_loopIndex63];
           if (filter instanceof SpecialSubscription.defaultsMap[type])
           {
             return true;
@@ -6005,22 +5992,22 @@ require.scopes["subscriptionClasses"] = (function()
 require.scopes["synchronizer"] = (function()
 {
   var exports = {};
-  var _tempVar65 = require("downloader");
-  var Downloader = _tempVar65.Downloader;
-  var Downloadable = _tempVar65.Downloadable;
-  var MILLIS_IN_SECOND = _tempVar65.MILLIS_IN_SECOND;
-  var MILLIS_IN_MINUTE = _tempVar65.MILLIS_IN_MINUTE;
-  var MILLIS_IN_HOUR = _tempVar65.MILLIS_IN_HOUR;
-  var MILLIS_IN_DAY = _tempVar65.MILLIS_IN_DAY;
-  var _tempVar66 = require("filterClasses");
-  var Filter = _tempVar66.Filter;
-  var CommentFilter = _tempVar66.CommentFilter;
+  var _tempVar64 = require("downloader");
+  var Downloader = _tempVar64.Downloader;
+  var Downloadable = _tempVar64.Downloadable;
+  var MILLIS_IN_SECOND = _tempVar64.MILLIS_IN_SECOND;
+  var MILLIS_IN_MINUTE = _tempVar64.MILLIS_IN_MINUTE;
+  var MILLIS_IN_HOUR = _tempVar64.MILLIS_IN_HOUR;
+  var MILLIS_IN_DAY = _tempVar64.MILLIS_IN_DAY;
+  var _tempVar65 = require("filterClasses");
+  var Filter = _tempVar65.Filter;
+  var CommentFilter = _tempVar65.CommentFilter;
   var FilterStorage = require("filterStorage").FilterStorage;
   var FilterNotifier = require("filterNotifier").FilterNotifier;
   var Prefs = require("prefs").Prefs;
-  var _tempVar67 = require("subscriptionClasses");
-  var Subscription = _tempVar67.Subscription;
-  var DownloadableSubscription = _tempVar67.DownloadableSubscription;
+  var _tempVar66 = require("subscriptionClasses");
+  var Subscription = _tempVar66.Subscription;
+  var DownloadableSubscription = _tempVar66.DownloadableSubscription;
   var Utils = require("utils").Utils;
   var INITIAL_DELAY = 1 * MILLIS_IN_MINUTE;
   var CHECK_INTERVAL = 1 * MILLIS_IN_HOUR;
@@ -6049,20 +6036,20 @@ require.scopes["synchronizer"] = (function()
     },
     _getDownloadables: function()
     {
-      var _generatorResult32 = [];
+      var _generatorResult31 = [];
       if (!Prefs.subscriptions_autoupdate)
       {
         return;
       }
-      for (var _loopIndex68 = 0; _loopIndex68 < FilterStorage.subscriptions.length; ++_loopIndex68)
+      for (var _loopIndex67 = 0; _loopIndex67 < FilterStorage.subscriptions.length; ++_loopIndex67)
       {
-        var subscription = FilterStorage.subscriptions[_loopIndex68];
+        var subscription = FilterStorage.subscriptions[_loopIndex67];
         if (subscription instanceof DownloadableSubscription)
         {
-          _generatorResult32.push(this._getDownloadable(subscription, false));
+          _generatorResult31.push(this._getDownloadable(subscription, false));
         }
       }
-      return _generatorResult32;
+      return _generatorResult31;
     },
     _getDownloadable: function(subscription, manual)
     {
@@ -6204,9 +6191,9 @@ require.scopes["synchronizer"] = (function()
           }
         }
       }
-      var _tempVar69 = downloader.processExpirationInterval(expirationInterval);
-      var softExpiration = _tempVar69[0];
-      var hardExpiration = _tempVar69[1];
+      var _tempVar68 = downloader.processExpirationInterval(expirationInterval);
+      var softExpiration = _tempVar68[0];
+      var hardExpiration = _tempVar68[1];
       subscription.softExpiration = Math.round(softExpiration / MILLIS_IN_SECOND);
       subscription.expires = Math.round(hardExpiration / MILLIS_IN_SECOND);
       if (minVersion)
@@ -6219,9 +6206,9 @@ require.scopes["synchronizer"] = (function()
       }
       lines.shift();
       var filters = [];
-      for (var _loopIndex70 = 0; _loopIndex70 < lines.length; ++_loopIndex70)
+      for (var _loopIndex69 = 0; _loopIndex69 < lines.length; ++_loopIndex69)
       {
-        var line = lines[_loopIndex70];
+        var line = lines[_loopIndex69];
         line = Filter.normalize(line);
         if (line)
         {

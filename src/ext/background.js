@@ -185,6 +185,15 @@
         }
       });
     }
+    var frames = framesOfTabs[details.tabId];
+    if (!frames)
+    {
+      frames = framesOfTabs[details.tabId] = Object.create(null);
+    }
+    frames[details.frameId] = {
+      parent: frames[details.parentFrameId] || null,
+      url: new URL(details.url)
+    };
   });
 
   function forgetTab(tabId)
@@ -211,16 +220,49 @@
     this._changes = null;
   };
   BrowserAction.prototype = {
+    _legacySetIcon: function(details)
+    {
+      var legacyDetails = {};
+      for (var key in details)
+      {
+        var value = details[key];
+        if (typeof value == "object")
+        {
+          value = {
+            19: value[19],
+            38: value[38]
+          };
+        }
+        legacyDetails[key] = value;
+      }
+      chrome.browserAction.setIcon(legacyDetails);
+    },
+    _safeSetIcon: function(details)
+    {
+      try
+      {
+        chrome.browserAction.setIcon(details);
+      }
+      catch (e)
+      {
+        this._safeSetIcon = this._legacySetIcon;
+        this._legacySetIcon(details);
+      }
+    },
     _applyChanges: function()
     {
       if ("iconPath" in this._changes)
       {
-        chrome.browserAction.setIcon(
+        this._safeSetIcon(
         {
           tabId: this._tabId,
           path: {
+            16: this._changes.iconPath.replace("$size", "16"),
             19: this._changes.iconPath.replace("$size", "19"),
-            38: this._changes.iconPath.replace("$size", "38")
+            20: this._changes.iconPath.replace("$size", "20"),
+            32: this._changes.iconPath.replace("$size", "32"),
+            38: this._changes.iconPath.replace("$size", "38"),
+            40: this._changes.iconPath.replace("$size", "40")
           }
         });
       }
@@ -471,17 +513,6 @@
       return;
     }
     var isMainFrame = details.type == "main_frame" || details.frameId == 0 && !(details.tabId in framesOfTabs);
-    var frames = null;
-    if (!isMainFrame)
-    {
-      frames = framesOfTabs[details.tabId];
-    }
-    if (!frames)
-    {
-      frames = framesOfTabs[details.tabId] = Object.create(null);
-    }
-    var frame = null;
-    var url = new URL(details.url);
     if (!isMainFrame)
     {
       var frameId;
@@ -496,10 +527,10 @@
         frameId = details.frameId;
         requestType = details.type.toUpperCase();
       }
-      frame = frames[frameId] || frames[Object.keys(frames)[0]];
+      var frame = ext.getFrame(details.tabId, frameId);
       if (frame)
       {
-        var results = ext.webRequest.onBeforeRequest._dispatch(url, requestType, new Page(
+        var results = ext.webRequest.onBeforeRequest._dispatch(new URL(details.url), requestType, new Page(
         {
           id: details.tabId
         }), frame);
@@ -510,13 +541,6 @@
           };
         }
       }
-    }
-    if (isMainFrame || details.type == "sub_frame")
-    {
-      frames[details.frameId] = {
-        url: url,
-        parent: frame
-      };
     }
   },
   {
