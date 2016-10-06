@@ -7,6 +7,22 @@
     "message": "Indien je deze advertenties liever niet ziet, kan je de Aanvaardbare Advertenties filter uitzetten.", 
     "description": "Acceptable Ads message on ad report page"
   }, 
+  "ab_filters_subscription_lastDownload_checksumMismatch": {
+    "message": "Failed, checksum mismatch", 
+    "description": "message on the filter tab"
+  }, 
+  "ab_filters_subscription_lastDownload_connectionError": {
+    "message": "Failed, download failure", 
+    "description": "message on the filter tab - Generic filter list download error message"
+  }, 
+  "ab_filters_subscription_lastDownload_invalidData": {
+    "message": "Failed, not a valid filters list", 
+    "description": "message on the filter tab - Invalid filter list file"
+  }, 
+  "ab_filters_subscription_lastDownload_invalidURL": {
+    "message": "Failed, not a valid address", 
+    "description": "message on the filter tab - Message when you subscribe to a non-list URL"
+  }, 
   "acceptable_ads_content_blocking_disbled_message": {
     "message": "We unsubscribed you from Acceptable Ads because you turned on Safari Content Blocking. You can only select one at a time. (<a>Why?</a>)", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
@@ -308,6 +324,10 @@
       }
     }
   }, 
+  "blockedresource": {
+    "message": "Blocked resource", 
+    "description": "Resource list page: resource status"
+  }, 
   "blockmoreads": {
     "message": "Meer advertenties blokkeren:", 
     "description": "Section header on the 'Customize' tab"
@@ -484,15 +504,15 @@
   }, 
   "custom_filters_migration_error_message_part1": {
     "message": "Custom filters error count: ", 
-    "description": "Part one of a message shown to users on the customize after invalid custom filter(s) have been migrated"
+    "description": "Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part2": {
     "message": "The following message(s) were generated during the custom filter migration (ignore the line numbers): ", 
-    "description": "Part two of a message shown to users on the customize after invalid custom filter(s) have been migrated"
+    "description": "Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part3": {
     "message": "Original entry: ", 
-    "description": "Part three of a message shown to users on the customize after invalid custom filter(s) have been migrated"
+    "description": "Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "customfilters": {
     "message": "Aangepaste Filters", 
@@ -526,25 +546,14 @@
   }, 
   "delete_migration_error_messages": {
     "message": "Delete messages", 
-    "description": "button text to allow user to delete the messages"
+    "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "Een gratis adblocker met meer dan 50 miljoen gebruikers, die ALLE vervelende advertenties, malware en tracking blokkeert."
+    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
     "message": "De populairste Chrome extensie met meer dan 40 miljoen gebruikers! Blokkeert advertenties op het internet.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
-  }, 
-  "description_chrome": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
-  }, 
-  "description_opera": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
-  }, 
-  "description_safari": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "disableaa": {
@@ -669,11 +678,71 @@
     "message": "Controleer in Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
+  "filter_chinese": {
+    "message": "Chinese + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_czech": {
+    "message": "Czech & Slovak + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_dutch": {
+    "message": "Dutch + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_arabic": {
+    "message": "Arabic + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_arabic_plus_french": {
+    "message": "Arabic + French + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_bulgarian": {
+    "message": "Bulgarian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_french": {
+    "message": "French + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_german": {
+    "message": "German + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_indonesian": {
+    "message": "Indonesian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_lithuania": {
+    "message": "Lithuanian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_romanian": {
+    "message": "Romanian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_israeli": {
+    "message": "Hebrew + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_italian": {
+    "message": "Italian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_latvian": {
+    "message": "Latvian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
   "filter_lists": {
     "message": "Filterlijsten"
   }, 
   "filter_must_follow_syntax": {
     "message": "Je filter moet de <a>AdBlock filter syntax</a> volgen."
+  }, 
+  "filter_russian": {
+    "message": "Russian & Ukrainian + EasyList", 
+    "description": "A filter list combined with EasyList"
   }, 
   "filteracceptable_ads": {
     "message": "Aanvaardbare Advertenties", 
@@ -717,10 +786,6 @@
   }, 
   "filtereasylist_plus_arabic": {
     "message": "Arabisch", 
-    "description": "language"
-  }, 
-  "filtereasylist_plus_arabic_plus_french": {
-    "message": "Arabic + French + EasyList", 
     "description": "language"
   }, 
   "filtereasylist_plus_bulgarian": {
@@ -806,6 +871,16 @@
   "filtermalware": {
     "message": "Malware bescherming", 
     "description": "A filter list"
+  }, 
+  "filterorigin": {
+    "message": "Filter origin:\n$list$", 
+    "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
+    "placeholders": {
+      "list": {
+        "content": "$1", 
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
   }, 
   "filterrussian": {
     "message": "Russisch en Oekraïens", 
@@ -966,6 +1041,18 @@
     "message": "Heb je een fout gevonden?", 
     "description": "Subtitle on the Support tab of the options"
   }, 
+  "framedomain": {
+    "message": "Frame domain: ", 
+    "description": "Resource list page: domain name of the frame"
+  }, 
+  "frametype": {
+    "message": "Frame type: ", 
+    "description": "Resource list page: followed by frame type (e.g. top frame, subframe)"
+  }, 
+  "frameurl": {
+    "message": "Frame URL: ", 
+    "description": "Resource list page: full URL of the frame"
+  }, 
   "general": {
     "message": "Algemeen"
   }, 
@@ -1000,9 +1087,25 @@
   "global_subscription_invalid_location": {
     "message": "Deze filterlijstlocatie is geen geldige URL, noch een geldige bestandsnaam."
   }, 
+  "headerfilter": {
+    "message": "Matched filter", 
+    "description": "Resource list page: title of a column"
+  }, 
+  "headerresource": {
+    "message": "Resource", 
+    "description": "Resource list page: title of a column"
+  }, 
+  "headertype": {
+    "message": "Type", 
+    "description": "Resource list page: title of a column"
+  }, 
   "here": {
     "message": "hier", 
     "description": "This message is injected in other strings as a link/button"
+  }, 
+  "hiddenelement": {
+    "message": "Hidden element", 
+    "description": "Resource list page: resource status"
   }, 
   "hide_this_button": {
     "message": "Verberg deze knop", 
@@ -1026,15 +1129,15 @@
   }, 
   "lang_arabic": {
     "message": "Arabic", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_bulgarian": {
     "message": "Bulgarian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_chinese": {
     "message": "Chinese", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_czech": {
     "message": "Tsjechisch", 
@@ -1042,11 +1145,11 @@
   }, 
   "lang_danish": {
     "message": "Danish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_dutch": {
     "message": "Dutch", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_english": {
     "message": "Engels", 
@@ -1054,67 +1157,67 @@
   }, 
   "lang_estonian": {
     "message": "Estonian", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_finnish": {
     "message": "Finnish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_french": {
     "message": "French", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_german": {
     "message": "German", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_greek": {
     "message": "Greek", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_hungarian": {
     "message": "Hungarian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_icelandic": {
     "message": "Icelandic", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_indonesian": {
     "message": "Indonesian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_israeli": {
-    "message": "Israeli", 
-    "description": "language option on Report an ad"
+    "message": "Hebrew", 
+    "description": "Language name"
   }, 
   "lang_italian": {
     "message": "Italian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_japanese": {
     "message": "Japanese", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_korean": {
     "message": "Korean", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_latvian": {
     "message": "Latvian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_lithuania": {
-    "message": "Lithuania", 
-    "description": "language option on Report an ad"
+    "message": "Lithuanian", 
+    "description": "Language name"
   }, 
   "lang_polish": {
     "message": "Polish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_romanian": {
     "message": "Romanian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_russian": {
     "message": "Russisch", 
@@ -1126,15 +1229,15 @@
   }, 
   "lang_spanish": {
     "message": "Spanish", 
-    "description": "language option on Report an ad"
+    "description": "A filter list"
   }, 
   "lang_swedish": {
     "message": "Swedish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_turkish": {
     "message": "Turkish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_ukranian": {
     "message": "Oekraïens", 
@@ -1166,6 +1269,10 @@
   "latest_version": {
     "message": "AdBlock is up-to-date!", 
     "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
+  }, 
+  "legend": {
+    "message": "Legend: ", 
+    "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   }, 
   "line": {
     "message": "Regel $number$", 
@@ -1233,7 +1340,7 @@
   }, 
   "migration_error_message": {
     "message": "We've found some errors in your custom filters.  See below for the messages.", 
-    "description": "Warning when blacklisting manually"
+    "description": "Warning when adding custom filters manually"
   }, 
   "modifydomain": {
     "message": "Website:", 
@@ -1249,9 +1356,13 @@
   "name_devbuild": {
     "message": "AdBlock experimentele versie"
   }, 
-  "new_resourcelist_explanation": {
-    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl-Shft-I), then select the 'AdBlock' tab.", 
-    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  "new_resourcelist_explanation_osx": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I)), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
+  }, 
+  "new_resourcelist_explanation_win": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl+Shift+I), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
   }, 
   "no": {
     "message": "Nee", 
@@ -1266,6 +1377,10 @@
         "example": "<a>here</a>"
       }
     }
+  }, 
+  "noresourcessend2": {
+    "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
+    "description": "Resource list page: error message"
   }, 
   "notification_configure": {
     "message": "Configureer notificatie instellingen"
@@ -1356,7 +1471,7 @@
   }, 
   "privacy_policy": {
     "message": "Privacy Policy", 
-    "description": "link in the footer on the options page"
+    "description": "Link to AdBlock's privacy policy"
   }, 
   "pwyw": {
     "message": "Betaal wat je wil!", 
@@ -1410,6 +1525,20 @@
   "reporttous2": {
     "message": "Je kunt de advertentie aan ons rapporteren <a>in de issue tracker</a> (Engelstalig).", 
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
+  }, 
+  "resourceblocktitle": {
+    "message": "All Resources", 
+    "description": "Resource list page name"
+  }, 
+  "resourcedomain": {
+    "message": "Loaded on page with domain:\n$domain$", 
+    "description": "Resource list page: text shown when hovering over an item in the third-party column", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
   }, 
   "retryaftersubscribe": {
     "message": "Meld je aan voor de volgende lijst en probeer het opnieuw: $list_title$", 
@@ -1475,7 +1604,8 @@
     "message": "Toon 'Element blokkeren' in het rechtermuisklik menu"
   }, 
   "show_devtools_panel": {
-    "message": "Toon \"AdBlock\" paneel in het ontwikkellaarsscherm"
+    "message": "Show 'Adblock' panel in the developer tools", 
+    "description": "Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
   }, 
   "show_on_adblock_button": {
     "message": "Toon het aantal geblokkeerde advertenties op de AdBlock knop", 
@@ -1577,6 +1707,10 @@
     "message": "Je gebruikt meer opslagruimte dan AdBlock kan gebruiken. Meldt je aub af voor enkele filterlijsten!", 
     "description": "Message shown when the user uses more storage than allowed by the browser"
   }, 
+  "subframe": {
+    "message": "Subframe", 
+    "description": "Resource list page: frame type"
+  }, 
   "subscribebutton": {
     "message": "Aanmelden", 
     "description": "Subscribe to a list button"
@@ -1640,6 +1774,14 @@
     "message": "Ondersteuning", 
     "description": "A tab on the options page"
   }, 
+  "thirdparty": {
+    "message": "Third-party", 
+    "description": "Resource list page: column title telling if the resource originates from a different domain"
+  }, 
+  "topframe": {
+    "message": "Top frame", 
+    "description": "Resource list page: frame type"
+  }, 
   "translator_credit": {
     "message": "Vertaling door", 
     "description": "Will be followed by a list of translator names (separate string)"
@@ -1650,6 +1792,10 @@
   }, 
   "typeimage": {
     "message": "afbeelding", 
+    "description": "A resource type"
+  }, 
+  "typemain_frame": {
+    "message": "page", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1680,8 +1826,16 @@
     "message": "script", 
     "description": "A resource type"
   }, 
+  "typeselector": {
+    "message": "selector", 
+    "description": "A resource type"
+  }, 
   "typestylesheet": {
     "message": "stylesheet", 
+    "description": "A resource type"
+  }, 
+  "typesub_frame": {
+    "message": "frame", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
@@ -1816,6 +1970,10 @@
   }, 
   "whitelisted_domains": {
     "message": "Vertrouwde domeinen"
+  }, 
+  "whitelistedresource": {
+    "message": "Whitelisted resource", 
+    "description": "Resource list page: resource status"
   }, 
   "whitelistertitle2": {
     "message": "Pas AdBlock niet toe op...", 

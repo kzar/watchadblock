@@ -2,6 +2,16 @@
 
 UNRELEASED:
 
+3.3.0:
+- Added all unique messages in the locale message files from the three variations of AdBlock (Chrome, Safari, Edge), so the locale files can be shared, and re-used by all of the various versions of AdBlock.  (#145)
+- Fixed the text description for the "Show All Request" AdBlock menu item. (#137)
+- Added logic to create and save the 'blockage_stats' object during installation.  (#141)
+- Removed extra 'descriptions' in the locale message.  (#148)
+- The extension will now recognize and process multiple links on our site (getadblock.com/installed) that can be used to disable Acceptable Ads.  (#159)
+- Added debug logic to the ping process to help diagnosis issues with the ping processing. (#150)
+- A GNU version 3 license file is included with the extension. (#140)
+- Added an option on the General tab of AdBlock options to enable / disable the AdBlock devtools panel. (#142)
+
 3.2.1:
 - Fixed issue with AdBlock icon display.  (#160)
 

@@ -100,7 +100,7 @@ CheckboxForFilterList.prototype = {
           var entry = filterListSections.language_filter_list.array[index];
           if (!entry.hasOwnProperty('label'))
           {
-            entry.label = translate('filter' + id);
+            entry.label = translateIDs(id);
           }
 
           var option = new OptionForFilterList(entry, index);
@@ -276,7 +276,7 @@ FilterListUtil.prepareSubscriptions = function (subs)
     }
 
     var entry          = subs[id];
-    entry.label        = translate('filter' + id);
+    entry.label        = translateIDs(id);
     entry.id           = id;
     var filterListType = FilterListUtil.getFilterListType(entry);
     filterListSections[filterListType].array.push(entry);
@@ -336,14 +336,14 @@ FilterListUtil.updateSubscriptionInfoForId = function (id)
   else if (subscription.downloadStatus && subscription.downloadStatus != 'synchronize_ok')
   {
     var map = {
-      synchronize_invalid_url: 'filters_subscription_lastDownload_invalidURL',
-      synchronize_connection_error: 'filters_subscription_lastDownload_connectionError',
-      synchronize_invalid_data: 'filters_subscription_lastDownload_invalidData',
-      synchronize_checksum_mismatch: 'filters_subscription_lastDownload_checksumMismatch',
+      synchronize_invalid_url: translate('ab_filters_subscription_lastDownload_invalidURL'),
+      synchronize_connection_error: translate('ab_filters_subscription_lastDownload_connectionError'),
+      synchronize_invalid_data: translate('ab_filters_subscription_lastDownload_invalidData'),
+      synchronize_checksum_mismatch: translate('ab_filters_subscription_lastDownload_checksumMismatch'),
     };
     if (subscription.downloadStatus in map)
     {
-      text = translate(map[subscription.downloadStatus]);
+      text = map[subscription.downloadStatus];
     }
     else
     {
@@ -821,6 +821,17 @@ function onFilterChangeHandler(action, item, param1, param2)
     }
   }
 }
+
+function translateIDs(id) {
+  var translatedMsg = translate('filter_' + id);
+  translatedMsg = translatedMsg.trim()
+  if (translatedMsg != "" && translatedMsg.length > 0) {
+     return translatedMsg
+  } else {
+     return translate('filter' + id)
+  }
+}
+
 $(function ()
 {
   // Retrieves list of filter lists from the background.

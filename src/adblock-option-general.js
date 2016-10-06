@@ -29,7 +29,7 @@ $(function ()
     $('#enable_' + name).prop('checked', optionalSettings[name]);
   }
 
-  var abpPrefs = ['show_statsinicon', 'shouldShowBlockElementMenu', 'show_statsinpopup'];
+  var abpPrefs = ['show_statsinicon', 'shouldShowBlockElementMenu', 'show_statsinpopup', 'show_devtools_panel'];
   for (var inx in abpPrefs) {
     var name = abpPrefs[inx];
     $('#prefs__' + name).prop('checked', backgroundPage.Prefs[name]);

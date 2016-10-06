@@ -7,6 +7,22 @@
     "message": "If you'd rather not see ads like this one, you may want to leave the Acceptable Ads filter list turned off.", 
     "description": "Acceptable Ads message on ad report page"
   }, 
+  "ab_filters_subscription_lastDownload_checksumMismatch": {
+    "message": "Failed, checksum mismatch", 
+    "description": "message on the filter tab"
+  }, 
+  "ab_filters_subscription_lastDownload_connectionError": {
+    "message": "Failed, download failure", 
+    "description": "message on the filter tab - Generic filter list download error message"
+  }, 
+  "ab_filters_subscription_lastDownload_invalidData": {
+    "message": "Failed, not a valid filters list", 
+    "description": "message on the filter tab - Invalid filter list file"
+  }, 
+  "ab_filters_subscription_lastDownload_invalidURL": {
+    "message": "Failed, not a valid address", 
+    "description": "message on the filter tab - Message when you subscribe to a non-list URL"
+  }, 
   "acceptable_ads_content_blocking_disbled_message": {
     "message": "We unsubscribed you from Acceptable Ads because you turned on Safari Content Blocking. You can only select one at a time. (<a>Why?</a>)", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
@@ -304,6 +320,10 @@
       }
     }
   }, 
+  "blockedresource": {
+    "message": "Blocked resource", 
+    "description": "Resource list page: resource status"
+  }, 
   "blockmoreads": {
     "message": "વધુ જાહેરાતો અવરોધિત કરો:", 
     "description": "Section header on the 'Customize' tab"
@@ -480,15 +500,15 @@
   }, 
   "custom_filters_migration_error_message_part1": {
     "message": "Custom filters error count: ", 
-    "description": "Part one of a message shown to users on the customize after invalid custom filter(s) have been migrated"
+    "description": "Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part2": {
     "message": "The following message(s) were generated during the custom filter migration (ignore the line numbers): ", 
-    "description": "Part two of a message shown to users on the customize after invalid custom filter(s) have been migrated"
+    "description": "Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part3": {
     "message": "Original entry: ", 
-    "description": "Part three of a message shown to users on the customize after invalid custom filter(s) have been migrated"
+    "description": "Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "customfilters": {
     "message": "કસ્ટમ ફિલ્ટર યાદી", 
@@ -522,26 +542,14 @@
   }, 
   "delete_migration_error_messages": {
     "message": "Delete messages", 
-    "description": "button text to allow user to delete the messages"
+    "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "description": "Note: this cannot be longer than 132 characters", 
-    "message": "Used by over 50 million people, a free ad blocker that blocks ALL annoying ads, malware and tracking."
+    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
     "message": "40 મિલિયન વપરાશકર્તાઓ સાથે સૌથી લોકપ્રિય, Chrome એક્સ્ટેન્શન! બધી વેબ સાઇટ​ પર જાહેરાતો બ્લોકો કરો.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
-  }, 
-  "description_chrome": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
-  }, 
-  "description_opera": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
-  }, 
-  "description_safari": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "disableaa": {
@@ -666,11 +674,71 @@
     "message": "Chrome માં ચેક કરે છે", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
+  "filter_chinese": {
+    "message": "Chinese + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_czech": {
+    "message": "Czech & Slovak + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_dutch": {
+    "message": "Dutch + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_arabic": {
+    "message": "Arabic + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_arabic_plus_french": {
+    "message": "Arabic + French + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_bulgarian": {
+    "message": "Bulgarian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_french": {
+    "message": "French + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_german": {
+    "message": "German + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_indonesian": {
+    "message": "Indonesian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_lithuania": {
+    "message": "Lithuanian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_easylist_plus_romanian": {
+    "message": "Romanian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_israeli": {
+    "message": "Hebrew + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_italian": {
+    "message": "Italian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
+  "filter_latvian": {
+    "message": "Latvian + EasyList", 
+    "description": "A filter list combined with EasyList"
+  }, 
   "filter_lists": {
     "message": "ફિલ્ટરની લીસ્ટ"
   }, 
   "filter_must_follow_syntax": {
     "message": "તમારું ફિલ્ટર <a>AdBlock ફિલ્ટર સિન્ટેક્સ</a>ફોલોવ કરવું જોઈએ."
+  }, 
+  "filter_russian": {
+    "message": "Russian & Ukrainian + EasyList", 
+    "description": "A filter list combined with EasyList"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -713,12 +781,8 @@
     "description": "language"
   }, 
   "filtereasylist_plus_arabic": {
-    "message": "Arabic + EasyList", 
-    "description": "language"
-  }, 
-  "filtereasylist_plus_arabic_plus_french": {
-    "message": "Arabic + French + EasyList", 
-    "description": "language"
+    "message": "Arabic", 
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_bulgarian": {
     "message": "બલ્ગેરિયન", 
@@ -726,7 +790,7 @@
   }, 
   "filtereasylist_plus_estonian": {
     "message": "Estonian", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_finnish": {
     "message": "ફિનિશ", 
@@ -749,8 +813,8 @@
     "description": "A filter list"
   }, 
   "filtereasylist_plus_lithuania": {
-    "message": "Lithuanian + EasyList", 
-    "description": "language"
+    "message": "Lithuanian", 
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_polish": {
     "message": "પોલિશ", 
@@ -774,7 +838,7 @@
   }, 
   "filtericelandic": {
     "message": "Icelandic", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterisraeli": {
     "message": "હિબ્રુ", 
@@ -803,6 +867,16 @@
   "filtermalware": {
     "message": "Malware સુરક્ષા", 
     "description": "A filter list"
+  }, 
+  "filterorigin": {
+    "message": "Filter origin:\n$list$", 
+    "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
+    "placeholders": {
+      "list": {
+        "content": "$1", 
+        "example": "A filter list name OR AdBlock OR the translation of 'tabcustomize'"
+      }
+    }
   }, 
   "filterrussian": {
     "message": "રશિયન અને યુક્રેનિયન", 
@@ -855,6 +929,18 @@
     "message": "શું તમને ભૂલ મળી?", 
     "description": "Subtitle on the Support tab of the options"
   }, 
+  "framedomain": {
+    "message": "Frame domain: ", 
+    "description": "Resource list page: domain name of the frame"
+  }, 
+  "frametype": {
+    "message": "Frame type: ", 
+    "description": "Resource list page: followed by frame type (e.g. top frame, subframe)"
+  }, 
+  "frameurl": {
+    "message": "Frame URL: ", 
+    "description": "Resource list page: full URL of the frame"
+  }, 
   "general": {
     "message": "સામાન્ય"
   }, 
@@ -862,9 +948,25 @@
     "message": "સામાન્ય વિકલ્પો", 
     "description": "Title of first tab page"
   }, 
+  "headerfilter": {
+    "message": "Matched filter", 
+    "description": "Resource list page: title of a column"
+  }, 
+  "headerresource": {
+    "message": "Resource", 
+    "description": "Resource list page: title of a column"
+  }, 
+  "headertype": {
+    "message": "Type", 
+    "description": "Resource list page: title of a column"
+  }, 
   "here": {
     "message": "અહીં", 
     "description": "This message is injected in other strings as a link/button"
+  }, 
+  "hiddenelement": {
+    "message": "Hidden element", 
+    "description": "Resource list page: resource status"
   }, 
   "hide_this_button": {
     "message": "આ બટન છુપાવો", 
@@ -888,15 +990,15 @@
   }, 
   "lang_arabic": {
     "message": "Arabic", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_bulgarian": {
     "message": "Bulgarian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_chinese": {
     "message": "Chinese", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_czech": {
     "message": "ઝેક", 
@@ -904,11 +1006,11 @@
   }, 
   "lang_danish": {
     "message": "Danish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_dutch": {
     "message": "Dutch", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_english": {
     "message": "ઇંગલિશ", 
@@ -916,67 +1018,67 @@
   }, 
   "lang_estonian": {
     "message": "Estonian", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_finnish": {
     "message": "Finnish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_french": {
     "message": "French", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_german": {
     "message": "German", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_greek": {
     "message": "Greek", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_hungarian": {
     "message": "Hungarian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_icelandic": {
     "message": "Icelandic", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_indonesian": {
     "message": "Indonesian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_israeli": {
-    "message": "Israeli", 
-    "description": "language option on Report an ad"
+    "message": "Hebrew", 
+    "description": "Language name"
   }, 
   "lang_italian": {
     "message": "Italian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_japanese": {
     "message": "Japanese", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_korean": {
     "message": "Korean", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_latvian": {
     "message": "Latvian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_lithuania": {
-    "message": "Lithuania", 
-    "description": "language option on Report an ad"
+    "message": "Lithuanian", 
+    "description": "Language name"
   }, 
   "lang_polish": {
     "message": "Polish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_romanian": {
     "message": "Romanian", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_russian": {
     "message": "રશિયન", 
@@ -988,15 +1090,15 @@
   }, 
   "lang_spanish": {
     "message": "Spanish", 
-    "description": "language option on Report an ad"
+    "description": "A filter list"
   }, 
   "lang_swedish": {
     "message": "Swedish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_turkish": {
     "message": "Turkish", 
-    "description": "language option on Report an ad"
+    "description": "Language name"
   }, 
   "lang_ukranian": {
     "message": "યુક્રેનિયન", 
@@ -1028,6 +1130,10 @@
   "latest_version": {
     "message": "AdBlock ની અપ ટુ ડેટ છે!", 
     "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
+  }, 
+  "legend": {
+    "message": "Legend: ", 
+    "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
   }, 
   "line": {
     "message": "લાઈન $number$", 
@@ -1095,7 +1201,7 @@
   }, 
   "migration_error_message": {
     "message": "We've found some errors in your custom filters.  See below for the messages.", 
-    "description": "Warning when blacklisting manually"
+    "description": "Warning when adding custom filters manually"
   }, 
   "modifydomain": {
     "message": "સાઇટ:", 
@@ -1111,9 +1217,13 @@
   "name_devbuild": {
     "message": "AdBlock ડેવલોપમેન્ટ બીલ્ડ"
   }, 
-  "new_resourcelist_explanation": {
-    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl-Shft-I), then select the 'AdBlock' tab.", 
-    "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
+  "new_resourcelist_explanation_osx": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I)), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
+  }, 
+  "new_resourcelist_explanation_win": {
+    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl+Shift+I), then select the 'AdBlock' tab.", 
+    "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
   }, 
   "no": {
     "message": "ના", 
@@ -1128,6 +1238,10 @@
         "example": "<a>here</a>"
       }
     }
+  }, 
+  "noresourcessend2": {
+    "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
+    "description": "Resource list page: error message"
   }, 
   "notification_with_buttons": {
     "message": "આ નોટીફીકેશનમાં બધી લીંક ખોલવા 'ઓકે' પર ક્લિક કરો."
@@ -1197,7 +1311,7 @@
   }, 
   "privacy_policy": {
     "message": "Privacy Policy", 
-    "description": "link in the footer on the options page"
+    "description": "Link to AdBlock's privacy policy"
   }, 
   "pwyw": {
     "message": "તમે શું કરવા માંગો છો તેના માટે ની ચૂકવણી કરો!", 
@@ -1251,6 +1365,20 @@
   "reporttous2": {
     "message": "આ જાહેરાત ના <a>ટ્રેકર મુદ્દે તમે અમને જાણ</a> કરી શકો છો.", 
     "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
+  }, 
+  "resourceblocktitle": {
+    "message": "All Resources", 
+    "description": "Resource list page name"
+  }, 
+  "resourcedomain": {
+    "message": "Loaded on page with domain:\n$domain$", 
+    "description": "Resource list page: text shown when hovering over an item in the third-party column", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
   }, 
   "retryaftersubscribe": {
     "message": "આ ગાળક યાદી પર સબ્સ્ક્રાઇબ કરો,પછી ફરીથી પ્રયત્ન કરો: $list_title$", 
@@ -1308,6 +1436,10 @@
   }, 
   "show_block_element_menu": {
     "message": "'બ્લોક એલિમેન્ટ' જુઓ મેનુ આઇટમ પર રાઈટ ક્લિક કરીને"
+  }, 
+  "show_devtools_panel": {
+    "message": "Show 'Adblock' panel in the developer tools", 
+    "description": "Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
   }, 
   "show_on_adblock_button": {
     "message": "AdBlock ના બટન પર જાહેરાતોના નંબર બતાવો", 
@@ -1409,6 +1541,10 @@
     "message": "તમને તમારો સ્ટોરેજ જથ્થો વટાવી ઉપયોગ AdBlock કરી શકો છો. કેટલાક ફિલ્ટર યાદીઓ ઉમેદવારી દૂર કરો!", 
     "description": "Message shown when the user uses more storage than allowed by the browser"
   }, 
+  "subframe": {
+    "message": "Subframe", 
+    "description": "Resource list page: frame type"
+  }, 
   "subscribebutton": {
     "message": "સબ્સ્ક્રાઇબ કરો", 
     "description": "Subscribe to a list button"
@@ -1466,6 +1602,14 @@
     "message": "સહાયતા", 
     "description": "A tab on the options page"
   }, 
+  "thirdparty": {
+    "message": "Third-party", 
+    "description": "Resource list page: column title telling if the resource originates from a different domain"
+  }, 
+  "topframe": {
+    "message": "Top frame", 
+    "description": "Resource list page: frame type"
+  }, 
   "translator_credit": {
     "message": "અનુવાદ માટે ક્રેડિટ જાય:", 
     "description": "Will be followed by a list of translator names (separate string)"
@@ -1476,6 +1620,10 @@
   }, 
   "typeimage": {
     "message": "છબી", 
+    "description": "A resource type"
+  }, 
+  "typemain_frame": {
+    "message": "page", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1506,8 +1654,16 @@
     "message": "સ્ક્રિપ્ટ", 
     "description": "A resource type"
   }, 
+  "typeselector": {
+    "message": "selector", 
+    "description": "A resource type"
+  }, 
   "typestylesheet": {
     "message": "શૈલી વ્યાખ્યા", 
+    "description": "A resource type"
+  }, 
+  "typesub_frame": {
+    "message": "frame", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
@@ -1642,6 +1798,10 @@
   }, 
   "whitelisted_domains": {
     "message": "વ્હાઈટ લીસ્ટેડ ડોમેઈન"
+  }, 
+  "whitelistedresource": {
+    "message": "Whitelisted resource", 
+    "description": "Resource list page: resource status"
   }, 
   "whitelistertitle2": {
     "message": "AdBlock ચલાવવા નથી ...", 

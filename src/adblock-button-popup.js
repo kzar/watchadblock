@@ -281,7 +281,11 @@ $(function ()
 
   $('#div_show_resourcelist').click(function ()
   {
-    $('#new_resourcelist_explanation').slideToggle();;
+    if (backgroundPage.STATS.os === 'Mac OS X')
+    {
+      $('#new_resourcelist_explanation').text(translate('new_resourcelist_explanation_osx'))
+    }
+    $('#new_resourcelist_explanation').slideToggle();
   });
 
   $('#div_report_an_ad').click(function ()

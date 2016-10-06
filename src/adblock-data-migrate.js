@@ -106,6 +106,19 @@ MigrateLegacyData = (function()
       storage_set(key, undefined);
       migrateLog('migrated Legacy Blockage Stats');
     }
+    else
+    {
+      ext.storage.get(key, function(response) {
+        var blockage_stats = response.blockage_stats;
+        if (!blockage_stats)
+        {
+          data = {};
+          data.start = Date.now();
+          data.version = 1;
+          ext.storage.set(key, data);
+        }
+      });
+    }
   }
   // Convert legacy AdBlock Stats to ABP
   function migrateLegacyStats()
