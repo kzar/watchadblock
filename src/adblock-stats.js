@@ -35,11 +35,6 @@ STATS = (function()
     {
       ext.storage.get("userid", function(response)
       {
-        if (chrome.runtime.lastError &&
-            chrome.runtime.lastError.message)
-        {
-          recordErrorMessage('userid error during get ' + chrome.runtime.lastError.message);
-        }
         if (!response.userid)
         {
           STATS.firstRun = true;
@@ -54,14 +49,7 @@ STATS = (function()
           }
           user_ID = result.join('') + time_suffix;
 
-          ext.storage.set("userid", user_ID, function()
-          {
-            if (chrome.runtime.lastError &&
-                chrome.runtime.lastError.message)
-            {
-              recordErrorMessage('userid error during set ' + chrome.runtime.lastError.message);
-            }
-          });
+          ext.storage.set("userid", user_ID);
         }
         else
         {
@@ -94,11 +82,6 @@ STATS = (function()
     }
     ext.storage.get("total_pings", function(response)
     {
-      if (chrome.runtime.lastError &&
-          chrome.runtime.lastError.message)
-      {
-        recordErrorMessage('total_pings error during get ' + chrome.runtime.lastError.message);
-      }
       var total_pings = response.total_pings || 0;
       var data = {
         u : user_ID,
@@ -195,21 +178,9 @@ STATS = (function()
   {
     ext.storage.get("total_pings", function(response)
     {
-      if (chrome.runtime.lastError &&
-          chrome.runtime.lastError.message)
-      {
-        recordErrorMessage('total_pings error during get ' + chrome.runtime.lastError.message);
-      }
       var total_pings = response.total_pings || 0;
       total_pings += 1;
-      ext.storage.set("total_pings", total_pings, function()
-      {
-        if (chrome.runtime.lastError &&
-            chrome.runtime.lastError.message)
-        {
-          recordErrorMessage('total_pings error during set ' + chrome.runtime.lastError.message);
-        }
-      });
+      ext.storage.set("total_pings", total_pings);
 
       var delay_hours;
       if (total_pings == 1) // Ping one hour after install
@@ -221,14 +192,7 @@ STATS = (function()
         delay_hours = 24 * 7;
 
       var millis = 1000 * 60 * 60 * delay_hours;
-      ext.storage.set("next_ping_time", Date.now() + millis, function()
-      {
-        if (chrome.runtime.lastError &&
-            chrome.runtime.lastError.message)
-        {
-          recordErrorMessage('next_ping_time error during set ' + chrome.runtime.lastError.message);
-        }
-      });
+      ext.storage.set("next_ping_time", Date.now() + millis);
     });
   };
 
@@ -243,11 +207,6 @@ STATS = (function()
     window.setTimeout(function() {
       ext.storage.get("next_ping_time", function(response)
       {
-        if (chrome.runtime.lastError &&
-            chrome.runtime.lastError.message)
-        {
-          recordErrorMessage('next_ping_time error during get ' + chrome.runtime.lastError.message);
-        }
         var next_ping_time = response.next_ping_time;
         if (!next_ping_time)
           callbackFN(0);
@@ -322,11 +281,6 @@ STATS = (function()
         // - send a message
         ext.storage.get("total_pings", function(response)
         {
-          if (chrome.runtime.lastError &&
-              chrome.runtime.lastError.message)
-          {
-            recordErrorMessage('total_pings error during get ' + chrome.runtime.lastError.message);
-          }
           if (!response.total_pings)
           {
             if (chrome.management && chrome.management.getSelf)
