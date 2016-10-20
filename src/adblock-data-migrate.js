@@ -124,7 +124,7 @@ MigrateLegacyData = (function()
   function migrateLegacyStats()
   {
     var pingDelay = 1;
-    var keys = ["userid", "total_pings", "next_ping_time"];
+    var keys = [STATS.userIDStorageKey, STATS.totalPingStorageKey, STATS.nextPingTimeStorageKey];
     var types = ["string", "number", "number"];
 
     for (var i = 0; i < keys.length; i++)
@@ -133,7 +133,7 @@ MigrateLegacyData = (function()
       var data = storage_get(key);
       if (data)
       {
-        // Storge the old data in the new location
+        // Store the old data in the new location
         if (typeof data === types[i])
         {
           ext.storage.set(key, data);

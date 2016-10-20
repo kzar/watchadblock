@@ -6,7 +6,9 @@ var run_bandaids = function()
   {
     apply_bandaid_for = "hotmail";
   }
-  else if (/getadblock\.com$/.test(document.location.hostname) && window.top === window.self)
+  else if (("getadblock.com" === document.location.hostname ||
+            "dev.getadblock.com" === document.location.hostname) &&
+           (window.top === window.self))
   {
     if (/\/question\/$/.test(document.location.pathname))
     {
@@ -110,6 +112,9 @@ var run_bandaids = function()
         {
           aaElements[i].onclick = function(event)
           {
+            if (event.isTrusted === false) {
+              return;
+            }
             event.preventDefault();
             BGcall("unsubscribe", {
               id : "acceptable_ads",

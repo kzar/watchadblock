@@ -2,7 +2,55 @@
 // and log messages.
 STATS = (function()
 {
+  // Inputs: key:string.
+  // Returns value if key exists, else undefined.
+  // Note: "_alt" is appended to the key to make it the key different
+  // from the previous items stored in localstorage
+  storage_get = function(key) {
+    var store = localStorage;
+    if (store === undefined) {
+        return undefined;
+    }
+    key = key + "_alt";
+    var json = store.getItem(key);
+    if (json == null)
+      return undefined;
+    try {
+      return JSON.parse(json);
+    } catch (ex) {
+      if (ex && ex.message) {
+        recordErrorMessage('storage_get error ' + ex.message);
+      }
+      return undefined;
+    }
+  };
+
+  // Inputs: key:string, value:object.
+  // Note: "_alt" is appended to the key to make it the key different
+  // from the previous items stored in localstorage
+  // If value === undefined, removes key from storage.
+  // Returns undefined.
+  storage_set = function(key, value) {
+    var store = localStorage;
+    key = key + "_alt";
+    if (value === undefined) {
+      store.removeItem(key);
+      return;
+    }
+    try {
+      store.setItem(key, JSON.stringify(value));
+    } catch (ex) {
+
+    }
+  };
+
+  var userIDStorageKey = "userid";
+  var totalPingStorageKey = "total_pings";
+  var nextPingTimeStorageKey = "next_ping_time";
+
   var stats_url = "https://ping.getadblock.com/stats/";
+
+  var FiftyFiveMinutes = 3300000;
 
   // Get some information about the version, os, and browser
   var version = chrome.runtime.getManifest().version;
@@ -33,9 +81,10 @@ STATS = (function()
   {
     var userIDPromise = new Promise(function(resolve)
     {
-      ext.storage.get("userid", function(response)
+      ext.storage.get(STATS.userIDStorageKey, function(response)
       {
-        if (!response.userid)
+        var localuserid = storage_get(STATS.userIDStorageKey);
+        if (!response[STATS.userIDStorageKey] && !localuserid)
         {
           STATS.firstRun = true;
           var time_suffix = (Date.now()) % 1e8; // 8 digits from end of
@@ -48,12 +97,21 @@ STATS = (function()
             result.push(alphabet[choice]);
           }
           user_ID = result.join('') + time_suffix;
-
-          ext.storage.set("userid", user_ID);
+          // store in redudant locations
+          ext.storage.set(STATS.userIDStorageKey, user_ID);
+          storage_set(STATS.userIDStorageKey, user_ID);
         }
         else
         {
-          user_ID = response.userid;
+          user_ID = response[STATS.userIDStorageKey] || localuserid;
+          if (!response[STATS.userIDStorageKey] && localuserid)
+          {
+            ext.storage.set(STATS.userIDStorageKey, user_ID);
+          }
+          if (response[STATS.userIDStorageKey] && !localuserid)
+          {
+            storage_set(STATS.userIDStorageKey, user_ID);
+          }
         }
         resolve(user_ID);
       });
@@ -80,9 +138,10 @@ STATS = (function()
     {
       return;
     }
-    ext.storage.get("total_pings", function(response)
+    ext.storage.get(STATS.totalPingStorageKey, function(response)
     {
-      var total_pings = response.total_pings || 0;
+      var localTotalPings = storage_get(STATS.totalPingStorageKey);
+      var total_pings = response[STATS.totalPingStorageKey] || localTotalPings || 0;
       var data = {
         u : user_ID,
         v : version,
@@ -153,6 +212,7 @@ STATS = (function()
           console.log("Ping returned error: ", e.status);
         },
       };
+
       if (chrome.management && chrome.management.getSelf)
       {
         chrome.management.getSelf(function(info)
@@ -176,11 +236,14 @@ STATS = (function()
   // Called just after we ping the server, to schedule our next ping.
   var scheduleNextPing = function()
   {
-    ext.storage.get("total_pings", function(response)
+    ext.storage.get(STATS.totalPingStorageKey, function(response)
     {
-      var total_pings = response.total_pings || 0;
+      var localTotalPings = storage_get(totalPingStorageKey);
+      var total_pings = response[STATS.totalPingStorageKey] || localTotalPings || 0;
       total_pings += 1;
-      ext.storage.set("total_pings", total_pings);
+      // store in redudant locations
+      ext.storage.set(STATS.totalPingStorageKey, total_pings);
+      storage_set(STATS.totalPingStorageKey, total_pings);
 
       var delay_hours;
       if (total_pings == 1) // Ping one hour after install
@@ -192,7 +255,11 @@ STATS = (function()
         delay_hours = 24 * 7;
 
       var millis = 1000 * 60 * 60 * delay_hours;
-      ext.storage.set("next_ping_time", Date.now() + millis);
+      var nextPingTime = Date.now() + millis;
+
+      // store in redudant location
+      ext.storage.set(STATS.nextPingTimeStorageKey, nextPingTime);
+      storage_set(STATS.nextPingTimeStorageKey, nextPingTime);
     });
   };
 
@@ -205,13 +272,21 @@ STATS = (function()
     }
     // Wait 10 seconds to allow the previous 'set' to finish
     window.setTimeout(function() {
-      ext.storage.get("next_ping_time", function(response)
+      ext.storage.get(STATS.nextPingTimeStorageKey, function(response)
       {
-        var next_ping_time = response.next_ping_time;
-        if (!next_ping_time)
+        var local_next_ping_time = storage_get(STATS.nextPingTimeStorageKey);
+        var next_ping_time = response[STATS.nextPingTimeStorageKey] || local_next_ping_time || 0;
+        // if this is the first time we've run (just installed), millisTillNextPing is 0
+        if (next_ping_time === 0 && STATS.firstRun) {
           callbackFN(0);
-        else
-          callbackFN(Math.max(0, next_ping_time - Date.now()));
+        }
+        // if we don't have a 'next ping time', or it's not a valid number,
+        // default to 55 minute ping interval
+        if (next_ping_time === 0 || isNaN(next_ping_time)) {
+          callbackFN(FiftyFiveMinutes);
+        } else {
+          callbackFN(next_ping_time - Date.now());
+        }
       });
     }, 10000);
   };
@@ -241,6 +316,9 @@ STATS = (function()
   };
 
   return {
+    userIDStorageKey : userIDStorageKey,
+    totalPingStorageKey : totalPingStorageKey,
+    nextPingTimeStorageKey : nextPingTimeStorageKey,
     // True if AdBlock was just installed.
     firstRun : firstRun,
     userId : function()
@@ -279,9 +357,9 @@ STATS = (function()
       {
         // Do 'stuff' when we're first installed...
         // - send a message
-        ext.storage.get("total_pings", function(response)
+        ext.storage.get(STATS.totalPingStorageKey, function(response)
         {
-          if (!response.total_pings)
+          if (!response[STATS.totalPingStorageKey])
           {
             if (chrome.management && chrome.management.getSelf)
             {

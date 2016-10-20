@@ -2,6 +2,11 @@
 
 UNRELEASED:
 
+3.4.0:
+- Fixed an issue with the lower section of the AdBlock Options page being hidden behind the footer. (#167)
+- Improved the security for the 'bandaids' processing on the getadblock.com/installed page by improving the host name check, and adding a check to click event for isTrusted.  (#170)
+- Updated the 'stats' processing to store the next ping time, ping count, and unique identifier to two different persisted storage areas.  (#174)
+
 3.3.2:
 - Removed all debug logging from the ping process. (#168)
 
