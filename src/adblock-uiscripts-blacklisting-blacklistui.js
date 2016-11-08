@@ -204,14 +204,22 @@ BlacklistUi.prototype._build_page2 = function() {
         that._ui_page2.dialog('close');
         custom_filter = prompt(translate("blacklistereditfilter"), custom_filter);
         if (custom_filter) {//null => user clicked cancel
-          if (!/\#\#/.test(custom_filter))
+          if (!/\#\#/.test(custom_filter)) {
             custom_filter = "##" + custom_filter;
-          BGcall('addCustomFilter', custom_filter, function(ex) {
-            if (!ex) {
-              block_list_via_css([custom_filter.substr(custom_filter.indexOf('##') + 2)]);
-              that._fire('block');
-            } else
-              alert(translate("blacklistereditinvalid1", ex));
+          }
+          BGcall('parseFilter', custom_filter, function(result) {
+            if (result.filter) {
+              BGcall('addCustomFilter', result.filter.text, function(ex) {
+                if (!ex) {
+                  block_list_via_css([custom_filter.substr(custom_filter.indexOf('##') + 2)]);
+                  that._fire('block');
+                } else {
+                  alert(translate("blacklistereditinvalid1", ex));
+                }
+              });
+            } else if (result.error && result.error.type) {
+              alert(translate("blacklistereditinvalid1", result.error.type));
+            }
           });
         }
       }

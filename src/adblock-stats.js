@@ -2,48 +2,6 @@
 // and log messages.
 STATS = (function()
 {
-  // Inputs: key:string.
-  // Returns value if key exists, else undefined.
-  // Note: "_alt" is appended to the key to make it the key different
-  // from the previous items stored in localstorage
-  storage_get = function(key) {
-    var store = localStorage;
-    if (store === undefined) {
-        return undefined;
-    }
-    key = key + "_alt";
-    var json = store.getItem(key);
-    if (json == null)
-      return undefined;
-    try {
-      return JSON.parse(json);
-    } catch (ex) {
-      if (ex && ex.message) {
-        recordErrorMessage('storage_get error ' + ex.message);
-      }
-      return undefined;
-    }
-  };
-
-  // Inputs: key:string, value:object.
-  // Note: "_alt" is appended to the key to make it the key different
-  // from the previous items stored in localstorage
-  // If value === undefined, removes key from storage.
-  // Returns undefined.
-  storage_set = function(key, value) {
-    var store = localStorage;
-    key = key + "_alt";
-    if (value === undefined) {
-      store.removeItem(key);
-      return;
-    }
-    try {
-      store.setItem(key, JSON.stringify(value));
-    } catch (ex) {
-
-    }
-  };
-
   var userIDStorageKey = "userid";
   var totalPingStorageKey = "total_pings";
   var nextPingTimeStorageKey = "next_ping_time";
@@ -51,6 +9,8 @@ STATS = (function()
   var stats_url = "https://ping.getadblock.com/stats/";
 
   var FiftyFiveMinutes = 3300000;
+
+  var dataCorrupt = false;
 
   // Get some information about the version, os, and browser
   var version = chrome.runtime.getManifest().version;
@@ -74,7 +34,47 @@ STATS = (function()
 
   var user_ID;
 
-  // Give the user a userid if they don't have one yet.
+  // Inputs: key:string.
+  // Returns value if key exists, else undefined.
+  // Note: "_alt" is appended to the key to make it the key different
+  // from the previous items stored in localstorage
+  var storage_get = function(key) {
+    var store = localStorage;
+    if (store === undefined) {
+        return undefined;
+    }
+    key = key + "_alt";
+    var json = store.getItem(key);
+    if (json == null)
+      return undefined;
+    try {
+      return JSON.parse(json);
+    } catch (ex) {
+      if (ex && ex.message) {
+        recordErrorMessage('storage_get error ' + ex.message);
+      }
+      return undefined;
+    }
+  };
+
+  // Inputs: key:string, value:object.
+  // Note: "_alt" is appended to the key to make it the key different
+  // from the previous items stored in localstorage
+  // If value === undefined, removes key from storage.
+  // Returns undefined.
+  var storage_set = function(key, value) {
+    var store = localStorage;
+    key = key + "_alt";
+    if (value === undefined) {
+      store.removeItem(key);
+      return;
+    }
+    try {
+      store.setItem(key, JSON.stringify(value));
+    } catch (ex) {
+      dataCorrupt = true;
+    }
+  };
 
   // Give the user a userid if they don't have one yet.
   var checkUserId = function()
@@ -173,6 +173,7 @@ STATS = (function()
       {
         data["aa"] = 'u';
       }
+      data["dc"] = dataCorrupt ? '1' : '0';
       callbackFN(data);
     });
   };
@@ -239,7 +240,10 @@ STATS = (function()
     ext.storage.get(STATS.totalPingStorageKey, function(response)
     {
       var localTotalPings = storage_get(totalPingStorageKey);
-      var total_pings = response[STATS.totalPingStorageKey] || localTotalPings || 0;
+      localTotalPings = isNaN(localTotalPings) ? 0 : localTotalPings;
+      var total_pings = response[STATS.totalPingStorageKey]
+      total_pings = isNaN(total_pings) ? 0 : total_pings;
+      total_pings = Math.max(localTotalPings, total_pings);
       total_pings += 1;
       // store in redudant locations
       ext.storage.set(STATS.totalPingStorageKey, total_pings);
@@ -258,7 +262,17 @@ STATS = (function()
       var nextPingTime = Date.now() + millis;
 
       // store in redudant location
-      ext.storage.set(STATS.nextPingTimeStorageKey, nextPingTime);
+      ext.storage.set(STATS.nextPingTimeStorageKey, nextPingTime, function()
+      {
+        if (chrome.runtime.lastError)
+        {
+          dataCorrupt = true;
+        }
+        else
+        {
+          dataCorrupt = false;
+        }
+      });
       storage_set(STATS.nextPingTimeStorageKey, nextPingTime);
     });
   };
@@ -270,24 +284,37 @@ STATS = (function()
     {
       return;
     }
+    // If we've detected data corruption issues,
+    // then default to a 55 minute ping interval
+    if (dataCorrupt)
+    {
+      callbackFN(FiftyFiveMinutes);
+      return;
+    }
     // Wait 10 seconds to allow the previous 'set' to finish
-    window.setTimeout(function() {
+    window.setTimeout(function()
+    {
       ext.storage.get(STATS.nextPingTimeStorageKey, function(response)
       {
         var local_next_ping_time = storage_get(STATS.nextPingTimeStorageKey);
-        var next_ping_time = response[STATS.nextPingTimeStorageKey] || local_next_ping_time || 0;
+        local_next_ping_time = isNaN(local_next_ping_time) ? 0 : local_next_ping_time;
+        var next_ping_time = isNaN(response[STATS.nextPingTimeStorageKey]) ? 0 : response[STATS.nextPingTimeStorageKey];
+        next_ping_time = Math.max(local_next_ping_time, next_ping_time);
         // if this is the first time we've run (just installed), millisTillNextPing is 0
-        if (next_ping_time === 0 && STATS.firstRun) {
+        if (next_ping_time === 0 && STATS.firstRun)
+        {
           callbackFN(0);
+          return;
         }
         // if we don't have a 'next ping time', or it's not a valid number,
         // default to 55 minute ping interval
-        if (next_ping_time === 0 || isNaN(next_ping_time)) {
+        if (next_ping_time === 0 || isNaN(next_ping_time))
+        {
           callbackFN(FiftyFiveMinutes);
-        } else {
-          callbackFN(next_ping_time - Date.now());
+          return;
         }
-      });
+        callbackFN(next_ping_time - Date.now());
+      }); // end of get
     }, 10000);
   };
 

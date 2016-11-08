@@ -2,6 +2,11 @@
 
 UNRELEASED:
 
+3.5.0:
+- Fixed an issue with the YouTube channel white-list feature.  AdBlock now correctly handles YouTube channel names with special characters such as '#".  (#179)
+- Fixed an issue on the black list wizard.  The black list wizard now shows an error message when a user creates invalid filter list rule.  (#183)
+- Updated the 'stats' processing to store and retrieve the next ping time, ping count, and unique identifier to two different persisted storage areas.  (#182)
+
 3.4.0:
 - Fixed an issue with the lower section of the AdBlock Options page being hidden behind the footer. (#167)
 - Improved the security for the 'bandaids' processing on the getadblock.com/installed page by improving the host name check, and adding a check to click event for isTrusted.  (#170)
