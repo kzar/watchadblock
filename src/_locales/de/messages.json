@@ -31,10 +31,6 @@
     "message":"AdBlock-Einstellungen",
     "description":"Title for the options page"
   },
-  "chromebutton_how_to_hide2":{
-    "message":"Um den Button zu verbergen, klicken Sie mit einem Rechtsklick auf den Button und wählen Sie 'Schaltfläche verbergen'. Der Button kann unter chrome:\/\/chrome\/extensions wieder aktiviert werden.",
-    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
-  },
   "operabutton_how_to_hide2":{
     "message":"Um den Button auszublenden, gehen Sie auf opera:\/\/extensions, und aktivieren Sie die Option \"In der Symbolleiste ausblenden\". Um den Button wieder einzublenden, deaktivieren Sie die Option.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
@@ -359,10 +355,6 @@
     "message":"Antisocial Filterliste (entfernt Buttons von sozialen Netzwerken)",
     "description":"A filter list"
   },
-  "filterannoyances":{
-    "message":"Fanboy's Annoyances (entfernt störende\/lästige Inhalte auf Webseiten)",
-    "description":"A filter list"
-  },
   "filterwarning_removal":{
     "message":"'Adblock Warning Removal'-Filterliste (entfernt Warnungen über die Benutzung von Werbe-Blockern)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
@@ -571,6 +563,10 @@
     "message":"Deaktivieren Sie alle Erweiterungen außer AdBlock:",
     "description":"Instruction on ad report page"
   },
+  "disableforchromestepone":{
+    "message":"Öffnen Sie die <a href='#'> Erweiterungen Seite<\/a>.",
+    "description":"Step 1 for disabling Chrome extensions"
+  },
   "clickdisableotherextensions":{
     "message":"<b>Oder<\/b> klicken Sie einfach auf diesen Button um alles oben genannte zu tun: <a>Alle anderen Erweiterungen deaktivieren<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
@@ -685,6 +681,10 @@
   },
   "lang_slovak":{
     "message":"slowakisch",
+    "description":"language"
+  },
+  "lang_spanish":{
+    "message":"spanisch",
     "description":"language"
   },
   "filtereasylist_plus_spanish":{
@@ -1077,10 +1077,6 @@
       }
     }
   },
-  "dropboxerrorforfilters":{
-    "message":"Sie haben die Dateigrößenbeschränkung von Dropbox überschritten. Bitte entfernen Sie einige Einträge aus Ihrer benutzerdefinierten Filterliste, und versuchen Sie es erneut.",
-    "description":"Message to Dropbox sync users on the Customize tab, custom filters \/ disabled."
-  },
   "languagedropdowndescription":{
     "message":"Filterlisten für andere Sprachen hinzufügen: ",
     "description":"Dropdown list for language-specific filters"
@@ -1311,6 +1307,10 @@
     "message":"Sie können dies wieder aktivieren und die Webseiten die Sie mögen unterstützen indem Sie weiter unten \"Einige nicht aufdringliche Werbung zulassen\" aktivieren.",
     "description":"Message shown to users after disabling Acceptable Ads via update page."
   },
+  "adreport_laststep":{
+    "message":"Letzter Schritt: Melden Sie uns das Problem.",
+    "description":"Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
+  },
   "adreport_name":{
     "message":"Name",
     "description":"Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
@@ -1334,6 +1334,10 @@
   "buttonsubmit":{
     "message":"Senden",
     "description":"Button to send a form."
+  },
+  "adreport_missing_info":{
+    "message":"Erforderliche Informationen fehlen oder sind ungültig.  Bitte beantworten sie die Fragen die rot umrahmt sind.",
+    "description":"Error message shown when the user doesn't enter anything in some of the text fields."
   },
   "adreport_response_invalid_file":{
     "message":"Datei ist keine Bilddatei. Bitte laden Sie eine Datei hoch die mit .png, .gif, oder .jpg endet.",

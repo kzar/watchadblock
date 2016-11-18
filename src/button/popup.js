@@ -5,6 +5,7 @@ $(function() {
     localizePage();
 
     var BG = chrome.extension.getBackgroundPage();
+    BG.recordGeneralMessage("popup opened");
 
     // Set menu entries appropriately for the selected tab.
     $(".menu-entry, .menu-status, .separator").hide();
@@ -249,7 +250,7 @@ $(function() {
     });
 
     $("#link_open").click(function() {
-        var linkHref = "https://getadblock.com/share/";
+        var linkHref = "https://getadblock.com/pay/?exp=7002&v=0";
         BG.openTab(linkHref);
         closeAndReloadPopup();
         return;
