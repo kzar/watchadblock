@@ -5,7 +5,6 @@ $(function() {
     localizePage();
 
     var BG = chrome.extension.getBackgroundPage();
-    BG.recordGeneralMessage("popup opened");
 
     // Set menu entries appropriately for the selected tab.
     $(".menu-entry, .menu-status, .separator").hide();

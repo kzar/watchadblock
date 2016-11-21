@@ -164,6 +164,7 @@ if (!LEGACY_SAFARI) {
 
     safari.application.addEventListener("popover", function(event) {
         safari.extension.popovers[0].contentWindow.location.reload();
+        recordGeneralMessage("popup opened");
     }, true);
 
     safari.application.addEventListener("validate", function(event) {
