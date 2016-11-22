@@ -20,6 +20,7 @@ $(function ()
 
   // Set menu entries appropriately for the selected tab.
   $('.menu-entry, .menu-status, .separator').hide();
+  BG.recordGeneralMessage("popup opened");
 
   BG.getCurrentTabInfo(function (info)
   {
@@ -321,7 +322,7 @@ $(function ()
 
   $('#link_open').click(function ()
   {
-    var linkHref = 'https://getadblock.com/share/';
+    var linkHref = "https://getadblock.com/pay/?exp=7002&v=0";
     BG.ext.pages.open(linkHref);
     closeAndReloadPopup();
   });
