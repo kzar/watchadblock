@@ -183,7 +183,7 @@
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Povolit odblokování specifických YouTube kanálů", 
+    "message": "Allow whitelisting of specific YouTube channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -341,7 +341,7 @@
     "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   }, 
   "bugreport": {
-    "message": "Proč nám nepošlete <a>bug report</a>?", 
+    "message": "Why don't you send us a <a>bug report</a>?", 
     "description": "Link to send a bug report on the Support tab of the options"
   }, 
   "buttonback": {
@@ -373,7 +373,7 @@
     "description": "OK button"
   }, 
   "buttonsubmit": {
-    "message": "Submit", 
+    "message": "Odeslat", 
     "description": "Button to send a form."
   }, 
   "cancel": {
@@ -438,7 +438,7 @@
     "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }, 
   "chromebutton_how_to_hide2": {
-    "message": "Chcete-li skrýt tlačítko, klikněte na něj pravým tlačítkem myši a vyberte příkaz Skrýt tlačítko. Můžete jej opět zobrazit zde chrome://chrome/extensions.", 
+    "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   }, 
   "cleanuplist2": {
@@ -549,7 +549,7 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "Nejpopulárnější rozšíření pro Chrome s více než 40 miliony uživateli! Blokujeme reklamy na celém webu.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
@@ -587,7 +587,7 @@
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
-    "message": "Otevřít <a href='#'>panel rozšíření</a>", 
+    "message": "Open the <a href='#'>extensions page</a>.", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
@@ -613,10 +613,6 @@
   "dont_run_on_this_page": {
     "message": "Nepoužívat na této stránce", 
     "description": "Menu entry to whitelist a page"
-  }, 
-  "dropboxerrorforfilters": {
-    "message": "Překročili jste limit velikosti Dropboxu. Prosíme, odstraňte některé položky z Vašeho vlastního, či zakázaného filtru a zkuste to znovu.", 
-    "description": "Message to Dropbox sync users on the Customize tab, custom filters / disabled."
   }, 
   "easy_create_filter": {
     "message": "Blokovat prvek"
@@ -653,38 +649,6 @@
   "fetchinglabel": {
     "message": "Načítám... Prosím, čekejte.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "Používáte zastaralou verzi AdBlocku. Prosím, klikněte na tlačítko menu ve Firefoxu a vyberte Doplňky. Poté na stránce Doplňky klikněte na ikonku ozubeného kolečka a zvolte \"Vyhledat aktualizace\".", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  }, 
-  "ff_button_how_to_hide": {
-    "message": "Pro skrytí tlačítka, klepněte pravým tlačítkem myši a zvolte Skrýt tlačítko. Můžete jej znovu vyvolat pod Firefox menu > Customize", 
-    "description": "Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
-  }, 
-  "ff_checkinchrome_1": {
-    "message": "Nainstalujte Google Chrome, jestli jej ještě nemáte.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_2": {
-    "message": "Nainstalujte AdBlock pro Chrome, jestli jej ještě nemáte.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_3": {
-    "message": "V Chrome se přihlašte k těm stejným filtrům jako zde.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_4": {
-    "message": "V Chrome načtěte stránku s reklamami.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_5": {
-    "message": "Zobrazila se reklama v Chrome také?", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrometitle": {
-    "message": "Zkontrolujte v Chrome", 
-    "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_chinese": {
     "message": "Chinese + EasyList", 
@@ -757,32 +721,32 @@
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
-    "message": "AdBlock filtry", 
+    "message": "AdBlock custom filters", 
     "description": "A filter list"
   }, 
   "filterannoyances": {
-    "message": "Fanboy's Annoyances (odstraní otravnosti na webu)", 
-    "description": "Name of the filter list"
+    "message": "Fanboy's Annoyances (blocks in-page pop-ups, social media and related widgets, and other annoyances)", 
+    "description": "A filter list"
   }, 
   "filterantisocial": {
     "message": "Anti-sociální filtr (odstraní tlačítka na sociální sítě)", 
-    "description": "Name of the filter list"
+    "description": "A filter list"
   }, 
   "filterchinese": {
     "message": "Čínština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterczech": {
     "message": "Česky a Slovensky", 
-    "description": "Language names for a filter list"
+    "description": "A filter list"
   }, 
   "filterdanish": {
     "message": "Dánština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterdutch": {
     "message": "Holandština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist": {
     "message": "EasyList", 
@@ -794,7 +758,7 @@
   }, 
   "filtereasylist_plun_korean": {
     "message": "Korejština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_arabic": {
     "message": "Arabic", 
@@ -802,7 +766,7 @@
   }, 
   "filtereasylist_plus_bulgarian": {
     "message": "Bulharština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_estonian": {
     "message": "Estonian", 
@@ -810,19 +774,19 @@
   }, 
   "filtereasylist_plus_finnish": {
     "message": "Finština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_french": {
     "message": "Francouzština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_german": {
     "message": "Němčina", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_greek": {
     "message": "Řečtina", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonéština", 
@@ -834,15 +798,15 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
     "message": "Rumunština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_spanish": {
     "message": "Španělština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasyprivacy": {
     "message": "EasyPrivacy (ochrana soukromí)", 
@@ -850,7 +814,7 @@
   }, 
   "filterhungarian": {
     "message": "Maďarština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtericelandic": {
     "message": "Icelandic", 
@@ -858,15 +822,15 @@
   }, 
   "filterisraeli": {
     "message": "Hebrejština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filteritalian": {
     "message": "Italština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterjapanese": {
     "message": "Japonština", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterlatvian": {
     "message": "Lotyština", 
@@ -954,8 +918,8 @@
     "description": "A filter list"
   }, 
   "filterwarning_removal": {
-    "message": "Odstranění varování při používání AdBlocku na některých serverech", 
-    "description": "Name of the filter list"
+    "message": "Adblock Warning Removal list (removes warnings about using ad blockers)", 
+    "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
     "message": "Hledání reklam...<br/><br/><i>Bude to trvat pouze chvilku.</i>", 
@@ -1102,7 +1066,7 @@
     "description": "Resource list page: title of a column"
   }, 
   "headertype": {
-    "message": "Type", 
+    "message": "Typ", 
     "description": "Resource list page: title of a column"
   }, 
   "here": {
@@ -1138,51 +1102,51 @@
     "description": "Language name"
   }, 
   "lang_bulgarian": {
-    "message": "Bulgarian", 
+    "message": "Bulharština", 
     "description": "Language name"
   }, 
   "lang_chinese": {
-    "message": "Chinese", 
+    "message": "Čínština", 
     "description": "Language name"
   }, 
   "lang_czech": {
     "message": "Čeština", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_danish": {
-    "message": "Danish", 
+    "message": "Dánština", 
     "description": "Language name"
   }, 
   "lang_dutch": {
-    "message": "Dutch", 
+    "message": "Holandština", 
     "description": "Language name"
   }, 
   "lang_english": {
     "message": "Angličtina", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_estonian": {
     "message": "Estonian", 
     "description": "Language name"
   }, 
   "lang_finnish": {
-    "message": "Finnish", 
+    "message": "Finština", 
     "description": "Language name"
   }, 
   "lang_french": {
-    "message": "French", 
+    "message": "Francouzština", 
     "description": "Language name"
   }, 
   "lang_german": {
-    "message": "German", 
+    "message": "Němčina", 
     "description": "Language name"
   }, 
   "lang_greek": {
-    "message": "Greek", 
+    "message": "Řečtina", 
     "description": "Language name"
   }, 
   "lang_hungarian": {
-    "message": "Hungarian", 
+    "message": "Maďarština", 
     "description": "Language name"
   }, 
   "lang_icelandic": {
@@ -1190,27 +1154,27 @@
     "description": "Language name"
   }, 
   "lang_indonesian": {
-    "message": "Indonesian", 
+    "message": "Indonéština", 
     "description": "Language name"
   }, 
   "lang_israeli": {
-    "message": "Hebrew", 
+    "message": "Hebrejština", 
     "description": "Language name"
   }, 
   "lang_italian": {
-    "message": "Italian", 
+    "message": "Italština", 
     "description": "Language name"
   }, 
   "lang_japanese": {
-    "message": "Japanese", 
+    "message": "Japonština", 
     "description": "Language name"
   }, 
   "lang_korean": {
-    "message": "Korean", 
+    "message": "Korejština", 
     "description": "Language name"
   }, 
   "lang_latvian": {
-    "message": "Latvian", 
+    "message": "Lotyština", 
     "description": "Language name"
   }, 
   "lang_lithuania": {
@@ -1218,36 +1182,36 @@
     "description": "Language name"
   }, 
   "lang_polish": {
-    "message": "Polish", 
+    "message": "Polština", 
     "description": "Language name"
   }, 
   "lang_romanian": {
-    "message": "Romanian", 
+    "message": "Rumunština", 
     "description": "Language name"
   }, 
   "lang_russian": {
     "message": "Ruština", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_slovak": {
     "message": "Slovenština", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_spanish": {
-    "message": "Spanish", 
+    "message": "Španělština", 
     "description": "Language name"
   }, 
   "lang_swedish": {
-    "message": "Swedish", 
+    "message": "Švédština", 
     "description": "Language name"
   }, 
   "lang_turkish": {
-    "message": "Turkish", 
+    "message": "Turečtina", 
     "description": "Language name"
   }, 
   "lang_ukranian": {
     "message": "Ukrajinština", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "languagedropdowndescription": {
     "message": "Přidat filtry pro jiný jazyk: ", 
@@ -1532,10 +1496,6 @@
     "message": "Poznámka: vaše hlášení může být veřejně dostupné. Mějte to na paměti předtím, než vložíte cokoli soukromého.", 
     "description": "Ad report page string, when you're about to submit a report"
   }, 
-  "reporttous2": {
-    "message": "Pokud umíte anglicky, můžete nám reklamu nahlásit <a>na seznam problémů</a>.", 
-    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
-  }, 
   "resourceblocktitle": {
     "message": "All Resources", 
     "description": "Resource list page name"
@@ -1701,10 +1661,6 @@
   "stats_title": {
     "message": "Blokovaných reklam"
   }, 
-  "status_disabled": {
-    "message": "AdBlock nelze spustit na této doméně.", 
-    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
-  }, 
   "status_paused": {
     "message": "AdBlock je pozastaven.", 
     "description": "Message shown in toolbar button when AdBlock is paused"
@@ -1805,7 +1761,7 @@
     "description": "A resource type"
   }, 
   "typemain_frame": {
-    "message": "page", 
+    "message": "stránka", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1845,7 +1801,7 @@
     "description": "A resource type"
   }, 
   "typesub_frame": {
-    "message": "frame", 
+    "message": "rámec", 
     "description": "A resource type"
   }, 
   "typesubdocument": {

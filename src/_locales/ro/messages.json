@@ -183,7 +183,7 @@
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Permite whitelisting pentru canale Youtube specifice", 
+    "message": "Allow whitelisting of specific YouTube channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -341,7 +341,7 @@
     "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   }, 
   "bugreport": {
-    "message": "De ce nu ne trimiteţi un <a> raport de problemă</a>?", 
+    "message": "Why don't you send us a <a>bug report</a>?", 
     "description": "Link to send a bug report on the Support tab of the options"
   }, 
   "buttonback": {
@@ -438,7 +438,7 @@
     "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }, 
   "chromebutton_how_to_hide2": {
-    "message": "Pentru a ascunde butonul, click dreapta, iar apoi alege 'Ascundeți butonul'. Pentru a-l arăta trebuie să accesați managerul de extensii.", 
+    "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   }, 
   "cleanuplist2": {
@@ -549,7 +549,7 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "Cea mai populară extensie pentru Chrome, cu peste 40 de milioane de utilizatori! Blochează orice reclamă pe web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
@@ -587,7 +587,7 @@
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
-    "message": "Deschide <a href='#'>managerul de extensii</a>", 
+    "message": "Open the <a href='#'>extensions page</a>.", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
@@ -613,10 +613,6 @@
   "dont_run_on_this_page": {
     "message": "Nu rula pe această pagină", 
     "description": "Menu entry to whitelist a page"
-  }, 
-  "dropboxerrorforfilters": {
-    "message": "Ai depăşit limita de spaţiu Dropbox. Te rugăm îndepărtează câteva intrări din filtrele proprii sau cele dezactivate şi încearcă din nou.", 
-    "description": "Message to Dropbox sync users on the Customize tab, custom filters / disabled."
   }, 
   "easy_create_filter": {
     "message": "Blochează elementul"
@@ -653,38 +649,6 @@
   "fetchinglabel": {
     "message": "Preluare... vă rugăm așteptați.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "Utilizaţi o versiune veche de AdBlock. Vă rugăm să faceţi clic pe butonul Firefox Meniu şi selectaţi Suplimente. Apoi in pagina de suplimente, faceţi clic pe pictograma roţii dinţate (instrumente pentru suplimente) şi alegeţi 'Verifică actualizari'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  }, 
-  "ff_button_how_to_hide": {
-    "message": "Pentru a ascunde butonul, faceţi click dreapta pe el si alegeţi Remove din Toolbar. Îl puteţi afişa din nou din meniul Firefox -> Customize.", 
-    "description": "Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
-  }, 
-  "ff_checkinchrome_1": {
-    "message": "Instalează Chrome dacă nu-l ai.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_2": {
-    "message": "Instalaţi AdBlock pentru Chrome, dacă nu îl aveţi.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_3": {
-    "message": "În Chrome, abonaţi-vă la aceleaşi liste de filtrare ca aici.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_4": {
-    "message": "În Chrome, incărcaţi pagina cu reclama.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_5": {
-    "message": "Reclama apare şi în Chrome?", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrometitle": {
-    "message": "Verifică în Chrome", 
-    "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_chinese": {
     "message": "Chinese + EasyList", 
@@ -757,32 +721,32 @@
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
-    "message": "Filtre AdBlock personalizate", 
+    "message": "AdBlock custom filters", 
     "description": "A filter list"
   }, 
   "filterannoyances": {
-    "message": "Fanboy's Annoyances (înlătură deranjurile pe Web)", 
-    "description": "Name of the filter list"
+    "message": "Fanboy's Annoyances (blocks in-page pop-ups, social media and related widgets, and other annoyances)", 
+    "description": "A filter list"
   }, 
   "filterantisocial": {
     "message": "Filtru rețele sociale (elimină butoanele sociale)", 
-    "description": "Name of the filter list"
+    "description": "A filter list"
   }, 
   "filterchinese": {
     "message": "Chineză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterczech": {
     "message": "Cehă și Slovacă", 
-    "description": "Language names for a filter list"
+    "description": "A filter list"
   }, 
   "filterdanish": {
     "message": "Daneză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterdutch": {
     "message": "Olandeză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist": {
     "message": "EasyList", 
@@ -794,7 +758,7 @@
   }, 
   "filtereasylist_plun_korean": {
     "message": "Coreeană", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_arabic": {
     "message": "Arabic", 
@@ -802,7 +766,7 @@
   }, 
   "filtereasylist_plus_bulgarian": {
     "message": "Bulgară", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_estonian": {
     "message": "Estonian", 
@@ -810,19 +774,19 @@
   }, 
   "filtereasylist_plus_finnish": {
     "message": "Finlandeză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_french": {
     "message": "Franceză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_german": {
     "message": "Germană", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_greek": {
     "message": "Greacă", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indoneziană", 
@@ -834,15 +798,15 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Poloneză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
     "message": "Română", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_spanish": {
     "message": "Spaniolă", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasyprivacy": {
     "message": "EasyPrivacy (protecție a vieții private)", 
@@ -850,7 +814,7 @@
   }, 
   "filterhungarian": {
     "message": "Maghiară", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtericelandic": {
     "message": "Icelandic", 
@@ -858,15 +822,15 @@
   }, 
   "filterisraeli": {
     "message": "Ebraică", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filteritalian": {
     "message": "Italiană", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterjapanese": {
     "message": "Japoneză", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterlatvian": {
     "message": "Letonă", 
@@ -954,8 +918,8 @@
     "description": "A filter list"
   }, 
   "filterwarning_removal": {
-    "message": "Lista AdBlock Warning Removal (elimină mesajele despre utilizarea AdBlock)", 
-    "description": "Name of the filter list"
+    "message": "Adblock Warning Removal list (removes warnings about using ad blockers)", 
+    "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
     "message": "Căutare reclame... <br/><br/><i>Va rugăm așteptați.</i>", 
@@ -1099,7 +1063,7 @@
     "description": "Resource list page: title of a column"
   }, 
   "headertype": {
-    "message": "Type", 
+    "message": "Tip", 
     "description": "Resource list page: title of a column"
   }, 
   "here": {
@@ -1135,51 +1099,51 @@
     "description": "Language name"
   }, 
   "lang_bulgarian": {
-    "message": "Bulgarian", 
+    "message": "Bulgară", 
     "description": "Language name"
   }, 
   "lang_chinese": {
-    "message": "Chinese", 
+    "message": "Chineză", 
     "description": "Language name"
   }, 
   "lang_czech": {
     "message": "Cehă", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_danish": {
-    "message": "Danish", 
+    "message": "Daneză", 
     "description": "Language name"
   }, 
   "lang_dutch": {
-    "message": "Dutch", 
+    "message": "Olandeză", 
     "description": "Language name"
   }, 
   "lang_english": {
     "message": "Engleză", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_estonian": {
     "message": "Estonian", 
     "description": "Language name"
   }, 
   "lang_finnish": {
-    "message": "Finnish", 
+    "message": "Finlandeză", 
     "description": "Language name"
   }, 
   "lang_french": {
-    "message": "French", 
+    "message": "Franceză", 
     "description": "Language name"
   }, 
   "lang_german": {
-    "message": "German", 
+    "message": "Germană", 
     "description": "Language name"
   }, 
   "lang_greek": {
-    "message": "Greek", 
+    "message": "Greacă", 
     "description": "Language name"
   }, 
   "lang_hungarian": {
-    "message": "Hungarian", 
+    "message": "Maghiară", 
     "description": "Language name"
   }, 
   "lang_icelandic": {
@@ -1187,27 +1151,27 @@
     "description": "Language name"
   }, 
   "lang_indonesian": {
-    "message": "Indonesian", 
+    "message": "Indoneziană", 
     "description": "Language name"
   }, 
   "lang_israeli": {
-    "message": "Hebrew", 
+    "message": "Ebraică", 
     "description": "Language name"
   }, 
   "lang_italian": {
-    "message": "Italian", 
+    "message": "Italiană", 
     "description": "Language name"
   }, 
   "lang_japanese": {
-    "message": "Japanese", 
+    "message": "Japoneză", 
     "description": "Language name"
   }, 
   "lang_korean": {
-    "message": "Korean", 
+    "message": "Coreeană", 
     "description": "Language name"
   }, 
   "lang_latvian": {
-    "message": "Latvian", 
+    "message": "Letonă", 
     "description": "Language name"
   }, 
   "lang_lithuania": {
@@ -1215,36 +1179,36 @@
     "description": "Language name"
   }, 
   "lang_polish": {
-    "message": "Polish", 
+    "message": "Poloneză", 
     "description": "Language name"
   }, 
   "lang_romanian": {
-    "message": "Romanian", 
+    "message": "Română", 
     "description": "Language name"
   }, 
   "lang_russian": {
     "message": "Rusă", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_slovak": {
     "message": "Slovacă", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_spanish": {
-    "message": "Spanish", 
+    "message": "Spaniolă", 
     "description": "Language name"
   }, 
   "lang_swedish": {
-    "message": "Swedish", 
+    "message": "Suedeză", 
     "description": "Language name"
   }, 
   "lang_turkish": {
-    "message": "Turkish", 
+    "message": "Turcă", 
     "description": "Language name"
   }, 
   "lang_ukranian": {
     "message": "Ucraineană", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "languagedropdowndescription": {
     "message": "Adaugă filtru pentru altă limbă: ", 
@@ -1529,10 +1493,6 @@
     "message": "Notă: raportul tău poate deveni accesibil publicului. Gândește-te la aceasta înainte de a include ceva privat.", 
     "description": "Ad report page string, when you're about to submit a report"
   }, 
-  "reporttous2": {
-    "message": "If you can speak English, you can report the ad to us <a>in the issue tracker</a>.", 
-    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
-  }, 
   "resourceblocktitle": {
     "message": "All Resources", 
     "description": "Resource list page name"
@@ -1698,10 +1658,6 @@
   "stats_title": {
     "message": "Reclame blocate"
   }, 
-  "status_disabled": {
-    "message": "AdBlock nu poate rula pe acest domeniu.", 
-    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
-  }, 
   "status_paused": {
     "message": "AdBlock este pauzat.", 
     "description": "Message shown in toolbar button when AdBlock is paused"
@@ -1802,7 +1758,7 @@
     "description": "A resource type"
   }, 
   "typemain_frame": {
-    "message": "page", 
+    "message": "pagină", 
     "description": "A resource type"
   }, 
   "typemedia": {

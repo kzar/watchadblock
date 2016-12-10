@@ -183,7 +183,7 @@
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Tillad whitelisting af bestemte YouTube-kanaler", 
+    "message": "Allow whitelisting of specific YouTube channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -341,7 +341,7 @@
     "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   }, 
   "bugreport": {
-    "message": "Hvorfor ikke sende os en <a>fejlrapport</a>?", 
+    "message": "Why don't you send us a <a>bug report</a>?", 
     "description": "Link to send a bug report on the Support tab of the options"
   }, 
   "buttonback": {
@@ -438,7 +438,7 @@
     "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }, 
   "chromebutton_how_to_hide2": {
-    "message": "For at skjule knappen skal du højreklikke på den og vælge 'Skjul knap'. Du kan få den frem igen ved at gå til chrome://chrome/extensions.", 
+    "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   }, 
   "cleanuplist2": {
@@ -549,7 +549,7 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "Den mest populære udvidelse til Chrome, med over 40 millioner brugere! Blokerer reklamer overalt på internettet.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
@@ -587,7 +587,7 @@
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
-    "message": "Åben siden for <a href='#'>udvidelser</a>", 
+    "message": "Open the <a href='#'>extensions page</a>.", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
@@ -649,30 +649,6 @@
   "fetchinglabel": {
     "message": "Henter... vent venligst.", 
     "description": "Status label"
-  }, 
-  "ff_checkinchrome_1": {
-    "message": "Installér Chrome, hvis du ikke har det.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_2": {
-    "message": "Installér AdBlock til Chrome, hvis du ikke har det.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_3": {
-    "message": "I Chrome, abonnér på de samme filterlister som du har her.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_4": {
-    "message": "I Chrome, indlæs siden med annoncen.", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrome_5": {
-    "message": "Er reklamen også vist i Chrome?", 
-    "description": "Instruction for how to check Chrome for a reported ad"
-  }, 
-  "ff_checkinchrometitle": {
-    "message": "Tjek i Chrome", 
-    "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_chinese": {
     "message": "Chinese + EasyList", 
@@ -745,32 +721,32 @@
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
-    "message": "AdBlock-brugerdefinerede filtre", 
+    "message": "AdBlock custom filters", 
     "description": "A filter list"
   }, 
   "filterannoyances": {
-    "message": "Fanboy's Annoyances (fjerner irritationer på nettet)", 
-    "description": "Name of the filter list"
+    "message": "Fanboy's Annoyances (blocks in-page pop-ups, social media and related widgets, and other annoyances)", 
+    "description": "A filter list"
   }, 
   "filterantisocial": {
     "message": "Antisocial-filterliste (fjerner sociale medierknapper)", 
-    "description": "Name of the filter list"
+    "description": "A filter list"
   }, 
   "filterchinese": {
     "message": "Kinesisk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterczech": {
     "message": "Tjekkisk og slovakisk", 
-    "description": "Language names for a filter list"
+    "description": "A filter list"
   }, 
   "filterdanish": {
     "message": "Dansk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterdutch": {
     "message": "Hollandsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist": {
     "message": "EasyList", 
@@ -782,7 +758,7 @@
   }, 
   "filtereasylist_plun_korean": {
     "message": "Koreansk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_arabic": {
     "message": "Arabic", 
@@ -790,7 +766,7 @@
   }, 
   "filtereasylist_plus_bulgarian": {
     "message": "Bulgarsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_estonian": {
     "message": "Estonian", 
@@ -798,19 +774,19 @@
   }, 
   "filtereasylist_plus_finnish": {
     "message": "Finsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_french": {
     "message": "Fransk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_german": {
     "message": "Tysk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_greek": {
     "message": "Græsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesisk", 
@@ -822,15 +798,15 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
     "message": "Romænsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasylist_plus_spanish": {
     "message": "Spansk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtereasyprivacy": {
     "message": "EasyPrivacy (beskyttelse af privatliv)", 
@@ -838,7 +814,7 @@
   }, 
   "filterhungarian": {
     "message": "Ungarsk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filtericelandic": {
     "message": "Icelandic", 
@@ -846,15 +822,15 @@
   }, 
   "filterisraeli": {
     "message": "Hebræisk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filteritalian": {
     "message": "Italiensk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterjapanese": {
     "message": "Japansk", 
-    "description": "language"
+    "description": "A filter list"
   }, 
   "filterlatvian": {
     "message": "Lettisk", 
@@ -942,8 +918,8 @@
     "description": "A filter list"
   }, 
   "filterwarning_removal": {
-    "message": "AdBlock-deaktiveringsadvarselsliste (fjerner meddelelser om at bruge AdBlock)", 
-    "description": "Name of the filter list"
+    "message": "Adblock Warning Removal list (removes warnings about using ad blockers)", 
+    "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
     "message": "Finder reklamer...<br/><br/><i>Det tager kun et øjeblik.</i>", 
@@ -1126,51 +1102,51 @@
     "description": "Language name"
   }, 
   "lang_bulgarian": {
-    "message": "Bulgarian", 
+    "message": "Bulgarsk", 
     "description": "Language name"
   }, 
   "lang_chinese": {
-    "message": "Chinese", 
+    "message": "Kinesisk", 
     "description": "Language name"
   }, 
   "lang_czech": {
     "message": "Tjekkisk", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_danish": {
-    "message": "Danish", 
+    "message": "Dansk", 
     "description": "Language name"
   }, 
   "lang_dutch": {
-    "message": "Dutch", 
+    "message": "Hollandsk", 
     "description": "Language name"
   }, 
   "lang_english": {
     "message": "Engelsk", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_estonian": {
     "message": "Estonian", 
     "description": "Language name"
   }, 
   "lang_finnish": {
-    "message": "Finnish", 
+    "message": "Finsk", 
     "description": "Language name"
   }, 
   "lang_french": {
-    "message": "French", 
+    "message": "Fransk", 
     "description": "Language name"
   }, 
   "lang_german": {
-    "message": "German", 
+    "message": "Tysk", 
     "description": "Language name"
   }, 
   "lang_greek": {
-    "message": "Greek", 
+    "message": "Græsk", 
     "description": "Language name"
   }, 
   "lang_hungarian": {
-    "message": "Hungarian", 
+    "message": "Ungarsk", 
     "description": "Language name"
   }, 
   "lang_icelandic": {
@@ -1178,27 +1154,27 @@
     "description": "Language name"
   }, 
   "lang_indonesian": {
-    "message": "Indonesian", 
+    "message": "Indonesisk", 
     "description": "Language name"
   }, 
   "lang_israeli": {
-    "message": "Hebrew", 
+    "message": "Hebræisk", 
     "description": "Language name"
   }, 
   "lang_italian": {
-    "message": "Italian", 
+    "message": "Italiensk", 
     "description": "Language name"
   }, 
   "lang_japanese": {
-    "message": "Japanese", 
+    "message": "Japansk", 
     "description": "Language name"
   }, 
   "lang_korean": {
-    "message": "Korean", 
+    "message": "Koreansk", 
     "description": "Language name"
   }, 
   "lang_latvian": {
-    "message": "Latvian", 
+    "message": "Lettisk", 
     "description": "Language name"
   }, 
   "lang_lithuania": {
@@ -1206,36 +1182,36 @@
     "description": "Language name"
   }, 
   "lang_polish": {
-    "message": "Polish", 
+    "message": "Polsk", 
     "description": "Language name"
   }, 
   "lang_romanian": {
-    "message": "Romanian", 
+    "message": "Romænsk", 
     "description": "Language name"
   }, 
   "lang_russian": {
     "message": "Russisk", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_slovak": {
     "message": "Slovakisk", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "lang_spanish": {
-    "message": "Spanish", 
+    "message": "Spansk", 
     "description": "Language name"
   }, 
   "lang_swedish": {
-    "message": "Swedish", 
+    "message": "Svensk", 
     "description": "Language name"
   }, 
   "lang_turkish": {
-    "message": "Turkish", 
+    "message": "Tyrkisk", 
     "description": "Language name"
   }, 
   "lang_ukranian": {
     "message": "Ukrainsk", 
-    "description": "language"
+    "description": "Language name"
   }, 
   "languagedropdowndescription": {
     "message": "Tilføj filtre for et andet sprog: ", 
@@ -1520,10 +1496,6 @@
     "message": "Bemærk: din rapport kan blive offentligt tilgængelig. Hav det i tankerne, inden du inkluderer personlige informationer.", 
     "description": "Ad report page string, when you're about to submit a report"
   }, 
-  "reporttous2": {
-    "message": "Du kan rapportere reklamen til os <a>i issue trackereren (engelsk)</a>.", 
-    "description": "NOTE: non-English translations should replace the first sentence and instead say 'If you can speak English, you can report the ad to us <a>in the issue tracker</a>.'"
-  }, 
   "resourceblocktitle": {
     "message": "All Resources", 
     "description": "Resource list page name"
@@ -1689,10 +1661,6 @@
   "stats_title": {
     "message": "Blokerede reklamer"
   }, 
-  "status_disabled": {
-    "message": "AdBlock kan ikke benyttes på dette domæne.", 
-    "description": "Message shown in toolbar button on web pages that disallow extensions, such as the Extensions Gallery or about:blank"
-  }, 
   "status_paused": {
     "message": "AdBlock er midlertidigt afbrudt.", 
     "description": "Message shown in toolbar button when AdBlock is paused"
@@ -1793,7 +1761,7 @@
     "description": "A resource type"
   }, 
   "typemain_frame": {
-    "message": "page", 
+    "message": "side", 
     "description": "A resource type"
   }, 
   "typemedia": {
