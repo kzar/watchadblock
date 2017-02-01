@@ -249,7 +249,7 @@ $(function() {
     });
 
     $("#link_open").click(function() {
-        var linkHref = "https://getadblock.com/pay/?exp=7002&v=0";
+        var linkHref = "https://getadblock.com/pay/?exp=7003&u=" + BG.STATS.userId;
         BG.openTab(linkHref);
         closeAndReloadPopup();
         return;

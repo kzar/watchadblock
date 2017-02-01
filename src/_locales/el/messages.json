@@ -1,6 +1,14 @@
 {
+  "description":{
+    "message":"Η πιο δημοφιλής επέκταση Chrome, με πάνω από 40 εκατομμύρια χρήστες! Μπλοκάρει διαφημίσεις σε όλο τον ιστό.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"Η πιο δημοφιλής επέκταση Chrome, με πάνω από 40 εκατομμύρια χρήστες! Μπλοκάρει διαφημίσεις σε όλο τον ιστό.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
+  "description_edge":{
+    "message":"AdBlock. Το #1 εργαλείο αποκλεισμού διαφημίσεων με πάνω από 200 εκατομμύρια λήψεις. Μπλοκάρει αγγελίες σε όλο τον ιστό.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -30,6 +38,10 @@
   "optionstitle":{
     "message":"Επιλογές του AdBlock",
     "description":"Title for the options page"
+  },
+  "chromebutton_how_to_hide2":{
+    "message":"Κάντε δεξιό κλικ στο κουμπί AdBlock και επιλέξτε \"Απόκρυψη στο μενού του Chrome\". Για να το δείτε, κάντε κλικ στο μενού του Chrome, κάντε δεξιό κλικ στο κουμπί AdBlock και επιλέξτε 'Διατήρηση στη γραμμή εργαλείων'.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
     "message":"Για να κρύψετε το κουμπί, πηγαίνετε στο opera:\/\/extensions και επιλέξτε το 'Απόκρυψη από τη γραμμή εργαλείων'. Μπορείτε να το εμφανίσετε ξανά αναιρώντας αυτή την επιλογή.",
@@ -244,7 +256,7 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "datacollectionoption":{
-    "message":"Να επιτρέπεται στο AdBlock να συγκεντρώνει ανώνυμα χρήση και δεδομένα λίστας φίλτρων",
+    "message":"Να επιτρέπεται στο AdBlock να συλλέγει ανώνυμα δεδομένα και χρήση λίστας φίλτρων",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "updatedrightnow":{
@@ -311,6 +323,22 @@
     "message":"Ανάκτηση... Παρακαλώ περιμένετε.",
     "description":"Status label"
   },
+  "ab_filters_subscription_lastDownload_invalidURL":{
+    "message":"Απέτυχε, δεν είναι μια έγκυρη διεύθυνση",
+    "description":"message on the filter tab - Message when you subscribe to a non-list URL"
+  },
+  "ab_filters_subscription_lastDownload_connectionError":{
+    "message":"Απέτυχε, αποτυχία λήψης",
+    "description":"message on the filter tab - Generic filter list download error message"
+  },
+  "ab_filters_subscription_lastDownload_invalidData":{
+    "message":"Απέτυχε, δεν είναι μια έγκυρη λίστα φίλτρων",
+    "description":"message on the filter tab - Invalid filter list file"
+  },
+  "ab_filters_subscription_lastDownload_checksumMismatch":{
+    "message":"Απέτυχε, ασυμφωνία επαληθευτικού αθροίσματος",
+    "description":"message on the filter tab"
+  },
   "invalidListUrl":{
     "message":"Μη έγκυρη διεύθυνση URL λίστας. Θα διαγραφεί.",
     "description":"Message when you subscribe to a non-list URL"
@@ -355,29 +383,45 @@
     "message":"Λίστα φίλτρου Antisocial (αφαιρεί τα κουμπιά κοινωνικής δικτύωσης)",
     "description":"A filter list"
   },
+  "filterannoyances":{
+    "message":"Fanboy's Annoyances (μπλοκάρει αναδυόμενα σε σελίδα, κοινωνικά μέσα δικτύωσης και σχετικά γραφικά στοιχεία και άλλες ενοχλήσεις)",
+    "description":"A filter list"
+  },
   "filterwarning_removal":{
     "message":"Λίστα αφαίρεσης Προειδοποιήσεων AdBlock (αφαιρεί τα μηνύματα που αφορούν τη χρήση AdBlock)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
-    "message":"Αποδεκτές διαφημίσεις (προτείνεται)",
+    "message":"Αποδεκτές διαφημίσεις",
     "description":"A filter list"
   },
   "filteradblock_custom":{
-    "message":"Προσαρμοσμένα φίλτρα του AdBlock (προτείνεται)",
+    "message":"AdBlock προσαρμοσμένα φίλτρα",
     "description":"A filter list"
   },
   "filtereasylist":{
-    "message":"EasyList (προτείνεται)",
+    "message":"EasyList",
+    "description":"A filter list"
+  },
+  "filtereasylist_lite":{
+    "message":"EasyList Lite (συνιστάται)",
     "description":"A filter list"
   },
   "filterrussian":{
     "message":"Ρωσικά και Ουκρανικά",
     "description":"Language names for a filter list"
   },
+  "filter_russian":{
+    "message":"Ρωσικά & Ουκρανικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filterczech":{
     "message":"Τσεχικά και Σλοβακικά",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
+  },
+  "filter_czech":{
+    "message":"Τσεχικά & Σλοβακικά + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (προστασία προσωπικών δεδομένων)",
@@ -387,6 +431,10 @@
     "message":"Ινδονησιακά",
     "description":"A filter list"
   },
+  "filter_easylist_plus_indonesian":{
+    "message":"Ινδονησιακά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filtermalware":{
     "message":"Προστασία από κακόβουλο λογισμικό",
     "description":"A filter list"
@@ -394,6 +442,10 @@
   "filterlatvian":{
     "message":"Λετονικά",
     "description":"A filter list"
+  },
+  "filter_latvian":{
+    "message":"Λετονικά + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filterswedish":{
     "message":"Σουηδικά",
@@ -462,6 +514,14 @@
   "filtersavewarning":{
     "message":"ΠΡΟΣΟΧΗ: αν κάνετε ένα λάθος εδώ, πολλά άλλα φίλτρα, συμπεριλαμβανομένων των επίσημων, μπορεί να πάθουν ζημιά! <br\/>Διαβάστε τις<a> οδηγίες για σύνταξη φίλτρων<\/a> για να μάθετε πώς να προσθέσετε προηγμένες μαύρες και λευκές λίστες φίλτρων.",
     "description":"Warning when blacklisting manually"
+  },
+  "migration_error_message":{
+    "message":"Έχουμε βρεί κάποια λάθη στα προσαρμοσμένα φίλτρα σας. Δείτε παρακάτω για τα μηνύματα.",
+    "description":"Warning when adding custom filters manually"
+  },
+  "delete_migration_error_messages":{
+    "message":"Διαγραφή μηνυμάτων",
+    "description":"Button to delete error messages when adding custom filters manually"
   },
   "contentblockingwarning":{
     "message":"Σημείωση: η καταχώρηση στη λευκή λίστα (που επιτρέπει διαφημίσεις) μιας σελίδας ή ενός ιστότοπου, δεν υποστηρίζεται με ενεργοποιημένο αποκλεισμό περιεχομένου Safari.",
@@ -609,107 +669,243 @@
   },
   "lang_english":{
     "message":"Αγγλικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"Βουλγαρικά",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"Κινεζικά",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"Τσεχικά",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"Δανικά",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"Ολλανδικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"Φινλανδικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"Γαλλικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"Γερμανικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"Ελληνικά",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"Ουγγαρικά",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"Εβραϊκά",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"Ιταλικά",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"Ιαπωνικά",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"Κορεατικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"Πολωνικά",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"Ρουμανικά",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"Ρωσικά",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"Σλοβακικά",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"Ισπανικά",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"Ισπανικά",
-    "description":"language"
+  "lang_russian":{
+    "message":"Ρωσικά",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"Σλοβακικά",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"Ουκρανικά",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"Αραβικά",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"Βουλγαρικά",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"Κινεζικά",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"Δανικά",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"Ολλανδικά",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"Εσθονικά",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"Φινλανδικά",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"Γαλλικά",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"Γερμανικά",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"Ελληνικά",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"Ουγγαρικά",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"Ινδονησιακά",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"Ισλανδικά",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"Εβραϊκά",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"Ιταλικά",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"Ιαπωνικά",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"Κορεατικά",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"Λιθουανικά",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"Πολωνικά",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"Ρουμανικά",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"Λετονικά",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"Σουηδικά",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"Τουρκικά",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"Βουλγαρικά",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_bulgarian":{
+    "message":"Βουλγαρικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterchinese":{
+    "message":"Κινεζικά",
+    "description":"A filter list"
+  },
+  "filter_chinese":{
+    "message":"Κινέζικα + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterdanish":{
+    "message":"Δανικά",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"Ολλανδικά",
+    "description":"A filter list"
+  },
+  "filter_dutch":{
+    "message":"Ολλανδικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"Φινλανδικά",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"Γαλλικά",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_french":{
+    "message":"Γαλλικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_german":{
+    "message":"Γερμανικά",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_german":{
+    "message":"Γερμανικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"Ελληνικά",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"Ουγγαρικά",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"Εβραϊκά",
+    "description":"A filter list"
+  },
+  "filter_israeli":{
+    "message":"Εβραϊκά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filteritalian":{
+    "message":"Ιταλικά",
+    "description":"A filter list"
+  },
+  "filter_italian":{
+    "message":"Ιταλικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterjapanese":{
+    "message":"Ιαπωνικά",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"Κορεατικά",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"Πολωνικά",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"Ρουμανικά",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_romanian":{
+    "message":"Ρουμανικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"Ισπανικά",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"Αραβικά",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_arabic":{
+    "message":"Αραβικά + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filter_easylist_plus_arabic_plus_french":{
+    "message":"Αραβικά + Γαλλικά + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasylist_plus_estonian":{
     "message":"Εσθονικά",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"Ισλανδικά",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"Λιθουανικά",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_lithuania":{
+    "message":"Λιθουανικά + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "other":{
     "message":"Άλλη",
@@ -863,6 +1059,10 @@
     "message":"σελίδα",
     "description":"A resource type"
   },
+  "typewebsocket":{
+    "message":"websocket",
+    "description":"A resource type"
+  },
   "typeunknown":{
     "message":"άγνωστο",
     "description":"A resource type"
@@ -959,9 +1159,17 @@
     "message":"Βοηθήστε να το διαδώσουμε!",
     "description":"Text of a share link"
   },
+  "donate_to_adblock":{
+    "message":"Αγαπάτε το AdBlock; Εξετάστε τη δωρεά!",
+    "description":"Text of a donate link in the toolbar button menu"
+  },
   "pwyw":{
     "message":"Πληρώστε ό,τι θέλετε!",
     "description":"Text of a payment request link"
+  },
+  "privacy_policy":{
+    "message":"Πολιτική απορρήτου",
+    "description":"Link to AdBlock's privacy policy"
   },
   "translator_credit":{
     "message":"Εύσημα για την μετάφραση δίνονται σε:",
@@ -1055,6 +1263,10 @@
     "message":"Εμφάνιση αριθμού μπλοκαρισμένων διαφημίσεων στο μενού του AdBlock",
     "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
   },
+  "show_devtools_panel":{
+    "message":"Εμφάνιση πίνακα 'AdBlock' στα εργαλεία προγραμματιστή",
+    "description":"Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
+  },
   "adblockinglist":{
     "message":"Λίστες φίλτρων μπλοκαρίσματος διαφημίσεων",
     "description":"List for subscribed ad blocking fiters"
@@ -1085,21 +1297,33 @@
     "message":"Προσθέστε φίλτρα για άλλη γλώσσα: ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Τι είναι αυτό;",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Πώς;",
     "description":"Text of a link pointing to instructions on how to do something"
+  },
+  "whats_this":{
+    "message":"Τι είναι αυτό;",
+    "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
     "message":" -- Επιλέξτε γλώσσα -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Να επιτρέπεται η καταχώρηση στη λευκή λίστα συγκεκριμένων καναλιών του YouTube",
+    "message":"Να επιτρέπεται η λευκή λίστα συγκεκριμένων καναλιών στο YouTube (απαιτεί επανεκκίνηση του περιηγητή σας)",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_all_youtube_channels":{
+    "message":"Στην λευκή λίστα όλα τα συνδρομητικά κανάλια YouTube",
+    "description":"Toolbar button menu entry, displayed only on youtube.com\/feed\/subscriptions and if the YouTube channel whitelisting option is enabled"
+  },
+  "one_moment_all_youtube_channels":{
+    "message":"Περιμένετε λίγο καθώς συγκεντρώνουμε όλες τις συνδρομές σας",
+    "description":"Alert message displayed when whitelisting all subscribed YouTube channels"
+  },
+  "all_youtube_channels_complete":{
+    "message":"Όλα τα συνδρομητικά σας κανάλια YouTube μπήκαν στη λευκή λίστα",
+    "description":"Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   },
   "whitelist_youtube_channel":{
     "message":"Στη λευκή λίστα το κανάλι $name$",
@@ -1226,6 +1450,14 @@
   "show_resourcelist":{
     "message":"Εμφάνιση όλων των αιτήσεων",
     "description":"Menu entry to open the resource list page"
+  },
+  "new_resourcelist_explanation_win":{
+    "message":"Για να εμφανίσετε όλα τα αιτήματα, κάντε δεξί κλικ στη σελίδα, επιλέξτε 'Έλεγχος' (Ctrl+Shift+I), στη συνέχεια επιλέξτε την καρτέλα 'AdBlock'.",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
+  },
+  "new_resourcelist_explanation_osx":{
+    "message":"Για να εμφανίσετε όλα τα αιτήματα, κάντε δεξί κλικ στη σελίδα, επιλέξτε 'Έλεγχος' (Option+Cmd+I), στη συνέχεια επιλέξτε την καρτέλα 'AdBlock'.",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
   },
   "noresourcessend2":{
     "message":"Κάτι πήγε λάθος. Κανένας πόρος δεν έχει αποσταλεί. Αυτή η σελίδα θα κλείσει τώρα. Δοκιμάστε να φορτώσετε ξανά την ιστοσελίδα.",
@@ -1359,10 +1591,6 @@
     "message":"Ξεχάσατε να επισυνάψετε ένα στιγμιότυπο οθόνης! Δεν μπορούμε να σας βοηθήσουμε χωρίς να δούμε την διαφήμιση που θέλετε να αναφέρετε.",
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
   },
-  "adreport_response_success":{
-    "message":"Όλα έτοιμα!  Θα έρθουμε σε επαφή σύντομα, πιθανότατα μέσα σε μια μέρα, δύο αν είναι διακοπές. Εν τω μεταξύ, αναζητήστε ένα μήνυμα ηλεκτρονικού ταχυδρομείου από το AdBlock. Εκεί θα βρείτε έναν σύνδεσμο για το εισιτήριο σας στην ιστοσελίδα βοήθειας. Εάν προτιμάτε να ακολουθήσετε με ηλεκτρονικό ταχυδρομείο, μπορείτε να το κάνετε και αυτό!",
-    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
-  },
   "adreport_response_invalid_file":{
     "message":"Αυτό δεν είναι αρχείο εικόνας. Παρακαλούμε αποστείλτε ένα αρχείο .png, .gif ή .jpg.",
     "description":"Error message shown when the user uploads an invalid file type."
@@ -1394,5 +1622,17 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"Και δημιουργήστε ένα εισιτήριο χειροκίνητα, και αντιγράψτε και επικολλήστε τις παρακάτω πληροφορίες στην ενότητα \"Σημπληρώστε τυχόν λεπτομέρειες που νομίζετε ότι θα μας βοηθήσουν να κατανοήσουμε το πρόβλημά σας\".",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "custom_filters_migration_error_message_part1":{
+    "message":"Μέτρηση σφαλμάτων προσαρμοσμένων φίλτρων: ",
+    "description":"Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part2":{
+    "message":"Δημιουργήθηκαν τα ακόλουθα μηνύματα κατά τη μετεγκατάσταση προσαρμοσμένου φίλτρου (αγνοήστε τους αριθμούς γραμμών): ",
+    "description":"Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part3":{
+    "message":"Αρχική εγγραφή: ",
+    "description":"Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }
 }

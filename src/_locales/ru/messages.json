@@ -1,6 +1,14 @@
 {
+  "description":{
+    "message":"Наиболее популярное расширение Chrome с более чем 40 миллионами пользователей! Блокирует рекламу по всему Интернету.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"Наиболее популярное расширение Chrome с более чем 40 миллионами пользователей! Блокирует рекламу по всему Интернету.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
+  "description_edge":{
+    "message":"AdBlock. Блокировщик рекламы №1 с более чем 200 миллионами загрузок. Блокирует рекламу по всему Интернету.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -30,6 +38,10 @@
   "optionstitle":{
     "message":"Параметры AdBlock",
     "description":"Title for the options page"
+  },
+  "chromebutton_how_to_hide2":{
+    "message":"Щелкните правой кнопкой мыши кнопку AdBlock и выберите 'Не показывать в меню Google Chrome'. Чтобы показать, щелкните правой кнопкой мыши кнопку AdBlock и выберите 'Добавить на панель инструментов'.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
     "message":"Чтобы скрыть кнопку, перейдите в  opera:\/\/extensions и включите опцию \"Скрыть из панели инструментов\". Вы можете отобразить её снова, сняв эту опцию.",
@@ -244,7 +256,7 @@
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "datacollectionoption":{
-    "message":"Разрешить AdBlock сбирать анонимное использование списка фильтров и данные",
+    "message":"Разрешить AdBlock анонимно сбирать использование списка фильтров и данные",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "updatedrightnow":{
@@ -311,6 +323,22 @@
     "message":"Получение... подождите.",
     "description":"Status label"
   },
+  "ab_filters_subscription_lastDownload_invalidURL":{
+    "message":"Ошибка, не действительный адрес",
+    "description":"message on the filter tab - Message when you subscribe to a non-list URL"
+  },
+  "ab_filters_subscription_lastDownload_connectionError":{
+    "message":"Ошибка, сбой загрузки",
+    "description":"message on the filter tab - Generic filter list download error message"
+  },
+  "ab_filters_subscription_lastDownload_invalidData":{
+    "message":"Ошибка, не допустимый список фильтров",
+    "description":"message on the filter tab - Invalid filter list file"
+  },
+  "ab_filters_subscription_lastDownload_checksumMismatch":{
+    "message":"Ошибка, несоответствие контрольной суммы",
+    "description":"message on the filter tab"
+  },
   "invalidListUrl":{
     "message":"Недопустимый список URL. Будет удален.",
     "description":"Message when you subscribe to a non-list URL"
@@ -332,11 +360,11 @@
     "description":"Title of the filter list tab"
   },
   "filterlistlink":{
-    "message":"Не подписывайтесь на больше чем нужно – каждый из них замедляет чуть-чуть работу! Первоисточники и дополнительные списки Вы можете найти <a>здесь<\/a>.",
+    "message":"Не подписывайтесь на больше чем нужно – каждый из них чуть-чуть замедляет работу! Первоисточники и дополнительные списки Вы можете найти <a>здесь<\/a>.",
     "description":"Explanation of the filter lists"
   },
   "updatenowmessage2":{
-    "message":"Я буду вносить обновления автоматически; Вы можете также <a>обновить сейчас<\/a>",
+    "message":"Я буду получать обновления автоматически; Вы можете также <a>обновить сейчас<\/a>",
     "description":"Update filters text + button"
   },
   "orenteraurl":{
@@ -355,29 +383,45 @@
     "message":"Список антисоциальных фильтров (удаляет кнопки социальных средств массовой информации)",
     "description":"A filter list"
   },
+  "filterannoyances":{
+    "message":"Fanboy's Annoyances (блокируются всплывающие окна внутри страницы, социальные сети и соответствующие виджеты, как и другие раздражители)",
+    "description":"A filter list"
+  },
   "filterwarning_removal":{
     "message":"Список Предупреждений об удалении AdBlock (удаляет предупреждения об использовании блокировщика рекламы)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
-    "message":"Ненавязчивая реклама (рекомендуется)",
+    "message":"Приемлемыя реклама",
     "description":"A filter list"
   },
   "filteradblock_custom":{
-    "message":"пользовательские фильтры AdBlock (рекомендуется)",
+    "message":"Пользовательские фильтры AdBlock",
     "description":"A filter list"
   },
   "filtereasylist":{
-    "message":"EasyList (рекомендуется)",
+    "message":"EasyList",
+    "description":"A filter list"
+  },
+  "filtereasylist_lite":{
+    "message":"EasyList Lite (рекомендуется)",
     "description":"A filter list"
   },
   "filterrussian":{
     "message":"Русский и украинский",
     "description":"Language names for a filter list"
   },
+  "filter_russian":{
+    "message":"Русский & Украинский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filterczech":{
     "message":"Чешский и словацкий",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
+  },
+  "filter_czech":{
+    "message":"Чешский & Словацкий + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (конфиденциальность)",
@@ -387,6 +431,10 @@
     "message":"Индонезийский",
     "description":"A filter list"
   },
+  "filter_easylist_plus_indonesian":{
+    "message":"Индонезийский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filtermalware":{
     "message":"Защита от вредоносных программ",
     "description":"A filter list"
@@ -394,6 +442,10 @@
   "filterlatvian":{
     "message":"Латышский",
     "description":"A filter list"
+  },
+  "filter_latvian":{
+    "message":"Латышский + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filterswedish":{
     "message":"Шведский",
@@ -460,8 +512,16 @@
     "description":"Subtitle on the 'Customize' tab"
   },
   "filtersavewarning":{
-    "message":"Осторожно: Если Вы сделаете здесь ошибку, много других фильтров, включая официальные фильтры, могут оказаться сломанными тоже! <br\/> Прочитайте <a>Учебник по синтаксису фильтров<\/a>, чтобы научиться дополнять черный и белый списки фильтров.",
+    "message":"Осторожно: Если Вы сделаете здесь ошибку, много других фильтров, включая официальные фильтры, могут получить повреждения тоже! <br\/> Прочитайте <a>Учебник по синтаксису фильтров<\/a>, чтобы научиться дополнять черный и белый списки фильтров.",
     "description":"Warning when blacklisting manually"
+  },
+  "migration_error_message":{
+    "message":"Мы обнаружили некоторые ошибки в пользовательских фильтрах. Смотрите сообщения ниже.",
+    "description":"Warning when adding custom filters manually"
+  },
+  "delete_migration_error_messages":{
+    "message":"Удалить сообщения",
+    "description":"Button to delete error messages when adding custom filters manually"
   },
   "contentblockingwarning":{
     "message":"Примечание: Белый список (разрешает рекламу) на странице или сайте не поддерживается в Safari блокирование содержимого включена.",
@@ -609,107 +669,243 @@
   },
   "lang_english":{
     "message":"Английский",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"Болгарский",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"Китайский",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"Чешский",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"Датский",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"Голландский",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"Финский",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"Французский",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"Немецкий",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"Греческий",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"Венгерский",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"Иврит",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"Итальянский",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"Японский",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"Корейский",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"Польский",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"Румынский",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"Русский",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"словацкий",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"Испанский",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"Испанский",
-    "description":"language"
+  "lang_russian":{
+    "message":"Русский",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"словацкий",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"Украинский",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"Арабский",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"Болгарский",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"Китайский",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"Датский",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"Голландский",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"Эстонский",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"Финский",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"Французский",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"Немецкий",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"Греческий",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"Венгерский",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"Индонезийский",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"Исландский",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"Иврит",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"Итальянский",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"Японский",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"Корейский",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"Литовский",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"Польский",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"Румынский",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"Латышский",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"Шведский",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"Турецкий",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"Болгарский",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_bulgarian":{
+    "message":"Болгарский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterchinese":{
+    "message":"Китайский",
+    "description":"A filter list"
+  },
+  "filter_chinese":{
+    "message":"Китайский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterdanish":{
+    "message":"Датский",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"Голландский",
+    "description":"A filter list"
+  },
+  "filter_dutch":{
+    "message":"Голландский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"Финский",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"Французский",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_french":{
+    "message":"Французский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_german":{
+    "message":"Немецкий",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_german":{
+    "message":"Немецкий + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"Греческий",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"Венгерский",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"Иврит",
+    "description":"A filter list"
+  },
+  "filter_israeli":{
+    "message":"Иврит + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filteritalian":{
+    "message":"Итальянский",
+    "description":"A filter list"
+  },
+  "filter_italian":{
+    "message":"Итальянский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterjapanese":{
+    "message":"Японский",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"Корейский",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"Польский",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"Румынский",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_romanian":{
+    "message":"Румынский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"Испанский",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"Арабский",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_arabic":{
+    "message":"Арабский + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filter_easylist_plus_arabic_plus_french":{
+    "message":"Арабский + Французский + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasylist_plus_estonian":{
     "message":"Эстонский",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"Исландский",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"Литовский",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_lithuania":{
+    "message":"Литовский + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "other":{
     "message":"Другой",
@@ -863,6 +1059,10 @@
     "message":"страница",
     "description":"A resource type"
   },
+  "typewebsocket":{
+    "message":"веб-сокет",
+    "description":"A resource type"
+  },
   "typeunknown":{
     "message":"неизвестно",
     "description":"A resource type"
@@ -892,7 +1092,7 @@
     "description":"Option at the bottom of the 'Customize' options tab"
   },
   "disabled_by_filter_lists":{
-    "message":"Извените, AdBlock отключен на этой странице одним из списков фильтров.",
+    "message":"К сожалению, AdBlock отключен на этой странице одним из списков фильтров.",
     "description":"Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   },
   "dont_run_on_pages_on_domain":{
@@ -959,9 +1159,17 @@
     "message":"Помогите распространить информацию!",
     "description":"Text of a share link"
   },
+  "donate_to_adblock":{
+    "message":"Нравится AdBlock? Подумайте о пожертвовании!",
+    "description":"Text of a donate link in the toolbar button menu"
+  },
   "pwyw":{
     "message":"Заплати сколько хочешь!",
     "description":"Text of a payment request link"
+  },
+  "privacy_policy":{
+    "message":"Политика конфиденциальности",
+    "description":"Link to AdBlock's privacy policy"
   },
   "translator_credit":{
     "message":"Благодарите за перевод:",
@@ -1055,6 +1263,10 @@
     "message":"Показать количество заблокированной рекламы в меню AdBlock",
     "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
   },
+  "show_devtools_panel":{
+    "message":"Показать панель «AdBlock» в инструментах разработчика",
+    "description":"Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
+  },
   "adblockinglist":{
     "message":"Списки фильтров блокировки рекламы",
     "description":"List for subscribed ad blocking fiters"
@@ -1085,21 +1297,33 @@
     "message":"Добавьте фильтры для другого языка: ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Что это?",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Как?",
     "description":"Text of a link pointing to instructions on how to do something"
+  },
+  "whats_this":{
+    "message":"Что это?",
+    "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
     "message":"-- Выберите язык --",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Разрешить заносить определенные каналы YouTube в белый список",
+    "message":"Разрешить белый список конкретных каналов YouTube (требуется перезагрузка вашего браузера)",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_all_youtube_channels":{
+    "message":"Белый список всех подписанных каналов YouTube",
+    "description":"Toolbar button menu entry, displayed only on youtube.com\/feed\/subscriptions and if the YouTube channel whitelisting option is enabled"
+  },
+  "one_moment_all_youtube_channels":{
+    "message":"Подождите, пока мы собираем все Ваши подписки",
+    "description":"Alert message displayed when whitelisting all subscribed YouTube channels"
+  },
+  "all_youtube_channels_complete":{
+    "message":"Все Ваши подписки на каналы YouTube были внесены в белый список",
+    "description":"Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   },
   "whitelist_youtube_channel":{
     "message":"Канал $name$ белого списка",
@@ -1226,6 +1450,14 @@
   "show_resourcelist":{
     "message":"Показать все запросы",
     "description":"Menu entry to open the resource list page"
+  },
+  "new_resourcelist_explanation_win":{
+    "message":"Чтобы показать все запросы, щелкните правой кнопкой мыши страницу, выберите «Проверить» (Ctrl + Shift + I), а затем выберите вкладку «AdBlock».",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
+  },
+  "new_resourcelist_explanation_osx":{
+    "message":"Чтобы показать все запросы, щелкните правой кнопкой мыши страницу, выберите «Проверить» (Option + Cmd + I), а затем выберите вкладку «AdBlock».",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
   },
   "noresourcessend2":{
     "message":"Что-то пошло не так. Ресурсы не были отправлены. Эта страница будет закрыта. Попробуйте перезагрузить сайт.",
@@ -1359,10 +1591,6 @@
     "message":"Вы забыли приложить скриншот! Мы не можем помочь Вам не видя рекламу, о которой Вы сообщаете.",
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
   },
-  "adreport_response_success":{
-    "message":"Все готово!  Мы скоро свяжемся с Вами, наиболее вероятно в течение одного-двух дней, если это не праздники. Также, найдите в электронной почте письмо от AdBlock. Вы найдете там ссылку на Ваш запрос на нашем сайте помощи. Если Вы предпочитаете следить за результатами по электронной почте, Вы можете делать это тоже!",
-    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
-  },
   "adreport_response_invalid_file":{
     "message":"Это не файл изображения. Пожалуйста, загрузите файл .png, .gif или .jpg.",
     "description":"Error message shown when the user uploads an invalid file type."
@@ -1394,5 +1622,17 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"И вручную создать карточку, и копировать и вставить информацию ниже в раздел «Fill in any details you think will help us understand your issue».",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "custom_filters_migration_error_message_part1":{
+    "message":"Количество ошибок в пользовательских фильтрах: ",
+    "description":"Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part2":{
+    "message":"Следующие сообщения были созданы во время миграции пользовательских фильтров (игнорируйте номера строк):",
+    "description":"Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part3":{
+    "message":"Исходная запись: ",
+    "description":"Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }
 }

@@ -1,4 +1,8 @@
 {
+  "description":{
+    "message":"40 મિલિયન વપરાશકર્તાઓ સાથે સૌથી લોકપ્રિય, Chrome એક્સ્ટેન્શન! બધી વેબ સાઇટ​ પર જાહેરાતો બ્લોકો કરો.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"40 મિલિયન વપરાશકર્તાઓ સાથે સૌથી લોકપ્રિય, Chrome એક્સ્ટેન્શન! બધી વેબ સાઇટ​ પર જાહેરાતો બ્લોકો કરો.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
@@ -347,21 +351,13 @@
     "message":"Anticocial ફિલ્ટર યાદી(સામાજિક મીડિયા બટનો દૂર કરે)",
     "description":"A filter list"
   },
-  "filteradblock_custom":{
-    "message":"AdBlock વૈવિધ્યપૂર્ણ ગાળકો (ભલામણ)",
-    "description":"A filter list"
-  },
-  "filtereasylist":{
-    "message":"EasyList (ભલામણ)",
-    "description":"A filter list"
-  },
   "filterrussian":{
     "message":"રશિયન અને યુક્રેનિયન",
     "description":"Language names for a filter list"
   },
   "filterczech":{
     "message":"ઝેક અને સ્લોવેક",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (ગોપનીયતા રક્ષણ)",
@@ -513,91 +509,167 @@
   },
   "lang_english":{
     "message":"ઇંગલિશ",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"બલ્ગેરિયન",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"ચિની",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"ઝેક",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"ડેનિશ",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"ડચ",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"ફિનિશ",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"ફ્રેન્ચ",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"જર્મન",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"ગ્રીક",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"હંગેરિયન",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"હિબ્રુ",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"ઇટાલિયન",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"Japanese",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"કોરિયન",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"પોલિશ",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"રોમાનિયન",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"રશિયન",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"સ્લોવેક",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"સ્પેનિશ",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"સ્પેનિશ",
-    "description":"language"
+  "lang_russian":{
+    "message":"રશિયન",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"સ્લોવેક",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"યુક્રેનિયન",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"બલ્ગેરિયન",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"ચિની",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"ડેનિશ",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"ડચ",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"ફિનિશ",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"ફ્રેન્ચ",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"જર્મન",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"ગ્રીક",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"હંગેરિયન",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"ઇન્ડોનેશિયન",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"હિબ્રુ",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"ઇટાલિયન",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"Japanese",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"કોરિયન",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"પોલિશ",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"રોમાનિયન",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"લાતવિયન",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"સ્વિડીશ",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"ટર્કિશ",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"બલ્ગેરિયન",
+    "description":"A filter list"
+  },
+  "filterchinese":{
+    "message":"ચિની",
+    "description":"A filter list"
+  },
+  "filterdanish":{
+    "message":"ડેનિશ",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"ડચ",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"ફિનિશ",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"ફ્રેન્ચ",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_german":{
+    "message":"જર્મન",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"ગ્રીક",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"હંગેરિયન",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"હિબ્રુ",
+    "description":"A filter list"
+  },
+  "filteritalian":{
+    "message":"ઇટાલિયન",
+    "description":"A filter list"
+  },
+  "filterjapanese":{
+    "message":"Japanese",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"કોરિયન",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"પોલિશ",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"રોમાનિયન",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"સ્પેનિશ",
+    "description":"A filter list"
   },
   "other":{
     "message":"અન્ય",
@@ -928,10 +1000,6 @@
   "selectlanguage":{
     "message":" -- ભાષા પસંદ કરો -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
-  },
-  "allow_whitelisting_youtube_channels":{
-    "message":"ચોક્કસ YouTube ની ચેનલો વ્હાઇટલિસ્ટિંગ પરવાનગી આપો",
-    "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
     "message":"વ્હાઇટલિસ્ટ $name$ ચેનલ",

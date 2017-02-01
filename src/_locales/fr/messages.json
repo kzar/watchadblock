@@ -1,6 +1,14 @@
 {
+  "description":{
+    "message":"La plus populaire des extensions Chrome, avec plus de 40 millions d'utilisateurs ! Bloque la publicité sur le web.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"La plus populaire des extensions Chrome, avec plus de 40 millions d'utilisateurs ! Bloque la publicité sur le web.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
+  "description_edge":{
+    "message":"AdBlock. Le meilleur logiciel anti-pub, avec plus de 200 millions de téléchargements. Bloque la publicité sur le web.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -30,6 +38,10 @@
   "optionstitle":{
     "message":"Options AdBlock",
     "description":"Title for the options page"
+  },
+  "chromebutton_how_to_hide2":{
+    "message":"Faites un clic droit sur le bouton AdBlock et sélectionnez \"Masquer dans le menu Chrome\". Pour l'afficher à nouveau, cliquez sur le menu Chrome, faites un clic droit sur le bouton AdBlock, et sélectionnez \"Garder dans la barre d'outils\".",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
     "message":"Pour masquer ce bouton, allez sur opera:\/\/extensions et cochez \"Cacher de la barre d'outils\". Vous pouvez l'afficher à nouveau en décochant cette option.",
@@ -311,6 +323,22 @@
     "message":"Récupération en cours...",
     "description":"Status label"
   },
+  "ab_filters_subscription_lastDownload_invalidURL":{
+    "message":"Echec, adresse invalide",
+    "description":"message on the filter tab - Message when you subscribe to a non-list URL"
+  },
+  "ab_filters_subscription_lastDownload_connectionError":{
+    "message":"Echec, téléchargement impossible",
+    "description":"message on the filter tab - Generic filter list download error message"
+  },
+  "ab_filters_subscription_lastDownload_invalidData":{
+    "message":"Echec, liste de filtres invalide",
+    "description":"message on the filter tab - Invalid filter list file"
+  },
+  "ab_filters_subscription_lastDownload_checksumMismatch":{
+    "message":"Echec, somme de contrôle différente",
+    "description":"message on the filter tab"
+  },
   "invalidListUrl":{
     "message":"URL de liste invalide. Elle sera supprimée.",
     "description":"Message when you subscribe to a non-list URL"
@@ -355,29 +383,45 @@
     "message":"Liste de filtres Antisocial (supprime les boutons de réseaux sociaux)",
     "description":"A filter list"
   },
+  "filterannoyances":{
+    "message":"Fanboy's Annoyances (bloque des pop-ups à l'intérieur des pages, les widgets de réseaux sociaux, et d'autres désagréments)",
+    "description":"A filter list"
+  },
   "filterwarning_removal":{
     "message":"Avertissements Adblock (supprime les messages au sujet de l'utilisation de bloqueurs de publicité)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
-    "message":"Publicités Acceptables (recommandé)",
+    "message":"Publicités Acceptables",
     "description":"A filter list"
   },
   "filteradblock_custom":{
-    "message":"Filtres personnalisés AdBlock (recommandé)",
+    "message":"Filtres personnalisés AdBlock",
     "description":"A filter list"
   },
   "filtereasylist":{
-    "message":"EasyList (recommandé)",
+    "message":"EasyList",
+    "description":"A filter list"
+  },
+  "filtereasylist_lite":{
+    "message":"EasyList allégée (recommandé)",
     "description":"A filter list"
   },
   "filterrussian":{
     "message":"Russe et ukrainien",
     "description":"Language names for a filter list"
   },
+  "filter_russian":{
+    "message":"Russe et Ukrainien + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filterczech":{
     "message":"Tchèque et slovaque",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
+  },
+  "filter_czech":{
+    "message":"Tchèque et Slovaque + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (protection de la vie privée)",
@@ -387,6 +431,10 @@
     "message":"Indonésien",
     "description":"A filter list"
   },
+  "filter_easylist_plus_indonesian":{
+    "message":"Indonésien + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filtermalware":{
     "message":"Protection contre les logiciels malveillants",
     "description":"A filter list"
@@ -394,6 +442,10 @@
   "filterlatvian":{
     "message":"Letton",
     "description":"A filter list"
+  },
+  "filter_latvian":{
+    "message":"Letton + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filterswedish":{
     "message":"Suédois",
@@ -462,6 +514,14 @@
   "filtersavewarning":{
     "message":"Attention : faire une erreur ici peut entraîner un mauvais fonctionnement des filtres officiels.<br\/>Consultez le <a>tutoriel de syntaxe<\/a> pour apprendre à ajouter des filtres avancés.",
     "description":"Warning when blacklisting manually"
+  },
+  "migration_error_message":{
+    "message":"Des erreurs ont été détectés dans vos filtres personnalisés. Les messages sont affichés ci-dessous.",
+    "description":"Warning when adding custom filters manually"
+  },
+  "delete_migration_error_messages":{
+    "message":"Effacer les messages",
+    "description":"Button to delete error messages when adding custom filters manually"
   },
   "contentblockingwarning":{
     "message":"Note : Autoriser la pub sur une page ou un site n'est pas supporté lorsque le Blocage de Contenu Safari est activé.",
@@ -609,107 +669,243 @@
   },
   "lang_english":{
     "message":"Anglais",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"Bulgare",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"Chinois",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"Tchèque",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"Danois",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"Néerlandais",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"Finlandais",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"Français",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"Allemand",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"Grec",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"Hongrois",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"Hébreu",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"Italien",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"Japonais",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"Coréen",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"Polonais",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"Roumain",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"Russe",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"Slovaque",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"Espagnol",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"Espagnol",
-    "description":"language"
+  "lang_russian":{
+    "message":"Russe",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"Slovaque",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"Ukrainien",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"Arabe",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"Bulgare",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"Chinois",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"Danois",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"Néerlandais",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"Estonien",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"Finlandais",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"Français",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"Allemand",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"Grec",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"Hongrois",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"Indonésien",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"Islandais",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"Hébreu",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"Italien",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"Japonais",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"Coréen",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"Lituanien",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"Polonais",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"Roumain",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"Letton",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"Suédois",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"Turc",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"Bulgare",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_bulgarian":{
+    "message":"Bulgare + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterchinese":{
+    "message":"Chinois",
+    "description":"A filter list"
+  },
+  "filter_chinese":{
+    "message":"Chinois + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterdanish":{
+    "message":"Danois",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"Néerlandais",
+    "description":"A filter list"
+  },
+  "filter_dutch":{
+    "message":"Néerlandais + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"Finlandais",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"Français",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_french":{
+    "message":"Français + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_german":{
+    "message":"Allemand",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_german":{
+    "message":"Allemand + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"Grec",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"Hongrois",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"Hébreu",
+    "description":"A filter list"
+  },
+  "filter_israeli":{
+    "message":"Hébreu + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filteritalian":{
+    "message":"Italien",
+    "description":"A filter list"
+  },
+  "filter_italian":{
+    "message":"Italien + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterjapanese":{
+    "message":"Japonais",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"Coréen",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"Polonais",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"Roumain",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_romanian":{
+    "message":"Roumain + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"Espagnol",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"Arabe",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_arabic":{
+    "message":"Arabe + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filter_easylist_plus_arabic_plus_french":{
+    "message":"Arabe + Français + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasylist_plus_estonian":{
     "message":"Estonien",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"Islandais",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"Lituanien",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_lithuania":{
+    "message":"Lituanien + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "other":{
     "message":"Autre",
@@ -863,6 +1059,10 @@
     "message":"page",
     "description":"A resource type"
   },
+  "typewebsocket":{
+    "message":"websocket",
+    "description":"A resource type"
+  },
   "typeunknown":{
     "message":"inconnu",
     "description":"A resource type"
@@ -959,9 +1159,17 @@
     "message":"Faites passer le mot !",
     "description":"Text of a share link"
   },
+  "donate_to_adblock":{
+    "message":"Aimez-vous AdBlock ? Pensez à faire un don !",
+    "description":"Text of a donate link in the toolbar button menu"
+  },
   "pwyw":{
     "message":"Payez ce que vous voulez !",
     "description":"Text of a payment request link"
+  },
+  "privacy_policy":{
+    "message":"Engagement de confidentialité",
+    "description":"Link to AdBlock's privacy policy"
   },
   "translator_credit":{
     "message":"Traduction par :",
@@ -1055,6 +1263,10 @@
     "message":"Afficher le nombre de pubs bloquées dans le menu AdBlock",
     "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
   },
+  "show_devtools_panel":{
+    "message":"Afficher le panneau \"AdBlock\" dans les outils développeur",
+    "description":"Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
+  },
   "adblockinglist":{
     "message":"Listes de filtres pour le blocage de publicités",
     "description":"List for subscribed ad blocking fiters"
@@ -1085,21 +1297,33 @@
     "message":"Ajouter des filtres pour une autre langue : ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Qu'est-ce que c'est ?",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Comment ?",
     "description":"Text of a link pointing to instructions on how to do something"
+  },
+  "whats_this":{
+    "message":"Qu'est-ce que c'est ?",
+    "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
     "message":" -- Sélectionnez une langue -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Autoriser la pub sur certaines chaînes YouTube uniquement",
+    "message":"Autoriser la pub sur certaines chaînes YouTube uniquement (nécessite un redémarrage de votre navigateur)",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_all_youtube_channels":{
+    "message":"Désactiver sur toutes les chaînes YouTube auxquelles je suis abonné",
+    "description":"Toolbar button menu entry, displayed only on youtube.com\/feed\/subscriptions and if the YouTube channel whitelisting option is enabled"
+  },
+  "one_moment_all_youtube_channels":{
+    "message":"Patientez un instant, la liste de vos abonnements est en train d'être recueillie…",
+    "description":"Alert message displayed when whitelisting all subscribed YouTube channels"
+  },
+  "all_youtube_channels_complete":{
+    "message":"Toutes les chaînes YouTube auxquelles vous êtes abonné ont été mises en liste blanche",
+    "description":"Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   },
   "whitelist_youtube_channel":{
     "message":"Autoriser la pub sur la chaîne $name$",
@@ -1226,6 +1450,14 @@
   "show_resourcelist":{
     "message":"Afficher toutes les requêtes",
     "description":"Menu entry to open the resource list page"
+  },
+  "new_resourcelist_explanation_win":{
+    "message":"Pour afficher toutes les requêtes, faites un clic droit sur la page, sélectionnez \"Inspecter\" (Ctrl+Maj+I), puis sélectionnez l'onglet \"AdBlock\".",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
+  },
+  "new_resourcelist_explanation_osx":{
+    "message":"Pour afficher toutes les requêtes, faites un clic droit sur la page, sélectionnez \"Inspecter\" (alt+cmd+i), puis sélectionnez l'onglet \"AdBlock\".",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
   },
   "noresourcessend2":{
     "message":"Quelque chose s'est mal passé. Aucune ressource n'a été envoyée. Cette page va maintenant se fermer. Essayez de recharger le site web.",
@@ -1360,7 +1592,7 @@
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
   },
   "adreport_response_success":{
-    "message":"Tout est bon ! Nous entrerons bientôt en contact avec vous, probablement dans un jour, deux si c'est un jour férié. En attendant, vous allez recevoir un email d'AdBlock avec un lien vers votre discussion sur notre site de support. Si vous préférez continuer par e-mail, c'est aussi possible !",
+    "message":"Tout est bon ! Nous entrerons bientôt en contact avec vous. En attendant, vous allez recevoir un email d'AdBlock avec un lien vers votre discussion sur notre site de support, ainsi que quelques suggestions d'aide pour des situations courantes.",
     "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   },
   "adreport_response_invalid_file":{
@@ -1394,5 +1626,17 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"Créez-y une discussion manuellement, et copiez\/collez les informations ci-dessous dans le champ \"Fill in any details you think will help us understand your issue\".",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "custom_filters_migration_error_message_part1":{
+    "message":"Nombre d'erreurs dans les filtres personnalisés : ",
+    "description":"Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part2":{
+    "message":"Les messages suivants ont été générés durant la migration des filtres personnalisés (ignorez les numéros de ligne) : ",
+    "description":"Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part3":{
+    "message":"Entrée d'origine : ",
+    "description":"Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }
 }

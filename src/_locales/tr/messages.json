@@ -1,6 +1,14 @@
 {
+  "description":{
+    "message":"40 milyondan fazla kullanıcısıyla en popüler Chrome eklentisi! İnternetteki tüm reklamları engeller.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"40 milyondan fazla kullanıcısıyla en popüler Chrome eklentisi! İnternetteki tüm reklamları engeller.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
+  "description_edge":{
+    "message":"AdBlock. 200 milyonun üzerinde indirmeyle #1 numaralı reklam engelleyicisi. Tüm web sitelerindeki reklamları engeller.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -30,6 +38,10 @@
   "optionstitle":{
     "message":"AdBlock Ayarları",
     "description":"Title for the options page"
+  },
+  "chromebutton_how_to_hide2":{
+    "message":"AdBlock butonuna tıklayarak 'Chrome menüsünde gizle' seçeneğini seçin. Tekrar görmek için Chrome menüsüne tıklayın ve AdBlock butonuna sağ tıklayarak 'Araç çubuğunda göster'i seçin.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
     "message":"Düğmeyi gizlemek için, adres çubuğundan opera:\/\/extensions gidip 'Araç çubuğundan gizle' seçeneğini işaretleyin. Yine bu seçeneğin işaretini kaldırarak görünmesini sağlayabilirsiniz.",
@@ -311,6 +323,22 @@
     "message":"Yükleniyor... lütfen bekleyin.",
     "description":"Status label"
   },
+  "ab_filters_subscription_lastDownload_invalidURL":{
+    "message":"Başarısız, adres geçerli değil",
+    "description":"message on the filter tab - Message when you subscribe to a non-list URL"
+  },
+  "ab_filters_subscription_lastDownload_connectionError":{
+    "message":"Başarısız, karşıdan yükleme hatası",
+    "description":"message on the filter tab - Generic filter list download error message"
+  },
+  "ab_filters_subscription_lastDownload_invalidData":{
+    "message":"Başarısız, filtre listesi geçersiz",
+    "description":"message on the filter tab - Invalid filter list file"
+  },
+  "ab_filters_subscription_lastDownload_checksumMismatch":{
+    "message":"Başarısız, checksum uyuşmazlığı",
+    "description":"message on the filter tab"
+  },
   "invalidListUrl":{
     "message":"Geçersiz filtre listesi linki. Bu link silinecek.",
     "description":"Message when you subscribe to a non-list URL"
@@ -355,29 +383,45 @@
     "message":"Antisosyal filtre listesi (sosyal medya düğmelerini kaldırır)",
     "description":"A filter list"
   },
+  "filterannoyances":{
+    "message":"Fanboy's Annoyances (sayfa içi pop-upları, sosyal medyadaki ve önerilen widgetları, ve diğer can sıkan reklamları engeller)",
+    "description":"A filter list"
+  },
   "filterwarning_removal":{
     "message":"Adblock Uyarı Kaldırma listesi (reklam engelleyicilerin kullanımı hakkında uyarır)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
-    "message":"Kabul edilebilir reklamlar (önerilen)",
+    "message":"Kabul edilebilir reklamlar",
     "description":"A filter list"
   },
   "filteradblock_custom":{
-    "message":"AdBlock özel filtreleri (tavsiye edilir)",
+    "message":"AdBlock özel filtreler",
     "description":"A filter list"
   },
   "filtereasylist":{
-    "message":"EasyList (tavsiye edilir)",
+    "message":"EasyList",
+    "description":"A filter list"
+  },
+  "filtereasylist_lite":{
+    "message":"EasyList Lite (tavsiye edilen)",
     "description":"A filter list"
   },
   "filterrussian":{
     "message":"Rusça ve Ukraynaca",
     "description":"Language names for a filter list"
   },
+  "filter_russian":{
+    "message":"Rusça & Ukraynaca + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filterczech":{
     "message":"Çekçe ve Slovakça",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
+  },
+  "filter_czech":{
+    "message":"Çekçe & Slovakça + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (gizlilik koruması)",
@@ -387,6 +431,10 @@
     "message":"Endonezce",
     "description":"A filter list"
   },
+  "filter_easylist_plus_indonesian":{
+    "message":"Endonezce + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filtermalware":{
     "message":"Zararlı yazılımlara karşı koruma",
     "description":"A filter list"
@@ -394,6 +442,10 @@
   "filterlatvian":{
     "message":"Letonca",
     "description":"A filter list"
+  },
+  "filter_latvian":{
+    "message":"Letonyaca + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filterswedish":{
     "message":"İsveççe",
@@ -462,6 +514,14 @@
   "filtersavewarning":{
     "message":"Dikkat: eğer burada bir hata yaparsanız, abone olduğunuz filtreler de dahil, çoğu liste tamamen bozulabilir!<br\/> Gelişmiş \"izin verilenler\" ve \"engellenenler\" listesi oluşturmak için lütfen <a>filtre sözdizimi kuralları<\/a> bölümünü okuyun.",
     "description":"Warning when blacklisting manually"
+  },
+  "migration_error_message":{
+    "message":"Özel filtrelerinde bazı hatalar bulduk. İletiler için aşağıya bakın.",
+    "description":"Warning when adding custom filters manually"
+  },
+  "delete_migration_error_messages":{
+    "message":"Mesajları sil",
+    "description":"Button to delete error messages when adding custom filters manually"
   },
   "contentblockingwarning":{
     "message":"Not: Beyaz Liste (izin verilen reklamlar) sayfa veya site Safari İçerik Engelleyici etkin iken desteklenmiyor.",
@@ -609,107 +669,243 @@
   },
   "lang_english":{
     "message":"İngilizce",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"Bulgarca",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"Çince",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"Çekce",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"Danimarkaca",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"Flemenkçe",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"Fince",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"Fransızca",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"Almanca",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"Yunanca",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"Macarca",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"İbranice",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"İtalyanca",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"Japonca",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"Korece",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"Lehçe",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"Rumence",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"Rusça",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"Slovakça",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"İspanyolca",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"İspanyolca",
-    "description":"language"
+  "lang_russian":{
+    "message":"Rusça",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"Slovakça",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"Ukraynaca",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"Arapça",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"Bulgarca",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"Çince",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"Danimarkaca",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"Flemenkçe",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"Estonca",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"Fince",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"Fransızca",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"Almanca",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"Yunanca",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"Macarca",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"Endonezce",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"İzlandaca",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"İbranice",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"İtalyanca",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"Japonca",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"Korece",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"Litvanca",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"Lehçe",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"Rumence",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"Letonca",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"İsveççe",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"Türkçe",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"Bulgarca",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_bulgarian":{
+    "message":"Bulgarca + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterchinese":{
+    "message":"Çince",
+    "description":"A filter list"
+  },
+  "filter_chinese":{
+    "message":"Çince + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterdanish":{
+    "message":"Danimarkaca",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"Flemenkçe",
+    "description":"A filter list"
+  },
+  "filter_dutch":{
+    "message":"Felemenkçe + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"Fince",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"Fransızca",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_french":{
+    "message":"Fransızca + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_german":{
+    "message":"Almanca",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_german":{
+    "message":"Almanca + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"Yunanca",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"Macarca",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"İbranice",
+    "description":"A filter list"
+  },
+  "filter_israeli":{
+    "message":"İbranice + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filteritalian":{
+    "message":"İtalyanca",
+    "description":"A filter list"
+  },
+  "filter_italian":{
+    "message":"İtalyanca + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterjapanese":{
+    "message":"Japonca",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"Korece",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"Lehçe",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"Rumence",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_romanian":{
+    "message":"Romence + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"İspanyolca",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"Arapça",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_arabic":{
+    "message":"Arapça + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filter_easylist_plus_arabic_plus_french":{
+    "message":"Arapça + Fransızca + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasylist_plus_estonian":{
     "message":"Estonca",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"İzlandaca",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"Litvanca",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_lithuania":{
+    "message":"Litvanca + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "other":{
     "message":"Diğer",
@@ -963,6 +1159,10 @@
     "message":"İstediğiniz kadar ödeyin!",
     "description":"Text of a payment request link"
   },
+  "privacy_policy":{
+    "message":"Gizlilik Politikası",
+    "description":"Link to AdBlock's privacy policy"
+  },
   "translator_credit":{
     "message":"Çeviri:",
     "description":"Will be followed by a list of translator names (separate string)"
@@ -1055,6 +1255,10 @@
     "message":"AdBlock menüsünde kaç tane reklamın engellendiğini göster",
     "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
   },
+  "show_devtools_panel":{
+    "message":"Geliştirici araçlarında 'AdBlock' panelini göster",
+    "description":"Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
+  },
   "adblockinglist":{
     "message":"Reklam Engelleme Filtre Listeleri",
     "description":"List for subscribed ad blocking fiters"
@@ -1085,20 +1289,20 @@
     "message":"Başka diller için filtre ekle: ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Bu nedir?",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Nasıl?",
     "description":"Text of a link pointing to instructions on how to do something"
+  },
+  "whats_this":{
+    "message":"Bu nedir?",
+    "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
     "message":"-- Dilinizi Seçin --",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Belirli Youtube kanallarını beyaz listeye eklemeye izin ver",
+    "message":"Belirli Youtube kanalları için beyaz listeye izin ver (tarayıcınızı yeniden başlatmayı gerektirir)",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
@@ -1226,6 +1430,14 @@
   "show_resourcelist":{
     "message":"Tüm istekleri göster",
     "description":"Menu entry to open the resource list page"
+  },
+  "new_resourcelist_explanation_win":{
+    "message":"Tüm istekleri görmek için, sayfaya sağ tıklayın, 'İncele' (Klavyeden Ctrl+Shift+I) seçin, 'AdBlock' sekmesine geçin.",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
+  },
+  "new_resourcelist_explanation_osx":{
+    "message":"Tüm istekleri görmek için, sayfaya sağ tıklayın, 'İncele' (Klavyeden Alt+Cmd+I) seçin, 'AdBlock' sekmesine geçin.",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
   },
   "noresourcessend2":{
     "message":"Bir şeyler ters gitti. Hiç bir kaynak gönderilmedi. Bu sayfa şimdi kapanacak. Web sitesini tekrar yüklemeyi deneyin.",
@@ -1359,10 +1571,6 @@
     "message":"Ekran görüntüsü eklemeyi unuttun! Bildirdiğin reklamları görmeden yardım edemeyiz.",
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
   },
-  "adreport_response_success":{
-    "message":"Her şey ayarlandı! Sizinle irtibata geçeceğiz, genellikle bir gün içinde, eğer tatilse iki gün. Bu arada, bir e-posta için AdBlock bak. Yardım sitesinde bir destek bileti linki bulacaksınız. E-posta yoluyla takip etmek isterseniz, siz de yapabilirsiniz!",
-    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
-  },
   "adreport_response_invalid_file":{
     "message":"Bu görüntü dosyası değil. Lütfen .png, .gif, veya .jpg uzantılı dosya yükle.",
     "description":"Error message shown when the user uploads an invalid file type."
@@ -1394,5 +1602,17 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"Ve elle bilet oluşturmak için, aşağıdaki bilgileri kopyalayıp \"Fill in any details you think will help us understand your issue\" bölümüne yapıştırın.",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "custom_filters_migration_error_message_part1":{
+    "message":"Özel filtreler hata sayısı: ",
+    "description":"Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part2":{
+    "message":"Özel filtrelemeden dolayı oluşturulan mesaj(lar)ı takip edin: ",
+    "description":"Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part3":{
+    "message":"Orijinal giriş: ",
+    "description":"Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }
 }

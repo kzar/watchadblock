@@ -1,11 +1,11 @@
 {
-  "description2":{
+  "description":{
     "message":"Chromen suosituin lisäosa. Yli 40 miljoonaa käyttäjää! Estää kaikki mainokset.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
-  "adblock_click_for_details":{
-    "message":"AdBlock - napsauta saadaksesi tietoja",
-    "description":"Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
+  "description2":{
+    "message":"Chromen suosituin lisäosa. Yli 40 miljoonaa käyttäjää! Estää kaikki mainokset.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "buttoncancel":{
     "message":"Peruuta",
@@ -34,10 +34,6 @@
   "operabutton_how_to_hide2":{
     "message":"Jos haluat piilottaa painikkeen, siirry osoitteeseen opera:\/\/extensions ja valitse ruutu 'Piilota työkaluriviltä'. Voit ottaa painikkeen käyttöön uudestaan poistamalla valinnan ruudusta.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Opera displays on the Extensions page."
-  },
-  "safaributton_how_to_hide2":{
-    "message":"Piilottaaksesi painikkeen, klikkaa hiiren oikealla Safarin työkaluriviä ja valitse Mukauta työkaluriviä, sitten vedä AdBlock-painike pois työkaluriviltä. Voit näyttää sen uudelleen vetämällä sen takaisin työkaluriviin.",
-    "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
   "sliderexplanation":{
     "message":"Raahaa säädintä oikealle niin kauan, että mainos häviää näkyvistä ja sivu näyttää hyvältä.",
@@ -146,10 +142,6 @@
   "blockanadtitle":{
     "message":"Estä mainos",
     "description":"Title of the first two dialogs of the blacklister"
-  },
-  "clickthead":{
-    "message":"Napsauta mainosta estääksesi sen.",
-    "description":"When you have to click the ad to continue"
   },
   "adblock_wont_run_on_pages_matching":{
     "message":"AdBlock ei ole käytössä sivuilla, jotka vastaavat näitä ehtoja:",
@@ -359,25 +351,13 @@
     "message":"Mainostenestovaroitusten poisto (poistaa varoitukset mainostenestäjistä)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
-  "filteracceptable_ads":{
-    "message":"Hyväksyttävät mainokset (suositus)",
-    "description":"A filter list"
-  },
-  "filteradblock_custom":{
-    "message":"AdBlockin mukautetut listat (suositeltu)",
-    "description":"A filter list"
-  },
-  "filtereasylist":{
-    "message":"EasyList (suositeltu)",
-    "description":"A filter list"
-  },
   "filterrussian":{
     "message":"Venäjä ja ukraina",
     "description":"Language names for a filter list"
   },
   "filterczech":{
     "message":"Tshekki ja slovakia",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (yksityisyydensuoja)",
@@ -507,10 +487,6 @@
     "message":"Mainoksia lisäävien haittaohjelmien tarkistus:",
     "description":"Section header on the ad report page"
   },
-  "malwarewarning":{
-    "message":"Tietokoneesi voi olla haittaohjelman saastuttama. Klikkaa <a>tästä<\/a> saadaksesi lisää tietoja.",
-    "description":"On the ad report page, the ads the user is seeing might be caused by malware\/adware"
-  },
   "malwarenotfound":{
     "message":"Tunnettuja haittaohjelmia ei löytynyt.",
     "description":"On the ad report page, the ads the user is seeing are probably not caused by malware\/adware"
@@ -534,10 +510,6 @@
   "updateyourlists":{
     "message":"Varmista, että suodatinlistasi ovat ajan tasalla:",
     "description":"Section header on the ad report page"
-  },
-  "clickupdatefilters":{
-    "message":"Napsauta tästä: <a>Päivitä suodattimeni!<\/a>",
-    "description":"Instruction on ad report page"
   },
   "reloadadpage":{
     "message":"Päivitä sivu, joka sisältää mainoksen.",
@@ -591,10 +563,6 @@
     "message":"Poista rasti ruudusta 'Käytössä' jokaiselta lisäosalta <b>paitsi<\/b> AdBlockilta. <b>Jätä AdBlock käyttöön<\/b>.",
     "description":"Step 2 for disabling Chrome and Safari extensions"
   },
-  "disableforsafaristepone":{
-    "message":"Napsauta Safari-valikkoa &rarr; Asetukset &rarr; Lisäosat.",
-    "description":"Step 1 for disabling Safari extensions"
-  },
   "reenableadsonebyone":{
     "message":"Hienoa! Selvitetäänpä nyt, mistä laajennuksesta ongelma johtuu. Ota laajennukset yksi kerrallaan käyttöön. Laajennus, jonka käyttöönoton myötä mainos palaa, on sellainen, joka sinun tulee poistaa päästäksesi eroon mainoksesta.",
     "description":"Tells the user to reenable the extensions one by one"
@@ -609,107 +577,199 @@
   },
   "lang_english":{
     "message":"englanti",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"bulgaria",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"kiina",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"tšekki",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"tanska",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"hollanti",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"suomi",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"ranska",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"saksa",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"kreikka",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"unkari",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"Heprea",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"italia",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"japani",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"korea",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"puola",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"romania",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"venäjä",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"Slovakki",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"espanja",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"espanja",
-    "description":"language"
+  "lang_russian":{
+    "message":"venäjä",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"Slovakki",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"ukraina",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"arabia",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"bulgaria",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"kiina",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"tanska",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"hollanti",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"viro",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"suomi",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"ranska",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"saksa",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"kreikka",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"unkari",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"Indonesia",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"islanti",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"Heprea",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"italia",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"japani",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"korea",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"liettua",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"puola",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"romania",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"Latvia",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"Ruotsi",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"Turkki",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"bulgaria",
+    "description":"A filter list"
+  },
+  "filterchinese":{
+    "message":"kiina",
+    "description":"A filter list"
+  },
+  "filterdanish":{
+    "message":"tanska",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"hollanti",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"suomi",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"ranska",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_german":{
+    "message":"saksa",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"kreikka",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"unkari",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"Heprea",
+    "description":"A filter list"
+  },
+  "filteritalian":{
+    "message":"italia",
+    "description":"A filter list"
+  },
+  "filterjapanese":{
+    "message":"japani",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"korea",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"puola",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"romania",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"espanja",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"arabia",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_estonian":{
     "message":"viro",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"islanti",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"liettua",
-    "description":"language"
+    "description":"A filter list"
   },
   "other":{
     "message":"Muu",
@@ -802,10 +862,6 @@
   "fixityourself":{
     "message":"OK, voit edelleen estää mainoksen vain itsellesi Asetukset-sivulla. Kiitos!",
     "description":"Telling users who won't report an ad to us how to handle it for themselves"
-  },
-  "adblock_outdated_chrome":{
-    "message":"Käytät vanhaa versiota AdBlockista. Siirry <a href='#'>lisäosasivulle<\/a>, ota 'Kehittäjätila' käyttöön ja napsauta 'Päivitä lisäosat nyt'",
-    "description":"Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome:\/\/chrome\/extensions\/'"
   },
   "block_an_ad_on_this_page":{
     "message":"Estä mainos tällä sivulla",
@@ -1081,21 +1137,17 @@
     "message":"Lisää suodattimia toiselle kielelle: ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Mikä tämä on?",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Kuinka?",
     "description":"Text of a link pointing to instructions on how to do something"
   },
+  "whats_this":{
+    "message":"Mikä tämä on?",
+    "description":"Text of a link pointing to the explanation of a new feature"
+  },
   "selectlanguage":{
     "message":" -- Valitse kieli -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
-  },
-  "allow_whitelisting_youtube_channels":{
-    "message":"Salli tiettyjen YouTube-kanavien mainosten näyttäminen",
-    "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
     "message":"Salli kanava $name$",
@@ -1128,16 +1180,6 @@
   "here":{
     "message":"tästä",
     "description":"This message is injected in other strings as a link\/button"
-  },
-  "update_available":{
-    "message":"AdBlock-päivitys on saatavilla! Napsauta $here$ päivittääksesi.<br>Huomaa: Jos haluat saada päivitykset automaattisesti, napsauta Safari > Asetukset > Lisäosat > Päivitykset<br>ja merkitse kohta 'Asenna päivitykset automaattisesti'.",
-    "description":"On the Options > Support page, shows when there are updates available for AdBlock",
-    "placeholders":{
-      "here":{
-        "content":"<a id='here'><\/a>",
-        "example":"<a>here<\/a>"
-      }
-    }
   },
   "adblocksupport":{
     "message":"AdBlock-tuki",
@@ -1186,10 +1228,6 @@
   "contributors":{
     "message":"Lisäksi löydät kaikki AdBlockin takana olevat henkilöt <a>täältä<\/a>!",
     "description":"Link to the contributors page on the Support tab of the options"
-  },
-  "debuginfo":{
-    "message":"Onko tiimi pyytänyt vianratkaisutietoja? Napsauta <a href='#' id='debug'>tästä<\/a> saadaksesi ne!",
-    "description":"Users can click this link to provide debug information to AdBlock staff"
   },
   "bugreport":{
     "message":"Mikset lähettäisi meille <a>virheilmoitusta<\/a>?",
@@ -1346,10 +1384,6 @@
   "adreport_missing_screenshot":{
     "message":"Unohdit liittää kuvakaappauksen! Emme voi auttaa sinua, jos emme näe mainosta tai mainoksia, jota\/joita olet ilmoittamassa.",
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
-  },
-  "adreport_response_success":{
-    "message":"Valmista! Olemme yhteydessä pian, todennäköisesti päivän tai loma-aikoina parin päivän kuluessa. Odotellessa voit lukea AdBlockilta saamasi sähköpostin. Löydät linkin lähettämääsi pyyntöön ohjesivustollemme. Jos haluat seurata edistymistä sähköpostistasi, se hoituu myös siellä!",
-    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   },
   "adreport_response_invalid_file":{
     "message":"Et ladannut kuvatiedostoa. Lataa .png-, .gif- tai .jpg-tiedosto.",

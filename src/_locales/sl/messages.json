@@ -1,4 +1,8 @@
 {
+  "description":{
+    "message":"Najbolj priljubljena razširitev za brskalnik Chrome z več kot 40 milijoni uporabnikov!  Blokira oglase po vsem spletu.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"Najbolj priljubljena razširitev za brskalnik Chrome z več kot 40 milijoni uporabnikov!  Blokira oglase po vsem spletu.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
@@ -355,25 +359,13 @@
     "message":"Seznam antisocialnih filtrov (odstrani gumbe za deljenje vsebine preko socialnih omrežij)",
     "description":"A filter list"
   },
-  "filteracceptable_ads":{
-    "message":"Sprejemljivi oglasi (priporočeno)",
-    "description":"A filter list"
-  },
-  "filteradblock_custom":{
-    "message":"AdBlock filtri po meri (priporočeno)",
-    "description":"A filter list"
-  },
-  "filtereasylist":{
-    "message":"EasyList (priporočeno)",
-    "description":"A filter list"
-  },
   "filterrussian":{
     "message":"ruski in ukrajinski",
     "description":"Language names for a filter list"
   },
   "filterczech":{
     "message":"češki in slovaški",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (zaščita zasebnosti)",
@@ -547,6 +539,10 @@
     "message":"Onemogočite vse razširitve, razen AdBlocka:",
     "description":"Instruction on ad report page"
   },
+  "disableforchromestepone":{
+    "message":"Odprite <a href='#'>stran z razširitvami<\/a>.",
+    "description":"Step 1 for disabling Chrome extensions"
+  },
   "clickdisableotherextensions":{
     "message":"<b>ALI<\/b> pa preprosto kliknite na ta gumb, da se vse zgoraj napisano stori samodejno: <a>Onemogoči vse druge razširitve<\/a>",
     "description":"On the ad report page, an alternative way to disable other extensions"
@@ -589,107 +585,199 @@
   },
   "lang_english":{
     "message":"angleščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"bolgarščina",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"kitajščina",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"češčina",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"danščina",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"nizozemščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"finščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"francoščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"nemščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"grščina",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"madžarščina",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"hebrejščina",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"italijanščina",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"japonščina",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"korejščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"poljščina",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"romunščina",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"ruščina",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"slovaščina",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"španščina",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"španščina",
-    "description":"language"
+  "lang_russian":{
+    "message":"ruščina",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"slovaščina",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"ukrajinščina",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"arabščina",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"bolgarščina",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"kitajščina",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"danščina",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"nizozemščina",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"estonščina",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"finščina",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"francoščina",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"nemščina",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"grščina",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"madžarščina",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"indonezijščina",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"islandščina",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"hebrejščina",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"italijanščina",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"japonščina",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"korejščina",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"litovščina",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"poljščina",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"romunščina",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"latvijščina",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"švedščina",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"turščina",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"bolgarščina",
+    "description":"A filter list"
+  },
+  "filterchinese":{
+    "message":"kitajščina",
+    "description":"A filter list"
+  },
+  "filterdanish":{
+    "message":"danščina",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"nizozemščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"finščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"francoščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_german":{
+    "message":"nemščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"grščina",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"madžarščina",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"hebrejščina",
+    "description":"A filter list"
+  },
+  "filteritalian":{
+    "message":"italijanščina",
+    "description":"A filter list"
+  },
+  "filterjapanese":{
+    "message":"japonščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"korejščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"poljščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"romunščina",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"španščina",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"arabščina",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_estonian":{
     "message":"estonščina",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"islandščina",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"litovščina",
-    "description":"language"
+    "description":"A filter list"
   },
   "other":{
     "message":"drugo",
@@ -1045,21 +1133,17 @@
     "message":"Filtri za druge jezike: ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Kaj je to?",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Kako?",
     "description":"Text of a link pointing to instructions on how to do something"
   },
+  "whats_this":{
+    "message":"Kaj je to?",
+    "description":"Text of a link pointing to the explanation of a new feature"
+  },
   "selectlanguage":{
     "message":" -- Izberite jezik -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
-  },
-  "allow_whitelisting_youtube_channels":{
-    "message":"Omogoči dodajanje nekaterih YouTube kanalov na seznam dovoljenih",
-    "description":"Checkbox on the 'General' tab of the Options page"
   },
   "whitelist_youtube_channel":{
     "message":"Dovoli oglase na kanalu $name$",
@@ -1286,6 +1370,18 @@
   "buttonsubmit":{
     "message":"Pošlji",
     "description":"Button to send a form."
+  },
+  "adreport_missing_screenshot":{
+    "message":"Pozabili ste dodati zaslonski posnetek! Brez tega, da vidimo oglase, ki jih prijavljate, vam ne moremo pomagati.",
+    "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
+  },
+  "adreport_response_invalid_file":{
+    "message":"To ni datoteka s sliko. Prosimo, prenesite datoteko tipa .png, .gif, ali .jpg.",
+    "description":"Error message shown when the user uploads an invalid file type."
+  },
+  "adreport_response_large_file":{
+    "message":"Datoteka je prevelika. Prosimo preverite, da je datoteka manjša od 10 MB.",
+    "description":"Error message shown when the user tries to upload a large image file."
   },
   "adreport_response_save_error":{
     "message":"Napaka pri shranjevanju priložene datoteke.",

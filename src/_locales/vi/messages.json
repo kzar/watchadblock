@@ -1,6 +1,14 @@
 {
+  "description":{
+    "message":"Tiện ích phổ biến nhất trên Chrome, với trên 40 triệu người dùng! AdBlock sẽ giúp bạn chặn tất cả quảng cáo trên internet.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
   "description2":{
     "message":"Tiện ích phổ biến nhất trên Chrome, với trên 40 triệu người dùng! AdBlock sẽ giúp bạn chặn tất cả quảng cáo trên internet.",
+    "description":"Extension description in manifest. Should not exceed 132 characters."
+  },
+  "description_edge":{
+    "message":"AdBlock. Trình chặn quảng cáo số 1 hiện nay với trên 200 triệu lượt tải về. Giúp bạn chặn tất cả quảng cáo trên internet.",
     "description":"Extension description in manifest. Should not exceed 132 characters."
   },
   "adblock_click_for_details":{
@@ -30,6 +38,10 @@
   "optionstitle":{
     "message":"Tùy chọn AdBlock",
     "description":"Title for the options page"
+  },
+  "chromebutton_how_to_hide2":{
+    "message":"Nhấp chuột phải vào nút AdBlock và chọn 'Ẩn trong menu Chrome'. Để hiển thị lại, nhấp vào menu Chrome, nhấp chuột phải vào nút AdBlock và chọn 'Hiển thị trên thanh công cụ'.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   },
   "operabutton_how_to_hide2":{
     "message":"Để ẩn nút này, đi đến opera:\/\/extensions và chọn 'Ẩn khỏi thanh cộng cụ'. Để hiển thị trở lại bạn chỉ cần bỏ chọn tùy chọn đó.",
@@ -311,6 +323,22 @@
     "message":"Đang lấy dữ liệu... vui lòng chờ trong giây lát.",
     "description":"Status label"
   },
+  "ab_filters_subscription_lastDownload_invalidURL":{
+    "message":"Lỗi, địa chỉ không hợp lệ",
+    "description":"message on the filter tab - Message when you subscribe to a non-list URL"
+  },
+  "ab_filters_subscription_lastDownload_connectionError":{
+    "message":"Lỗi, Tải xuống thất bại",
+    "description":"message on the filter tab - Generic filter list download error message"
+  },
+  "ab_filters_subscription_lastDownload_invalidData":{
+    "message":"Lỗi, bộ lọc không hợp lệ",
+    "description":"message on the filter tab - Invalid filter list file"
+  },
+  "ab_filters_subscription_lastDownload_checksumMismatch":{
+    "message":"Lỗi, checksum không khớp",
+    "description":"message on the filter tab"
+  },
   "invalidListUrl":{
     "message":"Địa chỉ bộ lọc không hợp lệ. Bộ lọc sẽ bị xóa.",
     "description":"Message when you subscribe to a non-list URL"
@@ -355,29 +383,45 @@
     "message":"Danh sách bộ lọc chặn mạng xã hội (loại bỏ các nút bấm liên quan đến mạng xã hội)",
     "description":"A filter list"
   },
+  "filterannoyances":{
+    "message":"Fanboy's Annoyances (Chặn cửa sổ bật lên trong trang, widget của mạng xã hội và các trang liên quan, và các phiền toái khác)",
+    "description":"A filter list"
+  },
   "filterwarning_removal":{
     "message":"Danh sách loại bỏ cảnh báo Adblock (loại bỏ các cảnh báo về việc sử dụng trình chặn quảng cáo)",
     "description":"A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   },
   "filteracceptable_ads":{
-    "message":"Quảng Cáo Chấp Nhận Được (được khuyến khích)",
+    "message":"Quảng cáo chấp nhận được",
     "description":"A filter list"
   },
   "filteradblock_custom":{
-    "message":"Bộ lọc tùy chỉnh AdBlock (khuyến khích)",
+    "message":"Bộ lọc tùy chỉnh AdBlock",
     "description":"A filter list"
   },
   "filtereasylist":{
-    "message":"EasyList (khuyến khích)",
+    "message":"EasyList",
+    "description":"A filter list"
+  },
+  "filtereasylist_lite":{
+    "message":"EasyList Lite (khuyên dùng)",
     "description":"A filter list"
   },
   "filterrussian":{
     "message":"Tiếng Nga và Ukraina",
     "description":"Language names for a filter list"
   },
+  "filter_russian":{
+    "message":"Tiếng Nga & Tiếng Ukraina + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filterczech":{
     "message":"Tiếng Séc và Slovakia",
-    "description":"Language names for a filter list"
+    "description":"A filter list"
+  },
+  "filter_czech":{
+    "message":"Tiếng Séc & Slovak + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasyprivacy":{
     "message":"EasyPrivacy (bảo vệ sự riêng tư)",
@@ -387,6 +431,10 @@
     "message":"Tiếng Indonesia",
     "description":"A filter list"
   },
+  "filter_easylist_plus_indonesian":{
+    "message":"Tiếng Indonesia + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
   "filtermalware":{
     "message":"Chống phần mềm độc hại",
     "description":"A filter list"
@@ -394,6 +442,10 @@
   "filterlatvian":{
     "message":"Tiếng Latvia",
     "description":"A filter list"
+  },
+  "filter_latvian":{
+    "message":"Tiếng Latvia + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filterswedish":{
     "message":"Tiếng Thụy Điển",
@@ -462,6 +514,14 @@
   "filtersavewarning":{
     "message":"Hãy cẩn thận: Nếu bạn chỉnh sửa không chính xác, rất nhiều bộ lọc khác bao gồm cả bộ lọc chính thức cũng có thể bị lỗi!<br\/>Bạn có thể đọc thêm về <a>cú pháp bộ lọc<\/a> để biết cách chỉnh sửa bộ lọc.",
     "description":"Warning when blacklisting manually"
+  },
+  "migration_error_message":{
+    "message":"Chúng tôi tìm thấy một vài lỗi trong bộ lọc tùy chỉnh của bạn. Xem những thông điệp dưới đây.",
+    "description":"Warning when adding custom filters manually"
+  },
+  "delete_migration_error_messages":{
+    "message":"Xóa thông điệp",
+    "description":"Button to delete error messages when adding custom filters manually"
   },
   "contentblockingwarning":{
     "message":"Lưu ý: Danh sách trắng (cho phép hiển thị quảng cáo) một trang hoặc địa chỉ chưa được hỗ trợ với Chặn Nội Dung Safari được bật.",
@@ -609,107 +669,243 @@
   },
   "lang_english":{
     "message":"Tiếng Anh",
-    "description":"language"
-  },
-  "filtereasylist_plus_bulgarian":{
-    "message":"Tiếng Bulgaria",
-    "description":"language"
-  },
-  "filterchinese":{
-    "message":"Tiếng Trung",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_czech":{
     "message":"Tiếng Séc",
-    "description":"language"
-  },
-  "filterdanish":{
-    "message":"Tiếng Đan Mạch",
-    "description":"language"
-  },
-  "filterdutch":{
-    "message":"Tiếng Hà Lan",
-    "description":"language"
-  },
-  "filtereasylist_plus_finnish":{
-    "message":"Tiếng Phần Lan",
-    "description":"language"
-  },
-  "filtereasylist_plus_french":{
-    "message":"Tiếng Pháp",
-    "description":"language"
-  },
-  "filtereasylist_plus_german":{
-    "message":"Tiếng Đức",
-    "description":"language"
-  },
-  "filtereasylist_plus_greek":{
-    "message":"Tiếng Hy Lạp",
-    "description":"language"
-  },
-  "filterhungarian":{
-    "message":"Tiếng Hungari",
-    "description":"language"
-  },
-  "filterisraeli":{
-    "message":"Tiếng Do Thái",
-    "description":"language"
-  },
-  "filteritalian":{
-    "message":"Tiếng Ý",
-    "description":"language"
-  },
-  "filterjapanese":{
-    "message":"Tiếng Nhật",
-    "description":"language"
-  },
-  "filtereasylist_plun_korean":{
-    "message":"Tiếng Hàn",
-    "description":"language"
-  },
-  "filtereasylist_plus_polish":{
-    "message":"Tiếng Ba Lan",
-    "description":"language"
-  },
-  "filtereasylist_plus_romanian":{
-    "message":"Tiếng Rumani",
-    "description":"language"
-  },
-  "lang_russian":{
-    "message":"Tiếng Nga",
-    "description":"language"
-  },
-  "lang_slovak":{
-    "message":"Tiếng Slovakia",
-    "description":"language"
+    "description":"Language name"
   },
   "lang_spanish":{
     "message":"Tiếng Tây Ban Nha",
-    "description":"language"
+    "description":"Language name"
   },
-  "filtereasylist_plus_spanish":{
-    "message":"Tiếng Tây Ban Nha",
-    "description":"language"
+  "lang_russian":{
+    "message":"Tiếng Nga",
+    "description":"Language name"
+  },
+  "lang_slovak":{
+    "message":"Tiếng Slovakia",
+    "description":"Language name"
   },
   "lang_ukranian":{
     "message":"Tiếng Ukraina",
-    "description":"language"
+    "description":"Language name"
+  },
+  "lang_arabic":{
+    "message":"Tiếng Ả-Rập",
+    "description":"Language name"
+  },
+  "lang_bulgarian":{
+    "message":"Tiếng Bulgaria",
+    "description":"Language name"
+  },
+  "lang_chinese":{
+    "message":"Tiếng Trung",
+    "description":"Language name"
+  },
+  "lang_danish":{
+    "message":"Tiếng Đan Mạch",
+    "description":"Language name"
+  },
+  "lang_dutch":{
+    "message":"Tiếng Hà Lan",
+    "description":"Language name"
+  },
+  "lang_estonian":{
+    "message":"Tiếng Estonia",
+    "description":"Language name"
+  },
+  "lang_finnish":{
+    "message":"Tiếng Phần Lan",
+    "description":"Language name"
+  },
+  "lang_french":{
+    "message":"Tiếng Pháp",
+    "description":"Language name"
+  },
+  "lang_german":{
+    "message":"Tiếng Đức",
+    "description":"Language name"
+  },
+  "lang_greek":{
+    "message":"Tiếng Hy Lạp",
+    "description":"Language name"
+  },
+  "lang_hungarian":{
+    "message":"Tiếng Hungari",
+    "description":"Language name"
+  },
+  "lang_indonesian":{
+    "message":"Tiếng Indonesia",
+    "description":"Language name"
+  },
+  "lang_icelandic":{
+    "message":"Tiếng Icecland",
+    "description":"Language name"
+  },
+  "lang_israeli":{
+    "message":"Tiếng Do Thái",
+    "description":"Language name"
+  },
+  "lang_italian":{
+    "message":"Tiếng Ý",
+    "description":"Language name"
+  },
+  "lang_japanese":{
+    "message":"Tiếng Nhật",
+    "description":"Language name"
+  },
+  "lang_korean":{
+    "message":"Tiếng Hàn",
+    "description":"Language name"
+  },
+  "lang_lithuania":{
+    "message":"Tiếng Lít-va",
+    "description":"Language name"
+  },
+  "lang_polish":{
+    "message":"Tiếng Ba Lan",
+    "description":"Language name"
+  },
+  "lang_romanian":{
+    "message":"Tiếng Rumani",
+    "description":"Language name"
+  },
+  "lang_latvian":{
+    "message":"Tiếng Latvia",
+    "description":"Language name"
+  },
+  "lang_swedish":{
+    "message":"Tiếng Thụy Điển",
+    "description":"Language name"
+  },
+  "lang_turkish":{
+    "message":"Tiếng Thổ Nhĩ Kỳ",
+    "description":"Language name"
+  },
+  "filtereasylist_plus_bulgarian":{
+    "message":"Tiếng Bulgaria",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_bulgarian":{
+    "message":"Tiếng Bulgaria + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterchinese":{
+    "message":"Tiếng Trung",
+    "description":"A filter list"
+  },
+  "filter_chinese":{
+    "message":"Tiếng Trung + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterdanish":{
+    "message":"Tiếng Đan Mạch",
+    "description":"A filter list"
+  },
+  "filterdutch":{
+    "message":"Tiếng Hà Lan",
+    "description":"A filter list"
+  },
+  "filter_dutch":{
+    "message":"Tiếng Hà Lan + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_finnish":{
+    "message":"Tiếng Phần Lan",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_french":{
+    "message":"Tiếng Pháp",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_french":{
+    "message":"Tiếng Pháp + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_german":{
+    "message":"Tiếng Đức",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_german":{
+    "message":"Tiếng Đức + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_greek":{
+    "message":"Tiếng Hy Lạp",
+    "description":"A filter list"
+  },
+  "filterhungarian":{
+    "message":"Tiếng Hungari",
+    "description":"A filter list"
+  },
+  "filterisraeli":{
+    "message":"Tiếng Do Thái",
+    "description":"A filter list"
+  },
+  "filter_israeli":{
+    "message":"Tiếng Do Thái + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filteritalian":{
+    "message":"Tiếng Ý",
+    "description":"A filter list"
+  },
+  "filter_italian":{
+    "message":"Tiếng Ý + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filterjapanese":{
+    "message":"Tiếng Nhật",
+    "description":"A filter list"
+  },
+  "filtereasylist_plun_korean":{
+    "message":"Tiếng Hàn",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_polish":{
+    "message":"Tiếng Ba Lan",
+    "description":"A filter list"
+  },
+  "filtereasylist_plus_romanian":{
+    "message":"Tiếng Rumani",
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_romanian":{
+    "message":"Tiếng Romani + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filtereasylist_plus_spanish":{
+    "message":"Tiếng Tây Ban Nha",
+    "description":"A filter list"
   },
   "filtereasylist_plus_arabic":{
     "message":"Tiếng Ả-Rập",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_arabic":{
+    "message":"Tiếng Ả Rập + EasyList",
+    "description":"A filter list combined with EasyList"
+  },
+  "filter_easylist_plus_arabic_plus_french":{
+    "message":"Tiếng Ả Rập + Tiếng Pháp + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "filtereasylist_plus_estonian":{
     "message":"Tiếng Estonia",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtericelandic":{
     "message":"Tiếng Icecland",
-    "description":"language"
+    "description":"A filter list"
   },
   "filtereasylist_plus_lithuania":{
     "message":"Tiếng Lít-va",
-    "description":"language"
+    "description":"A filter list"
+  },
+  "filter_easylist_plus_lithuania":{
+    "message":"Tiếng Lithuani + EasyList",
+    "description":"A filter list combined with EasyList"
   },
   "other":{
     "message":"Khác",
@@ -863,6 +1059,10 @@
     "message":"trang",
     "description":"A resource type"
   },
+  "typewebsocket":{
+    "message":"websocket",
+    "description":"A resource type"
+  },
   "typeunknown":{
     "message":"không rõ",
     "description":"A resource type"
@@ -959,9 +1159,17 @@
     "message":"Chia sẻ!",
     "description":"Text of a share link"
   },
+  "donate_to_adblock":{
+    "message":"Bạn có thích AdBlock? Hãy cân nhắc việc quyên góp!",
+    "description":"Text of a donate link in the toolbar button menu"
+  },
   "pwyw":{
     "message":"Trả bất cứ thứ gì bạn muốn!",
     "description":"Text of a payment request link"
+  },
+  "privacy_policy":{
+    "message":"Chính sách bảo mật",
+    "description":"Link to AdBlock's privacy policy"
   },
   "translator_credit":{
     "message":"Việt hóa bởi:",
@@ -1055,6 +1263,10 @@
     "message":"Hiển thị số quảng cáo bị chặn trên menu AdBlock",
     "description":"Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
   },
+  "show_devtools_panel":{
+    "message":"Hiển thị bảng điều khiển 'AdBlock' trong công cụ nhà phát triển",
+    "description":"Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
+  },
   "adblockinglist":{
     "message":"Danh sách các bộ lọc chặn quảng cáo",
     "description":"List for subscribed ad blocking fiters"
@@ -1085,21 +1297,33 @@
     "message":"Thêm bộ lọc cho ngôn ngữ khác: ",
     "description":"Dropdown list for language-specific filters"
   },
-  "whats_this":{
-    "message":"Đây là gì?",
-    "description":"Text of a link pointing to the explanation of a new feature"
-  },
   "how":{
     "message":"Cách dùng?",
     "description":"Text of a link pointing to instructions on how to do something"
+  },
+  "whats_this":{
+    "message":"Đây là gì?",
+    "description":"Text of a link pointing to the explanation of a new feature"
   },
   "selectlanguage":{
     "message":" -- Chọn ngôn ngữ -- ",
     "description":"Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   },
   "allow_whitelisting_youtube_channels":{
-    "message":"Cho phép một số kênh YouTube trong danh sách trắng",
+    "message":"Cho phép một số kênh YouTube cụ thể vào danh sách trắng (yêu cầu khởi động lại trình duyệt)",
     "description":"Checkbox on the 'General' tab of the Options page"
+  },
+  "whitelist_all_youtube_channels":{
+    "message":"Danh sách trắng tất cả những kênh YouTube đã đăng ký",
+    "description":"Toolbar button menu entry, displayed only on youtube.com\/feed\/subscriptions and if the YouTube channel whitelisting option is enabled"
+  },
+  "one_moment_all_youtube_channels":{
+    "message":"Chờ một chút tong khi chúng tôi thu thập tất cả các muc đăng ký của bạn",
+    "description":"Alert message displayed when whitelisting all subscribed YouTube channels"
+  },
+  "all_youtube_channels_complete":{
+    "message":"Tất cả những kênh YouTube bạn đăng ký đã được đưa vào danh sách trắng",
+    "description":"Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   },
   "whitelist_youtube_channel":{
     "message":"Đưa kênh $name$ vào danh sách trắng",
@@ -1226,6 +1450,14 @@
   "show_resourcelist":{
     "message":"Hiển thị tất cả yêu cầu",
     "description":"Menu entry to open the resource list page"
+  },
+  "new_resourcelist_explanation_win":{
+    "message":"Để hiển thị tất cả yêu cầu, nhấp chuột phải vào trang, chọn 'Kiểm tra' (Ctrl+Shift+I), sau đó chọn tab 'AdBlock'.",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
+  },
+  "new_resourcelist_explanation_osx":{
+    "message":"Để hiển thị tất cả yêu cầu, nhấp chuột phải vào trang, chọn 'Kiểm tra' (Option+Cmd+I), sau đó chọn tab 'AdBlock'.",
+    "description":"Message explaining how to access the resource list page on AdBlock 3.0+"
   },
   "noresourcessend2":{
     "message":"Đã xảy ra chuyện gì đó. Không có nguồn nào được gửi đi. Trang này sẽ bị đóng lại. Hãy thử tải lại trang web này.",
@@ -1359,10 +1591,6 @@
     "message":"Bạn quên đính kèm ảnh chụp màn hình rồi! Chúng tôi không thể giúp bạn nếu không thấy (những) quảng cáo mà bạn đang báo cáo.",
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
   },
-  "adreport_response_success":{
-    "message":"Đã xong! Chúng tôi sẽ sớm liên hệ với bạn, rất có thể là ngay trong ngày, hoặc hai ngày nếu là ngày lễ. Trong khi chờ đợi, bạn hãy tìm một email từ AdBlock. Bạn sẽ thấy một liên kết đến thẻ của bạn trên trang giúp đỡ của chúng tôi tại đó. Bạn cũng có thể theo dõi qua email nếu muốn!",
-    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
-  },
   "adreport_response_invalid_file":{
     "message":"Đó không phải tập tin ảnh. Hãy tải lên tập tin .png, .gif, hoặc .jpg.",
     "description":"Error message shown when the user uploads an invalid file type."
@@ -1394,5 +1622,17 @@
   "adreport_server_response_error__manual_msg_step2":{
     "message":"Và tự tạo một thẻ, sau đó chép và dán thông tin dưới đây vào phần \"Điền mọi thông tin chi tiết bạn nghĩ sẽ giúp chúng tôi hiểu được vấn đề của bạn\".",
     "description":"Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
+  },
+  "custom_filters_migration_error_message_part1":{
+    "message":"Số lỗi bộ lọc tùy chỉnh: ",
+    "description":"Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part2":{
+    "message":"Tin nhắn sau đây được tạo trong quá trình di chuyển bộ lọc tùy chỉnh (bỏ qua số dòng): ",
+    "description":"Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+  },
+  "custom_filters_migration_error_message_part3":{
+    "message":"Mục gốc: ",
+    "description":"Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }
 }
