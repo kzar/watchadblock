@@ -90,6 +90,10 @@
   "add_your_own_filters": {
     "message": "Додати власні фільтри"
   }, 
+  "adreport2": {
+    "message": "So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!<br/> Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Customize' tab of the options page!", 
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  }, 
   "adreport_all_debug_info": {
     "message": "Наступні відомості будуть також включені у звіт про рекламу.", 
     "description": "Shows the user the debug information that will be sent along with their report."
@@ -166,6 +170,10 @@
     "message": "Знайшли рекламу на сторінці? Ми допоможемо вам знайти правильне місце, щоб повідомити про це!", 
     "description": "Introduction of the ad reporting page"
   }, 
+  "adreportthanks": {
+    "message": "Thank You!", 
+    "description": "Message to the user thanking them for sharing the URL with us."
+  }, 
   "adreportvoluntary": {
     "message": "Повідомлення про наявність реклами є добровільним. Це допоможе іншим людям, додавання до списку фільтрів заблокує рекламу кожному користувачу. Якщо ви не відчуваєте себе альтруїстом прямо зараз - це нормально. Закрийте цю сторінку та <a>заблокуйте рекламу</a> тільки для себе.", 
     "description": "Introduction of the ad reporting page"
@@ -230,7 +238,7 @@
     "description": "Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
   }, 
   "blacklistereditinvalid1": {
-    "message": "Помилка введення фільтру: $exception$", 
+    "message": "Неприпустимий фільтр: $exception$", 
     "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.", 
     "placeholders": {
       "exception": {
@@ -258,15 +266,15 @@
     "description": "Blacklister attribute choosing page message"
   }, 
   "blacklisteroptions1": {
-    "message": "Які ознаки на вашу думку найкраще характеризуватимуть цю рекламу?", 
+    "message": "Як Ви думаєте, чи буде правильним бачити цю рекламу при кожному відвідуванні цієї сторінки?", 
     "description": "Blacklister attribute choosing page message"
   }, 
   "blacklisteroptionstitle": {
-    "message": "Останній крок: що робить це рекламою?", 
+    "message": "Останній крок: що робити з цією рекламою?", 
     "description": "Blacklister options page title"
   }, 
   "blacklistersinglematch": {
-    "message": "Під фільтр потрапляє <b>1</b> елемент на поточній сторінці.", 
+    "message": "Під фільтр потрапляє <b>1</b> елемент на цій сторінці.", 
     "description": "Tells the user only one match was found"
   }, 
   "blacklisterthefilter": {
@@ -649,6 +657,38 @@
   "fetchinglabel": {
     "message": "Забираємо... будь ласка, чекайте.", 
     "description": "Status label"
+  }, 
+  "ff_adblock_outdated": {
+    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
+    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
+  }, 
+  "ff_button_how_to_hide": {
+    "message": "To hide the button, right click it and choose Remove from Toolbar.  You can show it again under Firefox menu -> Customize.", 
+    "description": "Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  }, 
+  "ff_checkinchrome_1": {
+    "message": "Install Chrome, if you don't have it.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_2": {
+    "message": "Install AdBlock for Chrome, if you don't have it.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_3": {
+    "message": "In Chrome, subscribe to the same filter lists as you have here.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_4": {
+    "message": "In Chrome, load the page with the ad.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_5": {
+    "message": "Does the ad appear in Chrome too?", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrometitle": {
+    "message": "Check in Chrome", 
+    "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_chinese": {
     "message": "Китайська + EasyList", 
@@ -1033,7 +1073,7 @@
     "message": "Загальні"
   }, 
   "generaloptions": {
-    "message": "Основні настройки", 
+    "message": "Основні налаштування", 
     "description": "Title of first tab page"
   }, 
   "global_filter_cssproperty_nodomain": {
@@ -1590,7 +1630,7 @@
     "description": "Menu entry to open the resource list page"
   }, 
   "showcontextmenus2": {
-    "message": "Керувати AdBlock за допомогою контекстного меню", 
+    "message": "Додати елементи в меню правої кнопки миші", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "showlinkstolists2": {
@@ -1966,7 +2006,7 @@
     "description": "A positive response to a question"
   }, 
   "you_can_slide_to_change": {
-    "message": "Перетягніть, щоб визначити, чого саме не чіпатиме AdBlock.", 
+    "message": "Ви можете переміститись нижче, щоб змінити саме ті сторінки, на яких AdBlock не буде працювати.", 
     "description": "Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   }, 
   "you_know_thats_a_bad_idea_right": {

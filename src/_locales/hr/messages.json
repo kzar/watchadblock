@@ -8,19 +8,19 @@
     "description": "Acceptable Ads message on ad report page"
   }, 
   "ab_filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Failed, checksum mismatch", 
+    "message": "Neuspješno, pogrešna provjera veličine", 
     "description": "message on the filter tab"
   }, 
   "ab_filters_subscription_lastDownload_connectionError": {
-    "message": "Failed, download failure", 
+    "message": "Neuspješno, greška preuzimanja", 
     "description": "message on the filter tab - Generic filter list download error message"
   }, 
   "ab_filters_subscription_lastDownload_invalidData": {
-    "message": "Failed, not a valid filters list", 
+    "message": "Neuspješno, nije valjana lista filtera", 
     "description": "message on the filter tab - Invalid filter list file"
   }, 
   "ab_filters_subscription_lastDownload_invalidURL": {
-    "message": "Failed, not a valid address", 
+    "message": "Neuspješno, nije valjana adresa", 
     "description": "message on the filter tab - Message when you subscribe to a non-list URL"
   }, 
   "acceptable_ads_content_blocking_disbled_message": {
@@ -90,6 +90,10 @@
   "add_your_own_filters": {
     "message": "Dodaj vlastite filtere"
   }, 
+  "adreport2": {
+    "message": "So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!<br/> Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Customize' tab of the options page!", 
+    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
+  }, 
   "adreport_all_debug_info": {
     "message": "Slijedeće informacije biti će također uključene u prijavu oglasa.", 
     "description": "Shows the user the debug information that will be sent along with their report."
@@ -143,7 +147,7 @@
     "description": "Error message shown when the server could not save an attached file."
   }, 
   "adreport_response_success": {
-    "message": "All set! We'll be in touch as soon as we can. In the meantime, look for an email from AdBlock. You'll find a link to your ticket on our help site there, along with some self-help suggestions if we can't get back to you right away.", 
+    "message": "Sve je spremno! Javit ćemo Vam se što je prije moguće. U međuvremenu, potražite poruku e-pošte od AdBlock-a. Naći ćete link na Vaš zahtjev na našoj web-lokaciji pomoći, uz prijedloge samopomoći dok Vam se ne javimo.", 
     "description": "Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   }, 
   "adreport_screen_cap_upload": {
@@ -166,6 +170,10 @@
     "message": "Pronašli ste oglas na web-stranici? Pomoći ćemo Vam da pronađete pravo mjesto za prijaviti!", 
     "description": "Introduction of the ad reporting page"
   }, 
+  "adreportthanks": {
+    "message": "Thank You!", 
+    "description": "Message to the user thanking them for sharing the URL with us."
+  }, 
   "adreportvoluntary": {
     "message": "Prijavljivanje oglasa je dobrovoljno. Pomaže drugima da također ne vide reklame tako što održavatelji lista filtera blokiraju oglas za sve. Ako se ne osjećate altruistički, to je isto u redu. Zatvorite ovu stranicu i <a>blokirajte oglas</a> samo sebi.", 
     "description": "Introduction of the ad reporting page"
@@ -179,11 +187,11 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "all_youtube_channels_complete": {
-    "message": "All of your YouTube channel subscriptions have been whitelisted", 
+    "message": "Na svim vašim pretplaćenim YouTube kanalima su dopušteni oglasi", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Allow whitelisting of specific YouTube channels (requires restarting your browser)", 
+    "message": "Omogući dodavanje na listu dopuštenog određenih YouTube kanala (potrebno je ponovo pokrenuti preglednik)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -503,15 +511,15 @@
     "description": "Message of the css-hiding area"
   }, 
   "custom_filters_migration_error_message_part1": {
-    "message": "Custom filters error count: ", 
+    "message": "Broj pogrešaka prilagođenih filtera: ", 
     "description": "Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part2": {
-    "message": "The following message(s) were generated during the custom filter migration (ignore the line numbers): ", 
+    "message": "Sljedeće poruke su generirane tijekom migracije prilagođenih filtera (zanemarite brojeve redaka): ", 
     "description": "Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part3": {
-    "message": "Original entry: ", 
+    "message": "Izvorna stavka: ", 
     "description": "Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
   }, 
   "customfilters": {
@@ -545,7 +553,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
-    "message": "Delete messages", 
+    "message": "Obriši poruke", 
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
@@ -557,7 +565,7 @@
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
-    "message": "AdBlock. The #1 ad blocker with over 200 million downloads. Blocks ads all over the web.", 
+    "message": "AdBlock. #1 bloker oglasa s više od 200 milijuna preuzimanja. Blokira oglase na cijelom webu.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "disableaa": {
@@ -603,7 +611,7 @@
     "description": "Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
   }, 
   "donate_to_adblock": {
-    "message": "Love AdBlock? Consider donating!", 
+    "message": "Volite AdBlock? Razmislite o doniranju!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
   "dont_run_on_pages_on_domain": {
@@ -650,60 +658,92 @@
     "message": "Dobavljam... molim pričekajte.", 
     "description": "Status label"
   }, 
+  "ff_adblock_outdated": {
+    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
+    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
+  }, 
+  "ff_button_how_to_hide": {
+    "message": "To hide the button, right click it and choose Remove from Toolbar.  You can show it again under Firefox menu -> Customize.", 
+    "description": "Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  }, 
+  "ff_checkinchrome_1": {
+    "message": "Install Chrome, if you don't have it.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_2": {
+    "message": "Install AdBlock for Chrome, if you don't have it.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_3": {
+    "message": "In Chrome, subscribe to the same filter lists as you have here.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_4": {
+    "message": "In Chrome, load the page with the ad.", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrome_5": {
+    "message": "Does the ad appear in Chrome too?", 
+    "description": "Instruction for how to check Chrome for a reported ad"
+  }, 
+  "ff_checkinchrometitle": {
+    "message": "Check in Chrome", 
+    "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
   "filter_chinese": {
-    "message": "Chinese + EasyList", 
+    "message": "Kineski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_czech": {
-    "message": "Czech & Slovak + EasyList", 
+    "message": "Češki i slovački + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_dutch": {
-    "message": "Dutch + EasyList", 
+    "message": "Nizozemski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_arabic": {
-    "message": "Arabic + EasyList", 
+    "message": "Arapski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_arabic_plus_french": {
-    "message": "Arabic + French + EasyList", 
+    "message": "Arapski + francuski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_bulgarian": {
-    "message": "Bulgarian + EasyList", 
+    "message": "Bugarski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_french": {
-    "message": "French + EasyList", 
+    "message": "Francuski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_german": {
-    "message": "German + EasyList", 
+    "message": "Njemački + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_indonesian": {
-    "message": "Indonesian + EasyList", 
+    "message": "Indonezijski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_lithuania": {
-    "message": "Lithuanian + EasyList", 
+    "message": "Litvanski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_romanian": {
-    "message": "Romanian + EasyList", 
+    "message": "Rumunjski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_israeli": {
-    "message": "Hebrew + EasyList", 
+    "message": "Hebrejski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_italian": {
-    "message": "Italian + EasyList", 
+    "message": "Talijanski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_latvian": {
-    "message": "Latvian + EasyList", 
+    "message": "Latvijski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_lists": {
@@ -713,15 +753,15 @@
     "message": "Vaš filter mora slijediti <a>AdBlock filter sintaksu</a>."
   }, 
   "filter_russian": {
-    "message": "Russian & Ukrainian + EasyList", 
+    "message": "Ruski i ukrajinski + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filteracceptable_ads": {
-    "message": "Acceptable Ads", 
+    "message": "Prihvatljivi oglasi", 
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
-    "message": "AdBlock custom filters", 
+    "message": "AdBlock prilagođeni filteri", 
     "description": "A filter list"
   }, 
   "filterannoyances": {
@@ -753,7 +793,7 @@
     "description": "A filter list"
   }, 
   "filtereasylist_lite": {
-    "message": "EasyList Lite (recommended)", 
+    "message": "EasyList Lite (preporučeno)", 
     "description": "A filter list"
   }, 
   "filtereasylist_plun_korean": {
@@ -1309,7 +1349,7 @@
     "description": "On the ad report page, alert notifying users that they will need to manually reenable the extensions"
   }, 
   "migration_error_message": {
-    "message": "We've found some errors in your custom filters. See below for the messages.", 
+    "message": "Našli smo neke greške u prilagođenim filterima. Pogledajte poruke ispod.", 
     "description": "Warning when adding custom filters manually"
   }, 
   "modifydomain": {
@@ -1327,11 +1367,11 @@
     "message": "AdBlock razvojna inačica"
   }, 
   "new_resourcelist_explanation_osx": {
-    "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I), then select the 'AdBlock' tab.", 
+    "message": "Kako bi prikazali sve zahtjeve, desni klik na stranici, odaberite 'Pregledati' (opcija + Cmd + I), zatim odaberite 'AdBlock' karticu.", 
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
   }, 
   "new_resourcelist_explanation_win": {
-    "message": "To show all requests, right click the page, select 'Inspect' (Ctrl+Shift+I), then select the 'AdBlock' tab.", 
+    "message": "Kako bi prikazali sve zahtjeve, desni klik na stranici, odaberite 'Pregledati' (Ctrl + Shift + I), zatim odaberite 'AdBlock' karticu.", 
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
   }, 
   "no": {
@@ -1365,7 +1405,7 @@
     "message": "Kliknite na obavijest za otvaranje svih poveznica koje sadrži."
   }, 
   "one_moment_all_youtube_channels": {
-    "message": "One moment while we gather all of your subscriptions", 
+    "message": "Trenutak dok skupimo sve vaše pretplate", 
     "description": "Alert message displayed when whitelisting all subscribed YouTube channels"
   }, 
   "only_block_ads_on_these_sites": {
@@ -1444,7 +1484,7 @@
     "description": "Menu entry to pause AdBlock"
   }, 
   "privacy_policy": {
-    "message": "Privacy Policy", 
+    "message": "Pravila o privatnosti", 
     "description": "Link to AdBlock's privacy policy"
   }, 
   "pwyw": {
@@ -1574,7 +1614,7 @@
     "message": "Prikaži 'Blokiraj element' stavku izbornika desnog klika"
   }, 
   "show_devtools_panel": {
-    "message": "Show 'AdBlock' panel in the developer tools", 
+    "message": "Prikaži \"AdBlock\" ploču u razvojnim alatima", 
     "description": "Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
   }, 
   "show_on_adblock_button": {
@@ -1929,7 +1969,7 @@
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
-    "message": "Whitelist all subscribed YouTube channels", 
+    "message": "Dopusti reklame na svim pretplaćenim YouTube kanalima", 
     "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
   }, 
   "whitelist_youtube_channel": {
