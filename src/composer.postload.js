@@ -42,12 +42,13 @@ let lastRightClickEventIsMostRecent = false;
 
 function getFiltersForElement(element, callback)
 {
+  let src = element.getAttribute("src");
   ext.backgroundPage.sendMessage(
   {
     type: "composer.getFilters",
     tagName: element.localName,
     id: element.id,
-    src: element.getAttribute("src"),
+    src: src && src.length <= 1000 ? src : null,
     style: element.getAttribute("style"),
     classes: Array.prototype.slice.call(element.classList),
     urls: getURLsFromElement(element),
@@ -485,11 +486,7 @@ function deactivateBlockElement()
   ext.onExtensionUnloaded.removeListener(deactivateBlockElement);
 }
 
-// In Chrome 37-40, the document_end content script (this one) runs properly,
-// while the document_start content scripts (that defines ext) might not. Check
-// whether variable ext exists before continuing to avoid
-// "Uncaught ReferenceError: ext is not defined". See https://crbug.com/416907
-if ("ext" in window && document instanceof HTMLDocument)
+if (document instanceof HTMLDocument)
 {
   // Use a contextmenu handler to save the last element the user right-clicked
   // on. To make things easier, we actually save the DOM event. We have to do
@@ -553,7 +550,7 @@ if ("ext" in window && document instanceof HTMLDocument)
           checkCollapse(currentElement.prisoner || currentElement);
 
           // Apply added element hiding filters.
-          updateStylesheet();
+          elemhide.apply();
         }
         deactivateBlockElement();
         break;

@@ -168,32 +168,58 @@
       ext.pages.onLoading._dispatch(new Page(tab));
     }
   });
-  chrome.webNavigation.onBeforeNavigate.addListener(function(details)
+
+  function createFrame(tabId, frameId)
   {
-    if (details.frameId == 0)
-    {
-      ext._removeFromAllPageMaps(details.tabId);
-      chrome.tabs.get(details.tabId, function()
-      {
-        if (chrome.runtime.lastError)
-        {
-          ext.pages.onLoading._dispatch(new Page(
-          {
-            id: details.tabId,
-            url: details.url
-          }));
-        }
-      });
-    }
-    var frames = framesOfTabs[details.tabId];
+    var frames = framesOfTabs[tabId];
     if (!frames)
     {
-      frames = framesOfTabs[details.tabId] = Object.create(null);
+      frames = framesOfTabs[tabId] = Object.create(null);
     }
-    frames[details.frameId] = {
-      parent: frames[details.parentFrameId] || null,
-      url: new URL(details.url)
-    };
+    var frame = frames[frameId];
+    if (!frame)
+    {
+      frame = frames[frameId] = {};
+    }
+    return frame;
+  }
+  chrome.webNavigation.onBeforeNavigate.addListener(function(details)
+  {
+    var frame = createFrame(details.tabId, details.frameId);
+    frame.parent = framesOfTabs[details.tabId][details.parentFrameId] || null;
+  });
+  var eagerlyUpdatedPages = new ext.PageMap();
+  ext._updatePageFrameStructure = function(frameId, tabId, url, eager)
+  {
+    if (frameId == 0)
+    {
+      var page = new Page(
+      {
+        id: tabId,
+        url: url
+      });
+      if (eagerlyUpdatedPages.get(page) != url)
+      {
+        ext._removeFromAllPageMaps(tabId);
+        if (eager)
+        {
+          eagerlyUpdatedPages.set(page, url);
+        }
+        chrome.tabs.get(tabId, function()
+        {
+          if (chrome.runtime.lastError)
+          {
+            ext.pages.onLoading._dispatch(page);
+          }
+        });
+      }
+    }
+    var frame = createFrame(tabId, frameId);
+    frame.url = new URL(url);
+  };
+  chrome.webNavigation.onCommitted.addListener(function(details)
+  {
+    ext._updatePageFrameStructure(details.frameId, details.tabId, details.url);
   });
 
   function forgetTab(tabId)
@@ -508,38 +534,34 @@
   });
   chrome.webRequest.onBeforeRequest.addListener(function(details)
   {
-    if (details.tabId == -1)
+    if (details.tabId == -1 || details.type == "main_frame")
     {
       return;
     }
-    var isMainFrame = details.type == "main_frame" || details.frameId == 0 && !(details.tabId in framesOfTabs);
-    if (!isMainFrame)
+    var frameId;
+    var requestType;
+    if (details.type == "sub_frame")
     {
-      var frameId;
-      var requestType;
-      if (details.type == "sub_frame")
+      frameId = details.parentFrameId;
+      requestType = "SUBDOCUMENT";
+    }
+    else
+    {
+      frameId = details.frameId;
+      requestType = details.type.toUpperCase();
+    }
+    var frame = ext.getFrame(details.tabId, frameId);
+    if (frame)
+    {
+      var results = ext.webRequest.onBeforeRequest._dispatch(new URL(details.url), requestType, new Page(
       {
-        frameId = details.parentFrameId;
-        requestType = "SUBDOCUMENT";
-      }
-      else
+        id: details.tabId
+      }), frame);
+      if (results.indexOf(false) != -1)
       {
-        frameId = details.frameId;
-        requestType = details.type.toUpperCase();
-      }
-      var frame = ext.getFrame(details.tabId, frameId);
-      if (frame)
-      {
-        var results = ext.webRequest.onBeforeRequest._dispatch(new URL(details.url), requestType, new Page(
-        {
-          id: details.tabId
-        }), frame);
-        if (results.indexOf(false) != -1)
-        {
-          return {
-            cancel: true
-          };
-        }
+        return {
+          cancel: true
+        };
       }
     }
   },

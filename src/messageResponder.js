@@ -225,7 +225,7 @@
           var filters = [];
           var checkWhitelisted = require("whitelisting").checkWhitelisted;
 
-          if (!checkWhitelisted(sender.page, sender.frame,
+          if (Prefs.enabled && !checkWhitelisted(sender.page, sender.frame,
                                 RegExpFilter.typeMap.DOCUMENT |
                                 RegExpFilter.typeMap.ELEMHIDE))
           {
@@ -235,7 +235,8 @@
               return {
                 prefix: filter.selectorPrefix,
                 suffix: filter.selectorSuffix,
-                regexp: filter.regexpString
+                regexp: filter.regexpString,
+                text: filter.text
               };
             });
           }
