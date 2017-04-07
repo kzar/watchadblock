@@ -205,8 +205,8 @@ SURVEY = (function() {
         chrome.tabs.onCreated.removeListener(waitForUserAction);
       }
       var openTabIfAllowed = function() {
-        shouldShowSurvey(surveyData, function () {
-          ext.pages.open('https://getadblock.com/' + surveyData.open_this_url);
+        shouldShowSurvey(surveyData, function (responseData) {
+          ext.pages.open('https://getadblock.com/' + responseData.open_this_url);
         });
       }
       if (SAFARI) {
@@ -226,9 +226,7 @@ SURVEY = (function() {
     if (SAFARI) {
       safari.application.addEventListener("open", waitForUserAction, true);
     } else {
-      if (chrome.tabs.onCreated.hasListener(waitForUserAction)) {
-          chrome.tabs.onCreated.removeListener(waitForUserAction);
-      }
+      chrome.tabs.onCreated.removeListener(waitForUserAction);
       chrome.tabs.onCreated.addListener(waitForUserAction);
     }
   }; //end of processTab()
@@ -298,7 +296,7 @@ SURVEY = (function() {
         } catch (e) {
           log('Error parsing JSON: ', responseData, " Error: ", e);
         }
-        if (data && data.should_survey === 'true') {
+        if (data && data.should_survey === 'true' && surveyAllowed) {
           surveyAllowed = false;
           callback(data);
         }
@@ -319,23 +317,15 @@ SURVEY = (function() {
 
       try {
         var surveyData = JSON.parse(responseData);
-//        if (surveyData.type !== 'notification' &&
-//            (!surveyData.open_this_url ||
-//             !surveyData.open_this_url.match ||
-//             !surveyData.open_this_url.match(/^\/survey\))) {
-//          log("bad survey data", responseData);
-//          return null;
-//        }
-        if (surveyData.type !== 'notification') {
-          log("bad survey data", responseData);
-          return null;
-        }
-        if (surveyData.type === 'notification' &&
-            (!chrome ||
-            !chrome.notifications ||
-            isNaN(surveyData.block_count_limit))) {
-          log("bad survey data", responseData);
-          return null;
+        if (!surveyData)
+          return;
+
+        if (surveyData.type === 'overlay') {
+          processOverlay(surveyData);
+        } else if (surveyData.type === 'tab') {
+          processTab(surveyData);
+        } else if (surveyData.type === 'notification') {
+          processNotification(surveyData);
         }
       } catch (e) {
         console.log("Something went wrong with parsing survey data.");
