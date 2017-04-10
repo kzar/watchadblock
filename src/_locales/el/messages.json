@@ -51,6 +51,10 @@
     "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στη γραμμή εργαλείων του Safari και επιλέξτε Προσαρμογή γραμμής εργαλείων, στη συνέχεια σύρετε το κουμπί AdBlock έξω από τη γραμμή εργαλείων. Μπορείτε να το εμφανίσετε ξανά σύροντάς το πίσω στην γραμμή εργαλείων.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Για να κρύψετε το κουμπί, κάντε δεξί κλικ στο κουμπί και επιλογή Αφαίρεση από τη γραμμή εργαλείων. Μπορείτε να το επανεμφανίσετε από Firefox Μενού -> Προσαρμογή.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Σύρετε τον δείκτη ώσπου η διαφήμιση να μπλοκαριστεί σωστά στην σελίδα, και το μπλοκαρισμένο στοιχείο να φαίνεται εντάξει.",
     "description":"Blacklister slider page message"
@@ -210,7 +214,7 @@
     "description":"abp: link subscriber result"
   },
   "optionsversion":{
-    "message":"Έκδοση $version$",
+    "message":"ΕΚΔΟΣΗ $version$",
     "description":"Version number",
     "placeholders":{
       "version":{
@@ -981,6 +985,30 @@
     "message":"Εμφανίζεται η διαφήμιση και σε άλλον περιηγητή;",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
   },
+  "ff_checkinchrometitle":{
+    "message":"Ελέγξτε στο Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Εγκαταστήσετε το Chrome, αν δεν το έχετε.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Εγκαταστήσετε το AdBlock για Chrome, αν δεν το έχετε.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"Στο Chrome, εγγραφείτε στις ίδιες λίστες φίλτρων όπως έχετε εδώ.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"Στο Chrome, φόρτωση της σελίδας με τη διαφήμιση.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Η διαφήμιση εμφανίζεται και στο Chrome;",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
   "refusetocheck":{
     "message":"Δεν θέλω να το ελέγξω αυτό",
     "description":"User is telling us they don't wish to investigate something for us"
@@ -1164,15 +1192,15 @@
     "description":"Text of a donate link in the toolbar button menu"
   },
   "pwyw":{
-    "message":"Πληρώστε ό,τι θέλετε!",
+    "message":"ΠΛΗΡΩΣΤΕ ΟΤΙ ΘΕΛΕΤΕ!",
     "description":"Text of a payment request link"
   },
   "privacy_policy":{
-    "message":"Πολιτική απορρήτου",
+    "message":"ΠΟΛΙΤΙΚΗ ΑΠΟΡΡΗΤΟΥ",
     "description":"Link to AdBlock's privacy policy"
   },
   "translator_credit":{
-    "message":"Εύσημα για την μετάφραση δίνονται σε:",
+    "message":"Ευχαριστούμε για την βοήθεια στην μετάφραση τους:",
     "description":"Will be followed by a list of translator names (separate string)"
   },
   "tabsupport":{
@@ -1188,7 +1216,7 @@
     "description":"option on the 'General' tab"
   },
   "advanced_options2":{
-    "message":"Είμαι προχωρημένος χρήστης, δείξε μου προηγμένες επιλογές",
+    "message":"Είμαι ένας έμπειρος χρήστης, δείξε μου επιλογές για προχωρημένους",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "work_around_hulu_problems":{
@@ -1590,6 +1618,10 @@
   "adreport_missing_screenshot":{
     "message":"Ξεχάσατε να επισυνάψετε ένα στιγμιότυπο οθόνης! Δεν μπορούμε να σας βοηθήσουμε χωρίς να δούμε την διαφήμιση που θέλετε να αναφέρετε.",
     "description":"Error message shown when the user doesn't attach a screenshot to an ad report."
+  },
+  "adreport_response_success":{
+    "message":"Όλα έτοιμα! Θα είμαστε σε επαφή όσο το δυνατόν πιο σύντομα. Εν τω μεταξύ, αναζητήστε ένα μήνυμα ηλεκτρονικού ταχυδρομείου από το AdBlock. Θα βρείτε ένα σύνδεσμο για το εισιτήριό σας στην ιστοσελίδα μας βοήθειας, μαζί με μερικές προτάσεις αυτοβοήθειας εάν δεν επικοινωνήσουμε μαζί σας αμέσως.",
+    "description":"Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   },
   "adreport_response_invalid_file":{
     "message":"Αυτό δεν είναι αρχείο εικόνας. Παρακαλούμε αποστείλτε ένα αρχείο .png, .gif ή .jpg.",

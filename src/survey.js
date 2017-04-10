@@ -15,8 +15,8 @@ SURVEY = (function() {
         chrome.tabs.onCreated.removeListener(waitForUserAction);
       }
       var openTabIfAllowed = function() {
-        shouldShowSurvey(surveyData, function () {
-          openTab('https://getadblock.com/' + surveyData.open_this_url, true);
+        shouldShowSurvey(surveyData, function (responseData) {
+          openTab('https://getadblock.com/' + responseData.open_this_url, true);
         });
       }
       if (SAFARI) {
@@ -129,9 +129,9 @@ SURVEY = (function() {
           } catch (e) {
             console.log('Error parsing JSON: ', responseData, " Error: ", e);
           }
-          if (data && data.should_survey === 'true') {
+          if (data && data.should_survey === 'true' && surveyAllowed) {
             surveyAllowed = false;
-            callback();
+            callback(data);
           }
         });
       }

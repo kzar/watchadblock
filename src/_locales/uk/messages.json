@@ -51,6 +51,10 @@
     "message":"Щоб приховати кнопку, клацніть правою кнопкою мишки по панелі інструментів Safari і виберіть Кастомізувати Тулбар, а потім перетягніть кнопку AdBlock з панелі інструментів. Ви можете відобразити її знову, перетягнувши назад на панель інструментів.",
     "description":"Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   },
+  "ff_button_how_to_hide":{
+    "message":"Щоб приховати кнопку, натисніть правою кнопкою мишки і виберіть Видалити з Тулбару. Ви можете знову відобразити її, для цього потрібно зайти в меню Firefox ->Кастомізувати.",
+    "description":"Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
+  },
   "sliderexplanation":{
     "message":"Перетягуйте повзунок доти, доки реклама не зникне, проте не переборщіть.",
     "description":"Blacklister slider page message"
@@ -60,7 +64,7 @@
     "description":"Blacklister slider page title"
   },
   "blacklisteroptions1":{
-    "message":"Які ознаки на вашу думку найкраще характеризуватимуть цю рекламу?",
+    "message":"Як Ви думаєте, чи буде правильним бачити цю рекламу при кожному відвідуванні цієї сторінки?",
     "description":"Blacklister attribute choosing page message"
   },
   "blacklisternotsure":{
@@ -72,7 +76,7 @@
     "description":"Blacklister attribute choosing page message"
   },
   "blacklisteroptionstitle":{
-    "message":"Останній крок: що робить це рекламою?",
+    "message":"Останній крок: що робити з цією рекламою?",
     "description":"Blacklister options page title"
   },
   "blacklisternofilter":{
@@ -84,7 +88,7 @@
     "description":"Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
   },
   "blacklistereditinvalid1":{
-    "message":"Помилка введення фільтру: $exception$",
+    "message":"Неприпустимий фільтр: $exception$",
     "description":"Messagebox if the manually edited filter is invalid. Error messages are not translated.",
     "placeholders":{
       "exception":{
@@ -112,7 +116,7 @@
     }
   },
   "blacklistersinglematch":{
-    "message":"Під фільтр потрапляє <b>1<\/b> елемент на поточній сторінці.",
+    "message":"Під фільтр потрапляє <b>1<\/b> елемент на цій сторінці.",
     "description":"Tells the user only one match was found"
   },
   "blacklistermatches":{
@@ -168,7 +172,7 @@
     "description":"Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com\/reader\/*'.  The URL will appear on the next line."
   },
   "you_can_slide_to_change":{
-    "message":"Перетягніть, щоб визначити, чого саме не чіпатиме AdBlock.",
+    "message":"Ви можете переміститись нижче, щоб змінити саме ті сторінки, на яких AdBlock не буде працювати.",
     "description":"Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   },
   "whitelistertitle2":{
@@ -232,7 +236,7 @@
     "description":"A tab on the options page"
   },
   "generaloptions":{
-    "message":"Основні настройки",
+    "message":"Основні налаштування",
     "description":"Title of first tab page"
   },
   "betalabel":{
@@ -240,7 +244,7 @@
     "description":"Label for beta features in AdBlock Options"
   },
   "showcontextmenus2":{
-    "message":"Керувати AdBlock за допомогою контекстного меню",
+    "message":"Додати елементи в меню правої кнопки миші",
     "description":"Checkbox on the 'General' tab of the Options page"
   },
   "disableyoutubestreamingads":{
@@ -980,6 +984,30 @@
   "checkinfirefox_5":{
     "message":"Реклама з’являється в цьому браузері теж?",
     "description":"Instruction for how to check Firefox\/Chrome for a reported ad"
+  },
+  "ff_checkinchrometitle":{
+    "message":"Перевірте в Chrome",
+    "description":"Tell a user to see if a reported ad also appears in Chrome"
+  },
+  "ff_checkinchrome_1":{
+    "message":"Встановіть Chrome, якщо його у вас нема.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_2":{
+    "message":"Встановіть AdBlock для Chrome, якщо у вас його нема.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_3":{
+    "message":"У Chrome підпишіться на ті ж списки фільтрів, як і тут.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_4":{
+    "message":"В Chrome, завантажте сторінку з рекламою.",
+    "description":"Instruction for how to check Chrome for a reported ad"
+  },
+  "ff_checkinchrome_5":{
+    "message":"Реклама з'являється в Chrome теж?",
+    "description":"Instruction for how to check Chrome for a reported ad"
   },
   "refusetocheck":{
     "message":"Мені ліньки перевіряти",
