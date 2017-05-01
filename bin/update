@@ -20,8 +20,9 @@ if [ -n "$(git status --porcelain)" ]; then
     echo "New release(s) found..."
     echo "Applying release changes..."
     for f in `find releases/ -newer latest-release.txt -type f -printf '%T+ %p\n' | sort | awk '{print $2}'`; do
-        # Figure out version number of release
+        # Figure out version number and date for release
         version=`echo "$f" | grep -E "[0-9\.]*[0-9]" -o --color=never`
+        date=`stat -c %y "$f"`
         # Update the source
         rm -rf src/
         unzip -q $f -d tmp
@@ -29,7 +30,7 @@ if [ -n "$(git status --porcelain)" ]; then
         rm -rf tmp/
         # Commit the changes and tag
         git add . && git add -u
-        git commit -F- <<EOF
+        git commit --date="$date" -F- <<EOF
 Release new version $version
 
 `git diff --diff-filter=M --staged --unified=0 src/CHANGELOG* | grep -P '^\+(?:(?!\+\+))|^-(?:(?!--))' --color=never`
