@@ -312,21 +312,13 @@ SURVEY = (function() {
   // Inputs:
   //   responseData: string response from a ping
   var surveyDataFrom = function(responseData) {
-      if (responseData.length === 0)
+      if (responseData.length === 0 || responseData.trim().length === 0)
         return null;
 
       try {
         var surveyData = JSON.parse(responseData);
         if (!surveyData)
           return;
-
-        if (surveyData.type === 'overlay') {
-          processOverlay(surveyData);
-        } else if (surveyData.type === 'tab') {
-          processTab(surveyData);
-        } else if (surveyData.type === 'notification') {
-          processNotification(surveyData);
-        }
       } catch (e) {
         console.log("Something went wrong with parsing survey data.");
         console.log('error', e);

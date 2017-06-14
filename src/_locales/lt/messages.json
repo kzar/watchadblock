@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -1076,20 +1076,17 @@
     "message": "General options", 
     "description": "Title of first tab page"
   }, 
-  "global_filter_cssproperty_nodomain": {
-    "message": "CSS savybės filtrui nenurodytas aktyvus domenas"
-  }, 
   "global_filter_elemhide_duplicate_id": {
     "message": "Gali būti nurodytas tik vienas elemento ID kurį reikia paslėpti"
   }, 
   "global_filter_elemhide_nocriteria": {
     "message": "Nėra kriterijaus pagal kurį galima būtų nuspręsti kurį elementą paslėpti"
   }, 
-  "global_notification_antiadblock_message": {
-    "message": "Šioje svetainėje rodomi tiksliniai pranešimai AdBlock naudotojams. Ar norite jog AdBlock paslėptų tikslinius pranešimus?"
+  "global_filter_invalid_regexp": {
+    "message": "Netinkama reguliarioji išraiška"
   }, 
-  "global_notification_antiadblock_title": {
-    "message": "Paslėpti tikslinius pranešimus?"
+  "global_filter_unknown_option": {
+    "message": "Nežinoma filtro parinktis"
   }, 
   "global_remove_subscription_warning": {
     "message": "Ar tikrai norite atsisakyti šios prenumeratos?"
@@ -1392,6 +1389,12 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "Šioje svetainėje rodomi tiksliniai pranešimai AdBlock naudotojams. Ar norite jog AdBlock paslėptų tikslinius pranešimus?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "Paslėpti tikslinius pranešimus?"
+  }, 
   "notification_configure": {
     "message": "Konfigūruoti pranešimų nustatymus"
   }, 
@@ -1563,12 +1566,6 @@
   "safari50_updatenotice": {
     "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. <a>Upgrade now</a>.", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
-  }, 
-  "safari_content_blocker": {
-    "message": "Naudoti „Safari” įmontuotą turinio blokavimą (eksperimentinis)"
-  }, 
-  "safari_restart": {
-    "message": "Iš naujo paleiskite „Safari”"
   }, 
   "safaributton_how_to_hide2": {
     "message": "To hide the button, right click Safari's toolbar and choose Customize Toolbar, then drag the AdBlock button out of the toolbar. You can show it again by dragging it back into the toolbar.", 

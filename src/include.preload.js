@@ -15,9 +15,9 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+"use strict";
 
-var typeMap = {
+const typeMap = {
   "img": "IMAGE",
   "input": "IMAGE",
   "picture": "IMAGE",
@@ -31,24 +31,23 @@ var typeMap = {
 
 function getURLsFromObjectElement(element)
 {
-  var url = element.getAttribute("data");
+  let url = element.getAttribute("data");
   if (url)
     return [url];
 
-  for (var i = 0; i < element.children.length; i++)
+  for (let child of element.children)
   {
-    var child = element.children[i];
     if (child.localName != "param")
       continue;
 
-    var name = child.getAttribute("name");
+    let name = child.getAttribute("name");
     if (name != "movie"  && // Adobe Flash
         name != "source" && // Silverlight
         name != "src"    && // Real Media + Quicktime
         name != "FileName") // Windows Media
       continue;
 
-    var value = child.getAttribute("value");
+    let value = child.getAttribute("value");
     if (!value)
       continue;
 
@@ -60,17 +59,16 @@ function getURLsFromObjectElement(element)
 
 function getURLsFromAttributes(element)
 {
-  var urls = [];
+  let urls = [];
 
   if (element.src)
     urls.push(element.src);
 
   if (element.srcset)
   {
-    var candidates = element.srcset.split(",");
-    for (var i = 0; i < candidates.length; i++)
+    for (let candidate of element.srcset.split(","))
     {
-      var url = candidates[i].trim().replace(/\s+\S+$/, "");
+      let url = candidate.trim().replace(/\s+\S+$/, "");
       if (url)
         urls.push(url);
     }
@@ -81,11 +79,10 @@ function getURLsFromAttributes(element)
 
 function getURLsFromMediaElement(element)
 {
-  var urls = getURLsFromAttributes(element);
+  let urls = getURLsFromAttributes(element);
 
-  for (var i = 0; i < element.children.length; i++)
+  for (let child of element.children)
   {
-    var child = element.children[i];
     if (child.localName == "source" || child.localName == "track")
       urls.push.apply(urls, getURLsFromAttributes(child));
   }
@@ -98,7 +95,7 @@ function getURLsFromMediaElement(element)
 
 function getURLsFromElement(element)
 {
-  var urls;
+  let urls;
   switch (element.localName)
   {
     case "object":
@@ -116,7 +113,7 @@ function getURLsFromElement(element)
       break;
   }
 
-  for (var i = 0; i < urls.length; i++)
+  for (let i = 0; i < urls.length; i++)
   {
     if (/^(?!https?:)[\w-]+:/i.test(urls[i]))
       urls.splice(i--, 1);
@@ -127,11 +124,11 @@ function getURLsFromElement(element)
 
 function checkCollapse(element)
 {
-  var mediatype = typeMap[element.localName];
+  let mediatype = typeMap[element.localName];
   if (!mediatype)
     return;
 
-  var urls = getURLsFromElement(element);
+  let urls = getURLsFromElement(element);
   if (urls.length == 0)
     return;
 
@@ -143,12 +140,12 @@ function checkCollapse(element)
       baseURL: document.location.href
     },
 
-    function(collapse)
+    collapse =>
     {
       function collapseElement()
       {
-        var propertyName = "display";
-        var propertyValue = "none";
+        let propertyName = "display";
+        let propertyValue = "none";
         if (element.localName == "frame")
         {
           propertyName = "visibility";
@@ -164,13 +161,12 @@ function checkCollapse(element)
       {
         collapseElement();
 
-        if (MutationObserver)
-          new MutationObserver(collapseElement).observe(
-            element, {
-              attributes: true,
-              attributeFilter: ["style"]
-            }
-          );
+        new MutationObserver(collapseElement).observe(
+          element, {
+            attributes: true,
+            attributeFilter: ["style"]
+          }
+        );
       }
     }
   );
@@ -178,7 +174,7 @@ function checkCollapse(element)
 
 function checkSitekey()
 {
-  var attr = document.documentElement.getAttribute("data-adblockkey");
+  let attr = document.documentElement.getAttribute("data-adblockkey");
   if (attr)
     ext.backgroundPage.sendMessage({type: "filters.addKey", token: attr});
 }
@@ -195,9 +191,10 @@ function getContentDocument(element)
   }
 }
 
-function ElementHidingTracer(selectors)
+function ElementHidingTracer()
 {
-  this.selectors = selectors;
+  this.selectors = [];
+  this.filters = [];
 
   this.changedNodes = [];
   this.timeout = null;
@@ -211,35 +208,36 @@ function ElementHidingTracer(selectors)
     this.trace();
 }
 ElementHidingTracer.prototype = {
-  checkNodes: function(nodes)
+  addSelectors(selectors, filters)
   {
-    var matchedSelectors = [];
+    if (document.readyState != "loading")
+      this.checkNodes([document], selectors, filters);
 
-    // Find all selectors that match any hidden element inside the given nodes.
-    for (var i = 0; i < this.selectors.length; i++)
+    this.selectors.push(...selectors);
+    this.filters.push(...filters);
+  },
+
+  checkNodes(nodes, selectors, filters)
+  {
+    let matchedSelectors = [];
+
+    for (let i = 0; i < selectors.length; i++)
     {
-      var selector = this.selectors[i];
-
-      for (var j = 0; j < nodes.length; j++)
+      nodes: for (let node of nodes)
       {
-        var elements = nodes[j].querySelectorAll(selector);
-        var matched = false;
+        let elements = node.querySelectorAll(selectors[i]);
 
-        for (var k = 0; k < elements.length; k++)
+        for (let element of elements)
         {
           // Only consider selectors that actually have an effect on the
           // computed styles, and aren't overridden by rules with higher
           // priority, or haven't been circumvented in a different way.
-          if (getComputedStyle(elements[k]).display == "none")
+          if (getComputedStyle(element).display == "none")
           {
-            matchedSelectors.push(selector);
-            matched = true;
-            break;
+            matchedSelectors.push(filters[i].replace(/^.*?##/, ""));
+            break nodes;
           }
         }
-
-        if (matched)
-          break;
       }
     }
 
@@ -250,26 +248,25 @@ ElementHidingTracer.prototype = {
       });
   },
 
-  onTimeout: function()
+  onTimeout()
   {
-    this.checkNodes(this.changedNodes);
+    this.checkNodes(this.changedNodes, this.selectors, this.filters);
     this.changedNodes = [];
     this.timeout = null;
   },
 
-  observe: function(mutations)
+  observe(mutations)
   {
     // Forget previously changed nodes that are no longer in the DOM.
-    for (var i = 0; i < this.changedNodes.length; i++)
+    for (let i = 0; i < this.changedNodes.length; i++)
     {
       if (!document.contains(this.changedNodes[i]))
         this.changedNodes.splice(i--, 1);
     }
 
-    for (var j = 0; j < mutations.length; j++)
+    for (let mutation of mutations)
     {
-      var mutation = mutations[j];
-      var node = mutation.target;
+      let node = mutation.target;
 
       // Ignore mutations of nodes that aren't in the DOM anymore.
       if (!document.contains(node))
@@ -281,10 +278,10 @@ ElementHidingTracer.prototype = {
       if (mutation.type == "attributes")
         node = node.parentNode;
 
-      var addNode = true;
-      for (var k = 0; k < this.changedNodes.length; k++)
+      let addNode = true;
+      for (let i = 0; i < this.changedNodes.length; i++)
       {
-        var previouslyChangedNode = this.changedNodes[k];
+        let previouslyChangedNode = this.changedNodes[i];
 
         // If we are already going to check an ancestor of this node,
         // we can ignore this node, since it will be considered anyway
@@ -299,7 +296,7 @@ ElementHidingTracer.prototype = {
         // we can ignore that node, since it will be considered anyway
         // when checking one of its ancestors.
         if (node.contains(previouslyChangedNode))
-          this.changedNodes.splice(k--, 1);
+          this.changedNodes.splice(i--, 1);
       }
 
       if (addNode)
@@ -313,9 +310,9 @@ ElementHidingTracer.prototype = {
       this.timeout = setTimeout(this.onTimeout.bind(this), 1000);
   },
 
-  trace: function()
+  trace()
   {
-    this.checkNodes([document]);
+    this.checkNodes([document], this.selectors, this.filters);
 
     this.observer.observe(
       document,
@@ -327,7 +324,7 @@ ElementHidingTracer.prototype = {
     );
   },
 
-  disconnect: function()
+  disconnect()
   {
     document.removeEventListener("DOMContentLoaded", this.trace);
     this.observer.disconnect();
@@ -337,7 +334,7 @@ ElementHidingTracer.prototype = {
 
 function runInPageContext(fn, arg)
 {
-  var script = document.createElement("script");
+  let script = document.createElement("script");
   script.type = "application/javascript";
   script.async = false;
   script.textContent = "(" + fn + ")(" + JSON.stringify(arg) + ");";
@@ -345,24 +342,21 @@ function runInPageContext(fn, arg)
   document.documentElement.removeChild(script);
 }
 
-// Neither Chrome[1] nor Safari allow us to intercept WebSockets, and therefore
+// Chrome doesn't allow us to intercept WebSockets[1], and therefore
 // some ad networks are misusing them as a way to serve adverts and circumvent
 // us. As a workaround we wrap WebSocket, preventing blocked WebSocket
 // connections from being opened.
 // [1] - https://bugs.chromium.org/p/chromium/issues/detail?id=129353
 function wrapWebSocket()
 {
-  if (typeof WebSocket == "undefined")
-    return;
+  let eventName = "abpws-" + Math.random().toString(36).substr(2);
 
-  var eventName = "abpws-" + Math.random().toString(36).substr(2);
-
-  document.addEventListener(eventName, function(event)
+  document.addEventListener(eventName, event =>
   {
     ext.backgroundPage.sendMessage({
       type: "request.websocket",
       url: event.detail.url
-    }, function (block)
+    }, block =>
     {
       document.dispatchEvent(
         new CustomEvent(eventName + "-" + event.detail.url, {detail: block})
@@ -370,20 +364,20 @@ function wrapWebSocket()
     });
   });
 
-  runInPageContext(function(eventName)
+  runInPageContext(eventName =>
   {
     // As far as possible we must track everything we use that could be
     // sabotaged by the website later in order to circumvent us.
-    var RealWebSocket = WebSocket;
-    var closeWebSocket = Function.prototype.call.bind(RealWebSocket.prototype.close);
-    var addEventListener = document.addEventListener.bind(document);
-    var removeEventListener = document.removeEventListener.bind(document);
-    var dispatchEvent = document.dispatchEvent.bind(document);
-    var CustomEvent = window.CustomEvent;
+    let RealWebSocket = WebSocket;
+    let closeWebSocket = Function.prototype.call.bind(RealWebSocket.prototype.close);
+    let addEventListener = document.addEventListener.bind(document);
+    let removeEventListener = document.removeEventListener.bind(document);
+    let dispatchEvent = document.dispatchEvent.bind(document);
+    let CustomEvent = window.CustomEvent;
 
     function checkRequest(url, callback)
     {
-      var incomingEventName = eventName + "-" + url;
+      let incomingEventName = eventName + "-" + url;
       function listener(event)
       {
         callback(event.detail);
@@ -402,13 +396,13 @@ function wrapWebSocket()
       if (!(this instanceof WrappedWebSocket)) return RealWebSocket();
       if (arguments.length < 1) return new RealWebSocket();
 
-      var websocket;
+      let websocket;
       if (arguments.length == 1)
         websocket = new RealWebSocket(url);
       else
         websocket = new RealWebSocket(url, arguments[1]);
 
-      checkRequest(websocket.url, function(blocked)
+      checkRequest(websocket.url, blocked =>
       {
         if (blocked)
           closeWebSocket(websocket);
@@ -436,13 +430,13 @@ function ElemHide()
   this.style = null;
   this.tracer = null;
 
-  this.propertyFilters = new CSSPropertyFilters(
+  this.elemHideEmulation = new ElemHideEmulation(
     window,
-    function(callback)
+    callback =>
     {
       ext.backgroundPage.sendMessage({
         type: "filters.get",
-        what: "cssproperties"
+        what: "elemhideemulation"
       }, callback);
     },
     this.addSelectors.bind(this)
@@ -451,7 +445,7 @@ function ElemHide()
 ElemHide.prototype = {
   selectorGroupSize: 200,
 
-  createShadowTree: function()
+  createShadowTree()
   {
     // Use Shadow DOM if available as to not mess with with web pages that
     // rely on the order of their own <style> tags (#309). However, creating
@@ -465,22 +459,28 @@ ElemHide.prototype = {
     if (/\.(?:google|blogger)\.com$/.test(document.domain))
       return null;
 
-    var shadow = document.documentElement.createShadowRoot();
+    // Finally since some users have both AdBlock and Adblock Plus installed we
+    // have to consider how the two extensions interact. For example we want to
+    // avoid creating the shadowRoot twice.
+    let shadow = document.documentElement.shadowRoot ||
+                 document.documentElement.createShadowRoot();
     shadow.appendChild(document.createElement("shadow"));
 
     // Stop the website from messing with our shadow root (#4191, #4298).
     if ("shadowRoot" in Element.prototype)
     {
-      runInPageContext(function()
+      runInPageContext(() =>
       {
-        var ourShadowRoot = document.documentElement.shadowRoot;
-        var desc = Object.getOwnPropertyDescriptor(Element.prototype, "shadowRoot");
-        var shadowRoot = Function.prototype.call.bind(desc.get);
+        let ourShadowRoot = document.documentElement.shadowRoot;
+        if (!ourShadowRoot)
+          return;
+        let desc = Object.getOwnPropertyDescriptor(Element.prototype, "shadowRoot");
+        let shadowRoot = Function.prototype.call.bind(desc.get);
 
         Object.defineProperty(Element.prototype, "shadowRoot", {
-          configurable: true, enumerable: true, get: function()
+          configurable: true, enumerable: true, get()
           {
-            var shadow = shadowRoot(this);
+            let shadow = shadowRoot(this);
             return shadow == ourShadowRoot ? null : shadow;
           }
         });
@@ -490,7 +490,7 @@ ElemHide.prototype = {
     return shadow;
   },
 
-  addSelectors: function(selectors)
+  addSelectors(selectors, filters)
   {
     if (selectors.length == 0)
       return;
@@ -516,16 +516,19 @@ ElemHide.prototype = {
     // If using shadow DOM, we have to add the ::content pseudo-element
     // before each selector, in order to match elements within the
     // insertion point.
+    let preparedSelectors = [];
     if (this.shadow)
     {
-      var preparedSelectors = [];
-      for (var i = 0; i < selectors.length; i++)
+      for (let selector of selectors)
       {
-        var subSelectors = splitSelector(selectors[i]);
-        for (var j = 0; j < subSelectors.length; j++)
-          preparedSelectors.push("::content " + subSelectors[j]);
+        let subSelectors = splitSelector(selector);
+        for (let subSelector of subSelectors)
+          preparedSelectors.push("::content " + subSelector);
       }
-      selectors = preparedSelectors;
+    }
+    else
+    {
+      preparedSelectors = selectors;
     }
 
     // Safari only allows 8192 primitive selectors to be injected at once[1], we
@@ -533,23 +536,21 @@ ElemHide.prototype = {
     // (Chrome also has a limit, larger... but we're not certain exactly what it
     //  is! Edge apparently has no such limit.)
     // [1] - https://github.com/WebKit/webkit/blob/1cb2227f6b2a1035f7bdc46e5ab69debb75fc1de/Source/WebCore/css/RuleSet.h#L68
-    for (var i = 0; i < selectors.length; i += this.selectorGroupSize)
+    for (let i = 0; i < preparedSelectors.length; i += this.selectorGroupSize)
     {
-      var selector = selectors.slice(i, i + this.selectorGroupSize).join(", ");
-      this.style.sheet.addRule(selector, "display: none !important;");
+      let selector = preparedSelectors.slice(i, i + this.selectorGroupSize).join(", ");
+      this.style.sheet.insertRule(selector + "{display: none !important;}",
+                                  this.style.sheet.cssRules.length);
     }
+
+    if (this.tracer)
+      this.tracer.addSelectors(selectors, filters || selectors);
   },
 
-  apply: function()
+  apply()
   {
-    var selectors = null;
-    var propertyFiltersLoaded = false;
-
-    var checkLoaded = function()
+    ext.backgroundPage.sendMessage({type: "get-selectors"}, response =>
     {
-      if (!selectors || !propertyFiltersLoaded)
-        return;
-
       if (this.tracer)
         this.tracer.disconnect();
       this.tracer = null;
@@ -558,23 +559,11 @@ ElemHide.prototype = {
         this.style.parentElement.removeChild(this.style);
       this.style = null;
 
-      this.addSelectors(selectors.selectors);
-      this.propertyFilters.apply();
+      if (response.trace)
+        this.tracer = new ElementHidingTracer();
 
-      if (selectors.trace)
-        this.tracer = new ElementHidingTracer(selectors.selectors);
-    }.bind(this);
-
-    ext.backgroundPage.sendMessage({type: "get-selectors"}, function(response)
-    {
-      selectors = response;
-      checkLoaded();
-    });
-
-    this.propertyFilters.load(function()
-    {
-      propertyFiltersLoaded = true;
-      checkLoaded();
+      this.addSelectors(response.selectors);
+      this.elemHideEmulation.apply();
     });
   }
 };
@@ -584,17 +573,19 @@ if (document instanceof HTMLDocument)
   checkSitekey();
   wrapWebSocket();
 
+  // This variable is also used by our other content scripts, outside of the
+  // current scope.
   var elemhide = new ElemHide();
   elemhide.apply();
 
-  document.addEventListener("error", function(event)
+  document.addEventListener("error", event =>
   {
     checkCollapse(event.target);
   }, true);
 
-  document.addEventListener("load", function(event)
+  document.addEventListener("load", event =>
   {
-    var element = event.target;
+    let element = event.target;
     if (/^i?frame$/.test(element.localName))
       checkCollapse(element);
   }, true);

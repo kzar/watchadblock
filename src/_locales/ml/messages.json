@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -628,6 +628,9 @@
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enabled_for_site": {
+    "message": "ഈ സൈറ്റില്‍ <strong>സജീവം</strong>"
   }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
@@ -985,6 +988,14 @@
     "message": "Invalid list URL. It'll be deleted.", 
     "description": "Message when you subscribe to a non-list URL"
   }, 
+  "invalid_css_selector": {
+    "message": "$selector$ ഒരു ശരിയായ സി. എസ്. എസ്. സെലക്റ്റര്‍ അല്ല", 
+    "placeholders": {
+      "selector": {
+        "content": "$1"
+      }
+    }
+  }, 
   "lang_arabic": {
     "message": "Arabic", 
     "description": "Language name"
@@ -1211,6 +1222,9 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_devbuild": {
+    "message": "ആഡ്ബ്ലോക്ക് പ്ലസ് ഡെവലപ്മെന്റ് ബില്‍ഡ്"
+  }, 
   "new_resourcelist_explanation_osx": {
     "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I), then select the 'AdBlock' tab.", 
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
@@ -1239,6 +1253,9 @@
   }, 
   "notification_configure": {
     "message": "നോട്ടിഫിക്കേഷന്‍ ക്രമീകരണങ്ങള്‍ ചിട്ടപ്പെടുത്തുക"
+  }, 
+  "notification_open_all": {
+    "message": "ഈ അറിയിപ്പില്‍നിന്നുള്ള എല്ലാ കണ്ണികളും തുറക്കുക"
   }, 
   "one_moment_all_youtube_channels": {
     "message": "One moment while we gather all of your subscriptions", 
@@ -1469,6 +1486,22 @@
     "message": "Help spread the word!", 
     "description": "Text of a share link"
   }, 
+  "stats_label_page": {
+    "message": "ഈ താളില്‍ <strong>$number$</strong>", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
+  "stats_label_total": {
+    "message": "മൊത്തം <strong>$number$</strong>", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
   "stats_over": {
     "message": "$number$-നു മേല്‍", 
     "placeholders": {
@@ -1479,6 +1512,14 @@
   }, 
   "stats_share_download": {
     "message": "ആഡ്ബ്ലോക്ക് പ്ലസ് ഡൗണ്‍ലോഡ് ചെയ്യുക"
+  }, 
+  "stats_share_message": {
+    "message": "ആഡ്ബ്ലോക്ക് പ്ലസ്സിന് നന്ദി, ഞാന്‍ $number$ പരസ്യങ്ങളും ട്രാക്കറുകളും തടഞ്ഞു.", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
   }, 
   "stats_share_title": {
     "message": "ഈ സംഖ്യ പങ്കുവയ്ക്കുക"
@@ -1642,6 +1683,9 @@
   "undo_last_block": {
     "message": "Undo my blocks on this domain", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard"
+  }, 
+  "unexpected_filter_list_header": {
+    "message": "ഫില്‍റ്റര്‍ ലിസ്റ്റ് ഹെഡ്ഡറുകള്‍ ഇവിടെ അനുവദനീയമല്ല"
   }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 

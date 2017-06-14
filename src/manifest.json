@@ -3,9 +3,6 @@
   "background": {
     "persistent": true, 
     "scripts": [
-      "lib/polyfills/url.js", 
-      "lib/polyfills/promise.js", 
-      "lib/polyfills/fetch.js", 
       "ext/common.js", 
       "ext/background.js", 
       "lib/compat.js", 
@@ -29,7 +26,7 @@
       "adblock-subscriptioninit.js", 
       "adblock-data-migrate.js", 
       "adblock-excludefilter.js", 
-      "adblock-datacollection.js", 
+      "adblock-datacollection.v2.js", 
       "devenvPoller__.js"
     ]
   }, 
@@ -51,7 +48,7 @@
       "js": [
         "ext/common.js", 
         "ext/content.js", 
-        "cssProperties.js", 
+        "elemHideEmulation.js", 
         "include.preload.js", 
         "adblock-functions.js", 
         "adblock-bandaids.js"
@@ -89,12 +86,16 @@
     "64": "icons/ab-64.png"
   }, 
   "manifest_version": 2, 
-  "minimum_chrome_version": "41.0", 
+  "minimum_chrome_version": "49.0", 
+  "minimum_opera_version": "36.0", 
   "name": "__MSG_name__", 
   "optional_permissions": [
     "management"
   ], 
-  "options_page": "options.html", 
+  "options_ui": {
+    "open_in_tab": true, 
+    "page": "options.html"
+  }, 
   "permissions": [
     "tabs", 
     "http://*/*", 
@@ -113,7 +114,7 @@
   "storage": {
     "managed_schema": "managed-storage-schema.json"
   }, 
-  "version": "3.9.2", 
+  "version": "3.11.1", 
   "web_accessible_resources": [
     "adblock-jquery-ui.custom.css", 
     "adblock-jquery-ui.override-page.css", 

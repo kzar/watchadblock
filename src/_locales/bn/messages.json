@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -902,6 +902,45 @@
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
   }, 
+  "filters_acceptableAds2_label": {
+    "message": "ব্যক্তিগত গোপনীয়তা অলঙ্ঘঙ্কারী বিজ্ঞাপনকে অনুমোদন দিন"
+  }, 
+  "filters_addSubscriptionAdd_label": {
+    "message": "যুক্ত করুন"
+  }, 
+  "filters_addSubscriptionOther_label": {
+    "message": "একটি ভিন্ন ছাঁকনি সদস্যতা যুক্ত করুন"
+  }, 
+  "filters_addSubscription_label": {
+    "message": "ছাঁকনি সদস্যতা যুক্ত করুন"
+  }, 
+  "filters_readMore_label": {
+    "message": "আরো পড়ুন"
+  }, 
+  "filters_subscription_delete_label": {
+    "message": "মুছুন"
+  }, 
+  "filters_subscription_enabled_label": {
+    "message": "সক্রিয় করা"
+  }, 
+  "filters_subscription_lastDownload_checksumMismatch": {
+    "message": "ব্যর্থ, ত্রুটিনির্ধারক মেলেনি"
+  }, 
+  "filters_subscription_lastDownload_connectionError": {
+    "message": "ব্যর্থ, নামানো ব্যর্থতা"
+  }, 
+  "filters_subscription_lastDownload_inProgress": {
+    "message": "ডাউনলোড হচ্ছে…"
+  }, 
+  "filters_subscription_lastDownload_invalidData": {
+    "message": "ব্যর্থ, একটি যুক্তিযুক্ত ছাঁকন তালিকা নয়"
+  }, 
+  "filters_subscription_lastDownload_invalidURL": {
+    "message": "ব্যর্থ, যুক্তিযুক্ত ঠিকানা নয়"
+  }, 
+  "filters_viewList_label": {
+    "message": "দর্শন  তালিকা"
+  }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!<br/>Read the <a>filter syntax tutorial</a> to learn how to add advanced blacklist and whitelist filters.", 
     "description": "Warning when blacklisting manually"
@@ -991,6 +1030,24 @@
   "generaloptions": {
     "message": "General options", 
     "description": "Title of first tab page"
+  }, 
+  "global_filter_elemhide_duplicate_id": {
+    "message": "লুকিয়ে রাখার জন্যে উপাদানের কেবল একটা আইডি উল্লেখ করা যেতে পারে"
+  }, 
+  "global_filter_elemhide_nocriteria": {
+    "message": "লুকানো যাবে এমন উপাদান চেনার জন্য সুনির্দিষ্ট কোনো শর্ত নেই"
+  }, 
+  "global_filter_invalid_regexp": {
+    "message": "অকার্যকর নিয়মিত অভিব্যক্তি"
+  }, 
+  "global_filter_unknown_option": {
+    "message": "অজানা ফিল্টার অপশন"
+  }, 
+  "global_remove_subscription_warning": {
+    "message": "আপনি কি আসলেই এই সদস্যতা অপসারণ করতে চান?"
+  }, 
+  "global_subscription_invalid_location": {
+    "message": "পরিশ্রুতক তালিকা অবস্থান কোনোটিই একটি বৈধ ইউআরএল বা কোন কার্যকর ফাইল নাম নয়।"
   }, 
   "headerfilter": {
     "message": "Matched filter", 
@@ -1256,7 +1313,7 @@
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }, 
   "name": {
-    "message": "AdBlock"
+    "message": "অ্যাডব্লক প…"
   }, 
   "name_devbuild": {
     "message": "AdBlock উন্নয়ন গঠন"
@@ -1286,6 +1343,12 @@
   "noresourcessend2": {
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
+  }, 
+  "notification_antiadblock_message": {
+    "message": "এই সাইট অ্যাডব্লক প্লাস ব্যবহারকারীদের লক্ষ্যিত বার্তা দেখানর জন্য পরিচিত। আপনি কি অ্যাডব্লক প্লাসকে এই বার্তা লুকাতে বলতে চান?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "লক্ষ্যিত বার্তা লুকান?"
   }, 
   "notification_configure": {
     "message": "বিজ্ঞপ্তি সেটিংস কনফিগার করুন"
@@ -1354,6 +1417,21 @@
   }, 
   "out_of_date_lists": {
     "message": "পুরনো তালিকা নিয়মিত হালনাগাদ করা হয়।"
+  }, 
+  "overlay_notification_button_no": {
+    "message": "না"
+  }, 
+  "overlay_notification_button_yes": {
+    "message": "হ্যাঁ"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "এই বিজ্ঞপ্তি বন্ধ করুন"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "বিজ্ঞপ্তি দেখানো বন্ধ করুন"
+  }, 
+  "overlay_shownotifications_label": {
+    "message": "দরকারী বিজ্ঞপ্তি দেখান"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1443,12 +1521,6 @@
   "safari50_updatenotice": {
     "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. <a>Upgrade now</a>.", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
-  }, 
-  "safari_content_blocker": {
-    "message": "সাফারির স্থানীয় সামগ্রী অবরোধ ব্যবহার করুন (পরীক্ষামূলক)"
-  }, 
-  "safari_restart": {
-    "message": "সাফারি রিস্টার্ট করুন"
   }, 
   "safaributton_how_to_hide2": {
     "message": "To hide the button, right click Safari's toolbar and choose Customize Toolbar, then drag the AdBlock button out of the toolbar. You can show it again by dragging it back into the toolbar.", 
@@ -1623,8 +1695,14 @@
     "message": "Subscribing to filter list...", 
     "description": "abp: link subscriber title"
   }, 
+  "subscriptionSelection_location_label": {
+    "message": "ছাঁকনি তালিকার অবস্থান:"
+  }, 
   "subscriptionSelection_subscriptionSelector_label": {
     "message": "তালিকা থেকে একটি ফিল্টার সদস্যতা বাছাই করুন:"
+  }, 
+  "subscriptionSelection_title_label": {
+    "message": "সদস্যতার শিরোনাম:"
   }, 
   "supportsite": {
     "message": "Let us know on our <a>support site</a>!", 

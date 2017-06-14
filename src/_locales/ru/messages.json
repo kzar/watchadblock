@@ -930,7 +930,7 @@
     "message": "Ошибка: невозможно загрузить"
   }, 
   "filters_subscription_lastDownload_inProgress": {
-    "message": "сейчас..."
+    "message": "Загрузка..."
   }, 
   "filters_subscription_lastDownload_invalidData": {
     "message": "Ошибка: неверный формат списка фильтров"
@@ -1076,20 +1076,17 @@
     "message": "Общие параметры", 
     "description": "Title of first tab page"
   }, 
-  "global_filter_cssproperty_nodomain": {
-    "message": "Для фильтра CSS указан неверный домен"
-  }, 
   "global_filter_elemhide_duplicate_id": {
     "message": "У элемента, который нужно скрыть, может быть только один идентификатор"
   }, 
   "global_filter_elemhide_nocriteria": {
     "message": "Не указано никаких признаков, чтобы опознать элемент, который нужно скрыть"
   }, 
-  "global_notification_antiadblock_message": {
-    "message": "Известно, что этот сайт показывает сообщения пользователям AdBlock. Хотите, чтобы AdBlock скрывал такие сообщения?"
+  "global_filter_invalid_regexp": {
+    "message": "Неправильное регулярное выражение"
   }, 
-  "global_notification_antiadblock_title": {
-    "message": "Скрыть целевые сообщения?"
+  "global_filter_unknown_option": {
+    "message": "Неизвестная опция фильтра"
   }, 
   "global_remove_subscription_warning": {
     "message": "Вы уверены, что хотите удалить эту подписку?"
@@ -1392,6 +1389,12 @@
     "message": "Что-то пошло не так. Ресурсы не были отправлены. Эта страница будет закрыта. Попробуйте перезагрузить сайт.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "Известно, что этот сайт показывает сообщения пользователям AdBlock. Хотите, чтобы AdBlock скрывал такие сообщения?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "Скрыть целевые сообщения?"
+  }, 
   "notification_configure": {
     "message": "Настройка параметров уведомлений"
   }, 
@@ -1563,12 +1566,6 @@
   "safari50_updatenotice": {
     "message": "Вы используете старую версию Safari. Установите последнюю версию, чтобы использовать кнопки панели инструментов AdBlock для приостановки работы AdBlock, использования белого списка веб-сайтов и сообщений о рекламе. <a>Обновить сейчас</a>.", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
-  }, 
-  "safari_content_blocker": {
-    "message": "Используйте родное блокирование содержимого Safari (экспериментальный)"
-  }, 
-  "safari_restart": {
-    "message": "Пожалуйста, перезапустите Safari"
   }, 
   "safaributton_how_to_hide2": {
     "message": "Чтобы скрыть кнопку, щелкните правой кнопкой мыши по панели инструментов Safari и выберите Настроить панель инструментов, а затем перетащите кнопку AdBlock с панели инструментов. Вы можете показать её снова, перетащив обратно на панель инструментов.", 

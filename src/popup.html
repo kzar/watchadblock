@@ -19,7 +19,9 @@
 
 <html>
 <head>
+  <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="skin/popup.css">
+  <script src="ext/common.js"></script>
   <script src="ext/popup.js"></script>
   <script src="i18n.js"></script>
   <script src="popup.js"></script>
@@ -27,8 +29,7 @@
   <script src="stats.js"></script>
 </head>
 <!-- Set tabindex to work around Chromium issue 304532 -->
-<!-- Set overflow to hidden in order to prevent Safari showing scrollbars while loading -->
-<body tabindex="1" style="overflow: hidden;">
+<body tabindex="1">
 
 <header>
   <img id="logo" src="icons/detailed/abp-64.png" srcset="icons/detailed/abp-128.png 2x">
@@ -73,7 +74,7 @@
       <div class="menu-item collapse" data-option="show_statsinpopup" data-collapsable="stats-container" role="button">
         <div class="icon"></div>
         <span class="i18n_stats_title"></span>
-        <div class="collapse-icon-placeholder safari-inline-block"></div>
+        <div class="collapse-icon-placeholder"></div>
         <div class="collapse-icon"></div>
       </div>
       <ul id="stats" class="collapsable">

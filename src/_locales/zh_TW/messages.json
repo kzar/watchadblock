@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -1082,11 +1082,11 @@
   "global_filter_elemhide_nocriteria": {
     "message": "沒有指定欲隱藏元素的辨識名稱"
   }, 
-  "global_notification_antiadblock_message": {
-    "message": "已知此網站會對 AdBlock 用戶顯示針對性的訊息。您希望 AdBlock 隱藏它們嗎？"
+  "global_filter_invalid_regexp": {
+    "message": "無效的正規表示法"
   }, 
-  "global_notification_antiadblock_title": {
-    "message": "隱藏針對性的訊息？"
+  "global_filter_unknown_option": {
+    "message": "未知的篩選器選項"
   }, 
   "global_remove_subscription_warning": {
     "message": "您確定要移除此條件集嗎？"
@@ -1389,6 +1389,12 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "已知此網站會對 AdBlock 用戶顯示針對性的訊息。您希望 AdBlock 隱藏它們嗎？"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "隱藏針對性的訊息？"
+  }, 
   "notification_configure": {
     "message": "設置通知設定"
   }, 
@@ -1396,7 +1402,7 @@
     "message": "打開此通知的所有連結"
   }, 
   "notification_with_buttons": {
-    "message": "點擊＂確定＂打開通知中的所有鏈接．"
+    "message": "點選＂確定＂打開通知中的所有連結。"
   }, 
   "notification_without_buttons": {
     "message": "點擊通知打開它裡面的所有鏈接"
@@ -1560,12 +1566,6 @@
   "safari50_updatenotice": {
     "message": "你正在使用舊版的 Safari，請 <a>升級您的瀏覽器 </a> 以便使用在工具列按鈕中暫停 AdBlock，白名單，回報廣告等等最新的功能。", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
-  }, 
-  "safari_content_blocker": {
-    "message": "使用 Safari 的本機內容阻止 (實驗中)"
-  }, 
-  "safari_restart": {
-    "message": "請重新啟動 Safari"
   }, 
   "safaributton_how_to_hide2": {
     "message": "如需隱藏此按鈕，請到  opera://extensions 並且點選 『從工具列上隱藏』選項。 你可以取消該選項以再次顯示此按鈕", 

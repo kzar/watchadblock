@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -584,7 +584,7 @@
     "message": "<strong>Deaktivert</strong> på dette nettstedet"
   }, 
   "disabled_for_these_domains": {
-    "message": "AdBlock er deaktivert for domenene listet nedenfor. Du kan legge til et domene enten ved å trykke på AdBlock-ikonet i adressefeltet, eller ved å skrive inn domenet (ikke via URL) i boksen og klikke på \"Legg til domene\"-knappen."
+    "message": "AdBlock er deaktivert for domenene listet nedenfor. Du kan legge til et domene enten ved å trykke på AdBlock-ikonet i adressefeltet, eller ved å skrive inn domenet (ikke URL-en) i boksen og deretter klikke på \"Legg til domene\"-knappen."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock er deaktivert på denne siden.", 
@@ -1076,20 +1076,17 @@
     "message": "Generelle innstillinger", 
     "description": "Title of first tab page"
   }, 
-  "global_filter_cssproperty_nodomain": {
-    "message": "Det er ikke angitt et aktivt domene for CSS-egenskapsfilteret"
-  }, 
   "global_filter_elemhide_duplicate_id": {
     "message": "Du kan kun angi ett ID for elementet som skal skjules"
   }, 
   "global_filter_elemhide_nocriteria": {
     "message": "Du har ikke spesifisert kriterier for å gjenkjenne elementet som skal skjules"
   }, 
-  "global_notification_antiadblock_message": {
-    "message": "Dette området er kjent for å vise meldinger som henvender seg til AdBlock-brukere. Vil du at AdBlock skal skjule disse meldingene?"
+  "global_filter_invalid_regexp": {
+    "message": "Ugyldig regulært uttrykk"
   }, 
-  "global_notification_antiadblock_title": {
-    "message": "Skjul meldinger til AdBlock-brukere?"
+  "global_filter_unknown_option": {
+    "message": "Ukjent filteralternativ"
   }, 
   "global_remove_subscription_warning": {
     "message": "Ønsker du virkelig å fjerne dette abonnementet?"
@@ -1392,6 +1389,12 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "Dette området er kjent for å vise meldinger som henvender seg til AdBlock-brukere. Vil du at AdBlock skal skjule disse meldingene?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "Skjul meldinger til AdBlock-brukere?"
+  }, 
   "notification_configure": {
     "message": "Tilpass varslingsinnstillinger"
   }, 
@@ -1564,12 +1567,6 @@
     "message": "Du bruker en gammel versjon av Safari. Få den siste versjonen for å bruke AdBlock-verktøylinjen for å pause AdBlock, hviteliste nettsider, og rapporter annonser. <a>Oppdater nå</a>.", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }, 
-  "safari_content_blocker": {
-    "message": "Bruk Safari sitt eget innholdsblokkeringssystem (eksperimentell)"
-  }, 
-  "safari_restart": {
-    "message": "Vennligst start Safari på nytt"
-  }, 
   "safaributton_how_to_hide2": {
     "message": "For å gjemme knappen, høyreklikk på Safaris verktøylinje og velg tilpass verktøylinje. Deretter dra AdBlockknappen ut av verktøylinjen. Du kan vise den igjen ved å dra den tilbake til verktøylinjen", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
@@ -1674,7 +1671,7 @@
     }
   }, 
   "stats_over": {
-    "message": "$number$", 
+    "message": "over $number$", 
     "placeholders": {
       "number": {
         "content": "$1"

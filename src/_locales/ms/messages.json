@@ -195,7 +195,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
-    "message": "Simpan perubahan"
+    "message": "Simpan"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -1082,11 +1082,11 @@
   "global_filter_elemhide_nocriteria": {
     "message": "Tiada kriteria yang dinyatakan untuk mengenal pasti elemen untuk disembunyikan"
   }, 
-  "global_notification_antiadblock_message": {
-    "message": "Laman web ini telah dikenali untuk menunjukkan mesej yang disasarkan kepada pengguna AdBlock. Adakah anda mahu AdBlock untuk menyembunyikan mesej yang disasarkan?"
+  "global_filter_invalid_regexp": {
+    "message": "Ungkapan/Kod yang tidak sah"
   }, 
-  "global_notification_antiadblock_title": {
-    "message": "Sembunyi Mesej-mesej yang disasarkan?"
+  "global_filter_unknown_option": {
+    "message": "Pilihan tapisan tidak diketahui"
   }, 
   "global_remove_subscription_warning": {
     "message": "Adakah anda mahu membuang langganan ini?"
@@ -1389,6 +1389,12 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "Laman web ini telah dikenali untuk menunjukkan mesej yang disasarkan kepada pengguna AdBlock. Adakah anda mahu AdBlock untuk menyembunyikan mesej yang disasarkan?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "Sembunyi Mesej-mesej yang disasarkan?"
+  }, 
   "notification_configure": {
     "message": "Konfigurasi tetapan notifikasi"
   }, 
@@ -1462,6 +1468,15 @@
   }, 
   "overlay_notification_button_yes": {
     "message": "Ya"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "Tutup notifikasi ini"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "Hentikan paparan notofikasi"
+  }, 
+  "overlay_shownotifications_label": {
+    "message": "Papar notifikasi berguna"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1551,12 +1566,6 @@
   "safari50_updatenotice": {
     "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. <a>Upgrade now</a>.", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
-  }, 
-  "safari_content_blocker": {
-    "message": "Gunakan Sekatan Kandungan Safari (eksperimen)"
-  }, 
-  "safari_restart": {
-    "message": "Sila mula semula Safari"
   }, 
   "safaributton_how_to_hide2": {
     "message": "To hide the button, right click Safari's toolbar and choose Customize Toolbar, then drag the AdBlock button out of the toolbar. You can show it again by dragging it back into the toolbar.", 

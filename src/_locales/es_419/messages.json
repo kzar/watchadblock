@@ -541,7 +541,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage and data", 
+    "message": "Allow AdBlock to collect anonymous filter list usage, data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -1076,20 +1076,17 @@
     "message": "General options", 
     "description": "Title of first tab page"
   }, 
-  "global_filter_cssproperty_nodomain": {
-    "message": "No se especificó un dominio activo para el filtro de propiedades CSS"
-  }, 
   "global_filter_elemhide_duplicate_id": {
     "message": "Solo una ID de el elemento oculto puede ser especificado"
   }, 
   "global_filter_elemhide_nocriteria": {
     "message": "No hay criterios específicos para reconocer el elemento que se oculta"
   }, 
-  "global_notification_antiadblock_message": {
-    "message": "Se sabe que este sitio ha mostrado en el pasado mensajes dirigidos a los usuarios de AdBlock. ¿Quiere que AdBlock oculte esos mensajes?"
+  "global_filter_invalid_regexp": {
+    "message": "Expresión regular no válida"
   }, 
-  "global_notification_antiadblock_title": {
-    "message": "¿Ocultar mensajes dirigidos?"
+  "global_filter_unknown_option": {
+    "message": "Opción de filtro desconocida"
   }, 
   "global_remove_subscription_warning": {
     "message": "¿Está seguro de querer eliminar esta suscripción?"
@@ -1130,7 +1127,7 @@
     "description": "Message when you subscribe to a non-list URL"
   }, 
   "invalid_css_selector": {
-    "message": "$selector$ no es un selecor CSS válido", 
+    "message": "$selector$ no es un selector CSS válido", 
     "placeholders": {
       "selector": {
         "content": "$1"
@@ -1392,8 +1389,14 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "Se sabe que este sitio ha mostrado en el pasado mensajes dirigidos a los usuarios de AdBlock. ¿Quiere que AdBlock oculte esos mensajes?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "¿Ocultar mensajes dirigidos?"
+  }, 
   "notification_configure": {
-    "message": "Configurar opciones de notificación"
+    "message": "Configura opciones de notificación"
   }, 
   "notification_open_all": {
     "message": "Abrir todos los enlaces de esta notificación"
@@ -1563,12 +1566,6 @@
   "safari50_updatenotice": {
     "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. <a>Upgrade now</a>.", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
-  }, 
-  "safari_content_blocker": {
-    "message": "Usar el bloqueador nativo de Safari (experimental)"
-  }, 
-  "safari_restart": {
-    "message": "Por favor, reinicie Safari"
   }, 
   "safaributton_how_to_hide2": {
     "message": "To hide the button, right click Safari's toolbar and choose Customize Toolbar, then drag the AdBlock button out of the toolbar. You can show it again by dragging it back into the toolbar.", 
@@ -1865,7 +1862,7 @@
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard"
   }, 
   "unexpected_filter_list_header": {
-    "message": "Las cabeceras de la lista del filtro no son permitidas aquí"
+    "message": "Cabeceras de la lista del filtro no son permitidas aquí"
   }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 
