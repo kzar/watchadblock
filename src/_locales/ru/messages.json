@@ -24,7 +24,7 @@
     "description": "message on the filter tab - Message when you subscribe to a non-list URL"
   }, 
   "acceptable_ads_content_blocking_disbled_message": {
-    "message": "Мы отписался Вас от Приемлемой Рекламы, потому что Вы включили Блокировку Содержимого в Safari. Одновременно можно выбрать только одно. (<a>Почему?</a>)", 
+    "message": "Мы отписали Вас от Приемлемой Рекламы, потому что Вы включили Блокировку Содержимого в Safari. Одновременно можно выбрать только одно. ([[Почему?]])", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   }, 
   "acceptableadsdisable_done": {
@@ -40,7 +40,7 @@
     "description": "option on the 'General' tab"
   }, 
   "ad_report_please": {
-    "message": "Если Вы видите рекламу, не отправляйте отчет об ошибках, отправьте  <a>отчет о рекламе</a>!", 
+    "message": "Если Вы видите рекламу, не отправляйте отчет об ошибках, отправьте  [[отчет о рекламе]]!", 
     "description": "Link to the ad report page on our support site. This is found on the Support tab of the options."
   }, 
   "adalreadyblocked": {
@@ -52,7 +52,7 @@
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
   "adblock_outdated_chrome": {
-    "message": "Вы используете старую версию AdBlock. Пожалуйста, перейдите на <a href='#'>страницу Расширения</a>, включите 'Режим разработчика' и нажмите кнопку 'Обновить расширения'", 
+    "message": "Вы используете старую версию AdBlock. Пожалуйста, перейдите на [[страницу Расширения]], включите 'Режим разработчика' и нажмите кнопку 'Обновить расширения'", 
     "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   }, 
   "adblock_wont_run_on_pages_matching": {
@@ -89,10 +89,6 @@
   }, 
   "add_your_own_filters": {
     "message": "Персональные фильтры"
-  }, 
-  "adreport2": {
-    "message": "So you just found an ad on a web page? Well, I'll help you to find the correct place to report it!<br/> Remember: reporting ads is voluntary. If you don't wish to do this you can just close this window and block it only for yourself by adding its filter in the 'Customize' tab of the options page!", 
-    "description": "Instructions on ad reporting page. 'Customize' should be the same text as the name of the 'Customize' tab."
   }, 
   "adreport_all_debug_info": {
     "message": "Следующие сведения будут также включены в отчет о рекламе.", 
@@ -155,7 +151,7 @@
     "description": "Label next to a file upload button."
   }, 
   "adreport_server_response_error__manual_msg_step1": {
-    "message": "Пожалуйста, перейдите на <a>наш сайт поддержки</a>.", 
+    "message": "Пожалуйста, перейдите на [[наш сайт поддержки]].", 
     "description": "Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }, 
   "adreport_server_response_error__manual_msg_step2": {
@@ -171,11 +167,11 @@
     "description": "Introduction of the ad reporting page"
   }, 
   "adreportthanks": {
-    "message": "Thank You!", 
+    "message": "Спасибо!", 
     "description": "Message to the user thanking them for sharing the URL with us."
   }, 
   "adreportvoluntary": {
-    "message": "Сообщения о рекламе является добровольным. Это поможет каждому пользователю, благодаря добавлению в список фильтров реклама будет блокироваться у всех пользователей. Если Вы не чувствуете себя альтруистом прямо сейчас - ничего страшного. Просто закройте эту страничку и <a>заблокируйте рекламу</a> только для себя.", 
+    "message": "Сообщения о рекламе является добровольным. Это поможет каждому пользователю, благодаря добавлению в список фильтров реклама будет блокироваться у всех пользователей. Если Вы не чувствуете себя альтруистом прямо сейчас - ничего страшного. Просто закройте эту страничку и [[заблокируйте рекламу]] только для себя.", 
     "description": "Introduction of the ad reporting page"
   }, 
   "adstillappear": {
@@ -262,7 +258,7 @@
     "description": "Warning if the user hasn't specified a filter"
   }, 
   "blacklisternotsure": {
-    "message": "<b>Не уверены?</b> Просто нажмите кнопку 'Блокировать!'.", 
+    "message": "Не уверены? Просто нажмите кнопку 'Блокировать!'.", 
     "description": "Blacklister attribute choosing page message"
   }, 
   "blacklisteroptions1": {
@@ -274,7 +270,7 @@
     "description": "Blacklister options page title"
   }, 
   "blacklistersinglematch": {
-    "message": "Соответствует <b>1</b> элементу на этой странице.", 
+    "message": "Соответствует 1 элементу на этой странице.", 
     "description": "Tells the user only one match was found"
   }, 
   "blacklisterthefilter": {
@@ -317,7 +313,7 @@
     "description": "Shown below the 'Blocked ads:' message. Shows the number of ads blocked since AdBlock was installed. $count$ will be a number between 1 and 999,999,999.", 
     "placeholders": {
       "count": {
-        "content": "<a>123,456</a>", 
+        "content": "[[123,456]]", 
         "example": "The number of ads blocked. Do not make any changes to this placeholder when translating."
       }
     }
@@ -327,7 +323,7 @@
     "description": "Shown below the 'Blocked ads:' message. Shows the number of ads blocked on this page. $count$ will be a number between 1 and 999.", 
     "placeholders": {
       "count": {
-        "content": "<a>123</a>", 
+        "content": "[[123]]", 
         "example": "The number of ads blocked. Do not make any changes to this placeholder when translating."
       }
     }
@@ -349,7 +345,7 @@
     "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   }, 
   "bugreport": {
-    "message": "Почему бы Вам не отправить нам <a>сообщение об ошибке</a>?", 
+    "message": "Почему бы Вам не отправить нам [[сообщение об ошибке]]?", 
     "description": "Link to send a bug report on the Support tab of the options"
   }, 
   "buttonback": {
@@ -400,24 +396,12 @@
     "description": "Displayed when AdBlock is checking the newest available version"
   }, 
   "checkinfirefox_1": {
-    "message": "Установите Firefox $chrome$, если у Вас их нет.", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad", 
-    "placeholders": {
-      "chrome": {
-        "content": "<span id='chrome2'></span>", 
-        "example": "'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
+    "message": "Установите Firefox, если у Вас их нет.", 
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
-    "message": "Установите Adblock Plus для Firefox $chrome$, если у вас его нет.", 
-    "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'.", 
-    "placeholders": {
-      "chrome": {
-        "content": "<span id='adblockforchrome'></span>", 
-        "example": "'or AdBlock for Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
+    "message": "Установите Adblock Plus для Firefox , если у вас его нет.", 
+    "description": "Instruction for how to check Firefox for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefox_3": {
     "message": "В этом браузере подпишитесь на те же списки фильтров, как у Вас здесь.", 
@@ -431,15 +415,21 @@
     "message": "Реклама появляется в этом браузере тоже?", 
     "description": "Instruction for how to check Firefox/Chrome for a reported ad"
   }, 
+  "checkinfirefoxorchrome_1": {
+    "message": "Установите Firefox или Chrome, если у Вас нет их.", 
+    "description": "instruction for how to check Firefox or Chrome for a reported ad"
+  }, 
+  "checkinfirefoxorchrome_2": {
+    "message": "Установите Adblock Plus для Firefox или AdBlock для Chrome, если у Вас нет его.", 
+    "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
+  }, 
+  "checkinfirefoxorchrometitle": {
+    "message": "Проверьте в Firefox или Chrome", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
+  }, 
   "checkinfirefoxtitle": {
-    "message": "Проверить в Firefox $chrome$", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome", 
-    "placeholders": {
-      "chrome": {
-        "content": "<span id='chrome1'></span>", 
-        "example": "'or Chrome' (This will only be shown in Safari. Chrome users will not see this.)"
-      }
-    }
+    "message": "Проверить в Firefox ", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "checkinternetconnection": {
     "message": "Чтобы сообщить о рекламе, необходимо подключение к Интернету.", 
@@ -454,11 +444,11 @@
     "description": "Option at the bottom of the 'Customize' options tab"
   }, 
   "clickdisableaa": {
-    "message": "Нажмите кнопку: <a>Отключить Приемлемую Рекламу</a>", 
+    "message": "Нажмите кнопку: [[Отключить Приемлемую Рекламу]]", 
     "description": "Instruction on ad report page"
   }, 
   "clickdisableotherextensions": {
-    "message": "<b>ИЛИ</b>, просто нажмите эту кнопку для нас, чтобы сделать все вышеперечисленное: <a>Отключить все другие расширения</a>", 
+    "message": "ИЛИ, просто нажмите эту кнопку для нас, чтобы сделать все вышеперечисленное: [[Отключить все другие расширения]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
@@ -469,7 +459,7 @@
     "description": "When you have to click the ad to continue"
   }, 
   "clickupdatefilters": {
-    "message": "Щелкните: <a>Обновить фильтры!</a>", 
+    "message": "Щелкните: [[Обновить фильтры!]]", 
     "description": "Instruction on ad report page"
   }, 
   "close": {
@@ -491,7 +481,7 @@
     }
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
-    "message": "Мы отключить Блокировку Содержимого в Safari потому, что Вы решили разрешить ненавязчивую рекламу. Одновременно можно выбрать только одно. (<a>Почему?</a>)", 
+    "message": "Мы отключили Блокировку Содержимого в Safari потому, что Вы решили разрешить ненавязчивую рекламу. Одновременно можно выбрать только одно. ([[Почему?]])", 
     "description": "Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   }, 
   "contentblockingwarning": {
@@ -499,7 +489,7 @@
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
   "contributors": {
-    "message": "А также у нас есть <a>страница</a>, которая поможет Вам узнать людей, стоящих за AdBlock!", 
+    "message": "А также у нас есть страница, которая поможет Вам узнать [[людей, стоящих за AdBlock]]!", 
     "description": "Link to the contributors page on the Support tab of the options"
   }, 
   "correctfilters": {
@@ -527,7 +517,7 @@
     "description": "List for custom filters the user subscribed to"
   }, 
   "customfilterserrormessage": {
-    "message": "Следующий фильтр: <br/> $filter$ <br/> содержит ошибку: <br/> $message$", 
+    "message": "Следующий фильтр: \n $filter$ \n содержит ошибку: \n $message$", 
     "description": "Error message when there is an issue with a custom filter on the 'Customize' tab of the Options page", 
     "placeholders": {
       "filter": {
@@ -545,7 +535,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Наша команда запросила некоторую отладочную информацию? Нажмите <a href='#' id='debug'>здесь</a>!", 
+    "message": "Наша команда запросила некоторую отладочную информацию? Нажмите [[здесь]]!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -591,11 +581,11 @@
     "description": "Message shown in toolbar button on web pages that have been whitelisted"
   }, 
   "disableforchromeandsafaristeptwo": {
-    "message": "Снимите флажок 'Включен' рядом с каждым расширением <b>кроме</b> AdBlock. <b>Оставьте AdBlock включенным</b>.", 
+    "message": "Снимите флажок 'Включен' рядом с каждым расширением кроме AdBlock. Оставьте AdBlock включенным.", 
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
-    "message": "Откройте <a href='#'>страницу расширений</a>.", 
+    "message": "Откройте [[страницу расширений]].", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
@@ -659,7 +649,7 @@
     "description": "Status label"
   }, 
   "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
+    "message": "Вы используете старую версию AdBlock. Пожалуйста, нажмите на кнопку меню Firefox и выберите Дополнения. Затем на странице Дополнений, нажмите на значок шестеренки (инструменты для всех Дополнений) и выберите «Проверить наличие обновлений».", 
     "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
@@ -877,7 +867,7 @@
     "description": "A filter list"
   }, 
   "filterlistlink": {
-    "message": "Не подписывайтесь на больше чем нужно – каждый из них чуть-чуть замедляет работу! Первоисточники и дополнительные списки Вы можете найти <a>здесь</a>.", 
+    "message": "Не подписывайтесь на больше чем нужно – каждый из них чуть-чуть замедляет работу! Первоисточники и дополнительные списки Вы можете найти [[здесь]].", 
     "description": "Explanation of the filter lists"
   }, 
   "filterlistsrock": {
@@ -942,7 +932,7 @@
     "message": "Открыть список"
   }, 
   "filtersavewarning": {
-    "message": "Осторожно: Если Вы сделаете здесь ошибку, много других фильтров, включая официальные фильтры, могут получить повреждения тоже! <br/> Прочитайте <a>Учебник по синтаксису фильтров</a>, чтобы научиться дополнять черный и белый списки фильтров.", 
+    "message": "Осторожно: Если Вы сделаете здесь ошибку, много других фильтров, включая официальные фильтры, могут получить повреждения тоже! \n Прочитайте [[Учебник по синтаксису фильтров]], чтобы научиться дополнять черный и белый списки фильтров.", 
     "description": "Warning when blacklisting manually"
   }, 
   "filterstabtitle": {
@@ -962,7 +952,7 @@
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
-    "message": "Поиск рекламы...<br/><br/><i>Это займет секунды</i>", 
+    "message": "Поиск рекламы...\n\nЭто займет секунды", 
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   }, 
   "firefox_explanation": {
@@ -1330,7 +1320,7 @@
     "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
-    "message": "Ваш компьютер может быть заражен вредоносными программами.  Нажмите <a>здесь</a> для получения дополнительной информации.", 
+    "message": "Ваш компьютер может быть заражен вредоносными программами.  Нажмите [[здесь]] для получения дополнительной информации.", 
     "description": "On the ad report page, the ads the user is seeing might be caused by malware/adware"
   }, 
   "manualexcludefilteredit": {
@@ -1376,14 +1366,8 @@
     "description": "A negative response to a question"
   }, 
   "nodefaultfilter1": {
-    "message": "У нас нет списка фильтров по умолчанию для этого языка.<br/>Пожалуйста, попробуйте найти подходящий список, который поддерживает этот язык $link$, или заблокируйте эту рекламу для себя на вкладке 'Настройка'", 
-    "description": "Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab.", 
-    "placeholders": {
-      "link": {
-        "content": "<a id='link'></a>", 
-        "example": "<a>here</a>"
-      }
-    }
+    "message": "У нас нет списка фильтров по умолчанию для этого языка. Пожалуйста [[попытаться найти подходящий список, поддерживающий этот язык]] или блокируйте эту рекламу для себя через меню AdBlock.", 
+    "description": "Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab."
   }, 
   "noresourcessend2": {
     "message": "Что-то пошло не так. Ресурсы не были отправлены. Эта страница будет закрыта. Попробуйте перезагрузить сайт.", 
@@ -1439,14 +1423,6 @@
         "example": "2.0.9"
       }
     }
-  }, 
-  "oradblockforchrome": {
-    "message": "или AdBlock для Chrome", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "или Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
   }, 
   "orenteraurl": {
     "message": "Или введите URL:", 
@@ -1530,8 +1506,8 @@
     "description": "Telling the user to report an ad to a filter list maintainer", 
     "placeholders": {
       "link": {
-        "content": "$1", 
-        "example": "EXAMPLE 1: <a href='mailto:someguy@list.com'>John Doe</a>  EXAMPLE 2: <a href='http://easylist.org'>EasyList forums</a>"
+        "content": "[[]]", 
+        "example": "The link could point to a filter list's forum, or to the email address of a filter list maintainer. For example, forums.lanik.us or someguy@list.com."
       }
     }
   }, 
@@ -1564,7 +1540,7 @@
     }
   }, 
   "safari50_updatenotice": {
-    "message": "Вы используете старую версию Safari. Установите последнюю версию, чтобы использовать кнопки панели инструментов AdBlock для приостановки работы AdBlock, использования белого списка веб-сайтов и сообщений о рекламе. <a>Обновить сейчас</a>.", 
+    "message": "Вы используете старую версию Safari. Установите последнюю версию, чтобы использовать кнопки панели инструментов AdBlock для приостановки работы AdBlock, использования белого списка веб-сайтов и сообщений о рекламе. [[Обновить сейчас]].", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }, 
   "safaributton_how_to_hide2": {
@@ -1604,7 +1580,7 @@
     "description": "Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   }, 
   "show_ads_except_for": {
-    "message": "Показывать рекламу <i>везде</i>, кроме этих доменов...", 
+    "message": "Показывать рекламу везде, кроме этих доменов...", 
     "description": "Section title for blacklisting section of Customize tab"
   }, 
   "show_block_element_menu": {
@@ -1647,7 +1623,7 @@
     "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
   }, 
   "sourcecode": {
-    "message": "Исходный код <a>в свободном доступе</a> !", 
+    "message": "Исходный код [[в свободном доступе]] !", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
   }, 
   "spread_the_word": {
@@ -1750,7 +1726,7 @@
     "message": "Название подписки:"
   }, 
   "supportsite": {
-    "message": "Дайте нам знать на нашем <a>сайте поддержки</a>!", 
+    "message": "Дайте нам знать на нашем [[сайте поддержки]]!", 
     "description": "Link to the support site on the Support tab of the options"
   }, 
   "tabcustomize": {
@@ -1873,14 +1849,8 @@
     "description": "Status label"
   }, 
   "update_available": {
-    "message": "Есть обновление для AdBlock! Перейдите на $here$ для обновления. <br>Примечание: Если Вы хотите получать обновления автоматически, просто нажмите на Safari > Настройки...> Расширения> Обновления<br>и отметьте опцию «Устанавлить обновления автоматически».", 
-    "description": "On the Options > Support page, shows when there are updates available for AdBlock", 
-    "placeholders": {
-      "here": {
-        "content": "<a id='here'></a>", 
-        "example": "<a>here</a>"
-      }
-    }
+    "message": "Есть новое обновление для AdBlock! Перейдите [[сюда]] для обновления. Примечание: Если Вы хотите получать обновления автоматически, просто нажмите в Safari (в строке меню) > Настройки... > Расширения и отметьте опцию «Устанавливать обновления автоматически».", 
+    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Обновить сейчас"
@@ -1942,7 +1912,7 @@
     }
   }, 
   "updatenowmessage2": {
-    "message": "Я буду получать обновления автоматически; Вы можете также <a>обновить сейчас</a>", 
+    "message": "Я буду получать обновления автоматически; Вы можете также [[обновить сейчас]]", 
     "description": "Update filters text + button"
   }, 
   "updateyourlists": {
@@ -1950,7 +1920,7 @@
     "description": "Section header on the ad report page"
   }, 
   "warning_overrules_filters": {
-    "message": "Внимание: на всех других сайтах Вы увидите рекламу!<br>Будут отменены все другие фильтры для этих сайтов.", 
+    "message": "Внимание: на всех других сайтах Вы увидите рекламу!\nБудут отменены все другие фильтры для этих сайтов.", 
     "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
   }, 
   "whatmakesadblocktick": {
@@ -1962,7 +1932,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "Что нового в последней версии? См. <a style='cursor:pointer;'>changelog</a>!", 
+    "message": "Что нового в последней версии? См. [[changelog]]!", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
