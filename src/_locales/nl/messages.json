@@ -51,10 +51,6 @@
     "message": "AdBlock - klik voor details", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Je gebruikt een oude versie van AdBlock. Open de [[pagina voor extensiebeheer]], schakel 'Ontwikkelaarmodus' in en klik op 'Extensies nu bijwerken'", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock zal niets doen op pagina's die voldoen aan:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -76,13 +72,13 @@
     "description": "Subtitle on the Support tab of the options"
   }, 
   "add": {
-    "message": "Voeg toe"
+    "message": "Toevoegen"
   }, 
   "add_domain_button": {
-    "message": "Voeg domein toe"
+    "message": "Domein toevoegen"
   }, 
   "add_filter_button": {
-    "message": "Voeg filter toe"
+    "message": "Filter toevoegen"
   }, 
   "add_filters_msg": {
     "message": "Filter(s) toevoegen?"
@@ -391,10 +387,6 @@
     "message": "Verschijnt de advertentie in of voor een film of andere plugin zoals een Flash game?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Controleren op updates (duurt maar enkele seconden)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Installeer Firefox als je dit nog niet hebt.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -431,10 +423,6 @@
     "message": "Controle in Firefox ", 
     "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
-  "checkinternetconnection": {
-    "message": "Om een advertentie te rapporteren moet je verbonden zijn met internet.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
-  }, 
   "chromebutton_how_to_hide2": {
     "message": "Klik met de rechtermuisknop op de AdBlock knop en selecteer 'Verbergen in Chrome-menu'. Om het te laten zien, klik in het Chrome-menu met de rechtermuisknop op de AdBlock knop en selecteer 'In werkbalk houden'.", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
@@ -452,7 +440,7 @@
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
-    "message": "Na het sluiten van deze popup, klik (of klik met de rechtermuisknop) op het pagina-element."
+    "message": "Klik (of klik met de rechtermuisknop) na het sluiten van deze pop-up op een element op de pagina."
   }, 
   "clickthead": {
     "message": "Klik op de advertentie, en ik zal je helpen om deze te blokkeren.", 
@@ -531,7 +519,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Sta AdBlock toe om anoniem het gebruik van filters en gegevens te verzamelen", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -571,10 +559,10 @@
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
   "disabled_for_site": {
-    "message": "<strong>Uitgeschakeld</strong> op deze site"
+    "message": "<strong>Uitgeschakeld</strong> op deze website"
   }, 
   "disabled_for_these_domains": {
-    "message": "AdBlock is uitgeschakeld voor de hieronder vermelde domeinen. U kunt een domein toevoegen via het AdBlock logo in de adresbalk, of door het domein (geen URL) in het vak te typen en te klikken op \"Domein toevoegen\"."
+    "message": "AdBlock is voor de hieronder vermelde domeinen uitgeschakeld. U kunt een domein toevoegen via het AdBlock-pictogram in de adresbalk, of door het domein (geen URL) in het veld te typen en op de knop 'Domein toevoegen' te klikken."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock is uitgeschakeld voor deze pagina.", 
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Klik op het Safari menu &rarr; Voorkeuren &rarr; Extensies.", 
+    "message": "Klik op het Safari menu > Voorkeuren > Extensies.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -616,17 +604,17 @@
     "message": "Element blokkeren"
   }, 
   "edit_filters_raw": {
-    "message": "Bewerk filters als tekst"
+    "message": "Filters bewerken als tekst"
   }, 
   "enable_adblock": {
     "message": "Activeer AdBlock voor deze pagina", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
   }, 
   "enable_only_the": {
-    "message": "Schakel alleen de filterlijsten in die u nodig heeft. Te veel filterlijsten kunnen uw browser vast laten lopen."
+    "message": "Schakel alleen de filterlijsten in die u nodig hebt. Te veel filterlijsten kunnen uw browser laten vastlopen."
   }, 
   "enabled_for_site": {
-    "message": "<strong>Ingeschakeld</strong> op deze site"
+    "message": "<strong>Ingeschakeld</strong> op deze website"
   }, 
   "enableotherextensionscomplete": {
     "message": "De extensies die uitgeschakeld waren, zijn nu opnieuw ingeschakeld.", 
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Ophalen... even geduld aub.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "Om de knop te verbergen, klik er met de rechtermuisknop op en kies verwijderen van de werkbalk. Je kan het opnieuw weergeven door naar het Firefox menu -> Customize te gaan.", 
@@ -740,7 +724,7 @@
     "message": "Filterlijsten"
   }, 
   "filter_must_follow_syntax": {
-    "message": "Je filter moet de <a>AdBlock filter syntax</a> volgen."
+    "message": "Uw filter moet de <a>AdBlock-filtersyntaxis</a> volgen."
   }, 
   "filter_russian": {
     "message": "Russisch & Oekraïens + EasyList", 
@@ -1041,7 +1025,7 @@
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
   }, 
   "found_a_bug": {
-    "message": "Heb je een bug gevonden? Wil je helpen AdBlock te vertalen naar je eigen taal? Dien <a>hier een verzoek in</a>."
+    "message": "Een bug gevonden? Wilt u AdBlock naar uw eigen taal vertalen? <a>Dien hier een verzoek in</a>."
   }, 
   "foundbug": {
     "message": "Heb je een fout gevonden?", 
@@ -1117,7 +1101,7 @@
     "description": "Message when you subscribe to a non-list URL"
   }, 
   "invalid_css_selector": {
-    "message": "$selector$ is geen geldige CSS selector", 
+    "message": "$selector$ is geen geldige CSS-selector", 
     "placeholders": {
       "selector": {
         "content": "$1"
@@ -1245,7 +1229,7 @@
     "description": "Dropdown list for language-specific filters"
   }, 
   "last_updated_at": {
-    "message": "Laatst bijgewerkt op $time$ op $date$", 
+    "message": "Laatst bijgewerkt: $date$ om $time$", 
     "placeholders": {
       "date": {
         "content": "$2"
@@ -1256,16 +1240,12 @@
     }
   }, 
   "last_updated_at_today": {
-    "message": "Laatst bijgewerkt op $time$ vandaag", 
+    "message": "Laatst bijgewerkt: vandaag om $time$", 
     "placeholders": {
       "time": {
         "content": "$1"
       }
     }
-  }, 
-  "latest_version": {
-    "message": "AdBlock is up-to-date!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
   }, 
   "legend": {
     "message": "Legenda: ", 
@@ -1351,7 +1331,7 @@
     "message": "AdBlock"
   }, 
   "name_devbuild": {
-    "message": "AdBlock experimentele versie"
+    "message": "AdBlock-ontwikkelversie"
   }, 
   "new_resourcelist_explanation_osx": {
     "message": "Om alle aanvragen te tonen: klik met de rechtermuisknop op de pagina, selecteer 'Inspecteren' (Option+Cmd+I) en selecteer dan het tabblad 'AdBlock'.", 
@@ -1380,16 +1360,16 @@
     "message": "Gerichte berichten verbergen?"
   }, 
   "notification_configure": {
-    "message": "Configureer notificatie instellingen"
+    "message": "Meldingsinstellingen configureren"
   }, 
   "notification_open_all": {
-    "message": "Open alle links van deze notificatie"
+    "message": "Alle koppelingen van deze melding openen"
   }, 
   "notification_with_buttons": {
-    "message": "Klik 'OK' om alle links in het bericht te openen"
+    "message": "Klik op 'OK' om alle koppelingen in deze melding te openen."
   }, 
   "notification_without_buttons": {
-    "message": "Klik op de melding om alle links erin te openen."
+    "message": "Klik op de melding om alle koppelingen erin te openen."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "Even geduld terwijl we al je abonnementen verzamelen", 
@@ -1491,7 +1471,7 @@
     "description": "Checkbox on whitelist wizard"
   }, 
   "remove_button": {
-    "message": "Verwijder geselecteerde"
+    "message": "Geselecteerde verwijderen"
   }, 
   "removefromlist": {
     "message": "Uit lijst verwijderen", 
@@ -1584,7 +1564,7 @@
     "description": "Section title for blacklisting section of Customize tab"
   }, 
   "show_block_element_menu": {
-    "message": "Toon 'Element blokkeren' in het rechtermuisklik menu"
+    "message": "Menu-item 'Element blokkeren' in contextmenu tonen"
   }, 
   "show_devtools_panel": {
     "message": "Toon het 'AdBlock' menu bij de developer tools", 
@@ -1618,17 +1598,9 @@
     "message": "Stap 1: Uitzoeken wat er geblokkeerd moet worden", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Er ging iets mis bij het controleren op updates.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "De broncode is [[gratis beschikbaar]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Help ons om dit te verspreiden!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> op deze pagina", 
@@ -1666,13 +1638,13 @@
     }
   }, 
   "stats_share_title": {
-    "message": "Deel dit aantal"
+    "message": "Dit aantal delen"
   }, 
   "stats_show_iconnumber": {
-    "message": "Nummer weergeven in pictogram"
+    "message": "Aantal in pictogram tonen"
   }, 
   "stats_title": {
-    "message": "Advertenties geblokkeerd"
+    "message": "Geblokkeerde advertenties"
   }, 
   "status_paused": {
     "message": "AdBlock is gepauzeerd.", 
@@ -1720,7 +1692,7 @@
     "message": "Filterlijstlocatie:"
   }, 
   "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Kies a.u.b. een filterabonnement uit de lijst:"
+    "message": "Kies een filterabonnement uit de lijst:"
   }, 
   "subscriptionSelection_title_label": {
     "message": "Abonnementstitel:"
@@ -1838,7 +1810,7 @@
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard"
   }, 
   "unexpected_filter_list_header": {
-    "message": "Filter lijst headers zijn hier niet toegestaan"
+    "message": "Filterlijstheaders zijn hier niet toegestaan"
   }, 
   "unpause_adblock": {
     "message": "AdBlock hervatten", 
@@ -1847,10 +1819,6 @@
   "unsubscribedlabel": {
     "message": "Afgemeld.", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Nu bijwerken"

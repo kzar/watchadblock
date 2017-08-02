@@ -51,10 +51,6 @@
     "message": "AdBlock - Klikk for mer informasjon", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Du bruker en gammel versjon av AdBlock. Vennligst gå til [[utvidelsessiden]], aktiver 'Utviklermodus' og klikk 'Oppdater utvidelser nå'", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock vil ikke kjøre på disse sidene:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -391,13 +387,9 @@
     "message": "Vises annonsen i eller før en film eller hvilket som helst annet objekt som et Flash-spill?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Ser etter oppdateringer (dette bør kun ta et par sekunder)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Installer Firefox hvis du ikke har det.", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Install Adblock Plus for Firefox if you don't have it.", 
@@ -429,11 +421,7 @@
   }, 
   "checkinfirefoxtitle": {
     "message": "Sjekk i Firefox ", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "For å rapportere en annonse, må du være tilkoblet Internett.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
@@ -535,7 +523,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Har vårt team etterspurt feilsøkingsinfo? Klikk [[her]]for det!", 
+    "message": "Har vårt team etterspurt feilsøkingsinfo? Klikk [[her]] for det!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Klikk på Safari-menyen &rarr; Innstillinger &rarr; Utvidelser.", 
+    "message": "Klikk på Safari-menyen > Innstillinger > Utvidelser.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Henter... vennligst vent.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "For å skjule knappen, høyreklikk og velg Fjern fra verktøylinje. Du kan vise den igjen ved å åpne menyen og velge Tilpass.", 
@@ -1263,10 +1247,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "AdBlock er oppdatert!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1320,7 +1300,7 @@
     "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
-    "message": "Datamaskinen din kan være infisert av skadevare. Klikk[[her]] for mer informasjon.", 
+    "message": "Datamaskinen din kan være infisert av skadevare. Klikk [[her]] for mer informasjon.", 
     "description": "On the ad report page, the ads the user is seeing might be caused by malware/adware"
   }, 
   "manualexcludefilteredit": {
@@ -1423,14 +1403,6 @@
         "example": "2.0.9"
       }
     }
-  }, 
-  "oradblockforchrome": {
-    "message": "eller AdBlock for Chrome", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "eller Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
   }, 
   "orenteraurl": {
     "message": "Eller skriv en URL:", 
@@ -1556,7 +1528,7 @@
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   }, 
   "safaricontentblocking": {
-    "message": "Enable Safari Content Blocking", 
+    "message": "Aktiver Safari innholdsblokkering", 
     "description": "Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
   }, 
   "safaricontentblockinglimitexceeded": {
@@ -1626,17 +1598,9 @@
     "message": "Steg 1: Finn ut hva du skal blokkere.", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Noe gikk galt under sjekkingen av oppdateringer.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
-    "message": "Kildekoden er [[fritt tilgjengelig ]]!", 
+    "message": "Kildekoden er [[fritt tilgjengelig]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Hjelp oss å spre ordet!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> på denne siden", 
@@ -1856,10 +1820,6 @@
     "message": "Avmeldt.", 
     "description": "Status label"
   }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
-  }, 
   "update_now": {
     "message": "Oppdater nå"
   }, 
@@ -1940,7 +1900,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "Hva er nytt i den siste versjonen? Se  [[oppdateringloggen]]!", 
+    "message": "Hva er nytt i den siste versjonen? Se [[oppdateringloggen]]!", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {

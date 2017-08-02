@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
+ * Copyright (C) 2006-2017 eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -95,8 +95,8 @@ if (document instanceof HTMLDocument)
 
     ext.backgroundPage.sendMessage({
       type: "subscriptions.add",
-      title: title,
-      url: url,
+      title,
+      url,
       confirm: true
     });
   }, true);

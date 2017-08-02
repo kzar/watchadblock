@@ -51,10 +51,6 @@
     "message": "AdBlock - kliknite za detalje", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Koristite staru verziju AdBlock-a. Molimo idite do [[strane za prijključke]], uključite 'Režim razvojnika' i kliknite na 'Ažuriraj priključke sada'", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock neće raditi na stranama:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -95,11 +91,11 @@
     "description": "Shows the user the debug information that will be sent along with their report."
   }, 
   "adreport_email": {
-    "message": "What's your email address?", 
+    "message": "Vaša e-mail adresa?", 
     "description": "Label for a textbox where the user enters their email address to submit a bug or ad report."
   }, 
   "adreport_email_privacy": {
-    "message": "We'll only use this to contact you if we need more information.", 
+    "message": "Ovo ćemo koristiti samo da Vas kontaktiramo ako nam je potrebno više informacija.", 
     "description": "Let the user know that their email address won't be used for reasons other than contacting them about their bug or ad report."
   }, 
   "adreport_filter": {
@@ -111,7 +107,7 @@
     "description": "Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
   }, 
   "adreport_location": {
-    "message": "Exactly where on that page is the ad? What does it look like?", 
+    "message": "Gde je tačno reklama na ovoj stranici? Kako izgleda?", 
     "description": "Question on the ad report page asking the user to describe the ad and its location on a webpage."
   }, 
   "adreport_missing_info": {
@@ -123,11 +119,11 @@
     "description": "Error message shown when the user doesn't attach a screenshot to an ad report."
   }, 
   "adreport_name": {
-    "message": "What's your name?", 
+    "message": "Kako se zovete?", 
     "description": "Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
   }, 
   "adreport_response_file_name": {
-    "message": "That file name is too long. Please give your file a shorter name.", 
+    "message": "Ime datoteke je predugo. Molimo skratite ime datoteke.", 
     "description": "Error message shown when the file name of an attachement the user is trying to submit in a report is longer than 255 characters."
   }, 
   "adreport_response_invalid_file": {
@@ -139,7 +135,7 @@
     "description": "Error message shown when the user tries to upload a large image file."
   }, 
   "adreport_response_save_error": {
-    "message": "Error saving the uploaded file.", 
+    "message": "Greška u čuvanju otpremljene datoteke.", 
     "description": "Error message shown when the server could not save an attached file."
   }, 
   "adreport_response_success": {
@@ -147,7 +143,7 @@
     "description": "Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   }, 
   "adreport_screen_cap_upload": {
-    "message": "Attach a screenshot:", 
+    "message": "Priložite snimak ekrana:", 
     "description": "Label next to a file upload button."
   }, 
   "adreport_server_response_error__manual_msg_step1": {
@@ -391,17 +387,13 @@
     "message": "Da li se ova reklama vidi u filmu ili ispred filma ili nekog drugog priključka poput igre u Flash-u?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Proveravanje ažuriranja (trebalo bi trajati samo par sekundi)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Instalirajte Firefox ukoliko ga nemate.", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Instalirajte Adblock Plus za Firefox ukoliko ga nemate.", 
-    "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
+    "description": "Instruction for how to check Firefox for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefox_3": {
     "message": "U tom pregledaču, pretplatite se na iste liste filtera koje imate na ovom.", 
@@ -428,12 +420,8 @@
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
-    "message": "Proveri u Firefox-u ", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "Da biste prijavili reklamu, morate biti povezani na internet.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "message": "Proveri u Firefox-u", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
@@ -485,7 +473,7 @@
     "description": "Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   }, 
   "contentblockingwarning": {
-    "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
+    "message": "Napomena: Dodavanje na listu dopuštenih reklama na stranici nije podržano sa Safari blokiranjem sadržaja.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
   "contributors": {
@@ -531,7 +519,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Dopusti AdBlock-u anonimno prikupljanje podatka i korišćenja liste filtera", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Kliknite na Safari meni &rarr; Podešavanja &rarr; Extenzije.", 
+    "message": "Kliknite na Safari meni > Podešavanja > Extenzije.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Dobavljanje... molimo sačekajte.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "Da biste sklonili dugme, kliknite na njega desnim klikom i izaberite Ukloni sa trake. Možete ga opet vratiti klikom na Firefox meni -> Prilagođavanje.", 
@@ -1109,7 +1093,7 @@
     "description": "Toolbar button menu entry to hide the AdBlock button"
   }, 
   "how": {
-    "message": "How?", 
+    "message": "Kako?", 
     "description": "Text of a link pointing to instructions on how to do something"
   }, 
   "invalidListUrl": {
@@ -1262,10 +1246,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "latest_version": {
-    "message": "AdBlock je ažuran!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
   }, 
   "legend": {
     "message": "Legenda: ", 
@@ -1424,14 +1404,6 @@
       }
     }
   }, 
-  "oradblockforchrome": {
-    "message": "ili AdBlock za Chrome", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "ili Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
-  }, 
   "orenteraurl": {
     "message": "Ili unesite URL:", 
     "description": "Link for custom subscription"
@@ -1556,7 +1528,7 @@
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Customize Toolbar' should match the text that Safari displays in the toolbar's context menu."
   }, 
   "safaricontentblocking": {
-    "message": "Enable Safari Content Blocking", 
+    "message": "Omogućite Safari blokiranje sadržaja", 
     "description": "Checkbox on the 'General' tab of the Options page. 'Content Blocking' is the name of a different way of blocking resources introduced in Safari 9."
   }, 
   "safaricontentblockinglimitexceeded": {
@@ -1572,7 +1544,7 @@
     "description": "Body of a notification shown to Safari Content Blocking users with too many filter list rules"
   }, 
   "safarinotificationtitle": {
-    "message": "Content Blocking rule limit exceeded", 
+    "message": "Premašena granica broja pravila za blokiranje sadržaja", 
     "description": "Title of a notification shown to Safari Content Blocking users with too many filter list rules"
   }, 
   "savebutton": {
@@ -1626,17 +1598,9 @@
     "message": "Korak 1: Odredite šta da blokirate", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Desila se nekakva greška kod provere ažuriranja.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "Izvorni kod je [[otvoren i besplatan]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Pomozite da proširimo reč!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "На овој страници: <strong>$number$</strong>", 
@@ -1855,10 +1819,6 @@
   "unsubscribedlabel": {
     "message": "Prekini pratnju.", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Ажурирај"

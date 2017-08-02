@@ -51,10 +51,6 @@
     "message": "AdBlock - für weitere Optionen bitte klicken", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Sie benutzen eine veraltete Version von AdBlock. Bitte rufen Sie die [[Erweiterungen-Seite]] auf, aktivieren Sie den \"Entwicklermodus\" und klicken Sie auf \"Erweiterungen jetzt aktualisieren\".", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock wird auf allen Seiten deaktiviert, auf die folgendes zutrifft:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -391,17 +387,13 @@
     "message": "Erscheint die Werbung vor oder in einem Video oder einem anderen Plugin, wie z.B. einem Flash-Spiel?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Updates werden abgefragt (dauert nur wenige Sekunden)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Installieren Sie Firefox, falls Sie es noch nicht installiert haben.", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Installieren Sie Adblock Plus für Firefox, falls Sie es noch nicht installiert haben.", 
-    "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
+    "description": "Instruction for how to check Firefox for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefox_3": {
     "message": "Abonnieren Sie in diesem Browser dieselben Filterlisten, die Sie hier abonniert haben.", 
@@ -428,12 +420,8 @@
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
-    "message": "In Firefox  überprüfen", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "Um Werbung zu melden muss eine Internetverbindung bestehen.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "message": "In Firefox überprüfen", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "Klicken Sie mit der rechten Maustaste auf den AdBlock Button und wählen Sie 'Im Chrome-Menü ausblenden'. Um den Button wieder anzuzeigen, öffnen Sie das Chrome-Menü, klicken Sie mit der rechten Maustaste auf den AdBlock Button und wählen Sie 'In Symbolleiste behalten'.", 
@@ -531,11 +519,11 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "AdBlock erlauben anonyme Filterlistennutzung und andere anonyme Nutzungsdaten zu sammeln", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Hat unser Team Sie nach Debug-Informationen gefragt? Klicken Sie  [[hier]] um die Informationen anzuzeigen.", 
+    "message": "Hat unser Team Sie nach Debug-Informationen gefragt? Klicken Sie [[hier]] um die Informationen anzuzeigen.", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -585,11 +573,11 @@
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
-    "message": "Öffnen Sie die [[ Erweiterungen Seite]].", 
+    "message": "Öffnen Sie die [[Erweiterungen Seite]].", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Klicken Sie auf Safari (Menübar) &rarr; Einstellungen ... &rarr; Erweiterungen.", 
+    "message": "Klicken Sie auf Safari (Menübar) > Einstellungen ... > Erweiterungen.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Abrufen... bitte warten.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "Um den Button zu verbergen, klicken Sie mit einem Rechtsklick auf den Button und wählen Sie 'Aus Symbolleiste entfernen'. Der Button kann unter Firefox Menü -> Anpassen wieder aktiviert werden.", 
@@ -1263,10 +1247,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "Keine Updates für AdBlock verfügar.", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "Legende: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1320,7 +1300,7 @@
     "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
-    "message": "Ihr Computer ist möglicherweise mit Malware infiziert.  Klicken Sie [[hier]] für weitere Informationen.", 
+    "message": "Ihr Computer ist möglicherweise mit Malware infiziert. Klicken Sie [[hier]] für weitere Informationen.", 
     "description": "On the ad report page, the ads the user is seeing might be caused by malware/adware"
   }, 
   "manualexcludefilteredit": {
@@ -1423,14 +1403,6 @@
         "example": "2.0.9"
       }
     }
-  }, 
-  "oradblockforchrome": {
-    "message": "oder AdBlock für Chrome", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "oder Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
   }, 
   "orenteraurl": {
     "message": "...oder geben Sie eine Filterlistenadresse ein:", 
@@ -1626,17 +1598,9 @@
     "message": "Schritt 1: Herausfinden, was entfernt werden soll", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Bei der Überprüfung auf Updates ist ein Fehler aufgetreten.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "Der Quellcode ist [[frei verfügbar]].", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Teilen Sie es mit ihren Freunden!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> auf dieser Seite", 
@@ -1855,10 +1819,6 @@
   "unsubscribedlabel": {
     "message": "Abonnement beendet.", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Jetzt aktualisieren"

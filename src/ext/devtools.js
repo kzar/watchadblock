@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
+ * Copyright (C) 2006-2017 eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -17,10 +17,11 @@
 
 "use strict";
 
+(function()
 {
   let inspectedTabId = chrome.devtools.inspectedWindow.tabId;
   let port = chrome.runtime.connect({name: "devtools-" + inspectedTabId});
 
   ext.onMessage = port.onMessage;
   ext.devtools = chrome.devtools;
-}
+}());

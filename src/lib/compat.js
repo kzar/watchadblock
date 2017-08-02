@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
+ * Copyright (C) 2006-2017 eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -17,29 +17,6 @@
 
 "use strict";
 
-//
-// Module framework stuff
-//
-
-function require(module)
-{
-  if (!(module in require.scopes))
-  {
-    let scope = {exports: {}};
-    require.scopes[module] = require.modules[module](scope, scope.exports);
-  }
-  return require.scopes[module];
-}
-require.modules = Object.create(null);
-require.scopes = Object.create(null);
-
-function importAll(module, globalObj)
-{
-  let exports = require(module);
-  for (let key in exports)
-    globalObj[key] = exports[key];
-}
-
 let onShutdown = {
   done: false,
   add() {},
@@ -53,8 +30,7 @@ let onShutdown = {
 function nsIFileURL() {}
 function nsIHttpChannel() {}
 
-let Components =
-{
+let Components = {
   interfaces:
   {
     nsIFile: {DIRECTORY_TYPE: 0},
@@ -77,8 +53,16 @@ let Components =
   },
   results: {},
   utils: {
-    import()
+    import(resource)
     {
+      let match = /^resource:\/\/gre\/modules\/(.+)\.jsm$/.exec(resource);
+      let resourceName = match && match[1];
+      if (resourceName && Cu.import.resources.has(resourceName))
+        return {[resourceName]: Cu.import.resources.get(resourceName)};
+
+      throw new Error(
+        "Attempt to import unknown JavaScript module " + resource
+      );
     },
     reportError(e)
     {
@@ -94,50 +78,17 @@ const Ci = Components.interfaces;
 const Cr = Components.results;
 const Cu = Components.utils;
 
-let XPCOMUtils =
-{
+Cu.import.resources = new Map();
+
+Cu.import.resources.set("XPCOMUtils", {
   generateQI() {}
-};
-
-//
-// Fake nsIFile implementation for our I/O
-//
-
-function FakeFile(path)
-{
-  this.path = path;
-}
-FakeFile.prototype =
-{
-  get leafName()
-  {
-    return this.path;
-  },
-  set leafName(value)
-  {
-    this.path = value;
-  },
-  append(path)
-  {
-    this.path += path;
-  },
-  clone()
-  {
-    return new FakeFile(this.path);
-  },
-  get parent()
-  {
-    return {create() {}};
-  },
-  normalize() {}
-};
+});
 
 //
 // Services.jsm module emulation
 //
 
-let Services =
-{
+Cu.import.resources.set("Services", {
   obs: {
     addObserver() {},
     removeObserver() {}
@@ -210,16 +161,15 @@ let Services =
       return 0;
     }
   }
-}
+});
 
 //
 // FileUtils.jsm module emulation
 //
 
-let FileUtils =
-{
+Cu.import.resources.set("FileUtils", {
   PERMS_DIRECTORY: 0
-};
+});
 
 function FakeTimer()
 {
@@ -242,7 +192,7 @@ FakeTimer.prototype =
       {
         this.callback();
       }
-      catch(e)
+      catch (e)
       {
         Cu.reportError(e);
       }
@@ -255,8 +205,7 @@ FakeTimer.prototype =
 // Add a channel property to XMLHttpRequest, Synchronizer needs it
 //
 
-XMLHttpRequest.prototype.channel =
-{
+XMLHttpRequest.prototype.channel = {
   status: -1,
   notificationCallbacks: {},
   loadFlags: 0,

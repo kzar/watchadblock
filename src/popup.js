@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
+ * Copyright (C) 2006-2017 eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -49,10 +49,10 @@ function onLoad()
       );
     }
 
-    // Ask content script whether clickhide is active. If so, show cancel button.
-    // If that isn't the case, ask background.html whether it has cached filters. If so,
-    // ask the user whether she wants those filters.
-    // Otherwise, we are in default state.
+    // Ask content script whether clickhide is active. If so, show
+    // cancel button.  If that isn't the case, ask background.html
+    // whether it has cached filters. If so, ask the user whether she
+    // wants those filters. Otherwise, we are in default state.
     if (page)
     {
       if (checkWhitelisted(page))
@@ -66,9 +66,15 @@ function onLoad()
     }
   });
 
-  document.getElementById("enabled").addEventListener("click", toggleEnabled, false);
-  document.getElementById("clickhide").addEventListener("click", activateClickHide, false);
-  document.getElementById("clickhide-cancel").addEventListener("click", cancelClickHide, false);
+  document.getElementById("enabled").addEventListener(
+    "click", toggleEnabled, false
+  );
+  document.getElementById("clickhide").addEventListener(
+    "click", activateClickHide, false
+  );
+  document.getElementById("clickhide-cancel").addEventListener(
+    "click", cancelClickHide, false
+  );
   document.getElementById("options").addEventListener("click", () =>
   {
     ext.showOptions();
@@ -79,7 +85,11 @@ function onLoad()
   {
     collapser.addEventListener("click", toggleCollapse, false);
     if (!Prefs[collapser.dataset.option])
-      document.getElementById(collapser.dataset.collapsable).classList.add("collapsed");
+    {
+      document.getElementById(
+        collapser.dataset.collapsable
+      ).classList.add("collapsed");
+    }
   }
 }
 

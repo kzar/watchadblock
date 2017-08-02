@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
+ * Copyright (C) 2006-2017 eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -17,44 +17,43 @@
 
 "use strict";
 
+(function()
 {
-  let nonEmptyPageMaps = Object.create(null);
-  let pageMapCounter = 0;
+  let nonEmptyPageMaps = new Set();
 
   let PageMap = ext.PageMap = function()
   {
-    this._map = Object.create(null);
-    this._id = ++pageMapCounter;
+    this._map = new Map();
   };
   PageMap.prototype = {
     _delete(id)
     {
-      delete this._map[id];
+      this._map.delete(id);
 
-      if (Object.keys(this._map).length == 0)
-        delete nonEmptyPageMaps[this._id];
+      if (this._map.size == 0)
+        nonEmptyPageMaps.delete(this);
     },
     keys()
     {
-      return Object.keys(this._map).map(ext.getPage);
+      return Array.from(this._map.keys()).map(ext.getPage);
     },
     get(page)
     {
-      return this._map[page.id];
+      return this._map.get(page.id);
     },
     set(page, value)
     {
-      this._map[page.id] = value;
-      nonEmptyPageMaps[this._id] = this;
+      this._map.set(page.id, value);
+      nonEmptyPageMaps.add(this);
     },
     has(page)
     {
-      return page.id in this._map;
+      return this._map.has(page.id);
     },
     clear()
     {
-      for (let id in this._map)
-        this._delete(id);
+      this._map.clear();
+      nonEmptyPageMaps.delete(this);
     },
     delete(page)
     {
@@ -64,31 +63,10 @@
 
   ext._removeFromAllPageMaps = pageId =>
   {
-    for (let pageMapId in nonEmptyPageMaps)
-      nonEmptyPageMaps[pageMapId]._delete(pageId);
+    for (let pageMap of nonEmptyPageMaps)
+      pageMap._delete(pageId);
   };
-}
 
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-"use strict";
-
-{
   /* Pages */
 
   let Page = ext.Page = function(tab)
@@ -110,10 +88,10 @@
       // but sometimes we only have the tab id when we create a Page object.
       // In that case we get the url from top frame of the tab, recorded by
       // the onBeforeRequest handler.
-      let frames = framesOfTabs[this.id];
+      let frames = framesOfTabs.get(this.id);
       if (frames)
       {
-        let frame = frames[0];
+        let frame = frames.get(0);
         if (frame)
           return frame.url;
       }
@@ -128,24 +106,24 @@
 
   function afterTabLoaded(callback)
   {
-     return openedTab =>
-     {
-       let onUpdated = (tabId, changeInfo, tab) =>
-       {
-         if (tabId == openedTab.id && changeInfo.status == "complete")
-         {
-           chrome.tabs.onUpdated.removeListener(onUpdated);
-           callback(new Page(openedTab));
-         }
-       };
-       chrome.tabs.onUpdated.addListener(onUpdated);
-     };
+    return openedTab =>
+    {
+      let onUpdated = (tabId, changeInfo, tab) =>
+      {
+        if (tabId == openedTab.id && changeInfo.status == "complete")
+        {
+          chrome.tabs.onUpdated.removeListener(onUpdated);
+          callback(new Page(openedTab));
+        }
+      };
+      chrome.tabs.onUpdated.addListener(onUpdated);
+    };
   }
 
   ext.pages = {
     open(url, callback)
     {
-      chrome.tabs.create({url: url}, callback && afterTabLoaded(callback));
+      chrome.tabs.create({url}, callback && afterTabLoaded(callback));
     },
     query(info, callback)
     {
@@ -178,13 +156,19 @@
 
   function createFrame(tabId, frameId)
   {
-    let frames = framesOfTabs[tabId];
+    let frames = framesOfTabs.get(tabId);
     if (!frames)
-      frames = framesOfTabs[tabId] = Object.create(null);
+    {
+      frames = new Map();
+      framesOfTabs.set(tabId, frames);
+    }
 
-    let frame = frames[frameId];
+    let frame = frames.get(frameId);
     if (!frame)
-      frame = frames[frameId] = {};
+    {
+      frame = {};
+      frames.set(frameId, frame);
+    }
 
     return frame;
   }
@@ -193,7 +177,7 @@
   {
     if (frameId == 0)
     {
-      let page = new Page({id: tabId, url: url});
+      let page = new Page({id: tabId, url});
 
       ext._removeFromAllPageMaps(tabId);
 
@@ -210,11 +194,14 @@
       });
     }
 
-    // Update frame parent and URL in frame structure
+    // Update frame URL and parent in frame structure
     let frame = createFrame(tabId, frameId);
     frame.url = new URL(url);
-    frame.parent = framesOfTabs[tabId][parentFrameId] || null;
-  };
+
+    let parentFrame = framesOfTabs.get(tabId).get(parentFrameId);
+    if (parentFrame)
+      frame.parent = parentFrame;
+  }
 
   chrome.webRequest.onHeadersReceived.addListener(details =>
   {
@@ -260,7 +247,7 @@
         let disposition = header.value.split(";")[0].replace(/[ \t]+$/, "");
         if (disposition.toLowerCase() != "inline" &&
             /^[\x21-\x7E]+$/.test(disposition) &&
-            !/[()<>@,;:\\"/\[\]?={}]/.test(disposition))
+            !/[()<>@,;:\\"/[\]?={}]/.test(disposition))
           return;
       }
 
@@ -312,7 +299,7 @@
     ext.pages.onRemoved._dispatch(tabId);
 
     ext._removeFromAllPageMaps(tabId);
-    delete framesOfTabs[tabId];
+    framesOfTabs.delete(tabId);
   }
 
   chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) =>
@@ -373,7 +360,7 @@
     },
     _queueChanges()
     {
-      chrome.tabs.get(this._tabId, function()
+      chrome.tabs.get(this._tabId, () =>
       {
         // If the tab is prerendered, chrome.tabs.get() sets
         // chrome.runtime.lastError and we have to delay our changes
@@ -395,7 +382,7 @@
         {
           this._applyChanges();
         }
-      }.bind(this));
+      });
     },
     _addChange(name, value)
     {
@@ -510,14 +497,16 @@
 
   /* Web requests */
 
-  let framesOfTabs = Object.create(null);
+  let framesOfTabs = new Map();
 
   ext.getFrame = (tabId, frameId) =>
   {
-    return (framesOfTabs[tabId] || {})[frameId];
+    let frames = framesOfTabs.get(tabId);
+    return frames && frames.get(frameId);
   };
 
-  let handlerBehaviorChangedQuota = chrome.webRequest.MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES;
+  let handlerBehaviorChangedQuota =
+    chrome.webRequest.MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES;
 
   function propagateHandlerBehaviorChange()
   {
@@ -526,7 +515,9 @@
     // Otherwise Chrome notifies the user that this extension is causing issues.
     if (handlerBehaviorChangedQuota > 0)
     {
-      chrome.webNavigation.onBeforeNavigate.removeListener(propagateHandlerBehaviorChange);
+      chrome.webNavigation.onBeforeNavigate.removeListener(
+        propagateHandlerBehaviorChange
+      );
       chrome.webRequest.handlerBehaviorChanged();
 
       handlerBehaviorChangedQuota--;
@@ -542,7 +533,7 @@
       // There wouldn't be any visible effect when calling it earlier,
       // but it's an expensive operation and that way we avoid to call
       // it multiple times, if multiple filters are added/removed.
-      let onBeforeNavigate = chrome.webNavigation.onBeforeNavigate;
+      let {onBeforeNavigate} = chrome.webNavigation;
       if (!onBeforeNavigate.hasListener(propagateHandlerBehaviorChange))
         onBeforeNavigate.addListener(propagateHandlerBehaviorChange);
     }
@@ -556,17 +547,16 @@
       {
         if (details && details.length > 0)
         {
-          let frames = framesOfTabs[tab.id] = Object.create(null);
+          let frames = new Map();
+          framesOfTabs.set(tab.id, frames);
 
-          for (let i = 0; i < details.length; i++)
-            frames[details[i].frameId] = {url: new URL(details[i].url), parent: null};
-
-          for (let i = 0; i < details.length; i++)
+          for (let detail of details)
           {
-            let parentFrameId = details[i].parentFrameId;
+            let frame = {url: new URL(detail.url)};
+            frames.set(detail.frameId, frame);
 
-            if (parentFrameId != -1)
-              frames[details[i].frameId].parent = frames[parentFrameId];
+            if (detail.parentFrameId != -1)
+              frame.parent = frames.get(detail.parentFrameId);
           }
         }
       });
@@ -578,40 +568,41 @@
     // The high-level code isn't interested in requests that aren't
     // related to a tab or requests loading a top-level document,
     // those should never be blocked.
-    if (details.tabId == -1 || details.type == "main_frame")
+    if (details.type == "main_frame")
+      return;
+
+    // Filter out requests from non web protocols. Ideally, we'd explicitly
+    // specify the protocols we are interested in (i.e. http://, https://,
+    // ws:// and wss://) with the url patterns, given below, when adding this
+    // listener. But unfortunately, Chrome <=57 doesn't support the WebSocket
+    // protocol and is causing an error if it is given.
+    let url = new URL(details.url);
+    if (url.protocol != "http:" && url.protocol != "https:" &&
+        url.protocol != "ws:" && url.protocol != "wss:")
       return;
 
     // We are looking for the frame that contains the element which
     // has triggered this request. For most requests (e.g. images) we
     // can just use the request's frame ID, but for subdocument requests
     // (e.g. iframes) we must instead use the request's parent frame ID.
-    let frameId;
-    let requestType;
-    if (details.type == "sub_frame")
-    {
+    let {frameId, type} = details;
+    if (type == "sub_frame")
       frameId = details.parentFrameId;
-      requestType = "SUBDOCUMENT";
-    }
-    else
+
+    // Sometimes requests are not associated with a browser tab and
+    // in this case we want to still be able to view the url being called.
+    let frame = null;
+    let page = null;
+    if (details.tabId != -1)
     {
-      frameId = details.frameId;
-      requestType = details.type.toUpperCase();
+      frame = ext.getFrame(details.tabId, frameId);
+      page = new Page({id: details.tabId});
     }
 
-    let frame = ext.getFrame(details.tabId, frameId);
-    if (frame)
-    {
-      let results = ext.webRequest.onBeforeRequest._dispatch(
-        new URL(details.url),
-        requestType,
-        new Page({id: details.tabId}),
-        frame
-      );
-
-      if (results.indexOf(false) != -1)
-        return {cancel: true};
-    }
-  }, {urls: ["http://*/*", "https://*/*"]}, ["blocking"]);
+    if (ext.webRequest.onBeforeRequest._dispatch(
+        url, type, page, frame).includes(false))
+      return {cancel: true};
+  }, {urls: ["<all_urls>"]}, ["blocking"]);
 
 
   /* Message passing */
@@ -629,21 +620,23 @@
         url: new URL(rawSender.url),
         get parent()
         {
-          let frames = framesOfTabs[rawSender.tab.id];
+          let frames = framesOfTabs.get(rawSender.tab.id);
 
           if (!frames)
             return null;
 
-          let frame = frames[rawSender.frameId];
+          let frame = frames.get(rawSender.frameId);
           if (frame)
-            return frame.parent;
+            return frame.parent || null;
 
-          return frames[0];
+          return frames.get(0) || null;
         }
       };
     }
 
-    return ext.onMessage._dispatch(message, sender, sendResponse).indexOf(true) != -1;
+    return ext.onMessage._dispatch(
+      message, sender, sendResponse
+    ).indexOf(true) != -1;
   });
 
 
@@ -746,5 +739,4 @@
       });
     }
   };
-}
-
+}());

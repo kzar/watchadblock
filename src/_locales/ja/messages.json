@@ -40,7 +40,7 @@
     "description": "option on the 'General' tab"
   }, 
   "ad_report_please": {
-    "message": "広告を見つけたら、バグ報告ではなく、[[広告報告]]をしてください！", 
+    "message": "広告を見かけた場合は、バグ報告ではなく [[広告の報告]] を行ってください。", 
     "description": "Link to the ad report page on our support site. This is found on the Support tab of the options."
   }, 
   "adalreadyblocked": {
@@ -50,10 +50,6 @@
   "adblock_click_for_details": {
     "message": "AdBlock - 詳細はこちら", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
-  }, 
-  "adblock_outdated_chrome": {
-    "message": "古いバージョンの AdBlock を使用しています。 [[拡張機能ページ]] を開き、「デベロッパーモード」を有効にし、「今すぐ拡張機能をアップデート」をクリックしてください。", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlockを以下に一致するページでは実行しない:", 
@@ -143,7 +139,7 @@
     "description": "Error message shown when the server could not save an attached file."
   }, 
   "adreport_response_success": {
-    "message": "All set! We'll be in touch as soon as we can. In the meantime, look for an email from AdBlock. You'll find a link to your ticket on our help site there, along with some self-help suggestions if we can't get back to you right away.", 
+    "message": "すべて完了しました！早急に取り掛かります。その間、AdBlockからのメールをお待ちください。すぐに返答ができない場合には、セルフヘルプのサジェストに沿って、チケットのリンクを受け取ることができます。", 
     "description": "Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   }, 
   "adreport_screen_cap_upload": {
@@ -151,7 +147,7 @@
     "description": "Label next to a file upload button."
   }, 
   "adreport_server_response_error__manual_msg_step1": {
-    "message": "[[サポート ウェブサイト]]にアクセスしてください。", 
+    "message": "[[サポート ウェブサイト]] にアクセスしてください。", 
     "description": "Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }, 
   "adreport_server_response_error__manual_msg_step2": {
@@ -167,11 +163,11 @@
     "description": "Introduction of the ad reporting page"
   }, 
   "adreportthanks": {
-    "message": "Thank You!", 
+    "message": "ありがとうございます！", 
     "description": "Message to the user thanking them for sharing the URL with us."
   }, 
   "adreportvoluntary": {
-    "message": "広告の報告は任意です。 フィルタリストのメンテナーが広告をブロックできるようにすることで、他の人のお役に立てます。 利他的権利を感じていないのであれば問題ありません。 このページを閉じ、[[広告をブロック]]してください。", 
+    "message": "広告の報告は任意です。フィルタリストのメンテナーが広告をブロックできるようにすることで、他の人のお役に立てます。利他的権利を感じていないのであれば問題ありません。このページを閉じ、[[広告をブロック]] してください。", 
     "description": "Introduction of the ad reporting page"
   }, 
   "adstillappear": {
@@ -345,7 +341,7 @@
     "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   }, 
   "bugreport": {
-    "message": "できれば、[[バグ報告]]していただけませんか？", 
+    "message": "よろしければ [[バグ報告]] していただけませんか？", 
     "description": "Link to send a bug report on the Support tab of the options"
   }, 
   "buttonback": {
@@ -391,17 +387,13 @@
     "message": "動画の前、もしくはその他のFlashゲームのようなプラグインに広告が表示されますか？", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "アップデートを確認中 (数秒しかからないはずです)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Firefoxをお持ちではない場合は  インストールしてください。", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Firefox 用のAdblock Plusがない場合は、インストールしてください。", 
-    "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
+    "description": "Instruction for how to check Firefox for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefox_3": {
     "message": "そのブラウザで、ここと同じフィルタリストを登録してください。", 
@@ -416,24 +408,20 @@
     "description": "Instruction for how to check Firefox/Chrome for a reported ad"
   }, 
   "checkinfirefoxorchrome_1": {
-    "message": "Install Firefox or Chrome if you don't have it.", 
+    "message": "Firefox もしくは Chrome をお持ちでない場合はインストールしてください。", 
     "description": "instruction for how to check Firefox or Chrome for a reported ad"
   }, 
   "checkinfirefoxorchrome_2": {
-    "message": "Install Adblock Plus for Firefox or AdBlock for Chrome if you don't have it.", 
+    "message": "Firefox 用の Adblock Plus、もしくは Chrome 用の AdBlock をお持ちでない場合はインストールしてください。", 
     "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefoxorchrometitle": {
-    "message": "Check in Firefox or Chrome", 
+    "message": "Firefox や Chrome で確認", 
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
     "message": "Firefoxでも表示されるかどうかをチェックしてください ", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "広告を報告するには、インターネットに接続されていなければなりません。", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "AdBlockボタンを右クリックし、'Chrome メニューで非表示' を選択します。 表示するには、Chromeメニューをクリックし、AdBlockボタンを右クリックして、'ツールバーに表示' を選択します。", 
@@ -489,7 +477,7 @@
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
   "contributors": {
-    "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
+    "message": "[[AdBlockの支援者]] を見つけるのに役立つページもあります！", 
     "description": "Link to the contributors page on the Support tab of the options"
   }, 
   "correctfilters": {
@@ -531,11 +519,11 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "AdBlockが匿名フィルタリストの使用状況やデータを収集することを許可する", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "私たちのチームがデバッグ情報をいくらか要求しましたか？ それについては [[こちら]]をクリック！", 
+    "message": "デバッグ情報の提供を求められましたか？ [[こちら]] をクリックしてデバッグ情報を表示します。", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -585,11 +573,11 @@
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
-    "message": "[[拡張機能ページ]]を開きます。", 
+    "message": "[[拡張機能ページ]] を開きます。", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Safari のメニュー&rarr; 設定 &rarr; 拡張機能をクリックしてください。", 
+    "message": "Click the Safari menu > Preferences > Extensions.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -648,36 +636,32 @@
     "message": "取得中・・・しばらくお待ちください。", 
     "description": "Status label"
   }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  }, 
   "ff_button_how_to_hide": {
-    "message": "To hide the button, right click it and choose Remove from Toolbar.  You can show it again under Firefox menu -> Customize.", 
+    "message": "ボタンを非表示にするには、右クリックしてツールバーから 削除 を選択します。Firefox メニューボタン > カスタマイズ から再度表示させることができます。", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
   }, 
   "ff_checkinchrome_1": {
-    "message": "Install Chrome, if you don't have it.", 
+    "message": "Chrome をお持ちではない場合はインストールしてください。", 
     "description": "Instruction for how to check Chrome for a reported ad"
   }, 
   "ff_checkinchrome_2": {
-    "message": "Install AdBlock for Chrome, if you don't have it.", 
+    "message": "Chrome 用の AdBlock をお持ちでない場合は、インストールしてください。", 
     "description": "Instruction for how to check Chrome for a reported ad"
   }, 
   "ff_checkinchrome_3": {
-    "message": "In Chrome, subscribe to the same filter lists as you have here.", 
+    "message": "Chrome で、ここで使用しているのと同じフィルタリストを登録してください。", 
     "description": "Instruction for how to check Chrome for a reported ad"
   }, 
   "ff_checkinchrome_4": {
-    "message": "In Chrome, load the page with the ad.", 
+    "message": "Chrome で、広告ページを読み込んでください。", 
     "description": "Instruction for how to check Chrome for a reported ad"
   }, 
   "ff_checkinchrome_5": {
-    "message": "Does the ad appear in Chrome too?", 
+    "message": "Chrome でも広告は表示されますか？", 
     "description": "Instruction for how to check Chrome for a reported ad"
   }, 
   "ff_checkinchrometitle": {
-    "message": "Check in Chrome", 
+    "message": "Chrome で確認", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_chinese": {
@@ -867,7 +851,7 @@
     "description": "A filter list"
   }, 
   "filterlistlink": {
-    "message": "必要以上に登録をしないでください。追加する度に重くなりますので！リストの作成者、その他のリストは[[こちら]]。", 
+    "message": "追加するたびに動作が遅くなるので必要以上に登録しないでください。リストの作成者、その他のリストは [[こちら]]。", 
     "description": "Explanation of the filter lists"
   }, 
   "filterlistsrock": {
@@ -932,7 +916,7 @@
     "message": "フィルタファイルを開いて確認"
   }, 
   "filtersavewarning": {
-    "message": "警告： ここで作成したフィルターに問題がある場合、公式フィルターを含む他のフィルターが破損する場合があります。\nブラックリスト、ホワイトリストの詳細な記法は[[こちら（英語）]]です。", 
+    "message": "警告： ここで作成したフィルタに問題がある場合、公式フィルタを含む他のフィルタが破損する恐れがあります。\n高度なブラックリストおよびホワイトリストを追加する方法については [[フィルタ構文チュートリアル]] をご覧ください。", 
     "description": "Warning when blacklisting manually"
   }, 
   "filterstabtitle": {
@@ -1257,10 +1241,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "AdBlock は最新版です！", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "記録： ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1314,7 +1294,7 @@
     "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
-    "message": "お使いのコンピュータはマルウェアに感染している可能性があります。 詳細については、[[こちら]]をクリックしてください。", 
+    "message": "お使いのコンピュータはマルウェアに感染している可能性があります。詳細については [[こちら]] をクリックしてください。", 
     "description": "On the ad report page, the ads the user is seeing might be caused by malware/adware"
   }, 
   "manualexcludefilteredit": {
@@ -1360,7 +1340,7 @@
     "description": "A negative response to a question"
   }, 
   "nodefaultfilter1": {
-    "message": "We don't have a default filter list for that language.\nPlease [[try to find a suitable list that supports this language]] or block this ad for yourself via the AdBlock menu.", 
+    "message": "その言語に対応するデフォルトフィルタリストはありません。\n[[この言語に対応する適切なリストを検索してみる]] か、ご自身の AdBlock メニューからこの広告をブロックしてください。", 
     "description": "Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab."
   }, 
   "noresourcessend2": {
@@ -1417,14 +1397,6 @@
         "example": "2.0.9"
       }
     }
-  }, 
-  "oradblockforchrome": {
-    "message": "または Chrome 用 AdBlock", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "または Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
   }, 
   "orenteraurl": {
     "message": "URL直接指定：", 
@@ -1542,7 +1514,7 @@
     }
   }, 
   "safari50_updatenotice": {
-    "message": "あなたは古いバージョンのSafariを使用しています。AdBlockの全機能を利用していただくには最新バージョンが必要です。[[今すぐアップデート]].", 
+    "message": "あなたは古いバージョンの Safari を使用しています。AdBlock の全機能を利用していただくには最新バージョンが必要です。[[今すぐアップデート]]", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }, 
   "safaributton_how_to_hide2": {
@@ -1620,17 +1592,9 @@
     "message": "ステップ1： ブロック対象の指定", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "アップデートを確認中に不具合が発生しました。", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "ソースコードは [[自由に入手できます]]！", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "周りに広める", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "このページ内で <strong>$number$</strong>", 
@@ -1728,7 +1692,7 @@
     "message": "購読するフィルタの名称:"
   }, 
   "supportsite": {
-    "message": "[[サポートサイト]]でお知らせください！", 
+    "message": "[[サポートサイト]] でお知らせください。", 
     "description": "Link to the support site on the Support tab of the options"
   }, 
   "tabcustomize": {
@@ -1850,10 +1814,6 @@
     "message": "無効にしました。", 
     "description": "Status label"
   }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
-  }, 
   "update_now": {
     "message": "今すぐ更新"
   }, 
@@ -1914,7 +1874,7 @@
     }
   }, 
   "updatenowmessage2": {
-    "message": "自動的にアップデートを取得します。[[今すぐアップデート]]することも可能です。", 
+    "message": "自動的にアップデートを取得します。 [[今すぐアップデート]] することも可能です。", 
     "description": "Update filters text + button"
   }, 
   "updateyourlists": {
@@ -1934,7 +1894,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "最新リリースの新機能については、[[変更履歴]]をご確認ください！", 
+    "message": "最新リリースの新機能については [[変更履歴]] をご確認ください。", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {

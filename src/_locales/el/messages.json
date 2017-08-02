@@ -51,10 +51,6 @@
     "message": "AdBlock - κλικ για λεπτομέρειες", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Χρησιμοποιείτε παλιά έκδοση του AdBlock. Πηγαίνετε στη [[σελίδα επεκτάσεων]], ενεργοποιήστε την 'Λειτουργία για προγραμματιστές' και κάντε κλικ στο 'Ενημέρωση επεκτάσεων τώρα'", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "Το AdBlock δεν θα λειτουργεί σε σελίδες που αντιστοιχούν σε:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -391,10 +387,6 @@
     "message": "Εμφανίζεται αυτή η διαφήμιση μέσα ή πριν μια ταινία ή άλλο πρόσθετο σαν ένα παιχνίδι Flash;", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Έλεγχος για ενημερώσεις (πρέπει να διαρκέσει μόνο λίγα δευτερόλεπτα)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Εγκαταστήστε το Firefox αν δεν το έχετε ήδη.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -430,10 +422,6 @@
   "checkinfirefoxtitle": {
     "message": "Ελέγξτε στο Firefox ", 
     "description": "Tell a user to see if a reported ad also appears in Firefox"
-  }, 
-  "checkinternetconnection": {
-    "message": "Για να αναφέρετε μια διαφήμιση, πρέπει να είστε συνδεδεμένοι στον ιστό.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "Κάντε δεξιό κλικ στο κουμπί AdBlock και επιλέξτε \"Απόκρυψη στο μενού του Chrome\". Για να το δείτε, κάντε κλικ στο μενού του Chrome, κάντε δεξιό κλικ στο κουμπί AdBlock και επιλέξτε 'Διατήρηση στη γραμμή εργαλείων'.", 
@@ -531,7 +519,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Να επιτρέπεται στο AdBlock να συλλέγει ανώνυμα δεδομένα και χρήση λίστας φίλτρων", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Κάντε κλικ στο μενού Safari &rarr; Προτιμήσεις &rarr; Επεκτάσεις.", 
+    "message": "Κάντε κλικ στο μενού Safari > Προτιμήσεις > Επεκτάσεις.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Ανάκτηση... Παρακαλώ περιμένετε.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "Χρησιμοποιείτε μια παλιά έκδοση του AdBlock. Παρακαλούμε κάντε κλικ στο κουμπί μενού Firefox και επιλέξτε πρόσθετα. Στη συνέχεια, στη σελίδα \"Πρόσθετα\", κάντε κλικ στο εικονίδιο με το γρανάζι (Εργαλεία για όλα τα πρόσθετα) και επιλέξτε «Έλεγχος για ενημερώσεις».", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "Για να κρύψετε το κουμπί, κάντε δεξί κλικ στο κουμπί και επιλογή Αφαίρεση από τη γραμμή εργαλείων. Μπορείτε να το επανεμφανίσετε από Firefox Μενού -> Προσαρμογή.", 
@@ -1260,10 +1244,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "Το AdBlock είναι ενημερωμένο!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "Υπόμνημα: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1615,17 +1595,9 @@
     "message": "Βήμα 1ο: Επιλέξτε τι θα μπλοκάρετε", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Κάτι πήγε στραβά κατά τον έλεγχο ενημερώσεων.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "Ο πηγαίος κώδικας είναι [[ελεύθερα διαθέσιμος]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Βοηθήστε να το διαδώσουμε!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> σε αυτή την σελίδα", 
@@ -1844,10 +1816,6 @@
   "unsubscribedlabel": {
     "message": "Αναίρεση εγγραφής", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "Υπάρχει μια ενημερωμένη έκδοση για το AdBlock! Πηγαίνετε [[εκεί]] για ενημέρωση. Σημείωση: Αν θέλετε να λαμβάνετε ενημερώσεις αυτόματα, απλά κάντε κλικ στο Safari (στη γραμμή μενού) > Προτιμήσεις > Επεκτάσεις και ελέγξτε την επιλογή «Αυτόματη ενημέρωση επεκτάσεων από τη συλλογή επεκτάσεων Safari».", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Ενημέρωση τώρα"

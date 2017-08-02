@@ -40,7 +40,7 @@
     "description": "option on the 'General' tab"
   }, 
   "ad_report_please": {
-    "message": "如果你看到了廣告，請[[回報廣告]]而不是回報bug", 
+    "message": "If you're seeing an ad, don't make a bug report, make an [[ad report]]!", 
     "description": "Link to the ad report page on our support site. This is found on the Support tab of the options."
   }, 
   "adalreadyblocked": {
@@ -50,10 +50,6 @@
   "adblock_click_for_details": {
     "message": "AdBlock-點擊查看詳情", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
-  }, 
-  "adblock_outdated_chrome": {
-    "message": "You are using an old version of AdBlock. Please go to [[the extensions page]], enable 'Developer mode' and click 'Update extensions now'", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
   }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock 不會在符合此規則的網域啟用:", 
@@ -258,7 +254,7 @@
     "description": "Warning if the user hasn't specified a filter"
   }, 
   "blacklisternotsure": {
-    "message": "不確定？直接點選下方的 「阻擋」。", 
+    "message": "Not sure? Just press 'Block it!' below.", 
     "description": "Blacklister attribute choosing page message"
   }, 
   "blacklisteroptions1": {
@@ -270,7 +266,7 @@
     "description": "Blacklister options page title"
   }, 
   "blacklistersinglematch": {
-    "message": "頁面上只有 1 個匹配項目被阻擋。", 
+    "message": "That matches 1 item on this page.", 
     "description": "Tells the user only one match was found"
   }, 
   "blacklisterthefilter": {
@@ -391,13 +387,9 @@
     "message": "該廣告是出現在影片或 Flash 遊戲等外掛程式中？", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Checking for updates (should only take a few seconds)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
-    "message": "如果您尚未安裝的話，請先安裝 Firefox", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "message": "Install Firefox if you don't have it.", 
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Install Adblock Plus for Firefox if you don't have it.", 
@@ -428,12 +420,8 @@
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
-    "message": "在 Firefox中檢查 ", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "你必須連上網路才能回報廣告", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "message": "Check in Firefox", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
@@ -448,7 +436,7 @@
     "description": "Instruction on ad report page"
   }, 
   "clickdisableotherextensions": {
-    "message": " 或者 , 按下此按鈕以便完成上述所有操作: [[ 停用所有擴充 ]]", 
+    "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
@@ -459,7 +447,7 @@
     "description": "When you have to click the ad to continue"
   }, 
   "clickupdatefilters": {
-    "message": "點選: [[更新過濾清單！]]", 
+    "message": "Click this: [[Update my filters!]]", 
     "description": "Instruction on ad report page"
   }, 
   "close": {
@@ -517,7 +505,7 @@
     "description": "List for custom filters the user subscribed to"
   }, 
   "customfilterserrormessage": {
-    "message": "以下過濾器 \n $filter$ \n 有錯誤訊息：\n $message$", 
+    "message": "The following filter:\n $filter$ \n has an error: \n $message$", 
     "description": "Error message when there is an issue with a custom filter on the 'Customize' tab of the Options page", 
     "placeholders": {
       "filter": {
@@ -535,7 +523,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "我們的研發團隊有像您索取除錯資訊(debug info) ?  [[點我]]取得這些資訊 ！", 
+    "message": "Have our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -581,7 +569,7 @@
     "description": "Message shown in toolbar button on web pages that have been whitelisted"
   }, 
   "disableforchromeandsafaristeptwo": {
-    "message": "除了 AdBlock 維持勾選以外，取消所有其他擴充的『啟用』核取方塊", 
+    "message": "Uncheck the \"Enabled\" checkbox next to every extension except for AdBlock.  Leave AdBlock enabled.", 
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "選擇 Safari 選單 &rarr; 設定 &rarr; 擴充", 
+    "message": "選擇 Safari 選單 > 設定 > 擴充", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "正在獲取清單...請稍候。", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "若要隱藏按鈕，請在上面按右鍵，從工具列中選擇刪除。 你可以在 Firefox功能表-> 自訂 中將它再次顯示。", 
@@ -791,7 +775,7 @@
     "description": "A filter list"
   }, 
   "filtereasylist_plus_arabic": {
-    "message": "Arabic", 
+    "message": "阿拉伯文", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_bulgarian": {
@@ -799,7 +783,7 @@
     "description": "A filter list"
   }, 
   "filtereasylist_plus_estonian": {
-    "message": "Estonian", 
+    "message": "愛沙尼亞文", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_finnish": {
@@ -823,7 +807,7 @@
     "description": "A filter list"
   }, 
   "filtereasylist_plus_lithuania": {
-    "message": "Lithuanian", 
+    "message": "立陶宛文", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_polish": {
@@ -847,7 +831,7 @@
     "description": "A filter list"
   }, 
   "filtericelandic": {
-    "message": "Icelandic", 
+    "message": "冰島文", 
     "description": "A filter list"
   }, 
   "filterisraeli": {
@@ -867,7 +851,7 @@
     "description": "A filter list"
   }, 
   "filterlistlink": {
-    "message": "請不要訂閱過多清單，每新增一個清單都會讓瀏覽器的速度降低！更多詳細資訊和過濾清單可在[[這裡]]找到。", 
+    "message": "Don't subscribe to more than you need -- every one slows you down a tiny bit! Credits and more lists can be found [[here]].", 
     "description": "Explanation of the filter lists"
   }, 
   "filterlistsrock": {
@@ -932,7 +916,7 @@
     "message": "檢視條件列表"
   }, 
   "filtersavewarning": {
-    "message": "小心: 如果在這裡的設定出錯，包含官方的過濾清單，可能會失效！\n參閱[[過濾規則語法教學]]來正確地添加進階黑名單、白名單規則。", 
+    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
     "description": "Warning when blacklisting manually"
   }, 
   "filterstabtitle": {
@@ -952,7 +936,7 @@
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
-    "message": "正在尋找廣告...\n\n這只需要一點時間。", 
+    "message": "Finding ads...\n\nThis'll only take a moment.", 
     "description": "When you press ctrl-shift-K the blacklister searches for ads"
   }, 
   "firefox_explanation": {
@@ -1093,7 +1077,7 @@
     "description": "Resource list page: title of a column"
   }, 
   "headertype": {
-    "message": "類型", 
+    "message": "Type", 
     "description": "Resource list page: title of a column"
   }, 
   "here": {
@@ -1125,7 +1109,7 @@
     }
   }, 
   "lang_arabic": {
-    "message": "Arabic", 
+    "message": "阿拉伯文", 
     "description": "Language name"
   }, 
   "lang_bulgarian": {
@@ -1153,7 +1137,7 @@
     "description": "Language name"
   }, 
   "lang_estonian": {
-    "message": "Estonian", 
+    "message": "愛沙尼亞文", 
     "description": "Language name"
   }, 
   "lang_finnish": {
@@ -1177,7 +1161,7 @@
     "description": "Language name"
   }, 
   "lang_icelandic": {
-    "message": "Icelandic", 
+    "message": "冰島文", 
     "description": "Language name"
   }, 
   "lang_indonesian": {
@@ -1205,7 +1189,7 @@
     "description": "Language name"
   }, 
   "lang_lithuania": {
-    "message": "Lithuanian", 
+    "message": "立陶宛文", 
     "description": "Language name"
   }, 
   "lang_polish": {
@@ -1262,10 +1246,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "latest_version": {
-    "message": "AdBlock 是最新的！", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
   }, 
   "legend": {
     "message": "Legend: ", 
@@ -1424,14 +1404,6 @@
       }
     }
   }, 
-  "oradblockforchrome": {
-    "message": "或是 Chrome 版 AdBlock", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "或是 Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
-  }, 
   "orenteraurl": {
     "message": "或輸入過濾清單網址：", 
     "description": "Link for custom subscription"
@@ -1548,7 +1520,7 @@
     }
   }, 
   "safari50_updatenotice": {
-    "message": "你正在使用舊版的 Safari，請 [[升級您的瀏覽器 ]] 以便使用在工具列按鈕中暫停 AdBlock，白名單，回報廣告等等最新的功能。", 
+    "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. [[Upgrade now]].", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }, 
   "safaributton_how_to_hide2": {
@@ -1588,7 +1560,7 @@
     "description": "Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   }, 
   "show_ads_except_for": {
-    "message": "顯示廣告 在所有網站 除了這些網域...", 
+    "message": "Show ads everywhere except for these domains...", 
     "description": "Section title for blacklisting section of Customize tab"
   }, 
   "show_block_element_menu": {
@@ -1626,17 +1598,9 @@
     "message": "第一步:找出要阻擋的目標", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "在檢查更新的時候出了點錯誤", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
-    "message": "原始碼是[[ 開源的 ]]！", 
+    "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "將AdBlock推薦給更多人使用！", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "本頁有 <strong>$number$</strong>  項被過濾", 
@@ -1734,7 +1698,7 @@
     "message": "過濾條件集名稱："
   }, 
   "supportsite": {
-    "message": "請來我們的[[技術與支援網站]]讓我們聆聽您的意見！", 
+    "message": "Let us know on our [[support site]]!", 
     "description": "Link to the support site on the Support tab of the options"
   }, 
   "tabcustomize": {
@@ -1856,10 +1820,6 @@
     "message": "已取消訂閱。", 
     "description": "Status label"
   }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
-  }, 
   "update_now": {
     "message": "立即更新"
   }, 
@@ -1920,7 +1880,7 @@
     }
   }, 
   "updatenowmessage2": {
-    "message": "AdBlock會自動取得更新。 您也可以[[現在馬上更新]]", 
+    "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text + button"
   }, 
   "updateyourlists": {
@@ -1928,7 +1888,7 @@
     "description": "Section header on the ad report page"
   }, 
   "warning_overrules_filters": {
-    "message": "警告: 你會在其他網站看見廣告!\n你會在其他網站看見廣告。", 
+    "message": "Warning: on all other sites you will see ads!\nThis overrules all other filters for those sites.", 
     "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
   }, 
   "whatmakesadblocktick": {
@@ -1940,7 +1900,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "在新版中有哪些新功能？ 請參考 [[更新日誌]]！", 
+    "message": "What's new in the latest release? See the [[changelog]]!", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {

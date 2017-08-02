@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
+ * Copyright (C) 2006-2017 eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -17,65 +17,42 @@
 
 "use strict";
 
+(function()
 {
-  var ext = {};
+  window.ext = {};
 
   let EventTarget = ext._EventTarget = function()
   {
-    this._listeners = [];
+    this._listeners = new Set();
   };
   EventTarget.prototype = {
     addListener(listener)
     {
-      if (this._listeners.indexOf(listener) == -1)
-        this._listeners.push(listener);
+      this._listeners.add(listener);
     },
     removeListener(listener)
     {
-      let idx = this._listeners.indexOf(listener);
-      if (idx != -1)
-        this._listeners.splice(idx, 1);
+      this._listeners.delete(listener);
     },
-    _dispatch()
+    _dispatch(...args)
     {
       let results = [];
-      let listeners = this._listeners.slice();
 
-      for (let listener of listeners)
-        results.push(listener.apply(null, arguments));
+      for (let listener of this._listeners)
+        results.push(listener(...args));
 
       return results;
     }
   };
-}
 
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2016 Eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-"use strict";
-
-{
   // Workaround since HTMLCollection and NodeList didn't have iterator support
   // before Chrome 51.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=401699
+  let arrayIterator = Array.prototype[Symbol.iterator];
   if (!(Symbol.iterator in HTMLCollection.prototype))
-    HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+    HTMLCollection.prototype[Symbol.iterator] = arrayIterator;
   if (!(Symbol.iterator in NodeList.prototype))
-    NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+    NodeList.prototype[Symbol.iterator] = arrayIterator;
 
   /* Message passing */
 
@@ -97,5 +74,4 @@
 
   ext.getURL = chrome.extension.getURL;
   ext.i18n = chrome.i18n;
-}
-
+}());

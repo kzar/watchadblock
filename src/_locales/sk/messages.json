@@ -51,10 +51,6 @@
     "message": "AdBlock - kliknite pre viac informácií", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Používate starú verziu AdBlocku. Prosím choďte na [[stránku s rozšíreniami]], zapnite 'Režim pre vývojárov' a kliknite na 'Aktualizovať rozšírenia'.", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock sa nespustí na týchto stránkach:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -391,13 +387,9 @@
     "message": "Objavuje sa reklama vo filme alebo pred ním, alebo v akomkoľvek inom doplnku, napr. vo Flash hre?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Kontrola aktualizácií (mala by trvať iba pár sekúnd)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Nainštalujte FireFox ak ho nemáte.", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Install Adblock Plus for Firefox if you don't have it.", 
@@ -428,12 +420,8 @@
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
-    "message": "Skontrolujte vo Firefoxe ", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "Ak chcete nahlásiť reklamu, musíte byť pripojený na internet.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "message": "Skontrolujte vo Firefoxe", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
@@ -531,7 +519,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Povoliť AdBlock zbierať anonymné údaje o používaní filtrov", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -581,7 +569,7 @@
     "description": "Message shown in toolbar button on web pages that have been whitelisted"
   }, 
   "disableforchromeandsafaristeptwo": {
-    "message": "Odčiarknite všetky 'Povolené' políčka okrem AdBlocku.  Nechajte AdBlock zapnutý.", 
+    "message": "Odčiarknite všetky 'Povolené' políčka okrem AdBlocku. Nechajte AdBlock zapnutý.", 
     "description": "Step 2 for disabling Chrome and Safari extensions"
   }, 
   "disableforchromestepone": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Načítavam... prosím čakajte.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "Pre schovanie tlačidla kliknite naňho pravým tlačítkom myši a potom zvoľte Odstrániť z panela nástrojov. Ak chcete znova tlačidlo zobraziť Kliknutím na Firefox menu -> Prispôsobiť.", 
@@ -1257,10 +1241,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "AdBlock je aktuálny!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1314,7 +1294,7 @@
     "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
-    "message": "Váš počítač môže byť napadnutý malwarom.  Kliknite [[tu]] pre viac informácií.", 
+    "message": "Váš počítač môže byť napadnutý malwarom. Kliknite [[tu]] pre viac informácií.", 
     "description": "On the ad report page, the ads the user is seeing might be caused by malware/adware"
   }, 
   "manualexcludefilteredit": {
@@ -1417,14 +1397,6 @@
         "example": "2.0.9"
       }
     }
-  }, 
-  "oradblockforchrome": {
-    "message": "alebo AdBlock pre Chrome", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "alebo Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
   }, 
   "orenteraurl": {
     "message": "Alebo zadajte URL:", 
@@ -1620,17 +1592,9 @@
     "message": "Krok 1: Určte, čo sa bude blokovať", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Niečo sa pokazilo pri kontrole aktualizácií.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "Zdrojový kód je [[voľne k dispozícii]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Zdieľajte nás!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> na tejto stránke", 
@@ -1816,11 +1780,11 @@
     "description": "A resource type"
   }, 
   "typesub_frame": {
-    "message": "sub-dokument", 
+    "message": "frame", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
-    "message": "sub-dokument", 
+    "message": "frame", 
     "description": "A resource type"
   }, 
   "typeunknown": {
@@ -1849,10 +1813,6 @@
   "unsubscribedlabel": {
     "message": "Odhlásené.", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Aktualizovať teraz"
@@ -1934,7 +1894,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "Čo je nové v najnovšej verzii? Pozri [[ zoznam zmien]]!", 
+    "message": "Čo je nové v najnovšej verzii? Pozri [[zoznam zmien]]!", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {

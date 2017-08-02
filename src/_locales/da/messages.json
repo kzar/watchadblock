@@ -51,10 +51,6 @@
     "message": "AdBlock - klik for at se mere", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "Du bruger en gammel version af AdBlock. Gå venligst til [[siden for udvidelser]], aktiver 'Udviklertilstand' og klik på 'Opdater udvidelser nu'", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock vil ikke køre på nogen sider der passer med:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -85,7 +81,7 @@
     "message": "Tilføj filter"
   }, 
   "add_filters_msg": {
-    "message": "Tilføj filtre"
+    "message": "Tilføj filter/filtre?"
   }, 
   "add_your_own_filters": {
     "message": "Tilføj dine egne filtre"
@@ -95,7 +91,7 @@
     "description": "Shows the user the debug information that will be sent along with their report."
   }, 
   "adreport_email": {
-    "message": "What's your email address?", 
+    "message": "Hvad er din e-mail-adresse?", 
     "description": "Label for a textbox where the user enters their email address to submit a bug or ad report."
   }, 
   "adreport_email_privacy": {
@@ -123,7 +119,7 @@
     "description": "Error message shown when the user doesn't attach a screenshot to an ad report."
   }, 
   "adreport_name": {
-    "message": "What's your name?", 
+    "message": "Hvad er dit navn?", 
     "description": "Label for a textbox where the user enters their name (or nickname) to submit a bug or ad report."
   }, 
   "adreport_response_file_name": {
@@ -147,7 +143,7 @@
     "description": "Shown when a ticket has been sumbitted to AdBlock's support site successfully."
   }, 
   "adreport_screen_cap_upload": {
-    "message": "Attach a screenshot:", 
+    "message": "Vedhæft et skærmbillede:", 
     "description": "Label next to a file upload button."
   }, 
   "adreport_server_response_error__manual_msg_step1": {
@@ -391,13 +387,9 @@
     "message": "Vises reklamen i eller før film, eller et andet plugin, såsom et Flash-spil?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Tjekke om der er nye opdateringer (dette bør ikke tage lang tid)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
-    "message": "Installér Firefox hvis du ikke har det.", 
-    "description": "instruction for how to check Firefox/Chrome for a reported ad"
+    "message": "Install Firefox if you don't have it.", 
+    "description": "instruction for how to check Firefox for a reported ad"
   }, 
   "checkinfirefox_2": {
     "message": "Install Adblock Plus for Firefox if you don't have it.", 
@@ -428,15 +420,11 @@
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
-    "message": "Tjek i Firefox ", 
-    "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
-  }, 
-  "checkinternetconnection": {
-    "message": "For at rapportere annoncer, skal du have internetforbindelse.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
+    "message": "Check in Firefox", 
+    "description": "Tell a user to see if a reported ad also appears in Firefox"
   }, 
   "chromebutton_how_to_hide2": {
-    "message": "Right-click the AdBlock button and select 'Hide in Chrome Menu'. To show it, click the Chrome menu, right-click the AdBlock button, and select 'Keep in Toolbar'.", 
+    "message": "Højreklik på knappen AdBlock og vælg \"Skjul i Chrome-menuen\". Hvis du vil vise knappen igen, så klik på Chrome-menuen, højreklik på knappen AdBlock og vælg \"Vis på værktøjslinjen\".", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Hide Button' should match the text that Chrome displays when you right click a toolbar button."
   }, 
   "cleanuplist2": {
@@ -555,7 +543,7 @@
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
-    "message": "AdBlock. The #1 ad blocker with over 200 million downloads. Blocks ads all over the web.", 
+    "message": "AdBlock. Den førende reklameblokerer med over 200 millioner downloads. Blokerer reklamer over hele internettet.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "disableaa": {
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Klik på Safari-menuen &rarr; Indstillinger &rarr; Udvidelser.", 
+    "message": "Klik på Safari-menuen > Indstillinger > Udvidelser.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -648,10 +636,6 @@
     "message": "Henter... vent venligst.", 
     "description": "Status label"
   }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
-  }, 
   "ff_button_how_to_hide": {
     "message": "To hide the button, right click it and choose Remove from Toolbar.  You can show it again under Firefox menu -> Customize.", 
     "description": "Message explaining how to hide the AdBlock toolbar button. 'Remove from Toolbar' should match the text that Firefox displays when you right click a toolbar button, and 'Customize' should match the text that shows when you click the button on the Firefox toolbar with three lines."
@@ -681,7 +665,7 @@
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_chinese": {
-    "message": "Chinese + EasyList", 
+    "message": "kinesisk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_czech": {
@@ -689,27 +673,27 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_dutch": {
-    "message": "Dutch + EasyList", 
+    "message": "hollandsk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_arabic": {
-    "message": "Arabic + EasyList", 
+    "message": "arabisk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_arabic_plus_french": {
-    "message": "Arabic + French + EasyList", 
+    "message": "arabisk + fransk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_bulgarian": {
-    "message": "Bulgarian + EasyList", 
+    "message": "bulgarsk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_french": {
-    "message": "French + EasyList", 
+    "message": "fransk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_german": {
-    "message": "German + EasyList", 
+    "message": "tysk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_indonesian": {
@@ -717,19 +701,19 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_lithuania": {
-    "message": "Lithuanian + EasyList", 
+    "message": "litauisk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_romanian": {
-    "message": "Romanian + EasyList", 
+    "message": "rumænsk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_israeli": {
-    "message": "Hebrew + EasyList", 
+    "message": "hebraisk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_italian": {
-    "message": "Italian + EasyList", 
+    "message": "italiensk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_latvian": {
@@ -1109,7 +1093,7 @@
     "description": "Toolbar button menu entry to hide the AdBlock button"
   }, 
   "how": {
-    "message": "How?", 
+    "message": "Hvordan?", 
     "description": "Text of a link pointing to instructions on how to do something"
   }, 
   "invalidListUrl": {
@@ -1125,7 +1109,7 @@
     }
   }, 
   "lang_arabic": {
-    "message": "Arabic", 
+    "message": "arabisk", 
     "description": "Language name"
   }, 
   "lang_bulgarian": {
@@ -1153,7 +1137,7 @@
     "description": "Language name"
   }, 
   "lang_estonian": {
-    "message": "Estonian", 
+    "message": "estisk", 
     "description": "Language name"
   }, 
   "lang_finnish": {
@@ -1177,7 +1161,7 @@
     "description": "Language name"
   }, 
   "lang_icelandic": {
-    "message": "Icelandic", 
+    "message": "islandsk", 
     "description": "Language name"
   }, 
   "lang_indonesian": {
@@ -1205,7 +1189,7 @@
     "description": "Language name"
   }, 
   "lang_lithuania": {
-    "message": "Lithuanian", 
+    "message": "litauisk", 
     "description": "Language name"
   }, 
   "lang_polish": {
@@ -1263,10 +1247,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "AdBlock er ajour!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1320,7 +1300,7 @@
     "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
-    "message": "Din computer kan være inficeret med malware.  Klik [[her]] for mere information.", 
+    "message": "Din computer kan være inficeret med malware. Klik [[her]] for mere information.", 
     "description": "On the ad report page, the ads the user is seeing might be caused by malware/adware"
   }, 
   "manualexcludefilteredit": {
@@ -1380,16 +1360,16 @@
     "message": "Skjul målrettede beskeder ?"
   }, 
   "notification_configure": {
-    "message": "Konfigurer underretningsindstillinger"
+    "message": "Konfigurér notifikationsindstillinger"
   }, 
   "notification_open_all": {
-    "message": "Åbn alle links i denne underretning"
+    "message": "Åbn alle links i denne notifikation"
   }, 
   "notification_with_buttons": {
-    "message": "Klik på 'OK' for åbne alle links i denne meddelelse."
+    "message": "Klik 'OK' for at åbne alle links i denne notifikation."
   }, 
   "notification_without_buttons": {
-    "message": "Klik på meddelelsen for at åbne alle genveje i den."
+    "message": "Klik på notifikationen for at åbne alle dens genveje."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "One moment while we gather all of your subscriptions", 
@@ -1423,14 +1403,6 @@
         "example": "2.0.9"
       }
     }
-  }, 
-  "oradblockforchrome": {
-    "message": "eller AdBlock til Chrome", 
-    "description": "Used for placeholder in checkinfirefox_2 string"
-  }, 
-  "orchrome": {
-    "message": "eller Chrome", 
-    "description": "Used for placeholder in checkinfirefoxtitle and checkinfirefox_1 strings"
   }, 
   "orenteraurl": {
     "message": "Eller indtast et URL:", 
@@ -1626,17 +1598,9 @@
     "message": "Trin 1: Find ud af hvad der skal blokeres", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Noget gik galt, da vi forsøgte at tjekke for nye opdateringer.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
-    "message": "Kildekoden er [[frit tilgængelig]]!", 
+    "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Hjælp med at sprede ordet!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> på denne side", 
@@ -1674,7 +1638,7 @@
     }
   }, 
   "stats_share_title": {
-    "message": "Del dette tal"
+    "message": "Del dette antal"
   }, 
   "stats_show_iconnumber": {
     "message": "Vis antal i ikonet"
@@ -1734,7 +1698,7 @@
     "message": "Abonnementstitel:"
   }, 
   "supportsite": {
-    "message": "Lad os få det at vide på vores [[supportside]]!", 
+    "message": "Let us know on our [[support site]]!", 
     "description": "Link to the support site on the Support tab of the options"
   }, 
   "tabcustomize": {
@@ -1762,7 +1726,7 @@
     "description": "A tab on the options page"
   }, 
   "thirdparty": {
-    "message": "Third-party", 
+    "message": "Tredjepart", 
     "description": "Resource list page: column title telling if the resource originates from a different domain"
   }, 
   "topframe": {
@@ -1782,7 +1746,7 @@
     "description": "A resource type"
   }, 
   "typemain_frame": {
-    "message": "side", 
+    "message": "page", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1846,7 +1810,7 @@
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard"
   }, 
   "unexpected_filter_list_header": {
-    "message": "Filterliste-toptekster er ikke tilladt her"
+    "message": "Filterlisteoverskrifter er ikke tilladt hér"
   }, 
   "unpause_adblock": {
     "message": "Fortsæt AdBlock", 
@@ -1855,10 +1819,6 @@
   "unsubscribedlabel": {
     "message": "Fjern abonnement.", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Opdater nu"
@@ -1940,7 +1900,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "Hvad er der af nye ting i den seneste udgivelse? Tjek [[ændringsloggen]] ud.", 
+    "message": "What's new in the latest release? See the [[changelog]]!", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {

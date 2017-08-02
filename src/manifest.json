@@ -6,7 +6,6 @@
       "ext/common.js", 
       "ext/background.js", 
       "lib/compat.js", 
-      "lib/info.js", 
       "lib/publicSuffixList.js", 
       "lib/adblockplus.js", 
       "messageResponder.js", 
@@ -98,8 +97,7 @@
   }, 
   "permissions": [
     "tabs", 
-    "http://*/*", 
-    "https://*/*", 
+    "<all_urls>", 
     "contextMenus", 
     "webRequest", 
     "webRequestBlocking", 
@@ -114,7 +112,7 @@
   "storage": {
     "managed_schema": "managed-storage-schema.json"
   }, 
-  "version": "3.14.0", 
+  "version": "3.15.0", 
   "web_accessible_resources": [
     "adblock-jquery-ui.custom.css", 
     "adblock-jquery-ui.override-page.css", 

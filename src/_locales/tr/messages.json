@@ -51,10 +51,6 @@
     "message": "AdBlock - ayrıntılar için tıklayın", 
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
   }, 
-  "adblock_outdated_chrome": {
-    "message": "AdBlock'un eski bir sürümünü kullanıyorsunuz. Lütfen [[uzantılar sayfası]], 'Geliştirici modu' ve 'Uzantıları şimdi güncelle' seçeneklerini kullanarak güncelleme yapın.", 
-    "description": "Ad report page instructions to update AdBlock in Chrome. The link will point to 'chrome://chrome/extensions/'"
-  }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock şu durumlarla eşleşen sayfalarda çalışmayacak:", 
     "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
@@ -391,10 +387,6 @@
     "message": "Reklam bir video başlamadan önce, video oynatılırken ya da Flash oyunu gibi bir eklentide mi görünüyor?", 
     "description": "Text of the final ad report question"
   }, 
-  "checkforupdates": {
-    "message": "Güncelleştirmeler denetleniyor(sadece birkaç saniye sürer)...", 
-    "description": "Displayed when AdBlock is checking the newest available version"
-  }, 
   "checkinfirefox_1": {
     "message": "Eğer yüklü değilse, Firefox yükleyin.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -430,10 +422,6 @@
   "checkinfirefoxtitle": {
     "message": "Firefox  için reklamın görünüp görünmediğini kontrol edin.", 
     "description": "Tell a user to see if a reported ad also appears in Firefox"
-  }, 
-  "checkinternetconnection": {
-    "message": "Bir reklam bildirmek için internete bağlı olmanız gerekir.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs while reporting an ad on adreport page"
   }, 
   "chromebutton_how_to_hide2": {
     "message": "AdBlock butonuna tıklayarak 'Chrome menüsünde gizle' seçeneğini seçin. Tekrar görmek için Chrome menüsüne tıklayın ve AdBlock butonuna sağ tıklayarak 'Araç çubuğunda göster'i seçin.", 
@@ -531,7 +519,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "AdBlock'un anonim olarak filtre listesi kullanımı ve verilerini toplamasına izin ver", 
+    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -589,7 +577,7 @@
     "description": "Step 1 for disabling Chrome extensions"
   }, 
   "disableforsafaristepone": {
-    "message": "Safari menüsünü kullanarak; Tercihler &rarr; Uzantılar'a gidin.", 
+    "message": "Click the Safari menu > Preferences > Extensions.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -647,10 +635,6 @@
   "fetchinglabel": {
     "message": "Yükleniyor... lütfen bekleyin.", 
     "description": "Status label"
-  }, 
-  "ff_adblock_outdated": {
-    "message": "You are using an old version of AdBlock. Please click the Firefox menu button and choose Add-ons. Then on the Add-ons page, click the gear icon (Tools for all add-ons), and choose 'Check for Updates'.", 
-    "description": "On the Options > Support page, shows when there is an update available for AdBlock. 'Add-ons', 'Tools for all add-ons' and 'Check for Updates' should match the strings displayed by Firefox."
   }, 
   "ff_button_how_to_hide": {
     "message": "Düğmeyi gizlemek için sağ tıklatın ve araç çubuğu'ndan Kaldır'ı seçin.  Firefox menüsü -> Özelleştir altında bu  butonu yeniden gösterebilirsiniz.", 
@@ -1263,10 +1247,6 @@
       }
     }
   }, 
-  "latest_version": {
-    "message": "AdBlock güncel!", 
-    "description": "On the Options > Support page, shows when there are no updates available for AdBlock"
-  }, 
   "legend": {
     "message": "Açıklama: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
@@ -1618,17 +1598,9 @@
     "message": "İlk Adım: Nelerin engelleneceğini belirle", 
     "description": "Blacklister slider page title"
   }, 
-  "somethingwentwrong": {
-    "message": "Güncelleştirmeleri denetlerken bir şeyler ters gitti.", 
-    "description": "Displayed when AdBlock is checking the newest available version and an error occurs"
-  }, 
   "sourcecode": {
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
-  }, 
-  "spread_the_word": {
-    "message": "Lütfen AdBlock'u daha fazla kişiye ulaştırmama yardım edin!", 
-    "description": "Text of a share link"
   }, 
   "stats_label_page": {
     "message": "Bu sayfada <strong>$number$</strong>", 
@@ -1847,10 +1819,6 @@
   "unsubscribedlabel": {
     "message": "Abonelik kaldırıldı.", 
     "description": "Status label"
-  }, 
-  "update_available": {
-    "message": "There's an update for AdBlock! Go [[here]] to update.\nNote: If you want to receive updates automatically, just click on Safari (in the menu bar) > Preferences > Extensions\nand check option 'Automatically update extensions from the Safari Extensions Gallery'.", 
-    "description": "On the Options > Support page, shown when there is an update available for AdBlock on Safari"
   }, 
   "update_now": {
     "message": "Şimdi güncelle"
