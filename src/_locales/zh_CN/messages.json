@@ -179,11 +179,15 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "all_youtube_channels_complete": {
-    "message": "所有您的YouTube订阅频道已经加入白名单", 
+    "message": "所有您的YouTube™订阅频道已经加入白名单", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "允许所有订阅的YouTube™频道播放广告", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "允许将特定的YouTube频道加入白名单 (需要重启浏览器)", 
+    "message": "允许将特定的YouTube™频道加入白名单 (需要重启浏览器)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -281,12 +285,24 @@
     "message": "警告：未指定过滤规则！", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "屏蔽YouTube™上的广告", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "屏蔽此页面上的广告", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "屏蔽在YouTube™上的干扰", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "拦截元素"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "在YouTube™上保护我的隐私", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "屏蔽这个广告", 
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "在控制台日志中显示调试信息（这将会降低AdBlock的效能）", 
+    "message": "在控制台日志中显示调试信息（这将会降低AdBlock on YouTube™的效能）", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock。 冠军广告屏蔽软件，下载量超过2亿次。屏蔽整个互联网上的广告。", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "唯一的YouTube™广告拦截插件；由拥有6000万用户，最受欢迎的Chrome 扩展AdBlock制作", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "检查可接受广告规则:", 
@@ -558,11 +578,19 @@
     "message": "抱歉, 因为您的一个过滤列表，AdBlock在这个页面被禁用了", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "对不起， AdBlock on YouTube™因为您的一项选项设置被关闭", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "对当前网站<strong>禁用</strong>"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock 将不过滤以下域名。您可以通过点击地址栏的 AdBlock 图标进行添加，也可在下面输入域名（非URL）然后点击“添加过滤规则”。"
+  }, 
+  "disabled_on_this_channel": {
+    "message": "您允许此频道播放广告", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock在这个页面上被禁用。", 
@@ -575,6 +603,14 @@
   "disableforchromestepone": {
     "message": "打开[[扩展程序]]页面。", 
     "description": "Step 1 for disabling Chrome extensions"
+  }, 
+  "disableforedgestepone": {
+    "message": "单击更多菜单（...）并选择扩展。", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "除了AdBlock，依次点击其他所有扩展右侧的齿轮图标，再单击下方的开关使其关闭。", 
+    "description": "Step 2 for disabling Edge extensions"
   }, 
   "disableforsafaristepone": {
     "message": "单击Safari菜单 > 选项 > 扩展程序。", 
@@ -592,6 +628,10 @@
     "message": "喜欢AdBlock吗？请考虑捐赠！", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "喜欢AdBlock on YouTube™吗？请考虑捐赠！", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "不要在这个网域的页面上运行", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "拦截元素"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "以纯文本编辑过滤规则"
   }, 
   "enable_adblock": {
     "message": "在此页上启用AdBlock", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "屏蔽此频道的广告", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "请只启用您需要的过滤清单，启用过多会使浏览器变慢。"
@@ -919,6 +971,14 @@
     "message": "请小心: 如果您在这里设置出错，许多其它过滤规则，包括官方的过滤规则，可能会失效！\n参阅[[过滤规则语法教程]]来学习正确地添加高级黑名单、白名单规则。", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "请小心: 如果您在这里设置出错，AdBlock on YouTube™可能停止工作。", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "请参阅[[过滤规则语法教程]]来学习正确地添加白名单规则。", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "订阅过滤列表", 
     "description": "Title of the filter list tab"
@@ -1079,6 +1139,10 @@
   "headertype": {
     "message": "类型", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "这里", 
@@ -1330,6 +1394,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock on YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "AdBlock 开发版"
   }, 
@@ -1394,6 +1462,10 @@
     "message": "AdBlock选项", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "AdBlock on YouTube™ 选项", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "版本 $version$", 
     "description": "Version number", 
@@ -1441,6 +1513,10 @@
   "pause_adblock": {
     "message": "暂停AdBlock", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "暂停广告拦截", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "隐私政策", 
@@ -1576,7 +1652,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "在AdBlock菜单中显示被屏蔽的广告数", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "在图标上显示被屏蔽的广告数", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "在菜单中显示被屏蔽的广告数", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "显示资源列表", 
@@ -1816,6 +1900,14 @@
     "message": "重新启用AdBlock", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "继续广告拦截", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "已取消订阅。", 
     "description": "Status label"
@@ -1904,7 +1996,7 @@
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
-    "message": "将所有订阅的YouTube频道加入白名单", 
+    "message": "将所有订阅的YouTube™频道加入白名单", 
     "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
   }, 
   "whitelist_youtube_channel": {
@@ -1916,6 +2008,10 @@
         "example": "Name of channel"
       }
     }
+  }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "允许以下YouTube™频道播放广告：", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
   }, 
   "whitelisted_domains": {
     "message": "白名单"
@@ -1947,5 +2043,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "使用越多的过滤列表，AdBlock 越慢。过多的过滤列表甚至会使浏览器在部分网站崩溃。点击“确认”继续订阅此列表。", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "AdBlock on YouTube™ 更新", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

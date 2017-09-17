@@ -182,6 +182,10 @@
     "message": "すべてのチャンネル登録しているYouTubeチャンネルがホワイトリストに登録されました", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Allow ads on all subscribed YouTube™ channels", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
     "message": "特定のYouTubeチャンネルのホワイトリストを許可する（ブラウザの再起動が必要です）", 
     "description": "Checkbox on the 'General' tab of the Options page"
@@ -281,12 +285,24 @@
     "message": "注意： フィルターが指定されていません！", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "YouTube™上の広告を削除する", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "このページにある広告をブロック", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "YouTube™上のおすすめ表示を削除する", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "要素をブロック"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "YouTube™上のプライバシーを保護する", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "この広告をブロック", 
@@ -519,7 +535,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
+    "message": "AdBlockが匿名フィルタリストの使用データとフィルタリストによってブロックされたコンテンツに関する情報の収集を許可する", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "デバック情報を更新履歴に表示(AdBlockの動作が重くなります)", 
+    "message": "デバッグ情報をコンソールログに表示する (拡張機能の動作速度が低下します)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock。 2億以上のダウンロード数を誇る No.1 の広告ブロッカー。 Web上のあらゆる広告をブロックします。", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "AdBlockによって作られた、唯一のYouTube™広告ブロッカー。世界中で6000万人のユーザーを抱える最も人気のあるChrome拡張機能です", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Acceptable Adsフィルタの確認：", 
@@ -558,11 +578,19 @@
     "message": "申し訳ありませんが、あなたが設定したフィルターリストによってAdBlockがこのページで無効となっています。", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "申し訳ありませんが、このページでは設定によってAdBlock on YouTube™が無効になっています。", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "このサイトで<strong>無効</strong>"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock を以下のドメインで無効にします。アドレスバーの AdBlock アイコン、または下の欄にドメイン（URL ではない）を入力し「ドメインを追加」ボタンで追加できます。"
+  }, 
+  "disabled_on_this_channel": {
+    "message": "You allowed ads on this channel.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlockはこのページでは無効になっています。", 
@@ -576,8 +604,16 @@
     "message": "[[拡張機能ページ]] を開きます。", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
+  "disableforedgestepone": {
+    "message": "詳細メニュー (...) をクリックし、拡張機能を選択します。", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "AdBlockを除くすべての拡張機能を、それぞれ歯車アイコンをクリックしてオンになっているトグルボタンをクリックしてオフに変更します。", 
+    "description": "Step 2 for disabling Edge extensions"
+  }, 
   "disableforsafaristepone": {
-    "message": "Click the Safari menu > Preferences > Extensions.", 
+    "message": "Safariメニュー > 環境設定 > 拡張機能 をクリックします。", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -592,6 +628,10 @@
     "message": "AdBlockをお気に召しましたか？ ぜひ寄付をお願いします！", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "AdBlock on YouTube™をお気に召しましたか？ぜひ寄付をお願いします！", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "このドメイン上のページで稼動させない", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "要素をブロック"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "フィルタを編集する"
   }, 
   "enable_adblock": {
     "message": "このページで AdBlock を有効にする", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Block ads on this channel", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "本当に必要なフィルタのみを有効にしてください。多過ぎるフィルタはブラウザを重くします。"
@@ -919,6 +971,14 @@
     "message": "警告： ここで作成したフィルタに問題がある場合、公式フィルタを含む他のフィルタが破損する恐れがあります。\n高度なブラックリストおよびホワイトリストを追加する方法については [[フィルタ構文チュートリアル]] をご覧ください。", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "注意: ここで誤った設定をした場合、AdBlock on YouTube™が正常に動作しなくなる可能性があります。", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "ホワイトリストフィルタを追加する方法については、[[フィルタ構文チュートリアル]] をお読みください。", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "フィルターリストの登録", 
     "description": "Title of the filter list tab"
@@ -1073,6 +1133,10 @@
   "headertype": {
     "message": "タイプ", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "こちら", 
@@ -1324,6 +1388,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock on YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "AdBlock 開発版"
   }, 
@@ -1388,6 +1456,10 @@
     "message": "AdBlock設定", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "AdBlock on YouTube™ 設定", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "バージョン $version$", 
     "description": "Version number", 
@@ -1435,6 +1507,10 @@
   "pause_adblock": {
     "message": "AdBlockを一時停止", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "広告ブロックを一時停止", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "プライバシーポリシー", 
@@ -1570,7 +1646,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "AdBlockメニューにブロックされた広告の数を表示する", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "ブロックされた広告の数をボタンに表示する", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "ブロックされた広告の数をメニューに表示する", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "すべてのリクエストを表示する", 
@@ -1810,6 +1894,14 @@
     "message": "AdBlock の一時停止を解除", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "広告ブロックの一時停止を解除", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "無効にしました。", 
     "description": "Status label"
@@ -1911,6 +2003,10 @@
       }
     }
   }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Allow ads on YouTube™ channel:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
+  }, 
   "whitelisted_domains": {
     "message": "ホワイトリスト設定されたドメイン"
   }, 
@@ -1941,5 +2037,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "フィルターリストの使用頻度が高くなるにつれ、AdBlockの動作が重くなります。たくさんのフィルターリストはブラウザがクラッシュする原因となりえます。それでも追加する場合はOKを押してください。", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "AdBlock on YouTube™のアップデート", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

@@ -182,6 +182,10 @@
     "message": "Tất cả những kênh YouTube bạn đăng ký đã được đưa vào danh sách trắng", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Cho phép quảng cáo trên tất cả các kênh YouTube™ đã đăng ký", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
     "message": "Cho phép một số kênh YouTube cụ thể vào danh sách trắng (yêu cầu khởi động lại trình duyệt)", 
     "description": "Checkbox on the 'General' tab of the Options page"
@@ -281,12 +285,24 @@
     "message": "Cảnh báo: Không có bộ lọc nào được chỉ định!", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "Loại bỏ quảng cáo trên YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "Chặn quảng cáo trên trang này", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "Remove annoyances on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "Chặn quảng cáo"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "Bảo vệ sự riêng tư của tôi trên YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Chặn quảng cáo này", 
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "Hiển thị báo cáo gỡ lỗi trong Console Log (sẽ làm AdBlock chậm đi)", 
+    "message": "Show debug statements in Console Log (which slows down the extension)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock. Trình chặn quảng cáo số 1 hiện nay với trên 200 triệu lượt tải về. Giúp bạn chặn tất cả quảng cáo trên internet.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "Trình chặn quảng cáo duy nhất cho YouTube™ bởi AdBlock, tiện ích phổ biến nhất trên Chrome với 60 triệu người dùng trên toàn cầu", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Kiểm tra những bộ lọc Quảng Cáo Chấp Nhận Được:", 
@@ -558,11 +578,19 @@
     "message": "Xin lỗi, AdBlock đã bị tắt trên trang này bởi một trong số các bộ lọc của bạn.", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "<strong>Đã loại bỏ</strong> trên trang này"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock không hoạt động ở các tên miền dưới đây. Bạn có thể thêm một tên miền bằng cách bấm vào biểu tượng AdBlock nằm trên thanh địa chỉ, hoặc gõ tên miền (không phải là URL) trong khung bên dưới và ấn nút \"Thêm tên miền\"."
+  }, 
+  "disabled_on_this_channel": {
+    "message": "Bạn đã cho phép hiển thị quảng cáo trên kênh này.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock đã bị tắt trên trang này.", 
@@ -576,8 +604,16 @@
     "message": "Mở [[trang tiện ích]].", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
+  "disableforedgestepone": {
+    "message": "Click the More menu (...) and select Extensions.", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "For each extension except for AdBlock, click the gear icon and click the On toggle button to change it to Off.", 
+    "description": "Step 2 for disabling Edge extensions"
+  }, 
   "disableforsafaristepone": {
-    "message": "Nhấp vào menu Safari chọn > Preferences > Extensions.", 
+    "message": "Nhấp vào menu Safari > Preferences > Extensions.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -592,6 +628,10 @@
     "message": "Bạn có thích AdBlock? Hãy cân nhắc việc quyên góp!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "Love this? Consider donating!", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Không chạy trên trang của những tên miền này", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "Chặn phần từ"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "Chỉnh sửa bộ lọc như văn bản"
   }, 
   "enable_adblock": {
     "message": "Bật AdBlock trên trang này", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Chặn quảng cáo trên kênh này", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "Chỉ cho phép danh sách bộ lọc mà bạn cần. Quá nhiều bộ lọc có thể làm trình duyệt của bạn không đáp ứng kịp."
@@ -919,6 +971,14 @@
     "message": "Hãy cẩn thận: Nếu bạn chỉnh sửa không chính xác, rất nhiều bộ lọc khác bao gồm cả bộ lọc chính thức cũng có thể bị lỗi!\nBạn có thể đọc thêm về [[cú pháp bộ lọc]] để biết cách chỉnh sửa bộ lọc.", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "Be careful: if you make a mistake here, AdBlock on YouTube™ could stop working properly.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "Read the [[filter syntax tutorial]] to learn how to add whitelist filters.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "Đăng ký bộ lọc", 
     "description": "Title of the filter list tab"
@@ -1079,6 +1139,10 @@
   "headertype": {
     "message": "Loại", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "đây", 
@@ -1330,6 +1394,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock cho YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "AdBlock bản phát triển"
   }, 
@@ -1394,6 +1462,10 @@
     "message": "Tùy chọn AdBlock", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "Tùy chỉnh AdBlock cho YouTube™", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "Phiên bản $version$", 
     "description": "Version number", 
@@ -1441,6 +1513,10 @@
   "pause_adblock": {
     "message": "Tạm dừng AdBlock", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "Dừng chặn quảng cáo", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "Chính sách bảo mật", 
@@ -1576,7 +1652,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "Hiển thị số quảng cáo bị chặn trên menu AdBlock", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "Hiển thị số quảng cáo bị chặn trên nút", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "Hiển thị số quảng cáo bị chặn trên menu", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Hiển thị tất cả yêu cầu", 
@@ -1816,6 +1900,14 @@
     "message": "Hủy tạm dừng AdBlock", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "Tiếp tục chặn quảng cáo", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "Đã hủy đăng ký.", 
     "description": "Status label"
@@ -1917,6 +2009,10 @@
       }
     }
   }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Cho phép quảng cáo trên kênh YouTube™:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
+  }, 
   "whitelisted_domains": {
     "message": "Danh sách bỏ qua"
   }, 
@@ -1947,5 +2043,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Bạn sử dụng càng nhiều bộ lọc thì AdBlock chạy càng chậm. Thậm chí một số website còn bị treo nếu bạn sử dụng quá nhiều bộ lọc. Nếu bạn vẫn muốn đăng ký bộ lọc này, nhấp OK.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "Cập nhật về AdBlock on YouTube™", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

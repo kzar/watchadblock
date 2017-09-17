@@ -179,11 +179,15 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "all_youtube_channels_complete": {
-    "message": "All of your YouTube channel subscriptions have been whitelisted", 
+    "message": "All of your YouTube™ channel subscriptions have been whitelisted", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Allow ads on all subscribed YouTube™ channels", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Allow whitelisting of specific YouTube channels (requires restarting your browser)", 
+    "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -281,12 +285,24 @@
     "message": "Atenție: nici un filtru specificat!", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "Remove ads on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "Blocheză o reclamă de pe această pagină", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "Remove annoyances on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "Blochează elementul"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "Protect my privacy on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Blochează acest anunț", 
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "Arată declarații de depanare în Consolă (încetinește AdBlock)", 
+    "message": "Show debug statements in Console Log (which slows down the extension)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock. Nr.1 în blocarea reclamelor cu peste 200 de milioane de descărcări. Blochează toate reclamele în tot internetul.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Check the Acceptable Ads filters:", 
@@ -558,11 +578,19 @@
     "message": "Scuze, AdBlock este dezactivat pe această pagină din cauza unui filtru.", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "<strong>Dezactivat</strong> pe acest site"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock este dezactivat pentru domeniile listate mai jos. Poți adăuga un domeniu folosind iconița AdBlock in bara de adrese sau scriind domeniul (nu URL-ul) in spațiul de mai jos și făcând clic pe butonul \"Adaugă domeniu\"."
+  }, 
+  "disabled_on_this_channel": {
+    "message": "You allowed ads on this channel.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock este dezactivat pe această pagină.", 
@@ -575,6 +603,14 @@
   "disableforchromestepone": {
     "message": "Open the [[extensions page]].", 
     "description": "Step 1 for disabling Chrome extensions"
+  }, 
+  "disableforedgestepone": {
+    "message": "Click the More menu (...) and select Extensions.", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "For each extension except for AdBlock, click the gear icon and click the On toggle button to change it to Off.", 
+    "description": "Step 2 for disabling Edge extensions"
   }, 
   "disableforsafaristepone": {
     "message": "Click pe meniul Safari > Preferințe > Extensii.", 
@@ -592,6 +628,10 @@
     "message": "Love AdBlock? Consider donating!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "Love this? Consider donating!", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Nu rula pe paginiile din acest domeniu", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "Blochează elementul"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "Editează filtre în mod text"
   }, 
   "enable_adblock": {
     "message": "Activează AdBlock pe această pagină", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Block ads on this channel", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "Folosiţi doar listele de filtre de care aveţi nevoie. Prea multe vor afecta browser-ul."
@@ -674,10 +726,6 @@
   }, 
   "filter_dutch": {
     "message": "Dutch + EasyList", 
-    "description": "A filter list combined with EasyList"
-  }, 
-  "filter_easylist_plus_arabic": {
-    "message": "Arabic + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_arabic_plus_french": {
@@ -919,6 +967,14 @@
     "message": "Ai girjă: dacă greșești aici, toate filtrele, inclusiv cele oficiale, pot funcționa greșit! \n\nCitește [[sintaxa filtrelor]] pentru a învăța cum să adaugi filtre avansate.", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "Be careful: if you make a mistake here, AdBlock on YouTube™ could stop working properly.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "Read the [[filter syntax tutorial]] to learn how to add whitelist filters.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "Adaugă alte filtre", 
     "description": "Title of the filter list tab"
@@ -1073,6 +1129,10 @@
   "headertype": {
     "message": "Tip", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "aici", 
@@ -1324,6 +1384,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock on YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "Versiune de test AdBlock"
   }, 
@@ -1388,6 +1452,10 @@
     "message": "Opțiuni AdBlock", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "AdBlock on YouTube™ Options", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "Versiunea $version$", 
     "description": "Version number", 
@@ -1435,6 +1503,10 @@
   "pause_adblock": {
     "message": "Pauzează AdBlock", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "Pause ad blocking", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "Privacy Policy", 
@@ -1570,7 +1642,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "Arată numărul de reclame blocate în meniul AdBlock", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "Show number of ads blocked on button", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "Show number of ads blocked on menu", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Show all requests", 
@@ -1810,6 +1890,14 @@
     "message": "Activaţi AdBlock", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "Unpause ad blocking", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "Dezabonat.", 
     "description": "Status label"
@@ -1898,7 +1986,7 @@
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
-    "message": "Whitelist all subscribed YouTube channels", 
+    "message": "Whitelist all subscribed YouTube™ channels", 
     "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
   }, 
   "whitelist_youtube_channel": {
@@ -1910,6 +1998,10 @@
         "example": "Name of channel"
       }
     }
+  }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Allow ads on YouTube™ channel:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
   }, 
   "whitelisted_domains": {
     "message": "Domenii permise"
@@ -1941,5 +2033,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Cu cât ai mai multe filtre, cu atât mai încet funcționează AdBlock. Folosind prea multe filtre poate duce la oprirea navigatorului pe unele site-uri. Apasă OK pentru a adăuga filtrul oricum.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "AdBlock on YouTube™ updates", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

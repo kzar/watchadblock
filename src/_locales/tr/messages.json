@@ -24,7 +24,7 @@
     "description": "message on the filter tab - Message when you subscribe to a non-list URL"
   }, 
   "acceptable_ads_content_blocking_disbled_message": {
-    "message": "We unsubscribed you from Acceptable Ads because you turned on Safari Content Blocking. You can only select one at a time. ([[Why?]])", 
+    "message": "Seni kabul edilebilir reklamlar aboneliğinden çıkardık çünkü sen Safari İçerik Engelleme'ye geri döndün. Yalnızca bir tanesini seçebilirsin. ([[Neden?]])", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   }, 
   "acceptableadsdisable_done": {
@@ -40,7 +40,7 @@
     "description": "option on the 'General' tab"
   }, 
   "ad_report_please": {
-    "message": "If you're seeing an ad, don't make a bug report, make an [[ad report]]!", 
+    "message": "Bir reklam görüyorsanız, hata raporu göndermek yerine [[reklamı bildirin]]!", 
     "description": "Link to the ad report page on our support site. This is found on the Support tab of the options."
   }, 
   "adalreadyblocked": {
@@ -147,7 +147,7 @@
     "description": "Label next to a file upload button."
   }, 
   "adreport_server_response_error__manual_msg_step1": {
-    "message": "Please go to [[our support website]].", 
+    "message": "Lütfen [[destek websitemize]] gidin.", 
     "description": "Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }, 
   "adreport_server_response_error__manual_msg_step2": {
@@ -181,6 +181,10 @@
   "all_youtube_channels_complete": {
     "message": "Takip ettiğiniz tüm YouTube kanalları izin verilenlere eklendi", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
+  }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Allow ads on all subscribed YouTube™ channels", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
   }, 
   "allow_whitelisting_youtube_channels": {
     "message": "Belirli Youtube kanalları için beyaz listeye izin ver (tarayıcınızı yeniden başlatmayı gerektirir)", 
@@ -281,12 +285,24 @@
     "message": "Dikkat: hiç filtre tanımlanmamış!", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "Remove ads on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "Bu sayfadaki bir reklamı engelleyin", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "Remove annoyances on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "Öğeyi Engelle"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "Protect my privacy on YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Bu reklamı engelle", 
@@ -341,7 +357,7 @@
     "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
   }, 
   "bugreport": {
-    "message": "Why don't you send us a [[bug report]]?", 
+    "message": "Neden bize bir [[hata raporu]] göndermiyorsun?", 
     "description": "Link to send a bug report on the Support tab of the options"
   }, 
   "buttonback": {
@@ -373,7 +389,7 @@
     "description": "OK button"
   }, 
   "buttonsubmit": {
-    "message": "Submit", 
+    "message": "Gönder", 
     "description": "Button to send a form."
   }, 
   "cancel": {
@@ -408,15 +424,15 @@
     "description": "Instruction for how to check Firefox/Chrome for a reported ad"
   }, 
   "checkinfirefoxorchrome_1": {
-    "message": "Install Firefox or Chrome if you don't have it.", 
+    "message": "Eğer yüklü değilse, Firefox veya Chrome yükleyin.", 
     "description": "instruction for how to check Firefox or Chrome for a reported ad"
   }, 
   "checkinfirefoxorchrome_2": {
-    "message": "Install Adblock Plus for Firefox or AdBlock for Chrome if you don't have it.", 
+    "message": "Eğer yüklü değilse, Firefox için Adblock Plus veya Chrome için Adblock yükleyin.", 
     "description": "Instruction for how to check Firefox/Chrome for a reported ad. Don't translate the name 'Adblock Plus'."
   }, 
   "checkinfirefoxorchrometitle": {
-    "message": "Check in Firefox or Chrome", 
+    "message": "Firefox ya da Chrome'da kontrol et", 
     "description": "Tell a user to see if a reported ad also appears in Firefox/Chrome"
   }, 
   "checkinfirefoxtitle": {
@@ -469,7 +485,7 @@
     }
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
-    "message": "We turned off Safari Content Blocking because you opted to allow non-intrusive ads. You can only select one at a time. ([[Why?]])", 
+    "message": "Safari İçerik Engelleyici'yi kapattık çünkü sen müdahaleci olmayan reklamlara izin verdin. Yalnızca birini seçebilirsin. ([[Why?]])", 
     "description": "Warning shown when the Acceptable Ads filter list is enabled while Safari Content Blocking was already enabled."
   }, 
   "contentblockingwarning": {
@@ -477,7 +493,7 @@
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
   "contributors": {
-    "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
+    "message": "[[AdBlock'un arkasındaki kişileri]] öğrenmenizde yardımcı olmak için bir sayfamız var!", 
     "description": "Link to the contributors page on the Support tab of the options"
   }, 
   "correctfilters": {
@@ -505,7 +521,7 @@
     "description": "List for custom filters the user subscribed to"
   }, 
   "customfilterserrormessage": {
-    "message": "The following filter:\n $filter$ \n has an error: \n $message$", 
+    "message": "Bu filtre: \n$filter$\n bir hata ile karşılaştı: \n $message$", 
     "description": "Error message when there is an issue with a custom filter on the 'Customize' tab of the Options page", 
     "placeholders": {
       "filter": {
@@ -519,15 +535,15 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
+    "message": "AdBlock'un anonim filtre kullanım verilerini ve filtre listeleri tarafından engellenen içerikler hakkında bilgileri toplamasına izin ver", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Have our team requested some debug info? Click [[here]] for that!", 
+    "message": "Ekibimiz sizden hata ayıklama bilgileri mi istedi? Onun için [[buraya]] tıklayın!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "Konsol Günlüğünde hata ayıklama bilgilerini göster (AdBlock'u yavaşlatır)", 
+    "message": "Show debug statements in Console Log (which slows down the extension)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock. 200 milyonun üzerinde indirmeyle #1 numaralı reklam engelleyicisi. Tüm web sitelerindeki reklamları engeller.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Kabul edilebilir reklamların filtrelerini kontrol edin:", 
@@ -558,11 +578,19 @@
     "message": "Üzgünüm, Filtre listelerinizden biri AdBlock'u bu sayfada kapatmak için ayarlanmış.", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "Bu sitede <strong>devre dışı</strong>"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock aşağıdaki adresler için devre dışı bırakıldı. Adresleri adres çubuğundaki Adblock simgesinden ekleyebilir veya alan adını (URL'yi değil) kutucuğa yazıp \"Alan adını ekle\" butonuna tıklayabilirsin."
+  }, 
+  "disabled_on_this_channel": {
+    "message": "You allowed ads on this channel.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock bu sayfada kapatılmıştır.", 
@@ -576,8 +604,16 @@
     "message": "[[Uzantılar sayfasını]] açın.", 
     "description": "Step 1 for disabling Chrome extensions"
   }, 
+  "disableforedgestepone": {
+    "message": "Click the More menu (...) and select Extensions.", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "For each extension except for AdBlock, click the gear icon and click the On toggle button to change it to Off.", 
+    "description": "Step 2 for disabling Edge extensions"
+  }, 
   "disableforsafaristepone": {
-    "message": "Click the Safari menu > Preferences > Extensions.", 
+    "message": "Safari menüsünden tercihler kısmına girin ve eklentilere tıklayın.", 
     "description": "Step 1 for disabling Safari extensions"
   }, 
   "disableotherextensionscomplete": {
@@ -592,6 +628,10 @@
     "message": "AdBlock'u beğeniyor musun? Bağış yapmak isteyebilirsin!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "Love this? Consider donating!", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Bu alan adındaki sayfalarda çalışma", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "Öğeyi Engelle"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "Filtreleri salt metin olarak düzenle"
   }, 
   "enable_adblock": {
     "message": "Bu sayfada AdBlock'u etkinleştir", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Block ads on this channel", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "Yalnızca ihtiyacınız olan süzgeç listelerini etkinleştirin. Çok fazla seçim yapmak tarayıcınızın akıcılığını düşürebilir."
@@ -919,6 +971,14 @@
     "message": "Dikkat: eğer burada bir hata yaparsanız, abone olduğunuz filtreler de dahil, çoğu liste tamamen bozulabilir!\n Gelişmiş \"izin verilenler\" ve \"engellenenler\" listesi oluşturmak için lütfen [[filtre sözdizimi kuralları]] bölümünü okuyun.", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "Be careful: if you make a mistake here, AdBlock on YouTube™ could stop working properly.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "Read the [[filter syntax tutorial]] to learn how to add whitelist filters.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "Filtrelere abone olun", 
     "description": "Title of the filter list tab"
@@ -1077,8 +1137,12 @@
     "description": "Resource list page: title of a column"
   }, 
   "headertype": {
-    "message": "Type", 
+    "message": "Tip", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "buradan", 
@@ -1330,6 +1394,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock on YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "AdBlock geliştirme sürümü"
   }, 
@@ -1346,7 +1414,7 @@
     "description": "A negative response to a question"
   }, 
   "nodefaultfilter1": {
-    "message": "We don't have a default filter list for that language.\nPlease [[try to find a suitable list that supports this language]] or block this ad for yourself via the AdBlock menu.", 
+    "message": "Bu dil için varsayılan bir filtre listesi bulunmamakta.\nLütfen [[bu dili destekleyen uygun bir liste bulmaya çalışın]] veya bu reklamı AdBlock menüsünden kendiniz engelleyin.", 
     "description": "Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab."
   }, 
   "noresourcessend2": {
@@ -1393,6 +1461,10 @@
   "optionstitle": {
     "message": "AdBlock Ayarları", 
     "description": "Title for the options page"
+  }, 
+  "optionstitle_yt": {
+    "message": "AdBlock on YouTube™ Options", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
   }, 
   "optionsversion": {
     "message": "Sürüm $version$", 
@@ -1441,6 +1513,10 @@
   "pause_adblock": {
     "message": "AdBlock'u duraklat", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "Pause ad blocking", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "Gizlilik Politikası", 
@@ -1520,7 +1596,7 @@
     }
   }, 
   "safari50_updatenotice": {
-    "message": "You are using an old version of Safari. Get the latest version in order to use the AdBlock toolbar button to pause AdBlock, whitelist websites, and report ads. [[Upgrade now]].", 
+    "message": "Safari'nin eski bir sürümünü kullanıyorsunuz. AdBlock araç çubuğu butonunu kullanabilmek, bir web sitesine izin verebilmek ya da reklam bildirebilmek istiyorsanız, son sürüme geçin. [[Şimdi güncelleştirin]].", 
     "description": "A message shown to Safari 5.0 users urging them to upgrade"
   }, 
   "safaributton_how_to_hide2": {
@@ -1560,7 +1636,7 @@
     "description": "Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
   }, 
   "show_ads_except_for": {
-    "message": "Show ads everywhere except for these domains...", 
+    "message": "Şu alan adlarındakiler hariç her yerdeki reklamları göster", 
     "description": "Section title for blacklisting section of Customize tab"
   }, 
   "show_block_element_menu": {
@@ -1576,7 +1652,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "AdBlock menüsünde kaç tane reklamın engellendiğini göster", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "Show number of ads blocked on button", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "Show number of ads blocked on menu", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Tüm istekleri göster", 
@@ -1599,7 +1683,7 @@
     "description": "Blacklister slider page title"
   }, 
   "sourcecode": {
-    "message": "The source code is [[freely available]]!", 
+    "message": "Kaynak kodu [[serbestçe kullanılabilir]]!", 
     "description": "Link to the source code of AdBlock on the Support tab of the options"
   }, 
   "stats_label_page": {
@@ -1698,7 +1782,7 @@
     "message": "Aboneliğin adı:"
   }, 
   "supportsite": {
-    "message": "Let us know on our [[support site]]!", 
+    "message": "[[Destek sitemize]] bildirin!", 
     "description": "Link to the support site on the Support tab of the options"
   }, 
   "tabcustomize": {
@@ -1746,7 +1830,7 @@
     "description": "A resource type"
   }, 
   "typemain_frame": {
-    "message": "page", 
+    "message": "sayfa", 
     "description": "A resource type"
   }, 
   "typemedia": {
@@ -1786,7 +1870,7 @@
     "description": "A resource type"
   }, 
   "typesub_frame": {
-    "message": "frame", 
+    "message": "çerçeve", 
     "description": "A resource type"
   }, 
   "typesubdocument": {
@@ -1815,6 +1899,14 @@
   "unpause_adblock": {
     "message": "Tekrar başlat", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
+  }, 
+  "unpause_adblocking": {
+    "message": "Unpause ad blocking", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
   }, 
   "unsubscribedlabel": {
     "message": "Abonelik kaldırıldı.", 
@@ -1888,7 +1980,7 @@
     "description": "Section header on the ad report page"
   }, 
   "warning_overrules_filters": {
-    "message": "Warning: on all other sites you will see ads!\nThis overrules all other filters for those sites.", 
+    "message": "Dikkat: bu sitelerin dışında tüm sitelerde reklamları görebileceksiniz!\n Kullandığınız filtreler bu siteler dışında geçersiz olacak.", 
     "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
   }, 
   "whatmakesadblocktick": {
@@ -1900,7 +1992,7 @@
     "description": "Text of a link pointing to the explanation of a new feature"
   }, 
   "whatsnew": {
-    "message": "What's new in the latest release? See the [[changelog]]!", 
+    "message": "En son sürümde ne yenilikler var? [[Sürüm Notları]]'nı inceleyin!", 
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
@@ -1916,6 +2008,10 @@
         "example": "Name of channel"
       }
     }
+  }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Allow ads on YouTube™ channel:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
   }, 
   "whitelisted_domains": {
     "message": "Güvenilir adresler"
@@ -1947,5 +2043,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Ne kadar çok filtre listesi kullanırsanız, AdBlock o kadar yavaşlar. Çok fazla liste kullanmak bazı sitelerde tarayıcınızın çökmesine bile sebep olabilir. Bu listeyi yine de eklemek istiyorsanız Tamam'a basın.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "AdBlock on YouTube™ updates", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

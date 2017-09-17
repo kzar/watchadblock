@@ -182,6 +182,10 @@
     "message": "Na svim vašim pretplaćenim YouTube kanalima su dopušteni oglasi", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Dopustite oglase na svim pretplaćenim YouTube™ kanalima", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
     "message": "Omogući dodavanje na listu dopuštenog određenih YouTube kanala (potrebno je ponovo pokrenuti preglednik)", 
     "description": "Checkbox on the 'General' tab of the Options page"
@@ -281,12 +285,24 @@
     "message": "Upozorenje: filter nije unesen!", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "Uklonite oglase na YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "Blokiraj reklamu na ovoj stranici", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "Uklonite smetnje na YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "Blokiraj element"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "Zaštitite privatnost na YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Blokiraj ovu reklamu", 
@@ -519,7 +535,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
+    "message": "Dopustite AdBlock proširenju prikupljanje anonimnog popisa korištenja filtera i informacije o sadržaju blokiranom filter popisom", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "Prikaži izjave uklanjanja pogreške u zapisu konzole (usporava AdBlock)", 
+    "message": "Prikaži izjave uklanjanja grešaka u zapisu konzole (usporava proširenje)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock. #1 bloker oglasa s više od 200 milijuna preuzimanja. Blokira oglase na cijelom webu.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "Jedini YouTube™ bloker oglasa stvoren od AdBlock-a, najpopularnijeg Chrome proširenja sa 60 milijuna korisnika u cijelom svijetu.", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Provjeri filtere Prihvatljivih oglasa:", 
@@ -558,11 +578,19 @@
     "message": "Isprika, AdBlock je onemogućen na ovoj stranici zbog neke od vaših lista filtera.", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "Žao mi je, AdBlock na YouTube™ je onemogućena na ovoj stranici zbog jedne od vaših postavki.", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "<strong>Onemogućeno</strong> na ovoj stranici"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock je onemogućen za domene na popisu ispod. Možete dodati domenu ili pomoću AdBlock ikone u adresnoj traci ili upisivanjem domene (ne URL-a) u polju ispod i klikom na tipku \"Dodaj domenu\"."
+  }, 
+  "disabled_on_this_channel": {
+    "message": "Dozvolili ste oglase na ovom kanalu.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock je onemogućen na ovoj stranici.", 
@@ -575,6 +603,14 @@
   "disableforchromestepone": {
     "message": "Otvori [[stranicu proširenja]].", 
     "description": "Step 1 for disabling Chrome extensions"
+  }, 
+  "disableforedgestepone": {
+    "message": "Kliknite na izbornik Više (...) i odaberite proširenja.", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "Za svako proširenje osim AdBlock-a, kliknite ikonu zupčanika i kliknite na preklopni gumb i promijenite u isključeno.", 
+    "description": "Step 2 for disabling Edge extensions"
   }, 
   "disableforsafaristepone": {
     "message": "Kliknite Safari menu > Postavke > Proširenja.", 
@@ -592,6 +628,10 @@
     "message": "Volite AdBlock? Razmislite o doniranju!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "Volite ovo? Razmislite o doniranju!", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Onemogući pokretanje na stranicima ove domene", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "Blokiraj element"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "Uredi filtere kao običan tekst"
   }, 
   "enable_adblock": {
     "message": "Omogući AdBlock na ovoj stranici", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Blokirajte oglase na ovom kanalu", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "Omogućite samo popis filtra koji vam je potreban. Previše popisa filtra može učiniti vaš preglednik neupotrebljivim."
@@ -919,6 +971,14 @@
     "message": "Budite oprezni: ako ovdje napravite pogrešku mnogo drugih filtera, uključujući službene, se može pokvariti!\nPročitajte [[sintaksni vodič za filtere]] kako bi naučili dodavati napredne filtere zabranjujućih i dopuštajućih lista.", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "Budite oprezni: ako pogriješite, AdBlock za YouTube™ bi mogao prestati raditi ispravno.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "Pročitajte [[filter syntax tutorial]] da biste saznali kako dodati popis pouzdanih filtera.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "Prijava na listu filtera", 
     "description": "Title of the filter list tab"
@@ -1079,6 +1139,10 @@
   "headertype": {
     "message": "Tip", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "ovdje", 
@@ -1330,6 +1394,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock za YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "AdBlock razvojna inačica"
   }, 
@@ -1394,6 +1462,10 @@
     "message": "AdBlock postavke", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "AdBlock za YouTube™ Postavke", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "Verzija $version$", 
     "description": "Version number", 
@@ -1441,6 +1513,10 @@
   "pause_adblock": {
     "message": "Pauziraj AdBlock", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "Pauzirajete blokiranje oglasa", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "Pravila o privatnosti", 
@@ -1576,7 +1652,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "Pokaži broj blokiranih reklama na AdBlock izborniku", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "Pokaži broj blokiranih oglasa na gumbu", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "Pokaži broj blokiranih oglasa na izborniku", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Pokaži sve zahtjeve", 
@@ -1816,6 +1900,14 @@
     "message": "Ponovo aktivirati AdBlock", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "Pokrenite blokiranje oglasa", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "Odjavljeno.", 
     "description": "Status label"
@@ -1917,6 +2009,10 @@
       }
     }
   }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Dopusti oglase na YouTube™ kanalu:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
+  }, 
   "whitelisted_domains": {
     "message": "Dopuštene domene"
   }, 
@@ -1947,5 +2043,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Što više lista fitera koristite, sporiji će biti AdBlock. Korištenje previše lista može čak srušiti Vaš preglednik na nekim stranicama. Pritisnite U redu da se ipak prijavite na ovu listu.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "AdBlock za YouTube™ ažuriranja", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

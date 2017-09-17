@@ -179,11 +179,15 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "all_youtube_channels_complete": {
-    "message": "Όλα τα συνδρομητικά σας κανάλια YouTube μπήκαν στη λευκή λίστα", 
+    "message": "Όλα τα συνδρομητικά σας κανάλια YouTube™ μπήκαν στη λευκή λίστα", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Να επιτρέπονται οι διαφημίσεις σε όλα τα συνδρομητικά κανάλια YouTube™", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Να επιτρέπεται η λευκή λίστα συγκεκριμένων καναλιών στο YouTube (απαιτεί επανεκκίνηση του περιηγητή σας)", 
+    "message": "Να επιτρέπεται η λευκή λίστα συγκεκριμένων καναλιών στο YouTube™ (απαιτεί επανεκκίνηση του περιηγητή σας)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -281,12 +285,24 @@
     "message": "Προσοχή: Δεν προσδιορίστηκε φίλτρο!", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "Αφαίρεση διαφημίσεων στο YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "Μπλοκάρισμα μίας διαφήμισης σε αυτή τη σελίδα", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "Αφαίρεση ενοχλήσεων στο YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "Φραγή στοιχείου"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "Προστασία προσωπικών δεδομένων στο YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Μπλοκάρισμα αυτής της διαφήμισης", 
@@ -519,7 +535,7 @@
     }
   }, 
   "datacollectionoption": {
-    "message": "Allow AdBlock to collect anonymous filter list usage data, and information about content blocked by filter lists", 
+    "message": "Να επιτρέπεται στο AdBlock να συλλέγει ανώνυμα δεδομένα χρήσης φίλτρου λίστας και πληροφορίες σχετικά με το αποκλεισμένο περιεχόμενο από λίστες φίλτρων", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "Εμφάνιση στοιχείων αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί το AdBlock)", 
+    "message": "Εμφάνιση στοιχείων αποσφαλμάτωσης στο αρχείο κονσόλας (καθυστερεί την επέκταση)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock. Το #1 εργαλείο αποκλεισμού διαφημίσεων με πάνω από 200 εκατομμύρια λήψεις. Μπλοκάρει αγγελίες σε όλο τον ιστό.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "Εργαλείο αποκλεισμού διαφημίσεων YouTube™ από το AdBlock, την πιο δημoφιλή επέκταση Chrome με 60 εκατομμύρια χρήστες παγκοσμίως", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Έλεγχος των φίλτρων αποδεκτών διαφημίσεων:", 
@@ -558,11 +578,19 @@
     "message": "Συγνώμη, το AdBlock απενεργοποιήθηκε σε αυτήν την σελίδα λόγω μιας από τις λίστες φίλτρων σας.", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "Συγνώμη, το AdBlock στο YouTube™ απενεργοποιήθηκε σε αυτήν την σελίδα λόγω μιας από τις επιλογές σας.", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "<strong>Απενεργοποιημένο</strong> σε αυτή την σελίδα"
   }, 
   "disabled_for_these_domains": {
     "message": "Το AdBlock είναι απενεργοποιημένο για τους τομείς της ακόλουθης λίστας. Μπορείτε να προσθέσετε ένα τομέα, είτε μέσω του εικονιδίου AdBlock στην γραμμή διευθύνσεων είτε πληκτρολογώντας τον τομέα (όχι το URL) στο κουτί και κάνοντας κλικ στο κουμπί \"Προσθήκη τομέα\"."
+  }, 
+  "disabled_on_this_channel": {
+    "message": "Έχετε επιτρέψει τις διαφημίσεις σε αυτό το κανάλι.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "Το AdBlock είναι απενεργοποιημένο σε αυτήν την σελίδα.", 
@@ -575,6 +603,14 @@
   "disableforchromestepone": {
     "message": "Ανοίξτε τη [[σελίδα επεκτάσεων]].", 
     "description": "Step 1 for disabling Chrome extensions"
+  }, 
+  "disableforedgestepone": {
+    "message": "Κάντε κλικ στο μενού περισσότερα (...) και επιλέξτε το Επεκτάσεις.", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "Για κάθε επέκταση εκτός του AdBlock, κάντε κλικ στο εικονίδιο γραναζιού και κάντε κλικ στο κουμπί εναλλαγής για να το αλλάξετε σε Ανενεργό.", 
+    "description": "Step 2 for disabling Edge extensions"
   }, 
   "disableforsafaristepone": {
     "message": "Κάντε κλικ στο μενού Safari > Προτιμήσεις > Επεκτάσεις.", 
@@ -592,6 +628,10 @@
     "message": "Αγαπάτε το AdBlock; Εξετάστε τη δωρεά!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "Το αγαπάτε; Εξετάστε τη δωρεά!", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Εκτός λειτουργίας σε σελίδες αυτού του τομέα", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "Φραγή στοιχείου"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "Επεξεργασία φίλτρων ως ακατέργαστο κείμενο"
   }, 
   "enable_adblock": {
     "message": "Ενεργοποίηση του AdBlock σε αυτή τη σελίδα", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Αποκλεισμός διαφημίσεων σε αυτό το κανάλι", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "Ενεργοποιήστε μόνο τις λίστες φίλτρων που χρειάζεστε, καθώς πάρα πολλές μπορεί να επιβαρύνουν τον περιηγητή σας."
@@ -919,6 +971,14 @@
     "message": "ΠΡΟΣΟΧΗ: αν κάνετε ένα λάθος εδώ, πολλά άλλα φίλτρα, συμπεριλαμβανομένων των επίσημων, μπορεί να πάθουν ζημιά! \nΔιαβάστε τις[[ οδηγίες για σύνταξη φίλτρων]] για να μάθετε πώς να προσθέσετε προηγμένες μαύρες και λευκές λίστες φίλτρων.", 
     "description": "Warning when blacklisting manually"
   }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "Να είστε προσεκτικοί: αν κάνετε κάποιο λάθος εδώ, το AdBlock στο YouTube™ θα μπορούσε να σταματήσει να λειτουργεί σωστά.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "Διαβάστε τον [[οδηγό σύνταξης φίλτρου]] για να μάθετε πώς να προσθέσετε φίλτρα λευκής λίστας.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
   "filterstabtitle": {
     "message": "Εγγραφείτε σε λίστες φίλτρων", 
     "description": "Title of the filter list tab"
@@ -1076,6 +1136,10 @@
   "headertype": {
     "message": "Τύπος", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "εδώ", 
@@ -1327,6 +1391,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock στο YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "Έκδοση AdBlock υπό-ανάπτυξη"
   }, 
@@ -1391,6 +1459,10 @@
     "message": "Επιλογές του AdBlock", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "Επιλογές AdBlock στο YouTube™", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "ΕΚΔΟΣΗ $version$", 
     "description": "Version number", 
@@ -1438,6 +1510,10 @@
   "pause_adblock": {
     "message": "Παύση του AdBlock", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "Παύση αποκλεισμού διαφημίσεων", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "ΠΟΛΙΤΙΚΗ ΑΠΟΡΡΗΤΟΥ", 
@@ -1573,7 +1649,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "Εμφάνιση αριθμού μπλοκαρισμένων διαφημίσεων στο μενού του AdBlock", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "Εμφάνιση αριθμού μπλοκαρισμένων διαφημίσεων στο κουμπί", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "Εμφάνιση αριθμού μπλοκαρισμένων διαφημίσεων στο μενού", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Εμφάνιση όλων των αιτήσεων", 
@@ -1813,6 +1897,14 @@
     "message": "Αναίρεση παύσης του AdBlock", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "Αναίρεση παύσης αποκλεισμού διαφημίσεων", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "Αναίρεση εγγραφής", 
     "description": "Status label"
@@ -1901,7 +1993,7 @@
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
-    "message": "Στην λευκή λίστα όλα τα συνδρομητικά κανάλια YouTube", 
+    "message": "Στην λευκή λίστα όλα τα συνδρομητικά κανάλια YouTube™", 
     "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
   }, 
   "whitelist_youtube_channel": {
@@ -1913,6 +2005,10 @@
         "example": "Name of channel"
       }
     }
+  }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Να επιτρέπονται οι διαφημίσεις στο κανάλι YouTube™:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
   }, 
   "whitelisted_domains": {
     "message": "Λίστα Επιτρεπόμενων τομέων"
@@ -1944,5 +2040,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Όσο περισσότερα φίλτρα χρησιμοποιείτε,τόσο πιο αργά τρέχει το AdBlock. Χρησιμοποιώντας πολλά φίλτρα μπορεί ακόμα και να κολλήσει ο περιηγητής σας σε μερικές ιστοσελίδες. Πάτησε OK για να εγγραφείτε σε αυτή τη λίστα φίλτρων όπως και να έχει.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "Ενημερώσεις AdBlock στο YouTube™", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }

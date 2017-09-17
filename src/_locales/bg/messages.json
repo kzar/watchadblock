@@ -179,11 +179,15 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "all_youtube_channels_complete": {
-    "message": "Вашите канали с абонамент в YouTube са изключени", 
+    "message": "Вашите канали с абонамент в YouTube™ са изключени", 
     "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
+  "allow_ads_all_youtube_channels": {
+    "message": "Позволи реклами за каналите с абонамент в YouTube™", 
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+  }, 
   "allow_whitelisting_youtube_channels": {
-    "message": "Позволи изключения за определени канали в YouTube (след повторен пуск на браузъра)", 
+    "message": "Позволи изключения за определени канали в YouTube™ (след повторен пуск на браузъра)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_changes": {
@@ -281,12 +285,24 @@
     "message": "Внимание: няма указан филтър!", 
     "description": "Warns the user that no filter was specified"
   }, 
+  "block_ads_on_youtube": {
+    "message": "Премахвай рекламите от YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block ads on youtube.com"
+  }, 
   "block_an_ad_on_this_page": {
     "message": "Блокирай реклама в страницата", 
     "description": "Toolbar button menu entry and context menu entry"
   }, 
+  "block_annonyances_on_youtube": {
+    "message": "Премахвай досадните неща от YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+  }, 
   "block_element": {
     "message": "Блокирай елемента"
+  }, 
+  "block_privacy_on_youtube": {
+    "message": "Защити неприкосновеността ми в YouTube™", 
+    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Блокирай рекламата", 
@@ -527,7 +543,7 @@
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
-    "message": "Показвай предпроверочните декларации в дневника на Конзола (води до забавяне на AdBlock)", 
+    "message": "Показвай предпроверочните декларации към дневника на Конзола (забавя разширението)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -544,7 +560,11 @@
   }, 
   "description_edge": {
     "message": "AdBlock. Блокер на реклами №1 с над 200 милиона изтегляния! Блокира реклами в световната мрежа.", 
-    "description": "Extension description in manifest. Should not exceed 132 characters."
+    "description": "Description for the AdBlock for Edge extension. Should not exceed 132 characters."
+  }, 
+  "description_yt": {
+    "message": "Единственият блокер за YouTube™, създаден от AdBlock — най-популярното разширение за Chrome с над 60 милиона потребители в цял свят!", 
+    "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
   "disableaa": {
     "message": "Да проверите филтъра Приемливи реклами:", 
@@ -558,11 +578,19 @@
     "message": "За съжаление, AdBlock е забранен за страницата в някой от вашите филтри.", 
     "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
   }, 
+  "disabled_by_filter_lists_yt": {
+    "message": "За съжаление, AdBlock към YouTube™ е забранен за страницата в някоя от вашите настройки.", 
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
   "disabled_for_site": {
     "message": "<strong>Забранено</strong> за сайта"
   }, 
   "disabled_for_these_domains": {
     "message": "AdBlock е забранен за домейните от долния списък. Добавянето на домейн става или чрез иконата на AdBlock в адресната лента или чрез въвеждане на домейна (не на целия URL) в полето и натискане на бутон „Добави домейна“."
+  }, 
+  "disabled_on_this_channel": {
+    "message": "Рекламите са позволени за канала.", 
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock е забранен за страницата.", 
@@ -575,6 +603,14 @@
   "disableforchromestepone": {
     "message": "Отворете [[страницата с разширения]].", 
     "description": "Step 1 for disabling Chrome extensions"
+  }, 
+  "disableforedgestepone": {
+    "message": "Щракнете по меню Още (...) и изберете Разширения.", 
+    "description": "Step 1 for disabling Edge extensions"
+  }, 
+  "disableforedgesteptwo": {
+    "message": "За всяко разширение без AdBlock, щракайки по иконата със зъбно колело, поставете бутона ВКЛ в позиция ИЗКЛ.", 
+    "description": "Step 2 for disabling Edge extensions"
   }, 
   "disableforsafaristepone": {
     "message": "Натиснете Safari > Настройки > Разширения.", 
@@ -592,6 +628,10 @@
     "message": "Обичате AdBlock? Дарете!", 
     "description": "Text of a donate link in the toolbar button menu"
   }, 
+  "donate_to_youtube_adblock": {
+    "message": "Обичате разширението? Дарете!", 
+    "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Не изпълнявай за домейна", 
     "description": "Menu entry to open the whitelist wizard"
@@ -603,12 +643,24 @@
   "easy_create_filter": {
     "message": "Блокирай елемента"
   }, 
+  "easylist_disable_done": {
+    "message": "AdBlock uses EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
+  "easylist_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling EasyList via Filter List page."
+  }, 
   "edit_filters_raw": {
     "message": "Редактиране на филтрите в чист текст"
   }, 
   "enable_adblock": {
     "message": "Разреши AdBlock за страницата", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
+  }, 
+  "enable_adblock_on_this_channel": {
+    "message": "Блокирай рекламите за канала", 
+    "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enable_only_the": {
     "message": "Разрешете само необходимите филтри. Колкото повече са, толкова по-бавно ще работи вашият браузър."
@@ -916,8 +968,16 @@
     "message": "Покажи списъка"
   }, 
   "filtersavewarning": {
-    "message": "Внимание: ако допуснете грешка много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!\nПрочетете [[синтактично ръководство на филтрите]] за разширено добавяне на позволяващи и изключващи филтри.", 
+    "message": "Внимание: ако допуснете грешка, много от останалите филтри, в т.ч. официалните, могат също да спрат да работят!\nПрочетете [[синтактично ръководство на филтрите]] за разширено добавяне на позволяващи и изключващи филтри.", 
     "description": "Warning when blacklisting manually"
+  }, 
+  "filtersavewarning_ytadblock_1": {
+    "message": "Внимание: ако допуснете грешка, AdBlock към YouTube™ може да спре да работи правилно!", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+  }, 
+  "filtersavewarning_ytadblock_2": {
+    "message": "Прочетете [[синтактично ръководство на филтрите]] как се добавят позволяващи филтри.", 
+    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
   }, 
   "filterstabtitle": {
     "message": "Абониране за филтри", 
@@ -1079,6 +1139,10 @@
   "headertype": {
     "message": "Вид", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help_and_feedback": {
+    "message": "Help and Feedback", 
+    "description": "Text of the 'help' link in the toolbar button menu"
   }, 
   "here": {
     "message": "тук", 
@@ -1330,6 +1394,10 @@
   "name": {
     "message": "AdBlock"
   }, 
+  "name_adblock_on_youtube": {
+    "message": "AdBlock към YouTube™", 
+    "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
+  }, 
   "name_devbuild": {
     "message": "Компилация на AdBlock за разработчици"
   }, 
@@ -1394,6 +1462,10 @@
     "message": "Настройки на AdBlock", 
     "description": "Title for the options page"
   }, 
+  "optionstitle_yt": {
+    "message": "Настройки на AdBlock към YouTube™", 
+    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+  }, 
   "optionsversion": {
     "message": "Версия $version$", 
     "description": "Version number", 
@@ -1441,6 +1513,10 @@
   "pause_adblock": {
     "message": "Задръж AdBlock", 
     "description": "Menu entry to pause AdBlock"
+  }, 
+  "pause_adblocking": {
+    "message": "Задръж блокирането", 
+    "description": "Menu entry to pause the extension"
   }, 
   "privacy_policy": {
     "message": "Поверителност", 
@@ -1576,7 +1652,15 @@
   }, 
   "show_on_adblock_menu": {
     "message": "Показвай броя на блокираните реклами в менюто на AdBlock", 
-    "description": "Label for checkbox letting user choose whether the AdBlock popup menu should show the number of ads blocked"
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+  }, 
+  "show_on_button": {
+    "message": "Показвай броя на блокираните реклами върху бутона", 
+    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+  }, 
+  "show_on_menu": {
+    "message": "Показвай броя на блокираните реклами в менюто", 
+    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Покажи заявките", 
@@ -1816,6 +1900,14 @@
     "message": "Освободи AdBlock", 
     "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
   }, 
+  "unpause_adblocking": {
+    "message": "Освободи блокирането", 
+    "description": "Menu entry to unpause the extension"
+  }, 
+  "unsubscribe_from_all_confirmation": {
+    "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
+    "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
+  }, 
   "unsubscribedlabel": {
     "message": "Без абонамент.", 
     "description": "Status label"
@@ -1904,7 +1996,7 @@
     "description": "Link to display the changelog on the Support tab of the options"
   }, 
   "whitelist_all_youtube_channels": {
-    "message": "Изключи каналите с абонамент в YouTube", 
+    "message": "Изключи каналите с абонамент в YouTube™", 
     "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
   }, 
   "whitelist_youtube_channel": {
@@ -1916,6 +2008,10 @@
         "example": "Name of channel"
       }
     }
+  }, 
+  "whitelist_youtube_channel_v2": {
+    "message": "Позволи реклами за канал:", 
+    "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
   }, 
   "whitelisted_domains": {
     "message": "Изключени домейни"
@@ -1947,5 +2043,9 @@
   "you_know_thats_a_bad_idea_right": {
     "message": "Колкото повече филтри ползвате, толкова по-бавно ще работи AdBlock. Ползването на твърде много може да предизвика забиване на браузъра в определени сайтове. Натиснете ДА за абониране въпреки всичко.", 
     "description": "Confirmation message shown to user if they try to subscribe to too many lists. The user will have two options: OK and Cancel."
+  }, 
+  "ytadblockupdates": {
+    "message": "Обновяване на AdBlock към YouTube™", 
+    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
   }
 }
