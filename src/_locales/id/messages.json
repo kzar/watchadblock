@@ -9,19 +9,19 @@
   }, 
   "ab_filters_subscription_lastDownload_checksumMismatch": {
     "message": "Failed, checksum mismatch", 
-    "description": "message on the filter tab"
+    "description": "Filter lists tab of the Options page: Corrupted filter list file."
   }, 
   "ab_filters_subscription_lastDownload_connectionError": {
     "message": "Failed, download failure", 
-    "description": "message on the filter tab - Generic filter list download error message"
+    "description": "Filter lists tab of the Options page: Generic filter list download error message."
   }, 
   "ab_filters_subscription_lastDownload_invalidData": {
     "message": "Failed, not a valid filters list", 
-    "description": "message on the filter tab - Invalid filter list file"
+    "description": "Filter lists tab of the Options page: Invalid filter list file."
   }, 
   "ab_filters_subscription_lastDownload_invalidURL": {
     "message": "Failed, not a valid address", 
-    "description": "message on the filter tab - Message when you subscribe to a non-list URL"
+    "description": "Filter lists tab of the Options page: Message when you subscribe to a non-list URL."
   }, 
   "acceptable_ads_content_blocking_disbled_message": {
     "message": "We unsubscribed you from Acceptable Ads because you turned on Safari Content Blocking. You can only select one at a time. ([[Why?]])", 
@@ -29,35 +29,35 @@
   }, 
   "acceptableadsdisable_done": {
     "message": "You're no longer subscribed to the Acceptable Ads filter list.", 
-    "description": "Message shown to users after disabling Acceptable Ads via update page."
+    "description": "Message shown to users after disabling Acceptable Ads via the Options page."
   }, 
   "acceptableadsdisable_how_to_reenable": {
     "message": "You can turn this back on and support the websites you love by selecting \"Allow some non-intrusive advertising\" below.", 
-    "description": "Message shown to users after disabling Acceptable Ads via update page."
+    "description": "Message shown to users after disabling Acceptable Ads via the Options page."
   }, 
   "acceptableadsoption": {
     "message": "Izinkan beberapa iklan yang tidak mengganggu", 
-    "description": "option on the 'General' tab"
+    "description": "Checkbox on the 'General' tab of the Options page to enable the Acceptable Ads filter list"
   }, 
   "ad_report_please": {
     "message": "Jika Anda melihat iklan, jangan membuat laporan bug, melainkan buatlah [[laporan iklan]]!", 
-    "description": "Link to the ad report page on our support site. This is found on the Support tab of the options."
+    "description": "Link to the ad report page on AdBlock's help site. This is found on the Support tab of the options."
   }, 
   "adalreadyblocked": {
     "message": "Hebat! Anda sudah siap.", 
-    "description": "On the ad report page, telling a user there is nothing to do"
+    "description": "On the ad report page, telling the user there is nothing to do as the ad they were seeing is now blocked."
   }, 
   "adblock_click_for_details": {
     "message": "AdBlock - Klik untuk melihat detilnya", 
-    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button, and that they can control the number badge that appears on the button."
+    "description": "Tooltip on the AdBlock button, to help users understand that they can click the button to access more options."
   }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock tidak akan berjalan pada halaman yang sama dengan:", 
-    "description": "Message displayed when the whitelister dialog will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
+    "description": "Message displayed when the whitelist wizard will whitelist part of an entire website, for example '*.google.com/reader/*'.  The URL will appear on the next line."
   }, 
   "adblockinglist": {
     "message": "Daftar filter pemblokiran iklan", 
-    "description": "List for subscribed ad blocking fiters"
+    "description": "Subtitle on the Filter lists tab: List of filter lists to block ads."
   }, 
   "adblockreportinganad": {
     "message": "AdBlock - Laporkan sebuah iklan", 
@@ -65,11 +65,11 @@
   }, 
   "adblocksupport": {
     "message": "Dukungan AdBlock", 
-    "description": "Title of the support tab"
+    "description": "Title of the Support tab of the Options page"
   }, 
   "adblockupdates": {
     "message": "Perbarui AdBlock", 
-    "description": "Subtitle on the Support tab of the options"
+    "description": "Subtitle on the Support tab"
   }, 
   "add": {
     "message": "Tambah"
@@ -104,7 +104,7 @@
   }, 
   "adreport_laststep": {
     "message": "Last step: report the issue to us.", 
-    "description": "Heading on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
+    "description": "Subtitle on the ad report page. Shown when the ad needs to be reported to AdBlock, and not filter list maintainers."
   }, 
   "adreport_location": {
     "message": "Exactly where on that page is the ad? What does it look like?", 
@@ -180,7 +180,7 @@
   }, 
   "all_youtube_channels_complete": {
     "message": "All of your YouTube™ channel subscriptions have been whitelisted", 
-    "description": "Alert message displayed after the whitelisting of all subscribed YouTube channels has been completed"
+    "description": "Alert displayed after the whitelisting of all subscribed YouTube channels has been completed"
   }, 
   "allow_ads_all_youtube_channels": {
     "message": "Allow ads on all subscribed YouTube™ channels", 
@@ -195,15 +195,15 @@
   }, 
   "betalabel": {
     "message": "Beta", 
-    "description": "Label for beta features in AdBlock Options"
+    "description": "Label for experimental features in AdBlock Options"
   }, 
   "blacklistclickmessage": {
     "message": "Klik kanan sebuah iklan pada halaman untuk memblokirnya -- atau blokir secara manual disini.", 
-    "description": "Message at the top of the blacklist options tab"
+    "description": "'Hide a section of a webpage' part on the Customize tab of the Options page."
   }, 
   "blacklisterattrwillbe": {
     "message": "$attribute$ adalah $value$", 
-    "description": "Checkbox label", 
+    "description": "Checkbox label for attributes in 'Block an ad' wizard.", 
     "placeholders": {
       "attribute": {
         "content": "$1", 
@@ -217,11 +217,11 @@
   }, 
   "blacklisterblockedelement": {
     "message": "Elemen terblokir:", 
-    "description": "Tells the user what the blocked element is on the slider page"
+    "description": "Tells the user what the blocked element is on the 'Block an ad' wizard."
   }, 
   "blacklisterblocksalloftype": {
     "message": "Hati hati: Filter ini memblokir semua $elementtype$ elemen yang ada di halaman!", 
-    "description": "Warns the user that all elements of type X will be blocked", 
+    "description": "Warns the user that all elements of type X will be blocked.", 
     "placeholders": {
       "elementtype": {
         "content": "$1", 
@@ -231,11 +231,11 @@
   }, 
   "blacklistereditfilter": {
     "message": "Silahkan ketik filter yang benar di bawah ini dan tekan OK", 
-    "description": "Text if the user wants to manually edit a filter. 'OK' is the standard javascript popup button text."
+    "description": "Text if the user wants to manually edit a filter. 'OK' is the standard JavaScript popup button text."
   }, 
   "blacklistereditinvalid1": {
     "message": "Filter ini tidak sah: $exception$", 
-    "description": "Messagebox if the manually edited filter is invalid. Error messages are not translated.", 
+    "description": "Alert if the manually edited filter is invalid. Error messages are not translated.", 
     "placeholders": {
       "exception": {
         "content": "$1", 
@@ -259,15 +259,15 @@
   }, 
   "blacklisternotsure": {
     "message": "Tidak yakin? tekan saja 'Tutup!' dibawah.", 
-    "description": "Blacklister attribute choosing page message"
+    "description": "'Block an ad' wizard attribute choice page"
   }, 
   "blacklisteroptions1": {
     "message": "Apa yang anda pikir benar tentang iklan ini setiap anda mengunjungi halaman ini?", 
-    "description": "Blacklister attribute choosing page message"
+    "description": "'Block an ad' wizard attribute choice page"
   }, 
   "blacklisteroptionstitle": {
     "message": "Langkah terakhir: Apa yang membuat hal ini sebagai iklan?", 
-    "description": "Blacklister options page title"
+    "description": "'Block an ad' wizard title"
   }, 
   "blacklistersinglematch": {
     "message": "1 item yang sama pada halaman ini.", 
@@ -275,15 +275,15 @@
   }, 
   "blacklisterthefilter": {
     "message": "Filter, yang bisa diubah di halaman pengaturan:", 
-    "description": "Blacklister attribute choosing page message"
+    "description": "'Block an ad' wizard attribute choice page"
   }, 
   "blacklistertype": {
     "message": "Tipe", 
-    "description": "node name is called 'Type'"
+    "description": "node name is called 'Type' (HTML tag)"
   }, 
   "blacklisterwarningnofilter": {
     "message": "Perhatian: tidak ada filter yang ditentukan!", 
-    "description": "Warns the user that no filter was specified"
+    "description": "Warns the user that nothing will be blocked."
   }, 
   "block_ads_on_youtube": {
     "message": "Remove ads on YouTube™", 
@@ -295,30 +295,30 @@
   }, 
   "block_annonyances_on_youtube": {
     "message": "Remove annoyances on YouTube™", 
-    "description": "Label for checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+    "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
     "message": "Blokir elemen"
   }, 
   "block_privacy_on_youtube": {
     "message": "Protect my privacy on YouTube™", 
-    "description": "Label for checkbox letting user choose whether to block privacy-related requests on youtube.com"
+    "description": "Checkbox letting user choose whether to block privacy-related requests on youtube.com"
   }, 
   "block_this_ad": {
     "message": "Blokir iklan ini", 
-    "description": "Context and popup menu entry"
+    "description": "Toolbar button menu entry and context menu entry"
   }, 
   "blockanadtitle": {
     "message": "Blokir sebuah iklan", 
-    "description": "Title of the first two dialogs of the blacklister"
+    "description": "Title of the first two dialogs of the 'Block an ad' wizard"
   }, 
   "blockdomain": {
     "message": "Domain dari halaman untuk diterapkan", 
-    "description": "Message of the url and css -blocking area"
+    "description": "Message of the URL and CSS blocking sections"
   }, 
   "blocked_ads": {
     "message": "Iklan yang terblokir:", 
-    "description": "Title for popup menu section showing number of ads blocked"
+    "description": "Title for toolbar icon menu section showing number of ads blocked"
   }, 
   "blocked_n_in_total": {
     "message": "Total $count$", 
@@ -326,7 +326,7 @@
     "placeholders": {
       "count": {
         "content": "[[123,456]]", 
-        "example": "The number of ads blocked. Do not make any changes to this placeholder when translating."
+        "example": "123,456"
       }
     }
   }, 
@@ -336,7 +336,7 @@
     "placeholders": {
       "count": {
         "content": "[[123]]", 
-        "example": "The number of ads blocked. Do not make any changes to this placeholder when translating."
+        "example": "123"
       }
     }
   }, 
@@ -346,23 +346,23 @@
   }, 
   "blockmoreads": {
     "message": "Blokir lebih banyak iklan:", 
-    "description": "Section header on the 'Customize' tab"
+    "description": "Subtitle on the 'Customize' tab"
   }, 
   "blockurlwithtext": {
     "message": "Blok URL yang mengandung teks ini", 
-    "description": "Message of the url-blocking area"
+    "description": "Message of the URL-blocking section (Block an ad by its URL) on the Customize tab"
   }, 
   "browserestartrequired": {
     "message": "Please restart Safari to finish turning off content blocking.", 
-    "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch"
+    "description": "Displayed after disabling Safari Content Blocking, which requres a browser relaunch."
   }, 
   "bugreport": {
     "message": "Why don't you send us a [[bug report]]?", 
-    "description": "Link to send a bug report on the Support tab of the options"
+    "description": "Link to send a bug report on the Support tab"
   }, 
   "buttonback": {
     "message": "Kembali", 
-    "description": "Back to previous wizard page button"
+    "description": "Back to previous page button"
   }, 
   "buttonblockit": {
     "message": "Tutup!", 
@@ -374,15 +374,15 @@
   }, 
   "buttonedit": {
     "message": "Edit", 
-    "description": "Edit filter manually button"
+    "description": "Edit filter(s) manually button"
   }, 
   "buttonexclude": {
     "message": "Jangan sertakan", 
-    "description": "Button for excluding a domain in the whitelister dialog"
+    "description": "Button for excluding a domain in the whitelist wizard"
   }, 
   "buttonlooksgood": {
     "message": "Terlihat bagus", 
-    "description": "Looks good button"
+    "description": "Confirmation button after user chose what to block on the page"
   }, 
   "buttonok": {
     "message": "OK!", 
@@ -445,7 +445,7 @@
   }, 
   "cleanuplist2": {
     "message": "Bersihkan daftar ini", 
-    "description": "Option at the bottom of the 'Customize' options tab"
+    "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
   "clickdisableaa": {
     "message": "Klik ini: [[Nonaktifkan Iklan Yang Dapat Diterima]]", 
@@ -460,7 +460,7 @@
   }, 
   "clickthead": {
     "message": "Klik iklannya, dan saya akan menuntun anda memblokirnya.", 
-    "description": "When you have to click the ad to continue"
+    "description": "User has to click the ad they want to block."
   }, 
   "clickupdatefilters": {
     "message": "Klik ini: [[Perbaharui filter saya!]]", 
@@ -476,11 +476,11 @@
     "placeholders": {
       "count": {
         "content": "$1", 
-        "example": "The number of custom blocks for a domain."
+        "example": "12"
       }, 
       "host": {
         "content": "$2", 
-        "example": "code.google.ph, ph.msn.com, stackoverflow.com"
+        "example": "stackoverflow.com"
       }
     }
   }, 
@@ -494,31 +494,31 @@
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
-    "description": "Link to the contributors page on the Support tab of the options"
+    "description": "Link to the contributors page on the Support tab"
   }, 
   "correctfilters": {
     "message": "Pastikan Anda menggunakan filter bahasa yang tepat:", 
-    "description": "On the ad report page, label describing having the right set of filters"
+    "description": "On the ad report page, label describing having the right filter lists enabled"
   }, 
   "csstomatch": {
     "message": "CSS untuk dicari", 
-    "description": "Message of the css-hiding area"
+    "description": "Message of the CSS-hiding section (Hide a section of a webpage) on the Customize tab"
   }, 
   "custom_filters_migration_error_message_part1": {
     "message": "Custom filters error count: ", 
-    "description": "Part one of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+    "description": "Part one of a message shown to users on the Customize tab of the Options page after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part2": {
     "message": "The following message(s) were generated during the custom filter migration (ignore the line numbers): ", 
-    "description": "Part two of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+    "description": "Part two of a message shown to users on the Customize tab of the Options page after invalid custom filters have been migrated"
   }, 
   "custom_filters_migration_error_message_part3": {
     "message": "Original entry: ", 
-    "description": "Part three of a message shown to users on the 'Customize' tab after invalid custom filters have been migrated"
+    "description": "Part three of a message shown to users on the Customize tab of the Options page after invalid custom filters have been migrated"
   }, 
   "customfilters": {
     "message": "Daftar Filter sendiri", 
-    "description": "List for custom filters the user subscribed to"
+    "description": "Subtitle on the Filter lists tab: Section for adding your own filter lists."
   }, 
   "customfilterserrormessage": {
     "message": "Filter berikut: \n $filter$ \n memiliki kesalahan: \n $message$", 
@@ -576,11 +576,11 @@
   }, 
   "disabled_by_filter_lists": {
     "message": "Maaf, AdBlock dimatikan pada halaman ini oleh salah satu daftar filter anda.", 
-    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list"
+    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list."
   }, 
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
-    "description": "Message shown when a user tries to unwhitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+    "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
   }, 
   "disabled_for_site": {
     "message": "<strong>Nonaktifkan</strong> pada situs ini"
@@ -590,7 +590,7 @@
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
-    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that the user has whitelisted."
+    "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
   }, 
   "disabled_on_this_page": {
     "message": "AdBlock dimatikan pada halaman ini.", 
@@ -620,10 +620,6 @@
     "message": "Kami telah dinonaktifkan semua ekstensi lainnya. Sekarang kita akan memuat ulang halaman dengan iklan. Harap tunggu sebentar.", 
     "description": "On the ad report page, alert notifying users that we've disabled all other extensions"
   }, 
-  "disableyoutubestreamingads": {
-    "message": "Aktifkan modus kompatibilitas ClickToFlash", 
-    "description": "Checkbox on the 'General' tab of the Options page. Allow AdBlock and the ClickToFlash Safari extension to work simultaneously on YouTube."
-  }, 
   "donate_to_adblock": {
     "message": "Love AdBlock? Consider donating!", 
     "description": "Text of a donate link in the toolbar button menu"
@@ -638,18 +634,26 @@
   }, 
   "dont_run_on_this_page": {
     "message": "Jangan jalankan pada halama ini", 
-    "description": "Menu entry to whitelist a page"
+    "description": "Menu entry to whitelist the current page"
   }, 
   "easy_create_filter": {
     "message": "Blokir elemen"
   }, 
   "easylist_disable_done": {
     "message": "AdBlock uses EasyList to block ads on most websites.", 
-    "description": "Message shown to users after disabling EasyList via Filter List page."
+    "description": "Message shown to users after disabling EasyList via the Filter lists tab on the Options page."
   }, 
   "easylist_disable_how_to_reenable": {
     "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList\" now to block more ads.", 
-    "description": "Message shown to users after disabling EasyList via Filter List page."
+    "description": "Message shown to users after disabling EasyList via the Filter lists tab on the Options page."
+  }, 
+  "easylist_lite_disable_done": {
+    "message": "AdBlock uses EasyList Lite or EasyList to block ads on most websites.", 
+    "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
+  }, 
+  "easylist_lite_disable_how_to_reenable": {
+    "message": "We recommend keeping it on. If you unsubscribed by accident, please select \"EasyList Lite\" or \"EasyList\" now to block more ads.", 
+    "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
   "edit_filters_raw": {
     "message": "Ubah penyaring sebagai teks mentah"
@@ -674,19 +678,19 @@
   }, 
   "englishonly": {
     "message": "Hanya Inggris", 
-    "description": "Lets the user know that a link/page is available in English only"
+    "description": "Lets the user know that a link/page is only available in English."
   }, 
   "excludedomainorurl": {
     "message": "Domain atau URL dimana AdBlock tidak boleh memblokir apapun", 
-    "description": "Message of the exclude area"
+    "description": "Message of the exclude section (Show ads on a webpage or domain) on the Customize tab"
   }, 
   "failedtofetchfilter": {
     "message": "Gagal mengambil filter ini!", 
-    "description": "Error messagebox"
+    "description": "Error alert when subscribing to a filter list"
   }, 
   "fetchinglabel": {
     "message": "Mengambil... Silahkan tunggu.", 
-    "description": "Status label"
+    "description": "Status label when selecting a new filter list"
   }, 
   "ff_button_how_to_hide": {
     "message": "Untuk menyembunyikan tombol, klik kanan dan pilih Hapus dari Toolbar.  Anda dapat menunjukkan ini lagi di bawah menu Firefox-> Customize.", 
@@ -900,11 +904,11 @@
   }, 
   "filterlistlink": {
     "message": "Jangan berangganan lebih dari yang anda butuhkan -- setiap satunya akan sedikit memperlambat anda! Kredit dan lebih banyak daftar dapat ditemukan [[Disini]].", 
-    "description": "Explanation of the filter lists"
+    "description": "Filter lists tab explanation and link to filter list credits."
   }, 
   "filterlistsrock": {
     "message": "Daftar filter memblokir banyak iklan di web. Anda juga bisa:", 
-    "description": "Header text on the Customize tab. 'Filter lists' should be the same text as the name of the 'Filter lists' tab."
+    "description": "Header text on the Customize tab"
   }, 
   "filtermalware": {
     "message": "Perlindungan Malware", 
@@ -965,19 +969,19 @@
   }, 
   "filtersavewarning": {
     "message": "Hati hati: jika anda membuat kesalahan disini banyak filter, termasuk filter resmi juga akan rusak!\nBaca [[Panduan filter syntax]] untuk belajar bagaimana menambah filter daftar hitam dan daftar putih yang lebih maju.", 
-    "description": "Warning when blacklisting manually"
+    "description": "Warning when manually editing filters."
   }, 
   "filtersavewarning_ytadblock_1": {
     "message": "Be careful: if you make a mistake here, AdBlock on YouTube™ could stop working properly.", 
-    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+    "description": "First part of the warning when manually editing filters in the 'AdBlock on YouTube' extension."
   }, 
   "filtersavewarning_ytadblock_2": {
     "message": "Read the [[filter syntax tutorial]] to learn how to add whitelist filters.", 
-    "description": "Warning when manually editing filters in the 'AdBlock on YouTube' extension."
+    "description": "Second part of the warning when manually editing filters in the 'AdBlock on YouTube' extension."
   }, 
   "filterstabtitle": {
     "message": "Berlangganan pada daftar filter", 
-    "description": "Title of the filter list tab"
+    "description": "Title of the Filter lists tab of the Options page"
   }, 
   "filterswedish": {
     "message": "Swedia", 
@@ -993,11 +997,11 @@
   }, 
   "findingads": {
     "message": "Mencari iklan...\n\nhanya sebentar saja.", 
-    "description": "When you press ctrl-shift-K the blacklister searches for ads"
+    "description": "'Block an ad' wizard loading message"
   }, 
   "firefox_explanation": {
     "message": "Tujuan dari pertanyaan ini adalah untuk menentukan siapa yang harus menerima laporan anda. Jika anda menjawab pertanyaan dengan salah, laporannya akan terkirim kepada orang yang salah, jadi mungkin laporan anda akan diabaikan.", 
-    "description": "Explanation of the Check-in-Firefox or Chrome step in the ad reporter"
+    "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
   "firstRun_abbButtonSubtitle": {
     "message": "Tersedia untuk Android dan iOS"
@@ -1085,7 +1089,7 @@
   }, 
   "foundbug": {
     "message": "Menemukan bug?", 
-    "description": "Subtitle on the Support tab of the options"
+    "description": "Subtitle on the Support tab"
   }, 
   "framedomain": {
     "message": "Frame domain: ", 
@@ -1093,7 +1097,7 @@
   }, 
   "frametype": {
     "message": "Frame type: ", 
-    "description": "Resource list page: followed by frame type (e.g. top frame, subframe)"
+    "description": "Resource list page: followed by frame type (top frame, subframe)"
   }, 
   "frameurl": {
     "message": "Frame URL: ", 
@@ -1104,7 +1108,7 @@
   }, 
   "generaloptions": {
     "message": "Pengaturan Umum", 
-    "description": "Title of first tab page"
+    "description": "Title of the first Options page tab"
   }, 
   "global_filter_elemhide_duplicate_id": {
     "message": "Adblok Plus hanya dapat menerima sebanyak satu kali suatu ID dari elemen yang ingin disembunyikan"
@@ -1138,7 +1142,7 @@
   }, 
   "help_and_feedback": {
     "message": "Help and Feedback", 
-    "description": "Text of the 'help' link in the toolbar button menu"
+    "description": "Text of a help link in the toolbar button menu"
   }, 
   "here": {
     "message": "disini", 
@@ -1286,7 +1290,7 @@
   }, 
   "languagedropdowndescription": {
     "message": "Tambahkan filter untuk bahasa lain: ", 
-    "description": "Dropdown list for language-specific filters"
+    "description": "Dropdown list for language-specific filter lists"
   }, 
   "last_updated_at": {
     "message": "Terakhir diperbaharui pada pukul $time$ tanggal $date$", 
@@ -1309,7 +1313,7 @@
   }, 
   "legend": {
     "message": "Legend: ", 
-    "description": "Resource list page: followed by color codes for various resource statuses (e.g. blocked, whitelisted, hidden)"
+    "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
   }, 
   "line": {
     "message": "Baris $number$", 
@@ -1321,15 +1325,15 @@
   }, 
   "linkblockadbyurl": {
     "message": "Blok sebuah iklan oleh URLnya", 
-    "description": "Link on the 'Customize' tab"
+    "description": "Link label on the 'Customize' tab"
   }, 
   "linkhidesection": {
     "message": "Sembunyikan sebagian dari halaman Web", 
-    "description": "Link on the 'Customize' tab"
+    "description": "Link label on the 'Customize' tab"
   }, 
   "linkunblock": {
     "message": "Perlihatkan iklan pada sebuah halama atau domain", 
-    "description": "Link on the 'Customize' tab"
+    "description": "Link label on the 'Customize' tab"
   }, 
   "loading": {
     "message": "MEMUAT...", 
@@ -1345,7 +1349,7 @@
   }, 
   "malwarenotificationcheckboxmessage": {
     "message": "Haruskah AdBlock memberitahu Anda ketika mendeteksi malware?", 
-    "description": "Checkbox displayed when subscribing to the Malware filter list on the Filter lists tab of the Options page"
+    "description": "Checkbox displayed when subscribing to the 'Malware protection' filter list on the Filter lists tab of the Options page"
   }, 
   "malwarenotificationdisablethesemessages": {
     "message": "Nonaktifkan pemberitahuan ini", 
@@ -1353,11 +1357,11 @@
   }, 
   "malwarenotificationlearnmore": {
     "message": "Pelajari lebih lanjut tentang malware", 
-    "description": "Button on the malware notification that opens a page about malware on our website. Message should be under 45 characters!"
+    "description": "Button on the malware notification that opens a page about malware on the AdBlock website. Message should be under 45 characters!"
   }, 
   "malwarenotificationmessage": {
     "message": "AdBlock telah memblokir unduhan dari situs terkenal akan host malware.", 
-    "description": "Notification when a malware request has been blocked. This message should be under 90 characters!"
+    "description": "Notification when a potential malware request has been blocked. This message should be under 90 characters!"
   }, 
   "malwarewarning": {
     "message": "Komputer Anda mungkin terinfeksi oleh malware. Klik [[di sini]] untuk informasi lebih lanjut.", 
@@ -1377,7 +1381,7 @@
   }, 
   "migration_error_message": {
     "message": "We've found some errors in your custom filters. See below for the messages.", 
-    "description": "Warning when adding custom filters manually"
+    "description": "Error when adding custom filters manually"
   }, 
   "modifydomain": {
     "message": "Situs:", 
@@ -1391,7 +1395,7 @@
     "message": "AdBlock"
   }, 
   "name_adblock_on_youtube": {
-    "message": "AdBlock on YouTube™", 
+    "message": "AdBlock pada YouTube™", 
     "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
   }, 
   "name_devbuild": {
@@ -1399,11 +1403,11 @@
   }, 
   "new_resourcelist_explanation_osx": {
     "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I), then select the 'AdBlock' tab.", 
-    "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
+    "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Mac)"
   }, 
   "new_resourcelist_explanation_win": {
     "message": "To show all requests, right click the page, select 'Inspect' (Ctrl+Shift+I), then select the 'AdBlock' tab.", 
-    "description": "Message explaining how to access the resource list page on AdBlock 3.0+"
+    "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Windows)"
   }, 
   "no": {
     "message": "Tidak", 
@@ -1411,7 +1415,7 @@
   }, 
   "nodefaultfilter1": {
     "message": "We don't have a default filter list for that language.\nPlease [[try to find a suitable list that supports this language]] or block this ad for yourself via the AdBlock menu.", 
-    "description": "Instructions on ad report page pointing users to EasyList subscriptions list. 'Customize' should be the same text as the name of the 'Customize' tab."
+    "description": "Instructions on ad report page pointing users to EasyList subscriptions list."
   }, 
   "noresourcessend2": {
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
@@ -1437,7 +1441,7 @@
   }, 
   "one_moment_all_youtube_channels": {
     "message": "Harap tunggu sebentar kami sedang mengumpulkan semua langganan Anda", 
-    "description": "Alert message displayed when whitelisting all subscribed YouTube channels"
+    "description": "Alert displayed when whitelisting all subscribed YouTube channels"
   }, 
   "only_block_ads_on_these_sites": {
     "message": "Hanya blokir iklan di situs-situs ini:", 
@@ -1449,18 +1453,18 @@
   }, 
   "options": {
     "message": "Pilihan", 
-    "description": "The text of the link on chrome://chrome/extensions that gets you to the Options page for an extension"
+    "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
   "options_short": {
     "message": "Pilihan"
   }, 
   "optionstitle": {
     "message": "Pengaturan AdBlock", 
-    "description": "Title for the options page"
+    "description": "Title for the Options page"
   }, 
   "optionstitle_yt": {
     "message": "AdBlock on YouTube™ Options", 
-    "description": "Title for the options page for the 'AdBlock on YouTube' extension."
+    "description": "Title for the Options page for the 'AdBlock on YouTube' extension."
   }, 
   "optionsversion": {
     "message": "Versi $version$", 
@@ -1468,13 +1472,13 @@
     "placeholders": {
       "version": {
         "content": "$1", 
-        "example": "2.0.9"
+        "example": "3.9.2"
       }
     }
   }, 
   "orenteraurl": {
     "message": "Atau masukan sebuah URL:", 
-    "description": "Link for custom subscription"
+    "description": "Text box to enter a link to a custom filter list"
   }, 
   "other": {
     "message": "Yang lain", 
@@ -1482,7 +1486,7 @@
   }, 
   "otherfilters": {
     "message": "Daftar filter lainnya", 
-    "description": "List for other filters the user subscribed to"
+    "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
   "out_of_date_lists": {
     "message": "Daftar lama akan diperbaharui secara berkala."
@@ -1508,11 +1512,11 @@
   }, 
   "pause_adblock": {
     "message": "Bekukan AdBlock", 
-    "description": "Menu entry to pause AdBlock"
+    "description": "Menu entry to pause AdBlock (stop blocking ads)"
   }, 
   "pause_adblocking": {
     "message": "Pause ad blocking", 
-    "description": "Menu entry to pause the extension"
+    "description": "Menu entry to pause the extension (stop blocking ads)"
   }, 
   "privacy_policy": {
     "message": "Privacy Policy", 
@@ -1524,11 +1528,11 @@
   }, 
   "questionoridea": {
     "message": "Punya pertanyaan atau ide baru?", 
-    "description": "Subtitle on the Support tab of the options"
+    "description": "Subtitle on the Support tab"
   }, 
   "reenableadsonebyone": {
     "message": "Hebat! Sekarang mari kita menemukan ekstensi yang adalah penyebab. Pergi dan aktifkan ekstensi setiap satu per satu. Ekstensi yang membawa kembali iklan adalah yang Anda butuhkan untuk dihapus untuk menyingkirkan iklan.", 
-    "description": "Tells the user to reenable the extensions one by one"
+    "description": "Tells the user to re-enable the extensions one by one"
   }, 
   "refusetocheck": {
     "message": "Saya tidak ingin memeriksa hal ini", 
@@ -1540,14 +1544,14 @@
   }, 
   "reloadpageafterwhitelist": {
     "message": "Muat ulang laman.", 
-    "description": "Checkbox on whitelist wizard"
+    "description": "Checkbox in the whitelist wizard"
   }, 
   "remove_button": {
     "message": "Hapus yang dipilih"
   }, 
   "removefromlist": {
     "message": "Dihapus dari daftar", 
-    "description": "Label to remove a custom filter"
+    "description": "Label to remove a custom filter list"
   }, 
   "report_ad_on_page": {
     "message": "Laporkan sebuah iklan pada halaman ini", 
@@ -1565,7 +1569,7 @@
   }, 
   "reportpubliclyavailable": {
     "message": "Catatan: laporan anda mungkin akan tersedia untuk umum. Ingatlah itu sebelum anda menyertakan apapun yang bersifat pribadi.", 
-    "description": "Ad report page string, when you're about to submit a report"
+    "description": "Ad report page string, when you're about to submit a report."
   }, 
   "resourceblocktitle": {
     "message": "All Resources", 
@@ -1587,7 +1591,7 @@
     "placeholders": {
       "list_title": {
         "content": "$1", 
-        "example": "French filters"
+        "example": "French"
       }
     }
   }, 
@@ -1605,19 +1609,19 @@
   }, 
   "safaricontentblockinglimitexceeded": {
     "message": "The number of filter list rules exceeds the 50,000 limit, and has been automatically reduced. Please unsubscribe from some filter lists or disable Safari Content Blocking!", 
-    "description": "Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled"
+    "description": "Displayed when the number of rules in the subscribed filter lists is larger than the number supported by Safari Content Blocking, if that option is enabled."
   }, 
   "safaricontentblockingpausemessage": {
     "message": "To pause AdBlock with Content Blocking enabled, please select Safari (in the menu bar) > Preferences > Extensions > AdBlock, and uncheck 'Enable AdBlock'.", 
-    "description": "Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled"
+    "description": "Alert displayed after clicking 'Pause AdBlock' in the AdBlock menu while Safari Content blocking is enabled."
   }, 
   "safarinotificationbody": {
     "message": "Please disable some filter lists. More information in AdBlock's Options.", 
-    "description": "Body of a notification shown to Safari Content Blocking users with too many filter list rules"
+    "description": "Body of a notification shown to Safari Content Blocking users with too many filter list rules."
   }, 
   "safarinotificationtitle": {
     "message": "Content Blocking rule limit exceeded", 
-    "description": "Title of a notification shown to Safari Content Blocking users with too many filter list rules"
+    "description": "Title of a notification shown to Safari Content Blocking users with too many filter list rules."
   }, 
   "savebutton": {
     "message": "Simpan", 
@@ -1625,38 +1629,38 @@
   }, 
   "savereminder": {
     "message": "Jangan lupa untuk menyimpan!", 
-    "description": "Reminder to press save"
+    "description": "Reminder to click 'Save'"
   }, 
   "selectlanguage": {
     "message": " --Pilih bahasa-- ", 
-    "description": "Text for the first option in Langage Dropdown for Filter Lists tab in options. Include the ' -- ' on either side of your translation."
+    "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "show_ads_except_for": {
     "message": "Perlihatkan iklan dimanapun kecuali pada domain-domain ini...", 
-    "description": "Section title for blacklisting section of Customize tab"
+    "description": "Section title for the whitelisting section of Customize tab"
   }, 
   "show_block_element_menu": {
     "message": "Tampilkan butir menu \"Blokir Elemen\" saat klik kanan"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
-    "description": "Label for checkbox letting user choose whether the AdBlock tab should show in the developer tools window"
+    "description": "Checkbox letting user choose whether the AdBlock tab should be displayed in the developer tools window"
   }, 
   "show_on_adblock_button": {
     "message": "Tampilkan jumlah iklan yang diblokir di tombol AdBlock", 
-    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+    "description": "Checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   }, 
   "show_on_adblock_menu": {
     "message": "Tampilkan jumlah iklan yang diblokir di menu AdBlock", 
-    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+    "description": "Checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_on_button": {
     "message": "Show number of ads blocked on button", 
-    "description": "Label for checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
+    "description": "Checkbox letting user choose whether the toolbar button should show a badge with the number of ads blocked"
   }, 
   "show_on_menu": {
     "message": "Show number of ads blocked on menu", 
-    "description": "Label for checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
+    "description": "Checkbox letting user choose whether the AdBlock menu should show the number of ads blocked"
   }, 
   "show_resourcelist": {
     "message": "Show all requests", 
@@ -1664,23 +1668,23 @@
   }, 
   "showcontextmenus2": {
     "message": "Tambahkan barang ke menu klik kanan", 
-    "description": "Checkbox on the 'General' tab of the Options page"
+    "description": "Checkbox on the 'General' tab of the Options page."
   }, 
   "showlinkstolists2": {
     "message": "Tunjukkan alamat ke daftar filter", 
-    "description": "Option on the 'Filter lists' tab of the Options page"
+    "description": "Label to display filter list links"
   }, 
   "sliderexplanation": {
     "message": "Geser pengatur hingga iklan terblokir dengan benar pada halaman, dan elemen yang terblokir tidak terlihat.", 
-    "description": "Blacklister slider page message"
+    "description": "'Block an ad' wizard usage explanation"
   }, 
   "slidertitle": {
     "message": "Langkah 1: Tentukan apa yang akan diblokir", 
-    "description": "Blacklister slider page title"
+    "description": "'Block an ad' wizard title"
   }, 
   "sourcecode": {
     "message": "Kode sumber tersedia [[secara gratis]]!", 
-    "description": "Link to the source code of AdBlock on the Support tab of the options"
+    "description": "Link to the source code of AdBlock on the Support tab"
   }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> pada halaman ini", 
@@ -1728,15 +1732,15 @@
   }, 
   "status_paused": {
     "message": "AdBlock sedang dibekukan.", 
-    "description": "Message shown in toolbar button when AdBlock is paused"
+    "description": "Message shown in toolbar button when AdBlock is not running"
   }, 
   "stop_blocking_ads": {
     "message": "Berhenti memblokir iklan:", 
-    "description": "Section header on the 'Customize' tab"
+    "description": "Subtitle on the 'Customize' tab"
   }, 
   "storage_quota_exceeded": {
     "message": "Anda melebihi jumlah penyimpanan yang bisa dipakai oleh AdBlock. Batalkanlah langganan anda dari beberapa daftar filter!", 
-    "description": "Message shown when the user uses more storage than allowed by the browser"
+    "description": "Message shown when the user uses more storage than allowed by the browser."
   }, 
   "subframe": {
     "message": "Subframe", 
@@ -1744,11 +1748,11 @@
   }, 
   "subscribebutton": {
     "message": "Berlangganan", 
-    "description": "Subscribe to a list button"
+    "description": "Subscribe to a filter list button"
   }, 
   "subscribeconfirm": {
     "message": "Apakah Anda yakin bahwa Anda ingin berlangganan ke daftar filter $title$?", 
-    "description": "Prompt question before subscribing to the filter list", 
+    "description": "Prompt question before subscribing to a filter list", 
     "placeholders": {
       "title": {
         "content": "$1", 
@@ -1758,11 +1762,11 @@
   }, 
   "subscribingfailed": {
     "message": "Gagal!", 
-    "description": "abp: link subscriber result"
+    "description": "abp: link subscriber unsuccessful result"
   }, 
   "subscribingfinished": {
     "message": "Selesai!", 
-    "description": "abp: link subscriber result"
+    "description": "abp: link subscriber successful result"
   }, 
   "subscribingtitle": {
     "message": "Berlangganan daftar filter...", 
@@ -1779,23 +1783,23 @@
   }, 
   "supportsite": {
     "message": "Beritahukan kami di [[situs dukungan]] ini!", 
-    "description": "Link to the support site on the Support tab of the options"
+    "description": "Link to the support site on the Support tab"
   }, 
   "tabcustomize": {
     "message": "Penyesuaian", 
-    "description": "A tab on the options page"
+    "description": "A tab on the Options page"
   }, 
   "tabcustomizetitle": {
     "message": "Sesuaikan AdBlock", 
-    "description": "Title of the customize tab"
+    "description": "Title of the Customize tab of the Options page"
   }, 
   "tabfilterlists": {
     "message": "Daftar Filter", 
-    "description": "A tab on the options page"
+    "description": "A tab on the Options page"
   }, 
   "tabgeneral": {
     "message": "Umum", 
-    "description": "A tab on the options page"
+    "description": "A tab on the Options page"
   }, 
   "tabreloadcomplete": {
     "message": "Selesai! Kami memuat ulang halaman dengan iklan. Silakan periksa halaman tersebut untuk melihat apakah iklan hilang. Kemudian kembali ke halaman ini dan menjawab pertanyaan di bawah ini.", 
@@ -1803,7 +1807,7 @@
   }, 
   "tabsupport": {
     "message": "Dukungan", 
-    "description": "A tab on the options page"
+    "description": "A tab on the Options page"
   }, 
   "thirdparty": {
     "message": "Third-party", 
@@ -1815,7 +1819,7 @@
   }, 
   "translator_credit": {
     "message": "Diterjemahkan oleh:", 
-    "description": "Will be followed by a list of translator names (separate string)"
+    "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
   }, 
   "typehiding": {
     "message": "sembunyikan", 
@@ -1887,18 +1891,18 @@
   }, 
   "undo_last_block": {
     "message": "Batalkan blok saya pada domain ini", 
-    "description": "Menu entry to let the user cancel the result of running the blacklist wizard"
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
   "unexpected_filter_list_header": {
     "message": "Daftar saringan header tidak diperbolehkan disini"
   }, 
   "unpause_adblock": {
     "message": "Lanjutkan AdBlock", 
-    "description": "Link text to unpause AdBlock, displayed immediately after 'AdBlock is paused'"
+    "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused'"
   }, 
   "unpause_adblocking": {
     "message": "Unpause ad blocking", 
-    "description": "Menu entry to unpause the extension"
+    "description": "Menu entry to unpause the extension (start blocking ads again)"
   }, 
   "unsubscribe_from_all_confirmation": {
     "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
@@ -1906,18 +1910,18 @@
   }, 
   "unsubscribedlabel": {
     "message": "Tidak berlangganan.", 
-    "description": "Status label"
+    "description": "Status label when unselecting a filter list"
   }, 
   "update_now": {
     "message": "Perbaharui sekarang"
   }, 
   "updateddayago": {
     "message": "diperbaharui 1 hari lalu", 
-    "description": "Label for subscription"
+    "description": "Label for filter list subscription"
   }, 
   "updateddaysago": {
     "message": "diperbaharui $days$ hari lalu", 
-    "description": "Label for subscription", 
+    "description": "Label for filter list subscription", 
     "placeholders": {
       "days": {
         "content": "$1", 
@@ -1927,11 +1931,11 @@
   }, 
   "updatedhourago": {
     "message": "diperbaharui 1 jam lalu", 
-    "description": "Label for subscription"
+    "description": "Label for filter list subscription"
   }, 
   "updatedhoursago": {
     "message": "diperbaharui $hours$ jam lalu", 
-    "description": "Label for subscription", 
+    "description": "Label for filter list subscription", 
     "placeholders": {
       "hours": {
         "content": "$1", 
@@ -1941,11 +1945,11 @@
   }, 
   "updatedminuteago": {
     "message": "diperbaharui 1 menit lalu", 
-    "description": "Label for subscription"
+    "description": "Label for filter list subscription"
   }, 
   "updatedminutesago": {
     "message": "diperbaharui $minutes$ menit lalu", 
-    "description": "Label for subscription", 
+    "description": "Label for filter list subscription", 
     "placeholders": {
       "minutes": {
         "content": "$1", 
@@ -1955,11 +1959,11 @@
   }, 
   "updatedrightnow": {
     "message": "diperbaharui sekarang", 
-    "description": "Label for subscription"
+    "description": "Label for filter list subscription"
   }, 
   "updatedsecondsago": {
     "message": "diperbaharui $seconds$ detik yang lalu", 
-    "description": "Label for subscription", 
+    "description": "Label for filter list subscription", 
     "placeholders": {
       "seconds": {
         "content": "$1", 
@@ -1969,7 +1973,7 @@
   }, 
   "updatenowmessage2": {
     "message": "Saya akan mengambil pembaharuan secara otomatis; Anda juga dapat melakukan [[pembaharuan sekarang]]", 
-    "description": "Update filters text + button"
+    "description": "Update filters text and button"
   }, 
   "updateyourlists": {
     "message": "Pastikan daftar filter Anda telah diperbaharui:", 
@@ -1977,11 +1981,11 @@
   }, 
   "warning_overrules_filters": {
     "message": "Peringatan: pada semua situs lain anda akan melihat iklan!\nHal ini mengesampingkan semua filter lain untuk situs-situs tersebut.", 
-    "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a blacklisting filter"
+    "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a whitelist filter for all websites with only some exceptions."
   }, 
   "whatmakesadblocktick": {
     "message": "Ingin melihat bagaimana AdBlock bekerja?", 
-    "description": "Subtitle on the Support tab of the options"
+    "description": "Subtitle on the Support tab. This section contains links to the AdBlock source code and contributors. In this context, 'tick' can be replaced with the word 'work'."
   }, 
   "whats_this": {
     "message": "Apa ini?", 
@@ -1989,15 +1993,15 @@
   }, 
   "whatsnew": {
     "message": "Apa baru dalam rilis terbaru? Lihat [[changelog]]!", 
-    "description": "Link to display the changelog on the Support tab of the options"
+    "description": "Link to display the changelog on the Support tab"
   }, 
   "whitelist_all_youtube_channels": {
     "message": "Izinkan semua kanal langganan Youtube", 
-    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled"
+    "description": "Toolbar button menu entry, displayed only on youtube.com/feed/subscriptions and if the YouTube channel whitelisting option is enabled."
   }, 
   "whitelist_youtube_channel": {
     "message": "Daftar putih saluran $name$", 
-    "description": "Entry in the AdBlock menu, when a user is browsing YouTube and has enabled the YouTube channel whitelisting option", 
+    "description": "Entry in the AdBlock menu, only displayed when a user is browsing YouTube and has enabled the YouTube channel whitelisting option", 
     "placeholders": {
       "name": {
         "content": "$1", 
@@ -2018,11 +2022,11 @@
   }, 
   "whitelistertitle2": {
     "message": "Jangan jalankan AdBlock pada...", 
-    "description": "The title of the whitelister dialog"
+    "description": "The title of the whitelist wizard (Don't run on this page/pages on this domain)"
   }, 
   "wizardcantrunonframesets": {
     "message": "Fitur AdBlock ini tidak bekerja di situs ini karena menggunakan teknologi usang. Anda bisa memasukkannya ke sumber blacklist atau whitelist secara manual di tab 'Customize' halaman pengaturan.", 
-    "description": "Message (alert) shown when the user tries to use a blacklist/whitelist wizard on an old website"
+    "description": "Alert shown when the user tries to use a blacklist/whitelist wizard on an old website"
   }, 
   "work_around_hulu_problems": {
     "message": "Membetulkan video Hulu.com yang tidak bisa dimainkan (harus muat ulang browser anda)", 
@@ -2034,7 +2038,7 @@
   }, 
   "you_can_slide_to_change": {
     "message": "Anda dapat menggeser yang dibawah ini untuk mengganti secara tepat pada halaman apa AdBlock tidak akan berjalan.", 
-    "description": "Instructions for how to use the whitelister slider controls. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
+    "description": "Whitelist slider usage instructions. Sometimes only one slider will show, and sometimes two will show, and if possible the text should handle both cases."
   }, 
   "you_know_thats_a_bad_idea_right": {
     "message": "Semakin banyak daftar filter yang anda gunakan, semakinlambat AdBlock bekerja. Menggunakan terlalu banyak daftar bahkan dapat membuat browser anda berhenti bekerja pada beberapa situs. Tekan OK untuk tetap berlangganan pada daftar ini.", 
@@ -2042,6 +2046,6 @@
   }, 
   "ytadblockupdates": {
     "message": "AdBlock on YouTube™ updates", 
-    "description": "Subtitle on the Support tab of the options. Specific to the 'AdBlock on YouTube' extension."
+    "description": "Subtitle on the Support tab. Specific to the 'AdBlock on YouTube' extension."
   }
 }

@@ -550,7 +550,7 @@ SubscriptionUtil.validateUnderSubscription = function ()
       return true;
     } else
     {
-      $.cookie('noUnderubscriptionWarning', 'true', { expires: (1 / 48) });
+      $.cookie('noUnderSubscriptionWarning', 'true', { expires: (1 / 48) });
     }
   }
 
