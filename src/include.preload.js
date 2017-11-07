@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -15,9 +15,10 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* globals ElemHideEmulation, splitSelector */
-
 "use strict";
+
+let {splitSelector} = require("common");
+let {ElemHideEmulation} = require("content_elemHideEmulation");
 
 // This variable is also used by our other content scripts.
 let elemhide;
@@ -343,6 +344,7 @@ function ElemHide()
   this.shadow = this.createShadowTree();
   this.style = null;
   this.tracer = null;
+  this.inject = true;
 
   this.elemHideEmulation = new ElemHideEmulation(
     window,
@@ -384,11 +386,8 @@ ElemHide.prototype = {
     return shadow;
   },
 
-  addSelectors(selectors, filters)
+  injectSelectors(selectors, filters)
   {
-    if (selectors.length == 0)
-      return;
-
     if (!this.style)
     {
       // Create <style> element lazily, only if we add styles. Add it to
@@ -438,6 +437,33 @@ ElemHide.prototype = {
       this.style.sheet.insertRule(selector + "{display: none !important;}",
                                   this.style.sheet.cssRules.length);
     }
+  },
+
+  addSelectors(selectors, filters)
+  {
+    if (!selectors || selectors.length == 0)
+      return;
+
+    if (this.inject)
+    {
+      // Insert the style rules inline if we have been instructed by the
+      // background page to do so. This is usually the case, except on platforms
+      // that do support user stylesheets via the chrome.tabs.insertCSS API
+      // (Firefox 53 onwards for now and possibly Chrome in the near future).
+      // Once all supported platforms have implemented this API, we can remove
+      // the code below. See issue #5090.
+      // Related Chrome and Firefox issues:
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=632009
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=1310026
+      this.injectSelectors(selectors, filters);
+    }
+    else
+    {
+      ext.backgroundPage.sendMessage({
+        type: "elemhide.injectSelectors",
+        selectors
+      });
+    }
 
     if (this.tracer)
       this.tracer.addSelectors(selectors, filters);
@@ -460,7 +486,7 @@ ElemHide.prototype = {
 
   apply()
   {
-    ext.backgroundPage.sendMessage({type: "get-selectors"}, response =>
+    ext.backgroundPage.sendMessage({type: "elemhide.getSelectors"}, response =>
     {
       if (this.tracer)
         this.tracer.disconnect();
@@ -473,7 +499,13 @@ ElemHide.prototype = {
       if (response.trace)
         this.tracer = new ElementHidingTracer();
 
-      this.addSelectors(response.selectors);
+      this.inject = response.inject;
+
+      if (this.inject)
+        this.addSelectors(response.selectors);
+      else if (this.tracer)
+        this.tracer.addSelectors(response.selectors);
+
       this.elemHideEmulation.apply();
     });
   }
@@ -501,7 +533,7 @@ if (document instanceof HTMLDocument)
 
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -675,8 +707,11 @@ function injected(eventName, injectedIntoContentWindow)
   {
     for (let name of properties)
     {
-      Object.defineProperty(dest, name,
-                            Object.getOwnPropertyDescriptor(src, name));
+      if (src.hasOwnProperty(name))
+      {
+        Object.defineProperty(dest, name,
+                              Object.getOwnPropertyDescriptor(src, name));
+      }
     }
   }
 
@@ -857,7 +892,7 @@ function injected(eventName, injectedIntoContentWindow)
   function WrappedRTCPeerConnection(...args)
   {
     if (!(this instanceof WrappedRTCPeerConnection))
-      return WrappedRTCPeerConnection();
+      return RealRTCPeerConnection();
 
     let configuration = protectConfiguration(args[0]);
 

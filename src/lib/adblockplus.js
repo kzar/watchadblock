@@ -23,7 +23,6 @@ require.modules["info"] = function(module, exports)
 
 "use strict";
 
-let platform = "chromium";
 let platformVersion = null;
 let application = null;
 let applicationVersion;
@@ -39,13 +38,6 @@ while (match = regexp.exec(navigator.userAgent))
   if (app == "Chrome")
   {
     platformVersion = ver;
-  }
-  else if (app == "Edge")
-  {
-    platform = "edgehtml";
-    platformVersion = ver;
-    application = "edge";
-    applicationVersion = "0";
   }
   else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
   {
@@ -73,21 +65,121 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.18.0";
+exports.addonVersion = "3.19.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
 
-exports.platform = platform;
+exports.platform = "chromium";
 exports.platformVersion = platformVersion;
 
 return module.exports;
 };
+require.modules["cssInjection"] = function(module, exports)
+{
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** @module cssInjection */
+
+"use strict";
+
+const {RegExpFilter} = require("filterClasses");
+const {ElemHide} = require("elemHide");
+const {checkWhitelisted} = require("whitelisting");
+const {extractHostFromFrame} = require("url");
+const {port} = require("messaging");
+const devtools = require("devtools");
+
+let userStylesheetsSupported = true;
+
+function hideElements(tabId, frameId, selectors)
+{
+  let code = selectors.join(", ") + "{display: none !important;}";
+
+  try
+  {
+    chrome.tabs.insertCSS(tabId,
+      {
+        code,
+        cssOrigin: "user",
+        frameId,
+        matchAboutBlank: true,
+        runAt: "document_start"
+      }
+    );
+    return true;
+  }
+  catch (error)
+  {
+    if (/\bError processing cssOrigin\b/.test(error.message) == -1)
+      throw error;
+
+    userStylesheetsSupported = false;
+    return false;
+  }
+}
+
+port.on("elemhide.getSelectors", (msg, sender) =>
+{
+  let selectors;
+  let trace = devtools && devtools.hasPanel(sender.page);
+
+  if (!checkWhitelisted(sender.page, sender.frame,
+                        RegExpFilter.typeMap.DOCUMENT |
+                        RegExpFilter.typeMap.ELEMHIDE))
+  {
+    let specificOnly = checkWhitelisted(sender.page, sender.frame,
+                                        RegExpFilter.typeMap.GENERICHIDE);
+    selectors = ElemHide.getSelectorsForDomain(
+      extractHostFromFrame(sender.frame),
+      specificOnly ? ElemHide.SPECIFIC_ONLY : ElemHide.ALL_MATCHING
+    );
+  }
+  else
+  {
+    selectors = [];
+  }
+
+  if (selectors.length == 0 || userStylesheetsSupported &&
+      hideElements(sender.page.id, sender.frame.id, selectors))
+  {
+    if (trace)
+      return {selectors, trace: true, inject: false};
+
+    return {trace: false, inject: false};
+  }
+
+  return {selectors, trace, inject: true};
+});
+
+port.on("elemhide.injectSelectors", (msg, sender) =>
+{
+  return hideElements(sender.page.id, sender.frame.id, msg.selectors);
+});
+
+return module.exports;
+};
+
 require.modules["filterValidation"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -286,7 +378,7 @@ require.modules["icon"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -529,7 +621,7 @@ require.modules["io"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -719,7 +811,7 @@ require.modules["messaging"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -857,7 +949,7 @@ require.modules["notificationHelper"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -944,7 +1036,7 @@ function getNotificationButtons(notificationType, message)
         }
       ];
     }
-    if (["critical", "relentless"].indexOf(notificationType) == -1)
+    if (!["critical", "relentless"].includes(notificationType))
     {
       buttons.push({
         type: "configure",
@@ -1070,7 +1162,7 @@ function showNotification(notification)
         title,
         {
           lang: Utils.appLocale,
-          dir: ext.i18n.getMessage("@@bidi_dir"),
+          dir: Utils.readingDirection,
           body: message,
           icon: iconUrl
         }
@@ -1127,7 +1219,7 @@ let shouldDisplay =
 exports.shouldDisplay = (method, notificationType) =>
 {
   let methods = displayMethods[notificationType] || defaultDisplayMethods;
-  return methods.indexOf(method) > -1;
+  return methods.includes(method);
 };
 
 ext.pages.onLoading.addListener(page =>
@@ -1144,7 +1236,7 @@ require.modules["prefs"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -1195,7 +1287,7 @@ defaults.data_directory = "";
  * @see https://adblockplus.org/en/preferences#patternsbackups
  * @type {number}
  */
-defaults.patternsbackups = 5;
+defaults.patternsbackups = 0;
 /**
  * @see https://adblockplus.org/en/preferences#patternsbackupinterval
  * @type {number}
@@ -1290,6 +1382,14 @@ defaults.hidePlaceholders = true;
  * @type {boolean}
  */
 defaults.notifications_showui = false;
+
+/**
+ * Determines whether data has been cleaned up after upgrading from the legacy
+ * extension on Firefox.
+ *
+ * @type {boolean}
+ */
+defaults.data_cleanup_done = false;
 
 /**
  * Notification categories to be ignored.
@@ -1473,7 +1573,7 @@ require.modules["punycode"] = function(module, exports)
 {
 /*
  * Copyright (C) 2011-2016 Mathias Bynens <https://mathiasbynens.be/>
- * Copyright (C) 2016-2017 eyeo GmbH (Minor modifications for compatibility.)
+ * Copyright (C) 2016-present eyeo GmbH (Minor modifications for compatibility.)
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -1941,7 +2041,7 @@ require.modules["requestBlocker"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -1971,8 +2071,11 @@ const {port} = require("messaging");
 const devtools = require("devtools");
 
 // Chrome can't distinguish between OBJECT_SUBREQUEST and OBJECT requests.
-if (!("OBJECT_SUBREQUEST" in chrome.webRequest.ResourceType))
+if (!chrome.webRequest.ResourceType ||
+    !("OBJECT_SUBREQUEST" in chrome.webRequest.ResourceType))
+{
   RegExpFilter.typeMap.OBJECT_SUBREQUEST = RegExpFilter.typeMap.OBJECT;
+}
 
 // Map of content types reported by the browser to the respecitve content types
 // used by Adblock Plus. Other content types are simply mapped to OTHER.
@@ -2127,8 +2230,13 @@ port.on("request.blockedByWrapper", (msg, sender) =>
   // Chrome 58 onwards directly supports WebSocket blocking, so we can ignore
   // messages from the wrapper here (see https://crbug.com/129353). Hopefully
   // WebRTC will be supported soon too (see https://crbug.com/707683).
-  if (msg.requestType.toUpperCase() in chrome.webRequest.ResourceType)
+  // Edge supports neither webRequest.ResourceType nor WebSocket blocking yet:
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10297376/
+  if (chrome.webRequest.ResourceType &&
+      (msg.requestType.toUpperCase() in chrome.webRequest.ResourceType))
+  {
     return false;
+  }
 
   return ext.webRequest.onBeforeRequest._dispatch(
      new URL(msg.url),
@@ -2145,7 +2253,7 @@ require.modules["stats"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -2178,6 +2286,15 @@ let blockedPerPage = new ext.PageMap();
  * @return {Number}
  */
 exports.getBlockedPerPage = page => blockedPerPage.get(page) || 0;
+
+// Chrome automatically clears the browser action badge text when the URL of
+// the tab is updated, but Firefox doesn't.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=1395074
+ext.pages.onLoading.addListener(page =>
+{
+  if (!blockedPerPage.get(page))
+    page.browserAction.setBadge();
+});
 
 FilterNotifier.on("filter.hitCount", (filter, newValue, oldValue, page) =>
 {
@@ -2231,7 +2348,7 @@ require.modules["subscriptionInit"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -2423,7 +2540,7 @@ require.modules["tldjs"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -2479,7 +2596,7 @@ require.modules["url"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -2603,7 +2720,7 @@ require.modules["utils"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -2646,9 +2763,22 @@ let Utils = exports.Utils = {
   },
   get appLocale()
   {
-    let locale = ext.i18n.getMessage("@@ui_locale").replace(/_/g, "-");
+    let locale = ext.i18n.getUILanguage();
     Object.defineProperty(this, "appLocale", {value: locale, enumerable: true});
     return this.appLocale;
+  },
+  get readingDirection()
+  {
+    let direction = ext.i18n.getMessage("@@bidi_dir");
+    // This fallback is only necessary for Microsoft Edge
+    if (!direction)
+      direction = /^(?:ar|fa|he|ug|ur)\b/.test(this.appLocale) ? "rtl" : "ltr";
+    Object.defineProperty(
+      this,
+      "readingDirection",
+      {value: direction, enumerable: true}
+    );
+    return this.readingDirection;
   },
   generateChecksum(lines)
   {
@@ -2728,7 +2858,7 @@ require.modules["whitelisting"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -2937,7 +3067,7 @@ require.modules["devtools"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -3212,11 +3342,11 @@ function updateFilters(filters, added)
       // filters, we also wouldn't know if any new element matches.
       if (added)
       {
-        if (nonRequestTypes.indexOf(record.request.type) != -1)
+        if (nonRequestTypes.includes(record.request.type))
           continue;
 
         let filter = matchRequest(record.request);
-        if (filters.indexOf(filter) == -1)
+        if (!filters.includes(filter))
           continue;
 
         record.filter = filter;
@@ -3229,10 +3359,10 @@ function updateFilters(filters, added)
       // matches instead until the page is reloaded.
       else
       {
-        if (filters.indexOf(record.filter) == -1)
+        if (!filters.includes(record.filter))
           continue;
 
-        if (nonRequestTypes.indexOf(record.request.type) != -1)
+        if (nonRequestTypes.includes(record.request.type))
         {
           panel.port.postMessage({
             type: "remove-record",
@@ -3329,7 +3459,7 @@ require.modules["popupBlocker"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -3461,7 +3591,7 @@ require.modules["csp"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -3478,10 +3608,12 @@ require.modules["csp"] = function(module, exports)
 
 "use strict";
 
-// Before Chrome 58, the webRequest API did not intercept WebSocket
-// connections (see https://crbug.com/129353). Hence we inject CSP headers,
-// below, as a workaround.
-if (!("WEBSOCKET" in chrome.webRequest.ResourceType))
+// The webRequest API doesn't support WebSocket connection blocking in Microsoft
+// Edge and versions of Chrome before 58. Therefore for those we inject CSP
+// headers below as a workaround. See https://crbug.com/129353 and
+// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10297376/
+if (!chrome.webRequest.ResourceType ||
+    !("WEBSOCKET" in chrome.webRequest.ResourceType))
 {
   const {defaultMatcher} = require("matcher");
   const {BlockingFilter, RegExpFilter} = require("filterClasses");
@@ -3534,7 +3666,7 @@ require.modules["coreUtils"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -3576,7 +3708,7 @@ require.modules["common"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -3624,8 +3756,47 @@ function filterToRegExp(text)
     .replace(/(\.\*)$/, "");
 }
 
-if (typeof exports != "undefined")
-  exports.filterToRegExp = filterToRegExp;
+exports.filterToRegExp = filterToRegExp;
+
+function splitSelector(selector)
+{
+  if (selector.indexOf(",") == -1)
+    return [selector];
+
+  let selectors = [];
+  let start = 0;
+  let level = 0;
+  let sep = "";
+
+  for (let i = 0; i < selector.length; i++)
+  {
+    let chr = selector[i];
+
+    if (chr == "\\")        // ignore escaped characters
+      i++;
+    else if (chr == sep)    // don't split within quoted text
+      sep = "";             // e.g. [attr=","]
+    else if (sep == "")
+    {
+      if (chr == '"' || chr == "'")
+        sep = chr;
+      else if (chr == "(")  // don't split between parentheses
+        level++;            // e.g. :matches(div,span)
+      else if (chr == ")")
+        level = Math.max(0, level - 1);
+      else if (chr == "," && level == 0)
+      {
+        selectors.push(selector.substring(start, i));
+        start = i + 1;
+      }
+    }
+  }
+
+  selectors.push(selector.substring(start));
+  return selectors;
+}
+
+exports.splitSelector = splitSelector;
 
 return module.exports;
 };
@@ -3634,7 +3805,7 @@ require.modules["downloader"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -4061,7 +4232,7 @@ require.modules["elemHide"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -4463,7 +4634,7 @@ require.modules["elemHideEmulation"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -4550,7 +4721,7 @@ require.modules["events"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -4662,7 +4833,7 @@ require.modules["filterClasses"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -5697,7 +5868,7 @@ require.modules["filterListener"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -6023,7 +6194,7 @@ require.modules["filterNotifier"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -6115,7 +6286,7 @@ require.modules["filterStorage"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -7501,7 +7672,7 @@ require.modules["matcher"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -7962,7 +8133,7 @@ require.modules["notification"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -8162,17 +8333,6 @@ let Notification = exports.Notification =
    */
   _getNextToShow(url)
   {
-    function checkTarget(target, parameter, name, version)
-    {
-      let minVersionKey = parameter + "MinVersion";
-      let maxVersionKey = parameter + "MaxVersion";
-      return !((parameter in target && target[parameter] != name) ||
-               (minVersionKey in target &&
-                Services.vc.compare(version, target[minVersionKey]) < 0) ||
-               (maxVersionKey in target &&
-                Services.vc.compare(version, target[maxVersionKey]) > 0));
-    }
-
     let remoteData = [];
     if (typeof Prefs.notificationdata.data == "object" &&
         Prefs.notificationdata.data.notifications instanceof Array)
@@ -8186,6 +8346,30 @@ let Notification = exports.Notification =
 
     const {addonName, addonVersion, application,
            applicationVersion, platform, platformVersion} = require("info");
+
+    let targetChecks = {
+      extension: v => v == addonName,
+      extensionMinVersion:
+        v => Services.vc.compare(addonVersion, v) >= 0,
+      extensionMaxVersion:
+        v => Services.vc.compare(addonVersion, v) <= 0,
+      application: v => v == application,
+      applicationMinVersion:
+        v => Services.vc.compare(applicationVersion, v) >= 0,
+      applicationMaxVersion:
+        v => Services.vc.compare(applicationVersion, v) <= 0,
+      platform: v => v == platform,
+      platformMinVersion:
+        v => Services.vc.compare(platformVersion, v) >= 0,
+      platformMaxVersion:
+        v => Services.vc.compare(platformVersion, v) <= 0,
+      blockedTotalMin: v => Prefs.show_statsinpopup &&
+        Prefs.blocked_total >= v,
+      blockedTotalMax: v => Prefs.show_statsinpopup &&
+        Prefs.blocked_total <= v,
+      locales: v => v.includes(Utils.appLocale)
+    };
+
     let notificationToShow = null;
     for (let notification of notifications)
     {
@@ -8251,19 +8435,21 @@ let Notification = exports.Notification =
       if (notification.targets instanceof Array)
       {
         let match = false;
+
         for (let target of notification.targets)
         {
-          if (checkTarget(target, "extension", addonName, addonVersion) &&
-              checkTarget(target, "application", application,
-                          applicationVersion) &&
-              checkTarget(target, "platform", platform, platformVersion))
+          if (Object.keys(target).every(key =>
+              targetChecks.hasOwnProperty(key) &&
+              targetChecks[key](target[key])))
           {
             match = true;
             break;
           }
         }
         if (!match)
+        {
           continue;
+        }
       }
 
       if (!notificationToShow ||
@@ -8443,7 +8629,7 @@ require.modules["rsa"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -9079,7 +9265,7 @@ require.modules["subscriptionClasses"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -9659,7 +9845,7 @@ require.modules["synchronizer"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -10023,7 +10209,7 @@ require.modules["antiadblockInit"] = function(module, exports)
 {
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -10130,3 +10316,4 @@ require("popupBlocker");
 require("subscriptionInit");
 require("stats");
 require("csp");
+require("cssInjection");

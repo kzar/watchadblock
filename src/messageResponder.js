@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -36,9 +36,11 @@
   const {Synchronizer} = require("synchronizer");
 
   const info = require("info");
-  const {Subscription,
-         DownloadableSubscription,
-         SpecialSubscription} = require("subscriptionClasses");
+  const {
+    Subscription,
+    DownloadableSubscription,
+    SpecialSubscription
+  } = require("subscriptionClasses");
 
   // Some modules doesn't exist on Firefox. Moreover,
   // require() throws an exception on Firefox in that case.
@@ -71,6 +73,8 @@
   {
     let obj = convertObject(["disabled", "downloadStatus", "homepage",
                              "lastDownload", "title", "url"], subscription);
+    if (subscription instanceof SpecialSubscription)
+      obj.filters = subscription.filters.map(convertFilter);
     obj.isDownloading = Synchronizer.isExecuting(subscription.url);
     return obj;
   }
@@ -172,7 +176,7 @@
         bidiDir = isRtl ? "rtl" : "ltr";
       }
       else
-        bidiDir = ext.i18n.getMessage("@@bidi_dir");
+        bidiDir = Utils.readingDirection;
 
       return {locale: Utils.appLocale, bidiDir};
     }
@@ -195,7 +199,15 @@
   port.on("app.open", (message, sender) =>
   {
     if (message.what == "options")
-      ext.showOptions();
+    {
+      ext.showOptions(() =>
+      {
+        if (!message.action)
+          return;
+
+        sendMessage("app", message.action, ...message.args);
+      });
+    }
   });
 
   port.on("filters.add", (message, sender) =>
@@ -226,9 +238,9 @@
       let filters = [];
       const {checkWhitelisted} = require("whitelisting");
 
-      if (Prefs.enabled && !checkWhitelisted(sender.page, sender.frame,
-                            RegExpFilter.typeMap.DOCUMENT |
-                            RegExpFilter.typeMap.ELEMHIDE))
+      let isWhitelisted = checkWhitelisted(sender.page, sender.frame,
+        RegExpFilter.typeMap.DOCUMENT | RegExpFilter.typeMap.ELEMHIDE);
+      if (Prefs.enabled && !isWhitelisted)
       {
         let {hostname} = sender.frame.url;
         filters = ElemHideEmulation.getRulesForDomain(hostname);

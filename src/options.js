@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -69,19 +69,19 @@ const updateSubscription = wrapper({type: "subscriptions.update"}, "url");
 const importRawFilters = wrapper({type: "filters.importRaw"},
                                  "text", "removeExisting");
 const addFilter = wrapper({type: "filters.add"}, "text");
-const getFilters = wrapper({type: "filters.get"}, "subscriptionUrl");
 const removeFilter = wrapper({type: "filters.remove"}, "text");
+const quoteCSS = wrapper({type: "composer.quoteCSS"}, "CSS");
 
 const whitelistedDomainRegexp = /^@@\|\|([^/:]+)\^\$document$/;
 const statusMessages = new Map([
-   ["synchronize_invalid_url",
-    "filters_subscription_lastDownload_invalidURL"],
-   ["synchronize_connection_error",
-    "filters_subscription_lastDownload_connectionError"],
-   ["synchronize_invalid_data",
-    "filters_subscription_lastDownload_invalidData"],
-   ["synchronize_checksum_mismatch",
-    "filters_subscription_lastDownload_checksumMismatch"]
+  ["synchronize_invalid_url",
+   "filters_subscription_lastDownload_invalidURL"],
+  ["synchronize_connection_error",
+   "filters_subscription_lastDownload_connectionError"],
+  ["synchronize_invalid_data",
+   "filters_subscription_lastDownload_invalidData"],
+  ["synchronize_checksum_mismatch",
+   "filters_subscription_lastDownload_checksumMismatch"]
 ]);
 
 let delayedSubscriptionSelection = null;
@@ -118,6 +118,9 @@ function loadOptions()
       {
         setLinks("found-a-bug", url);
       });
+
+      if (platform == "gecko")
+        $("#firefox-warning").removeAttr("hidden");
     });
   });
 
@@ -187,16 +190,13 @@ $(loadOptions);
 
 function convertSpecialSubscription(subscription)
 {
-  getFilters(subscription.url, filters =>
+  for (let filter of subscription.filters)
   {
-    for (let filter of filters)
-    {
-      if (whitelistedDomainRegexp.test(filter.text))
-        appendToListBox("excludedDomainsBox", RegExp.$1);
-      else
-        appendToListBox("userFiltersBox", filter.text);
-    }
-  });
+    if (whitelistedDomainRegexp.test(filter.text))
+      appendToListBox("excludedDomainsBox", RegExp.$1);
+    else
+      appendToListBox("userFiltersBox", filter.text);
+  }
 }
 
 // Reloads the displayed subscriptions and filters
@@ -533,9 +533,14 @@ function appendToListBox(boxId, text)
 function removeFromListBox(boxId, text)
 {
   let list = document.getElementById(boxId);
-  let selector = "option[value=" + CSS.escape(text) + "]";
-  for (let option of list.querySelectorAll(selector))
-    list.removeChild(option);
+  // Edge does not support CSS.escape yet:
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/101410/
+  quoteCSS(text, escapedCSS =>
+  {
+    let selector = "option[value=" + escapedCSS + "]";
+    for (let option of list.querySelectorAll(selector))
+      list.removeChild(option);
+  });
 }
 
 function addWhitelistDomain(event)
@@ -660,7 +665,7 @@ function addSubscriptionEntry(subscription)
 
   getPref("additional_subscriptions", additionalSubscriptions =>
   {
-    if (additionalSubscriptions.indexOf(subscription.url) != -1)
+    if (additionalSubscriptions.includes(subscription.url))
       removeButton.style.visibility = "hidden";
   });
 

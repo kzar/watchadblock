@@ -1,6 +1,23 @@
+if (typeof require != "function")
+{
+  var require = function(module)
+  {
+    if (!(module in require.scopes))
+    {
+      let scope = {exports: {}};
+      require.scopes[module] = require.modules[module](scope, scope.exports);
+    }
+    return require.scopes[module];
+  };
+  require.modules = Object.create(null);
+  require.scopes = Object.create(null);
+}
+
+require.modules["common"] = function(module, exports)
+{
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -48,34 +65,7 @@ function filterToRegExp(text)
     .replace(/(\.\*)$/, "");
 }
 
-if (typeof exports != "undefined")
-  exports.filterToRegExp = filterToRegExp;
-
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/* globals filterToRegExp */
-
-"use strict";
-
-const MIN_INVOCATION_INTERVAL = 3000;
-const abpSelectorRegexp = /:-abp-([\w-]+)\(/i;
-
-let reportError = () => {};
+exports.filterToRegExp = filterToRegExp;
 
 function splitSelector(selector)
 {
@@ -115,6 +105,38 @@ function splitSelector(selector)
   return selectors;
 }
 
+exports.splitSelector = splitSelector;
+
+return module.exports;
+};
+
+require.modules["content_elemHideEmulation"] = function(module, exports)
+{
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const {filterToRegExp, splitSelector} = require("common");
+
+let MIN_INVOCATION_INTERVAL = 3000;
+const MAX_SYNCHRONOUS_PROCESSING_TIME = 50;
+const abpSelectorRegexp = /:-abp-([\w-]+)\(/i;
+
 /** Return position of node from parent.
  * @param {Node} node the node to find the position of.
  * @return {number} One-based index like for :nth-child(), or 0 on error.
@@ -130,6 +152,8 @@ function positionInParent(node)
 
 function makeSelector(node, selector)
 {
+  if (node == null)
+    return null;
   if (!node.parentElement)
   {
     let newSelector = ":root";
@@ -221,7 +245,16 @@ function* evaluate(chain, index, prefix, subtree, styles)
   }
   for (let [selector, element] of
        chain[index].getSelectors(prefix, subtree, styles))
-    yield* evaluate(chain, index + 1, selector, element, styles);
+  {
+    if (selector == null)
+      yield null;
+    else
+      yield* evaluate(chain, index + 1, selector, element, styles);
+  }
+  // Just in case the getSelectors() generator above had to run some heavy
+  // document.querySelectorAll() call which didn't produce any results, make
+  // sure there is at least one point where execution can pause.
+  yield null;
 }
 
 function PlainSelector(selector)
@@ -244,6 +277,7 @@ PlainSelector.prototype = {
 };
 
 const incompletePrefixRegexp = /[\s>+~]$/;
+const relativeSelectorRegexp = /^[>+~]/;
 
 function HasSelector(selectors)
 {
@@ -279,8 +313,55 @@ HasSelector.prototype = {
     {
       let iter = evaluate(this._innerSelectors, 0, "", element, styles);
       for (let selector of iter)
-        if (element.querySelector(selector))
-          yield element;
+      {
+        if (selector == null)
+        {
+          yield null;
+          continue;
+        }
+        if (relativeSelectorRegexp.test(selector))
+          selector = ":scope" + selector;
+        try
+        {
+          if (element.querySelector(selector))
+            yield element;
+        }
+        catch (e)
+        {
+          // :scope isn't supported on Edge, ignore error caused by it.
+        }
+      }
+      yield null;
+    }
+  }
+};
+
+function ContainsSelector(textContent)
+{
+  this._text = textContent;
+}
+
+ContainsSelector.prototype = {
+  requiresHiding: true,
+
+  *getSelectors(prefix, subtree, stylesheet)
+  {
+    for (let element of this.getElements(prefix, subtree, stylesheet))
+      yield [makeSelector(element, ""), subtree];
+  },
+
+  *getElements(prefix, subtree, stylesheet)
+  {
+    let actualPrefix = (!prefix || incompletePrefixRegexp.test(prefix)) ?
+        prefix + "*" : prefix;
+    let elements = subtree.querySelectorAll(actualPrefix);
+
+    for (let element of elements)
+    {
+      if (element.textContent.includes(this._text))
+        yield element;
+      else
+        yield null;
     }
   }
 };
@@ -309,7 +390,17 @@ PropsSelector.prototype = {
     for (let style of styles)
       if (regexp.test(style.style))
         for (let subSelector of style.subSelectors)
+        {
+          if (subSelector.startsWith("*") &&
+              !incompletePrefixRegexp.test(prefix))
+          {
+            subSelector = subSelector.substr(1);
+          }
+          let idx = subSelector.lastIndexOf("::");
+          if (idx != -1)
+            subSelector = subSelector.substr(0, idx);
           yield prefix + subSelector;
+        }
   },
 
   *getSelectors(prefix, subtree, styles)
@@ -319,6 +410,12 @@ PropsSelector.prototype = {
   }
 };
 
+function isSelectorHidingOnlyPattern(pattern)
+{
+  return pattern.selectors.some(s => s.preferHideWithSelector) &&
+    !pattern.selectors.some(s => s.requiresHiding);
+}
+
 function ElemHideEmulation(window, getFiltersFunc, addSelectorsFunc,
                            hideElemsFunc)
 {
@@ -326,6 +423,7 @@ function ElemHideEmulation(window, getFiltersFunc, addSelectorsFunc,
   this.getFiltersFunc = getFiltersFunc;
   this.addSelectorsFunc = addSelectorsFunc;
   this.hideElemsFunc = hideElemsFunc;
+  this.observer = new window.MutationObserver(this.observe.bind(this));
 }
 
 ElemHideEmulation.prototype = {
@@ -379,6 +477,8 @@ ElemHideEmulation.prototype = {
         return null;
       selectors.push(new HasSelector(hasSelectors));
     }
+    else if (match[1] == "contains")
+      selectors.push(new ContainsSelector(content.text));
     else
     {
       // this is an error, can't parse selector.
@@ -395,10 +495,16 @@ ElemHideEmulation.prototype = {
 
     selectors.push(...suffix);
 
+    if (selectors.length == 1 && selectors[0] instanceof ContainsSelector)
+    {
+      this.window.console.error(
+        new SyntaxError("Failed to parse Adblock Plus " +
+                        `selector ${selector}, can't ` +
+                        "have a lonely :-abp-contains()."));
+      return null;
+    }
     return selectors;
   },
-
-  _lastInvocation: 0,
 
   /**
    * Processes the current document and applies all rules to it.
@@ -407,11 +513,11 @@ ElemHideEmulation.prototype = {
    *    made reprocessing necessary. This parameter shouldn't be passed in for
    *    the initial processing, all of document's stylesheets will be considered
    *    then and all rules, including the ones not dependent on styles.
+   * @param {function} [done]
+   *    Callback to call when done.
    */
-  addSelectors(stylesheets)
+  _addSelectors(stylesheets, done)
   {
-    this._lastInvocation = Date.now();
-
     let selectors = [];
     let selectorFilters = [];
 
@@ -424,8 +530,11 @@ ElemHideEmulation.prototype = {
     if (!stylesheets)
       stylesheets = this.window.document.styleSheets;
 
-    for (let stylesheet of stylesheets)
+    // Chrome < 51 doesn't have an iterable StyleSheetList
+    // https://issues.adblockplus.org/ticket/5381
+    for (let i = 0; i < stylesheets.length; i++)
     {
+      let stylesheet = stylesheets[i];
       // Explicitly ignore third-party stylesheets to ensure consistent behavior
       // between Firefox and Chrome.
       if (!this.isSameOrigin(stylesheet))
@@ -445,62 +554,146 @@ ElemHideEmulation.prototype = {
     }
 
     let {document} = this.window;
-    for (let pattern of this.patterns)
-    {
-      if (stylesheetOnlyChange &&
-          !pattern.selectors.some(selector => selector.dependsOnStyles))
-      {
-        continue;
-      }
 
-      for (let selector of evaluate(pattern.selectors,
-                                    0, "", document, cssStyles))
+    let patterns = this.patterns.slice();
+    let pattern = null;
+    let generator = null;
+
+    let processPatterns = () =>
+    {
+      let cycleStart = this.window.performance.now();
+
+      if (!pattern)
       {
-        if (pattern.selectors.some(s => s.preferHideWithSelector) &&
-            !pattern.selectors.some(s => s.requiresHiding))
+        if (!patterns.length)
         {
-          selectors.push(selector);
-          selectorFilters.push(pattern.text);
+          this.addSelectorsFunc(selectors, selectorFilters);
+          this.hideElemsFunc(elements, elementFilters);
+          if (typeof done == "function")
+            done();
+          return;
         }
-        else
+
+        pattern = patterns.shift();
+
+        if (stylesheetOnlyChange &&
+            !pattern.selectors.some(selector => selector.dependsOnStyles))
         {
-          for (let element of document.querySelectorAll(selector))
+          pattern = null;
+          return processPatterns();
+        }
+        generator = evaluate(pattern.selectors, 0, "", document, cssStyles);
+      }
+      for (let selector of generator)
+      {
+        if (selector != null)
+        {
+          if (isSelectorHidingOnlyPattern(pattern))
           {
-            elements.push(element);
-            elementFilters.push(pattern.text);
+            selectors.push(selector);
+            selectorFilters.push(pattern.text);
+          }
+          else
+          {
+            for (let element of document.querySelectorAll(selector))
+            {
+              elements.push(element);
+              elementFilters.push(pattern.text);
+            }
           }
         }
+        if (this.window.performance.now() -
+            cycleStart > MAX_SYNCHRONOUS_PROCESSING_TIME)
+        {
+          this.window.setTimeout(processPatterns, 0);
+          return;
+        }
       }
-    }
+      pattern = null;
+      return processPatterns();
+    };
 
-    this.addSelectorsFunc(selectors, selectorFilters);
-    this.hideElemsFunc(elements, elementFilters);
+    processPatterns();
   },
 
-  _stylesheetQueue: null,
+  // This property is only used in the tests
+  // to shorten the invocation interval
+  get MIN_INVOCATION_INTERVAL()
+  {
+    return MIN_INVOCATION_INTERVAL;
+  },
+
+  set MIN_INVOCATION_INTERVAL(interval)
+  {
+    MIN_INVOCATION_INTERVAL = interval;
+  },
+
+  _filteringInProgress: false,
+  _lastInvocation: -MIN_INVOCATION_INTERVAL,
+  _scheduledProcessing: null,
+
+  /**
+   * Re-run filtering either immediately or queued.
+   * @param {CSSStyleSheet[]} [stylesheets]
+   *    new stylesheets to be processed. This parameter should be omitted
+   *    for DOM modification (full reprocessing required).
+   */
+  queueFiltering(stylesheets)
+  {
+    let completion = () =>
+    {
+      this._lastInvocation = this.window.performance.now();
+      this._filteringInProgress = false;
+      if (this._scheduledProcessing)
+      {
+        let newStylesheets = this._scheduledProcessing.stylesheets;
+        this._scheduledProcessing = null;
+        this.queueFiltering(newStylesheets);
+      }
+    };
+
+    if (this._scheduledProcessing)
+    {
+      if (!stylesheets)
+        this._scheduledProcessing.stylesheets = null;
+      else if (this._scheduledProcessing.stylesheets)
+        this._scheduledProcessing.stylesheets.push(...stylesheets);
+    }
+    else if (this._filteringInProgress)
+    {
+      this._scheduledProcessing = {stylesheets};
+    }
+    else if (this.window.performance.now() -
+             this._lastInvocation < MIN_INVOCATION_INTERVAL)
+    {
+      this._scheduledProcessing = {stylesheets};
+      this.window.setTimeout(() =>
+      {
+        let newStylesheets = this._scheduledProcessing.stylesheets;
+        this._filteringInProgress = true;
+        this._scheduledProcessing = null;
+        this._addSelectors(newStylesheets, completion);
+      },
+      MIN_INVOCATION_INTERVAL -
+      (this.window.performance.now() - this._lastInvocation));
+    }
+    else
+    {
+      this._filteringInProgress = true;
+      this._addSelectors(stylesheets, completion);
+    }
+  },
 
   onLoad(event)
   {
     let stylesheet = event.target.sheet;
     if (stylesheet)
-    {
-      if (!this._stylesheetQueue &&
-          Date.now() - this._lastInvocation < MIN_INVOCATION_INTERVAL)
-      {
-        this._stylesheetQueue = [];
-        this.window.setTimeout(() =>
-        {
-          let stylesheets = this._stylesheetQueue;
-          this._stylesheetQueue = null;
-          this.addSelectors(stylesheets);
-        }, MIN_INVOCATION_INTERVAL - (Date.now() - this._lastInvocation));
-      }
+      this.queueFiltering([stylesheet]);
+  },
 
-      if (this._stylesheetQueue)
-        this._stylesheetQueue.push(stylesheet);
-      else
-        this.addSelectors([stylesheet]);
-    }
+  observe(mutations)
+  {
+    this.queueFiltering();
   },
 
   apply()
@@ -518,10 +711,24 @@ ElemHideEmulation.prototype = {
       if (this.patterns.length > 0)
       {
         let {document} = this.window;
-        this.addSelectors();
+        this.queueFiltering();
+        this.observer.observe(
+          document,
+          {
+            childList: true,
+            attributes: true,
+            characterData: true,
+            subtree: true
+          }
+        );
         document.addEventListener("load", this.onLoad.bind(this), true);
       }
     });
   }
+};
+
+exports.ElemHideEmulation = ElemHideEmulation;
+
+return module.exports;
 };
 

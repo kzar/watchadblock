@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -317,6 +317,16 @@
 
   /* Browser actions */
 
+  // On Firefox for Android, open the options page directly when the browser
+  // action is clicked.
+  if (!("getPopup" in chrome.browserAction))
+  {
+    chrome.browserAction.onClicked.addListener(() =>
+    {
+      ext.showOptions();
+    });
+  }
+
   let BrowserAction = function(tabId)
   {
     this._tabId = tabId;
@@ -327,33 +337,50 @@
     {
       if ("iconPath" in this._changes)
       {
-        chrome.browserAction.setIcon({
-          tabId: this._tabId,
-          path: {
-            16: this._changes.iconPath.replace("$size", "16"),
-            19: this._changes.iconPath.replace("$size", "19"),
-            20: this._changes.iconPath.replace("$size", "20"),
-            32: this._changes.iconPath.replace("$size", "32"),
-            38: this._changes.iconPath.replace("$size", "38"),
-            40: this._changes.iconPath.replace("$size", "40")
-          }
-        });
+        // Firefox for Android displays the browser action not as an icon but
+        // as a menu item. There is no icon, but such an option may be added in
+        // the future.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1331746
+        if ("setIcon" in chrome.browserAction)
+        {
+          chrome.browserAction.setIcon({
+            tabId: this._tabId,
+            path: {
+              16: this._changes.iconPath.replace("$size", "16"),
+              19: this._changes.iconPath.replace("$size", "19"),
+              20: this._changes.iconPath.replace("$size", "20"),
+              32: this._changes.iconPath.replace("$size", "32"),
+              38: this._changes.iconPath.replace("$size", "38"),
+              40: this._changes.iconPath.replace("$size", "40")
+            }
+          });
+        }
       }
 
       if ("badgeText" in this._changes)
       {
-        chrome.browserAction.setBadgeText({
-          tabId: this._tabId,
-          text: this._changes.badgeText
-        });
+        // There is no badge on Firefox for Android; the browser action is
+        // simply a menu item.
+        if ("setBadgeText" in chrome.browserAction)
+        {
+          chrome.browserAction.setBadgeText({
+            tabId: this._tabId,
+            text: this._changes.badgeText
+          });
+        }
       }
 
       if ("badgeColor" in this._changes)
       {
-        chrome.browserAction.setBadgeBackgroundColor({
-          tabId: this._tabId,
-          color: this._changes.badgeColor
-        });
+        // There is no badge on Firefox for Android; the browser action is
+        // simply a menu item.
+        if ("setBadgeBackgroundColor" in chrome.browserAction)
+        {
+          chrome.browserAction.setBadgeBackgroundColor({
+            tabId: this._tabId,
+            color: this._changes.badgeColor
+          });
+        }
       }
 
       this._changes = null;
@@ -423,7 +450,9 @@
 
   let updateContextMenu = () =>
   {
-    if (contextMenuUpdating)
+    // Firefox for Android does not support context menus.
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1269062
+    if (!("contextMenus" in chrome) || contextMenuUpdating)
       return;
 
     contextMenuUpdating = true;
@@ -488,11 +517,14 @@
 
   chrome.tabs.onActivated.addListener(updateContextMenu);
 
-  chrome.windows.onFocusChanged.addListener(windowId =>
+  if ("windows" in chrome)
   {
-    if (windowId != chrome.windows.WINDOW_ID_NONE)
-      updateContextMenu();
-  });
+    chrome.windows.onFocusChanged.addListener(windowId =>
+    {
+      if (windowId != chrome.windows.WINDOW_ID_NONE)
+        updateContextMenu();
+    });
+  }
 
 
   /* Web requests */
@@ -617,7 +649,10 @@
     {
       sender.page = new Page(rawSender.tab);
       sender.frame = {
-        url: new URL(rawSender.url),
+        id: rawSender.frameId,
+        // In Edge requests from internal extension pages
+        // (protocol ms-browser-extension://) do no have a sender URL.
+        url: rawSender.url ? new URL(rawSender.url) : null,
         get parent()
         {
           let frames = framesOfTabs.get(rawSender.tab.id);
@@ -636,7 +671,7 @@
 
     return ext.onMessage._dispatch(
       message, sender, sendResponse
-    ).indexOf(true) != -1;
+    ).includes(true);
   });
 
 
@@ -662,9 +697,16 @@
 
   /* Options */
 
-  if ("openOptionsPage" in chrome.runtime)
+  ext.showOptions = callback =>
   {
-    ext.showOptions = callback =>
+    let info = require("info");
+
+    if ("openOptionsPage" in chrome.runtime &&
+        // Some versions of Firefox for Android before version 57 do have a
+        // runtime.openOptionsPage but it doesn't do anything.
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1364945
+        (info.application != "fennec" ||
+         parseInt(info.applicationVersion, 10) >= 57))
     {
       if (!callback)
       {
@@ -689,45 +731,47 @@
           });
         });
       }
-    };
-  }
-  else
-  {
-    // Edge does not yet support runtime.openOptionsPage (tested version 38)
-    // and so this workaround needs to stay for now.
-    ext.showOptions = callback =>
+    }
+    else if ("windows" in chrome)
     {
-      chrome.windows.getLastFocused(win =>
+      // Edge does not yet support runtime.openOptionsPage (tested version 38)
+      // and so this workaround needs to stay for now.
+      // We are not using extension.getURL to get the absolute path here
+      // because of the Edge issue:
+      // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10276332/
+      let optionsUrl = "options.html";
+      let fullOptionsUrl = ext.getURL(optionsUrl);
+
+      chrome.tabs.query({}, tabs =>
       {
-        let optionsUrl = chrome.extension.getURL("options.html");
-        let queryInfo = {url: optionsUrl};
-
-        // extension pages can't be accessed in incognito windows. In order to
-        // correctly mimic the way in which Chrome opens extension options,
-        // we have to focus the options page in any other window.
-        if (!win.incognito)
-          queryInfo.windowId = win.id;
-
-        chrome.tabs.query(queryInfo, tabs =>
+        // We find a tab ourselves because Edge has a bug when quering tabs
+        // with extension URL protocol:
+        // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8094141/ 
+        // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8604703/
+        let tab = tabs.find(element => element.url == fullOptionsUrl);
+        if (tab)
         {
-          if (tabs.length > 0)
-          {
-            let tab = tabs[0];
+          chrome.windows.update(tab.windowId, {focused: true});
+          chrome.tabs.update(tab.id, {active: true});
 
-            chrome.windows.update(tab.windowId, {focused: true});
-            chrome.tabs.update(tab.id, {active: true});
-
-            if (callback)
-              callback(new Page(tab));
-          }
-          else
-          {
-            ext.pages.open(optionsUrl, callback);
-          }
-        });
+          if (callback)
+            callback(new Page(tab));
+        }
+        else
+        {
+          ext.pages.open(optionsUrl, callback);
+        }
       });
-    };
-  }
+    }
+    else
+    {
+      // Firefox for Android before version 57 does not support
+      // runtime.openOptionsPage, nor does it support the windows API. Since
+      // there is effectively only one window on the mobile browser, there's no
+      // need to bring it into focus.
+      ext.pages.open("options.html", callback);
+    }
+  };
 
   /* Windows */
   ext.windows = {

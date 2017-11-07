@@ -1,6 +1,6 @@
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-2017 eyeo GmbH
+ * Copyright (C) 2006-present eyeo GmbH
  *
  * Adblock Plus is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -26,6 +26,7 @@ const {Prefs} = require("prefs");
 const {extractHostFromFrame, stringifyURL, isThirdParty} = require("url");
 const {getKey, checkWhitelisted} = require("whitelisting");
 const {port} = require("messaging");
+const info = require("info");
 
 let readyPages = new ext.PageMap();
 
@@ -118,7 +119,7 @@ function composeFilters(details)
         if (specificOnly)
           filterText += "$domain=" + docDomain;
 
-        if (filters.indexOf(filterText) == -1)
+        if (!filters.includes(filterText))
           filters.push(filterText);
       }
     }
@@ -180,8 +181,14 @@ function updateContextMenu(page, filter)
 
   if (typeof filter == "undefined")
     filter = checkWhitelisted(page);
-  if (!filter && Prefs.shouldShowBlockElementMenu && readyPages.has(page))
+
+  // We don't support the filter composer on Firefox for Android, because the
+  // user experience on mobile is quite different.
+  if (info.application != "fennec" &&
+      !filter && Prefs.shouldShowBlockElementMenu && readyPages.has(page))
+  {
     page.contextMenus.create(contextMenuItem);
+  }
 }
 
 FilterNotifier.on("page.WhitelistingStateRevalidate", updateContextMenu);
@@ -247,6 +254,11 @@ port.on("composer.getFilters", (message, sender) =>
     page: sender.page,
     frame: sender.frame
   });
+});
+
+port.on("composer.quoteCSS", (message, sender) =>
+{
+  return quoteCSS(message.CSS);
 });
 
 ext.pages.onLoading.addListener(page =>
