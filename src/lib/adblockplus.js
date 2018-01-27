@@ -65,7 +65,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.22.1";
+exports.addonVersion = "3.23.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -105,39 +105,25 @@ const {extractHostFromFrame} = require("url");
 const {port} = require("messaging");
 const devtools = require("devtools");
 
-let userStylesheetsSupported = true;
+const userStyleSheetsSupported = "extensionTypes" in chrome &&
+                                 "CSSOrigin" in chrome.extensionTypes;
 
 function hideElements(tabId, frameId, selectors)
 {
-  let code = selectors.join(", ") + "{display: none !important;}";
-
-  try
-  {
-    chrome.tabs.insertCSS(tabId,
-      {
-        code,
-        cssOrigin: "user",
-        frameId,
-        matchAboutBlank: true,
-        runAt: "document_start"
-      }
-    );
-    return true;
-  }
-  catch (error)
-  {
-    if (/\bError processing cssOrigin\b/.test(error.message) == -1)
-      throw error;
-
-    userStylesheetsSupported = false;
-    return false;
-  }
+  chrome.tabs.insertCSS(tabId, {
+    code: selectors.join(", ") + "{display: none !important;}",
+    cssOrigin: "user",
+    frameId,
+    matchAboutBlank: true,
+    runAt: "document_start"
+  });
 }
 
 port.on("elemhide.getSelectors", (msg, sender) =>
 {
-  let selectors;
+  let selectors = [];
   let trace = devtools && devtools.hasPanel(sender.page);
+  let inject = !userStyleSheetsSupported;
 
   if (!checkWhitelisted(sender.page, sender.frame,
                         RegExpFilter.typeMap.DOCUMENT |
@@ -150,26 +136,20 @@ port.on("elemhide.getSelectors", (msg, sender) =>
       specificOnly ? ElemHide.SPECIFIC_ONLY : ElemHide.ALL_MATCHING
     );
   }
-  else
-  {
-    selectors = [];
-  }
 
-  if (selectors.length == 0 || userStylesheetsSupported &&
-      hideElements(sender.page.id, sender.frame.id, selectors))
-  {
-    if (trace)
-      return {selectors, trace: true, inject: false};
+  if (!inject && selectors.length > 0)
+    hideElements(sender.page.id, sender.frame.id, selectors);
 
-    return {trace: false, inject: false};
-  }
+  let response = {trace, inject};
+  if (trace || inject)
+    response.selectors = selectors;
 
-  return {selectors, trace, inject: true};
+  return response;
 });
 
 port.on("elemhide.injectSelectors", (msg, sender) =>
 {
-  return hideElements(sender.page.id, sender.frame.id, msg.selectors);
+  hideElements(sender.page.id, sender.frame.id, msg.selectors);
 });
 
 return module.exports;
