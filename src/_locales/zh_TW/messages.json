@@ -624,6 +624,14 @@
     "message": "Display AdBlock in", 
     "description": "Text shown before language selector drop-down."
   }, 
+  "domain_pause_adblock": {
+    "message": "Pause on this site", 
+    "description": "Menu entry to pause AdBlock on this domain (stop blocking ads)"
+  }, 
+  "domain_unpause_adblock": {
+    "message": "Unpause AdBlock on this site", 
+    "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused on this site'"
+  }, 
   "donate_to_adblock": {
     "message": "Love AdBlock? Consider donating!", 
     "description": "Text of a donate link in the toolbar button menu"
@@ -634,6 +642,10 @@
   }, 
   "dont_run_on_pages_on_domain": {
     "message": "不在這個網域的頁面使用", 
+    "description": "Menu entry to open the whitelist wizard"
+  }, 
+  "dont_run_on_pages_on_site": {
+    "message": "Don't run on pages on this site", 
     "description": "Menu entry to open the whitelist wizard"
   }, 
   "dont_run_on_this_page": {
@@ -1392,7 +1404,7 @@
     "description": "Generic message displayed during processes that take some time"
   }, 
   "local_cdn_option": {
-    "message": "Enable Local CDN for popular website libraries", 
+    "message": "Enable local content caching for popular website libraries", 
     "description": "Option to let the user enable Local CDN feature."
   }, 
   "malwarecheck": {
@@ -1574,6 +1586,10 @@
     "message": "暫停 AdBlock", 
     "description": "Menu entry to pause AdBlock (stop blocking ads)"
   }, 
+  "pause_adblock_everywhere": {
+    "message": "Pause on all sites", 
+    "description": "Menu entry to pause AdBlock everywhere (stop blocking ads)"
+  }, 
   "pause_adblocking": {
     "message": "Pause ad blocking", 
     "description": "Menu entry to pause the extension (stop blocking ads)"
@@ -1644,6 +1660,10 @@
         "example": "example.com"
       }
     }
+  }, 
+  "resume_blocking_ads": {
+    "message": "Resume blocking ads", 
+    "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused on this site' or 'AdBlock is paused on all sites'"
   }, 
   "retryaftersubscribe": {
     "message": "先訂閱此過濾清單，然後重試一次：$list_title$", 
@@ -1794,9 +1814,17 @@
   "stats_title": {
     "message": "已過濾廣告"
   }, 
+  "status_domain_paused": {
+    "message": "AdBlock is paused on this site.", 
+    "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
   "status_paused": {
     "message": "AdBlock 已暫停", 
     "description": "Message shown in toolbar button when AdBlock is not running"
+  }, 
+  "status_universal_paused": {
+    "message": "AdBlock is paused on all sites.", 
+    "description": "Message shown in toolbar button when AdBlock is not running on all domains"
   }, 
   "stop_blocking_ads": {
     "message": "停止阻擋廣告:", 
@@ -1963,6 +1991,10 @@
   }, 
   "undo_last_block": {
     "message": "取消我在此網域上建立的阻擋規則", 
+    "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
+  }, 
+  "undo_last_block_site": {
+    "message": "Undo my blocks on this site", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
   "unexpected_filter_list_header": {
