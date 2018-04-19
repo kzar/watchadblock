@@ -66,15 +66,6 @@ $(function ()
 
       $('#page_blocked_count').text(getBlockedPerPage(page).toLocaleString());
       $('#total_blocked_count').text(Prefs.blocked_total.toLocaleString());
-
-      // Show help link until it is clicked.
-      $('#block_counts_help').toggle(info.settings.show_block_counts_help_link).click(function ()
-      {
-        BG.setSetting('show_block_counts_help_link', false);
-        ext.pages.open($(this).attr('href'));
-        $(this).hide();
-        closeAndReloadPopup();
-      });
     }
 
     var host = parseUri(page.unicodeUrl).host;
@@ -325,6 +316,13 @@ $(function ()
   {
     BG.recordGeneralMessage("options_clicked");
     BG.ext.pages.open(BG.ext.getURL('options.html'));
+    closeAndReloadPopup();
+  });
+
+  $('#help_link').click(function ()
+  {
+    BG.recordGeneralMessage("feedback_clicked");
+    BG.ext.pages.open("http://help.getadblock.com/");
     closeAndReloadPopup();
   });
 
