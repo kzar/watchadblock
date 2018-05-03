@@ -86,6 +86,15 @@
   "default_locale": "en_US", 
   "description": "__MSG_description__", 
   "devtools_page": "devtools.html", 
+  "externally_connectable": {
+    "matches": [
+      "http://dev.getadblock.com/*", 
+      "https://dev.getadblock.com/*", 
+      "http://dev1.getadblock.com/*", 
+      "http://dev2.getadblock.com/*", 
+      "https://getadblock.com/*"
+    ]
+  }, 
   "icons": {
     "128": "icons/ab-128.png", 
     "16": "icons/ab-16.png", 
@@ -121,7 +130,7 @@
   "storage": {
     "managed_schema": "managed-storage-schema.json"
   }, 
-  "version": "3.29.0", 
+  "version": "3.29.1", 
   "web_accessible_resources": [
     "adblock-jquery-ui.custom.css", 
     "adblock-jquery-ui.override-page.css", 
