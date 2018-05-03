@@ -999,6 +999,8 @@ var getDebugInfo = function (callback)
     response.other_info.localStorageInfo = "no data";
   }
   response.other_info.is_adblock_paused = adblockIsPaused();
+  response.other_info.license_state = License.get().status;
+  response.other_info.license_version = License.get().lv;
 
   // Get total pings
   ext.storage.get('total_pings', function (storageResponse)
@@ -1026,9 +1028,30 @@ var getDebugInfo = function (callback)
             response.other_info[key] = messages[i];
           }
         }
-        if (callback)
-        {
-          callback(response);
+        if (License.isActiveLicense()) {
+          chrome.alarms.getAll(function(alarms) {
+            if (alarms && alarms.length > 0) {
+              response.other_info['Alarm info'] = 'length: ' + alarms.length;
+              for (var i = 0; i < alarms.length; i++)
+              {
+                var alarm = alarms[i];
+                response.other_info[i + " Alarm Name"] = alarm.name;
+                response.other_info[i + " Alarm Scheduled Time"] = new Date(alarm.scheduledTime);
+              }
+            } else {
+              response.other_info['No alarm info'];
+            }
+            License.getLicenseInstallationDate(function(installdate) {
+              response.other_info["License Installation Date"] = installdate;
+              if (typeof callback === 'function') {
+                callback(response);
+              }
+            });
+          });
+        } else { // License is not active
+          if (typeof callback === 'function') {
+            callback(response);
+          }
         }
       });
     });
