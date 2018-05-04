@@ -248,7 +248,7 @@ var License = (function () {
   };
 })();
 
-chrome.runtime.onMessageExternal.addListener(
+chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.command === "payment_success" && request.transID && request.selections && request.version === 1) {
         var currentLicense = {};
@@ -271,8 +271,8 @@ chrome.runtime.onMessageExternal.addListener(
             channels.setEnabled(id, request.selections.landscape);
           }
         }
+        sendResponse({ ack: true });
     }
-    sendResponse({ack:true});
 });
 
 var channels = {};
@@ -288,7 +288,7 @@ License.ready().then(function() {
           if (chrome.runtime.lastError) {
               log(chrome.runtime.lastError)
           }
-      });      
+      });
       chrome.tabs.executeScript(sender.tab.id, {file: "adblock-picreplacement.js", frameId: sender.frameId, runAt:"document_start"}, function(){
           if (chrome.runtime.lastError) {
               log(chrome.runtime.lastError)
@@ -319,23 +319,11 @@ License.ready().then(function() {
   });
 
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.message === 'get-license') {
-      sendResponse(License.get());
-    }
-  });
-
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message === 'recordOneAdReplaced') {
       sendResponse({});
-      if (License.isActiveLicense() || License.isTrialLicense()) {
+      if (License.isActiveLicense()) {
         replacedCounts.recordOneAdReplaced(sender.tab.id)
       }
-    }
-  });
-
-  chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    if (request.command === 'is-license-valid') {
-      sendResponse(License.isTrialLicense() || License.isActiveLicense());
     }
   });
 

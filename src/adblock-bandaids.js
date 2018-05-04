@@ -309,8 +309,10 @@ var run_bandaids = function()
   {
     apply_bandaid_for = "hotmail";
   }
-  else if (("getadblock.com" === document.location.hostname ||
-            "dev.getadblock.com" === document.location.hostname) &&
+  else if (('getadblock.com' === document.location.hostname ||
+            'dev.getadblock.com' === document.location.hostname ||
+            'dev1.getadblock.com' === document.location.hostname ||    
+            'dev2.getadblock.com' === document.location.hostname) &&
            (window.top === window.self))
   {
     if (/\/question\/$/.test(document.location.pathname))
@@ -389,6 +391,18 @@ var run_bandaids = function()
     },
     getadblock : function()
     {
+      window.addEventListener("message", receiveMessage, false);
+      function receiveMessage(event)
+      {
+        if (event.data &&
+            event.data.command === "payment_success") {
+          window.removeEventListener("message", receiveMessage);
+          chrome.runtime.sendMessage(event.data, function (response) {
+            window.postMessage(response, "*");
+          });
+        }
+      }
+
       chrome.storage.local.get("userid", function(response)
       {
         if (response.userid)
