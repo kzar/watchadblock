@@ -74,17 +74,8 @@
   "add": {
     "message": "Pridėti"
   }, 
-  "add_domain_button": {
-    "message": "Pridėti domeną"
-  }, 
-  "add_filter_button": {
-    "message": "Pridėti filtrą"
-  }, 
   "add_filters_msg": {
     "message": "Pridėti filtrus(-ą)?"
-  }, 
-  "add_your_own_filters": {
-    "message": "Pridėkite savo filtrus"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Pritaikyti pakeitimus"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -474,6 +462,21 @@
     "message": "Close", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Slėpti Adblock įspėjimo pranešimus"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Blokuoti kenkėjiškas programas"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Blokuoti papildomą sekimą"
+  }, 
+  "common_feature_social_title": {
+    "message": "Blokuoti socialinių tinklų sekimą piktogramomis"
+  }, 
+  "common_notification_hide": {
+    "message": "Uždaryti pranešimą"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Toliau"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -589,9 +595,6 @@
   "disabled_for_site": {
     "message": "Šiame puslapyje <strong>išjungta</strong>"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock žemiau išvardytiems domenams išjungtas. Pridėti domeną galite paspaudę AdBlock piktogramą, adreso juostoje arba įvesdami domeną (ne URL) ir paspausdami „Pridėti domeną“ mygtuką."
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +686,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Redaguoti filtrus kaip gryną tesktą"
-  }, 
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +693,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Įjunkite tik tuos filtrų sąrašus kurių jums reikia. Jei įgalinsite per daug jūsų naršyklė gali sulėtėti."
   }, 
   "enabled_for_site": {
     "message": "Šiame puslapyje <strong>įjungta</strong>"
@@ -792,6 +789,18 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Nėra nurodytas aktyvus domenas išplėstam slėpimo filtrui"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Neleistino turinio saugumo politika"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Nurodytas netinkamas (arba nenurodytas) domenas"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Netinkama reguliarioji išraiška"
+  }, 
   "filter_israeli": {
     "message": "Hebrew + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +813,12 @@
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Filtrų sąrašai"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Jūsų filtras turi atitikti <a>AdBlock filtrų sintaksę</a>."
-  }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Nežinoma filtro parinktis"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -972,44 +978,8 @@
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Leisti neįkyrias reklamas"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Pridėti"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Pridėti kitą prenumeratą"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "Pridėti filtro prenumeratą"
-  }, 
-  "filters_readMore_label": {
-    "message": "Plačiau"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Ištrinti"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Įjungta"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Nepavyko, bloga kontrolinė suma"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "Nepavyko, atsiuntimo klaida"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "Atsiunčiama..."
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Nepavyko, netinkamas filtrų sąrašas"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Nepavyko, netinkamas adresas"
-  }, 
-  "filters_viewList_label": {
-    "message": "Peržiūrėti sąrašą"
   }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
@@ -1065,41 +1035,14 @@
   "firstRun_contributor_credits": {
     "message": "Padėkos prisidėjusiems"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Ar šis puslapis pastoviai rodomas? <a>Paspauskite čia</a>"
-  }, 
   "firstRun_donate": {
     "message": "paaukoti"
   }, 
   "firstRun_donate_label": {
     "message": "Paremkite mūsų projektą"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Kenkėjiškų programų blokavimas"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Padarykite savo naršymą saugesniu užblokuodami žinomas kenkėjiškas svetaines."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Pašalinti socialinių puslapių mygtukus"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Automatiškai pašalinkite socialinių tinklų mygtukus, tokius kaip „Facebook Like“, kurie seka jūsų elgesį."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "Išjungti sekimą"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Išjunkite sekimą ir paverskite savo naršymą privačiu - paslėpkite savo pėdsakus nuo reklamos įmonių kurios galbūt seka kiekvieną jūsų žingsnį."
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock gali daugiau nei tik blokuoti reklamas"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Dėl klaidos visi filtrai buvo pašalinti, todėl mes negalime atkurti atsarginės kopijos. Taip pat filtrai ir priimtinų reklamų nustatymai nustatyti iš naujo. Prašome pasitikrinti jūsų filtrų sąrašus ir priimtinų reklamų nustatymus<a>AdBlock nustatymuose</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Jūs naudojate seną Safari versiją, kurios AdBlock nepalaiko. AdBlock gali veikti netinkamai ar sukelti problemų. Rekomenduojame naudoti Safari 6.1.1 ar naujesnę versiją (prieinama Mac OS X 10.9 Mavericks) arba naudokite naujausią Mozilla Firefox, Google Chrome ar Opera."
   }, 
   "firstRun_share": {
     "message": "Papasakokite savo draugams"
@@ -1109,12 +1052,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock sėkmingai įdiegta"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "IŠJ."
-  }, 
-  "firstRun_toggle_on": {
-    "message": "Įj."
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1127,9 +1064,6 @@
   "format_site1_site2_site3": {
     "message": "Format: ~site1.com|~site2.com|~news.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "Radote klaidą? Norite išversti AdBlock į savo kalbą? Užpildykite <a>prašymą čia</a>."
   }, 
   "foundbug": {
     "message": "Found a bug?", 
@@ -1147,30 +1081,9 @@
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Bendra"
-  }, 
   "generaloptions": {
     "message": "General options", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Gali būti nurodytas tik vienas elemento ID kurį reikia paslėpti"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Nėra kriterijaus pagal kurį galima būtų nuspręsti kurį elementą paslėpti"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "Netinkama reguliarioji išraiška"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "Nežinoma filtro parinktis"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Ar tikrai norite atsisakyti šios prenumeratos?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "Filtrų sąrašo adresas nėra taisyklingas URL ar failo vardas."
   }, 
   "headerfilter": {
     "message": "Matched filter", 
@@ -1215,6 +1128,84 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Anoniminis pranešimas"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Mes negalėsime grįžti prie jūsų ir greičiausiai jūsų ataskaitai bus priskirtas žemas prioritetas."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Parašykite komentarą"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "Teksto įvedimo laukelis leidžia jums įvesti komentarą kuris mums padės suprasti jūsų problemą. Šis žingsnis nebūtinas, bet rekomenduojamas jei problema neaiški. Taipogi galite peržiūrėti pranešimą prieš jį siunčiant."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Komentaras (nebūtinas):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Jūsų komentaras ilgesnis nei 1000 simbolių. Bus išsiųsti tik pirmi 1000 simbolių."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Jūsų pranešimas išsaugotas. Jį pasiekti galite šiuo adresu:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "Palaukite kelias akimirkas, kol AdBlock surinks reikalingus duomenis."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Sveiki atvykę į klaidų pranešėją"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Baigti"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Mes raginame įvesti veikiantį el. pašto adresą, tada jei turėsime klausimų galėsime jums juos užduoti. Taipogi tai padės atpažinti jūsų pranešimus ir suteikti jiems aukštesnį prioritetą."
+  }, 
+  "issueReporter_email_label": {
+    "message": "El. paštas:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Bandymas išsiųsti pranešimą nepavyko, buvo gauta klaida \"?1?\". Įsitikinkite jog esate prisijungę prie interneto ir bandykite dar kartą. Jei problema vis dar yra paprašykite pagalbos forume [link]AdBlock forumas[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "Pasirinkite šią pasirinkty jei reklama rodoma, net ir įjungus AdBlock."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock neblokuoja reklamų"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Pasirinkite šią pasirinkty jei puslapyje trūksta svarbaus turinio, jei atvaizduojama netinkamai ar puslapis nefunkcionuoja taip kaip turėtų. Norėdami įsitikinti jog problemą sukėlė AdBlock galite trumpam išjungti AdBlock."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock blokuoja per daug"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Pranešta klaida turbūt žinoma. Daugiau informacijos:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Klaidos pranešimas"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Privatumo politika"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Siųsti pranešimą"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Siųsti pranešimą"
+  }, 
+  "issueReporter_sending": {
+    "message": "Palaukite kol AdBlock siunčia jūsų pranešimą."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Rodyti pranešimo duomenis"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Šis langas padės įvykdyti kelis žingsnius kurie reikalingi pranešti apie AdBlock problemą. Pirmiausia, šiame puslapyje, pasirinkite problemos su kuria susidūrėte tipą:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Pasirinkite tipą"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1379,25 +1370,6 @@
   "languagedropdowndescription": {
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
-  }, 
-  "last_updated_at": {
-    "message": "Paskutinį kartą atnaujinta $time$ $date$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "Paskutinį kartą atnaujinta šiandien $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
   }, 
   "legend": {
     "message": "Legend: ", 
@@ -1575,8 +1547,351 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "Priimtinos reklamos yra tokios kurios nesikerta su jūsų žiūrimu turiniu. <a>Daugiau apie neįkyrių reklamų kriterijus galite sužinoti čia</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Leisti neįkyrias reklamas"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "Priimtini skelbimai yra neįkyrūs skelbimai. Tai aukso vidurys tarp reklamų blokavimo ir interneto turinio pajamų gavimo palaikymas."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>Pastaba:</strong> Jūs nustatymuose išjungėte <strong>Do Not Track (DNT)</strong>. Norint jog ši parinktis tinkamai veiktų įjunkite <strong>DNT</strong>. <a>Apie DNT daugiau galite sužinoti čia</a>."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "Priimtinos reklamos"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Leisti tik tas reklamas kuriose nėra trečiųjų šalių sekimo"
+  }, 
+  "options_advanced_description": {
+    "message": "Derinkite AdBlock, pridėkite ar pašalinkite sąrašus, kurkite ir prižiūrėkite savo sąrašus"
+  }, 
+  "options_close": {
+    "message": "užverti"
+  }, 
+  "options_control_remove_title": {
+    "message": "pašalinti"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "Atsisakyti"
+  }, 
+  "options_customFilter_edit": {
+    "message": "Taisyti sąrašus"
+  }, 
+  "options_customFilter_save": {
+    "message": "Išsaugoti"
+  }, 
+  "options_customFilters_description": {
+    "message": "Kurti savo sąrašus ir valdyti ką ir kur AdBlock blokuos ar neblokuos."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "pvz. $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "Sužinokite kaip kurti sąrašus"
+  }, 
+  "options_customFilters_start": {
+    "message": "Pradėti kurti savo sąrašą"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Jūsų sukurti sąrašai bus rodomi čia."
+  }, 
+  "options_customFilters_title": {
+    "message": "Kurkite ir redaguokite savo sąrašus"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Mano sąrašai"
+  }, 
+  "options_customize_blockElement": {
+    "message": "Dešinio mygtuko meniu rodyti „Blokuoti elementą“"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "Laikinai puslapyje blokuoti įkyrius elementus, pvz. paveikslėlius ar skaidres."
+  }, 
+  "options_customize_header": {
+    "message": "Derinti „puslapyje“ veiksmus"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Rodyti „AdBlock“ valdymo pultą kūrėjo įrankiuose"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "Peržiūrėkite užblokuotus ir neblokuojamus elementus iš kūrėjo įrankinės."
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Rodyti naudingus pranešimus"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Išjungti visus AdBlock pranešimus."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "Autorinės teisės © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "Apie AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "Visos teisės saugomos. AdBlock® yra registruotas eyeo GmbH prekės ženklas."
+  }, 
+  "options_dialog_about_version": {
+    "message": "Versija $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "Sąrašo url"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Įveskite tinkamą url"
+  }, 
+  "options_dialog_import_title": {
+    "message": "Pridėti filtrų sąrašą"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Nėra tinkamų kalbų."
+  }, 
+  "options_dialog_language_title": {
+    "message": "Pasirinkite kalbą"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Taip, naudoti šį sąrašą"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Ar tikrai norite pridėti šį filtrų sąrašą?"
+  }, 
+  "options_email": {
+    "message": "El. paštas:"
+  }, 
+  "options_english": {
+    "message": "Anglų"
+  }, 
+  "options_filterList_add": {
+    "message": "+ Pridėti naują sąrašą"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Filtrų sąrašai"
+  }, 
+  "options_filterList_column_status": {
+    "message": "Būsena"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Paskutinis atnaujinimas"
+  }, 
+  "options_filterList_description": {
+    "message": "Kiekvienas AdBlock nustatymas veikia filtrų sąrašo dėka. Žemiau yra filtrų sąrašai kurie atitinka visus jūsų AdBlock nustatymus. Taipogi galite pridėti papildomus sąrašus sukurtus ir palaikomus mūsų patikimos bendruomenės."
+  }, 
+  "options_filterList_empty": {
+    "message": "Jūs į AdBlock nepridėjote jokių sąrašų. Pridėti sąrašai bus rodomi čia."
+  }, 
+  "options_filterList_hours": {
+    "message": "valandas"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Nepavyko, bloga kontrolinė suma"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Nepavyko, atsiuntimo klaida"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Atnaujinama"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Nepavyko, netinkamas filtrų sąrašas"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Nepavyko, netinkamas adresas"
+  }, 
+  "options_filterList_minutes": {
+    "message": "prieš minutes"
+  }, 
+  "options_filterList_now": {
+    "message": "Ką tik"
+  }, 
+  "options_filterList_source": {
+    "message": "šaltinis"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Aktyvus"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Išjungta"
+  }, 
+  "options_filterList_title": {
+    "message": "Filtrų sąrašai"
+  }, 
+  "options_filterList_update": {
+    "message": "atnaujinti visus sąrašus"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "atnaujinti dabar"
+  }, 
+  "options_filterList_website": {
+    "message": "tinklapis"
+  }, 
+  "options_footer_about": {
+    "message": "Apie AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "Prisidėkite"
+  }, 
+  "options_general_description": {
+    "message": "Nustatykite ką AdBlock tinklapiuose rodo ir ką slepia"
+  }, 
+  "options_help_description": {
+    "message": "Ieškokite pagalbos arba susisiekite su mumis"
+  }, 
+  "options_language_add": {
+    "message": "+ pridėti kalbą"
+  }, 
+  "options_language_change": {
+    "message": "pakeisti"
+  }, 
+  "options_language_description": {
+    "message": "Optimizuoti AdBlock tai kalbai(-oms) kurių tinklapius naršote."
+  }, 
+  "options_language_empty": {
+    "message": "Neturite konkrečios kalbos sąrašų."
+  }, 
+  "options_language_header": {
+    "message": "Kalba"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>PATARIMAS:</strong> Pasirinkite tik reikiamas kalbas. Jei pasirinksite per daug tai tik sulėtins jūsų naršymą."
+  }, 
+  "options_learn_more": {
+    "message": "Sužinoti daugiau"
+  }, 
+  "options_more_filters_description": {
+    "message": "Tai yra papildomi sąrašai kuriuos anksčiau pridėjote į AdBlock."
+  }, 
+  "options_more_filters_header": {
+    "message": "Daugiau filtrų"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>Pastaba:</strong> Trečiųjų šalių sąrašus turėtumėte naudoti tik iš patikimų autorių."
+  }, 
+  "options_new_label": {
+    "message": "Nauji"
+  }, 
+  "options_page_document_title": {
+    "message": "Nustatymai"
+  }, 
+  "options_page_title": {
+    "message": "Nustatymai"
+  }, 
+  "options_privacy_header": {
+    "message": "Privatumas ir saugumas"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "Apsaugokite savo asmeninius duomenis pašalindami visas sekimo formas, įskaitant ir informacijos rinkėjus."
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "Socialinių tinklų piktogramos lankomuose puslapiuose leidžia socialiniams tinklams sukurti jūsų naršymo įpročių profilį - net jei jūs nepaspaudžiate ant jų. Paslėpus jas galite apsaugoti savo privatumą."
+  }, 
+  "options_report_bug": {
+    "message": "Radote klaidą? <a>Praneškite mums apie klaidą</a>"
+  }, 
+  "options_report_forum": {
+    "message": "Norite palaikymo iš mūsų bendruomenės? <a>Aplankykite forumą</a>"
+  }, 
   "options_short": {
     "message": "Parinktys"
+  }, 
+  "options_social_description": {
+    "message": "Turite klausimą ar naują idėją? Mes pasiruošę jums padėti."
+  }, 
+  "options_social_title": {
+    "message": "Susisiekite su mumis"
+  }, 
+  "options_support_title": {
+    "message": "Palaikymas"
+  }, 
+  "options_tab_advanced": {
+    "message": "Papildomi"
+  }, 
+  "options_tab_general": {
+    "message": "Bendra"
+  }, 
+  "options_tab_help": {
+    "message": "Pagalba"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Tinklapiai baltajame sąraše"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "Pastebėjome jog pas jus įjungta ir <strong>$tracking$</strong> ir <strong>$acceptableAds$</strong>.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "Norime pranešti jog norint parodyti jums aktualesnius skelbimus Priimtinuose skelbimuose <strong>gali</strong> būti šiek tiek stebėjimo."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "Jei pageidaujate papildomo saugumo, žemiau pažymėkite <strong>$acceptableAdsPrivacy$</strong>.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "Gerai, supratau"
+  }, 
+  "options_whitelist_add": {
+    "message": "Pridėti svetainę"
+  }, 
+  "options_whitelist_description": {
+    "message": "Jūs išjungėte reklamų blokavimą šiuose puslapiuose ir matote reklamas juose."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Neturi puslapių baltąjame sąraše."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "Tinklapiai kuriais pasitikite ir norite juose matyti reklamą, bus rodomi čia."
+  }, 
+  "options_whitelist_notification": {
+    "message": "„$website$“ pridėta į ignoruojamų sąrašą.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "pvz. $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1608,9 +1923,6 @@
     "message": "Other Filter Lists", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Pasenę sąrašai periodiškai atnaujinami."
-  }, 
   "overlay_notification_button_no": {
     "message": "Ne"
   }, 
@@ -1622,9 +1934,6 @@
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "Neberodyti pranešimų"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "Rodyti naudingus pranešimus"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1669,9 +1978,6 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Pašalinti pasirinktą"
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -1763,12 +2069,12 @@
     "message": " -- Select Language -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Pranešti apie problemą šiame puslapyje"
+  }, 
   "show_ads_except_for": {
     "message": "Show ads everywhere except for these domains...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Dešinio mygtuko meniu rodyti „Blokuoti elementą“"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
@@ -1834,28 +2140,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "daugiau nei $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "Parsisiųsti AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "AdBlock dėka aš užblokavau $number$ reklamų.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Dalintis šiuo skaičiumi"
-  }, 
   "stats_show_iconnumber": {
     "message": "Piktogramoje rodyti skaičių"
   }, 
@@ -1911,15 +2195,6 @@
   "subscribingtitle": {
     "message": "Subscribing to filter list...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Filtrų sąrašo vieta:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Pasirinkite filtro prenumeratą iš šio sąrašo:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Prenumeratos pavadinimas:"
   }, 
   "supportsite": {
     "message": "Let us know on our [[support site]]!", 
@@ -2064,9 +2339,6 @@
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "Atnaujinti"
-  }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
     "description": "Label for filter list subscription"
@@ -2164,9 +2436,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Domenai baltajame sąraše"
   }, 
   "whitelistedresource": {
     "message": "Whitelisted resource", 

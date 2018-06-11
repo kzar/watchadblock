@@ -74,17 +74,8 @@
   "add": {
     "message": "اضافه کردن"
   }, 
-  "add_domain_button": {
-    "message": "اضافه کردن سایت"
-  }, 
-  "add_filter_button": {
-    "message": "اضافه کردن فیلتر"
-  }, 
   "add_filters_msg": {
     "message": "اضافه کردن فیلتر (ها) ؟"
-  }, 
-  "add_your_own_filters": {
-    "message": "اضافه کردن فیلتر خودتان"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "اعمال تغییرات"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -474,6 +462,21 @@
     "message": "Close", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "مخفی کردن پیام‌های هشدار Adblock"
+  }, 
+  "common_feature_malware_title": {
+    "message": "مسدود کردن بدافزار"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "ردیابی اضافی را مسدود کنید"
+  }, 
+  "common_feature_social_title": {
+    "message": "مسدود کردن ردیابی آیکون‌های رسانه‌های اجتماعی"
+  }, 
+  "common_notification_hide": {
+    "message": "بستن اعلان"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "ادامه"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -589,9 +595,6 @@
   "disabled_for_site": {
     "message": "برای این سایت <strong>غیرفعال شد</strong>"
   }, 
-  "disabled_for_these_domains": {
-    "message": "این افزونه در سایت های زیر غیرفعاله. برای اضافه کردن یک سایت می توانید روی آیکون AdBlock در نوارآدرس کلیک کنید یا دامنه اون سایت (نه آدرس دقیق) را در این جعبه بنویسید و دکمه «اضافه کردن سایت» را بزنید."
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +686,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "ویرایش لیست فیلترها بصورت متنی"
-  }, 
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +693,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "فقط لیست های فیلتر ضروری رو فعال کنید. انتخاب زیاد، باعث کند شدن مرورگر میشه."
   }, 
   "enabled_for_site": {
     "message": "برای این سایت <strong>فعال شد</strong>"
@@ -792,6 +789,18 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "هیچ دامنه فعال برای فیلترینگ پنهان شده مشخص نشده است"
+  }, 
+  "filter_invalid_csp": {
+    "message": "سیاست امنیتی نامعتبر مطالب"
+  }, 
+  "filter_invalid_domain": {
+    "message": "دامنه نامعتبر (یا خالی) مشخص شده است"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "الگوی جستجوی نامعتبر"
+  }, 
   "filter_israeli": {
     "message": "Hebrew + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +813,12 @@
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "لیست فیلتر"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "فیلترهایی که می‌نویسید باید از <a> قواعد فیلترنویسی AdBlock</a> پیروی کند."
-  }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "فیلتر ناشناس"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -972,44 +978,8 @@
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "اجازه دادن به تبلیغات ناخواسته"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "اضافه"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "یک اشتراک ديگر اضافه کنید"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "اضافه کردن اشتراک فیلتر"
-  }, 
-  "filters_readMore_label": {
-    "message": "بیشتر بخوانید"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "حذف"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "فعال شده"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "ناموفق, عدم تطابق کنترلی"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "ناموفق، فرآیند دریافت شکست خورد"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "در حال دریافت..."
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "ناموفق، فهرست پالایه ها نامعتبر است"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "ناموفق، نشانی معتبر نیست"
-  }, 
-  "filters_viewList_label": {
-    "message": "مشاهده لیست"
   }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
@@ -1065,41 +1035,14 @@
   "firstRun_contributor_credits": {
     "message": "اعتبار نویسندگان"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "آیا این صفحه در حال رویت نگه داشته شده؟ <a>اینجا کلیک کن!</a>"
-  }, 
   "firstRun_donate": {
     "message": "کمک مالی"
   }, 
   "firstRun_donate_label": {
     "message": "پروژه ما را حمایت کنید"
   }, 
-  "firstRun_feature_malware": {
-    "message": "مسدود کردن نرم افزارهای مخرب"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "مرور خود رابا مسدود کردن دامنه های مخرب شناخته شده امن تر کنید."
-  }, 
-  "firstRun_feature_social": {
-    "message": "حذف دکمه های رسانه های اجتماعی"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "به طور خودکار مانند like در فیس بوک ، تجربه وبگردی از رسانه های اجتماعی را بفرستید و وضعیت کارهای خود را دنبال کنید."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "غیر فعال کردن ردیابی"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "با غیر فعال کردن ردیابی با امنیت کامل به گشت و گذار اینترنتی بپردازید وخود را از شرکت هایی که می توانند هر لحظه زیر نظر داشته باشند مخفی کنید."
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock می تواند تبلیغات بیشتری را مسدود کند"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "به نظر می رسد که ناشی از موضوع همه فیلتر به حذف می شود و ما قادر به بازگرداندن پشتیبان. بنابراین ما مجبور به تنظیم مجدد فیلتر و تنظیمات تبلیغات قابل قبول. لطفا لیست فیلتر و تنظیمات تبلیغات قابل قبول در <a>Adblock پلاس گزینه های</a> خود را."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "شما در حال حاضر از يك نسخه قديمي تر مرورگر Safari استفاده ميكنيد كه توسط AdBlock پشتيباني نميشود. اين موضوع احتمال دارد بر روي تجربه وب گردي كاربر تأثير منفي گذاشته و يا باعث درست عمل نكردن پلاگين شود. ما قوياً توصيه مي كنيم كه مرورگر خود را به Safari 6.1.1 يا بالاتربه روز رساني كنيد (براي نسخه  Mountain Lion ورژن  OS X 10.8 در سيستم عامل مكينتاش)، و يا به روز رساني به Safari 7.0.1 (براي نسخه Mavericks ورژن OS X 10.9 در سيستم عامل مكينتاش). و يا اينكه ازآخرين ورژن مرورگرهايي مانند: Google Chrome ،Mozilla Firefox و يا Opera استفاده كنيد."
   }, 
   "firstRun_share": {
     "message": "به دوستان خود بگویید"
@@ -1109,12 +1052,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock با موفقیت نصب شد"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "خاموش"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "روشن"
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1127,9 +1064,6 @@
   "format_site1_site2_site3": {
     "message": "Format: ~site1.com|~site2.com|~news.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "باگ پیدا کردید؟ مایلید AdBlock را به زبان خودتان ترجمه کنید؟ <a>درخواستتان را اینجا مطرح کنید</a>."
   }, 
   "foundbug": {
     "message": "Found a bug?", 
@@ -1147,30 +1081,9 @@
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "صفحه اصلی"
-  }, 
   "generaloptions": {
     "message": "General options", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "فقط یک شناسه از عنصری که قرار است پنهان شود را می توان مشخص کرد."
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "هیچ ضابطه ای برای شناسایی عناصری که می بایست پنهان شوند مشخص نشد."
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "الگوی جستجوی نامعتبر"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "فیلتر ناشناس"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "آیا برای حذف اشتراک مطمئن هستید؟"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "مکان وارد شده برای فهرست فیلترها نامعتبر است."
   }, 
   "headerfilter": {
     "message": "Matched filter", 
@@ -1215,6 +1128,84 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "ارسال ناشناس"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "ما قادر نخواهیم بود که دوباره بیاییم و احتمالاً این گزارش را در اولویت های پایین تر قرار می دهیم."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "وارد کردن نظر"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "جعبه متن زیر به شما اجازه می دهد که نظر خود را برای کمک به درک ما در مورد مشکل وارد کنید. این مورد اختیاری می باشد ولی در صورتی که مشکل آشکار نیست توصیه می شود. شما همچنین می توانید قبل از ارسال گزارش داده ها را بررسی کنید."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "نظر (اختیاری):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "حد اکثر طول نظر 1000 حرف می باشد. فقط 1000 حرف اولی فرستاده می شود."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "گزارش شما ذخیره شد. شما می توانید در نشانی زیر به آن دسترسی پیدا کنید:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "لطفا برای چند لحظه صبر کنید تا فوق تبلیغ شکن داده های درخواستی شما را جمع آوری کند."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "به گزارشگر اشکالات خوش آمدید"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "انجام شد"
+  }, 
+  "issueReporter_email_description": {
+    "message": "ما شما را تشویق می کنیم که یک آدرس ایمیل معتبر از خود وارد کنید تا اگر سوالی بود ما بتوانیم در آینده با شما ارتباط برقرار کنیم در مورد گزارش شما. این به ما اجازه می دهد که میزان همکاری شما را بسنجیم و اولویت کار شما به مراحل بالاتر برسد."
+  }, 
+  "issueReporter_email_label": {
+    "message": "پست الکترونیکی:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "تلاش برای ارسال گزارش شکست خورد، شماره خطا \"?1?\". لطفا مطمئن شوید که به اینترنت متصل هستید و مجددا سعی کنید. اگر مشکل همچنان ادامه دارد می توانید در [link]تالار گفتمان فوق تبلیغ شکن[/link] در خواست کمک کنید."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "اگر تبلیغات همچنان مشاهده می شوند با وجود این که فوق تبلیغ شکن فعال است این گزینه را انتخاب کنید"
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "فوق تبلیغ شکن هیچ تبلیغی را مسدود نمی کند."
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "اگر صفحه خالی از محتوای مهم می شود یا نادرست نمایش داده می شود یا موفق به عملکرد درست نیست این گزینه را انتخاب کنید."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "فوق تبلیغ شکن بیش از حد موارد را مسدود می کند."
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "گزارشی که شما ارسال کردید هم اکنون شناخته شده است. اطلاعات بیشتر:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "گزارش گر اشکالات"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "سیاست حفظ اسرار"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "ارسال گزارش"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "ارسال گزارش"
+  }, 
+  "issueReporter_sending": {
+    "message": "لطفا صبر کنید تا فوق تبلیغ شکن گزارش شما را ارسال کند."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "نمایش داده های گزارش"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "این پنجره شما را برای ارائه یک گزارش خطا فوق تبلیغ شکن راهنمایی می کند. ابتدا نوع مشکلی را که در این صفحه با آن روبرو هستید را انتخاب کنید:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "انتخاب نوع اشکال"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1380,25 +1371,6 @@
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "آخرین بروزرسانی در زمان $time$ و تاریخ $date$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "آخرین بروز رسانی در $time$ امروز", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1548,7 +1520,7 @@
     "message": "آیا مایلید پیام های هدفمند برای کاربران AdBlock را مخفی نمایید؟"
   }, 
   "notification_configure": {
-    "message": "تنظیمات هشدار ها"
+    "message": "پیکربندی تنظیمات اعلان"
   }, 
   "notification_open_all": {
     "message": "باز کردن همه لینک های این هشدار"
@@ -1575,8 +1547,68 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "آگهی های قابل قبول آزار دهنده نیستند و با محتوایی که مشاهده می کنید تداخل نکنید. <a> درباره معیارهای قابل قبول تبلیغات بیشتر بدانید </a>"
+  }, 
+  "options_close": {
+    "message": "بستن"
+  }, 
+  "options_control_remove_title": {
+    "message": "حذف"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "لغو"
+  }, 
+  "options_customFilter_edit": {
+    "message": "ویرایش فیلترها"
+  }, 
+  "options_customFilter_save": {
+    "message": "ذخیره"
+  }, 
+  "options_customize_showNotifications": {
+    "message": "نمایش اعلان های مفید"
+  }, 
+  "options_email": {
+    "message": "ایمیل:"
+  }, 
+  "options_filterList_column_name": {
+    "message": "لیست فیلتر"
+  }, 
+  "options_filterList_column_status": {
+    "message": "وضعیت"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "ناموفق, عدم تطابق کنترلی"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "ناموفق، فرآیند دریافت شکست خورد"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "ناموفق، نشانی معتبر نیست"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "غیر فعال"
+  }, 
+  "options_filterList_title": {
+    "message": "لیست فیلتر"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "آپدیت کن"
+  }, 
+  "options_page_document_title": {
+    "message": "تنظیمات"
+  }, 
+  "options_page_title": {
+    "message": "تنظیمات"
+  }, 
   "options_short": {
     "message": "تنظیمات"
+  }, 
+  "options_tab_general": {
+    "message": "صفحه اصلی"
+  }, 
+  "options_tab_whitelist": {
+    "message": "فهرست سفید پایگاهها (که تبلیغات مسدود نشه)"
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1608,11 +1640,8 @@
     "message": "Other Filter Lists", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "لیست های تاریخ گذشته مرتباً آپدیت می شوند."
-  }, 
   "overlay_notification_button_no": {
-    "message": "نه"
+    "message": "خیر"
   }, 
   "overlay_notification_button_yes": {
     "message": "بله"
@@ -1622,9 +1651,6 @@
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "عدم نمایش اعلان ها"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "نمایش اعلان های مفید"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1669,9 +1695,6 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "حذف انتخاب شده"
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -1763,12 +1786,12 @@
     "message": " -- Select Language -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "گزارش مشکل در این صفحه"
+  }, 
   "show_ads_except_for": {
     "message": "Show ads everywhere except for these domains...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "نمایش گزینه «مسدود کردن این عنصر» در منوی کلیک راست"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
@@ -1834,28 +1857,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "بیش از $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "دانلود AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "به واسطه AdBlock من $number$ تبلیغ و ردگیر را مسدود کردم.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "این عدد را به اشتراک بگذار"
-  }, 
   "stats_show_iconnumber": {
     "message": "نمایش تعداد در آیکون"
   }, 
@@ -1911,15 +1912,6 @@
   "subscribingtitle": {
     "message": "Subscribing to filter list...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "نشانی فهرست فیلترها:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "یک اشتراک فیلتر از لیست زیر انتخاب کنید :"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "عنوان اشتراک:"
   }, 
   "supportsite": {
     "message": "Let us know on our [[support site]]!", 
@@ -2064,9 +2056,6 @@
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "آپدیت کن"
-  }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
     "description": "Label for filter list subscription"
@@ -2127,6 +2116,15 @@
     "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_heading": {
+    "message": "AdBlock به‌روز شده است!"
+  }, 
+  "updates_status": {
+    "message": "به‌روزرسانی کامل شد"
+  }, 
+  "updates_subheading": {
+    "message": "چه چیزی جدید شده؟"
+  }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2162,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "لیست سفید سایت ها (که تبلیغات مسدود نشه)"
   }, 
   "whitelistedresource": {
     "message": "Whitelisted resource", 

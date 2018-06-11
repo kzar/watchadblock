@@ -74,17 +74,8 @@
   "add": {
     "message": "أضف"
   }, 
-  "add_domain_button": {
-    "message": "أضف نطاق"
-  }, 
-  "add_filter_button": {
-    "message": "أضف فلتر"
-  }, 
   "add_filters_msg": {
     "message": "إضافة فلتر\\فلاتر؟"
-  }, 
-  "add_your_own_filters": {
-    "message": "أضف الفلاتر الخاصة بك"
   }, 
   "adreport_all_debug_info": {
     "message": "المعلومات التالية سيتم تضمينها أيضًا بتقرير الإعلان.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "السماح whitelisting لقنوات يوتيوب محددة (يتطلب إعادة تشغيل المستعرض الخاص بك)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "تطبيق التغييرات"
   }, 
   "betalabel": {
     "message": "الإصدار التجريبي", 
@@ -474,6 +462,21 @@
     "message": "إغلاق", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "اخفاء رسائل تحذير ادبلوك"
+  }, 
+  "common_feature_malware_title": {
+    "message": "منع البرامج الضارة"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "حجب أنواع التعقب الإضافية"
+  }, 
+  "common_feature_social_title": {
+    "message": "حجب تعقب رموز مواقع التواصل الاجتماعي"
+  }, 
+  "common_notification_hide": {
+    "message": "أغلق هذا التنبيه"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "هل أنت متأكد من أنك تريد إزالة $count$ المنع الذي قمت بإنشائه في $host$؟", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "ملاحظة: Whitelisting (السماح بالإعلانات على) صفحة أو موقع لا تعمل مع تمكين حظر المحتوى في safari.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "واصِل"
   }, 
   "contributors": {
     "message": "لقد حصلنا على صفحة لمساعدتك على معرفة [[الناس وراء AdBlock]]، جيداً!", 
@@ -589,9 +595,6 @@
   "disabled_for_site": {
     "message": "<strong>معطل</strong> في هذا الموقع"
   }, 
-  "disabled_for_these_domains": {
-    "message": "آدبلوك بلس معطل للنطاقات التالية. تستطيع إضافة نطاق من خلال أيقونة ﺁدبلوك بلس في شريط العنوان أو من خلال كتابة اسم النطاق (وليس الرابط) في الصندوق ثم الضغط على زر \"أضف نطاق\"."
-  }, 
   "disabled_on_this_channel": {
     "message": "تسمح بالإعلانات على هذه القناة.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +686,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "تعديل الفلاتر في نص عادي"
-  }, 
   "enable_adblock": {
     "message": "تمكين AdBlock على هذه الصفحة", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +693,6 @@
   "enable_adblock_on_this_channel": {
     "message": "حظر الإعلانات على هذا القناة", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "فعّل قائمة الترشيح التي تريد فقط. الكثير منها بإمكانه جعل متصفحك لا يستجيب."
   }, 
   "enabled_for_site": {
     "message": "<strong>مفعّل</strong> في هذا الموقع"
@@ -792,6 +789,18 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "لم يتم تحديد نطاق نشط لفلتر إخفاء العناصر الموسعة"
+  }, 
+  "filter_invalid_csp": {
+    "message": "سياسة أمان المحتوى غير صالحة"
+  }, 
+  "filter_invalid_domain": {
+    "message": "تم تحديد نطاق غير صحيح (أو فارغ)"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "تعبير منطقي غير صحيح"
+  }, 
   "filter_israeli": {
     "message": "العبرية + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +813,12 @@
     "message": "اللغة اللاتفية + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "قوائم المرشحات"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "مرشحك يجب ان يتبع <a>قواعد ترشيح آدبلوك بلس</a>."
-  }, 
   "filter_russian": {
     "message": "الروسي & الأوكراني + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "خيار فلتر غير معروف"
   }, 
   "filteracceptable_ads": {
     "message": "الإعلانات المقبولة", 
@@ -972,44 +978,8 @@
     "message": "الروسية والأوكرانية", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "السماح لبعض الإعلانات الغير متطفّلة"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "اضافة"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "إضافة اشتراك آخر"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "إضافة إشتراك فلاتر"
-  }, 
-  "filters_readMore_label": {
-    "message": "قراءة المزيد"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "ازالة"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "مفعّل"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "فشل الأمر، عدم تطابق المجموع الإختباري"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "فشل الأمر، بسبب فشل التحميل"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "جاري التحميل…"
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "فشل الأمر، قائمة فلاتر ليست صحيحة"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "فشل الأمر، العنوان ليس صحيح"
-  }, 
-  "filters_viewList_label": {
-    "message": "إظهار القائمة"
   }, 
   "filtersavewarning": {
     "message": "احترس: إن أخطأت هنا فقد تعطب الكثير من المرشّحات هنا، بما في ذلك المرشّحات الرّسميّة!\nاقرأ [[درس صياغة المرشّحات]] لتطّلع على المزيد عن طريقة إضافة مرشّحات متقدّمة للقوائم السّوداء والبيضاء.", 
@@ -1065,56 +1035,38 @@
   "firstRun_contributor_credits": {
     "message": "شكر للمساهمين"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "هل تواصل هذه الصفحة الظهور ؟ <a>اضغط هنا !</a>"
+  "firstRun_dataCorruptedWarning_intro": {
+    "message": "يواجه بعض المستخدمين مشكلة، حيث تفتح هذه الصفحة في كل مرة يتم فيها تشغيل المتصفح. يمكن حل هذه المشكلة عن طريق إلغاء تثبيت AdBlock وإعادة تثبيته:"
+  }, 
+  "firstRun_dataCorruptedWarning_note": {
+    "message": "إذا كنت لا تزال بحاجة إلى المساعدة، تواصل معنا عن طريق support@adblockplus.org أو قم بزيارة <a>مركز المساعدة</a> الخاص بنا."
+  }, 
+  "firstRun_dataCorruptedWarning_step1": {
+    "message": "افتح علامة التبويب الخاصة بالإضافات في متصفحك."
+  }, 
+  "firstRun_dataCorruptedWarning_step2": {
+    "message": "إبحث عن إضافة AdBlock وقم بإزالته."
+  }, 
+  "firstRun_dataCorruptedWarning_step3": {
+    "message": "قم بإعادة تثبيت AdBlock عن طريق <a>adblockplus.org</a>."
   }, 
   "firstRun_donate": {
     "message": "تبرع"
   }, 
   "firstRun_donate_label": {
-    "message": "دعم مشروعنا"
-  }, 
-  "firstRun_feature_malware": {
-    "message": "منع البرامج الضارة"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "إجعل التصفح أكثر أماناً بتعطيل مواقع البرامج الضارة المعروفة."
-  }, 
-  "firstRun_feature_social": {
-    "message": "إزالة أزرار المواقع الإجتماعية"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "خلص تلقائياً المتصفح الخاص بك من وسائل الإعلام الاجتماعية الأزرار، مثل مثل ألفيس بوك، التي تظهر في صفحات الويب، وتتبع السلوك الخاص بك."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "تعطيل التعقب"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "حافظ على خصوصيتك عند استخدام المتصفح بتعطيل التجسس و أخفي نفسك على الشركات الإعلانية اللتي تحاول أن تتبع كل تحركاتك."
-  }, 
-  "firstRun_features": {
-    "message": "آد بلوك بلس يمكنه عمل أشياء أخرى غير حجب الإعلانات"
+    "message": "إدعم مشروعنا"
   }, 
   "firstRun_filterlistsReinitializedWarning": {
-    "message": "ويبدو أن خطأ تسبب في إزالة جميع قوائم الفلترات حجب الإعلانات، و لم نتمكن من استعادة نسخة احتياطية. ولذلك اضطررنا إلى إعادة تعيين الإعدادات الخاصة بك و قائمة الفلاتر للوضع السابق مع \"الإعلانات القبول\". الرجاء التحقق من قوائم الفلترات و إعدادات \"الإعلانات المقبولة\" في <a>خيارات آدبلوك بلس</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "أنت تستخدم نسخة فديمة من متصفح سفارى وهذه النسخة غير مدعومة من أد بلوك بلس. بحيث من الممكن ان لا يعمل بصورة صحيحة على بعض المواقع. نحن نوصي بشدة ان تقوم بالترقية الى النسخة السادسة 6.1.1 للمتصفح سفارى أو النسخة الأحدث (متوفر على Mac OS X 10.8 Mountain Lion) أو النسخة السابعة 7.0.1 أو الأحدث (متوفر على OS X 10.9 Mavericks) أو تستطيع ان تستخدم أحدث إصدارللمتصفح فايرفوكس، جوجل كروم أو أوبرا."
+    "message": "ويبدو أن خطأ تسبب في إزالة جميع قوائم الفلترات حجب الإعلانات، و لم نتمكن من استعادة نسخة احتياطية. ولذلك اضطررنا إلى إعادة تعيين الإعدادات الخاصة بك و قائمة الفلاتر للوضع السابق مع \"الإعلانات القبول\". الرجاء التحقق من قوائم الفلترات و إعدادات \"الإعلانات المقبولة\" في <a>خيارات AdBlock</a>."
   }, 
   "firstRun_share": {
     "message": "أخبر أصدقائك"
   }, 
   "firstRun_share_headline": {
-    "message": "<a>يقدم لنا يد المساعدة</a> في جعل الإنترنت مكاناً أفضل"
+    "message": "<a>قدم لنا يد المساعدة</a> في جعل الإنترنت مكاناً أفضل"
   }, 
   "firstRun_title": {
-    "message": "تم تثبيت آد بلوك بلس"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "إيقاف"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "تشغيل"
+    "message": "تم تثبيت AdBlock"
   }, 
   "fixityourself": {
     "message": "حسنا، يمكنك لا يزال حظر هذا الإعلان لنفسك في صفحة خيارات. شكرا!", 
@@ -1127,9 +1079,6 @@
   "format_site1_site2_site3": {
     "message": "تنسيق: ~موقع1.com|~موقع2.com|~اخبار.موقع3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "هل وجدت خطأ برمجي؟ تريد ترجمة ﺁدبلوك بلس إلى لغتك؟ الرجاء <a>الطلب هنا</a>."
   }, 
   "foundbug": {
     "message": "العثور على خطأ؟", 
@@ -1147,30 +1096,9 @@
     "message": "عنوان الإطار: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "عام"
-  }, 
   "generaloptions": {
     "message": "خيارات عامة", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "تعريف واحد فقط للعنصر الذي سيتم إخفاؤه يمكن أن يحدد"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "لم يتم تحديد صيغة للتعرف على العنصر لإخفائه"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "تعبير منطقي غير صحيح"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "خيار فلتر غير معروف"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "هل أنت حقاً راغب بإزالة هذا الإشتراك؟"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "موقع قائمة الفلاتر ليس صحيح كعنوان ويب و لا كإسم ملف."
   }, 
   "headerfilter": {
     "message": "تطابق عوامل التصفية", 
@@ -1215,6 +1143,87 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "تقرير بدون هوية"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "لن نكون قادرين على الرجوع إليك و لن نعطي للتقرير أهمية كبيرة."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "أضف تعليق"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "يسمح لك الحقل التالي بإدخال تعليق ليساعدنا في فهم المشكلة. هذه الخطوة إختيارية ولكننا نصح بها إن لم تكن المشكلة واضحة. تستطيع أيضا مراجعة بيانات التقرير قبل إرساله."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "التعليق (إختياري):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "طول التعليق يتجاوز 1000 حرف. سيتم إرسال أول 1000 حرف فقط."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "تم حفظ تقريرك. ستستطيع الوصول إليه عن طريق العنوان التالي:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "من فضلك الإنتظر قليلا ريثما يجمع آدبلوك بلس المعلومات المطلوبة."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "أهلا بك في مبلغ المشاكل"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>ملاحظة:</strong>سيتم فتح علامة تبويب إضافية مؤقتًا بحيث لن تتأثر الصفحة التي تزورها بالمُبلّغ عن المشكلة."
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "تمّ"
+  }, 
+  "issueReporter_email_description": {
+    "message": "نحن نشجعك لإدخال بريد إلكتروني صحيح لكي نتمكن من الاتصال بك بخصوص تقريرك إذا كانت هناك أسئلة. أيضا يسمح لنا بالتعرف على مساهمتك و إعطائها أولوية."
+  }, 
+  "issueReporter_email_label": {
+    "message": "البريد الإلكتروني:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "فشل إرسال التقرير بسبب الخطأ \"?1?\". الرجاء التأكد من صحة اتصالك بالإنترنت ثم أعاد المحاولة. إن استمرت المشكلة الرجاء طلب المساعدة على [link]منتديات آدبلوك بلس[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "اختر هذا الخيار إن كان أحد الإعلانات ظاهرا رغم أن آدبلوك بلس مفعل"
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "آدبلوك بلس لا يقوم بحجب أحد الإعلانات"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "اختر هذا الخيار ان كان محتوى مهم ناقص من الصفحة أو كانت الصفحة تظهر بشكل خاطئ أو لا تعمل بشكل جيد. إن لم يكن باستطاعتك تحديد إن كان آدبلوك بلس هو سبب المشكلة جرب تعطيله مؤقتاً"
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "آدبلوك بلس يحجب أكثر من اللازم"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "المشكلة التي قمت بالإبلاغ عنه معروفة مسبقاً. للمزيد من المعلومات:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "مبلغ المشاكل"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "سياسة الخصوصية"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "إرسال التقرير"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "إرسال التقرير"
+  }, 
+  "issueReporter_sending": {
+    "message": "الرجاء الإنتظار ريثما يقوم آدبلوك بلس بإرسال تقرير."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "إظهار بيانات التقرير"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "هذه النافذة ستقودك خلال الخطوات المطلوبة لإرسال تبليغ بمشكلة في آدبلوك بلس. في البداية عليك إختيار نوع المشكلة التي تواجهها من هذه الصفحة:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "إختر نوع المشكلة"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1380,25 +1389,6 @@
     "message": "إضافة عوامل تصفية للغة أخرى: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "أخر تحديث في $time$ عند $date$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "آخر تحديث في $time$ اليوم", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "شرح: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1542,7 +1532,7 @@
     "description": "Resource list page: error message"
   }, 
   "notification_antiadblock_message": {
-    "message": "يعرف هذا الموقع بإظهاره رسائل موجهة إلى المستخدمي آدبلوك بلس. هل تريد أن يخفي آدبلوك بلس هذه الرسائل المستهدفة؟"
+    "message": "يعرف هذا الموقع بإظهاره رسائل موجهة إلى المستخدمي AdBlock. هل تريد أن يخفي AdBlock هذه الرسائل المستهدفة؟"
   }, 
   "notification_antiadblock_title": {
     "message": "إخفاء الرسائل المستهدفة؟"
@@ -1575,8 +1565,351 @@
     "message": "الخيارات", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "الإعلان المقبول لا تسبب أي مضايقات ولا تعيق المحتوى الذي تشاهده. <a>اقرأ المزيد عن معايير الإعلان المقبول</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "السماح بـالإعلان المقبول"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "الإعلانات المقبولة هي إعلانات غير تطفلية. إنها نقطة الوسط بين حجب الإعلانات ودعم المحتوى الإلكتروني عبر الإنترنت لأنها تدر أرباحًا على مالكي موقع الويب."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>ملاحظة:</strong> لديك <strong>ميزة عدم التعقب (DNT)</strong> معطّلة في إعدادات المتصفّح. لكي تعمل هذه الميزة بشكل صحيح، الرجاء تمكين <strong>DNT</strong> في تفضيلات المتصفّح. <a>تعرف على كيفية تشغيل DNT</a>."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "الإعلان المقبول"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "السماح فقط بالإعلانات دون تتبع الجهات الخارجية"
+  }, 
+  "options_advanced_description": {
+    "message": "يمكنك تخصيص AdBlock حسب تفضيلاتك الشخصية أو يمكنك إضافة أو إزالة قوائم عوامل التصفية أو إنشاء قوائم عوامل تصفية خاصة بك أو الحفاظ عليها"
+  }, 
+  "options_close": {
+    "message": "غلق"
+  }, 
+  "options_control_remove_title": {
+    "message": "إزالة"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "إلغاء"
+  }, 
+  "options_customFilter_edit": {
+    "message": "عدل الفلاتر"
+  }, 
+  "options_customFilter_save": {
+    "message": "حفظ"
+  }, 
+  "options_customFilters_description": {
+    "message": "اكتب عوامل التصفية المخصصة لديك لزيادة التحكم في المحتوى الذي يسمح AdBlock أو يحجبه."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "مثال $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "تعرف على كيفية كتابة قوائم"
+  }, 
+  "options_customFilters_start": {
+    "message": "بدء كتابة قوائم عوامل التصفية الخاصة بي"
+  }, 
+  "options_customFilters_tip": {
+    "message": "ستظهر هنا عوامل التصفية التي تنشأها."
+  }, 
+  "options_customFilters_title": {
+    "message": "إنشاء وتحرير قوائم عوامل التصفية"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "قوائم عوامل التصفية"
+  }, 
+  "options_customize_blockElement": {
+    "message": "عرض \"حجب عنصر\" عند النقر فوق العنصر بالزر الأيمن"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "حجب العناصر المزعجة مؤقتًا في إحدى صفحات الويب، مثل الصور أو عروض شرائح الرسوم المتحركة."
+  }, 
+  "options_customize_header": {
+    "message": "تخصيص الإجراءات التي تتم في الصفحة حسب تفضيلاتك الشخصية"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "عرض لوحة 'AdBlock' في أدوات المطور"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "عرض العناصر التي تم حجبها أو إدراجها في القائمة البيضاء من لوحة أدوات المطور في المتصفح."
+  }, 
+  "options_customize_showNotifications": {
+    "message": "أظهر الأشعارات الهامة"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "أوقف تشغيل كل الإخطارات من AdBlock."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "حقوق النشر © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "نبذة عن AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "كافة الحقوق محفوظة. ®AdBlock هو علامة تجارية مسجلة لشركة eyeo GmbH."
+  }, 
+  "options_dialog_about_version": {
+    "message": "رقم الإصدار $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "رابط URL لقائمة عوامل تصفية"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "أدخل رابط URL صحيحًا"
+  }, 
+  "options_dialog_import_title": {
+    "message": "إضافة قائمة عوامل تصفية"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "لا يوجد لغات متوفرة."
+  }, 
+  "options_dialog_language_title": {
+    "message": "حدد لغة"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "نعم، استخدم قائمة الفلاتر هذه"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "هل أنت بالتأكيد تريد إضافة قائمة عوامل التصفية هذه؟"
+  }, 
+  "options_email": {
+    "message": "البريد الإلكتروني:"
+  }, 
+  "options_english": {
+    "message": "الإنجليزية"
+  }, 
+  "options_filterList_add": {
+    "message": "+ أضف قائمة عوامل تصفية جديدة"
+  }, 
+  "options_filterList_column_name": {
+    "message": "قوائم عوامل التصفية"
+  }, 
+  "options_filterList_column_status": {
+    "message": "الحالة"
+  }, 
+  "options_filterList_column_update": {
+    "message": "التحديث الأخير"
+  }, 
+  "options_filterList_description": {
+    "message": "يعمل كل إعداد من إعدادات AdBlock بسبب إحدى قوائم عوامل التصفية. وفيما يلي قوائم عوامل التصفية التي تتوافق مع كافة إعدادات AdBlock. كما يمكنك إضافة عوامل تصفية إضافية تم إنشاؤها والتي تحتفظ بها مجتمعنا الموثوق بها."
+  }, 
+  "options_filterList_empty": {
+    "message": "لم تضف أي عوامل تصفية إلى AdBlock. ستظهر هنا عوامل التصفية التي أضفتها."
+  }, 
+  "options_filterList_hours": {
+    "message": "منذ ساعات"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "فشل الأمر، عدم تطابق المجموع الإختباري"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "فشل الأمر، بسبب فشل التحميل"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "تحديث"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "فشل الأمر، قائمة الفلاتر غير صحيحة"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "فشل الأمر، العنوان ليس صحيح"
+  }, 
+  "options_filterList_minutes": {
+    "message": "منذ دقائق"
+  }, 
+  "options_filterList_now": {
+    "message": "فقط الآن"
+  }, 
+  "options_filterList_source": {
+    "message": "المصدر"
+  }, 
+  "options_filterList_state_active": {
+    "message": "نشط"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "معطل"
+  }, 
+  "options_filterList_title": {
+    "message": "قوائم عوامل التصفية"
+  }, 
+  "options_filterList_update": {
+    "message": "تحديث كل قوائم عوامل التصفية"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "تحديث الآن"
+  }, 
+  "options_filterList_website": {
+    "message": "مواقع الويب"
+  }, 
+  "options_footer_about": {
+    "message": "نبذة عن AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "مساهمة"
+  }, 
+  "options_general_description": {
+    "message": "حدد المحتويات التي يظهرها AdBlock ويخفيها على مواقع الويب."
+  }, 
+  "options_help_description": {
+    "message": "ابحث عن التعليمات أو تواصل معنا"
+  }, 
+  "options_language_add": {
+    "message": "+ إضافة لغة"
+  }, 
+  "options_language_change": {
+    "message": "تغيير"
+  }, 
+  "options_language_description": {
+    "message": "يمكنك تحسين AdBlock للغة (اللغات) التي تتصفح بها مواقع الويب عادة."
+  }, 
+  "options_language_empty": {
+    "message": "ليس لديك أي عوامل تصفية محددة حسب اللغة."
+  }, 
+  "options_language_header": {
+    "message": "اللغة"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>نصيحة:</strong> لا تحدد سوى اللغات التي تحتاجها. سيؤدي تحديد المزيد من اللغات إلى إبطاء مانع الإعلانات ومن ثم إبطاء سرعة تصفحك."
+  }, 
+  "options_learn_more": {
+    "message": "تعرف على المزيد"
+  }, 
+  "options_more_filters_description": {
+    "message": "هذه عوامل تصفية إضافية أضفتها من قبل إلى AdBlock."
+  }, 
+  "options_more_filters_header": {
+    "message": "المزيد من عوامل التصفية"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>ملاحظة:</strong> ينبغي ألا تستخدم عوامل تصفية من أطراف خارجية إلا من مؤلفين تثق بهم."
+  }, 
+  "options_new_label": {
+    "message": "جديد"
+  }, 
+  "options_page_document_title": {
+    "message": "إعدادات"
+  }, 
+  "options_page_title": {
+    "message": "إعدادات"
+  }, 
+  "options_privacy_header": {
+    "message": "الخصوصية والأمان"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "احرص على حماية خصوصيتك من الجهات المعلومة التي قد تتعقب نشاطك على الإنترنت عبر المواقع الإلكتروني التي تزورها."
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "تتيح رموز مواقع التواصل الاجتماعي التي تظهر في مواقع الويب لك زيارة شبكات مواقع التواصل الاجتماعي لإنشاء بروفايل شخصي لك استنادًا إلى عاداتك في التصفح - حتى عندما لا تنقر فوق تلك الأزرار أو الرموز. يمكن حماية بروفايلك الشخصي من خلال إخفاء تلك الرموز."
+  }, 
+  "options_report_bug": {
+    "message": "هل وجدت خطأ برمجيًا؟ <a>أرسل لنا تقريرًا بالخطأ البرمجي</a>"
+  }, 
+  "options_report_forum": {
+    "message": "هل تريد الدعم من مجتمعنا؟ <a>الانتقال إلى المنتدى</a>"
+  }, 
   "options_short": {
     "message": "الخيارات"
+  }, 
+  "options_social_description": {
+    "message": "هل لديك سؤال أو فكرة جديدة؟ نحن هنا لنساعدك."
+  }, 
+  "options_social_title": {
+    "message": "تواصل معنا"
+  }, 
+  "options_support_title": {
+    "message": "الدعم"
+  }, 
+  "options_tab_advanced": {
+    "message": "متقدمة"
+  }, 
+  "options_tab_general": {
+    "message": "عامة"
+  }, 
+  "options_tab_help": {
+    "message": "تعليمات"
+  }, 
+  "options_tab_whitelist": {
+    "message": "مواقع الويب المدرجة في القوائم البيضاء"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "لاحظنا أنه لديك على حد سواء <strong>$tracking$</strong> و <strong>$acceptableAds$</strong> مفعلة.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "نريدك أن تعرف أنه حتى يتمكن المعلنون من عرض إعلانات ملائمة أكثر، <strong>قد</strong> يكون هناك بعض التتبع مع الإعلانات المقبولة."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "إذا كنت تفضل خصوصية إضافية، حدد <strong>$acceptableAdsPrivacy$</strong> خانة الاختيار أدناه.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "حسناً، فهمت"
+  }, 
+  "options_whitelist_add": {
+    "message": "إضافة موقع ويب"
+  }, 
+  "options_whitelist_description": {
+    "message": "لقد أوقفت تشغيل حجب الإعلانات في مواقع الويب هذه ومن ثم سترى إعلاناتها فيها."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "ليس لديك أي مواقع ويب مدرجة في القائمة البيضاء."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "ستظهر هنا مواقع الويب التي تثق فيها وتريد السماح بظهور الإعلانات فيها."
+  }, 
+  "options_whitelist_notification": {
+    "message": "$website$ تم إدراجه في القائمة البيضاء.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "مثال $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "خيارات AdBlock", 
@@ -1608,9 +1941,6 @@
     "message": "قوائم عامل التصفية الأخرى", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "القوائم القديمة تحدث دورياً."
-  }, 
   "overlay_notification_button_no": {
     "message": "لا"
   }, 
@@ -1618,13 +1948,10 @@
     "message": "نعم"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "إغلاق هذا التنبيه"
+    "message": "إغلاق الإشعارات"
   }, 
   "overlay_notification_closing_button_optout": {
-    "message": "إيقاف عرض التنبيهات"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "إظهار التنبيهات الهامة"
+    "message": "إيقاف عرض الإشعارات"
   }, 
   "pagelanguagecheck": {
     "message": "ما هي لغة المكتوبة في تلك الصفحة؟", 
@@ -1669,9 +1996,6 @@
   "reloadpageafterwhitelist": {
     "message": "إعادة تحميل الصفحة.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "إزالة المحدد"
   }, 
   "removefromlist": {
     "message": "حذف من القائمه", 
@@ -1763,12 +2087,12 @@
     "message": " --حدد اللغة -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "التبليغ عن مشكل في هذه الصفحة"
+  }, 
   "show_ads_except_for": {
     "message": "وتظهر الإعلانات في كل مكان باستثناء هذه المجالات...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "أظهر فقرة \"حجب العنصر\" في قائمة النقرة اليمنى"
   }, 
   "show_devtools_panel": {
     "message": "اظهر لوحة 'AdBlock' في أدوات المطور", 
@@ -1834,28 +2158,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "ما يضاهي $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "تحميل آدبلوك بلس"
-  }, 
-  "stats_share_message": {
-    "message": "أنا منعت $number$ إعلاناً و متتبعاً بفضل آدبلوك بلس.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "مشاركة هذا الرقم"
-  }, 
   "stats_show_iconnumber": {
     "message": "عرض الرقم في الصورة المرمزة"
   }, 
@@ -1911,15 +2213,6 @@
   "subscribingtitle": {
     "message": "الاشتراك في قائمة عامل التصفية...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "موقع قائمة الفلاتر:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "الرجاء اختيار اشتراك لفلتر من القائمة:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "عنوان الاشتراك"
   }, 
   "supportsite": {
     "message": "اسمحوا لنا أن نعرف في [[الموقعنا]]!", 
@@ -2064,9 +2357,6 @@
     "message": "الغاء الاشتراك.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "التحديث الان"
-  }, 
   "updateddayago": {
     "message": "تحديث منذ 1 يوم", 
     "description": "Label for filter list subscription"
@@ -2127,6 +2417,27 @@
     "message": "سأجلب التّحديثات آليًّا، يمكنك أيضًا [[التّحديث الآن]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "إذا أحكمت سيطرتك على سطح المكتب، فستستطيع حجب الإعلانات وتحسين الخصوصية والأمان على الهاتف الجوال أيضًا. احصل على <a>تطبيق Adblock Browser أدناه</a>"
+  }, 
+  "updates_blockAds": {
+    "message": "أنشأ تحالف متمردي المصادر المفتوحة عوامل تصفية جديدة للحجب وهي تتيح لك تدمير الإعلانات المخفية على مواقع الويب مثل الفيس بوك حتى إذا عاود الإمبراطور الهجوم."
+  }, 
+  "updates_heading": {
+    "message": "تم تحديث AdBlock!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "صفحة الإعدادات الجديدة للعلامة التجارية - وتصميم جديد مع مزيدٍ من خيارات الخصوصية والأمان - ولذلك من السهل <a>تخصيص AdBlock حسبما تريده</a>."
+  }, 
+  "updates_phone": {
+    "message": "ولكن تمهل! ماذا عن هاتفك؟"
+  }, 
+  "updates_status": {
+    "message": "اكتمل التحديث"
+  }, 
+  "updates_subheading": {
+    "message": "ما الجديد؟"
+  }, 
   "updateyourlists": {
     "message": "تأكد من قوائم عوامل التصفية الخاصة محدثة:", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2475,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "السماح بالإعلانات على قناة YouTube™:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "نطاقات القائمة البيضاء"
   }, 
   "whitelistedresource": {
     "message": "موارد اللائحة البيضاء", 

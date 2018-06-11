@@ -74,17 +74,8 @@
   "add": {
     "message": "添加"
   }, 
-  "add_domain_button": {
-    "message": "添加域名"
-  }, 
-  "add_filter_button": {
-    "message": "添加过滤规则"
-  }, 
   "add_filters_msg": {
     "message": "添加过滤规则？"
-  }, 
-  "add_your_own_filters": {
-    "message": "自定义过滤"
   }, 
   "adreport_all_debug_info": {
     "message": "以下信息也将列入广告报告。", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "允许将特定的YouTube™频道加入白名单 (需要重启浏览器)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "确认更改"
   }, 
   "betalabel": {
     "message": "测试功能", 
@@ -404,7 +392,7 @@
     "description": "Text of the final ad report question"
   }, 
   "catchannelswitchlabel": {
-    "message": "Cats", 
+    "message": "猫", 
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
   "checkinfirefox_1": {
@@ -460,7 +448,7 @@
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
-    "message": "此消息框关闭后，请点击（或右击）网页上的一个元素。"
+    "message": "本弹窗自动关闭后，请点击（或右击）当前页面上的一个元素。"
   }, 
   "clickthead": {
     "message": "点选要屏蔽的广告，AdBlock会协助您设定。", 
@@ -473,6 +461,21 @@
   "close": {
     "message": "关闭", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "隐藏 Adblock 警告消息"
+  }, 
+  "common_feature_malware_title": {
+    "message": "屏蔽恶意软件"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "禁用其他跟踪"
+  }, 
+  "common_feature_social_title": {
+    "message": "禁止社交媒体图标跟踪"
+  }, 
+  "common_notification_hide": {
+    "message": "关闭通知"
   }, 
   "confirm_undo_custom_filters": {
     "message": "您确定要移除您在$host$上创建的$count$个屏蔽规则？", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "注意: 启用Safari内容屏蔽将无法支持将网页或网站加入白名单 (允许显示广告) 功能。", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "下一步"
   }, 
   "contributors": {
     "message": "我们也有一个页面让您了解[[AdBlock幕后的贡献者们]]！", 
@@ -587,10 +593,7 @@
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
   }, 
   "disabled_for_site": {
-    "message": "对当前网站<strong>禁用</strong>"
-  }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock 将不过滤以下域名。您可以通过点击地址栏的 AdBlock 图标进行添加，也可在下面输入域名（非URL）然后点击“添加过滤规则”。"
+    "message": "在当前网站上 <strong>禁用</strong>"
   }, 
   "disabled_on_this_channel": {
     "message": "您允许此频道播放广告", 
@@ -629,7 +632,7 @@
     "description": "Text shown before language selector drop-down."
   }, 
   "dogchannelswitchlabel": {
-    "message": "Dogs", 
+    "message": "狗", 
     "description": "The label text for the dog switch on the MyAdBlock Options page"
   }, 
   "domain_pause_adblock": {
@@ -683,9 +686,6 @@
     "message": "我们推荐您订阅 \"EasyList Lite\" 或 \"EasyList\", 但不要同时订阅这两者。", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "以纯文本编辑过滤规则"
-  }, 
   "enable_adblock": {
     "message": "在此页上启用AdBlock", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -694,11 +694,8 @@
     "message": "屏蔽此频道的广告", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
-  "enable_only_the": {
-    "message": "请只启用您需要的过滤清单，启用过多会使浏览器变慢。"
-  }, 
   "enabled_for_site": {
-    "message": "对当前网站<strong>启用</strong>"
+    "message": "在当前网站上 <strong>启用</strong>"
   }, 
   "enableotherextensionscomplete": {
     "message": "被禁用的扩展已重新启用。", 
@@ -792,6 +789,18 @@
     "message": "越南文 + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "没有为扩展元素隐藏规则指定有效域名"
+  }, 
+  "filter_invalid_csp": {
+    "message": "无效的内容安全策略（CSP）"
+  }, 
+  "filter_invalid_domain": {
+    "message": "指定的域名无效或者为空"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "无效的正则表达式"
+  }, 
   "filter_israeli": {
     "message": "希伯来文 + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +813,12 @@
     "message": "拉脱维亚文 + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "过滤规则列表"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "您的过滤规则必须遵循 <a> AdBlock 过滤规则语法</a>。"
-  }, 
   "filter_russian": {
     "message": "俄文和乌克兰文 + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "未知的过滤规则"
   }, 
   "filteracceptable_ads": {
     "message": "可接受广告", 
@@ -972,44 +978,8 @@
     "message": "俄文和乌克兰文", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "允许一些非侵入式广告"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "添加"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "添加其他过滤规则订阅组"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "添加过滤规则订阅组"
-  }, 
-  "filters_readMore_label": {
-    "message": "深入了解"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "删除"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "启用"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "失败，检验和不匹配"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "失败，下载失败"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "正在下载……"
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "失败，不是有效的过滤规则列表"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "失败，不是有效地址"
-  }, 
-  "filters_viewList_label": {
-    "message": "查看列表"
   }, 
   "filtersavewarning": {
     "message": "请小心: 如果您在这里设置出错，许多其它过滤规则，包括官方的过滤规则，可能会失效！\n参阅[[过滤规则语法教程]]来学习正确地添加高级黑名单、白名单规则。", 
@@ -1048,13 +1018,13 @@
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
   "firstRun_abbButtonSubtitle": {
-    "message": "可用于Android和iOS"
+    "message": "可用于 Android 和 iOS"
   }, 
   "firstRun_abbButtonTitle": {
-    "message": "在此获取Adblock Browser"
+    "message": "在此获取 Adblock 浏览器"
   }, 
   "firstRun_abbPromotionHeadline": {
-    "message": "有智能手机还是平板电脑？"
+    "message": "有一部智能手机或平板电脑？"
   }, 
   "firstRun_acceptableAdsExplanation": {
     "message": "我们想鼓励网站使用简单、不使人反感的广告。这也是为什么我们建立了一个<a>严格的指导方针</a>来确定可接受的广告，并在默认设置下展示它们。如果您仍想屏蔽所有广告，您可以轻松地<a>禁用</a>这项功能。"
@@ -1065,8 +1035,20 @@
   "firstRun_contributor_credits": {
     "message": "贡献者记录"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "总是显示此页？<a>点击这里！</a>"
+  "firstRun_dataCorruptedWarning_intro": {
+    "message": "部分用户在每次启动浏览器的时候都会遇到此页面打开的问题。此问题可以通过卸载后重新安装AdBlock来解决："
+  }, 
+  "firstRun_dataCorruptedWarning_note": {
+    "message": "如果您仍然需要帮助，请通过support@adblockplus.org与我们联系，或访问我们的<a>帮助中心</a>。"
+  }, 
+  "firstRun_dataCorruptedWarning_step1": {
+    "message": "打开浏览器的扩展选项。"
+  }, 
+  "firstRun_dataCorruptedWarning_step2": {
+    "message": "找到AdBlock并将其删除。"
+  }, 
+  "firstRun_dataCorruptedWarning_step3": {
+    "message": "从<a>adblockplus.org</a>上面重新安装AdBlock。"
   }, 
   "firstRun_donate": {
     "message": "捐赠"
@@ -1074,47 +1056,17 @@
   "firstRun_donate_label": {
     "message": "支持我们的项目"
   }, 
-  "firstRun_feature_malware": {
-    "message": "拦截恶意软件"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "使您的浏览更安全，阻止已知的恶意软件域。"
-  }, 
-  "firstRun_feature_social": {
-    "message": "移除社交媒体按钮"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "自动屏蔽网页中出现的社交媒体按钮，例如 Facebook 的 Like，摆脱行为跟踪。"
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "禁止跟踪"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "隐秘浏览避开跟踪 - 摆脱广告公司跟踪你的一举一动。"
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock 不仅仅能拦截广告"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "似乎因一个问题导致所有过滤规则已被删除，并且我们无法从备份中恢复。因此，我们不得不重置您的过滤规则和可接受广告设置。请在 <a>AdBlock 选项</a> 中检查您的过滤规则列表和可接受广告设置。"
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "AdBlock 不支持您正在使用的 Safari 旧版本。这可能导致无法正常工作，或者损害一些网站上的用户体验。我们强烈建议您更新到 Safari 6.1.1 或更高版本（基于 OS X 10.8 Mountain Lion），或 Safari 7.0.1 或更高版本（基于 OS X 10.9 Mavericks），或者使用 Mozilla Firefox、Google Chrome 或 Opera 浏览器的最新版本。"
   }, 
   "firstRun_share": {
     "message": "告诉你的朋友"
   }, 
   "firstRun_share_headline": {
-    "message": "<a>给我们一点支持</a>，让网络变得更加美好"
+    "message": "<a>给我们一点帮助</a>，让网络变得更加美好"
   }, 
   "firstRun_title": {
     "message": "AdBlock 已安装"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "关闭"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "开启"
   }, 
   "fixityourself": {
     "message": "好了。您仍然可以在选项中手动屏蔽此广告。 谢谢！", 
@@ -1127,9 +1079,6 @@
   "format_site1_site2_site3": {
     "message": "格式: ~site1.com|~site2.com|~news.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "发现漏洞？想要帮忙翻译AdBlock？请前往<a>此处询问</a>"
   }, 
   "foundbug": {
     "message": "发现了bug？", 
@@ -1147,30 +1096,9 @@
     "message": "框架URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "常规"
-  }, 
   "generaloptions": {
     "message": "一般选项", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "仅可以指定一个要隐藏的元素 ID"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "没有指定要隐藏元素的识别标准"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "无效的正则表达式"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "未知的过滤规则"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "您确定要移除该过滤规则订阅组吗？"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "过滤规则列表的位置不是有效的 URL 或有效的文件名。"
   }, 
   "headerfilter": {
     "message": "符合的过滤规则", 
@@ -1209,15 +1137,96 @@
     "description": "Message when you subscribe to a non-list URL"
   }, 
   "invalid_css_selector": {
-    "message": "$selector$ 不是一个有效的 CSS 选择器", 
+    "message": "$selector$ 不是有效的 CSS 选择器", 
     "placeholders": {
       "selector": {
         "content": "$1"
       }
     }
   }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "匿名提交"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "我们将无法回复你，并且报告可能被放在较低的优先级次序。"
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "输入注释"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "以下文本区允许您输入一些注释来帮助我们更好地理解该问题。 该步骤虽然是可选的，但是如果问题不是那么显而易见的话，我们 推荐您输入一些注释。您可以在发送之前再检查一下报告的数据。"
+  }, 
+  "issueReporter_comment_label": {
+    "message": "注释（可选）："
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "您输入的注释长度超过 1000 个字符。只有前 1000 个字符会被发送出去。"
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "您的报告已被保存。您可以通过如下地址访问："
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "AdBlock 正在收集所需数据，请稍等片刻。"
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "欢迎使用问题报告系统"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>注意：</strong>将会暂时打开一个附加选项卡，因此您所在的页面不会受到问题报告器的影响。"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "完成"
+  }, 
+  "issueReporter_email_description": {
+    "message": "我们鼓励您输入一个有效的电子邮件地址，以便在我们对你的报告有疑问时可以与您联系。它还能使我们能认出你的贡献，并帮助确定它们的优先次序。"
+  }, 
+  "issueReporter_email_label": {
+    "message": "电子邮箱"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "发送报告失败，错误码 \"?1?\"。请确保您已连接互联网并重试。 如果问题依旧，请到 [link]AdBlock 论坛[/link]寻求帮助。"
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "如果 AdBlock 处于启用状态但仍然有广告出现，请选择此选项。"
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock 没有屏蔽广告"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "如果页面缺失了重要内容、显示不正常或者功能不正常，请选择此选项。 您可以通过临时禁用 AdBlock 来检测问题是否为 AdBlock 所致。"
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock 屏蔽了太多元素"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "您提交的问题可能是个已知问题。详情见："
+  }, 
+  "issueReporter_page_title": {
+    "message": "问题报告"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "隐私策略"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "发送报告"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "发送报告"
+  }, 
+  "issueReporter_sending": {
+    "message": "AdBlock 正在提交您的报告，请稍等。"
+  }, 
+  "issueReporter_showData_label": {
+    "message": "显示报告数据"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "本窗口将通过一系列步骤引导您提交 AdBlock 问题报告。 首先，请在本页选择您遇到的问题类型："
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "选择问题类型"
+  }, 
   "landscapechannelswitchlabel": {
-    "message": "Landscapes", 
+    "message": "风景", 
     "description": "The label text for the Landscape switch on the MyAdBlock Options page"
   }, 
   "lang_arabic": {
@@ -1380,25 +1389,6 @@
     "message": "添加其它语言的过滤列表：", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "最后更新于$time$  $date$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "最近更新于 今天$time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "图例： ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1488,7 +1478,7 @@
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }, 
   "myadblockenrollment": {
-    "message": "Enable MyAdBlock", 
+    "message": "启用MyAdBlock", 
     "description": "The text of the menu item in the popup menu that takes you to the MyAdBlock Enrollment page"
   }, 
   "myadblockoptions": {
@@ -1496,15 +1486,15 @@
     "description": "The text of the menu item in the popup menu that takes you to the MyAdBlock Options page"
   }, 
   "myadblockoptionscategoryheader": {
-    "message": "Categories", 
+    "message": "图片类别", 
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblockoptionspageheader": {
-    "message": "MyAdBlock Options", 
+    "message": "MyAdBlock选项", 
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblockpicreplacementswitchlabel": {
-    "message": "Replace some blocked ads with high-quality images from the categories below", 
+    "message": "用以下类别的高品质图片替换被屏蔽的广告", 
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "name": {
@@ -1526,7 +1516,7 @@
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Windows)"
   }, 
   "newmyadblockenrollment": {
-    "message": "NEW", 
+    "message": "新", 
     "description": "The text of the 'Enable MyAdBlock' menu item in the popup menu that takes you to the MyAdBlock Enrollment page"
   }, 
   "no": {
@@ -1554,7 +1544,7 @@
     "message": "打开此通知中的所有链接"
   }, 
   "notification_with_buttons": {
-    "message": "点击“确定”打开此通知中的所有链接。"
+    "message": "单击 \"确定\" 以打开此通知中的所有链接。"
   }, 
   "notification_without_buttons": {
     "message": "点击通知打开它上面的所有链接。"
@@ -1575,8 +1565,351 @@
     "message": "选项", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "可接受广告不会令人烦恼，也不会干扰您正在查看的内容。<a>阅读更多关于可接受广告的标准</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "允许可接受广告"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "可接受的广告是非侵入式广告。由于它们为网站所有者创造了收入，因此它们处于广告屏蔽和支持在线内容之间的中间位置。"
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>注意：</strong><strong>请勿跟踪 (DNT)</strong>选项在浏览器设置中已被禁用。为了本功能正常工作，请在您的浏览器首选项中启用 <strong>DNT</strong>。<a>查看启用DNT的方法</a>。"
+  }, 
+  "options_acceptableAds_header": {
+    "message": "可接受广告"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "只允许没有第三方跟踪的广告"
+  }, 
+  "options_advanced_description": {
+    "message": "自定义 AdBlock、添加或移除过滤列表、创建和维护您自己的过滤列表"
+  }, 
+  "options_close": {
+    "message": "关闭"
+  }, 
+  "options_control_remove_title": {
+    "message": "移除"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "取消"
+  }, 
+  "options_customFilter_edit": {
+    "message": "编辑过滤规则"
+  }, 
+  "options_customFilter_save": {
+    "message": "保存"
+  }, 
+  "options_customFilters_description": {
+    "message": "编写自己的自定义过滤器，以进一步控制 AdBlock 允许或屏蔽的内容。"
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "例如 $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "了解如何编写过滤列表"
+  }, 
+  "options_customFilters_start": {
+    "message": "开始编写我的过滤列表"
+  }, 
+  "options_customFilters_tip": {
+    "message": "您创建的过滤器将显示在此处。"
+  }, 
+  "options_customFilters_title": {
+    "message": "创建和编辑您的过滤列表"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "我的过滤列表"
+  }, 
+  "options_customize_blockElement": {
+    "message": "显示“块元素”右键单击菜单项"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "暂时屏蔽网页上的烦人项目，例如：图片或动画幻灯片。"
+  }, 
+  "options_customize_header": {
+    "message": "自定义页面操作"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "在开发人员工具中显示“AdBlock”面板"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "从浏览器的开发人员工具面板中查看已被屏蔽和列入白名单的项目。"
+  }, 
+  "options_customize_showNotifications": {
+    "message": "显示有用的通知"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "关闭 AdBlock 的所有通知。"
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "版权所有 © $currentYear$ eyeo GmbH。", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "关于 AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "保留所有权利。AdBlock® 是 eyeo GmbH 的注册 商标。"
+  }, 
+  "options_dialog_about_version": {
+    "message": "版本号 $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "过滤列表 URL"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "输入有效的 URL"
+  }, 
+  "options_dialog_import_title": {
+    "message": "添加过滤列表"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "没有可用的语言。"
+  }, 
+  "options_dialog_language_title": {
+    "message": "选择语言"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "是，使用此过滤规则列表"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "您确定要添加此过滤列表吗？"
+  }, 
+  "options_email": {
+    "message": "电子邮件："
+  }, 
+  "options_english": {
+    "message": "英语"
+  }, 
+  "options_filterList_add": {
+    "message": "+ 添加一个新的过滤列表"
+  }, 
+  "options_filterList_column_name": {
+    "message": "过滤列表"
+  }, 
+  "options_filterList_column_status": {
+    "message": "状态"
+  }, 
+  "options_filterList_column_update": {
+    "message": "最近更新时间"
+  }, 
+  "options_filterList_description": {
+    "message": "每个 AdBlock 设置由于过滤列表而起作用。以下是与所有 AdBlock 设置相对应的过滤列表。您还可以添加由我们信任的社区创建和维护的其他过滤器。"
+  }, 
+  "options_filterList_empty": {
+    "message": "您尚未向 AdBlock 添加过滤列表。您添加的过滤列表将显示在此处。"
+  }, 
+  "options_filterList_hours": {
+    "message": "几小时以前"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "失败，检验和不匹配"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "失败，下载失败"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "正在更新"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "失败，不是有效的过滤规则列表"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "失败，不是有效地址"
+  }, 
+  "options_filterList_minutes": {
+    "message": "几分钟前"
+  }, 
+  "options_filterList_now": {
+    "message": "刚才"
+  }, 
+  "options_filterList_source": {
+    "message": "来源"
+  }, 
+  "options_filterList_state_active": {
+    "message": "活跃"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "被禁用"
+  }, 
+  "options_filterList_title": {
+    "message": "过滤列表"
+  }, 
+  "options_filterList_update": {
+    "message": "更新所有过滤列表"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "现在更新"
+  }, 
+  "options_filterList_website": {
+    "message": "网站"
+  }, 
+  "options_footer_about": {
+    "message": "关于 AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "协助"
+  }, 
+  "options_general_description": {
+    "message": "确定 AdBlock 在网站上显示和隐藏的内容"
+  }, 
+  "options_help_description": {
+    "message": "寻求帮助或联系我们"
+  }, 
+  "options_language_add": {
+    "message": "+ 添加语言"
+  }, 
+  "options_language_change": {
+    "message": "更改"
+  }, 
+  "options_language_description": {
+    "message": "为您平日浏览网站的语言优化 AdBlock。"
+  }, 
+  "options_language_empty": {
+    "message": "您没有任何特定语言的过滤器。"
+  }, 
+  "options_language_header": {
+    "message": "语言"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>提示：</strong>只选择您需要的语言。选择更多会减慢广告拦截器的速度，因此会降低浏览速度。"
+  }, 
+  "options_learn_more": {
+    "message": "了解详情"
+  }, 
+  "options_more_filters_description": {
+    "message": "这些是您以前添加到 AdBlock 的其他过滤器。"
+  }, 
+  "options_more_filters_header": {
+    "message": "更多过滤器"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>注意：</strong>您应该只使用来自您信任的作者的第三方过滤器列表。"
+  }, 
+  "options_new_label": {
+    "message": "新"
+  }, 
+  "options_page_document_title": {
+    "message": "设置"
+  }, 
+  "options_page_title": {
+    "message": "设置"
+  }, 
+  "options_privacy_header": {
+    "message": "隐私与安全"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "保护您的隐私，防止已知实体在您访问的各种网站上跟踪您的在线活动。"
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "您访问的网站上的社交媒体图标允许社交媒体网络根据您的浏览习惯建立您的个人资料记录——即使您没有点击它们。隐藏这些图标可以保护您的个人资料。"
+  }, 
+  "options_report_bug": {
+    "message": "发现错误？<a>向我们发送错误报告</a>"
+  }, 
+  "options_report_forum": {
+    "message": "想要我们社区的支持？<a>前往论坛</a>"
+  }, 
   "options_short": {
     "message": "设置"
+  }, 
+  "options_social_description": {
+    "message": "有问题还是新想法？我们来帮忙。"
+  }, 
+  "options_social_title": {
+    "message": "保持联系"
+  }, 
+  "options_support_title": {
+    "message": "支持"
+  }, 
+  "options_tab_advanced": {
+    "message": "高级"
+  }, 
+  "options_tab_general": {
+    "message": "一般"
+  }, 
+  "options_tab_help": {
+    "message": "帮助"
+  }, 
+  "options_tab_whitelist": {
+    "message": "白名单网站"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "我们注意到您同时启用了<strong>$tracking$</strong>和<strong>$acceptableAds$</strong>。", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "我们想告知您，为了让广告商向您展示更有相关性的广告，可接受广告<strong>可能</strong>准许某些跟踪型的广告。"
+  }, 
+  "options_tracking_warning_3": {
+    "message": "如果您更偏好隐私，选择下方的<strong>$acceptableAdsPrivacy$</strong>复选框。", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "好的，知道了"
+  }, 
+  "options_whitelist_add": {
+    "message": "添加网站"
+  }, 
+  "options_whitelist_description": {
+    "message": "您已关闭这些网站上的广告屏蔽功能，因此会在这些网站上看到广告。"
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "您没有任何列入白名单的网站。"
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "您信任的网站并希望允许广告在此显示。"
+  }, 
+  "options_whitelist_notification": {
+    "message": "$website$ 已被列入白名单。", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "例如 $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock选项", 
@@ -1608,9 +1941,6 @@
     "message": "其它过滤列表", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "过滤列表会定期自动更新"
-  }, 
   "overlay_notification_button_no": {
     "message": "否"
   }, 
@@ -1622,9 +1952,6 @@
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "不再显示通知"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "显示有益提示"
   }, 
   "pagelanguagecheck": {
     "message": "此页面使用什么语言？", 
@@ -1669,9 +1996,6 @@
   "reloadpageafterwhitelist": {
     "message": "重新载入页面", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "删除所选项"
   }, 
   "removefromlist": {
     "message": "从列表中移除", 
@@ -1763,12 +2087,12 @@
     "message": "——选择语言——", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "报告当前页面上的问题"
+  }, 
   "show_ads_except_for": {
     "message": "在所有网站 显示广告，除了这些网域...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "添加‘拦截元素’到右鍵菜单"
   }, 
   "show_devtools_panel": {
     "message": "在开发者工具中显示AdBlock面板", 
@@ -1834,33 +2158,11 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "超过$number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "下载 AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "感谢AdBlock拦截了$number$个广告和跟踪行为。", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "分享屏蔽广告总数"
-  }, 
   "stats_show_iconnumber": {
     "message": "在图标上显示数量"
   }, 
   "stats_title": {
-    "message": "已拦截广告"
+    "message": "已拦截广告数"
   }, 
   "status_domain_paused": {
     "message": "AdBlock已在本网站上暂停。", 
@@ -1911,15 +2213,6 @@
   "subscribingtitle": {
     "message": "正在订阅过滤列表...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "过滤规则列表位置:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "从列表中选择过滤规则订阅组:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "订阅组的标题:"
   }, 
   "supportsite": {
     "message": "到我们的[[技术支持网站]]上告诉我们！", 
@@ -2064,9 +2357,6 @@
     "message": "已取消订阅。", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "立即更新"
-  }, 
   "updateddayago": {
     "message": "1天前更新", 
     "description": "Label for filter list subscription"
@@ -2127,6 +2417,27 @@
     "message": "AdBlock会自动获取更新；您也可以要求[[现在更新]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "如果在电脑上进行控制，您也可以拦截移动设备上的广告，并提高移动设备的隐私和安全性。获取下面的 <a>Adblock 浏览器应用程序</a>"
+  }, 
+  "updates_blockAds": {
+    "message": "开源反抗联盟创建了新的拦截过滤器，即使在Facebook等帝国反击的情况下，也可以屏蔽其上的广告。"
+  }, 
+  "updates_heading": {
+    "message": "AdBlock 已完成更新！"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "全新的设置页面 - 改进和重新设计跟以前比，AdBlock有更多的隐私和安全性选项-<a>所以您可以根据需要轻松自定义它</a>。"
+  }, 
+  "updates_phone": {
+    "message": "等等！您的手机呢？"
+  }, 
+  "updates_status": {
+    "message": "更新完成"
+  }, 
+  "updates_subheading": {
+    "message": "有哪些新功能？"
+  }, 
   "updateyourlists": {
     "message": "请确认您的过滤列表都已是最新的：", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2475,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "允许以下YouTube™频道播放广告：", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "白名单"
   }, 
   "whitelistedresource": {
     "message": "已加入白名单的资源", 

@@ -74,17 +74,8 @@
   "add": {
     "message": "Pievienot"
   }, 
-  "add_domain_button": {
-    "message": "Pievienot domēnu"
-  }, 
-  "add_filter_button": {
-    "message": "Pievienot filtru"
-  }, 
   "add_filters_msg": {
     "message": "Pievienot filtru(s)?"
-  }, 
-  "add_your_own_filters": {
-    "message": "Pievieno savus filtrus"
   }, 
   "adreport_all_debug_info": {
     "message": "Šī informācija arī tiks iekļauta reklāmas kļūdas ziņojumā.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Pielietot izmaiņas"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -474,6 +462,9 @@
     "message": "Aizvērt", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_notification_hide": {
+    "message": "Aizvērt paziņojumu"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +486,9 @@
   "contentblockingwarning": {
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Uz priekšu"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -589,9 +583,6 @@
   "disabled_for_site": {
     "message": "<strong>Izslēgts</strong> šajā lapā"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock Jūsu izvēlētajos domēnos ir atslēgts. Jūs varat pievienot domēnu izmantojot AdBlock, kas atrodas adreses joslā, vai ievadot domēnu (nevis URL) kastē un noklikšķinot uz pogas \"Pievienot domēnu\"."
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +674,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Labot filtrus kā jēlu tekstu"
-  }, 
   "enable_adblock": {
     "message": "Iespējot AdBlock šajā lapā", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +681,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Jums ir nepieciešams tikai ieslēgt filtrēšanu caur sarakstu. Daudz filtresana var nogalinat jusu internet mekletaju."
   }, 
   "enabled_for_site": {
     "message": "<strong>Ieslēgts</strong> šajā lapā"
@@ -792,6 +777,15 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Nav aktīva domēna norādītais paplašinātā elements neizcelt filtrs"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Norādīts nederīgs (vai tukšs) domēns"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Nederīga regulārā izteiksme"
+  }, 
   "filter_israeli": {
     "message": "Ebreju + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +798,12 @@
     "message": "Latviešu + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Filtru saraksts"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Filtram jāatbilst <a>AdBlock filtru sintaksei</a>."
-  }, 
   "filter_russian": {
     "message": "Krievu & Ukraiņu + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Nezināma filtra opcija"
   }, 
   "filteracceptable_ads": {
     "message": "Pieņemamas reklāmas", 
@@ -972,44 +963,8 @@
     "message": "krievu un ukraiņu", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Atļaut dažas neuzbāzīgas reklāmas"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Pievienot"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Pievienot citu abonementu"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "Pievienot filtra abonēšanu"
-  }, 
-  "filters_readMore_label": {
-    "message": "Lasīt vairāk"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Dzēst"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Iespējota"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Neizdevās, kontrolsummas neatbilstība"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "Neizdevās, lejupielāde neizdevās"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "Lejupielādē..."
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Neizdevās, nav derīgs filtru saraksts"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Neizdevās, nav derīga adrese"
-  }, 
-  "filters_viewList_label": {
-    "message": "Skatīt sarakstu"
   }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
@@ -1065,41 +1020,14 @@
   "firstRun_contributor_credits": {
     "message": "Ziedotāju saraksts"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Vai šī lapa turpina attēloties? <a>Spied šeit!</a>"
-  }, 
   "firstRun_donate": {
     "message": "ziedot"
   }, 
   "firstRun_donate_label": {
     "message": "Atbalstīt mūsu projektu"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Bloķēt ļaundabīgas programmas"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Padarīt Jūsu pārlūkošanu drošāku, bloķējot zināmos ļaundabīgo programmu avotus."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Noņemt sociālo mediju pogas"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Automātiski atbrīvot Jūsu pārlūkošanas procesu no tādām sociālo mediju pogām kā Facebook Live, kas parādās interneta lapās un izseko Jūsu darbību."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "Atspējot izsekošanu"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Pārlūkot privāti, atspējojot izsekošanu - slēpjot Jūsu pēdas no reklāmas kompānijām, kuras varētu izsekot katru Jūsu kustību."
-  }, 
-  "firstRun_features": {
-    "message": "AdblockPlus var izdarīt vairāk, ne tikai bloķēt reklāmas"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Diemžēl, traucējuma dēļ visi filtri bija novākti un neizdevās izmantot rezerves versiju. Tādēļ mēs atjaunojam jūsu filtrus un Acceptable Ads iestatījumus līdz sākumstāvoklim. Esiet tik laipni un izpētiet jūsu filtra sarakstus un Acceptable Ads iestātījumus  izmantojot šo <a>AdBlock options</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Jūs izmantojat novecojušu Safari versiju, kuru AdBlock neatbalsta. Tas var nedarboties pareizi vai pasliktināt lietotāja pieredzi dažās vietnēs. Mēs uzstājīgi iesakām Jums atjaunināt Safari līdz 6. vai vēl jaunākai versijai (pieejama Mac OS X 10.8 Mountain Lion un augstāk) jeb lietot Mozilla Firefox, Google Chrome vai Opera jaunākās versijas."
   }, 
   "firstRun_share": {
     "message": "Pastāsti saviem draugiem"
@@ -1109,12 +1037,6 @@
   }, 
   "firstRun_title": {
     "message": "AdblockPlus ir uzstādīts"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "IZSLĒGTS"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "IESLĒGTS"
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1127,9 +1049,6 @@
   "format_site1_site2_site3": {
     "message": "Formāts: ~vietne1.lv|~vietne2.lv|~jaunumi.vietne1.lv", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "Atradi defektu? Vēlies iztulkot AdBlock savā valodā? Lūdzu <a>iesniedz pieprasījumu šeit</a>."
   }, 
   "foundbug": {
     "message": "Atradi kļūdu?", 
@@ -1147,24 +1066,9 @@
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Vispārīgi"
-  }, 
   "generaloptions": {
     "message": "Vispārīgās iespējas", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Tikai viens paslēpjamā elementa ID drīkst tikt norādīts."
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Elementa paslēpšanai nav norādīts neviens kritērijs"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Vai Jūs tiešām vēlaties noņemt šo abonementu?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "Filtru saraksta atrašanās vieta nav ne derīgs URL ne arī derīgs faila nosaukums."
   }, 
   "headerfilter": {
     "message": "Saskaņots filtrs", 
@@ -1209,6 +1113,84 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Anonīms iesniegums"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Mēs nevarēsim ar Jums sazināties un visdrīzāk piešķirsim Jūsu ziņojumam zemāku prioritāti."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Pievienojiet komentāru"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "Teksta laukums ļauj Jums ierakstīt komentāru, lai palīdzētu mums saprast problēmu. Šis solis nav obligāts, bet ir rekomendēts, ja problēma nav acīmredzama. Jūs arī varat pārskatīt ziņojuma datus, pirms nosūtīšanas."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Komentārs (nav obligāti):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Jūsu komentāra garums pārsniedz 1000 simbolus. Tikai pirmie 1000 simboli tiks nosūtīti."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Jūsu ziņojums ir saglabāts. Jūs tam varat piekļūt sekojošajā adresē:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "Uzgaidiet pāris mirkļus, kamēr AdBlock apkopo nepieciešamos datus."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Laipni lūdzu problēmu ziņotājā"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Gatavs"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Mēs aicinām Jūs ievadīt derīgu e-pasta adresi, lai mēs varētu ar Jums kontaktēties, ja radīsies papildus jautājumi par Jūsu ziņojumu. Tā palīdzēs mums arī atpazīt Jūsu ieguldījumu un piešķirt tam augstāku prioritāti."
+  }, 
+  "issueReporter_email_label": {
+    "message": "E-pasts:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Mēģinājums sūtīt ziņojumu neizdevās. Kļūdas kods \"?1?\". Lūdzu pārliecinieties, ka Jums ir savienojums ar internetu un mēģiniet vēlreiz. Ja problēma atkārtojas, lūdzu prasiet palīdzību [link]AdBlock forumā[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "Izvēlaties šo opciju ja reklāma tiek attēlota neskatoties uz to ka AdBlock ir ieslēgts."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock nebloķē reklāmu"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Izvēlaties šo opciju, ja lai trūkst svarīga saturam tā tiek nepareizi attēlota vai nefunkcionē pareizi. Jūs varat noteikt vai to izraisa AdBlock, to īslaicīgi atslēdzot."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock bloķē pārāk daudz"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Jūsu nosūtītais problēma iespējams jau ir zināma. Vairāk informācija:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Problēmu ziņotājs"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Privātuma politika"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Sūtīt ziņojumu"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Sūtīt ziņojumu"
+  }, 
+  "issueReporter_sending": {
+    "message": "Lūdzu uzgaidiet kamēr AdBlock sūta Jūsu ziņojumu."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Rādīt ziņojuma datus"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Šis log Jūs vedīs cauri nepieciešamajiem soļiem, lai nosūtītu AdBlock problēmu ziņojumu. Vispirms, lūdzu izvēlieties tipu problēmai, ko Jūs pieredzat šajā lapā:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Izvēlieties problēmas tipu"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1374,25 +1356,6 @@
     "message": "Pievienot citas valodas filtrus: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "Pēdējoreiz atjaunināts $date$, $time$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "Pēdējo reiz atjaunināts šodien plkst. $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "Leģenda: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1536,10 +1499,10 @@
     "description": "Resource list page: error message"
   }, 
   "notification_antiadblock_message": {
-    "message": "Šī vietne ir zināma, lai parādītu mērķtiecīgas ziņas AdBlock lietotājiem. Vai jūs vēlaties, AdBlock slēpt mērķtiecīgas ziņas?"
+    "message": "Šī vietne rāda mērķtiecīgas ziņas AdBlock lietotājiem. Vai vēlaties, lai AdBlock slēptu mērķtiecīgas ziņas?"
   }, 
   "notification_antiadblock_title": {
-    "message": "slēpt mērķtiecīgas ziņas?"
+    "message": "Slēpt mērķtiecīgas ziņas?"
   }, 
   "notification_configure": {
     "message": "Konfigurēt paziņojuma iestatījumus"
@@ -1569,8 +1532,284 @@
     "message": "Iespējas", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "Pieļaujamā reklāma nav kaitinoša un netraucē skatāmajam saturam. <a>Uzzināt vairāk par pieļaujamās reklāmas kritērijiem</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Atļaut pielaujamo reklāmu"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "Pieļaujamā reklāma ir neuzmācīga reklāma Tas ir kompromiss starp reklāmas bloķēšanu un tiešsaistes satura atbalstīšanu, jo tā rada ieņēmumus vietņu īpašniekiem."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "Pieļaujamā reklāma"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Atļaut reklāmu tikai bez trešās puses izsekošanas"
+  }, 
+  "options_advanced_description": {
+    "message": "Pielāgojiet AdBlock, pievienojiet vai noņemiet filtru sarakstus, izveidojiet un pārvaldiet savus filtru sarakstus"
+  }, 
+  "options_close": {
+    "message": "aizvērt"
+  }, 
+  "options_control_remove_title": {
+    "message": "noņemt"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "Atcelt"
+  }, 
+  "options_customFilter_edit": {
+    "message": "Rediģēt filtrus"
+  }, 
+  "options_customFilter_save": {
+    "message": "Saglabāt"
+  }, 
+  "options_customFilters_description": {
+    "message": "Izveidojiet savus filtrus, lai kontrolētu to, kādu saturu AdBlock atļauj vai bloķē."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "piemēram, $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "Uzzināt kā izveidot filtru sarakstu"
+  }, 
+  "options_customFilters_start": {
+    "message": "Sākt mana filtru saraksta izveidošanu"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Šeit tiks rādīti izveidotie filtri."
+  }, 
+  "options_customFilters_title": {
+    "message": "Izveidot un rediģēt savu filtru sarakstu"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Mans filtru saraksts"
+  }, 
+  "options_customize_blockElement": {
+    "message": "Rādīt \"Bloķēt elementu'' labā klikšķa izvēlnē"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "Īslaicīgi bloķēt tīmekļlapā esošos vienumus, piemēram, attēlus vai animētas slaidrādes."
+  }, 
+  "options_customize_header": {
+    "message": "Pielāgot darbības lapā"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Rādīt 'AdBlock' paneli izstrādātāju rīkos"
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Rādīt noderīgus paziņojumus"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Izslēgt visus AdBlock paziņojumus."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "Autortiesības © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "Par AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "Visas tiesības paturētas. AdBlock® ir eyeo GmbH reģistrēta preču zīme."
+  }, 
+  "options_dialog_about_version": {
+    "message": "Versija $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "Filtru saraksta URL"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Ievadiet derīgu URL"
+  }, 
+  "options_dialog_import_title": {
+    "message": "Pievienot filtru sarakstu"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Nav nevienas pieejamas valodas."
+  }, 
+  "options_dialog_language_title": {
+    "message": "Izvēlieties valodu"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Jā, izmantot šo filtru sarakstu"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Vai tiešām vēlaties pievienot šo filtru sarakstu?"
+  }, 
+  "options_email": {
+    "message": "E-pasts:"
+  }, 
+  "options_english": {
+    "message": "angļu valoda"
+  }, 
+  "options_filterList_add": {
+    "message": "+ Pievienot jaunu filtru sarakstu"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Filtru saraksts"
+  }, 
+  "options_filterList_column_status": {
+    "message": "Statuss"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Atjaunināts"
+  }, 
+  "options_filterList_hours": {
+    "message": "pirms stundas"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Neizdevās, kontrolsummas neatbilstība"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Neizdevās, lejupielāde neizdevās"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Atjaunina"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Neizdevās, nav derīgs filtru saraksts"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Neizdevās, nav derīga adrese"
+  }, 
+  "options_filterList_minutes": {
+    "message": "pirms minūtes"
+  }, 
+  "options_filterList_now": {
+    "message": "tikko"
+  }, 
+  "options_filterList_source": {
+    "message": "saturs"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Atspējots"
+  }, 
+  "options_filterList_title": {
+    "message": "Filtru saraksts"
+  }, 
+  "options_filterList_update": {
+    "message": "atjaunināt visus filtru sarakstus"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "atjaunināt tagad"
+  }, 
+  "options_filterList_website": {
+    "message": "mājaslapa"
+  }, 
+  "options_footer_about": {
+    "message": "Par AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "Līdzdarboties"
+  }, 
+  "options_general_description": {
+    "message": "Nosakiet, ko AdBlock rāda un slēpj tīmekļvietnēs"
+  }, 
+  "options_help_description": {
+    "message": "Atrast palīdzību vai sazināties ar mums"
+  }, 
+  "options_language_add": {
+    "message": "+ pievienot valodu"
+  }, 
+  "options_language_description": {
+    "message": "Optimizējiet AdBlock valodām, kurās parasti pārlūkojat tīmekļvietnes."
+  }, 
+  "options_language_header": {
+    "message": "Valoda"
+  }, 
+  "options_learn_more": {
+    "message": "Uzzināt vairāk"
+  }, 
+  "options_more_filters_header": {
+    "message": "Vairāk filtru"
+  }, 
+  "options_new_label": {
+    "message": "Jauns"
+  }, 
+  "options_page_document_title": {
+    "message": "AdBlock opcijas"
+  }, 
+  "options_page_title": {
+    "message": "Iestatījumi"
+  }, 
+  "options_privacy_header": {
+    "message": "Privātums un drošība"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "Aizsargājiet savus personas datus, noņemot visus veidus izsekošanai no interneta, tostarp informācijas savācējus."
+  }, 
+  "options_report_forum": {
+    "message": "Nepieciešams atbalsts no mūsu kopienas? <a>Apmeklēt forumu</a>"
+  }, 
   "options_short": {
     "message": "Iespējas"
+  }, 
+  "options_social_description": {
+    "message": "Ir jautājums vai jauna ideja? Mēs esam šeit, lai palīdzētu."
+  }, 
+  "options_social_title": {
+    "message": "Sazināties"
+  }, 
+  "options_support_title": {
+    "message": "Atbalsts"
+  }, 
+  "options_tab_advanced": {
+    "message": "Papildu"
+  }, 
+  "options_tab_general": {
+    "message": "Vispārīgi"
+  }, 
+  "options_tab_help": {
+    "message": "Palīdzība"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Baltā saraksta vietnes"
+  }, 
+  "options_whitelist_add": {
+    "message": "Pievienot vietni"
+  }, 
+  "options_whitelist_description": {
+    "message": "Jūs esat izslēdzis reklāmu bloķēšanu šajās vietnēs un tāpēc tajās redzēsiet reklāmas."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Baltajā sarakstā nav nevienas vietnes."
+  }, 
+  "options_whitelist_notification": {
+    "message": "\"$website$\" iekļauta baltajā sarakstā.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "piemēram, $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock iespējas", 
@@ -1602,14 +1841,17 @@
     "message": "Citi filtru saraksti", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Novecojušie saraksti tiek periodiski atjaunināti."
-  }, 
   "overlay_notification_button_no": {
-    "message": " Nē"
+    "message": "Nē"
   }, 
   "overlay_notification_button_yes": {
-    "message": " Jā"
+    "message": "Jā"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "Aizvērt šo paziņojumu"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "Pārtraukt rādīt paziņojumus"
   }, 
   "pagelanguagecheck": {
     "message": "Kādā valodā ir šī lapa?", 
@@ -1654,9 +1896,6 @@
   "reloadpageafterwhitelist": {
     "message": "Pārlādēt lapu.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Noņemt izvēlēto"
   }, 
   "removefromlist": {
     "message": "Izņemt no saraksta", 
@@ -1748,12 +1987,12 @@
     "message": " -- Izvēlieties valodu -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Ziņot par problēmām šajā lapā"
+  }, 
   "show_ads_except_for": {
     "message": "Rādīt reklāmasvisur izņemot šādos domēnos...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Rādīt \"Bloķēt elementu'' labā klikšķa izvēlnē"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
@@ -1819,28 +2058,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "$number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "Lejuplādēt AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "Es esmu bloķējis $number$ reklāmas un trackerus, Paldies AdBlock.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Padalīties ar šo skaitli"
-  }, 
   "stats_show_iconnumber": {
     "message": "Parādīt skaitli ikonā"
   }, 
@@ -1896,15 +2113,6 @@
   "subscribingtitle": {
     "message": "Abonē filtra sarakstu...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Filtru saraksta atrašanās vieta:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Lūdzu, izvēlieties filtru abonementu no saraksta:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Abonementa nosaukums:"
   }, 
   "supportsite": {
     "message": "Let us know on our [[support site]]!", 
@@ -2049,9 +2257,6 @@
     "message": "Atcelt abonēšanu.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "Atjaunināt tagad"
-  }, 
   "updateddayago": {
     "message": "atjaunināts pirms dienas", 
     "description": "Label for filter list subscription"
@@ -2112,6 +2317,15 @@
     "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_heading": {
+    "message": "AdBlock ir atjaunināts!"
+  }, 
+  "updates_status": {
+    "message": "Atjaunināšana pabeigta"
+  }, 
+  "updates_subheading": {
+    "message": "Kas jauns?"
+  }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
@@ -2149,9 +2363,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Atļautie domēni"
   }, 
   "whitelistedresource": {
     "message": "Atļautie resursi", 

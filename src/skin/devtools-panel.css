@@ -1,3 +1,20 @@
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 *
 {
   font-family: 'Lucida Grande', 'Segoe UI', Ubuntu, Tahoma, Arial, sans-serif;
@@ -9,6 +26,11 @@ html
 {
   height: 100%;
   overflow: hidden;
+}
+
+a
+{
+  color: inherit;
 }
 
 body
@@ -130,20 +152,7 @@ body.dark #items tr[data-state=whitelisted]
 }
 
 #items[data-filter-state=blocked]       tr:not([data-state=blocked]),
-#items[data-filter-state=whitelisted]   tr:not([data-state=whitelisted]),
-#items[data-filter-type=SUBDOCUMENT]    tr:not([data-type=SUBDOCUMENT]),
-#items[data-filter-type=IMAGE]          tr:not([data-type=IMAGE]),
-#items[data-filter-type=STYLESHEET]     tr:not([data-type=STYLESHEET]),
-#items[data-filter-type=SCRIPT]         tr:not([data-type=SCRIPT]),
-#items[data-filter-type=OBJECT]         tr:not([data-type=OBJECT]),
-#items[data-filter-type=XMLHTTPREQUEST] tr:not([data-type=XMLHTTPREQUEST]),
-#items[data-filter-type=FONT]           tr:not([data-type=FONT]),
-#items[data-filter-type=PING]           tr:not([data-type=PING]),
-#items[data-filter-type=POPUP]          tr:not([data-type=POPUP]),
-#items[data-filter-type=ELEMHIDE]       tr:not([data-type=ELEMHIDE]),
-#items[data-filter-type=WEBSOCKET]      tr:not([data-type=WEBSOCKET]),
-#items[data-filter-type=WEBRTC]         tr:not([data-type=WEBRTC]),
-#items[data-filter-type=OTHER]          tr:not([data-type=OTHER])
+#items[data-filter-state=whitelisted]   tr:not([data-state=whitelisted])
 {
   display: none;
 }
@@ -170,12 +179,15 @@ tr:not(:hover) .action
   width: 100%;
 }
 
-.resourceLink
+.rewritten-url > a,
+.resource-link
 {
-  cursor: pointer;
+  text-decoration: none;
 }
 
-.resourceLink:hover {
+.rewritten-url > a:hover,
+.resource-link:hover
+{
   text-decoration: underline;
 }
 

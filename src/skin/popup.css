@@ -24,7 +24,8 @@ body.clickhide-active #clickhide-cancel
 
 body.local #enabled,
 body.local #clickhide,
-body.local #stats-page
+body.local #stats-page,
+body.local #issueReporter
 {
   display: none;
 }
@@ -259,56 +260,15 @@ body.disabled #enabled #enabled-no
   background-position: -50px -49px;
 }
 
+#issueReporter .icon
+{
+  visibility: hidden;
+}
 
 #stats strong
 {
   font-size: 15px;
   line-height: 140%;
-}
-
-#share
-{
-  margin-top: 5px;
-  font-size: 12px;
-  color: #949494;
-}
-
-#share-box
-{
-  margin-top: 5px;
-  margin-left: -3px;
-}
-
-#share-box div[data-social]
-{
-  cursor: pointer;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  margin: 3px 10px 3px 3px;
-  border-radius: 3px;
-  background-image: url(popup.png);
-}
-
-#share-box div[data-social]:hover
-{
-  margin: 0px 7px 0px 0px;
-  border: 3px solid #cdc6bd
-}
-
-#share-box div[data-social="facebook"]
-{
-  background-position: -1px -1px;
-}
-
-#share-box div[data-social="twitter"]
-{
-  background-position: -1px -34px;
-}
-
-#share-box div[data-social="gplus"]
-{
-  background-position: -1px -67px;
 }
 
 .collapse
@@ -340,7 +300,7 @@ body.disabled #enabled #enabled-no
   background-position: -34px -77px;
 }
 
-.collapsed .collapsable
+.collapsed .collapsible
 {
   display: none;
 }

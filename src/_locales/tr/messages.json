@@ -74,17 +74,8 @@
   "add": {
     "message": "Ekle"
   }, 
-  "add_domain_button": {
-    "message": "Alan adı ekle"
-  }, 
-  "add_filter_button": {
-    "message": "Filtre ekle"
-  }, 
   "add_filters_msg": {
-    "message": "Filtre(ler) Ekle?"
-  }, 
-  "add_your_own_filters": {
-    "message": "Kendi filtrelerinizi ekleyin"
+    "message": "Süzgeç(ler) eklensin mi?"
   }, 
   "adreport_all_debug_info": {
     "message": "Aşağıdaki bilgilerde reklam raporuna dahil edilecektir.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Belirli YouTube™ kanalları için beyaz listeye izin ver (tarayıcınızı yeniden başlatmayı gerektirir)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Değişiklikleri uygula"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -298,7 +286,7 @@
     "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
-    "message": "Öğeyi Engelle"
+    "message": "Öğeyi engelle"
   }, 
   "block_privacy_on_youtube": {
     "message": "YouTube™'da gizliliğimi koru", 
@@ -460,7 +448,7 @@
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
-    "message": "Bu pencere kapandığında, engelleyeceğiniz ögeye tıklayın (veya sağ tıklayın)."
+    "message": "Bu açılır pencereyi kapattıktan sonra, sayfadaki bir öğeye farenin sol veya sağ tuşuyla tıklayın."
   }, 
   "clickthead": {
     "message": "Reklamı tıklatın, ve engelleme seçeneklerini görün.", 
@@ -473,6 +461,21 @@
   "close": {
     "message": "Kapat", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Adblock Uyarı İletilerini Gizle"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Kötücül Yazılımı Engelle"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Ek takipçileri engelle"
+  }, 
+  "common_feature_social_title": {
+    "message": "Sosyal medya simgeleri ile takibi engelle"
+  }, 
+  "common_notification_hide": {
+    "message": "Uyarıyı kapat"
   }, 
   "confirm_undo_custom_filters": {
     "message": "$host$ alan adında yaptığınız $count$ engellemeyi kaldırmak istediğinize emin misiniz?", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "Not: Beyaz Liste (izin verilen reklamlar) sayfa veya site Safari İçerik Engelleyici etkin iken desteklenmiyor.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Devam et"
   }, 
   "contributors": {
     "message": "[[AdBlock'un arkasındaki kişileri]] öğrenmenizde yardımcı olmak için bir sayfamız var!", 
@@ -589,9 +595,6 @@
   "disabled_for_site": {
     "message": "Bu sitede <strong>devre dışı</strong>"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock aşağıdaki adresler için devre dışı bırakıldı. Adresleri adres çubuğundaki Adblock simgesinden ekleyebilir veya alan adını (URL'yi değil) kutucuğa yazıp \"Alan adını ekle\" butonuna tıklayabilirsin."
-  }, 
   "disabled_on_this_channel": {
     "message": "Bu kanaldaki reklamlara izin verdin.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -661,7 +664,7 @@
     "description": "Menu entry to whitelist the current page"
   }, 
   "easy_create_filter": {
-    "message": "Öğeyi Engelle"
+    "message": "Öğe engelle"
   }, 
   "easylist_disable_done": {
     "message": "AdBlock çoğu websitede reklamları engellemek için EasyList kullanır.", 
@@ -683,9 +686,6 @@
     "message": "Biz \"EasyList Lite\" yada \"EasyList\" listelerine abone olmanızı öneriyoruz fakat ikisine birden değil.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Filtreleri salt metin olarak düzenle"
-  }, 
   "enable_adblock": {
     "message": "Bu sayfada AdBlock'u etkinleştir", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +693,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Bu kanaldaki reklamları engelle", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Yalnızca ihtiyacınız olan süzgeç listelerini etkinleştirin. Çok fazla seçim yapmak tarayıcınızın akıcılığını düşürebilir."
   }, 
   "enabled_for_site": {
     "message": "Bu sitede <strong>etkin</strong>"
@@ -792,6 +789,18 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Genişletilmiş öğe gizleme süzgeci için etkin bir alan adı belirtilmedi"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Geçersiz İçerik Güvenliği Politikası"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Geçersiz (veya boş) alan adı belirtildi"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Geçersiz düzenli ifade"
+  }, 
   "filter_israeli": {
     "message": "İbranice + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +813,12 @@
     "message": "Letonyaca + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Filtre listesi"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Eklediğiniz filtre <a>AdBlock filtre kurallarına</a> uymak zorundadır."
-  }, 
   "filter_russian": {
     "message": "Rusça & Ukraynaca + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Bilinmeyen süzme seçeneği"
   }, 
   "filteracceptable_ads": {
     "message": "Kabul edilebilir reklamlar", 
@@ -972,44 +978,8 @@
     "message": "Rusça ve Ukraynaca", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Rahatsız etmeyen bazı reklamlara izin ver"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Ekle"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Başka abonelik ekle"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "Süzgeç aboneliği ekle"
-  }, 
-  "filters_readMore_label": {
-    "message": "Daha fazla bilgi al"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Sil"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Etkin"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Olmadı. Sağlama yapılamadı"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
-    "message": "Olmadı. İndirmede sorun var."
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "İndiriliyor..."
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Olmadı. Bu düzgün bir süzgeç listesi değil."
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Olmadı. Bu geçerli bir adres değil."
-  }, 
-  "filters_viewList_label": {
-    "message": "Listeye bak"
+    "message": "Başarısız. İndirmede sorun var."
   }, 
   "filtersavewarning": {
     "message": "Dikkat: eğer burada bir hata yaparsanız, abone olduğunuz filtreler de dahil, çoğu liste tamamen bozulabilir!\n Gelişmiş \"izin verilenler\" ve \"engellenenler\" listesi oluşturmak için lütfen [[filtre sözdizimi kuralları]] bölümünü okuyun.", 
@@ -1065,8 +1035,20 @@
   "firstRun_contributor_credits": {
     "message": "Emeği Geçenler"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Bu sayfa sürekli gösteriliyor mu? <a>Buraya tıklayın!</a>"
+  "firstRun_dataCorruptedWarning_intro": {
+    "message": "Bazı kullanıcıların yaşadığı sorun, tarayıcılarını her başlattıkları zaman bu sayfanın açılmasıdır. Bu sorun, AdBlock kaldırılıp yeniden yüklenerek çözülebilir:"
+  }, 
+  "firstRun_dataCorruptedWarning_note": {
+    "message": "Eğer yine de yardıma ihtiyacınız olursa, bizimle support@adblockplus.org adresi üzerinden iletişime geçebilir veya <a>Yardım Merkezi</a>’mizi ziyaret edebilirsiniz."
+  }, 
+  "firstRun_dataCorruptedWarning_step1": {
+    "message": "Tarayıcınızın \"Uzantılar\" sekmesini açın."
+  }, 
+  "firstRun_dataCorruptedWarning_step2": {
+    "message": "AdBlock’ı bulup kaldırın."
+  }, 
+  "firstRun_dataCorruptedWarning_step3": {
+    "message": "AdBlock’ı <a>adblockplus.org</a> adresinden yeniden yükleyin."
   }, 
   "firstRun_donate": {
     "message": "bağış yapın"
@@ -1074,32 +1056,8 @@
   "firstRun_donate_label": {
     "message": "Projemize destek verin"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Zararlı Yazılım Engelleme"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Bilinen kötü amaçlı yazılıma sahip alan adlarını engelleyerek gezintinizi daha güvenli hale getirin."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Sosyal Medya Düğmelerini Kaldır"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Sayfalarda çıkan ve davranışlarınızı takip eden Facebook'un \"Beğen\" düğmesi gibi sosyal medya düğmelerinden kurtulun."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "İzlenmeyi Devre Dışı Bırak"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Her hareketinizi izleyen reklam şirketlerin adımlarınızı gizleyin. İnternette izlenmeyi devre dışı bırakarak gezin."
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock reklamları engellemekten daha fazlasını yapabilir"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Görünüşe göre bir sorun tüm filtrelerinizin kaldırılmasına neden olmuş ve yedeği geri yükleyemiyoruz. Bu yüzden filtrelerinizi ve Kabul Edilebilir Reklamlar ayarlarınızı sıfırlamamız gerekiyordu. Lütfen <a>AdBlock seçenekleri</a> bölümünde filtre listelerinizi ve Kabul Edilebilir Reklamlar ayarlarınızı denetleyin."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Safari'nin AdBlock tarafından desteklenmeyen eski bir sürümünü kullanıyorsunuz. Uygulama doğru şekilde çalışmayabilir veya bazı internet sitelerinde kullanıcı deneyimini olumsuz etkileyebilir. Sürümünüzü Safari 6.1.1 veya daha yüksek  (OS X 10.8 Mountain Lion için), ya da Safari 7.0.1 veya daha yüksek (OS X 10.9 Mavericks için) bir sürüme yükseltmenizi, veya Mozilla Firefox, Google  Chrome ya da Opera'nın en son sürümünü kullanmanızı önemle tavsiye ederiz."
   }, 
   "firstRun_share": {
     "message": "Arkadaşlarınıza bahsedin"
@@ -1109,12 +1067,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock yüklendi"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "KAPALI"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "AÇIK"
   }, 
   "fixityourself": {
     "message": "Tamam, bu reklamı yine de Ayarlar menüsünü kullanarak kendiniz için engelleyebilirsiniz. Teşekkürler!", 
@@ -1127,9 +1079,6 @@
   "format_site1_site2_site3": {
     "message": "Biçim: ~site1.com|~site2.com|~haberler.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "Hata mı buldunuz? AdBlock'ı kendi dilinize mi çevirmek istiyorsunuz? Lütfen <a>buradan dosya isteyiniz</a>."
   }, 
   "foundbug": {
     "message": "Bir hata mı buldunuz?", 
@@ -1147,30 +1096,9 @@
     "message": "Çerçeve URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Genel"
-  }, 
   "generaloptions": {
     "message": "Genel Ayarlar", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Gizlenecek sadece bir bileşen kimliği belirtilebilir"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Gizlenecek bileşeni anlamak için hiçbir ölçüt belirtilmedi"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "Geçersiz düzenli ifade"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "Bilinmeyen süzme seçeneği"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Gerçekten abonelikten çıkmak istiyor musunuz?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "Dosya listesi konumu ne düzgün bir URL ne de düzgün bir ada sahip."
   }, 
   "headerfilter": {
     "message": "Eşleşen filtre", 
@@ -1209,12 +1137,93 @@
     "description": "Message when you subscribe to a non-list URL"
   }, 
   "invalid_css_selector": {
-    "message": "$selector$ geçerli bir CSS seçicisi değildir", 
+    "message": "$selector$ geçerli bir CSS seçicisi değil", 
     "placeholders": {
       "selector": {
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Anonim gönder"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Size geri dönemeyiz ve muhtemelen rapor önceliği düşük olarak ayarlanır."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Yorum ekle"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "Aşağıdaki metin alanı sorunu anlamamız için yorum yazmanıza olanak tanır. Bu adım isteğe bağlıdır ancak sorun açık değilse tavsiye edilir. Ayrıca bildirimi göndermeden önce gözden geçirebilirsiniz."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Yorum (isteğe bağlı):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Yorumunuzun uzunluğu 1000 karakteri aşıyor. Sadece ilk 1000 karakter gönderilecek."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Bildiriminiz kaydedildi ve ona aşağıdaki adresten ulaşabilirsiniz:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "AdBlock eklentisinin gerekli bilgileri toplaması için lütfen biraz bekleyin."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Sorun bildiriciye hoş geldiniz"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>Not:</strong> Bulunduğunuz sayfanın Sorun Bildiricisi tarafından etkilenmemesi için, geçici olarak ek bir sekme açılacaktır."
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Bitti"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Sizi, raporunuz hakkında sorularımız olursa sizinle iletişime geçebilmemiz için geçerli bir e-posta adresi girmeye teşvik ediyoruz. Bu aynı zamanda katılımlarınızı hatırlamamızı ve önceliklerini yüksek olarak ayarlamamızı sağlar."
+  }, 
+  "issueReporter_email_label": {
+    "message": "E-posta:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Hata bildirimi gönderme girişiminiz \"?1?\" hata koduyla başarısız oldu. Lütfen internete bağlı olduğunuzdan emin olun ve yeniden deneyin. Sorun devam ederse lütfen [link]AdBlock forumunda[/link] yardım isteyin."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "AdBlock devrede olmasına rağmen reklamın biri görünüyorsa bu seçeneği seçin."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock reklamın birini engellemiyor"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Sayfanın önemli içeriği hiç görünmüyorsa, yanlış görünüyorsa veya sayfa düzgün işlemiyorsa bu seçeneği seçin. Sorun kaynağının AdBlock olup olmadığını eklentiyi geçici olarak devre dışı bırakıp belirleyebilirsiniz."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock çok fazla engelleme yapıyor"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Bildirdiğiniz sorun büyük olasılıkla biliniyor. Daha fazla bilgi:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Sorun bildirici"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Gizlilik politikası"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Bildirimi gönder"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Bildirimi gönder"
+  }, 
+  "issueReporter_sending": {
+    "message": "Lütfen AdBlock bildirimi gönderirken bekleyin."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Bildirim verisini göster"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Bu pencere AdBlock sorun bildirimi göndermek için gerekli adımların atılmasında size rehberlik edecek. Önce bu sayfada ne tür sorun yaşadığınızı seçin:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Sorun türünü seçin"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1380,31 +1389,12 @@
     "message": "Başka diller için filtre ekle: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "Son Güncellenme: $date$ $time$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "En son bugün güncellendi. Güncelleme saati: $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "Açıklama: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
   }, 
   "line": {
-    "message": "Satır $number$", 
+    "message": "$number$. satır", 
     "placeholders": {
       "number": {
         "content": "$1"
@@ -1548,16 +1538,16 @@
     "message": "Hedeflenen iletileri gizlemek istiyor musunuz?"
   }, 
   "notification_configure": {
-    "message": "Bildirim ayarlarını yapılandırma"
+    "message": "Bildirim ayarlarını yapılandır"
   }, 
   "notification_open_all": {
-    "message": "bu bildirimden gelen tüm bağlantıları aç"
+    "message": "Bu bildirimden gelen tüm bağlantıları aç"
   }, 
   "notification_with_buttons": {
     "message": "Bu bildirimdeki tüm bağlantıları açmak için 'Tamam' düğmesine tıklayın."
   }, 
   "notification_without_buttons": {
-    "message": "Bildirimdeki tüm bağlantıları açmak için bildirim üzerine tıklayın."
+    "message": "Bildirimdeki tüm bağlantıları açmak için bildirime tıklayın."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "YouTube™ takip bilgilerini alırken lütfen biraz bekleyin", 
@@ -1575,8 +1565,351 @@
     "message": "Seçenekler", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "Kabul edilebilir reklamlar, can sıkıcı olmayan ve görüntülemekte olduğunuz içeriğe müdahale etmeyen reklamlardır. <a>Kabul edilebilir reklamlar ölçütleri hakkında daha fazla bilgi alın</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Kabul edilebilir reklamlara izin ver"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "Kabul edilebilir reklamlar, rahatsız etmeyen reklamlardır. Bu tür reklamlar, reklamları tamamen engellemekle çevrim içi içeriği desteklemek arasında bir arayoldur, çünkü site sahiplerinin gelir elde etmelerini sağlarlar."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>Açıklama:</strong> Tarayıcı ayarlarınızda <strong>Do Not Track (DNT)</strong> seçeneği devre dışı olarak ayarlı. Bu özelliğin düzgün çalışmasını sağlamak için lütfen tarayıcı tercihlerinizde <strong>DNT</strong> özelliğini devreye alın. <a>DNT'yi nasıl devreye alabileceğinizi öğrenin</a>."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "Kabul edilebilir reklamlar"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Üçüncü taraf takibi olmayan reklamlara izin ver"
+  }, 
+  "options_advanced_description": {
+    "message": "AdBlock'ı özelleştirin; süzme listeleri ekleyin veya çıkarın; kendi süzme listelerinizi oluşturun veya düzenleyin"
+  }, 
+  "options_close": {
+    "message": "kapat"
+  }, 
+  "options_control_remove_title": {
+    "message": "kaldır"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "Vazgeç"
+  }, 
+  "options_customFilter_edit": {
+    "message": "Süzgeçleri düzenle"
+  }, 
+  "options_customFilter_save": {
+    "message": "Kaydet"
+  }, 
+  "options_customFilters_description": {
+    "message": "AdBlock'ın izin vereceği veya engelleyeceği içeriklere ilişkin daha fazla kontrol için kendi özel süzgeçlerinizi yazın."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "örn. $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "Süzgeç listesinin nasıl yazılacağını öğrenin"
+  }, 
+  "options_customFilters_start": {
+    "message": "Kendi süzme listeni yazmaya başla"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Oluşturduğunuz süzgeçler burada belirecek."
+  }, 
+  "options_customFilters_title": {
+    "message": "Süzgeç listenizi oluşturun ve düzenleyin"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Süzgeç listelerim"
+  }, 
+  "options_customize_blockElement": {
+    "message": "Sağ tıklama menüsünde 'Öğeyi engelle' seçeneğini göster"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "Sayfadaki can sıkıcı öğeleri geçici olarak engelle (örn. resimler veya canlandırılmış sunumlar)."
+  }, 
+  "options_customize_header": {
+    "message": "Sayfa eylemlerini özelleştir"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Geliştirici araçlarında 'AdBlock' panelini göster"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "Tarayıcınızın geliştirici araçları panelinde engellenen veya beyaz listeye alınan öğeleri göster."
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Yararlı bildirimlerini göster"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Tüm AdBlock bildirimlerini devre dışı bırak."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "Telif Hakkı © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "AdBlock Hakkında"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "Tüm hakları saklıdır. AdBlock®, eyeo GmbH'nin tescilli ticari markasıdır"
+  }, 
+  "options_dialog_about_version": {
+    "message": "Sürüm numarası $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "Süzme listesi URL'si"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Geçerli bir URL girin"
+  }, 
+  "options_dialog_import_title": {
+    "message": "Süzgeç listesi ekle"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Kullanılabilir bir dil yok."
+  }, 
+  "options_dialog_language_title": {
+    "message": "Bir dil seçin"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Evet, bu süzme listesini kullan"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Bu filtre listesini eklemek istediğinizden emin misiniz?"
+  }, 
+  "options_email": {
+    "message": "E-posta:"
+  }, 
+  "options_english": {
+    "message": "İngilizce"
+  }, 
+  "options_filterList_add": {
+    "message": "+ Yeni süzgeç listesi ekle"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Süzgeç listeleri"
+  }, 
+  "options_filterList_column_status": {
+    "message": "Durum"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Son güncelleme"
+  }, 
+  "options_filterList_description": {
+    "message": "Her bir AdBlock ayarı bir süzme listesine bağlı çalışır. Aşağıda, AdBlock ayarlarınıza karşılık gelen filtre listeleri. Güvenilir topluluğumuz tarafından oluşturulan ve saklanan ilave filtreler de ekleyebilirsiniz."
+  }, 
+  "options_filterList_empty": {
+    "message": "AdBlock'a hiçbir süzme listesi eklemediniz. Eklediğiniz süzme listeleri burada gösterilecektir."
+  }, 
+  "options_filterList_hours": {
+    "message": "saat önce"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Başarısız. Sağlama yapılamadı."
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Başarısız. İndirmede sorun var."
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Güncelleniyor"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Başarısız. Geçerli bir süzgeç listesi değil."
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Başarısız. Bu geçerli bir adres değil."
+  }, 
+  "options_filterList_minutes": {
+    "message": "dakika önce"
+  }, 
+  "options_filterList_now": {
+    "message": "Şimdi"
+  }, 
+  "options_filterList_source": {
+    "message": "kaynak"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Etkin"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Devre dışı"
+  }, 
+  "options_filterList_title": {
+    "message": "Süzgeç listeleri"
+  }, 
+  "options_filterList_update": {
+    "message": "tüm süzgeç listelerini güncelle"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "şimdi güncelle"
+  }, 
+  "options_filterList_website": {
+    "message": "site"
+  }, 
+  "options_footer_about": {
+    "message": "AdBlock Hakkında"
+  }, 
+  "options_footer_contribute": {
+    "message": "Katkıda bulun"
+  }, 
+  "options_general_description": {
+    "message": "AdBlock'ın sayfalarda ne gösterip ne gizleyeceğini belirleyin"
+  }, 
+  "options_help_description": {
+    "message": "Yardıma veya bize ulaşın"
+  }, 
+  "options_language_add": {
+    "message": "+ dil ekle"
+  }, 
+  "options_language_change": {
+    "message": "değiştir"
+  }, 
+  "options_language_description": {
+    "message": "AdBlock'u ziyaret ettiğiniz sitelerin dillerine göre en iyi hâle getirin."
+  }, 
+  "options_language_empty": {
+    "message": "Henüz herhangi bir dile özel süzgeç listeniz yok."
+  }, 
+  "options_language_header": {
+    "message": "Dil"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>İPUCU:</strong> Sadece ihtiyaç duyduğunuz dilleri seçin. Daha fazla dil seçmek reklam engelleyiciyi, dolayısıyla tarama hızınızı azaltacak."
+  }, 
+  "options_learn_more": {
+    "message": "Daha fazla bilgi"
+  }, 
+  "options_more_filters_description": {
+    "message": "Bunlar AdBlock'a daha önce eklediğiniz ek süzgeçler."
+  }, 
+  "options_more_filters_header": {
+    "message": "Daha fazla süzgeç"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>Not:</strong> Yalnızca güvendiğiniz geliştiricilerin üçüncü taraf süzme listelerini kullanmalısınız."
+  }, 
+  "options_new_label": {
+    "message": "Yeni"
+  }, 
+  "options_page_document_title": {
+    "message": "AdBlock Seçenekleri"
+  }, 
+  "options_page_title": {
+    "message": "Ayarlar"
+  }, 
+  "options_privacy_header": {
+    "message": "Gizlilik ve güvenlik"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "Gizliliğinizi, ziyaret ettiğiniz web sitelerinde çevrimiçi faaliyetlerinizin izlenebilirliğini engelleyerek koruyun."
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "Ziyaret ettiğiniz sayfalarda yer alan sosyal medya düğmeleri (veya simgeleri) tarama alışkanlıklarınızı temel alarak sizin bir \"resminizi\" oluşturur. Kimliğinizi korumak için bu düğmeleri gizleyin."
+  }, 
+  "options_report_bug": {
+    "message": "Hataya mı rastladınız? <a>Sorunu bize bildirin.</a>"
+  }, 
+  "options_report_forum": {
+    "message": "Topluluktan yardım mı almak istiyorsunuz? <a>Foruma bakın.</a>"
+  }, 
   "options_short": {
     "message": "Seçenekler"
+  }, 
+  "options_social_description": {
+    "message": "Sorunuz veya fikriniz mi var? Yardım etmek için buradayız."
+  }, 
+  "options_social_title": {
+    "message": "Temas kur"
+  }, 
+  "options_support_title": {
+    "message": "Destek"
+  }, 
+  "options_tab_advanced": {
+    "message": "Gelişmiş"
+  }, 
+  "options_tab_general": {
+    "message": "Genel"
+  }, 
+  "options_tab_help": {
+    "message": "Yardım"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Beyaz listedeki siteler"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "Her ikisinin de devrede olduğu anlaşılıyor: <strong>$tracking$</strong> ve <strong>$acceptableAds$</strong>.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "Reklamcıların size daha uygun reklam gösterebilmeleri amacıyla, Kabul Edilebilir Reklamlar'dan bazıları sizi takip ediyor <strong>olabilir</strong>."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "Daha fazla gizlilik istiyorsanız aşağıdaki <strong>$acceptableAdsPrivacy$</strong> kutucuğunu işaretleyin.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "Tamam, anladım"
+  }, 
+  "options_whitelist_add": {
+    "message": "Site ekle"
+  }, 
+  "options_whitelist_description": {
+    "message": "Bu sitelerde reklam engellemeyi devre dışı bıraktınız. Bu sitelerde reklamlar göreceksiniz."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Beyaz listeye aldığınız hiçbir site yok."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "Güvendiğiniz ve reklam gösterme izni verdiğiniz siteler burada gösterilecek."
+  }, 
+  "options_whitelist_notification": {
+    "message": "$website$ beyaz listeye eklendi.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "örn. $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock Ayarları", 
@@ -1608,9 +1941,6 @@
     "message": "Diğer Filtre Listeleri", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Zamanı geçmiş listeler düzenli olarak güncellenmektedir."
-  }, 
   "overlay_notification_button_no": {
     "message": "Hayır"
   }, 
@@ -1618,13 +1948,10 @@
     "message": "Evet"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Bu bildirimi kapat"
+    "message": "Bu bildirim kapat"
   }, 
   "overlay_notification_closing_button_optout": {
-    "message": "Bildirim göstermeyi durdur"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "Yararlı bildirimleri göster"
+    "message": "Bildirimleri göstermeyi durdur"
   }, 
   "pagelanguagecheck": {
     "message": "Bu sayfa hangi dilde yazılmış?", 
@@ -1669,9 +1996,6 @@
   "reloadpageafterwhitelist": {
     "message": "Sayfayı yeniden yükle.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Seçili olanı kaldır"
   }, 
   "removefromlist": {
     "message": "Listeden sil", 
@@ -1763,12 +2087,12 @@
     "message": "-- Dilinizi Seçin --", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Bu sayfadaki sorunu bildir"
+  }, 
   "show_ads_except_for": {
     "message": "Şu alan adlarındakiler hariç her yerdeki reklamları göster", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Sağ tık menüsünde 'Öğeyi Engelle' seçeneğini göster"
   }, 
   "show_devtools_panel": {
     "message": "Geliştirici araçlarında 'AdBlock' panelini göster", 
@@ -1834,30 +2158,8 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "$number$ üzerinde", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "AdBlock'ı indir"
-  }, 
-  "stats_share_message": {
-    "message": "$number$ reklamı ve izleyiciyi AdBlock sayesinde engelledim.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Bu sayıyı paylaş"
-  }, 
   "stats_show_iconnumber": {
-    "message": "Simgede numarayı göster"
+    "message": "Simgede sayıyı göster"
   }, 
   "stats_title": {
     "message": "Engellenen reklamlar"
@@ -1911,15 +2213,6 @@
   "subscribingtitle": {
     "message": "Filtre listelerine abone olunuyor...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Süzgeç listesi konumu:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Lütfen listeden bir süzgeç aboneliği seçin:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Aboneliğin adı:"
   }, 
   "supportsite": {
     "message": "[[Destek sitemize]] bildirin!", 
@@ -2046,7 +2339,7 @@
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
   "unexpected_filter_list_header": {
-    "message": "Filtre liste başlıklarına burada izin verilmiyor"
+    "message": "Süzgeç listesi üst bilgisine burada izin verilmiyor"
   }, 
   "unpause_adblock": {
     "message": "Tekrar başlat", 
@@ -2063,9 +2356,6 @@
   "unsubscribedlabel": {
     "message": "Abonelik kaldırıldı.", 
     "description": "Status label when unselecting a filter list"
-  }, 
-  "update_now": {
-    "message": "Şimdi güncelle"
   }, 
   "updateddayago": {
     "message": "1 gün önce güncelleştirildi", 
@@ -2127,6 +2417,27 @@
     "message": "Güncellemeler otomatik olarak yüklenecek; siz de [[şimdi güncelle]] butonunu kullanarak güncelleyebilirsiniz", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "Masaüstü bilgisayarda kontrol sizdeyse, mobil cihazlarda da reklamları engelleyebilir ve gizliliğinizi ve güvenliğinizi daha iyi bir seviyeye taşıyabilirsiniz. <a>Aşağıdaki Adblock Browser Uygulaması</a>'nı edinin"
+  }, 
+  "updates_blockAds": {
+    "message": "İmparatora rağmen, İsyancı Açık Kaynak Topluluğu, Facebook gibi web sitelerindeki gizli reklamları yok etmenize olanak sağlayan yeni bir engelleme filtresi oluşturdu."
+  }, 
+  "updates_heading": {
+    "message": "AdBlock güncellendi!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "Yeni Ayarlar sayfası - daha fazla gizlilik ve güvenlik seçenekleriyle yenilendi ve yeniden tasarlandı - bu sayede <a>AdBlock'ı istediğiniz gibi özelleştirmek</a> artık çok daha kolay."
+  }, 
+  "updates_phone": {
+    "message": "Ama durun! Peki ya telefonunuz?"
+  }, 
+  "updates_status": {
+    "message": "Güncelleme tamamlandı"
+  }, 
+  "updates_subheading": {
+    "message": "Yenilikler"
+  }, 
   "updateyourlists": {
     "message": "Filtre listelerinin güncel olduğundan emin olun:", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2475,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "YouTube™ üzerinde reklama izin verilen kanallar:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Güvenilir adresler"
   }, 
   "whitelistedresource": {
     "message": "İzin verilen kaynak", 

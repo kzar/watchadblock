@@ -74,17 +74,8 @@
   "add": {
     "message": "Legg til"
   }, 
-  "add_domain_button": {
-    "message": "Legg til domene"
-  }, 
-  "add_filter_button": {
-    "message": "Legg til filter"
-  }, 
   "add_filters_msg": {
     "message": "Legg til filter/filtre?"
-  }, 
-  "add_your_own_filters": {
-    "message": "Legg til dine egne filtre"
   }, 
   "adreport_all_debug_info": {
     "message": "Den følgende informasjonen vil også bli lagt til i reklamerapporten.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Tillat hvitelisting av spesifikke YouTube™-kanaler (Krever en omstart av nettleseren din)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Bruk endringer"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -404,7 +392,7 @@
     "description": "Text of the final ad report question"
   }, 
   "catchannelswitchlabel": {
-    "message": "Cats", 
+    "message": "Katter", 
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
   "checkinfirefox_1": {
@@ -474,6 +462,21 @@
     "message": "Lukk", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Skjul Adblock Advarsler"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Blokker Malware"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Blokker ytterligere sporing"
+  }, 
+  "common_feature_social_title": {
+    "message": "Blokker sporing av ikoner for sosiale medier"
+  }, 
+  "common_notification_hide": {
+    "message": "Lukk påminnelse"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Er du sikker på at du vil ta bort $count$ blokkeringene som du har fjernet på $host$?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "Merk: Hvitlisting (Å tillate annonser) på en side eller nettsted, støttes ikke med Safari når innholdsblokkering er aktivert.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Fortsett"
   }, 
   "contributors": {
     "message": "Vi har også en side som hjelper deg å lære om [[folkene bak AdBlock]]!", 
@@ -589,9 +595,6 @@
   "disabled_for_site": {
     "message": "<strong>Deaktivert</strong> på dette nettstedet"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock er deaktivert for domenene listet nedenfor. Du kan legge til et domene enten ved å trykke på AdBlock-ikonet i adressefeltet, eller ved å skrive inn domenet (ikke URL-en) i boksen og deretter klikke på \"Legg til domene\"-knappen."
-  }, 
   "disabled_on_this_channel": {
     "message": "Du har tillatt reklamer på denne kanalen.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -629,7 +632,7 @@
     "description": "Text shown before language selector drop-down."
   }, 
   "dogchannelswitchlabel": {
-    "message": "Dogs", 
+    "message": "Hunder", 
     "description": "The label text for the dog switch on the MyAdBlock Options page"
   }, 
   "domain_pause_adblock": {
@@ -683,9 +686,6 @@
     "message": "Vi anbefaler å abonnere på enten \"EasyList Lite\" eller \"EasyList\", men ikke begge to av dem.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Rediger filtre i råtekstform"
-  }, 
   "enable_adblock": {
     "message": "Aktiver AdBlock på denne siden", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +693,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Blokker reklamer på denne kanalen", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Aktiver kun de filterlistene du har behov for. For mange filterlister kan gjøre nettleseren treg."
   }, 
   "enabled_for_site": {
     "message": "<strong>Aktivert</strong> på dette nettstedet"
@@ -789,8 +786,20 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_easylist_plus_vietnamese": {
-    "message": "Vietnamese + EasyList", 
+    "message": "Vietnamesisk + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Ingen aktive domener er angitt for utvidet elementskjulingsfilter"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Ugyldig innholdssikkerhetspolicy"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Ugyldig (eller tomt) domene angitt"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Ugyldig regulært uttrykk"
   }, 
   "filter_israeli": {
     "message": "Hebraisk + EasyList", 
@@ -804,15 +813,12 @@
     "message": "Latvisk + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Filterlister"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Filtrene må følge syntaksen til <a>AdBlock-filtrene</a>."
-  }, 
   "filter_russian": {
     "message": "Russisk og ukrainsk + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Ukjent filteralternativ"
   }, 
   "filteracceptable_ads": {
     "message": "Akseptable Reklamer", 
@@ -835,7 +841,7 @@
     "description": "A filter list"
   }, 
   "filterbrazilian_portuguese": {
-    "message": "Brazilian Portuguese", 
+    "message": "Brasiliansk portugisisk", 
     "description": "A filter list"
   }, 
   "filterchinese": {
@@ -972,44 +978,8 @@
     "message": "Russisk og ukrainsk", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Tillat noen ikke-påtrengende annonser"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Legg til"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Legg til et annet abonnement"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "Legg til filterabonnement"
-  }, 
-  "filters_readMore_label": {
-    "message": "Les mer"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Slett"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Aktivert"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Mislyktes, kontrollsummen stemmer ikke"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "Feilet, nedlastingsfeil"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "Laster ned..."
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Feilet, ikke en gyldig filterliste"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Feilet, ikke en gyldig adresse"
-  }, 
-  "filters_viewList_label": {
-    "message": "Vis liste"
   }, 
   "filtersavewarning": {
     "message": "Vær forsiktig: hvis du gjør en feil her kan mange andre filtere, inkludert de offisielle, bli ødelagt!\nLes [[filtersyntax-veiledningen]] for å lære hvordan du kan legge til avanserte svarteliste- og hvitelistefiltre.", 
@@ -1057,7 +1027,7 @@
     "message": "Har du en smarttelefon eller et nettbrett?"
   }, 
   "firstRun_acceptableAdsExplanation": {
-    "message": "Vi vil oppfordre nettsider til å bruke standard, ikke-påtrengende annonser. Derfor har vi laget <a>strenge retningslinjer</a> for å identifisere akseptable annonser, som vises når man har aktivert standardinnstillingene. Hvis du ønsker å blokkere alle annonser, kan du  <a>velge bort</a> dette straks."
+    "message": "Vi vil herved oppfordre nettsteder til å bruke enkle, ikke-påtrengende annonser. Det er grunnen til at vi har laget <a>strenge retningslinjer</a> for å identifisere akseptable annonser. Du finner retningslinjene under standardinnstillingene. Dersom du ønsker å surfe helt uten annonser, kan du <a>deaktivere</a> akseptable annonser når som helst."
   }, 
   "firstRun_acceptableAdsHeadline": {
     "message": "Irriterende annonser blir fra nå av blokkert"
@@ -1065,41 +1035,14 @@
   "firstRun_contributor_credits": {
     "message": "Takk til"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Dukker denne siden stadig opp? <a>Klikk her!</a>"
-  }, 
   "firstRun_donate": {
     "message": "donér"
   }, 
   "firstRun_donate_label": {
     "message": "Støtt prosjektet vårt"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Blokkering av skadeprogram"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Gjør nettlesingen din tryggere ved å blokkere domener som er kjent for å være skadelige."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Fjern sosiale media-knapper"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Bli kvitt knapper for sosiale medier, slik som \"Liker\" fra Facebook, som dukker opp på nettsider og sporer handlingene dine."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "Slå av sporing"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Vær privat på nettet ved å hindre sporing - gjem sporene dine fra reklameselskaper som ellers registrerer alt du gjør."
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock kan gjøre mer enn å bare blokkere annonser"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Det kan se ut som at en feil i systemet gjorde at alle filtrene ble fjernet, og vi var ute av stand til å gjenopprette sikkerhetskopien. Vi har derfor måttet nullstille alle filtrene og innstillingene for Akseptable annonser. Vennligst kontroller filterlistene dine og innstillingene for Akseptable annonser i valgalternativene til <a>AdBlock options</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Du bruker en gammel versjon av Safari som ikke støttes av AdBlock, og det kan hende AdBlock ikke fungerer, eller forverrer brukeropplevelsen på enkelte nettsteder. Vi anbefaler sterkt at du enten oppdaterer til Safari 6.1.1 eller nyere (tilgjengelig for Mac OS X 10.8 Mountain Lion), Safari 7.0.1 (tilgjengelig for OS X 10.9 Mavericks) eller nyere, eller bruker den nyeste versjonen av Mozilla Firefox, Google Chrome eller Opera."
   }, 
   "firstRun_share": {
     "message": "Fortell dette til vennene dine"
@@ -1109,12 +1052,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock har blitt installert"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "AV"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "PÅ"
   }, 
   "fixityourself": {
     "message": "OK, du kan fremdeles blokkere denne reklamen selv, under innstillinger. Takk!", 
@@ -1128,15 +1065,12 @@
     "message": "Format: ~side1.no|~side2.com|~nyheter.side3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
   }, 
-  "found_a_bug": {
-    "message": "Har du funnet en feil? Vil du oversette AdBlock til ditt eget språk? Vennligst <a>send en forespørsel hit</a>."
-  }, 
   "foundbug": {
     "message": "Har du funnet en feil?", 
     "description": "Subtitle on the Support tab"
   }, 
   "framedomain": {
-    "message": "Ramme domene: ", 
+    "message": "Rammedomene: ", 
     "description": "Resource list page: domain name of the frame"
   }, 
   "frametype": {
@@ -1147,30 +1081,9 @@
     "message": "Rammens nettadresse: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Generelt"
-  }, 
   "generaloptions": {
     "message": "Generelle innstillinger", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Du kan kun angi ett ID for elementet som skal skjules"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Du har ikke spesifisert kriterier for å gjenkjenne elementet som skal skjules"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "Ugyldig regulært uttrykk"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "Ukjent filteralternativ"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Ønsker du virkelig å fjerne dette abonnementet?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "Filterlistens plassering er verken en gyldig URL eller et gyldig filnavn."
   }, 
   "headerfilter": {
     "message": "Matchende filtre", 
@@ -1216,8 +1129,89 @@
       }
     }
   }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Anonym innsending"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Vi vil ikke kunne svare deg, og det vil sannsynligvis gjøre at rapporten får lavere prioritet."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Skriv inn kommentar"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "I tekstfeltet nedenfor kan du skrive en kommentar som kan hjelpe oss til å forstå problemet. Dette er valgfritt, men anbefalt hvis problemet ikke åpenbart. Du kan også se på rapportdataene før de sendes."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Kommentar (valgfritt):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Kommentaren din er lengre enn 1000 tegn. Kun de første 1000 tegnene vil bli inkludert i rapporten."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Rapporten er lagret. Du kan få tilgang til den på følgende internettadresse:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "Vennligst vent på at AdBlock samler inn de nødvendige data."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Velkommen til problemrapportereren"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>Merk:</strong> En ny fane vil bli åpnet midlertidig slik at siden du er på ikke blir påvirket av Problemrapportereren."
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Fullfør"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Vi oppfordrer deg til å oppgi en gyldig e-postadresse, slik at vi kan kontakte deg hvis vi har spørsmål angående denne rapporten. Det vil også gjøre at vi kan gjenkjenne dine bidrag, og prioritere dem høyere."
+  }, 
+  "issueReporter_email_label": {
+    "message": "E-post:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Et forsøk på å sende inn rapporten feilet, med feilkoden \"?1?\". Vennligst kontrollér at du har internettilgang, og prøv på nytt. Hvis problemet vedvarer kan du be om hjelp i [link]AdBlock forum[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "Velg dette alternativet hvis et reklameelement vises, selv om AdBlock er aktivert."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock blokkerer ikke et reklameelement"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Velg dette alternativet hvis siden mangler viktig innhold, vises feil eller ikke fungerer sånn det skal. Du kan finne ut om AdBlock er roten til problemet ved å deaktivere AdBlock midlertidig."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock blokkerer for mye"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Problemet du rapporterte inn er allerede kjent for oss. Mer informasjon:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Problemrapporterer"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Personvern"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Send rapport"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Send rapport"
+  }, 
+  "issueReporter_sending": {
+    "message": "Vennligst vent mens AdBlock sender inn din rapport."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Vis rapportdata"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Dette vinduet vil veilede deg gjennom de nødvendige stegene som trengs for å sende inn en problemrapport til AdBlock. Velg først hvilket type problem du har på denne siden:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Velg type problem"
+  }, 
   "landscapechannelswitchlabel": {
-    "message": "Landscapes", 
+    "message": "Landskap", 
     "description": "The label text for the Landscape switch on the MyAdBlock Options page"
   }, 
   "lang_arabic": {
@@ -1380,25 +1374,6 @@
     "message": "Legg til filtre for et annet språk: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "Sist oppdatert klokken $time$ $date$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "Sist oppdatert klokken $time$ i dag", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "Forklaring: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1488,7 +1463,7 @@
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }, 
   "myadblockenrollment": {
-    "message": "Enable MyAdBlock", 
+    "message": "Aktiver MyAdBlock", 
     "description": "The text of the menu item in the popup menu that takes you to the MyAdBlock Enrollment page"
   }, 
   "myadblockoptions": {
@@ -1496,15 +1471,15 @@
     "description": "The text of the menu item in the popup menu that takes you to the MyAdBlock Options page"
   }, 
   "myadblockoptionscategoryheader": {
-    "message": "Categories", 
+    "message": "Kategorier", 
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblockoptionspageheader": {
-    "message": "MyAdBlock Options", 
+    "message": "MyAdBlock innstillinger", 
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblockpicreplacementswitchlabel": {
-    "message": "Replace some blocked ads with high-quality images from the categories below", 
+    "message": "Bytt ut noen blokkerte annonser med bilder av høy kvalitet fra kategoriene nedenfor", 
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "name": {
@@ -1526,7 +1501,7 @@
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Windows)"
   }, 
   "newmyadblockenrollment": {
-    "message": "NEW", 
+    "message": "NY", 
     "description": "The text of the 'Enable MyAdBlock' menu item in the popup menu that takes you to the MyAdBlock Enrollment page"
   }, 
   "no": {
@@ -1575,8 +1550,161 @@
     "message": "Innstillinger", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Tillat akseptable reklamer"
+  }, 
+  "options_acceptableAds_header": {
+    "message": "Akseptable annonser"
+  }, 
+  "options_close": {
+    "message": "lukk"
+  }, 
+  "options_control_remove_title": {
+    "message": "fjern"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "Avbryt"
+  }, 
+  "options_customFilter_edit": {
+    "message": "Rediger filter"
+  }, 
+  "options_customFilter_save": {
+    "message": "Lagre"
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "f.eks $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Vis nyttige varsler"
+  }, 
+  "options_dialog_about_title": {
+    "message": "Om AdBlock"
+  }, 
+  "options_email": {
+    "message": "E-post:"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Filterlister"
+  }, 
+  "options_filterList_column_status": {
+    "message": "Status"
+  }, 
+  "options_filterList_hours": {
+    "message": "timer siden"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Mislyktes, kontrollsummen stemmer ikke"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Feilet, nedlastingsfeil"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Oppdaterer"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Feilet, ikke en gyldig adresse"
+  }, 
+  "options_filterList_minutes": {
+    "message": "minutter siden"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Deaktivert"
+  }, 
+  "options_filterList_title": {
+    "message": "Filterlister"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "oppdater nå"
+  }, 
+  "options_footer_about": {
+    "message": "Om AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "Bidra"
+  }, 
+  "options_language_header": {
+    "message": "Språk"
+  }, 
+  "options_learn_more": {
+    "message": "Få mer informasjon"
+  }, 
+  "options_more_filters_header": {
+    "message": "Flere filtre"
+  }, 
+  "options_new_label": {
+    "message": "Ny"
+  }, 
+  "options_page_document_title": {
+    "message": "Innstillinger"
+  }, 
+  "options_page_title": {
+    "message": "Innstillinger"
+  }, 
+  "options_privacy_header": {
+    "message": "Personvern & sikkerhet"
+  }, 
   "options_short": {
     "message": "Alternativer"
+  }, 
+  "options_social_description": {
+    "message": "Har du et spørsmål eller en ny idé? Vi er her for å hjelpe."
+  }, 
+  "options_social_title": {
+    "message": "Ta kontakt"
+  }, 
+  "options_support_title": {
+    "message": "Støtte"
+  }, 
+  "options_tab_advanced": {
+    "message": "Avansert"
+  }, 
+  "options_tab_general": {
+    "message": "Generelt"
+  }, 
+  "options_tab_help": {
+    "message": "Hjelp"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Hvitelistede nettsteder"
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "Ok, skjønner"
+  }, 
+  "options_whitelist_add": {
+    "message": "Legg til nettsted"
+  }, 
+  "options_whitelist_description": {
+    "message": "Du har slått av blokkering av annonser på disse nettstedene, og vil derfor se annonser på dem."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Du har ingen hvitelistede nettsteder."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "Nettsteder du stoler på og ønsker å tillate annonser på vil bli vist her."
+  }, 
+  "options_whitelist_notification": {
+    "message": "\"$website$\" har blitt hvitelistet.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "f.eks $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock-innstillinger", 
@@ -1608,9 +1736,6 @@
     "message": "Andre filterlister", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Utdaterte lister blir oppdatert periodisk."
-  }, 
   "overlay_notification_button_no": {
     "message": "Nei"
   }, 
@@ -1618,13 +1743,10 @@
     "message": "Ja"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Lukk dette varselet"
+    "message": "Lukk denne meldingen"
   }, 
   "overlay_notification_closing_button_optout": {
-    "message": "Slutt å vise varsler"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "Vis nyttige varsler"
+    "message": "Ikke vis flere varsler"
   }, 
   "pagelanguagecheck": {
     "message": "Hvilket språk er siden skrevet på?", 
@@ -1669,9 +1791,6 @@
   "reloadpageafterwhitelist": {
     "message": "Last inn siden på nytt.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Fjern valgte"
   }, 
   "removefromlist": {
     "message": "Fjern fra listen", 
@@ -1763,12 +1882,12 @@
     "message": " — Velg språk — ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Rapporter problem på denne siden"
+  }, 
   "show_ads_except_for": {
     "message": "Vis reklame overalt unntatt på disse domenene...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Vis høyreklikkmenyvalget \"Blokkér element\""
   }, 
   "show_devtools_panel": {
     "message": "Vis 'AdBlock'-panelet i utviklerverktøyene", 
@@ -1834,28 +1953,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "over $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "Last ned AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "Jeg blokkerte $number$ annonser og trackere, takket være AdBlock.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Del dette tallet"
-  }, 
   "stats_show_iconnumber": {
     "message": "Vis tall i ikonet"
   }, 
@@ -1911,15 +2008,6 @@
   "subscribingtitle": {
     "message": "Abonner på filterlister...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Filterabonnementets plassering:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Vennligst velg et filterabonnement fra listen:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Abonnementstittel:"
   }, 
   "supportsite": {
     "message": "La oss få vite det på vår [[støtteside]]!", 
@@ -2064,9 +2152,6 @@
     "message": "Avmeldt.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "Oppdater nå"
-  }, 
   "updateddayago": {
     "message": "oppdatert for en dag siden", 
     "description": "Label for filter list subscription"
@@ -2127,6 +2212,15 @@
     "message": "Jeg vil laste ned oppdateringer automatisk; du kan også [[oppdatere nå]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_heading": {
+    "message": "AdBlock har blitt oppdatert!"
+  }, 
+  "updates_status": {
+    "message": "Oppdatering fullført"
+  }, 
+  "updates_subheading": {
+    "message": "Hva er nytt?"
+  }, 
   "updateyourlists": {
     "message": "Sørg for at filterlistene dine er oppdatert:", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2258,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Tillat reklamer på YouTube™-kanalen:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Hvitelistede domener"
   }, 
   "whitelistedresource": {
     "message": "Hvitelistede ressurser", 

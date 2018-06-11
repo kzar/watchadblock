@@ -74,17 +74,8 @@
   "add": {
     "message": "जोड़ें"
   }, 
-  "add_domain_button": {
-    "message": "डोमेन जोड़ें"
-  }, 
-  "add_filter_button": {
-    "message": "फ़िल्टर जोड़ें"
-  }, 
   "add_filters_msg": {
     "message": "फ़िल्टर(ो) को जोडिए?"
-  }, 
-  "add_your_own_filters": {
-    "message": "आपके द्वारा बनाये फ़िल्टर्स जोड़ें"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "परिवर्तन लागू करें"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -496,6 +484,9 @@
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
+  "continue": {
+    "message": "जारी रखें"
+  }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
@@ -589,9 +580,6 @@
   "disabled_for_site": {
     "message": "इस साइट पर <strong>इस्तेमाल न करे</strong>"
   }, 
-  "disabled_for_these_domains": {
-    "message": "निम्नलिखित डोमिन पर AdBlock का इस्ताल नहीं किआ जा रहा। आप ऄड्रेस बार मै AdBlock आइकॉन को क्लिक कर अथवा डिब्बी मे डोमेन (यूआरएल नहीं) टाइप कर, फिर \"ऐड डोमेन\" बटन दबा कर, नए अपवाद बना सकते है।"
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +671,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "फिल्टरों को रौ टेक्स्ट के रूप मै सम्पादित करे"
-  }, 
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +678,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "केवल उन्ही फिल्टरों का इस्तमाल करे जिनकी आवश्यकता हो। उनावश्यक फिल्टरों के इस्तमाल से ब्रॉउज़र अनुत्तरदायी हो सकता है।"
   }, 
   "enabled_for_site": {
     "message": "इस साईट पर <strong>इस्तमाल हो रहा है </strong>"
@@ -792,6 +774,15 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "विस्तारित तत्व छुपा फ़िल्टर के लिए कोई सक्रिय डोमेन निर्दिष्ट नहीं है"
+  }, 
+  "filter_invalid_domain": {
+    "message": "अमान्य (या खाली) डोमेन निर्दिष्ट"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "अमांय नियमित व्यंजक"
+  }, 
   "filter_israeli": {
     "message": "Hebrew + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +795,12 @@
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "फिल्टरों कि सूची "
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "आपके फ़िल्टर को <a>AdBlock फ़िल्टर सिंटैक्स</a> का पालन करना होगा।"
-  }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "अज्ञात फ़िल्टर विकल्प"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -972,6 +960,9 @@
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
   }, 
+  "filters_subscription_lastDownload_connectionError": {
+    "message": "विफल रहा, डाउनलोड विफलता"
+  }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
     "description": "Warning when manually editing filters."
@@ -1023,9 +1014,6 @@
   "firstRun_acceptableAdsHeadline": {
     "message": "कष्टकारी विज्ञापन अब हटा दिए जायेंगे"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "क्या यह पृष्ट बार बार प्रस्तुत हो रहा है? <a>यहाँ क्लिक करें</a>"
-  }, 
   "firstRun_title": {
     "message": "AdBlock स्थापित होगया हे."
   }, 
@@ -1040,9 +1028,6 @@
   "format_site1_site2_site3": {
     "message": "Format: ~site1.com|~site2.com|~news.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "यधपि आपको किसी दोष कि जानकारी दिनी हो या AdBlock का अनुवाद करना हो तो कृपया <a>यहाँ एक गुजारिश करे</a>"
   }, 
   "foundbug": {
     "message": "Found a bug?", 
@@ -1059,9 +1044,6 @@
   "frameurl": {
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
-  }, 
-  "general": {
-    "message": "सामान्य "
   }, 
   "generaloptions": {
     "message": "General options", 
@@ -1110,6 +1092,54 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "टिप्पणी दर्ज करें"
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "आपकी रिपोर्ट सहेजी गई है। आप इसे निम्नलिखित पते पर पहुँच प्राप्त कर सकते हैं:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "कृपया कुछ पल प्रतीक्षा करें जब तक Adblock प्लस आवश्यक डेटा इकट्ठा कर रहा हो।"
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "मुद्दा रिपोर्टर में स्वागत है"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "संपन्न"
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "यदि Adblock प्लस सक्षम किया जा रहा होने के बावजूद एक विज्ञापन प्रदर्शित किया जाता है इस विकल्प का चयन करें।"
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "एडब्लॉक प्लस कोई विज्ञापन को ब्लॉक नही करता हैं"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "इस विकल्प का चयन करें, अगर पृष्ठ में महत्वपूर्ण सामग्री का अभाव है या गलत तरीके से प्रदर्शित करता है अथवा ठीक से कार्य करने के लिए विफल रहता है । समस्या का कारण Adblock प्लस है की नही, यह Adblock प्लस को अस्थायी रूप से अक्षम करने से है यह निर्धारित कर सकते हैं।"
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "Adblock प्लस बहुत ज्यादा अवरुद्ध कर रहा है"
+  }, 
+  "issueReporter_page_title": {
+    "message": "मुद्दा रिपोर्टर"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "गोपनीयता नीति"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "रिपोर्ट भेजें"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "रिपोर्ट भेजें"
+  }, 
+  "issueReporter_showData_label": {
+    "message": "रिपोर्ट डेटा दिखाएँ"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "यह विंडो आपको Adblock प्लस मुद्दा रिपोर्ट को जमा करने के लिए मार्गदर्शन करेगा। पहले, कृपया किस तरह के मुद्दों का आप इस पृष्ठ पर सामना कर रहे हैं का चयन करें:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "समस्या प्रकार का चयन करें"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1274,25 +1304,6 @@
   "languagedropdowndescription": {
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
-  }, 
-  "last_updated_at": {
-    "message": "पिछली अद्यतन तिथि: $time$ $date$ को संपन्न", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "अंतिम अद्यतन आज $time$ को संपन्न", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
   }, 
   "legend": {
     "message": "Legend: ", 
@@ -1464,8 +1475,50 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_close": {
+    "message": "बंद करें"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "रद्द करें"
+  }, 
+  "options_filterList_column_name": {
+    "message": "फिल्टरों कि सूची "
+  }, 
+  "options_filterList_column_status": {
+    "message": "स्थित"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "असफल, checksum मिसमैच"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "विफल रहा, डाउनलोड विफलता"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "विफल रहा, एक मान्य पता नहीं "
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "अक्षम"
+  }, 
+  "options_filterList_title": {
+    "message": "फिल्टरों कि सूची "
+  }, 
+  "options_filterList_updateNow": {
+    "message": "अपडेट करें "
+  }, 
+  "options_language_header": {
+    "message": "भाष"
+  }, 
+  "options_page_document_title": {
+    "message": "सेटिंग्स"
+  }, 
+  "options_page_title": {
+    "message": "सेटिंग्स"
+  }, 
   "options_short": {
     "message": "विकल्प "
+  }, 
+  "options_tab_general": {
+    "message": "सामान्य "
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1497,8 +1550,17 @@
     "message": "Other Filter Lists", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "पुराणी सूचियाँ समय-समय पर अद्यतन कि जाती हैं।"
+  "overlay_notification_button_no": {
+    "message": "नहीं"
+  }, 
+  "overlay_notification_button_yes": {
+    "message": "हाँ"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "यह सूचना बंद करें"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "सूचनाएं दिखाना रोकें"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1543,9 +1605,6 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "चुने हुओं को हटाएँ "
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -1637,12 +1696,12 @@
     "message": " -- Select Language -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": " इस पन्ने पर रिपोर्ट मुद्दा"
+  }, 
   "show_ads_except_for": {
     "message": "Show ads everywhere except for these domains...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "'तत्वों को प्रतिबंधित करें' दाएँ क्लिक के मेनू आइटम में प्रदर्शित करे"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
@@ -1708,28 +1767,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "$number$ से अधिक", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "AdBlock डाऊनलोड करें "
-  }, 
-  "stats_share_message": {
-    "message": "मैंने $number$ विज्ञापनों और ट्रैकरों को ब्लाक किआ, AdBlock का धन्यवाद्।", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "इस संख्या को शेयर करें"
-  }, 
   "stats_show_iconnumber": {
     "message": "आइकॉन में अंक दर्शाएँ "
   }, 
@@ -1785,9 +1822,6 @@
   "subscribingtitle": {
     "message": "Subscribing to filter list...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "लिस्ट में से एक फ़िल्टर सब्स्क्रिप्शन चुनें: "
   }, 
   "supportsite": {
     "message": "Let us know on our [[support site]]!", 
@@ -1932,9 +1966,6 @@
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "अपडेट करें "
-  }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
     "description": "Label for filter list subscription"
@@ -2032,9 +2063,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "अधिकृत डोमेन "
   }, 
   "whitelistedresource": {
     "message": "Whitelisted resource", 

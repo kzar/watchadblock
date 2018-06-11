@@ -17,12 +17,12 @@
 
 "use strict";
 
-const {Filter, ActiveFilter} = require("filterClasses");
-const {FilterNotifier} = require("filterNotifier");
-const {FilterStorage} = require("filterStorage");
-const {IO} = require("io");
-const {Prefs} = require("prefs");
-const {SpecialSubscription} = require("subscriptionClasses");
+const {Filter, ActiveFilter} = require("../adblockpluscore/lib/filterClasses");
+const {FilterNotifier} = require("../adblockpluscore/lib/filterNotifier");
+const {FilterStorage} = require("../adblockpluscore/lib/filterStorage");
+const {Prefs} = require("./prefs");
+const {SpecialSubscription} =
+  require("../adblockpluscore/lib/subscriptionClasses");
 
 Promise.all([FilterNotifier.once("load"), Prefs.untilLoaded]).then(() =>
 {
@@ -77,7 +77,7 @@ Promise.all([FilterNotifier.once("load"), Prefs.untilLoaded]).then(() =>
   let backups = [];
   for (let i = 1; i < 100; i++)
     backups.push(`file:patterns-backup${i}.ini`);
-  browser.storage.local.remove(backups).then(() =>
+  browser.storage.local.remove(backups, () =>
   {
     Prefs.data_cleanup_done = true;
   });

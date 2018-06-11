@@ -19,10 +19,27 @@
 
 let lastFilterQuery = null;
 
+browser.runtime.sendMessage({type: "types.get"},
+  (filterTypes) =>
+  {
+    const filterTypesElem = document.getElementById("filter-type");
+    const filterStyleElem = document.createElement("style");
+    for (const type of filterTypes)
+    {
+      filterStyleElem.innerHTML +=
+        `#items[data-filter-type=${type}] tr:not([data-type=${type}])` +
+        "{display: none;}";
+      const optionNode = document.createElement("option");
+      optionNode.appendChild(document.createTextNode(type));
+      filterTypesElem.appendChild(optionNode);
+    }
+    document.body.appendChild(filterStyleElem);
+  });
+
 function generateFilter(request, domainSpecific)
 {
   let filter = request.url.replace(/^[\w-]+:\/+(?:www\.)?/, "||");
-  let options = [];
+  const options = [];
 
   if (request.type == "POPUP")
   {
@@ -31,6 +48,9 @@ function generateFilter(request, domainSpecific)
     if (request.url == "about:blank")
       domainSpecific = true;
   }
+
+  if (request.type == "CSP")
+    options.push("csp");
 
   if (domainSpecific)
     options.push("domain=" + request.docDomain);
@@ -43,14 +63,14 @@ function generateFilter(request, domainSpecific)
 
 function createActionButton(action, label, filter)
 {
-  let button = document.createElement("span");
+  const button = document.createElement("span");
 
   button.textContent = label;
   button.classList.add("action");
 
   button.addEventListener("click", () =>
   {
-    ext.backgroundPage.sendMessage({
+    browser.runtime.sendMessage({
       type: "filters." + action,
       text: filter
     });
@@ -61,33 +81,46 @@ function createActionButton(action, label, filter)
 
 function createRecord(request, filter, template)
 {
-  let row = document.importNode(template, true);
+  const row = document.importNode(template, true);
   row.dataset.type = request.type;
 
   row.querySelector(".domain").textContent = request.docDomain;
   row.querySelector(".type").textContent = request.type;
 
-  let urlElement = row.querySelector(".url");
-  let actionWrapper = row.querySelector(".action-wrapper");
+  const urlElement = row.querySelector(".resource-link");
+  const actionWrapper = row.querySelector(".action-wrapper");
 
   if (request.url)
   {
     urlElement.textContent = request.url;
+    urlElement.setAttribute("href", request.url);
 
-    if (request.type != "POPUP")
+    // Firefox 57 doesn't support the openResource API.
+    if (request.type != "POPUP" && "openResource" in ext.devtools.panels)
     {
-      urlElement.classList.add("resourceLink");
-      urlElement.addEventListener("click", () =>
+      urlElement.addEventListener("click", event =>
       {
-        ext.devtools.panels.openResource(request.url);
+        if (event.button == 0)
+        {
+          ext.devtools.panels.openResource(request.url);
+          event.preventDefault();
+        }
       }, false);
     }
   }
 
+  if (request.rewrittenUrl)
+  {
+    let rewrittenUrl = row.querySelector(".rewritten-url > a");
+    rewrittenUrl.textContent = request.rewrittenUrl;
+    rewrittenUrl.setAttribute("href", request.rewrittenUrl);
+    row.querySelector(".rewritten-url").removeAttribute("hidden");
+  }
+
   if (filter)
   {
-    let filterElement = row.querySelector(".filter");
-    let originElement = row.querySelector(".origin");
+    const filterElement = row.querySelector(".filter");
+    const originElement = row.querySelector(".origin");
 
     filterElement.textContent = filter.text;
     row.dataset.state = filter.whitelisted ? "whitelisted" : "blocked";
@@ -133,16 +166,16 @@ function createRecord(request, filter, template)
 
 function shouldFilterRow(row, query)
 {
-  let elementsToSearch = [
-    row.getElementsByClassName("url"),
+  const elementsToSearch = [
+    row.getElementsByClassName("resource-link"),
     row.getElementsByClassName("filter"),
     row.getElementsByClassName("origin"),
     row.getElementsByClassName("type")
   ];
 
-  for (let elements of elementsToSearch)
+  for (const elements of elementsToSearch)
   {
-    for (let element of elements)
+    for (const element of elements)
     {
       if (element.innerText.search(query) != -1)
         return false;
@@ -153,7 +186,7 @@ function shouldFilterRow(row, query)
 
 function performSearch(table, query)
 {
-  for (let row of table.rows)
+  for (const row of table.rows)
   {
     if (shouldFilterRow(row, query))
       row.classList.add("filtered-by-search");
@@ -164,15 +197,15 @@ function performSearch(table, query)
 
 function cancelSearch(table)
 {
-  for (let row of table.rows)
+  for (const row of table.rows)
     row.classList.remove("filtered-by-search");
 }
 
 document.addEventListener("DOMContentLoaded", () =>
 {
-  let container = document.getElementById("items");
-  let table = container.querySelector("tbody");
-  let template = document.querySelector("template").content.firstElementChild;
+  const container = document.getElementById("items");
+  const table = container.querySelector("tbody");
+  const template = document.querySelector("template").content.firstElementChild;
 
   document.getElementById("reload").addEventListener("click", () =>
   {
@@ -199,15 +232,15 @@ document.addEventListener("DOMContentLoaded", () =>
         break;
 
       case "update-record":
-        let oldRow = table.getElementsByTagName("tr")[message.index];
-        let newRow = createRecord(message.request, message.filter, template);
+        const oldRow = table.getElementsByTagName("tr")[message.index];
+        const newRow = createRecord(message.request, message.filter, template);
         oldRow.parentNode.replaceChild(newRow, oldRow);
         newRow.classList.add("changed");
         container.classList.add("has-changes");
         break;
 
       case "remove-record":
-        let row = table.getElementsByTagName("tr")[message.index];
+        const row = table.getElementsByTagName("tr")[message.index];
         row.parentNode.removeChild(row);
         container.classList.add("has-changes");
         break;
@@ -237,6 +270,6 @@ document.addEventListener("DOMContentLoaded", () =>
   // Since Chrome 54 the themeName is accessible, for earlier versions we must
   // assume the default theme is being used.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=608869
-  let theme = chrome.devtools.panels.themeName || "default";
+  const theme = browser.devtools.panels.themeName || "default";
   document.body.classList.add(theme);
 }, false);

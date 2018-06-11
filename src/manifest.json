@@ -3,37 +3,13 @@
   "background": {
     "persistent": true, 
     "scripts": [
+      "polyfill.js", 
       "ext/common.js", 
       "ext/background.js", 
       "lib/compat.js", 
       "lib/publicSuffixList.js", 
       "lib/adblockplus.js", 
-      "messageResponder.js", 
-      "background.js", 
       "adblock-jquery.js", 
-      "adblock-errorreporting.js", 
-      "adblock-functions.js", 
-      "adblock-survey.js", 
-      "adblock-stats.js", 
-      "adblock-uninstall.js", 
-      "adblock-idlehandler.js", 
-      "adblock-localFilesIndex.js", 
-      "adblock-localcdn.js", 
-      "adblock-settings.js", 
-      "adblock-servermessages.js", 
-      "adblock-background.js", 
-      "adblock-adpsubscriptionadapter.js", 
-      "adblock-contextmenus.js", 
-      "adblock-subscriptioninit.js", 
-      "adblock-data-migrate.js", 
-      "adblock-excludefilter.js", 
-      "adblock-datacollection.v2.js", 
-      "adblock-picreplacement-image-sizes-map.js", 
-      "adblock-picreplacement-channels.js", 
-      "adblock-picreplacement-cat-channel.js", 
-      "adblock-picreplacement-dog-channel.js", 
-      "adblock-picreplacement-langscape-channel.js", 
-      "adblock-picreplacement-check.js", 
       "devenvPoller__.js"
     ]
   }, 
@@ -53,11 +29,10 @@
     {
       "all_frames": true, 
       "js": [
+        "polyfill.js", 
         "ext/common.js", 
         "ext/content.js", 
-        "elemHideEmulation.js", 
         "include.preload.js", 
-        "adblock-picreplacement-contentscript-loader.js", 
         "adblock-functions.js", 
         "adblock-bandaids.js"
       ], 
@@ -121,7 +96,7 @@
   "storage": {
     "managed_schema": "managed-storage-schema.json"
   }, 
-  "version": "3.30.1", 
+  "version": "3.31.0", 
   "web_accessible_resources": [
     "adblock-jquery-ui.custom.css", 
     "adblock-jquery-ui.override-page.css", 

@@ -17,7 +17,6 @@
 
 "use strict";
 
-(function()
 {
   let nonEmptyPageMaps = new Set();
 
@@ -61,11 +60,12 @@
     }
   };
 
-  ext._removeFromAllPageMaps = pageId =>
+  function removeFromAllPageMaps(pageId)
   {
     for (let pageMap of nonEmptyPageMaps)
       pageMap._delete(pageId);
-  };
+  }
+
 
   /* Pages */
 
@@ -98,7 +98,7 @@
     },
     sendMessage(message, responseCallback)
     {
-      chrome.tabs.sendMessage(this.id, message, responseCallback);
+      browser.tabs.sendMessage(this.id, message, responseCallback);
     }
   };
 
@@ -112,43 +112,21 @@
       {
         if (tabId == openedTab.id && changeInfo.status == "complete")
         {
-          chrome.tabs.onUpdated.removeListener(onUpdated);
+          browser.tabs.onUpdated.removeListener(onUpdated);
           callback(new Page(openedTab));
         }
       };
-      chrome.tabs.onUpdated.addListener(onUpdated);
+      browser.tabs.onUpdated.addListener(onUpdated);
     };
   }
 
   ext.pages = {
-    open(url, callback)
-    {
-      chrome.tabs.create({url}, callback && afterTabLoaded(callback));
-    },
-    query(info, callback)
-    {
-      let rawInfo = {};
-      for (let property in info)
-      {
-        switch (property)
-        {
-          case "active":
-          case "lastFocusedWindow":
-            rawInfo[property] = info[property];
-        }
-      }
-
-      chrome.tabs.query(rawInfo, tabs =>
-      {
-        callback(tabs.map(tab => new Page(tab)));
-      });
-    },
     onLoading: new ext._EventTarget(),
     onActivated: new ext._EventTarget(),
     onRemoved: new ext._EventTarget()
   };
 
-  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
+  browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
   {
     if (changeInfo.status == "loading")
       ext.pages.onLoading._dispatch(new Page(tab));
@@ -179,17 +157,17 @@
     {
       let page = new Page({id: tabId, url});
 
-      ext._removeFromAllPageMaps(tabId);
+      removeFromAllPageMaps(tabId);
 
-      chrome.tabs.get(tabId, () =>
+      browser.tabs.get(tabId, () =>
       {
-        // If the tab is prerendered, chrome.tabs.get() sets
-        // chrome.runtime.lastError and we have to dispatch the onLoading event,
-        // since the onUpdated event isn't dispatched for prerendered tabs.
-        // However, we have to keep relying on the unUpdated event for tabs that
-        // are already visible. Otherwise browser action changes get overridden
-        // when Chrome automatically resets them on navigation.
-        if (chrome.runtime.lastError)
+        // If the tab is prerendered, browser.tabs.get() sets
+        // browser.runtime.lastError and we have to dispatch the onLoading
+        // event, since the onUpdated event isn't dispatched for prerendered
+        // tabs. However, we have to keep relying on the onUpdated event for
+        // tabs that are already visible. Otherwise browser action changes get
+        // overridden when Chrome automatically resets them on navigation.
+        if (browser.runtime.lastError)
           ext.pages.onLoading._dispatch(page);
       });
     }
@@ -203,7 +181,7 @@
       frame.parent = parentFrame;
   }
 
-  chrome.webRequest.onHeadersReceived.addListener(details =>
+  browser.webRequest.onHeadersReceived.addListener(details =>
   {
     // We have to update the frame structure when switching to a new
     // document, so that we process any further requests made by that
@@ -281,13 +259,27 @@
   {types: ["main_frame", "sub_frame"], urls: ["http://*/*", "https://*/*"]},
   ["responseHeaders"]);
 
-  chrome.webNavigation.onBeforeNavigate.addListener(details =>
+  browser.webNavigation.onBeforeNavigate.addListener(details =>
   {
-    // Since we can only listen for HTTP(S) responses using
-    // webRequest.onHeadersReceived we must update the page structure here for
-    // other navigations.
-    let url = new URL(details.url);
-    if (url.protocol != "http:" && url.protocol != "https:")
+    // Requests can be made by about:blank frames before the frame's
+    // onCommitted event has fired, so we update the frame structure
+    // for those now.
+    if (details.url == "about:blank")
+    {
+      updatePageFrameStructure(details.frameId, details.tabId, details.url,
+                               details.parentFrameId);
+    }
+  });
+
+  browser.webNavigation.onCommitted.addListener(details =>
+  {
+    // We have to update the frame structure for documents that weren't
+    // loaded over HTTP (including documents cached by Service Workers),
+    // when the navigation occurs. However, we must be careful to not
+    // update the state of the same document twice, otherewise the number
+    // of any ads blocked already and any recorded sitekey could get lost.
+    let frame = ext.getFrame(details.tabId, details.frameId);
+    if (!frame || frame.url.href != details.url)
     {
       updatePageFrameStructure(details.frameId, details.tabId, details.url,
                                details.parentFrameId);
@@ -298,34 +290,24 @@
   {
     ext.pages.onRemoved._dispatch(tabId);
 
-    ext._removeFromAllPageMaps(tabId);
+    removeFromAllPageMaps(tabId);
     framesOfTabs.delete(tabId);
   }
 
-  chrome.tabs.onReplaced.addListener((addedTabId, removedTabId) =>
+  browser.tabs.onReplaced.addListener((addedTabId, removedTabId) =>
   {
     forgetTab(removedTabId);
   });
 
-  chrome.tabs.onRemoved.addListener(forgetTab);
+  browser.tabs.onRemoved.addListener(forgetTab);
 
-  chrome.tabs.onActivated.addListener(details =>
+  browser.tabs.onActivated.addListener(details =>
   {
     ext.pages.onActivated._dispatch(new Page({id: details.tabId}));
   });
 
 
   /* Browser actions */
-
-  // On Firefox for Android, open the options page directly when the browser
-  // action is clicked.
-  if (!("getPopup" in chrome.browserAction))
-  {
-    chrome.browserAction.onClicked.addListener(() =>
-    {
-      ext.showOptions();
-    });
-  }
 
   let BrowserAction = function(tabId)
   {
@@ -341,19 +323,27 @@
         // as a menu item. There is no icon, but such an option may be added in
         // the future.
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1331746
-        if ("setIcon" in chrome.browserAction)
+        if ("setIcon" in browser.browserAction)
         {
-          chrome.browserAction.setIcon({
-            tabId: this._tabId,
-            path: {
-              16: this._changes.iconPath.replace("$size", "16"),
-              19: this._changes.iconPath.replace("$size", "19"),
-              20: this._changes.iconPath.replace("$size", "20"),
-              32: this._changes.iconPath.replace("$size", "32"),
-              38: this._changes.iconPath.replace("$size", "38"),
-              40: this._changes.iconPath.replace("$size", "40")
-            }
-          });
+          let path = {
+            16: this._changes.iconPath.replace("$size", "16"),
+            19: this._changes.iconPath.replace("$size", "19"),
+            20: this._changes.iconPath.replace("$size", "20"),
+            32: this._changes.iconPath.replace("$size", "32"),
+            38: this._changes.iconPath.replace("$size", "38"),
+            40: this._changes.iconPath.replace("$size", "40")
+          };
+          try
+          {
+            browser.browserAction.setIcon({tabId: this._tabId, path});
+          }
+          catch (e)
+          {
+            // Edge throws if passed icon sizes different than 19,20,38,40px.
+            delete path[16];
+            delete path[32];
+            browser.browserAction.setIcon({tabId: this._tabId, path});
+          }
         }
       }
 
@@ -361,9 +351,9 @@
       {
         // There is no badge on Firefox for Android; the browser action is
         // simply a menu item.
-        if ("setBadgeText" in chrome.browserAction)
+        if ("setBadgeText" in browser.browserAction)
         {
-          chrome.browserAction.setBadgeText({
+          browser.browserAction.setBadgeText({
             tabId: this._tabId,
             text: this._changes.badgeText
           });
@@ -374,9 +364,9 @@
       {
         // There is no badge on Firefox for Android; the browser action is
         // simply a menu item.
-        if ("setBadgeBackgroundColor" in chrome.browserAction)
+        if ("setBadgeBackgroundColor" in browser.browserAction)
         {
-          chrome.browserAction.setBadgeBackgroundColor({
+          browser.browserAction.setBadgeBackgroundColor({
             tabId: this._tabId,
             color: this._changes.badgeColor
           });
@@ -387,23 +377,23 @@
     },
     _queueChanges()
     {
-      chrome.tabs.get(this._tabId, () =>
+      browser.tabs.get(this._tabId, () =>
       {
-        // If the tab is prerendered, chrome.tabs.get() sets
-        // chrome.runtime.lastError and we have to delay our changes
+        // If the tab is prerendered, browser.tabs.get() sets
+        // browser.runtime.lastError and we have to delay our changes
         // until the currently visible tab is replaced with the
-        // prerendered tab. Otherwise chrome.browserAction.set* fails.
-        if (chrome.runtime.lastError)
+        // prerendered tab. Otherwise browser.browserAction.set* fails.
+        if (browser.runtime.lastError)
         {
           let onReplaced = (addedTabId, removedTabId) =>
           {
             if (addedTabId == this._tabId)
             {
-              chrome.tabs.onReplaced.removeListener(onReplaced);
+              browser.tabs.onReplaced.removeListener(onReplaced);
               this._applyChanges();
             }
           };
-          chrome.tabs.onReplaced.addListener(onReplaced);
+          browser.tabs.onReplaced.addListener(onReplaced);
         }
         else
         {
@@ -452,14 +442,14 @@
   {
     // Firefox for Android does not support context menus.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1269062
-    if (!("contextMenus" in chrome) || contextMenuUpdating)
+    if (!("contextMenus" in browser) || contextMenuUpdating)
       return;
 
     contextMenuUpdating = true;
 
-    chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs =>
+    browser.tabs.query({active: true, lastFocusedWindow: true}, tabs =>
     {
-      chrome.contextMenus.removeAll(() =>
+      browser.contextMenus.removeAll(() =>
       {
         contextMenuUpdating = false;
 
@@ -473,7 +463,7 @@
 
         items.forEach(item =>
         {
-          chrome.contextMenus.create({
+          browser.contextMenus.create({
             title: item.title,
             contexts: item.contexts,
             onclick(info, tab)
@@ -515,13 +505,13 @@
     }
   };
 
-  chrome.tabs.onActivated.addListener(updateContextMenu);
+  browser.tabs.onActivated.addListener(updateContextMenu);
 
-  if ("windows" in chrome)
+  if ("windows" in browser)
   {
-    chrome.windows.onFocusChanged.addListener(windowId =>
+    browser.windows.onFocusChanged.addListener(windowId =>
     {
-      if (windowId != chrome.windows.WINDOW_ID_NONE)
+      if (windowId != browser.windows.WINDOW_ID_NONE)
         updateContextMenu();
     });
   }
@@ -537,45 +527,11 @@
     return frames && frames.get(frameId);
   };
 
-  let handlerBehaviorChangedQuota =
-    chrome.webRequest.MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES;
-
-  function propagateHandlerBehaviorChange()
-  {
-    // Make sure to not call handlerBehaviorChanged() more often than allowed
-    // by chrome.webRequest.MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES.
-    // Otherwise Chrome notifies the user that this extension is causing issues.
-    if (handlerBehaviorChangedQuota > 0)
-    {
-      chrome.webNavigation.onBeforeNavigate.removeListener(
-        propagateHandlerBehaviorChange
-      );
-      chrome.webRequest.handlerBehaviorChanged();
-
-      handlerBehaviorChangedQuota--;
-      setTimeout(() => { handlerBehaviorChangedQuota++; }, 600000);
-    }
-  }
-
-  ext.webRequest = {
-    onBeforeRequest: new ext._EventTarget(),
-    handlerBehaviorChanged()
-    {
-      // Defer handlerBehaviorChanged() until navigation occurs.
-      // There wouldn't be any visible effect when calling it earlier,
-      // but it's an expensive operation and that way we avoid to call
-      // it multiple times, if multiple filters are added/removed.
-      let {onBeforeNavigate} = chrome.webNavigation;
-      if (!onBeforeNavigate.hasListener(propagateHandlerBehaviorChange))
-        onBeforeNavigate.addListener(propagateHandlerBehaviorChange);
-    }
-  };
-
-  chrome.tabs.query({}, tabs =>
+  browser.tabs.query({}, tabs =>
   {
     tabs.forEach(tab =>
     {
-      chrome.webNavigation.getAllFrames({tabId: tab.id}, details =>
+      browser.webNavigation.getAllFrames({tabId: tab.id}, details =>
       {
         if (details && details.length > 0)
         {
@@ -595,51 +551,10 @@
     });
   });
 
-  chrome.webRequest.onBeforeRequest.addListener(details =>
-  {
-    // The high-level code isn't interested in requests that aren't
-    // related to a tab or requests loading a top-level document,
-    // those should never be blocked.
-    if (details.type == "main_frame")
-      return;
-
-    // Filter out requests from non web protocols. Ideally, we'd explicitly
-    // specify the protocols we are interested in (i.e. http://, https://,
-    // ws:// and wss://) with the url patterns, given below, when adding this
-    // listener. But unfortunately, Chrome <=57 doesn't support the WebSocket
-    // protocol and is causing an error if it is given.
-    let url = new URL(details.url);
-    if (url.protocol != "http:" && url.protocol != "https:" &&
-        url.protocol != "ws:" && url.protocol != "wss:")
-      return;
-
-    // We are looking for the frame that contains the element which
-    // has triggered this request. For most requests (e.g. images) we
-    // can just use the request's frame ID, but for subdocument requests
-    // (e.g. iframes) we must instead use the request's parent frame ID.
-    let {frameId, type} = details;
-    if (type == "sub_frame")
-      frameId = details.parentFrameId;
-
-    // Sometimes requests are not associated with a browser tab and
-    // in this case we want to still be able to view the url being called.
-    let frame = null;
-    let page = null;
-    if (details.tabId != -1)
-    {
-      frame = ext.getFrame(details.tabId, frameId);
-      page = new Page({id: details.tabId});
-    }
-
-    if (ext.webRequest.onBeforeRequest._dispatch(
-        url, type, page, frame).includes(false))
-      return {cancel: true};
-  }, {urls: ["<all_urls>"]}, ["blocking"]);
-
 
   /* Message passing */
 
-  chrome.runtime.onMessage.addListener((message, rawSender, sendResponse) =>
+  browser.runtime.onMessage.addListener((message, rawSender, sendResponse) =>
   {
     let sender = {};
 
@@ -673,114 +588,4 @@
       message, sender, sendResponse
     ).includes(true);
   });
-
-
-  /* Storage */
-
-  ext.storage = {
-    get(keys, callback)
-    {
-      chrome.storage.local.get(keys, callback);
-    },
-    set(key, value, callback)
-    {
-      let items = {};
-      items[key] = value;
-      chrome.storage.local.set(items, callback);
-    },
-    remove(key, callback)
-    {
-      chrome.storage.local.remove(key, callback);
-    },
-    onChanged: chrome.storage.onChanged
-  };
-
-  /* Options */
-
-  ext.showOptions = callback =>
-  {
-    let info = require("info");
-
-    if ("openOptionsPage" in chrome.runtime &&
-        // Some versions of Firefox for Android before version 57 do have a
-        // runtime.openOptionsPage but it doesn't do anything.
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=1364945
-        (info.application != "fennec" ||
-         parseInt(info.applicationVersion, 10) >= 57))
-    {
-      if (!callback)
-      {
-        chrome.runtime.openOptionsPage();
-      }
-      else
-      {
-        chrome.runtime.openOptionsPage(() =>
-        {
-          if (chrome.runtime.lastError)
-            return;
-
-          chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs =>
-          {
-            if (tabs.length > 0)
-            {
-              if (tabs[0].status == "complete")
-                callback(new Page(tabs[0]));
-              else
-                afterTabLoaded(callback)(tabs[0]);
-            }
-          });
-        });
-      }
-    }
-    else if ("windows" in chrome)
-    {
-      // Edge does not yet support runtime.openOptionsPage (tested version 38)
-      // and so this workaround needs to stay for now.
-      // We are not using extension.getURL to get the absolute path here
-      // because of the Edge issue:
-      // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10276332/
-      let optionsUrl = "options.html";
-      let fullOptionsUrl = ext.getURL(optionsUrl);
-
-      chrome.tabs.query({}, tabs =>
-      {
-        // We find a tab ourselves because Edge has a bug when quering tabs
-        // with extension URL protocol:
-        // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8094141/ 
-        // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/8604703/
-        let tab = tabs.find(element => element.url == fullOptionsUrl);
-        if (tab)
-        {
-          chrome.windows.update(tab.windowId, {focused: true});
-          chrome.tabs.update(tab.id, {active: true});
-
-          if (callback)
-            callback(new Page(tab));
-        }
-        else
-        {
-          ext.pages.open(optionsUrl, callback);
-        }
-      });
-    }
-    else
-    {
-      // Firefox for Android before version 57 does not support
-      // runtime.openOptionsPage, nor does it support the windows API. Since
-      // there is effectively only one window on the mobile browser, there's no
-      // need to bring it into focus.
-      ext.pages.open("options.html", callback);
-    }
-  };
-
-  /* Windows */
-  ext.windows = {
-    create(createData, callback)
-    {
-      chrome.windows.create(createData, createdWindow =>
-      {
-        afterTabLoaded(callback)(createdWindow.tabs[0]);
-      });
-    }
-  };
-}());
+}

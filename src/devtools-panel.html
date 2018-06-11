@@ -20,6 +20,7 @@
   <head>
     <meta charset="utf-8">
     <link type="text/css" rel="stylesheet" href="skin/devtools-panel.css">
+    <script src="polyfill.js"></script>
     <script src="ext/common.js"></script>
     <script src="ext/content.js"></script>
     <script src="ext/devtools.js"></script>
@@ -44,19 +45,6 @@
             items of
             <select id="filter-type">
               <option value="">any</option>
-              <option>SUBDOCUMENT</option>
-              <option>IMAGE</option>
-              <option>STYLESHEET</option>
-              <option>SCRIPT</option>
-              <option>OBJECT</option>
-              <option>XMLHTTPREQUEST</option>
-              <option>FONT</option>
-              <option>PING</option>
-              <option>POPUP</option>
-              <option>ELEMHIDE</option>
-              <option>WEBSOCKET</option>
-              <option>WEBRTC</option>
-              <option>OTHER</option>
             </select>
             type
           </td>
@@ -99,7 +87,12 @@
       <tr>
         <td>
           <div class="request-wrapper">
-            <div class="url">&nbsp;</div>
+            <div>
+              <a class="resource-link" href="" target="_blank">&nbsp;</a>
+              <span class="rewritten-url" hidden> rewritten to
+                <a href="" target="_blank"></a>
+              </span>
+            </div>
             <div class="domain"></div>
           </div>
         </td>

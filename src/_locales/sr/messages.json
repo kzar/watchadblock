@@ -74,17 +74,8 @@
   "add": {
     "message": "Додај"
   }, 
-  "add_domain_button": {
-    "message": "Додај домен"
-  }, 
-  "add_filter_button": {
-    "message": "Додај филтер"
-  }, 
   "add_filters_msg": {
     "message": "Додавање филтера"
-  }, 
-  "add_your_own_filters": {
-    "message": "Сопствени филтери"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Сачувај"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -474,6 +462,9 @@
     "message": "Zatvori", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Сакриј Адблок Поруке Упозорења"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Jeste li sigurni da želite ukloniti $count$ blokiranja koje ste napravili na $host$?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +486,9 @@
   "contentblockingwarning": {
     "message": "Napomena: Dodavanje na listu dopuštenih reklama na stranici nije podržano sa Safari blokiranjem sadržaja.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Даље"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -589,9 +583,6 @@
   "disabled_for_site": {
     "message": "<strong>Онемогући</strong> на овом сајту"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock не важи за доленаведене домене. Нови домен можете додати путем иконе AdBlock-а или тако што ћете унети домен (не URL) у поље и кликнути на дугме „Додај домен“."
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +674,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Уреди филтере у режиму текста"
-  }, 
   "enable_adblock": {
     "message": "Omogući AdBlock na ovoj stranici", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +681,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Омогућите само оне спискове филтера који су вам потребни. Превише њих може да успори прегледач."
   }, 
   "enabled_for_site": {
     "message": "<strong>Омогући</strong> на овом сајту"
@@ -792,6 +777,15 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Нема активних домена наведених за проширени елемент који крију филтер"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Неважећи (или празан) домен је наведен"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Неважећи регуларни израз"
+  }, 
   "filter_israeli": {
     "message": "Hebrew + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +798,12 @@
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Спискови филтера"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Ваш филтер мора да следи <a>синтаксу за филтере AdBlock-а</a>."
-  }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Непозната опција филтера"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -972,44 +963,8 @@
     "message": "Ruski i ukrajinski", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Дозволи ненаметљиве рекламе"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Додај"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Додај другу претплату"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "Додај претплату на филтер"
-  }, 
-  "filters_readMore_label": {
-    "message": "Сазнај више"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Избриши"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Омогућено"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Грешка: неслагање контролног збира"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "Грешка при преузимању"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "Преузимање..."
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Грешка: неисправан формат списка филтера"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Грешка: неисправна адреса"
-  }, 
-  "filters_viewList_label": {
-    "message": "Погледај списак"
   }, 
   "filtersavewarning": {
     "message": "Budite pažljivi: ukoliko napravite grešku ovde mnogo drugih filtera, uključujući i oficijalne filtere, mogu da prestanu da rade kako treba!\nPročitajte [[sintaksni vodič za filtere]] kako bi naučili da dodajete napredne filtere zabranjujućih i dopuštajućih lista.", 
@@ -1065,41 +1020,14 @@
   "firstRun_contributor_credits": {
     "message": "Кредитовани сарадници"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Да ли се ова страница наставља појављивати? <a>Кликните овде!</a>"
-  }, 
   "firstRun_donate": {
     "message": "Донирајте"
   }, 
   "firstRun_donate_label": {
     "message": "Подржите наш пројекат"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Блокирање малвера"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Учините ваше сурфовање сигурнијим, блокирајући домене познате по злонамерним малвер програмима."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Уклоните дугмиће друштвених мрежа"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Аутоматски учините сурфовање ослобођеним од  дугмића друштвених мрежа, као што су \"Facebook Like\" дугме, који се појављују на страницама и прате ваше понашање."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "Онемогући праћење"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Сурфујте приватно са онемогућеним праћењем - скривајући се од рекламних компанија које прате сваки ваш потез."
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock може више од блокирања реклама"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Изгледа да је проблем узроковао да сви филтери буду уклоњени, а резервне примерке није могуће повратити. Због тога смо морали да вратимо поставке филтера и дозвољених огласа на подразумеване вредности. Проверите листе филтера и дозвољене огласе у <a>опцијама AdBlock-а</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Користите верзију Сафарија коју AdBlock не подржава, зато је могуће да неке веб странице неће бити оптимално приказане, или ABP уопште неће функционисати. Препоручујемо да унапредите Safari у задњу верзију, или да користите Мозила Фајерфокс, Гугл Кром или Опера браузер."
   }, 
   "firstRun_share": {
     "message": "Препоручите нас својим пријатељима"
@@ -1109,12 +1037,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock је инсталиран"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "Искључен"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "Укључен"
   }, 
   "fixityourself": {
     "message": "OK, i dalje možete da blokirate ovu reklamu za sebe na strani sa podešavanjima. Hvala!", 
@@ -1127,9 +1049,6 @@
   "format_site1_site2_site3": {
     "message": "Format: ~sajt1.com|~sajt2.com|~novosti.sajt3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "Пронашли сте грешку или желите да преведете AdBlock на свој језик? <a>Овде поднесите захтев</a>."
   }, 
   "foundbug": {
     "message": "Našli ste bag?", 
@@ -1147,30 +1066,9 @@
     "message": "URL okvira: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Опште"
-  }, 
   "generaloptions": {
     "message": "Opšte opcije", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Да би сте сакрили елеменат, морате дати само један идентитет елемента."
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Није пронађен критеријум за препознавање елемента који ће бити сакривен."
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "Неважећи регуларни израз"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "Непозната опција филтера"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Желите ли да уклоните ову претплату?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "Неисправна адреса и име датотеке са списком филтера."
   }, 
   "headerfilter": {
     "message": "Odgovarajući filter", 
@@ -1215,6 +1113,84 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Пошаљи анонимно"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Нећемо моћи да вас контактирамо. Приоритет вашег извештаја ће вероватно бити низак."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Унесите коментар"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "Доње поље за текст омогућава вам да додате коментар, како бисте нам помогли да лакше схватимо проблем. Овај корак је произвољан али је пожељан, ако проблем није лако уочљив. Можете и да још једном прегледате извештај пре него што га пошаљете."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Коментар (необавезно):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Дужина вашег коментара прелази 1000 знакова. Само првих 1000 знакова ће бити послато."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Ваш извештај је сачуван. Можете му приступити на следећој адреси:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "Сачекајте неколико тренутака док AdBlock прибави потребне податке."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Добро дошли у одељак за пријаву грешака"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Готово"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Молимо вас да унесете исправну е-адресу да бисмо могли да вас контактирамо ако имамо питања у вези са вашим извештајем. Тиме ће и ваши извештаји имати већи приоритет."
+  }, 
+  "issueReporter_email_label": {
+    "message": "Е-адреса:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Покушај слања извештаја није успео - грешка „?1?”. Уверите се да сте повезани са Интернетом, па покушајте поново. Ако проблем и даље постоји, помоћ потражите на [link]форуму AdBlock-а[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "Изаберите ову опцију ако је оглас приказан иако је AdBlock омогућен."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock не блокира огласе"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Изаберите ову опцију ако страници недостају неки битни садржаји, погрешно изгледа или не ради како треба. Пробајте да привремено онемогућите AdBlock, па проверите да ли је онда све у реду."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock блокира превише"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Проблем који сте пријавили је вероватно већ познат. Више информација:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Пријава грешака"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Политика приватности"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Пошаљи извештај"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Пошаљи извештај"
+  }, 
+  "issueReporter_sending": {
+    "message": "Сачекајте док AdBlock не пошаље ваш извештај."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Прикажи податке у извештају"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Овај прозор ће Вас водити кроз кораке за решавање проблема у AdBlock-у и њихово пријављивање. За почетак, изаберите врсту проблема на који сте наишли на овој страници:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Изаберите тип проблема"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1379,25 +1355,6 @@
   "languagedropdowndescription": {
     "message": "Dodaj filtere za drugi jezik: ", 
     "description": "Dropdown list for language-specific filter lists"
-  }, 
-  "last_updated_at": {
-    "message": "Последњи пут ажурирано $date$ у $time$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "Последњи пут ажурирано данас у $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
   }, 
   "legend": {
     "message": "Legenda: ", 
@@ -1575,8 +1532,68 @@
     "message": "Opcije", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_header": {
+    "message": "Прихватљиви огласи"
+  }, 
+  "options_close": {
+    "message": "затвори"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "Откажи"
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Приказуј корисна обавештења"
+  }, 
+  "options_email": {
+    "message": "И-мејл:"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Спискови филтера"
+  }, 
+  "options_filterList_column_status": {
+    "message": "Стање"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Грешка: неслагање контролног збира"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Грешка при преузимању"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Грешка: неисправна адреса"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Онемогућено"
+  }, 
+  "options_filterList_title": {
+    "message": "Спискови филтера"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "ажурирај"
+  }, 
+  "options_language_header": {
+    "message": "Језик"
+  }, 
+  "options_page_document_title": {
+    "message": "Поставке"
+  }, 
+  "options_page_title": {
+    "message": "Поставке"
+  }, 
   "options_short": {
     "message": "Опције"
+  }, 
+  "options_support_title": {
+    "message": "Подршка"
+  }, 
+  "options_tab_general": {
+    "message": "Опште"
+  }, 
+  "options_tab_help": {
+    "message": "Помоћ"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Дозвољени сајтови"
   }, 
   "optionstitle": {
     "message": "Opcije AdBlock-a", 
@@ -1608,9 +1625,6 @@
     "message": "Ostale Filter Liste", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Застарели спискови се редовно ажурирају."
-  }, 
   "overlay_notification_button_no": {
     "message": "Не"
   }, 
@@ -1622,9 +1636,6 @@
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "Не приказуј обавештења"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "Приказуј корисна обавештења"
   }, 
   "pagelanguagecheck": {
     "message": "Na kom jeziku je stranica napisana?", 
@@ -1669,9 +1680,6 @@
   "reloadpageafterwhitelist": {
     "message": "Ponovo učitajte stranicu.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Уклони изабрано"
   }, 
   "removefromlist": {
     "message": "Ukloni sa liste", 
@@ -1763,12 +1771,12 @@
     "message": " -- Izaberite jezik ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Пријави проблеме на овој страници"
+  }, 
   "show_ads_except_for": {
     "message": "Prikaži reklame svuda osim na ovim domenima...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Ставка „Блокирај елемент“ у контекстуалном менију"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
@@ -1834,28 +1842,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "$number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "Преузми AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "Блокирао сам $number$ огласа и пратилаца захваљујући AdBlock-у.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Дели овај број"
-  }, 
   "stats_show_iconnumber": {
     "message": "Прикажи број на икони"
   }, 
@@ -1911,15 +1897,6 @@
   "subscribingtitle": {
     "message": "Prijavljivanje na listu filtera...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Локација списка са филтерима:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Изаберите пријаву са списка:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Назив пријаве:"
   }, 
   "supportsite": {
     "message": "Recite nam na našoj [[stranici podrške]]!", 
@@ -2064,9 +2041,6 @@
     "message": "Prekini pratnju.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "Ажурирај"
-  }, 
   "updateddayago": {
     "message": "ažurirano pre jedan dan", 
     "description": "Label for filter list subscription"
@@ -2164,9 +2138,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Дозвољени домени"
   }, 
   "whitelistedresource": {
     "message": "Dopušteni resurs", 

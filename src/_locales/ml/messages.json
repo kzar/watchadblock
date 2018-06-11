@@ -74,17 +74,8 @@
   "add": {
     "message": "ചേര്‍ക്കുക"
   }, 
-  "add_domain_button": {
-    "message": "ഡൊമൈൻ  ചേര്‍ക്കുക"
-  }, 
-  "add_filter_button": {
-    "message": "ഫിൽറ്റർ ചേര്‍ക്കുക"
-  }, 
   "add_filters_msg": {
     "message": "ഫിൽറ്റർ / ഫിൽറ്ററുകൾ ഉള്പെടുത്തുക?"
-  }, 
-  "add_your_own_filters": {
-    "message": "സ്വന്തം ഫിൽറ്റർ ചേര്‍ക്കുക"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "മാറ്റങ്ങള്‍ നടപ്പിലാക്കുക"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -496,6 +484,9 @@
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
+  "continue": {
+    "message": "തുടരുക"
+  }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
@@ -680,9 +671,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "അരിപ്പകള്‍ റോ ടെക്സ്റ്റ് (ഫോര്‍മാറ്റിങ് ഇല്ലാതെ) ആയി തിരുത്തുക"
-  }, 
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -797,9 +785,6 @@
   "filter_latvian": {
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
-  }, 
-  "filter_lists": {
-    "message": "പട്ടികകള്‍ അരിക്കുക"
   }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
@@ -963,6 +948,9 @@
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
   }, 
+  "filters_subscription_lastDownload_connectionError": {
+    "message": "പരാജയം, ഡൌണ്‍ലോഡ് പരാജയപ്പെട്ടിരിക്കുന്നു"
+  }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
     "description": "Warning when manually editing filters."
@@ -1027,9 +1015,6 @@
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "പലവക"
-  }, 
   "generaloptions": {
     "message": "General options", 
     "description": "Title of the first Options page tab"
@@ -1077,6 +1062,15 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "കഴിഞ്ഞിരിക്കുന്നു"
+  }, 
+  "issueReporter_page_title": {
+    "message": "പ്രശ്നം റിപ്പോര്‍ട്ട് ചെയ്യുക"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "സ്വകാര്യതാ നയം"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1242,25 +1236,6 @@
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "അവസാനം പുതുക്കിയത് $date$, $time$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "അവസാനം പുതുക്കിയത് ഇന്ന് $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1370,7 +1345,7 @@
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "name": {
-    "message": "AdBlock"
+    "message": "ആഡ്ബ്ലോക്ക്…"
   }, 
   "name_adblock_on_youtube": {
     "message": "AdBlock on YouTube™", 
@@ -1425,8 +1400,38 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_close": {
+    "message": "അടക്കുക"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "റദ്ദാക്കുക"
+  }, 
+  "options_filterList_column_name": {
+    "message": "പട്ടികകള്‍ അരിക്കുക"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "പരാജയം, ഡൌണ്‍ലോഡ് പരാജയപ്പെട്ടിരിക്കുന്നു"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "പരാജയപ്പെട്ടിരിക്കുന്നു, ഇതൊരു സാധുവായ വിലാസം അല്ല"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "പ്രവര്‍ത്തനരഹിത"
+  }, 
+  "options_filterList_title": {
+    "message": "പട്ടികകള്‍ അരിക്കുക"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "ഇപ്പോള്‍ത്തന്നെ പുതുക്കുക"
+  }, 
   "options_short": {
     "message": "സൗകര്യങ്ങള്‍"
+  }, 
+  "options_tab_general": {
+    "message": "പലവക"
+  }, 
+  "options_tab_whitelist": {
+    "message": "വൈറ്റ് ലിസ്റ്റ് ചെയ്ത സൈറ്റുകൾ"
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1458,8 +1463,11 @@
     "message": "Other Filter Lists", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "പഴകിയ പട്ടികകള്‍ പതിവായി പുതുക്കുന്നു."
+  "overlay_notification_button_no": {
+    "message": "അല്ല"
+  }, 
+  "overlay_notification_button_yes": {
+    "message": "അതെ"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1504,9 +1512,6 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "തെരഞ്ഞെടുത്തത് നീക്കംചെയ്യുക"
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -1665,28 +1670,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_over": {
-    "message": "$number$-നു മേല്‍", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "ആഡ്ബ്ലോക്ക് പ്ലസ് ഡൗണ്‍ലോഡ് ചെയ്യുക"
-  }, 
-  "stats_share_message": {
-    "message": "ആഡ്ബ്ലോക്ക് പ്ലസ്സിന് നന്ദി, ഞാന്‍ $number$ പരസ്യങ്ങളും ട്രാക്കറുകളും തടഞ്ഞു.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "ഈ സംഖ്യ പങ്കുവയ്ക്കുക"
   }, 
   "stats_show_iconnumber": {
     "message": "ഐക്കണില്‍ സംഖ്യ കാണിക്കുക"
@@ -1887,9 +1870,6 @@
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "ഇപ്പോള്‍ത്തന്നെ പുതുക്കുക"
-  }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
     "description": "Label for filter list subscription"
@@ -1987,9 +1967,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "നല്ലപട്ടികയില്‍പ്പെട്ട ഡൊമെയ്നുകള്‍"
   }, 
   "whitelistedresource": {
     "message": "Whitelisted resource", 

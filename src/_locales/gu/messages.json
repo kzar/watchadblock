@@ -74,17 +74,8 @@
   "add": {
     "message": "ઊમેરો"
   }, 
-  "add_domain_button": {
-    "message": "ડોમેઈન ઊમેરો"
-  }, 
-  "add_filter_button": {
-    "message": "ફિલ્ટર ઊમેરો"
-  }, 
   "add_filters_msg": {
     "message": "ફિલ્ટર ઉમેરવા છે?"
-  }, 
-  "add_your_own_filters": {
-    "message": "તમારું પોતાનું ફિલ્ટર ઊમેરો"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "બદલાવ સાચવો"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -298,7 +286,7 @@
     "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
-    "message": "બ્લોક એલિમેન્ટ"
+    "message": "અવરોધિત તત્વ"
   }, 
   "block_privacy_on_youtube": {
     "message": "Protect my privacy on YouTube™", 
@@ -460,7 +448,7 @@
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
-    "message": "આ પોપ અપ બંધ કરીને, પેજ પરનાં એલિમેન્ટ પર ક્લિક (અથવા રાઈટ ક્લિક) કરો."
+    "message": "આ પોપઅપને બંધ કર્યા પછી, પૃષ્ઠ પર એક ઘટક (અથવા જમણું ક્લિક કરો) પર ક્લિક કરો."
   }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
@@ -473,6 +461,18 @@
   "close": {
     "message": "Close", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "એડબ્લોક ચેતવણી સંદેશાઓ છુપાવો"
+  }, 
+  "common_feature_malware_title": {
+    "message": "મૉલવેરને અવરોધિત કરો"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "વધારાના ટ્રેકિંગને અવરોધિત કરો"
+  }, 
+  "common_feature_social_title": {
+    "message": "સોશિયલ મીડિયા આઇકોન્સ ટ્રેકિંગને અવરોધિત કરો"
   }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
@@ -495,6 +495,9 @@
   "contentblockingwarning": {
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "ચાલુ રાખો"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -589,9 +592,6 @@
   "disabled_for_site": {
     "message": "આં સાઈટ પર <strong>ડિસેબલ</strong> કરો"
   }, 
-  "disabled_for_these_domains": {
-    "message": "નીચે આપેલ ડોમેઈન  માટે AdBlock ડિસેબલ કરેલ છે. તમે એડ્રેસ બાર નાં AdBlock આઇકોન દ્વારા અથવા બોક્સમાં ડોમેઈન (નહીં કે URL) ટાઇપ કરી  \"ડોમેઈન ઊમેરો\" બટન ક્લિક કરીને સાઈટ ઉમેરી શકો છો."
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +683,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "ફિલ્ટરને સળંગ ટેક્સ્ટની જેમ સુધારો"
-  }, 
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +690,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "માત્ર જરૂરી ફિલ્ટર લીસ્ટને જ ઇનેબલ કરો. વધું પડતા ઇનેબલ બ્રાઉઝરને અનરિસ્પોન્સિવ બનાવી શકે છે."
   }, 
   "enabled_for_site": {
     "message": "આં સાઈટ પર <strong>ઇનેબલ</strong> કરો"
@@ -792,6 +786,18 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "વિસ્તૃત ઘટક છૂપાઇ ફિલ્ટર માટે કોઈ સક્રિય ડોમેન નિર્દિષ્ટ નથી"
+  }, 
+  "filter_invalid_csp": {
+    "message": "અમાન્ય સામગ્રી સુરક્ષા નીતિ"
+  }, 
+  "filter_invalid_domain": {
+    "message": "ઉલ્લેખિત અમાન્ય (અથવા ખાલી) ડોમેન"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "અમાન્ય રેગ્યુલર એક્સપ્રેશન"
+  }, 
   "filter_israeli": {
     "message": "Hebrew + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +810,12 @@
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "ફિલ્ટરની લીસ્ટ"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "તમારું ફિલ્ટર <a>AdBlock ફિલ્ટર સિન્ટેક્સ</a>ફોલોવ કરવું જોઈએ."
-  }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "અજ્ઞાત ફિલ્ટર વિકલ્પ"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -972,6 +975,9 @@
     "message": "Russian and Ukrainian", 
     "description": "Language names for a filter list"
   }, 
+  "filters_subscription_lastDownload_connectionError": {
+    "message": "નિષ્ફળ થયું, ડાઉનલોડ નિષ્ફળ થયું"
+  }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
     "description": "Warning when manually editing filters."
@@ -1008,6 +1014,42 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_abbButtonSubtitle": {
+    "message": "Android અને iOS માટે ઉપલબ્ધ"
+  }, 
+  "firstRun_abbButtonTitle": {
+    "message": "એડબ્લૉક બ્રાઉઝર અહીં મેળવો"
+  }, 
+  "firstRun_abbPromotionHeadline": {
+    "message": "સ્માર્ટફોન અથવા ટેબલેટ મળ્યો?"
+  }, 
+  "firstRun_acceptableAdsExplanation": {
+    "message": "અમે સાઇટ્સ સીધા, સ્વાભાવિક જાહેરાતોનો ઉપયોગ કરવા પ્રોત્સાહિત કરવા માગીએ છીએ. એટલા માટે અમે સ્વીકાર્ય જાહેરાતોને ઓળખવા માટે <a> સખત માર્ગદર્શિકા </a> નિર્ધારિત કર્યા છે, જે ડિફોલ્ટ સેટિંગ્સ હેઠળ બતાવવામાં આવે છે. જો તમે હજી પણ દરેક જાહેરાતને અવરોધિત કરવા માંગો છો, તો તમે તેને અમુક સેકંડમાં <a> નિષ્ક્રિય </a> કરી શકો છો."
+  }, 
+  "firstRun_acceptableAdsHeadline": {
+    "message": "હેરાન જાહેરાતો હવે અવરોધિત કરવામાં આવશે"
+  }, 
+  "firstRun_contributor_credits": {
+    "message": "સહયોગી ક્રેડિટ્સ"
+  }, 
+  "firstRun_donate": {
+    "message": "દાન કરો"
+  }, 
+  "firstRun_donate_label": {
+    "message": "અમારા પ્રોજેક્ટ આધાર"
+  }, 
+  "firstRun_filterlistsReinitializedWarning": {
+    "message": "એવું લાગે છે કે કોઈ મુદ્દાને કારણે તમામ ફિલ્ટર્સ દૂર કરવામાં આવ્યાં હતાં અને અમે બેકઅપ પુનઃસ્થાપિત કરવામાં અસમર્થ હતાં. તેથી અમારે તમારા ફિલ્ટર્સ અને સ્વીકાર્ય જાહેરાતો સેટિંગ્સ રીસેટ કરવાની હતી. કૃપા કરીને <a> એડબ્લૉક પ્લસ વિકલ્પો </a> માં તમારી ફિલ્ટર સૂચિ અને સ્વીકાર્ય જાહેરાતો સેટિંગ્સ તપાસો."
+  }, 
+  "firstRun_share": {
+    "message": "તમારા મિત્રોને કહો"
+  }, 
+  "firstRun_share_headline": {
+    "message": "<a> વેબને વધુ સારું સ્થાન બનાવવા માટે અમને એક હાથ આપો </a>"
+  }, 
+  "firstRun_title": {
+    "message": "એડબ્લોક પ્લસ સંગ્રહિત કરી દેવામાં આવ્યું છે"
+  }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1019,9 +1061,6 @@
   "format_site1_site2_site3": {
     "message": "Format: ~site1.com|~site2.com|~news.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "કોઈ ભૂલ છે ? શું તમારી ભાષામાં AdBlock ને રૂપાંતરિત કરવા માગો છો ? તમારી <a>રીક્વેસ્ટ અહીં આપો</a>."
   }, 
   "foundbug": {
     "message": "Found a bug?", 
@@ -1038,9 +1077,6 @@
   "frameurl": {
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
-  }, 
-  "general": {
-    "message": "સામાન્ય"
   }, 
   "generaloptions": {
     "message": "General options", 
@@ -1089,6 +1125,84 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "અનામિક સબમિશન"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "અમે તમને પાછા આવવા માટે સમર્થ હશો નહીં અને સંભવિતપણે રિપોર્ટને ઓછો કરશે."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "ટિપ્પણી દાખલ કરો"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "નીચે આપેલી ટેક્સ્ટ ફીલ્ડ તમને સમસ્યાને સમજવામાં સહાય માટે ટિપ્પણી દાખલ કરવાની પરવાનગી આપે છે. આ પગલું વૈકલ્પિક છે પરંતુ સમસ્યા સ્પષ્ટ ન હોય તો આગ્રહણીય છે. તમે મોકલવામાં આવે તે પહેલાં રિપોર્ટ ડેટાની સમીક્ષા પણ કરી શકો છો."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "ટિપ્પણી (વૈકલ્પિક):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "તમારી ટિપ્પણીની લંબાઈ 1000 અક્ષરોથી વધી જાય છે માત્ર પ્રથમ 1000 અક્ષરો મોકલવામાં આવશે."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "તમારી રિપોર્ટ સાચવવામાં આવી છે. તમે તેને નીચેના સરનામા પર ઍક્સેસ કરી શકો છો:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "કૃપા કરીને થોડી ક્ષણો રાહ જુઓ જ્યારે એડબ્લોક પ્લસ આવશ્યક ડેટા એકઠી કરે છે."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "ઇશ્યૂ રિપોર્ટરમાં આપનું સ્વાગત છે"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "પૂર્ણ થયું"
+  }, 
+  "issueReporter_email_description": {
+    "message": "અમે તમને એક માન્ય ઇમેઇલ સરનામું દાખલ કરવા પ્રોત્સાહિત કરીએ છીએ જેથી તમારી રિપોર્ટ વિશે કોઈ પ્રશ્નો હોય તો અમે તમારો સંપર્ક કરી શકીએ. તે અમને તમારા યોગદાનને ઓળખી કાઢવા અને તેમને વધુ ઉચ્ચ બનાવવા માટે પરવાનગી આપશે."
+  }, 
+  "issueReporter_email_label": {
+    "message": "ઇમેઇલ:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "રિપોર્ટ મોકલવાનો પ્રયાસ ભૂલ કોડ \"?1?\" માં નિષ્ફળ થયો. કૃપા કરીને ખાતરી કરો કે તમે ઇન્ટરનેટથી કનેક્ટેડ છો અને ફરીથી પ્રયાસ કરો. જો સમસ્યા યથાવત રહે તો કૃપા કરીને [link] એડબ્લોક પ્લસ ફોરમ [/link] માં સહાયની વિનંતી કરો."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "એડબ્લોક પ્લસ સક્ષમ હોવા છતાં કોઈ જાહેરાત પ્રદર્શિત થાય તો આ વિકલ્પ પસંદ કરો."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "એડબ્લોક પ્લસ કોઈ જાહેરાતને અવરોધિત કરતી નથી"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "આ વિકલ્પને પસંદ કરો જો પૃષ્ઠમાં મહત્વપૂર્ણ સામગ્રી ન હોય તો, ખોટી રીતે પ્રદર્શિત કરે છે અથવા યોગ્ય રીતે કામ કરવામાં નિષ્ફળ જાય છે. તમે નક્કી કરી શકો છો કે એડબ્લોક પ્લસ એ અસ્થાયી રૂપે તે નિષ્ક્રિય કરીને સમસ્યાનું કારણ છે."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "એડબ્લોક પ્લસ ખૂબ અવરોધિત છે"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "તમે જે સમસ્યાની જાણ કરો છો તે પહેલેથી જ જાણીતું છે. વધુ મહિતી:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "ઇશ્યૂ રિપોર્ટર"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "ગોપનીયતા નીતિ"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "રિપોર્ટ મોકલો"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "રિપોર્ટ મોકલો"
+  }, 
+  "issueReporter_sending": {
+    "message": "એડબ્લોક પ્લસ તમારી રિપોર્ટ સબમિટ કરે ત્યાં સુધી કૃપા કરીને રાહ જુઓ."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "રિપોર્ટ ડેટા બતાવો"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "આ વિંડો એડબ્લોક પ્લસ ઇશ્યૂ રિપોર્ટની રજૂઆત માટે આવશ્યક પગલાંથી તમને માર્ગદર્શન આપશે. પ્રથમ, કૃપા કરીને તમે આ પૃષ્ઠ પર જે સમસ્યા અનુભવી રહ્યા છો તેનો પ્રકાર પસંદ કરો:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "સમસ્યા પ્રકાર પસંદ કરો"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1254,25 +1368,6 @@
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
-  "last_updated_at": {
-    "message": "છેલ્લી અપડેટ $time$ વાગ્યે  $date$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "છેલ્લી અપડેટ $time$ વાગ્યે આજે", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1415,6 +1510,18 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_antiadblock_message": {
+    "message": "આ સાઇટ એડબ્લોક પ્લસ વપરાશકર્તાઓને લક્ષિત સંદેશાઓ બતાવવા માટે જાણીતી છે. શું તમે એડબ્લોક પ્લસને લક્ષિત સંદેશાને છુપાવવા માંગો છો?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "લક્ષિત સંદેશા છુપાવો છો?"
+  }, 
+  "notification_configure": {
+    "message": "સૂચના સેટિંગ્સને ગોઠવો"
+  }, 
+  "notification_open_all": {
+    "message": "આ સૂચનાથી તમામ લિંક્સ ખોલો"
+  }, 
   "notification_with_buttons": {
     "message": "આ નોટીફીકેશનમાં બધી લીંક ખોલવા 'ઓકે' પર ક્લિક કરો."
   }, 
@@ -1437,8 +1544,348 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "સ્વીકાર્ય જાહેરાતો નકામી નથી અને તમે જોઈ રહ્યાં છો તે સામગ્રીમાં દખલ ન કરો <a> સ્વીકાર્ય જાહેરાત માનકો વિશે વધુ વાંચો </a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "સ્વીકાર્ય જાહેરાતોને મંજૂરી આપો"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "સ્વીકાર્ય જાહેરાતો બિન કર્કશ જાહેરાતો છે તેઓ જાહેરાત અવરોધિત અને સહાયક ઑનલાઇન સામગ્રી વચ્ચે મધ્યમ જમીન છે કારણ કે તેઓ વેબસાઇટ માલિકો માટે આવક પેદા કરે છે."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>નૉૅધ;</strong>તમારી પાસે છે<strong>ટ્રેક કરશો નહીં (ડીએનટી)</strong>તમારી બ્રાઉઝર સેટિંગ્સમાં અક્ષમ કરેલું છે આ સુવિધાને યોગ્ય રીતે કામ કરવા માટે, કૃપા કરીને સક્ષમ કરો <strong>ડીએનટી</strong>તમારા બ્રાઉઝર પસંદગીઓમાં <a>ડીએનટી ને કેવી રીતે સક્ષમ કરવું તે શોધો</a>."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "સ્વીકાર્ય જાહેરાતો"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "માત્ર તૃતીય-પક્ષ ટ્રૅકિંગ વગર જાહેરાતોને મંજૂરી આપો"
+  }, 
+  "options_advanced_description": {
+    "message": "એડબ્લોક પ્લસને કસ્ટમાઇઝ કરો, ફિલ્ટર યાદીઓ ઍડ કરો અથવા દૂર કરો, તમારી પોતાની ફિલ્ટર યાદીઓ બનાવો અને જાળવો"
+  }, 
+  "options_close": {
+    "message": "બંધ"
+  }, 
+  "options_control_remove_title": {
+    "message": "દુર કરો"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "રદ"
+  }, 
+  "options_customFilter_edit": {
+    "message": "ફિલ્ટર્સ સંપાદિત કરો"
+  }, 
+  "options_customFilter_save": {
+    "message": "સાચવો"
+  }, 
+  "options_customFilters_description": {
+    "message": "સામગ્રી એડબ્લોક પ્લસ દ્વારા પરવાનગી આપે છે અથવા બ્લોકો શું નિયંત્રિત કરવા માટે તમારા પોતાના કસ્ટમ ફિલ્ટર્સ લખો."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "ઉદાહરણ $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "ફિલ્ટર યાદીઓ કેવી રીતે લખવા તે જાણો"
+  }, 
+  "options_customFilters_start": {
+    "message": "મારી ફિલ્ટર સૂચિ લખવાનું પ્રારંભ કરો"
+  }, 
+  "options_customFilters_tip": {
+    "message": "તમે બનાવો છો તે ફિલ્ટર્સ અહીં દેખાશે."
+  }, 
+  "options_customFilters_title": {
+    "message": "તમારી ફિલ્ટર સૂચિ બનાવો અને સંપાદિત કરો"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "મારી ફિલ્ટર સૂચિ"
+  }, 
+  "options_customize_blockElement": {
+    "message": "'બ્લોક તત્વ' રાઇટ-ક્લિક મેનુ આઇટમ બતાવો"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "વેબપેજ પર કામચલાઉ વસ્તુઓને અસ્થાયી ધોરણે બ્લૉક કરો, દા.ત. છબીઓ અથવા એનિમેટેડ સ્લાઇડશૉઝ."
+  }, 
+  "options_customize_header": {
+    "message": "ઑન-પૃષ્ઠ ક્રિયાઓ કસ્ટમાઇઝ કરો"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "વિકાસકર્તા સાધનોમાં 'એડબ્લોક પ્લસ' પેનલ દર્શાવો"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "તમારા બ્રાઉઝરનાં વિકાસકર્તા ટૂલ્સ પેનલમાંથી અવરોધિત અને વ્હાઇટલિસ્ટ કરેલ આઇટમ્સ જુઓ."
+  }, 
+  "options_customize_showNotifications": {
+    "message": "ઉપયોગી અને સૂચનાઓ બતાવો"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "એડબ્લોક પ્લસથી બધી સૂચનાઓ બંધ કરો."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "કૉપિરાઇટ © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "એડબ્લોક પ્લસ વિશે"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "બધા હકો અમારી પાસે રાખેલા છે. એડબ્લોક પ્લસ® eyeo GmbH રજિસ્ટર્ડ ટ્રેડમાર્ક છે."
+  }, 
+  "options_dialog_about_version": {
+    "message": "સંસ્કરણ નંબર $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "ફિલ્ટર સૂચિ URL"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "એક માન્ય URL દાખલ કરો"
+  }, 
+  "options_dialog_import_title": {
+    "message": "એક ફિલ્ટર સૂચિ ઉમેરો"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "ત્યાં કોઈ ઉપલબ્ધ ભાષાઓ નથી."
+  }, 
+  "options_dialog_language_title": {
+    "message": "કોઈ ભાષા પસંદ કરો"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "હા, આ ફિલ્ટર સૂચિનો ઉપયોગ કરો"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "શું તમે ખરેખર આ ફિલ્ટર સૂચિને ઉમેરવા માંગો છો?"
+  }, 
+  "options_email": {
+    "message": "ઇમેઇલ:"
+  }, 
+  "options_english": {
+    "message": "અંગ્રેજી"
+  }, 
+  "options_filterList_add": {
+    "message": "+ નવી ફિલ્ટર સૂચિ ઉમેરો"
+  }, 
+  "options_filterList_column_name": {
+    "message": "ફિલ્ટરની લીસ્ટ"
+  }, 
+  "options_filterList_column_status": {
+    "message": "સ્થિત"
+  }, 
+  "options_filterList_column_update": {
+    "message": "છેલ્લે અપડેટ કર્યું"
+  }, 
+  "options_filterList_description": {
+    "message": "દરેક એડબ્લોક પ્લસ સેટિંગ વિધેયો કારણ કે એક ફિલ્ટર યાદી. નીચે તમારા એડબ્લોક પ્લસ સેટિંગ્સને અનુરૂપ ફિલ્ટર યાદીઓ છે. અમારા વિશ્વસનીય સમુદાય દ્વારા બનાવવામાં અને જાળવવામાં આવેલા વધારાના ફિલ્ડ્સને તમે પણ ઉમેરી શકો છો."
+  }, 
+  "options_filterList_empty": {
+    "message": "તમે ઍડબ્લૉક પ્લસમાં કોઈપણ ફિલ્ટર યાદીઓ ઉમેર્યા નથી. ફિલ્ટર યાદીઓ તમે ઉમેરે છે અહીં બતાવવામાં આવશે."
+  }, 
+  "options_filterList_hours": {
+    "message": "કલાકો પહેલા"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "નિષ્ફળ, checksum મેળ ખાતી નથી"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "નિષ્ફળ થયું, ડાઉનલોડ નિષ્ફળ થયું"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "અપડેટ કરી રહ્યું છે"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "નિષ્ફળ થયું, માન્ય ફિલ્ટર સૂચિ નથી"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "નિષ્ફળ થયું, માન્ય સરનામું નથી"
+  }, 
+  "options_filterList_minutes": {
+    "message": "મીનીટ પહેલા"
+  }, 
+  "options_filterList_now": {
+    "message": "હમણાજ"
+  }, 
+  "options_filterList_source": {
+    "message": "સ્રોત"
+  }, 
+  "options_filterList_state_active": {
+    "message": "સક્રિય"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "અક્ષમ"
+  }, 
+  "options_filterList_title": {
+    "message": "ફિલ્ટરની લીસ્ટ"
+  }, 
+  "options_filterList_update": {
+    "message": "તમામ ફિલ્ટર યાદીઓને અપડેટ કરો"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "અપડેટ કરો"
+  }, 
+  "options_filterList_website": {
+    "message": "વેબસાઇટ"
+  }, 
+  "options_footer_about": {
+    "message": "એડબ્લોક પ્લસ વિશે"
+  }, 
+  "options_footer_contribute": {
+    "message": "ફાળો આપો"
+  }, 
+  "options_general_description": {
+    "message": "વેબસાઇટ્સ પર એડબ્લોક પ્લસ શો અને છુપાવે છે તે નક્કી કરો"
+  }, 
+  "options_help_description": {
+    "message": "મદદ શોધો અથવા અમારો સંપર્ક કરો"
+  }, 
+  "options_language_add": {
+    "message": "+ એક ભાષા ઉમેરો"
+  }, 
+  "options_language_change": {
+    "message": "ફેરફાર"
+  }, 
+  "options_language_description": {
+    "message": "ભાષા (ઓ) માટે એડબ્લૉક પ્લસ ઑપ્ટિમાઇઝ કરો તમે સામાન્ય રીતે વેબસાઇટ્સને બ્રાઉઝ કરો છો."
+  }, 
+  "options_language_empty": {
+    "message": "તમારી પાસે કોઈપણ ભાષા-વિશિષ્ટ ફિલ્ટર્સ નથી."
+  }, 
+  "options_language_header": {
+    "message": "ભાષા"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>સંકેત:</strong>માત્ર તમને જરૂરી ભાષાઓ પસંદ કરો વધુ પસંદ કરવાથી જાહેરાત અવરોધક ધીમું હશે અને, તેથી, તમારી બ્રાઉઝિંગ ગતિ."
+  }, 
+  "options_learn_more": {
+    "message": "વધુ શીખો"
+  }, 
+  "options_more_filters_description": {
+    "message": "આ એડબ્લૉકલ પ્લસમાં અગાઉ ઉમેરાયેલા વધારાના ફિલ્ટર્સ છે."
+  }, 
+  "options_more_filters_header": {
+    "message": "વધુ ફિલ્ટર્સ"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>નૉૅધ:</strong>તમારે ફક્ત લેખકોની તૃતીય પક્ષ ફિલ્ટર સૂચિનો ઉપયોગ કરવો જોઈએ જે તમે વિશ્વાસ કરો છો."
+  }, 
+  "options_new_label": {
+    "message": "નવું"
+  }, 
+  "options_page_document_title": {
+    "message": "એડબ્લોક પ્લસ વિકલ્પો"
+  }, 
+  "options_page_title": {
+    "message": "સેટિંગ્સ"
+  }, 
+  "options_privacy_header": {
+    "message": "ગોપનીયતા અને સુરક્ષા"
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "તમે મુલાકાત લો છો તે વેબસાઇટ્સ પરની સોશિયલ મીડિયા ચિહ્નો સામાજિક મીડિયા નેટવર્ક્સને તમારી બ્રાઉઝિંગ ધુમ્રપાન પર આધારિત તમારી પ્રોફાઇલ બનાવવા માટે આવે છે - ત્યારે પણ તમે તેમના પર ક્લિક ન કરો ત્યારે. આ ચિહ્નોને છુપાવી તમારી પ્રોફાઇલને સુરક્ષિત કરી શકે છે."
+  }, 
+  "options_report_bug": {
+    "message": "ભૂલ મળી?<a>અમને બગ રિપોર્ટ મોકલો</a>"
+  }, 
+  "options_report_forum": {
+    "message": "અમારા સમુદાય તરફથી સપોર્ટ જોઈએ છે? <a>ફોરમ પર જાઓ</a>"
+  }, 
   "options_short": {
     "message": "ઓપ્શન્સ"
+  }, 
+  "options_social_description": {
+    "message": "પ્રશ્ન અથવા નવો વિચાર છે? અમે મદદ કરવા માટે અહીં છીએ."
+  }, 
+  "options_social_title": {
+    "message": "સંપર્કમાં રહેવા"
+  }, 
+  "options_support_title": {
+    "message": "આધાર"
+  }, 
+  "options_tab_advanced": {
+    "message": "અદ્યતન"
+  }, 
+  "options_tab_general": {
+    "message": "સામાન્ય"
+  }, 
+  "options_tab_help": {
+    "message": "મદદ"
+  }, 
+  "options_tab_whitelist": {
+    "message": "વ્હાઇટલિસ્ટ વેબસાઇટ્સ"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "અમે નોંધ્યું છે કે તમારી પાસે બંને છે<strong>$tracking$</strong>અને<strong>$acceptableAds$</strong>સક્ષમ.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "અમે તમને જણાવવા માગીએ છીએ કે જાહેરાતકર્તાઓ તમને વધુ સંબંધિત જાહેરાતો બતાવવા માટે ક્રમમાં આવે છે, ત્યાં <strong> શકે છે </strong> સ્વીકાર્ય જાહેરાતો સાથે કેટલાક ટ્રેકિંગ હોઈ શકે છે."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "જો તમે વધારાની ગોપનીયતા પસંદ કરો છો, તો પસંદ કરો<strong>$acceptableAdsPrivacy$</strong> ચેકબૉક્સ નીચે.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "બરાબર, મળ્યું"
+  }, 
+  "options_whitelist_add": {
+    "message": "વેબસાઇટ ઉમેરો"
+  }, 
+  "options_whitelist_description": {
+    "message": "તમે આ વેબસાઇટ્સ પર જાહેરાત અવરોધિત કરવાનું ચાલુ કર્યું છે અને તેથી, તેમના પરની જાહેરાતો જોવા મળશે."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "તમારી પાસે કોઈપણ વ્હાઇટલિસ્ટ વેબસાઇટ્સ નથી."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "તમે જે વેબસાઇટ્સ પર વિશ્વાસ કરો છો અને જાહેરાતોને પરવાનગી આપવા માંગો છો તે અહીં બતાવવામાં આવશે."
+  }, 
+  "options_whitelist_notification": {
+    "message": "$website$ વ્હાઇટલિસ્ટેડ કરવામાં આવ્યું છે.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "ઉદાહરણ માટે $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1470,8 +1917,17 @@
     "message": "Other Filter Lists", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "આઉટ-ઓફ-ડેટ લીસ્ટ ક્રમવાર સુધારેલ છે."
+  "overlay_notification_button_no": {
+    "message": "ના"
+  }, 
+  "overlay_notification_button_yes": {
+    "message": "હા"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "આ સૂચના બંધ કરો"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "સૂચનાઓ દર્શાવવાનું રોકો"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1516,9 +1972,6 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "પસંદ કરેલ કાઢો"
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -1610,12 +2063,12 @@
     "message": " -- Select Language -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "આ પૃષ્ઠ પર અને સમસ્યાની જાણ કરો"
+  }, 
   "show_ads_except_for": {
     "message": "Show ads everywhere except for these domains...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "'બ્લોક એલિમેન્ટ' જુઓ મેનુ આઇટમ પર રાઈટ ક્લિક કરીને"
   }, 
   "show_devtools_panel": {
     "message": "Show 'AdBlock' panel in the developer tools", 
@@ -1681,28 +2134,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "ઉપર $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "ડાઉનલોડ AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "મેં $number$ એડ્સ અને ટ્રેકરબ્લોક કર્યા AdBlockનો આભાર.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "આ આંકડા શેર કરો"
-  }, 
   "stats_show_iconnumber": {
     "message": "આઇકોનમાં નંબર દેખાડો"
   }, 
@@ -1758,9 +2189,6 @@
   "subscribingtitle": {
     "message": "Subscribing to filter list...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "લીસ્ટમાંથી ફિલ્ટર સબક્રીપ્શન સિલેક્ટ કરો:"
   }, 
   "supportsite": {
     "message": "Let us know on our [[support site]]!", 
@@ -1905,9 +2333,6 @@
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "અપડેટ કરો"
-  }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
     "description": "Label for filter list subscription"
@@ -1968,6 +2393,27 @@
     "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "જો તમે ડેસ્કટોપ પર નિયંત્રણ લઈ રહ્યા છો, તો તમે જાહેરાતોને અવરોધિત કરી શકો છો અને તમારી ગોપનીયતા અને સુરક્ષાને મોબાઇલ પર પણ સુધારી શકો છો. નીચે <a> એડબ્લૉક બ્રાઉઝર એપ્લિકેશન </a> મેળવો."
+  }, 
+  "updates_blockAds": {
+    "message": "ઓપન સોર્સ રિબેલ એલાયન્સે નવા અવરોધિત ફિલ્ટર્સ બનાવ્યાં છે જે તમને ફેસબુક જેવી વેબસાઈટ્સ પર છુપાયેલા જાહેરાતોને વિસ્ફોટ કરવા દે છે, પછી ભલે એમ્પાયર બેકઅપ કરે."
+  }, 
+  "updates_heading": {
+    "message": "એડબ્લોક પ્લસ અપડેટ કરવામાં આવ્યું છે!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "બ્રાન્ડ નવી સેટિંગ્સ પૃષ્ઠ - વધુ ગોપનીયતા અને સુરક્ષા વિકલ્પો સાથે નવીનીકરણ અને પુનઃસ્થાપિત - તેથી તે સરળ છે <a>એડબ્લોક પ્લસને કસ્ટમાઇઝ કરો જેમ તમે તેને ઇચ્છો છો</a>."
+  }, 
+  "updates_phone": {
+    "message": "પરંતુ રાહ જુઓ! તમારા ફોન વિશે શું?"
+  }, 
+  "updates_status": {
+    "message": "અપડેટ પૂર્ણ થયું"
+  }, 
+  "updates_subheading": {
+    "message": "નવું શું છે?"
+  }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
@@ -2005,9 +2451,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "વ્હાઈટ લીસ્ટેડ ડોમેઈન"
   }, 
   "whitelistedresource": {
     "message": "Whitelisted resource", 

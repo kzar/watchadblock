@@ -74,17 +74,8 @@
   "add": {
     "message": "ጨምር"
   }, 
-  "add_domain_button": {
-    "message": "አድራሻ ጨምር"
-  }, 
-  "add_filter_button": {
-    "message": "ማጣሪያ ጨምር"
-  }, 
   "add_filters_msg": {
     "message": "ማጣሪያ(ዎች) ጨምር?"
-  }, 
-  "add_your_own_filters": {
-    "message": "የራስዎትን ማጣሪያ ይጨምሩ"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "ለውጡን ተቀበል"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -298,7 +286,7 @@
     "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
-    "message": "ይሄንን ከልክል"
+    "message": "ይሄንን አካል ከልክል"
   }, 
   "block_privacy_on_youtube": {
     "message": "Protect my privacy on YouTube™", 
@@ -459,6 +447,9 @@
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
+  "clickhide_instructions": {
+    "message": "ይህን መልእክት እንደዘጉ፥ በገጹ ላይ ያለ አካል ላይ ክሊክ (ወይም የቀኝ ክሊክ) ያርጉ።"
+  }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
     "description": "User has to click the ad they want to block."
@@ -492,6 +483,9 @@
   "contentblockingwarning": {
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "ቀጥል"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -583,6 +577,9 @@
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
   }, 
+  "disabled_for_site": {
+    "message": "በዚህ ድር ገጾች ላይ <strong>ጠፍቷል</strong>"
+  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -651,6 +648,9 @@
     "message": "Don't run on this page", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "easy_create_filter": {
+    "message": "ይህን አካል ይከልክሉ"
+  }, 
   "easylist_disable_done": {
     "message": "AdBlock uses EasyList to block ads on most websites.", 
     "description": "Message shown to users after disabling EasyList via the Filter lists tab on the Options page."
@@ -678,6 +678,9 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
+  }, 
+  "enabled_for_site": {
+    "message": "በዚህ ድር ገጾች ላይ <strong>በርቷል</strong>"
   }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
@@ -782,9 +785,6 @@
   "filter_latvian": {
     "message": "Latvian + EasyList", 
     "description": "A filter list combined with EasyList"
-  }, 
-  "filter_lists": {
-    "message": "የማጣሪያ ዝርዝር"
   }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
@@ -1012,9 +1012,6 @@
     "message": "Frame URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "አጠቃላይ"
-  }, 
   "generaloptions": {
     "message": "General options", 
     "description": "Title of the first Options page tab"
@@ -1054,6 +1051,14 @@
   "invalidListUrl": {
     "message": "Invalid list URL. It'll be deleted.", 
     "description": "Message when you subscribe to a non-list URL"
+  }, 
+  "invalid_css_selector": {
+    "message": "$selector$ ትክክለኛ የሲኤስኤስ መራጭ አይደለም።", 
+    "placeholders": {
+      "selector": {
+        "content": "$1"
+      }
+    }
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1334,6 +1339,9 @@
     "message": "AdBlock on YouTube™", 
     "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
   }, 
+  "name_devbuild": {
+    "message": "አድብሎክ ፕላስ በስሪት ላይ ያለ"
+  }, 
   "new_resourcelist_explanation_osx": {
     "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I), then select the 'AdBlock' tab.", 
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Mac)"
@@ -1358,6 +1366,18 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "notification_configure": {
+    "message": "የማስታወሻ ምርጫዎትን ይለውጡ"
+  }, 
+  "notification_open_all": {
+    "message": "በዚህ ማስታወሻ ውስጥ ያሉ አገናኞች ሁሉ ይክፈቱ"
+  }, 
+  "notification_with_buttons": {
+    "message": "'OK'ን ይጫኑ በዚህ ማስታወሻ ውስጥ ያሉ አገናኞች ሁሉ ለመክፈት።"
+  }, 
+  "notification_without_buttons": {
+    "message": "በውስጡ ያሉ አገናኞች ሁሉ ለመክፈት ማስታወሻውን ይጫኑት።"
+  }, 
   "one_moment_all_youtube_channels": {
     "message": "One moment while we gather all of your subscriptions", 
     "description": "Alert displayed when whitelisting all subscribed YouTube channels"
@@ -1374,8 +1394,23 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_customFilter_cancel": {
+    "message": "ይቅር"
+  }, 
+  "options_filterList_column_name": {
+    "message": "የማጣሪያ ዝርዝር"
+  }, 
+  "options_filterList_title": {
+    "message": "የማጣሪያ ዝርዝር"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "ማሻሻያ አሁን አርግ"
+  }, 
   "options_short": {
     "message": "ምርጫዎች"
+  }, 
+  "options_tab_general": {
+    "message": "አጠቃላይ"
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1450,9 +1485,6 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "የተመረጠውን አጥፋ"
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -1595,6 +1627,22 @@
   "sourcecode": {
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
+  }, 
+  "stats_label_page": {
+    "message": "<strong>$number$</strong> በዚህ ገጽ ላይ", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
+  "stats_label_total": {
+    "message": "<strong>$number$</strong> ባጠቃላይ", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
   }, 
   "stats_show_iconnumber": {
     "message": "ቁጥር ምልክት ላይ አሳይ"
@@ -1776,6 +1824,9 @@
     "message": "Undo my blocks on this site", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
+  "unexpected_filter_list_header": {
+    "message": "የማጣሪያ ዝርዝር ራስጌ እዚህ ጋር አይፈቀድም"
+  }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 
     "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused'"
@@ -1791,9 +1842,6 @@
   "unsubscribedlabel": {
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
-  }, 
-  "update_now": {
-    "message": "ማሻሻያ አሁን አርግ"
   }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
@@ -1892,9 +1940,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "የተፈቀዱ አድራሻዎች"
   }, 
   "whitelistedresource": {
     "message": "Whitelisted resource", 

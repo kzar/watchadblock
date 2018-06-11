@@ -20,10 +20,18 @@
 "use strict";
 
 const info = require("info");
-const {Prefs} = require("prefs");
-const {Utils} = require("utils");
+const {isDataCorrupted} = require("./subscriptionInit.js");
+const {Prefs} = require("./prefs");
+const {Utils} = require("./utils");
 
-function setUninstallURL()
+let setUninstallURL =
+/**
+ * Sets (or updates) the URL that is openend when the extension is uninstalled.
+ *
+ * Must be called after prefs got initialized and a data corruption
+ * if any was detected, as well when notification data change.
+ */
+exports.setUninstallURL = () =>
 {
   let search = [];
   for (let key of ["addonName", "addonVersion", "application",
@@ -47,16 +55,10 @@ function setUninstallURL()
   }
 
   search.push("notificationDownloadCount=" + encodeURIComponent(downlCount));
+  search.push("corrupted=" + (isDataCorrupted() ? "1" : "0"));
 
-  chrome.runtime.setUninstallURL(Utils.getDocLink("uninstalled") + "&" +
-                                 search.join("&"));
-}
+  browser.runtime.setUninstallURL(Utils.getDocLink("uninstalled") + "&" +
+                                  search.join("&"));
+};
 
-// The uninstall URL contains the notification download count as a parameter,
-// therefore we must wait for preferences to be loaded before generating the
-// URL and we need to re-generate it each time the notification data changes.
-if ("setUninstallURL" in chrome.runtime)
-{
-  Prefs.untilLoaded.then(setUninstallURL);
-  Prefs.on("notificationdata", setUninstallURL);
-}
+Prefs.on("notificationdata", setUninstallURL);

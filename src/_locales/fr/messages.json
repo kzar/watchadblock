@@ -74,17 +74,8 @@
   "add": {
     "message": "Ajouter"
   }, 
-  "add_domain_button": {
-    "message": "Ajouter le domaine"
-  }, 
-  "add_filter_button": {
-    "message": "Ajouter le filtre"
-  }, 
   "add_filters_msg": {
     "message": "Ajouter le(s) filtre(s) ?"
-  }, 
-  "add_your_own_filters": {
-    "message": "Ajouter vos propres filtres"
   }, 
   "adreport_all_debug_info": {
     "message": "Les informations suivantes figureront également dans votre rapport.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Autoriser la pub sur certaines chaînes YouTube™ uniquement (nécessite un redémarrage de votre navigateur)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Appliquer les modifications"
   }, 
   "betalabel": {
     "message": "(expérimental)", 
@@ -474,6 +462,21 @@
     "message": "Fermer", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Masquer les messages d'avertissement Adblock"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Bloquer les logiciels malveillants"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Bloquer le traçage supplémentaire"
+  }, 
+  "common_feature_social_title": {
+    "message": "Bloquer le tracking par les icônes des médias sociaux"
+  }, 
+  "common_notification_hide": {
+    "message": "Fermer la notification"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Êtes-vous sûr de vouloir supprimer les $count$ blocages que vous avez créé sur $host$ ?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +498,9 @@
   "contentblockingwarning": {
     "message": "Note : Autoriser la pub sur une page ou un site n'est pas supporté lorsque le Blocage de Contenu Safari est activé.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Continuer"
   }, 
   "contributors": {
     "message": "Nous avons également une page sur laquelle vous pouvez trouver les [[contributeurs AdBlock]] !", 
@@ -589,9 +595,6 @@
   "disabled_for_site": {
     "message": "<strong>Désactivé</strong> sur ce site"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock est désactivé sur les domaines ci-dessous. Vous pouvez ajouter un domaine via l'icône AdBlock de la barre d'adresse, ou en tapant le domaine (et non un URL) dans cette boîte de texte et en cliquant sur le bouton \"Ajouter le domaine\"."
-  }, 
   "disabled_on_this_channel": {
     "message": "Vous avez autorisé la pub sur cette chaîne.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +686,6 @@
     "message": "Il est recommandé de soit s'abonner à \"EasyList Lite\", soit \"EasyList\", mais pas les deux.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Éditer les filtres en texte brut"
-  }, 
   "enable_adblock": {
     "message": "Activer AdBlock sur cette page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +693,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Bloquer la pub sur cette chaîne", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Activez uniquement les listes de filtres dont vous avez besoin. En activer trop peut ralentir votre navigateur."
   }, 
   "enabled_for_site": {
     "message": "<strong>Activé</strong> sur ce site"
@@ -792,6 +789,18 @@
     "message": "Vietnamien + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Aucun domaine actif spécifié pour le filtre de masquage d'élément étendu"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Politique de sécurité du contenu non valide"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Le domaine spécifié est Invalide (ou vide)"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Expression régulière non valide"
+  }, 
   "filter_israeli": {
     "message": "Hébreu + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +813,12 @@
     "message": "Letton + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Liste de filtres"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Votre filtre doit suivre la <a>syntaxe des filtres AdBlock</a>."
-  }, 
   "filter_russian": {
     "message": "Russe et Ukrainien + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Option de filtre inconnue"
   }, 
   "filteracceptable_ads": {
     "message": "Publicités Acceptables", 
@@ -972,44 +978,8 @@
     "message": "Russe et ukrainien", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Autoriser certaines publicités non-intrusives"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Ajouter"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Ajouter un autre abonnement"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "S'abonner à la liste de filtres"
-  }, 
-  "filters_readMore_label": {
-    "message": "En apprendre davantage"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Supprimer"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Activé"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Échec, le checksum ne correspond pas !"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
-    "message": "Échec, erreur lors du téléchargement !"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "Téléchargement en cours…"
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Échec, ceci n'est pas une liste de filtres valide !"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Échec, ceci n'est pas une adresse valide !"
-  }, 
-  "filters_viewList_label": {
-    "message": "Afficher la liste"
+    "message": "Échec, erreur lors du téléchargement"
   }, 
   "filtersavewarning": {
     "message": "Attention : faire une erreur ici peut entraîner un mauvais fonctionnement des filtres officiels.\nConsultez le [[tutoriel de syntaxe]] pour apprendre à ajouter des filtres avancés.", 
@@ -1065,8 +1035,20 @@
   "firstRun_contributor_credits": {
     "message": "Crédits des contributeurs"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Cette page s'affiche-t-elle encore ? <a>Cliquez ici !</a>"
+  "firstRun_dataCorruptedWarning_intro": {
+    "message": "Pour certains usagers, cettte page s'ouvre à chaque fois qu'ils ouvrent leur navigateur. Ce problème peut être résolu en désinstallant et réinstallant AdBlock :"
+  }, 
+  "firstRun_dataCorruptedWarning_note": {
+    "message": "Si vous avez encore besoin d'aide,  envoyez-nous un email à support@adblockplus.org ou visitez notre <a>centre d'aide</a>."
+  }, 
+  "firstRun_dataCorruptedWarning_step1": {
+    "message": "Ouvrez l'onglet Extensions de votre navigateur."
+  }, 
+  "firstRun_dataCorruptedWarning_step2": {
+    "message": "Trouvez et éliminez AdBlock."
+  }, 
+  "firstRun_dataCorruptedWarning_step3": {
+    "message": "Réinstallez AdBlock depuis <a>adblockplus.org</a>."
   }, 
   "firstRun_donate": {
     "message": "Faire un don"
@@ -1074,32 +1056,8 @@
   "firstRun_donate_label": {
     "message": "Soutenir notre projet"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Blocage des logiciels malveillants"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Rendre votre navigation plus sécurisée en bloquant les domaines malveillants connus."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Supprimer les boutons des réseaux sociaux"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Se débarrasser automatiquement des boutons de réseaux sociaux tels que les « J'aime » Facebook qui apparaissent sur les pages Web et suivent votre comportement."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "Désactiver l'espionnage"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Naviguer incognito en désactivant le suivi, en masquant vos traces aux publicistes qui traqueraient vos faits et gestes."
-  }, 
-  "firstRun_features": {
-    "message": "Pour terminer l'installation, choisissez un niveau de protection de votre vie privée"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Il semblerait qu'à cause d'un problème, tous les filtres aient été supprimés et que nous n'ayons été en mesure de rétablir une sauvegarde. C'est pourquoi nous avons été contraints de réinitialiser vos filtres et les paramètres des publicités acceptables. Veuillez vérifier vos listes de filtres et les paramètres de publicités acceptables dans les <a>options d'AdBlock</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Vous utilisez une vieille version de Safari incompatible avec AdBlock. Elle pourra ne pas bien fonctionner ou nuire à l'expérience utilisateur sur certains sites Web. Nous recommandons fortement de mettre à jour Safari, soit vers la version 6.1.1 ou supérieure (sur OS X 10.8 Mountain Lion), soit vers la version 7.0.1 ou supérieure (sur OS X 10.9 Mavericks) ou d'utiliser la dernière version de Mozilla Firefox, Google Chrome ou Opera."
   }, 
   "firstRun_share": {
     "message": "Parlez-en à vos amis"
@@ -1109,12 +1067,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock a été installée"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "INACTIF"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "ACTIF"
   }, 
   "fixityourself": {
     "message": "D'accord, vous pouvez tout de même bloquer cette publicité pour vous-même dans les options.", 
@@ -1127,9 +1079,6 @@
   "format_site1_site2_site3": {
     "message": "Format : ~site1.com|~site2.com|~news.site3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "Vous avez trouvé une erreur ? Vous voulez traduire AdBlock dans votre langue ? N’hésitez pas à <a>déposer une demande ici</a>."
   }, 
   "foundbug": {
     "message": "Avez-vous trouvé un bogue ?", 
@@ -1147,30 +1096,9 @@
     "message": "URL du cadre : ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Général"
-  }, 
   "generaloptions": {
     "message": "Options générales", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Il n'est possible de spécifier qu'une ID de l'élément à masquer"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Aucun critère spécifié pour reconnaître l'élément à masquer"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "Expression régulière non valide"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "Option de filtre inconnu"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Souhaitez-vous vraiment supprimer cet abonnement ?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "L'adresse indiquant l'emplacement de la liste de filtres n'est ni une URL valide, ni un nom de fichier valide."
   }, 
   "headerfilter": {
     "message": "Filtre correspondant", 
@@ -1215,6 +1143,87 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Soumission anonyme"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Nous ne serons pas en mesure de vous recontacter et votre signalement ne sera probablement pas traité prioritairement."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Entrez un commentaire"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "Le champ ci-dessous vous permet de saisir un commentaire pour nous aider à comprendre le problème. Cette étape est facultative mais recommandée si le problème n'est pas évident à détecter. Vous pouvez également revoir les données du signalement avant l'envoi."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Commentaire (facultatif) :"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Votre commentaire comporte plus de 1000 caractères. Seuls les 1000 premiers caractères seront envoyés."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Votre signalement a été envoyé. Vous pouvez y accéder à l'adresse suivante :"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "Veuillez patienter quelques instants pendant qu'AdBlock réunit les données nécessaires."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Bienvenue dans l'assistant de signalement de problèmes"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>Remarque :</strong> Un onglet supplémentaire s'ouvrira temporairement de façon à ce que la page sur laquelle vous vous trouvez ne soit pas affectée par le signaleur de problèmes."
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Terminé"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Nous vous encourageons à saisir un courriel valide afin que nous puissions vous contacter pour toute question concernant votre signalement. Cela nous permettra également de reconnaître vos contributions et de les traiter prioritairement."
+  }, 
+  "issueReporter_email_label": {
+    "message": "E-mail :"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Une tentative d'envoi du signalement a échoué avec le code erreur « ?1? ». Veuillez vérifier que vous êtes bien connecté à Internet et réessayer. Si le problème persiste, veuillez demander assistance dans le [link]forum d'AdBlock[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "Choisissez cette option si une publicité est tout de même affichée bien qu'AdBlock soit activée."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock ne bloque pas une publicité"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Choisissez cette option si la page manque de contenu important, est mal affiché ou ne fonctionne pas correctement. Vous pouvez vérifier si AdBlock en est la cause en la désactivant temporairement."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock bloque trop"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Le problème que vous signalez est probablement déjà connu. Davantage d'informations :"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Signalement de problèmes"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Politique de confidentialité"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Envoyer le signalement"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Envoyer le signalement"
+  }, 
+  "issueReporter_sending": {
+    "message": "Veuillez patienter pendant qu'AdBlock soumet votre signalement."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Afficher les données du signalement"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Cette fenêtre vous guidera à travers les étapes nécessaires à la soumission d'un problème AdBlock. Dans un premier temps, veuillez choisir le type de problème rencontré sur cette page :"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Choisir le type de problème"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Paysages", 
@@ -1379,25 +1388,6 @@
   "languagedropdowndescription": {
     "message": "Ajouter des filtres pour une autre langue : ", 
     "description": "Dropdown list for language-specific filter lists"
-  }, 
-  "last_updated_at": {
-    "message": "Dernière actualisation le $date$ à $time$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "Dernière actualisation aujourd'hui à $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
   }, 
   "legend": {
     "message": "Légende : ", 
@@ -1575,8 +1565,351 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "Les publicités acceptables ne sont pas agaçantes et ne gênent pas le contenu que vous affichez. <a>Plus d'infos sur les critères des publicités acceptables</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Autoriser les publicités acceptables"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "Les publicités acceptables sont des publicités discrètes. Elles sont à mi-chemin entre le blocage des publicités et le soutien du contenu en ligne car elles génèrent des revenus pour les propriétaires de sites web."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>NB :</strong> Vous avez désactivé <strong>Interdire le suivi (DNT)</strong> dans les paramètres de vos navigateur. Pour que cette fonctionnalité soit efficace, vous devez activer <strong>DNT</strong> dans vos préférences de navigation. <a>Découvrir comment activer DNT</a>"
+  }, 
+  "options_acceptableAds_header": {
+    "message": "PUBLICITÉ ACCEPTABLE"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Autoriser seulement les annonces sans traçage tiers"
+  }, 
+  "options_advanced_description": {
+    "message": "Personnalisez AdBlock, ajoutez ou supprimez des listes de filtres, créez et maintenez vos propres listes de filtres"
+  }, 
+  "options_close": {
+    "message": "FERMER"
+  }, 
+  "options_control_remove_title": {
+    "message": "Supprimer"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "ANNULER"
+  }, 
+  "options_customFilter_edit": {
+    "message": "Modifier les filtres"
+  }, 
+  "options_customFilter_save": {
+    "message": "ENREGISTRER"
+  }, 
+  "options_customFilters_description": {
+    "message": "Créez vos propres filtres sur mesure pour contrôler encore mieux le contenu autorisé ou bloqué par AdBlock."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "par exemple: $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "Apprenez à écrire des listes de filtres"
+  }, 
+  "options_customFilters_start": {
+    "message": "Commencer à créer ma liste de filtres"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Les filtres que vous créez seront affichés ici."
+  }, 
+  "options_customFilters_title": {
+    "message": "CRÉER ET MODIFIER VOTRE LISTE DE FILTRES"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Ma liste de filtres"
+  }, 
+  "options_customize_blockElement": {
+    "message": "Afficher l’option « Bloquer l'élément » au menu contextuel (clic droit)"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "Bloquez temporairement les éléments agaçants sur une page web, par ex. les images ou les diaporamas animés."
+  }, 
+  "options_customize_header": {
+    "message": "PERSONNALISEZ LES ACTIONS SUR LES PAGES"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Afficher le panneau « AdBlock » dans les outils pour développeur"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "Affichez les éléments bloqués et sur liste blanche du panneau d'outils développeur de votre navigateur."
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Afficher les notifications utiles"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Désactivez toutes les notifications d’AdBlock."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "À propos d'AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "Tous droits réservés. AdBlock® est une marque déposée d’eyeo GmbH."
+  }, 
+  "options_dialog_about_version": {
+    "message": "Numéro de version $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "URL de liste de filtres"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Saisissez une URL valide"
+  }, 
+  "options_dialog_import_title": {
+    "message": "Ajouter une liste de filtres"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Il n’y a pas de langues disponibles."
+  }, 
+  "options_dialog_language_title": {
+    "message": "Sélectionner une langue"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Oui, utilisez cette liste de filtres"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Voulez-vous vraiment ajouter cette liste de filtres ?"
+  }, 
+  "options_email": {
+    "message": "E-mail :"
+  }, 
+  "options_english": {
+    "message": "Anglais"
+  }, 
+  "options_filterList_add": {
+    "message": "+ AJOUTER UNE NOUVELLE LISTE DE FILTRES"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Listes de filtres"
+  }, 
+  "options_filterList_column_status": {
+    "message": "État"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Dernière mise à jour"
+  }, 
+  "options_filterList_description": {
+    "message": "Chaque fonctionnalité AdBlock a besoin d’une liste de filtres. Vous trouverez ci-dessous les listes de filtres qui correspondent à tous vos paramètres AdBlock. Vous pouvez aussi ajouter des filtres supplémentaires créés par notre communauté de confiance."
+  }, 
+  "options_filterList_empty": {
+    "message": "Vous n’avez ajouté aucune liste de filtres à AdBlock. Les listes de filtres que vous ajoutez seront affichées ici."
+  }, 
+  "options_filterList_hours": {
+    "message": "Il y a heures"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Échec, le checksum ne correspond pas"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Échec, erreur lors du téléchargement !"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Mise à jour en cours"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Échec, ceci n'est pas une liste de filtres valide"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Échec, ceci n'est pas une adresse valide !"
+  }, 
+  "options_filterList_minutes": {
+    "message": "Il y a minutes"
+  }, 
+  "options_filterList_now": {
+    "message": "Juste maintenant"
+  }, 
+  "options_filterList_source": {
+    "message": "Source"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Actif"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Désactivée"
+  }, 
+  "options_filterList_title": {
+    "message": "Listes de filtres"
+  }, 
+  "options_filterList_update": {
+    "message": "METTRE À JOUR TOUTES LES LISTES DE FILTRES"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "Mettre à jour maintenant"
+  }, 
+  "options_filterList_website": {
+    "message": "Site web"
+  }, 
+  "options_footer_about": {
+    "message": "À propos d'AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "PARTICIPER"
+  }, 
+  "options_general_description": {
+    "message": "Déterminez les éléments qu’AdBlock affiche et masque sur les sites web"
+  }, 
+  "options_help_description": {
+    "message": "Trouvez de l’aide ou nous contacter"
+  }, 
+  "options_language_add": {
+    "message": "+ AJOUTER UNE LANGUE"
+  }, 
+  "options_language_change": {
+    "message": "CHANGER"
+  }, 
+  "options_language_description": {
+    "message": "Optimisez AdBlock pour la ou les langues des sites web que vous consultez le plus souvent."
+  }, 
+  "options_language_empty": {
+    "message": "Vous n’avez aucun filtre spécifique à la langue."
+  }, 
+  "options_language_header": {
+    "message": "Langue"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>CONSEIL :</strong> Sélectionnez uniquement les langues dont vous avez besoin. Si vous en sélectionnez plus, le bloqueur de publicité sera ralenti, ce qui ralentira donc votre vitesse de navigation."
+  }, 
+  "options_learn_more": {
+    "message": "Plus d'infos"
+  }, 
+  "options_more_filters_description": {
+    "message": "Il s’agit de filtres supplémentaires que vous avez ajouté à AdBlock antérieurement."
+  }, 
+  "options_more_filters_header": {
+    "message": "Plus de filtres"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>NB :</strong> Vous devez utiliser uniquement des listes de filtres tierces provenant d'auteurs auxquels vous faites confiance."
+  }, 
+  "options_new_label": {
+    "message": "NOUVEAU"
+  }, 
+  "options_page_document_title": {
+    "message": "Paramètres"
+  }, 
+  "options_page_title": {
+    "message": "Paramètres"
+  }, 
+  "options_privacy_header": {
+    "message": "CONFIDENTIALITÉ & SÉCURITÉ"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "Protégez vos données confidentielles contre les entités connues qui sont susceptibles de suivre vos activités en ligne sur les différents sites Internet que vous consultez."
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "Les icônes des médias sociaux sur les sites web que vous consultez permettent aux réseaux de médias sociaux de construire votre profil en fonction de vos habitudes de navigation, même si vous ne cliquez pas dessus. En masquant ces icônes, vous pouvez protéger votre profil."
+  }, 
+  "options_report_bug": {
+    "message": "Vous avez trouvé un bogue ? <a>Envoyez-nous un rapport de bogue</a>"
+  }, 
+  "options_report_forum": {
+    "message": "Vous voulez le soutien de notre communauté ? <a>Accédez au Forum</a>"
+  }, 
   "options_short": {
     "message": "Options"
+  }, 
+  "options_social_description": {
+    "message": "Vous avez une question ou une idée ? Nous sommes là pour vous aider."
+  }, 
+  "options_social_title": {
+    "message": "Nous contacter"
+  }, 
+  "options_support_title": {
+    "message": "Support"
+  }, 
+  "options_tab_advanced": {
+    "message": "Paramètres avancés"
+  }, 
+  "options_tab_general": {
+    "message": "Paramètres généraux"
+  }, 
+  "options_tab_help": {
+    "message": "Aide"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Sites Web sur liste blanche"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "Nous avons remarqué que vous avez les deux options <strong>$tracking$</strong> et <strong>$acceptableAds$</strong> activée.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "Nous tenons à ce que vous sachiez que pour que les annonceurs puissent vous montrer des annonces plus pertinentes, il <strong>peut</strong> y avoir un suivi avec la Publicité Acceptable."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "Si vous préférez une confidentialité supplémentaire, sélectionnez <strong>$acceptableAdsPrivacy$</strong> la case ci-dessous.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "Ok, j'ai compris"
+  }, 
+  "options_whitelist_add": {
+    "message": "AJOUTER UN SITE WEB"
+  }, 
+  "options_whitelist_description": {
+    "message": "Comme vous avez désactivé le blocage des publicités sur ces sites web, vous verrez des publicités lorsque vous les consultez."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Vous n’avez aucun site web sur liste blanche."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "Les sites web auxquels vous faites confiance et souhaitez autoriser à vous présenter des publicités apparaîtront ici."
+  }, 
+  "options_whitelist_notification": {
+    "message": "$website$ a été mis sur liste blanche.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "par exemple: $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "Options AdBlock", 
@@ -1608,9 +1941,6 @@
     "message": "Autres listes de filtres", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Les listes périmées seront actualisées périodiquement."
-  }, 
   "overlay_notification_button_no": {
     "message": "Non"
   }, 
@@ -1621,10 +1951,7 @@
     "message": "Fermer cette notification"
   }, 
   "overlay_notification_closing_button_optout": {
-    "message": "Ne plus afficher les notifications"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "Afficher les notifications utiles"
+    "message": "Cesser d'afficher les notifications"
   }, 
   "pagelanguagecheck": {
     "message": "Dans quelle langue cette page est-elle écrite ?", 
@@ -1669,9 +1996,6 @@
   "reloadpageafterwhitelist": {
     "message": "Recharger la page.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Supprimer la sélection"
   }, 
   "removefromlist": {
     "message": "Retirer de la liste", 
@@ -1763,12 +2087,12 @@
     "message": " -- Sélectionnez une langue -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Signaler un problème sur cette page"
+  }, 
   "show_ads_except_for": {
     "message": "Afficher les publicités partout sauf sur ces domaines...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Afficher 'Bloquer l'élément' dans le menu clic-droit"
   }, 
   "show_devtools_panel": {
     "message": "Afficher le panneau \"AdBlock\" dans les outils développeur", 
@@ -1834,28 +2158,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "plus de $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "Télécharger AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "J'ai bloqué $number$ publicités et trackers grâce à AdBlock.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Partager le nombre de blocages"
-  }, 
   "stats_show_iconnumber": {
     "message": "Afficher le nombre sur l'icône"
   }, 
@@ -1911,15 +2213,6 @@
   "subscribingtitle": {
     "message": "Abonnement à la liste de filtres...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Emplacement de la liste :"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Veuillez choisir un abonnement dans la liste suivante :"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Nom de l'abonnement :"
   }, 
   "supportsite": {
     "message": "Faites-le nous savoir sur notre [[site de support]] !", 
@@ -2064,9 +2357,6 @@
     "message": "Désabonné.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "Actualiser maintenant"
-  }, 
   "updateddayago": {
     "message": "Mis à jour il y a 1 jour.", 
     "description": "Label for filter list subscription"
@@ -2127,6 +2417,27 @@
     "message": "Les listes seront mises à jour automatiquement. Vous pouvez aussi les [[mettre à jour maintenant]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "Si vous prenez le contrôle sur votre PC, vous voudrez aussi bloquer les pubs et améliorer votre confidentialité et votre sécurité sur votre mobile. Téléchargez <a>l’appli Adblock Browser ci-dessous</a>"
+  }, 
+  "updates_blockAds": {
+    "message": "L’Alliance Rebelle Open Source a créé de nouveaux filtres de blocage qui vous permettent d’éliminer les pubs déguisées sur les sites web comme Facebook, même si l'Empire contre-attaque."
+  }, 
+  "updates_heading": {
+    "message": "AdBlock a été mis à jour !"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "Page des paramètres totalement nouvelle - remaniée et relookée, avec plus d’options de protection de la vie privée et de sécurité - pour qu’il soit plus facile de <a>personnaliser AdBlock exactement comme vous voulez</a>."
+  }, 
+  "updates_phone": {
+    "message": "Mais ce n’est pas tout ! Et votre téléphone ?"
+  }, 
+  "updates_status": {
+    "message": "Mise à jour terminée"
+  }, 
+  "updates_subheading": {
+    "message": "Quoi de neuf ?"
+  }, 
   "updateyourlists": {
     "message": "Vérifiez que vos filtres sont à jour :", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2475,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Autoriser la pub sur la chaîne YouTube™ :", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Domaines autorisés"
   }, 
   "whitelistedresource": {
     "message": "Resource autorisée", 

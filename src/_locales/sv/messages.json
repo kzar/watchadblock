@@ -74,17 +74,8 @@
   "add": {
     "message": "Lägg till"
   }, 
-  "add_domain_button": {
-    "message": "Lägg till domän"
-  }, 
-  "add_filter_button": {
-    "message": "Lägg till filter"
-  }, 
   "add_filters_msg": {
     "message": "Lägg till filter?"
-  }, 
-  "add_your_own_filters": {
-    "message": "Lägg till dina egna filter"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -189,9 +180,6 @@
   "allow_whitelisting_youtube_channels": {
     "message": "Allow whitelisting of specific YouTube™ channels (requires restarting your browser)", 
     "description": "Checkbox on the 'General' tab of the Options page"
-  }, 
-  "apply_changes": {
-    "message": "Verkställ ändringar"
   }, 
   "betalabel": {
     "message": "Beta", 
@@ -474,6 +462,18 @@
     "message": "Stäng", 
     "description": "Generic message for buttons that close a view or window"
   }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Dölj Adblock Varningsmeddelanden"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Blockera skadliga program"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Blockera ytterligare spårning"
+  }, 
+  "common_feature_social_title": {
+    "message": "Blockera spårning via sociala medieikoner"
+  }, 
   "confirm_undo_custom_filters": {
     "message": "Vill du verkligen ta bort $count$ blockering(ar) som du har skapat för $host$?", 
     "description": "Confirmation message when user wants to undo their custom blocks for a domain. $count$ will be a number between 1 and 999,999,999, $host$ will be the domain where the custom blocks will be reset.", 
@@ -495,6 +495,9 @@
   "contentblockingwarning": {
     "message": "Note:  Whitelisting (allowing ads on) a page or site is not supported with Safari Content Blocking enabled.", 
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
+  }, 
+  "continue": {
+    "message": "Fortsätt"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
@@ -589,9 +592,6 @@
   "disabled_for_site": {
     "message": "<strong>Avaktiverat</strong> på denna webbplats"
   }, 
-  "disabled_for_these_domains": {
-    "message": "AdBlock är avaktiverad för domänerna i denna lista. Du kan lägga till en domän via AdBlock-ikonen i adressfältet eller genom att skriva domännamnet (inte URL) i textboxen och klicka på \"Lägg till domän\"."
-  }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
     "description": "Message shown in the toolbar button menu on YouTube channel pages and videos that have been whitelisted."
@@ -683,9 +683,6 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
-  "edit_filters_raw": {
-    "message": "Redigera filter som ren text"
-  }, 
   "enable_adblock": {
     "message": "Aktivera AdBlock på denna sida", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -693,9 +690,6 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
-  }, 
-  "enable_only_the": {
-    "message": "Aktivera endast de filterlistor du behöver. För många kan göra att webbläsaren inte svarar."
   }, 
   "enabled_for_site": {
     "message": "<strong>Aktiverat</strong> på denna webbplats"
@@ -792,6 +786,15 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Ingen aktiv domän angiven för utökat elementdöljarfilter"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Ogiltig (eller tom) domän angiven"
+  }, 
+  "filter_invalid_regexp": {
+    "message": "Ogiltigt reguljärt uttryck"
+  }, 
   "filter_israeli": {
     "message": "Hebreiska + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -804,15 +807,12 @@
     "message": "Lettiska + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_lists": {
-    "message": "Filterlistor"
-  }, 
-  "filter_must_follow_syntax": {
-    "message": "Ditt filter måste följa <a>AdBlock filtersyntax</a>."
-  }, 
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_unknown_option": {
+    "message": "Okänt filteralternativ"
   }, 
   "filteracceptable_ads": {
     "message": "Godtagbara annonser", 
@@ -972,44 +972,8 @@
     "message": "Ryska och Ukrainska", 
     "description": "Language names for a filter list"
   }, 
-  "filters_acceptableAds2_label": {
-    "message": "Tillåt viss icke-störande reklam"
-  }, 
-  "filters_addSubscriptionAdd_label": {
-    "message": "Lägg till"
-  }, 
-  "filters_addSubscriptionOther_label": {
-    "message": "Lägg till en ny prenumeration"
-  }, 
-  "filters_addSubscription_label": {
-    "message": "Lägg till filterprenumeration"
-  }, 
-  "filters_readMore_label": {
-    "message": "Läs mer"
-  }, 
-  "filters_subscription_delete_label": {
-    "message": "Ta bort"
-  }, 
-  "filters_subscription_enabled_label": {
-    "message": "Aktiverat"
-  }, 
-  "filters_subscription_lastDownload_checksumMismatch": {
-    "message": "Fel kontrollsumma"
-  }, 
   "filters_subscription_lastDownload_connectionError": {
     "message": "Fel vid hämtning"
-  }, 
-  "filters_subscription_lastDownload_inProgress": {
-    "message": "Hämtar…"
-  }, 
-  "filters_subscription_lastDownload_invalidData": {
-    "message": "Fel vid validering av filter"
-  }, 
-  "filters_subscription_lastDownload_invalidURL": {
-    "message": "Ogiltig adress"
-  }, 
-  "filters_viewList_label": {
-    "message": "Visa lista"
   }, 
   "filtersavewarning": {
     "message": "Varning! Ett misstag här, kan resultera i att andra filter, inklusive dom officiella, kan förstöras!\nLäs '[[syntax-guiden]]' för att lära hur man skapar avancerade svart- och vitlistor.", 
@@ -1065,41 +1029,14 @@
   "firstRun_contributor_credits": {
     "message": "Tack till"
   }, 
-  "firstRun_dataCorruptionWarning": {
-    "message": "Fortsätter denna sida att visas? <a>Klicka här!</a>"
-  }, 
   "firstRun_donate": {
     "message": "donera"
   }, 
   "firstRun_donate_label": {
     "message": "Stöd vårt projekt"
   }, 
-  "firstRun_feature_malware": {
-    "message": "Malwareblockering"
-  }, 
-  "firstRun_feature_malware_description": {
-    "message": "Göra din surfning säkrare genom att blockera kända skadliga domäner."
-  }, 
-  "firstRun_feature_social": {
-    "message": "Ta bort knappar för Sociala Medier"
-  }, 
-  "firstRun_feature_social_description": {
-    "message": "Förbättrar automatiskt din webbupplevelse genom borttagning av sociala medier knappar, såsom Facebook Gilla, som visas på webbsidor och spåra ditt beteende."
-  }, 
-  "firstRun_feature_tracking": {
-    "message": "Inaktivera Spårning"
-  }, 
-  "firstRun_feature_tracking_description": {
-    "message": "Surfa privat genom att inaktivera spårning - dölj dina spår från reklamföretag som vill spåra dina rörelser."
-  }, 
-  "firstRun_features": {
-    "message": "AdBlock kan göra mer än att blockera reklam"
-  }, 
   "firstRun_filterlistsReinitializedWarning": {
     "message": "Det verkar som ett problem har orsakat att alla filter har tagits bort och det gick inte att återställa en säkerhetskopia. Vi var därför tvunga att att återställa dina Filter och Acceptabla Annonser inställningar. Vänligen kontrollera dina Filterlistor och Acceptabla Annonser inställningar i <a>AdBlock alternativ</a>."
-  }, 
-  "firstRun_legacySafariWarning": {
-    "message": "Du använder en äldre version av Safari som inte stödjs av AdBlock. AdBlock kanske inte fungerar korrekt eller försämrar användarupplevelsen på vissa hemsidor. Vi rekommenderar starkt att antingen uppdatera till Safari 6.1.1 eller högre (tillgänglig på OS X 10.8 Mountain Lion), Safari 7.0.1 eller högre (tillgänglig på OS X 10.9 Mavericks), eller att använda den senaste versionen av Mozilla Firefox, Google Chrome eller Opera."
   }, 
   "firstRun_share": {
     "message": "Berätta för dina vänner"
@@ -1109,12 +1046,6 @@
   }, 
   "firstRun_title": {
     "message": "AdBlock har installerats"
-  }, 
-  "firstRun_toggle_off": {
-    "message": "AV"
-  }, 
-  "firstRun_toggle_on": {
-    "message": "PÅ"
   }, 
   "fixityourself": {
     "message": "OK, du kan fortfarande blockera reklamen själv på 'Alternativ-sidan'. Tack!", 
@@ -1127,9 +1058,6 @@
   "format_site1_site2_site3": {
     "message": "Format: ~sida1.com|~sida2.se|~nyheter.sida3.org", 
     "description": "Example showing users how to input a list of sites on the Customize tab. You can translate the 'news' and 'siteN' but leave the '|'s and '~'s in place."
-  }, 
-  "found_a_bug": {
-    "message": "Hittat ett fel? Vill du översätta AdBlock till ett annat språk? Vänligen, <a>skapa en förfrågan här</a>."
   }, 
   "foundbug": {
     "message": "Hittat ett fel?", 
@@ -1147,30 +1075,9 @@
     "message": "Ram-URL: ", 
     "description": "Resource list page: full URL of the frame"
   }, 
-  "general": {
-    "message": "Allmänt"
-  }, 
   "generaloptions": {
     "message": "Allmäna alternativ", 
     "description": "Title of the first Options page tab"
-  }, 
-  "global_filter_elemhide_duplicate_id": {
-    "message": "Endast ett ID får anges för elementet som skall döljas"
-  }, 
-  "global_filter_elemhide_nocriteria": {
-    "message": "Inga villkor för att gömma element har uppfyllts"
-  }, 
-  "global_filter_invalid_regexp": {
-    "message": "Ogiltigt reguljärt uttryck"
-  }, 
-  "global_filter_unknown_option": {
-    "message": "Okänt filteralternativ"
-  }, 
-  "global_remove_subscription_warning": {
-    "message": "Vill du verkligen ta bort denna prenumeration?"
-  }, 
-  "global_subscription_invalid_location": {
-    "message": "Platsen du angivit är antingen ogiltig eller så har du angivit ett felaktigt filnamn."
   }, 
   "headerfilter": {
     "message": "Matchat filter", 
@@ -1215,6 +1122,84 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "Skicka in anonymt"
+  }, 
+  "issueReporter_anonymousSubmission_warning": {
+    "message": "Vi kommer inte att kunna kontakta er och er rapport kan få en lägre prioritering."
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "Ange kommentar"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "Textfältet nedan låter dig ange en kommentar för att hjälpa oss förstå problemet. Detta steg är valfritt, men rekommenderas om problemet inte är tydligt. Du kan även granska rapportdatan innan den skickas."
+  }, 
+  "issueReporter_comment_label": {
+    "message": "Kommentar (valfritt):"
+  }, 
+  "issueReporter_comment_lengthWarning": {
+    "message": "Längden på din kommentar överskrider 1 000 tecken. Endast de första 1 000 tecknen kommer att skickas."
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "Din rapport har sparats. Du kan nå den på följande adress:"
+  }, 
+  "issueReporter_dataCollector_description": {
+    "message": "Var vänlig vänta några ögonblick medan AdBlock samlar in nödvändig data."
+  }, 
+  "issueReporter_dataCollector_heading": {
+    "message": "Välkommen till problemrapportören"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "Klar"
+  }, 
+  "issueReporter_email_description": {
+    "message": "Vi uppmanar dig att ange en giltig e-postadress så att vi kan kontakta dig om det finns frågor om er rapport. Det tillåter oss att erkänna era bidrag och prioritera dem högre."
+  }, 
+  "issueReporter_email_label": {
+    "message": "E-Post:"
+  }, 
+  "issueReporter_errorMessage": {
+    "message": "Det gick inte att skicka rapporten. Felkod: \"?1?\". Var vänlig säkerställ att du är ansluten till Internet och försök sedan igen. Om problemet kvarstår, vänligen begär hjälp i [link]AdBlock webbforum[/link]."
+  }, 
+  "issueReporter_falseNegative_description": {
+    "message": "Välj detta alternativ om en annons visas trots att AdBlock är aktiverat."
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "AdBlock blockerar inte en annons"
+  }, 
+  "issueReporter_falsePositive_description": {
+    "message": "Välj detta alternativ om sidan saknar viktigt innehåll, visas på ett felaktigt sätt eller inte fungerar som den skall. Du kan ta reda på huruvida AdBlock är orsaken till problemet genom att tillfälligtvis inaktivera det."
+  }, 
+  "issueReporter_falsePositive_label": {
+    "message": "AdBlock blockerar alltför mycket"
+  }, 
+  "issueReporter_knownIssueMessage": {
+    "message": "Problemet du rapporterade är antagligen redan känt. Mer information:"
+  }, 
+  "issueReporter_page_title": {
+    "message": "Rapportera problem"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "Sekretesspolicy"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "Skicka rapport"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "Skicka rapport"
+  }, 
+  "issueReporter_sending": {
+    "message": "Var vänlig vänta medan AdBlock skickar ing din rapport."
+  }, 
+  "issueReporter_showData_label": {
+    "message": "Visa rapportdata"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "Denna dialog kommer att guida dig igenom alla steg som krävs för att skicka in en problemrapport för AdBlock. Först och främst måste du välja den typ av problem som du upplever på denna sida:"
+  }, 
+  "issueReporter_typeSelector_heading": {
+    "message": "Välj problemtyp"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1379,25 +1364,6 @@
   "languagedropdowndescription": {
     "message": "Lägg till filter för andra språk: ", 
     "description": "Dropdown list for language-specific filter lists"
-  }, 
-  "last_updated_at": {
-    "message": "Senast uppdaterad den $date$ $time$", 
-    "placeholders": {
-      "date": {
-        "content": "$2"
-      }, 
-      "time": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "last_updated_at_today": {
-    "message": "Senast uppdaterad i dag $time$", 
-    "placeholders": {
-      "time": {
-        "content": "$1"
-      }
-    }
   }, 
   "legend": {
     "message": "Legend: ", 
@@ -1575,8 +1541,348 @@
     "message": "Alternativ", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "Godtagbar annonser är inte irriterande och stör inte innehållet du visar. <a>Läs mer om Godtagbara annonser-kriteriet</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Tillåt Godtagbara annonser"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "Godtagbara annons är icke-inkräktande annonser. Det är mitten emellan annonsblockering och att stödja onlineinnehåll eftersom de genererar inkomst för webbplatsägare."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>OBS:</strong> Du har <strong>Stör ej (DNT)</strong> inaktiverat i dina webbläsarinställningar. För att denna funktion ska fungera korrekt, slå på <strong>Stör ej</strong> i din webbläsares preferenser. <a>Se hur du slår på DNT</a>."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "Godtagbara annonser"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Tillåt endast annonser utan tredjepartsspårning"
+  }, 
+  "options_advanced_description": {
+    "message": "Anpassa AdBlock, lägg till eller ta bort filterlistor, skapa och underhåll dina egna filterlistor"
+  }, 
+  "options_close": {
+    "message": "stäng"
+  }, 
+  "options_control_remove_title": {
+    "message": "ta bort"
+  }, 
+  "options_customFilter_cancel": {
+    "message": "Avbryt"
+  }, 
+  "options_customFilter_edit": {
+    "message": "Redigera filter"
+  }, 
+  "options_customFilter_save": {
+    "message": "Spara"
+  }, 
+  "options_customFilters_description": {
+    "message": "Skriv dina egna anpassade filter för ytterligare kontroll om vad innehåll AdBlock tillåter eller blockerar."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "t.ex. $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "Lär dig skriva filterlistor"
+  }, 
+  "options_customFilters_start": {
+    "message": "Börja skriva min filterlista"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Filter som du skapar visas här."
+  }, 
+  "options_customFilters_title": {
+    "message": "Skapa och redigera din filterlista"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Min filterlista"
+  }, 
+  "options_customize_blockElement": {
+    "message": "Visa 'Blockera objekt' i högerklicksmeny"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "Tillfälligt blockera irriterande objekt på en webbsida, t.ex. bilder eller animerade bildspel."
+  }, 
+  "options_customize_header": {
+    "message": "Skräddarsy sidåtgärder"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Visa 'AdBlock'-panelen i utvecklarverktygen"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "Visa blockerade samt vitlistade objekt i din webbläsares utvecklarverktygspanel."
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Visa användbara notifieringar"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Stäng av alla notifikationer från AdBlock."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "Om AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "Alla rättigheter reserverade. AdBlock® är ett registrerat varumärke av eyeo GmbH."
+  }, 
+  "options_dialog_about_version": {
+    "message": "Versionsnummer $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "Filterlistans URL"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Ange en giltig URL"
+  }, 
+  "options_dialog_import_title": {
+    "message": "Lägg till en filterlista"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Det finns inga tillgängliga språk."
+  }, 
+  "options_dialog_language_title": {
+    "message": "Välj ett språk"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Ja, använd den här filterlistan"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Är du säker du vill lägga till den här filterlistan?"
+  }, 
+  "options_email": {
+    "message": "E-Post:"
+  }, 
+  "options_english": {
+    "message": "Engelska"
+  }, 
+  "options_filterList_add": {
+    "message": "+ Lägg till en ny filterlista"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Filterlistor"
+  }, 
+  "options_filterList_column_status": {
+    "message": "Status"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Senast uppdaterad"
+  }, 
+  "options_filterList_description": {
+    "message": "Varje AdBlock inställning fungerar på grund av filterlistor. Nedan visas dina filterlistor som motsvarar alla dina AdBlock inställningar. Du kan även lägga till ytterligare filter skapade och underhållna av vårt betrodda community."
+  }, 
+  "options_filterList_empty": {
+    "message": "Du har inte lagt till några filterlistor i AdBlock. Filterlistor som du lägger till kommer visas här."
+  }, 
+  "options_filterList_hours": {
+    "message": "timmar sedan"
+  }, 
+  "options_filterList_lastDownload_checksumMismatch": {
+    "message": "Fel kontrollsumma"
+  }, 
+  "options_filterList_lastDownload_connectionError": {
+    "message": "Fel vid hämtning"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Uppdaterar"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Misslyckades, inte en giltig filterlista"
+  }, 
+  "options_filterList_lastDownload_invalidURL": {
+    "message": "Ogiltig adress"
+  }, 
+  "options_filterList_minutes": {
+    "message": "minuter sedan"
+  }, 
+  "options_filterList_now": {
+    "message": "Just nu"
+  }, 
+  "options_filterList_source": {
+    "message": "källa"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Aktiv"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "Inaktiverad"
+  }, 
+  "options_filterList_title": {
+    "message": "Filterlistor"
+  }, 
+  "options_filterList_update": {
+    "message": "uppdatera alla filterlistor"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "uppdatera nu"
+  }, 
+  "options_filterList_website": {
+    "message": "webbplats"
+  }, 
+  "options_footer_about": {
+    "message": "Om AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "Bidra"
+  }, 
+  "options_general_description": {
+    "message": "Bestäm vad AdBlock visar och döljer på webbsidor"
+  }, 
+  "options_help_description": {
+    "message": "Få hjälp eller kom i kontakt med oss"
+  }, 
+  "options_language_add": {
+    "message": "+ lägg till ett språk"
+  }, 
+  "options_language_change": {
+    "message": "ändra"
+  }, 
+  "options_language_description": {
+    "message": "Optimera AdBlock för de språk du oftast besöker webbsidor i."
+  }, 
+  "options_language_empty": {
+    "message": "Du har inga språkspecifika filter."
+  }, 
+  "options_language_header": {
+    "message": "Språk"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>TIP:</strong> Välj endast språken du behöver. Att välja mer kommer att sakna ner annonsblockeraren och din surfhastighet."
+  }, 
+  "options_learn_more": {
+    "message": "Läs mer"
+  }, 
+  "options_more_filters_description": {
+    "message": "Detta är ytterligare filter som du nyligen lagt till i AdBlock."
+  }, 
+  "options_more_filters_header": {
+    "message": "Fler filter"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>Note:</strong> Du ska endast använda filterlistor från tredjepart från användare du litar på."
+  }, 
+  "options_new_label": {
+    "message": "Ny"
+  }, 
+  "options_page_document_title": {
+    "message": "Inställningar"
+  }, 
+  "options_page_title": {
+    "message": "Inställningar"
+  }, 
+  "options_privacy_header": {
+    "message": "Sekretess & säkerhet"
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "Sociala medieikoner på webbsidor du besöker tillåter sociala medianätverk att bygga upp en profil baserat på dina surfvanor - även om du inte klickar på dem. Dölj dessa ikoner för att skydda din profil."
+  }, 
+  "options_report_bug": {
+    "message": "Hittat en bugg? <a>Skicka en buggrapport</a>"
+  }, 
+  "options_report_forum": {
+    "message": "Vill du ha stöd från vårt community? <a>Gå till Forumet</a>"
+  }, 
   "options_short": {
     "message": "Inställningar"
+  }, 
+  "options_social_description": {
+    "message": "Har en fråga eller en ny idé? Vi är här för att hjälpa."
+  }, 
+  "options_social_title": {
+    "message": "Kom i kontakt"
+  }, 
+  "options_support_title": {
+    "message": "Support"
+  }, 
+  "options_tab_advanced": {
+    "message": "Avancerat"
+  }, 
+  "options_tab_general": {
+    "message": "Allmänt"
+  }, 
+  "options_tab_help": {
+    "message": "Hjälp"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Vitlistade webbplatser"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "Vi märkte att du har både <strong>$tracking$</strong> och <strong>$acceptableAds$</strong> aktiverat.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "Vi vill att du ska veta att för att annonsörer ska kunna visa dig mer relevanta annonser, kommer det <strong>kanske</strong> vara viss spårning med Godtagbara annonser."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "Om du föredrar extra sekretess, välj <strong>$acceptableAdsPrivacy$</strong> i kryssrutan nedan.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "Ok, fattar"
+  }, 
+  "options_whitelist_add": {
+    "message": "Lägg till webbplats"
+  }, 
+  "options_whitelist_description": {
+    "message": "Du har inaktiverat annonsblockering på dessa webbplatser och kommer därför att se annonser på dem."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Du har inte några vitlistade webbsidor."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "Webbplatser du litar på och vill tillåta annonser på kommer att visas här."
+  }, 
+  "options_whitelist_notification": {
+    "message": "\"$website$\" har vitlistats.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "t.ex. $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock-alternativ", 
@@ -1608,9 +1914,6 @@
     "message": "Andra filterlistor", 
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
-  "out_of_date_lists": {
-    "message": "Utdaterade listor uppdateras periodiskt."
-  }, 
   "overlay_notification_button_no": {
     "message": "Nej"
   }, 
@@ -1622,9 +1925,6 @@
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "Sluta visa notifieringar"
-  }, 
-  "overlay_shownotifications_label": {
-    "message": "Visa användbara notifieringar"
   }, 
   "pagelanguagecheck": {
     "message": "På vilket språk är sidan skriven?", 
@@ -1669,9 +1969,6 @@
   "reloadpageafterwhitelist": {
     "message": "Uppdatera sidan.", 
     "description": "Checkbox in the whitelist wizard"
-  }, 
-  "remove_button": {
-    "message": "Ta bort markerad"
   }, 
   "removefromlist": {
     "message": "Ta bort från listan", 
@@ -1763,12 +2060,12 @@
     "message": "-- Välj språk --", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "sendReport": {
+    "message": "Rapportera problem på denna sida"
+  }, 
   "show_ads_except_for": {
     "message": "Visa reklamtillägg överallt utom på dessa domäner...", 
     "description": "Section title for the whitelisting section of Customize tab"
-  }, 
-  "show_block_element_menu": {
-    "message": "Visa 'Blockera objekt' i högerklicksmeny"
   }, 
   "show_devtools_panel": {
     "message": "Visa 'AdBlock'-panel ibland utvecklingsverktygen", 
@@ -1834,28 +2131,6 @@
       }
     }
   }, 
-  "stats_over": {
-    "message": "över $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_download": {
-    "message": "Ladda ner AdBlock"
-  }, 
-  "stats_share_message": {
-    "message": "Jag blockerade $number$ annonser och trackers tack vare AdBlock.", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
-  }, 
-  "stats_share_title": {
-    "message": "Dela detta nummer"
-  }, 
   "stats_show_iconnumber": {
     "message": "Visa nummer vid ikon"
   }, 
@@ -1911,15 +2186,6 @@
   "subscribingtitle": {
     "message": "Prenumerera på filterlista...", 
     "description": "abp: link subscriber title"
-  }, 
-  "subscriptionSelection_location_label": {
-    "message": "Plats för filter:"
-  }, 
-  "subscriptionSelection_subscriptionSelector_label": {
-    "message": "Vänligen välj en filterprenumeration från listan:"
-  }, 
-  "subscriptionSelection_title_label": {
-    "message": "Rubrik för prenumeration:"
   }, 
   "supportsite": {
     "message": "Låt oss veta, på vår [[support-sida]]!", 
@@ -2064,9 +2330,6 @@
     "message": "Prenumeration avslutad.", 
     "description": "Status label when unselecting a filter list"
   }, 
-  "update_now": {
-    "message": "Uppdatera nu"
-  }, 
   "updateddayago": {
     "message": "Uppdaterades för 1 dag sedan", 
     "description": "Label for filter list subscription"
@@ -2127,6 +2390,27 @@
     "message": "Uppdateringar hämtas automatiskt. Du kan också [[uppdatera nu]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "Om du tar kontroll på datorn, kan du blockera annonser och förbättra din integritet och säkerhet på mobilen också. Skaffa appen <a>Adblock Browser App nedan</a>."
+  }, 
+  "updates_blockAds": {
+    "message": "The Open Source Rebel Alliance har skapat nya blockerande filter som låter dig spränga dolda annonser på webbsidor som Facebook, även om imperiet slår tillbaka."
+  }, 
+  "updates_heading": {
+    "message": "AdBlock har uppdaterats!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "Helt ny Inställningssida - ändrad och omdesignad med mer sekretess -och säkerhetsval - so det blir enklare att <a>skräddarsy AdBlock precis som du vill ha det</a>."
+  }, 
+  "updates_phone": {
+    "message": "Men vänta! Din telefon då?"
+  }, 
+  "updates_status": {
+    "message": "Uppdateringen slutförd"
+  }, 
+  "updates_subheading": {
+    "message": "Vad är nytt?"
+  }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
@@ -2164,9 +2448,6 @@
   "whitelist_youtube_channel_v2": {
     "message": "Allow ads on YouTube™ channel:", 
     "description": "Menu entry to whitelist the channel of the current YouTube video or page. The channel name will appear on a line below this menu item."
-  }, 
-  "whitelisted_domains": {
-    "message": "Vitlistade domäner"
   }, 
   "whitelistedresource": {
     "message": "Vitlistade resurser", 

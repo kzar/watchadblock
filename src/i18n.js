@@ -17,15 +17,11 @@
 
 "use strict";
 
-// This variable should no longer be necessary once options.js in Chrome
-// accesses ext.i18n directly.
-let {i18n} = ext;
-
 // Getting UI locale cannot be done synchronously on Firefox,
 // requires messaging the background page. For Chrome and Safari,
 // we could get the UI locale here, but would need to duplicate
 // the logic implemented in Utils.appLocale.
-ext.backgroundPage.sendMessage(
+browser.runtime.sendMessage(
   {
     type: "app.get",
     what: "localeInfo"
@@ -37,31 +33,33 @@ ext.backgroundPage.sendMessage(
   }
 );
 
-// Inserts i18n strings into matching elements. Any inner HTML already
-// in the element is parsed as JSON and used as parameters to
-// substitute into placeholders in the i18n message.
-ext.i18n.setElementText = function(element, stringName, args)
-{
-  function processString(str, currentElement)
+ext.i18n = {
+  // Inserts i18n strings into matching elements. Any inner HTML already
+  // in the element is parsed as JSON and used as parameters to
+  // substitute into placeholders in the i18n message.
+  setElementText(element, stringName, args)
   {
-    let match = /^(.*?)<(a|strong)>(.*?)<\/\2>(.*)$/.exec(str);
-    if (match)
+    function processString(str, currentElement)
     {
-      processString(match[1], currentElement);
+      const match = /^(.*?)<(a|strong)>(.*?)<\/\2>(.*)$/.exec(str);
+      if (match)
+      {
+        processString(match[1], currentElement);
 
-      let e = document.createElement(match[2]);
-      processString(match[3], e);
-      currentElement.appendChild(e);
+        const e = document.createElement(match[2]);
+        processString(match[3], e);
+        currentElement.appendChild(e);
 
-      processString(match[4], currentElement);
+        processString(match[4], currentElement);
+      }
+      else
+        currentElement.appendChild(document.createTextNode(str));
     }
-    else
-      currentElement.appendChild(document.createTextNode(str));
-  }
 
-  while (element.lastChild)
-    element.removeChild(element.lastChild);
-  processString(ext.i18n.getMessage(stringName, args), element);
+    while (element.lastChild)
+      element.removeChild(element.lastChild);
+    processString(browser.i18n.getMessage(stringName, args), element);
+  }
 };
 
 // Loads i18n strings
@@ -69,8 +67,8 @@ function loadI18nStrings()
 {
   function addI18nStringsToElements(containerElement)
   {
-    let elements = containerElement.querySelectorAll("[class^='i18n_']");
-    for (let node of elements)
+    const elements = containerElement.querySelectorAll("[class^='i18n_']");
+    for (const node of elements)
     {
       let args = JSON.parse("[" + node.textContent + "]");
       if (args.length == 0)
@@ -79,7 +77,7 @@ function loadI18nStrings()
       let {className} = node;
       if (className instanceof SVGAnimatedString)
         className = className.animVal;
-      let stringName = className.split(/\s/)[0].substring(5);
+      const stringName = className.split(/\s/)[0].substring(5);
 
       ext.i18n.setElementText(node, stringName, args);
     }
@@ -88,17 +86,17 @@ function loadI18nStrings()
   // Content of Template is not rendered on runtime so we need to add
   // translation strings for each Template documentFragment content
   // individually.
-  for (let template of document.querySelectorAll("template"))
+  for (const template of document.querySelectorAll("template"))
     addI18nStringsToElements(template.content);
 }
 
 // Provides a more readable string of the current date and time
 function i18nTimeDateStrings(when)
 {
-  let d = new Date(when);
-  let timeString = d.toLocaleTimeString();
+  const d = new Date(when);
+  const timeString = d.toLocaleTimeString();
 
-  let now = new Date();
+  const now = new Date();
   if (d.toDateString() == now.toDateString())
     return [timeString];
   return [timeString, d.toLocaleDateString()];
@@ -107,7 +105,7 @@ function i18nTimeDateStrings(when)
 // Formats date string to ["YYYY-MM-DD", "mm:ss"] format
 function i18nFormatDateTime(when)
 {
-  let date = new Date(when);
+  const date = new Date(when);
   let dateParts = [date.getFullYear(), date.getMonth() + 1, date.getDate(),
                    date.getHours(), date.getMinutes()];
 
