@@ -92,7 +92,7 @@
  */
 
 const {FilterNotifier} = __webpack_require__(1);
-const {extend} = __webpack_require__(18);
+const {extend} = __webpack_require__(19);
 const {filterToRegExp} = __webpack_require__(32);
 
 /**
@@ -1223,7 +1223,7 @@ ElemHideEmulationFilter.prototype = extend(ElemHideBase, {
  */
 
 const {EventEmitter} = __webpack_require__(13);
-const {desc} = __webpack_require__(18);
+const {desc} = __webpack_require__(19);
 
 const CATCH_ALL = "__all";
 
@@ -1737,7 +1737,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.31.0";
+exports.addonVersion = "3.31.2";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -2565,7 +2565,7 @@ INIParser.prototype =
 const {ActiveFilter, BlockingFilter,
        WhitelistFilter, ElemHideBase} = __webpack_require__(0);
 const {FilterNotifier} = __webpack_require__(1);
-const {desc, extend} = __webpack_require__(18);
+const {desc, extend} = __webpack_require__(19);
 
 /**
  * Abstract base class for filter subscriptions
@@ -5932,262 +5932,6 @@ exports.parseFilters = text =>
 
 /***/ }),
 /* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-function desc(properties)
-{
-  let descriptor = {};
-  let keys = Object.keys(properties);
-
-  for (let key of keys)
-    descriptor[key] = Object.getOwnPropertyDescriptor(properties, key);
-
-  return descriptor;
-}
-exports.desc = desc;
-
-function extend(cls, properties)
-{
-  return Object.create(cls.prototype, desc(properties));
-}
-exports.extend = extend;
-
-function findIndex(iterable, callback, thisArg)
-{
-  let index = 0;
-  for (let item of iterable)
-  {
-    if (callback.call(thisArg, item))
-      return index;
-
-    index++;
-  }
-
-  return -1;
-}
-exports.findIndex = findIndex;
-
-function indexOf(iterable, searchElement)
-{
-  return findIndex(iterable, item => item === searchElement);
-}
-exports.indexOf = indexOf;
-
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-/**
- * @fileOverview Element hiding emulation implementation.
- */
-
-const {ElemHide} = __webpack_require__(14);
-const {Filter} = __webpack_require__(0);
-
-let filters = new Set();
-
-/**
- * Container for element hiding emulation filters
- * @class
- */
-let ElemHideEmulation = {
-  /**
-   * Removes all known filters
-   */
-  clear()
-  {
-    filters.clear();
-  },
-
-  /**
-   * Add a new element hiding emulation filter
-   * @param {ElemHideEmulationFilter} filter
-   */
-  add(filter)
-  {
-    filters.add(filter.text);
-  },
-
-  /**
-   * Removes an element hiding emulation filter
-   * @param {ElemHideEmulationFilter} filter
-   */
-  remove(filter)
-  {
-    filters.delete(filter.text);
-  },
-
-  /**
-   * Returns a list of all rules active on a particular domain
-   * @param {string} domain
-   * @return {ElemHideEmulationFilter[]}
-   */
-  getRulesForDomain(domain)
-  {
-    let result = [];
-    for (let text of filters.values())
-    {
-      let filter = Filter.fromText(text);
-      if (filter.isActiveOnDomain(domain) &&
-          !ElemHide.getException(filter, domain))
-      {
-        result.push(filter);
-      }
-    }
-    return result;
-  }
-};
-exports.ElemHideEmulation = ElemHideEmulation;
-
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/** @module stats */
-
-
-
-const {Prefs} = __webpack_require__(2);
-const {BlockingFilter} = __webpack_require__(0);
-const {FilterNotifier} = __webpack_require__(1);
-const {port} = __webpack_require__(7);
-
-const badgeColor = "#646464";
-let blockedPerPage = new ext.PageMap();
-
-let getBlockedPerPage =
-/**
- * Gets the number of requests blocked on the given page.
- *
- * @param  {Page} page
- * @return {Number}
- */
-exports.getBlockedPerPage = page => blockedPerPage.get(page) || 0;
-
-function updateBadge(page, blockedCount)
-{
-  if (Prefs.show_statsinicon)
-  {
-    page.browserAction.setBadge(blockedCount && {
-      color: badgeColor,
-      number: blockedCount
-    });
-  }
-}
-
-// Once nagivation for the tab has been committed to (e.g. it's no longer
-// being prerendered) we clear its badge, or if some requests were already
-// blocked beforehand we display those on the badge now.
-browser.webNavigation.onCommitted.addListener(details =>
-{
-  if (details.frameId == 0)
-  {
-    let page = new ext.Page({id: details.tabId});
-    let blocked = blockedPerPage.get(page);
-
-    updateBadge(page, blocked);
-  }
-});
-
-FilterNotifier.on("filter.hitCount", (filter, newValue, oldValue, tabIds) =>
-{
-  if (!(filter instanceof BlockingFilter))
-    return;
-
-  for (let tabId of tabIds)
-  {
-    let page = new ext.Page({id: tabId});
-    let blocked = blockedPerPage.get(page) || 0;
-
-    blockedPerPage.set(page, ++blocked);
-    updateBadge(page, blocked);
-  }
-
-  Prefs.blocked_total++;
-});
-
-Prefs.on("show_statsinicon", () =>
-{
-  browser.tabs.query({}, tabs =>
-  {
-    for (let tab of tabs)
-    {
-      let page = new ext.Page(tab);
-
-      if (Prefs.show_statsinicon)
-        updateBadge(page, blockedPerPage.get(page));
-      else
-        page.browserAction.setBadge(null);
-    }
-  });
-});
-
-port.on("stats.getBlockedPerPage",
-        message => getBlockedPerPage(new ext.Page(message.tab)));
-
-
-/***/ }),
-/* 21 */
 /***/ (function(module, exports) {
 
 let LocalCDN = exports.LocalCDN = (function() {
@@ -6423,6 +6167,262 @@ let LocalCDN = exports.LocalCDN = (function() {
     }
   };
 })();
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+function desc(properties)
+{
+  let descriptor = {};
+  let keys = Object.keys(properties);
+
+  for (let key of keys)
+    descriptor[key] = Object.getOwnPropertyDescriptor(properties, key);
+
+  return descriptor;
+}
+exports.desc = desc;
+
+function extend(cls, properties)
+{
+  return Object.create(cls.prototype, desc(properties));
+}
+exports.extend = extend;
+
+function findIndex(iterable, callback, thisArg)
+{
+  let index = 0;
+  for (let item of iterable)
+  {
+    if (callback.call(thisArg, item))
+      return index;
+
+    index++;
+  }
+
+  return -1;
+}
+exports.findIndex = findIndex;
+
+function indexOf(iterable, searchElement)
+{
+  return findIndex(iterable, item => item === searchElement);
+}
+exports.indexOf = indexOf;
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+/**
+ * @fileOverview Element hiding emulation implementation.
+ */
+
+const {ElemHide} = __webpack_require__(14);
+const {Filter} = __webpack_require__(0);
+
+let filters = new Set();
+
+/**
+ * Container for element hiding emulation filters
+ * @class
+ */
+let ElemHideEmulation = {
+  /**
+   * Removes all known filters
+   */
+  clear()
+  {
+    filters.clear();
+  },
+
+  /**
+   * Add a new element hiding emulation filter
+   * @param {ElemHideEmulationFilter} filter
+   */
+  add(filter)
+  {
+    filters.add(filter.text);
+  },
+
+  /**
+   * Removes an element hiding emulation filter
+   * @param {ElemHideEmulationFilter} filter
+   */
+  remove(filter)
+  {
+    filters.delete(filter.text);
+  },
+
+  /**
+   * Returns a list of all rules active on a particular domain
+   * @param {string} domain
+   * @return {ElemHideEmulationFilter[]}
+   */
+  getRulesForDomain(domain)
+  {
+    let result = [];
+    for (let text of filters.values())
+    {
+      let filter = Filter.fromText(text);
+      if (filter.isActiveOnDomain(domain) &&
+          !ElemHide.getException(filter, domain))
+      {
+        result.push(filter);
+      }
+    }
+    return result;
+  }
+};
+exports.ElemHideEmulation = ElemHideEmulation;
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** @module stats */
+
+
+
+const {Prefs} = __webpack_require__(2);
+const {BlockingFilter} = __webpack_require__(0);
+const {FilterNotifier} = __webpack_require__(1);
+const {port} = __webpack_require__(7);
+
+const badgeColor = "#646464";
+let blockedPerPage = new ext.PageMap();
+
+let getBlockedPerPage =
+/**
+ * Gets the number of requests blocked on the given page.
+ *
+ * @param  {Page} page
+ * @return {Number}
+ */
+exports.getBlockedPerPage = page => blockedPerPage.get(page) || 0;
+
+function updateBadge(page, blockedCount)
+{
+  if (Prefs.show_statsinicon)
+  {
+    page.browserAction.setBadge(blockedCount && {
+      color: badgeColor,
+      number: blockedCount
+    });
+  }
+}
+
+// Once nagivation for the tab has been committed to (e.g. it's no longer
+// being prerendered) we clear its badge, or if some requests were already
+// blocked beforehand we display those on the badge now.
+browser.webNavigation.onCommitted.addListener(details =>
+{
+  if (details.frameId == 0)
+  {
+    let page = new ext.Page({id: details.tabId});
+    let blocked = blockedPerPage.get(page);
+
+    updateBadge(page, blocked);
+  }
+});
+
+FilterNotifier.on("filter.hitCount", (filter, newValue, oldValue, tabIds) =>
+{
+  if (!(filter instanceof BlockingFilter))
+    return;
+
+  for (let tabId of tabIds)
+  {
+    let page = new ext.Page({id: tabId});
+    let blocked = blockedPerPage.get(page) || 0;
+
+    blockedPerPage.set(page, ++blocked);
+    updateBadge(page, blocked);
+  }
+
+  Prefs.blocked_total++;
+});
+
+Prefs.on("show_statsinicon", () =>
+{
+  browser.tabs.query({}, tabs =>
+  {
+    for (let tab of tabs)
+    {
+      let page = new ext.Page(tab);
+
+      if (Prefs.show_statsinicon)
+        updateBadge(page, blockedPerPage.get(page));
+      else
+        page.browserAction.setBadge(null);
+    }
+  });
+});
+
+port.on("stats.getBlockedPerPage",
+        message => getBlockedPerPage(new ext.Page(message.tab)));
+
 
 /***/ }),
 /* 22 */
@@ -7875,7 +7875,7 @@ let SURVEY = exports.SURVEY = (function() {
         return;
       }
       page = pages[0];
-      var blockedPerPage = __webpack_require__(20).getBlockedPerPage(page);
+      var blockedPerPage = __webpack_require__(21).getBlockedPerPage(page);
       callback(blockedPerPage);
     });
   }
@@ -8194,7 +8194,7 @@ let SURVEY = exports.SURVEY = (function() {
 
 const Prefs = __webpack_require__(2).Prefs;
 const FilterStorage = __webpack_require__(4).FilterStorage;
-const {LocalCDN} = __webpack_require__(21);
+const {LocalCDN} = __webpack_require__(18);
 const {SURVEY} = __webpack_require__(26);
 const {recordGeneralMessage, recordErrorMessage} = __webpack_require__(12).ServerMessages;
 // Allows interaction with the server to track install rate
@@ -8718,7 +8718,7 @@ __webpack_require__(15);
 __webpack_require__(33);
 __webpack_require__(23);
 __webpack_require__(38);
-__webpack_require__(20);
+__webpack_require__(21);
 __webpack_require__(39);
 __webpack_require__(40);
 __webpack_require__(41);
@@ -8775,7 +8775,7 @@ const {XPCOMUtils} = Cu.import("resource://gre/modules/XPCOMUtils.jsm", {});
 const {FilterStorage} = __webpack_require__(4);
 const {FilterNotifier} = __webpack_require__(1);
 const {ElemHide} = __webpack_require__(14);
-const {ElemHideEmulation} = __webpack_require__(19);
+const {ElemHideEmulation} = __webpack_require__(20);
 const {defaultMatcher} = __webpack_require__(9);
 const {ActiveFilter, RegExpFilter,
        ElemHideBase, ElemHideEmulationFilter} = __webpack_require__(0);
@@ -11167,7 +11167,7 @@ browser.webRequest.onHeadersReceived.addListener(details =>
 
 const {RegExpFilter} = __webpack_require__(0);
 const {ElemHide} = __webpack_require__(14);
-const {ElemHideEmulation} = __webpack_require__(19);
+const {ElemHideEmulation} = __webpack_require__(20);
 const {checkWhitelisted} = __webpack_require__(8);
 const {extractHostFromFrame} = __webpack_require__(6);
 const {port} = __webpack_require__(7);
@@ -13023,7 +13023,7 @@ Object.assign(window, {
 
 /***/ }),
 /* 49 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 function getAvailableFiles() {
 return {
@@ -13050,6 +13050,14 @@ jquery: {
 },
 };
 }
+ 
+// Attach methods to window
+Object.assign(window, {
+  getAvailableFiles
+});
+const {LocalCDN} = __webpack_require__(18);
+LocalCDN.setUp();
+ 
 
 
 /***/ }),
@@ -13057,7 +13065,7 @@ jquery: {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-const {LocalCDN} = __webpack_require__(21);
+const {LocalCDN} = __webpack_require__(18);
 // OPTIONAL SETTINGS
 function Settings()
 {
@@ -13184,14 +13192,14 @@ const NotificationStorage = __webpack_require__(16).Notification;
 
 const {RegExpFilter} = __webpack_require__(0);
 
-const {getBlockedPerPage} = __webpack_require__(20);
+const {getBlockedPerPage} = __webpack_require__(21);
 
 const info = __webpack_require__(3);
 
 // Object's used on the option, pop up, etc. pages...
 const {STATS} = __webpack_require__(27);
 const {DataCollectionV2} = __webpack_require__(52);
-const {LocalCDN} = __webpack_require__(21);
+const {LocalCDN} = __webpack_require__(18);
 const {ServerMessages} = __webpack_require__(12);
 const {recordGeneralMessage, recordErrorMessage, recordAdreportMessage} = __webpack_require__(12).ServerMessages;
 const {getUrlFromId, unsubscribe, getSubscriptionsMinusText, getAllSubscriptionsMinusText, getIdFromURL} = __webpack_require__(54).SubscriptionAdapter;
@@ -17517,7 +17525,7 @@ Object.assign(window, {
 
 const {ElemHide} = __webpack_require__(14);
 const {RegExpFilter} = __webpack_require__(0);
-const {ElemHideEmulation} = __webpack_require__(19);
+const {ElemHideEmulation} = __webpack_require__(20);
 const {checkWhitelisted} = __webpack_require__(8);
 const {extractHostFromFrame} = __webpack_require__(6);
 const {port} = __webpack_require__(7);
