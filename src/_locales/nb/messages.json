@@ -395,6 +395,10 @@
     "message": "Katter", 
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
+  "changes_to_adblock": {
+    "message": "We've made changes to AdBlock!", 
+    "description": "Link to Options page with more information about the changes."
+  }, 
   "checkinfirefox_1": {
     "message": "Installer Firefox hvis du ikke har det.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -663,6 +667,10 @@
     "message": "Ikke kjør på denne siden", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "download_mac_app": {
+    "message": "To get the best AdBlock experience on your Mac, please download our [[AdBlock for Safari Mac App!]]", 
+    "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
+  }, 
   "easy_create_filter": {
     "message": "Blokkér element"
   }, 
@@ -830,6 +838,10 @@
   }, 
   "filterannoyances": {
     "message": "Fanboy's Annoyances (Blokkerer oppsprettere, widgeter for sosiale medier og lignende, og andre plager)", 
+    "description": "A filter list"
+  }, 
+  "filteranticircumvent": {
+    "message": "Anti-Circumvention filters", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
@@ -1374,6 +1386,10 @@
     "message": "Legg til filtre for et annet språk: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
+  "learn_more": {
+    "message": "Learn more.", 
+    "description": "Link to Knowledge Base article with more information about the settings change"
+  }, 
   "legend": {
     "message": "Forklaring: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1528,6 +1544,10 @@
     "message": "No gikk galt. Ingen elementer har blitt sendt. Denne siden vil nå lukkes. Prøv å last inn på nytt.", 
     "description": "Resource list page: error message"
   }, 
+  "note": {
+    "message": "NOTE:", 
+    "description": "Indicates that the user should take note of the message that follows."
+  }, 
   "notification_antiadblock_message": {
     "message": "Dette området er kjent for å vise meldinger som henvender seg til AdBlock-brukere. Vil du at AdBlock skal skjule disse meldingene?"
   }, 
@@ -1583,6 +1603,9 @@
   "options_customFilter_save": {
     "message": "Lagre"
   }, 
+  "options_customFilters_description": {
+    "message": "Lag dine egne tilpassede filter for å kontrollere hvilket innhold AdBlock tillater eller blokkerer ytterligere."
+  }, 
   "options_customFilters_edit_placeholder": {
     "message": "f.eks $filter$", 
     "placeholders": {
@@ -1592,20 +1615,59 @@
       }
     }
   }, 
+  "options_customFilters_learn": {
+    "message": "Lær å lage filterlister"
+  }, 
+  "options_customFilters_start": {
+    "message": "Begynn å lage min filterliste"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Filter du lager vil vises her."
+  }, 
+  "options_customFilters_title": {
+    "message": "Opprett og rediger dine filterlister"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Min filterliste"
+  }, 
   "options_customize_showNotifications": {
     "message": "Vis nyttige varsler"
   }, 
   "options_dialog_about_title": {
     "message": "Om AdBlock"
   }, 
+  "options_dialog_import_title": {
+    "message": "Legg til en filterliste"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Det er ingen tilgjengelige språk."
+  }, 
+  "options_dialog_language_title": {
+    "message": "Velg et språk"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Ja, bruk denne filterlisten"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Er du sikker på at du vil legge til denne filterlisten?"
+  }, 
   "options_email": {
     "message": "E-post:"
+  }, 
+  "options_english": {
+    "message": "Engelsk"
+  }, 
+  "options_filterList_add": {
+    "message": "+ Legg til en ny filterliste"
   }, 
   "options_filterList_column_name": {
     "message": "Filterlister"
   }, 
   "options_filterList_column_status": {
     "message": "Status"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Sist oppdatert"
   }, 
   "options_filterList_hours": {
     "message": "timer siden"
@@ -1619,11 +1681,23 @@
   "options_filterList_lastDownload_inProgress": {
     "message": "Oppdaterer"
   }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Feilet, ikke en gyldig filterliste"
+  }, 
   "options_filterList_lastDownload_invalidURL": {
     "message": "Feilet, ikke en gyldig adresse"
   }, 
   "options_filterList_minutes": {
     "message": "minutter siden"
+  }, 
+  "options_filterList_now": {
+    "message": "Akkurat nå"
+  }, 
+  "options_filterList_source": {
+    "message": "kilde"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Aktiv"
   }, 
   "options_filterList_state_disabled": {
     "message": "Deaktivert"
@@ -1631,14 +1705,32 @@
   "options_filterList_title": {
     "message": "Filterlister"
   }, 
+  "options_filterList_update": {
+    "message": "oppdater alle filterlister"
+  }, 
   "options_filterList_updateNow": {
     "message": "oppdater nå"
+  }, 
+  "options_filterList_website": {
+    "message": "nettside"
   }, 
   "options_footer_about": {
     "message": "Om AdBlock"
   }, 
   "options_footer_contribute": {
     "message": "Bidra"
+  }, 
+  "options_general_description": {
+    "message": "Avgjør hva AdBlock viser og skjuler på nettsteder"
+  }, 
+  "options_help_description": {
+    "message": "Finn hjelp eller kontakt oss"
+  }, 
+  "options_language_add": {
+    "message": "+ legg til et språk"
+  }, 
+  "options_language_change": {
+    "message": "endre"
   }, 
   "options_language_header": {
     "message": "Språk"
@@ -1896,6 +1988,10 @@
   }, 
   "sendReport": {
     "message": "Rapporter problem på denne siden"
+  }, 
+  "settings_changed": {
+    "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
+    "description": "Part of Options page message letting users know of settings change."
   }, 
   "show_ads_except_for": {
     "message": "Vis reklame overalt unntatt på disse domenene...", 
@@ -2236,6 +2332,10 @@
   "updateyourlists": {
     "message": "Sørg for at filterlistene dine er oppdatert:", 
     "description": "Section header on the ad report page"
+  }, 
+  "urgent_safari_changes": {
+    "message": "URGENT: Apple is changing Safari extensions.", 
+    "description": "Title for Options page message letting users know of settings change."
   }, 
   "warning_overrules_filters": {
     "message": "Advarsel: på alle andre sider vil du se annonser! \nDette overskriver alle andre filtre for disse sidene.", 

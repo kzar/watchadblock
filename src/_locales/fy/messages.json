@@ -74,6 +74,9 @@
   "add": {
     "message": "Tafoegje"
   }, 
+  "add_filters_msg": {
+    "message": "Filter(s) tafoegje?"
+  }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
     "description": "Shows the user the debug information that will be sent along with their report."
@@ -282,6 +285,9 @@
     "message": "Remove annoyances on YouTube™", 
     "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
+  "block_element": {
+    "message": "Elemint blokkearje"
+  }, 
   "block_privacy_on_youtube": {
     "message": "Protect my privacy on YouTube™", 
     "description": "Checkbox letting user choose whether to block privacy-related requests on youtube.com"
@@ -389,6 +395,10 @@
     "message": "Cats", 
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
+  "changes_to_adblock": {
+    "message": "We've made changes to AdBlock!", 
+    "description": "Link to Options page with more information about the changes."
+  }, 
   "checkinfirefox_1": {
     "message": "Install Firefox if you don't have it.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -441,6 +451,9 @@
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
+  "clickhide_instructions": {
+    "message": "Klik (of klik mei de rjochtermûsknop) nei it sluten fan dizze pop-up op in elemint op de side."
+  }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
     "description": "User has to click the ad they want to block."
@@ -452,6 +465,21 @@
   "close": {
     "message": "Close", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Adblock-warskôgngsberjochten ferstopje"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Malware blokkearje"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Oanfoljende tracking blokkearje"
+  }, 
+  "common_feature_social_title": {
+    "message": "Tracking fia sosjale-mediapiktogrammen blokkearje"
+  }, 
+  "common_notification_hide": {
+    "message": "Melding slute"
   }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
@@ -525,7 +553,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Have our team requested some debug info? Click [[here]] for that!", 
+    "message": "Has our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -537,11 +565,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -567,6 +595,9 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
+  "disabled_for_site": {
+    "message": "<strong>Utskeakele</strong> op dizze website"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -636,6 +667,13 @@
     "message": "Don't run on this page", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "download_mac_app": {
+    "message": "To get the best AdBlock experience on your Mac, please download our [[AdBlock for Safari Mac App!]]", 
+    "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
+  }, 
+  "easy_create_filter": {
+    "message": "Elemint blokkearje"
+  }, 
   "easylist_disable_done": {
     "message": "AdBlock uses EasyList to block ads on most websites.", 
     "description": "Message shown to users after disabling EasyList via the Filter lists tab on the Options page."
@@ -663,6 +701,9 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
+  }, 
+  "enabled_for_site": {
+    "message": "<strong>Ynskeakele</strong> op dizze website"
   }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
@@ -756,6 +797,15 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Gjin aktyf domein opjûn foar wiidweidige elemintferbergjend filter"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Unjildich ynhâldbefeiligingsbelied"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Unjildich (of leech) domein opjaan"
+  }, 
   "filter_invalid_regexp": {
     "message": "Unjildige reguliere ekspresje"
   }, 
@@ -788,6 +838,10 @@
   }, 
   "filterannoyances": {
     "message": "Fanboy's Annoyances (blocks in-page pop-ups, social media and related widgets, and other annoyances)", 
+    "description": "A filter list"
+  }, 
+  "filteranticircumvent": {
+    "message": "Anti-Circumvention filters", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
@@ -937,7 +991,7 @@
     "description": "Language names for a filter list"
   }, 
   "filters_subscription_lastDownload_connectionError": {
-    "message": "Mislearre, ynlaadprobleem"
+    "message": "Mislearre, flater wylst it downloaden"
   }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
@@ -975,32 +1029,56 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_abbButtonSubtitle": {
+    "message": "Beskikber foar Android en iOS"
+  }, 
+  "firstRun_abbButtonTitle": {
+    "message": "Download Adblock Browser hjir"
+  }, 
+  "firstRun_abbPromotionHeadline": {
+    "message": "Hawwe jo in snoadfoan of tablet?"
+  }, 
   "firstRun_acceptableAdsExplanation": {
-    "message": "Wy wolle graach dat websiden simpele net skreauwende advertinsjes brûke. Derom hawwe wy <a>stringe regels</a> om akseptabele advertinsjes te werkennen.  Dit stiet ûnder standert settings. Ast noch steeds alle advertinsjes blokkeare wolst, dan kist dat <a>Út sette</a> yn in pear sekonden."
+    "message": "Wy wolle graach dat websiden simpele net skreauwende advertinsjes brûke. Derom hawwe wy <a>stringe regels</a> om akseptabele advertinsjes te werkennen. Dit stiet ûnder standert ynstellingen. As jo noch hieltyd alle advertinsjes blokkearje wolle, dan kinne jo dat yn in pear sekonden <a>Utskeakelje</a>."
   }, 
   "firstRun_acceptableAdsHeadline": {
-    "message": "ferfelende advertinsjes wurde no tsjin hâlden"
+    "message": "Ferfelende advertinsjes wurde no blokkearre"
   }, 
   "firstRun_contributor_credits": {
-    "message": "Meiwurker Nammen"
+    "message": "Tank oan meiwurkers"
+  }, 
+  "firstRun_dataCorruptedWarning_intro": {
+    "message": "Guon brûkers ûnderfine in probleem wêrby dizze side hieltyd iepene wurdt wannear de browser start wurdt. Dit probleem kin oplost wurde troch AdBlock fuort te smiten en opnij te ynstallearjen:"
+  }, 
+  "firstRun_dataCorruptedWarning_note": {
+    "message": "As jo noch hieltyd help nedich hawwe, nim dan kontakt mei ús op fia support@adblockplus.org of besykje ús <a>Helpsintrum</a>."
+  }, 
+  "firstRun_dataCorruptedWarning_step1": {
+    "message": "Iepenje it ljepblêd ‘Utwreidingen’ fan jo browser."
+  }, 
+  "firstRun_dataCorruptedWarning_step2": {
+    "message": "Sykje nei AdBlock en smyt it fuort."
+  }, 
+  "firstRun_dataCorruptedWarning_step3": {
+    "message": "Ynstallearje AdBlock opnij fan <a>adblockplus.org</a> ôf."
   }, 
   "firstRun_donate": {
-    "message": "Donneare"
+    "message": "donearje"
   }, 
   "firstRun_donate_label": {
-    "message": "Support ús projekt"
+    "message": "Stypje ús projekt"
   }, 
   "firstRun_filterlistsReinitializedWarning": {
-    "message": "It liket der op dat der in probleem wie wer troch alle filters fuorthelle wurden en it ûnmooglik wie om in backup werom te setten. Hjirfoar hawwe wie jo filters en Akseptabele Advertinsjes opnij ynstelt.  Kontrolear jo ynstellingen in de <a>AdBlock Opties</a>."
+    "message": "It liket der op dat der in probleem wie wêrtroch alle filters fuortsmiten binne en it ûnmooglik wie om in reservekopy werom te setten. Hjirtroch hawwe wy jo filters en Akseptabele Advertinsjes opnij ynsteld. Kontrolearje jo ynstellingen yn de <a>AdBlock-opsjes</a>."
   }, 
   "firstRun_share": {
-    "message": "sis it tsjin freonen"
+    "message": "Fertel it jo freonen"
   }, 
   "firstRun_share_headline": {
-    "message": "<a>Jou ús in hantsje</a>  om it web in moaiere plak te meitsjen"
+    "message": "<a>Help ús</a> fan it web in better plak te meitsjen"
   }, 
   "firstRun_title": {
-    "message": "Adblock is no ynstalleare"
+    "message": "Adblock is ynstallearre"
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1050,10 +1128,6 @@
     "message": "Help and Feedback", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "here", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Hidden element", 
     "description": "Resource list page: resource status"
@@ -1069,6 +1143,14 @@
   "invalidListUrl": {
     "message": "Invalid list URL. It'll be deleted.", 
     "description": "Message when you subscribe to a non-list URL"
+  }, 
+  "invalid_css_selector": {
+    "message": "$selector$ is gjin jildige CSS-selector", 
+    "placeholders": {
+      "selector": {
+        "content": "$1"
+      }
+    }
   }, 
   "issueReporter_anonymousSubmission_label": {
     "message": "Anonym Bydrage"
@@ -1096,6 +1178,9 @@
   }, 
   "issueReporter_dataCollector_heading": {
     "message": "Wolkom by de probleemrapportearder"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>Opmerking:</strong> der wurdt tydlik in ekstra ljepblêd iepene, sadat de side wêrop jo jo binne net troch de probleemrapportaazje beynfloede wurdt."
   }, 
   "issueReporter_doneButton_label": {
     "message": "Klear"
@@ -1312,9 +1397,21 @@
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
+  "learn_more": {
+    "message": "Learn more.", 
+    "description": "Link to Knowledge Base article with more information about the settings change"
+  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
+  }, 
+  "line": {
+    "message": "Regel $number$", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
   }, 
   "linkblockadbyurl": {
     "message": "Block an ad by its URL", 
@@ -1431,6 +1528,9 @@
     "message": "AdBlock on YouTube™", 
     "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
   }, 
+  "name_devbuild": {
+    "message": "AdBlock-ûntwikkelferzje"
+  }, 
   "new_resourcelist_explanation_osx": {
     "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I), then select the 'AdBlock' tab.", 
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Mac)"
@@ -1455,11 +1555,27 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "note": {
+    "message": "NOTE:", 
+    "description": "Indicates that the user should take note of the message that follows."
+  }, 
   "notification_antiadblock_message": {
     "message": "Dizze website is ferneamd om it toanen fan rjochte berjochten oan AdBlock-brûkers. Wolle jo dat AdBlock dizze ferstoppet?"
   }, 
   "notification_antiadblock_title": {
-    "message": "Rjochte berjochten ferbergje?"
+    "message": "Rjochte berjochten ferstopje?"
+  }, 
+  "notification_configure": {
+    "message": "Meldingsynstellingen konfigurearje"
+  }, 
+  "notification_open_all": {
+    "message": "Alle keppelingen fan dizze melding iepenje"
+  }, 
+  "notification_with_buttons": {
+    "message": "Klik op ‘OK’ om alle keppelingen yn dizze melding te iepenjen."
+  }, 
+  "notification_without_buttons": {
+    "message": "Klik op de melding om alle keppelingen deryn te iepenjen."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "One moment while we gather all of your subscriptions", 
@@ -1477,17 +1593,170 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "Akseptabele advertinsjes binne net ferfelend en jouwe gjin fersteuring mei de ynhâld dy't jo besjogge. <a>Lês mear oer de kritearia foar Akseptabele advertinsjes</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Akseptabele advertinsjes tastean"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "Akseptabele advertinsjes binne net-opdringerige advertinsjes. Se binne it middenpaad tusken advertinsjeblokkearring en it stypjen fan online-ynhâld, omdat se ynkomsten foar website-eigeners generearje."
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>Opmerking:</strong> jo hawwe <strong>Do Not Track (DNT)</strong> útskeakele yn jo browserynstellingen. Skeakelje <strong>DNT</strong> yn yn jo browserfoarkarren om dizze funksje goed wurkje te litt. <a>Lês hoe't jo DNT ynskeakelje kinne</a>."
+  }, 
+  "options_acceptableAds_header": {
+    "message": "Akseptabele advertinsjes"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Allinnich advertinsjes sûnder tracking troch tredden tastean"
+  }, 
+  "options_advanced_description": {
+    "message": "AdBlock oanpasse, filterlisten tafoegje of fuortsmiten, jo eigen filterlisten meitsje en beheare"
+  }, 
+  "options_anti_cv_header": {
+    "message": "Untwykbeskerming"
+  }, 
+  "options_anti_cv_title": {
+    "message": "ABP-filterlist foar ûntwykbeskerming"
+  }, 
+  "options_anti_cv_tooltip": {
+    "message": "Dizze filterlist wurket de ûntwiking tsjin (byg. techniken foar it ôftwingen fan advertinsjes foar advertinsjeblokkearrende brûkers). Dizze filters rjochtsje harren op de ûntwiking fan reklame en ek it relatearre folgjen."
+  }, 
   "options_close": {
     "message": "sluten"
+  }, 
+  "options_control_remove_title": {
+    "message": "fuortsmite"
   }, 
   "options_customFilter_cancel": {
     "message": "Annulearje"
   }, 
+  "options_customFilter_edit": {
+    "message": "Filters bewurkje"
+  }, 
+  "options_customFilter_save": {
+    "message": "Bewarje"
+  }, 
+  "options_customFilters_description": {
+    "message": "Skriuw jo eigen oanpaste filters om fierder te bepalen hokker ynhâld AdBlock tastiet of blokkearret."
+  }, 
+  "options_customFilters_edit_placeholder": {
+    "message": "byg. $filter$", 
+    "placeholders": {
+      "filter": {
+        "content": "$1", 
+        "example": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_customFilters_learn": {
+    "message": "Ynfo oer it skriuwen fan filterlisten"
+  }, 
+  "options_customFilters_start": {
+    "message": "Begjinne mei it skriuwen fan myn filterlist"
+  }, 
+  "options_customFilters_tip": {
+    "message": "Hjir ferskine filters dy't jo meitsje."
+  }, 
+  "options_customFilters_title": {
+    "message": "Jo filterlist meitsje en bewurkje"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Myn filterlist"
+  }, 
+  "options_customize_blockElement": {
+    "message": "Menu-item ‘Elemint blokkearje’ yn kontekstmenu toane"
+  }, 
+  "options_customize_blockElement_tooltip": {
+    "message": "Steurende items op in webside, lykas ôfbyldingen of bewegende diafoarstellingen, tydlik blokkearje."
+  }, 
+  "options_customize_header": {
+    "message": "Aksjes-op-side oanpasse"
+  }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Paniel ‘AdBlock’ yn ûntwikkelershelpmiddelen toane"
+  }, 
+  "options_customize_showDevToolsPanel_tooltip": {
+    "message": "Blokkearre en items op wite list fan it paniel ûntwikkelershelpmiddelen fan jo browser besjen"
+  }, 
+  "options_customize_showNotifications": {
+    "message": "Nuttige meldingen toane"
+  }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Alle meldingen fan AdBlock útskeakelje."
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "2017", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "Oer AdBlock"
+  }, 
+  "options_dialog_about_trademark": {
+    "message": "Alle rjochten foarbehâlden. AdBlock® is in registrearre hannelsmerk fan eyeo GmbH."
+  }, 
+  "options_dialog_about_version": {
+    "message": "Ferzjenûmer $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "URL fan filterlist"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Fier in jildige URL yn"
+  }, 
+  "options_dialog_import_title": {
+    "message": "In filterlist tafoegje"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "Der binne gjin beskikbere talen."
+  }, 
+  "options_dialog_language_title": {
+    "message": "In taal selektearje"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "Ja, dizze filterlist brûke"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "Binne jo wis dat jo dizze filterlist tafoegje wolle?"
+  }, 
   "options_email": {
     "message": "E-mail:"
   }, 
+  "options_english": {
+    "message": "Ingelsk"
+  }, 
+  "options_filterList_add": {
+    "message": "+ Nije filterlist tafoegje"
+  }, 
+  "options_filterList_column_name": {
+    "message": "Filterlisten"
+  }, 
   "options_filterList_column_status": {
     "message": "Steat"
+  }, 
+  "options_filterList_column_update": {
+    "message": "Lêst bywurke"
+  }, 
+  "options_filterList_description": {
+    "message": "Elke AdBlock-ynstelling funksjonearret fanwegen in filterlist. Hjirûnder stean de filterlisten dy't mei al jo AdBlock-ynstellingen oerienkomme. Jo kinne ek ekstra filters tafoegje dy't troch ús fertroude mienskip makke en ûnderhâlden wurde."
+  }, 
+  "options_filterList_empty": {
+    "message": "Jo hawwe gjin filterlisten oan AdBlock tafoege. Filterlisten dy't jo tafoegje wurde hjir toand."
+  }, 
+  "options_filterList_hours": {
+    "message": "oeren lyn"
   }, 
   "options_filterList_lastDownload_checksumMismatch": {
     "message": "Mislearre, checksum komt net oerien"
@@ -1495,14 +1764,189 @@
   "options_filterList_lastDownload_connectionError": {
     "message": "Mislearre, ynlaadprobleem"
   }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Fernije"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "Mislearre, gjin jildige filterlist"
+  }, 
   "options_filterList_lastDownload_invalidURL": {
     "message": "Mislearre, gjin jildich adres"
+  }, 
+  "options_filterList_minutes": {
+    "message": "minuten lyn"
+  }, 
+  "options_filterList_now": {
+    "message": "Sakrekt"
+  }, 
+  "options_filterList_source": {
+    "message": "boarne"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Aktyf"
   }, 
   "options_filterList_state_disabled": {
     "message": "Útskeakele"
   }, 
+  "options_filterList_title": {
+    "message": "Filterlisten"
+  }, 
+  "options_filterList_update": {
+    "message": "alle filterlisten bywurkje"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "no bywurkje"
+  }, 
+  "options_filterList_website": {
+    "message": "website"
+  }, 
+  "options_footer_about": {
+    "message": "Oer AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "Meiwurkje"
+  }, 
+  "options_general_description": {
+    "message": "Bepale wat AdBlock op websites toant en ferstoppet"
+  }, 
+  "options_help_description": {
+    "message": "Help sykje of kontakt mei ús opnimme"
+  }, 
+  "options_language_add": {
+    "message": "+ in taal tafoegje"
+  }, 
+  "options_language_change": {
+    "message": "wizigje"
+  }, 
+  "options_language_description": {
+    "message": "Optimalisearje AdBlock foar de taal/talen wêryn't jo websites trochgeans besjogge."
+  }, 
+  "options_language_empty": {
+    "message": "Jo hawwe gjin taalspesifike filters."
+  }, 
+  "options_language_header": {
+    "message": "Taal"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>TIP:</strong> selektearje allinnich de talen dy't jo nedich hawwe. It selektearjen fan mear talen fertraget de adblocker en dêrmei uw sneupsnelheid."
+  }, 
+  "options_learn_more": {
+    "message": "Mear ynfo"
+  }, 
+  "options_more_filters_description": {
+    "message": "Dit binne ekstra filters dy't jo earder oan AdBlock tafoege hawwe."
+  }, 
+  "options_more_filters_header": {
+    "message": "Mear filters"
+  }, 
+  "options_more_filters_note": {
+    "message": "<strong>Opmerking:</strong> jo moatte allinnich filterlisten fan tredden brûke fan auteurs dy't jo fertrouwe."
+  }, 
+  "options_new_label": {
+    "message": "Nij"
+  }, 
+  "options_page_document_title": {
+    "message": "AdBlock-opsjes"
+  }, 
+  "options_page_title": {
+    "message": "Ynstellingen"
+  }, 
+  "options_privacy_header": {
+    "message": "Privacy en befeiliging"
+  }, 
+  "options_protection_privacy_tooltip": {
+    "message": "Beskermje jo privacy tsjin bekende entiteiten dy't jo online-aktiviteit op websites dy't jo besykje folgje kinne."
+  }, 
+  "options_protection_social_tooltip": {
+    "message": "Fia de sosjale-mediapiktogrammen op de websites dy't jo besykje, kinne sosjale-medianetwurken in profyl fan jo opboue op basis fan jo sneupgedrach - sels wannear't jo hjir net op klikke. It ferstopjen fan dizze knoppen kin jo profyl beskermje."
+  }, 
+  "options_report_bug": {
+    "message": "In bug fûn? <a>Stjoer ús in bugrapport</a>"
+  }, 
+  "options_report_forum": {
+    "message": "Stipe fan ús mienskip nedich? <a>Gean nei it foarum</a>"
+  }, 
   "options_short": {
     "message": "Opsjes"
+  }, 
+  "options_social_description": {
+    "message": "Hawwe jo in fraach of in nij idee? Wy binne der om te helpen."
+  }, 
+  "options_social_title": {
+    "message": "Kontakt opnimme"
+  }, 
+  "options_support_title": {
+    "message": "Stipe"
+  }, 
+  "options_tab_advanced": {
+    "message": "Avansearre"
+  }, 
+  "options_tab_general": {
+    "message": "Algemien"
+  }, 
+  "options_tab_help": {
+    "message": "Help"
+  }, 
+  "options_tab_whitelist": {
+    "message": "Websites op wite list"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "Wy hawwe murken dat jo sawol <strong>$tracking$</strong> as <strong>$acceptableAds$</strong> ynskeakele hawwe.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "Jo moatte witte dat der by Akseptabele advertinsjes <strong>mooglik</strong> tracking bart, sadat advertearders mear relevante advertinsjes toane kinne."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "As jo de foarkar jouwe oan ekstra privacy, selektearje dan it ûndersteande fekje <strong>$acceptableAdsPrivacy$</strong>.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "OK, begrepen"
+  }, 
+  "options_whitelist_add": {
+    "message": "Website tafoegje"
+  }, 
+  "options_whitelist_description": {
+    "message": "Jo hawwe it blokkearjen fan advertinsjes op de folgjende websites útskeakele, wêrtroch jo der advertinsjes op sjogge."
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "Jo hawwe gjin websites op de wite list."
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "Hjir wurde websites toand dy't jo fertrouwe en wêrop jo advertinsjes tastean wolle."
+  }, 
+  "options_whitelist_notification": {
+    "message": "‘$website$’ is op de wite list pleatst.", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "byg. $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1539,6 +1983,12 @@
   }, 
   "overlay_notification_button_yes": {
     "message": "Ja"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "Dizze melding slute"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "Toanen fan meldingen stopje"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1675,7 +2125,11 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "Rapportearje probleem op dizze side"
+    "message": "Probleem op dizze side melde"
+  }, 
+  "settings_changed": {
+    "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
+    "description": "Part of Options page message letting users know of settings change."
   }, 
   "show_ads_except_for": {
     "message": "Show ads everywhere except for these domains...", 
@@ -1728,6 +2182,28 @@
   "sourcecode": {
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
+  }, 
+  "stats_label_page": {
+    "message": "<strong>$number$</strong> op dizze side", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
+  "stats_label_total": {
+    "message": "<strong>$number$</strong> yn totaal", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
+  "stats_show_iconnumber": {
+    "message": "Oantal yn piktogram toane"
+  }, 
+  "stats_title": {
+    "message": "Blokkearre advertinsjes"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
@@ -1903,6 +2379,9 @@
     "message": "Undo my blocks on this site", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
+  "unexpected_filter_list_header": {
+    "message": "Filterlistheaders binne hjir net tastien"
+  }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 
     "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused'"
@@ -1979,9 +2458,34 @@
     "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "As jo de kontrôle hawwe op jo desktop, kinne jo ek advertinsjes blokkearje en jo privacy en befeiliging ferbetterje op jo mobile apparaat. Download de <a>Adblock Browser-app hjirûnder</a>."
+  }, 
+  "updates_blockAds": {
+    "message": "De Open Source Rebel Alliance hat nije blokkearringsfilters makke wêrmei't jo ferburgen advertinsjes op websites lykas Facebook ferdwine litte kinne, sels as it ympearium tebekslacht."
+  }, 
+  "updates_heading": {
+    "message": "AdBlock is fernijd!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "Gloednije side foar Ynstellingen - fernijd en restyled mei mear opsjes foar privacy en befeiliging - sadat it makliker is om <a>AdBlock nei winsk oan te passen</a>."
+  }, 
+  "updates_phone": {
+    "message": "Mar wacht! Hoe sit it mei jo telefoan?"
+  }, 
+  "updates_status": {
+    "message": "Fernijing foltôge"
+  }, 
+  "updates_subheading": {
+    "message": "Wat is er nij?"
+  }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
+  }, 
+  "urgent_safari_changes": {
+    "message": "URGENT: Apple is changing Safari extensions.", 
+    "description": "Title for Options page message letting users know of settings change."
   }, 
   "warning_overrules_filters": {
     "message": "Warning: on all other sites you will see ads!\nThis overrules all other filters for those sites.", 
@@ -2026,7 +2530,7 @@
     "description": "The title of the whitelist wizard (Don't run on this page/pages on this domain)"
   }, 
   "wizardcantrunonframesets": {
-    "message": "This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.", 
+    "message": "This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the Options page.", 
     "description": "Alert shown when the user tries to use a blacklist/whitelist wizard on an old website"
   }, 
   "work_around_hulu_problems": {

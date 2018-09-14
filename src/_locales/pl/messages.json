@@ -395,6 +395,10 @@
     "message": "Koty", 
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
+  "changes_to_adblock": {
+    "message": "We've made changes to AdBlock!", 
+    "description": "Link to Options page with more information about the changes."
+  }, 
   "checkinfirefox_1": {
     "message": "Zainstaluj Firefoksa jeśli go nie masz.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -469,10 +473,10 @@
     "message": "Blokowanie szkodliwego oprogramowania"
   }, 
   "common_feature_privacy_title": {
-    "message": "Blokuj dodatkowe mechanizmy śledzenia"
+    "message": "Blokowanie dodatkowych mechanizmów śledzenia"
   }, 
   "common_feature_social_title": {
-    "message": "Blokuj śledzenie przez ikony mediów społecznościowych"
+    "message": "Blokowanie śledzenia przez media społecznościowe"
   }, 
   "common_notification_hide": {
     "message": "Zamknij powiadomienie"
@@ -663,6 +667,10 @@
     "message": "Wstrzymaj blokowanie na tej stronie", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "download_mac_app": {
+    "message": "To get the best AdBlock experience on your Mac, please download our [[AdBlock for Safari Mac App!]]", 
+    "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
+  }, 
   "easy_create_filter": {
     "message": "Blokuj element"
   }, 
@@ -830,6 +838,10 @@
   }, 
   "filterannoyances": {
     "message": "Fanboy's Annoyances (blokuje wyskakujące okna, media społecznościowe widżety oraz inne irytujące rzeczy)", 
+    "description": "A filter list"
+  }, 
+  "filteranticircumvent": {
+    "message": "Anti-Circumvention filters", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
@@ -1036,7 +1048,7 @@
     "message": "Lista współtwórców"
   }, 
   "firstRun_dataCorruptedWarning_intro": {
-    "message": "Niektórzy użytkownicy mają problemy podczas otwierania tej strony przy każdym uruchomieniu przeglądarki. Problem można rozwiązać poprzez odinstalowanie i ponowne zainstalowanie AdBlock:"
+    "message": "Niektórzy użytkownicy mają problemy podczas otwierania tej strony przy każdym uruchomieniu przeglądarki. Problem można rozwiązać poprzez odinstalowanie i ponowne zainstalowanie AdBlocka:"
   }, 
   "firstRun_dataCorruptedWarning_note": {
     "message": "Aby uzyskać dalszą pomoc, skontaktuj się z nami pod adresem: support@adblockplus.org lub odwiedź nasze <a>Centrum pomocy</a>."
@@ -1048,7 +1060,7 @@
     "message": "Znajdź rozszerzenie AdBlock i usuń je."
   }, 
   "firstRun_dataCorruptedWarning_step3": {
-    "message": "Zainstaluj AdBlock z witryny <a>adblockplus.org</a>."
+    "message": "Zainstaluj ponownie AdBlock z witryny <a>adblockplus.org</a>."
   }, 
   "firstRun_donate": {
     "message": "Przekaż darowiznę"
@@ -1172,7 +1184,7 @@
     "message": "Witamy w reporterze problemów"
   }, 
   "issueReporter_data_gathering_tab": {
-    "message": "<strong>Uwaga:</strong> Otworzy się dodatkowa karta, więc narzędzie zgłaszania problemów Issue Reporter nie wpłynie na wyświetlanie aktualnie przeglądanej strony."
+    "message": "<strong>Uwaga:</strong> Otworzy się dodatkowa karta, więc narzędzie zgłaszania problemów nie wpłynie na wyświetlanie aktualnie przeglądanej strony."
   }, 
   "issueReporter_doneButton_label": {
     "message": "Gotowe"
@@ -1389,6 +1401,10 @@
     "message": "Dodaj filtry dla innego języka: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
+  "learn_more": {
+    "message": "Learn more.", 
+    "description": "Link to Knowledge Base article with more information about the settings change"
+  }, 
   "legend": {
     "message": "Legenda: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1543,6 +1559,10 @@
     "message": "Coś poszło nie tak. Żadne zasoby nie zostały wysłane. Ta strona zostanie zamknięta. Spróbuj załadować stronę ponownie.", 
     "description": "Resource list page: error message"
   }, 
+  "note": {
+    "message": "NOTE:", 
+    "description": "Indicates that the user should take note of the message that follows."
+  }, 
   "notification_antiadblock_message": {
     "message": "Ta witryna wyświetla użytkownikom AdBlocka ukierunkowane dla nich informacje. Czy chcesz, by AdBlock ukrywał tego typu informacje?"
   }, 
@@ -1597,6 +1617,15 @@
   }, 
   "options_advanced_description": {
     "message": "Dostosuj AdBlock, dodaj lub usuń zestawy filtrów, twórz i utrzymuj własne zestawy filtrów"
+  }, 
+  "options_anti_cv_header": {
+    "message": "Omijanie blokowania"
+  }, 
+  "options_anti_cv_title": {
+    "message": "Zestaw filtrów ABP przeciwdziałających omijaniu blokowania"
+  }, 
+  "options_anti_cv_tooltip": {
+    "message": "Filtry znajdujące się w tym zestawie przeciwdziałają omijaniu blokowania – technikom wymuszającym wyświetlanie reklam użytkownikom blokującym reklamy. Filtry te identyfikują i zakłócają omijanie blokowania oraz powiązane z nimi śledzenie."
   }, 
   "options_close": {
     "message": "Zamknij"
@@ -1830,7 +1859,7 @@
     "message": "Prywatność i bezpieczeństwo"
   }, 
   "options_protection_privacy_tooltip": {
-    "message": "Chroń swoją prywatność przed znanymi jednostkami, które mogą śledzić Twoje działania w odwiedzanych witrynach internetowych."
+    "message": "Chroń swoją prywatność przed znanymi elementami, które mogą śledzić Twoją aktywność na odwiedzanych witrynach."
   }, 
   "options_protection_social_tooltip": {
     "message": "Ikony mediów społecznościowych znajdujące się w odwiedzanych witrynach internetowych umożliwiaj sieciom mediów społecznościowych na budowanie Twojego profilu w oparciu o Twoje nawyki przeglądania – nawet, jeśli ich nie klikasz. Ukrycie tych ikon może ochronić Twój profil."
@@ -1882,7 +1911,7 @@
     "message": "Aby reklamodawcy mogli wyświetlać bardziej trafne reklamy <strong>może</strong> istnieć pewne śledzenie realizowane za pomocą akceptowalne reklam."
   }, 
   "options_tracking_warning_3": {
-    "message": "Jeśli wolisz dodatkową prywatność, zaznacz poniżej opcję <strong>$acceptableAdsPrivacy$</strong>.", 
+    "message": "Jeśli preferujesz dodatkową prywatność, zaznacz poniżej opcję <strong>$acceptableAdsPrivacy$</strong>.", 
     "placeholders": {
       "acceptableAdsPrivacy": {
         "content": "$1", 
@@ -2101,6 +2130,10 @@
   }, 
   "sendReport": {
     "message": "Zgłoś problem na tej stronie"
+  }, 
+  "settings_changed": {
+    "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
+    "description": "Part of Options page message letting users know of settings change."
   }, 
   "show_ads_except_for": {
     "message": "Pokazuj reklamy wszędzie z wyjątkiem tych domen...", 
@@ -2453,6 +2486,10 @@
   "updateyourlists": {
     "message": "Upewnij się, że twoje listy filtrów są aktualne:", 
     "description": "Section header on the ad report page"
+  }, 
+  "urgent_safari_changes": {
+    "message": "URGENT: Apple is changing Safari extensions.", 
+    "description": "Title for Options page message letting users know of settings change."
   }, 
   "warning_overrules_filters": {
     "message": "Uwaga: na wszystkich innych stronach będziesz widzieć reklamy!\nUnieważnia to wszystkie inne filtry dla tych stron.", 

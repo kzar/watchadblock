@@ -134,7 +134,7 @@ exports.filterToRegExp = filterToRegExp;
 
 function splitSelector(selector)
 {
-  if (selector.indexOf(",") == -1)
+  if (!selector.includes(","))
     return [selector];
 
   let selectors = [];
@@ -171,6 +171,108 @@ function splitSelector(selector)
 }
 
 exports.splitSelector = splitSelector;
+
+function findTargetSelectorIndex(selector)
+{
+  let index = 0;
+  let whitespace = 0;
+  let scope = [];
+
+  // Start from the end of the string and go character by character, where each
+  // character is a Unicode code point.
+  for (let character of [...selector].reverse())
+  {
+    let currentScope = scope[scope.length - 1];
+
+    if (character == "'" || character == "\"")
+    {
+      // If we're already within the same type of quote, close the scope;
+      // otherwise open a new scope.
+      if (currentScope == character)
+        scope.pop();
+      else
+        scope.push(character);
+    }
+    else if (character == "]" || character == ")")
+    {
+      // For closing brackets and parentheses, open a new scope only if we're
+      // not within a quote. Within quotes these characters should have no
+      // meaning.
+      if (currentScope != "'" && currentScope != "\"")
+        scope.push(character);
+    }
+    else if (character == "[")
+    {
+      // If we're already within a bracket, close the scope.
+      if (currentScope == "]")
+        scope.pop();
+    }
+    else if (character == "(")
+    {
+      // If we're already within a parenthesis, close the scope.
+      if (currentScope == ")")
+        scope.pop();
+    }
+    else if (!currentScope)
+    {
+      // At the top level (not within any scope), count the whitespace if we've
+      // encountered it. Otherwise if we've hit one of the combinators,
+      // terminate here; otherwise if we've hit a non-colon character,
+      // terminate here.
+      if (/\s/.test(character))
+      {
+        whitespace++;
+      }
+      else if ((character == ">" || character == "+" || character == "~") ||
+               (whitespace > 0 && character != ":"))
+      {
+        break;
+      }
+    }
+
+    // Zero out the whitespace count if we've entered a scope.
+    if (scope.length > 0)
+      whitespace = 0;
+
+    // Increment the index by the size of the character. Note that for Unicode
+    // composite characters (like emoji) this will be more than one.
+    index += character.length;
+  }
+
+  return selector.length - index + whitespace;
+}
+
+/**
+ * Qualifies a CSS selector with a qualifier, which may be another CSS selector
+ * or an empty string. For example, given the selector "div.bar" and the
+ * qualifier "#foo", this function returns "div#foo.bar".
+ * @param {string} selector The selector to qualify.
+ * @param {string} qualifier The qualifier with which to qualify the selector.
+ * @returns {string} The qualified selector.
+ */
+function qualifySelector(selector, qualifier)
+{
+  let qualifiedSelector = "";
+
+  for (let sub of splitSelector(selector))
+  {
+    sub = sub.trim();
+
+    qualifiedSelector += ", ";
+
+    let index = findTargetSelectorIndex(sub);
+    let [, type = "", rest] = /^([a-z][a-z-]*)?(.*)/i.exec(sub.substr(index));
+
+    // Note that the first group in the regular expression is optional. If it
+    // doesn't match (e.g. "#foo::nth-child(1)"), type will be an empty string.
+    qualifiedSelector += sub.substr(0, index) + type + qualifier + rest;
+  }
+
+  // Remove the initial comma and space.
+  return qualifiedSelector.substr(2);
+}
+
+exports.qualifySelector = qualifySelector;
 
 
 /***/ }),
@@ -592,7 +694,7 @@ let {ElemHideEmulation} =
   __webpack_require__(4);
 
 // This variable is also used by our other content scripts.
-let elemhide;
+let contentFiltering;
 
 const typeMap = new Map([
   ["img", "IMAGE"],
@@ -798,7 +900,7 @@ function checkCollapse(element)
           if (!collapsingSelectors.has(selector))
           {
             collapsingSelectors.add(selector);
-            elemhide.addSelectors([selector], null, "collapsing", true);
+            contentFiltering.addSelectors([selector], null, "collapsing", true);
             if (typeof checkElement === "function") {
               checkElement(element);
             }
@@ -969,7 +1071,7 @@ ElementHidingTracer.prototype = {
   }
 };
 
-function ElemHide()
+function ContentFiltering()
 {
   this.shadow = this.createShadowTree();
   this.styles = new Map();
@@ -982,7 +1084,7 @@ function ElemHide()
     this.hideElements.bind(this)
   );
 }
-ElemHide.prototype = {
+ContentFiltering.prototype = {
   selectorGroupSize: 1024,
 
   createShadowTree()
@@ -1133,9 +1235,13 @@ ElemHide.prototype = {
     }
   },
 
-  apply()
+  apply(filterTypes)
   {
-    browser.runtime.sendMessage({type: "elemhide.getSelectors"}, response =>
+    browser.runtime.sendMessage({
+      type: "content.applyFilters",
+      filterTypes
+    },
+    response =>
     {
       if (this.tracer)
         this.tracer.disconnect();
@@ -1167,8 +1273,8 @@ if (document instanceof HTMLDocument)
 {
   checkSitekey();
 
-  elemhide = new ElemHide();
-  elemhide.apply();
+  contentFiltering = new ContentFiltering();
+  contentFiltering.apply();
 
   document.addEventListener("error", event =>
   {
@@ -1184,7 +1290,7 @@ if (document instanceof HTMLDocument)
 }
 
 window.checkCollapse = checkCollapse;
-window.elemhide = elemhide;
+window.contentFiltering = contentFiltering;
 window.typeMap = typeMap;
 window.getURLsFromElement = getURLsFromElement;
 
@@ -1212,12 +1318,31 @@ window.getURLsFromElement = getURLsFromElement;
 
 
 
-const {textToRegExp, filterToRegExp, splitSelector} = __webpack_require__(0);
+const {textToRegExp, filterToRegExp, splitSelector,
+       qualifySelector} = __webpack_require__(0);
 const {indexOf} = __webpack_require__(5);
 
 let MIN_INVOCATION_INTERVAL = 3000;
 const MAX_SYNCHRONOUS_PROCESSING_TIME = 50;
 const abpSelectorRegexp = /:-abp-([\w-]+)\(/i;
+
+let testInfo = null;
+
+function setTestMode()
+{
+  testInfo = {
+    lastProcessedElements: new Set()
+  };
+}
+
+exports.setTestMode = setTestMode;
+
+function getTestInfo()
+{
+  return testInfo;
+}
+
+exports.getTestInfo = getTestInfo;
 
 function getCachedPropertyValue(object, name, defaultValueFunc = () => {})
 {
@@ -1382,7 +1507,7 @@ const regexpRegexp = /^\/(.*)\/([imu]*)$/;
 function makeRegExpParameter(text)
 {
   let [, pattern, flags] =
-      regexpRegexp.exec(text) || [undefined, textToRegExp(text)];
+      regexpRegexp.exec(text) || [null, textToRegExp(text)];
 
   try
   {
@@ -1394,7 +1519,7 @@ function makeRegExpParameter(text)
   return null;
 }
 
-function* evaluate(chain, index, prefix, subtree, styles)
+function* evaluate(chain, index, prefix, subtree, styles, targets)
 {
   if (index >= chain.length)
   {
@@ -1402,12 +1527,12 @@ function* evaluate(chain, index, prefix, subtree, styles)
     return;
   }
   for (let [selector, element] of
-       chain[index].getSelectors(prefix, subtree, styles))
+       chain[index].getSelectors(prefix, subtree, styles, targets))
   {
     if (selector == null)
       yield null;
     else
-      yield* evaluate(chain, index + 1, selector, element, styles);
+      yield* evaluate(chain, index + 1, selector, element, styles, targets);
   }
   // Just in case the getSelectors() generator above had to run some heavy
   // document.querySelectorAll() call which didn't produce any results, make
@@ -1420,6 +1545,7 @@ function PlainSelector(selector)
   this._selector = selector;
   this.maybeDependsOnAttributes = /[#.]|\[.+\]/.test(selector);
   this.dependsOnDOM = this.maybeDependsOnAttributes;
+  this.maybeContainsSiblingCombinators = /[~+]/.test(selector);
 }
 
 PlainSelector.prototype = {
@@ -1429,8 +1555,9 @@ PlainSelector.prototype = {
    * @param {string} prefix the prefix for the selector.
    * @param {Node} subtree the subtree we work on.
    * @param {StringifiedStyle[]} styles the stringified style objects.
+   * @param {Node[]} [targets] the nodes we are interested in.
    */
-  *getSelectors(prefix, subtree, styles)
+  *getSelectors(prefix, subtree, styles, targets)
   {
     yield [prefix + this._selector, subtree];
   }
@@ -1465,9 +1592,9 @@ HasSelector.prototype = {
     );
   },
 
-  *getSelectors(prefix, subtree, styles)
+  *getSelectors(prefix, subtree, styles, targets)
   {
-    for (let element of this.getElements(prefix, subtree, styles))
+    for (let element of this.getElements(prefix, subtree, styles, targets))
       yield [makeSelector(element), element];
   },
 
@@ -1476,8 +1603,9 @@ HasSelector.prototype = {
    * @param {string} prefix the prefix for the selector.
    * @param {Node} subtree the subtree we work on.
    * @param {StringifiedStyle[]} styles the stringified style objects.
+   * @param {Node[]} [targets] the nodes we are interested in.
    */
-  *getElements(prefix, subtree, styles)
+  *getElements(prefix, subtree, styles, targets)
   {
     let actualPrefix = (!prefix || incompletePrefixRegexp.test(prefix)) ?
         prefix + "*" : prefix;
@@ -1486,7 +1614,17 @@ HasSelector.prototype = {
     {
       for (let element of elements)
       {
-        let iter = evaluate(this._innerSelectors, 0, "", element, styles);
+        // If the element is neither an ancestor nor a descendant of one of the
+        // targets, we can skip it.
+        if (targets && !targets.some(target => element.contains(target) ||
+                                               target.contains(element)))
+        {
+          yield null;
+          continue;
+        }
+
+        let iter = evaluate(this._innerSelectors, 0, "", element, styles,
+                            targets);
         for (let selector of iter)
         {
           if (selector == null)
@@ -1495,6 +1633,9 @@ HasSelector.prototype = {
             yield element;
         }
         yield null;
+
+        if (testInfo)
+          testInfo.lastProcessedElements.add(element);
       }
     }
   }
@@ -1509,13 +1650,13 @@ ContainsSelector.prototype = {
   dependsOnDOM: true,
   dependsOnCharacterData: true,
 
-  *getSelectors(prefix, subtree, styles)
+  *getSelectors(prefix, subtree, styles, targets)
   {
-    for (let element of this.getElements(prefix, subtree, styles))
+    for (let element of this.getElements(prefix, subtree, styles, targets))
       yield [makeSelector(element), subtree];
   },
 
-  *getElements(prefix, subtree, styles)
+  *getElements(prefix, subtree, styles, targets)
   {
     let actualPrefix = (!prefix || incompletePrefixRegexp.test(prefix)) ?
         prefix + "*" : prefix;
@@ -1538,10 +1679,20 @@ ContainsSelector.prototype = {
 
         lastRoot = element;
 
+        if (targets && !targets.some(target => element.contains(target) ||
+                                               target.contains(element)))
+        {
+          yield null;
+          continue;
+        }
+
         if (this._regexp && this._regexp.test(element.textContent))
           yield element;
         else
           yield null;
+
+        if (testInfo)
+          testInfo.lastProcessedElements.add(element);
       }
     }
   }
@@ -1564,6 +1715,7 @@ function PropsSelector(propertyExpression)
 
 PropsSelector.prototype = {
   dependsOnStyles: true,
+  dependsOnDOM: true,
 
   *findPropsSelectors(styles, prefix, regexp)
   {
@@ -1579,11 +1731,11 @@ PropsSelector.prototype = {
           let idx = subSelector.lastIndexOf("::");
           if (idx != -1)
             subSelector = subSelector.substr(0, idx);
-          yield prefix + subSelector;
+          yield qualifySelector(subSelector, prefix);
         }
   },
 
-  *getSelectors(prefix, subtree, styles)
+  *getSelectors(prefix, subtree, styles, targets)
   {
     for (let selector of this.findPropsSelectors(styles, prefix, this._regexp))
       yield [selector, subtree];
@@ -1649,6 +1801,15 @@ Pattern.prototype = {
     );
   },
 
+  get maybeContainsSiblingCombinators()
+  {
+    return getCachedPropertyValue(
+      this, "_maybeContainsSiblingCombinators",
+      () => this.selectors.some(selector =>
+                                selector.maybeContainsSiblingCombinators)
+    );
+  },
+
   matchesMutationTypes(mutationTypes)
   {
     let mutationTypeMatchMap = getCachedPropertyValue(
@@ -1687,6 +1848,31 @@ function extractMutationTypes(mutations)
   }
 
   return types;
+}
+
+function extractMutationTargets(mutations)
+{
+  if (!mutations)
+    return null;
+
+  let targets = new Set();
+
+  for (let mutation of mutations)
+  {
+    if (mutation.type == "childList")
+    {
+      // When new nodes are added, we're interested in the added nodes rather
+      // than the parent.
+      for (let node of mutation.addedNodes)
+        targets.add(node);
+    }
+    else
+    {
+      targets.add(mutation.target);
+    }
+  }
+
+  return [...targets];
 }
 
 function filterPatterns(patterns, {stylesheets, mutations})
@@ -1816,6 +2002,9 @@ ElemHideEmulation.prototype = {
    */
   _addSelectors(stylesheets, mutations, done)
   {
+    if (testInfo)
+      testInfo.lastProcessedElements.clear();
+
     let patterns = filterPatterns(this.patterns, {stylesheets, mutations});
 
     let selectors = [];
@@ -1873,6 +2062,8 @@ ElemHideEmulation.prototype = {
       }
     }
 
+    let targets = extractMutationTargets(mutations);
+
     let pattern = null;
     let generator = null;
 
@@ -1895,8 +2086,22 @@ ElemHideEmulation.prototype = {
 
         pattern = patterns.shift();
 
+        let evaluationTargets = targets;
+
+        // If the pattern appears to contain any sibling combinators, we can't
+        // easily optimize based on the mutation targets. Since this is a
+        // special case, skip the optimization. By setting it to null here we
+        // make sure we process the entire DOM.
+        if (pattern.maybeContainsSiblingCombinators)
+          evaluationTargets = null;
+
+        // Ignore mutation targets when using style sheets, because we may have
+        // to update all the CSS selectors.
+        if (!this.useInlineStyles)
+          evaluationTargets = null;
+
         generator = evaluate(pattern.selectors, 0, "",
-                             this.document, cssStyles);
+                             this.document, cssStyles, evaluationTargets);
       }
       for (let selector of generator)
       {
@@ -2036,6 +2241,21 @@ ElemHideEmulation.prototype = {
 
   observe(mutations)
   {
+    if (testInfo)
+    {
+      // In test mode, filter out any mutations likely done by us
+      // (i.e. style="display: none !important"). This makes it easier to
+      // observe how the code responds to DOM mutations.
+      mutations = mutations.filter(
+        ({type, attributeName, target: {style: newValue}, oldValue}) =>
+        !(type == "attributes" && attributeName == "style" &&
+          newValue.display == "none" && oldValue.display != "none")
+      );
+
+      if (mutations.length == 0)
+        return;
+    }
+
     this.queueFiltering(null, mutations);
   },
 

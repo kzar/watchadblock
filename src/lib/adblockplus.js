@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -93,7 +93,7 @@
 
 const {FilterNotifier} = __webpack_require__(1);
 const {extend} = __webpack_require__(19);
-const {filterToRegExp} = __webpack_require__(32);
+const {filterToRegExp} = __webpack_require__(34);
 
 /**
  * Abstract base class for filters
@@ -154,10 +154,10 @@ Filter.prototype =
 Filter.knownFilters = new Map();
 
 /**
- * Regular expression that element hiding filters should match
+ * Regular expression that content filters should match
  * @type {RegExp}
  */
-Filter.elemhideRegExp = /^([^/*|@"!]*?)#([@?])?#(.+)$/;
+Filter.contentRegExp = /^([^/*|@"!]*?)#([@?$])?#(.+)$/;
 /**
  * Regular expression that RegExp filters specified as RegExps should match
  * @type {RegExp}
@@ -167,7 +167,7 @@ Filter.regexpRegExp = /^(@@)?\/.*\/(?:\$~?[\w-]+(?:=[^,\s]+)?(?:,~?[\w-]+(?:=[^,
  * Regular expression that options on a RegExp filter should match
  * @type {RegExp}
  */
-Filter.optionsRegExp = /\$(~?[\w-]+(?:=[^,]+)?(?:,~?[\w-]+(?:=[^,]+)?)*)$/;
+Filter.optionsRegExp = /\$(~?[\w-]+(?:=[^,]*)?(?:,~?[\w-]+(?:=[^,]*)?)*)$/;
 /**
  * Regular expression that matches an invalid Content Security Policy
  * @type {RegExp}
@@ -187,7 +187,7 @@ Filter.fromText = function(text)
   if (filter)
     return filter;
 
-  let match = (text.includes("#") ? Filter.elemhideRegExp.exec(text) : null);
+  let match = text.includes("#") ? Filter.contentRegExp.exec(text) : null;
   if (match)
   {
     let propsMatch;
@@ -202,9 +202,7 @@ Filter.fromText = function(text)
           `${prefix}:-abp-properties(${expression})${suffix}`);
     }
 
-    filter = ElemHideBase.fromText(
-      text, match[1], match[2], match[3]
-    );
+    filter = ContentFilter.fromText(text, match[1], match[2], match[3]);
   }
   else if (text[0] == "!")
     filter = new CommentFilter(text);
@@ -254,12 +252,12 @@ Filter.normalize = function(text)
   if (/^ *!/.test(text))
     return text.trim();
 
-  // Special treatment for element hiding filters, right side is allowed to
-  // contain spaces
-  if (Filter.elemhideRegExp.test(text))
+  // Special treatment for content filters, right side is allowed to contain
+  // spaces
+  if (Filter.contentRegExp.test(text))
   {
-    let [, domains, separator, selector] = /^(.*?)(#[@?]?#?)(.*)$/.exec(text);
-    return domains.replace(/ +/g, "") + separator + selector.trim();
+    let [, domains, separator, body] = /^(.*?)(#[@?$]?#?)(.*)$/.exec(text);
+    return domains.replace(/ +/g, "") + separator + body.trim();
   }
 
   // For most regexp filters we strip all spaces, but $csp filter options
@@ -310,7 +308,7 @@ Filter.toRegExp = filterToRegExp;
 
 /**
  * Class for invalid filters
- * @param {string} text see Filter()
+ * @param {string} text see {@link Filter Filter()}
  * @param {string} reason Reason why this filter is invalid
  * @constructor
  * @augments Filter
@@ -341,7 +339,7 @@ InvalidFilter.prototype = extend(Filter, {
 
 /**
  * Class for comments
- * @param {string} text see Filter()
+ * @param {string} text see {@link Filter Filter()}
  * @constructor
  * @augments Filter
  */
@@ -364,7 +362,7 @@ CommentFilter.prototype = extend(Filter, {
 /**
  * Abstract base class for filters that can get hits
  * @param {string} text
- *   see Filter()
+ *   see {@link Filter Filter()}
  * @param {string} [domains]
  *   Domains that the filter is restricted to separated by domainSeparator
  *   e.g. "foo.com|bar.com|~baz.com"
@@ -375,7 +373,8 @@ function ActiveFilter(text, domains)
 {
   Filter.call(this, text);
 
-  this.domainSource = domains;
+  if (domains)
+    this.domainSource = domains;
 }
 exports.ActiveFilter = ActiveFilter;
 
@@ -456,18 +455,11 @@ ActiveFilter.prototype = extend(Filter, {
   domainSeparator: null,
 
   /**
-   * Determines whether the trailing dot in domain names isn't important and
-   * should be ignored, must be overridden by subclasses.
-   * @type {boolean}
-   */
-  ignoreTrailingDot: true,
-
-  /**
-   * Determines whether domainSource is already upper-case,
+   * Determines whether domainSource is already lower-case,
    * can be overridden by subclasses.
    * @type {boolean}
    */
-  domainSourceIsUpperCase: false,
+  domainSourceIsLowerCase: false,
 
   /**
    * Map containing domains that this filter should match on/not match
@@ -476,29 +468,29 @@ ActiveFilter.prototype = extend(Filter, {
    */
   get domains()
   {
-    // Despite this property being cached, the getter is called
-    // several times on Safari, due to WebKit bug 132872
-    let prop = Object.getOwnPropertyDescriptor(this, "domains");
+    let prop = Object.getOwnPropertyDescriptor(this, "_domains");
     if (prop)
-      return prop.value;
+    {
+      let {value} = prop;
+      return typeof value == "string" ?
+               new Map([[value, true], ["", false]]) : value;
+    }
 
     let domains = null;
 
     if (this.domainSource)
     {
       let source = this.domainSource;
-      if (!this.domainSourceIsUpperCase)
+      if (!this.domainSourceIsLowerCase)
       {
-        // RegExpFilter already have uppercase domains
-        source = source.toUpperCase();
+        // RegExpFilter already have lowercase domains
+        source = source.toLowerCase();
       }
       let list = source.split(this.domainSeparator);
       if (list.length == 1 && list[0][0] != "~")
       {
         // Fast track for the common one-domain scenario
-        if (this.ignoreTrailingDot)
-          list[0] = list[0].replace(/\.+$/, "");
-        domains = new Map([["", false], [list[0], true]]);
+        domains = list[0];
       }
       else
       {
@@ -506,8 +498,6 @@ ActiveFilter.prototype = extend(Filter, {
         for (let i = 0; i < list.length; i++)
         {
           let domain = list[i];
-          if (this.ignoreTrailingDot)
-            domain = domain.replace(/\.+$/, "");
           if (domain == "")
             continue;
 
@@ -535,7 +525,7 @@ ActiveFilter.prototype = extend(Filter, {
       this.domainSource = null;
     }
 
-    Object.defineProperty(this, "domains", {value: domains, enumerable: true});
+    Object.defineProperty(this, "_domains", {value: domains});
     return this.domains;
   },
 
@@ -571,9 +561,7 @@ ActiveFilter.prototype = extend(Filter, {
     if (!docDomain)
       return this.domains.get("");
 
-    if (this.ignoreTrailingDot)
-      docDomain = docDomain.replace(/\.+$/, "");
-    docDomain = docDomain.toUpperCase();
+    docDomain = docDomain.replace(/\.+$/, "").toLowerCase();
 
     while (true)
     {
@@ -599,9 +587,7 @@ ActiveFilter.prototype = extend(Filter, {
     if (!docDomain || !this.domains || this.domains.get(""))
       return false;
 
-    if (this.ignoreTrailingDot)
-      docDomain = docDomain.replace(/\.+$/, "");
-    docDomain = docDomain.toUpperCase();
+    docDomain = docDomain.replace(/\.+$/, "").toLowerCase();
 
     for (let [domain, isIncluded] of this.domains)
     {
@@ -649,7 +635,7 @@ ActiveFilter.prototype = extend(Filter, {
 
 /**
  * Abstract base class for RegExp-based filters
- * @param {string} text see Filter()
+ * @param {string} text see {@link Filter Filter()}
  * @param {string} regexpSource
  *   filter part that the regular expression should be build from
  * @param {number} [contentType]
@@ -702,9 +688,9 @@ exports.RegExpFilter = RegExpFilter;
 
 RegExpFilter.prototype = extend(ActiveFilter, {
   /**
-   * @see ActiveFilter.domainSourceIsUpperCase
+   * @see ActiveFilter.domainSourceIsLowerCase
    */
-  domainSourceIsUpperCase: true,
+  domainSourceIsLowerCase: true,
 
   /**
    * Number of filters contained, will always be 1 (required to
@@ -730,16 +716,10 @@ RegExpFilter.prototype = extend(ActiveFilter, {
    */
   get regexp()
   {
-    // Despite this property being cached, the getter is called
-    // several times on Safari, due to WebKit bug 132872
-    let prop = Object.getOwnPropertyDescriptor(this, "regexp");
-    if (prop)
-      return prop.value;
-
     let source = Filter.toRegExp(this.regexpSource);
     let regexp = new RegExp(source, this.matchCase ? "" : "i");
     Object.defineProperty(this, "regexp", {value: regexp});
-    delete this.regexpSource;
+    this.regexpSource = null;
     return regexp;
   },
   /**
@@ -772,12 +752,6 @@ RegExpFilter.prototype = extend(ActiveFilter, {
    */
   get sitekeys()
   {
-    // Despite this property being cached, the getter is called
-    // several times on Safari, due to WebKit bug 132872
-    let prop = Object.getOwnPropertyDescriptor(this, "sitekeys");
-    if (prop)
-      return prop.value;
-
     let sitekeys = null;
 
     if (this.sitekeySource)
@@ -828,7 +802,7 @@ RegExpFilter.fromText = function(text)
 {
   let blocking = true;
   let origText = text;
-  if (text.indexOf("@@") == 0)
+  if (text[0] == "@" && text[1] == "@")
   {
     blocking = false;
     text = text.substr(2);
@@ -843,7 +817,7 @@ RegExpFilter.fromText = function(text)
   let csp = null;
   let rewrite = null;
   let options;
-  let match = (text.indexOf("$") >= 0 ? Filter.optionsRegExp.exec(text) : null);
+  let match = text.includes("$") ? Filter.optionsRegExp.exec(text) : null;
   if (match)
   {
     options = match[1].split(",");
@@ -857,42 +831,60 @@ RegExpFilter.fromText = function(text)
         value = option.substr(separatorIndex + 1);
         option = option.substr(0, separatorIndex);
       }
-      option = option.replace(/-/, "_").toUpperCase();
-      if (option in RegExpFilter.typeMap)
-      {
-        if (contentType == null)
-          contentType = 0;
-        contentType |= RegExpFilter.typeMap[option];
 
-        if (option == "CSP" && value)
-          csp = value;
-      }
-      else if (option[0] == "~" && option.substr(1) in RegExpFilter.typeMap)
+      let inverse = option[0] == "~";
+      if (inverse)
+        option = option.substr(1);
+
+      let type = RegExpFilter.typeMap[option.replace(/-/, "_").toUpperCase()];
+      if (type)
       {
-        if (contentType == null)
-          ({contentType} = RegExpFilter.prototype);
-        contentType &= ~RegExpFilter.typeMap[option.substr(1)];
+        if (inverse)
+        {
+          if (contentType == null)
+            ({contentType} = RegExpFilter.prototype);
+          contentType &= ~type;
+        }
+        else
+        {
+          contentType |= type;
+
+          if (type == RegExpFilter.typeMap.CSP && value)
+            csp = value;
+        }
       }
-      else if (option == "MATCH_CASE")
-        matchCase = true;
-      else if (option == "~MATCH_CASE")
-        matchCase = false;
-      else if (option == "DOMAIN" && value)
-        domains = value.toUpperCase();
-      else if (option == "THIRD_PARTY")
-        thirdParty = true;
-      else if (option == "~THIRD_PARTY")
-        thirdParty = false;
-      else if (option == "COLLAPSE")
-        collapse = true;
-      else if (option == "~COLLAPSE")
-        collapse = false;
-      else if (option == "SITEKEY" && value)
-        sitekeys = value.toUpperCase();
-      else if (option == "REWRITE" && value)
-        rewrite = value;
       else
-        return new InvalidFilter(origText, "filter_unknown_option");
+      {
+        switch (option.toLowerCase())
+        {
+          case "match-case":
+            matchCase = !inverse;
+            break;
+          case "domain":
+            if (!value)
+              return new InvalidFilter(origText, "filter_unknown_option");
+            domains = value.toLowerCase();
+            break;
+          case "third-party":
+            thirdParty = !inverse;
+            break;
+          case "collapse":
+            collapse = !inverse;
+            break;
+          case "sitekey":
+            if (!value)
+              return new InvalidFilter(origText, "filter_unknown_option");
+            sitekeys = value.toUpperCase();
+            break;
+          case "rewrite":
+            if (value == null)
+              return new InvalidFilter(origText, "filter_unknown_option");
+            rewrite = value;
+            break;
+          default:
+            return new InvalidFilter(origText, "filter_unknown_option");
+        }
+      }
     }
   }
 
@@ -968,13 +960,13 @@ RegExpFilter.prototype.contentType &= ~(RegExpFilter.typeMap.CSP |
 
 /**
  * Class for blocking filters
- * @param {string} text see Filter()
- * @param {string} regexpSource see RegExpFilter()
- * @param {number} [contentType] see RegExpFilter()
- * @param {boolean} [matchCase] see RegExpFilter()
- * @param {string} [domains] see RegExpFilter()
- * @param {boolean} [thirdParty] see RegExpFilter()
- * @param {string} [sitekeys] see RegExpFilter()
+ * @param {string} text see {@link Filter Filter()}
+ * @param {string} regexpSource see {@link RegExpFilter RegExpFilter()}
+ * @param {number} [contentType] see {@link RegExpFilter RegExpFilter()}
+ * @param {boolean} [matchCase] see {@link RegExpFilter RegExpFilter()}
+ * @param {string} [domains] see {@link RegExpFilter RegExpFilter()}
+ * @param {boolean} [thirdParty] see {@link RegExpFilter RegExpFilter()}
+ * @param {string} [sitekeys] see {@link RegExpFilter RegExpFilter()}
  * @param {boolean} [collapse]
  *   defines whether the filter should collapse blocked content, can be null
  * @param {string} [csp]
@@ -991,9 +983,14 @@ function BlockingFilter(text, regexpSource, contentType, matchCase, domains,
   RegExpFilter.call(this, text, regexpSource, contentType, matchCase, domains,
                     thirdParty, sitekeys);
 
-  this.collapse = collapse;
-  this.csp = csp;
-  this.rewrite = rewrite;
+  if (collapse != null)
+    this.collapse = collapse;
+
+  if (csp != null)
+    this.csp = csp;
+
+  if (rewrite != null)
+    this.rewrite = rewrite;
 }
 exports.BlockingFilter = BlockingFilter;
 
@@ -1043,13 +1040,13 @@ BlockingFilter.prototype = extend(RegExpFilter, {
 
 /**
  * Class for whitelist filters
- * @param {string} text see Filter()
- * @param {string} regexpSource see RegExpFilter()
- * @param {number} [contentType] see RegExpFilter()
- * @param {boolean} [matchCase] see RegExpFilter()
- * @param {string} [domains] see RegExpFilter()
- * @param {boolean} [thirdParty] see RegExpFilter()
- * @param {string} [sitekeys] see RegExpFilter()
+ * @param {string} text see {@link Filter Filter()}
+ * @param {string} regexpSource see {@link RegExpFilter RegExpFilter()}
+ * @param {number} [contentType] see {@link RegExpFilter RegExpFilter()}
+ * @param {boolean} [matchCase] see {@link RegExpFilter RegExpFilter()}
+ * @param {string} [domains] see {@link RegExpFilter RegExpFilter()}
+ * @param {boolean} [thirdParty] see {@link RegExpFilter RegExpFilter()}
+ * @param {string} [sitekeys] see {@link RegExpFilter RegExpFilter()}
  * @constructor
  * @augments RegExpFilter
  */
@@ -1066,64 +1063,66 @@ WhitelistFilter.prototype = extend(RegExpFilter, {
 });
 
 /**
- * Base class for element hiding filters
- * @param {string} text see Filter()
+ * Base class for content filters
+ * @param {string} text see {@link Filter Filter()}
  * @param {string} [domains] Host names or domains the filter should be
  *                           restricted to
- * @param {string} selector   CSS selector for the HTML elements that should be
- *                            hidden
+ * @param {string} body      The body of the filter
  * @constructor
  * @augments ActiveFilter
  */
-function ElemHideBase(text, domains, selector)
+function ContentFilter(text, domains, body)
 {
   ActiveFilter.call(this, text, domains || null);
 
-  // Braces are being escaped to prevent CSS rule injection.
-  this.selector = selector.replace("{", "\\7B ").replace("}", "\\7D ");
+  this.body = body;
 }
-exports.ElemHideBase = ElemHideBase;
+exports.ContentFilter = ContentFilter;
 
-ElemHideBase.prototype = extend(ActiveFilter, {
+ContentFilter.prototype = extend(ActiveFilter, {
   /**
    * @see ActiveFilter.domainSeparator
    */
   domainSeparator: ",",
 
   /**
-   * @see ActiveFilter.ignoreTrailingDot
-   */
-  ignoreTrailingDot: false,
-
-  /**
-   * CSS selector for the HTML elements that should be hidden
+   * The body of the filter
    * @type {string}
    */
-  selector: null
+  body: null
 });
 
 /**
- * Creates an element hiding filter from a pre-parsed text representation
+ * Creates a content filter from a pre-parsed text representation
  *
  * @param {string} text         same as in Filter()
  * @param {string} [domains]
  *   domains part of the text representation
  * @param {string} [type]
-*    rule type, either empty or @ (exception) or ? (emulation rule)
- * @param {string} selector     raw CSS selector
+ *   rule type, either:
+ *     <li>"" for an element hiding filter</li>
+ *     <li>"@" for an element hiding exception filter</li>
+ *     <li>"?" for an element hiding emulation filter</li>
+ *     <li>"$" for a snippet filter</li>
+ * @param {string} body
+ *   body part of the text representation, either a CSS selector or a snippet
+ *   script
  * @return {ElemHideFilter|ElemHideException|
- *          ElemHideEmulationFilter|InvalidFilter}
+ *          ElemHideEmulationFilter|SnippetFilter|InvalidFilter}
  */
-ElemHideBase.fromText = function(text, domains, type, selector)
+ContentFilter.fromText = function(text, domains, type, body)
 {
-  // We don't allow ElemHide filters which have any empty domains.
-  // Note: The ElemHide.prototype.domainSeparator is duplicated here, if that
-  // changes this must be changed too.
+  // We don't allow content filters which have any empty domains.
+  // Note: The ContentFilter.prototype.domainSeparator is duplicated here, if
+  // that changes this must be changed too.
   if (domains && /(^|,)~?(,|$)/.test(domains))
     return new InvalidFilter(text, "filter_invalid_domain");
 
   if (type == "@")
-    return new ElemHideException(text, domains, selector);
+    return new ElemHideException(text, domains, body);
+
+  if (type == "$")
+    return new SnippetFilter(text, domains, body);
 
   if (type == "?")
   {
@@ -1132,17 +1131,44 @@ ElemHideBase.fromText = function(text, domains, type, selector)
     if (!/,[^~][^,.]*\.[^,]/.test("," + domains))
       return new InvalidFilter(text, "filter_elemhideemulation_nodomain");
 
-    return new ElemHideEmulationFilter(text, domains, selector);
+    return new ElemHideEmulationFilter(text, domains, body);
   }
 
-  return new ElemHideFilter(text, domains, selector);
+  return new ElemHideFilter(text, domains, body);
 };
 
 /**
+ * Base class for element hiding filters
+ * @param {string} text see {@link Filter Filter()}
+ * @param {string} [domains] see {@link ContentFilter ContentFilter()}
+ * @param {string} selector  CSS selector for the HTML elements that should be
+ *                           hidden
+ * @constructor
+ * @augments ContentFilter
+ */
+function ElemHideBase(text, domains, selector)
+{
+  ContentFilter.call(this, text, domains, selector);
+}
+exports.ElemHideBase = ElemHideBase;
+
+ElemHideBase.prototype = extend(ContentFilter, {
+  /**
+   * CSS selector for the HTML elements that should be hidden
+   * @type {string}
+   */
+  get selector()
+  {
+    // Braces are being escaped to prevent CSS rule injection.
+    return this.body.replace("{", "\\7B ").replace("}", "\\7D ");
+  }
+});
+
+/**
  * Class for element hiding filters
- * @param {string} text see Filter()
- * @param {string} [domains]  see ElemHideBase()
- * @param {string} selector see ElemHideBase()
+ * @param {string} text see {@link Filter Filter()}
+ * @param {string} [domains]  see {@link ElemHideBase ElemHideBase()}
+ * @param {string} selector see {@link ElemHideBase ElemHideBase()}
  * @constructor
  * @augments ElemHideBase
  */
@@ -1158,9 +1184,9 @@ ElemHideFilter.prototype = extend(ElemHideBase, {
 
 /**
  * Class for element hiding exceptions
- * @param {string} text see Filter()
- * @param {string} [domains]  see ElemHideBase()
- * @param {string} selector see ElemHideBase()
+ * @param {string} text see {@link Filter Filter()}
+ * @param {string} [domains]  see {@link ElemHideBase ElemHideBase()}
+ * @param {string} selector see {@link ElemHideBase ElemHideBase()}
  * @constructor
  * @augments ElemHideBase
  */
@@ -1176,9 +1202,9 @@ ElemHideException.prototype = extend(ElemHideBase, {
 
 /**
  * Class for element hiding emulation filters
- * @param {string} text           see Filter()
- * @param {string} domains        see ElemHideBase()
- * @param {string} selector       see ElemHideBase()
+ * @param {string} text           see {@link Filter Filter()}
+ * @param {string} domains        see {@link ElemHideBase ElemHideBase()}
+ * @param {string} selector       see {@link ElemHideBase ElemHideBase()}
  * @constructor
  * @augments ElemHideBase
  */
@@ -1190,6 +1216,33 @@ exports.ElemHideEmulationFilter = ElemHideEmulationFilter;
 
 ElemHideEmulationFilter.prototype = extend(ElemHideBase, {
   type: "elemhideemulation"
+});
+
+/**
+ * Class for snippet filters
+ * @param {string} text see Filter()
+ * @param {string} [domains] see ContentFilter()
+ * @param {string} script    Script that should be executed
+ * @constructor
+ * @augments ContentFilter
+ */
+function SnippetFilter(text, domains, script)
+{
+  ContentFilter.call(this, text, domains, script);
+}
+exports.SnippetFilter = SnippetFilter;
+
+SnippetFilter.prototype = extend(ContentFilter, {
+  type: "snippet",
+
+  /**
+   * Script that should be executed
+   * @type {string}
+   */
+  get script()
+  {
+    return this.body;
+  }
 });
 
 
@@ -1392,6 +1445,11 @@ defaults.subscriptions_exceptionsurl_privacy = "https://easylist-downloads.adblo
  * @type {string}
  */
 defaults.subscriptions_antiadblockurl = "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt";
+/**
+ * Used to ensure the anti-circumvention subscription is opted in by default.
+ * @type {boolean}
+ */
+defaults.subscriptions_addedanticv = false;
 /**
  * @see https://adblockplus.org/en/preferences#documentation_link
  * @type {string}
@@ -1737,7 +1795,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.32.1";
+exports.addonVersion = "3.33.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -1770,15 +1828,607 @@ exports.platformVersion = platformVersion;
 
 
 /**
+ * @fileOverview Definition of Subscription class and its subclasses.
+ */
+
+const {ActiveFilter, BlockingFilter,
+       WhitelistFilter, ElemHideBase} = __webpack_require__(0);
+const {FilterNotifier} = __webpack_require__(1);
+const {extend} = __webpack_require__(19);
+
+/**
+ * Abstract base class for filter subscriptions
+ *
+ * @param {string} url    download location of the subscription
+ * @param {string} [title]  title of the filter subscription
+ * @constructor
+ */
+function Subscription(url, title)
+{
+  this.url = url;
+  this.filters = [];
+  if (title)
+    this._title = title;
+  Subscription.knownSubscriptions.set(url, this);
+}
+exports.Subscription = Subscription;
+
+Subscription.prototype =
+{
+  /**
+   * Download location of the subscription
+   * @type {string}
+   */
+  url: null,
+
+  /**
+   * Type of the subscription
+   * @type {?string}
+   */
+  type: null,
+
+  /**
+   * Filters contained in the filter subscription
+   * @type {Filter[]}
+   */
+  filters: null,
+
+  _title: null,
+  _fixedTitle: false,
+  _disabled: false,
+
+  /**
+   * Title of the filter subscription
+   * @type {string}
+   */
+  get title()
+  {
+    return this._title;
+  },
+  set title(value)
+  {
+    if (value != this._title)
+    {
+      let oldValue = this._title;
+      this._title = value;
+      FilterNotifier.triggerListeners("subscription.title",
+                                      this, value, oldValue);
+    }
+    return this._title;
+  },
+
+  /**
+   * Determines whether the title should be editable
+   * @type {boolean}
+   */
+  get fixedTitle()
+  {
+    return this._fixedTitle;
+  },
+  set fixedTitle(value)
+  {
+    if (value != this._fixedTitle)
+    {
+      let oldValue = this._fixedTitle;
+      this._fixedTitle = value;
+      FilterNotifier.triggerListeners("subscription.fixedTitle",
+                                      this, value, oldValue);
+    }
+    return this._fixedTitle;
+  },
+
+  /**
+   * Defines whether the filters in the subscription should be disabled
+   * @type {boolean}
+   */
+  get disabled()
+  {
+    return this._disabled;
+  },
+  set disabled(value)
+  {
+    if (value != this._disabled)
+    {
+      let oldValue = this._disabled;
+      this._disabled = value;
+      FilterNotifier.triggerListeners("subscription.disabled",
+                                      this, value, oldValue);
+    }
+    return this._disabled;
+  },
+
+  /**
+   * Serializes the subscription to an array of strings for writing
+   * out on the disk.
+   * @param {string[]} buffer  buffer to push the serialization results into
+   */
+  serialize(buffer)
+  {
+    buffer.push("[Subscription]");
+    buffer.push("url=" + this.url);
+    if (this.type)
+      buffer.push("type=" + this.type);
+    if (this._title)
+      buffer.push("title=" + this._title);
+    if (this._fixedTitle)
+      buffer.push("fixedTitle=true");
+    if (this._disabled)
+      buffer.push("disabled=true");
+  },
+
+  serializeFilters(buffer)
+  {
+    for (let filter of this.filters)
+      buffer.push(filter.text.replace(/\[/g, "\\["));
+  },
+
+  toString()
+  {
+    let buffer = [];
+    this.serialize(buffer);
+    return buffer.join("\n");
+  }
+};
+
+/**
+ * Cache for known filter subscriptions, maps URL to subscription objects.
+ * @type {Map.<string,Subscription>}
+ */
+Subscription.knownSubscriptions = new Map();
+
+/**
+ * Returns a subscription from its URL, creates a new one if necessary.
+ * @param {string} url
+ *   URL of the subscription
+ * @return {Subscription}
+ *   subscription or null if the subscription couldn't be created
+ */
+Subscription.fromURL = function(url)
+{
+  let subscription = Subscription.knownSubscriptions.get(url);
+  if (subscription)
+    return subscription;
+
+  if (url[0] != "~")
+    return new DownloadableSubscription(url, null);
+  return new SpecialSubscription(url);
+};
+
+/**
+ * Deserializes a subscription
+ *
+ * @param {Object}  obj
+ *   map of serialized properties and their values
+ * @return {Subscription}
+ *   subscription or null if the subscription couldn't be created
+ */
+Subscription.fromObject = function(obj)
+{
+  let result;
+  if (obj.url[0] != "~")
+  {
+    // URL is valid - this is a downloadable subscription
+    result = new DownloadableSubscription(obj.url, obj.title);
+    if ("type" in obj)
+      result.type = obj.type;
+    if ("downloadStatus" in obj)
+      result._downloadStatus = obj.downloadStatus;
+    if ("lastSuccess" in obj)
+      result.lastSuccess = parseInt(obj.lastSuccess, 10) || 0;
+    if ("lastCheck" in obj)
+      result._lastCheck = parseInt(obj.lastCheck, 10) || 0;
+    if ("expires" in obj)
+      result.expires = parseInt(obj.expires, 10) || 0;
+    if ("softExpiration" in obj)
+      result.softExpiration = parseInt(obj.softExpiration, 10) || 0;
+    if ("errors" in obj)
+      result._errors = parseInt(obj.errors, 10) || 0;
+    if ("version" in obj)
+      result.version = parseInt(obj.version, 10) || 0;
+    if ("requiredVersion" in obj)
+      result.requiredVersion = obj.requiredVersion;
+    if ("homepage" in obj)
+      result._homepage = obj.homepage;
+    if ("lastDownload" in obj)
+      result._lastDownload = parseInt(obj.lastDownload, 10) || 0;
+    if ("downloadCount" in obj)
+      result.downloadCount = parseInt(obj.downloadCount, 10) || 0;
+  }
+  else
+  {
+    result = new SpecialSubscription(obj.url, obj.title);
+    if ("defaults" in obj)
+      result.defaults = obj.defaults.split(" ");
+  }
+  if ("fixedTitle" in obj)
+    result._fixedTitle = (obj.fixedTitle == "true");
+  if ("disabled" in obj)
+    result._disabled = (obj.disabled == "true");
+
+  return result;
+};
+
+/**
+ * Class for special filter subscriptions (user's filters)
+ * @param {string} url see {@link Subscription Subscription()}
+ * @param {string} [title]  see {@link Subscription Subscription()}
+ * @constructor
+ * @augments Subscription
+ */
+function SpecialSubscription(url, title)
+{
+  Subscription.call(this, url, title);
+}
+exports.SpecialSubscription = SpecialSubscription;
+
+SpecialSubscription.prototype = extend(Subscription, {
+  /**
+   * Filter types that should be added to this subscription by default
+   * (entries should correspond to keys in SpecialSubscription.defaultsMap).
+   * @type {string[]}
+   */
+  defaults: null,
+
+  /**
+   * Tests whether a filter should be added to this group by default
+   * @param {Filter} filter filter to be tested
+   * @return {boolean}
+   */
+  isDefaultFor(filter)
+  {
+    if (this.defaults && this.defaults.length)
+    {
+      for (let type of this.defaults)
+      {
+        if (filter instanceof SpecialSubscription.defaultsMap.get(type))
+          return true;
+        if (!(filter instanceof ActiveFilter) && type == "blacklist")
+          return true;
+      }
+    }
+
+    return false;
+  },
+
+  /**
+   * See Subscription.serialize()
+   * @inheritdoc
+   */
+  serialize(buffer)
+  {
+    Subscription.prototype.serialize.call(this, buffer);
+    if (this.defaults && this.defaults.length)
+    {
+      buffer.push("defaults=" +
+        this.defaults.filter(
+          type => SpecialSubscription.defaultsMap.has(type)
+        ).join(" ")
+      );
+    }
+    if (this._lastDownload)
+      buffer.push("lastDownload=" + this._lastDownload);
+  }
+});
+
+SpecialSubscription.defaultsMap = new Map([
+  ["whitelist", WhitelistFilter],
+  ["blocking", BlockingFilter],
+  ["elemhide", ElemHideBase]
+]);
+
+/**
+ * Creates a new user-defined filter group.
+ * @param {string} [title]  title of the new filter group
+ * @return {SpecialSubscription}
+ */
+SpecialSubscription.create = function(title)
+{
+  let url;
+  do
+  {
+    url = "~user~" + Math.round(Math.random() * 1000000);
+  } while (Subscription.knownSubscriptions.has(url));
+  return new SpecialSubscription(url, title);
+};
+
+/**
+ * Creates a new user-defined filter group and adds the given filter to it.
+ * This group will act as the default group for this filter type.
+ * @param {Filter} filter
+ * @return {SpecialSubscription}
+ */
+SpecialSubscription.createForFilter = function(filter)
+{
+  let subscription = SpecialSubscription.create();
+  subscription.filters.push(filter);
+  for (let [type, class_] of SpecialSubscription.defaultsMap)
+  {
+    if (filter instanceof class_)
+      subscription.defaults = [type];
+  }
+  if (!subscription.defaults)
+    subscription.defaults = ["blocking"];
+  return subscription;
+};
+
+/**
+ * Abstract base class for regular filter subscriptions (both
+ * internally and externally updated)
+ * @param {string} url    see {@link Subscription Subscription()}
+ * @param {string} [title]  see {@link Subscription Subscription()}
+ * @constructor
+ * @augments Subscription
+ */
+function RegularSubscription(url, title)
+{
+  Subscription.call(this, url, title || url);
+}
+exports.RegularSubscription = RegularSubscription;
+
+RegularSubscription.prototype = extend(Subscription, {
+  _homepage: null,
+  _lastDownload: 0,
+
+  /**
+   * Filter subscription homepage if known
+   * @type {string}
+   */
+  get homepage()
+  {
+    return this._homepage;
+  },
+  set homepage(value)
+  {
+    if (value != this._homepage)
+    {
+      let oldValue = this._homepage;
+      this._homepage = value;
+      FilterNotifier.triggerListeners("subscription.homepage",
+                                      this, value, oldValue);
+    }
+    return this._homepage;
+  },
+
+  /**
+   * Time of the last subscription download (in seconds since the
+   * beginning of the epoch)
+   * @type {number}
+   */
+  get lastDownload()
+  {
+    return this._lastDownload;
+  },
+  set lastDownload(value)
+  {
+    if (value != this._lastDownload)
+    {
+      let oldValue = this._lastDownload;
+      this._lastDownload = value;
+      FilterNotifier.triggerListeners("subscription.lastDownload",
+                                      this, value, oldValue);
+    }
+    return this._lastDownload;
+  },
+
+  /**
+   * See Subscription.serialize()
+   * @inheritdoc
+   */
+  serialize(buffer)
+  {
+    Subscription.prototype.serialize.call(this, buffer);
+    if (this._homepage)
+      buffer.push("homepage=" + this._homepage);
+    if (this._lastDownload)
+      buffer.push("lastDownload=" + this._lastDownload);
+  }
+});
+
+/**
+ * Class for filter subscriptions updated externally (by other extension)
+ * @param {string} url    see {@link Subscription Subscription()}
+ * @param {string} [title]  see {@link Subscription Subscription()}
+ * @constructor
+ * @augments RegularSubscription
+ */
+function ExternalSubscription(url, title)
+{
+  RegularSubscription.call(this, url, title);
+}
+exports.ExternalSubscription = ExternalSubscription;
+
+ExternalSubscription.prototype = extend(RegularSubscription, {
+  /**
+   * See Subscription.serialize()
+   * @inheritdoc
+   */
+  serialize(buffer)
+  {
+    throw new Error(
+      "Unexpected call, external subscriptions should not be serialized"
+    );
+  }
+});
+
+/**
+ * Class for filter subscriptions updated externally (by other extension)
+ * @param {string} url  see {@link Subscription Subscription()}
+ * @param {string} [title]  see {@link Subscription Subscription()}
+ * @constructor
+ * @augments RegularSubscription
+ */
+function DownloadableSubscription(url, title)
+{
+  RegularSubscription.call(this, url, title);
+}
+exports.DownloadableSubscription = DownloadableSubscription;
+
+DownloadableSubscription.prototype = extend(RegularSubscription, {
+  _downloadStatus: null,
+  _lastCheck: 0,
+  _errors: 0,
+
+  /**
+   * Status of the last download (ID of a string)
+   * @type {string}
+   */
+  get downloadStatus()
+  {
+    return this._downloadStatus;
+  },
+  set downloadStatus(value)
+  {
+    let oldValue = this._downloadStatus;
+    this._downloadStatus = value;
+    FilterNotifier.triggerListeners("subscription.downloadStatus",
+                                    this, value, oldValue);
+    return this._downloadStatus;
+  },
+
+  /**
+   * Time of the last successful download (in seconds since the beginning of the
+   * epoch).
+   */
+  lastSuccess: 0,
+
+  /**
+   * Time when the subscription was considered for an update last time
+   * (in seconds since the beginning of the epoch). This will be used
+   * to increase softExpiration if the user doesn't use Adblock Plus
+   * for some time.
+   * @type {number}
+   */
+  get lastCheck()
+  {
+    return this._lastCheck;
+  },
+  set lastCheck(value)
+  {
+    if (value != this._lastCheck)
+    {
+      let oldValue = this._lastCheck;
+      this._lastCheck = value;
+      FilterNotifier.triggerListeners("subscription.lastCheck",
+                                      this, value, oldValue);
+    }
+    return this._lastCheck;
+  },
+
+  /**
+   * Hard expiration time of the filter subscription (in seconds since
+   * the beginning of the epoch)
+   * @type {number}
+   */
+  expires: 0,
+
+  /**
+   * Soft expiration time of the filter subscription (in seconds since
+   * the beginning of the epoch)
+   * @type {number}
+   */
+  softExpiration: 0,
+
+  /**
+   * Number of download failures since last success
+   * @type {number}
+   */
+  get errors()
+  {
+    return this._errors;
+  },
+  set errors(value)
+  {
+    if (value != this._errors)
+    {
+      let oldValue = this._errors;
+      this._errors = value;
+      FilterNotifier.triggerListeners("subscription.errors", this,
+                                      value, oldValue);
+    }
+    return this._errors;
+  },
+
+  /**
+   * Version of the subscription data retrieved on last successful download
+   * @type {number}
+   */
+  version: 0,
+
+  /**
+   * Minimal Adblock Plus version required for this subscription
+   * @type {string}
+   */
+  requiredVersion: null,
+
+  /**
+   * Number indicating how often the object was downloaded.
+   * @type {number}
+   */
+  downloadCount: 0,
+
+  /**
+   * See Subscription.serialize()
+   * @inheritdoc
+   */
+  serialize(buffer)
+  {
+    RegularSubscription.prototype.serialize.call(this, buffer);
+    if (this.downloadStatus)
+      buffer.push("downloadStatus=" + this.downloadStatus);
+    if (this.lastSuccess)
+      buffer.push("lastSuccess=" + this.lastSuccess);
+    if (this.lastCheck)
+      buffer.push("lastCheck=" + this.lastCheck);
+    if (this.expires)
+      buffer.push("expires=" + this.expires);
+    if (this.softExpiration)
+      buffer.push("softExpiration=" + this.softExpiration);
+    if (this.errors)
+      buffer.push("errors=" + this.errors);
+    if (this.version)
+      buffer.push("version=" + this.version);
+    if (this.requiredVersion)
+      buffer.push("requiredVersion=" + this.requiredVersion);
+    if (this.downloadCount)
+      buffer.push("downloadCount=" + this.downloadCount);
+  }
+});
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+/**
  * @fileOverview FilterStorage class responsible for managing user's
  *               subscriptions and filters.
  */
 
-const {IO} = __webpack_require__(31);
+const {IO} = __webpack_require__(33);
 const {Prefs} = __webpack_require__(2);
 const {Filter, ActiveFilter} = __webpack_require__(0);
 const {Subscription, SpecialSubscription,
-       ExternalSubscription} = __webpack_require__(5);
+       ExternalSubscription} = __webpack_require__(4);
 const {FilterNotifier} = __webpack_require__(1);
 
 /**
@@ -1838,9 +2488,9 @@ let FilterStorage = exports.FilterStorage =
 
   /**
    * Map of subscriptions already on the list, by their URL/identifier
-   * @type {Object}
+   * @type {Map.<string,Subscription>}
    */
-  knownSubscriptions: Object.create(null),
+  knownSubscriptions: new Map(),
 
   /**
    * Finds the filter group that a filter should be added to by default. Will
@@ -1876,11 +2526,11 @@ let FilterStorage = exports.FilterStorage =
    */
   addSubscription(subscription)
   {
-    if (subscription.url in FilterStorage.knownSubscriptions)
+    if (FilterStorage.knownSubscriptions.has(subscription.url))
       return;
 
     FilterStorage.subscriptions.push(subscription);
-    FilterStorage.knownSubscriptions[subscription.url] = subscription;
+    FilterStorage.knownSubscriptions.set(subscription.url, subscription);
     addSubscriptionFilters(subscription);
 
     FilterNotifier.triggerListeners("subscription.added", subscription);
@@ -1899,7 +2549,7 @@ let FilterStorage = exports.FilterStorage =
         removeSubscriptionFilters(subscription);
 
         FilterStorage.subscriptions.splice(i--, 1);
-        delete FilterStorage.knownSubscriptions[subscription.url];
+        FilterStorage.knownSubscriptions.delete(subscription.url);
         FilterNotifier.triggerListeners("subscription.removed", subscription);
         return;
       }
@@ -2120,9 +2770,9 @@ let FilterStorage = exports.FilterStorage =
       parser.process(line);
       if (line === null)
       {
-        let knownSubscriptions = Object.create(null);
+        let knownSubscriptions = new Map();
         for (let subscription of parser.subscriptions)
-          knownSubscriptions[subscription.url] = subscription;
+          knownSubscriptions.set(subscription.url, subscription);
 
         this.fileProperties = parser.fileProperties;
         this.subscriptions = parser.subscriptions;
@@ -2410,7 +3060,7 @@ let FilterStorage = exports.FilterStorage =
  */
 function addSubscriptionFilters(subscription)
 {
-  if (!(subscription.url in FilterStorage.knownSubscriptions))
+  if (!FilterStorage.knownSubscriptions.has(subscription.url))
     return;
 
   for (let filter of subscription.filters)
@@ -2424,7 +3074,7 @@ function addSubscriptionFilters(subscription)
  */
 function removeSubscriptionFilters(subscription)
 {
-  if (!(subscription.url in FilterStorage.knownSubscriptions))
+  if (!FilterStorage.knownSubscriptions.has(subscription.url))
     return;
 
   for (let filter of subscription.filters)
@@ -2444,7 +3094,7 @@ function INIParser()
   this.fileProperties = this.curObj = {};
   this.subscriptions = [];
   this.knownFilters = new Map();
-  this.knownSubscriptions = Object.create(null);
+  this.knownSubscriptions = new Map();
 }
 INIParser.prototype =
 {
@@ -2518,7 +3168,7 @@ INIParser.prototype =
             this.curObj = [];
             break;
           default:
-            this.wantObj = undefined;
+            this.wantObj = null;
             this.curObj = null;
         }
       }
@@ -2532,587 +3182,6 @@ INIParser.prototype =
     }
   }
 };
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-/**
- * @fileOverview Definition of Subscription class and its subclasses.
- */
-
-const {ActiveFilter, BlockingFilter,
-       WhitelistFilter, ElemHideBase} = __webpack_require__(0);
-const {FilterNotifier} = __webpack_require__(1);
-const {desc, extend} = __webpack_require__(19);
-
-/**
- * Abstract base class for filter subscriptions
- *
- * @param {string} url    download location of the subscription
- * @param {string} [title]  title of the filter subscription
- * @constructor
- */
-function Subscription(url, title)
-{
-  this.url = url;
-  this.filters = [];
-  if (title)
-    this._title = title;
-  Subscription.knownSubscriptions[url] = this;
-}
-exports.Subscription = Subscription;
-
-Subscription.prototype =
-{
-  /**
-   * Download location of the subscription
-   * @type {string}
-   */
-  url: null,
-
-  /**
-   * Filters contained in the filter subscription
-   * @type {Filter[]}
-   */
-  filters: null,
-
-  _title: null,
-  _fixedTitle: false,
-  _disabled: false,
-
-  /**
-   * Title of the filter subscription
-   * @type {string}
-   */
-  get title()
-  {
-    return this._title;
-  },
-  set title(value)
-  {
-    if (value != this._title)
-    {
-      let oldValue = this._title;
-      this._title = value;
-      FilterNotifier.triggerListeners("subscription.title",
-                                      this, value, oldValue);
-    }
-    return this._title;
-  },
-
-  /**
-   * Determines whether the title should be editable
-   * @type {boolean}
-   */
-  get fixedTitle()
-  {
-    return this._fixedTitle;
-  },
-  set fixedTitle(value)
-  {
-    if (value != this._fixedTitle)
-    {
-      let oldValue = this._fixedTitle;
-      this._fixedTitle = value;
-      FilterNotifier.triggerListeners("subscription.fixedTitle",
-                                      this, value, oldValue);
-    }
-    return this._fixedTitle;
-  },
-
-  /**
-   * Defines whether the filters in the subscription should be disabled
-   * @type {boolean}
-   */
-  get disabled()
-  {
-    return this._disabled;
-  },
-  set disabled(value)
-  {
-    if (value != this._disabled)
-    {
-      let oldValue = this._disabled;
-      this._disabled = value;
-      FilterNotifier.triggerListeners("subscription.disabled",
-                                      this, value, oldValue);
-    }
-    return this._disabled;
-  },
-
-  /**
-   * Serializes the subscription to an array of strings for writing
-   * out on the disk.
-   * @param {string[]} buffer  buffer to push the serialization results into
-   */
-  serialize(buffer)
-  {
-    buffer.push("[Subscription]");
-    buffer.push("url=" + this.url);
-    if (this._title)
-      buffer.push("title=" + this._title);
-    if (this._fixedTitle)
-      buffer.push("fixedTitle=true");
-    if (this._disabled)
-      buffer.push("disabled=true");
-  },
-
-  serializeFilters(buffer)
-  {
-    for (let filter of this.filters)
-      buffer.push(filter.text.replace(/\[/g, "\\["));
-  },
-
-  toString()
-  {
-    let buffer = [];
-    this.serialize(buffer);
-    return buffer.join("\n");
-  }
-};
-
-/**
- * Cache for known filter subscriptions, maps URL to subscription objects.
- * @type {Object}
- */
-Subscription.knownSubscriptions = Object.create(null);
-
-/**
- * Returns a subscription from its URL, creates a new one if necessary.
- * @param {string} url
- *   URL of the subscription
- * @return {Subscription}
- *   subscription or null if the subscription couldn't be created
- */
-Subscription.fromURL = function(url)
-{
-  if (url in Subscription.knownSubscriptions)
-    return Subscription.knownSubscriptions[url];
-
-  if (url[0] != "~")
-    return new DownloadableSubscription(url, null);
-  return new SpecialSubscription(url);
-};
-
-/**
- * Deserializes a subscription
- *
- * @param {Object}  obj
- *   map of serialized properties and their values
- * @return {Subscription}
- *   subscription or null if the subscription couldn't be created
- */
-Subscription.fromObject = function(obj)
-{
-  let result;
-  if (obj.url[0] != "~")
-  {
-    // URL is valid - this is a downloadable subscription
-    result = new DownloadableSubscription(obj.url, obj.title);
-    if ("downloadStatus" in obj)
-      result._downloadStatus = obj.downloadStatus;
-    if ("lastSuccess" in obj)
-      result.lastSuccess = parseInt(obj.lastSuccess, 10) || 0;
-    if ("lastCheck" in obj)
-      result._lastCheck = parseInt(obj.lastCheck, 10) || 0;
-    if ("expires" in obj)
-      result.expires = parseInt(obj.expires, 10) || 0;
-    if ("softExpiration" in obj)
-      result.softExpiration = parseInt(obj.softExpiration, 10) || 0;
-    if ("errors" in obj)
-      result._errors = parseInt(obj.errors, 10) || 0;
-    if ("version" in obj)
-      result.version = parseInt(obj.version, 10) || 0;
-    if ("requiredVersion" in obj)
-      result.requiredVersion = obj.requiredVersion;
-    if ("homepage" in obj)
-      result._homepage = obj.homepage;
-    if ("lastDownload" in obj)
-      result._lastDownload = parseInt(obj.lastDownload, 10) || 0;
-    if ("downloadCount" in obj)
-      result.downloadCount = parseInt(obj.downloadCount, 10) || 0;
-  }
-  else
-  {
-    result = new SpecialSubscription(obj.url, obj.title);
-    if ("defaults" in obj)
-      result.defaults = obj.defaults.split(" ");
-  }
-  if ("fixedTitle" in obj)
-    result._fixedTitle = (obj.fixedTitle == "true");
-  if ("disabled" in obj)
-    result._disabled = (obj.disabled == "true");
-
-  return result;
-};
-
-/**
- * Class for special filter subscriptions (user's filters)
- * @param {string} url see Subscription()
- * @param {string} [title]  see Subscription()
- * @constructor
- * @augments Subscription
- */
-function SpecialSubscription(url, title)
-{
-  Subscription.call(this, url, title);
-}
-exports.SpecialSubscription = SpecialSubscription;
-
-SpecialSubscription.prototype = extend(Subscription, {
-  /**
-   * Filter types that should be added to this subscription by default
-   * (entries should correspond to keys in SpecialSubscription.defaultsMap).
-   * @type {string[]}
-   */
-  defaults: null,
-
-  /**
-   * Tests whether a filter should be added to this group by default
-   * @param {Filter} filter filter to be tested
-   * @return {boolean}
-   */
-  isDefaultFor(filter)
-  {
-    if (this.defaults && this.defaults.length)
-    {
-      for (let type of this.defaults)
-      {
-        if (filter instanceof SpecialSubscription.defaultsMap[type])
-          return true;
-        if (!(filter instanceof ActiveFilter) && type == "blacklist")
-          return true;
-      }
-    }
-
-    return false;
-  },
-
-  /**
-   * See Subscription.serialize()
-   * @inheritdoc
-   */
-  serialize(buffer)
-  {
-    Subscription.prototype.serialize.call(this, buffer);
-    if (this.defaults && this.defaults.length)
-    {
-      buffer.push("defaults=" +
-        this.defaults.filter(
-          type => type in SpecialSubscription.defaultsMap
-        ).join(" ")
-      );
-    }
-    if (this._lastDownload)
-      buffer.push("lastDownload=" + this._lastDownload);
-  }
-});
-
-SpecialSubscription.defaultsMap = Object.create(null, desc({
-  whitelist: WhitelistFilter,
-  blocking: BlockingFilter,
-  elemhide: ElemHideBase
-}));
-
-/**
- * Creates a new user-defined filter group.
- * @param {string} [title]  title of the new filter group
- * @return {SpecialSubscription}
- */
-SpecialSubscription.create = function(title)
-{
-  let url;
-  do
-  {
-    url = "~user~" + Math.round(Math.random() * 1000000);
-  } while (url in Subscription.knownSubscriptions);
-  return new SpecialSubscription(url, title);
-};
-
-/**
- * Creates a new user-defined filter group and adds the given filter to it.
- * This group will act as the default group for this filter type.
- * @param {Filter} filter
- * @return {SpecialSubscription}
- */
-SpecialSubscription.createForFilter = function(filter)
-{
-  let subscription = SpecialSubscription.create();
-  subscription.filters.push(filter);
-  for (let type in SpecialSubscription.defaultsMap)
-  {
-    if (filter instanceof SpecialSubscription.defaultsMap[type])
-      subscription.defaults = [type];
-  }
-  if (!subscription.defaults)
-    subscription.defaults = ["blocking"];
-  return subscription;
-};
-
-/**
- * Abstract base class for regular filter subscriptions (both
- * internally and externally updated)
- * @param {string} url    see Subscription()
- * @param {string} [title]  see Subscription()
- * @constructor
- * @augments Subscription
- */
-function RegularSubscription(url, title)
-{
-  Subscription.call(this, url, title || url);
-}
-exports.RegularSubscription = RegularSubscription;
-
-RegularSubscription.prototype = extend(Subscription, {
-  _homepage: null,
-  _lastDownload: 0,
-
-  /**
-   * Filter subscription homepage if known
-   * @type {string}
-   */
-  get homepage()
-  {
-    return this._homepage;
-  },
-  set homepage(value)
-  {
-    if (value != this._homepage)
-    {
-      let oldValue = this._homepage;
-      this._homepage = value;
-      FilterNotifier.triggerListeners("subscription.homepage",
-                                      this, value, oldValue);
-    }
-    return this._homepage;
-  },
-
-  /**
-   * Time of the last subscription download (in seconds since the
-   * beginning of the epoch)
-   * @type {number}
-   */
-  get lastDownload()
-  {
-    return this._lastDownload;
-  },
-  set lastDownload(value)
-  {
-    if (value != this._lastDownload)
-    {
-      let oldValue = this._lastDownload;
-      this._lastDownload = value;
-      FilterNotifier.triggerListeners("subscription.lastDownload",
-                                      this, value, oldValue);
-    }
-    return this._lastDownload;
-  },
-
-  /**
-   * See Subscription.serialize()
-   * @inheritdoc
-   */
-  serialize(buffer)
-  {
-    Subscription.prototype.serialize.call(this, buffer);
-    if (this._homepage)
-      buffer.push("homepage=" + this._homepage);
-    if (this._lastDownload)
-      buffer.push("lastDownload=" + this._lastDownload);
-  }
-});
-
-/**
- * Class for filter subscriptions updated externally (by other extension)
- * @param {string} url    see Subscription()
- * @param {string} [title]  see Subscription()
- * @constructor
- * @augments RegularSubscription
- */
-function ExternalSubscription(url, title)
-{
-  RegularSubscription.call(this, url, title);
-}
-exports.ExternalSubscription = ExternalSubscription;
-
-ExternalSubscription.prototype = extend(RegularSubscription, {
-  /**
-   * See Subscription.serialize()
-   * @inheritdoc
-   */
-  serialize(buffer)
-  {
-    throw new Error(
-      "Unexpected call, external subscriptions should not be serialized"
-    );
-  }
-});
-
-/**
- * Class for filter subscriptions updated externally (by other extension)
- * @param {string} url  see Subscription()
- * @param {string} [title]  see Subscription()
- * @constructor
- * @augments RegularSubscription
- */
-function DownloadableSubscription(url, title)
-{
-  RegularSubscription.call(this, url, title);
-}
-exports.DownloadableSubscription = DownloadableSubscription;
-
-DownloadableSubscription.prototype = extend(RegularSubscription, {
-  _downloadStatus: null,
-  _lastCheck: 0,
-  _errors: 0,
-
-  /**
-   * Status of the last download (ID of a string)
-   * @type {string}
-   */
-  get downloadStatus()
-  {
-    return this._downloadStatus;
-  },
-  set downloadStatus(value)
-  {
-    let oldValue = this._downloadStatus;
-    this._downloadStatus = value;
-    FilterNotifier.triggerListeners("subscription.downloadStatus",
-                                    this, value, oldValue);
-    return this._downloadStatus;
-  },
-
-  /**
-   * Time of the last successful download (in seconds since the beginning of the
-   * epoch).
-   */
-  lastSuccess: 0,
-
-  /**
-   * Time when the subscription was considered for an update last time
-   * (in seconds since the beginning of the epoch). This will be used
-   * to increase softExpiration if the user doesn't use Adblock Plus
-   * for some time.
-   * @type {number}
-   */
-  get lastCheck()
-  {
-    return this._lastCheck;
-  },
-  set lastCheck(value)
-  {
-    if (value != this._lastCheck)
-    {
-      let oldValue = this._lastCheck;
-      this._lastCheck = value;
-      FilterNotifier.triggerListeners("subscription.lastCheck",
-                                      this, value, oldValue);
-    }
-    return this._lastCheck;
-  },
-
-  /**
-   * Hard expiration time of the filter subscription (in seconds since
-   * the beginning of the epoch)
-   * @type {number}
-   */
-  expires: 0,
-
-  /**
-   * Soft expiration time of the filter subscription (in seconds since
-   * the beginning of the epoch)
-   * @type {number}
-   */
-  softExpiration: 0,
-
-  /**
-   * Number of download failures since last success
-   * @type {number}
-   */
-  get errors()
-  {
-    return this._errors;
-  },
-  set errors(value)
-  {
-    if (value != this._errors)
-    {
-      let oldValue = this._errors;
-      this._errors = value;
-      FilterNotifier.triggerListeners("subscription.errors", this,
-                                      value, oldValue);
-    }
-    return this._errors;
-  },
-
-  /**
-   * Version of the subscription data retrieved on last successful download
-   * @type {number}
-   */
-  version: 0,
-
-  /**
-   * Minimal Adblock Plus version required for this subscription
-   * @type {string}
-   */
-  requiredVersion: null,
-
-  /**
-   * Number indicating how often the object was downloaded.
-   * @type {number}
-   */
-  downloadCount: 0,
-
-  /**
-   * See Subscription.serialize()
-   * @inheritdoc
-   */
-  serialize(buffer)
-  {
-    RegularSubscription.prototype.serialize.call(this, buffer);
-    if (this.downloadStatus)
-      buffer.push("downloadStatus=" + this.downloadStatus);
-    if (this.lastSuccess)
-      buffer.push("lastSuccess=" + this.lastSuccess);
-    if (this.lastCheck)
-      buffer.push("lastCheck=" + this.lastCheck);
-    if (this.expires)
-      buffer.push("expires=" + this.expires);
-    if (this.softExpiration)
-      buffer.push("softExpiration=" + this.softExpiration);
-    if (this.errors)
-      buffer.push("errors=" + this.errors);
-    if (this.version)
-      buffer.push("version=" + this.version);
-    if (this.requiredVersion)
-      buffer.push("requiredVersion=" + this.requiredVersion);
-    if (this.downloadCount)
-      buffer.push("downloadCount=" + this.downloadCount);
-  }
-});
 
 
 /***/ }),
@@ -3141,7 +3210,7 @@ DownloadableSubscription.prototype = extend(RegularSubscription, {
 
 
 
-const {getDomain} = __webpack_require__(34);
+const {getDomain} = __webpack_require__(36);
 
 /**
  * Gets the IDN-decoded hostname from the URL of a frame.
@@ -3156,7 +3225,7 @@ exports.extractHostFromFrame = (frame, originUrl) =>
 {
   for (; frame; frame = frame.parent)
   {
-    let hostname = frame.url.hostname;
+    let {hostname} = frame.url;
     if (hostname)
       return hostname;
   }
@@ -3365,11 +3434,11 @@ exports.getPort = function(window)
 const {defaultMatcher} = __webpack_require__(9);
 const {Filter, RegExpFilter} = __webpack_require__(0);
 const {FilterNotifier} = __webpack_require__(1);
-const {FilterStorage} = __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {extractHostFromFrame, isThirdParty} = __webpack_require__(6);
 const {port} = __webpack_require__(7);
 const {logWhitelistedDocument} = __webpack_require__(11);
-const {verifySignature} = __webpack_require__(35);
+const {verifySignature} = __webpack_require__(37);
 
 let sitekeys = new ext.PageMap();
 
@@ -3962,7 +4031,8 @@ CombinedMatcher.prototype =
 
   /**
    * Optimized filter matching testing both whitelist and blacklist matchers
-   * simultaneously. For parameters see Matcher.matchesAny().
+   * simultaneously. For parameters see
+     {@link Matcher#matchesAny Matcher.matchesAny()}.
    * @see Matcher#matchesAny
    * @inheritdoc
    */
@@ -4136,7 +4206,7 @@ let Utils = exports.Utils = {
 
 const {extractHostFromFrame} = __webpack_require__(6);
 const {EventEmitter} = __webpack_require__(13);
-const {FilterStorage} = __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {port} = __webpack_require__(7);
 const {RegExpFilter,
        ElemHideFilter} = __webpack_require__(0);
@@ -4778,7 +4848,7 @@ exports.ElemHide = {
     let selectors = [];
 
     let excluded = new Set();
-    let currentDomain = domain ? domain.toUpperCase() : "";
+    let currentDomain = domain ? domain.replace(/\.+$/, "").toLowerCase() : "";
 
     // This code is a performance hot-spot, which is why we've made certain
     // micro-optimisations. Please be careful before making changes.
@@ -4849,13 +4919,13 @@ exports.ElemHide = {
 
 const {Downloader, Downloadable,
        MILLIS_IN_SECOND, MILLIS_IN_MINUTE,
-       MILLIS_IN_HOUR, MILLIS_IN_DAY} = __webpack_require__(22);
+       MILLIS_IN_HOUR, MILLIS_IN_DAY} = __webpack_require__(23);
 const {Filter} = __webpack_require__(0);
-const {FilterStorage} = __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {FilterNotifier} = __webpack_require__(1);
 const {Prefs} = __webpack_require__(2);
 const {Subscription,
-       DownloadableSubscription} = __webpack_require__(5);
+       DownloadableSubscription} = __webpack_require__(4);
 const {Utils} = __webpack_require__(10);
 
 const INITIAL_DELAY = 1 * MILLIS_IN_MINUTE;
@@ -5026,11 +5096,11 @@ let Synchronizer = exports.Synchronizer =
       subscription.disabled = oldSubscription.disabled;
       subscription.lastCheck = oldSubscription.lastCheck;
 
-      let listed = (oldSubscription.url in FilterStorage.knownSubscriptions);
+      let listed = FilterStorage.knownSubscriptions.has(oldSubscription.url);
       if (listed)
         FilterStorage.removeSubscription(oldSubscription);
 
-      delete Subscription.knownSubscriptions[oldSubscription.url];
+      Subscription.knownSubscriptions.delete(oldSubscription.url);
 
       if (listed)
         FilterStorage.addSubscription(subscription);
@@ -5112,8 +5182,6 @@ let Synchronizer = exports.Synchronizer =
     }
 
     FilterStorage.updateSubscriptionFilters(subscription, filters);
-
-    return undefined;
   },
 
   _onDownloadError(downloadable, downloadURL, error, channelStatus,
@@ -5161,7 +5229,7 @@ let Synchronizer = exports.Synchronizer =
           if (onShutdown.done)
             return;
 
-          if (!(subscription.url in FilterStorage.knownSubscriptions))
+          if (!FilterStorage.knownSubscriptions.has(subscription.url))
             return;
 
           let match = /^(\d+)(?:\s+(\S+))?$/.exec(request.responseText);
@@ -5216,7 +5284,7 @@ Synchronizer.init();
 const {Prefs} = __webpack_require__(2);
 const {Downloader, Downloadable,
        MILLIS_IN_MINUTE, MILLIS_IN_HOUR,
-       MILLIS_IN_DAY} = __webpack_require__(22);
+       MILLIS_IN_DAY} = __webpack_require__(23);
 const {Utils} = __webpack_require__(10);
 const {Matcher, defaultMatcher} = __webpack_require__(9);
 const {Filter, RegExpFilter, WhitelistFilter} = __webpack_require__(0);
@@ -5714,224 +5782,6 @@ Notification.init();
 
 /***/ }),
 /* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/** @module filterValidation */
-
-
-
-const {Filter, InvalidFilter, ElemHideBase, ElemHideEmulationFilter,
-       ElemHideException} = __webpack_require__(0);
-
-/**
- * An error returned by
- * {@link module:filterValidation.parseFilter parseFilter()} or
- * {@link module:filterValidation.parseFilters parseFilters()}
- * indicating that a given filter cannot be parsed,
- * contains an invalid CSS selector or is a filter list header.
- *
- * @param {string} type See documentation in the constructor below.
- * @param {Object} [details] Contains the "reason" and / or "selector"
- *                           properties.
- * @constructor
- */
-function FilterParsingError(type, details)
-{
-  /**
-   * Indicates why the filter is rejected. Possible choices:
-   * "invalid-filter", "invalid-css-selector", "unexpected-filter-list-header"
-   *
-   * @type {string}
-   */
-  this.type = type;
-
-  if (details)
-  {
-    if ("reason" in details)
-      this.reason = details.reason;
-    if ("selector" in details)
-      this.selector = details.selector;
-  }
-}
-FilterParsingError.prototype = {
-  /**
-   * The line number the error occurred on if
-   * {@link module:filterValidation.parseFilters parseFilters()}
-   * were used. Or null if the error was returned by
-   * {@link module:filterValidation.parseFilter parseFilter()}.
-   *
-   * @type {?number}
-   */
-  lineno: null,
-
-  /**
-   * Returns a detailed translated error message.
-   *
-   * @return {string}
-   */
-  toString()
-  {
-    let message;
-    if (this.reason)
-      message = browser.i18n.getMessage(this.reason);
-    else
-    {
-      message = browser.i18n.getMessage(
-        this.type.replace(/-/g, "_"),
-        "selector" in this ? "'" + this.selector + "'" : null
-      );
-    }
-
-    if (this.lineno)
-    {
-      message = browser.i18n.getMessage(
-        "line", this.lineno.toLocaleString()
-      ) + ": " + message;
-    }
-    return message;
-  }
-};
-
-function isValidCSSSelector(selector)
-{
-  let style = document.createElement("style");
-  document.documentElement.appendChild(style);
-  let {sheet} = style;
-  document.documentElement.removeChild(style);
-
-  try
-  {
-    document.querySelector(selector);
-    sheet.insertRule(selector + "{}", 0);
-  }
-  catch (e)
-  {
-    return false;
-  }
-  return true;
-}
-
-function isValidFilterSelector(filter)
-{
-  // Only ElemHideBase has selectors.
-  if (!(filter instanceof ElemHideBase))
-    return true;
-
-  // We don't check the syntax of ElemHideEmulationFilter yet.
-  if (filter instanceof ElemHideEmulationFilter)
-    return true;
-
-  // If it is an ElemHideException, and it has an extended CSS
-  // selector we don't validate and assume it is valid.
-  if (filter instanceof ElemHideException &&
-      filter.selector.includes(":-abp-"))
-  {
-    return true;
-  }
-
-  return isValidCSSSelector(filter.selector);
-}
-
-/**
- * @typedef ParsedFilter
- * @property {?Filter} [filter]
- *   The parsed filter if it is valid. Or null if the given string is empty.
- * @property {FilterParsingError} [error]
- *   See {@link module:filterValidation~FilterParsingError FilterParsingError}
- */
-
-let parseFilter =
-/**
- * Parses and validates a filter given by the user.
- *
- * @param {string}  text
- * @return {ParsedFilter}
- */
-exports.parseFilter = text =>
-{
-  let filter = null;
-  text = Filter.normalize(text);
-
-  if (text)
-  {
-    if (text[0] == "[")
-      return {error: new FilterParsingError("unexpected-filter-list-header")};
-
-    filter = Filter.fromText(text);
-
-    if (filter instanceof InvalidFilter)
-    {
-      return {error: new FilterParsingError("invalid-filter",
-                                            {reason: filter.reason})};
-    }
-    if (!isValidFilterSelector(filter))
-    {
-      return {error: new FilterParsingError("invalid-css-selector",
-                                            {selector: filter.selector})};
-    }
-  }
-
-  return {filter};
-};
-
-/**
- * @typedef ParsedFilters
- * @property {Filter[]} filters
- *   The parsed result without invalid filters.
- * @property {FilterParsingError[]} errors
- *   See {@link module:filterValidation~FilterParsingError FilterParsingError}
- */
-
-/**
- * Parses and validates a newline-separated list of filters given by the user.
- *
- * @param {string}  text
- * @return {ParsedFilters}
- */
-exports.parseFilters = text =>
-{
-  let lines = text.split("\n");
-  let filters = [];
-  let errors = [];
-
-  for (let i = 0; i < lines.length; i++)
-  {
-    let {filter, error} = parseFilter(lines[i]);
-
-    if (filter)
-      filters.push(filter);
-
-    if (error)
-    {
-      error.lineno = i + 1;
-      errors.push(error);
-    }
-  }
-
-  return {filters, errors};
-};
-
-
-/***/ }),
-/* 18 */
 /***/ (function(module, exports) {
 
 let LocalCDN = exports.LocalCDN = (function() {
@@ -6167,6 +6017,224 @@ let LocalCDN = exports.LocalCDN = (function() {
     }
   };
 })();
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** @module filterValidation */
+
+
+
+const {Filter, InvalidFilter, ElemHideBase, ElemHideEmulationFilter,
+       ElemHideException} = __webpack_require__(0);
+
+/**
+ * An error returned by
+ * {@link module:filterValidation.parseFilter parseFilter()} or
+ * {@link module:filterValidation.parseFilters parseFilters()}
+ * indicating that a given filter cannot be parsed,
+ * contains an invalid CSS selector or is a filter list header.
+ *
+ * @param {string} type See documentation in the constructor below.
+ * @param {Object} [details] Contains the "reason" and / or "selector"
+ *                           properties.
+ * @constructor
+ */
+function FilterParsingError(type, details)
+{
+  /**
+   * Indicates why the filter is rejected. Possible choices:
+   * "invalid-filter", "invalid-css-selector", "unexpected-filter-list-header"
+   *
+   * @type {string}
+   */
+  this.type = type;
+
+  if (details)
+  {
+    if ("reason" in details)
+      this.reason = details.reason;
+    if ("selector" in details)
+      this.selector = details.selector;
+  }
+}
+FilterParsingError.prototype = {
+  /**
+   * The line number the error occurred on if
+   * {@link module:filterValidation.parseFilters parseFilters()}
+   * were used. Or null if the error was returned by
+   * {@link module:filterValidation.parseFilter parseFilter()}.
+   *
+   * @type {?number}
+   */
+  lineno: null,
+
+  /**
+   * Returns a detailed translated error message.
+   *
+   * @return {string}
+   */
+  toString()
+  {
+    let message;
+    if (this.reason)
+      message = browser.i18n.getMessage(this.reason);
+    else
+    {
+      message = browser.i18n.getMessage(
+        this.type.replace(/-/g, "_"),
+        "selector" in this ? "'" + this.selector + "'" : null
+      );
+    }
+
+    if (this.lineno)
+    {
+      message = browser.i18n.getMessage(
+        "line", this.lineno.toLocaleString()
+      ) + ": " + message;
+    }
+    return message;
+  }
+};
+
+function isValidCSSSelector(selector)
+{
+  let style = document.createElement("style");
+  document.documentElement.appendChild(style);
+  let {sheet} = style;
+  document.documentElement.removeChild(style);
+
+  try
+  {
+    document.querySelector(selector);
+    sheet.insertRule(selector + "{}", 0);
+  }
+  catch (e)
+  {
+    return false;
+  }
+  return true;
+}
+
+function isValidFilterSelector(filter)
+{
+  // Only ElemHideBase has selectors.
+  if (!(filter instanceof ElemHideBase))
+    return true;
+
+  // We don't check the syntax of ElemHideEmulationFilter yet.
+  if (filter instanceof ElemHideEmulationFilter)
+    return true;
+
+  // If it is an ElemHideException, and it has an extended CSS
+  // selector we don't validate and assume it is valid.
+  if (filter instanceof ElemHideException &&
+      filter.selector.includes(":-abp-"))
+  {
+    return true;
+  }
+
+  return isValidCSSSelector(filter.selector);
+}
+
+/**
+ * @typedef ParsedFilter
+ * @property {?Filter} [filter]
+ *   The parsed filter if it is valid. Or null if the given string is empty.
+ * @property {FilterParsingError} [error]
+ *   See {@link module:filterValidation~FilterParsingError FilterParsingError}
+ */
+
+let parseFilter =
+/**
+ * Parses and validates a filter given by the user.
+ *
+ * @param {string}  text
+ * @return {ParsedFilter}
+ */
+exports.parseFilter = text =>
+{
+  let filter = null;
+  text = Filter.normalize(text);
+
+  if (text)
+  {
+    if (text[0] == "[")
+      return {error: new FilterParsingError("unexpected-filter-list-header")};
+
+    filter = Filter.fromText(text);
+
+    if (filter instanceof InvalidFilter)
+    {
+      return {error: new FilterParsingError("invalid-filter",
+                                            {reason: filter.reason})};
+    }
+    if (!isValidFilterSelector(filter))
+    {
+      return {error: new FilterParsingError("invalid-css-selector",
+                                            {selector: filter.selector})};
+    }
+  }
+
+  return {filter};
+};
+
+/**
+ * @typedef ParsedFilters
+ * @property {Filter[]} filters
+ *   The parsed result without invalid filters.
+ * @property {FilterParsingError[]} errors
+ *   See {@link module:filterValidation~FilterParsingError FilterParsingError}
+ */
+
+/**
+ * Parses and validates a newline-separated list of filters given by the user.
+ *
+ * @param {string}  text
+ * @return {ParsedFilters}
+ */
+exports.parseFilters = text =>
+{
+  let lines = text.split("\n");
+  let filters = [];
+  let errors = [];
+
+  for (let i = 0; i < lines.length; i++)
+  {
+    let {filter, error} = parseFilter(lines[i]);
+
+    if (filter)
+      filters.push(filter);
+
+    if (error)
+    {
+      error.lineno = i + 1;
+      errors.push(error);
+    }
+  }
+
+  return {filters, errors};
+};
+
 
 /***/ }),
 /* 19 */
@@ -6449,6 +6517,202 @@ port.on("stats.getBlockedPerPage",
 
 
 /**
+ * @fileOverview Snippets implementation.
+ */
+
+const {Filter} = __webpack_require__(0);
+
+const singleCharacterEscapes = new Map([
+  ["n", "\n"], ["r", "\r"], ["t", "\t"]
+]);
+
+let filters = new Set();
+
+/**
+ * Container for snippet filters
+ * @class
+ */
+let Snippets = {
+  /**
+   * Removes all known filters
+   */
+  clear()
+  {
+    filters.clear();
+  },
+
+  /**
+   * Add a new snippet filter
+   * @param {SnippetFilter} filter
+   */
+  add(filter)
+  {
+    filters.add(filter.text);
+  },
+
+  /**
+   * Removes a snippet filter
+   * @param {SnippetFilter} filter
+   */
+  remove(filter)
+  {
+    filters.delete(filter.text);
+  },
+
+  /**
+   * Returns a list of all scripts active on a particular domain
+   * @param {string} domain
+   * @return {string[]}
+   */
+  getScriptsForDomain(domain)
+  {
+    let result = [];
+    for (let text of filters)
+    {
+      let filter = Filter.fromText(text);
+      if (filter.isActiveOnDomain(domain))
+        result.push(filter.script);
+    }
+    return result;
+  }
+};
+
+exports.Snippets = Snippets;
+
+/**
+ * Parses a script and returns a list of all its commands and their arguments
+ * @param {string} script
+ * @return {Array.<string[]>}
+ */
+function parseScript(script)
+{
+  let tree = [];
+
+  let escape = false;
+  let withinQuotes = false;
+
+  let unicodeEscape = null;
+
+  let call = [];
+  let argument = "";
+
+  for (let character of script.trim() + ";")
+  {
+    if (unicodeEscape != null)
+    {
+      unicodeEscape += character;
+
+      if (unicodeEscape.length == 4)
+      {
+        let codePoint = parseInt(unicodeEscape, 16);
+        if (!isNaN(codePoint))
+          argument += String.fromCodePoint(codePoint);
+
+        unicodeEscape = null;
+      }
+    }
+    else if (escape)
+    {
+      escape = false;
+
+      if (character == "u")
+        unicodeEscape = "";
+      else
+        argument += singleCharacterEscapes.get(character) || character;
+    }
+    else if (character == "\\")
+    {
+      escape = true;
+    }
+    else if (character == "'")
+    {
+      withinQuotes = !withinQuotes;
+    }
+    else if (withinQuotes || character != ";" && !/\s/.test(character))
+    {
+      argument += character;
+    }
+    else
+    {
+      if (argument)
+      {
+        call.push(argument);
+        argument = "";
+      }
+
+      if (character == ";" && call.length > 0)
+      {
+        tree.push(call);
+        call = [];
+      }
+    }
+  }
+
+  return tree;
+}
+
+exports.parseScript = parseScript;
+
+/**
+ * Compiles a script against a given list of libraries into executable code
+ * @param {string} script
+ * @param {string[]} libraries
+ * @return {string}
+ */
+function compileScript(script, libraries)
+{
+  return `
+    "use strict";
+    {
+      const libraries = ${JSON.stringify(libraries)};
+
+      const script = ${JSON.stringify(parseScript(script))};
+
+      let imports = Object.create(null);
+      for (let library of libraries)
+        new Function("exports", library)(imports);
+
+      for (let [name, ...args] of script)
+      {
+        if (Object.prototype.hasOwnProperty.call(imports, name))
+        {
+          let value = imports[name];
+          if (typeof value == "function")
+            value(...args);
+        }
+      }
+    }
+  `;
+}
+
+exports.compileScript = compileScript;
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+/**
  * @fileOverview Downloads a set of URLs in regular time intervals.
  */
 
@@ -6638,7 +6902,7 @@ Downloader.prototype =
     const {addonName, addonVersion, application, applicationVersion,
            platform, platformVersion} = __webpack_require__(3);
     let url = downloadable.redirectURL || downloadable.url;
-    if (url.indexOf("?") >= 0)
+    if (url.includes("?"))
       url += "&";
     else
       url += "?";
@@ -6854,7 +7118,7 @@ Downloadable.prototype =
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6881,7 +7145,7 @@ Downloadable.prototype =
 
 const {Filter, RegExpFilter, BlockingFilter} =
   __webpack_require__(0);
-const {Subscription} = __webpack_require__(5);
+const {Subscription} = __webpack_require__(4);
 const {defaultMatcher} = __webpack_require__(9);
 const {FilterNotifier} = __webpack_require__(1);
 const {Prefs} = __webpack_require__(2);
@@ -7054,7 +7318,7 @@ browser.webRequest.onBeforeRequest.addListener(details =>
 
   if (filter instanceof BlockingFilter)
   {
-    if (filter.rewrite)
+    if (typeof filter.rewrite == "string")
     {
       rewrittenUrl = filter.rewriteUrl(details.url);
       // If no rewrite happened (error, different origin), we'll
@@ -7198,7 +7462,7 @@ FilterNotifier.on("load", onFilterChange);
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7223,14 +7487,14 @@ FilterNotifier.on("load", onFilterChange);
 
 
 
-const {startIconAnimation, stopIconAnimation} = __webpack_require__(42);
+const {startIconAnimation, stopIconAnimation} = __webpack_require__(44);
 const {Utils} = __webpack_require__(10);
 const {Notification: NotificationStorage} =
   __webpack_require__(16);
 const {initAntiAdblockNotification} =
-  __webpack_require__(43);
+  __webpack_require__(45);
 const {Prefs} = __webpack_require__(2);
-const {showOptions} = __webpack_require__(44);
+const {showOptions} = __webpack_require__(46);
 
 let activeNotification = null;
 let activeButtons = null;
@@ -7524,7 +7788,7 @@ NotificationStorage.addShowListener(showNotification);
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7535,15 +7799,15 @@ NotificationStorage.addShowListener(showNotification);
 const {Subscription,
        DownloadableSubscription,
        SpecialSubscription} =
-  __webpack_require__(5);
-const {FilterStorage} = __webpack_require__(4);
+  __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {FilterNotifier} = __webpack_require__(1);
 const info = __webpack_require__(3);
 const {Prefs} = __webpack_require__(2);
 const {Synchronizer} = __webpack_require__(15);
 const {Utils} = __webpack_require__(10);
-const {initNotifications} = __webpack_require__(24);
-const {updatesVersion} = __webpack_require__(46);
+const {initNotifications} = __webpack_require__(25);
+const {updatesVersion} = __webpack_require__(48);
 
 let firstRun;
 let subscriptionsCallback = null;
@@ -7582,13 +7846,14 @@ function detectFirstRun()
  *
  * @return {boolean}
  */
-function shouldAddDefaultSubscription()
+function shouldAddDefaultSubscriptions()
 {
   for (let subscription of FilterStorage.subscriptions)
   {
     if (subscription instanceof DownloadableSubscription &&
         subscription.url != Prefs.subscriptions_exceptionsurl &&
-        subscription.url != Prefs.subscriptions_antiadblockurl)
+        subscription.url != Prefs.subscriptions_antiadblockurl &&
+        subscription.type != "circumvention")
       return false;
 
     if (subscription instanceof SpecialSubscription &&
@@ -7600,22 +7865,24 @@ function shouldAddDefaultSubscription()
 }
 
 /**
- * Finds the element for the default ad blocking filter subscription based
+ * @typedef {object} DefaultSubscriptions
+ * @property {?Element} ads
+ * @property {?Element} circumvention
+ */
+/**
+ * Finds the elements for the default ad blocking filter subscriptions based
  * on the user's locale.
  *
  * @param {HTMLCollection} subscriptions
- * @return {Element}
+ * @return {DefaultSubscriptions}
  */
-function chooseFilterSubscription(subscriptions)
+function chooseFilterSubscriptions(subscriptions)
 {
-  let selectedItem = null;
+  let selectedItem = {};
   let selectedPrefix = null;
   let matchCount = 0;
   for (let subscription of subscriptions)
   {
-    if (!selectedItem)
-      selectedItem = subscription;
-
     let prefixes = subscription.getAttribute("prefixes");
     let prefix = prefixes && prefixes.split(",").find(
       lang => new RegExp("^" + lang + "\\b").test(Utils.appLocale)
@@ -7623,27 +7890,39 @@ function chooseFilterSubscription(subscriptions)
 
     let subscriptionType = subscription.getAttribute("type");
 
-    if (prefix && subscriptionType == "ads")
-    {
-      if (!selectedPrefix || selectedPrefix.length < prefix.length)
-      {
-        selectedItem = subscription;
-        selectedPrefix = prefix;
-        matchCount = 1;
-      }
-      else if (selectedPrefix && selectedPrefix.length == prefix.length)
-      {
-        matchCount++;
+    if ((subscriptionType == "ads" || subscriptionType == "circumvention") &&
+        !selectedItem[subscriptionType])
+      selectedItem[subscriptionType] = subscription;
 
-        // If multiple items have a matching prefix of the same length:
-        // Select one of the items randomly, probability should be the same
-        // for all items. So we replace the previous match here with
-        // probability 1/N (N being the number of matches).
-        if (Math.random() * matchCount < 1)
+    if (prefix)
+    {
+      // The "ads" subscription is the one driving the selection.
+      if (subscriptionType == "ads")
+      {
+        if (!selectedPrefix || selectedPrefix.length < prefix.length)
         {
-          selectedItem = subscription;
+          selectedItem[subscriptionType] = subscription;
           selectedPrefix = prefix;
+          matchCount = 1;
         }
+        else if (selectedPrefix && selectedPrefix.length == prefix.length)
+        {
+          matchCount++;
+
+          // If multiple items have a matching prefix of the same length:
+          // Select one of the items randomly, probability should be the same
+          // for all items. So we replace the previous match here with
+          // probability 1/N (N being the number of matches).
+          if (Math.random() * matchCount < 1)
+          {
+            selectedItem[subscriptionType] = subscription;
+            selectedPrefix = prefix;
+          }
+        }
+      }
+      else if (subscriptionType == "circumvention")
+      {
+        selectedItem[subscriptionType] = subscription;
       }
     }
   }
@@ -7709,10 +7988,10 @@ function getSubscriptions()
     }
   }
 
-  // Add default ad blocking subscription (e.g. EasyList)
-  if (shouldAddDefaultSubscription())
+  // Add default ad blocking subscriptions (e.g. EasyList, Anti-Circumvention)
+  let addDefaultSubscription = shouldAddDefaultSubscriptions();
+  if (addDefaultSubscription || !Prefs.subscriptions_addedanticv)
   {
-
     return fetch("subscriptions.xml")
       .then(response => response.text())
       .then(text =>
@@ -7720,17 +7999,33 @@ function getSubscriptions()
         let doc = new DOMParser().parseFromString(text, "application/xml");
         let nodes = doc.getElementsByTagName("subscription");
 
-        let node = chooseFilterSubscription(nodes);
-        if (node)
+        let defaultSubscriptions = chooseFilterSubscriptions(nodes);
+        if (defaultSubscriptions)
         {
-          let url = node.getAttribute("url");
-          if (url)
+          for (let name in defaultSubscriptions)
           {
-            let subscription = Subscription.fromURL(url);
-            subscription.disabled = false;
-            subscription.title = node.getAttribute("title");
-            subscription.homepage = node.getAttribute("homepage");
-            subscriptions.push(subscription);
+            let node = defaultSubscriptions[name];
+            if (!node)
+              continue;
+
+            let url = node.getAttribute("url");
+            if (url)
+            {
+              // Make sure that we don't add Easylist again if we want
+              // to just add the Anti-Circumvention subscription.
+              let type = node.getAttribute("type");
+              if (!addDefaultSubscription && type != "circumvention")
+                continue;
+
+              let subscription = Subscription.fromURL(url);
+              subscription.disabled = false;
+              subscription.title = node.getAttribute("title");
+              subscription.homepage = node.getAttribute("homepage");
+              subscription.type = type;
+              subscriptions.push(subscription);
+              if (subscription.type == "circumvention")
+                Prefs.subscriptions_addedanticv = true;
+            }
           }
         }
         // Add AdBlock specific filter lists
@@ -7794,6 +8089,9 @@ Promise.all([
 ]).then(detectFirstRun)
   .then(getSubscriptions)
   .then(addSubscriptionsAndNotifyUser)
+  // We have to require the "uninstall" module on demand,
+  // as the "uninstall" module in turn requires this module.
+  .then(() => { __webpack_require__(27).setUninstallURL(); })
   .then(initNotifications);
 
 /**
@@ -7824,378 +8122,95 @@ exports.setSubscriptionsCallback = callback =>
   subscriptionsCallback = callback;
 };
 
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// if the ping reponse indicates a survey (tab or overlay)
-// gracefully processes the request
-const {recordGeneralMessage, recordErrorMessage} = __webpack_require__(12).ServerMessages;
-let SURVEY = exports.SURVEY = (function() {
-  // Only allow one survey per browser startup, to make sure users don't get
-  // spammed due to bugs in AdBlock / the ping server / the browser.
-  var surveyAllowed = true;
-  var lastNotificationID = "";
-
-  // Call |callback(tab)|, where |tab| is the active tab, or undefined if
-  // there is no active tab.
-  var getActiveTab = function(callback) {
-    if (!SAFARI) {
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        callback(tabs[0]);
-      });
-    } else {
-      var target = safari || {};
-      target = target.application || {};
-      target = target.activeBrowserWindow || {};
-      callback(target.activeTab);
-    }
-  };
-
-  // True if we are willing to show an overlay on this tab.
-  var validTab = function(tab) {
-    if (!SAFARI) {
-      if (tab.incognito || tab.status !== "complete") {
-        return false;
-      }
-    }
-    return /^http:/.test(tab.url);
-  };
-
-  var getBlockCountOnActiveTab = function(callback) {
-    chrome.tabs.query(
-    {
-      active: true,
-      lastFocusedWindow: true,
-    }, function (pages)
-    {
-      if (pages.length === 0)
-      {
-        return;
-      }
-      page = pages[0];
-      var blockedPerPage = __webpack_require__(21).getBlockedPerPage(page);
-      callback(blockedPerPage);
-    });
-  }
-
-  //create a Notification
-  var processNotification = function(surveyData) {
-    // Check to see if we should show the survey before showing the overlay.
-    var showNotificationIfAllowed = function(tab) {
-      shouldShowSurvey(surveyData, function(updatedSurveyData) {
-        lastNotificationID = (Math.floor(Math.random() * 3000)).toString();
-        if (updatedSurveyData) {
-          newSurveyData = surveyDataFrom(JSON.stringify(updatedSurveyData));
-          if (newSurveyData.survey_id === surveyData.survey_id) {
-            surveyData = newSurveyData;
-          } else {
-            recordGeneralMessage("survey_ids_do_not_match", undefined, {original_sid: surveyData.survey_id, updated_sid: newSurveyData.survey_id });
-            return;
-          }
-        }
-        if (!surveyData.notification_options ||
-            !surveyData.notification_options.type ||
-            !surveyData.notification_options.message ||
-            !surveyData.notification_options.icon_url ||
-            isNaN(surveyData.notification_options.priority)) {
-          recordGeneralMessage("invalid_survey_data", undefined, { sid: surveyData.survey_id });
-          return;
-        }
-        var notificationOptions = {
-          title: surveyData.notification_options.title,
-          iconUrl: surveyData.notification_options.icon_url,
-          type: surveyData.notification_options.type,
-          priority: surveyData.notification_options.priority,
-          message: surveyData.notification_options.message
-        };
-        if (surveyData.notification_options.context_message) {
-          notificationOptions.contextMessage = surveyData.notification_options.context_message;
-        }
-        if (surveyData.notification_options.require_interaction) {
-          notificationOptions.requireInteraction = surveyData.notification_options.require_interaction;
-        }
-        if (surveyData.notification_options.is_clickable) {
-          notificationOptions.isClickable = surveyData.notification_options.is_clickable;
-        }
-        // click handler for notification
-        var notificationClicked = function(notificationId) {
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-          if (notificationId === lastNotificationID && surveyData.notification_options.clicked_url) {
-            recordGeneralMessage("notification_clicked" , undefined, { sid: surveyData.survey_id });
-            openTab("https://getadblock.com/" + surveyData.notification_options.clicked_url);
-          } else {
-            recordGeneralMessage("notification_clicked_no_URL_to_open", undefined, { sid: surveyData.survey_id });
-          }
-        };
-        var buttonNotificationClicked = function(notificationId, buttonIndex) {
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-          if (surveyData.notification_options.buttons) {
-            if (notificationId === lastNotificationID && buttonIndex === 0) {
-                recordGeneralMessage("button_0_clicked", undefined, { sid: surveyData.survey_id });
-                openTab("https://getadblock.com/" + surveyData.notification_options.buttons[0].clicked_url);
-            }
-            if (notificationId === lastNotificationID && buttonIndex === 1) {
-                recordGeneralMessage("button_1_clicked", undefined, { sid: surveyData.survey_id });
-                openTab("https://getadblock.com/" + surveyData.notification_options.buttons[1].clicked_url);
-            }
-          }
-        };
-        var closedClicked = function(notificationId, byUser) {
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-          recordGeneralMessage("notification_closed", undefined, { sid: surveyData.survey_id , bu: byUser });
-        };
-        chrome.notifications.onClicked.removeListener(notificationClicked);
-        chrome.notifications.onClicked.addListener(notificationClicked);
-        if (surveyData.notification_options.buttons) {
-          var buttonArray = [];
-          if (surveyData.notification_options.buttons[0]) {
-            buttonArray.push({title: surveyData.notification_options.buttons[0].title,
-                           iconUrl: surveyData.notification_options.buttons[0].icon_url})
-          }
-          if (surveyData.notification_options.buttons[1]) {
-            buttonArray.push({title: surveyData.notification_options.buttons[1].title,
-                           iconUrl: surveyData.notification_options.buttons[1].icon_url})
-          }
-          notificationOptions.buttons = buttonArray;
-        }
-        chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-        chrome.notifications.onButtonClicked.addListener(buttonNotificationClicked);
-        chrome.notifications.onClosed.addListener(closedClicked);
-        // show the notification to the user.
-        chrome.notifications.create(lastNotificationID, notificationOptions, function(id) {
-          if (chrome.runtime.lastError) {
-            recordGeneralMessage("error_survey_not_shown", undefined, { sid: surveyData.survey_id });
-            chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-            chrome.notifications.onClicked.removeListener(notificationClicked);
-            chrome.notifications.onClosed.removeListener(closedClicked);
-            return;
-          }
-          recordGeneralMessage("survey_shown", undefined, { sid: surveyData.survey_id });
-        });
-      });
-    };
-
-    var retryInFiveMinutes = function() {
-      var fiveMinutes = 5 * 60 * 1000;
-      setTimeout(function() {
-        processNotification(surveyData);
-      }, fiveMinutes);
-    };
-    // check (again) if we still have permission to show a notification
-    if (chrome &&
-        chrome.notifications &&
-        chrome.notifications.getPermissionLevel) {
-        chrome.notifications.getPermissionLevel(function(permissionLevel){
-          if (permissionLevel === "granted") {
-            if (isNaN(surveyData.block_count_limit)) {
-              log('invalid block_count_limit', surveyData.block_count_limit);
-              return;
-            }
-            surveyData.block_count_limit = Number(surveyData.block_count_limit);
-            chrome.idle.queryState(60, function(state) {
-              if (state === "active") {
-                getBlockCountOnActiveTab(function(blockedPerPage) {
-                  if (blockedPerPage >= surveyData.block_count_limit) {
-                    getActiveTab(function(tab) {
-                      if (tab && validTab(tab)) {
-                        showNotificationIfAllowed(tab);
-                      } else {
-                        // We didn't find an appropriate tab
-                        retryInFiveMinutes();
-                      }
-                    });
-                  } else {
-                    retryInFiveMinutes();
-                  }
-                }); // end getBlockCountOnActiveTab
-              } else {
-                // browser is idle or locked
-                retryInFiveMinutes();
-              }
-            }); // end chrome.idle.queryState
-          }
-        });
-    }
-  }; //end of processNotification()
-
-  //open a Tab for a full page survey
-  var processTab = function(surveyData) {
-
-    var openTabIfAllowed = function() {
-      setTimeout(function () {
-        shouldShowSurvey(surveyData, function (responseData) {
-          chrome.tabs.create({ url: 'https://getadblock.com/' + responseData.open_this_url });
-        });
-      }, 10000); // 10 seconds
-    };
-
-    var waitForUserAction = function() {
-      chrome.tabs.onCreated.removeListener(waitForUserAction);
-      openTabIfAllowed();
-    };
-
-    chrome.idle.queryState(60, function(state) {
-      if (state === "active") {
-        openTabIfAllowed();
-      } else {
-        chrome.tabs.onCreated.removeListener(waitForUserAction);
-        chrome.tabs.onCreated.addListener(waitForUserAction);
-      }
-    });
-  }; //end of processTab()
-
-  //Display a notification overlay on the active tab
-  // To avoid security issues, the tab that is selected must not be incognito mode (Chrome only),
-  // and must not be using SSL / HTTPS
-  var processOverlay = function(surveyData) {
-
-    // Check to see if we should show the survey before showing the overlay.
-    var showOverlayIfAllowed = function(tab) {
-      shouldShowSurvey(surveyData, function() {
-        var data = { command: "showoverlay", overlayURL: surveyData.open_this_url, tabURL:tab.url};
-        var validateResponseFromTab = function(response) {
-          if (chrome.runtime.lastError) {
-            if (chrome.runtime.lastError.message) {
-              recordErrorMessage('overlay_message_error ', undefined, { errorMessage: chrome.runtime.lastError.message});
-            } else {
-              recordErrorMessage('overlay_message_error ', undefined, { error: JSON.stringify(chrome.runtime.lastError) });
-            }
-          } else if (!response || response.ack !== data.command) {
-            recordErrorMessage('invalid_response_from_notification_overlay_script', undefined, { response: response });
-          }
-        };
-        if (SAFARI) {
-          chrome.extension.sendRequest(data, validateResponseFromTab);
-        } else {
-          chrome.tabs.sendRequest(tab.id, data, validateResponseFromTab);
-        }
-      });
-    };
-
-    var retryInFiveMinutes = function() {
-      var fiveMinutes = 5 * 60 * 1000;
-      setTimeout(function() {
-        processOverlay(surveyData);
-      }, fiveMinutes);
-    };
-
-    getActiveTab(function(tab) {
-      if (tab && validTab(tab)) {
-        showOverlayIfAllowed(tab);
-      } else {
-        // We didn't find an appropriate tab
-        retryInFiveMinutes();
-      }
-    });
-  }; //end of processOverlay()
-
-  //functions below are used by both Tab and Overlay Surveys
-
-  // Double check that the survey should be shown
-  // Inputs:
-  //   surveyData: JSON survey information from ping server
-  //   callback(): called with no arguments if the survey should be shown
-  var shouldShowSurvey = function(surveyData, callback) {
-    // Check if we should show survey only if it can actually be shown
-    // based on surveyAllowed.
-    if (surveyAllowed) {
-      var data = { cmd: "survey", u: STATS.userId(), sid: surveyData.survey_id };
-      if (STATS.flavor === "E" && Prefs.blocked_total) {
-        data["b"] = Prefs.blocked_total;
-      }
-      $.post(STATS.statsUrl, data, function(responseData) {
-        try {
-          var data = JSON.parse(responseData);
-        } catch (e) {
-          log('Error parsing JSON: ', responseData, " Error: ", e);
-        }
-        if (data && data.should_survey === 'true' && surveyAllowed) {
-          surveyAllowed = false;
-          callback(data);
-        }
-      });
-    } else {
-     log('survey not allowed');
-    }
-  };
-
-  // Check the response from a ping to see if it contains valid survey instructions.
-  // If so, return an object containing data about the survey to show.
-  // Otherwise, return null.
-  // Inputs:
-  //   responseData: string response from a ping
-  var surveyDataFrom = function(responseData) {
-      if (responseData.length === 0 || responseData.trim().length === 0)
-        return null;
-
-      try {
-        var surveyData = JSON.parse(responseData);
-        if (!surveyData)
-          return;
-      } catch (e) {
-        console.log("Something went wrong with parsing survey data.");
-        console.log('error', e);
-        console.log('response data', responseData);
-        return null;
-      }
-      return surveyData;
-  };
-
-  return {
-    maybeSurvey: function(responseData) {
-      if (getSettings().show_survey === false)
-        return;
-
-      var surveyData = surveyDataFrom(responseData);
-      if (!surveyData)
-        return;
-
-      if (surveyData.type === 'overlay') {
-        processOverlay(surveyData);
-      } else if (surveyData.type === 'tab') {
-        processTab(surveyData);
-      } else if (surveyData.type === 'notification') {
-        processNotification(surveyData);
-      }
-    },//end of maybeSurvey
-    types: function(callback) {
-      // 'O' = Overlay Surveys
-      // 'T' = Tab Surveys
-      // 'N' = Notifications
-      if (chrome &&
-          chrome.notifications &&
-          chrome.notifications.getPermissionLevel) {
-          chrome.notifications.getPermissionLevel(function(permissionLevel){
-            if (permissionLevel === "granted") {
-              callback("OTN");
-            } else {
-              callback("OT");
-            }
-          });
-          return;
-      }
-      callback("OT");
-    }
-  };
-})();
+// Exports for tests only
+exports.chooseFilterSubscriptions = chooseFilterSubscriptions;
 
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/** @module adblock-betafish/alias/uninstall */
+
+const FilterStorage = __webpack_require__(5).FilterStorage;
+const FilterNotifier = __webpack_require__(1).FilterNotifier;
+const {STATS} = __webpack_require__(28);
+
+let uninstallInit = exports.uninstallInit = function()
+{
+  if (chrome.runtime.setUninstallURL)
+  {
+    var Prefs = __webpack_require__(2).Prefs;
+    STATS.untilLoaded(function(userID)
+    {
+      var uninstallURL = "https://getadblock.com/uninstall/?u=" + userID;
+      // if the start property of blockCount exists (which is the AdBlock
+      // installation timestamp)
+      // use it to calculate the approximate length of time that user has
+      // AdBlock installed
+      if (Prefs && Prefs.blocked_total !== undefined)
+      {
+        var twoMinutes = 2 * 60 * 1000;
+        var getABCLastUpdateTime = function()
+        {
+          for ( var sub in FilterStorage.subscriptions)
+          {
+            var subscription = FilterStorage.subscriptions[sub];
+            if (subscription.url === getUrlFromId("adblock_custom"))
+            {
+              return subscription._lastDownload;
+            }
+          }
+          return null;
+        };
+        var updateUninstallURL = function()
+        {
+          chrome.storage.local.get("blockage_stats", function(data)
+          {
+            var url = uninstallURL;
+            if (data &&
+                data.blockage_stats &&
+                data.blockage_stats.start)
+            {
+              var installedDuration = (Date.now() - data.blockage_stats.start);
+              url = url + "&t=" + installedDuration;
+            }
+            var bc = Prefs.blocked_total;
+            url = url + "&bc=" + bc;
+            var lastUpdateTime = getABCLastUpdateTime();
+            if (lastUpdateTime !== null)
+            {
+              url = url + "&abc-lt=" + lastUpdateTime;
+            }
+            else
+            {
+              url = url + "&abc-lt=-1"
+            }
+            chrome.runtime.setUninstallURL(url);
+          });
+        };
+        // start an interval timer that will update the Uninstall URL every 2
+        // minutes
+        setInterval(updateUninstallURL, twoMinutes);
+        updateUninstallURL();
+      }
+      else
+      {
+        chrome.runtime.setUninstallURL(uninstallURL + "&t=-1");
+      }
+    }); // end of STATS.then
+  }
+};
+exports.setUninstallURL = uninstallInit;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
 const Prefs = __webpack_require__(2).Prefs;
-const FilterStorage = __webpack_require__(4).FilterStorage;
-const {LocalCDN} = __webpack_require__(18);
-const {SURVEY} = __webpack_require__(26);
+const FilterStorage = __webpack_require__(5).FilterStorage;
+const {LocalCDN} = __webpack_require__(17);
+const {SURVEY} = __webpack_require__(29);
 const {recordGeneralMessage, recordErrorMessage} = __webpack_require__(12).ServerMessages;
 // Allows interaction with the server to track install rate
 // and log messages.
@@ -8674,7 +8689,370 @@ let STATS = exports.STATS = (function()
 
 
 /***/ }),
-/* 28 */
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// if the ping reponse indicates a survey (tab or overlay)
+// gracefully processes the request
+const {recordGeneralMessage, recordErrorMessage} = __webpack_require__(12).ServerMessages;
+let SURVEY = exports.SURVEY = (function() {
+  // Only allow one survey per browser startup, to make sure users don't get
+  // spammed due to bugs in AdBlock / the ping server / the browser.
+  var surveyAllowed = true;
+  var lastNotificationID = "";
+
+  // Call |callback(tab)|, where |tab| is the active tab, or undefined if
+  // there is no active tab.
+  var getActiveTab = function(callback) {
+    if (!SAFARI) {
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        callback(tabs[0]);
+      });
+    } else {
+      var target = safari || {};
+      target = target.application || {};
+      target = target.activeBrowserWindow || {};
+      callback(target.activeTab);
+    }
+  };
+
+  // True if we are willing to show an overlay on this tab.
+  var validTab = function(tab) {
+    if (!SAFARI) {
+      if (tab.incognito || tab.status !== "complete") {
+        return false;
+      }
+    }
+    return /^http:/.test(tab.url);
+  };
+
+  var getBlockCountOnActiveTab = function(callback) {
+    chrome.tabs.query(
+    {
+      active: true,
+      lastFocusedWindow: true,
+    }, function (pages)
+    {
+      if (pages.length === 0)
+      {
+        return;
+      }
+      page = pages[0];
+      var blockedPerPage = __webpack_require__(21).getBlockedPerPage(page);
+      callback(blockedPerPage);
+    });
+  }
+
+  //create a Notification
+  var processNotification = function(surveyData) {
+    // Check to see if we should show the survey before showing the overlay.
+    var showNotificationIfAllowed = function(tab) {
+      shouldShowSurvey(surveyData, function(updatedSurveyData) {
+        lastNotificationID = (Math.floor(Math.random() * 3000)).toString();
+        if (updatedSurveyData) {
+          newSurveyData = surveyDataFrom(JSON.stringify(updatedSurveyData));
+          if (newSurveyData.survey_id === surveyData.survey_id) {
+            surveyData = newSurveyData;
+          } else {
+            recordGeneralMessage("survey_ids_do_not_match", undefined, {original_sid: surveyData.survey_id, updated_sid: newSurveyData.survey_id });
+            return;
+          }
+        }
+        if (!surveyData.notification_options ||
+            !surveyData.notification_options.type ||
+            !surveyData.notification_options.message ||
+            !surveyData.notification_options.icon_url ||
+            isNaN(surveyData.notification_options.priority)) {
+          recordGeneralMessage("invalid_survey_data", undefined, { sid: surveyData.survey_id });
+          return;
+        }
+        var notificationOptions = {
+          title: surveyData.notification_options.title,
+          iconUrl: surveyData.notification_options.icon_url,
+          type: surveyData.notification_options.type,
+          priority: surveyData.notification_options.priority,
+          message: surveyData.notification_options.message
+        };
+        if (surveyData.notification_options.context_message) {
+          notificationOptions.contextMessage = surveyData.notification_options.context_message;
+        }
+        if (surveyData.notification_options.require_interaction) {
+          notificationOptions.requireInteraction = surveyData.notification_options.require_interaction;
+        }
+        if (surveyData.notification_options.is_clickable) {
+          notificationOptions.isClickable = surveyData.notification_options.is_clickable;
+        }
+        // click handler for notification
+        var notificationClicked = function(notificationId) {
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          chrome.notifications.onClosed.removeListener(closedClicked);
+          if (notificationId === lastNotificationID && surveyData.notification_options.clicked_url) {
+            recordGeneralMessage("notification_clicked" , undefined, { sid: surveyData.survey_id });
+            openTab("https://getadblock.com/" + surveyData.notification_options.clicked_url);
+          } else {
+            recordGeneralMessage("notification_clicked_no_URL_to_open", undefined, { sid: surveyData.survey_id });
+          }
+        };
+        var buttonNotificationClicked = function(notificationId, buttonIndex) {
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          chrome.notifications.onClosed.removeListener(closedClicked);
+          if (surveyData.notification_options.buttons) {
+            if (notificationId === lastNotificationID && buttonIndex === 0) {
+                recordGeneralMessage("button_0_clicked", undefined, { sid: surveyData.survey_id });
+                openTab("https://getadblock.com/" + surveyData.notification_options.buttons[0].clicked_url);
+            }
+            if (notificationId === lastNotificationID && buttonIndex === 1) {
+                recordGeneralMessage("button_1_clicked", undefined, { sid: surveyData.survey_id });
+                openTab("https://getadblock.com/" + surveyData.notification_options.buttons[1].clicked_url);
+            }
+          }
+        };
+        var closedClicked = function(notificationId, byUser) {
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          chrome.notifications.onClosed.removeListener(closedClicked);
+          recordGeneralMessage("notification_closed", undefined, { sid: surveyData.survey_id , bu: byUser });
+        };
+        chrome.notifications.onClicked.removeListener(notificationClicked);
+        chrome.notifications.onClicked.addListener(notificationClicked);
+        if (surveyData.notification_options.buttons) {
+          var buttonArray = [];
+          if (surveyData.notification_options.buttons[0]) {
+            buttonArray.push({title: surveyData.notification_options.buttons[0].title,
+                           iconUrl: surveyData.notification_options.buttons[0].icon_url})
+          }
+          if (surveyData.notification_options.buttons[1]) {
+            buttonArray.push({title: surveyData.notification_options.buttons[1].title,
+                           iconUrl: surveyData.notification_options.buttons[1].icon_url})
+          }
+          notificationOptions.buttons = buttonArray;
+        }
+        chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+        chrome.notifications.onButtonClicked.addListener(buttonNotificationClicked);
+        chrome.notifications.onClosed.addListener(closedClicked);
+        // show the notification to the user.
+        chrome.notifications.create(lastNotificationID, notificationOptions, function(id) {
+          if (chrome.runtime.lastError) {
+            recordGeneralMessage("error_survey_not_shown", undefined, { sid: surveyData.survey_id });
+            chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+            chrome.notifications.onClicked.removeListener(notificationClicked);
+            chrome.notifications.onClosed.removeListener(closedClicked);
+            return;
+          }
+          recordGeneralMessage("survey_shown", undefined, { sid: surveyData.survey_id });
+        });
+      });
+    };
+
+    var retryInFiveMinutes = function() {
+      var fiveMinutes = 5 * 60 * 1000;
+      setTimeout(function() {
+        processNotification(surveyData);
+      }, fiveMinutes);
+    };
+    // check (again) if we still have permission to show a notification
+    if (chrome &&
+        chrome.notifications &&
+        chrome.notifications.getPermissionLevel) {
+        chrome.notifications.getPermissionLevel(function(permissionLevel){
+          if (permissionLevel === "granted") {
+            if (isNaN(surveyData.block_count_limit)) {
+              log('invalid block_count_limit', surveyData.block_count_limit);
+              return;
+            }
+            surveyData.block_count_limit = Number(surveyData.block_count_limit);
+            chrome.idle.queryState(60, function(state) {
+              if (state === "active") {
+                getBlockCountOnActiveTab(function(blockedPerPage) {
+                  if (blockedPerPage >= surveyData.block_count_limit) {
+                    getActiveTab(function(tab) {
+                      if (tab && validTab(tab)) {
+                        showNotificationIfAllowed(tab);
+                      } else {
+                        // We didn't find an appropriate tab
+                        retryInFiveMinutes();
+                      }
+                    });
+                  } else {
+                    retryInFiveMinutes();
+                  }
+                }); // end getBlockCountOnActiveTab
+              } else {
+                // browser is idle or locked
+                retryInFiveMinutes();
+              }
+            }); // end chrome.idle.queryState
+          }
+        });
+    }
+  }; //end of processNotification()
+
+  //open a Tab for a full page survey
+  var processTab = function(surveyData) {
+
+    var openTabIfAllowed = function() {
+      setTimeout(function () {
+        shouldShowSurvey(surveyData, function (responseData) {
+          chrome.tabs.create({ url: 'https://getadblock.com/' + responseData.open_this_url });
+        });
+      }, 10000); // 10 seconds
+    };
+
+    var waitForUserAction = function() {
+      chrome.tabs.onCreated.removeListener(waitForUserAction);
+      openTabIfAllowed();
+    };
+
+    chrome.idle.queryState(60, function(state) {
+      if (state === "active") {
+        openTabIfAllowed();
+      } else {
+        chrome.tabs.onCreated.removeListener(waitForUserAction);
+        chrome.tabs.onCreated.addListener(waitForUserAction);
+      }
+    });
+  }; //end of processTab()
+
+  //Display a notification overlay on the active tab
+  // To avoid security issues, the tab that is selected must not be incognito mode (Chrome only),
+  // and must not be using SSL / HTTPS
+  var processOverlay = function(surveyData) {
+
+    // Check to see if we should show the survey before showing the overlay.
+    var showOverlayIfAllowed = function(tab) {
+      shouldShowSurvey(surveyData, function() {
+        var data = { command: "showoverlay", overlayURL: surveyData.open_this_url, tabURL:tab.url};
+        var validateResponseFromTab = function(response) {
+          if (chrome.runtime.lastError) {
+            if (chrome.runtime.lastError.message) {
+              recordErrorMessage('overlay_message_error ', undefined, { errorMessage: chrome.runtime.lastError.message});
+            } else {
+              recordErrorMessage('overlay_message_error ', undefined, { error: JSON.stringify(chrome.runtime.lastError) });
+            }
+          } else if (!response || response.ack !== data.command) {
+            recordErrorMessage('invalid_response_from_notification_overlay_script', undefined, { response: response });
+          }
+        };
+        if (SAFARI) {
+          chrome.extension.sendRequest(data, validateResponseFromTab);
+        } else {
+          chrome.tabs.sendRequest(tab.id, data, validateResponseFromTab);
+        }
+      });
+    };
+
+    var retryInFiveMinutes = function() {
+      var fiveMinutes = 5 * 60 * 1000;
+      setTimeout(function() {
+        processOverlay(surveyData);
+      }, fiveMinutes);
+    };
+
+    getActiveTab(function(tab) {
+      if (tab && validTab(tab)) {
+        showOverlayIfAllowed(tab);
+      } else {
+        // We didn't find an appropriate tab
+        retryInFiveMinutes();
+      }
+    });
+  }; //end of processOverlay()
+
+  //functions below are used by both Tab and Overlay Surveys
+
+  // Double check that the survey should be shown
+  // Inputs:
+  //   surveyData: JSON survey information from ping server
+  //   callback(): called with no arguments if the survey should be shown
+  var shouldShowSurvey = function(surveyData, callback) {
+    // Check if we should show survey only if it can actually be shown
+    // based on surveyAllowed.
+    if (surveyAllowed) {
+      var data = { cmd: "survey", u: STATS.userId(), sid: surveyData.survey_id };
+      if (STATS.flavor === "E" && Prefs.blocked_total) {
+        data["b"] = Prefs.blocked_total;
+      }
+      $.post(STATS.statsUrl, data, function(responseData) {
+        try {
+          var data = JSON.parse(responseData);
+        } catch (e) {
+          log('Error parsing JSON: ', responseData, " Error: ", e);
+        }
+        if (data && data.should_survey === 'true' && surveyAllowed) {
+          surveyAllowed = false;
+          callback(data);
+        }
+      });
+    } else {
+     log('survey not allowed');
+    }
+  };
+
+  // Check the response from a ping to see if it contains valid survey instructions.
+  // If so, return an object containing data about the survey to show.
+  // Otherwise, return null.
+  // Inputs:
+  //   responseData: string response from a ping
+  var surveyDataFrom = function(responseData) {
+      if (responseData.length === 0 || responseData.trim().length === 0)
+        return null;
+
+      try {
+        var surveyData = JSON.parse(responseData);
+        if (!surveyData)
+          return;
+      } catch (e) {
+        console.log("Something went wrong with parsing survey data.");
+        console.log('error', e);
+        console.log('response data', responseData);
+        return null;
+      }
+      return surveyData;
+  };
+
+  return {
+    maybeSurvey: function(responseData) {
+      if (getSettings().show_survey === false)
+        return;
+
+      var surveyData = surveyDataFrom(responseData);
+      if (!surveyData)
+        return;
+
+      if (surveyData.type === 'overlay') {
+        processOverlay(surveyData);
+      } else if (surveyData.type === 'tab') {
+        processTab(surveyData);
+      } else if (surveyData.type === 'notification') {
+        processNotification(surveyData);
+      }
+    },//end of maybeSurvey
+    types: function(callback) {
+      // 'O' = Overlay Surveys
+      // 'T' = Tab Surveys
+      // 'N' = Notifications
+      if (chrome &&
+          chrome.notifications &&
+          chrome.notifications.getPermissionLevel) {
+          chrome.notifications.getPermissionLevel(function(permissionLevel){
+            if (permissionLevel === "granted") {
+              callback("OTN");
+            } else {
+              callback("OT");
+            }
+          });
+          return;
+      }
+      callback("OT");
+    }
+  };
+})();
+
+
+/***/ }),
+/* 30 */
 /***/ (function(module, exports) {
 
 // Used by both channels.js and picreplacement.js
@@ -8710,38 +9088,38 @@ exports.SMALL = imageSizesMap.get("small");
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(30);
+__webpack_require__(32);
 __webpack_require__(15);
-__webpack_require__(33);
-__webpack_require__(23);
-__webpack_require__(38);
-__webpack_require__(21);
-__webpack_require__(39);
+__webpack_require__(35);
+__webpack_require__(24);
 __webpack_require__(40);
+__webpack_require__(21);
 __webpack_require__(41);
-__webpack_require__(47);
-__webpack_require__(48);
-__webpack_require__(26);
+__webpack_require__(42);
+__webpack_require__(43);
 __webpack_require__(49);
 __webpack_require__(50);
+__webpack_require__(29);
 __webpack_require__(51);
-__webpack_require__(56);
-__webpack_require__(25);
+__webpack_require__(52);
+__webpack_require__(53);
 __webpack_require__(57);
-__webpack_require__(28);
+__webpack_require__(26);
 __webpack_require__(58);
+__webpack_require__(30);
 __webpack_require__(59);
 __webpack_require__(60);
 __webpack_require__(61);
 __webpack_require__(62);
-module.exports = __webpack_require__(63);
+__webpack_require__(63);
+module.exports = __webpack_require__(64);
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8772,13 +9150,16 @@ module.exports = __webpack_require__(63);
 const {Services} = Cu.import("resource://gre/modules/Services.jsm", {});
 const {XPCOMUtils} = Cu.import("resource://gre/modules/XPCOMUtils.jsm", {});
 
-const {FilterStorage} = __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {FilterNotifier} = __webpack_require__(1);
 const {ElemHide} = __webpack_require__(14);
 const {ElemHideEmulation} = __webpack_require__(20);
+const {Snippets} = __webpack_require__(22);
 const {defaultMatcher} = __webpack_require__(9);
 const {ActiveFilter, RegExpFilter,
-       ElemHideBase, ElemHideEmulationFilter} = __webpack_require__(0);
+       ElemHideBase, ElemHideEmulationFilter,
+       SnippetFilter} = __webpack_require__(0);
+const {SpecialSubscription} = __webpack_require__(4);
 const {Prefs} = __webpack_require__(2);
 
 /**
@@ -8885,12 +9266,23 @@ function addFilter(filter)
     return;
 
   let hasEnabled = false;
+  let allowSnippets = false;
   for (let i = 0; i < filter.subscriptions.length; i++)
   {
-    if (!filter.subscriptions[i].disabled)
+    let subscription = filter.subscriptions[i];
+
+    if (!subscription.disabled)
     {
       hasEnabled = true;
-      break;
+
+      // Allow snippets to be executed only by the circumvention lists or the
+      // user's own filters.
+      if (subscription.type == "circumvention" ||
+          subscription instanceof SpecialSubscription)
+      {
+        allowSnippets = true;
+        break;
+      }
     }
   }
   if (!hasEnabled)
@@ -8905,6 +9297,8 @@ function addFilter(filter)
     else
       ElemHide.add(filter);
   }
+  else if (allowSnippets && filter instanceof SnippetFilter)
+    Snippets.add(filter);
 }
 
 /**
@@ -8941,6 +9335,8 @@ function removeFilter(filter)
     else
       ElemHide.remove(filter);
   }
+  else if (filter instanceof SnippetFilter)
+    Snippets.remove(filter);
 }
 
 const primes = [101, 109, 131, 149, 163, 179, 193, 211, 229, 241];
@@ -8988,7 +9384,7 @@ function onSubscriptionDisabled(subscription, newValue)
 {
   FilterListener.setDirty(1);
 
-  if (subscription.url in FilterStorage.knownSubscriptions)
+  if (FilterStorage.knownSubscriptions.has(subscription.url))
   {
     if (newValue == false)
       addFilters(subscription.filters);
@@ -9001,8 +9397,8 @@ function onSubscriptionUpdated(subscription)
 {
   FilterListener.setDirty(1);
 
-  if (subscription.url in FilterStorage.knownSubscriptions &&
-      !subscription.disabled)
+  if (!subscription.disabled &&
+      FilterStorage.knownSubscriptions.has(subscription.url))
   {
     subscription.oldFilters.forEach(removeFilter);
     addFilters(subscription.filters);
@@ -9060,6 +9456,7 @@ function onLoad()
   defaultMatcher.clear();
   ElemHide.clear();
   ElemHideEmulation.clear();
+  Snippets.clear();
   for (let subscription of FilterStorage.subscriptions)
   {
     if (!subscription.disabled)
@@ -9074,7 +9471,7 @@ function onSave()
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9162,20 +9559,6 @@ exports.IO =
   },
 
   /**
-   * Copies a file.
-   * @param {string} fromFile
-   *    Name of the file to be copied
-   * @param {string} toFile
-   *    Name of the file to be written, will be overwritten if exists
-   * @return {Promise}
-   *    Promise to be resolved or rejected once the operation is completed
-   */
-  copyFile(fromFile, toFile)
-  {
-    return loadFile(fromFile).then(entry => saveFile(toFile, entry.content));
-  },
-
-  /**
    * Renames a file.
    * @param {string} fromFile
    *    Name of the file to be renamed
@@ -9188,19 +9571,7 @@ exports.IO =
   {
     return loadFile(fromFile)
       .then(entry => browser.storage.local.set({[fileToKey(newName)]: entry}))
-      .then(() => this.removeFile(fromFile));
-  },
-
-  /**
-   * Removes a file.
-   * @param {string} fileName
-   *    Name of the file to be removed
-   * @return {Promise}
-   *    Promise to be resolved or rejected once the operation is completed
-   */
-  removeFile(fileName)
-  {
-    return browser.storage.local.remove(fileToKey(fileName));
+      .then(() => browser.storage.local.remove(fileToKey(fromFile)));
   },
 
   /**
@@ -9230,7 +9601,7 @@ exports.IO =
 
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9300,7 +9671,7 @@ exports.filterToRegExp = filterToRegExp;
 
 function splitSelector(selector)
 {
-  if (selector.indexOf(",") == -1)
+  if (!selector.includes(","))
     return [selector];
 
   let selectors = [];
@@ -9338,9 +9709,111 @@ function splitSelector(selector)
 
 exports.splitSelector = splitSelector;
 
+function findTargetSelectorIndex(selector)
+{
+  let index = 0;
+  let whitespace = 0;
+  let scope = [];
+
+  // Start from the end of the string and go character by character, where each
+  // character is a Unicode code point.
+  for (let character of [...selector].reverse())
+  {
+    let currentScope = scope[scope.length - 1];
+
+    if (character == "'" || character == "\"")
+    {
+      // If we're already within the same type of quote, close the scope;
+      // otherwise open a new scope.
+      if (currentScope == character)
+        scope.pop();
+      else
+        scope.push(character);
+    }
+    else if (character == "]" || character == ")")
+    {
+      // For closing brackets and parentheses, open a new scope only if we're
+      // not within a quote. Within quotes these characters should have no
+      // meaning.
+      if (currentScope != "'" && currentScope != "\"")
+        scope.push(character);
+    }
+    else if (character == "[")
+    {
+      // If we're already within a bracket, close the scope.
+      if (currentScope == "]")
+        scope.pop();
+    }
+    else if (character == "(")
+    {
+      // If we're already within a parenthesis, close the scope.
+      if (currentScope == ")")
+        scope.pop();
+    }
+    else if (!currentScope)
+    {
+      // At the top level (not within any scope), count the whitespace if we've
+      // encountered it. Otherwise if we've hit one of the combinators,
+      // terminate here; otherwise if we've hit a non-colon character,
+      // terminate here.
+      if (/\s/.test(character))
+      {
+        whitespace++;
+      }
+      else if ((character == ">" || character == "+" || character == "~") ||
+               (whitespace > 0 && character != ":"))
+      {
+        break;
+      }
+    }
+
+    // Zero out the whitespace count if we've entered a scope.
+    if (scope.length > 0)
+      whitespace = 0;
+
+    // Increment the index by the size of the character. Note that for Unicode
+    // composite characters (like emoji) this will be more than one.
+    index += character.length;
+  }
+
+  return selector.length - index + whitespace;
+}
+
+/**
+ * Qualifies a CSS selector with a qualifier, which may be another CSS selector
+ * or an empty string. For example, given the selector "div.bar" and the
+ * qualifier "#foo", this function returns "div#foo.bar".
+ * @param {string} selector The selector to qualify.
+ * @param {string} qualifier The qualifier with which to qualify the selector.
+ * @returns {string} The qualified selector.
+ */
+function qualifySelector(selector, qualifier)
+{
+  let qualifiedSelector = "";
+
+  for (let sub of splitSelector(selector))
+  {
+    sub = sub.trim();
+
+    qualifiedSelector += ", ";
+
+    let index = findTargetSelectorIndex(sub);
+    let [, type = "", rest] = /^([a-z][a-z-]*)?(.*)/i.exec(sub.substr(index));
+
+    // Note that the first group in the regular expression is optional. If it
+    // doesn't match (e.g. "#foo::nth-child(1)"), type will be an empty string.
+    qualifiedSelector += sub.substr(0, index) + type + qualifier + rest;
+  }
+
+  // Remove the initial comma and space.
+  return qualifiedSelector.substr(2);
+}
+
+exports.qualifySelector = qualifySelector;
+
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9367,8 +9840,8 @@ const {RegExpFilter,
        WhitelistFilter,
        ElemHideFilter} = __webpack_require__(0);
 const {SpecialSubscription} =
-  __webpack_require__(5);
-const {FilterStorage} = __webpack_require__(4);
+  __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {defaultMatcher} = __webpack_require__(9);
 const {FilterNotifier} = __webpack_require__(1);
 const {extractHostFromFrame} = __webpack_require__(6);
@@ -9626,7 +10099,7 @@ browser.runtime.onConnect.addListener(newPort =>
 
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9683,7 +10156,7 @@ exports.getDomain = hostname =>
 
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9712,8 +10185,8 @@ exports.getDomain = hostname =>
  * This is a specialized RSA library meant only to verify SHA1-based signatures.
  */
 
-const {BigInteger} = __webpack_require__(36);
-const Rusha = __webpack_require__(37);
+const {BigInteger} = __webpack_require__(38);
+const Rusha = __webpack_require__(39);
 
 let rusha = new Rusha();
 
@@ -9896,7 +10369,7 @@ exports.verifySignature = verifySignature;
 
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports) {
 
 /*
@@ -10490,7 +10963,7 @@ BigInteger.ONE = nbv(1);
 
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function () {
@@ -10914,7 +11387,7 @@ BigInteger.ONE = nbv(1);
 
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11053,7 +11526,7 @@ if ("onCreatedNavigationTarget" in browser.webNavigation)
 
 
 /***/ }),
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11140,7 +11613,7 @@ browser.webRequest.onHeadersReceived.addListener(details =>
 
 
 /***/ }),
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11161,13 +11634,14 @@ browser.webRequest.onHeadersReceived.addListener(details =>
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @module cssInjection */
+/** @module contentFiltering */
 
 
 
 const {RegExpFilter} = __webpack_require__(0);
 const {ElemHide} = __webpack_require__(14);
 const {ElemHideEmulation} = __webpack_require__(20);
+const {Snippets, compileScript} = __webpack_require__(22);
 const {checkWhitelisted} = __webpack_require__(8);
 const {extractHostFromFrame} = __webpack_require__(6);
 const {port} = __webpack_require__(7);
@@ -11183,6 +11657,9 @@ const styleSheetRemovalSupported = info.platform == "gecko";
 const selectorGroupSize = 1024;
 
 let userStyleSheetsSupported = true;
+
+let snippetsLibrarySource = "";
+let executableCode = new Map();
 
 function* splitSelectors(selectors)
 {
@@ -11241,7 +11718,7 @@ function addStyleSheet(tabId, frameId, styleSheet)
     // (e.g. "Error: No frame with id 574 in tab 266"), which can happen when
     // the code in the parent document has removed the frame before the
     // background page has had a chance to respond to the content script's
-    // "elemhide.getSelectors" message. We simply ignore such errors, because
+    // "content.applyFilters" message. We simply ignore such errors, because
     // otherwise they show up in the log too often and make debugging
     // difficult.
     //
@@ -11306,25 +11783,87 @@ function updateFrameStyles(tabId, frameId, selectors, groupName, appendOnly)
   return true;
 }
 
-port.on("elemhide.getSelectors", (message, sender) =>
+function getExecutableCode(script)
+{
+  let code = executableCode.get(script);
+  if (code)
+    return code;
+
+  code = compileScript(script, [snippetsLibrarySource]);
+
+  executableCode.set(script, code);
+  return code;
+}
+
+function executeScript(script, tabId, frameId)
+{
+  try
+  {
+    let details = {
+      code: getExecutableCode(script),
+      matchAboutBlank: true,
+      runAt: "document_start"
+    };
+
+    // Chrome <50 throws an exception if chrome.tabs.executeScript is called
+    // with a frameId of 0.
+    if (frameId != 0)
+      details.frameId = frameId;
+
+    browser.tabs.executeScript(tabId, details)
+    .catch(error =>
+    {
+      // Sometimes a frame is added and removed very quickly, in such cases we
+      // simply ignore the error.
+      if (error.message == "The frame was removed.")
+        return;
+
+      // Sometimes the frame in question is just not found. We don't know why
+      // this is exactly, but we simply ignore the error.
+      if (/^No frame with id \d+ in tab \d+\.$/.test(error.message))
+        return;
+
+      throw error;
+    });
+  }
+  catch (error)
+  {
+    // See the comment in the catch block associated with the call to
+    // tabs.insertCSS for why we catch and ignore any errors here.
+  }
+}
+
+port.on("content.applyFilters", (message, sender) =>
 {
   let selectors = [];
   let emulatedPatterns = [];
   let trace = HitLogger.hasListener(sender.page.id);
   let inline = !userStyleSheetsSupported;
 
+  let {elemhide, snippets} = message.filterTypes ||
+                             {elemhide: true, snippets: true};
+
   if (!checkWhitelisted(sender.page, sender.frame, null,
-                        RegExpFilter.typeMap.DOCUMENT |
-                        RegExpFilter.typeMap.ELEMHIDE))
+                        RegExpFilter.typeMap.DOCUMENT))
   {
     let hostname = extractHostFromFrame(sender.frame);
-    let specificOnly = checkWhitelisted(sender.page, sender.frame, null,
-                                        RegExpFilter.typeMap.GENERICHIDE);
 
-    selectors = ElemHide.getSelectorsForDomain(hostname, specificOnly);
+    if (snippets)
+    {
+      for (let script of Snippets.getScriptsForDomain(hostname))
+        executeScript(script, sender.page.id, sender.frame.id);
+    }
 
-    for (let filter of ElemHideEmulation.getRulesForDomain(hostname))
-      emulatedPatterns.push({selector: filter.selector, text: filter.text});
+    if (elemhide && !checkWhitelisted(sender.page, sender.frame, null,
+                                      RegExpFilter.typeMap.ELEMHIDE))
+    {
+      let specificOnly = checkWhitelisted(sender.page, sender.frame, null,
+                                          RegExpFilter.typeMap.GENERICHIDE);
+      selectors = ElemHide.getSelectorsForDomain(hostname, specificOnly);
+
+      for (let filter of ElemHideEmulation.getRulesForDomain(hostname))
+        emulatedPatterns.push({selector: filter.selector, text: filter.text});
+    }
   }
 
   if (!inline && !updateFrameStyles(sender.page.id, sender.frame.id,
@@ -11353,9 +11892,16 @@ port.on("elemhide.injectSelectors", (message, sender) =>
                     message.groupName, message.appendOnly);
 });
 
+fetch(browser.extension.getURL("/snippets.js"), {cache: "no-cache"})
+.then(response => response.ok ? response.text() : "")
+.then(text =>
+{
+  snippetsLibrarySource = text;
+});
+
 
 /***/ }),
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11385,12 +11931,12 @@ port.on("elemhide.injectSelectors", (message, sender) =>
   const {port} = __webpack_require__(7);
   const {Prefs} = __webpack_require__(2);
   const {Utils} = __webpack_require__(10);
-  const {FilterStorage} = __webpack_require__(4);
+  const {FilterStorage} = __webpack_require__(5);
   const {FilterNotifier} = __webpack_require__(1);
   const {defaultMatcher} = __webpack_require__(9);
   const {Notification: NotificationStorage} = __webpack_require__(16);
   const {getActiveNotification, shouldDisplay,
-         notificationClicked} = __webpack_require__(24);
+         notificationClicked} = __webpack_require__(25);
   const {HitLogger} = __webpack_require__(11);
 
   const {
@@ -11404,13 +11950,13 @@ port.on("elemhide.injectSelectors", (message, sender) =>
     DownloadableSubscription,
     SpecialSubscription,
     RegularSubscription
-  } = __webpack_require__(5);
+  } = __webpack_require__(4);
 
-  const {showOptions} = __webpack_require__(45);
+  const {showOptions} = __webpack_require__(47);
 
   port.on("types.get", (message, sender) =>
   {
-    const filterTypes = Array.from(__webpack_require__(23).filterTypes);
+    const filterTypes = Array.from(__webpack_require__(24).filterTypes);
     filterTypes.push(...filterTypes.splice(filterTypes.indexOf("OTHER"), 1));
     return filterTypes;
   });
@@ -11558,7 +12104,7 @@ port.on("elemhide.injectSelectors", (message, sender) =>
   {
     if (message.what == "issues")
     {
-      const subscriptionInit = __webpack_require__(25);
+      const subscriptionInit = __webpack_require__(26);
       return {
         dataCorrupted: subscriptionInit.isDataCorrupted(),
         filterlistsReinitialized: subscriptionInit.isReinitialized()
@@ -11621,7 +12167,7 @@ port.on("elemhide.injectSelectors", (message, sender) =>
 
   port.on("filters.add", (message, sender) =>
   {
-    const result = __webpack_require__(17).parseFilter(message.text);
+    const result = __webpack_require__(18).parseFilter(message.text);
     const errors = [];
     if (result.error)
       errors.push(result.error.toString());
@@ -11651,7 +12197,7 @@ port.on("elemhide.injectSelectors", (message, sender) =>
 
   port.on("filters.importRaw", (message, sender) =>
   {
-    const result = __webpack_require__(17).parseFilters(message.text);
+    const result = __webpack_require__(18).parseFilters(message.text);
     const errors = [];
     for (const error of result.errors)
     {
@@ -11794,14 +12340,14 @@ port.on("elemhide.injectSelectors", (message, sender) =>
   port.on("subscriptions.remove", (message, sender) =>
   {
     const subscription = Subscription.fromURL(message.url);
-    if (subscription.url in FilterStorage.knownSubscriptions)
+    if (FilterStorage.knownSubscriptions.has(subscription.url))
       FilterStorage.removeSubscription(subscription);
   });
 
   port.on("subscriptions.toggle", (message, sender) =>
   {
     const subscription = Subscription.fromURL(message.url);
-    if (subscription.url in FilterStorage.knownSubscriptions)
+    if (FilterStorage.knownSubscriptions.has(subscription.url))
     {
       if (subscription.disabled || message.keepInstalled)
         subscription.disabled = !subscription.disabled;
@@ -11894,7 +12440,7 @@ port.on("elemhide.injectSelectors", (message, sender) =>
 
 
 /***/ }),
-/* 42 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12140,7 +12686,7 @@ exports.startIconAnimation = type =>
 
 
 /***/ }),
-/* 43 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12165,9 +12711,9 @@ exports.startIconAnimation = type =>
 
 const {Prefs} = __webpack_require__(2);
 const {ActiveFilter} = __webpack_require__(0);
-const {FilterStorage} = __webpack_require__(4);
+const {FilterStorage} = __webpack_require__(5);
 const {FilterNotifier} = __webpack_require__(1);
-const {Subscription} = __webpack_require__(5);
+const {Subscription} = __webpack_require__(4);
 const {Notification} = __webpack_require__(16);
 
 exports.initAntiAdblockNotification = function initAntiAdblockNotification()
@@ -12184,7 +12730,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
   {
     const subanti = Prefs.subscriptions_antiadblockurl;
     const subscription = Subscription.fromURL(subanti);
-    if (subscription.url in FilterStorage.knownSubscriptions)
+    if (FilterStorage.knownSubscriptions.has(subscription.url))
       subscription.disabled = !approved;
   }
 
@@ -12226,7 +12772,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
     if (url != subscription.url)
       return;
 
-    if (url in FilterStorage.knownSubscriptions && subscription.disabled)
+    if (FilterStorage.knownSubscriptions.has(url) && subscription.disabled)
       addAntiAdblockNotification(subscription);
     else
       removeAntiAdblockNotification();
@@ -12239,7 +12785,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
 
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12469,7 +13015,7 @@ browser.browserAction.onClicked.addListener(() =>
 
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12623,7 +13169,7 @@ browser.browserAction.setPopup({popup: "adblock-button-popup.html"});
 
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12657,7 +13203,7 @@ exports.updatesVersion = 1;
 
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports) {
 
 ﻿// Send the file name and line number of any error message. This will help us
@@ -12699,7 +13245,7 @@ window.addEventListener("error", function(e)
 });
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13022,7 +13568,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 function getAvailableFiles() {
@@ -13055,17 +13601,17 @@ jquery: {
 Object.assign(window, {
   getAvailableFiles
 });
-const {LocalCDN} = __webpack_require__(18);
+const {LocalCDN} = __webpack_require__(17);
 LocalCDN.setUp();
  
 
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-const {LocalCDN} = __webpack_require__(18);
+const {LocalCDN} = __webpack_require__(17);
 // OPTIONAL SETTINGS
 function Settings()
 {
@@ -13166,7 +13712,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const getDecodedHostname = __webpack_require__(6).getDecodedHostname;
@@ -13176,14 +13722,14 @@ const WhitelistFilter = __webpack_require__(0).WhitelistFilter;
 
 const {checkWhitelisted} = __webpack_require__(8);
 
-const Subscription = __webpack_require__(5).Subscription;
-const DownloadableSubscription = __webpack_require__(5).DownloadableSubscription;
-const SpecialSubscription = __webpack_require__(5).SpecialSubscription;
+const Subscription = __webpack_require__(4).Subscription;
+const DownloadableSubscription = __webpack_require__(4).DownloadableSubscription;
+const SpecialSubscription = __webpack_require__(4).SpecialSubscription;
 
-const parseFilter = __webpack_require__(17).parseFilter;
-const parseFilters = __webpack_require__(17).parseFilters;
+const parseFilter = __webpack_require__(18).parseFilter;
+const parseFilters = __webpack_require__(18).parseFilters;
 
-const FilterStorage = __webpack_require__(4).FilterStorage;
+const FilterStorage = __webpack_require__(5).FilterStorage;
 const FilterNotifier = __webpack_require__(1).FilterNotifier;
 const Prefs = __webpack_require__(2).Prefs;
 const Synchronizer = __webpack_require__(15).Synchronizer;
@@ -13197,13 +13743,13 @@ const {getBlockedPerPage} = __webpack_require__(21);
 const info = __webpack_require__(3);
 
 // Object's used on the option, pop up, etc. pages...
-const {STATS} = __webpack_require__(27);
-const {DataCollectionV2} = __webpack_require__(52);
-const {LocalCDN} = __webpack_require__(18);
+const {STATS} = __webpack_require__(28);
+const {DataCollectionV2} = __webpack_require__(54);
+const {LocalCDN} = __webpack_require__(17);
 const {ServerMessages} = __webpack_require__(12);
 const {recordGeneralMessage, recordErrorMessage, recordAdreportMessage} = __webpack_require__(12).ServerMessages;
-const {getUrlFromId, unsubscribe, getSubscriptionsMinusText, getAllSubscriptionsMinusText, getIdFromURL} = __webpack_require__(54).SubscriptionAdapter;
-const {uninstallInit} = __webpack_require__(55);
+const {getUrlFromId, unsubscribe, getSubscriptionsMinusText, getAllSubscriptionsMinusText, getIdFromURL} = __webpack_require__(56).SubscriptionAdapter;
+const {uninstallInit} = __webpack_require__(27);
 
 Object.assign(window, {
   FilterStorage,
@@ -14269,7 +14815,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ﻿const {postFilterStatsToLogServer} = __webpack_require__(12).ServerMessages;
@@ -14283,7 +14829,7 @@ let DataCollectionV2 = exports.DataCollectionV2 = (function()
          WhitelistFilter,
          ElemHideFilter} = __webpack_require__(0);
   const {port} = __webpack_require__(7);
-  const {idleHandler} = __webpack_require__(53);
+  const {idleHandler} = __webpack_require__(55);
   const HOUR_IN_MS = 1000 * 60 * 60;
   const TIME_LAST_PUSH_KEY = "timeLastPush";
 
@@ -14553,7 +15099,7 @@ let DataCollectionV2 = exports.DataCollectionV2 = (function()
 
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports) {
 
 // Schedules a function to be executed once when the computer is idle.
@@ -14619,11 +15165,11 @@ let idleHandler = exports.idleHandler = {
 };
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-﻿const FilterStorage = __webpack_require__(4).FilterStorage;
-with (__webpack_require__(5))
+﻿const FilterStorage = __webpack_require__(5).FilterStorage;
+with (__webpack_require__(4))
 {
   this.Subscription = Subscription;
   this.SpecialSubscription = SpecialSubscription;
@@ -14914,6 +15460,13 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
       language : true,
       hidden : false,
     },
+    "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt" :
+    {
+      id : "anticircumvent", // Polish
+      language : false,
+      hidden : false,
+    },
+
   };
 
   // Properties:  id       -unique identifier for the filter list
@@ -15156,83 +15709,7 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
 
 
 /***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/** @module adblock-betafish/alias/uninstall */
-
-const FilterStorage = __webpack_require__(4).FilterStorage;
-const FilterNotifier = __webpack_require__(1).FilterNotifier;
-const {STATS} = __webpack_require__(27);
-
-let uninstallInit = exports.uninstallInit = function()
-{
-  if (chrome.runtime.setUninstallURL)
-  {
-    var Prefs = __webpack_require__(2).Prefs;
-    STATS.untilLoaded(function(userID)
-    {
-      var uninstallURL = "https://getadblock.com/uninstall/?u=" + userID;
-      // if the start property of blockCount exists (which is the AdBlock
-      // installation timestamp)
-      // use it to calculate the approximate length of time that user has
-      // AdBlock installed
-      if (Prefs && Prefs.blocked_total !== undefined)
-      {
-        var twoMinutes = 2 * 60 * 1000;
-        var getABCLastUpdateTime = function()
-        {
-          for ( var sub in FilterStorage.subscriptions)
-          {
-            var subscription = FilterStorage.subscriptions[sub];
-            if (subscription.url === getUrlFromId("adblock_custom"))
-            {
-              return subscription._lastDownload;
-            }
-          }
-          return null;
-        };
-        var updateUninstallURL = function()
-        {
-          chrome.storage.local.get("blockage_stats", function(data)
-          {
-            var url = uninstallURL;
-            if (data &&
-                data.blockage_stats &&
-                data.blockage_stats.start)
-            {
-              var installedDuration = (Date.now() - data.blockage_stats.start);
-              url = url + "&t=" + installedDuration;
-            }
-            var bc = Prefs.blocked_total;
-            url = url + "&bc=" + bc;
-            var lastUpdateTime = getABCLastUpdateTime();
-            if (lastUpdateTime !== null)
-            {
-              url = url + "&abc-lt=" + lastUpdateTime;
-            }
-            else
-            {
-              url = url + "&abc-lt=-1"
-            }
-            chrome.runtime.setUninstallURL(url);
-          });
-        };
-        // start an interval timer that will update the Uninstall URL every 2
-        // minutes
-        setInterval(updateUninstallURL, twoMinutes);
-        updateUninstallURL();
-      }
-      else
-      {
-        chrome.runtime.setUninstallURL(uninstallURL + "&t=-1");
-      }
-    }); // end of STATS.then
-  }
-};
-
-/***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const {checkWhitelisted} = __webpack_require__(8);
@@ -15418,7 +15895,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 ﻿// Module for removing individual filters from filter lists
@@ -15539,13 +16016,13 @@ ExcludeFilter = (function ()
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-const Subscription = __webpack_require__(5).Subscription;
+const Subscription = __webpack_require__(4).Subscription;
 
-const {imageSizesMap, WIDE, TALL, SKINNYWIDE, SKINNYTALL, BIG, SMALL} = __webpack_require__(28);
+const {imageSizesMap, WIDE, TALL, SKINNYWIDE, SKINNYTALL, BIG, SMALL} = __webpack_require__(30);
 
 var subscription1 = Subscription.fromURL(getUrlFromId("antisocial"));
 var subscription2 = Subscription.fromURL(getUrlFromId("annoyances"));
@@ -15837,7 +16314,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 
@@ -16375,7 +16852,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 // Channel containing hard coded dogs loaded from CDN
@@ -16777,7 +17254,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 // Channel containing hard coded Landscapes loaded from CDN.
@@ -17108,7 +17585,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Yes, you could hack my code to not check the license.  But please don't.
@@ -17513,7 +17990,7 @@ Object.assign(window, {
 });
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

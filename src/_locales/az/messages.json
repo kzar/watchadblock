@@ -395,6 +395,10 @@
     "message": "Cats", 
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
+  "changes_to_adblock": {
+    "message": "We've made changes to AdBlock!", 
+    "description": "Link to Options page with more information about the changes."
+  }, 
   "checkinfirefox_1": {
     "message": "Install Firefox if you don't have it.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -446,6 +450,9 @@
   "clickdisableotherextensions": {
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
+  }, 
+  "clickhide_instructions": {
+    "message": "Bu popap pəncərəni bağlayandan sonra, səhifədə lazım olan elementə klik (sol və ya sağ klik) edin."
   }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
@@ -531,7 +538,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Have our team requested some debug info? Click [[here]] for that!", 
+    "message": "Has our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -543,11 +550,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "The most popular Chrome extension, with over 40 million users! Blocks ads all over the web.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -573,6 +580,9 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
+  }, 
+  "disabled_for_site": {
+    "message": "Bu saytda <strong>söndürülüb</strong>"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -642,6 +652,10 @@
     "message": "Don't run on this page", 
     "description": "Menu entry to whitelist the current page"
   }, 
+  "download_mac_app": {
+    "message": "To get the best AdBlock experience on your Mac, please download our [[AdBlock for Safari Mac App!]]", 
+    "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
+  }, 
   "easy_create_filter": {
     "message": "Elementi əngəllə"
   }, 
@@ -672,6 +686,9 @@
   "enable_adblock_on_this_channel": {
     "message": "Block ads on this channel", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
+  }, 
+  "enabled_for_site": {
+    "message": "Bu saytda <strong>aktivdir</strong>"
   }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
@@ -765,6 +782,15 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_elemhideemulation_nodomain": {
+    "message": "Elementlərin geniş gizlədilməsi üçün aktiv domen qeyd olunmayıb"
+  }, 
+  "filter_invalid_csp": {
+    "message": "Məzmunun təhlükəsizlik siyasətində səhv var"
+  }, 
+  "filter_invalid_domain": {
+    "message": "Qeyd olunmuş domendə səhv tapıldı"
+  }, 
   "filter_invalid_regexp": {
     "message": "Etibarsız ifadə"
   }, 
@@ -785,7 +811,7 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_unknown_option": {
-    "message": "Qeyri-müəyyən filtr seçim"
+    "message": "Qeyri-müəyyən filtr seçimi"
   }, 
   "filteracceptable_ads": {
     "message": "Acceptable Ads", 
@@ -797,6 +823,10 @@
   }, 
   "filterannoyances": {
     "message": "Fanboy's Annoyances (blocks in-page pop-ups, social media and related widgets, and other annoyances)", 
+    "description": "A filter list"
+  }, 
+  "filteranticircumvent": {
+    "message": "Anti-Circumvention filters", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
@@ -946,7 +976,7 @@
     "description": "Language names for a filter list"
   }, 
   "filters_subscription_lastDownload_connectionError": {
-    "message": "Baş tutmadı yükləmə uğursuz oldu"
+    "message": "Baş tutmadı, yükləmə uğursuz oldu"
   }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
@@ -1038,10 +1068,6 @@
     "message": "Help and Feedback", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "here", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Hidden element", 
     "description": "Resource list page: resource status"
@@ -1057,6 +1083,14 @@
   "invalidListUrl": {
     "message": "Invalid list URL. It'll be deleted.", 
     "description": "Message when you subscribe to a non-list URL"
+  }, 
+  "invalid_css_selector": {
+    "message": "$selector$ etibarsız CSS-selektorudur", 
+    "placeholders": {
+      "selector": {
+        "content": "$1"
+      }
+    }
   }, 
   "issueReporter_anonymousSubmission_label": {
     "message": "Anonim göndəriş"
@@ -1297,6 +1331,10 @@
     "message": "Add filters for another language: ", 
     "description": "Dropdown list for language-specific filter lists"
   }, 
+  "learn_more": {
+    "message": "Learn more.", 
+    "description": "Link to Knowledge Base article with more information about the settings change"
+  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1424,6 +1462,9 @@
     "message": "AdBlock on YouTube™", 
     "description": "Name of version of the AdBlock extension that only blocks ads on YouTube. Other strings that refer to the 'AdBlock on YouTube' extension should use this name."
   }, 
+  "name_devbuild": {
+    "message": "AdBlock (sınaq versiyası)"
+  }, 
   "new_resourcelist_explanation_osx": {
     "message": "To show all requests, right click the page, select 'Inspect' (Option+Cmd+I), then select the 'AdBlock' tab.", 
     "description": "Message explaining how to access the resource list page on AdBlock 3.0+ (Mac)"
@@ -1448,11 +1489,27 @@
     "message": "Something went wrong. No resources have been sent through. This page will now close. Try reloading the website.", 
     "description": "Resource list page: error message"
   }, 
+  "note": {
+    "message": "NOTE:", 
+    "description": "Indicates that the user should take note of the message that follows."
+  }, 
   "notification_antiadblock_message": {
     "message": "Bu səhifənin lazımi mesajları AdBlock istifadəçilərinə göstərir. AdBlock' un hədəf mesajları gizlətməyini istəyirsiniz?"
   }, 
   "notification_antiadblock_title": {
     "message": "Hədəf mesajlar gizlədilsin?"
+  }, 
+  "notification_configure": {
+    "message": "Bildirişlərin ayarlarını seç"
+  }, 
+  "notification_open_all": {
+    "message": "Bu bildirişə aid bütün keçidləri aç"
+  }, 
+  "notification_with_buttons": {
+    "message": "Bu bildirişə aid bütün keçidləri açmaq üçün 'OK' düyməsini basın."
+  }, 
+  "notification_without_buttons": {
+    "message": "Bütün keçidləri açmaq üçün, bildirişin üzərinə klik edin."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "One moment while we gather all of your subscriptions", 
@@ -1504,7 +1561,7 @@
     "message": "Tənzimləmələr"
   }, 
   "options_short": {
-    "message": "Seçimlər"
+    "message": "Ayarlar"
   }, 
   "options_tab_general": {
     "message": "Ümumi"
@@ -1688,6 +1745,10 @@
   "sendReport": {
     "message": "Səhifədəki səhvi bildir"
   }, 
+  "settings_changed": {
+    "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
+    "description": "Part of Options page message letting users know of settings change."
+  }, 
   "show_ads_except_for": {
     "message": "Show ads everywhere except for these domains...", 
     "description": "Section title for the whitelisting section of Customize tab"
@@ -1760,7 +1821,7 @@
     "message": "Nişanda nömrə göstər"
   }, 
   "stats_title": {
-    "message": "Reklamlar əngəlləndi"
+    "message": "Cəmi blok edilib"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
@@ -1936,6 +1997,9 @@
     "message": "Undo my blocks on this site", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
+  "unexpected_filter_list_header": {
+    "message": "Filtr siyahının başlıqları burada istifadə olunmur"
+  }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 
     "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused'"
@@ -2016,6 +2080,10 @@
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
   }, 
+  "urgent_safari_changes": {
+    "message": "URGENT: Apple is changing Safari extensions.", 
+    "description": "Title for Options page message letting users know of settings change."
+  }, 
   "warning_overrules_filters": {
     "message": "Warning: on all other sites you will see ads!\nThis overrules all other filters for those sites.", 
     "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a whitelist filter for all websites with only some exceptions."
@@ -2059,7 +2127,7 @@
     "description": "The title of the whitelist wizard (Don't run on this page/pages on this domain)"
   }, 
   "wizardcantrunonframesets": {
-    "message": "This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.", 
+    "message": "This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the Options page.", 
     "description": "Alert shown when the user tries to use a blacklist/whitelist wizard on an old website"
   }, 
   "work_around_hulu_problems": {
