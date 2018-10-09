@@ -25,6 +25,15 @@
     "default_popup": "adblock-button-popup.html", 
     "default_title": "__MSG_name__"
   }, 
+  "commands": {
+    "toggle_pause": {
+      "description": "Toggle Pause/Resume on all sites", 
+      "suggested_key": {
+        "default": "Ctrl+Period", 
+        "mac": "Command+Period"
+      }
+    }
+  }, 
   "content_scripts": [
     {
       "all_frames": true, 
@@ -96,7 +105,7 @@
   "storage": {
     "managed_schema": "managed-storage-schema.json"
   }, 
-  "version": "3.33.0", 
+  "version": "3.34.0", 
   "web_accessible_resources": [
     "adblock-jquery-ui.custom.css", 
     "adblock-jquery-ui.override-page.css", 

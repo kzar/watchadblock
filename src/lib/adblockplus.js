@@ -1795,7 +1795,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.33.0";
+exports.addonVersion = "3.34.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -14389,6 +14389,13 @@ chrome.storage.local.get(domainPausedKey, function (response)
   }
 });
 
+chrome.commands.onCommand.addListener(function(command) {
+  if (command === "toggle_pause") {
+    adblockIsPaused(!adblockIsPaused());
+    recordGeneralMessage("pause_shortcut_used");
+  }
+});
+
 // Return the contents of a local file.
 // Inputs: file:string - the file relative address, eg "js/foo.js".
 // Returns: the content of the file.
@@ -14415,18 +14422,118 @@ if (!SAFARI && chrome.runtime.id === 'pljaalgmajnlogcgiohkhdmgpomjcihk')
 }
 
 var updateStorageKey = 'last_known_version';
-chrome.runtime.onInstalled.addListener(function (details)
-{
- if (details.reason === 'update' || details.reason === 'install')
- {
-   localStorage.setItem(updateStorageKey, chrome.runtime.getManifest().version);
- }
-});
+// Commented out temporarily while doing /update
+//chrome.runtime.onInstalled.addListener(function (details)
+//{
+// if (details.reason === 'update' || details.reason === 'install')
+// {
+//   localStorage.setItem(updateStorageKey, chrome.runtime.getManifest().version);
+// }
+//});
 
 var openTab = function (url)
 {
   chrome.tabs.create({ url })
 };
+
+if (chrome.runtime.id)
+{
+  var updateTabRetryCount = 0;
+  var getUpdatedURL = function()
+  {
+    var updatedURL = 'https://getadblock.com/update/' + encodeURIComponent(chrome.runtime.getManifest().version) + '/?u=' + STATS.userId();
+    updatedURL = updatedURL + '&bc=' + Prefs.blocked_total;
+    updatedURL = updatedURL + '&rt=' + updateTabRetryCount;
+    return updatedURL;
+  };
+  var waitForUserAction = function()
+  {
+    chrome.tabs.onCreated.removeListener(waitForUserAction);
+    setTimeout(function ()
+    {
+      updateTabRetryCount++;
+      openUpdatedPage();
+    }, 10000); // 10 seconds
+  };
+  var openUpdatedPage = function()
+  {
+    var updatedURL = getUpdatedURL();
+    chrome.tabs.create({ url: updatedURL }, function(tab)
+    {
+      // if we couldn't open a tab to '/updated_tab', send a message
+      if (chrome.runtime.lastError || !tab)
+      {
+        if (chrome.runtime.lastError && chrome.runtime.lastError.message)
+        {
+          recordErrorMessage('updated_tab_failed_to_open' + chrome.runtime.lastError.message);
+        }
+        else
+        {
+          recordErrorMessage('updated_tab_failed_to_open');
+        }
+        chrome.tabs.onCreated.removeListener(waitForUserAction);
+        chrome.tabs.onCreated.addListener(waitForUserAction);
+        return;
+      }
+      if (updateTabRetryCount > 0)
+      {
+        recordGeneralMessage('updated_tab_retry_success_count_' + updateTabRetryCount);
+      }
+    });
+  };
+  var shouldShowUpdate = function()
+  {
+    var checkQueryState = function()
+    {
+      chrome.idle.queryState(60, function(state)
+      {
+        if (state === "active")
+        {
+          openUpdatedPage();
+        }
+        else
+        {
+          chrome.tabs.onCreated.removeListener(waitForUserAction);
+          chrome.tabs.onCreated.addListener(waitForUserAction);
+        }
+      });
+    };
+    if (chrome.management && chrome.management.getSelf)
+    {
+      chrome.management.getSelf(function(info)
+      {
+        if (info && info.installType !== "admin")
+        {
+          checkQueryState();
+        }
+        else if (info && info.installType === "admin")
+        {
+          recordGeneralMessage('update_tab_not_shown_admin_user');
+        }
+      });
+    }
+    else
+    {
+      checkQueryState();
+    }
+  };
+  // Display updated page after each update
+  chrome.runtime.onInstalled.addListener(function (details)
+  {
+    var lastKnownVersion = localStorage.getItem(updateStorageKey);
+    if (details.reason === 'update' &&
+        chrome.runtime.getManifest().version === "3.34.0" &&
+        lastKnownVersion === '3.33.1' &&
+        chrome.runtime.id !== 'pljaalgmajnlogcgiohkhdmgpomjcihk')
+    {
+      STATS.untilLoaded(function(userID)
+      {
+        Prefs.untilLoaded.then(shouldShowUpdate);
+      });
+    }
+    localStorage.setItem(updateStorageKey, chrome.runtime.getManifest().version);
+  });
+}
 
 // Creates a custom filter entry that whitelists a YouTube channel
 // Inputs: url:string url of the page
@@ -15734,15 +15841,39 @@ var updateButtonUIAndContextMenus = function ()
 var updateContextMenuItems = function (page)
 {
   // Remove the AdBlock context menu
-  page.contextMenus.remove(AdBlockContextMenuItemOne);
-  page.contextMenus.remove(AdBlockContextMenuItemTwo);
+  page.contextMenus.remove(contextMenuItem.blockThisAd);
+  page.contextMenus.remove(contextMenuItem.blockAnAd);
+  page.contextMenus.remove(contextMenuItem.pauseAll);
+  page.contextMenus.remove(contextMenuItem.unpauseAll);
+  page.contextMenus.remove(contextMenuItem.pauseDomain);
+  page.contextMenus.remove(contextMenuItem.unpauseDomain);
 
   // Check if the context menu items should be added
-  if (Prefs.shouldShowBlockElementMenu &&
-      !checkWhitelisted(page))
+  if (!Prefs.shouldShowBlockElementMenu) {
+    return;
+  }
+
+  const adblockIsPaused = window.adblockIsPaused();
+  const domainIsPaused = window.adblockIsDomainPaused({"url": page.url.href, "id": page.id});
+
+  if (adblockIsPaused)
   {
-    page.contextMenus.create(AdBlockContextMenuItemOne);
-    page.contextMenus.create(AdBlockContextMenuItemTwo);
+    page.contextMenus.create(contextMenuItem.unpauseAll);
+  }
+  else if (domainIsPaused)
+  {
+    page.contextMenus.create(contextMenuItem.unpauseDomain);
+  }
+  else if (checkWhitelisted(page))
+  {
+    page.contextMenus.create(contextMenuItem.pauseAll);
+  }
+  else
+  {
+    page.contextMenus.create(contextMenuItem.blockThisAd);
+    page.contextMenus.create(contextMenuItem.blockAnAd);
+    page.contextMenus.create(contextMenuItem.pauseDomain);
+    page.contextMenus.create(contextMenuItem.pauseAll);
   }
 };
 
@@ -15781,29 +15912,79 @@ Prefs.on(Prefs.shouldShowBlockElementMenu, function ()
 
 updateButtonUIAndContextMenus();
 
-var AdBlockContextMenuItemOne = {
-    title: chrome.i18n.getMessage('block_this_ad'),
-    contexts: ['all'],
-    onclick: function (page, clickdata)
+const contextMenuItem = (() =>
+{
+  return {
+    pauseAll:
     {
-      emitPageBroadcast(
-        { fn:'top_open_blacklist_ui', options:{ info: clickdata } },
-        { tab: page }
-      );
+      title: chrome.i18n.getMessage('pause_adblock_everywhere'),
+      contexts: ['all'],
+      onclick: () =>
+      {
+        recordGeneralMessage('cm_pause_clicked');
+        adblockIsPaused(true);
+        updateButtonUIAndContextMenus();
+      },
+    },
+    unpauseAll:
+    {
+      title: chrome.i18n.getMessage('resume_blocking_ads'),
+      contexts: ['all'],
+      onclick: () =>
+      {
+        recordGeneralMessage('cm_unpause_clicked');
+        adblockIsPaused(false);
+        updateButtonUIAndContextMenus();
+      },
+    },
+    pauseDomain:
+    {
+      title: chrome.i18n.getMessage('domain_pause_adblock'),
+      contexts: ['all'],
+      onclick: (page) =>
+      {
+        recordGeneralMessage('cm_domain_pause_clicked');
+        adblockIsDomainPaused({'url': page.url.href, 'id': page.id}, true);
+        updateButtonUIAndContextMenus();
+      },
+    },
+    unpauseDomain:
+    {
+      title: chrome.i18n.getMessage('resume_blocking_ads'),
+      contexts: ['all'],
+      onclick: (page) =>
+      {
+        recordGeneralMessage('cm_domain_unpause_clicked');
+        adblockIsDomainPaused({'url': page.url.href, 'id': page.id}, false);
+        updateButtonUIAndContextMenus();
+      },
+    },
+    blockThisAd:
+    {
+      title: chrome.i18n.getMessage('block_this_ad'),
+      contexts: ['all'],
+      onclick: function (page, clickdata)
+      {
+        emitPageBroadcast(
+          { fn:'top_open_blacklist_ui', options:{ info: clickdata } },
+          { tab: page }
+        );
+      },
+    },
+    blockAnAd:
+    {
+      title: chrome.i18n.getMessage('block_an_ad_on_this_page'),
+      contexts: ['all'],
+      onclick: function (page)
+      {
+        emitPageBroadcast(
+          { fn:'top_open_blacklist_ui', options:{ nothing_clicked: true } },
+          { tab: page }
+        );
+      },
     },
   };
-
-var AdBlockContextMenuItemTwo = {
-    title: chrome.i18n.getMessage('block_an_ad_on_this_page'),
-    contexts: ['all'],
-    onclick: function (page, clickdata)
-    {
-      emitPageBroadcast(
-        { fn:'top_open_blacklist_ui', options:{ nothing_clicked: true } },
-        { tab: page }
-      );
-    },
-  };
+})();
 
 // Bounce messages back to content scripts.
 if (!SAFARI)
