@@ -396,7 +396,7 @@
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
   "changes_to_adblock": {
-    "message": "We've made changes to AdBlock!", 
+    "message": "עשינו שינויים אל AdBlock!", 
     "description": "Link to Options page with more information about the changes."
   }, 
   "checkinfirefox_1": {
@@ -443,6 +443,9 @@
     "message": "נקה רשימה זו", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "לחץ על יסוד בעמוד כדי לחסום אותו."
+  }, 
   "clickdisableaa": {
     "message": "לחץ על זה: [[השבת פרסומות מקובלות]]", 
     "description": "Instruction on ad report page"
@@ -452,7 +455,7 @@
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
-    "message": "לאחר סגירת חלון קופץ זה, לחץ (או לחץ לחיצה ימנית) על יסוד בעמוד זה."
+    "message": "לאחר סגירת חלון קופץ זה, לחץ (או לחץ לחיצה ימנית) על יסוד בעמוד."
   }, 
   "clickthead": {
     "message": "לחץ על הפרסומת, ואדריך אותך כיצד לחסום אותה.", 
@@ -565,11 +568,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "הרחבת Chrome הפופולרית ביותר, עם יותר מ־40 מיליון משתמשים! חוסמת פרסומות בכל רחבי הרשת.", 
+    "message": "הרחבת Chrome הפופולרית ביותר, עם יותר מ־60 מיליון משתמשים! חוסמת פרסומות בכל רחבי הרשת.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "הרחבת Chrome הפופולרית ביותר, עם יותר מ־40 מיליון משתמשים! חוסמת פרסומות בכל רחבי הרשת.", 
+    "message": "הרחבת Chrome הפופולרית ביותר, עם יותר מ־60 מיליון משתמשים! חוסמת פרסומות בכל רחבי הרשת.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -668,7 +671,7 @@
     "description": "Menu entry to whitelist the current page"
   }, 
   "download_mac_app": {
-    "message": "To get the best AdBlock experience on your Mac, please download our [[AdBlock for Safari Mac App!]]", 
+    "message": "כדי לקבל את חווית AdBlock הטובה ביותר על Mac, אנא הורד את [[יישום Mac של AdBlock עבור Safari]] שלנו!", 
     "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
   }, 
   "easy_create_filter": {
@@ -798,13 +801,13 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_elemhideemulation_nodomain": {
-    "message": "לא צוין תחום פעיל עבור יסוד מורחב של מסנן הסתרה"
+    "message": "לא צויין תחום פעיל עבור יסוד מורחב של מסנן הסתרה"
   }, 
   "filter_invalid_csp": {
     "message": "מדיניות אבטחה של תוכן לא תקף"
   }, 
   "filter_invalid_domain": {
-    "message": "תחום לא תקף (או ריק) צוין"
+    "message": "תחום לא תקף (או ריק) צויין"
   }, 
   "filter_invalid_regexp": {
     "message": "ביטוי רגיל לא תקף"
@@ -825,6 +828,9 @@
     "message": "רוסית ואוקראינית + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "לא צויין תחום פעיל עבור מסנן תגזירים"
+  }, 
   "filter_unknown_option": {
     "message": "אפשרות מסנן לא ידועה"
   }, 
@@ -841,7 +847,7 @@
     "description": "A filter list"
   }, 
   "filteranticircumvent": {
-    "message": "Anti-Circumvention filters", 
+    "message": "מסנני נגד־עקיפה", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
@@ -976,6 +982,10 @@
     "message": "הגנה מפני נוזקה", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "נורבגית", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "מוצא מסנן:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,56 +1039,62 @@
     "message": "המטרה של שאלה זו היא לקבוע מי אמור לקבל את הדוח שלך. אם תענה על שאלה זאת באופן שגוי, הדוח יישלח לאנשים הלא נכונים, כך שהוא עשוי להיתקל בהתעלמות.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "זמין עבור Android ו־iOS"
+  "firstRun_browser_description": {
+    "message": "מהצוות שמאחורי AdBlock, חוסם הפרסומות הפופולרי ביותר עבור דפדפני שולחן עבודה, דפדפן Adblock זמין עכשיו עבור מכשירי Android ומכשירי iOS שלך."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "השג את Adblock Browser כאן"
+  "firstRun_browser_store_android": {
+    "message": "יישום Android ב־Google Play"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "יש לך טלפון חכם או מחשב לוח?"
+  "firstRun_browser_store_ios": {
+    "message": "זמין בחנות היישומים iTunes"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "אנחנו מעודדים אתרים להשתמש בפרסום ישר ובלתי־פולשני. זו הסיבה שייסדנו <a>קווים מנחים נוקשים</a> כדי לזהות פרסומות מקובלות, אשר מופיעות תחת הגדרות ברירת מחדל. אם אתה עדין רוצה לחסום כל פרסומת שהיא אתה יכול <a>להשבית</a> זאת במספר שניות."
+  "firstRun_browser_title": {
+    "message": "יישום דפדפן Adblock"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "פרסומות מציקות ייחסמו כעת"
+  "firstRun_control_description": {
+    "message": "כברירת מחדל, יתכן שתראה מספר פרסומות בלתי־פולשניות שדבקות <a0>בקריטריון קפדני</a0>. אנו מזהים פרסומות אלו בתור פרסומות מקובלות. מעדיף לחסום את כל הפרסומות? <a1>כבה את פרסומות מקובלות</a1> בתוך <a2>הגדרות</a2>."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "קרדיטי תורמים"
+  "firstRun_control_title": {
+    "message": "אתה בשליטה"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "מספר משתמשים חווים סוגייה שבה דף זה נפתח בכל פעם שהדפדפן שלהם מופעל. סוגייה זו יכולה להיפתר ע\"י הסרה והתקנה מחדש של AdBlock:"
+  "firstRun_fair_description": {
+    "message": "אנו מעודדים אטתך לעשות שימוש הוגן ב־AdBlock ובאפשרות לשים אתרים ברשימה לבנה. בהסתמכות על המסננים שאתה משתמש, אתה מבין ומקבל שתוצאות בלתי־מכוונות עלולות להתרחש (למשל, תוכן חסום באתר). פנה אל <a0>תנאי השימוש</a0> לעוד מידע לגבי שימוש הוגן ב־AdBlock."
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "אם אתה עדין צריך עזרה, צור איתנו קשר בכתובת support@adblockplus.org או בקר ב<a>מרכז העזרה</a> שלנו."
+  "firstRun_fair_title": {
+    "message": "שימוש הוגן"
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "פתח את לשונית ההרחבות של הדפדפן שלך."
+  "firstRun_footer_copyright": {
+    "message": "זכות יוצרים © $year$ כל הזכויות שמורות. AdBlock® הוא סימן מסחרי רשום של <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "אתר את AdBlock והסר אותו."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "התקן מחדש את AdBlock מתוך <a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "תרום"
-  }, 
-  "firstRun_donate_label": {
-    "message": "תמוך במיזם שלנו"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "נראה שישנה סוגייה שגרמה לכל המסננים להיות מוסרים ולא יכולנו לשחזר גיבוי. לכן נאלצנו לאפס את המסננים ואת הגדרות הפרסומות המקובלות. אנא בדוק את רשימת המסננים והגדרות הפרסומות המקובלות ב <a>AdBlock אפשרויות</a>."
-  }, 
-  "firstRun_share": {
-    "message": "ספר לחבריך"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>תן לנו יד</a> בהפיכת הרשת למקום טוב יותר"
+  "firstRun_subtitle": {
+    "message": "הרגע לקחת שליטה בדפדפן שלך."
   }, 
   "firstRun_title": {
-    "message": "AdBlock הותקן"
+    "message": "התקנה מוצלחת!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
+    "message": "מספר משתמשים חווים סוגייה שבה עמוד זה נפתח בכל פעם שהדפדפן שלהם מופעל. סוגייה זו יכולה להיפתר ע\"י הסרה והתקנה מחדש של AdBlock:"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "אם אתה עדין צריך עזרה, צור איתנו קשר בכתובת <a0>support@adblockplus.org</a0> או בקר ב<a1>מרכז העזרה</a1> שלנו."
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "פתח את לשונית ההרחבות של הדפדפן שלך."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "אתר את AdBlock והסר אותו."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "התקן מחדש את AdBlock מתוך <a>adblockplus.org</a>."
+  }, 
+  "firstRun_warning_reinitialized": {
+    "message": "נראה שישנה סוגייה שגרמה לכל המסננים להיות מוסרים ולא יכולנו לשחזר גיבוי. לכן נאלצנו לאפס את המסננים ואת הגדרות הפרסומות המקובלות. אנא בדוק את רשימת המסננים והגדרות הפרסומות המקובלות ב<a>אפשרויות AdBlock</a>."
   }, 
   "fixityourself": {
     "message": "בסדר, אתה עדין יכול לחסום פרסומת זו לעצמך בעמוד האפשרויות. תודה!", 
@@ -1128,10 +1144,6 @@
     "message": "עזרה ומשוב", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "כאן", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "אלמנט מוסתר", 
     "description": "Resource list page: resource status"
@@ -1163,34 +1175,28 @@
     "message": "לא נוכל לחזור אליך וסביר שנתעדף את הדיווח בצורה נמוכה יותר."
   }, 
   "issueReporter_commentPage_heading": {
-    "message": "הכנס הערה"
+    "message": "השאר תגובה"
   }, 
   "issueReporter_comment_description": {
-    "message": "שדה הטקסט שמתחת מאפשר לך להכניס הערה כדי לעזור לנו בהבנת הסוגייה. צעד זה אינו חובה אך מומלץ אם הבעיה אינה מובנת מאליה. אתה יכול גם לסקור את נתוני הדיווח לפני שליחתם."
+    "message": "אנא עזור לנו להבין בצורה טובה יותר את הסוגייה ע\"י השארת תגובה למטה."
   }, 
   "issueReporter_comment_label": {
     "message": "הערה (רשותי):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "האורך של הערתך חרג מ־1000 תווים. רק 1000 התווים הראשונים יישלחו."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "הדיווח שלך נשמר. ניתן להשיג גישה אליו בכתובת הבאה:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "אנא המתן מספר רגעים בזמן ש־AdBlock אוסף את הנתונים הדרושים."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "ברוך הבא אל מדווח הסוגיות"
-  }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>הערה:</strong> לשונית נוספת תיפתח באופן זמני כך שהעמוד שאתה עליו לא יושפע ממדווח הסוגיות."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "פרטים"
   }, 
   "issueReporter_doneButton_label": {
     "message": "בוצע"
   }, 
   "issueReporter_email_description": {
-    "message": "אנו ממליצים להזין כתובת דוא\"ל תקפה כך שנוכל ליצור איתך קשר אם קיימות שאלות לגבי הדיווח שלך. כמו כן, כתובתך תאפשר לנו לזהות את תרומותיך ולתעדף אותן בצורה גבוהה יותר."
+    "message": "זה מועיל להכניס כתובת דוא\"ל תקפה. זה מאפשר לנו ליצור איתך קשר כדי לתקן סוגיות קשות כמו נוזקה. זכור שאין זה חובה להכניס כתובת דוא\"ל, וכתובתך אף פעם לא תשותף."
   }, 
   "issueReporter_email_label": {
     "message": "דוא\"ל:"
@@ -1199,25 +1205,46 @@
     "message": "ניסיון לשלוח את הדיווח נכשל עם קוד השגיאה \"?1?\". אנא וודא שאתה מחובר לאינטרנט ונסה שוב. אם הבעיה נמשכת, אנא בקש סיוע ב[link]פורום AdBlock[/link]."
   }, 
   "issueReporter_falseNegative_description": {
-    "message": "בחר אפשרות זו אם פרסומת מוצגת על אף ש־AdBlock מאופשר."
+    "message": "AdBlock מאופשר, אבל אני עדין רואה פרסומת או פרסומות."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "AdBlock אינו חוסם פרסומות"
+    "message": "אני עדין רואה פרסומות"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "בחר אפשרות זו אם חסר בעמוד תוכן חשוב או שהוא מוצג בצורה לא נכונה או שהוא נכשל לתפקד כראוי. אתה יכול לקבוע אם AdBlock הוא הגורם לבעיה ע\"י השבתה זמנית שלו."
+    "message": "הדף מציג בצורה לא נכונה, נכשל לתפקד או נראה שהוא חסר תוכן חשוב."
   }, 
   "issueReporter_falsePositive_label": {
-    "message": "AdBlock חוסם יותר מדי"
+    "message": "העמוד שאני מנסה לראות שבור"
+  }, 
+  "issueReporter_highlighter_description": {
+    "message": "השתמש בכלים כדי להדגיש כל פרסומת או כדי להסתיר מידע רגיש על צילום המסך. הדגשת פרסומות תעזור לנו לתקן את הסוגייה בצורה מהירה יותר."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "הדגש סוגייה"
   }, 
   "issueReporter_knownIssueMessage": {
     "message": "הסוגייה שדיווחת עליה כנראה ידועה כבר. מידע נוסף:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "סמן סוגייה"
   }, 
   "issueReporter_page_title": {
     "message": "מדווח הסוגיות"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "מדיניות פרטיות"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "מעבד"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "הסתר"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "הדגש"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "בחר סוגייה"
   }, 
   "issueReporter_sendButton_label": {
     "message": "שלח דיווח"
@@ -1229,13 +1256,13 @@
     "message": "אנא המתן בזמן ש־AdBlock מגיש את הדיווח שלך."
   }, 
   "issueReporter_showData_label": {
-    "message": "הראה נתוני דיווח"
+    "message": "לחץ על קישור זה כדי לסקור את נתוני הדיווח לפני שליחה"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "חלון זה ידריך אותך דרך הצעדים הדרושים להגשה של דיווח סוגיית AdBlock. ראשית, אנא בחר את סוג הסוגייה שאתה חווה בעמוד זה:"
+    "message": "אנא בחר סוגייה:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "בחירת סוג סוגייה"
+    "message": "איזה סוג של סוגייה אתה חווה?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "נופים", 
@@ -1402,7 +1429,7 @@
     "description": "Dropdown list for language-specific filter lists"
   }, 
   "learn_more": {
-    "message": "Learn more.", 
+    "message": "למד עוד.", 
     "description": "Link to Knowledge Base article with more information about the settings change"
   }, 
   "legend": {
@@ -1560,7 +1587,7 @@
     "description": "Resource list page: error message"
   }, 
   "note": {
-    "message": "NOTE:", 
+    "message": "הערה:", 
     "description": "Indicates that the user should take note of the message that follows."
   }, 
   "notification_antiadblock_message": {
@@ -1570,7 +1597,7 @@
     "message": "להסתיר הודעות מוכוונות?"
   }, 
   "notification_configure": {
-    "message": "קביעת הגדרות התראה"
+    "message": "קבע הגדרות התראה"
   }, 
   "notification_open_all": {
     "message": "פתח את כל הקישורים מהתראה זו"
@@ -1643,7 +1670,7 @@
     "message": "שמור"
   }, 
   "options_customFilters_description": {
-    "message": "כתוב את המסננים המותאמים אישית שלך כדי לשלוט עוד יותר איזה תוכן AdBlock מתיר או חוסם."
+    "message": "צור את המסננים שלך כדי לשלוט עוד יותר איזה תוכן AdBlock חוסם.<a0>למד כיצד ליצור מסננים</a0>"
   }, 
   "options_customFilters_edit_placeholder": {
     "message": "לדוגמה $filter$", 
@@ -1676,7 +1703,10 @@
     "message": "חסום באופן זמני פריטים מציקים באתר. לדוגמה, תמונות או מצגות מונפשות."
   }, 
   "options_customize_header": {
-    "message": "התאם אישית פעולות עמוד"
+    "message": "התאמות אישיות"
+  }, 
+  "options_customize_iconStats": {
+    "message": "הראה מספר של פרסומות חסומות בצלמית"
   }, 
   "options_customize_showDevToolsPanel": {
     "message": "הראה חלונית 'AdBlock' במצב מפתחים"
@@ -1688,7 +1718,7 @@
     "message": "הראה התראות שימושיות"
   }, 
   "options_customize_showNotifications_tooltip": {
-    "message": "כבה את כל ההתראות מ־AdBlock."
+    "message": "התר התראות מאת AdBlock (התראות הקשורות לסוגיות של ביצועים מכריעים תמיד ייראו)."
   }, 
   "options_dialog_about_copyright": {
     "message": ".eyeo GmbH $currentYear$ © זכויות יוצרים", 
@@ -1804,6 +1834,14 @@
   "options_filterList_website": {
     "message": "אתר"
   }, 
+  "options_filters_search_or_add": {
+    "message": "חפש או הוסף מסנן (למשל $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "אודות AdBlock"
   }, 
@@ -1863,6 +1901,9 @@
   }, 
   "options_protection_social_tooltip": {
     "message": "צלמיות המדיה החברתית באתרים שאתה מבקר בהם מתירות לרשתות מדיה חברתית לבנות פרופיל שלך על סמך הרגלי גלישתך - אפילו אם אתה לא לוחץ עליהן. הסתרת צלמיות אלו יכולה להגן על הפרופיל שלך."
+  }, 
+  "options_refresh": {
+    "message": "רענן"
   }, 
   "options_report_bug": {
     "message": "מצאת תקל? <a>שלח לנו דיווח תקלים</a>"
@@ -1953,7 +1994,7 @@
     }
   }, 
   "optionstitle": {
-    "message": "אפשריות AdBlock", 
+    "message": "אפשרויות AdBlock", 
     "description": "Title for the Options page"
   }, 
   "optionstitle_yt": {
@@ -1989,7 +2030,7 @@
     "message": "כן"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "סגור התראה זו"
+    "message": "סגור"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "הפסק להראות התראות"
@@ -2014,6 +2055,9 @@
     "message": "מדיניות פרטיות", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "מעוניין ב־AdBlock בנייד?"
+  }, 
   "pwyw": {
     "message": "שלם כפי יכולתך!", 
     "description": "Text of a payment request link"
@@ -2025,6 +2069,9 @@
   "reenableadsonebyone": {
     "message": "מעולה! עכשיו בוא נמצא איזו הרחבה היא הגורם. לך אליהן ואפשר כל הרחבה אחת אחת. ההרחבה שמחזירה את הפרסומת (פרסומות) היא האחת שאתה צריך להסיר כדי להיפטר מהפרסומות.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "לחץ על <strong>רענן</strong> כדי שהשינויים ייכנסו לתוקף."
   }, 
   "refusetocheck": {
     "message": "אני לא רוצה לסמן את זה", 
@@ -2129,10 +2176,10 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "דווח על סוגייה בעמוד זה"
+    "message": "דווח על סוגייה"
   }, 
   "settings_changed": {
-    "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
+    "message": "כהכנה, AdBlock עובד כעת בצורה שונה וחלק מההגדרות שלך כנראה השתנה.", 
     "description": "Part of Options page message letting users know of settings change."
   }, 
   "show_ads_except_for": {
@@ -2187,6 +2234,9 @@
     "message": "קוד המקור [[זמין בחינם]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "מספר של פריטים חסומים"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> בעמוד זה", 
     "placeholders": {
@@ -2204,7 +2254,7 @@
     }
   }, 
   "stats_show_iconnumber": {
-    "message": "הראה מספרים בצלמית"
+    "message": "הראה מספר בצלמית"
   }, 
   "stats_title": {
     "message": "פרסומות חסומות"
@@ -2212,6 +2262,9 @@
   "status_domain_paused": {
     "message": "AdBlock מושהה באתר זה.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "חסום פרסומות ב:"
   }, 
   "status_paused": {
     "message": "AdBlock מושבת.", 
@@ -2306,6 +2359,10 @@
   "translators": {
     "message": "למד עוד על איך לעזור לתרגם את AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "הסתרה", 
@@ -2488,7 +2545,7 @@
     "description": "Section header on the ad report page"
   }, 
   "urgent_safari_changes": {
-    "message": "URGENT: Apple is changing Safari extensions.", 
+    "message": "דחוף: Apple משנה את הרחבות Safari.", 
     "description": "Title for Options page message letting users know of settings change."
   }, 
   "warning_overrules_filters": {

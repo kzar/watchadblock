@@ -443,6 +443,9 @@
     "message": "Clean up this list", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "Націсніце на элемент на старонцы, каб заблакаваць яго."
+  }, 
   "clickdisableaa": {
     "message": "Click this: [[Disable Acceptable Ads]]", 
     "description": "Instruction on ad report page"
@@ -825,6 +828,9 @@
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "Не ўказаны дамен для фільтра фрагментаў кода"
+  }, 
   "filter_unknown_option": {
     "message": "Невядомы параметр фільтра"
   }, 
@@ -976,6 +982,10 @@
     "message": "Malware protection", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Norwegian", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Filter origin:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,56 +1039,62 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Даступны для Android і iOS"
+  "firstRun_browser_description": {
+    "message": "Ад стваральнікаў AdBlock – аднаго з найпапулярнейшых блакіроўшчыкаў рэкламы для настольных камп'ютараў... Adblock Browser – блакаванне рэкламы на мабільных прыладах з сістэмамі Android і iOS."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Спампаваць Adblock Browser"
+  "firstRun_browser_store_android": {
+    "message": "Праграма для Android у Google Play"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Маеце смартфон або планшэт?"
+  "firstRun_browser_store_ios": {
+    "message": "Даступна праз iTunes у App Store"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Мы б хацелі заахвоціць сайты ўжываць простую, недакучлівую рэкламу. Таму былі створаны <a>строгія ўказанні</a> паводле якіх, некаторая рэклама па змаўчанні дапушчальная. Калі вы хочаце блакаваць усю рэкламу, гэтую функцыю можна лёгка <a>адключыць</a>."
+  "firstRun_browser_title": {
+    "message": "Праграма Adblock Browser"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Надакучлівая рэклама цяпер будзе блакавацца"
+  "firstRun_control_description": {
+    "message": "Па змаўчанні вы бачыце недакучлівую рэкламу, якая адпавядае нашым <a0>строгім ўказанням</a0>. Яна лічыцца дапушчальнай. Хочаце блакаваць усю рэкламу? <a1>Адключыце дапушчальную рэкламу</a1> ў <a2>Наладах</a2>."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "Спіс распрацоўшчыкаў"
+  "firstRun_control_title": {
+    "message": "Цяпер кіруеце вы"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "У некаторых карыстальнікаў гэта старонка адкрываецца пры кожным запуску браўзера. Праблему можа вырашыць выдаленне і паўторнае ўсталяванне AdBlock:"
+  "firstRun_fair_description": {
+    "message": "Мы імкнёмся да сумленнага выкарыстання AdBlock і белага спіса сайтаў. Ужываючы фільтры, вы разумееце, што можна атрымаць нечаканыя вынікі (напр. блакаванне зместу на старонках) і прымаеце іх. Каб атрымаць дадатковай звесткі пра сумленнае выкарыстанне AdBlock, глядзіце <a0>Умовы выкарыстання</a0>."
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "Калі вам усё яшчэ патрэбна дапамога, можна напісаць на пошту падтрымкі support@adblockplus.org ці наведаць <a>Даведачны цэнтр (англ.)</a>."
+  "firstRun_fair_title": {
+    "message": "Сумленнае выкарыстанне"
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "Адкрыйце ў браўзеры ўкладку «Пашырэнні»."
+  "firstRun_footer_copyright": {
+    "message": "Аўтарскае права © $year$ Усе правы абаронены. AdBlock® – зарэгістраваны таварны знак <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "Знайдзіце там AdBlock і выдаліце яго."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "Усталюйце AdBlock з сайта <a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "ахвяраваць"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Падтрымайце наш праект"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "Падобна на тое, што ў выніку памылкі былі выдалены ўсе фільтры і іх немагчыма аднавіць з рэзервовай копіі. З гэтай прычыны былі скінуты налады фільтраў і недакучлівай рэкламы. Праверце вашы спісы фільтраў і параметры для недакучлівай рэкламы ў <a>наладах AdBlock</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Раскажыце сябрам"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Памажыце нам</a> ў імкненні зрабіць інтэрнэт лепшым месцам"
+  "firstRun_subtitle": {
+    "message": "Вы цалкам кантралюеце свой браўзер."
   }, 
   "firstRun_title": {
-    "message": "AdBlock усталяваны"
+    "message": "Усталяванне выканана паспяхова!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
+    "message": "У некаторых карыстальнікаў гэта старонка адкрываецца пры кожным запуску браўзера. Праблему можна вырашыць праз выдаленне і паўторнае ўсталяванне AdBlock:"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "Калі вам яшчэ патрэбна дапамога, можаце напісаць нам на <a0>support@adblockplus.org</a0> ці наведаць <a1>даведачны цэнтр</a1>."
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "Адкрыйце ў сваім браўзеры ўкладку «Пашырэнні»."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "Знайдзіце там AdBlock і выдаліце яго."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "Усталюйце AdBlock з сайта <a>adblockplus.org</a>."
+  }, 
+  "firstRun_warning_reinitialized": {
+    "message": "Падобна на тое, што ў выніку памылкі былі выдалены ўсе фільтры і іх немагчыма аднавіць з рэзервовай копіі. З гэтай прычыны былі скінуты налады фільтраў і недакучлівай рэкламы. Праверце вашы спісы фільтраў і параметры для недакучлівай рэкламы ў <a>наладах AdBlock</a>."
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1159,34 +1175,28 @@
     "message": "Мы не зможам з вамі звязацца, таму можа стацца так, што справаздачы нададуць ніжэйшы прыярытэт."
   }, 
   "issueReporter_commentPage_heading": {
-    "message": "Дадайце каментарый"
+    "message": "Пакінуць каментарый"
   }, 
   "issueReporter_comment_description": {
-    "message": "У поле знізу можна дадаць каментарый, каб памагчы нам зразумець праблему. Гэты пункт неабавязковы, аднак рэкамендаваны для невідавочных праблем. Таксама вы можаце да адпраўкі праглядзець усе звесткі, якія дасылаюцца ў справаздачы."
+    "message": "Пакіньце каментарый, гэта дапаможа нам лепей зразумець праблему."
   }, 
   "issueReporter_comment_label": {
     "message": "Каментарый (неабавязкова):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "Даўжыня вашага каментарыя перавышае ліміт у 1000 сімвалаў. Будзе адпраўлена толькі першая тысяча сімвалаў."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "Справаздача захавана. Вы можаце праглядзець яе, калі пяройдзеце па наступнай спасылцы:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Крыху пачакайце пакуль AdBlock збірае неабходныя звесткі."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Вітаем у майстры стварэння справаздач"
-  }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Нататка:</strong> Часова адкрыецца дадатковая ўкладка, таму праблемная старонка не паўплывае на адпраўку справаздачы."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Звесткі"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Гатова"
   }, 
   "issueReporter_email_description": {
-    "message": "Рэкамендуем увесці сапраўдны адрас электроннай пошты, каб мы маглі звязацца з вамі для вырашэння пытанняў па вашай справаздачы. Таксама ён дазволіць вызначыць ваш папярэдні ўнёсак і надасць справаздачы вышэйшы прыярытэт."
+    "message": "Рэкамендуем увесці сапраўдны адрас электроннай пошты. Мы можам звязацца з вамі, каб развязаць складаныя пытанні, напрыклад звязаныя са шкодным праграмным забеспячэннем. Памятайце, што вам неабавязкова ўводзіць адрас электроннай пошты і, што мы не перадаём яго пабочным асобам."
   }, 
   "issueReporter_email_label": {
     "message": "Электронная пошта:"
@@ -1195,25 +1205,46 @@
     "message": "Не атрымалася адправіць справаздачу. Код памылкі: «?1?». Пераканайцеся, што вы падлучаныя да Інтэрнэту і паспрабуйце зноў. Калі праблема не знікне, звярніцеся па дапамогу на [link]форум AdBlock[/link]."
   }, 
   "issueReporter_falseNegative_description": {
-    "message": "Выберыце гэты варыянт, калі пры ўключаным AdBlock на старонцы ўсё адно паказваецца рэклама."
+    "message": "AdBlock уключаны, але рэклама паказваецца."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "AdBlock не блакуе рэкламу"
+    "message": "Рэклама паказваецца"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "Выберыце гэты варыянт, калі на старонцы не хапае часткі неабходнага змесціва ці яно паказана няправільна. Часова адключыўшы AdBlock, можна вызначыць ці ён з'яўляецца прычынай праблемы."
+    "message": "На старонцы не хапае часткі неабходнага змесціва ці яно паказана няправільна."
   }, 
   "issueReporter_falsePositive_label": {
-    "message": "AdBlock блакуе лішняе"
+    "message": "Старонка паказваецца часткова"
+  }, 
+  "issueReporter_highlighter_description": {
+    "message": "Скарыстайцеся прыладамі, каб вылучыць усе рэкламныя аб'явы ці схаваць прыватныя звесткі на здымку экрана. Вылучэнне элементаў дапаможа нам хутчэй выправіць праблему."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Вылучыце праблему"
   }, 
   "issueReporter_knownIssueMessage": {
     "message": "Магчыма, праблема, пра якую вы паведамілі, ўжо вядомая. Дадатковая інфармацыя:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Пазначыць праблему"
   }, 
   "issueReporter_page_title": {
     "message": "Паведаміць аб праблеме"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Палітыка канфідэнцыяльнасці"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "апрацоўка"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Схаваць"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Вылучыць"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Выбраць праблему"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Адправіць справаздачу"
@@ -1225,13 +1256,13 @@
     "message": "AdBlock адпраўляе вашу справаздачу. Пачакайце."
   }, 
   "issueReporter_showData_label": {
-    "message": "Паказаць змесціва справаздачы"
+    "message": "Націсніце сюды, каб паглядзець змесціва справаздачы"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "Майстар дапаможа вам стварыць справаздачу. Спачатку выберыце тып знойдзенай на старонцы праблемы:"
+    "message": "Выберыце тып праблемы:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "Выберыце тып праблемы"
+    "message": "З якой праблемай вы сутыкнуліся?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1672,7 +1703,10 @@
     "message": "Часова блакаваць дакучлівыя элементы на старонцы, напрыклад выявы або анімаваныя паказы слайдаў."
   }, 
   "options_customize_header": {
-    "message": "Дзеянні на старонках"
+    "message": "Налады"
+  }, 
+  "options_customize_iconStats": {
+    "message": "Паказваць на значку колькасць заблакаваных рэкламных аб'яў"
   }, 
   "options_customize_showDevToolsPanel": {
     "message": "Паказваць панэль «AdBlock» у інструментах распрацоўшчыка"
@@ -1684,7 +1718,7 @@
     "message": "Паказваць карысныя апавяшчэнні"
   }, 
   "options_customize_showNotifications_tooltip": {
-    "message": "Выключыць усе апавяшчэнні AdBlock."
+    "message": "Дазволіць апавяшчэнні ад AdBlock (апавяшчэнні, звязаныя з праблемамі, крытычнымі для прадукцыйнасці, будуць паказвацца заўсёды)."
   }, 
   "options_dialog_about_copyright": {
     "message": "Аўтарскае права © $currentYear$ eyeo GmbH.", 
@@ -1800,6 +1834,14 @@
   "options_filterList_website": {
     "message": "сайт"
   }, 
+  "options_filters_search_or_add": {
+    "message": "Пошук / дадаванне фільтра (напр. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "Пра AdBlock"
   }, 
@@ -1859,6 +1901,9 @@
   }, 
   "options_protection_social_tooltip": {
     "message": "Значкі сацыяльных сетак на наведаных сайтах, нават калі вы не націскаеце на іх, дазваляюць сайтам сацыяльных сетак ствараць асабовы профіль, абапіраючыся на вашы звычкі і прагледжаныя старонкі. Блакаванне гэтых значкоў можа абараніць ваш профіль."
+  }, 
+  "options_refresh": {
+    "message": "Абнавіць"
   }, 
   "options_report_bug": {
     "message": "Знайшлі памылку? <a>Дашліце нам справаздачу</a>"
@@ -1985,7 +2030,7 @@
     "message": "Так"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Закрыць гэтае апавяшчэнне"
+    "message": "Закрыць"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "Не паказваць апавяшчэнні"
@@ -2010,6 +2055,9 @@
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Цікавіць AdBlock для мабільных прылад?"
+  }, 
   "pwyw": {
     "message": "Pay what you want!", 
     "description": "Text of a payment request link"
@@ -2021,6 +2069,9 @@
   "reenableadsonebyone": {
     "message": "Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Націсніце <strong>Абнавіць</strong>, каб ажыццявіць змены."
   }, 
   "refusetocheck": {
     "message": "I don't want to check this", 
@@ -2125,7 +2176,7 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "Паведаміць аб праблеме на гэтай старонцы"
+    "message": "Паведаміць аб праблеме"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2183,6 +2234,9 @@
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "Колькасць заблакаваных элементаў"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> на гэтай старонцы", 
     "placeholders": {
@@ -2208,6 +2262,9 @@
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Блакаванне рэкламы на:"
   }, 
   "status_paused": {
     "message": "AdBlock is paused.", 
@@ -2303,6 +2360,10 @@
     "message": "Learn more about how to help translate AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
   }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
+  }, 
   "typehiding": {
     "message": "hiding", 
     "description": "A resource type"
@@ -2380,7 +2441,7 @@
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
   "unexpected_filter_list_header": {
-    "message": "Загалоўкі для спісаў фільтраў тут не дазволеныя"
+    "message": "Загалоўкі для спіса фільтраў тут не дазволеныя"
   }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 

@@ -443,6 +443,9 @@
     "message": "Очистить список", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "Нажмите на элемент на странице, чтобы заблокировать его."
+  }, 
   "clickdisableaa": {
     "message": "Щелкните: [[Скрывать Приемлемую рекламу]]", 
     "description": "Instruction on ad report page"
@@ -452,7 +455,7 @@
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
   "clickhide_instructions": {
-    "message": "После закрытия этого всплывающего окна, щёлкните на элементе левой или правой кнопкой мыши."
+    "message": "После закрытия этого всплывающего окна выберите элемент на странице (левой или правой кнопкой мыши)."
   }, 
   "clickthead": {
     "message": "Щелкните по объявлению, и я помогу вам его заблокировать.", 
@@ -703,7 +706,7 @@
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
   "enabled_for_site": {
-    "message": "<strong>Включён</strong> на этом сайте"
+    "message": "<strong>Включен</strong> на этом сайте"
   }, 
   "enableotherextensionscomplete": {
     "message": "Мы снова включили расширения, которые были отключены.", 
@@ -824,6 +827,9 @@
   "filter_russian": {
     "message": "Русский & Украинский + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_snippet_nodomain": {
+    "message": "Не указан активный домен для фрагментного фильтра"
   }, 
   "filter_unknown_option": {
     "message": "Неизвестная опция фильтра"
@@ -976,6 +982,10 @@
     "message": "Защита от вредоносных программ", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Норвежский", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Исходный фильтр:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -991,7 +1001,7 @@
     "description": "Language names for a filter list"
   }, 
   "filters_subscription_lastDownload_connectionError": {
-    "message": "Ошибка, загрузка невозможна"
+    "message": "Ошибка, загрузка не удалась"
   }, 
   "filtersavewarning": {
     "message": "Внимание: если вы сделаете ошибку, то многие фильтры, включая официальные, могут прекратить работу! Ознакомьтесь с [[учебником по синтаксису фильтров]], чтобы узнать, как добавлять продвинутые фильтры.", 
@@ -1029,56 +1039,62 @@
     "message": "Цель этого вопроса заключается в том, чтобы определить, кто будет получать отчет. Неправильный ответ может повлечь за собой отправление отчета по некорректному адресу, где он может быть проигнорирован.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Доступен для Android и iOS"
+  "firstRun_browser_description": {
+    "message": "Создатели AdBlock, самого популярного блокиратора рекламы для настольных браузеров, представляют Adblock Browser для устройств с системами Android и iOS."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Скачайте Adblock Browser здесь"
+  "firstRun_browser_store_android": {
+    "message": "Приложение Android в Google Play"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Есть смартфон или планшет?"
+  "firstRun_browser_store_ios": {
+    "message": "Уже доступно в iTunes App Store"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Мы хотели бы призвать веб-сайты использовать простую, ненавязчивую рекламу. Вот почему мы установили <a>строгие принципы</a> для определения приемлемых объявлений, которые разрешены в  настройках по умолчанию. Если вы все еще хотите блокировать каждое объявление вы можете <a>Отключить</a> это в течение нескольких секунд."
+  "firstRun_browser_title": {
+    "message": "Приложение Adblock Browser"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Надоевшая реклама теперь будет заблокирована"
+  "firstRun_control_description": {
+    "message": "По умолчанию вы можете видеть неназойливую рекламу, которая регламентируется <a0>жесткими критериями</a0>. Мы определяем такую рекламу как допустимую. Хотите блокировать любую рекламу? <a1>Отключите допустимую рекламу</a1> в <a2>Настройках</a2>."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "Список разработчиков"
+  "firstRun_control_title": {
+    "message": "Теперь контролируете вы"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "У некоторых пользователей эта страница открывается при каждом запуске браузера. Эту проблему можно решить с помощью удаления и переустановки AdBlock."
+  "firstRun_fair_description": {
+    "message": "Мы рекомендуем добросовестно пользоваться приложением AdBlock и опцией добавления веб-сайтов в белый список. Учитывая применяемые вами фильтры, вы понимаете и принимаете возможность получения неожиданных результатов (например, блокировка контента на веб-сайте). Для получения дополнительной информации о добросовестном использовании приложения AdBlock см. <a0>Условия использования</a0>."
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "Если Вам требуется дальнейшая помощь, Вы можете связаться с нами по адресу support@adblockplus.org или посетить сайт <a>Help Center</a>."
+  "firstRun_fair_title": {
+    "message": "Добросовестное использование"
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "Откройте вкладку \"Расширения\" в Вашем браузере."
+  "firstRun_footer_copyright": {
+    "message": "Авторское право © $year$ Все права защищены. AdBlock® является зарегистрированной торговой маркой компании <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "Найдите там AdBlock и удалите его."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "Установите AdBlock с сайта <a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "пожертвовать"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Поддержать наш проект"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "Похоже, ошибка привела к тому, что все фильтры удалены, и мы не можем их восстановить из резервной копии. Поэтому мы сбросили ваши фильтры и параметры \"ненавязчивой\" рекламы. Пожалуйста проверьте список ваших фильтров и параметры \"ненавязчивой \"рекламы в <a>параметрах AdBlock</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Рассказать друзьям"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Протяните нам руку помощи</a> в стремлении сделать Интернет лучше"
+  "firstRun_subtitle": {
+    "message": "Вы получили возможность управлять своим браузером"
   }, 
   "firstRun_title": {
-    "message": "AdBlock установлен"
+    "message": "Установка выполнена успешно!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
+    "message": "У некоторых пользователей эта страница открывается при каждом запуске браузера. Эту проблему можно решить с помощью удаления и переустановки AdBlock:"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "Если Вам требуется дальнейшая помощь, Вы можете связаться с нами по адресу <a0>support@adblockplus.org</a0> или посетить сайт <a1>Help Center</a1>."
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "Откройте вкладку \"Расширения\" в Вашем браузере."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "Найдите там AdBlock и удалите его."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "Установите AdBlock с сайта <a>adblockplus.org</a>."
+  }, 
+  "firstRun_warning_reinitialized": {
+    "message": "Похоже, что проблема привела к удалению всех фильтров, и мы не смогли восстановить данные из резервной копии. Поэтому нам пришлось сбросить фильтры и настройки допустимой рекламы. Проверьте списки фильтров и настройки допустимой рекламы в <a>параметрах AdBlock</a>."
   }, 
   "fixityourself": {
     "message": "Хорошо, тогда просто заблокируйте это объявление в Параметрах. Спасибо!", 
@@ -1159,34 +1175,28 @@
     "message": "Мы не сможем связаться с вами и, вероятно, уделим меньше внимания Вашему сообщению."
   }, 
   "issueReporter_commentPage_heading": {
-    "message": "Комментарий"
+    "message": "Оставить комментарий"
   }, 
   "issueReporter_comment_description": {
-    "message": "Внизу вы можете добавить комментарий, чтобы помочь нам понять проблему. Это не обязательно, но рекомендуется для неочевидных проблем. Также вы можете проверить данные сообщения, прежде чем оно будет отправлено."
+    "message": "Помогите нам лучше понять проблему, оставив комментарий ниже."
   }, 
   "issueReporter_comment_label": {
     "message": "Комментарий (необязательно):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "Длина комментария превышает 1000 символов. Только первые 1000 символов будут отправлены."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "Сообщение отправлено и сохранено. Вы можете просмотреть его по следующей ссылке:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Пожалуйста, подождите несколько секунд, пока AdBlock собирает нужные данные."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Добро пожаловать в мастер отправки отчётов"
-  }, 
   "issueReporter_data_gathering_tab": {
-    "message": "<strong>Примечание:</strong> Временно откроется дополнительная закладка, поэтому страница, на которой вы находитесь, не попадет в Журнал ошибок."
+    "message": "<strong>Примечание:</strong> Дополнительная вкладка будет временно открыта, чтобы Журнал ошибок не нарушал работу Вашей текущей страницы."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Сведения"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Готово"
   }, 
   "issueReporter_email_description": {
-    "message": "Мы рекомендуем ввести e-mail адрес, по которому мы могли бы связаться в случае вопросов по вашему сообщению. Это также позволит нам обрабатывать его в предпочтительном порядке, если были качественные предыдущие сообщения."
+    "message": "Рекомендуется указать действующий адрес электронной почты. Мы сможем связаться с вами для решения сложных проблем, таких как вредоносные программы. Помните, что указывать адрес электронной почты необязательно, и он не будет передан другим лицам."
   }, 
   "issueReporter_email_label": {
     "message": "E-mail:"
@@ -1195,25 +1205,46 @@
     "message": "Ошибка отправки сообщения: «?1?». Пожалуйста, удостоверьтесь, что ваше соединение с сетью Интернет работает, и попробуйте еще раз. Если проблема остается, обратитесь на [link]форум AdBlock[/link]."
   }, 
   "issueReporter_falseNegative_description": {
-    "message": "Выберите этот вариант, если реклама на странице отображается даже при включённом AdBlock."
+    "message": "AdBlock работает, но я по-прежнему вижу рекламу."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "AdBlock не блокирует рекламу"
+    "message": "Я всё ещё вижу рекламу"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "Если на странице отсутствуют важные части содержимого, а также если она отображается или функционирует неправильно, то следует выбрать этот вариант. Вы можете проверить, является ли AdBlock источником проблемы, временно отключив его."
+    "message": "Страница отображается неправильно, не работает или на ней отсутствует важное содержимое."
   }, 
   "issueReporter_falsePositive_label": {
-    "message": "AdBlock блокирует слишком многое"
+    "message": "Страница, которую я пытаюсь открыть, не работает"
+  }, 
+  "issueReporter_highlighter_description": {
+    "message": "Используйте инструменты для выделения каждой рекламы или скрытия конфиденциальной информации на снимке экрана. Выделение рекламы позволит нам быстрее устранить проблему."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Выделите проблему"
   }, 
   "issueReporter_knownIssueMessage": {
     "message": "Возможно, что проблема, о которой вы сообщили, уже известна. Дополнительная информация:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Отметить проблему"
   }, 
   "issueReporter_page_title": {
     "message": "Сообщить о проблеме"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Политика конфиденциальности"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "обработка"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Скрыть"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Выделить"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Выбрать проблему"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Отправить сообщение"
@@ -1225,13 +1256,13 @@
     "message": "Пожалуйста, подождите, пока AdBlock отправляет ваше сообщение."
   }, 
   "issueReporter_showData_label": {
-    "message": "Показать данные сообщения"
+    "message": "Нажмите на эту ссылку для просмотра данных отчета перед отправкой"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "Мастер поможет вам отправить сообщение о проблеме с AdBlock. Пожалуйста, укажите на этой странице тип проблемы, с которой вы столкнулись:"
+    "message": "Выберите проблему:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "Выбор типа проблемы"
+    "message": "С какой проблемой вы столкнулись?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Пейзажи", 
@@ -1522,7 +1553,7 @@
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "name": {
-    "message": "Блокировщик…"
+    "message": "AdBlock"
   }, 
   "name_adblock_on_youtube": {
     "message": "AdBlock на YouTube™", 
@@ -1639,7 +1670,7 @@
     "message": "СОХРАНИТЬ"
   }, 
   "options_customFilters_description": {
-    "message": "Пишите свои собственные фильтры для большего контроля над тем, что показывает или скрывает AdBlock."
+    "message": "Создавайте свои собственные фильтры для более глубоко контроля над тем, какое содержимое AdBlock блокирует. <a0>Узнайте, как создавать фильтры</a0>"
   }, 
   "options_customFilters_edit_placeholder": {
     "message": "например, $filter$", 
@@ -1651,10 +1682,10 @@
     }
   }, 
   "options_customFilters_learn": {
-    "message": "Узнайте, как составлять списки фильтров"
+    "message": "Узнайте, как создавать фильтры"
   }, 
   "options_customFilters_start": {
-    "message": "Начать составление моего списка фильтров"
+    "message": "Начать создание списка фильтров"
   }, 
   "options_customFilters_tip": {
     "message": "Здесь показаны созданные вами фильтры."
@@ -1672,7 +1703,10 @@
     "message": "Временная блокировка раздражающих элементов на сайте, например изображений или анимационных слайд-шоу."
   }, 
   "options_customize_header": {
-    "message": "НАСТРОЙКА ДЕЙСТВИЙ НА СТРАНИЦЕ"
+    "message": "Настройки"
+  }, 
+  "options_customize_iconStats": {
+    "message": "Отображать на значке количество заблокированных рекламных объявлений"
   }, 
   "options_customize_showDevToolsPanel": {
     "message": "Показывать панель «AdBlock» в инструментах разработчика"
@@ -1684,7 +1718,7 @@
     "message": "Показывать полезные уведомления"
   }, 
   "options_customize_showNotifications_tooltip": {
-    "message": "Выключение всех уведомлений от AdBlock."
+    "message": "Разрешить уведомления от AdBlock (уведомления, связанные с критическими проблемами производительности, всегда будут отображаться)."
   }, 
   "options_dialog_about_copyright": {
     "message": "Авторское право © $currentYear$ eyeo GmbH.", 
@@ -1714,7 +1748,7 @@
     "message": "URL списка фильтров"
   }, 
   "options_dialog_import_subscription_location_error": {
-    "message": "Ввести действительную URL"
+    "message": "Введите действительную URL"
   }, 
   "options_dialog_import_title": {
     "message": "Добавить список фильтров"
@@ -1800,6 +1834,14 @@
   "options_filterList_website": {
     "message": "Сайт"
   }, 
+  "options_filters_search_or_add": {
+    "message": "Фильтр поиска / добавления (например, $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "Об AdBlock"
   }, 
@@ -1855,10 +1897,13 @@
     "message": "КОНФИДЕНЦИАЛЬНОСТЬ И БЕЗОПАСНОСТЬ"
   }, 
   "options_protection_privacy_tooltip": {
-    "message": "Защищайте свою приватность от известных структур, которые могут отслеживать вашу онлайн активность по сайтам, которые вы посещаете."
+    "message": "Защищайте свою приватность от известных структур, которые могут отслеживать вашу онлайн активность на сайтах, которые вы посещаете."
   }, 
   "options_protection_social_tooltip": {
     "message": "Значки социальных сетей на посещаемых сайтах позволяют социальным сетям формировать ваш профиль на основании ваших привычек просмотра ресурсов сети – даже если вы их не нажимаете. Скрытие этих значков поможет защитить ваш профиль."
+  }, 
+  "options_refresh": {
+    "message": "Обновить"
   }, 
   "options_report_bug": {
     "message": "Нашли ошибку? <a>Отправить нам отчет об ошибках</a>"
@@ -1979,13 +2024,13 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
   "overlay_notification_button_no": {
-    "message": "Неа"
+    "message": "Нет"
   }, 
   "overlay_notification_button_yes": {
     "message": "Да"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Закрыть это уведомление"
+    "message": "Закрыть"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "Запретить показ уведомлений"
@@ -2010,6 +2055,9 @@
     "message": "Политика конфиденциальности", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Интересует AdBlock для мобильного устройства?"
+  }, 
   "pwyw": {
     "message": "Платите, сколько хотите!", 
     "description": "Text of a payment request link"
@@ -2021,6 +2069,9 @@
   "reenableadsonebyone": {
     "message": "Отлично! Давайте попробуем выяснить, в каком расширении проблема. Попробуйте включать их по одному. Если после включения одного из расширений вы снова видите рекламу — значит, его и нужно удалить.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Нажмите <strong>Обновить</strong>, чтобы изменения вступили в силу."
   }, 
   "refusetocheck": {
     "message": "Я не хочу проверять", 
@@ -2125,7 +2176,7 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "Сообщить о проблеме на этой странице"
+    "message": "Сообщить об ошибке"
   }, 
   "settings_changed": {
     "message": "В связи с этим настройки AdBlock могли быть изменены.", 
@@ -2183,6 +2234,9 @@
     "message": "Исходный код в [[свободном доступе]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "Число заблокированных объектов"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> на этой странице", 
     "placeholders": {
@@ -2203,11 +2257,14 @@
     "message": "Показывать число в значке"
   }, 
   "stats_title": {
-    "message": "Статистика блокирования"
+    "message": "Рекламы заблокировано"
   }, 
   "status_domain_paused": {
     "message": "Работа AdBlock приостановлена на этом сайте.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Блокировать рекламу на:"
   }, 
   "status_paused": {
     "message": "AdBlock приостановлен.", 
@@ -2303,6 +2360,10 @@
     "message": "Узнайте больше о том, как помочь перевести AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
   }, 
+  "troubleshoot_an_ad": {
+    "message": "Устранение неполадок с объявлением", 
+    "description": "Entry in the AdBlock button menu"
+  }, 
   "typehiding": {
     "message": "скрытое", 
     "description": "A resource type"
@@ -2328,7 +2389,7 @@
     "description": "A resource type"
   }, 
   "typeother": {
-    "message": "иное", 
+    "message": "другие", 
     "description": "A resource type"
   }, 
   "typepage": {

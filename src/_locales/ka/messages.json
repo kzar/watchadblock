@@ -443,6 +443,9 @@
     "message": "Clean up this list", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "დააწკაპეთ ელემენტზე მოცემულ გვერდზე მის შესაზღუდად."
+  }, 
   "clickdisableaa": {
     "message": "Click this: [[Disable Acceptable Ads]]", 
     "description": "Instruction on ad report page"
@@ -825,6 +828,9 @@
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "მოქმედი დომენი არაა მითითებული ცალკეული ფილტრისთვის"
+  }, 
   "filter_unknown_option": {
     "message": "ფილტრის უცნობი პარამეტრი"
   }, 
@@ -976,6 +982,10 @@
     "message": "Malware protection", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Norwegian", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Filter origin:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,56 +1039,62 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "ხელმისაწვდომია Android-სა და iOS-ზე"
+  "firstRun_browser_description": {
+    "message": "რეკლამების ყველაზე მეტად სასურველი შემზღუდავის, AdBlock-ის შემქმნელებისგან, Adblock Browser ახლა უკვე ხელმისაწვდომია თქვენს Android და iOS მოწყობილობებზე."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "გადმოწერეთ Adblock Browser აქედან"
+  "firstRun_browser_store_android": {
+    "message": "Android-ის პროგრამა Google Play-ში"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "გაქვთ სმარტფონი ან პლანშეტი?"
+  "firstRun_browser_store_ios": {
+    "message": "ხელმისაწვდომია iTunes App Store-ში"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "ჩვენ გვსურს წავახალისოთ ვებსაიტები, რომ გამოიყენონ არაგამაღიზიანებელი, სადა რეკლამები. სწორედ ამიტომაც, ჩამოვაყალიბეთ <a>მკაცრი მითითებები</a> მისაღები რეკლამების განსაზღვრისთვის, რომელიც მოცემულია ნაგულისხმევ პარამეტრებში. თუ მაინც გსურთ ყველა რეკლამის შეზღუდვა, მისი <a>გამორთვა</a> მარტივად შეგიძლიათ."
+  "firstRun_browser_title": {
+    "message": "პროგრამა Adblock Browser"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "მომაბეზრებელი რეკლამები ახლა უკვე შეზღუდულია"
+  "firstRun_control_description": {
+    "message": "ნაგულისხმევად, შესაძლოა იხილოთ ზოგიერთი არაგამაღიზიანებელი რეკლამა, რომლებიც <a0>მკაცრი წესებითაა განსაზღვრული</a0>. ასეთი რეკლამები მიიჩნევა მისაღებად. მაინც გირჩევნიათ მათი შეზღუდვა? <a1>გამორთეთ მისაღები რეკლამები</a1> თქვენი <a2>პარამეტრებიდან</a2>."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "წვლილის შემტანები"
+  "firstRun_control_title": {
+    "message": "მართვის სადავეები თქვენს ხელშია"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "მომხმარებელთა ნაწილი გადააწყდა ერთგვარ ხარვეზს — ბრაუზერის ყოველი გაშვებისას, ეს გვერდი იხსნებოდა. ამ ხარვეზის გამოსწორება შესაძლებელია AdBlock-ის ამოშლითა და ხელახლა დაყენებით:"
+  "firstRun_fair_description": {
+    "message": "ჩვენ უზრუნველგყოფთ AdBlock-ის კეთილსინდისიერად გამოყენების უფლებითა და საიტების გამონაკლისებში დამატების შესაძლებლობით. გამოყენებული ფილტრებიდან გამომდინარე, უნდა გაითვალისწინოთ და ეთანხმებოდეთ შესაძლო მოულოდნელ შედეგებს (მაგ. საიტზე შიგთავსის შეზღუდვა). გაეცანით <a0>გამოყენების პირობებს</a0> დამატებითი ინფორმაციის მისაღებად, AdBlock-ით კეთილსინდისიერად სარგებლობის შესახებ."
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "თუ კვლავ გესაჭიროებათ დახმარება, დაგვიკავშირდით support@adblockplus.org მისამართზე ან ეწვიეთ ჩვენს <a>მხარდაჭერის გვერდს</a>."
+  "firstRun_fair_title": {
+    "message": "კეთილსინდისიერი გამოყენება"
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "გახსენით თქვენი ბრაუზერის გაფართოებების გვერდი."
+  "firstRun_footer_copyright": {
+    "message": "საავტორო უფლებები © $year$ ყველა უფლება დაცულია. AdBlock® წარმოადგენს <a0>eyeo GmbH</a0>-ის კუთვნილ სავაჭრო ნიშანს.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "მონახეთ AdBlock და ამოშალეთ."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "ხელახლა დააყენეთ AdBlock საიტიდან <a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "შემოწირულობა"
-  }, 
-  "firstRun_donate_label": {
-    "message": "მხარი დაუჭირეთ ჩვენს პროექტს"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "როგორც ჩანს, ეს ხარვეზი გამომდინარეობს იქიდან, რომ ყველა ფილტრი წაიშალა და მათი აღდგენა ვერ მოხერხდა. შესაბამისად, ფილტრებისა და მისაღები რეკლამების პარამეტრები ხელახლა დაყენდა. გთხოვთ, გადაამოწმოთ თქვენი ფილტრებისა და მისაღები რეკლამების მახასიათებლები <a>AdBlock-ის პარამეტრებში</a>."
-  }, 
-  "firstRun_share": {
-    "message": "უთხარით მეგობრებს"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>ამოგვიდექით მხარში</a>, რომ გავხადოთ ინტერნეტი კიდევ უფრო უკეთესი"
+  "firstRun_subtitle": {
+    "message": "თქვენ ახლა, ბრაუზერის მართვის სადავეები თქვენს ხელში აიღეთ."
   }, 
   "firstRun_title": {
-    "message": "AdBlock დაყენებულია"
+    "message": "დაყენებულია წარმატებით!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
+    "message": "მომხმარებელთა ნაწილი გადააწყდა ერთგვარ ხარვეზს — ბრაუზერის ყოველი გაშვებისას, ეს გვერდი იხსნებოდა. ამ ხარვეზის გამოსწორება შესაძლებელია AdBlock-ის ამოშლითა და ხელახლა დაყენებით:"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "თუ კვლავ გესაჭიროებათ დახმარება, დაგვიკავშირდით <a0>support@adblockplus.org</a0> მისამართზე ან ეწვიეთ ჩვენს <a1>მხარდაჭერის გვერდს</a1>."
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "გახსენით თქვენი ბრაუზერის გაფართოებების გვერდი."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "მონახეთ AdBlock და ამოშალეთ."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "ხელახლა დააყენეთ AdBlock საიტიდან <a>adblockplus.org</a>."
+  }, 
+  "firstRun_warning_reinitialized": {
+    "message": "როგორც ჩანს, ეს ხარვეზი გამომდინარეობს იქიდან, რომ ყველა ფილტრი წაიშალა და მათი აღდგენა ვერ მოხერხდა. შესაბამისად, ფილტრებისა და მისაღები რეკლამების პარამეტრები ხელახლა დაყენდა. გთხოვთ, გადაამოწმოთ თქვენი ფილტრებისა და მისაღები რეკლამების მახასიათებლები <a>AdBlock-ის პარამეტრებში</a>."
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1167,20 +1183,14 @@
   "issueReporter_comment_label": {
     "message": "შენიშვნა (არასავალდებულო):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "თქვენი კომენტარი აჭარბებს 1000 სიმბოლოს. მხოლოდ, პირველი 1000 სიმბოლო გადაიგზავნება."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "თქვენი მოხსენება შენახულია. მასზე წვდომისთვის გამოიყენეთ შემდეგი მისამართი:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "გთხოვთ, მოითმინოთ რამდენიმე წამი, სანამ AdBlock შეაგროვებს საჭირო მონაცემებს."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "მოგესალმებით, ხარვეზის მომხსენებლის გვერდზე"
-  }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>შენიშვნა:</strong> დროებით იხსნება დამატებითი ახალი ჩანართი, ასე რომ გვერდს რომელსაც სტუმრობთ, არაფერი ეხება ხარვეზების მომხსენებლის გამოყენებისას."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "შინაარსი"
   }, 
   "issueReporter_doneButton_label": {
     "message": "მზადაა"
@@ -1206,14 +1216,35 @@
   "issueReporter_falsePositive_label": {
     "message": "AdBlock ზღუდავს ზედმეტად"
   }, 
+  "issueReporter_highlighter_description": {
+    "message": "გამოიყენეთ ხელსაწყო თითოეული რეკლამის მისათითებლად ან პირადი მონაცემების დასამალად გადაღებული სურათიდან. რეკლამების მითითება საშუალებას მოგვცემს, სწრაფადვე გამოვასწოროთ ხარვეზი."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "ხარვეზის მითითება"
+  }, 
   "issueReporter_knownIssueMessage": {
     "message": "ხარვეზი, რომლის შესახებაც მოგვახსენეთ, შესაძლოა უკვე აღმოფხვრილი იყოს. ვრცლად, იხილეთ:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "ხარვეზის მონიშვნა"
   }, 
   "issueReporter_page_title": {
     "message": "ხარვეზის მომხსენებელი"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "პირადულობის დაცვის დებულება"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "დამუშავება"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "დამალვა"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "მითითება"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "ხარვეზის არჩევა"
   }, 
   "issueReporter_sendButton_label": {
     "message": "მოხსენების გაგზავნა"
@@ -1594,7 +1625,7 @@
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
   "options_acceptableAds_ads_description_1": {
-    "message": "მისაღები რეკლამები არაა მომაბეზრებელი და არ ფარავს იმ შიგთავსს, რომელსაც ნახულობთ. <a>იხილეთ ვრცლად, მისაღები რეკლამების გასაზღვრის წესის შესახებ</a>"
+    "message": "მისაღები რეკლამები არაა მომაბეზრებელი და არ ფარავს იმ შიგთავსს, რომელსაც ნახულობთ. <a>იხილეთ ვრცლად, მისაღები რეკლამების განსაზღვრის წესის შესახებ</a>"
   }, 
   "options_acceptableAds_ads_label": {
     "message": "მისაღები რეკლამების დაშვება"
@@ -1672,7 +1703,10 @@
     "message": "ვებგვერდზე მომაბეზრებელი შიგთავსის დროებით შეზღუდვა, მაგ. სურათებისა და მოძრავი სლაიდების."
   }, 
   "options_customize_header": {
-    "message": "ვებგვერდზე მოქმედებების განსაზღვრა"
+    "message": "მორგება"
+  }, 
+  "options_customize_iconStats": {
+    "message": "შეზღუდული რეკლამების რაოდენობის ჩვენება ხატულაზე"
   }, 
   "options_customize_showDevToolsPanel": {
     "message": "'AdBlock'-ის არე შემმუშავებლის ხელსაწყოებში"
@@ -1684,7 +1718,7 @@
     "message": "საჭირო შეტყობინებების ჩვენება"
   }, 
   "options_customize_showNotifications_tooltip": {
-    "message": "AdBlock-ის ყველა შეტყობინების გათიშვა."
+    "message": "შეტყობინებების დაშვება AdBlock-ისგან (წარმადობასთან დაკავშირებული მნიშვნელოვანი შეტყობინებები ყოველთვის გამოჩნდება)."
   }, 
   "options_dialog_about_copyright": {
     "message": "მფლობელი © $currentYear$ eyeo GmbH.", 
@@ -1711,10 +1745,10 @@
     }
   }, 
   "options_dialog_import_subscription_location": {
-    "message": "ფილტრის URL ბმული"
+    "message": "ფილტრის URL-ბმული"
   }, 
   "options_dialog_import_subscription_location_error": {
-    "message": "შეიყვანეთ მართებული URL ბმული"
+    "message": "შეიყვანეთ მართებული URL-ბმული"
   }, 
   "options_dialog_import_title": {
     "message": "ფილტრის დამატება"
@@ -1800,6 +1834,14 @@
   "options_filterList_website": {
     "message": "ვებსაიტი"
   }, 
+  "options_filters_search_or_add": {
+    "message": "ძიება / ფილტრის დამატება (მაგ. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "AdBlock-ის შესახებ"
   }, 
@@ -1859,6 +1901,9 @@
   }, 
   "options_protection_social_tooltip": {
     "message": "ვებსაიტებზე არსებული მოწონების ან გაზიარების ხატულებით, სოციალურ ქსელებს ეძლევა საშუალება შეისწავლოს და შეადგინოს თქვენი პიროვნული დახასიათება, მონახულებული გვერდების საფუძველზე - მიუხედავად იმისა, დააწკაპებთ თუ არა ამ მათზე. ამ ხატულების დამალვა, უზრუნველყოფს თქვენს პირადულობას."
+  }, 
+  "options_refresh": {
+    "message": "განახლება"
   }, 
   "options_report_bug": {
     "message": "ხარვეზი აღმოაჩინეთ? <a>მოგვახსენეთ ამის შესახებ</a>"
@@ -1985,7 +2030,7 @@
     "message": "დიახ"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "შეტყობინების დახურვა"
+    "message": "დახურვა"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "შეტყობინებების შეწყვეტა"
@@ -2010,6 +2055,9 @@
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "გაინტერესებთ AdBlock მობილურზე?"
+  }, 
   "pwyw": {
     "message": "Pay what you want!", 
     "description": "Text of a payment request link"
@@ -2021,6 +2069,9 @@
   "reenableadsonebyone": {
     "message": "Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "დაწკაპეთ <strong>განახლებას</strong> ცვლილებების ასახვისთვის."
   }, 
   "refusetocheck": {
     "message": "I don't want to check this", 
@@ -2125,7 +2176,7 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "მოხსენება ხარვეზის შესახებ ამ გვერდზე"
+    "message": "ხარვეზის მოხსენება"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2183,6 +2234,9 @@
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "შეზღუდული ერთეულების რიცხვი"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> ამ გვერდზე", 
     "placeholders": {
@@ -2208,6 +2262,9 @@
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "რეკლამების შეზღუდვა:"
   }, 
   "status_paused": {
     "message": "AdBlock is paused.", 
@@ -2302,6 +2359,10 @@
   "translators": {
     "message": "Learn more about how to help translate AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "hiding", 

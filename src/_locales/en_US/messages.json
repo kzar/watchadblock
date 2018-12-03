@@ -446,6 +446,10 @@
     "message": "Clean up this list", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#block-element", 
+    "message": "Click an element on the page to block it."
+  }, 
   "clickdisableaa": {
     "message": "Click this: [[Disable Acceptable Ads]]", 
     "description": "Instruction on ad report page"
@@ -838,6 +842,9 @@
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "No active domain specified for snippet filter"
+  }, 
   "filter_unknown_option": {
     "message": "Unknown filter option"
   }, 
@@ -989,6 +996,10 @@
     "message": "Malware protection", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Norwegian", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Filter origin:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1042,61 +1053,67 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Available for Android and iOS"
+  "firstRun_browser_description": {
+    "message": "From the team behind AdBlock, the most popular ad blocker for desktop browsers, Adblock Browser is now available for your Android and iOS devices."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Get Adblock Browser here"
+  "firstRun_browser_store_android": {
+    "message": "Android app on Google Play"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Got a smartphone or a tablet?"
+  "firstRun_browser_store_ios": {
+    "message": "Available on the iTunes App Store"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "We'd like to encourage websites to use straightforward, unobtrusive advertising. That's why we've established <a>strict guidelines</a> to identify acceptable ads, which are shown under default settings. If you still want to block every ad you can <a>disable</a> this in a few seconds."
+  "firstRun_browser_title": {
+    "message": "Adblock Browser app"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Annoying ads will now be blocked"
+  "firstRun_control_description": {
+    "message": "By default, you may see some nonintrusive ads that adhere to <a0>strict criteria</a0>. We identify these ads as Acceptable Ads. Prefer to block all ads? <a1>Turn off Acceptable Ads</a1> in your <a2>Settings</a2>."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "Contributor Credits"
+  "firstRun_control_title": {
+    "message": "You're in control"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
+  "firstRun_fair_description": {
+    "message": "We encourage you to make fair use of AdBlock and the option to whitelist websites. Depending on the filters you use, you understand and accept that unintentional results might occur (e.g. blocked content on a website). Refer to the <a0>Terms of Use</a0> for more information about fair use of AdBlock."
+  }, 
+  "firstRun_fair_title": {
+    "message": "Fair use"
+  }, 
+  "firstRun_footer_copyright": {
+    "message": "Copyright © $year$ All rights reserved. AdBlock® is a registered trademark of <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
+  }, 
+  "firstRun_subtitle": {
+    "message": "You just took control of your browser."
+  }, 
+  "firstRun_title": {
+    "message": "Installation Successful!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
     "description": "Text shown at beginning of warning being shown when data corruption was detected", 
     "message": "Some users are experiencing an issue where this page opens each time their browser is launched. This issue can be resolved by uninstalling and reinstalling AdBlock:"
   }, 
-  "firstRun_dataCorruptedWarning_note": {
+  "firstRun_warning_dataCorrupted_note": {
     "description": "Footnote at the end of warning being shown when data corruption was detected", 
-    "message": "If you still need help, contact us at support@adblockplus.org or visit our <a>Help Center</a>."
+    "message": "If you still need help, contact us at <a0>support@adblockplus.org</a0> or visit our <a1>Help Center</a1>."
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
+  "firstRun_warning_dataCorrupted_step1": {
     "description": "First step of instructions in warning being shown when data corruption was detected", 
     "message": "Open your browser's Extensions tab."
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
+  "firstRun_warning_dataCorrupted_step2": {
     "description": "Second step of instructions in warning being shown when data corruption was detected", 
     "message": "Locate AdBlock and remove it."
   }, 
-  "firstRun_dataCorruptedWarning_step3": {
+  "firstRun_warning_dataCorrupted_step3": {
     "description": "Third step of instructions in warning being shown when data corruption was detected", 
     "message": "Reinstall AdBlock from <a>adblockplus.org</a>."
   }, 
-  "firstRun_donate": {
-    "message": "donate"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Support our project"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
+  "firstRun_warning_reinitialized": {
     "message": "It seems that an issue caused all filters to be removed and we were unable to restore a backup. Therefore we had to reset your filters and Acceptable Ads settings. Please check your filter lists and Acceptable Ads settings in the <a>AdBlock options</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Tell your friends"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Give us a hand</a> in making the web a better place"
-  }, 
-  "firstRun_title": {
-    "message": "AdBlock has been installed"
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1177,34 +1194,28 @@
     "message": "We won't be able to come back to you and will likely prioritize the report lower."
   }, 
   "issueReporter_commentPage_heading": {
-    "message": "Enter comment"
+    "message": "Leave a comment"
   }, 
   "issueReporter_comment_description": {
-    "message": "The text field below allows you to enter a comment to help us understand the issue. This step is optional but recommended if the problem isn't obvious. You can also review the report data before it is sent."
+    "message": "Please help us better understand the issue by leaving a comment below."
   }, 
   "issueReporter_comment_label": {
     "message": "Comment (optional):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "The length of your comment exceeds 1000 characters. Only the first 1000 characters will be sent."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "Your report has been saved. You can access it at the following address:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Please wait a few moments while AdBlock gathers the required data."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Welcome to the issue reporter"
-  }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Note:</strong> An additional tab will temporarily open so the page you are on won't be affected by the Issue Reporter."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Details"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Done"
   }, 
   "issueReporter_email_description": {
-    "message": "We encourage you to enter a valid email address so that we can contact you if there are questions about your report. It will also allow us to recognize your contributions and to prioritize them higher."
+    "message": "It's helpful to enter a valid email address. This allows us to contact you to fix difficult issues like malware. Keep in mind that it's not mandatory to enter an email address, and your address will never be shared."
   }, 
   "issueReporter_email_label": {
     "message": "Email:"
@@ -1213,25 +1224,46 @@
     "message": "An attempt to send the report failed with error code \"?1?\". Please ensure you are connected to the Internet and retry. If the problem persists please request assistance in the [link]AdBlock forum[/link]."
   }, 
   "issueReporter_falseNegative_description": {
-    "message": "Select this option if an advertisement is displayed despite AdBlock being enabled."
+    "message": "AdBlock is enabled, but I still see an ad or ads."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "AdBlock doesn't block an advertisement"
+    "message": "I still see ads"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "Select this option if the page lacks important content, displays incorrectly or fails to function properly. You can determine whether AdBlock is the cause of the problem by disabling it temporarily."
+    "message": "The page displays incorrectly, fails to function or seems to be missing important content."
   }, 
   "issueReporter_falsePositive_label": {
-    "message": "AdBlock is blocking too much"
+    "message": "The page I'm trying to view is broken"
+  }, 
+  "issueReporter_highlighter_description": {
+    "message": "Use the tools to highlight each ad or hide sensitive info on the screenshot. Highlighting ads will help us fix the issue faster."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Highlight issue"
   }, 
   "issueReporter_knownIssueMessage": {
     "message": "The issue you reported is probably already known. More information:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Mark issue"
   }, 
   "issueReporter_page_title": {
     "message": "Issue reporter"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Privacy policy"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "processing"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Hide"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Highlight"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Select issue"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Send report"
@@ -1243,13 +1275,13 @@
     "message": "Please wait while AdBlock is submitting your report."
   }, 
   "issueReporter_showData_label": {
-    "message": "Show report data"
+    "message": "Click this link to review the report data before sending"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "This window will guide you through the steps required for the submission of an AdBlock issue report. First, please select the type of issue that you are experiencing on this page:"
+    "message": "Please select an issue:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "Select issue type"
+    "message": "What type of issue are you experiencing?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1675,7 +1707,7 @@
   }, 
   "options_customFilters_description": {
     "description": "Custom filter lists section description in Advanced tab", 
-    "message": "Write your own custom filters to further control what content AdBlock allows or blocks."
+    "message": "Create your own filters to further control what content AdBlock blocks. <a0>Learn how to create filters</a0>"
   }, 
   "options_customFilters_edit_placeholder": {
     "description": "Custom filter widget(empty) placeholder text in Advanced tab", 
@@ -1689,11 +1721,11 @@
   }, 
   "options_customFilters_learn": {
     "description": "Custom filter widget(empty) link text in Advanced tab", 
-    "message": "Learn how to write filter lists"
+    "message": "Learn how to create filters"
   }, 
   "options_customFilters_start": {
     "description": "Custom filter widget(empty) button text in Advanced tab", 
-    "message": "Start writing my filter list"
+    "message": "Start creating my filter list"
   }, 
   "options_customFilters_tip": {
     "description": "Custom filter widget(empty) hint text in Advanced tab", 
@@ -1717,7 +1749,11 @@
   }, 
   "options_customize_header": {
     "description": "Section title in Advanced tab", 
-    "message": "Customize on-page actions"
+    "message": "Customizations"
+  }, 
+  "options_customize_iconStats": {
+    "description": "Option label of customize section in Advanced tab", 
+    "message": "Show number of ads blocked in icon"
   }, 
   "options_customize_showDevToolsPanel": {
     "description": "Option label of customize section in Advanced tab", 
@@ -1733,7 +1769,7 @@
   }, 
   "options_customize_showNotifications_tooltip": {
     "description": "Tooltip text for Show notifications option item of customize section in Advanced tab", 
-    "message": "Turn off all notifications from AdBlock."
+    "message": "Allow notifications from AdBlock (notifications related to critical performance issues will always be shown)."
   }, 
   "options_dialog_about_copyright": {
     "description": "Copyright information in 'about AdBlock' modal dialog", 
@@ -1883,6 +1919,15 @@
     "description": "Context menu item in advanced tab, appears after click on subscription", 
     "message": "website"
   }, 
+  "options_filters_search_or_add": {
+    "description": "The filter search placeholder.", 
+    "message": "Search / add filter (e.g. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "description": "Sidebar button label", 
     "message": "About AdBlock"
@@ -1962,6 +2007,10 @@
   "options_protection_social_tooltip": {
     "description": "Tooltip for 'Block social media icons tracking' option in General tab", 
     "message": "The social media icons on the websites you visit allow social media networks to build a profile of you based on your browsing habits - even when you don't click on them. Hiding these icons can protect your profile."
+  }, 
+  "options_refresh": {
+    "description": "refresh text in the main toggle", 
+    "message": "Refresh"
   }, 
   "options_report_bug": {
     "description": "'Support' section list item in Help tab", 
@@ -2108,9 +2157,11 @@
     "message": "Yes"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Close this notification"
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#notifications", 
+    "message": "Close"
   }, 
   "overlay_notification_closing_button_optout": {
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#notifications", 
     "message": "Stop showing notifications"
   }, 
   "pagelanguagecheck": {
@@ -2133,6 +2184,10 @@
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#index", 
+    "message": "Interested in AdBlock on mobile?"
+  }, 
   "pwyw": {
     "message": "Pay what you want!", 
     "description": "Text of a payment request link"
@@ -2144,6 +2199,10 @@
   "reenableadsonebyone": {
     "message": "Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#refresh", 
+    "message": "Click <strong>Refresh</strong> for the changes to take effect."
   }, 
   "refusetocheck": {
     "message": "I don't want to check this", 
@@ -2248,7 +2307,8 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "Report issue on this page"
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#report-issue", 
+    "message": "Report issue"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2306,6 +2366,10 @@
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "description": "Stats description above the page / total stats", 
+    "message": "Number of items blocked"
+  }, 
   "stats_label_page": {
     "description": "This shows the number of blocked requests on a specific page in the popup.", 
     "message": "<strong>$number$</strong> on this page", 
@@ -2335,6 +2399,10 @@
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "description": "https://gitlab.com/eyeo/specs/spec/blob/bubble_ui/spec/abp/bubble-ui.md#index", 
+    "message": "Block ads on:"
   }, 
   "status_paused": {
     "message": "AdBlock is paused.", 
@@ -2429,6 +2497,10 @@
   "translators": {
     "message": "Learn more about how to help translate AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "hiding", 

@@ -553,7 +553,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Har vores hold spurgt efter debug-info? Klik [[her]] for at få det!", 
+    "message": "Has our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -565,11 +565,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "Den mest populære udvidelse til Chrome, med over 40 millioner brugere! Blokerer reklamer overalt på internettet.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "Den mest populære udvidelse til Chrome, med over 40 millioner brugere! Blokerer reklamer overalt på internettet.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -976,6 +976,10 @@
     "message": "Malwarebeskyttelse", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Norwegian", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Filter origin:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,57 +1033,6 @@
     "message": "Formålet med dette spørgsmål er for at fastslå, hvem der bør modtage din rapportering. Hvis du besvarer spørgsmålet forkert vil rapporten blive sendt til de forkerte folk, og måske blive ignoreret.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Tilgængelig på Android og iOS"
-  }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Hent Adblock Browser her"
-  }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Har du en smartphone eller en tablet?"
-  }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Vi vil gerne tilskynde websteder til at bruge enkel, diskret annoncering. Derfor har vi indført <a>strenge retningslinjer</a> for at identificere de acceptable annoncer, der vises med standardindstillingerne. Hvis du stadig vil blokere alle annoncer, er det nemt at <a>deaktivere</a> denne funktion."
-  }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Irriterende annoncer bliver nu blokeret"
-  }, 
-  "firstRun_contributor_credits": {
-    "message": "Tak til"
-  }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "Nogle brugere oplever et problem, hvor denne side vises hver gang de åbner deres browser. Dette problem kan løses ved at afinstallere og geninstallere AdBlock:"
-  }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "Hvis du stadig har brug for hjælp, bedes du kontakte os på support@adblockplus.org eller besøge siden <a>Hjælp</a>."
-  }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "Åbn fanebladet Udvidelser i din browser."
-  }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "Find AdBlock, og fjern udvidelsen."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "Geninstallér AdBlock via <a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "donér"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Støt projektet"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "Et problem har tilsyneladende fjernet alle filtre, og det var ikke muligt at gendanne en sikkerhedskopi. Dine filtre og indstillinger for acceptable annoncer er derfor blevet nulstillet. Kontrollér dine filterlister og indstillinger for acceptable annoncer under <a>AdBlock-indstillinger</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Fortæl det til vennerne"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Giv en hånd</a> med at gøre internettet til et bedre sted"
-  }, 
-  "firstRun_title": {
-    "message": "AdBlock er nu installeret"
-  }, 
   "fixityourself": {
     "message": "OK, du kan stadig blokere reklamen for dig selv på siden Indstillinger. Tak!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1128,10 +1081,6 @@
     "message": "Help and Feedback", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "her", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Hidden element", 
     "description": "Resource list page: resource status"
@@ -1171,17 +1120,8 @@
   "issueReporter_comment_label": {
     "message": "Kommentar (valgfri):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "Teksten overstiger 1000 tegn. Kun de første 1000 tegn bliver sendt."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "Rapporten er gemt. Den kan ses på følgende adresse:"
-  }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Vent et øjeblik, mens AdBlock indsamler data."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Velkommen til Rapportér problem"
   }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Bemærk:</strong> Et ekstra faneblad vises midlertidigt, så den besøgte side ikke påvirkes af funktionen Rapportér problem."
@@ -1619,13 +1559,13 @@
     "message": "Tilpas AdBlock, tilføj eller fjern filterlister, opret og vedligehold dine egne filterlister"
   }, 
   "options_anti_cv_header": {
-    "message": "Anti-omgåelse"
+    "message": "Omgåelsesbeskyttelse"
   }, 
   "options_anti_cv_title": {
-    "message": "ABP Anti-omgåelse filterliste"
+    "message": "Filterliste for ABP-omgåelsesbeskyttelse"
   }, 
   "options_anti_cv_tooltip": {
-    "message": "Denne filterliste virker mod omgåelse (Dvs. teknikker til at tvinge annoncer på ad-blokerede brugere). Disse filtre vedrører omgåelse af annoncer samt relateret sporing."
+    "message": "Denne filterliste fungerer som beskyttelse mod omgåelse (dvs. teknikker til at påtvinge visning af annoncer for brugere med annonceblokering slået til). Disse filtre adresserer omgående annoncer såvel som relateret sporing."
   }, 
   "options_close": {
     "message": "luk"
@@ -1675,9 +1615,6 @@
   "options_customize_blockElement_tooltip": {
     "message": "Bloker midlertidigt irriterende elementer på en webside, f.eks. billeder eller animerede slideshows."
   }, 
-  "options_customize_header": {
-    "message": "Tilpas websidehandlinger"
-  }, 
   "options_customize_showDevToolsPanel": {
     "message": "Vis AdBlock-panel i udviklingsværktøjer"
   }, 
@@ -1686,9 +1623,6 @@
   }, 
   "options_customize_showNotifications": {
     "message": "Vis nyttige meddelelser"
-  }, 
-  "options_customize_showNotifications_tooltip": {
-    "message": "Deaktivér alle meddelelser fra AdBlock."
   }, 
   "options_dialog_about_copyright": {
     "message": "Copyright © $currentYear$ eyeo GmbH.", 
@@ -1988,9 +1922,6 @@
   "overlay_notification_button_yes": {
     "message": "Ja"
   }, 
-  "overlay_notification_closing_button_hide": {
-    "message": "Luk denne meddelelse"
-  }, 
   "overlay_notification_closing_button_optout": {
     "message": "Vis ikke meddelelser"
   }, 
@@ -2127,9 +2058,6 @@
   "selectlanguage": {
     "message": " --Vælg sprog-- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
-  }, 
-  "sendReport": {
-    "message": "Rapportér problem"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2306,6 +2234,10 @@
   "translators": {
     "message": "Learn more about how to help translate AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "skjuler", 

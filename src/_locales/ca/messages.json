@@ -396,7 +396,7 @@
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
   "changes_to_adblock": {
-    "message": "We've made changes to AdBlock!", 
+    "message": "Hem fet canvis a l'AdBlock!", 
     "description": "Link to Options page with more information about the changes."
   }, 
   "checkinfirefox_1": {
@@ -442,6 +442,9 @@
   "cleanuplist2": {
     "message": "Neteja aquesta llista", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
+  }, 
+  "click_element_to_block_it": {
+    "message": "Feu clic a un element de la pàgina per bloquejar-lo."
   }, 
   "clickdisableaa": {
     "message": "Feu clic a: [[Desactiva Anuncis Acceptables]]", 
@@ -553,7 +556,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "El nostre equip us ha sol·licitat informació de depuració? Cliqueu [[aquí]] per enviar-la!", 
+    "message": "El nostre equip us ha sol·licitat informació de depuració? Cliqueu [[here]] per enviar-la!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -565,11 +568,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "L'extensió més popular de Chrome, amb més de 40 milions d'usuaris! Bloqueja els anuncis de tota la xarxa.", 
+    "message": "L'extensió més popular de Chrome, amb més de 60 milions d'usuaris! Bloqueja els anuncis de tota la xarxa.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "L'extensió més popular de Chrome, amb més de 40 milions d'usuaris! Bloqueja els anuncis de tota la xarxa.", 
+    "message": "L'extensió més popular de Chrome, amb més de 60 milions d'usuaris! Bloqueja els anuncis de tota la xarxa.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -668,7 +671,7 @@
     "description": "Menu entry to whitelist the current page"
   }, 
   "download_mac_app": {
-    "message": "To get the best AdBlock experience on your Mac, please download our [[AdBlock for Safari Mac App!]]", 
+    "message": "Per obtenir la millor experiència d'AdBlock al vostre Mac, baixeu l'[[AdBlock per a l'aplicació de Safari Mac!]]", 
     "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
   }, 
   "easy_create_filter": {
@@ -798,7 +801,7 @@
     "description": "A filter list combined with EasyList"
   }, 
   "filter_elemhideemulation_nodomain": {
-    "message": "No s'ha especificat cap domini actiu per al filtre d'ocultació d'element estès"
+    "message": "No s'ha especificat cap domini actiu per al filtre estès d'ocultació d'elements"
   }, 
   "filter_invalid_csp": {
     "message": "Política de seguretat de contingut no vàlida"
@@ -825,6 +828,9 @@
     "message": "Rus i ucraïnès + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "No s'ha especificat cap domini actiu per al filtre de fragments"
+  }, 
   "filter_unknown_option": {
     "message": "Opció de filtrat desconegut"
   }, 
@@ -841,7 +847,7 @@
     "description": "A filter list"
   }, 
   "filteranticircumvent": {
-    "message": "Anti-Circumvention filters", 
+    "message": "Filtres anti-elusió", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
@@ -976,6 +982,10 @@
     "message": "Protecció contra el programari maliciós", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Noruec", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Origen del filtre:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,56 +1039,62 @@
     "message": "El propòsit d'aquesta pregunta és determinar qui ha de rebre el vostre informe. Si contesteu aquesta pregunta de forma incorrecta, l'informe s'enviarà a les persones equivocades, i potser sigueu ignorats.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Disponible per a Android i iOS"
+  "firstRun_browser_description": {
+    "message": "De l'equip que està darrere de AdBlock, el bloquejador d'anuncis per a navegadors d'escriptori més popular del món, Adblock Browser està ara disponible per a dispositius Android i iOS."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Obtén l'Adblock Browser aquí"
+  "firstRun_browser_store_android": {
+    "message": "Aplicació Android a Google Play"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Teniu un telèfon intel·ligent o tauleta?"
+  "firstRun_browser_store_ios": {
+    "message": "Disponible a l'iTunes App Store"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Ens agradaria encoratjar els llocs web a utilitzar d'ara en endavant publicitat no intrusiva. És per això que hem establert uns <a>patrons estrictes</a> per identificar els anuncis acceptables, els quals es mostren a sota de les preferències per defecte. Si encara voleu bloquejar tots els anuncis podeu <a>desactivar</a> això en pocs segons."
+  "firstRun_browser_title": {
+    "message": "Aplicació Adblock Browser"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Els anuncis molestos seran bloquejats"
+  "firstRun_control_description": {
+    "message": "Per defecte, veureu alguns anuncis no intrusius que s'adhereixen a <a0>criteris estrictes</a0>. Els identifiquem com anuncis acceptables. Preferiu bloquejar tots els anuncis? <a1>Desactiveu els anuncis acceptables</a1> a la <a2>Configuració</a2>."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "Reconeiximent als co·laboradors"
+  "firstRun_control_title": {
+    "message": "Preneu el control"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "Alguns usuaris experimenten un problema en què aquesta pàgina s'obre cada vegada que s'executa el seu navegador. Aquest problema es pot resoldre desinstal·lant i reinstal·lant AdBlock:"
+  "firstRun_fair_description": {
+    "message": "Us animem a fer un ús raonable d'AdBlock i de l'opció de llista blanca per a llocs web permesos. Segons els filtres que feu servir, haureu d'entendre i acceptar que es poden generar resultats no intencionats, com a contingut bloquejat en un lloc web. Consulteu els <a0>Termes d'ús</a0> per a conèixer més informació sobre un ús raonable d'AdBlock."
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "Si encara necessiteu ajuda, contacteu amb nosaltres a support@adblockplus.org o visiteu el nostre <a>Centre d'ajuda</a>."
+  "firstRun_fair_title": {
+    "message": "Ús raonable"
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "Obriu la pestanya Extensions del navegador."
+  "firstRun_footer_copyright": {
+    "message": "Drets d'autor © $year$ Tots els drets reservats. AdBlock® és una marca registrada de <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "Localitzeu l'AdBlock i suprimiu-lo."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "Torneu a instal·lar l'AdBlock des d'<a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "fes una donació"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Recolzeu el nostre projecte"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "Sembla que un problema ha causat que tots els filtres es suprimeixin, però hem pogut restaurar una còpia de seguretat. Durant aquest procés, també s'ha restaurat els filtres i la configuració d'anuncis acceptable. Verifiqueu que la configuració actual és la desitjada, mitjançant les <a>«Preferències del filtre»</a> de l'AdBlock."
-  }, 
-  "firstRun_share": {
-    "message": "Digueu-ho als vostres amics"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Dóneu-nos un cop de mà</a> per fer la xarxa un lloc millor"
+  "firstRun_subtitle": {
+    "message": "Acabeu de prendre el control del vostre navegador."
   }, 
   "firstRun_title": {
-    "message": "S'ha instal·lat l'AdBlock"
+    "message": "Instal·lació correcta!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
+    "message": "Alguns usuaris experimenten un problema en què aquesta pàgina s'obre cada vegada que s'executa el seu navegador. Aquest problema es pot resoldre desinstal·lant i reinstal·lant AdBlock:"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "Si encara necessiteu ajuda, contacteu amb nosaltres a <a0>support@adblockplus.org</a0> o visiteu el nostre <a1>Centre d'ajuda</a1>."
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "Obriu la pestanya Extensions del navegador."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "Localitza l'AdBlock i suprimeix-lo."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "Torna a instal·lar AdBlock des d'<a>adblockplus.org</a>."
+  }, 
+  "firstRun_warning_reinitialized": {
+    "message": "Sembla que un problema ha eliminat tots els filtres i no hem pogut restaurar una còpia de seguretat. Per tant, hem hagut de restablir els vostres filtres i la configuració d'anuncis acceptables. Comproveu les vostres llistes de filtres i la configuració d'anuncis acceptables a les <a>opcions d'AdBlock</a>."
   }, 
   "fixityourself": {
     "message": "D'acord, encara podeu bloquejar aquest anunci vosaltres mateixos a la pàgina d'opcions. Gràcies!", 
@@ -1128,10 +1144,6 @@
     "message": "Ajuda i comentaris", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "aquí", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Element ocult", 
     "description": "Resource list page: resource status"
@@ -1163,34 +1175,28 @@
     "message": "No podrem contestar-lo i segurament, no el prioritzarem."
   }, 
   "issueReporter_commentPage_heading": {
-    "message": "Escriu un comentari"
+    "message": "Deixeu un comentari"
   }, 
   "issueReporter_comment_description": {
-    "message": "El camp de text a continuació et permet introduir un comentari que ens ajudi a comprendre el problema. Aquest pas és opcional però es recomana si el problema no és obvi. També pots revisar les dades de l'informe abans d'enviar-lo."
+    "message": "Ajudeu-nos a comprendre millor el problema deixant un comentari a continuació."
   }, 
   "issueReporter_comment_label": {
     "message": "Comentari (opcional):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "La longitud del teu comentari supera els 1000 caràcters. Només s'enviaran els primers 1000 caràcters."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "El vostre informe ha estat desat. Podeu accedir-hi a la següent adreça:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "L'AdBlock està analitzant les dades. Espereu..."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Us donem la benvinguda a l'avisador d'errors"
-  }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Nota:</strong> S'obrirà una pestanya addicional de forma temporal perquè la pàgina en qüestió no es vegi afectada per l'avisador d'incidències."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Detalls"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Fet"
   }, 
   "issueReporter_email_description": {
-    "message": "Recomanem donar una adreça de correu vàlida per tal de contactar amb vós si sorgeixen algunes preguntes sobre el vostre informe. També ens permetrà reconèixer les vostres contribucions i prioritzar-les."
+    "message": "És útil introduir una adreça de correu vàlida. Això ens permet comunicar-nos amb vós per solucionar problemes difícils com ara el programari maliciós. Tingueu en compte que no és obligatori introduir una adreça de correu i mai no es compartirà la vostra adreça."
   }, 
   "issueReporter_email_label": {
     "message": "Correu:"
@@ -1199,25 +1205,46 @@
     "message": "S'ha produït un error en intentar enviar l'informe amb el codi d'error «?1?». Assegureu-vos que esteu connectat a Internet i torneu-ho a provar. Si el problema persisteix, demaneu assistència al [link]fòrum d'AdBlock[/link]."
   }, 
   "issueReporter_falseNegative_description": {
-    "message": "Seleccioneu aquesta opció si un anunci es mostra tot i que l'AdBlock està habilitat."
+    "message": "L'AdBlock està activat, però encara veig un anunci o anuncis."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "L'AdBlock no bloqueja un anunci"
+    "message": "Encara veig anuncis"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "Seleccioneu aquesta opció si a la pàgina manca contingut important, es mostra de forma incorrecta o no funciona correctament. Podeu determinar si l'AdBlock és la causa del problema desactivant-lo temporalment."
+    "message": "La pàgina es mostra de manera incorrecta, no funciona o sembla que hi manca contingut important."
   }, 
   "issueReporter_falsePositive_label": {
-    "message": "L'AdBlock està bloquejant massa"
+    "message": "La pàgina que intento veure no es veu bé"
+  }, 
+  "issueReporter_highlighter_description": {
+    "message": "Utilitzeu les eines per destacar cada anunci o ocultar la informació sensible a la captura de pantalla. Els anuncis destacats ens ajudaran a solucionar el problema amb més rapidesa."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Destaca el problema"
   }, 
   "issueReporter_knownIssueMessage": {
     "message": "El problema del que informeu probablement ja es coneix. Més informació:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Marca el problema"
   }, 
   "issueReporter_page_title": {
     "message": "Avisador d'errors"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Política de privadesa"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "s'està processant"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Amaga"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Destaca"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Seleccioneu la incidència"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Envia l'informe"
@@ -1229,13 +1256,13 @@
     "message": "Espereu mentre l'AdBlock envia el vostre informe."
   }, 
   "issueReporter_showData_label": {
-    "message": "Mostra les dades de l'informe"
+    "message": "Feu clic a aquest enllaç per revisar les dades de l'informe abans d'enviar-lo"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "Aquest assistent us guiarà a través dels passos necessaris per enviar un informe de fallida a l'AdBlock. Primer, seleccioneu el tipus d'incidència que teniu en aquesta pàgina:"
+    "message": "Seleccioneu un problema:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "Seleccioneu el tipus d'incidència"
+    "message": "Quin tipus de problema teniu?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Paisatges", 
@@ -1402,7 +1429,7 @@
     "description": "Dropdown list for language-specific filter lists"
   }, 
   "learn_more": {
-    "message": "Learn more.", 
+    "message": "Aprèn més.", 
     "description": "Link to Knowledge Base article with more information about the settings change"
   }, 
   "legend": {
@@ -1560,7 +1587,7 @@
     "description": "Resource list page: error message"
   }, 
   "note": {
-    "message": "NOTE:", 
+    "message": "NOTA:", 
     "description": "Indicates that the user should take note of the message that follows."
   }, 
   "notification_antiadblock_message": {
@@ -1643,7 +1670,7 @@
     "message": "Desa"
   }, 
   "options_customFilters_description": {
-    "message": "Escriviu els vostres propis filtres personalitzats per controlar més el contingut que l'AdBlock permet o bloqueja."
+    "message": "Creeu els vostres propis filtres per a un major control sobre què contingut bloqueja l'AdBlock. <a0>Més informació de com crear filtres</a0>"
   }, 
   "options_customFilters_edit_placeholder": {
     "message": "p. e. $filter$", 
@@ -1655,10 +1682,10 @@
     }
   }, 
   "options_customFilters_learn": {
-    "message": "Esbrina com escriure llistes de filtres"
+    "message": "Més informació de com crear filtres"
   }, 
   "options_customFilters_start": {
-    "message": "Comença a escriure la meva llista de filtres"
+    "message": "Començar a crear la meva llista de filtres"
   }, 
   "options_customFilters_tip": {
     "message": "Els filtres que creeu es mostraran aquí."
@@ -1676,7 +1703,10 @@
     "message": "Bloqueja temporalment elements molestos en una pàgina web, p. e. imatges o presentacions de diapositives animades."
   }, 
   "options_customize_header": {
-    "message": "Personalitza accions a la pàgina"
+    "message": "Personalitzacions"
+  }, 
+  "options_customize_iconStats": {
+    "message": "Mostra el número d'anuncis bloquejats a la icona"
   }, 
   "options_customize_showDevToolsPanel": {
     "message": "Mostra el quadre «AdBlock» a les eines de desenvolupador"
@@ -1688,7 +1718,7 @@
     "message": "Mostra les notificacions útils"
   }, 
   "options_customize_showNotifications_tooltip": {
-    "message": "Desactiva totes les notificacions d'AdBlock."
+    "message": "Permet notificacions d'AdBlock (les notificacions relacionades amb problemes de rendiment crítics es mostraran sempre)."
   }, 
   "options_dialog_about_copyright": {
     "message": "Drets d'autor © $currentYear$ eyeo GmbH.", 
@@ -1804,6 +1834,14 @@
   "options_filterList_website": {
     "message": "lloc web"
   }, 
+  "options_filters_search_or_add": {
+    "message": "Cerca / afegeix un filtre (p. ex. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "Quant a l'AdBlock"
   }, 
@@ -1863,6 +1901,9 @@
   }, 
   "options_protection_social_tooltip": {
     "message": "Les icones de les xarxes socials dels llocs web que visiteu permeten que les xarxes de xarxes socials construeixin un perfil segons els vostres hàbits de navegació, fins i tot quan no feu clic a ells. Ocultar aquestes icones pot protegir el vostre perfil."
+  }, 
+  "options_refresh": {
+    "message": "Refresca"
   }, 
   "options_report_bug": {
     "message": "Heu trobat un error? <a>Envieu-nos un informe d'error</a>"
@@ -1989,7 +2030,7 @@
     "message": "Sí"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Tanca aquesta notificació"
+    "message": "Tanca"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "No mostris més notificacions"
@@ -2014,6 +2055,9 @@
     "message": "Política de privadesa", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Esteu interessat en AdBlock per al mòbil?"
+  }, 
   "pwyw": {
     "message": "Pagueu el que desitgeu!", 
     "description": "Text of a payment request link"
@@ -2025,6 +2069,9 @@
   "reenableadsonebyone": {
     "message": "Fantàstic! Ara hem d'esbrinar quina extensió n'és la causant. Aneu activant les extensions una per una. L'extensió que fa retornar la publicitat és la que heu de desinstal·lar per treure-us de sobre els anuncis.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Feu clic a <strong>Refresca</strong> perquè els canvis tinguin efecte."
   }, 
   "refusetocheck": {
     "message": "No vull comprovar això", 
@@ -2129,10 +2176,10 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "Notifica un problema en aquesta pàgina"
+    "message": "Notifica un problema"
   }, 
   "settings_changed": {
-    "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
+    "message": "En preparació, l'AdBlock ara funciona de manera diferent i algunes de les configuracions poden haver canviat.", 
     "description": "Part of Options page message letting users know of settings change."
   }, 
   "show_ads_except_for": {
@@ -2187,6 +2234,9 @@
     "message": "El codi font està [[totalment disponible]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "Número d'elements bloquejats"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> en aquesta pàgina", 
     "placeholders": {
@@ -2212,6 +2262,9 @@
   "status_domain_paused": {
     "message": "AdBlock està aturat en aquest lloc.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Bloqueja anuncis a:"
   }, 
   "status_paused": {
     "message": "L'AdBlock està en pausa.", 
@@ -2306,6 +2359,10 @@
   "translators": {
     "message": "Més informació sobre com ajudar a traduir AdBlock [[[here]]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "s'està amagant", 
@@ -2488,7 +2545,7 @@
     "description": "Section header on the ad report page"
   }, 
   "urgent_safari_changes": {
-    "message": "URGENT: Apple is changing Safari extensions.", 
+    "message": "URGENT: Apple està canviant les extensions de Safari.", 
     "description": "Title for Options page message letting users know of settings change."
   }, 
   "warning_overrules_filters": {

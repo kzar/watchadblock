@@ -443,6 +443,9 @@
     "message": "Curăţă această listă", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "Faceţi clic pe un element de pe pagină pentru a-l bloca."
+  }, 
   "clickdisableaa": {
     "message": "Click this: [[Disable Acceptable Ads]]", 
     "description": "Instruction on ad report page"
@@ -553,7 +556,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Echipa noastră a solicitat unele informaţii de depanare? Faceţi clic [[aici]] pentru asta!", 
+    "message": "Has our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -565,11 +568,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "Cea mai populară extensie pentru Chrome, cu peste 40 de milioane de utilizatori! Blochează orice reclamă pe web.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "Cea mai populară extensie pentru Chrome, cu peste 40 de milioane de utilizatori! Blochează orice reclamă pe web.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -825,6 +828,9 @@
     "message": "EasyList Rusă și ucraineană", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "Nici un domeniu activ specificat pentru filtrul de tip snippet"
+  }, 
   "filter_unknown_option": {
     "message": "Opțiune filtru necunoscută"
   }, 
@@ -976,6 +982,10 @@
     "message": "Protecție malware", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Norwegian", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Filter origin:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,56 +1039,62 @@
     "message": "Scopul acestei întrebări este de a determina cine primește raportul tău.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Disponibil pentru Android și iOS"
+  "firstRun_browser_description": {
+    "message": "De la echipa din spatele AdBlock, cel mai popular ad blocker pentru browsere desktop, Adblock Browser este acum disponibil pentru dispozitivele Android si iOS."
   }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Descărcați Adblock Browser de aici"
+  "firstRun_browser_store_android": {
+    "message": "Android app de pe Google Play"
   }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Aveți un smartphone sau o tabletă?"
+  "firstRun_browser_store_ios": {
+    "message": "Disponibil pe iTunes App Store"
   }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Dorim să încurajăm site-urile web în a utiliza publicitate simplă, discretă. De aceea ne-am stabilit <a>reguli de orientare stricte</a> pentru a identifica anunțurile acceptabile, care sunt permise de către setările implicite. Dacă totuși doriți să blocați toată publicitatea, puteți <a>dezactiva</a> aceste permisiuni în câteva secunde."
+  "firstRun_browser_title": {
+    "message": "Adblock Browser"
   }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Reclamele enervante vor fi blocate acum"
+  "firstRun_control_description": {
+    "message": "În mod implicit, puteţi vedea unele reclame neagasante care aderă la <a0>criterii stricte</a0>. Vom identifica aceste anunţuri ca anunţurile acceptabile. Preferi să blochezi toate anunţurile? <a1>stopaţi anunţurile acceptabile</a1> în <a2>setările</a2> tale."
   }, 
-  "firstRun_contributor_credits": {
-    "message": "Contributori"
+  "firstRun_control_title": {
+    "message": "Aveţi pe deplin controlul"
   }, 
-  "firstRun_dataCorruptedWarning_intro": {
-    "message": "Unii utilizatori se confruntă cu problema deschiderii acestei pagine de fiecare datã când browser-ul este deschis. Această problemă poate fi rezolvatã prin dezinstalarea şi reinstalarea AdBlock:"
+  "firstRun_fair_description": {
+    "message": "Vă recomandăm să utilizati corect AdBlock şi opţiunea de a debloca unele site-uri web. În funcţie de filtrele pe care le utilizati, veţi înţelege şi accepta că rezultatele neintenţionate ar putea apărea (ex. blocate de conţinut de pe un site web). Consultaţi pentru mai multe informaţii despre utilizarea corectă a AdBlock de <a0>termeni de utilizare</a0>."
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "Dacă încă mai aveţi nevoie de ajutor, contactaţi-ne la support@adblockplus.org sau vizitaţi <a>centrul de ajutor</a>."
+  "firstRun_fair_title": {
+    "message": "Utilizare corectã"
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
-    "message": "Deschideți pagina de extensii din browser-ul dumneavoastră."
+  "firstRun_footer_copyright": {
+    "message": "Copyright © $year$ toate drepturile rezervate. AdBlock® este o marcă înregistrată a <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
-    "message": "Localizaţi AdBlock şi dezinstalaţi-l."
-  }, 
-  "firstRun_dataCorruptedWarning_step3": {
-    "message": "Reinstalaţi AdBlock de pe site-ul <a>adblockplus.org</a>."
-  }, 
-  "firstRun_donate": {
-    "message": "donaţi"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Ajutați proiectul"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "Se pare că din cauza unor probleme toate filtrele au fost eliminate şi a fost imposibil să le recuperăm. Prin urmare, am resetat filtrele şi setările pentru publicitate acceptabilă. Vă rugăm să verificaţi listele de filtre şi setările pentru publicitate acceptabilă în <a>Opţiuni pentru AdBlock</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Spuneți prietenilor dumneavoastră"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Ajutați-ne</a> în a îmbunătăți web-ul"
+  "firstRun_subtitle": {
+    "message": "Aveţi pe deplin controlul browser-ului dvs."
   }, 
   "firstRun_title": {
-    "message": "AdBlock a fost instalat"
+    "message": "Instalare reusita!"
+  }, 
+  "firstRun_warning_dataCorrupted_intro": {
+    "message": "Unii utilizatori se confruntă cu problema deschiderii acestei pagini de fiecare datã când browser-ul este deschis. Această problemă poate fi rezolvatã prin dezinstalarea şi reinstalarea AdBlock:"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "Dacă încă mai aveţi nevoie de ajutor, contactaţi-ne la <a0>support@adblockplus.org</a0> sau vizitaţi <a1>centrul de ajutor</a1>."
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "Deschideți pagina de extensii din browser-ul dumneavoastră."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "Localizaţi AdBlock şi dezinstalaţi-l."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "Reinstalaţi AdBlock de pe site-ul <a>adblockplus.org</a>."
+  }, 
+  "firstRun_warning_reinitialized": {
+    "message": "Se pare că din cauza unor probleme toate filtrele au fost eliminate şi a fost imposibil să le recuperăm. Prin urmare, am resetat filtrele şi setările pentru publicitate acceptabilă. Vă rugăm să verificaţi listele de filtre şi setările pentru publicitate acceptabilă în <a>Opţiuni pentru AdBlock</a>."
   }, 
   "fixityourself": {
     "message": "Poți bloca această reclamă pentru tine în Opțiuni. Mulțumesc!", 
@@ -1128,10 +1144,6 @@
     "message": "Help and Feedback", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "aici", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Hidden element", 
     "description": "Resource list page: resource status"
@@ -1171,20 +1183,14 @@
   "issueReporter_comment_label": {
     "message": "Comentariu (opțional):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "Comentariul are mai mult de 1000 de litere. Doar primele 1000 vor fi trimise."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "Raportarea a fost salvată și poate fi accesată la adresa următoare:"
   }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Așteptați un moment până ce AdBlock adună datele necesare."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Bine ați venit la programul de raportat probleme"
-  }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Notã:</strong> Un tab va fi temporar deschis astfel încât pagina pe care sunteţi nu va fi afectatã de Issue Reporter."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Detalii"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Efectuat"
@@ -1210,14 +1216,35 @@
   "issueReporter_falsePositive_label": {
     "message": "AdBlock blochează prea mult"
   }, 
+  "issueReporter_highlighter_description": {
+    "message": "Folositi uneltele pentru a evidentia sau ascunde date sensibile pe screenshot. Marcând reclamele ne va ajuta sa rezolvam mai repede problema."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Evidentiaza problema"
+  }, 
   "issueReporter_knownIssueMessage": {
     "message": "Problema pe care o aveți este probabil cunoscută. Detalii:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Evidentiaza problema"
   }, 
   "issueReporter_page_title": {
     "message": "Raportare problemă"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Politică de confidenţialitate"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "Procesare"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Ascunde"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Evidentiaza"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Alegeți tipul problemei"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Trimite raport"
@@ -1618,6 +1645,15 @@
   "options_advanced_description": {
     "message": "Personalizează AdBlock, adaugă sau elimină liste de filtre, crează şi întreţine propriile liste de filtre"
   }, 
+  "options_anti_cv_header": {
+    "message": "Anti-Truc"
+  }, 
+  "options_anti_cv_title": {
+    "message": "ABP Lista Anti-Trucuri "
+  }, 
+  "options_anti_cv_tooltip": {
+    "message": "Această listă de filtre împotriva trucurilor (adică tehnici pentru a forţa anunţuri pentru utilizatorii de adblockers). Aceste filtre rezolvă astfel de reclame precum si tracking-ul aferent"
+  }, 
   "options_close": {
     "message": "închide"
   }, 
@@ -1667,7 +1703,10 @@
     "message": "Blochează temporar elementele enervante pe o pagină de web, de exemplu imagini sau slideshow-uri animate."
   }, 
   "options_customize_header": {
-    "message": "Personalizează acţiunile pe pagină"
+    "message": "Personalizari"
+  }, 
+  "options_customize_iconStats": {
+    "message": "Arată numărul de anunţuri blocate în icon"
   }, 
   "options_customize_showDevToolsPanel": {
     "message": "Arată panoul \"AdBlock\" în developer tools"
@@ -1679,7 +1718,7 @@
     "message": "Arată notificări utile"
   }, 
   "options_customize_showNotifications_tooltip": {
-    "message": "Dezactivează toate notificările din AdBlock."
+    "message": "Permiteţi notificări în AdBlock (notificări legate de probleme critice de performanţă vor fi afişate totdeauna)."
   }, 
   "options_dialog_about_copyright": {
     "message": "Copyright © $currentYear$ eyeo GmbH.", 
@@ -1795,6 +1834,14 @@
   "options_filterList_website": {
     "message": "website"
   }, 
+  "options_filters_search_or_add": {
+    "message": "Căutare / Adauga filtru (ex. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "Despre AdBlock"
   }, 
@@ -1854,6 +1901,9 @@
   }, 
   "options_protection_social_tooltip": {
     "message": "Butoanele de social media (sau icoane) pe site-urile pe care le vizitaţi permit reţelelor sociale să vă construiască un profil bazat pe obiceiurile de navigare - chiar şi atunci când nu faceţi clic pe ele. Ascunde aceste butoane pentru a vă proteja profilul."
+  }, 
+  "options_refresh": {
+    "message": "Actualizează"
   }, 
   "options_report_bug": {
     "message": "Ai descoperit o eroare? <a>Trimite-ne un raport</a>"
@@ -1980,7 +2030,7 @@
     "message": "Da"
   }, 
   "overlay_notification_closing_button_hide": {
-    "message": "Închideţi această notificare"
+    "message": "Închide"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "Opreşte afişarea notificărilor"
@@ -2005,6 +2055,9 @@
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Interesat în AdBlock pe mobil?"
+  }, 
   "pwyw": {
     "message": "Plătiţi ceea ce doriţi!", 
     "description": "Text of a payment request link"
@@ -2016,6 +2069,9 @@
   "reenableadsonebyone": {
     "message": "Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Faceţi clic pe <strong>Refresh</strong> pentru ca modificările să aibă efect."
   }, 
   "refusetocheck": {
     "message": "Nu doresc să încerc asta", 
@@ -2120,7 +2176,7 @@
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "sendReport": {
-    "message": "Raportează probleme pe această pagină"
+    "message": "Raportează o problemă"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2178,6 +2234,9 @@
     "message": "Codul sursă este [[disponibil gratuit]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "Numărul de elemente blocat"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> pe această pagină", 
     "placeholders": {
@@ -2203,6 +2262,9 @@
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Blocarea anunţurilor este activã:"
   }, 
   "status_paused": {
     "message": "AdBlock este pauzat.", 
@@ -2297,6 +2359,10 @@
   "translators": {
     "message": "Learn more about how to help translate AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "ascuns", 

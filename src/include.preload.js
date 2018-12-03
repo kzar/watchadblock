@@ -102,13 +102,28 @@ exports.textToRegExp = textToRegExp;
 /**
  * Converts filter text into regular expression string
  * @param {string} text as in Filter()
+ * @param {boolean} [captureAll=false] whether to enable the capturing of
+ *   leading and trailing wildcards in the filter text; by default, leading and
+ *   trailing wildcards are stripped out
  * @return {string} regular expression representation of filter text
  */
-function filterToRegExp(text)
+function filterToRegExp(text, captureAll = false)
 {
+  // remove multiple wildcards
+  text = text.replace(/\*+/g, "*");
+
+  if (!captureAll)
+  {
+    // remove leading wildcard
+    if (text[0] == "*")
+      text = text.substring(1);
+
+    // remove trailing wildcard
+    if (text[text.length - 1] == "*")
+      text = text.substring(0, text.length - 1);
+  }
+
   return text
-    // remove multiple wildcards
-    .replace(/\*+/g, "*")
     // remove anchors following separator placeholder
     .replace(/\^\|$/, "^")
     // escape special symbols
@@ -123,11 +138,7 @@ function filterToRegExp(text)
     // process anchor at expression start
     .replace(/^\\\|/, "^")
     // process anchor at expression end
-    .replace(/\\\|$/, "$")
-    // remove leading wildcards
-    .replace(/^(\.\*)/, "")
-    // remove trailing wildcards
-    .replace(/(\.\*)$/, "");
+    .replace(/\\\|$/, "$");
 }
 
 exports.filterToRegExp = filterToRegExp;
@@ -648,8 +659,17 @@ function injected(eventName, injectedIntoContentWindow)
 
 if (document instanceof HTMLDocument)
 {
-  let sandbox = window.frameElement &&
-                window.frameElement.getAttribute("sandbox");
+  let sandbox;
+
+  // We have to wrap the following code in a try catch
+  // because of this Microsoft Edge bug:
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/19082980/
+  try
+  {
+    sandbox = window.frameElement &&
+              window.frameElement.getAttribute("sandbox");
+  }
+  catch (e) {}
 
   if (typeof sandbox != "string" || /(^|\s)allow-scripts(\s|$)/i.test(sandbox))
   {
@@ -1540,15 +1560,16 @@ function* evaluate(chain, index, prefix, subtree, styles, targets)
   yield null;
 }
 
-function PlainSelector(selector)
+class PlainSelector
 {
-  this._selector = selector;
-  this.maybeDependsOnAttributes = /[#.]|\[.+\]/.test(selector);
-  this.dependsOnDOM = this.maybeDependsOnAttributes;
-  this.maybeContainsSiblingCombinators = /[~+]/.test(selector);
-}
+  constructor(selector)
+  {
+    this._selector = selector;
+    this.maybeDependsOnAttributes = /[#.]|\[.+\]/.test(selector);
+    this.dependsOnDOM = this.maybeDependsOnAttributes;
+    this.maybeContainsSiblingCombinators = /[~+]/.test(selector);
+  }
 
-PlainSelector.prototype = {
   /**
    * Generator function returning a pair of selector
    * string and subtree.
@@ -1561,42 +1582,43 @@ PlainSelector.prototype = {
   {
     yield [prefix + this._selector, subtree];
   }
-};
+}
 
 const incompletePrefixRegexp = /[\s>+~]$/;
 
-function HasSelector(selectors)
+class HasSelector
 {
-  this._innerSelectors = selectors;
-}
+  constructor(selectors)
+  {
+    this.dependsOnDOM = true;
 
-HasSelector.prototype = {
-  dependsOnDOM: true,
+    this._innerSelectors = selectors;
+  }
 
   get dependsOnStyles()
   {
     return this._innerSelectors.some(selector => selector.dependsOnStyles);
-  },
+  }
 
   get dependsOnCharacterData()
   {
     return this._innerSelectors.some(
       selector => selector.dependsOnCharacterData
     );
-  },
+  }
 
   get maybeDependsOnAttributes()
   {
     return this._innerSelectors.some(
       selector => selector.maybeDependsOnAttributes
     );
-  },
+  }
 
   *getSelectors(prefix, subtree, styles, targets)
   {
     for (let element of this.getElements(prefix, subtree, styles, targets))
       yield [makeSelector(element), element];
-  },
+  }
 
   /**
    * Generator function returning selected elements.
@@ -1639,22 +1661,23 @@ HasSelector.prototype = {
       }
     }
   }
-};
-
-function ContainsSelector(textContent)
-{
-  this._regexp = makeRegExpParameter(textContent);
 }
 
-ContainsSelector.prototype = {
-  dependsOnDOM: true,
-  dependsOnCharacterData: true,
+class ContainsSelector
+{
+  constructor(textContent)
+  {
+    this.dependsOnDOM = true;
+    this.dependsOnCharacterData = true;
+
+    this._regexp = makeRegExpParameter(textContent);
+  }
 
   *getSelectors(prefix, subtree, styles, targets)
   {
     for (let element of this.getElements(prefix, subtree, styles, targets))
       yield [makeSelector(element), subtree];
-  },
+  }
 
   *getElements(prefix, subtree, styles, targets)
   {
@@ -1696,26 +1719,27 @@ ContainsSelector.prototype = {
       }
     }
   }
-};
-
-function PropsSelector(propertyExpression)
-{
-  let regexpString;
-  if (propertyExpression.length >= 2 && propertyExpression[0] == "/" &&
-      propertyExpression[propertyExpression.length - 1] == "/")
-  {
-    regexpString = propertyExpression.slice(1, -1)
-      .replace("\\7B ", "{").replace("\\7D ", "}");
-  }
-  else
-    regexpString = filterToRegExp(propertyExpression);
-
-  this._regexp = new RegExp(regexpString, "i");
 }
 
-PropsSelector.prototype = {
-  dependsOnStyles: true,
-  dependsOnDOM: true,
+class PropsSelector
+{
+  constructor(propertyExpression)
+  {
+    this.dependsOnStyles = true;
+    this.dependsOnDOM = true;
+
+    let regexpString;
+    if (propertyExpression.length >= 2 && propertyExpression[0] == "/" &&
+        propertyExpression[propertyExpression.length - 1] == "/")
+    {
+      regexpString = propertyExpression.slice(1, -1)
+        .replace("\\7B ", "{").replace("\\7D ", "}");
+    }
+    else
+      regexpString = filterToRegExp(propertyExpression);
+
+    this._regexp = new RegExp(regexpString, "i");
+  }
 
   *findPropsSelectors(styles, prefix, regexp)
   {
@@ -1733,29 +1757,30 @@ PropsSelector.prototype = {
             subSelector = subSelector.substr(0, idx);
           yield qualifySelector(subSelector, prefix);
         }
-  },
+  }
 
   *getSelectors(prefix, subtree, styles, targets)
   {
     for (let selector of this.findPropsSelectors(styles, prefix, this._regexp))
       yield [selector, subtree];
   }
-};
-
-function Pattern(selectors, text)
-{
-  this.selectors = selectors;
-  this.text = text;
 }
 
-Pattern.prototype = {
+class Pattern
+{
+  constructor(selectors, text)
+  {
+    this.selectors = selectors;
+    this.text = text;
+  }
+
   get dependsOnStyles()
   {
     return getCachedPropertyValue(
       this, "_dependsOnStyles",
       () => this.selectors.some(selector => selector.dependsOnStyles)
     );
-  },
+  }
 
   get dependsOnDOM()
   {
@@ -1763,7 +1788,7 @@ Pattern.prototype = {
       this, "_dependsOnDOM",
       () => this.selectors.some(selector => selector.dependsOnDOM)
     );
-  },
+  }
 
   get dependsOnStylesAndDOM()
   {
@@ -1772,7 +1797,7 @@ Pattern.prototype = {
       () => this.selectors.some(selector => selector.dependsOnStyles &&
                                             selector.dependsOnDOM)
     );
-  },
+  }
 
   get maybeDependsOnAttributes()
   {
@@ -1789,7 +1814,7 @@ Pattern.prototype = {
                            selector.dependsOnStyles)
             )
     );
-  },
+  }
 
   get dependsOnCharacterData()
   {
@@ -1799,7 +1824,7 @@ Pattern.prototype = {
       this, "_dependsOnCharacterData",
       () => this.selectors.some(selector => selector.dependsOnCharacterData)
     );
-  },
+  }
 
   get maybeContainsSiblingCombinators()
   {
@@ -1808,7 +1833,7 @@ Pattern.prototype = {
       () => this.selectors.some(selector =>
                                 selector.maybeContainsSiblingCombinators)
     );
-  },
+  }
 
   matchesMutationTypes(mutationTypes)
   {
@@ -1831,7 +1856,7 @@ Pattern.prototype = {
 
     return false;
   }
-};
+}
 
 function extractMutationTypes(mutations)
 {
@@ -1899,16 +1924,20 @@ function shouldObserveCharacterData(patterns)
   return patterns.some(pattern => pattern.dependsOnCharacterData);
 }
 
-function ElemHideEmulation(addSelectorsFunc, hideElemsFunc)
+class ElemHideEmulation
 {
-  this.document = document;
-  this.addSelectorsFunc = addSelectorsFunc;
-  this.hideElemsFunc = hideElemsFunc;
-  this.observer = new MutationObserver(this.observe.bind(this));
-  this.useInlineStyles = true;
-}
+  constructor(addSelectorsFunc, hideElemsFunc)
+  {
+    this._filteringInProgress = false;
+    this._lastInvocation = -MIN_INVOCATION_INTERVAL;
+    this._scheduledProcessing = null;
 
-ElemHideEmulation.prototype = {
+    this.document = document;
+    this.addSelectorsFunc = addSelectorsFunc;
+    this.hideElemsFunc = hideElemsFunc;
+    this.observer = new MutationObserver(this.observe.bind(this));
+  }
+
   isSameOrigin(stylesheet)
   {
     try
@@ -1920,7 +1949,7 @@ ElemHideEmulation.prototype = {
       // Invalid URL, assume that it is first-party.
       return true;
     }
-  },
+  }
 
   /** Parse the selector
    * @param {string} selector the selector to parse
@@ -1983,7 +2012,7 @@ ElemHideEmulation.prototype = {
       return null;
     }
     return selectors;
-  },
+  }
 
   /**
    * Processes the current document and applies all rules to it.
@@ -2024,8 +2053,8 @@ ElemHideEmulation.prototype = {
     // style sheets and the DOM (e.g. -abp-has(-abp-properties)), find all the
     // rules in every style sheet in the document, because we need to run
     // querySelectorAll afterwards. On the other hand, if we only have patterns
-    // that depend on either styles or DOM both not both
-    // (e.g. -abp-properties or -abp-contains), we can skip this part.
+    // that depend on either styles or DOM both not both (e.g. -abp-contains),
+    // we can skip this part.
     if (mutations && patterns.some(pattern => pattern.dependsOnStylesAndDOM))
       stylesheets = this.document.styleSheets;
 
@@ -2095,11 +2124,6 @@ ElemHideEmulation.prototype = {
         if (pattern.maybeContainsSiblingCombinators)
           evaluationTargets = null;
 
-        // Ignore mutation targets when using style sheets, because we may have
-        // to update all the CSS selectors.
-        if (!this.useInlineStyles)
-          evaluationTargets = null;
-
         generator = evaluate(pattern.selectors, 0, "",
                              this.document, cssStyles, evaluationTargets);
       }
@@ -2107,18 +2131,10 @@ ElemHideEmulation.prototype = {
       {
         if (selector != null)
         {
-          if (!this.useInlineStyles)
+          for (let element of this.document.querySelectorAll(selector))
           {
-            selectors.push(selector);
-            selectorFilters.push(pattern.text);
-          }
-          else
-          {
-            for (let element of this.document.querySelectorAll(selector))
-            {
-              elements.push(element);
-              elementFilters.push(pattern.text);
-            }
+            elements.push(element);
+            elementFilters.push(pattern.text);
           }
         }
         if (performance.now() - cycleStart > MAX_SYNCHRONOUS_PROCESSING_TIME)
@@ -2132,23 +2148,19 @@ ElemHideEmulation.prototype = {
     };
 
     processPatterns();
-  },
+  }
 
   // This property is only used in the tests
   // to shorten the invocation interval
   get MIN_INVOCATION_INTERVAL()
   {
     return MIN_INVOCATION_INTERVAL;
-  },
+  }
 
   set MIN_INVOCATION_INTERVAL(interval)
   {
     MIN_INVOCATION_INTERVAL = interval;
-  },
-
-  _filteringInProgress: false,
-  _lastInvocation: -MIN_INVOCATION_INTERVAL,
-  _scheduledProcessing: null,
+  }
 
   /**
    * Re-run filtering either immediately or queued.
@@ -2230,14 +2242,14 @@ ElemHideEmulation.prototype = {
       this._filteringInProgress = true;
       this._addSelectors(stylesheets, mutations, completion);
     }
-  },
+  }
 
   onLoad(event)
   {
     let stylesheet = event.target.sheet;
     if (stylesheet)
       this.queueFiltering([stylesheet]);
-  },
+  }
 
   observe(mutations)
   {
@@ -2257,7 +2269,7 @@ ElemHideEmulation.prototype = {
     }
 
     this.queueFiltering(null, mutations);
-  },
+  }
 
   apply(patterns)
   {
@@ -2284,7 +2296,7 @@ ElemHideEmulation.prototype = {
       this.document.addEventListener("load", this.onLoad.bind(this), true);
     }
   }
-};
+}
 
 exports.ElemHideEmulation = ElemHideEmulation;
 

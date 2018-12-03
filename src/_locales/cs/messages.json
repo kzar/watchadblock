@@ -396,7 +396,7 @@
     "description": "The label text for the cat switch on the MyAdBlock Options page"
   }, 
   "changes_to_adblock": {
-    "message": "We've made changes to AdBlock!", 
+    "message": "V AdBlocku jsme provedli změny!", 
     "description": "Link to Options page with more information about the changes."
   }, 
   "checkinfirefox_1": {
@@ -547,7 +547,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "Požádal náš tým o nějaké ladící informace? Klikněte [[zde]]!", 
+    "message": "Has our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -559,11 +559,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "Nejpopulárnější rozšíření pro Chrome s více než 40 miliony uživateli! Blokujeme reklamy na celém webu.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "Nejpopulárnější rozšíření pro Chrome s více než 40 miliony uživateli! Blokujeme reklamy na celém webu.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -970,6 +970,10 @@
     "message": "Ochrana proti Malware-u", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Norština", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Původ filtrování:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1023,56 +1027,23 @@
     "message": "Smyslem této otázky je určit, kdo by měl dostat vaše hlášení. Pokud odpovíte na tuto otázku chybně, může být zpráva zaslána nesprávným lidem a pak může být ignorována.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Dostupný pro Android a iOS"
-  }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Získejte Adblock Browser zde"
-  }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Máte smartphone nebo tablet?"
-  }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Rádi bychom podpořili webové stránky v používání jasné neobtěžující reklamy. Proto jsme zavedli <a>přísná pravidla</a> k určení přijatelných reklam, které se pak ve výchozím nastavení zobrazují . Pokud přesto chcete blokovat veškerou reklamu, můžete toto během chvilky <a>zakázat</a>."
-  }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "Otravné reklamy budou nyní blokovány"
-  }, 
-  "firstRun_contributor_credits": {
-    "message": "Zásluhy přispěvatelů"
-  }, 
-  "firstRun_dataCorruptedWarning_intro": {
+  "firstRun_warning_dataCorrupted_intro": {
     "message": "Někteří uživatelé se setkávají s problémem, kdy se při každém spuštění prohlížeče otevře tato stránka. Tento problém lze vyřešit odinstalací a opakovanou instalací aplikace AdBlock:"
   }, 
-  "firstRun_dataCorruptedWarning_note": {
-    "message": "Pokud i nadále potřebujete pomoc, kontaktujte nás na adrese support@adblockplus.org nebo navštivte naše <a>Help Center</a>."
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "Pokud i nadále potřebujete pomoc, kontaktujte nás na adrese <a0>support@adblockplus.org</a0> nebo navštivte naše <a1>Help Center</a1>."
   }, 
-  "firstRun_dataCorruptedWarning_step1": {
+  "firstRun_warning_dataCorrupted_step1": {
     "message": "Otevřete kartu Rozšíření prohlížeče."
   }, 
-  "firstRun_dataCorruptedWarning_step2": {
+  "firstRun_warning_dataCorrupted_step2": {
     "message": "Vyhledejte položku AdBlock a odstraňte ji."
   }, 
-  "firstRun_dataCorruptedWarning_step3": {
+  "firstRun_warning_dataCorrupted_step3": {
     "message": "Znovu nainstalujte AdBlock z <a>adblockplus.org</a>."
   }, 
-  "firstRun_donate": {
-    "message": "přispějte"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Podpořte náš projekt"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
+  "firstRun_warning_reinitialized": {
     "message": "Zdá se, že nastal problém, který způsobil smazání všech filtrů a nebyli jsme schopni je obnovit ze zálohy. Museli jsme tudíž Vaše filtry a nastavení Přijatelných reklam resetovat. Prosím zkontrolujte si své nastavení seznamů filtrů a Přijatelných reklam v <a>předvolbách Adblocku Plus</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Řekněte svým přátelům"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Pomozte nám</a> učinit web lepším"
-  }, 
-  "firstRun_title": {
-    "message": "AdBlock byl nainstalován"
   }, 
   "fixityourself": {
     "message": "OK, můžete si zablokovat tuto reklamu pouze pro sebe v Nastavení na záložce Vlastní filtr. Díky!", 
@@ -1122,10 +1093,6 @@
     "message": "Pomoc a zpětná vazba", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "zde", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Skrytý prvek", 
     "description": "Resource list page: resource status"
@@ -1165,17 +1132,8 @@
   "issueReporter_comment_label": {
     "message": "Komentář (nepovinný)"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "Váš komentář přesahuje 1000 znaků. Pouze prvních 1000 znaků bude odesláno."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "Vaše hlášení bylo odesláno. Můžete si prohlédnou hlášení na následující adrese:"
-  }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Počkejte prosím zatímco AdBlock sbírá potřebná data."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Vítejte v nástroji na oznamování problémů"
   }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Poznámka:</strong> Dočasně se otevře další karta, takže stránka, na které se právě nacházíte, nebude funkcí hlášení problémů (Issue Reporter) nijak ovlivněna."
@@ -1396,7 +1354,7 @@
     "description": "Dropdown list for language-specific filter lists"
   }, 
   "learn_more": {
-    "message": "Learn more.", 
+    "message": "Zjistěte více.", 
     "description": "Link to Knowledge Base article with more information about the settings change"
   }, 
   "legend": {
@@ -1554,7 +1512,7 @@
     "description": "Resource list page: error message"
   }, 
   "note": {
-    "message": "NOTE:", 
+    "message": "POZNÁMKA:", 
     "description": "Indicates that the user should take note of the message that follows."
   }, 
   "notification_antiadblock_message": {
@@ -1654,9 +1612,6 @@
   "options_customize_blockElement_tooltip": {
     "message": "Dočasně zablokujte nepříjemné položky na webové stránce, například obrázky nebo animované prezentace."
   }, 
-  "options_customize_header": {
-    "message": "PŘIZPŮSOBENÍ ÚKONŮ NA WEBOVÝCH STRÁNKÁCH"
-  }, 
   "options_customize_showDevToolsPanel": {
     "message": "V nástrojích pro vývojáře zobrazte panel AdBlock"
   }, 
@@ -1665,9 +1620,6 @@
   }, 
   "options_customize_showNotifications": {
     "message": "Zobrazovat užitečná upozornění"
-  }, 
-  "options_customize_showNotifications_tooltip": {
-    "message": "Vypněte veškerá upozornění z aplikace AdBlock."
   }, 
   "options_dialog_about_copyright": {
     "message": "Copyright © $currentYear$ eyeo GmbH.", 
@@ -1936,9 +1888,6 @@
   "overlay_notification_button_yes": {
     "message": "Ano"
   }, 
-  "overlay_notification_closing_button_hide": {
-    "message": "Uzavřít toto oznámení"
-  }, 
   "overlay_notification_closing_button_optout": {
     "message": "Přestaň ukazovat oznámení"
   }, 
@@ -2075,9 +2024,6 @@
   "selectlanguage": {
     "message": " -- Zvolte jazyk -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
-  }, 
-  "sendReport": {
-    "message": "Nahlásit problém na této stránce"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2254,6 +2200,10 @@
   "translators": {
     "message": "Zjistěte více o tom, jak pomoci přeložit AdBlock [[here]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "skrytý", 
@@ -2436,7 +2386,7 @@
     "description": "Section header on the ad report page"
   }, 
   "urgent_safari_changes": {
-    "message": "URGENT: Apple is changing Safari extensions.", 
+    "message": "AKUTNÍ: Apple mění rozšíření pro Safari.", 
     "description": "Title for Options page message letting users know of settings change."
   }, 
   "warning_overrules_filters": {

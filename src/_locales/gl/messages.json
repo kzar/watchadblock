@@ -553,7 +553,7 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginfo": {
-    "message": "O noso equipo solicitouche algunha información de depuración. Preme [[aquí]] para enviala!", 
+    "message": "Has our team requested some debug info? Click [[here]] for that!", 
     "description": "Users can click this link to provide debug information to AdBlock staff"
   }, 
   "debuginlogoption": {
@@ -565,11 +565,11 @@
     "description": "Button to delete error messages when adding custom filters manually"
   }, 
   "description": {
-    "message": "A extensión máis popular de Chrome con máis de 40 millóns de usuarios. Bloquea anuncios por toda a rede.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description2": {
-    "message": "A extensión máis popular de Chrome con máis de 40 millóns de usuarios. Bloquea anuncios por toda a rede.", 
+    "message": "The most popular Chrome extension, with over 60 million users! Blocks ads all over the web.", 
     "description": "Extension description in manifest. Should not exceed 132 characters."
   }, 
   "description_edge": {
@@ -976,6 +976,10 @@
     "message": "Protección contra software malicioso", 
     "description": "A filter list"
   }, 
+  "filternorwegian": {
+    "message": "Noruego", 
+    "description": "A filter lsit"
+  }, 
   "filterorigin": {
     "message": "Orixe do filtro:\n$list$", 
     "description": "Resource list page: tooltip of matching filter, telling which filter list contains the filter", 
@@ -1029,42 +1033,6 @@
     "message": "O propósito desta pregunta é determinar quen debe recibir o teu informe. Se contestas de forma incorrecta, o informe enviarase ás persoas equivocadas e podería ser ignorado.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
-  "firstRun_abbButtonSubtitle": {
-    "message": "Dispoñible para Android e iOS"
-  }, 
-  "firstRun_abbButtonTitle": {
-    "message": "Obtén aquí Adblock Browser"
-  }, 
-  "firstRun_abbPromotionHeadline": {
-    "message": "Tes unha tablet ou teléfono intelixente?"
-  }, 
-  "firstRun_acceptableAdsExplanation": {
-    "message": "Queremos animar ás páxinas web para que empreguen a publicidade dun xeito mais directo e non invasivo. É polo que fixemos unhas <a>regras moi estritas</a> co fin de identificar a publicidade aceptable, que se mostra coas opcións predefinidas. Se aínda queres bloquear toda a publicidade, podes <a>desactivar</a> isto nuns segundos."
-  }, 
-  "firstRun_acceptableAdsHeadline": {
-    "message": "A partir de agora bloquearanse os anuncios molestos"
-  }, 
-  "firstRun_contributor_credits": {
-    "message": "Coa colaboración de..."
-  }, 
-  "firstRun_donate": {
-    "message": "fai unha doazón"
-  }, 
-  "firstRun_donate_label": {
-    "message": "Apoia o noso proxecto"
-  }, 
-  "firstRun_filterlistsReinitializedWarning": {
-    "message": "Semella que un problema provocaba que todos os filtros fosen eliminados e imposibles de restaurar. Por tanto, tivemos que restablecer os teus filtros e a configuración dos Anuncios aceptables. Por favor, bótalle un ollo á tua listaxe de filtros e aos axustes de Anuncios aceptables nas <a>opcións de AdBlock</a>."
-  }, 
-  "firstRun_share": {
-    "message": "Díllelo ás túas amizades"
-  }, 
-  "firstRun_share_headline": {
-    "message": "<a>Bótanos unha man</a> para facer da rede un sitio mellor"
-  }, 
-  "firstRun_title": {
-    "message": "AdBlock foi instalado"
-  }, 
   "fixityourself": {
     "message": "De acordo. Podes seguir bloqueando este anuncio ti mesmo/a na páxina de opcións. Grazas!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1113,10 +1081,6 @@
     "message": "Axuda e suxestións", 
     "description": "Text of a help link in the toolbar button menu"
   }, 
-  "here": {
-    "message": "aquí", 
-    "description": "This message is injected in other strings as a link/button"
-  }, 
   "hiddenelement": {
     "message": "Elemento oculto", 
     "description": "Resource list page: resource status"
@@ -1156,17 +1120,8 @@
   "issueReporter_comment_label": {
     "message": "Comentario (opcional):"
   }, 
-  "issueReporter_comment_lengthWarning": {
-    "message": "O teu comentario ten mais de 1000 caracteres, e só os primeiros 1000 serán enviados."
-  }, 
   "issueReporter_confirmationMessage": {
     "message": "O teu informe foi gardado. Podes acceder a él no seguinte enderezo:"
-  }, 
-  "issueReporter_dataCollector_description": {
-    "message": "Agarda un intre mentres AdBlock reúne os datos necesarios."
-  }, 
-  "issueReporter_dataCollector_heading": {
-    "message": "Benvido ao Xerador de Informes de Problemas"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Feito"
@@ -1654,9 +1609,6 @@
   "overlay_notification_button_yes": {
     "message": "Si"
   }, 
-  "overlay_notification_closing_button_hide": {
-    "message": "Pechar esta notificación"
-  }, 
   "overlay_notification_closing_button_optout": {
     "message": "Deixar de mostrar notificacións"
   }, 
@@ -1793,9 +1745,6 @@
   "selectlanguage": {
     "message": " -- Selecciona o idioma -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
-  }, 
-  "sendReport": {
-    "message": "Informar dun problema nesta páxina"
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -1972,6 +1921,10 @@
   "translators": {
     "message": "Máis información sobre como axudar a traducir AdBlock [[aquí]]", 
     "description": "A link on the Options page / translators tab to a KB article about how to help translate AdBlock"
+  }, 
+  "troubleshoot_an_ad": {
+    "message": "Troubleshoot an ad", 
+    "description": "Entry in the AdBlock button menu"
   }, 
   "typehiding": {
     "message": "agochando", 
