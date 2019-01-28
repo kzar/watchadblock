@@ -1372,6 +1372,67 @@ exports.filterNotifier = filterNotifier;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+
+let platformVersion = null;
+let application = null;
+let applicationVersion;
+
+let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
+let match;
+
+while (match = regexp.exec(navigator.userAgent))
+{
+  let app = match[1];
+  let ver = match[2];
+
+  if (app == "Chrome")
+  {
+    platformVersion = ver;
+  }
+  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
+  {
+    // For compatibility with legacy websites, Chrome's UA
+    // also includes a Mozilla, AppleWebKit and Safari token.
+    // Any further name/version pair indicates a fork.
+    application = app == "OPR" ? "opera" : app.toLowerCase();
+    applicationVersion = ver;
+  }
+}
+
+// not a Chromium-based UA, probably modifed by the user
+if (!platformVersion)
+{
+  application = "unknown";
+  applicationVersion = platformVersion = "0";
+}
+
+// no additional name/version, so this is upstream Chrome
+if (!application)
+{
+  application = "chrome";
+  applicationVersion = platformVersion;
+}
+
+
+exports.addonName = "adblockforchrome";
+exports.addonVersion = "3.38.0";
+
+exports.application = application;
+exports.applicationVersion = applicationVersion;
+
+exports.platform = "chromium";
+exports.platformVersion = platformVersion;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1669,7 +1730,7 @@ function savePref(pref)
 }
 
 let customSave = new Map();
-if (__webpack_require__(3).platform == "gecko")
+if (__webpack_require__(2).platform == "gecko")
 {
   // Saving one storage value causes all others to be saved as well on Gecko.
   // Make sure that updating ad counter doesn't cause the filters data to be
@@ -1766,67 +1827,6 @@ function init()
 
 init();
 
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-
-
-let platformVersion = null;
-let application = null;
-let applicationVersion;
-
-let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
-let match;
-
-while (match = regexp.exec(navigator.userAgent))
-{
-  let app = match[1];
-  let ver = match[2];
-
-  if (app == "Chrome")
-  {
-    platformVersion = ver;
-  }
-  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
-  {
-    // For compatibility with legacy websites, Chrome's UA
-    // also includes a Mozilla, AppleWebKit and Safari token.
-    // Any further name/version pair indicates a fork.
-    application = app == "OPR" ? "opera" : app.toLowerCase();
-    applicationVersion = ver;
-  }
-}
-
-// not a Chromium-based UA, probably modifed by the user
-if (!platformVersion)
-{
-  application = "unknown";
-  applicationVersion = platformVersion = "0";
-}
-
-// no additional name/version, so this is upstream Chrome
-if (!application)
-{
-  application = "chrome";
-  applicationVersion = platformVersion;
-}
-
-
-exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.36.0";
-
-exports.application = application;
-exports.applicationVersion = applicationVersion;
-
-exports.platform = "chromium";
-exports.platformVersion = platformVersion;
 
 /***/ }),
 /* 4 */
@@ -2442,7 +2442,7 @@ DownloadableSubscription.prototype = extend(RegularSubscription, {
  */
 
 const {IO} = __webpack_require__(34);
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Filter, ActiveFilter} = __webpack_require__(0);
 const {Subscription, SpecialSubscription,
        ExternalSubscription} = __webpack_require__(4);
@@ -4351,7 +4351,7 @@ let Utils = exports.Utils = {
 
   getDocLink(linkID)
   {
-    let docLink = __webpack_require__(2).Prefs.documentation_link;
+    let docLink = __webpack_require__(3).Prefs.documentation_link;
     return docLink.replace(/%LINK%/g, linkID)
                   .replace(/%LANG%/g, Utils.appLocale);
   },
@@ -4541,7 +4541,7 @@ const {Downloader, Downloadable,
 const {Filter} = __webpack_require__(0);
 const {FilterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Subscription,
        DownloadableSubscription} = __webpack_require__(4);
 
@@ -4803,7 +4803,7 @@ class Synchronizer
         subscription.errors = 0;
 
         let fallbackURL = Prefs.subscriptions_fallbackurl;
-        const {addonVersion} = __webpack_require__(3);
+        const {addonVersion} = __webpack_require__(2);
         fallbackURL = fallbackURL.replace(/%VERSION%/g,
                                           encodeURIComponent(addonVersion));
         fallbackURL = fallbackURL.replace(/%SUBSCRIPTION%/g,
@@ -4889,7 +4889,7 @@ exports.Synchronizer = synchronizer;
  * @fileOverview Handles notifications.
  */
 
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Downloader, Downloadable,
        MILLIS_IN_MINUTE, MILLIS_IN_HOUR,
        MILLIS_IN_DAY} = __webpack_require__(24);
@@ -5113,7 +5113,7 @@ let Notification = exports.Notification =
       return null;
 
     const {addonName, addonVersion, application,
-           applicationVersion, platform, platformVersion} = __webpack_require__(3);
+           applicationVersion, platform, platformVersion} = __webpack_require__(2);
 
     let targetChecks = {
       extension: v => v == addonName,
@@ -6344,7 +6344,7 @@ exports.ElemHideEmulation = ElemHideEmulation;
 
 
 
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {BlockingFilter} = __webpack_require__(0);
 const {filterNotifier} = __webpack_require__(1);
 const {port} = __webpack_require__(7);
@@ -6914,7 +6914,7 @@ class Downloader
   getDownloadUrl(downloadable)
   {
     const {addonName, addonVersion, application, applicationVersion,
-           platform, platformVersion} = __webpack_require__(3);
+           platform, platformVersion} = __webpack_require__(2);
     let url = downloadable.redirectURL || downloadable.url;
     if (url.includes("?"))
       url += "&";
@@ -7164,7 +7164,7 @@ const {Filter, RegExpFilter, BlockingFilter} =
 const {Subscription} = __webpack_require__(4);
 const {defaultMatcher} = __webpack_require__(9);
 const {filterNotifier} = __webpack_require__(1);
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {checkWhitelisted, getKey} = __webpack_require__(8);
 const {extractHostFromFrame, isThirdParty} = __webpack_require__(6);
 const {port} = __webpack_require__(7);
@@ -7510,8 +7510,9 @@ const {Notification: NotificationStorage} =
   __webpack_require__(15);
 const {initAntiAdblockNotification} =
   __webpack_require__(47);
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {showOptions} = __webpack_require__(48);
+const info = __webpack_require__(2);
 
 let activeNotification = null;
 let activeButtons = null;
@@ -7678,7 +7679,10 @@ function showNotification(notification)
     let iconUrl = browser.extension.getURL("icons/detailed/abp-128.png");
     let linkCount = (activeNotification.links || []).length;
 
-    if ("notifications" in browser)
+    // Newer versions of Microsoft Edge (EdgeHTML 17) have the notifications
+    // API, but the entire browser crashes when it is used.
+    // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/20146233/
+    if (info.platform != "edgehtml")
     {
       activeButtons = getNotificationButtons(activeNotification.type,
                                              texts.message);
@@ -7760,7 +7764,7 @@ function showNotification(notification)
  */
 exports.initNotifications = () =>
 {
-  if ("notifications" in browser)
+  if (info.platform != "edgehtml")
     initChromeNotifications();
   initAntiAdblockNotification();
 };
@@ -7819,8 +7823,8 @@ const {Subscription,
   __webpack_require__(4);
 const {FilterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
-const info = __webpack_require__(3);
-const {Prefs} = __webpack_require__(2);
+const info = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Synchronizer} = __webpack_require__(14);
 const {Utils} = __webpack_require__(12);
 const {initNotifications} = __webpack_require__(26);
@@ -8156,7 +8160,7 @@ let uninstallInit = exports.uninstallInit = function()
 {
   if (chrome.runtime.setUninstallURL)
   {
-    var Prefs = __webpack_require__(2).Prefs;
+    var Prefs = __webpack_require__(3).Prefs;
     STATS.untilLoaded(function(userID)
     {
       var uninstallURL = "https://getadblock.com/uninstall/?u=" + userID;
@@ -8223,7 +8227,7 @@ exports.setUninstallURL = uninstallInit;
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Prefs = __webpack_require__(2).Prefs;
+const Prefs = __webpack_require__(3).Prefs;
 const FilterStorage = __webpack_require__(5).FilterStorage;
 const {LocalCDN} = __webpack_require__(16);
 const {SURVEY} = __webpack_require__(30);
@@ -9180,7 +9184,7 @@ const {ActiveFilter, RegExpFilter,
        ElemHideBase, ElemHideFilter, ElemHideEmulationFilter,
        SnippetFilter} = __webpack_require__(0);
 const {SpecialSubscription} = __webpack_require__(4);
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 
 /**
  * Increases on filter changes, filters will be saved if it exceeds 1.
@@ -11842,7 +11846,7 @@ const {checkWhitelisted} = __webpack_require__(8);
 const {extractHostFromFrame} = __webpack_require__(6);
 const {port} = __webpack_require__(7);
 const {HitLogger, logRequest} = __webpack_require__(10);
-const info = __webpack_require__(3);
+const info = __webpack_require__(2);
 
 // Chromium's support for tabs.removeCSS is still a work in progress and the
 // API is likely to be different from Firefox's; for now we just don't use it
@@ -12145,7 +12149,7 @@ fetch(browser.extension.getURL("/snippets.js"), {cache: "no-cache"})
 (function(global)
 {
   const {port} = __webpack_require__(7);
-  const {Prefs} = __webpack_require__(2);
+  const {Prefs} = __webpack_require__(3);
   const {Utils} = __webpack_require__(12);
   const {FilterStorage} = __webpack_require__(5);
   const {filterNotifier} = __webpack_require__(1);
@@ -12160,7 +12164,7 @@ fetch(browser.extension.getURL("/snippets.js"), {cache: "no-cache"})
   } = __webpack_require__(0);
   const {Synchronizer} = __webpack_require__(14);
 
-  const info = __webpack_require__(3);
+  const info = __webpack_require__(2);
   const {
     Subscription,
     DownloadableSubscription,
@@ -12925,7 +12929,7 @@ exports.startIconAnimation = type =>
 
 
 
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {ActiveFilter} = __webpack_require__(0);
 const {FilterStorage} = __webpack_require__(5);
 const {filterNotifier} = __webpack_require__(1);
@@ -13027,7 +13031,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
 
 
 const {checkWhitelisted} = __webpack_require__(8);
-const info = __webpack_require__(3);
+const info = __webpack_require__(2);
 
 const manifest = browser.runtime.getManifest();
 const optionsUrl = manifest.options_page || manifest.options_ui.page;
@@ -13147,8 +13151,13 @@ exports.showOptions = callback =>
 {
   findOptionsTab(optionsTab =>
   {
-    // Edge does not yet support runtime.openOptionsPage (tested version 38)
+    // Older versions of Edge do not support runtime.openOptionsPage
+    // (tested version 38).
     if ("openOptionsPage" in browser.runtime &&
+        // Newer versions of Edge (tested version 44) do support the API,
+        // but it does not function correctly. The options page can be opened
+        // repeatedly.
+        info.platform != "edgehtml" &&
         // Some versions of Firefox for Android before version 57 do have a
         // runtime.openOptionsPage but it doesn't do anything.
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1364945
@@ -13948,7 +13957,7 @@ const parseFilters = __webpack_require__(17).parseFilters;
 
 const FilterStorage = __webpack_require__(5).FilterStorage;
 const {filterNotifier} = __webpack_require__(1);
-const Prefs = __webpack_require__(2).Prefs;
+const Prefs = __webpack_require__(3).Prefs;
 const Synchronizer = __webpack_require__(14).Synchronizer;
 const Utils = __webpack_require__(12).Utils;
 const NotificationStorage = __webpack_require__(15).Notification;
@@ -13957,7 +13966,7 @@ const {RegExpFilter} = __webpack_require__(0);
 
 const {getBlockedPerPage} = __webpack_require__(21);
 
-const info = __webpack_require__(3);
+const info = __webpack_require__(2);
 
 // Object's used on the option, pop up, etc. pages...
 const {STATS} = __webpack_require__(29);
@@ -14361,7 +14370,17 @@ var getCurrentTabInfo = function (callback, secondTime)
     {
       result.whitelisted = checkWhitelisted(page);
     }
-
+    if (getSettings().youtube_channel_whitelist
+        && parseUri(tab.url).hostname === 'www.youtube.com') {
+      result.youTubeChannelName = ytChannelNamePages.get(page.id);
+      // handle the odd occurence of when the  YT Channel Name
+      // isn't available in the ytChannelNamePages map
+      // obtain the channel name from the URL
+      // for instance, when the forward / back button is clicked
+      if (!result.youTubeChannelName && /ab_channel/.test(tab.url)) {
+        result.youTubeChannelName = parseUri.parseSearch(tab.url).ab_channel;
+      }
+    }
     callback(result);
   });
 };
@@ -14560,7 +14579,7 @@ chrome.storage.local.get(pausedKey, function (response)
   {
     var pauseHandler = function (action)
     {
-      FilterNotifier.off("load", pauseHandler);
+      filterNotifier.off("load", pauseHandler);
       var result1 = parseFilter(pausedFilterText1);
       var result2 = parseFilter(pausedFilterText2);
       FilterStorage.removeFilter(result1.filter);
@@ -14568,7 +14587,7 @@ chrome.storage.local.get(pausedKey, function (response)
       chrome.storage.local.remove(pausedKey);
     };
 
-    FilterNotifier.on("load", pauseHandler);
+    filterNotifier.on("load", pauseHandler);
   }
 });
 
@@ -14583,7 +14602,7 @@ chrome.storage.local.get(domainPausedKey, function (response)
     {
       var domainPauseHandler = function (action)
       {
-        FilterNotifier.off("load", domainPauseHandler);
+        filterNotifier.off("load", domainPauseHandler);
         for (var aDomain in storedDomainPauses)
         {
           var result = parseFilter("@@" + aDomain + "$document");
@@ -14591,7 +14610,7 @@ chrome.storage.local.get(domainPausedKey, function (response)
         }
         chrome.storage.local.remove(domainPausedKey);
       };
-      FilterNotifier.on("load", domainPauseHandler);
+      filterNotifier.on("load", domainPauseHandler);
     }
   } catch (err)
   {
@@ -14766,107 +14785,200 @@ var createWhitelistFilterForYoutubeChannel = function (url)
 };
 
 // YouTube Channel Whitelist and AdBlock Bandaids
-// Script injection logic for Safari is done in safari_bg.js
-if (!SAFARI)
+var runChannelWhitelist = function (tabUrl, tabId)
 {
-  var runChannelWhitelist = function (tabUrl, tabId)
+  if (parseUri(tabUrl).hostname === 'www.youtube.com' && getSettings().youtube_channel_whitelist && !parseUri.parseSearch(tabUrl).ab_channel)
   {
-    if (parseUri(tabUrl).hostname === 'www.youtube.com' && getSettings().youtube_channel_whitelist && !parseUri.parseSearch(tabUrl).ab_channel)
+    chrome.tabs.executeScript(tabId,
     {
-      chrome.tabs.executeScript(tabId,
-      {
-        file: 'adblock-ytchannel.js',
-        runAt: 'document_start',
-      });
-    }
-  };
+      file: 'adblock-ytchannel.js',
+      runAt: 'document_start',
+    });
+  }
+};
 
-  chrome.tabs.onCreated.addListener(function (tab)
+chrome.tabs.onCreated.addListener(function (tab)
+{
+  if (chrome.runtime.lastError)
+  {
+    return;
+  }
+  chrome.tabs.get(tab.id, function (tabs)
   {
     if (chrome.runtime.lastError)
     {
       return;
     }
-    chrome.tabs.get(tab.id, function (tabs)
+    if (tabs && tabs.url && tabs.id)
     {
-      if (chrome.runtime.lastError)
-      {
-        return;
-      }
+      runChannelWhitelist(tabs.url, tabs.id);
+    }
+  });
+});
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)
+{
+  if (chrome.runtime.lastError)
+  {
+    return;
+  }
+  if (changeInfo.status === 'loading')
+  {
+    if (chrome.runtime.lastError)
+    {
+      return;
+    }
+    chrome.tabs.get(tabId, function (tabs)
+    {
       if (tabs && tabs.url && tabs.id)
       {
         runChannelWhitelist(tabs.url, tabs.id);
       }
     });
-  });
+  }
+});
 
-  chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)
+// On single page sites, such as YouTube, that update the URL using the History API pushState(),
+// they don't actually load a new page, we need to get notified when this happens
+// and update the URLs in the Page and Frame objects
+var youTubeHistoryStateUpdateHanlder = function(details) {
+  if (details &&
+      details.hasOwnProperty("frameId") &&
+      details.hasOwnProperty("tabId") &&
+      details.hasOwnProperty("url") &&
+      details.hasOwnProperty("transitionType") &&
+      details.transitionType === "link")
   {
-    if (chrome.runtime.lastError)
+    var myURL = new URL(details.url);
+    if (myURL.hostname === "www.youtube.com")
     {
-      return;
-    }
-    if (changeInfo.status === 'loading')
-    {
-      if (chrome.runtime.lastError)
-      {
-        return;
+      var myFrame = ext.getFrame(details.tabId, details.frameId);
+      var myPage = ext.getPage(details.tabId);
+      var previousWhitelistState = checkWhitelisted(myPage);
+      myPage.url = myURL;
+      myPage._url = myURL;
+      myFrame.url = myURL;
+      myFrame._url = myURL;
+      var currentWhitelistState = checkWhitelisted(myPage);
+      if (!currentWhitelistState && (currentWhitelistState !== previousWhitelistState)) {
+        myPage.sendMessage({type: "reloadStyleSheet"});
       }
-      chrome.tabs.get(tabId, function (tabs)
+      if (myURL.pathname === "/") {
+        ytChannelNamePages.set(myPage.id, "");
+      }
+    }
+  }
+};
+
+var addYouTubeHistoryStateUpdateHanlder = function() {
+  chrome.webNavigation.onHistoryStateUpdated.addListener(youTubeHistoryStateUpdateHanlder);
+};
+
+var removeYouTubeHistoryStateUpdateHanlder = function() {
+  chrome.webNavigation.onHistoryStateUpdated.removeListener(youTubeHistoryStateUpdateHanlder);
+};
+
+settings.onload().then(function()
+{
+  if (getSettings().youtube_channel_whitelist)
+  {
+    addYouTubeHistoryStateUpdateHanlder();
+  }
+});
+
+// Listen for the message from the ytchannel.js content script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command === 'updateYouTubeChannelName' && message.args === false) {
+    ytChannelNamePages.set(sender.tab.id, "");
+    sendResponse({});
+    return;
+  }
+  if (message.command === 'updateYouTubeChannelName' && message.channelName) {
+    ytChannelNamePages.set(sender.tab.id, message.channelName);
+    sendResponse({});
+    return;
+  }
+  if (message.command === 'get_channel_name_by_channel_id' && message.channelId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://www.googleapis.com/youtube/v3/channels?part=snippet&id=" + message.channelId + "&key=" + atob("QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz"));
+    xhr.onload = function()
+    {
+      if (xhr.readyState === 4 && xhr.status === 200)
       {
-        if (tabs && tabs.url && tabs.id)
+        const json = JSON.parse(xhr.response);
+        // Got name of the channel
+        if (json && json.items && json.items[0])
         {
-          runChannelWhitelist(tabs.url, tabs.id);
-        }
-      });
-    }
-  });
-
-  // On single page sites, such as YouTube, that update the URL using the History API pushState(),
-  // they don't actually load a new page, we need to get notified when this happens
-  // and update the URLs in the Page and Frame objects
-  var youTubeHistoryStateUpdateHanlder = function(details) {
-    if (details &&
-        details.hasOwnProperty("frameId") &&
-        details.hasOwnProperty("tabId") &&
-        details.hasOwnProperty("url") &&
-        details.hasOwnProperty("transitionType") &&
-        details.transitionType === "link")
-    {
-      var myURL = new URL(details.url);
-      if (myURL.hostname === "www.youtube.com")
-      {
-        var myFrame = ext.getFrame(details.tabId, details.frameId);
-        var myPage = ext.getPage(details.tabId);
-        var previousWhitelistState = checkWhitelisted(myPage);
-        myPage.url = myURL;
-        myPage._url = myURL;
-        myFrame.url = myURL;
-        myFrame._url = myURL;
-        var currentWhitelistState = checkWhitelisted(myPage);
-        if (!currentWhitelistState && (currentWhitelistState !== previousWhitelistState)) {
-          myPage.sendMessage({type: "reloadStyleSheet"});
+          const channelName = json.items[0].snippet.title;
+          ytChannelNamePages.set(sender.tab.id, channelName);
+          chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: channelName });
         }
       }
     }
-  };
-
-  var addYouTubeHistoryStateUpdateHanlder = function() {
-    chrome.webNavigation.onHistoryStateUpdated.addListener(youTubeHistoryStateUpdateHanlder);
-  };
-
-  var removeYouTubeHistoryStateUpdateHanlder = function() {
-    chrome.webNavigation.onHistoryStateUpdated.removeListener(youTubeHistoryStateUpdateHanlder);
-  };
-
-  settings.onload().then(function()
-  {
-    if (getSettings().youtube_channel_whitelist)
+    xhr.send();
+    sendResponse({});
+    return;
+  }
+  if (message.command === 'get_channel_name_by_video_id' && message.videoId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + message.videoId + "&key=" + atob("QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz"));
+    xhr.onload = function()
     {
-      addYouTubeHistoryStateUpdateHanlder();
+      if (xhr.readyState === 4 && xhr.status === 200)
+      {
+        const json = JSON.parse(xhr.response);
+        // Got name of the channel
+        if (json && json.items && json.items[0])
+        {
+          const channelName = json.items[0].snippet.channelTitle;
+          ytChannelNamePages.set(sender.tab.id, channelName);
+          chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: channelName });
+        }
+      }
     }
-  });
-}
+    xhr.send();
+    sendResponse({});
+    return;
+  }
+  if (message.command === 'get_channel_name_by_user_id' && message.userId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://www.googleapis.com/youtube/v3/channels?part=snippet&forUsername=" + message.userId + "&key=" + atob("QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz"));
+    xhr.onload = function()
+    {
+      if (xhr.readyState === 4 && xhr.status === 200)
+      {
+        const json = JSON.parse(xhr.response);
+        // Got name of the channel
+        if (json && json.items && json.items[0])
+        {
+          const channelName = json.items[0].snippet.title;
+          ytChannelNamePages.set(sender.tab.id, channelName);
+          chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: channelName });
+        }
+      }
+    }
+    xhr.send();
+    sendResponse({});
+    return;
+  }
+});
+var ytChannelNamePages = new Map();
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (!getSettings().youtube_channel_whitelist) {
+    return;
+  }
+  if (ytChannelNamePages.get(tabId) && parseUri(tab.url).hostname !== 'www.youtube.com') {
+    ytChannelNamePages.delete(tabId);
+    return;
+  }
+});
+chrome.tabs.onRemoved.addListener(function(tabId) {
+  if (getSettings().youtube_channel_whitelist) {
+    return;
+  }
+  ytChannelNamePages.delete(tabId);
+});
 
 // used by the Options pages, since they don't have access to setContentBlocker
 function isSafariContentBlockingAvailable()
@@ -15128,8 +15240,10 @@ Object.assign(window, {
   isWhitelistFilter,
   isSelectorExcludeFilter,
   addYouTubeHistoryStateUpdateHanlder,
-  removeYouTubeHistoryStateUpdateHanlder
+  removeYouTubeHistoryStateUpdateHanlder,
+  ytChannelNamePages
 });
+
 
 /***/ }),
 /* 56 */
@@ -15324,12 +15438,12 @@ let DataCollectionV2 = exports.DataCollectionV2 = (function()
             }
             var data = {
               version:                 "4",
-              addonName:               __webpack_require__(3).addonName,
-              addonVersion:            __webpack_require__(3).addonVersion,
-              application:             __webpack_require__(3).application,
-              applicationVersion:      __webpack_require__(3).applicationVersion,
-              platform:                __webpack_require__(3).platform,
-              platformVersion:         __webpack_require__(3).platformVersion,
+              addonName:               __webpack_require__(2).addonName,
+              addonVersion:            __webpack_require__(2).addonVersion,
+              application:             __webpack_require__(2).application,
+              applicationVersion:      __webpack_require__(2).applicationVersion,
+              platform:                __webpack_require__(2).platform,
+              platformVersion:         __webpack_require__(2).platformVersion,
               appLocale:               Utils.appLocale,
               filterListSubscriptions: subscribedSubs,
               domains:                 dataCollectionCache.domains,
@@ -16050,7 +16164,7 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
 
 const {checkWhitelisted} = __webpack_require__(8);
 const {filterNotifier} = __webpack_require__(1);
-const Prefs = __webpack_require__(2).Prefs;
+const Prefs = __webpack_require__(3).Prefs;
 
 var updateButtonUIAndContextMenus = function ()
 {

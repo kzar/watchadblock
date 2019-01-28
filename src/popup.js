@@ -517,6 +517,29 @@ const {
   whenPageReady
 } = require("./popup.utils.js");
 
+// platform and application dataset bootstrap
+Promise.all([
+  // one is used to hide the Issue Reporter due EdgeHTML bug
+  // the Issue Reporter should work once MSEdge ships with Chromium instead
+  browser.runtime.sendMessage({
+    type: "app.get",
+    what: "platform"
+  }),
+  // one is used to hide all Edge specific things (i.e. 3rd parts links)
+  browser.runtime.sendMessage({
+    type: "app.get",
+    what: "application"
+  })
+]).then(([platform, application]) =>
+{
+  // this won't ever change during ABP lifecycle, which is why
+  // it's set ASAP as data-platform attribute, on the most top element,
+  // instead of being one of the body classes
+  const {dataset} = document.documentElement;
+  dataset.platform = platform;
+  dataset.application = application;
+});
+
 // create the tab object once at the right time
 // and make it available per each getTab.then(...)
 const getTab = new Promise(
@@ -552,7 +575,8 @@ getTab.then(tab =>
 })
 .then(tab =>
 {
-  const hostname = new URL(tab.url).hostname.replace(/^www\./, "");
+  const {url} = tab;
+  const hostname = url ? new URL(url).hostname.replace(/^www\./, "") : "";
   $("#blocking-domain").textContent = hostname;
   $("#issue-reporter").addEventListener(
     "click", () => reportIssue(tab)

@@ -91,8 +91,8 @@
  * @fileOverview Definition of Filter class and its subclasses.
  */
 
-const {filterNotifier} = __webpack_require__(1);
-const {extend} = __webpack_require__(12);
+const {filterNotifier} = __webpack_require__(2);
+const {extend} = __webpack_require__(13);
 const {filterToRegExp} = __webpack_require__(20);
 
 /**
@@ -1332,6 +1332,67 @@ SnippetFilter.prototype = extend(ContentFilter, {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+
+let platformVersion = null;
+let application = null;
+let applicationVersion;
+
+let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
+let match;
+
+while (match = regexp.exec(navigator.userAgent))
+{
+  let app = match[1];
+  let ver = match[2];
+
+  if (app == "Chrome")
+  {
+    platformVersion = ver;
+  }
+  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
+  {
+    // For compatibility with legacy websites, Chrome's UA
+    // also includes a Mozilla, AppleWebKit and Safari token.
+    // Any further name/version pair indicates a fork.
+    application = app == "OPR" ? "opera" : app.toLowerCase();
+    applicationVersion = ver;
+  }
+}
+
+// not a Chromium-based UA, probably modifed by the user
+if (!platformVersion)
+{
+  application = "unknown";
+  applicationVersion = platformVersion = "0";
+}
+
+// no additional name/version, so this is upstream Chrome
+if (!application)
+{
+  application = "chrome";
+  applicationVersion = platformVersion;
+}
+
+
+exports.addonName = "adblockforchrome";
+exports.addonVersion = "3.38.0";
+
+exports.application = application;
+exports.applicationVersion = applicationVersion;
+
+exports.platform = "chromium";
+exports.platformVersion = platformVersion;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1368,7 +1429,7 @@ exports.filterNotifier = filterNotifier;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1669,7 +1730,7 @@ function savePref(pref)
 }
 
 let customSave = new Map();
-if (__webpack_require__(3).platform == "gecko")
+if (__webpack_require__(1).platform == "gecko")
 {
   // Saving one storage value causes all others to be saved as well on Gecko.
   // Make sure that updating ad counter doesn't cause the filters data to be
@@ -1768,67 +1829,6 @@ init();
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-
-
-let platformVersion = null;
-let application = null;
-let applicationVersion;
-
-let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
-let match;
-
-while (match = regexp.exec(navigator.userAgent))
-{
-  let app = match[1];
-  let ver = match[2];
-
-  if (app == "Chrome")
-  {
-    platformVersion = ver;
-  }
-  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
-  {
-    // For compatibility with legacy websites, Chrome's UA
-    // also includes a Mozilla, AppleWebKit and Safari token.
-    // Any further name/version pair indicates a fork.
-    application = app == "OPR" ? "opera" : app.toLowerCase();
-    applicationVersion = ver;
-  }
-}
-
-// not a Chromium-based UA, probably modifed by the user
-if (!platformVersion)
-{
-  application = "unknown";
-  applicationVersion = platformVersion = "0";
-}
-
-// no additional name/version, so this is upstream Chrome
-if (!application)
-{
-  application = "chrome";
-  applicationVersion = platformVersion;
-}
-
-
-exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.36.0";
-
-exports.application = application;
-exports.applicationVersion = applicationVersion;
-
-exports.platform = "chromium";
-exports.platformVersion = platformVersion;
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1857,12 +1857,12 @@ exports.platformVersion = platformVersion;
  *               subscriptions and filters.
  */
 
-const {IO} = __webpack_require__(11);
-const {Prefs} = __webpack_require__(2);
+const {IO} = __webpack_require__(12);
+const {Prefs} = __webpack_require__(3);
 const {Filter, ActiveFilter} = __webpack_require__(0);
 const {Subscription, SpecialSubscription,
        ExternalSubscription} = __webpack_require__(5);
-const {filterNotifier} = __webpack_require__(1);
+const {filterNotifier} = __webpack_require__(2);
 const {INIParser} = __webpack_require__(21);
 
 /**
@@ -2545,8 +2545,8 @@ function removeSubscriptionFilters(subscription)
 
 const {ActiveFilter, BlockingFilter,
        WhitelistFilter, ElemHideBase} = __webpack_require__(0);
-const {filterNotifier} = __webpack_require__(1);
-const {extend} = __webpack_require__(12);
+const {filterNotifier} = __webpack_require__(2);
+const {extend} = __webpack_require__(13);
 
 /**
  * Abstract base class for filter subscriptions
@@ -3165,7 +3165,7 @@ let Utils = exports.Utils = {
 
   getDocLink(linkID)
   {
-    let docLink = __webpack_require__(2).Prefs.documentation_link;
+    let docLink = __webpack_require__(3).Prefs.documentation_link;
     return docLink.replace(/%LINK%/g, linkID)
                   .replace(/%LANG%/g, Utils.appLocale);
   },
@@ -3294,6 +3294,88 @@ exports.EventEmitter = EventEmitter;
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** @module url */
+
+
+
+const {getDomain} = __webpack_require__(28);
+
+/**
+ * Gets the IDN-decoded hostname from the URL of a frame.
+ * If the URL don't have host information (like "about:blank"
+ * and "data:" URLs) it falls back to the parent frame.
+ *
+ * @param {?Frame}  frame
+ * @param {URL}    [originUrl]
+ * @return {string}
+ */
+exports.extractHostFromFrame = (frame, originUrl) =>
+{
+  for (; frame; frame = frame.parent)
+  {
+    let {hostname} = frame.url;
+    if (hostname)
+      return hostname;
+  }
+
+  return originUrl ? originUrl.hostname : "";
+};
+
+function isDomain(hostname)
+{
+  // No hostname or IPv4 address, also considering hexadecimal octets.
+  if (/^((0x[\da-f]+|\d+)(\.|$))*$/i.test(hostname))
+    return false;
+
+  // IPv6 address. Since there can't be colons in domains, we can
+  // just check whether there are any colons to exclude IPv6 addresses.
+  return hostname.indexOf(":") == -1;
+}
+
+/**
+ * Checks whether the request's origin is different from the document's origin.
+ *
+ * @param {URL}    url           The request URL
+ * @param {string} documentHost  The IDN-decoded hostname of the document
+ * @return {Boolean}
+ */
+exports.isThirdParty = (url, documentHost) =>
+{
+  let requestHost = url.hostname.replace(/\.+$/, "");
+  documentHost = documentHost.replace(/\.+$/, "");
+
+  if (requestHost == documentHost)
+    return false;
+
+  if (!isDomain(requestHost) || !isDomain(documentHost))
+    return true;
+
+  return getDomain(requestHost) != getDomain(documentHost);
+};
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3722,88 +3804,6 @@ exports.defaultMatcher = defaultMatcher;
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/** @module url */
-
-
-
-const {getDomain} = __webpack_require__(31);
-
-/**
- * Gets the IDN-decoded hostname from the URL of a frame.
- * If the URL don't have host information (like "about:blank"
- * and "data:" URLs) it falls back to the parent frame.
- *
- * @param {?Frame}  frame
- * @param {URL}    [originUrl]
- * @return {string}
- */
-exports.extractHostFromFrame = (frame, originUrl) =>
-{
-  for (; frame; frame = frame.parent)
-  {
-    let {hostname} = frame.url;
-    if (hostname)
-      return hostname;
-  }
-
-  return originUrl ? originUrl.hostname : "";
-};
-
-function isDomain(hostname)
-{
-  // No hostname or IPv4 address, also considering hexadecimal octets.
-  if (/^((0x[\da-f]+|\d+)(\.|$))*$/i.test(hostname))
-    return false;
-
-  // IPv6 address. Since there can't be colons in domains, we can
-  // just check whether there are any colons to exclude IPv6 addresses.
-  return hostname.indexOf(":") == -1;
-}
-
-/**
- * Checks whether the request's origin is different from the document's origin.
- *
- * @param {URL}    url           The request URL
- * @param {string} documentHost  The IDN-decoded hostname of the document
- * @return {Boolean}
- */
-exports.isThirdParty = (url, documentHost) =>
-{
-  let requestHost = url.hostname.replace(/\.+$/, "");
-  documentHost = documentHost.replace(/\.+$/, "");
-
-  if (requestHost == documentHost)
-    return false;
-
-  if (!isDomain(requestHost) || !isDomain(documentHost))
-    return true;
-
-  return getDomain(requestHost) != getDomain(documentHost);
-};
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3966,6 +3966,132 @@ exports.getPort = function(window)
 
 
 
+const {filterNotifier} = __webpack_require__(2);
+const {FilterStorage} = __webpack_require__(4);
+const {DownloadableSubscription, SpecialSubscription} =
+  __webpack_require__(5);
+
+const BACKUP_NAME = "file:patterns.ini";
+
+let backupDelay;
+let pendingBackup = false;
+
+function setBackupInterval(backupInterval = 60 * 1000)
+{
+  backupDelay = backupInterval;
+}
+
+setBackupInterval();
+
+function scheduleBackup()
+{
+  if (!pendingBackup)
+  {
+    pendingBackup = true;
+
+    setTimeout(
+      () =>
+      {
+        saveToStorage();
+        pendingBackup = false;
+      },
+      backupDelay
+    );
+  }
+}
+
+function saveToStorage()
+{
+  browser.storage.local.set({
+    [BACKUP_NAME]: {
+      content: serialize(),
+      lastModified: Date.now()
+    }
+  });
+}
+
+function serialize()
+{
+  let buffer = [];
+
+  for (let subscription of FilterStorage.subscriptions)
+  {
+    if (subscription instanceof SpecialSubscription)
+    {
+      subscription.serialize(buffer);
+      buffer.push("[Subscription filters]");
+      subscription.serializeFilters(buffer);
+    }
+    else if (subscription instanceof DownloadableSubscription)
+    {
+      let {homepage, title, url, disabled} = subscription;
+
+      buffer.push(
+        "[Subscription]",
+        `homepage=${homepage}`,
+        `title=${title}`,
+        `url=${url}`,
+        `disabled=${disabled}`
+      );
+    }
+  }
+  return buffer;
+}
+
+function getBackupData()
+{
+  return browser.storage.local.get(BACKUP_NAME).then(items =>
+  {
+    let entry = items[BACKUP_NAME];
+    if (entry)
+      return entry;
+
+    throw {type: "NoSuchFile"};
+  });
+}
+
+filterNotifier.on("load", scheduleBackup);
+filterNotifier.on("subscription.updated", scheduleBackup);
+filterNotifier.on("subscription.added", scheduleBackup);
+filterNotifier.on("subscription.removed", scheduleBackup);
+filterNotifier.on("subscription.disabled", scheduleBackup);
+filterNotifier.on("filter.added", scheduleBackup);
+filterNotifier.on("filter.removed", scheduleBackup);
+filterNotifier.on("filter.moved", scheduleBackup);
+filterNotifier.on("filter.disabled", scheduleBackup);
+
+exports.IndexedDBBackup =
+{
+  getBackupData,
+  // Non-public API, just for tests.
+  setBackupInterval
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
 const keyPrefix = "file:";
 
 function fileToKey(fileName)
@@ -4073,7 +4199,7 @@ exports.IO =
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4137,132 +4263,6 @@ exports.indexOf = indexOf;
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-const {filterNotifier} = __webpack_require__(1);
-const {FilterStorage} = __webpack_require__(4);
-const {DownloadableSubscription, SpecialSubscription} =
-  __webpack_require__(5);
-
-const BACKUP_NAME = "file:indexedDB-backup";
-
-let backupDelay;
-let pendingBackup = false;
-
-function setBackupInterval(backupInterval = 60 * 1000)
-{
-  backupDelay = backupInterval;
-}
-
-setBackupInterval();
-
-function scheduleBackup()
-{
-  if (!pendingBackup)
-  {
-    pendingBackup = true;
-
-    setTimeout(
-      () =>
-      {
-        saveToStorage();
-        pendingBackup = false;
-      },
-      backupDelay
-    );
-  }
-}
-
-function saveToStorage()
-{
-  browser.storage.local.set({
-    [BACKUP_NAME]: {
-      content: serialize(),
-      lastModified: Date.now()
-    }
-  });
-}
-
-function serialize()
-{
-  let buffer = [];
-
-  for (let subscription of FilterStorage.subscriptions)
-  {
-    if (subscription instanceof SpecialSubscription)
-    {
-      subscription.serialize(buffer);
-      buffer.push("[Subscription filters]");
-      subscription.serializeFilters(buffer);
-    }
-    else if (subscription instanceof DownloadableSubscription)
-    {
-      let {homepage, title, url, disabled} = subscription;
-
-      buffer.push(
-        "[Subscription]",
-        `homepage=${homepage}`,
-        `title=${title}`,
-        `url=${url}`,
-        `disabled=${disabled}`
-      );
-    }
-  }
-  return buffer;
-}
-
-function getBackupData()
-{
-  return browser.storage.local.get(BACKUP_NAME).then(items =>
-  {
-    let entry = items[BACKUP_NAME];
-    if (entry)
-      return entry;
-
-    throw {type: "NoSuchFile"};
-  });
-}
-
-filterNotifier.on("load", scheduleBackup);
-filterNotifier.on("subscription.updated", scheduleBackup);
-filterNotifier.on("subscription.added", scheduleBackup);
-filterNotifier.on("subscription.removed", scheduleBackup);
-filterNotifier.on("subscription.disabled", scheduleBackup);
-filterNotifier.on("filter.added", scheduleBackup);
-filterNotifier.on("filter.removed", scheduleBackup);
-filterNotifier.on("filter.moved", scheduleBackup);
-filterNotifier.on("filter.disabled", scheduleBackup);
-
-exports.IndexedDBBackup =
-{
-  getBackupData,
-  // Non-public API, just for tests.
-  setBackupInterval
-};
-
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4293,13 +4293,13 @@ const {Subscription,
        SpecialSubscription} =
   __webpack_require__(5);
 const {FilterStorage} = __webpack_require__(4);
-const {filterNotifier} = __webpack_require__(1);
-const info = __webpack_require__(3);
-const {Prefs} = __webpack_require__(2);
-const {Synchronizer} = __webpack_require__(26);
+const {filterNotifier} = __webpack_require__(2);
+const info = __webpack_require__(1);
+const {Prefs} = __webpack_require__(3);
+const {Synchronizer} = __webpack_require__(23);
 const {Utils} = __webpack_require__(6);
-const {initNotifications} = __webpack_require__(27);
-const {updatesVersion} = __webpack_require__(36);
+const {initNotifications} = __webpack_require__(24);
+const {updatesVersion} = __webpack_require__(33);
 
 let firstRun;
 let subscriptionsCallback = null;
@@ -4423,10 +4423,16 @@ function chooseFilterSubscriptions(subscriptions)
 
 function supportsNotificationsWithButtons()
 {
-  // Microsoft Edge (as of EdgeHTML 16) doesn't have the notifications API.
+  // Older versions of Microsoft Edge (EdgeHTML 16) don't have the
+  // notifications API. Newever versions (EdgeHTML 17) seem to crash
+  // when it is used.
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/20146233/
+  if (info.platform == "edgehtml")
+    return false;
+
   // Opera gives an asynchronous error when buttons are provided (we cannot
   // detect that behavior without attempting to show a notification).
-  if (!("notifications" in browser) || info.application == "opera")
+  if (info.application == "opera")
     return false;
 
   // Firefox throws synchronously if the "buttons" option is provided.
@@ -4577,7 +4583,7 @@ Promise.all([
   .then(addSubscriptionsAndNotifyUser)
   // We have to require the "uninstall" module on demand,
   // as the "uninstall" module in turn requires this module.
-  .then(() => { __webpack_require__(37).setUninstallURL(); })
+  .then(() => { __webpack_require__(34).setUninstallURL(); })
   .then(initNotifications);
 
 /**
@@ -4819,7 +4825,7 @@ class Downloader
   getDownloadUrl(downloadable)
   {
     const {addonName, addonVersion, application, applicationVersion,
-           platform, platformVersion} = __webpack_require__(3);
+           platform, platformVersion} = __webpack_require__(1);
     let url = downloadable.redirectURL || downloadable.url;
     if (url.includes("?"))
       url += "&";
@@ -5066,12 +5072,12 @@ exports.Downloadable = Downloadable;
  * @fileOverview Handles notifications.
  */
 
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Downloader, Downloadable,
        MILLIS_IN_MINUTE, MILLIS_IN_HOUR,
        MILLIS_IN_DAY} = __webpack_require__(15);
 const {Utils} = __webpack_require__(6);
-const {Matcher, defaultMatcher} = __webpack_require__(8);
+const {Matcher, defaultMatcher} = __webpack_require__(9);
 const {Filter, RegExpFilter, WhitelistFilter} = __webpack_require__(0);
 
 const INITIAL_DELAY = 1 * MILLIS_IN_MINUTE;
@@ -5290,7 +5296,7 @@ let Notification = exports.Notification =
       return null;
 
     const {addonName, addonVersion, application,
-           applicationVersion, platform, platformVersion} = __webpack_require__(3);
+           applicationVersion, platform, platformVersion} = __webpack_require__(1);
 
     let targetChecks = {
       extension: v => v == addonName,
@@ -5591,14 +5597,14 @@ Notification.init();
 
 
 
-const {defaultMatcher} = __webpack_require__(8);
+const {defaultMatcher} = __webpack_require__(9);
 const {Filter, RegExpFilter} = __webpack_require__(0);
-const {filterNotifier} = __webpack_require__(1);
+const {filterNotifier} = __webpack_require__(2);
 const {FilterStorage} = __webpack_require__(4);
-const {extractHostFromFrame, isThirdParty} = __webpack_require__(9);
+const {extractHostFromFrame, isThirdParty} = __webpack_require__(8);
 const {port} = __webpack_require__(10);
-const {logWhitelistedDocument} = __webpack_require__(32);
-const {verifySignature} = __webpack_require__(33);
+const {logWhitelistedDocument} = __webpack_require__(29);
+const {verifySignature} = __webpack_require__(30);
 
 let sitekeys = new ext.PageMap();
 
@@ -5820,13 +5826,12 @@ if (typeof browser == "object")
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-__webpack_require__(24);
-__webpack_require__(25);
+__webpack_require__(22);
+__webpack_require__(35);
+__webpack_require__(36);
 __webpack_require__(38);
-__webpack_require__(39);
-__webpack_require__(41);
-__webpack_require__(43);
-module.exports = __webpack_require__(44);
+__webpack_require__(40);
+module.exports = __webpack_require__(41);
 
 
 /***/ }),
@@ -5834,49 +5839,131 @@ module.exports = __webpack_require__(44);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 
-
-const {FilterStorage} = __webpack_require__(4);
-const {Subscription} = __webpack_require__(5);
-const {Filter} = __webpack_require__(0);
-const {defaultMatcher} = __webpack_require__(8);
-const {ElemHide} = __webpack_require__(22);
-const {Prefs} = __webpack_require__(2);
-
-function prepareFilterComponents(keepListeners)
 {
-  FilterStorage.subscriptions = [];
-  FilterStorage.knownSubscriptions = Object.create(null);
-  Subscription.knownSubscriptions = Object.create(null);
-  Filter.knownFilters = Object.create(null);
+  const {IndexedDBBackup} = __webpack_require__(11);
+  const info = __webpack_require__(1);
+  const {FilterStorage} = __webpack_require__(4);
+  const {Filter} = __webpack_require__(0);
+  const {Subscription, SpecialSubscription} =
+    __webpack_require__(5);
 
-  defaultMatcher.clear();
-  ElemHide.clear();
-}
+  let backupDelay = 100;
+  let subscription = Subscription.fromObject({
+    title: "test",
+    url: "test.com",
+    homepage: "example.com",
+    lastSuccess: 8,
+    disabled: false,
+    lastDownload: 12,
+    lastCheck: 16,
+    softExpiration: 18,
+    expires: 20,
+    downloadStatus: "done",
+    errors: 3,
+    version: 24,
+    downloadCount: 1,
+    requiredVersion: "0.6"
+  });
+  let filter = Filter.fromText("example.com");
+  let specialSubscription = SpecialSubscription.createForFilter(filter);
 
-function restoreFilterComponents()
-{
-}
+  let testEdge = info.platform == "edgehtml" ? QUnit.test : QUnit.skip;
 
-function executeFirstRunActions()
-{
+  QUnit.module("Microsoft Edge indexedDB backup", {
+    beforeEach()
+    {
+      this._storageLocalSet = browser.storage.local.set;
+      IndexedDBBackup.setBackupInterval(backupDelay);
+    },
+    afterEach()
+    {
+      Object.defineProperty(
+        browser.storage.local, "set",
+        {value: this._storageLocalSet, enumerable: true}
+      );
+      IndexedDBBackup.setBackupInterval();
+    }
+  });
+
+  testEdge("Backup creation", assert =>
+  {
+    testSaveSteps(assert);
+  });
+
+  function testSaveSteps(assert)
+  {
+    let start = performance.now();
+    let saveTimes = [];
+
+    let steps = [
+      {
+        done: assert.async(),
+        check(data)
+        {
+          let expectedFormat = [
+            "[Subscription]",
+            `url=${specialSubscription.url}`,
+            "defaults=blocking",
+            "[Subscription filters]",
+            "example.com",
+            "[Subscription]",
+            "homepage=example.com",
+            "title=test",
+            "url=test.com",
+            "disabled=false"
+          ];
+
+          ok(
+            saveTimes[0] - start >= backupDelay,
+            "first write is deferred"
+          );
+          deepEqual(
+            data.content,
+            expectedFormat,
+            "saved data has the correct information"
+          );
+
+          FilterStorage.removeSubscription(subscription);
+          FilterStorage.removeSubscription(specialSubscription);
+        }
+      },
+      {
+        done: assert.async(),
+        check(data)
+        {
+          ok(
+            saveTimes[1] - saveTimes[0] >= backupDelay,
+            "next changes are saved after the write delay"
+          );
+          deepEqual(
+            data.content, [], "saved data has the correct information"
+          );
+        }
+      }
+    ];
+    let mockSave = data =>
+    {
+      let step = steps.shift();
+
+      saveTimes.push(performance.now());
+
+      setTimeout(() =>
+      {
+        step.check(data["file:patterns.ini"]);
+        step.done();
+      }, 0);
+    };
+
+    Object.defineProperty(
+      browser.storage.local, "set",
+      {value: mockSave, enumerable: true}
+    );
+
+    FilterStorage.addSubscription(specialSubscription);
+    FilterStorage.addSubscription(subscription);
+  }
 }
 
 
@@ -6287,526 +6374,6 @@ exports.INIParser = INIParser;
 
 
 
-/**
- * @fileOverview Element hiding implementation.
- */
-
-const {ElemHideExceptions} = __webpack_require__(23);
-const {filterNotifier} = __webpack_require__(1);
-
-/**
- * Lookup table, active flag, by filter by domain.
- * (Only contains filters that aren't unconditionally matched for all domains.)
- * @type {Map.<string,Map.<Filter,boolean>>}
- */
-let filtersByDomain = new Map();
-
-/**
- * Lookup table, filter by selector. (Only used for selectors that are
- * unconditionally matched for all domains.)
- * @type {Map.<string,Filter>}
- */
-let filterBySelector = new Map();
-
-/**
- * This array caches the keys of filterBySelector table (selectors
- * which unconditionally apply on all domains). It will be null if the
- * cache needs to be rebuilt.
- * @type {?string[]}
- */
-let unconditionalSelectors = null;
-
-/**
- * Map to be used instead when a filter has a blank domains property.
- * @type {Map.<string,boolean>}
- * @const
- */
-let defaultDomains = new Map([["", true]]);
-
-/**
- * Set containing known element hiding filters
- * @type {Set.<ElemHideFilter>}
- */
-let knownFilters = new Set();
-
-/**
- * Adds a filter to the lookup table of filters by domain.
- * @param {Filter} filter
- */
-function addToFiltersByDomain(filter)
-{
-  let domains = filter.domains || defaultDomains;
-  for (let [domain, isIncluded] of domains)
-  {
-    // There's no need to note that a filter is generically disabled.
-    if (!isIncluded && domain == "")
-      continue;
-
-    let filters = filtersByDomain.get(domain);
-    if (!filters)
-      filtersByDomain.set(domain, filters = new Map());
-    filters.set(filter, isIncluded);
-  }
-}
-
-/**
- * Returns a list of selectors that apply on each website unconditionally.
- * @returns {string[]}
- */
-function getUnconditionalSelectors()
-{
-  if (!unconditionalSelectors)
-    unconditionalSelectors = [...filterBySelector.keys()];
-
-  return unconditionalSelectors;
-}
-
-ElemHideExceptions.on("added", ({selector}) =>
-{
-  // If this is the first exception for a previously unconditionally applied
-  // element hiding selector we need to take care to update the lookups.
-  let unconditionalFilterForSelector = filterBySelector.get(selector);
-  if (unconditionalFilterForSelector)
-  {
-    addToFiltersByDomain(unconditionalFilterForSelector);
-    filterBySelector.delete(selector);
-    unconditionalSelectors = null;
-  }
-});
-
-/**
- * Container for element hiding filters
- * @class
- */
-exports.ElemHide = {
-  /**
-   * Removes all known filters
-   */
-  clear()
-  {
-    for (let collection of [filtersByDomain, filterBySelector, knownFilters])
-      collection.clear();
-
-    unconditionalSelectors = null;
-    filterNotifier.emit("elemhideupdate");
-  },
-
-  /**
-   * Add a new element hiding filter
-   * @param {ElemHideFilter} filter
-   */
-  add(filter)
-  {
-    if (knownFilters.has(filter))
-      return;
-
-    let {selector} = filter;
-
-    if (!(filter.domains || ElemHideExceptions.hasExceptions(selector)))
-    {
-      // The new filter's selector is unconditionally applied to all domains
-      filterBySelector.set(selector, filter);
-      unconditionalSelectors = null;
-    }
-    else
-    {
-      // The new filter's selector only applies to some domains
-      addToFiltersByDomain(filter);
-    }
-
-    knownFilters.add(filter);
-    filterNotifier.emit("elemhideupdate");
-  },
-
-  /**
-   * Removes an element hiding filter
-   * @param {ElemHideFilter} filter
-   */
-  remove(filter)
-  {
-    if (!knownFilters.has(filter))
-      return;
-
-    let {selector} = filter;
-
-    // Unconditially applied element hiding filters
-    if (filterBySelector.get(selector) == filter)
-    {
-      filterBySelector.delete(selector);
-      unconditionalSelectors = null;
-    }
-    // Conditionally applied element hiding filters
-    else
-    {
-      let domains = filter.domains || defaultDomains;
-      for (let domain of domains.keys())
-      {
-        let filters = filtersByDomain.get(domain);
-        if (filters)
-        {
-          filters.delete(filter);
-
-          if (filters.size == 0)
-            filtersByDomain.delete(domain);
-        }
-      }
-    }
-
-    knownFilters.delete(filter);
-    filterNotifier.emit("elemhideupdate");
-  },
-
-  /**
-   * Determines from the current filter list which selectors should be applied
-   * on a particular host name.
-   * @param {string} domain
-   * @param {boolean} [specificOnly] true if generic filters should not apply.
-   * @returns {string[]} List of selectors.
-   */
-  getSelectorsForDomain(domain, specificOnly = false)
-  {
-    let selectors = [];
-
-    let excluded = new Set();
-    let currentDomain = domain ? domain.replace(/\.+$/, "").toLowerCase() : "";
-
-    // This code is a performance hot-spot, which is why we've made certain
-    // micro-optimisations. Please be careful before making changes.
-    while (true)
-    {
-      if (specificOnly && currentDomain == "")
-        break;
-
-      let filters = filtersByDomain.get(currentDomain);
-      if (filters)
-      {
-        for (let [filter, isIncluded] of filters)
-        {
-          if (!isIncluded)
-          {
-            excluded.add(filter);
-          }
-          else
-          {
-            let {selector} = filter;
-            if ((excluded.size == 0 || !excluded.has(filter)) &&
-                !ElemHideExceptions.getException(selector, domain))
-            {
-              selectors.push(selector);
-            }
-          }
-        }
-      }
-
-      if (currentDomain == "")
-        break;
-
-      let nextDot = currentDomain.indexOf(".");
-      currentDomain = nextDot == -1 ? "" : currentDomain.substr(nextDot + 1);
-    }
-
-    if (!specificOnly)
-      selectors = getUnconditionalSelectors().concat(selectors);
-
-    return selectors;
-  }
-};
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-/**
- * @fileOverview Element hiding exceptions implementation.
- */
-
-const {EventEmitter} = __webpack_require__(7);
-const {filterNotifier} = __webpack_require__(1);
-
-/**
- * Lookup table, lists of element hiding exceptions by selector
- * @type {Map.<string,ElemHideException[]>}
- */
-let exceptions = new Map();
-
-/**
- * Set containing known element exceptions
- * @type {Set.<ElemHideException>}
- */
-let knownExceptions = new Set();
-
-/**
- * Container for element hiding exceptions
- * @class
- */
-exports.ElemHideExceptions = Object.assign(Object.create(new EventEmitter()), {
-  /**
-   * Removes all known exceptions
-   */
-  clear()
-  {
-    exceptions.clear();
-    knownExceptions.clear();
-
-    filterNotifier.emit("elemhideupdate");
-  },
-
-  /**
-   * Add a new element hiding exception
-   * @param {ElemHideException} exception
-   */
-  add(exception)
-  {
-    if (knownExceptions.has(exception))
-      return;
-
-    let {selector} = exception;
-    let list = exceptions.get(selector);
-    if (list)
-      list.push(exception);
-    else
-      exceptions.set(selector, [exception]);
-
-    knownExceptions.add(exception);
-
-    this.emit("added", exception);
-
-    filterNotifier.emit("elemhideupdate");
-  },
-
-  /**
-   * Removes an element hiding exception
-   * @param {ElemHideException} exception
-   */
-  remove(exception)
-  {
-    if (!knownExceptions.has(exception))
-      return;
-
-    let list = exceptions.get(exception.selector);
-    let index = list.indexOf(exception);
-    if (index >= 0)
-      list.splice(index, 1);
-
-    knownExceptions.delete(exception);
-
-    this.emit("removed", exception);
-
-    filterNotifier.emit("elemhideupdate");
-  },
-
-  /**
-   * Checks whether any exception rules are registered for a selector
-   * @param {string} selector
-   * @returns {boolean}
-   */
-  hasExceptions(selector)
-  {
-    return exceptions.has(selector);
-  },
-
-  /**
-   * Checks whether an exception rule is registered for a selector on a
-   * particular domain.
-   * @param {string} selector
-   * @param {?string} docDomain
-   * @return {?ElemHideException}
-   */
-  getException(selector, docDomain)
-  {
-    let list = exceptions.get(selector);
-    if (!list)
-      return null;
-
-    for (let i = list.length - 1; i >= 0; i--)
-    {
-      if (list[i].isActiveOnDomain(docDomain))
-        return list[i];
-    }
-
-    return null;
-  }
-});
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-{
-  const {IndexedDBBackup} = __webpack_require__(13);
-  const info = __webpack_require__(3);
-  const {FilterStorage} = __webpack_require__(4);
-  const {Filter} = __webpack_require__(0);
-  const {Subscription, SpecialSubscription} =
-    __webpack_require__(5);
-
-  let backupDelay = 100;
-  let subscription = Subscription.fromObject({
-    title: "test",
-    url: "test.com",
-    homepage: "example.com",
-    lastSuccess: 8,
-    disabled: false,
-    lastDownload: 12,
-    lastCheck: 16,
-    softExpiration: 18,
-    expires: 20,
-    downloadStatus: "done",
-    errors: 3,
-    version: 24,
-    downloadCount: 1,
-    requiredVersion: "0.6"
-  });
-  let filter = Filter.fromText("example.com");
-  let specialSubscription = SpecialSubscription.createForFilter(filter);
-
-  let testEdge = info.platform == "edgehtml" ? QUnit.test : QUnit.skip;
-
-  QUnit.module("Microsoft Edge indexedDB backup", {
-    beforeEach()
-    {
-      this._storageLocalSet = browser.storage.local.set;
-      IndexedDBBackup.setBackupInterval(backupDelay);
-    },
-    afterEach()
-    {
-      Object.defineProperty(
-        browser.storage.local, "set",
-        {value: this._storageLocalSet, enumerable: true}
-      );
-      IndexedDBBackup.setBackupInterval();
-    }
-  });
-
-  testEdge("Backup creation", assert =>
-  {
-    testSaveSteps(assert);
-  });
-
-  function testSaveSteps(assert)
-  {
-    let start = performance.now();
-    let saveTimes = [];
-
-    let steps = [
-      {
-        done: assert.async(),
-        check(data)
-        {
-          let expectedFormat = [
-            "[Subscription]",
-            `url=${specialSubscription.url}`,
-            "defaults=blocking",
-            "[Subscription filters]",
-            "example.com",
-            "[Subscription]",
-            "homepage=example.com",
-            "title=test",
-            "url=test.com",
-            "disabled=false"
-          ];
-
-          ok(
-            saveTimes[0] - start >= backupDelay,
-            "first write is deferred"
-          );
-          deepEqual(
-            data.content,
-            expectedFormat,
-            "saved data has the correct information"
-          );
-
-          FilterStorage.removeSubscription(subscription);
-          FilterStorage.removeSubscription(specialSubscription);
-        }
-      },
-      {
-        done: assert.async(),
-        check(data)
-        {
-          ok(
-            saveTimes[1] - saveTimes[0] >= backupDelay,
-            "next changes are saved after the write delay"
-          );
-          deepEqual(
-            data.content, [], "saved data has the correct information"
-          );
-        }
-      }
-    ];
-    let mockSave = data =>
-    {
-      let step = steps.shift();
-
-      saveTimes.push(performance.now());
-
-      setTimeout(() =>
-      {
-        step.check(data["file:indexedDB-backup"]);
-        step.done();
-      }, 0);
-    };
-
-    Object.defineProperty(
-      browser.storage.local, "set",
-      {value: mockSave, enumerable: true}
-    );
-
-    FilterStorage.addSubscription(specialSubscription);
-    FilterStorage.addSubscription(subscription);
-  }
-}
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
 {
   let {chooseFilterSubscriptions} = __webpack_require__(14);
 
@@ -6854,7 +6421,7 @@ exports.ElemHideExceptions = Object.assign(Object.create(new EventEmitter()), {
 
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6886,8 +6453,8 @@ const {Downloader, Downloadable,
        MILLIS_IN_HOUR, MILLIS_IN_DAY} = __webpack_require__(15);
 const {Filter} = __webpack_require__(0);
 const {FilterStorage} = __webpack_require__(4);
-const {filterNotifier} = __webpack_require__(1);
-const {Prefs} = __webpack_require__(2);
+const {filterNotifier} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Subscription,
        DownloadableSubscription} = __webpack_require__(5);
 
@@ -7149,7 +6716,7 @@ class Synchronizer
         subscription.errors = 0;
 
         let fallbackURL = Prefs.subscriptions_fallbackurl;
-        const {addonVersion} = __webpack_require__(3);
+        const {addonVersion} = __webpack_require__(1);
         fallbackURL = fallbackURL.replace(/%VERSION%/g,
                                           encodeURIComponent(addonVersion));
         fallbackURL = fallbackURL.replace(/%SUBSCRIPTION%/g,
@@ -7208,7 +6775,7 @@ exports.Synchronizer = synchronizer;
 
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7233,14 +6800,15 @@ exports.Synchronizer = synchronizer;
 
 
 
-const {startIconAnimation, stopIconAnimation} = __webpack_require__(28);
+const {startIconAnimation, stopIconAnimation} = __webpack_require__(25);
 const {Utils} = __webpack_require__(6);
 const {Notification: NotificationStorage} =
   __webpack_require__(16);
 const {initAntiAdblockNotification} =
-  __webpack_require__(29);
-const {Prefs} = __webpack_require__(2);
-const {showOptions} = __webpack_require__(30);
+  __webpack_require__(26);
+const {Prefs} = __webpack_require__(3);
+const {showOptions} = __webpack_require__(27);
+const info = __webpack_require__(1);
 
 let activeNotification = null;
 let activeButtons = null;
@@ -7407,7 +6975,10 @@ function showNotification(notification)
     let iconUrl = browser.extension.getURL("icons/detailed/abp-128.png");
     let linkCount = (activeNotification.links || []).length;
 
-    if ("notifications" in browser)
+    // Newer versions of Microsoft Edge (EdgeHTML 17) have the notifications
+    // API, but the entire browser crashes when it is used.
+    // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/20146233/
+    if (info.platform != "edgehtml")
     {
       activeButtons = getNotificationButtons(activeNotification.type,
                                              texts.message);
@@ -7489,7 +7060,7 @@ function showNotification(notification)
  */
 exports.initNotifications = () =>
 {
-  if ("notifications" in browser)
+  if (info.platform != "edgehtml")
     initChromeNotifications();
   initAntiAdblockNotification();
 };
@@ -7534,7 +7105,7 @@ NotificationStorage.addShowListener(showNotification);
 
 
 /***/ }),
-/* 28 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7559,7 +7130,7 @@ NotificationStorage.addShowListener(showNotification);
 
 
 
-const {filterNotifier} = __webpack_require__(1);
+const {filterNotifier} = __webpack_require__(2);
 
 const frameOpacities = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
                         1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -7780,7 +7351,7 @@ exports.startIconAnimation = type =>
 
 
 /***/ }),
-/* 29 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7803,10 +7374,10 @@ exports.startIconAnimation = type =>
 
 
 
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {ActiveFilter} = __webpack_require__(0);
 const {FilterStorage} = __webpack_require__(4);
-const {filterNotifier} = __webpack_require__(1);
+const {filterNotifier} = __webpack_require__(2);
 const {Subscription} = __webpack_require__(5);
 const {Notification} = __webpack_require__(16);
 
@@ -7879,7 +7450,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
 
 
 /***/ }),
-/* 30 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7905,7 +7476,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
 
 
 const {checkWhitelisted} = __webpack_require__(17);
-const info = __webpack_require__(3);
+const info = __webpack_require__(1);
 
 const manifest = browser.runtime.getManifest();
 const optionsUrl = manifest.options_page || manifest.options_ui.page;
@@ -8025,8 +7596,13 @@ exports.showOptions = callback =>
 {
   findOptionsTab(optionsTab =>
   {
-    // Edge does not yet support runtime.openOptionsPage (tested version 38)
+    // Older versions of Edge do not support runtime.openOptionsPage
+    // (tested version 38).
     if ("openOptionsPage" in browser.runtime &&
+        // Newer versions of Edge (tested version 44) do support the API,
+        // but it does not function correctly. The options page can be opened
+        // repeatedly.
+        info.platform != "edgehtml" &&
         // Some versions of Firefox for Android before version 57 do have a
         // runtime.openOptionsPage but it doesn't do anything.
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1364945
@@ -8110,7 +7686,7 @@ browser.browserAction.onClicked.addListener(() =>
 
 
 /***/ }),
-/* 31 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8167,7 +7743,7 @@ exports.getDomain = hostname =>
 
 
 /***/ }),
-/* 32 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8192,7 +7768,7 @@ exports.getDomain = hostname =>
 
 
 
-const {extractHostFromFrame} = __webpack_require__(9);
+const {extractHostFromFrame} = __webpack_require__(8);
 const {EventEmitter} = __webpack_require__(7);
 const {FilterStorage} = __webpack_require__(4);
 const {port} = __webpack_require__(10);
@@ -8337,7 +7913,7 @@ port.on("hitLogger.traceElemHide", (message, sender) =>
 
 
 /***/ }),
-/* 33 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8366,8 +7942,8 @@ port.on("hitLogger.traceElemHide", (message, sender) =>
  * This is a specialized RSA library meant only to verify SHA1-based signatures.
  */
 
-const {BigInteger} = __webpack_require__(34);
-const Rusha = __webpack_require__(35);
+const {BigInteger} = __webpack_require__(31);
+const Rusha = __webpack_require__(32);
 
 let rusha = new Rusha();
 
@@ -8550,7 +8126,7 @@ exports.verifySignature = verifySignature;
 
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ (function(module, exports) {
 
 /*
@@ -9144,7 +8720,7 @@ BigInteger.ONE = nbv(1);
 
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function () {
@@ -9568,7 +9144,7 @@ BigInteger.ONE = nbv(1);
 
 
 /***/ }),
-/* 36 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9602,7 +9178,7 @@ exports.updatesVersion = 1;
 
 
 /***/ }),
-/* 37 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9627,9 +9203,9 @@ exports.updatesVersion = 1;
 
 
 
-const info = __webpack_require__(3);
+const info = __webpack_require__(1);
 const {isDataCorrupted} = __webpack_require__(14);
-const {Prefs} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
 const {Utils} = __webpack_require__(6);
 
 let setUninstallURL =
@@ -9673,16 +9249,16 @@ Prefs.on("notificationdata", setUninstallURL);
 
 
 /***/ }),
-/* 38 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 {
-  const {IO} = __webpack_require__(11);
-  const info = __webpack_require__(3);
-  const {IndexedDBBackup} = __webpack_require__(13);
+  const {IO} = __webpack_require__(12);
+  const info = __webpack_require__(1);
+  const {IndexedDBBackup} = __webpack_require__(11);
 
   const testFileNames = {
     testData: "testData",
@@ -9765,7 +9341,7 @@ Prefs.on("notificationdata", setUninstallURL);
 
     asyncReadHelper(
       IO.statFile,
-      testFileNames.stat,
+      testFileNames.readBackup,
       {exists: true, lastModified: backupData.lastModified},
       "statFile return correct value, if a data restore is performed",
       assert);
@@ -9950,7 +9526,7 @@ Prefs.on("notificationdata", setUninstallURL);
 
 
 /***/ }),
-/* 39 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9959,7 +9535,7 @@ Prefs.on("notificationdata", setUninstallURL);
 {
   const {Filter, ElemHideFilter} =
     __webpack_require__(0);
-  const {escapeCSS, quoteCSS} = __webpack_require__(40);
+  const {escapeCSS, quoteCSS} = __webpack_require__(37);
 
   QUnit.module("CSS escaping");
 
@@ -10059,7 +9635,7 @@ Prefs.on("notificationdata", setUninstallURL);
 
 
 /***/ }),
-/* 40 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10084,14 +9660,14 @@ Prefs.on("notificationdata", setUninstallURL);
 
 
 
-const {defaultMatcher} = __webpack_require__(8);
+const {defaultMatcher} = __webpack_require__(9);
 const {RegExpFilter} = __webpack_require__(0);
-const {filterNotifier} = __webpack_require__(1);
-const {Prefs} = __webpack_require__(2);
-const {extractHostFromFrame, isThirdParty} = __webpack_require__(9);
+const {filterNotifier} = __webpack_require__(2);
+const {Prefs} = __webpack_require__(3);
+const {extractHostFromFrame, isThirdParty} = __webpack_require__(8);
 const {getKey, checkWhitelisted} = __webpack_require__(17);
 const {port} = __webpack_require__(10);
-const info = __webpack_require__(3);
+const info = __webpack_require__(1);
 
 let readyPages = new ext.PageMap();
 
@@ -10406,14 +9982,14 @@ ext.pages.onLoading.addListener(page =>
 
 
 /***/ }),
-/* 41 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 {
-  const {parseFilter, parseFilters} = __webpack_require__(42);
+  const {parseFilter, parseFilters} = __webpack_require__(39);
   const {BlockingFilter,
          ElemHideFilter,
          CommentFilter} = __webpack_require__(0);
@@ -10486,7 +10062,7 @@ ext.pages.onLoading.addListener(page =>
 
 
 /***/ }),
-/* 42 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10704,14 +10280,14 @@ exports.parseFilters = text =>
 
 
 /***/ }),
-/* 43 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 {
-  const {Prefs} = __webpack_require__(2);
+  const {Prefs} = __webpack_require__(3);
 
   QUnit.module("Preferences", {
     setup()
@@ -10873,7 +10449,7 @@ exports.parseFilters = text =>
 
 
 /***/ }),
-/* 44 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10897,8 +10473,8 @@ exports.parseFilters = text =>
 
 
 {
-  const {extractHostFromFrame, isThirdParty} = __webpack_require__(9);
-  const {platform} = __webpack_require__(3);
+  const {extractHostFromFrame, isThirdParty} = __webpack_require__(8);
+  const {platform} = __webpack_require__(1);
 
   QUnit.module("URL/host tools");
 

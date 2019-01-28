@@ -178,19 +178,26 @@ function getFile(fileName, dbInstance, storeName)
     {
       if (!indexedDBResult)
       {
-        const {IndexedDBBackup} = require("./indexedDBBackup");
+        // If we failed to read the main patterns.ini file, it could be that the
+        // IndexedDB database got trashed by Edge. Lets restore our backup from
+        // local storage. ("readBackup" is used by the unit tests.)
+        if (fileName == "patterns.ini" || fileName == "readBackup")
+        {
+          const {IndexedDBBackup} = require("./indexedDBBackup");
 
-        return IndexedDBBackup.getBackupData()
-          .then(backupData =>
-            saveFile(
-              {
-                fileName: fileToKey(fileName),
-                content: backupData.content,
-                lastModified: backupData.lastModified
-              },
-              dbInstance,
-              storeName).then(() => backupData)
-          );
+          return IndexedDBBackup.getBackupData()
+            .then(backupData =>
+              saveFile(
+                {
+                  fileName: fileToKey(fileName),
+                  content: backupData.content,
+                  lastModified: backupData.lastModified
+                },
+                dbInstance,
+                storeName).then(() => backupData)
+            );
+        }
+        return Promise.reject({type: "NoSuchFile"});
       }
       return indexedDBResult;
     });
