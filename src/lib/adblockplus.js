@@ -1420,7 +1420,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.39.1";
+exports.addonVersion = "3.40.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -14355,34 +14355,38 @@ var getCurrentTabInfo = function (callback, secondTime)
 
       return;
     }
-    const page = new ext.Page(tab);
-    var disabledSite = pageIsUnblockable(page.url.href);
-    var displayStats = Prefs.show_statsinicon;
-
-    var result =
+    chrome.storage.local.get(License.myAdBlockEnrollmentFeatureKey, (myAdBlockInfo) =>
     {
-      page: page,
-      tab: tab,
-      disabledSite: disabledSite,
-      settings: getSettings()
-    };
+      const page = new ext.Page(tab);
+      var disabledSite = pageIsUnblockable(page.url.href);
+      var displayStats = Prefs.show_statsinicon;
 
-    if (!disabledSite)
-    {
-      result.whitelisted = checkWhitelisted(page);
-    }
-    if (getSettings().youtube_channel_whitelist
-        && parseUri(tab.url).hostname === 'www.youtube.com') {
-      result.youTubeChannelName = ytChannelNamePages.get(page.id);
-      // handle the odd occurence of when the  YT Channel Name
-      // isn't available in the ytChannelNamePages map
-      // obtain the channel name from the URL
-      // for instance, when the forward / back button is clicked
-      if (!result.youTubeChannelName && /ab_channel/.test(tab.url)) {
-        result.youTubeChannelName = parseUri.parseSearch(tab.url).ab_channel;
+      var result =
+      {
+        page: page,
+        tab: tab,
+        disabledSite: disabledSite,
+        settings: getSettings(),
+        myAdBlockInfo: myAdBlockInfo
+      };
+
+      if (!disabledSite)
+      {
+        result.whitelisted = checkWhitelisted(page);
       }
-    }
-    callback(result);
+      if (getSettings().youtube_channel_whitelist
+          && parseUri(tab.url).hostname === 'www.youtube.com') {
+        result.youTubeChannelName = ytChannelNamePages.get(page.id);
+        // handle the odd occurence of when the  YT Channel Name
+        // isn't available in the ytChannelNamePages map
+        // obtain the channel name from the URL
+        // for instance, when the forward / back button is clicked
+        if (!result.youTubeChannelName && /ab_channel/.test(tab.url)) {
+          result.youTubeChannelName = parseUri.parseSearch(tab.url).ab_channel;
+        }
+      }
+      callback(result);
+    });// end of chrome.storage.local.get
   });
 };
 
@@ -16683,11 +16687,21 @@ Channels.prototype = {
     }
   },
 
+  isAnyEnabled: function() {
+    for (var id in this._channelGuide) {
+      var channel = this._channelGuide[id];
+      if (channel.enabled) {
+        return true;
+      }
+    }
+    return false;
+  },
+
   // Returns a random Listing from all enabled channels or from channel
   // |channelId| if specified, trying to match the ratio of |width| and
   // |height| decently.  Returns undefined if there are no enabled channels.
   randomListing: function(opts) {
-    if (!getSettings().picreplacement) {
+    if (!getSettings().picreplacement && !this.isAnyEnabled()) {
       return undefined;
     }
     // if the element to be replace is 'fixed' in position, it may make for bad pic replacement element.
@@ -18142,9 +18156,12 @@ Object.assign(window, {
 // Paying for this extension supports the work on AdBlock.  Thanks very much.
 const {checkWhitelisted} = __webpack_require__(8);
 const {recordGeneralMessage} = __webpack_require__(13).ServerMessages;
+const MY_ADBLOCK_FEATURE_VERSION = 0;
+
 var License = (function () {
   var licenseStorageKey = 'license';
   var installTimestampStorageKey = 'install_timestamp';
+  var myAdBlockEnrollmentFeatureKey = 'myAdBlockFeature';
   var licenseAlarmName = 'licenseAlarm';
   var theLicense = undefined;
   var oneDayInMinutes = 1140;
@@ -18245,6 +18262,7 @@ var License = (function () {
 
   return {
     licenseStorageKey: licenseStorageKey,
+    myAdBlockEnrollmentFeatureKey: myAdBlockEnrollmentFeatureKey,
     initialized: initialized,
     licenseAlarmName: licenseAlarmName,
     checkPingResponse: function(pingResponseData) {
@@ -18266,6 +18284,20 @@ var License = (function () {
           theLicense.myadblock_enrollment = true;
           License.set(theLicense);
         });
+
+        // Create myAdBlock storage if it doesn't already exist
+        chrome.storage.local.get(License.myAdBlockEnrollmentFeatureKey, (myAdBlockInfo) => {
+          if (!$.isEmptyObject(myAdBlockInfo)) {
+            return;
+          }
+          var myAdBlockFeature = {
+            'version': MY_ADBLOCK_FEATURE_VERSION,
+            'displayPopupMenuBanner': true,
+            'takeUserToMyAdBlockTab': false,
+          };
+          chrome.storage.local.set({ myAdBlockFeature });
+        });
+
       }
     },
     get: function() {
@@ -18399,12 +18431,25 @@ var License = (function () {
   };
 })();
 
+var reloadOptionsPageTabs = function() {
+  var optionTabQuery = {
+    title: 'AdBlock Options',
+    url: 'chrome-extension://*/options.html*'
+  }
+  chrome.tabs.query(optionTabQuery, function(tabs) {
+    for (var i in tabs) {
+      chrome.tabs.reload(tabs[i].id);
+    }
+  });
+}
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.command === "payment_success" && request.transID && request.selections && request.version === 1) {
+    if (request.command === "payment_success" && request.transID && request.version === 1) {
         var currentLicense = {};
         currentLicense.status = "active";
         License.set(currentLicense);
+        reloadOptionsPageTabs();
         var delay = 30 * 60 * 1000; // 30 minutes
         window.setTimeout(function() {
           License.updatePeriodically();
@@ -18412,15 +18457,7 @@ chrome.runtime.onMessage.addListener(
         setSetting("picreplacement", true);
         var guide = channels.getGuide();
         for (var id in guide) {
-          if (guide[id].name === "CatsChannel") {
-            channels.setEnabled(id, request.selections.cat);
-          }
-          if (guide[id].name === "DogsChannel") {
-            channels.setEnabled(id, request.selections.dog);
-          }
-          if (guide[id].name === "LandscapesChannel") {
-            channels.setEnabled(id, request.selections.landscape);
-          }
+          channels.setEnabled(id, true);
         }
         sendResponse({ ack: true });
     }
@@ -18432,7 +18469,7 @@ License.ready().then(function() {
     if (!(request.message == "load_my_adblock")) {
       return;
     }
-    if (sender.url && sender.url.startsWith("http") && getSettings().picreplacement) {
+    if (sender.url && sender.url.startsWith("http") && getSettings().picreplacement && channels.isAnyEnabled()) {
       chrome.tabs.executeScript(sender.tab.id, {file: "adblock-picreplacement-image-sizes-map.js", frameId: sender.frameId, runAt:"document_start"}, function(){
           if (chrome.runtime.lastError) {
               log(chrome.runtime.lastError)
