@@ -1420,7 +1420,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.40.0";
+exports.addonVersion = "3.40.1";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -16798,11 +16798,11 @@ Channels.prototype = {
     var entries = storage_get("channels");
     if (!entries || (entries.length > 0 && !entries[0].name)) {
       this.add({name: "DogsChannel", param: undefined,
-                enabled: true});
+                enabled: false});
       this.add({name: "CatsChannel", param: undefined,
                 enabled: true});
       this.add({name: "LandscapesChannel", param: undefined,
-                enabled: true});
+                enabled: false});
     }
     else {
       for (var i=0; i < entries.length; i++) {
@@ -18455,10 +18455,6 @@ chrome.runtime.onMessage.addListener(
           License.updatePeriodically();
         }, delay);
         setSetting("picreplacement", true);
-        var guide = channels.getGuide();
-        for (var id in guide) {
-          channels.setEnabled(id, true);
-        }
         sendResponse({ ack: true });
     }
 });
