@@ -189,6 +189,10 @@
     "message": "특정 YouTube™ 채널을 허용 목록에 등록 (브라우저 재시작 필요)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
+  "allow_whitelisting_youtube_channels2": {
+    "message": "Allow whitelisting of specific YouTube™ channels", 
+    "description": "Checkbox on the 'General' tab of the Options page"
+  }, 
   "betalabel": {
     "message": "베타", 
     "description": "Label for experimental features in AdBlock Options"
@@ -342,6 +346,10 @@
   }, 
   "blockmoreads": {
     "message": "더 많은 광고 차단:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "blockmoreads2": {
+    "message": "Block more ads", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "blockurlwithtext": {
@@ -568,6 +576,10 @@
     "message": "콘솔 로그에서 디버그 정보 보이기 (확장 프로그램이 느려짐)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
+  "debuginlogoption2": {
+    "message": "Show debug statements in Console Log", 
+    "description": "Checkbox on the 'General' tab of the Options page"
+  }, 
   "delete_migration_error_messages": {
     "message": "메시지 삭제", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -721,6 +733,34 @@
     "message": "영문 전용", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
+  "enter_url": {
+    "message": "enter a URL", 
+    "description": "Placeholder text in the Custom Filter list URL bar"
+  }, 
+  "error_msg_header": {
+    "message": "Oops! We're sorry, the AdBlock menu had trouble loading.", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_help": {
+    "message": "If that doesn't work, check here for more help: Click ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_help_us": {
+    "message": "Help us resolve this problem by sending us some debug data: Click ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_here": {
+    "message": "here", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_reload": {
+    "message": "Next, try reloading the extension: Click ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_thank_you": {
+    "message": "Thank you", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
   "excludedomainorurl": {
     "message": "광고를 아무것도 차단하지 않을 도메인 또는 URL을 입력하세요", 
     "description": "Message of the exclude section (Show ads on a webpage or domain) on the Customize tab"
@@ -760,6 +800,14 @@
   "ff_checkinchrometitle": {
     "message": "Chrome에서 확인하기", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_annoyances_explained": {
+    "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
+    "description": "A filter list explaination"
+  }, 
+  "filter_antisocial_explained": {
+    "message": "removes social media buttons", 
+    "description": "A filter list explaination"
   }, 
   "filter_chinese": {
     "message": "중국어 + EasyList", 
@@ -836,6 +884,10 @@
   "filter_unknown_option": {
     "message": "알 수 없는 필터 옵션"
   }, 
+  "filter_warning_removal_explained": {
+    "message": "removes warnings about using ad blockers", 
+    "description": "A filter list explaination"
+  }, 
   "filteracceptable_ads": {
     "message": "허용할만한 광고", 
     "description": "A filter list"
@@ -848,12 +900,20 @@
     "message": "Fanboy's Annoyances (페이지 내 팝업, 소셜 미디어 관련, 이외 다른 성가신 요소)", 
     "description": "A filter list"
   }, 
+  "filterannoyances2": {
+    "message": "Fanboy's Annoyances", 
+    "description": "A filter list"
+  }, 
   "filteranticircumvent": {
     "message": "차단 회피를 차단하는 필터", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
     "message": "Antisocial 필터 목록 (소셜 미디어 버튼 제거)", 
+    "description": "A filter list"
+  }, 
+  "filterantisocial2": {
+    "message": "Antisocial filter list", 
     "description": "A filter list"
   }, 
   "filterbitcoin_mining_protection": {
@@ -980,6 +1040,10 @@
     "message": "필터 목록은 웹상의 대다수 광고를 차단합니다. 여기서는 다음 기능을 사용할 수 있습니다.", 
     "description": "Header text on the Customize tab"
   }, 
+  "filterlistsrock2": {
+    "message": "The filter lists block most ads on the web. You can also...", 
+    "description": "Header text on the Customize tab"
+  }, 
   "filtermalware": {
     "message": "악성 프로그램으로부터 보호", 
     "description": "A filter list"
@@ -1009,6 +1073,14 @@
     "message": "주의: 여기서 실수한다면 공식 필터를 포함한 다른 필터들이 제대로 동작하지 않을 수 있습니다!\n고급 차단 및 허용 목록을 추가하는 방법을 알아보려면 [[필터 문법 안내서]]를 참고하시기 바랍니다.", 
     "description": "Warning when manually editing filters."
   }, 
+  "filtersavewarning_part1": {
+    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!", 
+    "description": "Warning when manually editing filters -- first part not clickable."
+  }, 
+  "filtersavewarning_part2": {
+    "message": "Read the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
+    "description": "Warning when manually editing filters -- second part clickable."
+  }, 
   "filtersavewarning_ytadblock_1": {
     "message": "주의하세요. 여기에서 실수하신다면 AdBlock on YouTube™가 제대로 작동하지 않을 수 있습니다.", 
     "description": "First part of the warning when manually editing filters in the 'AdBlock on YouTube' extension."
@@ -1031,6 +1103,10 @@
   }, 
   "filterwarning_removal": {
     "message": "Adblock 경고 제거 목록 (광고 차단 프로그램 이용 경고 메시지 제거)", 
+    "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  }, 
+  "filterwarning_removal2": {
+    "message": "Adblock Warning Removal list", 
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
@@ -1090,6 +1166,10 @@
   "generaloptions": {
     "message": "일반 설정", 
     "description": "Title of the first Options page tab"
+  }, 
+  "generaloptions2": {
+    "message": "General Options", 
+    "description": "Title of one of the Options page tabs"
   }, 
   "headerfilter": {
     "message": "일치하는 필터", 
@@ -1451,8 +1531,16 @@
     "message": "비활성 필터 편집:", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
+  "manualexcludefilteredit2": {
+    "message": "Edit disabled filters", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
   "manualfilteredit": {
     "message": "필터를 수동으로 수정하기:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "manualfilteredit2": {
+    "message": "Manually edit your filters", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualfilteredit_yt": {
@@ -1959,6 +2047,10 @@
     "message": "자발적 후원", 
     "description": "Text of a payment request link"
   }, 
+  "pwyw2": {
+    "message": "Pay What You Want!", 
+    "description": "Text of a payment request link"
+  }, 
   "questionoridea": {
     "message": "질문 또는 제안할 것이 있나요?", 
     "description": "Subtitle on the Support tab"
@@ -2000,6 +2092,10 @@
   "reportpubliclyavailable": {
     "message": "참고: 제공된 정보가 공개될 수 있습니다. 내용 작성 시 개인정보에 유의하시기 바랍니다", 
     "description": "Ad report page string, when you're about to submit a report."
+  }, 
+  "require_restart_browser": {
+    "message": "requires restarting your browser", 
+    "description": "Text displayed within an option to notify users to restart the browser to fully enable the option"
   }, 
   "resourceblocktitle": {
     "message": "전체 자원", 
@@ -2069,6 +2165,10 @@
     "message": " -- 언어 선택 -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "selectlanguage2": {
+    "message": "select language", 
+    "description": "First option in the language dropdown menu on the Filter lists tab."
+  }, 
   "settings_changed": {
     "message": "이제 AdBlock이 전과는 다르게 동작하게 되며, 몇몇 설정들이 변경되었습니다.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -2121,6 +2221,10 @@
     "message": "1단계: 차단하려는 요소 선택", 
     "description": "'Block an ad' wizard title"
   }, 
+  "slows_down_extension": {
+    "message": "slows down the extension", 
+    "description": "Text of an option telling users that the option slows down the extension"
+  }, 
   "sourcecode": {
     "message": "소스 코드는 [[무료로 배포]]됩니다!", 
     "description": "Link to the source code of AdBlock on the Support tab"
@@ -2161,6 +2265,10 @@
   }, 
   "stop_blocking_ads": {
     "message": "광고 차단 중단:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "stop_blocking_ads2": {
+    "message": "Stop blocking ads", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "storage_quota_exceeded": {
@@ -2239,6 +2347,10 @@
   }, 
   "translator_credit": {
     "message": "한국어 번역자:", 
+    "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
+  }, 
+  "translator_credit2": {
+    "message": "Credit for translation goes to...", 
     "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
   }, 
   "translators": {

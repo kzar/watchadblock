@@ -189,6 +189,10 @@
     "message": "Salli tiettyjen YouTube™-kanavien lisäys poikkeus-listalle (vaatii selaimen uudelleen käynnistämisen)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
+  "allow_whitelisting_youtube_channels2": {
+    "message": "Allow whitelisting of specific YouTube™ channels", 
+    "description": "Checkbox on the 'General' tab of the Options page"
+  }, 
   "betalabel": {
     "message": "Beta", 
     "description": "Label for experimental features in AdBlock Options"
@@ -342,6 +346,10 @@
   }, 
   "blockmoreads": {
     "message": "Estä lisää mainoksia:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "blockmoreads2": {
+    "message": "Block more ads", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "blockurlwithtext": {
@@ -553,6 +561,10 @@
     "message": "Show debug statements in Console Log (which slows down the extension)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
+  "debuginlogoption2": {
+    "message": "Show debug statements in Console Log", 
+    "description": "Checkbox on the 'General' tab of the Options page"
+  }, 
   "delete_migration_error_messages": {
     "message": "Poista viestit", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -706,6 +718,34 @@
     "message": "Vain englanniksi", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
+  "enter_url": {
+    "message": "enter a URL", 
+    "description": "Placeholder text in the Custom Filter list URL bar"
+  }, 
+  "error_msg_header": {
+    "message": "Oops! We're sorry, the AdBlock menu had trouble loading.", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_help": {
+    "message": "If that doesn't work, check here for more help: Click ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_help_us": {
+    "message": "Help us resolve this problem by sending us some debug data: Click ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_here": {
+    "message": "here", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_reload": {
+    "message": "Next, try reloading the extension: Click ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_thank_you": {
+    "message": "Thank you", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
   "excludedomainorurl": {
     "message": "Osoite tai verkkotunnus, jossa AdBlockin ei pitäisi estää mitään", 
     "description": "Message of the exclude section (Show ads on a webpage or domain) on the Customize tab"
@@ -745,6 +785,14 @@
   "ff_checkinchrometitle": {
     "message": "Tarkista Chromessa", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_annoyances_explained": {
+    "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
+    "description": "A filter list explaination"
+  }, 
+  "filter_antisocial_explained": {
+    "message": "removes social media buttons", 
+    "description": "A filter list explaination"
   }, 
   "filter_chinese": {
     "message": "Kiina + EasyList", 
@@ -821,6 +869,10 @@
   "filter_unknown_option": {
     "message": "Tuntematon suodatusvaihtoehto"
   }, 
+  "filter_warning_removal_explained": {
+    "message": "removes warnings about using ad blockers", 
+    "description": "A filter list explaination"
+  }, 
   "filteracceptable_ads": {
     "message": "Hyväksyttävät mainokset", 
     "description": "A filter list"
@@ -833,12 +885,20 @@
     "message": "Fanboy's Annoyances (estää ponnahdusikkunat, sosiaaliseen mediaan ja siihen liittyvät widgetit ja muut ärsyttävyydet)", 
     "description": "A filter list"
   }, 
+  "filterannoyances2": {
+    "message": "Fanboy's Annoyances", 
+    "description": "A filter list"
+  }, 
   "filteranticircumvent": {
     "message": "Anti-Circumvention filters", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
     "message": "Epäsosiaalinen suodatinluottelo (poistaa some-painikkeet)", 
+    "description": "A filter list"
+  }, 
+  "filterantisocial2": {
+    "message": "Antisocial filter list", 
     "description": "A filter list"
   }, 
   "filterbitcoin_mining_protection": {
@@ -965,6 +1025,10 @@
     "message": "Suodatinlistat estävät suurimman osan mainoksista.  Voit myös:", 
     "description": "Header text on the Customize tab"
   }, 
+  "filterlistsrock2": {
+    "message": "The filter lists block most ads on the web. You can also...", 
+    "description": "Header text on the Customize tab"
+  }, 
   "filtermalware": {
     "message": "Haittaohjelmien suodatus", 
     "description": "A filter list"
@@ -994,6 +1058,14 @@
     "message": "Ole varovainen: jos teet virheen tässä, myös viralliset suodattimet voivat lakata toimimasta!\nLue [[suodattimen syntaksiopas]] saadaksesi lisätietoja suodattimien muokkauksesta.", 
     "description": "Warning when manually editing filters."
   }, 
+  "filtersavewarning_part1": {
+    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!", 
+    "description": "Warning when manually editing filters -- first part not clickable."
+  }, 
+  "filtersavewarning_part2": {
+    "message": "Read the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
+    "description": "Warning when manually editing filters -- second part clickable."
+  }, 
   "filtersavewarning_ytadblock_1": {
     "message": "Be careful: if you make a mistake here, AdBlock on YouTube™ could stop working properly.", 
     "description": "First part of the warning when manually editing filters in the 'AdBlock on YouTube' extension."
@@ -1016,6 +1088,10 @@
   }, 
   "filterwarning_removal": {
     "message": "Mainostenestovaroitusten poisto (poistaa varoitukset mainostenestäjistä)", 
+    "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  }, 
+  "filterwarning_removal2": {
+    "message": "Adblock Warning Removal list", 
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
@@ -1057,6 +1133,10 @@
   "generaloptions": {
     "message": "Yleiset asetukset", 
     "description": "Title of the first Options page tab"
+  }, 
+  "generaloptions2": {
+    "message": "General Options", 
+    "description": "Title of one of the Options page tabs"
   }, 
   "headerfilter": {
     "message": "Vastaava suodatin", 
@@ -1415,8 +1495,16 @@
     "message": "Muokkaa suodattimia, jotka poistettu käytöstä:", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
+  "manualexcludefilteredit2": {
+    "message": "Edit disabled filters", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
   "manualfilteredit": {
     "message": "Muokkaa suodattimia manuaalisesti:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "manualfilteredit2": {
+    "message": "Manually edit your filters", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualfilteredit_yt": {
@@ -1689,6 +1777,10 @@
     "message": "Maksa mitä haluat!", 
     "description": "Text of a payment request link"
   }, 
+  "pwyw2": {
+    "message": "Pay What You Want!", 
+    "description": "Text of a payment request link"
+  }, 
   "questionoridea": {
     "message": "Onko sinulla kysymys tai ehdotus?", 
     "description": "Subtitle on the Support tab"
@@ -1730,6 +1822,10 @@
   "reportpubliclyavailable": {
     "message": "Huomautus: ilmoituksesi saatetaan julkaista. Pidä se mielessä ennen kuin sisällytät mitään yksityistä.", 
     "description": "Ad report page string, when you're about to submit a report."
+  }, 
+  "require_restart_browser": {
+    "message": "requires restarting your browser", 
+    "description": "Text displayed within an option to notify users to restart the browser to fully enable the option"
   }, 
   "resourceblocktitle": {
     "message": "Kaikki resurssit", 
@@ -1799,6 +1895,10 @@
     "message": " -- Valitse kieli -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "selectlanguage2": {
+    "message": "select language", 
+    "description": "First option in the language dropdown menu on the Filter lists tab."
+  }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -1851,6 +1951,10 @@
     "message": "Vaihe 1: määritä, mitä estetään", 
     "description": "'Block an ad' wizard title"
   }, 
+  "slows_down_extension": {
+    "message": "slows down the extension", 
+    "description": "Text of an option telling users that the option slows down the extension"
+  }, 
   "sourcecode": {
     "message": "Lähdekoodi on [[vapaasti saatavilla]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
@@ -1891,6 +1995,10 @@
   }, 
   "stop_blocking_ads": {
     "message": "Lopeta mainosten estäminen:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "stop_blocking_ads2": {
+    "message": "Stop blocking ads", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "storage_quota_exceeded": {
@@ -1969,6 +2077,10 @@
   }, 
   "translator_credit": {
     "message": "Kiitokset käännöksestä seuraaville:", 
+    "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
+  }, 
+  "translator_credit2": {
+    "message": "Credit for translation goes to...", 
     "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
   }, 
   "translators": {

@@ -60,11 +60,11 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block ads."
   }, 
   "adblockprotectenrollmentbutton": {
-    "message": "Try Now — It’s Free", 
+    "message": "Попробуйте прямо сейчас — бесплатно", 
     "description": "The text of the button in the menu item in the popup menu for AdBlock Protect extension.  Will automatically be converted to all uppercase"
   }, 
   "adblockprotectenrollmenttext": {
-    "message": "Keep your personal information safe with AdBlock Protect", 
+    "message": "AdBlock Protect защитит тайну вашей личной жизни", 
     "description": "The text of the menu item in the popup menu that takes users for the AdBlock Protect extension"
   }, 
   "adblockreportinganad": {
@@ -187,6 +187,10 @@
   }, 
   "allow_whitelisting_youtube_channels": {
     "message": "Добавить определенные каналы YouTube™ в белый список (потребует перезапуска браузера)", 
+    "description": "Checkbox on the 'General' tab of the Options page"
+  }, 
+  "allow_whitelisting_youtube_channels2": {
+    "message": "Разрешить вносить отдельные каналы YouTube™ в белый список", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "betalabel": {
@@ -342,6 +346,10 @@
   }, 
   "blockmoreads": {
     "message": "Скрывать еще больше рекламы:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "blockmoreads2": {
+    "message": "Скрывать еще больше рекламы", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "blockurlwithtext": {
@@ -571,6 +579,10 @@
     "message": "Показывать отладку в Журнале консоли (замедляет работу расширения)", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
+  "debuginlogoption2": {
+    "message": "Показывать данные об отладке в журнале консоли", 
+    "description": "Checkbox on the 'General' tab of the Options page"
+  }, 
   "delete_migration_error_messages": {
     "message": "Удалить сообщения", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -724,6 +736,34 @@
     "message": "Только на английском языке", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
+  "enter_url": {
+    "message": "введите URL", 
+    "description": "Placeholder text in the Custom Filter list URL bar"
+  }, 
+  "error_msg_header": {
+    "message": "Ой-ой! Простите, но AdBlock не смог загрузить меню.", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_help": {
+    "message": "Если это не помогло, то здесь вам обязательно помогут: нажмите ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_help_us": {
+    "message": "Помогите нам решить эту проблему, отправив нам данные о поломке: нажмите ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_here": {
+    "message": "здесь", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_reload": {
+    "message": "Попробуйте перезагрузить расширение: нажмите ", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "error_msg_thank_you": {
+    "message": "Спасибо", 
+    "description": "The text on the popup menu when an error has occurred"
+  }, 
   "excludedomainorurl": {
     "message": "Домен или URL-адрес, где AdBlock не должен ничего скрывать", 
     "description": "Message of the exclude section (Show ads on a webpage or domain) on the Customize tab"
@@ -763,6 +803,14 @@
   "ff_checkinchrometitle": {
     "message": "Проверка в Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_annoyances_explained": {
+    "message": "скрывает всплывающие окна, виджеты социальных сетей и прочую рекламу", 
+    "description": "A filter list explaination"
+  }, 
+  "filter_antisocial_explained": {
+    "message": "убирает кнопки социальных сетей", 
+    "description": "A filter list explaination"
   }, 
   "filter_chinese": {
     "message": "Китайский + EasyList", 
@@ -842,6 +890,10 @@
   "filter_unknown_option": {
     "message": "Неизвестная опция фильтра"
   }, 
+  "filter_warning_removal_explained": {
+    "message": "убирает предупреждения об использовании блокировщика рекламы", 
+    "description": "A filter list explaination"
+  }, 
   "filteracceptable_ads": {
     "message": "Приемлемая реклама", 
     "description": "A filter list"
@@ -854,12 +906,20 @@
     "message": "Услада фаната (скрывает всплывающие окна, виджеты социальных сетей и прочую рекламу)", 
     "description": "A filter list"
   }, 
+  "filterannoyances2": {
+    "message": "Услада фаната", 
+    "description": "A filter list"
+  }, 
   "filteranticircumvent": {
     "message": "Противообходные фильтры", 
     "description": "A filter list"
   }, 
   "filterantisocial": {
     "message": "Асоциальные фильтры (скрывают виджеты соцсетей)", 
+    "description": "A filter list"
+  }, 
+  "filterantisocial2": {
+    "message": "Список антисоциальных фильтров", 
     "description": "A filter list"
   }, 
   "filterbitcoin_mining_protection": {
@@ -986,6 +1046,10 @@
     "message": "Списки фильтров блокируют большую часть рекламы в Интернете.  Вы также можете:", 
     "description": "Header text on the Customize tab"
   }, 
+  "filterlistsrock2": {
+    "message": "Списки фильтров блокируют большую часть рекламы в Интернете. Вы также можете...", 
+    "description": "Header text on the Customize tab"
+  }, 
   "filtermalware": {
     "message": "Защита от вредоносных программ", 
     "description": "A filter list"
@@ -1015,6 +1079,14 @@
     "message": "Внимание: если вы сделаете ошибку, то многие фильтры, включая официальные, могут прекратить работу! Ознакомьтесь с [[учебником по синтаксису фильтров]], чтобы узнать, как добавлять продвинутые фильтры.", 
     "description": "Warning when manually editing filters."
   }, 
+  "filtersavewarning_part1": {
+    "message": "Будьте очень внимательны: если вы сейчас ошибетесь, то можете сломать целую кучу других фильтров, включая даже официальные!", 
+    "description": "Warning when manually editing filters -- first part not clickable."
+  }, 
+  "filtersavewarning_part2": {
+    "message": "Ознакомьтесь с [[учебником по синтаксису фильтров]], чтобы узнать, как добавлять продвинутые фильтры и создавать белый список.", 
+    "description": "Warning when manually editing filters -- second part clickable."
+  }, 
   "filtersavewarning_ytadblock_1": {
     "message": "Внимание: если вы сделаете ошибку, то AdBlock на YouTube™ может прекратить работу.", 
     "description": "First part of the warning when manually editing filters in the 'AdBlock on YouTube' extension."
@@ -1037,6 +1109,10 @@
   }, 
   "filterwarning_removal": {
     "message": "Убрать предупреждение о блокировке объявлений (скрывает просьбы перестать использовать блокиратор рекламы)", 
+    "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
+  }, 
+  "filterwarning_removal2": {
+    "message": "Список антиантиблокировщиков рекламы", 
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
@@ -1136,6 +1212,10 @@
     "message": "Общие", 
     "description": "Title of the first Options page tab"
   }, 
+  "generaloptions2": {
+    "message": "Общие параметры", 
+    "description": "Title of one of the Options page tabs"
+  }, 
   "headerfilter": {
     "message": "Совпадающий фильтр", 
     "description": "Resource list page: title of a column"
@@ -1165,7 +1245,7 @@
     "description": "Text of a link pointing to instructions on how to do something"
   }, 
   "images_coming_soon": {
-    "message": "More photos coming soon!", 
+    "message": "Больше фотографий уже совсем скоро!", 
     "description": "The text telling MyAdBlock active users that there will be more photos for MyAdBlock."
   }, 
   "invalidListUrl": {
@@ -1520,8 +1600,16 @@
     "message": "Настроить отключенные фильтры:", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
+  "manualexcludefilteredit2": {
+    "message": "Настроить отключенные фильтры", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
   "manualfilteredit": {
     "message": "Настроить фильтры вручную:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "manualfilteredit2": {
+    "message": "Настроить фильтры вручную", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualfilteredit_yt": {
@@ -1549,19 +1637,19 @@
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblock_payment_not_available_text": {
-    "message": "We’re so glad you are interested in MyAdBlock! Unfortunately, we can’t process payments at this time. Please try again later.", 
+    "message": "Мы очень рады, что вы заинтересовались MyAdBlock! К сожалению, пока мы не можем обработать ваш платеж. Попробуйте еще раз попозже.", 
     "description": "The text of an error message box in the MyAdBlock tab in option page when we cannot load iframe."
   }, 
   "myadblock_payment_not_available_title": {
-    "message": "OH NO! We were unable to connect to our servers", 
+    "message": "О нет! Мы не смогли подключиться к нашим серверам", 
     "description": "The title of an error message box in the MyAdBlock tab in option page when we cannot load iframe."
   }, 
   "myadblock_pic_replacemenet_description": {
-    "message": "Replace ads with images you love", 
+    "message": "Замените рекламу на любимые картинки", 
     "description": "The text briefly describing what the feature does in the MyAdBlock tab in the option page."
   }, 
   "myadblock_picreplacement_exlained": {
-    "message": "Select from the categories below and AdBlock will occasionally replace ads with high-quality images to brighten your day.", 
+    "message": "Выберите категорию из списка ниже, и периодически AdBlock будет заменять рекламу на HD-изображения и поднимать вам настроение.", 
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "myadblockenrollment": {
@@ -1600,7 +1688,7 @@
     "message": "AdBlock"
   }, 
   "new_myadblock_feature_available": {
-    "message": "Click here to unlock new features!", 
+    "message": "Щелкните, чтобы открыть новые функции!", 
     "description": "The text in the popup menu item saying there is a new MyAdBlock feature and takes you to the MyAdBlock tab in the option page."
   }, 
   "new_resourcelist_explanation_osx": {
@@ -2103,6 +2191,10 @@
     "message": "Платите, сколько хотите!", 
     "description": "Text of a payment request link"
   }, 
+  "pwyw2": {
+    "message": "Платите, сколько хотите!", 
+    "description": "Text of a payment request link"
+  }, 
   "questionoridea": {
     "message": "Есть вопросы или предложения?", 
     "description": "Subtitle on the Support tab"
@@ -2147,6 +2239,10 @@
   "reportpubliclyavailable": {
     "message": "Важно: ваш отчет может стать общедоступным. Пожалуйста, помните об этом, включая в него личные данные.", 
     "description": "Ad report page string, when you're about to submit a report."
+  }, 
+  "require_restart_browser": {
+    "message": "требуется перезапуск браузера", 
+    "description": "Text displayed within an option to notify users to restart the browser to fully enable the option"
   }, 
   "resourceblocktitle": {
     "message": "Все ресурсы", 
@@ -2216,6 +2312,10 @@
     "message": " -- Выбрать язык -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
+  "selectlanguage2": {
+    "message": "выбрать язык", 
+    "description": "First option in the language dropdown menu on the Filter lists tab."
+  }, 
   "sendReport": {
     "message": "Сообщить об ошибке"
   }, 
@@ -2271,6 +2371,10 @@
     "message": "Шаг 1: Что блокировать?", 
     "description": "'Block an ad' wizard title"
   }, 
+  "slows_down_extension": {
+    "message": "замедляет расширение", 
+    "description": "Text of an option telling users that the option slows down the extension"
+  }, 
   "sourcecode": {
     "message": "Исходный код в [[свободном доступе]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
@@ -2317,6 +2421,10 @@
   }, 
   "stop_blocking_ads": {
     "message": "Перестать скрывать рекламу:", 
+    "description": "Subtitle on the 'Customize' tab"
+  }, 
+  "stop_blocking_ads2": {
+    "message": "Перестать скрывать рекламу", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "storage_quota_exceeded": {
@@ -2395,6 +2503,10 @@
   }, 
   "translator_credit": {
     "message": "Над переводом работали:", 
+    "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
+  }, 
+  "translator_credit2": {
+    "message": "Над переводом работали...", 
     "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
   }, 
   "translators": {
@@ -2632,7 +2744,7 @@
     "description": "The title of the whitelist wizard (Don't run on this page/pages on this domain)"
   }, 
   "wizardcantrunonframesets": {
-    "message": "Эта функция AdBlock не может быть использована, потому что сайт создан с использованием устаревших технологий. Используйте вкладку \"Настроить\" в меню Параметров, чтобы вручную вносить сайты в черный/белый список.", 
+    "message": "Эта функция AdBlock не может быть использована, потому что сайт создан с использованием устаревших технологий. Используйте вкладку \"Настроить\" в меню \"Параметры\", чтобы вручную вносить сайты в черный/белый список.", 
     "description": "Alert shown when the user tries to use a blacklist/whitelist wizard on an old website"
   }, 
   "work_around_hulu_problems": {
