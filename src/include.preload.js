@@ -60,243 +60,20 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/*
- * This file is part of Adblock Plus <https://adblockplus.org/>,
- * Copyright (C) 2006-present eyeo GmbH
- *
- * Adblock Plus is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 3 as
- * published by the Free Software Foundation.
- *
- * Adblock Plus is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
-
-/**
- * Converts raw text into a regular expression string
- * @param {string} text the string to convert
- * @return {string} regular expression representation of the text
- */
-function textToRegExp(text)
-{
-  return text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-}
-
-exports.textToRegExp = textToRegExp;
-
-/**
- * Converts filter text into regular expression string
- * @param {string} text as in Filter()
- * @param {boolean} [captureAll=false] whether to enable the capturing of
- *   leading and trailing wildcards in the filter text; by default, leading and
- *   trailing wildcards are stripped out
- * @return {string} regular expression representation of filter text
- */
-function filterToRegExp(text, captureAll = false)
-{
-  // remove multiple wildcards
-  text = text.replace(/\*+/g, "*");
-
-  if (!captureAll)
-  {
-    // remove leading wildcard
-    if (text[0] == "*")
-      text = text.substring(1);
-
-    // remove trailing wildcard
-    if (text[text.length - 1] == "*")
-      text = text.substring(0, text.length - 1);
-  }
-
-  return text
-    // remove anchors following separator placeholder
-    .replace(/\^\|$/, "^")
-    // escape special symbols
-    .replace(/\W/g, "\\$&")
-    // replace wildcards by .*
-    .replace(/\\\*/g, ".*")
-    // process separator placeholders (all ANSI characters but alphanumeric
-    // characters and _%.-)
-    .replace(/\\\^/g, "(?:[\\x00-\\x24\\x26-\\x2C\\x2F\\x3A-\\x40\\x5B-\\x5E\\x60\\x7B-\\x7F]|$)")
-    // process extended anchor at expression start
-    .replace(/^\\\|\\\|/, "^[\\w\\-]+:\\/+(?!\\/)(?:[^\\/]+\\.)?")
-    // process anchor at expression start
-    .replace(/^\\\|/, "^")
-    // process anchor at expression end
-    .replace(/\\\|$/, "$");
-}
-
-exports.filterToRegExp = filterToRegExp;
-
-function splitSelector(selector)
-{
-  if (!selector.includes(","))
-    return [selector];
-
-  let selectors = [];
-  let start = 0;
-  let level = 0;
-  let sep = "";
-
-  for (let i = 0; i < selector.length; i++)
-  {
-    let chr = selector[i];
-
-    if (chr == "\\")        // ignore escaped characters
-      i++;
-    else if (chr == sep)    // don't split within quoted text
-      sep = "";             // e.g. [attr=","]
-    else if (sep == "")
-    {
-      if (chr == '"' || chr == "'")
-        sep = chr;
-      else if (chr == "(")  // don't split between parentheses
-        level++;            // e.g. :matches(div,span)
-      else if (chr == ")")
-        level = Math.max(0, level - 1);
-      else if (chr == "," && level == 0)
-      {
-        selectors.push(selector.substring(start, i));
-        start = i + 1;
-      }
-    }
-  }
-
-  selectors.push(selector.substring(start));
-  return selectors;
-}
-
-exports.splitSelector = splitSelector;
-
-function findTargetSelectorIndex(selector)
-{
-  let index = 0;
-  let whitespace = 0;
-  let scope = [];
-
-  // Start from the end of the string and go character by character, where each
-  // character is a Unicode code point.
-  for (let character of [...selector].reverse())
-  {
-    let currentScope = scope[scope.length - 1];
-
-    if (character == "'" || character == "\"")
-    {
-      // If we're already within the same type of quote, close the scope;
-      // otherwise open a new scope.
-      if (currentScope == character)
-        scope.pop();
-      else
-        scope.push(character);
-    }
-    else if (character == "]" || character == ")")
-    {
-      // For closing brackets and parentheses, open a new scope only if we're
-      // not within a quote. Within quotes these characters should have no
-      // meaning.
-      if (currentScope != "'" && currentScope != "\"")
-        scope.push(character);
-    }
-    else if (character == "[")
-    {
-      // If we're already within a bracket, close the scope.
-      if (currentScope == "]")
-        scope.pop();
-    }
-    else if (character == "(")
-    {
-      // If we're already within a parenthesis, close the scope.
-      if (currentScope == ")")
-        scope.pop();
-    }
-    else if (!currentScope)
-    {
-      // At the top level (not within any scope), count the whitespace if we've
-      // encountered it. Otherwise if we've hit one of the combinators,
-      // terminate here; otherwise if we've hit a non-colon character,
-      // terminate here.
-      if (/\s/.test(character))
-      {
-        whitespace++;
-      }
-      else if ((character == ">" || character == "+" || character == "~") ||
-               (whitespace > 0 && character != ":"))
-      {
-        break;
-      }
-    }
-
-    // Zero out the whitespace count if we've entered a scope.
-    if (scope.length > 0)
-      whitespace = 0;
-
-    // Increment the index by the size of the character. Note that for Unicode
-    // composite characters (like emoji) this will be more than one.
-    index += character.length;
-  }
-
-  return selector.length - index + whitespace;
-}
-
-/**
- * Qualifies a CSS selector with a qualifier, which may be another CSS selector
- * or an empty string. For example, given the selector "div.bar" and the
- * qualifier "#foo", this function returns "div#foo.bar".
- * @param {string} selector The selector to qualify.
- * @param {string} qualifier The qualifier with which to qualify the selector.
- * @returns {string} The qualified selector.
- */
-function qualifySelector(selector, qualifier)
-{
-  let qualifiedSelector = "";
-
-  for (let sub of splitSelector(selector))
-  {
-    sub = sub.trim();
-
-    qualifiedSelector += ", ";
-
-    let index = findTargetSelectorIndex(sub);
-    let [, type = "", rest] = /^([a-z][a-z-]*)?(.*)/i.exec(sub.substr(index));
-
-    // Note that the first group in the regular expression is optional. If it
-    // doesn't match (e.g. "#foo::nth-child(1)"), type will be an empty string.
-    qualifiedSelector += sub.substr(0, index) + type + qualifier + rest;
-  }
-
-  // Remove the initial comma and space.
-  return qualifiedSelector.substr(2);
-}
-
-exports.qualifySelector = qualifySelector;
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
+__webpack_require__(1);
 __webpack_require__(2);
-__webpack_require__(3);
 module.exports = __webpack_require__(6);
 
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -700,18 +477,42 @@ if (document instanceof HTMLDocument)
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 /** @module adblock-betafish/alias/include.preload */
 
+/*
+ * Same as the original source adblockpluschrome/include.preload.js
+ * except:
+ * - updated the `require` path to other modules
+ * - added several checks & innovocations of the 'MyAdBlock' function
+ *   checkElement()
+ */
+
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 
-let {splitSelector} = __webpack_require__(0);
+
 let {ElemHideEmulation} =
-  __webpack_require__(4);
+  __webpack_require__(3);
 
 // This variable is also used by our other content scripts.
 let contentFiltering;
@@ -728,7 +529,7 @@ const typeMap = new Map([
   ["embed", "OBJECT"]
 ]);
 
-let collapsingSelectors = new Set();
+let checkedSelectors = new Set();
 
 function getURLsFromObjectElement(element)
 {
@@ -762,7 +563,7 @@ function getURLsFromAttributes(element)
 {
   let urls = [];
 
-  if (element.src)
+  if (element.getAttribute("src") && "src" in element)
     urls.push(element.src);
 
   if (element.srcset)
@@ -900,9 +701,13 @@ function checkCollapse(element)
   if (urls.length == 0)
     return;
 
-  // Construct the selector here, because the attributes it relies on can change
-  // between now and when we get the response from the background page.
   let selector = getSelectorForBlockedElement(element);
+  if (selector)
+  {
+    if (checkedSelectors.has(selector))
+      return;
+    checkedSelectors.add(selector);
+  }
 
   browser.runtime.sendMessage(
     {
@@ -915,19 +720,12 @@ function checkCollapse(element)
     {
       if (collapse)
       {
-        if (selector)
-        {
-          if (!collapsingSelectors.has(selector))
-          {
-            collapsingSelectors.add(selector);
-            contentFiltering.addSelectors([selector], null, "collapsing", true);
-            if (typeof checkElement === "function") {
-              checkElement(element);
-            }
+        if (selector) {
+          contentFiltering.addSelectors([selector], "collapsing", true);
+          if (typeof checkElement === "function") {
+            checkElement(element);
           }
-        }
-        else
-        {
+        } else {
           hideElement(element);
         }
       }
@@ -956,22 +754,19 @@ function ElementHidingTracer()
     this.trace();
 }
 ElementHidingTracer.prototype = {
-  addSelectors(selectors, filters)
+  addSelectors(selectors)
   {
-    let pairs = selectors.map((sel, i) => [sel, filters && filters[i]]);
-
     if (document.readyState != "loading")
-      this.checkNodes([document], pairs);
+      this.checkNodes([document], selectors);
 
-    this.selectors.push(...pairs);
+    this.selectors.push(...selectors);
   },
 
-  checkNodes(nodes, pairs)
+  checkNodes(nodes, selectors)
   {
-    let selectors = [];
-    let filters = [];
+    let effectiveSelectors = [];
 
-    for (let [selector, filter] of pairs)
+    for (let selector of selectors)
     {
       nodes: for (let node of nodes)
       {
@@ -982,27 +777,19 @@ ElementHidingTracer.prototype = {
           // priority, or haven't been circumvented in a different way.
           if (getComputedStyle(element).display == "none")
           {
-            // For regular element hiding, we don't know the exact filter,
-            // but the background page can find it with the given selector.
-            // In case of element hiding emulation, the generated selector
-            // we got here is different from the selector part of the filter,
-            // but in this case we can send the whole filter text instead.
-            if (filter)
-              filters.push(filter);
-            else
-              selectors.push(selector);
-
+            effectiveSelectors.push(selector);
             break nodes;
           }
         }
       }
     }
 
-    if (selectors.length > 0 || filters.length > 0)
+    if (effectiveSelectors.length > 0)
     {
       browser.runtime.sendMessage({
         type: "hitLogger.traceElemHide",
-        selectors, filters
+        selectors: effectiveSelectors,
+        filters: []
       });
     }
   },
@@ -1093,51 +880,13 @@ ElementHidingTracer.prototype = {
 
 function ContentFiltering()
 {
-  this.shadow = this.createShadowTree();
   this.styles = new Map();
   this.tracer = null;
-  this.inline = true;
-  this.inlineEmulated = true;
 
-  this.elemHideEmulation = new ElemHideEmulation(
-    this.addSelectors.bind(this),
-    this.hideElements.bind(this)
-  );
+  this.elemHideEmulation = new ElemHideEmulation(this.hideElements.bind(this));
 }
 ContentFiltering.prototype = {
-  selectorGroupSize: 1024,
-
-  createShadowTree()
-  {
-    // Use Shadow DOM if available as to not mess with with web pages that
-    // rely on the order of their own <style> tags (#309). However, creating
-    // a shadow root breaks running CSS transitions. So we have to create
-    // the shadow root before transistions might start (#452).
-    if (!("createShadowRoot" in document.documentElement))
-      return null;
-
-    // Both Firefox and Chrome 66+ support user style sheets, so we can avoid
-    // creating an unnecessary shadow root on these platforms.
-    let match = /\bChrome\/(\d+)/.exec(navigator.userAgent);
-    if (!match || match[1] >= 66)
-      return null;
-
-    // Using shadow DOM causes issues on some Google websites,
-    // including Google Docs, Gmail and Blogger (#1770, #2602, #2687).
-    if (/\.(?:google|blogger)\.com$/.test(document.domain))
-      return null;
-
-    // Finally since some users have both AdBlock and Adblock Plus installed we
-    // have to consider how the two extensions interact. For example we want to
-    // avoid creating the shadowRoot twice.
-    let shadow = document.documentElement.shadowRoot ||
-                 document.documentElement.createShadowRoot();
-    shadow.appendChild(document.createElement("content"));
-
-    return shadow;
-  },
-
-  addSelectorsInline(selectors, groupName, appendOnly = false)
+  addRulesInline(rules, groupName = "standard", appendOnly = false)
   {
     let style = this.styles.get(groupName);
 
@@ -1147,97 +896,56 @@ ContentFiltering.prototype = {
         style.sheet.deleteRule(0);
     }
 
-    if (selectors.length == 0)
+    if (rules.length == 0)
       return;
 
     if (!style)
     {
       // Create <style> element lazily, only if we add styles. Add it to
-      // the shadow DOM if possible. Otherwise fallback to the <head> or
-      // <html> element. If we have injected a style element before that
-      // has been removed (the sheet property is null), create a new one.
+      // the <head> or <html> element. If we have injected a style element
+      // before that has been removed (the sheet property is null), create a
+      // new one.
       style = document.createElement("style");
-      (this.shadow || document.head ||
-                      document.documentElement).appendChild(style);
+      (document.head || document.documentElement).appendChild(style);
 
       // It can happen that the frame already navigated to a different
       // document while we were waiting for the background page to respond.
-      // In that case the sheet property will stay null, after addind the
-      // <style> element to the shadow DOM.
+      // In that case the sheet property may stay null, after adding the
+      // <style> element.
       if (!style.sheet)
         return;
 
       this.styles.set(groupName, style);
     }
 
-    // If using shadow DOM, we have to add the ::content pseudo-element
-    // before each selector, in order to match elements within the
-    // insertion point.
-    let preparedSelectors = [];
-    if (this.shadow)
-    {
-      for (let selector of selectors)
-      {
-        let subSelectors = splitSelector(selector);
-        for (let subSelector of subSelectors)
-          preparedSelectors.push("::content " + subSelector);
-      }
-    }
-    else
-    {
-      preparedSelectors = selectors;
-    }
-
-    // Chromium's Blink engine supports only up to 8,192 simple selectors, and
-    // even fewer compound selectors, in a rule. The exact number of selectors
-    // that would work depends on their sizes (e.g. "#foo .bar" has a
-    // size of 2). Since we don't know the sizes of the selectors here, we
-    // simply split them into groups of 1,024, based on the reasonable
-    // assumption that the average selector won't have a size greater than 8.
-    // The alternative would be to calculate the sizes of the selectors and
-    // divide them up accordingly, but this approach is more efficient and has
-    // worked well in practice. In theory this could still lead to some
-    // selectors not working on Chromium, but it is highly unlikely.
-    // See issue #6298 and https://crbug.com/804179
-    for (let i = 0; i < preparedSelectors.length; i += this.selectorGroupSize)
-    {
-      let selector = preparedSelectors.slice(
-        i, i + this.selectorGroupSize
-      ).join(", ");
-      style.sheet.insertRule(selector + "{display: none !important;}",
-                             style.sheet.cssRules.length);
-    }
+    for (let rule of rules)
+      style.sheet.insertRule(rule, style.sheet.cssRules.length);
   },
 
-  addSelectors(selectors, filters, groupName = "emulated", appendOnly = false)
+  addSelectors(selectors, groupName = "standard", appendOnly = false)
   {
-    if (this.inline || this.inlineEmulated)
+    browser.runtime.sendMessage({
+      type: "content.injectSelectors",
+      selectors,
+      groupName,
+      appendOnly
+    },
+    rules =>
     {
-      // Insert the style rules inline if we have been instructed by the
-      // background page to do so. This is usually the case, except on platforms
-      // that do support user stylesheets via the browser.tabs.insertCSS API
-      // (Firefox 53 onwards for now and possibly Chrome in the near future).
-      // Once all supported platforms have implemented this API, we can remove
-      // the code below. See issue #5090.
-      // Related Chrome and Firefox issues:
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=632009
-      // https://bugzilla.mozilla.org/show_bug.cgi?id=1310026
-      this.addSelectorsInline(selectors, groupName, appendOnly);
-    }
-    else
-    {
-      browser.runtime.sendMessage({
-        type: "elemhide.injectSelectors",
-        selectors,
-        groupName,
-        appendOnly
-      });
-    }
-
-    // Only trace selectors that are based directly on hiding filters
-    // (i.e. leave out collapsing selectors).
-    if (this.tracer && groupName != "collapsing")
-      this.tracer.addSelectors(selectors, filters);
+      if (rules)
+      {
+        // Insert the rules inline if we have been instructed by the background
+        // page to do so. This is rarely the case, except on platforms that do
+        // not support user stylesheets via the browser.tabs.insertCSS API
+        // (Firefox <53, Chrome <66, and Edge).
+        // Once all supported platforms have implemented this API, we can remove
+        // the code below. See issue #5090.
+        // Related Chrome and Firefox issues:
+        // https://bugs.chromium.org/p/chromium/issues/detail?id=632009
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1310026
+        this.addRulesInline(rules, groupName, appendOnly);
+      }
+    });
   },
 
   hideElements(elements, filters)
@@ -1270,19 +978,11 @@ ContentFiltering.prototype = {
       if (response.trace)
         this.tracer = new ElementHidingTracer();
 
-      this.inline = response.inline;
-      this.inlineEmulated = !!response.inlineEmulated;
-
-      if (this.inline)
-        this.addSelectorsInline(response.selectors, "standard");
+      if (response.inline)
+        this.addRulesInline(response.rules);
 
       if (this.tracer)
         this.tracer.addSelectors(response.selectors);
-
-      // Prefer CSS selectors for -abp-has and -abp-contains unless the
-      // background page has asked us to use inline styles.
-      this.elemHideEmulation.useInlineStyles = this.inline ||
-                                               this.inlineEmulated;
 
       this.elemHideEmulation.apply(response.emulatedPatterns);
     });
@@ -1314,8 +1014,9 @@ window.contentFiltering = contentFiltering;
 window.typeMap = typeMap;
 window.getURLsFromElement = getURLsFromElement;
 
+
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1339,7 +1040,7 @@ window.getURLsFromElement = getURLsFromElement;
 
 
 const {textToRegExp, filterToRegExp, splitSelector,
-       qualifySelector} = __webpack_require__(0);
+       qualifySelector} = __webpack_require__(4);
 const {indexOf} = __webpack_require__(5);
 
 let MIN_INVOCATION_INTERVAL = 3000;
@@ -1926,14 +1627,13 @@ function shouldObserveCharacterData(patterns)
 
 class ElemHideEmulation
 {
-  constructor(addSelectorsFunc, hideElemsFunc)
+  constructor(hideElemsFunc)
   {
     this._filteringInProgress = false;
     this._lastInvocation = -MIN_INVOCATION_INTERVAL;
     this._scheduledProcessing = null;
 
     this.document = document;
-    this.addSelectorsFunc = addSelectorsFunc;
     this.hideElemsFunc = hideElemsFunc;
     this.observer = new MutationObserver(this.observe.bind(this));
   }
@@ -2036,9 +1736,6 @@ class ElemHideEmulation
 
     let patterns = filterPatterns(this.patterns, {stylesheets, mutations});
 
-    let selectors = [];
-    let selectorFilters = [];
-
     let elements = [];
     let elementFilters = [];
 
@@ -2104,8 +1801,6 @@ class ElemHideEmulation
       {
         if (!patterns.length)
         {
-          if (selectors.length > 0)
-            this.addSelectorsFunc(selectors, selectorFilters);
           if (elements.length > 0)
             this.hideElemsFunc(elements, elementFilters);
           if (typeof done == "function")
@@ -2299,6 +1994,229 @@ class ElemHideEmulation
 }
 
 exports.ElemHideEmulation = ElemHideEmulation;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+
+/**
+ * Converts raw text into a regular expression string
+ * @param {string} text the string to convert
+ * @return {string} regular expression representation of the text
+ */
+function textToRegExp(text)
+{
+  return text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+}
+
+exports.textToRegExp = textToRegExp;
+
+/**
+ * Converts filter text into regular expression string
+ * @param {string} text as in Filter()
+ * @param {boolean} [captureAll=false] whether to enable the capturing of
+ *   leading and trailing wildcards in the filter text; by default, leading and
+ *   trailing wildcards are stripped out
+ * @return {string} regular expression representation of filter text
+ */
+function filterToRegExp(text, captureAll = false)
+{
+  // remove multiple wildcards
+  text = text.replace(/\*+/g, "*");
+
+  if (!captureAll)
+  {
+    // remove leading wildcard
+    if (text[0] == "*")
+      text = text.substring(1);
+
+    // remove trailing wildcard
+    if (text[text.length - 1] == "*")
+      text = text.substring(0, text.length - 1);
+  }
+
+  return text
+    // remove anchors following separator placeholder
+    .replace(/\^\|$/, "^")
+    // escape special symbols
+    .replace(/\W/g, "\\$&")
+    // replace wildcards by .*
+    .replace(/\\\*/g, ".*")
+    // process separator placeholders (all ANSI characters but alphanumeric
+    // characters and _%.-)
+    .replace(/\\\^/g, "(?:[\\x00-\\x24\\x26-\\x2C\\x2F\\x3A-\\x40\\x5B-\\x5E\\x60\\x7B-\\x7F]|$)")
+    // process extended anchor at expression start
+    .replace(/^\\\|\\\|/, "^[\\w\\-]+:\\/+(?!\\/)(?:[^\\/]+\\.)?")
+    // process anchor at expression start
+    .replace(/^\\\|/, "^")
+    // process anchor at expression end
+    .replace(/\\\|$/, "$");
+}
+
+exports.filterToRegExp = filterToRegExp;
+
+function splitSelector(selector)
+{
+  if (!selector.includes(","))
+    return [selector];
+
+  let selectors = [];
+  let start = 0;
+  let level = 0;
+  let sep = "";
+
+  for (let i = 0; i < selector.length; i++)
+  {
+    let chr = selector[i];
+
+    if (chr == "\\")        // ignore escaped characters
+      i++;
+    else if (chr == sep)    // don't split within quoted text
+      sep = "";             // e.g. [attr=","]
+    else if (sep == "")
+    {
+      if (chr == '"' || chr == "'")
+        sep = chr;
+      else if (chr == "(")  // don't split between parentheses
+        level++;            // e.g. :matches(div,span)
+      else if (chr == ")")
+        level = Math.max(0, level - 1);
+      else if (chr == "," && level == 0)
+      {
+        selectors.push(selector.substring(start, i));
+        start = i + 1;
+      }
+    }
+  }
+
+  selectors.push(selector.substring(start));
+  return selectors;
+}
+
+exports.splitSelector = splitSelector;
+
+function findTargetSelectorIndex(selector)
+{
+  let index = 0;
+  let whitespace = 0;
+  let scope = [];
+
+  // Start from the end of the string and go character by character, where each
+  // character is a Unicode code point.
+  for (let character of [...selector].reverse())
+  {
+    let currentScope = scope[scope.length - 1];
+
+    if (character == "'" || character == "\"")
+    {
+      // If we're already within the same type of quote, close the scope;
+      // otherwise open a new scope.
+      if (currentScope == character)
+        scope.pop();
+      else
+        scope.push(character);
+    }
+    else if (character == "]" || character == ")")
+    {
+      // For closing brackets and parentheses, open a new scope only if we're
+      // not within a quote. Within quotes these characters should have no
+      // meaning.
+      if (currentScope != "'" && currentScope != "\"")
+        scope.push(character);
+    }
+    else if (character == "[")
+    {
+      // If we're already within a bracket, close the scope.
+      if (currentScope == "]")
+        scope.pop();
+    }
+    else if (character == "(")
+    {
+      // If we're already within a parenthesis, close the scope.
+      if (currentScope == ")")
+        scope.pop();
+    }
+    else if (!currentScope)
+    {
+      // At the top level (not within any scope), count the whitespace if we've
+      // encountered it. Otherwise if we've hit one of the combinators,
+      // terminate here; otherwise if we've hit a non-colon character,
+      // terminate here.
+      if (/\s/.test(character))
+      {
+        whitespace++;
+      }
+      else if ((character == ">" || character == "+" || character == "~") ||
+               (whitespace > 0 && character != ":"))
+      {
+        break;
+      }
+    }
+
+    // Zero out the whitespace count if we've entered a scope.
+    if (scope.length > 0)
+      whitespace = 0;
+
+    // Increment the index by the size of the character. Note that for Unicode
+    // composite characters (like emoji) this will be more than one.
+    index += character.length;
+  }
+
+  return selector.length - index + whitespace;
+}
+
+/**
+ * Qualifies a CSS selector with a qualifier, which may be another CSS selector
+ * or an empty string. For example, given the selector "div.bar" and the
+ * qualifier "#foo", this function returns "div#foo.bar".
+ * @param {string} selector The selector to qualify.
+ * @param {string} qualifier The qualifier with which to qualify the selector.
+ * @returns {string} The qualified selector.
+ */
+function qualifySelector(selector, qualifier)
+{
+  let qualifiedSelector = "";
+
+  for (let sub of splitSelector(selector))
+  {
+    sub = sub.trim();
+
+    qualifiedSelector += ", ";
+
+    let index = findTargetSelectorIndex(sub);
+    let [, type = "", rest] = /^([a-z][a-z-]*)?(.*)/i.exec(sub.substr(index));
+
+    // Note that the first group in the regular expression is optional. If it
+    // doesn't match (e.g. "#foo::nth-child(1)"), type will be an empty string.
+    qualifiedSelector += sub.substr(0, index) + type + qualifier + rest;
+  }
+
+  // Remove the initial comma and space.
+  return qualifiedSelector.substr(2);
+}
+
+exports.qualifySelector = qualifySelector;
 
 
 /***/ }),

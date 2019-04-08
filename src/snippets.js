@@ -669,12 +669,36 @@ function randomId()
 
 function wrapPropertyAccess(object, property, descriptor)
 {
-  let currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
-  if (currentDescriptor && !currentDescriptor.configurable)
-    return false;
+  let dotIndex = property.indexOf(".");
+  if (dotIndex == -1)
+  {
+    // simple property case.
+    let currentDescriptor = Object.getOwnPropertyDescriptor(object, property);
+    if (currentDescriptor && !currentDescriptor.configurable)
+      return;
 
-  Object.defineProperty(object, property, descriptor);
-  return true;
+    Object.defineProperty(object, property, descriptor);
+    return;
+  }
+
+  let name = property.slice(0, dotIndex);
+  property = property.slice(dotIndex + 1);
+  let value = object[name];
+  if (value && typeof value == "object")
+    wrapPropertyAccess(value, property, descriptor);
+
+  let currentDescriptor = Object.getOwnPropertyDescriptor(object, name);
+  if (currentDescriptor && !currentDescriptor.configurable)
+    return;
+
+  let setter = newValue =>
+  {
+    value = newValue;
+    if (newValue && typeof newValue == "object")
+      wrapPropertyAccess(newValue, property, descriptor);
+  };
+
+  Object.defineProperty(object, name, {get: () => value, set: setter});
 }
 
 /**
@@ -718,8 +742,8 @@ function abortOnPropertyRead(property)
     throw new ReferenceError(rid);
   }
 
-  if (wrapPropertyAccess(window, property, {get: abort, set() {}}))
-    overrideOnError(rid);
+  wrapPropertyAccess(window, property, {get: abort, set() {}});
+  overrideOnError(rid);
 }
 
 exports["abort-on-property-read"] = makeInjector(abortOnPropertyRead,
@@ -750,8 +774,8 @@ function abortOnPropertyWrite(property)
     throw new ReferenceError(rid);
   }
 
-  if (wrapPropertyAccess(window, property, {set: abort}))
-    overrideOnError(rid);
+  wrapPropertyAccess(window, property, {set: abort});
+  overrideOnError(rid);
 }
 
 exports["abort-on-property-write"] = makeInjector(abortOnPropertyWrite,
@@ -784,7 +808,7 @@ function abortCurrentInlineScript(api, search = null)
   {
     object = object[node];
 
-    if (!object || typeof object != "object")
+    if (!object || !(typeof object == "object" || typeof object == "function"))
       return;
   }
 
@@ -813,10 +837,47 @@ function abortCurrentInlineScript(api, search = null)
     }
   };
 
-  if (wrapPropertyAccess(object, name, descriptor))
-    overrideOnError(rid);
+  wrapPropertyAccess(object, name, descriptor);
+  overrideOnError(rid);
 }
 
 exports["abort-current-inline-script"] =
   makeInjector(abortCurrentInlineScript, wrapPropertyAccess, toRegExp,
                overrideOnError, regexEscape, randomId);
+
+/**
+ * Strips a query string parameter from <code>fetch()</code> calls.
+ *
+ * @param {string} name The name of the parameter.
+ * @param {?string} [urlPattern] An optional pattern that the URL must match.
+ */
+function stripFetchQueryParameter(name, urlPattern = null)
+{
+  let fetch_ = window.fetch;
+  if (typeof fetch_ != "function")
+    return;
+
+  let urlRegExp = urlPattern ? toRegExp(urlPattern) : null;
+  window.fetch = function fetch(...args)
+  {
+    let [source] = args;
+    if (typeof source == "string" &&
+        (!urlRegExp || urlRegExp.test(source)))
+    {
+      let url = new URL(source);
+
+      // We don't use the searchParams property of the URL object because some
+      // older browsers do not support it (e.g. Chrome 50, see #7407).
+      let searchParams = new URLSearchParams(url.search.substring(1));
+      searchParams.delete(name);
+      url.search = searchParams;
+
+      args[0] = url.href;
+    }
+
+    return fetch_.apply(this, args);
+  };
+}
+
+exports["strip-fetch-query-parameter"] = makeInjector(stripFetchQueryParameter,
+                                                      toRegExp, regexEscape);

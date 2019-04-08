@@ -18,7 +18,8 @@
 "use strict";
 
 {
-  const asyncAPIs = [
+  let asyncAPIs = [
+    "browserAction.setIcon",
     "browserAction.getPopup",
     "contextMenus.removeAll",
     "devtools.panels.create",
@@ -49,6 +50,15 @@
     "windows.update"
   ];
 
+  // Microsoft Edge (44.17763.1.0), Chrome (<= 66) and Opera (<= 54)
+  // don't accept passing a callback for
+  // browserAction.setBadgeText and browserAction.setBadgeBackgroundColor
+  const maybeAsyncAPIs = [
+    ["browserAction.setBadgeText", {text: ""}],
+    ["browserAction.setBadgeBackgroundColor", {color: [0, 0, 0, 0]}]
+  ];
+  let syncAPIs = [];
+
   // Since we add a callback for all messaging API calls in our wrappers,
   // Chrome assumes we're interested in the response; when there's no response,
   // it sets runtime.lastError
@@ -63,7 +73,7 @@
 
   let messageListeners = new WeakMap();
 
-  function wrapAsyncAPI(api)
+  function getAPIWrappables(api)
   {
     let object = browser;
     let path = api.split(".");
@@ -81,6 +91,18 @@
     if (!func)
       return;
 
+    return {object, name, func};
+  }
+
+  function wrapAsyncAPI(api)
+  {
+    let wrappables = getAPIWrappables(api);
+
+    if (!wrappables)
+      return;
+
+    let {object, name, func} = wrappables;
+
     // If the property is not writable assigning it will fail, so we use
     // Object.defineProperty here instead. Assuming the property isn't
     // inherited its other attributes (e.g. enumerable) are preserved,
@@ -89,8 +111,6 @@
     Object.defineProperty(object, name, {
       value(...args)
       {
-        let callStack = new Error().stack;
-
         if (typeof args[args.length - 1] == "function")
           return func.apply(object, args);
 
@@ -113,12 +133,7 @@
             // runtime.lastError is already an Error instance on Edge, while on
             // Chrome it is a plain object with only a message property.
             if (!(error instanceof Error))
-            {
               error = new Error(error.message);
-
-              // Add a more helpful stack trace.
-              error.stack = callStack;
-            }
 
             rejectPromise(error);
           }
@@ -133,6 +148,23 @@
           resolvePromise = resolve;
           rejectPromise = reject;
         });
+      }
+    });
+  }
+
+  function wrapSyncAPI(api)
+  {
+    let wrappables = getAPIWrappables(api);
+
+    if (!wrappables)
+      return;
+
+    let {object, name, func} = wrappables;
+
+    Object.defineProperty(object, name, {
+      value(...args)
+      {
+        return Promise.resolve(func.call(object, ...args));
       }
     });
   }
@@ -215,6 +247,19 @@
     return true;
   }
 
+  function acceptsCallback(func, args)
+  {
+    try
+    {
+      func(...args, () => {});
+      return true;
+    }
+    catch (e)
+    {
+      return false;
+    }
+  }
+
   if (shouldWrapAPIs())
   {
     // Unlike Firefox and Microsoft Edge, Chrome doesn't have a "browser"
@@ -223,8 +268,23 @@
     if (typeof browser == "undefined")
       window.browser = chrome;
 
+    for (let [api, ...testArgs] of maybeAsyncAPIs)
+    {
+      let wrappables = getAPIWrappables(api);
+
+      if (!wrappables)
+        continue;
+
+      let {func} = wrappables;
+
+      (acceptsCallback(func, testArgs) ? asyncAPIs : syncAPIs).push(api);
+    }
+
     for (let api of asyncAPIs)
       wrapAsyncAPI(api);
+
+    for (let api of syncAPIs)
+      wrapSyncAPI(api);
 
     wrapRuntimeOnMessage();
   }
