@@ -1618,7 +1618,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.43.0";
+exports.addonVersion = "3.44.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -5310,6 +5310,7 @@ let ServerMessages = exports.ServerMessages = (function()
       "o": STATS.os,
       "l": determineUserLanguage(),
       "t": queryType,
+      "v": chrome.runtime.getManifest().version,
     };
     if (typeof additionalParams === "object") {
       for (var prop in additionalParams) {
@@ -9559,9 +9560,9 @@ let STATS = exports.STATS = (function()
         bv : browserVersion,
         ov : osVersion,
         ad: getSettings().show_advanced_options ? '1': '0',
+        yt: getSettings().youtube_channel_whitelist ? '1': '0',
         l : determineUserLanguage(),
         pc : total_pings,
-        cb : getSettings().safari_content_blocking ? '1' : '0',
         dcv2 : getSettings().data_collection_v2 ? '1' : '0',
         cdn: getSettings().local_cdn ? '1' : '0',
         cdnr: LocalCDN.getRedirectCount(),
@@ -14938,6 +14939,52 @@ var chromeStorageSetHelper = function(key, value, callback)
     chrome.storage.local.set(items, callback);
 };
 
+function chromeStorageGetHelper(storageKey) {
+  return new Promise(function(resolve, reject) {
+    chrome.storage.local.get(storageKey, function(items) {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError.message);
+        reject(chrome.runtime.lastError.message);
+      } else {
+        resolve(items[storageKey]);
+      }
+    });
+  });
+};
+
+function chromeLocalStorageOnChangedHelper(storageKey, callback) {
+  chrome.storage.onChanged.addListener(function(changes, namespace) {
+    if (namespace !== 'local') return;
+
+    for (var key in changes) {
+      if (key !== storageKey) return;
+      callback();
+    }
+  });
+};
+
+var reloadOptionsPageTabs = function() {
+  var optionTabQuery = {
+    url: 'chrome-extension://' + chrome.runtime.id + '/options.html*'
+  }
+  chrome.tabs.query(optionTabQuery, function(tabs) {
+    for (var i in tabs) {
+      chrome.tabs.reload(tabs[i].id);
+    }
+  });
+};
+
+var reloadAllOpenedTabs = function() {
+  var optionTabQuery = {
+    url: 'chrome-extension://' + chrome.runtime.id + '/*'
+  }
+  chrome.tabs.query(optionTabQuery, function(tabs) {
+    for (var i in tabs) {
+      chrome.tabs.reload(tabs[i].id);
+    }
+  });
+};
+
 Object.assign(window, {
   sessionstorage_set,
   sessionstorage_get,
@@ -14949,6 +14996,10 @@ Object.assign(window, {
   chromeStorageSetHelper,
   logging,
   translate,
+  chromeStorageGetHelper,
+  reloadOptionsPageTabs,
+  reloadAllOpenedTabs,
+  chromeLocalStorageOnChangedHelper,
 });
 
 /***/ }),
@@ -15010,6 +15061,10 @@ function Settings()
     show_survey : true,
     local_cdn : false,
     picreplacement : false,
+    color_themes: {
+      popup_menu: 'default_theme',
+      options_page: 'default_theme'
+    }
   };
   var _this = this;
   this._init = new Promise(function(resolve)
@@ -19552,17 +19607,6 @@ var License = (function () {
     }
   };
 })();
-
-var reloadOptionsPageTabs = function() {
-  var optionTabQuery = {
-    url: 'chrome-extension://' + chrome.runtime.id + '/options.html*'
-  }
-  chrome.tabs.query(optionTabQuery, function(tabs) {
-    for (var i in tabs) {
-      chrome.tabs.reload(tabs[i].id);
-    }
-  });
-}
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
