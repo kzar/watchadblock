@@ -774,9 +774,6 @@ ActiveFilter.prototype = extend(Filter, {
  * @param {string} [sitekeys]
  *   Public keys of websites that this filter should apply to
  * @param {?string} [rewrite]
- *   The (optional) rule specifying how to rewrite the URL. See
- *   RegExpFilter.prototype.rewrite.
- * @param {?string} [resourceName]
  *   The name of the internal resource to which to rewrite the
  *   URL. e.g. if the value of the <code>rewrite</code> parameter is
  *   <code>abp-resource:blank-html</code>, this should be
@@ -785,7 +782,7 @@ ActiveFilter.prototype = extend(Filter, {
  * @augments ActiveFilter
  */
 function RegExpFilter(text, regexpSource, contentType, matchCase, domains,
-                      thirdParty, sitekeys, rewrite, resourceName)
+                      thirdParty, sitekeys, rewrite)
 {
   ActiveFilter.call(this, text, domains);
 
@@ -799,8 +796,6 @@ function RegExpFilter(text, regexpSource, contentType, matchCase, domains,
     this.sitekeySource = sitekeys;
   if (rewrite != null)
     this.rewrite = rewrite;
-  if (resourceName)
-    this.resourceName = resourceName;
 
   if (regexpSource.length >= 2 &&
       regexpSource[0] == "/" &&
@@ -817,8 +812,7 @@ function RegExpFilter(text, regexpSource, contentType, matchCase, domains,
     // Patterns like /foo/bar/* exist so that they are not treated as regular
     // expressions. We drop any superfluous wildcards here so our optimizations
     // can kick in.
-    if (this.rewrite == null || this.resourceName)
-      regexpSource = regexpSource.replace(/^\*+/, "").replace(/\*+$/, "");
+    regexpSource = regexpSource.replace(/^\*+/, "").replace(/\*+$/, "");
 
     if (!this.matchCase && isLiteralPattern(regexpSource))
       regexpSource = regexpSource.toLowerCase();
@@ -857,12 +851,9 @@ RegExpFilter.prototype = extend(ActiveFilter, {
   {
     let value = null;
 
-    let {pattern, rewrite, resourceName} = this;
-    if ((rewrite != null && !resourceName) || !isLiteralPattern(pattern))
-    {
-      value = new RegExp(filterToRegExp(pattern, rewrite != null),
-                         this.matchCase ? "" : "i");
-    }
+    let {pattern} = this;
+    if (!isLiteralPattern(pattern))
+      value = new RegExp(filterToRegExp(pattern), this.matchCase ? "" : "i");
 
     Object.defineProperty(this, "regexp", {value});
     return value;
@@ -912,20 +903,13 @@ RegExpFilter.prototype = extend(ActiveFilter, {
   },
 
   /**
-   * The rule specifying how to rewrite the URL.
-   * The syntax is similar to the one of String.prototype.replace().
-   * @type {?string}
-   */
-  rewrite: null,
-
-  /**
    * The name of the internal resource to which to rewrite the
-   * URL. e.g. if the value of the <code>rewrite</code> property is
+   * URL. e.g. if the value of the <code>$rewrite</code> option is
    * <code>abp-resource:blank-html</code>, this should be
    * <code>blank-html</code>.
    * @type {?string}
    */
-  resourceName: null,
+  rewrite: null,
 
   /**
    * Tests whether the URL matches this filter
@@ -1064,7 +1048,6 @@ RegExpFilter.fromText = function(text)
   let collapse = null;
   let csp = null;
   let rewrite = null;
-  let resourceName = null;
   let options;
   let match = text.includes("$") ? Filter.optionsRegExp.exec(text) : null;
   if (match)
@@ -1132,28 +1115,15 @@ RegExpFilter.fromText = function(text)
           case "rewrite":
             if (value == null)
               return new InvalidFilter(origText, "filter_unknown_option");
-            rewrite = value;
-            if (value.startsWith("abp-resource:"))
-              resourceName = value.substr("abp-resource:".length);
+            if (!value.startsWith("abp-resource:"))
+              return new InvalidFilter(origText, "filter_invalid_rewrite");
+            rewrite = value.substr("abp-resource:".length);
             break;
           default:
             return new InvalidFilter(origText, "filter_unknown_option");
         }
       }
     }
-  }
-
-  // For security reasons, never match $rewrite filters
-  // against requests that might load any code to be executed.
-  // Unless it is to an internal resource.
-  if (rewrite != null && !resourceName)
-  {
-    if (contentType == null)
-      ({contentType} = RegExpFilter.prototype);
-    contentType &= ~(RegExpFilter.typeMap.SCRIPT |
-                     RegExpFilter.typeMap.SUBDOCUMENT |
-                     RegExpFilter.typeMap.OBJECT |
-                     RegExpFilter.typeMap.OBJECT_SUBREQUEST);
   }
 
   try
@@ -1163,7 +1133,7 @@ RegExpFilter.fromText = function(text)
       if (csp && Filter.invalidCSPRegExp.test(csp))
         return new InvalidFilter(origText, "filter_invalid_csp");
 
-      if (resourceName)
+      if (rewrite)
       {
         if (text[0] == "|" && text[1] == "|")
         {
@@ -1182,7 +1152,7 @@ RegExpFilter.fromText = function(text)
       }
 
       return new BlockingFilter(origText, text, contentType, matchCase, domains,
-                                thirdParty, sitekeys, rewrite, resourceName,
+                                thirdParty, sitekeys, rewrite,
                                 collapse, csp);
     }
     return new WhitelistFilter(origText, text, contentType, matchCase, domains,
@@ -1243,9 +1213,6 @@ RegExpFilter.prototype.contentType &= ~(RegExpFilter.typeMap.CSP |
  * @param {boolean} [thirdParty] see {@link RegExpFilter RegExpFilter()}
  * @param {string} [sitekeys] see {@link RegExpFilter RegExpFilter()}
  * @param {?string} [rewrite]
- *   The (optional) rule specifying how to rewrite the URL. See
- *   RegExpFilter.prototype.rewrite.
- * @param {?string} [resourceName]
  *   The name of the internal resource to which to rewrite the
  *   URL. e.g. if the value of the <code>rewrite</code> parameter is
  *   <code>abp-resource:blank-html</code>, this should be
@@ -1258,11 +1225,11 @@ RegExpFilter.prototype.contentType &= ~(RegExpFilter.typeMap.CSP |
  * @augments RegExpFilter
  */
 function BlockingFilter(text, regexpSource, contentType, matchCase, domains,
-                        thirdParty, sitekeys, rewrite, resourceName,
+                        thirdParty, sitekeys, rewrite,
                         collapse, csp)
 {
   RegExpFilter.call(this, text, regexpSource, contentType, matchCase, domains,
-                    thirdParty, sitekeys, rewrite, resourceName);
+                    thirdParty, sitekeys, rewrite);
 
   if (collapse != null)
     this.collapse = collapse;
@@ -1295,20 +1262,7 @@ BlockingFilter.prototype = extend(RegExpFilter, {
    */
   rewriteUrl(url)
   {
-    if (this.resourceName)
-      return resourceMap.get(this.resourceName) || url;
-
-    try
-    {
-      let rewrittenUrl = new URL(url.replace(this.regexp, this.rewrite), url);
-      if (rewrittenUrl.origin == new URL(url).origin)
-        return rewrittenUrl.href;
-    }
-    catch (e)
-    {
-    }
-
-    return url;
+    return resourceMap.get(this.rewrite) || url;
   }
 });
 
@@ -1618,7 +1572,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.44.0";
+exports.addonVersion = "3.45.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -1652,6 +1606,7 @@ exports.platformVersion = platformVersion;
 
 
 
+const info = __webpack_require__(2);
 const {EventEmitter} = __webpack_require__(12);
 
 const keyPrefix = "pref:";
@@ -1868,7 +1823,17 @@ let Prefs = exports.Prefs = {
 
     if (value == defaultValue)
     {
+      let oldValue = overrides[preference];
       delete overrides[preference];
+
+      // Firefox 66 fails to emit storage.local.onChanged events for falsey
+      // values. https://bugzilla.mozilla.org/show_bug.cgi?id=1541449
+      if (!oldValue &&
+          info.platform == "gecko" && parseInt(info.platformVersion, 10) == 66)
+      {
+        onChanged({[prefToKey(preference)]: {oldValue}}, "local");
+      }
+
       return browser.storage.local.remove(prefToKey(preference));
     }
 
@@ -1928,7 +1893,7 @@ function savePref(pref)
 }
 
 let customSave = new Map();
-if (__webpack_require__(2).platform == "gecko")
+if (info.platform == "gecko")
 {
   // Saving one storage value causes all others to be saved as well on Gecko.
   // Make sure that updating ad counter doesn't cause the filters data to be
@@ -1966,6 +1931,24 @@ function addPreference(pref)
   });
 }
 
+function onChanged(changes)
+{
+  for (let key in changes)
+  {
+    let pref = keyToPref(key);
+    if (pref && pref in defaults)
+    {
+      let change = changes[key];
+      if ("newValue" in change && change.newValue != defaults[pref])
+        overrides[pref] = change.newValue;
+      else
+        delete overrides[pref];
+
+      eventEmitter.emit(pref);
+    }
+  }
+}
+
 function init()
 {
   let prefs = Object.keys(defaults);
@@ -2001,23 +1984,7 @@ function init()
 
   function onLoaded()
   {
-    browser.storage.onChanged.addListener(changes =>
-    {
-      for (let key in changes)
-      {
-        let pref = keyToPref(key);
-        if (pref && pref in defaults)
-        {
-          let change = changes[key];
-          if ("newValue" in change && change.newValue != defaults[pref])
-            overrides[pref] = change.newValue;
-          else
-            delete overrides[pref];
-
-          eventEmitter.emit(pref);
-        }
-      }
-    });
+    browser.storage.onChanged.addListener(onChanged);
   }
 
   Prefs.untilLoaded = Promise.all([localLoaded, managedLoaded]).then(onLoaded);
