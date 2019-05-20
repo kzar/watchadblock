@@ -167,6 +167,7 @@ a:hover {
   height: 18px;
   width: 18px;
   margin-right: 7px;
+  margin-top: 5px;
 }
 #div_adblock_protect_enrollment {
   height: 98px;
@@ -247,33 +248,14 @@ svg#svg_options .icon-color:hover {
   cursor: pointer;
   fill: var(--help-icon-color-hovered);
 }
-#div_myadblock_enrollment {
-  background-color: red;
-  color: white;
-  position: relative;
-  line-height: 32px;
-  padding: 0 10px;
+.myadblocklogo {
+  float: right;
+  height: 18px;
+  width: 18px;
+  margin-right: 7px;
+  margin-top: 5px;
 }
-#div_myadblock_enrollment.bottom-space {
-  margin-bottom: 5px;
-}
-#div_myadblock_enrollment:hover,
-#div_myadblock_enrollment:hover .pointer-up {
-  transition: all 0.1s ease-out;
-  -webkit-transition: all 0.1s ease-out;
-  background-color: #E40D0D;
-  font-weight: bold;
-}
-.pointer-up {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 2px;
-  transform: rotate(45deg) skew(15deg, 15deg);
-  background: red;
-  right: 9px;
-  z-index: -1;
-}
+
 /* Retina & hi DPI displays only */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {}
 

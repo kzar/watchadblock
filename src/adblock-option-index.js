@@ -122,7 +122,6 @@ function loadOptions()
 
     loadTabs(activeTab);
   });
-
   backgroundPage.recordGeneralMessage("options_opened", undefined, { tab: activeTab });
 }
 

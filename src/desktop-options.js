@@ -1650,7 +1650,7 @@ IOElement.intent("i18n", id =>
 
 module.exports = IOElement;
 
-},{"document-register-element/pony":14,"hyperhtml-element/cjs":21}],3:[function(require,module,exports){
+},{"document-register-element/pony":15,"hyperhtml-element/cjs":22}],3:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1805,7 +1805,7 @@ var createContent = (function (document) {'use strict';
   function create(element) {
     return element === FRAGMENT ?
       document.createDocumentFragment() :
-      document.createElement(element);
+      document.createElementNS('http://www.w3.org/1999/xhtml', element);
   }
 
   // it could use createElementNS when hasNode is there
@@ -1825,23 +1825,18 @@ module.exports = createContent;
 },{}],5:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
-try { self.CustomEvent = new CustomEvent('.').constructor; }
-catch (CustomEvent) {
-  self.CustomEvent = function CustomEvent(type, init) {
-    if (!init)
-      init = {};
-    var bubbles = !!init.bubbles;
-    var cancelable = !!init.cancelable;
-    var e = document.createEvent('Event');
-    e.initEvent(type, bubbles, cancelable);
-    e.detail = init.detail;
-    try {
-      e.bubbles = bubbles;
-      e.cancelable = cancelable;
-    } catch (e) {}
-    return e;
-  };
-}
+self.CustomEvent = typeof CustomEvent === 'function' ?
+  CustomEvent :
+  (function (__p__) {
+    CustomEvent[__p__] = new CustomEvent('').constructor[__p__];
+    return CustomEvent;
+    function CustomEvent(type, init) {
+      if (!init) init = {};
+      var e = document.createEvent('CustomEvent');
+      e.initCustomEvent(type, !!init.bubbles, !!init.cancelable, init.detail);
+      return e;
+    }
+  }('prototype'));
 module.exports = self.CustomEvent;
 
 },{}],6:[function(require,module,exports){
@@ -1962,9 +1957,10 @@ var isArray = Array.isArray || (function (toString) {
 module.exports = isArray;
 
 },{}],10:[function(require,module,exports){
+/*! (c) Andrea Giammarchi - ISC */
 var templateLiteral = (function () {'use strict';
   var RAW = 'raw';
-  var isNoOp = false;
+  var isNoOp = typeof document !== 'object';
   var templateLiteral = function (tl) {
     if (
       // for badly transpiled literals
@@ -1972,7 +1968,7 @@ var templateLiteral = (function () {'use strict';
       // for some version of TypeScript
       tl.propertyIsEnumerable(RAW) ||
       // and some other version of TypeScript
-      !Object.isFrozen(tl.raw) ||
+      !Object.isFrozen(tl[RAW]) ||
       (
         // or for Firefox < 55
         /Firefox\/(\d+)/.test(
@@ -1983,28 +1979,42 @@ var templateLiteral = (function () {'use strict';
     ) {
       var forever = {};
       templateLiteral = function (tl) {
-        var key = RAW + tl.join(RAW);
+        for (var key = '.', i = 0; i < tl.length; i++)
+          key += tl[i].length + '.' + tl[i];
         return forever[key] || (forever[key] = tl);
       };
-      return templateLiteral(tl);
     } else {
       isNoOp = true;
-      return tl;
     }
+    return TL(tl);
   };
-  return function (tl) {
+  return TL;
+  function TL(tl) {
     return isNoOp ? tl : templateLiteral(tl);
-  };
+  }
 }());
 module.exports = templateLiteral;
 
 },{}],11:[function(require,module,exports){
+'use strict';
+const unique = (require('@ungap/template-literal'));
+
+Object.defineProperty(exports, '__esModule', {value: true}).default = function (template) {
+  var length = arguments.length;
+  var args = [unique(template)];
+  var i = 1;
+  while (i < length)
+    args.push(arguments[i++]);
+  return args;
+};
+
+},{"@ungap/template-literal":10}],12:[function(require,module,exports){
 var trim = ''.trim || function () {
   return String(this).replace(/^\s+|\s+/g, '');
 };
 module.exports = trim;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakMap = WeakMap; }
@@ -2041,7 +2051,7 @@ catch (WeakMap) {
 }
 module.exports = self.WeakMap;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*! (c) Andrea Giammarchi */
 function disconnected(poly) {'use strict';
   var CONNECTED = 'connected';
@@ -2153,7 +2163,7 @@ function disconnected(poly) {'use strict';
 }
 module.exports = disconnected;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*!
 ISC License
 
@@ -3664,7 +3674,7 @@ function installCustomElements(window, polyfill) {'use strict';
 
 module.exports = installCustomElements;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 /*! (c) 2018 Andrea Giammarchi (ISC) */
 
@@ -3888,7 +3898,7 @@ const domdiff = (
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
-},{"./utils.js":16}],16:[function(require,module,exports){
+},{"./utils.js":17}],17:[function(require,module,exports){
 'use strict';
 const Map = (require('@ungap/essential-map'));
 
@@ -4179,7 +4189,7 @@ const applyDiff = (
           futureStart++,
           futureStart,
           currentIndex < currentLength ?
-            get(currentNodes[currentIndex], 1) :
+            get(currentNodes[currentIndex], 0) :
             before
         );
         break;
@@ -4271,12 +4281,19 @@ const smartDiff = (
 };
 exports.smartDiff = smartDiff;
 
-},{"@ungap/essential-map":6}],17:[function(require,module,exports){
+},{"@ungap/essential-map":6}],18:[function(require,module,exports){
 'use strict';
 // Custom
-var NOT_IE = 'content' in document.createElement('template');
-var UID = (NOT_IE ? '-' : '_dt: ') + Math.random().toFixed(6) + (NOT_IE ? '%' : ';');
-//                                              ^ Edge issue ^
+var UID = '-' + Math.random().toFixed(6) + '%';
+//                           Edge issue!
+if (!(function (template, content, tabindex) {
+  return content in template && (
+    (template.innerHTML = '<p ' + tabindex + '="' + UID + '"></p>'),
+    template[content].childNodes[0].getAttribute(tabindex) == UID
+  );
+}(document.createElement('template'), 'content', 'tabindex'))) {
+  UID = '_dt: ' + UID.slice(1, -1) + ';';
+}
 var UIDC = '<!--' + UID + '-->';
 
 // DOM
@@ -4297,7 +4314,7 @@ exports.TEXT_NODE = TEXT_NODE;
 exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
 exports.VOID_ELEMENTS = VOID_ELEMENTS;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 // globals
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -4305,6 +4322,7 @@ const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* i
 // utils
 const createContent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/create-content'));
 const importNode = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/import-node'));
+const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
 
 // local
 const sanitize = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('./sanitizer.js'));
@@ -4322,8 +4340,9 @@ function createInfo(options, template) {
   if (transform)
     markup = transform(markup);
   var content = createContent(markup, options.type);
+  cleanContent(content);
   var holes = [];
-  parse(content, holes, template.slice(0));
+  parse(content, holes, template.slice(0), []);
   var info = {
     content: content,
     updates: function (content) {
@@ -4388,7 +4407,21 @@ function domtagger(options) {
   };
 }
 
-},{"./sanitizer.js":19,"./walker.js":20,"@ungap/create-content":4,"@ungap/import-node":8,"@ungap/weakmap":12}],19:[function(require,module,exports){
+function cleanContent(fragment) {
+  var childNodes = fragment.childNodes;
+  var i = childNodes.length;
+  while (i--) {
+    var child = childNodes[i];
+    if (
+      child.nodeType !== 1 &&
+      trim.call(child.textContent).length === 0
+    ) {
+      fragment.removeChild(child);
+    }
+  }
+}
+
+},{"./sanitizer.js":20,"./walker.js":21,"@ungap/create-content":4,"@ungap/import-node":8,"@ungap/trim":12,"@ungap/weakmap":13}],20:[function(require,module,exports){
 'use strict';
 const {UID, UIDC, VOID_ELEMENTS} = require('./constants.js');
 
@@ -4420,41 +4453,20 @@ function fullClosing($0, $1, $2) {
   return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
 }
 
-},{"./constants.js":17}],20:[function(require,module,exports){
+},{"./constants.js":18}],21:[function(require,module,exports){
 'use strict';
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
 
 const {
-  UID, UIDC, COMMENT_NODE, DOCUMENT_FRAGMENT_NODE, ELEMENT_NODE, SHOULD_USE_TEXT_CONTENT, TEXT_NODE
+  UID, UIDC, COMMENT_NODE, ELEMENT_NODE, SHOULD_USE_TEXT_CONTENT, TEXT_NODE
 } = require('./constants.js');
 
 exports.find = find;
 exports.parse = parse;
 
-function create(type, node, name) {
-  return {type: type, name: name, node: node, path: createPath(node)};
-}
-
-function createPath(node) {
-  var parentNode;
-  var path = [];
-  switch (node.nodeType) {
-    case ELEMENT_NODE:
-    case DOCUMENT_FRAGMENT_NODE:
-      parentNode = node;
-      break;
-    case COMMENT_NODE:
-      parentNode = node.parentNode;
-      prepend(path, parentNode, node);
-      break;
-    default:
-      parentNode = node.ownerElement;
-      break;
-  }
-  while ((parentNode = (node = parentNode).parentNode))
-    prepend(path, parentNode, node);
-  return path;
+function create(type, node, path, name) {
+  return {name: name, node: node, path: path, type: type};
 }
 
 function find(node, path) {
@@ -4465,27 +4477,28 @@ function find(node, path) {
   return node;
 }
 
-function parse(node, paths, parts) {
+function parse(node, holes, parts, path) {
   var childNodes = node.childNodes;
   var length = childNodes.length;
   var i = 0;
   while (i < length) {
-    var child = childNodes[i++];
+    var child = childNodes[i];
     switch (child.nodeType) {
       case ELEMENT_NODE:
-        parseAttributes(child, paths, parts);
-        parse(child, paths, parts);
+        var childPath = path.concat(i);
+        parseAttributes(child, holes, parts, childPath);
+        parse(child, holes, parts, childPath);
         break;
       case COMMENT_NODE:
         if (child.textContent === UID) {
           parts.shift();
-          paths.push(
+          holes.push(
             // basicHTML or other non standard engines
             // might end up having comments in nodes
             // where they shouldn't, hence this check.
             SHOULD_USE_TEXT_CONTENT.test(node.nodeName) ?
-              create('text', node) :
-              create('any', child)
+              create('text', node, path) :
+              create('any', child, path.concat(i))
           );
         }
         break;
@@ -4500,14 +4513,15 @@ function parse(node, paths, parts) {
           trim.call(child.textContent) === UIDC
         ) {
           parts.shift();
-          paths.push(create('text', node));
+          holes.push(create('text', node, path));
         }
         break;
     }
+    i++;
   }
 }
 
-function parseAttributes(node, paths, parts) {
+function parseAttributes(node, holes, parts, path) {
   var cache = new Map;
   var attributes = node.attributes;
   var remove = [];
@@ -4529,7 +4543,7 @@ function parseAttributes(node, paths, parts) {
                       /* istanbul ignore next */
                       attributes[realName.toLowerCase()];
         cache.set(name, value);
-        paths.push(create('attr', value, realName));
+        holes.push(create('attr', value, path, realName));
       }
       remove.push(attribute);
     }
@@ -4569,15 +4583,11 @@ function parseAttributes(node, paths, parts) {
   }
 }
 
-function prepend(path, parent, node) {
-  path.unshift(path.indexOf.call(parent.childNodes, node));
-}
-
-},{"./constants.js":17,"@ungap/essential-map":6,"@ungap/trim":11}],21:[function(require,module,exports){
+},{"./constants.js":18,"@ungap/essential-map":6,"@ungap/trim":12}],22:[function(require,module,exports){
 'use strict';
 /*! (C) 2017-2018 Andrea Giammarchi - ISC Style License */
 
-const {Component, bind, define, hyper, wire} = require('hyperhtml/cjs');
+const {Component, bind, define, hyper, wire} = require('hyperhtml');
 
 // utils to deal with custom elements builtin extends
 const ATTRIBUTE_CHANGED_CALLBACK = 'attributeChangedCallback';
@@ -4593,6 +4603,8 @@ const ownKeys = typeof Reflect === 'object' && Reflect.ownKeys ||
 const setPrototypeOf = O.setPrototypeOf ||
                       ((o, p) => (o.__proto__ = p, o));
 const camel = name => name.replace(/-([a-z])/g, ($0, $1) => $1.toUpperCase());
+const {attachShadow} = HTMLElement.prototype;
+const sr = new WeakMap;
 
 class HyperHTMLElement extends HTMLElement {
 
@@ -4805,21 +4817,37 @@ class HyperHTMLElement extends HTMLElement {
     return Class;
   }
 
+  // weakly relate the shadowRoot for refs usage
+  attachShadow() {
+    const shadowRoot = attachShadow.apply(this, arguments);
+    sr.set(this, shadowRoot);
+    return shadowRoot;
+  }
+
+  // returns elements by ref
+  get refs() {
+    const value = {};
+    if ('_html$' in this) {
+      const all = (sr.get(this) || this).querySelectorAll('[ref]');
+      for (let {length} = all, i = 0; i < length; i++) {
+        const node = all[i];
+        value[node.getAttribute('ref')] = node;
+      }
+      Object.defineProperty(this, 'refs', {value});
+      return value;
+    }
+    return value;
+  }
+
   // lazily bind once hyperHTML logic
   // to either the shadowRoot, if present and open,
   // the _shadowRoot property, if set due closed shadow root,
   // or the custom-element itself if no Shadow DOM is used.
   get html() {
     return this._html$ || (this.html = bind(
-      // in case of Shadow DOM {mode: "open"}, use it
-      this.shadowRoot ||
-      // in case of Shadow DOM {mode: "close"}, use it
-      // this needs the following reference created upfront
-      // this._shadowRoot = this.attachShadow({mode: "close"});
-      this._shadowRoot ||
-      // if no Shadow DOM is used, simply use the component
-      // as container for its own content (it just works too)
-      this
+      // in a way or another, bind to the right node
+      // backward compatible, first two could probably go already
+      this.shadowRoot || this._shadowRoot || sr.get(this) || this
     ));
   }
 
@@ -4936,7 +4964,7 @@ function isReady(created) {
   return false;
 }
 
-},{"hyperhtml/cjs":27}],22:[function(require,module,exports){
+},{"hyperhtml":28}],23:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var hyperStyle = (function (){'use strict';
   // from https://github.com/developit/preact/blob/33fc697ac11762a1cb6e71e9847670d047af7ce5/src/varants.js
@@ -5023,7 +5051,57 @@ var hyperStyle = (function (){'use strict';
 }());
 module.exports = hyperStyle;
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
+/*! (c) Andrea Giammarchi - ISC */
+var Wire = (function (slice, proto) {
+
+  proto = Wire.prototype;
+
+  proto.ELEMENT_NODE = 1;
+  proto.nodeType = 111;
+
+  proto.remove = function (keepFirst) {
+    var childNodes = this.childNodes;
+    var first = this.firstChild;
+    var last = this.lastChild;
+    this._ = null;
+    if (keepFirst && childNodes.length === 2) {
+      last.parentNode.removeChild(last);
+    } else {
+      var range = this.ownerDocument.createRange();
+      range.setStartBefore(keepFirst ? childNodes[1] : first);
+      range.setEndAfter(last);
+      range.deleteContents();
+    }
+    return first;
+  };
+
+  proto.valueOf = function (forceAppend) {
+    var fragment = this._;
+    var noFragment = fragment == null;
+    if (noFragment)
+      fragment = (this._ = this.ownerDocument.createDocumentFragment());
+    if (noFragment || forceAppend) {
+      for (var n = this.childNodes, i = 0, l = n.length; i < l; i++)
+        fragment.appendChild(n[i]);
+    }
+    return fragment;
+  };
+
+  return Wire;
+
+  function Wire(childNodes) {
+    var nodes = (this.childNodes = slice.call(childNodes, 0));
+    this.firstChild = nodes[0];
+    this.lastChild = nodes[nodes.length - 1];
+    this.ownerDocument = nodes[0].ownerDocument;
+    this._ = null;
+  }
+
+}([].slice));
+module.exports = Wire;
+
+},{}],25:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
@@ -5133,7 +5211,7 @@ function setup(content) {
           event.component = this;
           return (_wire$.dispatchEvent ?
                     _wire$ :
-                    _wire$.childNodes[0]
+                    _wire$.firstChild
                   ).dispatchEvent(event);
         }
         return false;
@@ -5182,53 +5260,22 @@ const setValue = (self, secret, value) =>
   })[secret]
 ;
 
-},{"@ungap/custom-event":5,"@ungap/essential-map":6,"@ungap/weakmap":12}],24:[function(require,module,exports){
-'use strict';
-const { append, doc, fragment } = require('../shared/utils.js');
-
-function Wire(childNodes) {
-  this.childNodes = childNodes;
-  this.length = childNodes.length;
-  this.first = childNodes[0];
-  this.last = childNodes[this.length - 1];
-  this._ = null;
-}
-Object.defineProperty(exports, '__esModule', {value: true}).default = Wire
-
-// when a wire is inserted, all its nodes will follow
-Wire.prototype.valueOf = function valueOf(different) {
-  const noFragment = this._ == null;
-  if (noFragment)
-    this._ = fragment(this.first);
-  /* istanbul ignore else */
-  if (noFragment || different)
-    append(this._, this.childNodes);
-  return this._;
-};
-
-// when a wire is removed, all its nodes must be removed as well
-Wire.prototype.remove = function remove() {
-  this._ = null;
-  const first = this.first;
-  const last = this.last;
-  if (this.length === 2) {
-    last.parentNode.removeChild(last);
-  } else {
-    const range = doc(first).createRange();
-    range.setStartBefore(this.childNodes[1]);
-    range.setEndAfter(last);
-    range.deleteContents();
+Object.defineProperties(
+  Component.prototype,
+  {
+    // used to distinguish better than instanceof
+    ELEMENT_NODE: {value: 1},
+    nodeType: {value: -1}
   }
-  return first;
-};
+);
 
-},{"../shared/utils.js":31}],25:[function(require,module,exports){
+},{"@ungap/custom-event":5,"@ungap/essential-map":6,"@ungap/weakmap":13}],26:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
+const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
 
 const {OWNER_SVG_ELEMENT} = require('../shared/constants.js');
 const {Tagger} = require('../objects/Updates.js');
-const {reArguments} = require('../shared/utils.js');
 
 // a weak collection of contexts that
 // are already known to hyperHTML
@@ -5240,7 +5287,7 @@ const bewitched = new WeakMap;
 // The `this` context is either a regular DOM node or a fragment.
 function render() {
   const wicked = bewitched.get(this);
-  const args = reArguments.apply(null, arguments);
+  const args = tta.apply(null, arguments);
   if (wicked && wicked.template === args[0]) {
     wicked.tagger.apply(null, args);
   } else {
@@ -5253,27 +5300,24 @@ function render() {
 // parse it once, if unknown, to map all interpolations
 // as single DOM callbacks, relate such template
 // to the current context, and render it after cleaning the context up
-function upgrade() {
-  const args = reArguments.apply(null, arguments);
+function upgrade(template) {
   const type = OWNER_SVG_ELEMENT in this ? 'svg' : 'html';
   const tagger = new Tagger(type);
-  bewitched.set(this, {tagger, template: args[0]});
+  bewitched.set(this, {tagger, template: template});
   this.textContent = '';
-  this.appendChild(tagger.apply(null, args));
+  this.appendChild(tagger.apply(null, arguments));
 }
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = render;
 
-},{"../objects/Updates.js":29,"../shared/constants.js":30,"../shared/utils.js":31,"@ungap/weakmap":12}],26:[function(require,module,exports){
+},{"../objects/Updates.js":30,"../shared/constants.js":31,"@ungap/template-tag-arguments":11,"@ungap/weakmap":13}],27:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
-const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
+const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
 
-const {ELEMENT_NODE} = require('../shared/constants.js');
-const Wire = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('../classes/Wire.js'));
+const Wire = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('hyperhtml-wire'));
 
 const {Tagger} = require('../objects/Updates.js');
-const {reArguments} = require('../shared/utils.js');
 
 // all wires used per each context
 const wires = new WeakMap;
@@ -5300,7 +5344,7 @@ const wire = (obj, type) => obj == null ?
 const content = type => {
   let wire, tagger, template;
   return function () {
-    const args = reArguments.apply(null, arguments);
+    const args = tta.apply(null, arguments);
     if (template !== args[0]) {
       template = args[0];
       tagger = new Tagger(type);
@@ -5336,31 +5380,23 @@ const weakly = (obj, type) => {
 // stay associated with the original interpolation.
 // To prevent hyperHTML from forgetting about a fragment's sub-nodes,
 // fragments are instead returned as an Array of nodes or, if there's only one entry,
-// as a single referenced node which, unlike framents, will indeed persist
+// as a single referenced node which, unlike fragments, will indeed persist
 // wire content throughout multiple renderings.
 // The initial fragment, at this point, would be used as unique reference to this
 // array of nodes or to this single referenced node.
 const wireContent = node => {
   const childNodes = node.childNodes;
-  const length = childNodes.length;
-  const wireNodes = [];
-  for (let i = 0; i < length; i++) {
-    let child = childNodes[i];
-    if (
-      child.nodeType === ELEMENT_NODE ||
-      trim.call(child.textContent).length !== 0
-    ) {
-      wireNodes.push(child);
-    }
-  }
-  return wireNodes.length === 1 ? wireNodes[0] : new Wire(wireNodes);
+  const {length} = childNodes;
+  return length === 1 ?
+    childNodes[0] :
+    (length ? new Wire(childNodes) : node);
 };
 
 exports.content = content;
 exports.weakly = weakly;
 Object.defineProperty(exports, '__esModule', {value: true}).default = wire;
 
-},{"../classes/Wire.js":24,"../objects/Updates.js":29,"../shared/constants.js":30,"../shared/utils.js":31,"@ungap/trim":11,"@ungap/weakmap":12}],27:[function(require,module,exports){
+},{"../objects/Updates.js":30,"@ungap/template-tag-arguments":11,"@ungap/weakmap":13,"hyperhtml-wire":24}],28:[function(require,module,exports){
 'use strict';
 /*! (c) Andrea Giammarchi (ISC) */
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -5374,7 +5410,6 @@ const {observe, Tagger} = require('./objects/Updates.js');
 const wire = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('./hyper/wire.js'));
 const {content, weakly} = require('./hyper/wire.js');
 const render = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('./hyper/render.js'));
-const { G } = require('./shared/constants.js');
 
 // all functions are self bound to the right context
 // you can do the following
@@ -5398,7 +5433,6 @@ hyper.wire = wire;
 // that don't necessarily need upfront polyfills
 // i.e. those still targeting IE
 hyper._ = {
-  global: G,
   WeakMap,
   WeakSet
 };
@@ -5441,7 +5475,7 @@ function hyper(HTML) {
 }
 Object.defineProperty(exports, '__esModule', {value: true}).default = hyper
 
-},{"./classes/Component.js":23,"./hyper/render.js":25,"./hyper/wire.js":26,"./objects/Intent.js":28,"./objects/Updates.js":29,"./shared/constants.js":30,"@ungap/essential-weakset":7,"@ungap/weakmap":12,"domdiff":15}],28:[function(require,module,exports){
+},{"./classes/Component.js":25,"./hyper/render.js":26,"./hyper/wire.js":27,"./objects/Intent.js":29,"./objects/Updates.js":30,"@ungap/essential-weakset":7,"@ungap/weakmap":13,"domdiff":16}],29:[function(require,module,exports){
 'use strict';
 const attributes = {};
 const intents = {};
@@ -5483,26 +5517,28 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = {
   }
 };
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const WeakSet = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-weakset'));
 const isArray = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/is-array'));
-
 const createContent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/create-content'));
+
 const disconnected = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('disconnected'));
 const domdiff = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('domdiff'));
 const domtagger = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('domtagger'));
 const hyperStyle = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('hyperhtml-style'));
+const Wire = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('hyperhtml-wire'));
 
 const {
   CONNECTED, DISCONNECTED, DOCUMENT_FRAGMENT_NODE, OWNER_SVG_ELEMENT
 } = require('../shared/constants.js');
 
 const Component = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('../classes/Component.js'));
-const Wire = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('../classes/Wire.js'));
 const Intent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('./Intent.js'));
-const { slice, text } = require('../shared/utils.js');
+
+const componentType = Component.prototype.nodeType;
+const wireType = Wire.prototype.nodeType;
 
 const observe = disconnected({Event: CustomEvent, WeakSet});
 
@@ -5514,24 +5550,24 @@ const asHTML = html => ({html});
 
 // returns nodes from wires and components
 const asNode = (item, i) => {
-  return 'ELEMENT_NODE' in item ?
-    item :
-    (item.constructor === Wire ?
+  switch (item.nodeType) {
+    case wireType:
       // in the Wire case, the content can be
       // removed, post-pended, inserted, or pre-pended and
       // all these cases are handled by domdiff already
       /* istanbul ignore next */
-      ((1 / i) < 0 ?
-        (i ? item.remove() : item.last) :
-        (i ? item.valueOf(true) : item.first)) :
-      asNode(item.render(), i));
+      return (1 / i) < 0 ?
+        (i ? item.remove(true) : item.lastChild) :
+        (i ? item.valueOf(true) : item.firstChild);
+    case componentType:
+      return asNode(item.render(), i);
+    default:
+      return item;
+  }
 }
 
 // returns true if domdiff can handle the value
-const canDiff = value =>
-                  'ELEMENT_NODE' in value ||
-                  value instanceof Wire ||
-                  value instanceof Component;
+const canDiff = value => 'ELEMENT_NODE' in value;
 
 // when a Promise is used as interpolation value
 // its result must be parsed once resolved.
@@ -5555,6 +5591,12 @@ const isPromise_ish = value => value != null && 'then' in value;
 
 // list of attributes that should not be directly assigned
 const readOnly = /^(?:form|list)$/i;
+
+// reused every slice time
+const slice = [].slice;
+
+// simplifies text node creation
+const text = (node, text) => node.ownerDocument.createTextNode(text);
 
 function Tagger(type) {
   this.type = type;
@@ -5618,9 +5660,16 @@ Tagger.prototype = {
       };
     }
     else if (name in Intent.attributes) {
+      oldValue;
       return any => {
-        oldValue = Intent.attributes[name](node, any);
-        node.setAttribute(name, oldValue == null ? '' : oldValue);
+        const newValue = Intent.attributes[name](node, any);
+        if (oldValue !== newValue) {
+          oldValue = newValue;
+          if (newValue == null)
+            node.removeAttribute(name);
+          else
+            node.setAttribute(name, newValue);
+        }
       };
     }
     // in every other case, use the attribute node as it is
@@ -5816,11 +5865,8 @@ Tagger.prototype = {
   }
 };
 
-},{"../classes/Component.js":23,"../classes/Wire.js":24,"../shared/constants.js":30,"../shared/utils.js":31,"./Intent.js":28,"@ungap/create-content":4,"@ungap/custom-event":5,"@ungap/essential-weakset":7,"@ungap/is-array":9,"disconnected":13,"domdiff":15,"domtagger":18,"hyperhtml-style":22}],30:[function(require,module,exports){
+},{"../classes/Component.js":25,"../shared/constants.js":31,"./Intent.js":29,"@ungap/create-content":4,"@ungap/custom-event":5,"@ungap/essential-weakset":7,"@ungap/is-array":9,"disconnected":14,"domdiff":16,"domtagger":19,"hyperhtml-style":23,"hyperhtml-wire":24}],31:[function(require,module,exports){
 'use strict';
-const G = document.defaultView;
-exports.G = G;
-
 // Node.CONSTANTS
 // 'cause some engine has no global Node defined
 // (i.e. Node, NativeScript, basicHTML ... )
@@ -5839,47 +5885,4 @@ exports.CONNECTED = CONNECTED;
 const DISCONNECTED = 'dis' + CONNECTED;
 exports.DISCONNECTED = DISCONNECTED;
 
-},{}],31:[function(require,module,exports){
-'use strict';
-const unique = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-literal'));
-
-// these are tiny helpers to simplify most common operations needed here
-const doc = node => node.ownerDocument || node;
-exports.doc = doc;
-const fragment = node => doc(node).createDocumentFragment();
-exports.fragment = fragment;
-const text = (node, text) => doc(node).createTextNode(text);
-exports.text = text;
-
-// appends an array of nodes
-// to a generic node/fragment
-// When available, uses append passing all arguments at once
-// hoping that's somehow faster, even if append has more checks on type
-// istanbul ignore next
-const append = 'append' in fragment(document) ?
-  (node, childNodes) => {
-    node.append.apply(node, childNodes);
-  } :
-  (node, childNodes) => {
-    const length = childNodes.length;
-    for (let i = 0; i < length; i++) {
-      node.appendChild(childNodes[i]);
-    }
-  };
-exports.append = append;
-
-// normalizes the template once for all arguments cases
-const reArguments = function (template) {
-  const args = [unique(template)];
-  for (let i = 1, length = arguments.length; i < length; i++)
-    args[i] = arguments[i];
-  return args;
-}
-exports.reArguments = reArguments
-
-// just recycling a one-off array to use slice
-// in every needed place
-const slice = [].slice;
-exports.slice = slice;
-
-},{"@ungap/template-literal":10}]},{},[1]);
+},{}]},{},[1]);
