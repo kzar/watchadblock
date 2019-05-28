@@ -444,14 +444,14 @@ try {
       $('#div_myadblock_options').click(function ()
       {
         BG.recordGeneralMessage("myadblock_options_clicked");
-        openPage(chrome.extension.getURL('options.html?tab=0'));
+        openPage(chrome.extension.getURL('options.html#mab'));
         closeAndReloadPopup();
       });
     
       $('#div_myadblock_enrollment').click(function ()
       {
         BG.recordGeneralMessage("myadblock_options_clicked");
-        openPage(chrome.extension.getURL('options.html?tab=0'));
+        openPage(chrome.extension.getURL('options.html#mab'));
         closeAndReloadPopup();
       });
 
