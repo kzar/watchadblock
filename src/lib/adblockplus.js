@@ -1572,7 +1572,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.48.0";
+exports.addonVersion = "3.49.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -9647,7 +9647,7 @@ let STATS = exports.STATS = (function()
       total_pings = isNaN(total_pings) ? 0 : total_pings;
       total_pings = Math.max(localTotalPings, total_pings);
       total_pings += 1;
-      // store in redudant locations
+      // store in redundant locations
       chromeStorageSetHelper(STATS.totalPingStorageKey, total_pings);
       storage_set(STATS.totalPingStorageKey, total_pings);
 
@@ -9663,7 +9663,7 @@ let STATS = exports.STATS = (function()
       var millis = 1000 * 60 * 60 * delay_hours;
       var nextPingTime = Date.now() + millis;
 
-      // store in redudant location
+      // store in redundant location
       chromeStorageSetHelper(STATS.nextPingTimeStorageKey, nextPingTime, function()
       {
         if (chrome.runtime.lastError)
@@ -15843,14 +15843,13 @@ if (chrome.runtime.id === 'pljaalgmajnlogcgiohkhdmgpomjcihk') {
 }
 
 var updateStorageKey = 'last_known_version';
-// Commented out temporarily while doing /update
-//chrome.runtime.onInstalled.addListener(function (details)
-//{
-// if (details.reason === 'update' || details.reason === 'install')
-// {
-//   localStorage.setItem(updateStorageKey, chrome.runtime.getManifest().version);
-// }
-//});
+chrome.runtime.onInstalled.addListener(function (details)
+{
+  if (details.reason === 'update' || details.reason === 'install')
+  {
+    localStorage.setItem(updateStorageKey, chrome.runtime.getManifest().version);
+  }
+});
 
 var openTab = function (url)
 {
@@ -15862,7 +15861,7 @@ if (chrome.runtime.id)
   var updateTabRetryCount = 0;
   var getUpdatedURL = function()
   {
-    var updatedURL = 'https://getadblock.com/update/' + encodeURIComponent('3.46.0') + '/?u=' + STATS.userId();
+    var updatedURL = 'https://getadblock.com/update/' + encodeURIComponent(chrome.runtime.getManifest().version) + '/?u=' + STATS.userId();
     updatedURL = updatedURL + '&bc=' + Prefs.blocked_total;
     updatedURL = updatedURL + '&rt=' + updateTabRetryCount;
     return updatedURL;
@@ -15902,60 +15901,6 @@ if (chrome.runtime.id)
       }
     });
   };
-  var shouldShowUpdate = function()
-  {
-    var checkQueryState = function()
-    {
-      chrome.idle.queryState(60, function(state)
-      {
-        if (state === "active")
-        {
-          openUpdatedPage();
-        }
-        else
-        {
-          chrome.tabs.onCreated.removeListener(waitForUserAction);
-          chrome.tabs.onCreated.addListener(waitForUserAction);
-        }
-      });
-    };
-    if (chrome.management && chrome.management.getSelf)
-    {
-      chrome.management.getSelf(function(info)
-      {
-        if (info && info.installType !== "admin")
-        {
-          checkQueryState();
-        }
-        else if (info && info.installType === "admin")
-        {
-          recordGeneralMessage('update_tab_not_shown_admin_user');
-        }
-      });
-    }
-    else
-    {
-      checkQueryState();
-    }
-  };
-  const slashUpdateReleases = ['3.46.0', '3.47.0', '3.48.0'];
-  // Display updated page after each update
-  chrome.runtime.onInstalled.addListener(function (details)
-  {
-    const lastKnownVersion = localStorage.getItem(updateStorageKey);
-    const currentVersion = chrome.runtime.getManifest().version;
-    if (details.reason === 'update' &&
-        slashUpdateReleases.includes(currentVersion) &&
-        !slashUpdateReleases.includes(lastKnownVersion) &&
-        chrome.runtime.id !== 'pljaalgmajnlogcgiohkhdmgpomjcihk')
-    {
-      STATS.untilLoaded(function(userID)
-      {
-        Prefs.untilLoaded.then(shouldShowUpdate);
-      });
-    }
-    localStorage.setItem(updateStorageKey, currentVersion);
-  });
 }
 
 // Creates a custom filter entry that whitelists a YouTube channel
@@ -17104,7 +17049,7 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
       hidden : false,
     },
 
-    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianList.txt" :
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFiltersABP.txt" :
     {
       id : "norwegian", // Norwegian
       language : true,
@@ -19585,7 +19530,7 @@ var License = (function () {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.command === "payment_success" && request.transID && request.version === 1) {
+    if (request.command === "payment_success" && request.version === 1) {
         var currentLicense = {};
         currentLicense.status = "active";
         License.set(currentLicense);
