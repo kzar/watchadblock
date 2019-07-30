@@ -1,4 +1,10 @@
 /*
+ * Same as the original source adblockpluschrome/adblockpluscore/lib/content/snippets.js
+ * except:
+ * - added an invocation of the 'MyAdBlock' function checkElement()
+ */
+
+/*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
  *
@@ -253,6 +259,10 @@ function makeInjector(injectable, ...dependencies)
  */
 function hideElement(element)
 {
+  if (typeof checkElement === "function") {
+    checkElement(element);
+  }
+
   element.style.setProperty("display", "none", "important");
 
   // Listen for changes to the style property and if our values are unset
