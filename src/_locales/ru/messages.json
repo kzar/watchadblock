@@ -27,6 +27,10 @@
     "message": "Мы отключили Приемлемую рекламу, поскольку вы включили блокировку контента Safari. Одновременно может работать только одна функция из этих двух. ([[Но почему?]])", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   }, 
+  "acceptable_ads_privacy": {
+    "message": "Не показывать рекламу, передающую информацию третьим лицам", 
+    "description": "The text of an Acceptable Ads sub-option in the General tab"
+  }, 
   "acceptableadsdisable_done": {
     "message": "Вы больше не используете фильтр Приемлемой рекламы.", 
     "description": "Message shown to users after disabling Acceptable Ads via the Options page."
@@ -52,15 +56,15 @@
     "description": "Tooltip on the AdBlock button, to help users understand that they can click the button to access more options."
   }, 
   "adblock_facebook": {
-    "message": "AdBlock Facebook", 
+    "message": "Facebook AdBlock", 
     "description": "Title for link to AdBlock's Facebook account"
   }, 
   "adblock_twitter": {
-    "message": "AdBlock Twitter", 
+    "message": "Twitter AdBlock", 
     "description": "Title for link to AdBlock's Twitter account"
   }, 
   "adblock_website": {
-    "message": "AdBlock Home Page", 
+    "message": "Домашняя страница AdBlock", 
     "description": "Title for link to AdBlock's website"
   }, 
   "adblock_wont_run_on_pages_matching": {
@@ -311,7 +315,7 @@
   }, 
   "block_annonyances_on_youtube": {
     "message": "Скрывать все раздражающее на YouTube™", 
-    "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+    "description": "Checkbox letting user choose whether to block annoyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
     "message": "Заблокировать элемент"
@@ -435,6 +439,10 @@
     "message": "Мы внесли в AdBlock некоторые изменения!", 
     "description": "Link to Options page with more information about the changes."
   }, 
+  "check_email": {
+    "message": "Проверьте почту.", 
+    "description": "Prompt the user to check their email for a message from AdBlock"
+  }, 
   "checkinfirefox_1": {
     "message": "Установите Firefox, если еще этого не сделали.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -533,6 +541,10 @@
         "example": "stackoverflow.com"
       }
     }
+  }, 
+  "contact_support_if_errors_continue": {
+    "message": "Если вы видите эту ошибку уже не в первый раз, то обратитесь к нам: [[support]].", 
+    "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
     "message": "Мы отключили блокировку контента Safari, поскольку вы разрешили показывать ненавязчивую рекламу. Одновременно может работать только одна функция из этих двух. ([[Но почему?]])", 
@@ -753,6 +765,10 @@
     "message": "Скрывать рекламу на этом канале", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
+  "enable_do_not_track_advice": {
+    "message": "Для корректной работы функции включите в настройках браузера Do Not Track (DNT).", 
+    "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
+  }, 
   "enabled_for_site": {
     "message": "<strong>Включен</strong> на этом сайте"
   }, 
@@ -834,7 +850,7 @@
   }, 
   "filter_annoyances_explained": {
     "message": "скрывает всплывающие окна, виджеты социальных сетей и прочую рекламу", 
-    "description": "A filter list explaination"
+    "description": "A filter list explanation"
   }, 
   "filter_antisocial_explained": {
     "message": "убирает кнопки социальных сетей", 
@@ -920,10 +936,14 @@
   }, 
   "filter_warning_removal_explained": {
     "message": "убирает предупреждения об использовании блокировщика рекламы", 
-    "description": "A filter list explaination"
+    "description": "A filter list explanation"
   }, 
   "filteracceptable_ads": {
     "message": "Приемлемая реклама", 
+    "description": "A filter list"
+  }, 
+  "filteracceptable_ads_privacy": {
+    "message": "Политика приемлемой рекламы", 
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
@@ -1277,7 +1297,7 @@
     "description": "Text of a link pointing to instructions on how to do something"
   }, 
   "image_swap": {
-    "message": "Image Swap", 
+    "message": "Замена изображений", 
     "description": "Title of the Image Swap sub-tab of the Options page"
   }, 
   "images_coming_soon": {
@@ -1673,12 +1693,46 @@
     "description": "Text in theme box of the Themes tab of the Options page (no more than 60 characters)"
   }, 
   "more_themes_on_the_way": {
-    "message": "More themes on the way!", 
+    "message": "Скоро будет больше тем!", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 60 characters)"
   }, 
   "myadblock_benefits_explained": {
-    "message": "In exchange for supporting us by enabling MyAdBlock, you'll get access to the latest tools and features as soon as they're released.", 
+    "message": "Поддержите нас, включив MyAdBlock, и первыми получайте доступ к новейшим функциям и инструментам.", 
     "description": "Main text of the teaser MyAdBlock feature in the MyAdBlock tab of the Options page"
+  }, 
+  "myadblock_enrollment_hide_forever": {
+    "message": "Не показывать снова", 
+    "description": "The label for a checkbox that will hide the enrollment box forever."
+  }, 
+  "myadblock_enrollment_link_info": {
+    "message": "Если вы перейдете по ссылке, то вам будет проще настроить MyAdBlock в других браузерах Chrome.", 
+    "description": "Explains what happens when clicking the magic link."
+  }, 
+  "myadblock_enrollment_resend_button": {
+    "message": "Отправить еще раз", 
+    "description": "Text on the MyAdBlock enrollment resend email button"
+  }, 
+  "myadblock_enrollment_resend_error": {
+    "message": "Ошибка отправки подтверждающего письма.", 
+    "description": "MyAdBlock license email failed to send error message."
+  }, 
+  "myadblock_enrollment_resend_success": {
+    "message": "Мы отправили волшебную ссылку на $email$.", 
+    "description": "MyAdBlock license email successfully sent message.", 
+    "placeholders": {
+      "email": {
+        "content": "$1", 
+        "example": "alice@example.com"
+      }
+    }
+  }, 
+  "myadblock_enrollment_success": {
+    "message": "Воспользуйтесь волшебной ссылкой из подтверждающего письма, чтобы разблокировать MyAdBlock в других браузерах Chrome.", 
+    "description": "MyAdBlock successfully licensed message."
+  }, 
+  "myadblock_enrollment_title": {
+    "message": "MyAdBlock установлен в этот браузер!", 
+    "description": "The title of the MyAdBlock enrollment box."
   }, 
   "myadblock_more_coming_soon": {
     "message": "Еще больше новых функций — скоро!", 
@@ -1689,11 +1743,11 @@
     "description": "The text of the header the MyAdBlock Options page"
   }, 
   "myadblock_payment_not_available_callout": {
-    "message": "Oh No!", 
+    "message": "О нет!", 
     "description": "The text notifying something is wrong in the payment iframe in the Options page."
   }, 
   "myadblock_payment_not_available_subtitle": {
-    "message": "We were unable to connect to our servers", 
+    "message": "Мы не смогли подключиться к нашим серверам", 
     "description": "The sub-title of an error message box in payment iframe in the Options page."
   }, 
   "myadblock_payment_not_available_text": {
@@ -1713,19 +1767,19 @@
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "myadblock_short_description": {
-    "message": "Experience an enhanced AdBlock with fun new features exclusively for donors", 
+    "message": "Попробуйте новую улучшенную версию AdBlock с эксклюзивными функциями для тех, кто поддерживает нас", 
     "description": "Text substitle of myAdBlock page in the options page"
   }, 
   "myadblock_subscribe_invite": {
-    "message": "Subscribe to MyAdBlock to unlock", 
+    "message": "Подпишитесь на MyAdBlock, чтобы открыть", 
     "description": "Text on hover of a locked MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
   "myadblock_sync_description": {
-    "message": "Sync your preferences across multiple browsers and devices", 
+    "message": "Синхронизируйте настройки между разными браузерами и устройствами", 
     "description": "Text on the MyAdBlock tab, Sync panel of the Options page"
   }, 
   "myadblock_themes_description": {
-    "message": "Change the way AdBlock looks, including font size and color scheme", 
+    "message": "Меняйте цветовую гамму и размер шрифтов AdBlock", 
     "description": "Text briefly describing what themes do on the MyAdBlock tab of the Options page"
   }, 
   "myadblockenrollment": {
@@ -1814,7 +1868,7 @@
     "message": "Щелкните по уведомлению, чтобы открыть все ссылки."
   }, 
   "ocean_theme": {
-    "message": "Ocean", 
+    "message": "Океан", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "one_moment_all_youtube_channels": {
@@ -2264,12 +2318,16 @@
     "message": "Перестать скрывать рекламу", 
     "description": "Menu entry to pause the extension (stop blocking ads)"
   }, 
+  "please_try_again": {
+    "message": "Попробуйте еще раз.", 
+    "description": "Prompt the user to retry the last action."
+  }, 
   "popup_menu_theme": {
     "message": "Тема всплывающего меню", 
     "description": "Section title of the Themes tab of the Options page"
   }, 
   "popup_menu_title": {
-    "message": "AdBlock Popup Menu", 
+    "message": "Всплывающее меню AdBlock", 
     "description": "Title for the popup menu."
   }, 
   "privacy_policy": {
@@ -2290,6 +2348,10 @@
   "questionoridea": {
     "message": "Есть вопросы или предложения?", 
     "description": "Subtitle on the Support tab"
+  }, 
+  "rebecca_purple_theme": {
+    "message": "Rebecca Purple", 
+    "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "reenableadsonebyone": {
     "message": "Отлично! Давайте попробуем выяснить, в каком расширении проблема. Попробуйте включать их по одному. Если после включения одного из расширений вы снова видите рекламу — значит, его и нужно удалить.", 
@@ -2468,7 +2530,7 @@
     "description": "Text of an option telling users that the option slows down the extension"
   }, 
   "solarized_theme": {
-    "message": "Solarized", 
+    "message": "Солнце", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "sourcecode": {
@@ -2562,11 +2624,11 @@
     "description": "abp: link subscriber title"
   }, 
   "sunshine_theme": {
-    "message": "Sunshine", 
+    "message": "Свет", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "support_to_unlock": {
-    "message": "Support to unlock", 
+    "message": "Поддержите, чтобы открыть", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
   }, 
   "supportsite": {
@@ -2574,11 +2636,11 @@
     "description": "Link to the support site on the Support tab"
   }, 
   "sync_check_status_text": {
-    "message": "Sync and personalize AdBlock across your extensions  [[Check status]]", 
+    "message": "Синхронизируйте AdBlock между расширениями [[Проверить статус]]", 
     "description": "message and button text on the Sync sub-tab of the Options page"
   }, 
   "sync_device_name_list_updated_at_msg": {
-    "message": "last updated on $timestamp$", 
+    "message": "последнее обновление: $timestamp$", 
     "description": "message to users on when the sync page was last updated with the name of the extensions / devices (displayed in locale specific format)", 
     "placeholders": {
       "timestamp": {
@@ -2588,83 +2650,91 @@
     }
   }, 
   "sync_extension_name_placeholder": {
-    "message": "Name this extension…", 
+    "message": "Назовите расширение…", 
     "description": "placeholder text in the extension / device name field on the sync page"
   }, 
   "sync_extension_no_extension_msg": {
-    "message": "You have no synced extensions.", 
+    "message": "Нет синхронизированных расширений.", 
     "description": "message to users on the sync page when the license is unavailable, inactive or a license ID hasn't been returned yet"
   }, 
   "sync_extension_section_title": {
-    "message": "Extensions", 
+    "message": "Расширения", 
     "description": "section title text on the Sync sub-tab of the Options page"
   }, 
   "sync_header_error_message_menu_part_3": {
-    "message": "Please make your changes again.", 
+    "message": "Пожалуйста, внесите изменения повторно.", 
     "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
+  "sync_header_error_revert_message_part_2": {
+    "message": "Ваши изменения сброшены.", 
+    "description": "part 2 of a message to users on the sync page when sending the sync data fails for some unknown reason."
+  }, 
   "sync_header_message_error_prefix": {
-    "message": "This extension was out of sync.", 
+    "message": "Расширение не было синхронизировано.", 
     "description": "Start of an sync error message to users on the Options page or AdBlock popup menu."
   }, 
+  "sync_header_message_error_suffix": {
+    "message": "Попробуйте еще раз.", 
+    "description": "Part of an sync error message to users on the Options page or AdBlock popup menu."
+  }, 
   "sync_header_message_getting_license": {
-    "message": "checking ...", 
+    "message": "проверка...", 
     "description": "message to users on the sync page when the extension is getting the license"
   }, 
   "sync_header_message_in_progress": {
-    "message": "Sync in progress…", 
+    "message": "Идет синхронизация…", 
     "description": "message to users on the options pages when syncing with the server is in progress"
   }, 
   "sync_header_message_no_license": {
-    "message": "Please give us a few moments to make sync available.", 
+    "message": "Подождите пару секунд, пока мы подготавливаем все.", 
     "description": "message to users on the sync page when the license is unavailable, inactive or a license ID hasn't been returned yet"
   }, 
   "sync_header_message_old_commit_version_customize_tab_part_2": {
-    "message": "We’ve synced this extension and will revert your changes.", 
+    "message": "Расширение синхронизировано, изменения будут сброшены.", 
     "description": "part 2 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_customize_tab_part_3": {
-    "message": "Please copy your custom rules to the clipboard, reload the page, and make your changes again.", 
+    "message": "Пожалуйста, скопируйте ваши настройки в буфер обмена, обновите страницу и внесите их заново.", 
     "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_part_2": {
-    "message": "We’ve synced this extension and reverted your changes.", 
-    "description": "part 2 of a message message to users on the sync page and popup menu when initial setup of sync fails for some unknown reason."
+    "message": "Расширение синхронизировано, изменения сброшены.", 
+    "description": "part 2 of a message to users on the sync page and popup menu when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_part_3": {
-    "message": "Please make your changes again.", 
-    "description": "part 3 of a message message to users on the sync page when initial setup of sync fails for some unknown reason."
+    "message": "Пожалуйста, внесите изменения повторно.", 
+    "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_setup_fail_part_2": {
-    "message": "Please try turning on sync again in a few minutes.", 
+    "message": "Попробуйте синхронизировать заново чуть попозже.", 
     "description": "message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_setup_fail_prefix": {
-    "message": "Sync error:", 
+    "message": "Ошибка синхронизации:", 
     "description": "start of error message to users on the sync page when sync fails."
   }, 
   "sync_header_message_sync_complete": {
-    "message": "Sync complete", 
+    "message": "Синхронизация завершена", 
     "description": "message to users on the option pages when syncing with the server server is complete"
   }, 
   "sync_message_old_version_part_1": {
-    "message": "You’re using an old version of AdBlock.", 
+    "message": "Вы используете устаревшую версию AdBlock.", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_message_old_version_part_2": {
-    "message": "Please [[update]] AdBlock so we can sync your settings.", 
+    "message": "Для синхронизации настроек вам нужно [[обновить AdBlock]].", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_now_btn_text": {
-    "message": "Sync now", 
+    "message": "Синхронизировать сейчас", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_now_message": {
-    "message": "I will fetch updates automatically; you can also", 
+    "message": "Я буду автоматически искать обновления, но вы можете", 
     "description": "message text in the on the sync page "
   }, 
   "sync_show_name_text": {
-    "message": "[[$name$]] is now synced", 
+    "message": "[[$name$]] синхронизируется", 
     "description": "message to users on the sync page when which includes the name of the extension / device", 
     "placeholders": {
       "name": {
@@ -2674,31 +2744,31 @@
     }
   }, 
   "sync_tab_item": {
-    "message": "Sync", 
+    "message": "Синхронизация", 
     "description": "Title of the Sync sub-tab of the Options page"
   }, 
   "sync_turn_off_btn_text": {
-    "message": "Turn off", 
+    "message": "Отключить", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_turn_on_duplicate_name_text": {
-    "message": "This extension name is already in use", 
+    "message": "Такое имя расширения уже существует", 
     "description": "error message text on the Sync sub-tab of the Options page"
   }, 
   "sync_turn_on_invalid_name_text": {
-    "message": "Please name this extension to continue", 
+    "message": "Пожалуйста, назовите расширение, чтобы продолжить", 
     "description": "error message text on the Sync sub-tab of the Options page"
   }, 
   "sync_turn_on_text": {
-    "message": "Sync and personalize AdBlock across your extensions  [[Turn on sync]]", 
+    "message": "Синхронизируйте AdBlock между расширениями [[Включить синхронизацию]]", 
     "description": "message and button text on the Sync sub-tab of the Options page"
   }, 
   "sync_update_now_section_title": {
-    "message": "Manual Sync", 
+    "message": "Синхронизировать вручную", 
     "description": "section title for the sync now section on the sync page"
   }, 
   "sync_verify_turn_on_text": {
-    "message": "Turning on sync will clear existing settings information for this extension.", 
+    "message": "Включение синхронизации приведет к сбросу настроек этого расширения.", 
     "description": "message text in the extension / device name field on the sync page"
   }, 
   "tabcustomize": {
@@ -2766,7 +2836,7 @@
     "description": "Entry in the AdBlock button menu"
   }, 
   "twitch_hiding_option": {
-    "message": "Enable hiding of streaming ads on Twitch™", 
+    "message": "Включить скрытие рекламы во время стрима на Twitch™", 
     "description": "Description of option on General tab of the Options page to hide Twitch ads"
   }, 
   "typehiding": {
@@ -2958,7 +3028,7 @@
     "description": "Message on the 'Customize' tab of the options page, explaining the danger of adding a whitelist filter for all websites with only some exceptions."
   }, 
   "watermelon_theme": {
-    "message": "Watermelon", 
+    "message": "Дыня", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "whatmakesadblocktick": {

@@ -27,6 +27,10 @@
     "message": "We unsubscribed you from Acceptable Ads because you turned on Safari Content Blocking. You can only select one at a time. ([[Why?]])", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   }, 
+  "acceptable_ads_privacy": {
+    "message": "Only allow ads without third-party tracking", 
+    "description": "The text of an Acceptable Ads sub-option in the General tab"
+  }, 
   "acceptableadsdisable_done": {
     "message": "Jste již přihlášen do seznamu přijatelných reklam.", 
     "description": "Message shown to users after disabling Acceptable Ads via the Options page."
@@ -435,6 +439,10 @@
     "message": "V AdBlocku jsme provedli změny!", 
     "description": "Link to Options page with more information about the changes."
   }, 
+  "check_email": {
+    "message": "Please check your email.", 
+    "description": "Prompt the user to check their email for a message from AdBlock"
+  }, 
   "checkinfirefox_1": {
     "message": "Nainstalujte prohlížeč Firefox, pokud jej nemáte.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -524,6 +532,10 @@
         "example": "stackoverflow.com"
       }
     }
+  }, 
+  "contact_support_if_errors_continue": {
+    "message": "If you continue to see this error, please contact [[support]].", 
+    "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
     "message": "We turned off Safari Content Blocking because you opted to allow non-intrusive ads. You can only select one at a time. ([[Why?]])", 
@@ -744,6 +756,10 @@
     "message": "Blokovat reklamy na tomto kanálu", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
   }, 
+  "enable_do_not_track_advice": {
+    "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
+    "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
+  }, 
   "enabled_for_site": {
     "message": "<strong>Povoleno</strong> na této stránce"
   }, 
@@ -825,7 +841,7 @@
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
-    "description": "A filter list explaination"
+    "description": "A filter list explanation"
   }, 
   "filter_antisocial_explained": {
     "message": "removes social media buttons", 
@@ -912,6 +928,10 @@
   }, 
   "filteracceptable_ads": {
     "message": "Přijatelné Reklamy", 
+    "description": "A filter list"
+  }, 
+  "filteracceptable_ads_privacy": {
+    "message": "Acceptable Ads Privacy", 
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
@@ -1605,6 +1625,40 @@
     "message": "In exchange for supporting us by enabling MyAdBlock, you'll get access to the latest tools and features as soon as they're released.", 
     "description": "Main text of the teaser MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
+  "myadblock_enrollment_hide_forever": {
+    "message": "Don't show this message again", 
+    "description": "The label for a checkbox that will hide the enrollment box forever."
+  }, 
+  "myadblock_enrollment_link_info": {
+    "message": "Clicking the link makes it easy to set up MyAdBlock in other Chrome browsers.", 
+    "description": "Explains what happens when clicking the magic link."
+  }, 
+  "myadblock_enrollment_resend_button": {
+    "message": "resend link", 
+    "description": "Text on the MyAdBlock enrollment resend email button"
+  }, 
+  "myadblock_enrollment_resend_error": {
+    "message": "There was a problem resending your confirmation email.", 
+    "description": "MyAdBlock license email failed to send error message."
+  }, 
+  "myadblock_enrollment_resend_success": {
+    "message": "We sent a magic link to $email$.", 
+    "description": "MyAdBlock license email successfully sent message.", 
+    "placeholders": {
+      "email": {
+        "content": "$1", 
+        "example": "alice@example.com"
+      }
+    }
+  }, 
+  "myadblock_enrollment_success": {
+    "message": "You can use the magic link in your confirmation email to unlock MyAdBlock in other Chrome browsers.", 
+    "description": "MyAdBlock successfully licensed message."
+  }, 
+  "myadblock_enrollment_title": {
+    "message": "MyAdBlock is set up on this browser!", 
+    "description": "The title of the MyAdBlock enrollment box."
+  }, 
   "myadblock_more_coming_soon": {
     "message": "More features coming soon!", 
     "description": "Title of the teaser MyAdBlock feature box in the MyAdBlock tab of the Options page"
@@ -2120,6 +2174,10 @@
     "message": "Pozastavit blokování reklam", 
     "description": "Menu entry to pause the extension (stop blocking ads)"
   }, 
+  "please_try_again": {
+    "message": "Please try again.", 
+    "description": "Prompt the user to retry the last action."
+  }, 
   "popup_menu_theme": {
     "message": "Motiv vyskakovacího okna", 
     "description": "Section title of the Themes tab of the Options page"
@@ -2143,6 +2201,10 @@
   "questionoridea": {
     "message": "Máte otázku nebo nový nápad?", 
     "description": "Subtitle on the Support tab"
+  }, 
+  "rebecca_purple_theme": {
+    "message": "Rebecca Purple", 
+    "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "reenableadsonebyone": {
     "message": "Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.", 
@@ -2444,9 +2506,17 @@
     "message": "Please make your changes again.", 
     "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
+  "sync_header_error_revert_message_part_2": {
+    "message": "Your changes were reverted.", 
+    "description": "part 2 of a message to users on the sync page when sending the sync data fails for some unknown reason."
+  }, 
   "sync_header_message_error_prefix": {
     "message": "This extension was out of sync.", 
     "description": "Start of an sync error message to users on the Options page or AdBlock popup menu."
+  }, 
+  "sync_header_message_error_suffix": {
+    "message": "Please try again later.", 
+    "description": "Part of an sync error message to users on the Options page or AdBlock popup menu."
   }, 
   "sync_header_message_getting_license": {
     "message": "checking ...", 
@@ -2470,11 +2540,11 @@
   }, 
   "sync_header_message_old_commit_version_part_2": {
     "message": "We’ve synced this extension and reverted your changes.", 
-    "description": "part 2 of a message message to users on the sync page and popup menu when initial setup of sync fails for some unknown reason."
+    "description": "part 2 of a message to users on the sync page and popup menu when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_part_3": {
     "message": "Please make your changes again.", 
-    "description": "part 3 of a message message to users on the sync page when initial setup of sync fails for some unknown reason."
+    "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_setup_fail_part_2": {
     "message": "Please try turning on sync again in a few minutes.", 
@@ -2493,7 +2563,7 @@
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_message_old_version_part_2": {
-    "message": "Please [[update]] AdBlock so we can sync your settings.", 
+    "message": "Please [[update AdBlock]] so we can sync your settings.", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_now_btn_text": {

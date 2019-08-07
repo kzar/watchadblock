@@ -27,6 +27,10 @@
     "message": "Wir haben Sie aus der Annehmbaren Werbung gelöscht, weil Sie Safari Content Blocking aktiviert haben. Sie können nur eine dieser Optionen auswählen. ([[Warum?]])", 
     "description": "Warning shown when Safari Content Blocking is enabled while the Acceptable Ads filter list was already enabled."
   }, 
+  "acceptable_ads_privacy": {
+    "message": "Nur Werbung ohne Tracking von Drittanbietern zulassen", 
+    "description": "The text of an Acceptable Ads sub-option in the General tab"
+  }, 
   "acceptableadsdisable_done": {
     "message": "Sie haben die Filterliste der Annehmbaren Werbung nicht mehr abonniert.", 
     "description": "Message shown to users after disabling Acceptable Ads via the Options page."
@@ -311,7 +315,7 @@
   }, 
   "block_annonyances_on_youtube": {
     "message": "Belästigungen auf YouTube™ entfernen", 
-    "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+    "description": "Checkbox letting user choose whether to block annoyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
     "message": "Element blockieren"
@@ -435,6 +439,10 @@
     "message": "Wir haben Änderungen an AdBlock vorgenommen!", 
     "description": "Link to Options page with more information about the changes."
   }, 
+  "check_email": {
+    "message": "Bitte überprüfen Sie Ihre E-Mail.", 
+    "description": "Prompt the user to check their email for a message from AdBlock"
+  }, 
   "checkinfirefox_1": {
     "message": "Installieren Sie Firefox, wenn Sie das noch nicht getan haben.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -533,6 +541,10 @@
         "example": "stackoverflow.com"
       }
     }
+  }, 
+  "contact_support_if_errors_continue": {
+    "message": "Wenn dieser Fehler weiterhin auftritt, kontaktieren Sie bitte: [[support]].", 
+    "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
     "message": "Wir haben Safari Content Blocking deaktiviert, da Sie nicht aufdringliche Werbung erlaubt haben. Sie können nur eine dieser Optionen auswählen. ([[Warum?]])", 
@@ -711,7 +723,7 @@
     "description": "Menu entry to open the whitelist wizard"
   }, 
   "dont_run_on_pages_on_site": {
-    "message": "Keine Seiten auf dieser Site ausführen", 
+    "message": "Nicht auf Seiten dieser Site ausführen", 
     "description": "Menu entry to open the whitelist wizard"
   }, 
   "dont_run_on_this_page": {
@@ -752,6 +764,10 @@
   "enable_adblock_on_this_channel": {
     "message": "Werbung auf diesem Kanal blockieren", 
     "description": "Menu entry to un-whitelist a YouTube channel, displayed under 'You allowed ads on this channel.'"
+  }, 
+  "enable_do_not_track_advice": {
+    "message": "Damit diese Funktion ordnungsgemäß funktioniert, aktivieren Sie bitte die Nichtverfolgung (DNT; Do Not Track) in den Einstellungen Ihres Browsers.", 
+    "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
   "enabled_for_site": {
     "message": "<strong>Aktiviert</strong> auf dieser Seite"
@@ -834,7 +850,7 @@
   }, 
   "filter_annoyances_explained": {
     "message": "blockiert seiteninterne Pop-ups, soziale Medien und verknüpfte Widgets sowie andere Belästigungen", 
-    "description": "A filter list explaination"
+    "description": "A filter list explanation"
   }, 
   "filter_antisocial_explained": {
     "message": "entfernt Schaltflächen für soziale Medien", 
@@ -920,10 +936,14 @@
   }, 
   "filter_warning_removal_explained": {
     "message": "entfernt Warnungen über die Benutzung von Ad-Blockern", 
-    "description": "A filter list explaination"
+    "description": "A filter list explanation"
   }, 
   "filteracceptable_ads": {
     "message": "Annehmbare Werbung", 
+    "description": "A filter list"
+  }, 
+  "filteracceptable_ads_privacy": {
+    "message": "Datenschutz für annehmbare Werbung", 
     "description": "A filter list"
   }, 
   "filteradblock_custom": {
@@ -1674,6 +1694,40 @@
     "message": "Als Dank für Ihre Unterstützung und das Aktivieren von MyAdBlock erhalten Sie Zugriff auf die neuesten Werkzeuge und Features, sobald diese veröffentlicht werden.", 
     "description": "Main text of the teaser MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
+  "myadblock_enrollment_hide_forever": {
+    "message": "Diese Meldung nicht mehr anzeigen", 
+    "description": "The label for a checkbox that will hide the enrollment box forever."
+  }, 
+  "myadblock_enrollment_link_info": {
+    "message": "Wenn Sie den Link anklicken, können Sie MyAdBlock einfach in anderen Chrome-Browsern einrichten.", 
+    "description": "Explains what happens when clicking the magic link."
+  }, 
+  "myadblock_enrollment_resend_button": {
+    "message": "Link erneut senden", 
+    "description": "Text on the MyAdBlock enrollment resend email button"
+  }, 
+  "myadblock_enrollment_resend_error": {
+    "message": "Beim erneuten Versenden Ihrer Bestätigungs-E-Mail ist ein Fehler aufgetreten.", 
+    "description": "MyAdBlock license email failed to send error message."
+  }, 
+  "myadblock_enrollment_resend_success": {
+    "message": "Wir haben einen magischen Link an $email$ geschickt.", 
+    "description": "MyAdBlock license email successfully sent message.", 
+    "placeholders": {
+      "email": {
+        "content": "$1", 
+        "example": "alice@example.com"
+      }
+    }
+  }, 
+  "myadblock_enrollment_success": {
+    "message": "Sie können den magischen Link in Ihrer Bestätigungs-E-Mail nutzen, um MyAdBlock in anderen Chrome-Browsern freizuschalten.", 
+    "description": "MyAdBlock successfully licensed message."
+  }, 
+  "myadblock_enrollment_title": {
+    "message": "MyAdBlock ist auf diesem Browser eingerichtet!", 
+    "description": "The title of the MyAdBlock enrollment box."
+  }, 
   "myadblock_more_coming_soon": {
     "message": "Bald mit noch mehr Features!", 
     "description": "Title of the teaser MyAdBlock feature box in the MyAdBlock tab of the Options page"
@@ -1715,7 +1769,7 @@
     "description": "Text on hover of a locked MyAdBlock feature in the MyAdBlock tab of the Options page"
   }, 
   "myadblock_sync_description": {
-    "message": "Sync your preferences across multiple browsers and devices", 
+    "message": "Synchronisieren Sie Ihre Einstellungen über mehrere Browser und Geräte hinweg", 
     "description": "Text on the MyAdBlock tab, Sync panel of the Options page"
   }, 
   "myadblock_themes_description": {
@@ -2250,6 +2304,10 @@
     "message": "Werbung blockieren pausieren", 
     "description": "Menu entry to pause the extension (stop blocking ads)"
   }, 
+  "please_try_again": {
+    "message": "Bitte erneut versuchen.", 
+    "description": "Prompt the user to retry the last action."
+  }, 
   "popup_menu_theme": {
     "message": "Motiv: Pop-up-Menü", 
     "description": "Section title of the Themes tab of the Options page"
@@ -2276,6 +2334,10 @@
   "questionoridea": {
     "message": "Haben Sie eine Frage oder eine neue Idee?", 
     "description": "Subtitle on the Support tab"
+  }, 
+  "rebecca_purple_theme": {
+    "message": "Rebecca Purple", 
+    "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "reenableadsonebyone": {
     "message": "Toll! Finden wir jetzt heraus, welche Erweiterung die Usache ist. Blättern Sie nacheinander durch alle Erweiterungen und aktivieren Sie sie. Sie müssen die Erweiterung deinstallieren, welche die Werbung(en) erzeugt, um die Werbungen loszuwerden.", 
@@ -2560,11 +2622,11 @@
     "description": "Link to the support site on the Support tab"
   }, 
   "sync_check_status_text": {
-    "message": "Sync and personalize AdBlock across your extensions  [[Check status]]", 
+    "message": "Synchronisieren und personalisieren Sie AdBlock über Ihre Erweiterungen hinweg  [[Status prüfen]]", 
     "description": "message and button text on the Sync sub-tab of the Options page"
   }, 
   "sync_device_name_list_updated_at_msg": {
-    "message": "last updated on $timestamp$", 
+    "message": "zuletzt aktualisiert am $timestamp$", 
     "description": "message to users on when the sync page was last updated with the name of the extensions / devices (displayed in locale specific format)", 
     "placeholders": {
       "timestamp": {
@@ -2574,83 +2636,91 @@
     }
   }, 
   "sync_extension_name_placeholder": {
-    "message": "Name this extension…", 
+    "message": "Benennen Sie diese Erweiterung ...", 
     "description": "placeholder text in the extension / device name field on the sync page"
   }, 
   "sync_extension_no_extension_msg": {
-    "message": "You have no synced extensions.", 
+    "message": "Sie haben keine synchronisierten Erweiterungen.", 
     "description": "message to users on the sync page when the license is unavailable, inactive or a license ID hasn't been returned yet"
   }, 
   "sync_extension_section_title": {
-    "message": "Extensions", 
+    "message": "Erweiterungen", 
     "description": "section title text on the Sync sub-tab of the Options page"
   }, 
   "sync_header_error_message_menu_part_3": {
-    "message": "Please make your changes again.", 
+    "message": "Bitte nehmen Sie Ihre Änderungen erneut vor.", 
     "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
+  "sync_header_error_revert_message_part_2": {
+    "message": "Ihre Änderungen wurden rückgängig gemacht.", 
+    "description": "part 2 of a message to users on the sync page when sending the sync data fails for some unknown reason."
+  }, 
   "sync_header_message_error_prefix": {
-    "message": "This extension was out of sync.", 
+    "message": "Diese Erweiterung war nicht synchronisiert.", 
     "description": "Start of an sync error message to users on the Options page or AdBlock popup menu."
   }, 
+  "sync_header_message_error_suffix": {
+    "message": "Bitte versuchen Sie es später noch einmal.", 
+    "description": "Part of an sync error message to users on the Options page or AdBlock popup menu."
+  }, 
   "sync_header_message_getting_license": {
-    "message": "checking ...", 
+    "message": "wird geprüft ...", 
     "description": "message to users on the sync page when the extension is getting the license"
   }, 
   "sync_header_message_in_progress": {
-    "message": "Sync in progress…", 
+    "message": "Synchronisierung läuft ...", 
     "description": "message to users on the options pages when syncing with the server is in progress"
   }, 
   "sync_header_message_no_license": {
-    "message": "Please give us a few moments to make sync available.", 
+    "message": "Bitte geben Sie uns einen Moment, um die Synchronisierung zur Verfügung zu stellen.", 
     "description": "message to users on the sync page when the license is unavailable, inactive or a license ID hasn't been returned yet"
   }, 
   "sync_header_message_old_commit_version_customize_tab_part_2": {
-    "message": "We’ve synced this extension and will revert your changes.", 
+    "message": "Wir haben diese Erweiterung synchronisiert und werden Ihre Änderungen rückgängig machen.", 
     "description": "part 2 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_customize_tab_part_3": {
-    "message": "Please copy your custom rules to the clipboard, reload the page, and make your changes again.", 
+    "message": "Bitte kopieren Sie Ihre eigenen Regeln in die Zwischenablage, laden Sie die Seite neu und nehmen Sie Ihre Änderungen erneut vor.", 
     "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_part_2": {
-    "message": "We’ve synced this extension and reverted your changes.", 
-    "description": "part 2 of a message message to users on the sync page and popup menu when initial setup of sync fails for some unknown reason."
+    "message": "Wir haben diese Erweiterung synchronisiert und Ihre Änderungen rückgängig gemacht.", 
+    "description": "part 2 of a message to users on the sync page and popup menu when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_old_commit_version_part_3": {
-    "message": "Please make your changes again.", 
-    "description": "part 3 of a message message to users on the sync page when initial setup of sync fails for some unknown reason."
+    "message": "Bitte nehmen Sie Ihre Änderungen erneut vor.", 
+    "description": "part 3 of a message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_setup_fail_part_2": {
-    "message": "Please try turning on sync again in a few minutes.", 
+    "message": "Bitte versuchen Sie, die Synchronisierung in wenigen Minuten erneut zu aktivieren.", 
     "description": "message to users on the sync page when initial setup of sync fails for some unknown reason."
   }, 
   "sync_header_message_setup_fail_prefix": {
-    "message": "Sync error:", 
+    "message": "Synchronisierungsfehler:", 
     "description": "start of error message to users on the sync page when sync fails."
   }, 
   "sync_header_message_sync_complete": {
-    "message": "Sync complete", 
+    "message": "Synchronisierung abgeschlossen", 
     "description": "message to users on the option pages when syncing with the server server is complete"
   }, 
   "sync_message_old_version_part_1": {
-    "message": "You’re using an old version of AdBlock.", 
+    "message": "Sie nutzen eine alte Version von AdBlock.", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_message_old_version_part_2": {
-    "message": "Please [[update]] AdBlock so we can sync your settings.", 
+    "message": "Bitte [[aktualisieren Sie AdBlock]], damit wir Ihre Einstellungen synchronisieren können.", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_now_btn_text": {
-    "message": "Sync now", 
+    "message": "Jetzt synchronisieren", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_now_message": {
-    "message": "I will fetch updates automatically; you can also", 
+    "message": "Ich werde Updates automatisch abrufen; Sie können auch", 
     "description": "message text in the on the sync page "
   }, 
   "sync_show_name_text": {
-    "message": "[[$name$]] is now synced", 
+    "message": "[[$name$]] ist jetzt synchronisiert", 
     "description": "message to users on the sync page when which includes the name of the extension / device", 
     "placeholders": {
       "name": {
@@ -2660,31 +2730,31 @@
     }
   }, 
   "sync_tab_item": {
-    "message": "Sync", 
+    "message": "Synchronisieren", 
     "description": "Title of the Sync sub-tab of the Options page"
   }, 
   "sync_turn_off_btn_text": {
-    "message": "Turn off", 
+    "message": "Deaktivieren", 
     "description": "button text on the Sync sub-tab of the Options page"
   }, 
   "sync_turn_on_duplicate_name_text": {
-    "message": "This extension name is already in use", 
+    "message": "Dieser Erweiterungsname wird bereits verwendet", 
     "description": "error message text on the Sync sub-tab of the Options page"
   }, 
   "sync_turn_on_invalid_name_text": {
-    "message": "Please name this extension to continue", 
+    "message": "Bitte benennen Sie diese Erweiterung, um fortzufahren", 
     "description": "error message text on the Sync sub-tab of the Options page"
   }, 
   "sync_turn_on_text": {
-    "message": "Sync and personalize AdBlock across your extensions  [[Turn on sync]]", 
+    "message": "Synchronisieren und personalisieren Sie AdBlock über Ihre Erweiterungen hinweg  [[Synchronisieren aktivieren]]", 
     "description": "message and button text on the Sync sub-tab of the Options page"
   }, 
   "sync_update_now_section_title": {
-    "message": "Manual Sync", 
+    "message": "Manuelle Synchronisierung", 
     "description": "section title for the sync now section on the sync page"
   }, 
   "sync_verify_turn_on_text": {
-    "message": "Turning on sync will clear existing settings information for this extension.", 
+    "message": "Das Aktivieren der Synchronisierung löscht bestehende Einstellungsdaten für diese Erweiterung.", 
     "description": "message text in the extension / device name field on the sync page"
   }, 
   "tabcustomize": {
@@ -2752,7 +2822,7 @@
     "description": "Entry in the AdBlock button menu"
   }, 
   "twitch_hiding_option": {
-    "message": "Enable hiding of streaming ads on Twitch™", 
+    "message": "Ausblenden von Streaming-Anzeigen auf Twitch™ aktivieren", 
     "description": "Description of option on General tab of the Options page to hide Twitch ads"
   }, 
   "typehiding": {
