@@ -1572,7 +1572,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.51.1";
+exports.addonVersion = "3.52.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -10544,14 +10544,22 @@ let STATS = exports.STATS = (function()
         data["extid"] = chrome.runtime.id;
       }
       var subs = getAllSubscriptionsMinusText();
-      if (subs["acceptable_ads"])
-      {
-        data["aa"] = subs["acceptable_ads"].subscribed ? '1' : '0';
+      if (subs) {
+        var aa = subs["acceptable_ads"];
+        var aaPrivacy = subs["acceptable_ads_privacy"];
+
+        if (!aa && !aaPrivacy) {
+          data.aa = 'u'; // Both filter lists unavailable
+        } else if (aa.subscribed) {
+          data.aa = '1';
+        } else if (aaPrivacy.subscribed) {
+          data.aa = '2';
+        } else if (!aa.subscribed && !aaPrivacy.subscribed) {
+          data.aa = '0'; // Both filter lists unsubscribed
+        }
       }
-      else
-      {
-        data["aa"] = 'u';
-      }
+
+
       data["dc"] = dataCorrupt ? '1' : '0';
       SURVEY.types(function(response)
       {
@@ -17399,6 +17407,19 @@ function checkPingResponseForProtect(responseData) {
   }
 }
 
+function isAcceptableAds(filterList) {
+  if (!filterList) {
+    return;
+  }
+  return filterList.id === 'acceptable_ads';
+};
+
+function isAcceptableAdsPrivacy(filterList) {
+  if (!filterList) {
+    return;
+  }
+  return filterList.id === 'acceptable_ads_privacy';
+};
 
 // Attach methods to window
 Object.assign(window, {
@@ -17434,7 +17455,9 @@ Object.assign(window, {
   checkPingResponseForProtect,
   pausedFilterText1,
   pausedFilterText2,
-  isLanguageSpecific
+  isLanguageSpecific,
+  isAcceptableAds,
+  isAcceptableAdsPrivacy,
 });
 
 
@@ -18297,6 +18320,12 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
     "https://easylist-downloads.adblockplus.org/exceptionrules.txt" :
     {
       id : "acceptable_ads", // Acceptable Ads
+      language : false,
+      hidden : false,
+    },
+    "https://easylist-downloads.adblockplus.org/exceptionrules-privacy-friendly.txt" :
+    {
+      id : "acceptable_ads_privacy", // Acceptable Ads Privacy
       language : false,
       hidden : false,
     },
