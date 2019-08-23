@@ -495,9 +495,6 @@
     "message": "ILI, samo kliknite ovaj gumb kako bi uradili sve ovo iznad: [[Onemogući sva druga proširenja]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Nakon zatvaranja ovog skočnog prozora, kliknite (ili desni klik miša) na element na ovoj stranici."
-  }, 
   "clickthead": {
     "message": "Kliknite reklamu i ja ću Vas voditi kroz blokiranje.", 
     "description": "User has to click the ad they want to block."
@@ -640,6 +637,74 @@
     "message": "Jedini YouTube™ bloker oglasa stvoren od AdBlock-a, najpopularnijeg Chrome proširenja sa 60 milijuna korisnika u cijelom svijetu.", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Provjeri filtere Prihvatljivih oglasa:", 
     "description": "Section header on the ad report page"
@@ -655,9 +720,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Žao mi je, AdBlock na YouTube™ je onemogućena na ovoj stranici zbog jedne od vaših postavki.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Onemogućeno</strong> na ovoj stranici"
   }, 
   "disabled_on_this_channel": {
     "message": "Dozvolili ste oglase na ovom kanalu.", 
@@ -765,9 +827,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Omogućeno</strong> na ovoj stranici"
   }, 
   "enableotherextensionscomplete": {
     "message": "Proširenja koja su prije bila onemogućena sada su omogućena.", 
@@ -1028,6 +1087,10 @@
     "message": "Grčki", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonezijski", 
     "description": "A filter list"
@@ -1038,6 +1101,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Poljski", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1164,6 +1231,12 @@
   "firefox_explanation": {
     "message": "Svrha ovog pitanja je da se utvrdi tko bi trebao primiti vaš izvještaj. Ako odgovorite netočno, izvještaj će biti poslan krivim ljudima pa tako možda i zanemaren.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
+  }, 
+  "firstRun_subtitle": {
+    "message": "Upravo ste preuzeli kontrolu vašeg preglednika."
+  }, 
+  "firstRun_title": {
+    "message": "Uspješna instalacija!"
   }, 
   "fixityourself": {
     "message": "U redu, još možete blokirati ovu reklamu samo za sebe u Postavkama. Hvala!", 
@@ -1839,32 +1912,8 @@
   "options_customFilter_cancel": {
     "message": "Odustani"
   }, 
-  "options_customFilter_edit": {
-    "message": "Uredi filtre"
-  }, 
-  "options_customFilter_save": {
-    "message": "Spremi"
-  }, 
   "options_customFilters_description": {
     "message": "Napišite svoj vlastiti prilagođeni filter za dodatnu kontrolu blokiranja ili prikazivanja sadržaja."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "npr. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Saznajte kako napisati popise filtra"
-  }, 
-  "options_customFilters_start": {
-    "message": "Započni pisati vlastiti popis filtra"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Filtri koje stvorite pojaviti će se ovdje."
   }, 
   "options_customFilters_title": {
     "message": "Stvorite i uredite vlastiti popis filtra"
@@ -1888,10 +1937,10 @@
     "message": "Prikaži korisne obavijesti"
   }, 
   "options_dialog_about_copyright": {
-    "message": "Autorsko pravo © $currentYear$ eyeo GmbH.", 
+    "message": "Autorsko pravo © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2373,12 +2422,6 @@
       }
     }
   }, 
-  "stats_show_iconnumber": {
-    "message": "Prikaži broj na ikoni"
-  }, 
-  "stats_title": {
-    "message": "Blokirano reklama"
-  }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
@@ -2807,6 +2850,12 @@
   "updatenowmessage2": {
     "message": "Ažuriranja će se preuzimati automatski; također možete [[ažurirati odmah]]", 
     "description": "Update filters text and button"
+  }, 
+  "updates_status": {
+    "message": "Ažuriranje je dovršeno"
+  }, 
+  "updates_subheading": {
+    "message": "Što je novo?"
   }, 
   "updateyourlists": {
     "message": "Provjerite stanje ažuriranja vaših filter lista:", 

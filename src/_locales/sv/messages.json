@@ -166,7 +166,7 @@
     "description": "Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }, 
   "adreport_server_response_error__manual_msg_step2": {
-    "message": "Och skapa en felanmälan, och kpoiera och klistra in informationen nedan in i \"Fyll i eventuella detaljer som du tror kan hjälpa oss att förstå ditt problem\"-delen.", 
+    "message": "Och skapa en felanmälan, och kopiera och klistra in informationen nedan in i \"Fyll i eventuella detaljer som du tror kan hjälpa oss att förstå ditt problem\"-delen.", 
     "description": "Error message shown when the server has an unrecoverable error during the submission of an ad or bug report."
   }, 
   "adreport_server_response_error_msg": {
@@ -495,9 +495,6 @@
     "message": "ELLER, klicka bara på den här knappen för att vi ska göra allt ovanstående: [[Inaktivera alla andra tillägg]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "När denna popup stängs, klicka (eller högerklicka) ett objekt på sidan."
-  }, 
   "clickthead": {
     "message": "Klicka på annonsen så visar jag hur du blockerar den.", 
     "description": "User has to click the ad they want to block."
@@ -637,6 +634,74 @@
     "message": "Den enda annonsblockeraren för YouTube™, byggd av AdBlock, det mest populära Chrome-tillägget med 60 miljoner användare över hela världen", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Kontrollera filtren för Godtagbara annonser:", 
     "description": "Section header on the ad report page"
@@ -652,9 +717,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Tyvärr, AdBlock på YouTube™ är inaktiverat på den här sidan av ett av dina alternativ.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Avaktiverat</strong> på denna webbplats"
   }, 
   "disabled_on_this_channel": {
     "message": "Du har tillåtit annonser på den här kanalen.", 
@@ -762,9 +824,6 @@
   "enable_do_not_track_advice": {
     "message": "För att den här funktionen ska fungera korrekt måste du aktivera \"Do Not Track (DNT) i din webbläsare.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Aktiverat</strong> på denna webbplats"
   }, 
   "enableotherextensionscomplete": {
     "message": "Tilläggen som tidigare inaktiverats har aktiverats på nytt.", 
@@ -1022,6 +1081,10 @@
     "message": "Grekiska", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesiska", 
     "description": "A filter list"
@@ -1032,6 +1095,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polska", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1839,32 +1906,8 @@
   "options_customFilter_cancel": {
     "message": "Avbryt"
   }, 
-  "options_customFilter_edit": {
-    "message": "Redigera filter"
-  }, 
-  "options_customFilter_save": {
-    "message": "Spara"
-  }, 
   "options_customFilters_description": {
     "message": "Skriv dina egna anpassade filter för ytterligare kontroll om vad innehåll AdBlock tillåter eller blockerar."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "t.ex. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Lär dig skriva filterlistor"
-  }, 
-  "options_customFilters_start": {
-    "message": "Börja skriva min filterlista"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Filter som du skapar visas här."
   }, 
   "options_customFilters_title": {
     "message": "Skapa och redigera din filterlista"
@@ -1888,10 +1931,10 @@
     "message": "Visa användbara notifieringar"
   }, 
   "options_dialog_about_copyright": {
-    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "message": "Copyright © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2433,12 +2476,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Visa nummer vid ikon"
-  }, 
-  "stats_title": {
-    "message": "Annonser blockerade"
   }, 
   "status_domain_paused": {
     "message": "AdBlock är pausat på den här webbplatsen.", 

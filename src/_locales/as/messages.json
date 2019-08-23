@@ -96,10 +96,10 @@
     "description": "Subtitle on the Support tab"
   }, 
   "add": {
-    "message": "जोडा"
+    "message": "যোগ কৰক"
   }, 
   "add_filters_msg": {
-    "message": "गाळणी जोडायची?"
+    "message": "ফিল্টাৰ(বোৰ) যোগ কৰিবনে?"
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -318,7 +318,7 @@
     "description": "Checkbox letting user choose whether to block annoyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
-    "message": "घटक रोखा"
+    "message": "উপাদান অৱৰুদ্ধ কৰক"
   }, 
   "block_privacy_on_youtube": {
     "message": "Protect my privacy on YouTube™", 
@@ -421,7 +421,7 @@
     "description": "Text to callout a new feature"
   }, 
   "cancel": {
-    "message": "रद्द करा"
+    "message": "বাতিল"
   }, 
   "cantblockflash": {
     "message": "We can't block ads inside Flash and other plugins yet. We are awaiting support from the browser and WebKit.", 
@@ -487,6 +487,9 @@
     "message": "Clean up this list", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "পৃষ্ঠাখনত কোনো এক উপাদান অৱৰুদ্ধ কৰিবলৈ ক্লিক কৰক।"
+  }, 
   "clickdisableaa": {
     "message": "Click this: [[Disable Acceptable Ads]]", 
     "description": "Instruction on ad report page"
@@ -506,6 +509,21 @@
   "close": {
     "message": "Close", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "এডব্লকৰ সকীয়নিমূলক বাৰ্তাবোৰ লুকুৱাওক"
+  }, 
+  "common_feature_malware_title": {
+    "message": "মেলৱেৰ অৱৰুদ্ধ কৰক"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "অতিৰিক্ত ট্ৰেকিং অৱৰুদ্ধ কৰক"
+  }, 
+  "common_feature_social_title": {
+    "message": "সংবাদ মাধ্যম আইকন ট্ৰেকিং অৱৰুদ্ধ কৰক"
+  }, 
+  "common_notification_hide": {
+    "message": "সুচনা বন্ধ কৰক"
   }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
@@ -534,11 +552,14 @@
     "description": "Notice shown on the 'Customize' tab of the options page when Safari Content Blocking is enabled"
   }, 
   "continue": {
-    "message": "सुरु ठेवा"
+    "message": "অব্যাহত ৰাখক"
   }, 
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "চয়নিত প্ৰতিলিপি কৰক"
   }, 
   "correctfilters": {
     "message": "Make sure you're using the right language filter(s):", 
@@ -601,6 +622,9 @@
   "default_theme": {
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
+  }, 
+  "delete": {
+    "message": "বিলোপ"
   }, 
   "delete_migration_error_messages": {
     "message": "Delete messages", 
@@ -779,7 +803,7 @@
     "description": "Link to download our Mac App. [[ and ]] will be replaced with HTML to link to the Mac App Store"
   }, 
   "easy_create_filter": {
-    "message": "घटक रोखा"
+    "message": "উপাদান অৱৰুদ্ধ কৰক"
   }, 
   "easylist_disable_done": {
     "message": "AdBlock uses EasyList to block ads on most websites.", 
@@ -889,6 +913,9 @@
     "message": "Check in Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
+  "filter_action_failed": {
+    "message": "কিবা ভুল হৈছে। অনুগ্ৰহ কৰি পুনৰ চেষ্টা কৰক।"
+  }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
     "description": "A filter list explanation"
@@ -941,18 +968,6 @@
     "message": "Vietnamese + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
-  "filter_elemhideemulation_nodomain": {
-    "message": "विस्तारित घटक लपवण्याच्या गाळणीसाठी सक्रीय डोमेन निर्धारित केलेले नाहीत"
-  }, 
-  "filter_invalid_csp": {
-    "message": "अवैध मजकूर सुरक्षा धोरण"
-  }, 
-  "filter_invalid_domain": {
-    "message": "अवैध (किंवा रिक्त) डोमेन निर्धारित"
-  }, 
-  "filter_invalid_regexp": {
-    "message": "अवैध सामान्य अविर्भाव"
-  }, 
   "filter_israeli": {
     "message": "Hebrew + EasyList", 
     "description": "A filter list combined with EasyList"
@@ -968,9 +983,6 @@
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
-  }, 
-  "filter_unknown_option": {
-    "message": "अज्ञात गाळणी पर्याय"
   }, 
   "filter_warning_removal_explained": {
     "message": "removes warnings about using ad blockers", 
@@ -1167,7 +1179,7 @@
     "description": "Language names for a filter list"
   }, 
   "filters_subscription_lastDownload_connectionError": {
-    "message": "अयशस्वी, डाउनलोड अयशस्वी"
+    "message": "ব্যৰ্থ হ\\'ল, ডাউনল\\'ড ব্যৰ্থতা"
   }, 
   "filtersavewarning": {
     "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!\nRead the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
@@ -1216,6 +1228,33 @@
   "firefox_explanation": {
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
+  }, 
+  "firstRun_browser_store_android": {
+    "message": "গুগ্\\'ল প্লে'ত এণ্ড্ৰইড এপ্প"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "iTunes এপ্প ষ্ট\\'ৰত উপলব্ধ"
+  }, 
+  "firstRun_browser_title": {
+    "message": "এডব্লক ব্ৰাউজাৰ এপ্প"
+  }, 
+  "firstRun_control_title": {
+    "message": "আপুনি নিয়ন্ত্ৰণত আছে"
+  }, 
+  "firstRun_fair_title": {
+    "message": "উচিত ব্যৱহাৰ"
+  }, 
+  "firstRun_title": {
+    "message": "ইনষ্টলেশ্বন সফল হৈছে!"
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "আপোনাৰ ব্ৰাউজাৰৰ সম্প্রসাৰণবোৰৰ টেব খোলক।"
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "এডব্লক প্লাছ স্থানাংকিত কৰি আঁতৰাই দিয়ক।"
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "<a>adblockplus.org</a>-ৰ পৰা এডব্লক প্লাছ পুনঃইনষ্টল কৰক।"
   }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
@@ -1297,13 +1336,32 @@
     "message": "Invalid list URL. It'll be deleted.", 
     "description": "Message when you subscribe to a non-list URL"
   }, 
-  "invalid_css_selector": {
-    "message": "$selector$ हा वैध CSS Selector नाही", 
-    "placeholders": {
-      "selector": {
-        "content": "$1"
-      }
-    }
+  "issueReporter_anonymousSubmission_label": {
+    "message": "নামবিহীন দাখিলকৰণ"
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "এটা মন্তব্য এৰি যাওক"
+  }, 
+  "issueReporter_comment_description": {
+    "message": "অনুগ্ৰহ কৰি তলত এটা মন্তব্য এৰি সমস্যাটো ভাল দৰে বুজাত আমাক সহায় কৰক।"
+  }, 
+  "issueReporter_comment_label": {
+    "message": "মন্তব্য (বৈকল্পিক):"
+  }, 
+  "issueReporter_confirmationMessage": {
+    "message": "আপোনাৰ অভিযোগ সঞ্চিত কৰা হ\\'ল। আপুনি নিম্নলিখিত ঠিকনাটোত ইয়ালৈ প্ৰৱেশ কৰিব পাৰিব:"
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "বিশদ-বিৱৰণ"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "সম্পন্ন"
+  }, 
+  "issueReporter_email_label": {
+    "message": "ইমেইল:"
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "মই তথাপিও বিজ্ঞাপন দেখা পাওঁ"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1476,14 +1534,6 @@
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
-  }, 
-  "line": {
-    "message": "ओळ $number$", 
-    "placeholders": {
-      "number": {
-        "content": "$1"
-      }
-    }
   }, 
   "linkblockadbyurl": {
     "message": "Block an ad by its URL", 
@@ -1708,7 +1758,7 @@
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "name": {
-    "message": "Adblock प्लस"
+    "message": "এডব্লক প্লাছ"
   }, 
   "name_adblock_on_youtube": {
     "message": "AdBlock on YouTube™", 
@@ -1754,14 +1804,23 @@
     "message": "NOTE:", 
     "description": "Indicates that the user should take note of the message that follows."
   }, 
+  "notification_antiadblock_message": {
+    "message": "এই ছাইটটো এডব্লক প্লাছ ব্যৱহাৰকাৰীসকললৈ লক্ষিত বাৰ্তাসমূহ দেখুওৱাৰ বাবে জনাজাত। এডব্লক প্লাছে লক্ষিত বাৰ্তাসমূহ লুকুৱাটো আপুনি বিচাৰি নেকি?"
+  }, 
+  "notification_antiadblock_title": {
+    "message": "লক্ষিত বাৰ্তাসমূহ লুকুৱাবনে?"
+  }, 
   "notification_configure": {
-    "message": "अधिसूचना प्राधान्ये संयोजित करा"
+    "message": "সুচনা ছেটিংছ ক\\'নফিগাৰ কৰক"
   }, 
   "notification_open_all": {
-    "message": "या अधिसूचनेमधील सर्व दुवे उघडा"
+    "message": "এই সুচনাটোৰ পৰা সকলো লিংক খোলক।"
   }, 
   "notification_with_buttons": {
-    "message": "ठीक' वर टिचकी मारून या अधिसूचनेतील सर्व दुवे उघडा."
+    "message": "এই সুচনাটোত থকা সকলো লিংক খোলিবলৈ 'ঠিক আছে' ক্লিক কৰক।"
+  }, 
+  "notification_without_buttons": {
+    "message": "সুচনাটোত থকা সকলো লিংক খোলিবলৈ সেইটোত ক্লিক কৰক।"
   }, 
   "ocean_theme": {
     "message": "Ocean", 
@@ -1783,36 +1842,285 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_description_1": {
+    "message": "গ্ৰহণযোগ্য বিজ্ঞাপনবোৰ বিৰক্তিকৰ নহয় আৰু আপুনি চাই থকা সমলৰ সৈতে হস্তক্ষেপ নকৰে। <a>গ্ৰহণযোগ্য বিজ্ঞাপনবোৰৰ মাপদণ্ডৰ বিষয়ে অধিক পঢ়ক</a>"
+  }, 
+  "options_acceptableAds_ads_label": {
+    "message": "গ্ৰহণযোগ্য বিজ্ঞাপনবোৰক অনুমতি দিয়ক"
+  }, 
+  "options_acceptableAds_description": {
+    "message": "গ্ৰহণযোগ্য বিজ্ঞাপনবোৰ হৈছে অ-অনধিকাৰমূলক বিজ্ঞাপন। সেইবোৰ বিজ্ঞাপন অৱৰুদ্ধকৰণ আৰু অনলাইন সমলৰ সমৰ্থনৰ মধ্যস্তৰ কাৰণ সেইবোৰে ৱেবছাইটৰ গৰাকীসকলৰ বাবে ৰাজস্ব উৎপন্ন কৰে।"
+  }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>লক্ষ্য কৰিব:</strong> আপোনাৰ ব্ৰাউজাৰ ছেটিংছত আপোনাৰ <strong>ট্ৰেক নকৰিব (DNT)</strong> অক্ষম কৰি থোৱা আছে। এই সুবিধাটোৱে সঠিককৈ কাৰ্য কৰিবলৈ হ\\'লে, অনুগ্ৰহ কৰি আপোনাৰ ব্ৰাউজাৰ অগ্ৰাধিকাৰসমূহত <strong>DNT</strong> সক্ষম কৰক। <a>চাওঁক DNT কেনেকৈ সক্ষম কৰে</a>।"
+  }, 
+  "options_acceptableAds_header": {
+    "message": "গ্ৰহণযোগ্য বিজ্ঞাপনবোৰ"
+  }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "কেৱল তৃতীয়-পক্ষ ট্ৰেকিং নথকা বিজ্ঞাপনবোৰক অনুমতি দিয়ক"
+  }, 
+  "options_advanced_description": {
+    "message": "এডব্লক প্লাছ অনুকূলিত কৰক, ফিল্টাৰৰ সূচী যোগ কৰক বা আঁতৰাওক, আপোনাৰ নিজা ফিল্টাৰৰ সূচী সৃষ্টি কৰক আৰু বজাই ৰাখক"
+  }, 
+  "options_anti_cv_header": {
+    "message": "প্রতাৰণা-বিৰোধী"
+  }, 
+  "options_anti_cv_title": {
+    "message": "ABP প্রতাৰণা-বিৰোধী ফিল্টাৰৰ সূচী"
+  }, 
   "options_close": {
-    "message": "बंद करा"
+    "message": "বন্ধ কৰক"
+  }, 
+  "options_control_remove_title": {
+    "message": "আঁতৰাওক"
   }, 
   "options_customFilter_cancel": {
-    "message": "रद्द करा"
+    "message": "বাতিল কৰক"
+  }, 
+  "options_customFilters_title": {
+    "message": "আপোনাৰ অনুকূলিত ফিল্টাৰবোৰ"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "মোৰ ফিল্টাৰৰ সূচী"
+  }, 
+  "options_customize_header": {
+    "message": "অনুকূলনবোৰ"
+  }, 
+  "options_dialog_import_subscription_location": {
+    "message": "ফিল্টাৰৰ সূচীৰ URL"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "এটা বৈধ URL প্ৰবিষ্ট কৰক"
+  }, 
+  "options_dialog_import_title": {
+    "message": "এখন ফিল্টাৰৰ সূচী যোগ কৰক"
+  }, 
+  "options_dialog_language_other_empty": {
+    "message": "কোনো উপলব্ধ ভাষা নাই।"
+  }, 
+  "options_dialog_language_title": {
+    "message": "এটা ভাষা চয়ন কৰক"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "হয়, এইখন ফিল্টাৰৰ সূচী ব্যৱহাৰ কৰক"
+  }, 
+  "options_dialog_predefined_title": {
+    "message": "আপুনি এই ফিল্টাৰৰ সূচীখন যোগ কৰিব বিচাৰে বুলি নিশ্চিতনে?"
+  }, 
+  "options_email": {
+    "message": "ইমেইল:"
+  }, 
+  "options_english": {
+    "message": "ইংৰাজী"
+  }, 
+  "options_filterList_add": {
+    "message": "+ এখন নতুন ফিল্টাৰৰ সূচী যোগ কৰক"
+  }, 
+  "options_filterList_column_name": {
+    "message": "ফিল্টাৰৰ সূচীবোৰ"
+  }, 
+  "options_filterList_column_status": {
+    "message": "স্থিতি"
+  }, 
+  "options_filterList_column_update": {
+    "message": "অন্তিমবাৰ উন্নীত হৈছিল"
+  }, 
+  "options_filterList_empty": {
+    "message": "আপুনি এডব্লক প্লাছত কোনো ফিল্টাৰৰ সূচী যোগ কৰা নাই। আপুনি যোগ কৰা ফিল্টাৰৰ সূচীবোৰ ইয়াত দেখুওৱা হ\\'ব।"
+  }, 
+  "options_filterList_hours": {
+    "message": "ঘণ্টা আগতে"
   }, 
   "options_filterList_lastDownload_checksumMismatch": {
-    "message": "अयशस्वी, चेकसम जुळत नाही"
+    "message": "ব্যৰ্থ হ\\'ল, ত্ৰুটিনিৰ্ধাৰক মিলা নাই"
   }, 
   "options_filterList_lastDownload_connectionError": {
-    "message": "अयशस्वी, डाउनलोड अयशस्वी"
+    "message": "ব্যৰ্থ হ\\'ল, ডাউনল\\'ড ব্যৰ্থতা"
+  }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "উন্নীত হৈ আছে"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "ব্যৰ্থ হ\\'ল, কোনো বৈধ ফিল্টাৰৰ সূচী নহয়"
   }, 
   "options_filterList_lastDownload_invalidURL": {
-    "message": "अयशस्वी, वैध पत्ता नाही"
+    "message": "ব্যৰ্থ হ\\'ল, কোনো বৈধ ঠিকনা নহয়"
+  }, 
+  "options_filterList_minutes": {
+    "message": "মিনিট আগতে"
+  }, 
+  "options_filterList_now": {
+    "message": "এই মাত্ৰ"
+  }, 
+  "options_filterList_source": {
+    "message": "উৎস"
+  }, 
+  "options_filterList_state_active": {
+    "message": "সক্ৰিয়"
+  }, 
+  "options_filterList_state_disabled": {
+    "message": "নিষ্ক্ৰিয়"
+  }, 
+  "options_filterList_title": {
+    "message": "ফিল্টাৰৰ সূচীবোৰ"
+  }, 
+  "options_filterList_update": {
+    "message": "সকলো ফিল্টাৰৰ সূচী উন্নীত কৰক"
+  }, 
+  "options_filterList_updateNow": {
+    "message": "এতিয়াই উন্নীত কৰক"
+  }, 
+  "options_filterList_website": {
+    "message": "ৱেবছাইট"
+  }, 
+  "options_filter_list_rule": {
+    "message": "ফিল্টাৰৰ নিয়ম"
+  }, 
+  "options_filters_search_or_add": {
+    "message": "ফিল্টাৰ(বোৰ)ৰ সন্ধান বা যোগ কৰক (যেনে $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
+  "options_footer_about": {
+    "message": "এডব্লক প্লাছৰ বিষয়ে"
+  }, 
+  "options_footer_contribute": {
+    "message": "অবদান কৰক"
+  }, 
+  "options_general_description": {
+    "message": "ৱেবছাইটবোৰত এডব্লক প্লাছে কি দেখুৱাব আৰু কি লুকুৱাব সেয়া নিৰ্ধাৰণ কৰক"
+  }, 
+  "options_help_description": {
+    "message": "সহায় বিচাৰক বা আমাৰ সৈতে যোগাযোগ কৰক"
+  }, 
+  "options_language_add": {
+    "message": "+ এটা ভাষা যোগ কৰক"
+  }, 
+  "options_language_change": {
+    "message": "সলনি কৰক"
+  }, 
+  "options_language_description": {
+    "message": "আপুনি সাধাৰণত ব্ৰাউজ কৰা ভাষা(বোৰ)ৰ বাবে এডব্লক প্লাছ অপ্টিমাইজ কৰক।"
+  }, 
+  "options_language_empty": {
+    "message": "আপোনাৰ কোন ভাষা-নিৰ্দিষ্ট ফিল্টাৰ নাই।"
   }, 
   "options_language_header": {
-    "message": "भाष"
+    "message": "ভাষা"
+  }, 
+  "options_language_tip": {
+    "message": "<strong>আভাস:</strong> কেৱল আপোনাৰ প্ৰয়োজনীয় ভাষাবোৰহে চয়ন কৰক। অধিক ভাষা চয়ন কৰাটোৱে বিজ্ঞাপন অৱৰোধকাৰীটোৰ লগতে আপোনাৰ ব্ৰাউজ কৰা গতি মন্থৰ কৰি তুলিব।"
+  }, 
+  "options_learn_more": {
+    "message": "অধিক জানক"
+  }, 
+  "options_more_filters_header": {
+    "message": "অধিক ফিল্টাৰ"
+  }, 
+  "options_new_label": {
+    "message": "নতুন"
   }, 
   "options_page_document_title": {
-    "message": "सेटिंग्ज"
+    "message": "এডব্লক প্লাছৰ বিকল্পবোৰ"
   }, 
   "options_page_theme": {
     "message": "Options Page Theme", 
     "description": "Section title of the Themes tab of the Options page"
   }, 
   "options_page_title": {
-    "message": "सेटिंग्ज"
+    "message": "ছেটিংছ"
+  }, 
+  "options_privacy_header": {
+    "message": "গোপনীয়তা আৰু নিৰাপত্তা"
+  }, 
+  "options_refresh": {
+    "message": "সতেজ কৰক"
+  }, 
+  "options_report_bug": {
+    "message": "কিবা ত্ৰুটি পাইছে নেকি? <a>আমালৈ ত্ৰুটিৰ অভিযোগ এটা প্ৰেৰণ কৰক</a>"
   }, 
   "options_short": {
-    "message": "पर्याय"
+    "message": "বিকল্পবোৰ"
+  }, 
+  "options_social_title": {
+    "message": "যোগাযোগ কৰক"
+  }, 
+  "options_support_title": {
+    "message": "সমৰ্থন"
+  }, 
+  "options_tab_advanced": {
+    "message": "অগ্ৰণী"
+  }, 
+  "options_tab_general": {
+    "message": "সাধাৰণ"
+  }, 
+  "options_tab_help": {
+    "message": "সহায়"
+  }, 
+  "options_tab_whitelist": {
+    "message": "শ্বেতসূচীভুক্ত ৱেবছাইটবোৰ"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "আমি লক্ষ্য কৰিছোঁ যে আপোনাৰ <strong>$tracking$</strong> আৰু <strong>$acceptableAds$</strong> দুয়ো সক্ষম কৰা আছে।", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "আমি আপোনাক জনাবলৈ বিচাৰো যে বিজ্ঞাপকসকলে আপোনাক অধিক প্ৰাসঙ্গিক বিজ্ঞাপনবোৰ দেখুৱাবলৈ, গ্ৰহণযোগ্য বিজ্ঞাপনবোৰৰ সৈতে কিছু ট্ৰেকিং <strong>কৰিবও</strong> পাৰে।"
+  }, 
+  "options_tracking_warning_3": {
+    "message": "যদি আপুনি অতিৰিক্ত গোপনীয়তা বিচাৰে, তলৰ <strong>$acceptableAdsPrivacy$</strong>ৰ চেকবক্সটো চয়ন কৰক।", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "ঠিক আছে, বুজিছোঁ"
+  }, 
+  "options_whitelist_add": {
+    "message": "ৱেবছাইট যোগ কৰক"
+  }, 
+  "options_whitelist_description": {
+    "message": "আপুনি এই ৱেবছাইটবোৰত বিজ্ঞাপন অৱৰুদ্ধকৰণ বন্ধ কৰিছে আৰু সেয়েহে, এইবোৰত বিজ্ঞাপন দেখা পাব।"
+  }, 
+  "options_whitelist_empty_1": {
+    "message": "আপোনাৰ কোনো শ্বেতসূচীভুক্ত ৱেবছাইট নাই।"
+  }, 
+  "options_whitelist_empty_2": {
+    "message": "আপুনি বিশ্বাস কৰা ৱেবছাইটবোৰ আৰু যিবোৰত বিজ্ঞাপনবোৰক অনুমতি দিবলৈ বিচাৰে সেইবোৰ ইয়াত দেখুওৱা হ\\'ব।"
+  }, 
+  "options_whitelist_notification": {
+    "message": "\"$website$\" শ্বেতসূচীভুক্ত কৰা হ\\'ল।", 
+    "placeholders": {
+      "website": {
+        "content": "$1", 
+        "example": "example.com"
+      }
+    }
+  }, 
+  "options_whitelist_placeholder_example": {
+    "message": "যেনে $domain$", 
+    "placeholders": {
+      "domain": {
+        "content": "$1", 
+        "example": "www.example.com"
+      }
+    }
   }, 
   "optionstitle": {
     "message": "AdBlock Options", 
@@ -1845,10 +2153,16 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block other elements that are not ads."
   }, 
   "overlay_notification_button_no": {
-    "message": "नाही"
+    "message": "নহয়"
   }, 
   "overlay_notification_button_yes": {
-    "message": "होय"
+    "message": "হয়"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "বন্ধ কৰক"
+  }, 
+  "overlay_notification_closing_button_optout": {
+    "message": "সুচনাবোৰ দেখুওৱা বন্ধ কৰক"
   }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
@@ -1882,6 +2196,9 @@
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "ম\\'বাইলৰ এডব্লক প্লাছত আগ্ৰহ আছে?"
+  }, 
   "pwyw": {
     "message": "Pay what you want!", 
     "description": "Text of a payment request link"
@@ -1901,6 +2218,9 @@
   "reenableadsonebyone": {
     "message": "Great! Now let's find out which extension is the cause. Go through and enable each extension one by one. The extension that brings back the ad(s) is the one you need to uninstall to get rid of the ads.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "সালসলনিবোৰ প্ৰভাৱিত কৰিবলৈ <strong>সতেজ কৰক</strong>-ত ক্লিক কৰক।"
   }, 
   "refusetocheck": {
     "message": "I don't want to check this", 
@@ -2012,6 +2332,9 @@
     "message": "select language", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "sendReport": {
+    "message": "সমস্যাৰ অভিযোগ কৰক"
+  }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -2076,9 +2399,31 @@
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "সংখ্যক সামগ্ৰী অৱৰুদ্ধ কৰা হৈছে"
+  }, 
+  "stats_label_page": {
+    "message": "এইখন পৃষ্ঠাত <strong>$number$</strong>টা", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
+  "stats_label_total": {
+    "message": "মুঠ <strong>$number$</strong>টা", 
+    "placeholders": {
+      "number": {
+        "content": "$1"
+      }
+    }
+  }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "ইয়াত বিজ্ঞাপন অৱৰুদ্ধ কৰক:"
   }, 
   "status_paused": {
     "message": "AdBlock is paused.", 
@@ -2426,9 +2771,6 @@
     "message": "Undo my blocks on this site", 
     "description": "Menu entry to let the user cancel the result of running the blacklist wizard."
   }, 
-  "unexpected_filter_list_header": {
-    "message": "गाळणी यादी मधील हेडर ला यथे परवानगी नाही"
-  }, 
   "unpause_adblock": {
     "message": "Unpause AdBlock", 
     "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused'"
@@ -2504,6 +2846,18 @@
   "updatenowmessage2": {
     "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text and button"
+  }, 
+  "updates_heading": {
+    "message": "এডব্লক প্লাছ উন্নীত কৰা হ\\'ল!"
+  }, 
+  "updates_phone": {
+    "message": "কিন্তু ৰ\\'ৱ! আপোনাৰ ফোৰৰ কি হ\\'ব?"
+  }, 
+  "updates_status": {
+    "message": "উন্নীতকৰণ সমাপ্ত"
+  }, 
+  "updates_subheading": {
+    "message": "নতুন কি আছে?"
   }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 

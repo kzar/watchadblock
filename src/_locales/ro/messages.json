@@ -498,9 +498,6 @@
     "message": "Sau, doar faceţi click pe acest buton pentru ca noi să facem toate cele de mai sus: [[Dezactivaţi toate celelalte extensii]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "După închiderea acestui pop-up, clic (sau clic-dreapta) pe un element de pe pagină."
-  }, 
   "clickthead": {
     "message": "Click pe o reclamă și te voi ajuta să o blochezi.", 
     "description": "User has to click the ad they want to block."
@@ -560,6 +557,9 @@
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "Copiază ce este selectat"
   }, 
   "correctfilters": {
     "message": "Make sure you're using the right language filter(s):", 
@@ -623,6 +623,9 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "Șterge"
+  }, 
   "delete_migration_error_messages": {
     "message": "Ștergere mesaje", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -643,6 +646,74 @@
     "message": "Singurul blocant de anunțuri YouTube™ creat de AdBlock, cea mai populară extensie Chrome cu 60 de milioane de utilizatori din lume", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Check the Acceptable Ads filters:", 
     "description": "Section header on the ad report page"
@@ -658,9 +729,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Dezactivat</strong> pe acest site"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -769,9 +837,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "message": "<strong>Activat</strong> pe acest site"
-  }, 
   "enableotherextensionscomplete": {
     "message": "Extensiile care au fost dezactivate anterior acum au fost re-activate.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -847,6 +912,9 @@
   "ff_checkinchrometitle": {
     "message": "Verifică în Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_action_failed": {
+    "message": "Ceva n-a mers bine! Vă rugăm să încercați din nou."
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
@@ -927,6 +995,9 @@
   "filter_russian": {
     "message": "EasyList Rusă și ucraineană", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_slow": {
+    "message": "Pentru a asigura o filtrare rapidă, verificaţi lungimea filtrului şi că nu conţine o expresie regulată."
   }, 
   "filter_snippet_nodomain": {
     "message": "Nici un domeniu activ specificat pentru filtrul de tip snippet"
@@ -1034,6 +1105,10 @@
     "message": "Greacă", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indoneziană", 
     "description": "A filter list"
@@ -1044,6 +1119,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Poloneză", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1322,6 +1401,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "Nu vom putea să te contactăm aşa că vom prioritatea semnalării va fi mai mică."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "Închide"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "Introducere comentariu"
   }, 
@@ -1384,6 +1466,9 @@
   }, 
   "issueReporter_processing_screenshot": {
     "message": "Procesare"
+  }, 
+  "issueReporter_screenreader_warning": {
+    "message": "Pentru a înţelege mai bine problema, un screenshot este necesar când trimiteți un raport de problemă. În funcţie de site-ul pe care vă aflaţi, captura de ecran ar putea conţine informaţii personale. Daca nu doriţi să trimiteţi o captură de ecran, vă rugăm să trimiteţi detalii la <a0>support@adblockplus.org</a0>."
   }, 
   "issueReporter_screenshot_hide": {
     "message": "Ascunde"
@@ -1938,35 +2023,11 @@
   "options_customFilter_cancel": {
     "message": "Anulează"
   }, 
-  "options_customFilter_edit": {
-    "message": "Editare filtre"
-  }, 
-  "options_customFilter_save": {
-    "message": "Salvează"
-  }, 
   "options_customFilters_description": {
-    "message": "Scrie propriile filtre personalizate pentru a controla ce conţinut permite sau blochează AdBlock."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "exemplu $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Învaţă cum să scrii liste de filtre"
-  }, 
-  "options_customFilters_start": {
-    "message": "Începeţi să scrieţi propria listă de filtre"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Filtrele create vor apărea aici."
+    "message": "Scrie propriile filtre personalizate pentru a controla ce conţinut permite sau blocheaza AdBlock. <a0>învaţă cum să scrii filtre</a0>"
   }, 
   "options_customFilters_title": {
-    "message": "Crează şi modifică propria listă de filtre"
+    "message": "Filtrele dvs personalizate"
   }, 
   "options_customFilters_widget_title": {
     "message": "Lista mea de filtre"
@@ -1996,10 +2057,10 @@
     "message": "Permiteţi notificări în AdBlock (notificări legate de probleme critice de performanţă vor fi afişate totdeauna)."
   }, 
   "options_dialog_about_copyright": {
-    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "message": "Copyright © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2095,7 +2156,7 @@
     "message": "Activ"
   }, 
   "options_filterList_state_disabled": {
-    "message": "Dezactivat"
+    "message": "Inactiv"
   }, 
   "options_filterList_title": {
     "message": "Liste de filtre"
@@ -2109,8 +2170,11 @@
   "options_filterList_website": {
     "message": "website"
   }, 
+  "options_filter_list_rule": {
+    "message": "Regulă de filtrare"
+  }, 
   "options_filters_search_or_add": {
-    "message": "Căutare / Adauga filtru (ex. $filter$)", 
+    "message": "Caută sau adaugă filtru (ex. $filter$)", 
     "placeholders": {
       "filter": {
         "content": "/ads/track/*"
@@ -2567,12 +2631,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Arată numerele în pictograma"
-  }, 
-  "stats_title": {
-    "message": "Reclame blocate"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

@@ -498,9 +498,6 @@
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "ამ სარკმლის დახურვისთანავე, დააწკაპეთ (ან მარჯვენა წკაპი) ელემენტზე მოცემულ გვერდზე."
-  }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
     "description": "User has to click the ad they want to block."
@@ -560,6 +557,9 @@
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "მონიშნულის ასლი"
   }, 
   "correctfilters": {
     "message": "Make sure you're using the right language filter(s):", 
@@ -623,6 +623,9 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "წაშლა"
+  }, 
   "delete_migration_error_messages": {
     "message": "Delete messages", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -643,6 +646,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Check the Acceptable Ads filters:", 
     "description": "Section header on the ad report page"
@@ -658,9 +729,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>გამორთულია</strong> ამ საიტზე"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -769,9 +837,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "message": "<strong>ჩართულია</strong> ამ საიტზე"
-  }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -847,6 +912,9 @@
   "ff_checkinchrometitle": {
     "message": "Check in Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_action_failed": {
+    "message": "რაღაც შეცდომაა. გთხოვთ, სცადოთ მოგვიანებით."
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
@@ -927,6 +995,9 @@
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_slow": {
+    "message": "ფილტრის სისწრაფეში დასარწმუნებლად, გთხოვთ გადახედოთ ნიმუშის სიგრძეს და გადაამოწმოთ, შეიცავს თუ არა რეგულარულ გამოსახულებას."
   }, 
   "filter_snippet_nodomain": {
     "message": "მოქმედი დომენი არაა მითითებული ცალკეული ფილტრისთვის"
@@ -1034,6 +1105,10 @@
     "message": "Greek", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesian", 
     "description": "A filter list"
@@ -1044,6 +1119,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polish", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1322,6 +1401,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "ჩვენ ვერ შევძლებთ თქვენთან დაკავშირებას და შესაბამისად, ნაკლები ყურადღება მიექცევა თქვენს მოხსენებას."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "დახურვა"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "დაურთეთ შენიშვნა"
   }, 
@@ -1385,6 +1467,9 @@
   "issueReporter_processing_screenshot": {
     "message": "დამუშავება"
   }, 
+  "issueReporter_screenreader_warning": {
+    "message": "ხარვეზის უკეთ ასახსნელად, საჭიროა ეკრანის სურათის დართვა მოხსენებისთვის. გარკვეული საიტების შემთხვევაში, სურათი შეიძლება პირად მონაცემებსაც შეიცავდეს. თუ თქვენთვის არასასურველია ეკრანის სურათის გადმოგზავნა, გთხოვთ დაგვიკავშირდეთ ელფოსტაზე <a0>support@adblockplus.org</a0>."
+  }, 
   "issueReporter_screenshot_hide": {
     "message": "დამალვა"
   }, 
@@ -1407,10 +1492,10 @@
     "message": "მოხსენების მონაცემების ჩვენება"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "ეს ფანჯარა გაგიძღვებათ AdBlock-სთან დაკავშირებული ხარვეზების შესახებ მოხსენებების გასაგზავნად. თავდაპირველად, მიუთითეთ, თუ რა სახის ხარვეზს გადააწყდით ამ გვერდზე:"
+    "message": "გთხოვთ, მიუთითოთ ხარვეზი:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "მიუთითეთ, რა სახის ხარვეზია"
+    "message": "რა სახის ხარვეზს გადააწყდით?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1938,35 +2023,11 @@
   "options_customFilter_cancel": {
     "message": "გაუქმება"
   }, 
-  "options_customFilter_edit": {
-    "message": "ფილტრების ჩასწორება"
-  }, 
-  "options_customFilter_save": {
-    "message": "შენახვა"
-  }, 
   "options_customFilters_description": {
-    "message": "შექმენით საკუთარი ფილტრები, AdBlock-ით სასურველი შიგთავსის შეზღუდვისა და დაშვებისთვის."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "მაგ. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "იხილეთ ვრცლად, როგორ იქმნება ფილტრები"
-  }, 
-  "options_customFilters_start": {
-    "message": "დაიწყეთ ფილტრის შექმნა"
-  }, 
-  "options_customFilters_tip": {
-    "message": "თქვენ მიერ შექმნილი ფილტრები აქ გამოჩნდება."
+    "message": "შექმენით და მართეთ საკუთარი ფილტრები, AdBlock-ით სასურველი შიგთავსის შეზღუდვისა და დაშვებისთვის. <a0>იხილეთ ვრცლად, თუ როგორ იწერება ფილტრები</a0>"
   }, 
   "options_customFilters_title": {
-    "message": "შექმენით და ჩაასწორეთ თქვენი ფილტრი"
+    "message": "თქვენი საკუთარი ფილტრები"
   }, 
   "options_customFilters_widget_title": {
     "message": "ჩემი ფილტრი"
@@ -1996,10 +2057,10 @@
     "message": "შეტყობინებების დაშვება AdBlock-ისგან (წარმადობასთან დაკავშირებული მნიშვნელოვანი შეტყობინებები ყოველთვის გამოჩნდება)."
   }, 
   "options_dialog_about_copyright": {
-    "message": "მფლობელი © $currentYear$ eyeo GmbH.", 
+    "message": "მფლობელი © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2095,7 +2156,7 @@
     "message": "მოქმედი"
   }, 
   "options_filterList_state_disabled": {
-    "message": "გამორთული"
+    "message": "უმოქმედო"
   }, 
   "options_filterList_title": {
     "message": "ფილტრის წესები"
@@ -2109,8 +2170,11 @@
   "options_filterList_website": {
     "message": "ვებსაიტი"
   }, 
+  "options_filter_list_rule": {
+    "message": "ფილტრის წესი"
+  }, 
   "options_filters_search_or_add": {
-    "message": "ძიება / ფილტრის დამატება (მაგ. $filter$)", 
+    "message": "მოიძიეთ ან დაამატეთ ფილტრ(ებ)ი (მაგ. $filter$)", 
     "placeholders": {
       "filter": {
         "content": "/ads/track/*"
@@ -2567,12 +2631,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "რიცხვის ჩვენება ხატულაზე"
-  }, 
-  "stats_title": {
-    "message": "შეზღუდული რეკლამები"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

@@ -487,6 +487,9 @@
     "message": "Clean up this list", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "அதை தடுப்பதற்கு பக்கத்தில் ஒரு தனிமத்தின் கிளிக் செய்யவும்."
+  }, 
   "clickdisableaa": {
     "message": "Click this: [[Disable Acceptable Ads]]", 
     "description": "Instruction on ad report page"
@@ -494,9 +497,6 @@
   "clickdisableotherextensions": {
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
-  }, 
-  "clickhide_instructions": {
-    "message": "இந்த விழிதிரை மூடிய பின், பக்கத்தில் உள்ள உறுப்பின் மேல் சொடுக்கவும். (அல்லது வலது விசையை சொடுக்கவும்.)"
   }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
@@ -509,6 +509,12 @@
   "close": {
     "message": "Close", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_malware_title": {
+    "message": "தீம்பொருள் தடை"
+  }, 
+  "common_notification_hide": {
+    "message": "அறிவிப்பை மூடு"
   }, 
   "confirm_undo_custom_filters": {
     "message": "Are you sure you want to remove the $count$ blocks that you have created on $host$?", 
@@ -625,6 +631,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Check the Acceptable Ads filters:", 
     "description": "Section header on the ad report page"
@@ -640,9 +714,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "இந்த தளத்தில் <strong> முடக்கப்பட்டுள்ளது</strong>"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -750,9 +821,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "இந்த தளத்தில் <strong> செயல்படுகிறது</strong>"
   }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
@@ -1010,6 +1078,10 @@
     "message": "Greek", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesian", 
     "description": "A filter list"
@@ -1020,6 +1092,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polish", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1147,6 +1223,36 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_browser_store_android": {
+    "message": "Google Play இல் Android பயன்பாடு"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "iTunes App Store இல் கிடைக்கிறது"
+  }, 
+  "firstRun_browser_title": {
+    "message": "Adblock Browser பயன்பாடு"
+  }, 
+  "firstRun_control_title": {
+    "message": "நீங்கள் கட்டுப்பாட்டில் உள்ளீர்கள்"
+  }, 
+  "firstRun_fair_title": {
+    "message": "நியாயமான பயன்பாடு"
+  }, 
+  "firstRun_subtitle": {
+    "message": "நீங்கள் உங்கள் உலாவி கட்டுப்பாட்டை இப்பொழுது எடுத்தீர்கள்."
+  }, 
+  "firstRun_title": {
+    "message": "நிறுவல் வெற்றி!"
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "உங்கள் உலாவி நீட்டிப்புகள் தாவலை திற."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "AdBlock கண்டுபிடி மற்றும் அதை அகற்றவும்."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "AdBlock -ஐ <a>adblockplus.org</a> இலிருந்து மறுநிறுவல் செய்யவும்."
+  }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1234,6 +1340,42 @@
         "content": "$1"
       }
     }
+  }, 
+  "issueReporter_anonymousSubmission_label": {
+    "message": "அநாமதேய சமர்ப்பிப்பு"
+  }, 
+  "issueReporter_commentPage_heading": {
+    "message": "ஒரு கருத்து தெரிவிக்கவும்"
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "விவரங்கள்"
+  }, 
+  "issueReporter_doneButton_label": {
+    "message": "முடிந்தது"
+  }, 
+  "issueReporter_email_label": {
+    "message": "மின்னஞ்சல்:"
+  }, 
+  "issueReporter_falseNegative_label": {
+    "message": "நான் இன்னும் விளம்பரங்களை பார்கிறேன்"
+  }, 
+  "issueReporter_privacyPolicy": {
+    "message": "தனியுரிமைக் கொள்கை"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "மறை"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "சிக்கலைத் தேர்ந்தெடு"
+  }, 
+  "issueReporter_sendButton_label": {
+    "message": "அறிக்கை அனுப்பு"
+  }, 
+  "issueReporter_sendPage_heading": {
+    "message": "அறிக்கை அனுப்பு"
+  }, 
+  "issueReporter_typeSelector_description": {
+    "message": "தயவுசெய்து ஒரு சிக்கலைத் தேர்ந்தெடு:"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1684,6 +1826,9 @@
     "message": "NOTE:", 
     "description": "Indicates that the user should take note of the message that follows."
   }, 
+  "notification_antiadblock_title": {
+    "message": "இலக்கு செய்திகளை மறைக்கவா?"
+  }, 
   "notification_configure": {
     "message": "அறிவிக்கை அமைப்புகளை உள்ளமைக்க"
   }, 
@@ -1716,26 +1861,71 @@
     "message": "Options", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_label": {
+    "message": "ஏற்கக்கூடிய விளம்பரங்களை அனுமதி"
+  }, 
   "options_close": {
     "message": "மூட"
   }, 
   "options_customFilter_cancel": {
     "message": "ரத்து செய்"
   }, 
+  "options_customize_header": {
+    "message": "தனிப்பயனாக்கல்கள்"
+  }, 
+  "options_dialog_about_copyright": {
+    "message": "பதிப்புரிமை © $currentYear$ <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "currentYear": {
+        "content": "$1", 
+        "example": "2017"
+      }
+    }
+  }, 
+  "options_dialog_about_title": {
+    "message": "AdBlock பற்றி"
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "செல்லும் URL உள்ளிடு"
+  }, 
+  "options_dialog_language_title": {
+    "message": "ஒரு மொழியைத் தேர்ந்தெடு"
+  }, 
+  "options_dialog_predefined_confirm": {
+    "message": "ஆம், இந்த வடிகட்டிப் பட்டியலை பயன்படுத்து"
+  }, 
+  "options_email": {
+    "message": "மின்னஞ்சல்:"
+  }, 
+  "options_english": {
+    "message": "ஆங்கிலம்"
+  }, 
+  "options_filterList_add": {
+    "message": "+ புதிய வடிகட்டி பட்டியல் சேர்"
+  }, 
   "options_filterList_column_name": {
     "message": "வடிகட்டி பட்டியல்கள்"
   }, 
   "options_filterList_column_status": {
-    "message": "நிலைம"
+    "message": "நிலை"
+  }, 
+  "options_filterList_column_update": {
+    "message": "கடைசியாக புதுப்பிக்கப்பட்டது"
   }, 
   "options_filterList_lastDownload_connectionError": {
     "message": "தோல்வியடைந்தது, பதிவிறக்கம் தோல்வி"
   }, 
   "options_filterList_lastDownload_invalidURL": {
-    "message": "தோல்வி, செல்லத்தக்க இல்லை  முகவரி"
+    "message": "தோல்வி, செல்லத்தக்க இல்லை முகவரி"
+  }, 
+  "options_filterList_minutes": {
+    "message": "நிமிடங்கள் முன்பு"
+  }, 
+  "options_filterList_now": {
+    "message": "இப்போது"
   }, 
   "options_filterList_state_disabled": {
-    "message": "முடக்கப்பட்டத"
+    "message": "முடக்கப்பட்டது"
   }, 
   "options_filterList_title": {
     "message": "வடிகட்டி பட்டியல்கள்"
@@ -1743,12 +1933,26 @@
   "options_filterList_updateNow": {
     "message": "இப்போது புதுப்பிக்கவும்"
   }, 
+  "options_filterList_website": {
+    "message": "வலைத்தளம்"
+  }, 
+  "options_filters_search_or_add": {
+    "message": "தேடு / வடிகட்டி சேர் (எ.கா $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_page_theme": {
     "message": "Options Page Theme", 
     "description": "Section title of the Themes tab of the Options page"
   }, 
+  "options_refresh": {
+    "message": "புதுப்பி"
+  }, 
   "options_short": {
-    "message": "தேர்வுகள்"
+    "message": "விருப்பங்கள்"
   }, 
   "options_tab_general": {
     "message": "பொது"
@@ -1792,6 +1996,9 @@
   "overlay_notification_button_yes": {
     "message": "ஆம்"
   }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "மூடு"
+  }, 
   "overlay_notification_closing_button_optout": {
     "message": "அறிவிப்புகளை நிறுத்து"
   }, 
@@ -1826,6 +2033,9 @@
   "privacy_policy": {
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
+  }, 
+  "promote_abp_module": {
+    "message": "AdBlock மொபைலில் ஆர்வமா?"
   }, 
   "pwyw": {
     "message": "Pay what you want!", 
@@ -2021,6 +2231,9 @@
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "தடுக்கப்பட்ட எண்ணிக்கை"
+  }, 
   "stats_label_page": {
     "message": "இந்தப் பக்கத்தில் <strong>$number$</strong>", 
     "placeholders": {
@@ -2037,15 +2250,12 @@
       }
     }
   }, 
-  "stats_show_iconnumber": {
-    "message": "படவுருவில் எண்ணை காட்டு"
-  }, 
-  "stats_title": {
-    "message": "தடுக்கப்பட்ட விளம்பரங்கள்"
-  }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "இல் விளம்பரங்கள் தடை:"
   }, 
   "status_paused": {
     "message": "AdBlock is paused.", 
@@ -2471,6 +2681,18 @@
   "updatenowmessage2": {
     "message": "I will fetch updates automatically; you can also [[update now]]", 
     "description": "Update filters text and button"
+  }, 
+  "updates_heading": {
+    "message": "AdBlock புதுப்பிக்கப்பட்டுள்ளது!"
+  }, 
+  "updates_phone": {
+    "message": "ஆனால்! உங்கள் கைபேசிக்கு என்ன?"
+  }, 
+  "updates_status": {
+    "message": "முழுமையாக புதுப்பிக்கப்பட்டது"
+  }, 
+  "updates_subheading": {
+    "message": "புதிது என்ன?"
   }, 
   "updateyourlists": {
     "message": "Make sure your filter lists are up to date:", 

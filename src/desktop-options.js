@@ -16,12 +16,62 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+"use strict";
+
+function send(type, args)
+{
+  args = Object.assign({}, {type}, args);
+  return browser.runtime.sendMessage(args);
+}
+
+const app = {
+  get: (what) => send("app.get", {what}),
+  open: (what) => send("app.open", {what})
+};
+module.exports.app = app;
+
+const doclinks = {
+  get: (link) => send("app.get", {what: "doclink", link})
+};
+module.exports.doclinks = doclinks;
+
+// For now we are merely reusing the port for long-lived communications to fix
+// https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
+const port = browser.runtime.connect({name: "ui"});
+module.exports.port = port;
+
+},{}],2:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /* globals checkShareResource, getDocLink, i18nFormatDateTime, openSharePopup,
   E */
 
 "use strict";
 
+require("./io-filter-table");
+require("./io-list-box");
 require("./io-popout");
+require("./io-toggle");
+
+const api = require("./api");
+const {$, events} = require("./dom");
+
+const {port} = api;
 
 let subscriptionsMap = Object.create(null);
 let filtersMap = Object.create(null);
@@ -29,6 +79,7 @@ let acceptableAdsUrl = null;
 let acceptableAdsPrivacyUrl = null;
 let isCustomFiltersLoaded = false;
 let additionalSubscriptions = [];
+let languages = {};
 
 const collections = Object.create(null);
 const {getMessage} = browser.i18n;
@@ -114,9 +165,9 @@ Collection.prototype._sortItems = function()
     // disabled, but only be removed. That way it's grouped together with
     // the "Own filter list" which cannot be disabled either at the bottom
     // of the filter lists in the Advanced tab.
-    if (isAcceptableAds(a.url))
+    if (a.url && isAcceptableAds(a.url))
       return 1;
-    if (isAcceptableAds(b.url))
+    if (b.url && isAcceptableAds(b.url))
       return -1;
 
     // Make sure that newly added entries always appear on top in descending
@@ -142,7 +193,7 @@ Collection.prototype.addItem = function(item)
   for (let j = 0; j < this.details.length; j++)
   {
     const detail = this.details[j];
-    const table = E(detail.id);
+    const table = $(`#${detail.id}`);
     const template = table.querySelector("template");
     const listItem = document.createElement("li");
     listItem.appendChild(document.importNode(template.content, true));
@@ -191,7 +242,7 @@ Collection.prototype.removeItem = function(item)
   const getListElement = this._createElementQuery(item);
   for (const detail of this.details)
   {
-    const table = E(detail.id);
+    const table = $(`#${detail.id}`);
     const element = getListElement(table);
 
     // Element gets removed so make sure to handle focus appropriately
@@ -227,7 +278,7 @@ Collection.prototype.updateItem = function(item)
   const access = (item.url || item.text).replace(/'/g, "\\'");
   for (let i = 0; i < this.details.length; i++)
   {
-    const table = E(this.details[i].id);
+    const table = $(`#${this.details[i].id}`);
     const element = table.querySelector("[data-access='" + access + "']");
     if (!element)
       continue;
@@ -265,7 +316,7 @@ Collection.prototype.updateItem = function(item)
     if (lastUpdateElement)
     {
       const message = element.querySelector(".message");
-      if (item.isDownloading)
+      if (item.downloading)
       {
         const text = getMessage("options_filterList_lastDownload_inProgress");
         message.textContent = text;
@@ -316,8 +367,7 @@ Collection.prototype.updateItem = function(item)
     {
       if (item.homepage)
         websiteElement.setAttribute("href", item.homepage);
-      else
-        websiteElement.setAttribute("aria-hidden", true);
+      websiteElement.setAttribute("aria-hidden", !item.homepage);
     }
 
     const sourceElement = element.querySelector("io-popout .source");
@@ -335,7 +385,7 @@ Collection.prototype.clearAll = function()
   this.items = [];
   for (const detail of this.details)
   {
-    const table = E(detail.id);
+    const table = $(`#${detail.id}`);
     let element = table.firstChild;
     while (element)
     {
@@ -403,7 +453,8 @@ collections.whitelist = new Collection([
 collections.filterLists = new Collection([
   {
     id: "all-filter-lists-table",
-    emptyTexts: ["options_filterList_empty"]
+    emptyTexts: ["options_filterList_empty"],
+    getTitleFunction: (item) => item.originalTitle || item.title || item.url
   }
 ]);
 
@@ -485,9 +536,7 @@ function updateFilter(filter)
   }
   else
   {
-    customFilters.push(filter.text);
-    if (isCustomFiltersLoaded)
-      updateCustomFiltersUi();
+    customFilters.push(filter);
   }
 
   filtersMap[filter.text] = filter;
@@ -498,27 +547,25 @@ function loadCustomFilters(filters)
   for (const filter of filters)
     updateFilter(filter);
 
-  setCustomFiltersView("read");
+  const cfTable = $("#custom-filters io-filter-table");
+  cfTable.filters = customFilters;
 }
 
 function removeCustomFilter(text)
 {
-  const index = customFilters.indexOf(text);
+  const index = customFilters.findIndex(filter => filter.text === text);
   if (index >= 0)
     customFilters.splice(index, 1);
-
-  updateCustomFiltersUi();
-}
-
-function updateCustomFiltersUi()
-{
-  const customFiltersListElement = E("custom-filters-raw");
-  customFiltersListElement.value = customFilters.join("\n");
 }
 
 function getLanguageTitle(item)
 {
-  let title = item.specialization;
+  const langs = item.languages.slice();
+  const firstLang = langs.shift();
+  let title = langs.reduce((acc, lang) =>
+  {
+    return getMessage("options_language_join", [acc, languages[lang]]);
+  }, languages[firstLang]);
   if (item.originalTitle && item.originalTitle.indexOf("+EasyList") > -1)
     title += " + " + getMessage("options_english");
   return title;
@@ -526,39 +573,36 @@ function getLanguageTitle(item)
 
 function loadRecommendations()
 {
-  return fetch("subscriptions.xml")
-    .then((response) =>
+  return Promise.all([
+    fetch("data/languages.json").then((resp) => resp.json()),
+    api.app.get("recommendations")
+  ]).then(([languagesData, recommendations]) =>
+  {
+    languages = languagesData;
+
+    for (const recommendation of recommendations)
     {
-      return response.text();
-    })
-    .then((text) =>
-    {
-      const doc = new DOMParser().parseFromString(text, "application/xml");
-      const elements = doc.documentElement.getElementsByTagName("subscription");
-      for (const element of elements)
+      let {type} = recommendation;
+      const subscription = {
+        disabled: true,
+        downloadStatus: null,
+        homepage: null,
+        originalTitle: recommendation.title,
+        languages: recommendation.languages,
+        recommended: type,
+        url: recommendation.url
+      };
+
+      if (subscription.recommended != "ads" &&
+          subscription.recommended != "circumvention")
       {
-        let type = element.getAttribute("type");
-        const subscription = {
-          disabled: true,
-          downloadStatus: null,
-          homepage: null,
-          specialization: element.getAttribute("specialization"),
-          originalTitle: element.getAttribute("title"),
-          recommended: type,
-          url: element.getAttribute("url")
-        };
-
-        if (subscription.recommended != "ads" &&
-            subscription.recommended != "circumvention")
-        {
-          type = type.replace(/\W/g, "_");
-          subscription.title = getMessage("common_feature_" +
-                                          type + "_title");
-        }
-
-        addSubscription(subscription);
+        type = type.replace(/\W/g, "_");
+        subscription.title = getMessage(`common_feature_${type}_title`);
       }
-    });
+
+      addSubscription(subscription);
+    }
+  });
 }
 
 function findParentData(element, dataName, returnElement)
@@ -573,7 +617,7 @@ function findParentData(element, dataName, returnElement)
 
 function sendMessageHandleErrors(message, onSuccess)
 {
-  browser.runtime.sendMessage(message, (errors) =>
+  browser.runtime.sendMessage(message).then(errors =>
   {
     if (errors.length > 0)
       alert(errors.join("\n"));
@@ -601,49 +645,27 @@ function execAction(action, element)
       addEnableSubscription(findParentData(element, "access", false));
       break;
     case "add-predefined-subscription": {
-      const dialog = E("dialog-content-predefined");
+      const dialog = $("#dialog-content-predefined");
       const title = dialog.querySelector("h3").textContent;
       const url = dialog.querySelector(".url").textContent;
       addEnableSubscription(url, title);
       closeDialog();
       break;
     }
-    case "cancel-custom-filters":
-      setCustomFiltersView("read");
-      break;
     case "change-language-subscription":
-      for (const key in subscriptionsMap)
-      {
-        const subscription = subscriptionsMap[key];
-        const subscriptionType = subscription.recommended;
-        if (subscriptionType == "ads" && subscription.disabled == false)
-        {
-          browser.runtime.sendMessage({
-            type: "subscriptions.remove",
-            url: subscription.url
-          });
-          browser.runtime.sendMessage({
-            type: "subscriptions.add",
-            url: findParentData(element, "access", false)
-          });
-          break;
-        }
-      }
+      changeLanguageSubscription(findParentData(element, "access", false));
       break;
     case "close-dialog":
       closeDialog();
       break;
-    case "edit-custom-filters":
-      setCustomFiltersView("write");
-      break;
     case "hide-more-filters-section":
-      E("more-filters").setAttribute("aria-hidden", true);
+      $("#more-filters").setAttribute("aria-hidden", true);
       break;
     case "hide-notification":
       hideNotification();
       break;
     case "import-subscription": {
-      const url = E("blockingList-textbox").value;
+      const url = $("#blockingList-textbox").value;
       addEnableSubscription(url);
       closeDialog();
       break;
@@ -653,6 +675,11 @@ function execAction(action, element)
       openDialog(dialog);
       break;
     }
+    case "open-list-box":
+      const ioListBox = $("io-list-box");
+      ioListBox.change = true;
+      $("button", ioListBox).focus();
+      break;
     case "remove-filter":
       browser.runtime.sendMessage({
         type: "filters.remove",
@@ -665,19 +692,8 @@ function execAction(action, element)
         url: findParentData(element, "access", false)
       });
       break;
-    case "save-custom-filters":
-      sendMessageHandleErrors({
-        type: "filters.importRaw",
-        text: E("custom-filters-raw").value,
-        removeExisting: true
-      },
-      () =>
-      {
-        setCustomFiltersView("read");
-      });
-      break;
     case "show-more-filters-section":
-      E("more-filters").setAttribute("aria-hidden", false);
+      $("#more-filters").setAttribute("aria-hidden", false);
       break;
     case "switch-acceptable-ads":
       const value = element.value || element.dataset.value;
@@ -754,7 +770,7 @@ function execAction(action, element)
 
       if (form.checkValidity())
       {
-        addEnableSubscription(E("import-list-url").value);
+        addEnableSubscription($("#import-list-url").value);
         form.reset();
         closeDialog();
       }
@@ -766,25 +782,25 @@ function execAction(action, element)
   }
 }
 
-function setCustomFiltersView(mode)
+function changeLanguageSubscription(url)
 {
-  const customFiltersElement = E("custom-filters-raw");
-  updateCustomFiltersUi();
-  if (mode == "read")
+  for (const key in subscriptionsMap)
   {
-    customFiltersElement.disabled = true;
-    if (!customFiltersElement.value)
+    const subscription = subscriptionsMap[key];
+    const subscriptionType = subscription.recommended;
+    if (subscriptionType == "ads" && subscription.disabled == false)
     {
-      setCustomFiltersView("empty");
-      return;
+      browser.runtime.sendMessage({
+        type: "subscriptions.remove",
+        url: subscription.url
+      });
+      browser.runtime.sendMessage({
+        type: "subscriptions.add",
+        url
+      });
+      break;
     }
   }
-  else if (mode == "write")
-  {
-    customFiltersElement.disabled = false;
-  }
-
-  E("custom-filters").dataset.mode = mode;
 }
 
 function onClick(e)
@@ -800,26 +816,9 @@ function onClick(e)
   }
 }
 
-function getKey(e)
-{
-  // e.keyCode has been deprecated so we attempt to use e.key
-  if ("key" in e)
-    return e.key;
-  return getKey.keys[e.keyCode];
-}
-getKey.keys = {
-  9: "Tab",
-  13: "Enter",
-  27: "Escape",
-  37: "ArrowLeft",
-  38: "ArrowUp",
-  39: "ArrowRight",
-  40: "ArrowDown"
-};
-
 function onKeyUp(e)
 {
-  const key = getKey(e);
+  const key = events.key(e);
   let element = document.activeElement;
   if (!key || !element)
     return;
@@ -894,18 +893,40 @@ function onHashChange()
   }
 }
 
+function setupIoListBox()
+{
+  const ioListBox = $("io-list-box");
+  ioListBox.getItemTitle = getLanguageTitle;
+  ioListBox.placeholder = getMessage("options_dialog_language_title");
+  ioListBox.items = collections.allLangs.items;
+  ioListBox.addEventListener("close", (event) =>
+  {
+    ioListBox.change = false;
+  });
+  ioListBox.addEventListener("change", (event) =>
+  {
+    const item = event.detail;
+    if (ioListBox.change)
+      changeLanguageSubscription(item.url);
+    else
+    {
+      item.disabled = !item.disabled;
+      addEnableSubscription(item.url, item.originalTitle, item.homepage);
+    }
+  });
+}
+
 function onDOMLoaded()
 {
-  populateLists();
+  populateLists().then(setupIoListBox);
 
   // Initialize navigation sidebar
   browser.runtime.sendMessage({
     type: "app.get",
     what: "addonVersion"
-  },
-  (addonVersion) =>
+  }).then(addonVersion =>
   {
-    E("abp-version").textContent = getMessage("options_dialog_about_version",
+    $("#abp-version").textContent = getMessage("options_dialog_about_version",
       [addonVersion]);
   });
 
@@ -914,40 +935,53 @@ function onDOMLoaded()
   document.body.addEventListener("keyup", onKeyUp, false);
   const exampleValue = getMessage("options_whitelist_placeholder_example",
     ["www.example.com"]);
-  E("whitelisting-textbox").setAttribute("placeholder", exampleValue);
-  E("whitelisting-textbox").addEventListener("keyup", (e) =>
+  $("#whitelisting-textbox").setAttribute("placeholder", exampleValue);
+  $("#whitelisting-textbox").addEventListener("keyup", (e) =>
   {
-    E("whitelisting-add-button").disabled = !e.target.value;
+    $("#whitelisting-add-button").disabled = !e.target.value;
   }, false);
 
   // General tab
-  getDocLink("contribute", (link) =>
+  getDocLink("contribute").then(link =>
   {
-    E("contribute").href = link;
+    $("#contribute").href = link;
   });
-  getDocLink("acceptable_ads_criteria", (link) =>
+  getDocLink("acceptable_ads_criteria").then(link =>
   {
     setElementLinks("enable-acceptable-ads-description", link);
   });
-  setElementText(E("tracking-warning-1"), "options_tracking_warning_1",
+  getDocLink("imprint").then((url) =>
+  {
+    setElementText(
+      $("#copyright"),
+      "options_dialog_about_copyright",
+      [new Date().getFullYear()]
+    );
+    setElementLinks("copyright", url);
+  });
+  getDocLink("privacy").then((url) =>
+  {
+    $("#privacy-policy").href = url;
+  });
+  setElementText($("#tracking-warning-1"), "options_tracking_warning_1",
     [getMessage("common_feature_privacy_title"),
      getMessage("options_acceptableAds_ads_label")]);
-  setElementText(E("tracking-warning-3"), "options_tracking_warning_3",
+  setElementText($("#tracking-warning-3"), "options_tracking_warning_3",
     [getMessage("options_acceptableAds_privacy_label")]);
 
-  getDocLink("privacy_friendly_ads", (link) =>
+  getDocLink("privacy_friendly_ads").then(link =>
   {
-    E("enable-acceptable-ads-privacy-description").href = link;
+    $("#enable-acceptable-ads-privacy-description").href = link;
   });
-  getDocLink("adblock_plus_{browser}_dnt", url =>
+  getDocLink("adblock_plus_{browser}_dnt").then(url =>
   {
     setElementLinks("dnt", url);
   });
 
   // Whitelisted tab
-  getDocLink("whitelist", (link) =>
+  getDocLink("whitelist").then(link =>
   {
-    E("whitelist-learn-more").href = link;
+    $("#whitelist-learn-more").href = link;
   });
 
   // Advanced tab
@@ -958,7 +992,7 @@ function onDOMLoaded()
   });
   for (const key of customize)
   {
-    getPref(key, (value) =>
+    getPref(key).then((value) =>
     {
       onPrefMessage(key, value, true);
     });
@@ -966,55 +1000,46 @@ function onDOMLoaded()
   browser.runtime.sendMessage({
     type: "app.get",
     what: "features"
-  },
-  (features) =>
+  }).then(features =>
   {
     hidePref("show_devtools_panel", !features.devToolsPanel);
   });
 
-  getDocLink("filterdoc", (link) =>
+  getDocLink("filterdoc").then(link =>
   {
     setElementLinks("custom-filters-description", link);
-    E("link-filters").setAttribute("href", link);
   });
 
-  getDocLink("subscriptions", (link) =>
+  getDocLink("subscriptions").then(link =>
   {
-    E("filter-lists-learn-more").setAttribute("href", link);
+    $("#filter-lists-learn-more").setAttribute("href", link);
   });
-
-  E("custom-filters-raw").setAttribute("placeholder",
-    getMessage("options_customFilters_edit_placeholder", ["/ads/track/*"]));
 
   // Help tab
-  getDocLink("adblock_plus_report_bug", (link) =>
+  getDocLink("adblock_plus_report_bug").then(link =>
   {
     setElementLinks("report-bug", link);
   });
-  getDocLink("{browser}_support", url =>
+  getDocLink("{browser}_support").then(url =>
   {
     setElementLinks("visit-forum", url);
   });
-  getDocLink("social_twitter", (link) =>
+  getDocLink("social_twitter").then(link =>
   {
-    E("twitter").setAttribute("href", link);
+    $("#social .twitter").setAttribute("href", link);
   });
-  getDocLink("social_facebook", (link) =>
+  getDocLink("social_facebook").then(link =>
   {
-    E("facebook").setAttribute("href", link);
+    $("#social .facebook").setAttribute("href", link);
   });
-  getDocLink("social_gplus", (link) =>
+  getDocLink("social_weibo").then(link =>
   {
-    E("google-plus").setAttribute("href", link);
-  });
-  getDocLink("social_weibo", (link) =>
-  {
-    E("weibo").setAttribute("href", link);
+    $("#social .weibo").setAttribute("href", link);
   });
 
-  E("dialog").addEventListener("keydown", function(e)
+  $("#dialog").addEventListener("keydown", function(e)
   {
-    switch (getKey(e))
+    switch (events.key(e))
     {
       case "Escape":
         closeDialog();
@@ -1043,7 +1068,7 @@ function onDOMLoaded()
 let focusedBeforeDialog = null;
 function openDialog(name)
 {
-  const dialog = E("dialog");
+  const dialog = $("#dialog");
   dialog.setAttribute("aria-hidden", false);
   dialog.setAttribute("aria-labelledby", "dialog-title-" + name);
   document.body.setAttribute("data-dialog", name);
@@ -1059,7 +1084,7 @@ function openDialog(name)
 
 function closeDialog()
 {
-  const dialog = E("dialog");
+  const dialog = $("#dialog");
   dialog.setAttribute("aria-hidden", true);
   dialog.removeAttribute("aria-labelledby");
   document.body.removeAttribute("data-dialog");
@@ -1068,22 +1093,22 @@ function closeDialog()
 
 function showNotification(text)
 {
-  E("notification").setAttribute("aria-hidden", false);
-  E("notification-text").textContent = text;
+  $("#notification").setAttribute("aria-hidden", false);
+  $("#notification-text").textContent = text;
   setTimeout(hideNotification, 3000);
 }
 
 function hideNotification()
 {
-  E("notification").setAttribute("aria-hidden", true);
-  E("notification-text").textContent = "";
+  $("#notification").setAttribute("aria-hidden", true);
+  $("#notification-text").textContent = "";
 }
 
 function setAcceptableAds()
 {
-  const acceptableAdsForm = E("acceptable-ads");
-  const acceptableAds = E("acceptable-ads-allow");
-  const acceptableAdsPrivacy = E("acceptable-ads-privacy-allow");
+  const acceptableAdsForm = $("#acceptable-ads");
+  const acceptableAds = $("#acceptable-ads-allow");
+  const acceptableAdsPrivacy = $("#acceptable-ads-privacy-allow");
   acceptableAdsForm.classList.remove("show-dnt-notification");
   acceptableAds.setAttribute("aria-checked", false);
   acceptableAdsPrivacy.setAttribute("aria-checked", false);
@@ -1138,10 +1163,10 @@ function hasPrivacyConflict()
 
 function setPrivacyConflict()
 {
-  const acceptableAdsForm = E("acceptable-ads");
+  const acceptableAdsForm = $("#acceptable-ads");
   if (hasPrivacyConflict())
   {
-    getPref("ui_warn_tracking", (showTrackingWarning) =>
+    getPref("ui_warn_tracking").then((showTrackingWarning) =>
     {
       acceptableAdsForm.classList.toggle("show-warning", showTrackingWarning);
     });
@@ -1154,68 +1179,68 @@ function setPrivacyConflict()
 
 function populateLists()
 {
-  subscriptionsMap = Object.create(null);
-  filtersMap = Object.create(null);
-
-  // Empty collections and lists
-  for (const property in collections)
-    collections[property].clearAll();
-
-  setCustomFiltersView("empty");
-  browser.runtime.sendMessage({
-    type: "subscriptions.get",
-    special: true
-  },
-  (subscriptions) =>
+  return new Promise(resolve =>
   {
-    const customFilterPromises = subscriptions.map(getSubscriptionFilters);
-    Promise.all(customFilterPromises).then((filters) =>
+    let todo = 2;
+    const done = () =>
     {
-      loadCustomFilters([].concat(...filters));
-      isCustomFiltersLoaded = true;
-    });
-  });
+      if (!--todo)
+        resolve();
+    };
 
-  browser.runtime.sendMessage({
-    type: "prefs.get",
-    key: "subscriptions_exceptionsurl"
-  },
-  (url) =>
-  {
-    acceptableAdsUrl = url;
+    subscriptionsMap = Object.create(null);
+    filtersMap = Object.create(null);
+
+    // Empty collections and lists
+    for (const property in collections)
+      collections[property].clearAll();
 
     browser.runtime.sendMessage({
-      type: "prefs.get",
-      key: "subscriptions_exceptionsurl_privacy"
-    },
-    (urlPrivacy) =>
+      type: "subscriptions.get",
+      special: true
+    }).then((subscriptions) =>
     {
-      acceptableAdsPrivacyUrl = urlPrivacy;
-
-      getPref("additional_subscriptions", (subscriptionUrls) =>
+      const customFilterPromises = subscriptions.map(getSubscriptionFilters);
+      Promise.all(customFilterPromises).then((filters) =>
       {
-        additionalSubscriptions = subscriptionUrls;
+        loadCustomFilters([].concat(...filters));
+        isCustomFiltersLoaded = true;
+      }).then(done);
+    });
 
-        // Load user subscriptions
-        browser.runtime.sendMessage({
-          type: "subscriptions.get",
-          downloadable: true
-        },
-        (subscriptions) =>
-        {
-          for (const subscription of subscriptions)
-            onSubscriptionMessage("added", subscription);
+    Promise.all([
+      browser.runtime.sendMessage({
+        type: "prefs.get",
+        key: "subscriptions_exceptionsurl"
+      }),
+      browser.runtime.sendMessage({
+        type: "prefs.get",
+        key: "subscriptions_exceptionsurl_privacy"
+      }),
+      getPref("additional_subscriptions"),
+      browser.runtime.sendMessage({
+        type: "subscriptions.get",
+        downloadable: true
+      })
+    ])
+    .then(([url, privacyUrl, additionalSubscriptionUrls, subscriptions]) =>
+    {
+      acceptableAdsUrl = url;
+      acceptableAdsPrivacyUrl = privacyUrl;
+      additionalSubscriptions = additionalSubscriptionUrls;
 
-          setAcceptableAds();
-        });
-      });
+      for (const subscription of subscriptions)
+        onSubscriptionMessage("added", subscription);
+
+      setAcceptableAds();
+      done();
     });
   });
 }
 
 function addWhitelistedDomain()
 {
-  const domain = E("whitelisting-textbox");
+  const domain = $("#whitelisting-textbox");
   for (const whitelistItem of collections.whitelist.items)
   {
     if (whitelistItem.title == domain.value)
@@ -1237,7 +1262,7 @@ function addWhitelistedDomain()
   }
 
   domain.value = "";
-  E("whitelisting-add-button").disabled = true;
+  $("#whitelisting-add-button").disabled = true;
 }
 
 function addEnableSubscription(url, title, homepage)
@@ -1383,12 +1408,12 @@ function getPrefElement(key)
   return document.querySelector("[data-pref='" + key + "']");
 }
 
-function getPref(key, callback)
+function getPref(key)
 {
-  browser.runtime.sendMessage({
+  return browser.runtime.sendMessage({
     type: "prefs.get",
     key
-  }, callback);
+  });
 }
 
 function onPrefMessage(key, value, initial)
@@ -1410,8 +1435,6 @@ function onPrefMessage(key, value, initial)
     checkbox.setAttribute("aria-checked", value);
 }
 
-const port = browser.runtime.connect({name: "ui"});
-
 port.onMessage.addListener((message) =>
 {
   switch (message.type)
@@ -1421,7 +1444,7 @@ port.onMessage.addListener((message) =>
       {
         case "addSubscription":
           const subscription = message.args[0];
-          const dialog = E("dialog-content-predefined");
+          const dialog = $("#dialog-content-predefined");
 
           let {title, url} = subscription;
           if (!title || title == url)
@@ -1491,7 +1514,241 @@ onDOMLoaded();
 window.addEventListener("unload", () => port.disconnect());
 window.addEventListener("hashchange", onHashChange, false);
 
-},{"./io-popout":3}],2:[function(require,module,exports){
+},{"./api":1,"./dom":3,"./io-filter-table":8,"./io-list-box":9,"./io-popout":10,"./io-toggle":12}],3:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+let browserName = "unknown";
+
+// Firefox only, which is exactly the one
+// we are looking for in order to patch events' layerX
+if (browser.runtime.getBrowserInfo)
+{
+  browser.runtime.getBrowserInfo().then(info =>
+  {
+    browserName = info.name.toLowerCase();
+  });
+}
+
+// used as legacy fallback in events.key(event) via keys[event.keyCode]
+const keys = {
+  9: "Tab",
+  13: "Enter",
+  27: "Escape",
+  37: "ArrowLeft",
+  38: "ArrowUp",
+  39: "ArrowRight",
+  40: "ArrowDown"
+};
+
+module.exports = {
+  $: (selector, container = document) => container.querySelector(selector),
+  $$: (selector, container = document) => container.querySelectorAll(selector),
+
+  // helper to format as indented string any HTML/XML node
+  asIndentedString,
+
+  // basic copy and paste clipboard utility
+  clipboard: {
+    // warning: Firefox needs a proper event to work
+    //          such click or mousedown or similar.
+    copy(text)
+    {
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ?
+                        selection.getRangeAt(0) : null;
+      const el = document.createElement("textarea");
+      el.value = text;
+      el.setAttribute("readonly", "");
+      el.style.cssText = "position:fixed;top:-999px";
+      document.body.appendChild(el).select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      if (selected)
+      {
+        selection.removeAllRanges();
+        // simply putting back selected doesn't work anymore
+        const range = document.createRange();
+        range.setStart(selected.startContainer, selected.startOffset);
+        range.setEnd(selected.endContainer, selected.endOffset);
+        selection.addRange(range);
+      }
+    },
+    // optionally accepts a `paste` DOM event
+    // it uses global clipboardData, if available, otherwise.
+    // i.e. input.onpaste = event => console.log(dom.clipboard.paste(event));
+    paste(event)
+    {
+      if (!event)
+        event = window;
+      const clipboardData = event.clipboardData || window.clipboardData;
+      return clipboardData ? clipboardData.getData("text") : "";
+    }
+  },
+
+  events: {
+    // necessary to retrieve the right key before Chrome 51
+    key(event)
+    {
+      return "key" in event ? event.key : keys[event.keyCode];
+    }
+  },
+
+  // helper to provide the relative coordinates
+  // to the closest positioned containing element
+  relativeCoordinates(event)
+  {
+    // good old way that will work properly in older browsers too
+    // mandatory for Chrome 49, still better than manual fallback
+    // in all other browsers that provide such functionality
+    let el = event.currentTarget;
+    if ("layerX" in event && "layerY" in event)
+    {
+      let {layerX} = event;
+      // see https://issues.adblockplus.org/ticket/7134
+      if (browserName === "firefox")
+        layerX -= el.offsetLeft;
+      return {x: layerX, y: event.layerY};
+    }
+    // fallback when layerX/Y will be removed (since deprecated)
+    let x = 0;
+    let y = 0;
+    do
+    {
+      x += el.offsetLeft - el.scrollLeft;
+      y += el.offsetTop - el.scrollTop;
+    } while (
+      (el = el.offsetParent) &&
+      !isNaN(el.offsetLeft) &&
+      !isNaN(el.offsetTop)
+    );
+    return {x: event.pageX - x, y: event.pageY - y};
+  }
+};
+
+function asIndentedString(element, indentation = 0)
+{
+  // only the first time it's called
+  if (!indentation)
+  {
+    // get the top meaningful element to parse
+    if (element.nodeType === 9)
+      element = element.documentElement;
+    // accept only elements
+    if (element.nodeType !== 1)
+      throw new Error("Unable to serialize " + element);
+    // avoid original XML pollution at first iteration
+    element = element.cloneNode(true);
+  }
+  const before = "  ".repeat(indentation + 1);
+  const after = "  ".repeat(indentation);
+  const doc = element.ownerDocument;
+  const children = element.children;
+  const length = children.length;
+  for (let i = 0; i < length; i++)
+  {
+    const child = children[i];
+    element.insertBefore(doc.createTextNode(`\n${before}`), child);
+    asIndentedString(child, indentation + 1);
+    if ((i + 1) === length)
+      element.appendChild(doc.createTextNode(`\n${after}`));
+  }
+  // inner calls don't need to bother serialization
+  if (indentation)
+    return "";
+  // easiest way to recognize an HTML element from an XML one
+  if (/^https?:\/\/www\.w3\.org\/1999\/xhtml$/.test(element.namespaceURI))
+    return element.outerHTML;
+  // all other elements should use XML serializer
+  return new XMLSerializer().serializeToString(element);
+}
+
+},{}],4:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const IOElement = require("./io-element");
+
+class IOCheckbox extends IOElement
+{
+  static get booleanAttributes()
+  {
+    return ["checked", "disabled"];
+  }
+
+  attributeChangedCallback()
+  {
+    this.render();
+  }
+
+  created()
+  {
+    this.addEventListener("click", this);
+    this.render();
+  }
+
+  onclick(event)
+  {
+    if (!this.disabled)
+    {
+      this.checked = !this.checked;
+      this.dispatchEvent(new CustomEvent("change", {
+        bubbles: true,
+        cancelable: true,
+        detail: this.checked
+      }));
+    }
+  }
+
+  render()
+  {
+    this.html`
+    <button
+      role="checkbox"
+      disabled="${this.disabled}"
+      aria-checked="${this.checked}"
+      aria-disabled="${this.disabled}"
+    />`;
+  }
+}
+
+IOCheckbox.define("io-checkbox");
+
+module.exports = IOCheckbox;
+
+},{"./io-element":5}],5:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1610,8 +1867,26 @@ class IOElement extends HyperHTMLElement
     return IOElement.getID(this);
   }
 
+  // returns true only when the component is live and styled
+  get ready()
+  {
+    return !!this.offsetParent && this.isStyled();
+  }
+
   // whenever an element is created, render its content once
   created() { this.render(); }
+
+  // based on a `--component-name: ready;` convention
+  // under the `component-name {}` related stylesheet,
+  // this method returns true only if such stylesheet
+  // has been already loaded.
+  isStyled()
+  {
+    const computed = window.getComputedStyle(this, null);
+    const property = "--" + this.nodeName.toLowerCase();
+    // in some case Edge returns '#fff' instead of ready
+    return computed.getPropertyValue(property).trim() !== "";
+  }
 
   // by default, render is a no-op
   render() {}
@@ -1650,7 +1925,1794 @@ IOElement.intent("i18n", id =>
 
 module.exports = IOElement;
 
-},{"document-register-element/pony":15,"hyperhtml-element/cjs":22}],3:[function(require,module,exports){
+},{"document-register-element/pony":24,"hyperhtml-element/cjs":31}],6:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+require("./io-checkbox");
+require("./io-toggle");
+
+const IOElement = require("./io-element");
+const IOScrollbar = require("./io-scrollbar");
+
+const {utils, wire} = IOElement;
+
+const {port} = require("./api");
+const {$, events} = require("./dom");
+
+const prevFilterText = new WeakMap();
+
+port.postMessage({
+  type: "filters.listen",
+  filter: ["disabled"]
+});
+
+// <io-filter-list disabled />.{filters = [...]}
+class IOFilterList extends IOElement
+{
+  static get booleanAttributes()
+  {
+    return ["disabled"];
+  }
+
+  static get observedAttributes()
+  {
+    return ["filters"];
+  }
+
+  get selected()
+  {
+    return this._selected || (this._selected = new Set());
+  }
+
+  set selected(value)
+  {
+    this._selected = new Set(value);
+    this.render();
+  }
+
+  get defaultState()
+  {
+    return {
+      infinite: false,
+      filters: [],
+      viewHeight: 0,
+      rowHeight: 0,
+      scrollTop: 0,
+      scrollHeight: 0,
+      tbody: null,
+      sort: {
+        current: "",
+        asc: false
+      },
+      sortMap: {
+        status: "disabled",
+        rule: "text",
+        warning: "slow"
+      }
+    };
+  }
+
+  get filters()
+  {
+    return this.state.filters || [];
+  }
+
+  set filters(value)
+  {
+    // if the offsetParent is null, hence the component is not visible, or
+    // if the related CSS is not loaded yet, this component cannot bootstrap
+    // because its TBODY will never be scrollable so there's no way
+    // to calculate its viewport height in pixels
+    // in such case, just execute later on until the CSS is parsed
+    if (!this.ready)
+    {
+      this._filters = value;
+      return;
+    }
+    this.selected = [];
+    // clear any previous --rule-width info
+    this.style.setProperty("--rule-width", "auto");
+    // render one row only for the setup
+    this.setState({infinite: false, filters: []});
+    // set current flex grown rule column
+    this.style.setProperty(
+      "--rule-width",
+      $('[data-column="rule"]', this).clientWidth + "px"
+    );
+    // if filters have more than a row
+    // prepare the table with a new state
+    if (value.length)
+    {
+      const tbody = $("tbody", this);
+      const rowHeight = $("tr", tbody).clientHeight;
+      const viewHeight = tbody.clientHeight;
+      this.setState({
+        infinite: true,
+        filters: value,
+        scrollTop: tbody.scrollTop,
+        scrollHeight: rowHeight * (value.length + 1) - viewHeight,
+        viewHeight,
+        rowHeight
+      });
+      // needed mostly for Firefox and Edge to have extra rows
+      // reflecting the same weight of others
+      this.style.setProperty("--row-height", `${rowHeight}px`);
+      // setup the scrollbar size too
+      this.scrollbar.size = rowHeight * value.length;
+    }
+  }
+
+  created()
+  {
+    setupPort.call(this);
+
+    // force one off setup whenever the component enters the view
+    if (!this.ready)
+      this.addEventListener(
+        "animationstart",
+        function prepare(event)
+        {
+          this.removeEventListener(event.type, prepare);
+          if (this._filters)
+          {
+            this.filters = this._filters;
+            this._filters = null;
+          }
+        }
+      );
+
+    // the rest of the setup
+    this.scrollbar = new IOScrollbar();
+    this.scrollbar.direction = "vertical";
+    this.scrollbar.addEventListener("scroll", () =>
+    {
+      const {position, range} = this.scrollbar;
+      const {scrollHeight} = this.state;
+      this.setState({
+        scrollTop: getScrollTop(scrollHeight * position / range)
+      });
+    });
+    this.addEventListener(
+      "wheel",
+      event =>
+      {
+        event.preventDefault();
+        // prevent race conditions between the blur event and the scroll
+        const activeElement = this.ownerDocument.activeElement;
+        if (activeElement && activeElement !== this.ownerDocument.body)
+        {
+          activeElement.blur();
+          return;
+        }
+        const {scrollHeight, scrollTop} = this.state;
+        this.setState({
+          scrollTop: getScrollTop(scrollTop + event.deltaY, scrollHeight)
+        });
+        // update the scrollbar position accordingly
+        updateScrollbarPosition.call(this);
+      },
+      {passive: false}
+    );
+    setScrollbarReactiveOpacity.call(this);
+  }
+
+  scrollTo(row)
+  {
+    const {rowHeight, scrollHeight} = this.state;
+    const index = typeof row === "string" ?
+      this.filters.findIndex(filter => filter.text === row) :
+      this.filters.findIndex(filter => filter === row);
+    if (index < 0)
+      console.error("invalid filter", row);
+    else
+    {
+      this.setState({
+        scrollTop: getScrollTop(index * rowHeight, scrollHeight)
+      });
+      updateScrollbarPosition.call(this);
+    }
+  }
+
+  onheaderclick(event)
+  {
+    const th = event.target.closest("th");
+    if (!utils.event.isLeftClick(event) || !th)
+      return;
+    const {column} = th.dataset;
+    if (column === "selected")
+    {
+      const ioCheckbox = event.target.closest("io-checkbox");
+      // ignore clicks outside the io-checkbox
+      if (ioCheckbox)
+        this.selected = ioCheckbox.checked ? this.filters : [];
+      return;
+    }
+    event.preventDefault();
+    const {sort, sortMap} = this.state;
+    if (column !== sort.current)
+    {
+      sort.current = column;
+      sort.asc = false;
+    }
+    sort.asc = !sort.asc;
+    const sorter = sort.asc ? 1 : -1;
+    const property = sortMap[column];
+    const direction = property === "slow" ? -1 : 1;
+    this.filters.sort((fa, fb) =>
+    {
+      if (fa[property] === fb[property])
+        return 0;
+      return (fa[property] < fb[property] ? -sorter : sorter) * direction;
+    });
+    this.render();
+    const dataset = th.closest("thead").dataset;
+    dataset.sort = column;
+    dataset.dir = sort.asc ? "asc" : "desc";
+  }
+
+  onpaste(event)
+  {
+    event.preventDefault();
+
+    const data = event.clipboardData.getData("text/plain");
+    // Filters must be written within a single line so we're ignoring any
+    // subsequent lines in case clipboard data contains multiple lines.
+    const [text] = data.trim().split("\n", 1);
+    document.execCommand("insertText", false, text);
+  }
+
+  onkeydown(event)
+  {
+    const key = events.key(event);
+    if (key === "Enter" || key === "Escape")
+    {
+      event.preventDefault();
+      if (key === "Escape" && this._filter)
+      {
+        const {currentTarget} = event;
+        const text = prevFilterText.get(this._filter) || this._filter.text;
+        currentTarget.textContent = text;
+        currentTarget.blur();
+        this._filter = null;
+      }
+    }
+  }
+
+  onkeyup(event)
+  {
+    const isEnter = events.key(event) === "Enter";
+    const update = isEnter || event.type === "blur";
+    const {currentTarget} = event;
+    const {title} = currentTarget;
+    const text = currentTarget.textContent.trim();
+    const filter = this._filter;
+
+    // if triggered but there was focus lost already: return
+    if (!filter)
+      return;
+
+    // in case of empty filter, remove it
+    if (!text)
+    {
+      if (!update)
+        return;
+      browser.runtime.sendMessage({
+        type: "filters.remove",
+        text: filter.text
+      }).then(errors =>
+      {
+        if (!errors.length)
+        {
+          this.selected.delete(filter);
+          this.render();
+          this.dispatchEvent(new CustomEvent("filter:removed", {
+            cancelable: false,
+            bubbles: true
+          }));
+        }
+      });
+      this._filter = null;
+      return;
+    }
+
+    // store the initial filter value once
+    // needed to remove the filter once finished the editing
+    if (!prevFilterText.has(filter))
+      prevFilterText.set(filter, title);
+
+    // avoid updating filters that didn't change
+    if (prevFilterText.get(filter) === text)
+    {
+      if (isEnter)
+        focusTheNextFilterIfAny.call(this, currentTarget.closest("tr"));
+      return;
+    }
+
+    // add + remove the filter on Enter / update
+    if (update)
+    {
+      filter.text = text;
+      currentTarget.title = text;
+      // drop any validation action at distance
+      this._validating = 0;
+      if (this.filters.some(f => f.text === filter.text && f !== filter))
+      {
+        const {reason} = filter;
+        filter.reason = browser.i18n.getMessage("filter_duplicated");
+
+        // render only if there's something different to show
+        if (filter.reason !== reason)
+        {
+          this.render();
+        }
+      }
+      else
+      {
+        replaceFilter.call(this, filter, currentTarget);
+        if (isEnter)
+          focusTheNextFilterIfAny.call(this, currentTarget.closest("tr"));
+      }
+      return;
+    }
+
+    // don't overload validation
+    if (this._validating > 0)
+    {
+      // but signal there is more validation to do
+      this._validating++;
+      return;
+    }
+    this._validating = 1;
+    browser.runtime.sendMessage({
+      type: "filters.validate",
+      text
+    }).then(errors =>
+    {
+      // in case a save operation has been asked in the meanwhile
+      if (this._validating < 1)
+        return;
+      // if there were more validation requests
+      if (this._validating > 1)
+      {
+        // reset the counter
+        this._validating = 0;
+        // re-trigger the event with same target
+        this.onkeyup({currentTarget});
+        return;
+      }
+      const {reason} = filter;
+      if (errors.length)
+        filter.reason = errors[0];
+      else
+        delete filter.reason;
+      // render only if there's something different to show
+      if (reason !== filter.reason)
+        this.render();
+    });
+  }
+
+  onfocus(event)
+  {
+    this._filter = event.currentTarget.data;
+  }
+
+  onblur(event)
+  {
+    // needed to avoid ellipsis on overflow hidden
+    // make the filter look like disappeared from the list
+    event.currentTarget.scrollLeft = 0;
+    if (this._changingFocus)
+    {
+      this._filter = null;
+      return;
+    }
+    this.onkeyup(event);
+    this._filter = null;
+  }
+
+  // used in the checkbox of the selected column only
+  onclick(event)
+  {
+    const filter = getFilter(event);
+    const {filters} = this;
+    if (event.shiftKey && this.selected.size)
+    {
+      let start = filters.indexOf(this._lastFilter);
+      const end = filters.indexOf(filter);
+      const method = this.selected.has(this._lastFilter) ?
+                          "add" :
+                          "delete";
+      if (start < end)
+      {
+        while (start++ < end)
+          this.selected[method](filters[start]);
+      }
+      else
+      {
+        while (start-- > end)
+          this.selected[method](filters[start]);
+      }
+    }
+    else
+    {
+      this._lastFilter = filter;
+      if (this.selected.has(filter))
+        this.selected.delete(filter);
+      else
+        this.selected.add(filter);
+    }
+    // render updated right after the checkbox changes
+  }
+
+  // used in both selected and status
+  // the selected needs it to render at the right time
+  // which is when the checkbox status changed
+  // not when it's clicked
+  onchange(event)
+  {
+    const {currentTarget} = event;
+    const td = currentTarget.closest("td");
+    if (td.dataset.column === "status")
+    {
+      const checkbox = currentTarget.closest("io-toggle");
+      const filter = getFilter(event);
+      filter.disabled = !checkbox.checked;
+      browser.runtime.sendMessage({
+        type: "filters.toggle",
+        text: filter.text,
+        disabled: filter.disabled
+      });
+    }
+    else
+    {
+      this.render();
+    }
+  }
+
+  postRender(list)
+  {
+    const {tbody, scrollTop, rowHeight} = this.state;
+    if (this.state.infinite)
+    {
+      tbody.scrollTop = scrollTop % rowHeight;
+    }
+    // keep growing the fake list until the tbody becomes scrollable
+    else if (
+      !tbody ||
+      (tbody.scrollHeight <= tbody.clientHeight && tbody.clientHeight)
+    )
+    {
+      this.setState({
+        tbody: tbody || $("tbody", this),
+        filters: list.concat({})
+      });
+    }
+  }
+
+  render()
+  {
+    let list = this.state.filters;
+    if (this.state.infinite)
+    {
+      list = [];
+      const {rowHeight, scrollTop, viewHeight} = this.state;
+      const length = this.state.filters.length;
+      let count = 0;
+      let i = Math.floor(scrollTop / rowHeight);
+      // always add an extra row to make scrolling smooth
+      while ((count * rowHeight) < (viewHeight + rowHeight))
+      {
+        list[count++] = i < length ? this.state.filters[i++] : null;
+      }
+    }
+    const {length} = this.filters;
+    this.html`<table cellpadding="0" cellspacing="0">
+      <thead onclick="${this}" data-call="onheaderclick">
+        <th data-column="selected">
+          <io-checkbox checked=${!!length && this.selected.size === length} />
+        </th>
+        <th data-column="status"></th>
+        <th data-column="rule">${{i18n: "options_filter_list_rule"}}</th>
+        <th data-column="warning">${
+          // for the header, just return always the same warning icon
+          warnings.get(this) ||
+          warnings.set(this, createImageForType(false)).get(this)
+        }</th>
+      </thead>
+      <tbody>${list.map(getRow, this)}</tbody>
+      ${this.scrollbar}
+    </table>`;
+    this.postRender(list);
+  }
+
+  sortBy(type, isAscending)
+  {
+    const th = $(`th[data-column="${type}"]`, this);
+    if (!th)
+    {
+      console.error(`unable to sort by ${type}`);
+      return;
+    }
+    const {sort} = this.state;
+    sort.current = type;
+    // sort.asc is flipped with current state
+    // so set the one that is not desired
+    sort.asc = !isAscending;
+    // before triggering the event
+    th.click();
+  }
+
+  updateScrollbar()
+  {
+    const {rowHeight, viewHeight} = this.state;
+    const {length} = this.filters;
+    this.scrollbar.size = rowHeight * length;
+    this.setState({
+      scrollHeight: rowHeight * (length + 1) - viewHeight
+    });
+  }
+}
+
+IOFilterList.define("io-filter-list");
+
+module.exports = IOFilterList;
+
+// delegates the handling of errors
+function dispatchError(reason, filter)
+{
+  this.dispatchEvent(new CustomEvent("error", {
+    cancelable: false,
+    bubbles: true,
+    detail: {
+      reason,
+      filter
+    }
+  }));
+}
+
+// Please note: the contenteditable=${...} attribute
+// cannot be set directly to the TD because of an ugly
+// MS Edge bug that does not allow TDs to be editable.
+function getRow(filter, i)
+{
+  if (filter)
+  {
+    const selected = this.selected.has(filter);
+    return wire(filter)`
+    <tr class="${selected ? "selected" : ""}">
+      <td data-column="selected">
+        <io-checkbox
+          checked="${selected}"
+          onclick="${this}" onchange="${this}"
+        />
+      </td>
+      <td data-column="status">
+        <!-- Not all filters can be en-/disabled (e.g. comments) -->
+        <io-toggle
+          checked="${!filter.disabled}"
+          disabled="${!("disabled" in filter)}"
+          aria-hidden="${!("disabled" in filter)}"
+          onchange="${this}"
+        />
+      </td>
+      <td data-column="rule">
+        <div
+          class="content"
+          contenteditable="${!this.disabled}"
+          title="${filter.text}"
+          onpaste="${this}"
+          onkeydown="${this}"
+          onkeyup="${this}"
+          onfocus="${this}"
+          onblur="${this}"
+          data="${filter}"
+        >${filter.text}</div>
+      </td>
+      <td data-column="warning">
+        ${getWarning(filter)}
+      </td>
+    </tr>`;
+  }
+  // no filter results into an empty, not editable, row
+  return wire(this, `:${i}`)`
+    <tr class="empty">
+      <td data-column="selected"></td>
+      <td data-column="status"></td>
+      <td data-column="rule"></td>
+      <td data-column="warning"></td>
+    </tr>`;
+}
+
+// used to show issues in the last column
+const issues = new WeakMap();
+
+// used to show warnings in the last column
+const warnings = new WeakMap();
+const warningSlow = browser.i18n.getMessage("filter_slow");
+
+// relate either issues or warnings to a filter
+const createImageForFilter = (weakMap, filter) =>
+{
+  const isIssue = weakMap === issues;
+  const image = createImageForType(isIssue);
+  if (isIssue)
+  {
+    image.title = filter.reason ||
+      browser.i18n.getMessage("filter_action_failed");
+  }
+  else
+    image.title = warningSlow;
+  weakMap.set(filter, image);
+  return image;
+};
+
+const createImageForType = (isIssue) =>
+{
+  const image = new Image();
+  image.src = `skin/icons/${isIssue ? "error" : "alert"}.svg`;
+  return image;
+};
+
+function focusTheNextFilterIfAny(tr)
+{
+  const i = this.filters.indexOf(this._filter) + 1;
+  if (i < this.filters.length)
+  {
+    const next = tr.nextElementSibling;
+    const {rowHeight, scrollTop, viewHeight} = this.state;
+    // used to avoid race conditions with blur event
+    this._changingFocus = true;
+    // force eventually the scrollTop to make
+    // the next row visible
+    if (next.offsetTop > viewHeight)
+    {
+      this.setState({
+        scrollTop: getScrollTop(scrollTop + rowHeight)
+      });
+    }
+    // focus its content field
+    $(".content", next).focus();
+    // set back the _changingFocus
+    this._changingFocus = false;
+  }
+}
+
+function animateAndDrop(target)
+{
+  target.addEventListener("animationend", dropSavedClass);
+  target.classList.add("saved");
+}
+
+function dropSavedClass(event)
+{
+  const {currentTarget} = event;
+  currentTarget.classList.remove("saved");
+  currentTarget.removeEventListener(event.type, dropSavedClass);
+}
+
+function getFilter(event)
+{
+  const el = event.currentTarget;
+  const div = $('td[data-column="rule"] > .content', el.closest("tr"));
+  return div.data;
+}
+
+// ensure the number is always between 0 and a positive number
+// specially handy when filters are erased and the viewHeight
+// is higher than scrollHeight and other cases too
+function getScrollTop(value, scrollHeight)
+{
+  const scrollTop = Math.max(
+    0,
+    Math.min(scrollHeight || Infinity, value)
+  );
+  // avoid division by zero gotchas
+  return isNaN(scrollTop) ? 0 : scrollTop;
+}
+
+function getWarning(filter)
+{
+  if (typeof filter.reason === "string")
+    return issues.get(filter) || createImageForFilter(issues, filter);
+  if (filter.slow)
+    return warnings.get(filter) || createImageForFilter(warnings, filter);
+  return "";
+}
+
+function replaceFilter(filter, currentTarget)
+{
+  const {text} = filter;
+  const old = prevFilterText.get(filter);
+  // if same text, no need to bother the extension at all
+  if (old === text)
+  {
+    animateAndDrop(currentTarget);
+    return;
+  }
+  browser.runtime.sendMessage({
+    type: "filters.replace",
+    new: text,
+    old
+  }).then(errors =>
+  {
+    if (errors.length)
+    {
+      filter.reason = errors[0];
+    }
+    else
+    {
+      // see https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/338
+      // until that lands, we remove the filter and add it at the end
+      // of the table so, before rendering, drop the new filter and update
+      // the current known one
+      const {filters} = this;
+      let i = filters.length;
+      let newFilter;
+      while (i--)
+      {
+        newFilter = filters[i];
+        if (newFilter.text === text)
+          break;
+      }
+      filters.splice(i, 1);
+      delete filter.disabled;
+      delete filter.reason;
+      Object.assign(filter, newFilter);
+      prevFilterText.set(filter, text);
+      animateAndDrop(currentTarget);
+    }
+    this.render();
+  });
+}
+
+function setScrollbarReactiveOpacity()
+{
+  // get native value for undefined opacity
+  const opacity = this.scrollbar.style.opacity;
+  // cache it once to never duplicate listeners
+  const cancelOpacity = () =>
+  {
+    // store default opacity value back
+    this.scrollbar.style.opacity = opacity;
+    // drop all listeners
+    document.removeEventListener("pointerup", cancelOpacity);
+    document.removeEventListener("pointercancel", cancelOpacity);
+  };
+  // add listeners on scrollbaro pointerdown event
+  this.scrollbar.addEventListener("pointerdown", () =>
+  {
+    this.scrollbar.style.opacity = 1;
+    document.addEventListener("pointerup", cancelOpacity);
+    document.addEventListener("pointercancel", cancelOpacity);
+  });
+}
+
+// listen to filters messages and eventually
+// delegate the error handling
+function setupPort()
+{
+  port.onMessage.addListener((message) =>
+  {
+    if (message.type === "filters.respond" && message.action === "disabled")
+    {
+      const {text, disabled} = message.args[0];
+      const filter = this.filters.find(f => f.text === text);
+      if (filter && disabled !== filter.disabled)
+      {
+        filter.reason = browser.i18n.getMessage("filter_disabled");
+        filter.disabled = disabled;
+      }
+      this.render();
+    }
+  });
+}
+
+function updateScrollbarPosition()
+{
+  const {scrollbar, state} = this;
+  const {scrollHeight, scrollTop} = state;
+  scrollbar.position = scrollTop * scrollbar.range / scrollHeight;
+}
+
+},{"./api":1,"./dom":3,"./io-checkbox":4,"./io-element":5,"./io-scrollbar":11,"./io-toggle":12}],7:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const IOElement = require("./io-element");
+
+const {$, events} = require("./dom");
+
+const MINIMUM_SEARCH_LENGTH = 3;
+
+// this component simply emits filter:add(text)
+// and filter:match({accuracy, filter}) events
+class IOFilterSearch extends IOElement
+{
+  static get booleanAttributes()
+  {
+    return ["disabled"];
+  }
+
+  static get observedAttributes()
+  {
+    return ["match"];
+  }
+
+  get defaultState()
+  {
+    return {
+      filterExists: true,
+      filters: [],
+      match: -1
+    };
+  }
+
+  get filters()
+  {
+    return this.state.filters;
+  }
+
+  // filters are never modified or copied
+  // but used to find out if one could be added
+  // or if the component in charge should show the found one
+  set filters(value)
+  {
+    this.setState({filters: value || []});
+  }
+
+  get match()
+  {
+    return this.state.match;
+  }
+
+  // match is a number between -1 and 1
+  // -1 means any match
+  // 1 means exact match
+  // 0 means match disabled => no filter:match event ever
+  set match(value)
+  {
+    this.setState({
+      match: Math.max(-1, Math.min(1, parseFloat(value) || 0))
+    }, false);
+  }
+
+  get value()
+  {
+    return $("input", this).value.trim();
+  }
+
+  set value(text)
+  {
+    const value = String(text || "").trim();
+    $("input", this).value = value;
+    this.setState({
+      filterExists: value.length ?
+                      this.state.filters.some(hasValue, value) :
+                      false
+    });
+  }
+
+  attributeChangedCallback(name, previous, current)
+  {
+    if (name === "match")
+      this.match = current;
+    else
+      this.render();
+  }
+
+  created()
+  {
+    const {i18n} = browser;
+    this._placeholder = i18n.getMessage("options_filters_search_or_add");
+    this._addingFilter = false;
+    this._timer = 0;
+    this.render();
+  }
+
+  onclick()
+  {
+    if (this.value)
+      addFilter.call(this, this.value);
+  }
+
+  ondrop(event)
+  {
+    event.preventDefault();
+    addFilter.call(this, event.dataTransfer.getData("text"));
+  }
+
+  onkeydown(event)
+  {
+    switch (events.key(event))
+    {
+      case "Enter":
+        const {value} = this;
+        if (
+          value.length &&
+          !this.disabled &&
+          !this.state.filters.some(hasValue, value)
+        )
+          addFilter.call(this, value);
+        break;
+      case "Escape":
+        dispatch.call(this, "filter:none");
+        this.value = "";
+        break;
+    }
+  }
+
+  onkeyup()
+  {
+    // clear timeout on any action
+    clearTimeout(this._timer);
+
+    // in case it was just added, don't do anything
+    if (this._addingFilter)
+    {
+      this._addingFilter = false;
+      return;
+    }
+
+    // debounce the search operations to avoid degrading
+    // performance on very long list of filters
+    this._timer = setTimeout(() =>
+    {
+      this._timer = 0;
+
+      const {match, value} = this;
+      // clear on backspace
+      if (!value.length)
+      {
+        dispatch.call(this, "filter:none");
+        this.value = "";
+      }
+      // do nothing when the search text is too small
+      // also no match means don't validate
+      // but also multi line (paste on old browsers)
+      // shouldn't pass through this logic (filtered later on)
+      else if (
+        !match ||
+        value.length < MINIMUM_SEARCH_LENGTH ||
+        isMultiLine(value)
+      )
+      {
+        this.setState({filterExists: this.state.filters.some(hasValue, value)});
+        dispatch.call(this, "filter:none");
+      }
+      else
+      {
+        const result = search.call(this, value);
+        if (result.accuracy && match <= result.accuracy)
+          dispatch.call(this, "filter:match", result);
+        else
+          dispatch.call(this, "filter:none");
+      }
+    }, 100);
+  }
+
+  onpaste(event)
+  {
+    const clipboardData = event.clipboardData || window.clipboardData;
+    const data = clipboardData.getData("text").trim();
+    // do not automatically paste on single line
+    if (isMultiLine(data))
+      addFilter.call(this, data);
+  }
+
+  render()
+  {
+    const {disabled} = this;
+    this.html`
+    <input
+      placeholder="${this._placeholder}"
+      onkeydown="${this}" onkeyup="${this}"
+      ondrop="${this}" onpaste="${this}"
+      disabled="${disabled}"
+    >
+    <button
+      onclick="${this}"
+      disabled="${disabled || this.state.filterExists || !this.value}">
+      + ${{i18n: "add"}}
+    </button>`;
+  }
+}
+
+IOFilterSearch.define("io-filter-search");
+
+module.exports = IOFilterSearch;
+
+function addFilter(data)
+{
+  dispatch.call(this, "filter:none");
+  let value = data.trim();
+  if (!value)
+    return;
+
+  // in case of multi line don't bother the search
+  if (isMultiLine(value))
+  {
+    value = clearMultiLine(value);
+    dispatch.call(this, "filter:add", value);
+  }
+  else
+  {
+    const result = search.call(this, value);
+    if (result.accuracy < 1)
+    {
+      this._addingFilter = true;
+      dispatch.call(this, "filter:add", value);
+    }
+    else if (result.accuracy && value.length >= MINIMUM_SEARCH_LENGTH)
+      dispatch.call(this, "filter:match", result);
+  }
+}
+
+function dispatch(type, detail)
+{
+  if (type === "filter:add" || this.filters.length)
+    this.dispatchEvent(new CustomEvent(type, {detail}));
+}
+
+function hasValue(filter)
+{
+  return filter.text == this;
+}
+
+function clearMultiLine(data)
+{
+  return data.split(/[\r\n]/)
+              .map(text => text.trim())
+              .filter(text => text.length)
+              .join("\n");
+}
+
+function isMultiLine(data)
+{
+  return /[\r\n]/.test(data.trim());
+}
+
+function search(value)
+{
+  let accuracy = 0;
+  let closerFilter = null;
+  const matches = [];
+  const searchLength = value.length;
+  if (searchLength)
+  {
+    const match = this.match;
+    const {filters} = this.state;
+    const {length} = filters;
+    for (let i = 0; i < length; i++)
+    {
+      const filter = filters[i];
+      const filterLength = filter.text.length;
+      // ignore all filters shorter than current search
+      if (searchLength > filterLength)
+        continue;
+      // compare the two strings only if length is the same
+      if (searchLength === filterLength)
+      {
+        if (filter.text === value)
+        {
+          matches.push(filter);
+          closerFilter = filter;
+          accuracy = 1;
+        }
+        continue;
+      }
+      // otherwise verify text includes searched value
+      // only if the match is not meant to be 1:1
+      if (match < 1 && filter.text.includes(value))
+      {
+        matches.push(filter);
+        const tmpAccuracy = searchLength / filterLength;
+        if (accuracy < tmpAccuracy)
+        {
+          closerFilter = filter;
+          accuracy = tmpAccuracy;
+        }
+      }
+    }
+    this.setState({filterExists: accuracy === 1});
+  }
+  return {accuracy, matches, value, filter: closerFilter};
+}
+
+},{"./dom":3,"./io-element":5}],8:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const IOElement = require("./io-element");
+const IOFilterList = require("./io-filter-list");
+const IOFilterSearch = require("./io-filter-search");
+
+const {clipboard} = require("./dom");
+
+const {bind, wire} = IOElement;
+
+// io-filter-table is a basic controller
+// used to relate the search and the list
+class IOFilterTable extends IOElement
+{
+  static get booleanAttributes()
+  {
+    return ["disabled"];
+  }
+
+  static get observedAttributes()
+  {
+    return ["match"];
+  }
+
+  get defaultState()
+  {
+    return {filters: [], match: -1, ready: false};
+  }
+
+  created()
+  {
+    this._showing = null;
+    this.search = this.appendChild(new IOFilterSearch());
+    this.search.addEventListener(
+      "filter:add",
+      event => this.onFilterAdd(event)
+    );
+    this.search.addEventListener(
+      "filter:match",
+      event => this.onFilterMatch(event)
+    );
+    this.search.addEventListener(
+      "filter:none",
+      () =>
+      {
+        this.list.selected = [];
+        this.updateFooter();
+      }
+    );
+    this.list = this.appendChild(new IOFilterList());
+    this.list.addEventListener(
+      "filter:removed",
+      event => this.onFilterRemoved(event)
+    );
+    this.footer = this.appendChild(wire()`<div class="footer" />`);
+    this.addEventListener("click", this);
+    this.addEventListener("error", this);
+    this.setState({ready: true});
+  }
+
+  attributeChangedCallback(name, prev, value)
+  {
+    if (name === "match")
+      this.setState({match: value}, false);
+    this.render();
+  }
+
+  get filters()
+  {
+    return this.state.filters;
+  }
+
+  set filters(value)
+  {
+    this.setState({filters: value});
+  }
+
+  get match()
+  {
+    return this.state.match;
+  }
+
+  set match(value)
+  {
+    this.setState({match: value});
+  }
+
+  onclick(event)
+  {
+    if (event.target.closest("io-checkbox"))
+    {
+      cleanErrors.call(this);
+    }
+  }
+
+  onerror(event)
+  {
+    // force the footer to be visible since errors are shown there
+    this.updateFooter();
+    this.footer.classList.add("visible");
+    const {errors} = event.detail;
+    const footerError = this.querySelector(".footer .error");
+
+    // Show a generic error message not only if we don't know what kind of
+    // error occurred but also if we don't have an error message for it yet
+    const errorMessages = errors.join("\n").trim();
+    bind(footerError)`${
+      errorMessages ?
+        errorMessages :
+        {i18n: "filter_action_failed"}
+    }`;
+  }
+
+  onfooterclick(event)
+  {
+    const {classList} = event.currentTarget;
+    switch (true)
+    {
+      case classList.contains("delete"):
+        const resolve = [];
+        for (const filter of this.list.selected)
+        {
+          this.list.selected.delete(filter);
+          this.filters.splice(this.filters.indexOf(filter), 1);
+          resolve.push(browser.runtime.sendMessage({
+            type: "filters.remove",
+            text: filter.text
+          }));
+        }
+        Promise.all(resolve).then(
+          () => updateList(this.list),
+          (errors) => this.onerror({detail: {errors}})
+        );
+        cleanErrors.call(this);
+        break;
+      case classList.contains("copy"):
+        const filters = [];
+        for (const filter of this.list.selected)
+        {
+          filters.push(filter.text);
+        }
+        clipboard.copy(filters.join("\n"));
+        break;
+    }
+  }
+
+  onFilterAdd(event)
+  {
+    const filters = event.detail.split(/(?:\r\n|\n)/);
+
+    cleanErrors.call(this);
+    browser.runtime.sendMessage({
+      type: "filters.importRaw",
+      text: filters.join("\n")
+    })
+    .then(errors =>
+    {
+      if (!errors.length)
+      {
+        filters.reverse();
+        let added = false;
+        for (const text of filters)
+        {
+          // We don't treat filter headers like invalid filters,
+          // instead we simply ignore them and don't show any errors
+          // in order to allow pasting complete filter lists
+          if (text[0] === "[")
+            continue;
+
+          added = true;
+          const i = this.filters.findIndex(flt => flt.text === text);
+          const [filter] = i < 0 ? [{text}] : this.filters.splice(i, 1);
+          this.filters.unshift(filter);
+        }
+
+        this.search.value = "";
+        if (!added)
+          return;
+
+        this.render();
+        updateList(this.list);
+        this.list.scrollTo(this.filters[0]);
+        this.updateFooter();
+      }
+      else
+      {
+        this.onerror({detail: {errors}});
+      }
+    });
+  }
+
+  onFilterMatch(event)
+  {
+    const {accuracy, filter, matches} = event.detail;
+    this.list.selected = matches;
+    // scroll either to the exact match or the first close match
+    this.list.scrollTo(accuracy === 1 ? filter : matches[0]);
+    this.updateFooter();
+  }
+
+  onFilterRemoved()
+  {
+    cleanErrors.call(this);
+    this.updateFooter();
+  }
+
+  render()
+  {
+    const {disabled} = this;
+    const {filters, match, ready} = this.state;
+    if (!ready || !filters.length)
+      return;
+
+    // update inner components setting filters
+    // only if necessary
+    this.search.disabled = disabled;
+    this.search.match = match;
+    if (this.search.filters !== filters)
+      this.search.filters = filters;
+
+    this.list.disabled = disabled;
+    if (this.list.filters !== filters)
+      this.list.filters = filters;
+
+    this.updateFooter();
+  }
+
+  updateFooter()
+  {
+    const disabled = !this.list.selected.size;
+    bind(this.footer)`
+      <button
+        class="delete"
+        onclick="${this}"
+        disabled="${disabled}"
+        data-call="onfooterclick"
+      >${{i18n: "delete"}}</button>
+      <button
+        class="copy"
+        onclick="${this}"
+        disabled="${disabled}"
+        data-call="onfooterclick"
+      >${{i18n: "copy_selected"}}</button>
+      <button class="error"></button>
+    `;
+  }
+}
+
+IOFilterTable.define("io-filter-table");
+
+function cleanErrors()
+{
+  const footerError = this.querySelector(".footer .error");
+  if (footerError)
+    bind(footerError)``;
+  this.updateFooter();
+}
+
+function updateList(list)
+{
+  list.render();
+  list.updateScrollbar();
+}
+
+},{"./dom":3,"./io-element":5,"./io-filter-list":6,"./io-filter-search":7}],9:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const DELAY = 200;
+
+const IOElement = require("./io-element");
+
+const {events} = require("./dom");
+
+// used to create options
+const {wire} = IOElement;
+
+// used to map codes cross browser
+const KeyCode = {
+  ARROW_DOWN: "ArrowDown",
+  ARROW_UP: "ArrowUp",
+  BACKSPACE: "Backspace",
+  DELETE: "Delete",
+  ENTER: "Enter",
+  ESCAPE: "Escape",
+  END: "End",
+  HOME: "Home",
+  PAGE_DOWN: "PageDown",
+  PAGE_UP: "PageUp",
+  SPACE: " ",
+  TAB: "Tab"
+};
+
+class IOListBox extends IOElement
+{
+  static get observedAttributes()
+  {
+    return ["action", "change", "disabled", "expanded", "items", "placeholder"];
+  }
+
+  created()
+  {
+    this._blurTimer = 0;
+    this._bootstrap = true;
+    this._text = browser.i18n.getMessage("options_language_add");
+    // in case the component has been addressed and
+    // it has already an attached items property
+    if (this.hasOwnProperty("items"))
+    {
+      const items = this.items;
+      delete this.items;
+      this.items = items;
+    }
+  }
+
+  // can be overridden but by default
+  // it returns the item.originalTitle
+  getItemTitle(item)
+  {
+    return item.originalTitle;
+  }
+
+  get change()
+  {
+    return !!this._change;
+  }
+
+  set change(value)
+  {
+    this._change = !!value;
+  }
+
+  // shortcuts to retrieve sub elements
+  get label()
+  {
+    return this.querySelector(`#${this.id}label`);
+  }
+
+  get popup()
+  {
+    return this.querySelector(`#${this.id}popup`);
+  }
+
+  // component status
+  get disabled()
+  {
+    return this.hasAttribute("disabled");
+  }
+
+  set disabled(value)
+  {
+    IOElement.utils.boolean.attribute(this, "disabled", value);
+    this.render();
+  }
+
+  get expanded()
+  {
+    return this.hasAttribute("expanded");
+  }
+
+  set expanded(value)
+  {
+    IOElement.utils.boolean.attribute(this, "expanded", value);
+    this.render();
+    setTimeout(
+      () =>
+      {
+        // be sure the eleemnt is blurred to re-open on focus
+        if (!value)
+          this.ownerDocument.activeElement.blur();
+        this.dispatchEvent(new CustomEvent(value ? "open" : "close"));
+      },
+      DELAY + 1
+    );
+  }
+
+  // items handler
+  get items()
+  {
+    return this._items;
+  }
+
+  set items(items)
+  {
+    this._items = items;
+    this.render();
+    // WAI-ARIA guidelines:
+    //  If an option is selected before the listbox receives focus,
+    //  focus is set on the selected option.
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // if no items were passed, clean up
+    // and bootstrap the next time.
+    // The bootstrap will focus the right item.
+    if (!items.length)
+    {
+      this._bootstrap = true;
+    }
+    // if it needs to bootstrap (cleanup or new component)
+    else if (this._bootstrap)
+    {
+      this._bootstrap = false;
+      for (const item of items)
+      {
+        // if an item is selected
+        if (!item.disabled)
+        {
+          // simulate hover it and exit
+          hover.call(this, "items", item);
+          fixSize.call(this);
+          return;
+        }
+      }
+      // if no item was selected, hover the first one
+      hover.call(this, "items", items[0]);
+    }
+
+    // ensure the list of items reflect the meant style
+    fixSize.call(this);
+  }
+
+  // events related methods
+  handleEvent(event)
+  {
+    if (!this.disabled)
+    {
+      this[`on${event.type}`](event);
+    }
+  }
+
+  // label related events
+  onblur(event)
+  {
+    // ensure blur won't close the list right away or it's impossible
+    // to get the selected raw on click (bad target)
+    if (this.expanded)
+      this._blurTimer = setTimeout(() =>
+      {
+        this.expanded = false;
+      }, DELAY);
+  }
+
+  onfocus(event)
+  {
+    // if 0 or already cleared, nothing happens, really
+    clearTimeout(this._blurTimer);
+    // show the popup
+    this.expanded = true;
+  }
+
+  onkeydown(event)
+  {
+    const hovered = this.querySelector(".hover");
+    switch (events.key(event))
+    {
+      case KeyCode.BACKSPACE:
+      case KeyCode.DELETE:
+        event.preventDefault();
+        break;
+      /* both SPACE, RETURN and ESC hide and blur */
+      case KeyCode.ENTER:
+      case KeyCode.SPACE:
+        hovered.dispatchEvent(new CustomEvent("click", {bubbles: true}));
+        /* eslint: fall through */
+      case KeyCode.ESCAPE:
+        event.preventDefault();
+        this.expanded = false;
+        break;
+      case KeyCode.ARROW_UP:
+        const prev = findNext.call(
+          this,
+          hovered, "previousElementSibling"
+        );
+        if (prev)
+          hover.call(this, "key", getItem.call(this, prev.id));
+        event.preventDefault();
+        break;
+      case KeyCode.ARROW_DOWN:
+        const next = findNext.call(
+          this,
+          hovered, "nextElementSibling"
+        );
+        if (next)
+          hover.call(this, "key", getItem.call(this, next.id));
+        event.preventDefault();
+        break;
+    }
+  }
+
+  // popup related events
+  onclick(event)
+  {
+    if (!IOElement.utils.event.isLeftClick(event))
+      return;
+    event.preventDefault();
+    clearTimeout(this._blurTimer);
+    const el = event.target.closest('[role="option"]');
+    if (el)
+    {
+      if (el.getAttribute("aria-disabled") !== "true")
+      {
+        this.dispatchEvent(new CustomEvent("change", {
+          detail: getItem.call(this, el.id)
+        }));
+      }
+      this.expanded = false;
+    }
+  }
+
+  onmousedown(event)
+  {
+    this.expanded = !this.expanded;
+  }
+
+  onmouseover(event)
+  {
+    const el = event.target.closest('[role="option"]');
+    if (el && !el.classList.contains("hover"))
+      hover.call(this, "mouse",
+                  this._items.find(item => getID(item) === el.id));
+  }
+
+  // the view
+  render()
+  {
+    const {change} = this;
+    const enabled = this._items.filter(item => !item.disabled).length;
+    this.html`
+    <button
+      role="combobox"
+      aria-readonly="true"
+      id="${this.id + "label"}"
+      disabled="${this.disabled}"
+      data-action="${this.action}"
+      aria-owns="${this.id + "popup"}"
+      aria-disabled="${this.disabled}"
+      aria-expanded="${this.expanded}"
+      aria-haspopup="${this.id + "popup"}"
+      onblur="${this}" onfocus="${this}"
+      onkeydown="${this}" onmousedown="${this}"
+    >${this.expanded ? this.placeholder : this._text}</button>
+    <ul
+      role="listbox"
+      tab-index="-1"
+      id="${this.id + "popup"}"
+      aria-labelledby="${this.id + "label"}"
+      hidden="${!this.expanded}"
+      onclick="${this}" onmouseover="${this}"
+    >${this._items.map(item =>
+    {
+      const id = getID(item);
+      const selected = !change && !item.disabled;
+      const disabled = selected && enabled === 1;
+      return wire(this, `html:${id}`)`
+      <li
+        id="${id}"
+        role="option"
+        aria-disabled="${change ? !item.disabled : disabled}"
+        aria-selected="${selected}"
+      >${this.getItemTitle(item)}</li>`;
+    })}</ul>`;
+  }
+}
+
+IOListBox.define("io-list-box");
+
+// to retrieve a unique ID per item
+function getID(item)
+{
+  // get a unique URL for each known item
+  return `li-${item.url.split("").map(
+    c => c.charCodeAt(0).toString(32)
+  ).join("")}`;
+}
+
+// to retrieve an item from an option id
+function getItem(id)
+{
+  return this._items.find(item => getID(item) === id);
+}
+
+// private helper
+function hover(type, item)
+{
+  const id = getID(item);
+  const hovered = this.querySelector(".hover");
+  if (hovered)
+    hovered.classList.remove("hover");
+  const option = this.querySelector(`#${id}`);
+  option.classList.add("hover");
+  this.label.setAttribute("aria-activedescendant", id);
+  const popup = this.popup;
+  // if it's the mouse moving, don't auto scroll (annoying)
+  if (type !== "mouse" && popup.scrollHeight > popup.clientHeight)
+  {
+    const scrollBottom = popup.clientHeight + popup.scrollTop;
+    const elementBottom = option.offsetTop + option.offsetHeight;
+    if (elementBottom > scrollBottom)
+    {
+      popup.scrollTop = elementBottom - popup.clientHeight;
+    }
+    else if (option.offsetTop < popup.scrollTop)
+    {
+      popup.scrollTop = option.offsetTop;
+    }
+  }
+}
+
+// find next available hoverable node
+function findNext(el, other)
+{
+  const first = el;
+  do
+  {
+    el = el[other];
+  } while (el && el !== first && !getItem.call(this, el.id).disabled);
+  return el === first ? null : el;
+}
+
+function fixSize()
+{
+  if (!this._fixedSize)
+  {
+    this._fixedSize = true;
+    this.style.setProperty("--height", this.label.offsetHeight + "px");
+  }
+}
+
+},{"./dom":3,"./io-element":5}],10:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1763,7 +3825,343 @@ class IOPopout extends IOElement
 
 IOPopout.define("io-popout");
 
-},{"./io-element":2}],4:[function(require,module,exports){
+},{"./io-element":5}],11:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const IOElement = require("./io-element");
+const {relativeCoordinates} = require("./dom");
+
+const {isLeftClick} = IOElement.utils.event;
+
+class IOScrollbar extends IOElement
+{
+  static get observedAttributes()
+  {
+    return ["direction", "position", "size"];
+  }
+
+  created()
+  {
+    this.addEventListener(
+      "click",
+      (event) =>
+      {
+        // ignore clicks on the slider or right clicks
+        if (event.target !== this || !isLeftClick(event))
+          return;
+        // prevents clicks action on the component
+        // after dragging the slider so that it won't
+        // be re-positioned again on click coordinates
+        if (this._dragging)
+        {
+          this._dragging = false;
+          return;
+        }
+        const {x, y} = relativeCoordinates(event);
+        if (this.direction === "horizontal")
+          setPosition.call(this, x - (this._sliderSize / 2));
+        else if (this.direction === "vertical")
+          setPosition.call(this, y - (this._sliderSize / 2));
+        this.dispatchEvent(new CustomEvent("scroll"));
+      }
+    );
+    this.addEventListener(
+      "wheel",
+      (event) =>
+      {
+        stop(event);
+        let delta = 0;
+        if (this.direction === "vertical")
+          delta = event.deltaY;
+        else if (this.direction === "horizontal")
+          delta = event.deltaX;
+        // this extra delta transformation is mostly needed for MS Edge
+        // but it works OK in every other browser too
+        delta = delta * this._sliderSize / this.size;
+        setPosition.call(this, this.position + delta);
+        this.dispatchEvent(new CustomEvent("scroll"));
+      },
+      {passive: false}
+    );
+  }
+
+  get defaultState()
+  {
+    return {
+      direction: "",
+      position: 0,
+      size: 0
+    };
+  }
+
+  get direction()
+  {
+    return this.state.direction;
+  }
+
+  // can be (ignore case) horizontal or vertical
+  set direction(value)
+  {
+    value = value.toLowerCase();
+    this.setState({direction: value});
+    this.setAttribute("direction", value);
+    // trigger eventual size recalculation
+    sizeChange.call(this);
+  }
+
+  get position()
+  {
+    return this.state.position || 0;
+  }
+
+  set position(value)
+  {
+    if (!this._elSize)
+      return;
+    setPosition.call(this, value);
+  }
+
+  // read-only: the amount of positions covered by the slider
+  get range()
+  {
+    return this._elSize - this._sliderSize;
+  }
+
+  get size()
+  {
+    return this.state.size;
+  }
+
+  set size(value)
+  {
+    this.setState({size: parseInt(value, 10)});
+    sizeChange.call(this);
+  }
+
+  onmousedown(event)
+  {
+    if (!isLeftClick(event))
+      return;
+    this._dragging = true;
+    this._coords = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    const slider = event.currentTarget;
+    const doc = slider.ownerDocument;
+    // use the document as source of mouse events truth
+    // use true as third option to intercept before bubbling
+    doc.addEventListener("mousemove", this, true);
+    doc.addEventListener("mouseup", this, true);
+    // also prevents selection like a native scrollbar would
+    // (this is specially needed for Firefox and Edge)
+    doc.addEventListener("selectstart", stop, true);
+  }
+
+  onmousemove(event)
+  {
+    const {x, y} = this._coords;
+    if (this.direction === "horizontal")
+    {
+      const {clientX} = event;
+      setPosition.call(this, this.position + clientX - x);
+      this._coords.x = clientX;
+    }
+    else if (this.direction === "vertical")
+    {
+      const {clientY} = event;
+      setPosition.call(this, this.position + clientY - y);
+      this._coords.y = clientY;
+    }
+    this.dispatchEvent(new CustomEvent("scroll"));
+  }
+
+  onmouseup(event)
+  {
+    if (!isLeftClick(event))
+      return;
+    const {currentTarget: doc, target} = event;
+    doc.removeEventListener("mousemove", this, true);
+    doc.removeEventListener("mouseup", this, true);
+    doc.removeEventListener("selectstart", stop, true);
+    // stop dragging if mouseup happens outside this component
+    // or within this component slider (the only child)
+    // otherwise let the click handler ignore the action
+    // which happens through the component itself
+    if (target !== this || target === this.child)
+      this._dragging = false;
+  }
+
+  render()
+  {
+    // the component and its slider are styled 100% through CSS, i.e.
+    // io-scrollbar[direction="vertical"] > .slider {}
+    this.html`<div
+      class="slider"
+      onmousedown="${this}"
+    />`;
+  }
+}
+
+IOScrollbar.define("io-scrollbar");
+
+module.exports = IOScrollbar;
+
+function setPosition(value)
+{
+  this.setState({
+    position: Math.max(
+      0,
+      Math.min(
+        parseFloat(value),
+        this.range
+      )
+    )
+  });
+  this.style.setProperty(
+    "--position",
+    this.state.position + "px"
+  );
+}
+
+function sizeChange()
+{
+  if (this.direction === "horizontal")
+    this._elSize = this.clientWidth;
+  else if (this.direction === "vertical")
+    this._elSize = this.clientHeight;
+  this._sliderSize = Math.floor(
+    Math.min(1, this._elSize / this.state.size) * this._elSize
+  );
+  if (this.direction === "horizontal")
+    this._sliderSize = Math.max(this._sliderSize, this.clientHeight);
+  else if (this.direction === "vertical")
+    this._sliderSize = Math.max(this._sliderSize, this.clientWidth);
+  this.style.setProperty("--slider-size", this._sliderSize + "px");
+  // trigger eventual position recalculation
+  // once this._elSize change
+  // set again the style to re-position the scroller
+  setPosition.call(this, this.position);
+}
+
+// if inside a container with its own wheel or mouse events,
+// avoid possible backfiring through already handled events.
+function stop(event)
+{
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+},{"./dom":3,"./io-element":5}],12:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+const IOElement = require("./io-element");
+const {boolean} = IOElement.utils;
+
+class IOToggle extends IOElement
+{
+  // action, checked, and disabled should be reflected down the button
+  static get observedAttributes()
+  {
+    return ["action", "checked", "disabled"];
+  }
+
+  created()
+  {
+    this.addEventListener("click", this);
+    this.render();
+  }
+
+  get checked()
+  {
+    return this.hasAttribute("checked");
+  }
+
+  set checked(value)
+  {
+    boolean.attribute(this, "checked", value);
+    this.render();
+  }
+
+  get disabled()
+  {
+    return this.hasAttribute("disabled");
+  }
+
+  set disabled(value)
+  {
+    boolean.attribute(this, "disabled", value);
+  }
+
+  onclick(event)
+  {
+    if (!this.disabled)
+    {
+      this.checked = !this.checked;
+      if (this.ownerDocument.activeElement !== this.child)
+      {
+        this.child.focus();
+      }
+      this.dispatchEvent(new CustomEvent("change", {
+        bubbles: true,
+        cancelable: true,
+        detail: this.checked
+      }));
+    }
+  }
+
+  render()
+  {
+    this.html`
+    <button
+      role="checkbox"
+      disabled="${this.disabled}"
+      data-action="${this.action}"
+      aria-checked="${this.checked}"
+      aria-disabled="${this.disabled}"
+    />`;
+  }
+}
+
+IOToggle.define("io-toggle");
+
+module.exports = IOToggle;
+
+},{"./io-element":5}],13:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var createContent = (function (document) {'use strict';
   var FRAGMENT = 'fragment';
@@ -1822,7 +4220,7 @@ var createContent = (function (document) {'use strict';
 }(document));
 module.exports = createContent;
 
-},{}],5:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 self.CustomEvent = typeof CustomEvent === 'function' ?
@@ -1839,7 +4237,7 @@ self.CustomEvent = typeof CustomEvent === 'function' ?
   }('prototype'));
 module.exports = self.CustomEvent;
 
-},{}],6:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.Map = Map; }
@@ -1876,7 +4274,7 @@ catch (Map) {
 }
 module.exports = self.Map;
 
-},{}],7:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakSet = WeakSet; }
@@ -1902,7 +4300,7 @@ catch (WeakSet) {
 }
 module.exports = self.WeakSet;
 
-},{}],8:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var importNode = (function (
   document,
@@ -1947,7 +4345,7 @@ var importNode = (function (
 ));
 module.exports = importNode;
 
-},{}],9:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 var isArray = Array.isArray || (function (toString) {
   var $ = toString.call([]);
   return function isArray(object) {
@@ -1956,7 +4354,7 @@ var isArray = Array.isArray || (function (toString) {
 }({}.toString));
 module.exports = isArray;
 
-},{}],10:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var templateLiteral = (function () {'use strict';
   var RAW = 'raw';
@@ -1995,7 +4393,7 @@ var templateLiteral = (function () {'use strict';
 }());
 module.exports = templateLiteral;
 
-},{}],11:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 const unique = (require('@ungap/template-literal'));
 
@@ -2008,13 +4406,13 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = function (
   return args;
 };
 
-},{"@ungap/template-literal":10}],12:[function(require,module,exports){
+},{"@ungap/template-literal":19}],21:[function(require,module,exports){
 var trim = ''.trim || function () {
   return String(this).replace(/^\s+|\s+/g, '');
 };
 module.exports = trim;
 
-},{}],13:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakMap = WeakMap; }
@@ -2051,7 +4449,7 @@ catch (WeakMap) {
 }
 module.exports = self.WeakMap;
 
-},{}],14:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /*! (c) Andrea Giammarchi */
 function disconnected(poly) {'use strict';
   var CONNECTED = 'connected';
@@ -2163,7 +4561,7 @@ function disconnected(poly) {'use strict';
 }
 module.exports = disconnected;
 
-},{}],15:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /*!
 ISC License
 
@@ -3674,7 +6072,7 @@ function installCustomElements(window, polyfill) {'use strict';
 
 module.exports = installCustomElements;
 
-},{}],16:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 /*! (c) 2018 Andrea Giammarchi (ISC) */
 
@@ -3898,7 +6296,7 @@ const domdiff = (
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
-},{"./utils.js":17}],17:[function(require,module,exports){
+},{"./utils.js":26}],26:[function(require,module,exports){
 'use strict';
 const Map = (require('@ungap/essential-map'));
 
@@ -4281,7 +6679,7 @@ const smartDiff = (
 };
 exports.smartDiff = smartDiff;
 
-},{"@ungap/essential-map":6}],18:[function(require,module,exports){
+},{"@ungap/essential-map":15}],27:[function(require,module,exports){
 'use strict';
 // Custom
 var UID = '-' + Math.random().toFixed(6) + '%';
@@ -4314,7 +6712,7 @@ exports.TEXT_NODE = TEXT_NODE;
 exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
 exports.VOID_ELEMENTS = VOID_ELEMENTS;
 
-},{}],19:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 // globals
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -4421,7 +6819,7 @@ function cleanContent(fragment) {
   }
 }
 
-},{"./sanitizer.js":20,"./walker.js":21,"@ungap/create-content":4,"@ungap/import-node":8,"@ungap/trim":12,"@ungap/weakmap":13}],20:[function(require,module,exports){
+},{"./sanitizer.js":29,"./walker.js":30,"@ungap/create-content":13,"@ungap/import-node":17,"@ungap/trim":21,"@ungap/weakmap":22}],29:[function(require,module,exports){
 'use strict';
 const {UID, UIDC, VOID_ELEMENTS} = require('./constants.js');
 
@@ -4453,7 +6851,7 @@ function fullClosing($0, $1, $2) {
   return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
 }
 
-},{"./constants.js":18}],21:[function(require,module,exports){
+},{"./constants.js":27}],30:[function(require,module,exports){
 'use strict';
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
@@ -4583,7 +6981,7 @@ function parseAttributes(node, holes, parts, path) {
   }
 }
 
-},{"./constants.js":18,"@ungap/essential-map":6,"@ungap/trim":12}],22:[function(require,module,exports){
+},{"./constants.js":27,"@ungap/essential-map":15,"@ungap/trim":21}],31:[function(require,module,exports){
 'use strict';
 /*! (C) 2017-2018 Andrea Giammarchi - ISC Style License */
 
@@ -4964,7 +7362,7 @@ function isReady(created) {
   return false;
 }
 
-},{"hyperhtml":28}],23:[function(require,module,exports){
+},{"hyperhtml":37}],32:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var hyperStyle = (function (){'use strict';
   // from https://github.com/developit/preact/blob/33fc697ac11762a1cb6e71e9847670d047af7ce5/src/varants.js
@@ -5051,7 +7449,7 @@ var hyperStyle = (function (){'use strict';
 }());
 module.exports = hyperStyle;
 
-},{}],24:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var Wire = (function (slice, proto) {
 
@@ -5101,7 +7499,7 @@ var Wire = (function (slice, proto) {
 }([].slice));
 module.exports = Wire;
 
-},{}],25:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
@@ -5269,7 +7667,7 @@ Object.defineProperties(
   }
 );
 
-},{"@ungap/custom-event":5,"@ungap/essential-map":6,"@ungap/weakmap":13}],26:[function(require,module,exports){
+},{"@ungap/custom-event":14,"@ungap/essential-map":15,"@ungap/weakmap":22}],35:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -5310,7 +7708,7 @@ function upgrade(template) {
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = render;
 
-},{"../objects/Updates.js":30,"../shared/constants.js":31,"@ungap/template-tag-arguments":11,"@ungap/weakmap":13}],27:[function(require,module,exports){
+},{"../objects/Updates.js":39,"../shared/constants.js":40,"@ungap/template-tag-arguments":20,"@ungap/weakmap":22}],36:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -5396,7 +7794,7 @@ exports.content = content;
 exports.weakly = weakly;
 Object.defineProperty(exports, '__esModule', {value: true}).default = wire;
 
-},{"../objects/Updates.js":30,"@ungap/template-tag-arguments":11,"@ungap/weakmap":13,"hyperhtml-wire":24}],28:[function(require,module,exports){
+},{"../objects/Updates.js":39,"@ungap/template-tag-arguments":20,"@ungap/weakmap":22,"hyperhtml-wire":33}],37:[function(require,module,exports){
 'use strict';
 /*! (c) Andrea Giammarchi (ISC) */
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -5475,7 +7873,7 @@ function hyper(HTML) {
 }
 Object.defineProperty(exports, '__esModule', {value: true}).default = hyper
 
-},{"./classes/Component.js":25,"./hyper/render.js":26,"./hyper/wire.js":27,"./objects/Intent.js":29,"./objects/Updates.js":30,"@ungap/essential-weakset":7,"@ungap/weakmap":13,"domdiff":16}],29:[function(require,module,exports){
+},{"./classes/Component.js":34,"./hyper/render.js":35,"./hyper/wire.js":36,"./objects/Intent.js":38,"./objects/Updates.js":39,"@ungap/essential-weakset":16,"@ungap/weakmap":22,"domdiff":25}],38:[function(require,module,exports){
 'use strict';
 const attributes = {};
 const intents = {};
@@ -5517,7 +7915,7 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = {
   }
 };
 
-},{}],30:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const WeakSet = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-weakset'));
@@ -5865,7 +8263,7 @@ Tagger.prototype = {
   }
 };
 
-},{"../classes/Component.js":25,"../shared/constants.js":31,"./Intent.js":29,"@ungap/create-content":4,"@ungap/custom-event":5,"@ungap/essential-weakset":7,"@ungap/is-array":9,"disconnected":14,"domdiff":16,"domtagger":19,"hyperhtml-style":23,"hyperhtml-wire":24}],31:[function(require,module,exports){
+},{"../classes/Component.js":34,"../shared/constants.js":40,"./Intent.js":38,"@ungap/create-content":13,"@ungap/custom-event":14,"@ungap/essential-weakset":16,"@ungap/is-array":18,"disconnected":23,"domdiff":25,"domtagger":28,"hyperhtml-style":32,"hyperhtml-wire":33}],40:[function(require,module,exports){
 'use strict';
 // Node.CONSTANTS
 // 'cause some engine has no global Node defined
@@ -5885,4 +8283,4 @@ exports.CONNECTED = CONNECTED;
 const DISCONNECTED = 'dis' + CONNECTED;
 exports.DISCONNECTED = DISCONNECTED;
 
-},{}]},{},[1]);
+},{}]},{},[2]);

@@ -246,8 +246,7 @@ function getFiltersForElement(element, callback)
     urls: getURLsFromElement(element),
     mediatype: typeMap.get(element.localName),
     baseURL: document.location.href
-  },
-  response =>
+  }).then(response =>
   {
     callback(response.filters, response.selectors);
   });
@@ -583,7 +582,7 @@ function elementPicked(event)
     browser.runtime.sendMessage({
       type: "composer.openDialog",
       filters
-    }, popupId =>
+    }).then(popupId =>
     {
       // Only the top frame keeps a record of the popup window's ID,
       // so if this isn't the top frame we need to pass the ID on.

@@ -495,9 +495,6 @@
     "message": "또는, [[다른 모든 확장 프로그램 끄기]] 버튼을 눌러 단계들을 자동으로 수행하게 할 수 있습니다", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "이 팝업을 닫은 후 웹 페이지에서 HTML 요소를 클릭하십시오."
-  }, 
   "clickthead": {
     "message": "숨기려는 광고를 클릭하세요.", 
     "description": "User has to click the ad they want to block."
@@ -514,7 +511,7 @@
     "message": "Adblock 경고 메시지 숨기기"
   }, 
   "common_feature_malware_title": {
-    "message": "악성코드 차단"
+    "message": "멀웨어 차단"
   }, 
   "common_feature_privacy_title": {
     "message": "추가적인 추적 차단"
@@ -640,6 +637,74 @@
     "message": "6천만 사용자가 선택한 Chrome 확장 프로그램 1위, AdBlock의 YouTube™ 광고 차단기", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "허용할만한 광고 필터 확인:", 
     "description": "Section header on the ad report page"
@@ -655,9 +720,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "죄송합니다, 당신의 설정에 맞추었기 때문에 AdBlock on YouTube™가 이 페이지에서는 작동하지 않습니다.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "이 사이트에서 <strong>광고 차단을 사용 중지</strong> 합니다."
   }, 
   "disabled_on_this_channel": {
     "message": "이 채널에서 광고를 허용했습니다.", 
@@ -765,9 +827,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "이 사이트에서 <strong>광고 차단을 사용</strong>합니다"
   }, 
   "enableotherextensionscomplete": {
     "message": "중지되었던 확장 프로그램을 다시 켰습니다.", 
@@ -1028,6 +1087,10 @@
     "message": "그리스어", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "인도네시아어", 
     "description": "A filter list"
@@ -1038,6 +1101,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "폴란드어", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1164,6 +1231,15 @@
   "firefox_explanation": {
     "message": "이 질문은 보고를 접수할 사람을 가려내기 위함입니다. 이 답변이 정확하지 않을 시 엉뚱한 사람에게 보고가 전달될 수 있고, 따라서 처리되지 않을 수 있습니다.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
+  }, 
+  "firstRun_browser_store_android": {
+    "message": "구글 플레이 스토어에 있는 안드로이드 앱"
+  }, 
+  "firstRun_browser_title": {
+    "message": "Adblock Browser 앱"
+  }, 
+  "firstRun_title": {
+    "message": "설치 성공!"
   }, 
   "firstRun_warning_dataCorrupted_intro": {
     "message": "일부 사용자에게서 브라우저가 시작될 때마다 이 페이지가 열리는 문제가 발생할 수 있습니다. AdBlock를 제거하고 다시 설치하여 이 문제를 해결할 수 있습니다:"
@@ -1854,32 +1930,8 @@
   "options_customFilter_cancel": {
     "message": "취소"
   }, 
-  "options_customFilter_edit": {
-    "message": "필터 편집"
-  }, 
-  "options_customFilter_save": {
-    "message": "저장"
-  }, 
   "options_customFilters_description": {
     "message": "AdBlock가 허용하거나 차단할 콘텐츠를 추가로 제어하려면 사용자 설정 필터를 작성하십시오."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "예: $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "필터 목록 작성하는 방법 알아보기"
-  }, 
-  "options_customFilters_start": {
-    "message": "내 필터 목록 작성 시작"
-  }, 
-  "options_customFilters_tip": {
-    "message": "사용자가 생성한 필터가 이곳에 표시됩니다."
   }, 
   "options_customFilters_title": {
     "message": "사용자 필터 목록 생성 및 수정"
@@ -1893,6 +1945,9 @@
   "options_customize_blockElement_tooltip": {
     "message": "웹페이지에서 방해가 되는 항목을 일시적으로 차단합니다. 예: 이미지 또는 애니메이션 슬라이드쇼"
   }, 
+  "options_customize_header": {
+    "message": "사용자 설정"
+  }, 
   "options_customize_showDevToolsPanel": {
     "message": "개발자 도구 패널에서 'AdBlock’ 패널을 표시합니다."
   }, 
@@ -1903,10 +1958,10 @@
     "message": "유용한 알림 표시"
   }, 
   "options_dialog_about_copyright": {
-    "message": "Copyright © $currentYear$ eyeo GmbH 저작권 소유.", 
+    "message": "Copyright © $currentYear$ <a0>eyeo GmbH</a0> 저작권 소유.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -1979,6 +2034,9 @@
   }, 
   "options_filterList_lastDownload_inProgress": {
     "message": "업데이트중"
+  }, 
+  "options_filterList_lastDownload_invalidData": {
+    "message": "실패함: 올바르지 않은 필터"
   }, 
   "options_filterList_lastDownload_invalidURL": {
     "message": "실패함 : 올바르지 않은 주소"
@@ -2074,6 +2132,9 @@
   "options_protection_social_tooltip": {
     "message": "방문한 웹사이트의 소셜 미디어 아이콘을 통해 소셜 미디어 네트워크는 사용자의 브라우징 습관을 바탕으로 사용자의 프로필을 구축합니다. 사용자가 클릭하지 않아도 이 작업은 진행됩니다. 이러한 아이콘을 숨김으로써 사용자의 프로필을 보호할 수 있습니다."
   }, 
+  "options_refresh": {
+    "message": "갱신"
+  }, 
   "options_report_bug": {
     "message": "버그를 찾으셨습니까? <a>버그 리포트 보내기</a>"
   }, 
@@ -2103,6 +2164,9 @@
   }, 
   "options_tab_whitelist": {
     "message": "허용 목록에 추가된 웹사이트"
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "네. 이해했습니다"
   }, 
   "options_whitelist_add": {
     "message": "웹사이트 추가"
@@ -2169,6 +2233,9 @@
   }, 
   "overlay_notification_button_yes": {
     "message": "예"
+  }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "닫기"
   }, 
   "overlay_notification_closing_button_optout": {
     "message": "알림 표시를 중지합니다"
@@ -2335,6 +2402,9 @@
     "message": "select language", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "sendReport": {
+    "message": "문제 보고"
+  }, 
   "settings_changed": {
     "message": "이제 AdBlock이 전과는 다르게 동작하게 되며, 몇몇 설정들이 변경되었습니다.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -2399,6 +2469,9 @@
     "message": "소스 코드는 [[무료로 배포]]됩니다!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "차단된 광고의 수"
+  }, 
   "stats_label_page": {
     "message": "이 페이지에서 <strong>$number$</strong> 개", 
     "placeholders": {
@@ -2415,15 +2488,12 @@
       }
     }
   }, 
-  "stats_show_iconnumber": {
-    "message": "아이콘에 차단된 광고 개수 표시"
-  }, 
-  "stats_title": {
-    "message": "차단된 광고"
-  }, 
   "status_domain_paused": {
     "message": "이 사이트에서 AdBlock이 일시 중지되었습니다.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "이 사이트에서 광고 차단을 사용합니다"
   }, 
   "status_paused": {
     "message": "AdBlock 일시 중지됨.", 

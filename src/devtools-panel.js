@@ -17,10 +17,12 @@
 
 "use strict";
 
+const {getMessage} = browser.i18n;
+
 let lastFilterQuery = null;
 
-browser.runtime.sendMessage({type: "types.get"},
-  (filterTypes) =>
+browser.runtime.sendMessage({type: "types.get"})
+  .then(filterTypes =>
   {
     const filterTypesElem = document.getElementById("filter-type");
     const filterStyleElem = document.createElement("style");
@@ -61,11 +63,11 @@ function generateFilter(request, domainSpecific)
   return filter;
 }
 
-function createActionButton(action, label, filter)
+function createActionButton(action, stringId, filter)
 {
   const button = document.createElement("span");
 
-  button.textContent = label;
+  button.textContent = getMessage(stringId);
   button.classList.add("action");
 
   button.addEventListener("click", () =>
@@ -79,6 +81,19 @@ function createActionButton(action, label, filter)
   return button;
 }
 
+function onUrlClick(event)
+{
+  if (event.button != 0)
+    return;
+
+  // Firefox doesn't support the openResource API yet
+  if (!("openResource" in browser.devtools.panels))
+    return;
+
+  browser.devtools.panels.openResource(event.target.href);
+  event.preventDefault();
+}
+
 function createRecord(request, filter, template)
 {
   const row = document.importNode(template, true);
@@ -87,34 +102,40 @@ function createRecord(request, filter, template)
   row.querySelector(".domain").textContent = request.docDomain;
   row.querySelector(".type").textContent = request.type;
 
-  const urlElement = row.querySelector(".resource-link");
+  const urlElement = row.querySelector("[data-i18n='devtools_request_url']");
   const actionWrapper = row.querySelector(".action-wrapper");
 
   if (request.url)
   {
-    urlElement.textContent = request.url;
-    urlElement.setAttribute("href", request.url);
+    const originalUrl = urlElement.querySelector("[data-i18n-index='0']");
+    originalUrl.classList.add("url");
+    originalUrl.textContent = request.url;
+    originalUrl.setAttribute("href", request.url);
+    originalUrl.setAttribute("target", "_blank");
 
-    // Firefox 57 doesn't support the openResource API.
-    if (request.type != "POPUP" && "openResource" in ext.devtools.panels)
+    if (request.type != "POPUP")
     {
-      urlElement.addEventListener("click", event =>
-      {
-        if (event.button == 0)
-        {
-          ext.devtools.panels.openResource(request.url);
-          event.preventDefault();
-        }
-      }, false);
+      originalUrl.addEventListener("click", onUrlClick);
+    }
+
+    if (request.rewrittenUrl)
+    {
+      const rewrittenUrl = urlElement.querySelector("[data-i18n-index='1'");
+      rewrittenUrl.classList.add("url-rewritten");
+      rewrittenUrl.textContent = request.rewrittenUrl;
+      rewrittenUrl.setAttribute("href", request.rewrittenUrl);
+      rewrittenUrl.addEventListener("click", onUrlClick);
+      rewrittenUrl.setAttribute("target", "_blank");
+    }
+    else
+    {
+      urlElement.innerHTML = "";
+      urlElement.appendChild(originalUrl);
     }
   }
-
-  if (request.rewrittenUrl)
+  else
   {
-    const rewrittenUrl = row.querySelector(".rewritten-url > a");
-    rewrittenUrl.textContent = request.rewrittenUrl;
-    rewrittenUrl.setAttribute("href", request.rewrittenUrl);
-    row.querySelector(".rewritten-url").removeAttribute("hidden");
+    urlElement.innerHTML = "&nbsp;";
   }
 
   if (filter)
@@ -130,9 +151,9 @@ function createRecord(request, filter, template)
     else
     {
       if (filter.userDefined)
-        originElement.textContent = "user-defined";
+        originElement.textContent = getMessage("devtools_filter_origin_custom");
       else
-        originElement.textContent = "unnamed subscription";
+        originElement.textContent = getMessage("devtools_filter_origin_none");
 
       originElement.classList.add("unnamed");
     }
@@ -140,21 +161,22 @@ function createRecord(request, filter, template)
     if (!filter.whitelisted && request.type != "ELEMHIDE")
     {
       actionWrapper.appendChild(createActionButton(
-        "add", "Add exception", "@@" + generateFilter(request, false)
+        "add", "devtools_action_unblock", "@@" + generateFilter(request, false)
       ));
     }
 
     if (filter.userDefined)
     {
       actionWrapper.appendChild(createActionButton(
-        "remove", "Remove rule", filter.text
+        "remove", "devtools_action_remove", filter.text
       ));
     }
   }
   else
   {
     actionWrapper.appendChild(createActionButton(
-      "add", "Block item", generateFilter(request, request.specificOnly)
+      "add", "devtools_action_block",
+      generateFilter(request, request.specificOnly)
     ));
   }
 
@@ -167,10 +189,10 @@ function createRecord(request, filter, template)
 function shouldFilterRow(row, query)
 {
   const elementsToSearch = [
-    row.getElementsByClassName("resource-link"),
     row.getElementsByClassName("filter"),
     row.getElementsByClassName("origin"),
-    row.getElementsByClassName("type")
+    row.getElementsByClassName("type"),
+    row.getElementsByClassName("url")
   ];
 
   for (const elements of elementsToSearch)
@@ -207,10 +229,11 @@ document.addEventListener("DOMContentLoaded", () =>
   const table = container.querySelector("tbody");
   const template = document.querySelector("template").content.firstElementChild;
 
-  document.getElementById("reload").addEventListener("click", () =>
-  {
-    ext.devtools.inspectedWindow.reload();
-  }, false);
+  document.querySelector("[data-i18n='devtools_footer'] > a")
+    .addEventListener("click", () =>
+    {
+      ext.devtools.inspectedWindow.reload();
+    }, false);
 
   document.getElementById("filter-state").addEventListener("change", (event) =>
   {
@@ -270,6 +293,6 @@ document.addEventListener("DOMContentLoaded", () =>
   // Since Chrome 54 the themeName is accessible, for earlier versions we must
   // assume the default theme is being used.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=608869
-  const theme = browser.devtools.panels.themeName || "default";
+  const theme = ext.devtools.panels.themeName || "default";
   document.body.classList.add(theme);
 }, false);

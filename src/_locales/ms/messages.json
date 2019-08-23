@@ -487,6 +487,9 @@
     "message": "Bersihkan senarai ini", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "Klik pada eleman di halaman untuk menyekatnya."
+  }, 
   "clickdisableaa": {
     "message": "Klik ini: [[Nyahdaya Iklan Boleh Diterima]]", 
     "description": "Instruction on ad report page"
@@ -494,9 +497,6 @@
   "clickdisableotherextensions": {
     "message": "ATAU, klik butang ini bagi kami untuk lakukan semua perkara di atas: [[Nyahdaya semua sambungan lain]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
-  }, 
-  "clickhide_instructions": {
-    "message": "Setelah menutup tetingkap ini, klik (atau klik butang kanan) pada sesuatu unsur atas laman."
   }, 
   "clickthead": {
     "message": "Klik iklan, dan saya akan membimbing anda menyekatnya.", 
@@ -509,6 +509,12 @@
   "close": {
     "message": "Tutup", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Sembunyikan Mesej Amaran Adblock"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Sekat Perisian Hasad"
   }, 
   "common_feature_privacy_title": {
     "message": "Sekat pengesanan tambahan"
@@ -551,6 +557,9 @@
   "contributors": {
     "message": "Kami juga mempunyai halaman untuk membantu anda mengenali [[orang di sebalik AdBlock]]!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "Salin"
   }, 
   "correctfilters": {
     "message": "Pastikan anda menggunakan bahasa penapis yang betul:", 
@@ -614,6 +623,9 @@
     "message": "Lalai", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "Padam"
+  }, 
   "delete_migration_error_messages": {
     "message": "Padam mesej", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -634,6 +646,74 @@
     "message": "Satu-satunya penyekat iklan YouTube™ dibina oleh AdBlock, sambungan Chrome paling popular dengan 60 juta pengguna seluruh dunia", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Semak penapis Iklan Boleh Diterima:", 
     "description": "Section header on the ad report page"
@@ -649,9 +729,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Maaf, AdBlock pada YouTube™ telah dinyahdaya di halaman ini oleh salah satu daripada tetapan anda.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Dinyahaktifkan</strong> pada laman web ini"
   }, 
   "disabled_on_this_channel": {
     "message": "Anda membenarkan iklan di saluran ini.", 
@@ -760,9 +837,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "message": "<strong>Dinyahaktifkan</strong> pada laman web ini"
-  }, 
   "enableotherextensionscomplete": {
     "message": "Sambungan yang dinyahdayakan sebelum ini telah diaktifkan semula.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -839,6 +913,9 @@
     "message": "Semak Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
+  "filter_action_failed": {
+    "message": "Sesuatu telah berlaku. Sila cuba lagi."
+  }, 
   "filter_annoyances_explained": {
     "message": "menyekat pop timbul dalam-halaman, media sosial, widget berkaitan dan gangguan lain", 
     "description": "A filter list explaination"
@@ -894,6 +971,9 @@
   "filter_elemhideemulation_nodomain": {
     "message": "Tiada domain aktif terpilih untuk menapis unsur penyembunyian lanjut"
   }, 
+  "filter_invalid_csp": {
+    "message": "Dasar Keselamatan Kandungan Tidak Sah"
+  }, 
   "filter_invalid_domain": {
     "message": "Domain Tidak Sah"
   }, 
@@ -915,6 +995,12 @@
   "filter_russian": {
     "message": "Rusia & Ukrain + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_slow": {
+    "message": "Untuk tapisan pantas, periksa panjang corak dan pastikan ia tidak mempunyai ungkapan biasa."
+  }, 
+  "filter_snippet_nodomain": {
+    "message": "Tiada domain aktif yang ditentukan untuk penapis cebisan"
   }, 
   "filter_unknown_option": {
     "message": "Pilihan tapisan tidak diketahui"
@@ -1019,6 +1105,10 @@
     "message": "Greek", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesia", 
     "description": "A filter list"
@@ -1029,6 +1119,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Poland", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1156,6 +1250,45 @@
     "message": "Soalan ini bertujuan untuk menentukan siapa yang patut terima laporan anda. Jika anda menjawab soalan ini dengan salah, laporan itu akan dihantar kepada orang yang salah, jadi ia mungkin akan diabaikan.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_browser_description": {
+    "message": "Daripada pasukan di sebalik AdBlock, penyekat iklan paling popular untuk pelayar desktop, Adblock Browser kini boleh didapati di peranti Android dan iOS."
+  }, 
+  "firstRun_browser_store_android": {
+    "message": "Apl Android di Google Play"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "Tersedia di iTunes App Store"
+  }, 
+  "firstRun_browser_title": {
+    "message": "Apl Adblock Browser"
+  }, 
+  "firstRun_control_description": {
+    "message": "Anda mungkin melihat iklan tidak menganggu yang mematuhi <a0>kriteria ketat</a0>. Kami mengenal pasti iklan ini sebagai Iklan yang Boleh Diterima. Lebih suka menyekat semua iklan? <a1>Matikan Iklan yang Boleh Diterima</a1> dalam <a2>Tetapan</a2> anda."
+  }, 
+  "firstRun_control_title": {
+    "message": "Anda mengawalnya"
+  }, 
+  "firstRun_fair_description": {
+    "message": "Kami menggalakkan anda untuk menggunakan AdBlock secara adil dan membuat pilihan untuk senarai putihkan laman web. Bergantung kepada penapis yang anda guna, anda faham dan terima bahawa sebarang keputusan tidak diingini mungkin berlaku (cth: kandungan yang disekat di laman web). Rujuk <a0>Terma Penggunaan</a0> untuk maklumat lanjut mengenai penggunaan AdBlock secara adil."
+  }, 
+  "firstRun_fair_title": {
+    "message": "Guna dengan baik"
+  }, 
+  "firstRun_footer_copyright": {
+    "message": "Hak cipta © $year$ Hak cipta terpelihara. AdBlock® adalah tanda dagangan berdaftar <a0>eyeo GmbH</a0>.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
+  }, 
+  "firstRun_subtitle": {
+    "message": "Anda yang mengawal pelayar anda."
+  }, 
+  "firstRun_title": {
+    "message": "Berjaya Dipasang!"
+  }, 
   "firstRun_warning_dataCorrupted_intro": {
     "message": "Sesetengah pengguna mengalami isu di mana halaman ini terbuka setiap kali pelayar dilancarkan. Isu ini boleh diselesaikan dengan menyahpasang dan memasang semula AdBlock:"
   }, 
@@ -1268,6 +1401,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "Kita tidak akan dapat kembali kepada anda dan mungkin akan mengutamakan laporan yang lebih rendah."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "Tutup"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "Masukkan komen"
   }, 
@@ -1282,6 +1418,9 @@
   }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Nota:</strong> Satu tab tambahan akan terbuka secara sementara supaya laman yang anda buka tidak terjejas oleh Pelapor Isu."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Butiran"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Selesai"
@@ -1307,14 +1446,38 @@
   "issueReporter_falsePositive_label": {
     "message": "Terlalu banyak disekat AdBlock"
   }, 
+  "issueReporter_highlighter_description": {
+    "message": "Gunakan alatan untuk menyerlahkan iklan atau sembunyikan maklumat sensitif. Iklan yang diserlahkan membantu kami menyelesaikan masalah lebih pantas."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Serlahkan masalah"
+  }, 
   "issueReporter_knownIssueMessage": {
     "message": "Isu yang dilaporkan kemungkinan telah dikenalpasti. Maklumat lanjut:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Tandakan masalah"
   }, 
   "issueReporter_page_title": {
     "message": "Pelapor isu"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Polisi privasi"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "memproses"
+  }, 
+  "issueReporter_screenreader_warning": {
+    "message": "Untuk membantu kami memahami masalah itu, tangkap skrin diperlukan semasa menghantar laporan masalah. Bergantung kepada laman web yang anda sedang berada, tangkap skrin mungkin mempunyai maklumat peribadi. Jika anda tidak mahu menghantar tangkap skrin, sila e-mel masalah tersebut ke <a0>support@adblockplus.org</a0>."
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Sembunyi"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Serlah"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Pilih masalah"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Hantar laporan"
@@ -1830,6 +1993,9 @@
   "options_acceptableAds_description": {
     "message": "Iklan yang boleh diterima adalah iklan yang tidak mengganggu. Mereka adalah alasan tengah antara penyekatan iklan dan penyokongan kandungan dalam talian kerana mereka menjana pendapatan untuk pemilik laman web."
   }, 
+  "options_acceptableAds_dnt_notification": {
+    "message": "<strong>Nota:</strong> <strong>Jangan Kesan/Jejak (DNT)</strong> dinyahdaya dalam tetapan pelayar anda. Untuk membenarkan ciri ini berfungsi dengan baik, sila dayakan <strong>DNT</strong> dalam tetapan pelayar anda. <a>Ketahui cara untuk mendayakan DNT</a>."
+  }, 
   "options_acceptableAds_header": {
     "message": "IKLAN YANG BOLEH DITERIMA"
   }, 
@@ -1838,6 +2004,15 @@
   }, 
   "options_advanced_description": {
     "message": "Peribadikan AdBlock, tambah atau keluarkan senarai penapis, buat dan kekalkan senarai penapis anda sendiri"
+  }, 
+  "options_anti_cv_header": {
+    "message": "Anti-Pemintasan"
+  }, 
+  "options_anti_cv_title": {
+    "message": "Senarai Penapis Anti-Pemintasan ABP"
+  }, 
+  "options_anti_cv_tooltip": {
+    "message": "Senarai penapis ini berfungsi terhadap pemintasan (teknik untuk memaksa memaparkan iklan kepada pengguna penyekat iklan). Penapis ini menyekat iklan pintasan serta penjejak yang berkautan."
   }, 
   "options_close": {
     "message": "TUTUP"
@@ -1848,32 +2023,8 @@
   "options_customFilter_cancel": {
     "message": "BATALKAN"
   }, 
-  "options_customFilter_edit": {
-    "message": "Edit penapis"
-  }, 
-  "options_customFilter_save": {
-    "message": "SIMPAN"
-  }, 
   "options_customFilters_description": {
     "message": "Tulis penapis tersuai anda sendiri untuk Selanjutnya mengawal apa yang dibenarkan atau disekat oleh AdBlock."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "cth. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Ketahui cara menulis senarai penapis"
-  }, 
-  "options_customFilters_start": {
-    "message": "Mula menulis senarai penapis saya"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Penapis yang anda buat akan muncul di sini."
   }, 
   "options_customFilters_title": {
     "message": "BUAT AND EDIT SENARAI PENAPIS ANDA"
@@ -1887,6 +2038,12 @@
   "options_customize_blockElement_tooltip": {
     "message": "Sekat item yang menjengkelkan pada laman web buat sementara, contohnya imej atau tayangan slaid animasi."
   }, 
+  "options_customize_header": {
+    "message": "Penyesuaian"
+  }, 
+  "options_customize_iconStats": {
+    "message": "Tunjukkan bilangan iklan yang disekat dalam ikon"
+  }, 
   "options_customize_showDevToolsPanel": {
     "message": "Tunjukkan panel ‘AdBlock’ dalam alat pemaju"
   }, 
@@ -1896,11 +2053,14 @@
   "options_customize_showNotifications": {
     "message": "Papar notifikasi berguna"
   }, 
+  "options_customize_showNotifications_tooltip": {
+    "message": "Benarkan pemberitahuan dari AdBlock (pemberitahuan berkaitan masalah prestasi akan sentiasa ditunjukkan)."
+  }, 
   "options_dialog_about_copyright": {
-    "message": "Hak cipta © $currentYear$ eyeo GmbH.", 
+    "message": "Hak cipta © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -1929,6 +2089,9 @@
   "options_dialog_import_title": {
     "message": "Tambah senarai penapis"
   }, 
+  "options_dialog_language_other_empty": {
+    "message": "Tiada bahasa yang tersedia."
+  }, 
   "options_dialog_language_title": {
     "message": "Pilih bahasa"
   }, 
@@ -1940,6 +2103,9 @@
   }, 
   "options_email": {
     "message": "E-mel:"
+  }, 
+  "options_english": {
+    "message": "Bahasa Inggeris"
   }, 
   "options_filterList_add": {
     "message": "+ TAMBAH SENARAI PENAPIS BARU"
@@ -2003,6 +2169,17 @@
   }, 
   "options_filterList_website": {
     "message": "Laman web"
+  }, 
+  "options_filter_list_rule": {
+    "message": "Peraturan penapis"
+  }, 
+  "options_filters_search_or_add": {
+    "message": "Cari atau tambah penapis (cth. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
   }, 
   "options_footer_about": {
     "message": "Mengenai AdBlock"
@@ -2068,6 +2245,9 @@
   "options_protection_social_tooltip": {
     "message": "Ikon media sosial di laman web yang anda lawati membolehkan rangkaian media sosial untuk membina profil anda berdasarkan tabiat pelayaran anda - walaupun anda tidak klik pada mereka. Menyembunyikan ikon ini boleh melindungi profil anda."
   }, 
+  "options_refresh": {
+    "message": "Segar semula"
+  }, 
   "options_report_bug": {
     "message": "Menemui bug? <a>Hantar laporan bug kepada kami</a>"
   }, 
@@ -2097,6 +2277,34 @@
   }, 
   "options_tab_whitelist": {
     "message": "Laman web senarai putih"
+  }, 
+  "options_tracking_warning_1": {
+    "message": "Kami perasan anda mendayakan <strong>$tracking$</strong> dan <strong>$acceptableAds$</strong>.", 
+    "placeholders": {
+      "acceptableAds": {
+        "content": "$2", 
+        "example": "Allow Acceptable Ads"
+      }, 
+      "tracking": {
+        "content": "$1", 
+        "example": "Block additional tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_2": {
+    "message": "Kami mahu anda tahu bahawa untuk pengiklan menunjukkan anda iklan yang relevan, <strong>kemungkinan</strong> terdapat penjejak dengan Iklan yang Boleh Diterima."
+  }, 
+  "options_tracking_warning_3": {
+    "message": "Jika anda lebih suka privasi tambahan, pilih <strong>$acceptableAdsPrivacy$</strong> kotak di bawah.", 
+    "placeholders": {
+      "acceptableAdsPrivacy": {
+        "content": "$1", 
+        "example": "Only allow ads without third-party tracking"
+      }
+    }
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "Ok, faham"
   }, 
   "options_whitelist_add": {
     "message": "TAMBAH LAMAN WEB"
@@ -2164,6 +2372,9 @@
   "overlay_notification_button_yes": {
     "message": "Ya"
   }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "Tutup"
+  }, 
   "overlay_notification_closing_button_optout": {
     "message": "Hentikan paparan pemberitahuan"
   }, 
@@ -2199,6 +2410,9 @@
     "message": "Dasar Privasi", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Berminat dengan AdBlock di telefon bimbit?"
+  }, 
   "pwyw": {
     "message": "Bayar apa yang anda mahu!", 
     "description": "Text of a payment request link"
@@ -2218,6 +2432,9 @@
   "reenableadsonebyone": {
     "message": "Hebat! Sekarang mari kita ketahui sambungan yang menjadi penyebabnya. Pergi dan dayakan setiap sambungan satu demi satu. Sambungan yang membawa balik iklan adalah yang perlu anda untuk menyahpasang untuk menyingkirkan iklan.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Klik <strong>Segar semula</strong> supaya perubahan dapat dilaksanakan."
   }, 
   "refusetocheck": {
     "message": "Saya tidak mahu tanda ini", 
@@ -2329,6 +2546,9 @@
     "message": "pilih bahasa", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "sendReport": {
+    "message": "Laporkan isu"
+  }, 
   "settings_changed": {
     "message": "Dalam persediaan, AdBlock kini berfungsi dengan berbeza dan sesetengah tetapan anda mungkin berubah.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -2393,6 +2613,9 @@
     "message": "Kod sumber adalah [[bebas]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "Bilangan item disekat"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> pada halaman ini", 
     "placeholders": {
@@ -2409,15 +2632,12 @@
       }
     }
   }, 
-  "stats_show_iconnumber": {
-    "message": "Paparkan nombor dalam ikon"
-  }, 
-  "stats_title": {
-    "message": "Iklan disekat"
-  }, 
   "status_domain_paused": {
     "message": "AdBlock dijeda pada tapak ini.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Sekat iklan di:"
   }, 
   "status_paused": {
     "message": "AdBlock dijeda.", 

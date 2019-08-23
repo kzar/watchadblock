@@ -498,9 +498,6 @@
     "message": "ALI pa preprosto kliknite na ta gumb, da se vse zgoraj napisano stori samodejno: [[Onemogoči vse druge razširitve]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Po zaključku tega popup kliknite (ali desni klik) element na strani."
-  }, 
   "clickthead": {
     "message": "Kliknite na oglas in vodili vas bomo skozi postopek blokiranja.", 
     "description": "User has to click the ad they want to block."
@@ -517,7 +514,7 @@
     "message": "Skrij Adblockova opozorilna sporočila"
   }, 
   "common_feature_malware_title": {
-    "message": "Blokiraj zlonam. programe"
+    "message": "Blokiraj zlonamerne programe"
   }, 
   "common_feature_privacy_title": {
     "message": "Blokiraj dodatno sledenje"
@@ -560,6 +557,9 @@
   "contributors": {
     "message": "Imamo tudi stran, kjer lahko najdete [[ljudi, ki so naredili AdBlock]]!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "Kopiraj izbrane"
   }, 
   "correctfilters": {
     "message": "Prepričajte se, da uporabljate pravilne jezikovne filtre:", 
@@ -623,6 +623,9 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "Izbriši"
+  }, 
   "delete_migration_error_messages": {
     "message": "Izbriši sporočila", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -643,6 +646,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Preverite filtre Sprejemljivih oglasov:", 
     "description": "Section header on the ad report page"
@@ -658,9 +729,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Omogočeno</strong> na tej strani"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -769,9 +837,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "message": "<strong>Omogočeno</strong> na tej strani"
-  }, 
   "enableotherextensionscomplete": {
     "message": "Predhodno onemogočene razširitve so zdaj ponovno omogočene.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -847,6 +912,9 @@
   "ff_checkinchrometitle": {
     "message": "Preverite v brskalniku Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_action_failed": {
+    "message": "Nekaj je šlo narobe. Prosim, poskusite znova."
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
@@ -927,6 +995,9 @@
   "filter_russian": {
     "message": "Ruski & ukrajinski + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_slow": {
+    "message": "Za zagotavljanje hitrega filtra, prosimo preverite dolžino vzorca in se prepričajte, da ne vsebuje regularnega izraza."
   }, 
   "filter_snippet_nodomain": {
     "message": "Za filter izrezkov ni navedene dejavne domene"
@@ -1034,6 +1105,10 @@
     "message": "grščina", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "indonezijščina", 
     "description": "A filter list"
@@ -1044,6 +1119,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "poljščina", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1175,10 +1254,10 @@
     "message": "Od ekipe dodatka AdBlock, najpriljubljenejšega orodja za blokiranje oglasov za namizne brskalnike, je sedaj na voljo tudi brskalnik Adblock Browser za vaše naprave Android in iOS."
   }, 
   "firstRun_browser_store_android": {
-    "message": "Program za Android na Googlu Play"
+    "message": "Android aplikacija na Google Play"
   }, 
   "firstRun_browser_store_ios": {
-    "message": "Na voljo v trgovini programov iTunes"
+    "message": "Na voljo v iTunes trgovini aplikacij"
   }, 
   "firstRun_browser_title": {
     "message": "Program Adblock Browser"
@@ -1190,7 +1269,7 @@
     "message": "VI imate nadzor"
   }, 
   "firstRun_fair_description": {
-    "message": "Priporočamo, da primerno uporabljate AdBlock in njegovo možnost dodajanja spletnih strani na beli sezam. Glede na filtre, ki jih uporabljate, se strinjate in sprejmete, da se lahko pojavijo nenamerni rezultati (npr. blokirana vsebina na spletni strani). Za več informacij glede primerne uporabe dodatka AdBlock se posvetujte s <a0>pogoji uporabe</a0>."
+    "message": "Priporočamo, da primerno uporabljate AdBlock in njegovo možnost dodajanja spletnih strani na beli seznam. Glede na filtre, ki jih uporabljate, se strinjate in sprejmete, da se lahko pojavijo nenamerni rezultati (npr. blokirana vsebina na spletni strani). Več informacij glede primerne uporabe dodatka AdBlock najdete v <a0>pogojih uporabe</a0>."
   }, 
   "firstRun_fair_title": {
     "message": "Primerna uporaba"
@@ -1322,6 +1401,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "Stika z vami ne bomo mogli vzpostaviti. Prednost poročilu pa bomo verjetno znižali."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "Zapri"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "Vnesite komentar"
   }, 
@@ -1356,13 +1438,13 @@
     "message": "Izberite to možnost, če je oglas prikazan kljub temu, da je AdBlock omogočen."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "AdBlock ne blokira oglasa"
+    "message": "Še vedno vidim oglase"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "Izberite to možnost, če strani manjka pomembna vsebina, če se prikaže nepravilno ali ne deluje pravilno. Določite lahko, ali je AdBlock kriv težav, tako da ga začasno izključite."
+    "message": "Izberite to možnost, če se stran ne prikaže, ne deluje pravilno, ali pa ji manjka pomembna vsebina."
   }, 
   "issueReporter_falsePositive_label": {
-    "message": "AdBlock blokira preveč stvari"
+    "message": "Stran, ki si jo želim ogledati, je pokvarjena"
   }, 
   "issueReporter_highlighter_description": {
     "message": "Uporabite orodja za označevanje vsakega oglasa ali skrivanje občutljivih podatkov na sliki strani. Označevanje oglasov nam bo pomagalo pri hitrejšemu reševanju težave."
@@ -1385,6 +1467,9 @@
   "issueReporter_processing_screenshot": {
     "message": "Obdelovanje"
   }, 
+  "issueReporter_screenreader_warning": {
+    "message": "Da bomo lahko bolje razumeli vašo težavo, je potreben posnetek zaslona. Odvisno od strani, na kateri se težava pojavi, posnetek zaslona lahko vsebuje osebne informacije. Če posnetka zaslona ne želite oddati, nam o težavi prosim pišite na <a0>support@adblockplus.org</a0>."
+  }, 
   "issueReporter_screenshot_hide": {
     "message": "Skrij"
   }, 
@@ -1404,13 +1489,13 @@
     "message": "Počakajte, dokler AdBlock pošilja vaše poročilo."
   }, 
   "issueReporter_showData_label": {
-    "message": "Pokaži podatke poročila"
+    "message": "Kliknite na to povezavo za predogled podatkov poročila pred pošiljanjem"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "To okno vas vodi po korakih do oddaje poročila o težavi z dodatkom AdBlock. Najprej izberite vrsto težave, s katero ste se srečali na tej strani:"
+    "message": "Izberite težavo:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "Izberite vrsto težave"
+    "message": "Do katere vrste težave je prišlo?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1868,7 +1953,7 @@
     "message": "Skrij ciljana sporočila?"
   }, 
   "notification_configure": {
-    "message": "Konfigurirajte nastavitve obveščanja"
+    "message": "Nastavitve obveščanja"
   }, 
   "notification_open_all": {
     "message": "Odprite vse povezave iz tega obvestila"
@@ -1938,35 +2023,11 @@
   "options_customFilter_cancel": {
     "message": "Prekliči"
   }, 
-  "options_customFilter_edit": {
-    "message": "Uredi filtre"
-  }, 
-  "options_customFilter_save": {
-    "message": "Shrani"
-  }, 
   "options_customFilters_description": {
-    "message": "Napišite svoje filtre po meri, da dodatno nadzirate, katero vsebino AdBlock blokira ali dovoli."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "npr. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Naučite se pisati sezname filtrov"
-  }, 
-  "options_customFilters_start": {
-    "message": "Začni pisati seznam filtrov"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Filtri, ki ste jih ustvarili, se bodo prikazali tukaj."
+    "message": "Napišite svoje filtre po meri, s katerimi dodatno nadzirate, katero vsebino AdBlock blokira ali dovoli. <a0>Nauči se pisati filtre</a0>"
   }, 
   "options_customFilters_title": {
-    "message": "Ustvarite in uredite svoj seznam fitrov"
+    "message": "Filtri po meri"
   }, 
   "options_customFilters_widget_title": {
     "message": "Moj seznam filtrov"
@@ -1975,7 +2036,7 @@
     "message": "Prikaži 'Blokiraj element' v meniju desnega klika"
   }, 
   "options_customize_blockElement_tooltip": {
-    "message": "Začasno blokiraj nadležne predmete spletni strani, npr. slike ali animirane predstavitve."
+    "message": "Začasno blokiraj nadležne predmete na spletni strani, npr. slike ali animirane predstavitve."
   }, 
   "options_customize_header": {
     "message": "Prilagajanje"
@@ -1990,16 +2051,16 @@
     "message": "Pokaži blokirane in dovoljene predmete na plošči orodij za razvijalce vašega brskalnika."
   }, 
   "options_customize_showNotifications": {
-    "message": "Prikaži koristno  obvestila"
+    "message": "Prikaži koristna obvestila"
   }, 
   "options_customize_showNotifications_tooltip": {
     "message": "Dovoli obvestila dodatka AdBlock (obvestila o kritičnih težavah glede zmogljivosti bodo vedno prikazana)."
   }, 
   "options_dialog_about_copyright": {
-    "message": "Avtorske pravice © $currentYear$ eyeo GmbH.", 
+    "message": "Avtorske pravice © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2068,7 +2129,7 @@
     "message": "Pred nekaj urami"
   }, 
   "options_filterList_lastDownload_checksumMismatch": {
-    "message": "Neuspešno, kontrolna vsota se ne ujema"
+    "message": "Neuspešno, nadzorna vsota se ne ujema"
   }, 
   "options_filterList_lastDownload_connectionError": {
     "message": "Neuspešno, napaka prenosa"
@@ -2095,7 +2156,7 @@
     "message": "Dejaven"
   }, 
   "options_filterList_state_disabled": {
-    "message": "Onemogočen"
+    "message": "Nedejaven"
   }, 
   "options_filterList_title": {
     "message": "Seznami filtrov"
@@ -2109,8 +2170,11 @@
   "options_filterList_website": {
     "message": "spletna stran"
   }, 
+  "options_filter_list_rule": {
+    "message": "Pravilo filtra"
+  }, 
   "options_filters_search_or_add": {
-    "message": "Iskanje/dodajanje filtra (npr. $filter$)", 
+    "message": "Išči ali dodaj filter (npr. $filter$)", 
     "placeholders": {
       "filter": {
         "content": "/ads/track/*"
@@ -2136,10 +2200,10 @@
     "message": "spremeni"
   }, 
   "options_language_description": {
-    "message": "Optmizirajte AdBlock za jezike spletnih strani, ki si jih ogledujete."
+    "message": "Optimizirajte AdBlock za jezike spletnih strani, po katerih ponavadi brskate."
   }, 
   "options_language_empty": {
-    "message": "Nimate filtrov za posemezen jezik."
+    "message": "Nimate filtrov za posamezen jezik."
   }, 
   "options_language_header": {
     "message": "Jezik"
@@ -2163,7 +2227,7 @@
     "message": "Novo"
   }, 
   "options_page_document_title": {
-    "message": "Nastavitve"
+    "message": "Možnosti AdBlock"
   }, 
   "options_page_theme": {
     "message": "Options Page Theme", 
@@ -2179,13 +2243,13 @@
     "message": "Zaščitite svoje osebne podatke tako, da odstranite vse oblike sledenja z interneta, vključno z zbiralniki informacij."
   }, 
   "options_protection_social_tooltip": {
-    "message": "Ikone družbenih omrežij na spletnih straneh, ki jih obiščete, družbenim omrežjem omogočajo, da o vas ustvarijo profil glede na vaše navade brskanja - tudi če na njih ne kliknete. Skrivanje teh ikon bo zaščitilo vaš profil."
+    "message": "Ikone družbenih omrežij na spletnih straneh ki jih obiščete, družbenim omrežjem omogočajo, da o vas ustvarijo profil glede na vaše brskalne navade - tudi če nanje ne kliknete. Skrivanje teh ikon pomaga zaščititi vaš profil."
   }, 
   "options_refresh": {
     "message": "Osveži"
   }, 
   "options_report_bug": {
-    "message": "Ste našli hrošča? <a>Pošiljite nam poročilo o hrošču.</a>"
+    "message": "Ste našli hrošča? <a>Pošljite nam poročilo o hrošču.</a>"
   }, 
   "options_report_forum": {
     "message": "Želite pomoč naše skupnosti? <a>Obiščite forum.</a>"
@@ -2215,7 +2279,7 @@
     "message": "Dovoljene spletne strani"
   }, 
   "options_tracking_warning_1": {
-    "message": "Opatili smo, da imate omogočena tako <strong>$tracking$</strong> kot <strong>$acceptableAds$</strong>.", 
+    "message": "Opazili smo, da imate omogočena tako <strong>$tracking$</strong> kot <strong>$acceptableAds$</strong>.", 
     "placeholders": {
       "acceptableAds": {
         "content": "$2", 
@@ -2567,12 +2631,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Pokaži število v ikoni"
-  }, 
-  "stats_title": {
-    "message": "Blokiranih oglasov"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

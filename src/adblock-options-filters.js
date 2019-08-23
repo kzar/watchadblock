@@ -447,7 +447,7 @@ FilterListUtil.updateSubscriptionInfoForId = function (id) {
   if ($infoLabel.text() === translate('invalidListUrl')) {
     return;
   }
-  if (Synchronizer.isExecuting(subscription.url)) {
+  if (synchronizer.isExecuting(subscription.url)) {
     text = translate('fetchinglabel');
   } else if (subscription.downloadStatus && subscription.downloadStatus != 'synchronize_ok') {
     var map = {
@@ -678,7 +678,7 @@ SubscriptionUtil.subscribe = function (id, title) {
 
   filterStorage.addSubscription(subscription);
   if (subscription instanceof DownloadableSubscription) {
-    Synchronizer.execute(subscription);
+    synchronizer.execute(subscription);
   }
 
   if (backgroundPage.isAcceptableAds(cachedSubscription)) {
@@ -840,7 +840,7 @@ function onFilterChangeHandler(action, item) {
   var updateEntry = function (entry, eventAction) {
     if (entry) {
       // copy / update relevant properties to the cached entry
-      var properties = ['downloadStatus', 'label', 'lastDownload', '_downloadStatus', 'language'];
+      const properties = ['downloadStatus', 'label', 'lastDownload', '_downloadStatus', 'language'];
       for (var i = 0; i < properties.length; i++) {
         if (entry[properties[i]]) {
           FilterListUtil.cachedSubscriptions[entry.id][properties[i]] = entry[properties[i]];

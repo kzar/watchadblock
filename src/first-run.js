@@ -35,6 +35,11 @@ const doclinks = {
 };
 module.exports.doclinks = doclinks;
 
+// For now we are merely reusing the port for long-lived communications to fix
+// https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
+const port = browser.runtime.connect({name: "ui"});
+module.exports.port = port;
+
 },{}],2:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,

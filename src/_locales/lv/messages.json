@@ -498,9 +498,6 @@
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Pēc šī uznirstošā loga aizvēršanas, noklikšķiniet (vai noklikšķiniet ar labo pogu) uz elementa šajā lapā."
-  }, 
   "clickthead": {
     "message": "Noklikšķiniet uz reklāmas un jums palīdzēs to bloķēt.", 
     "description": "User has to click the ad they want to block."
@@ -512,6 +509,9 @@
   "close": {
     "message": "Aizvērt", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Slēpt Adblock brīdinājuma ziņojumus"
   }, 
   "common_feature_malware_title": {
     "message": "Bloķēt ļaunatūru"
@@ -557,6 +557,9 @@
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "Kopēt atlasīto"
   }, 
   "correctfilters": {
     "message": "Make sure you're using the right language filter(s):", 
@@ -620,6 +623,9 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "Dzēst"
+  }, 
   "delete_migration_error_messages": {
     "message": "Dzēst ziņas", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -640,6 +646,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Pārbaudīt Pieņemamo Reklāmu filtrus:", 
     "description": "Section header on the ad report page"
@@ -655,9 +729,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Izslēgts</strong> šajā lapā"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -766,9 +837,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "message": "<strong>Ieslēgts</strong> šajā lapā"
-  }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -844,6 +912,9 @@
   "ff_checkinchrometitle": {
     "message": "Pārbaudiet Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_action_failed": {
+    "message": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz."
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
@@ -924,6 +995,9 @@
   "filter_russian": {
     "message": "Krievu & Ukraiņu + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_snippet_nodomain": {
+    "message": "Fragmentu filtram nav norādīts aktīvs domēns"
   }, 
   "filter_unknown_option": {
     "message": "Nezināma filtra opcija"
@@ -1028,6 +1102,10 @@
     "message": "grieķu", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonēziešu", 
     "description": "A filter list"
@@ -1038,6 +1116,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "poļu", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1165,8 +1247,20 @@
     "message": "Jautājuma mērķis ir lai noteiktu kuram būtu jāsaņem tavs ziņojums. Ja tu atbildi uz šo jautājumu nepareizi, ziņojums var tikt nosūtīts nepareizajiem cilvēkiem un tikt ignorēts.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_browser_description": {
+    "message": "No populārākā reklāmbloķētāja datoru pārlūkprogrammām AdBlock komandas, tagad ir pieejams arī Adblock Browser Android un iOS ierīcēm."
+  }, 
+  "firstRun_browser_store_android": {
+    "message": "Android lietotne Google Play"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "Pieejams iTunes App Store"
+  }, 
   "firstRun_browser_title": {
     "message": "Adblock Browser lietotne"
+  }, 
+  "firstRun_control_description": {
+    "message": "Pēc noklusējuma var tikt rādītas dažas neuzmācīgas reklāmas, kas atbilst <a0>stingriem kritērijiem</a0>. Mēs identificējam šīs reklāmas kā pieļaujamas. Ja nevēlaties tās redzēt <a1>bloķējiet pieļaujamās reklāmas</a1> <a2>iestatījumos</a2>."
   }, 
   "firstRun_footer_copyright": {
     "message": "Copyright © $year$. Visas tiesības paturētas. AdBlock® ir <a0>eyeo GmbH</a0> reģistrēta preču zīme.", 
@@ -1286,6 +1380,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "Mēs nevarēsim ar Jums sazināties un visdrīzāk piešķirsim Jūsu ziņojumam zemāku prioritāti."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "Aizvērt"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "Pievienojiet komentāru"
   }, 
@@ -1297,6 +1394,12 @@
   }, 
   "issueReporter_confirmationMessage": {
     "message": "Jūsu ziņojums ir saglabāts. Jūs tam varat piekļūt sekojošajā adresē:"
+  }, 
+  "issueReporter_data_gathering_tab": {
+    "message": "<strong>Piezīme:</strong> Jauna cilne tika atvērta, lai Problēmu ziņotājs neietekmētu atvērto lapu."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Detaļas"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Gatavs"
@@ -1317,7 +1420,7 @@
     "message": "AdBlock nebloķē reklāmu"
   }, 
   "issueReporter_falsePositive_description": {
-    "message": "Izvēlaties šo opciju, ja lai trūkst svarīga saturam tā tiek nepareizi attēlota vai nefunkcionē pareizi. Jūs varat noteikt vai to izraisa AdBlock, to īslaicīgi atslēdzot."
+    "message": "Lapa tiek attēlota nepareizi, nedarbojas vai šķiet, ka tai trūkst svarīga satura."
   }, 
   "issueReporter_falsePositive_label": {
     "message": "AdBlock bloķē pārāk daudz"
@@ -1331,6 +1434,9 @@
   "issueReporter_knownIssueMessage": {
     "message": "Jūsu nosūtītais problēma iespējams jau ir zināma. Vairāk informācija:"
   }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Iezīmēt"
+  }, 
   "issueReporter_page_title": {
     "message": "Problēmu ziņotājs"
   }, 
@@ -1340,11 +1446,17 @@
   "issueReporter_processing_screenshot": {
     "message": "apstrādā"
   }, 
+  "issueReporter_screenreader_warning": {
+    "message": "Lai palīdzētu mums labāk izprast problēmu, iesniedzot problēmas ziņojumu, nepieciešams ekrānuzņēmums. Atkarībā no vietnes, kurā pašlaik atrodaties, ekrānuzņēmums var saturēt personisku informāciju. Ja nevēlaties iesniegt ekrānuzņēmumu, lūdzu, nosūtiet ziņojumu par problēmu uz <a0>support@adblockplus.org</a0>."
+  }, 
   "issueReporter_screenshot_hide": {
     "message": "Slēpt"
   }, 
   "issueReporter_screenshot_highlight": {
     "message": "Iezīmēt"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Atlasīt"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Sūtīt ziņojumu"
@@ -1855,7 +1967,7 @@
     "message": "Pieļaujamā reklāma nav kaitinoša un netraucē skatāmajam saturam. <a>Uzzināt vairāk par pieļaujamās reklāmas kritērijiem</a>"
   }, 
   "options_acceptableAds_ads_label": {
-    "message": "Atļaut pielaujamo reklāmu"
+    "message": "Atļaut pieļaujamo reklāmu"
   }, 
   "options_acceptableAds_description": {
     "message": "Pieļaujamā reklāma ir neuzmācīga reklāma Tas ir kompromiss starp reklāmas bloķēšanu un tiešsaistes satura atbalstīšanu, jo tā rada ieņēmumus vietņu īpašniekiem."
@@ -1881,32 +1993,8 @@
   "options_customFilter_cancel": {
     "message": "Atcelt"
   }, 
-  "options_customFilter_edit": {
-    "message": "Rediģēt filtrus"
-  }, 
-  "options_customFilter_save": {
-    "message": "Saglabāt"
-  }, 
   "options_customFilters_description": {
     "message": "Izveidojiet savus filtrus, lai kontrolētu to, kādu saturu AdBlock atļauj vai bloķē."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "piemēram, $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Uzzināt kā izveidot filtru sarakstu"
-  }, 
-  "options_customFilters_start": {
-    "message": "Sākt mana filtru saraksta izveidošanu"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Šeit tiks rādīti izveidotie filtri."
   }, 
   "options_customFilters_title": {
     "message": "Izveidot un rediģēt savu filtru sarakstu"
@@ -1930,10 +2018,10 @@
     "message": "Rādīt noderīgus paziņojumus"
   }, 
   "options_dialog_about_copyright": {
-    "message": "Autortiesības © $currentYear$ eyeo GmbH.", 
+    "message": "Autortiesības © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2080,7 +2168,7 @@
     "message": "Jauns"
   }, 
   "options_page_document_title": {
-    "message": "AdBlock opcijas"
+    "message": "AdBlock iestatījumi"
   }, 
   "options_page_theme": {
     "message": "Options Page Theme", 
@@ -2099,7 +2187,7 @@
     "message": "Atsvaidzināt"
   }, 
   "options_report_bug": {
-    "message": "Atradāt kļūdu? Nosūtiet mums<a>ziņojumu par kļūdu</a>"
+    "message": "Atradāt kļūdu? Nosūtiet mums <a>ziņojumu par kļūdu</a>"
   }, 
   "options_report_forum": {
     "message": "Nepieciešams atbalsts no mūsu kopienas? <a>Apmeklēt forumu</a>"
@@ -2453,12 +2541,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Rādīt skaitli ikonā"
-  }, 
-  "stats_title": {
-    "message": "Bloķētās reklāmas"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

@@ -62,7 +62,7 @@ $(function ()
 
   var getExcludeFilters = function() {
     var excludeFiltersKey = 'exclude_filters';
-    chrome.storage.local.get(excludeFiltersKey, function(response)
+    chrome.storage.local.get(excludeFiltersKey).then((response) =>
     {
       if (response[excludeFiltersKey])
       {
@@ -74,7 +74,7 @@ $(function ()
   getExcludeFilters();
 
   // Display any migration error messages to the user
-  chrome.storage.local.get('custom_filters_errors', function(response) {
+  chrome.storage.local.get('custom_filters_errors').then((response) => {
     if (response['custom_filters_errors'])
     {
       $("#txtMigrationErrorMessage").val(response['custom_filters_errors']);
@@ -372,7 +372,7 @@ $(function ()
         var result = parseFilter(filter);
         if (result.error)
         {
-          filterErrorMessage = translate('customfilterserrormessage', [filter, result.error.reason || result.error]);
+          filterErrorMessage = translate('customfilterserrormessage', [result.filter.text, result.error]);
         }
       }
     }

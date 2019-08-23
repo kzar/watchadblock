@@ -318,7 +318,7 @@
     "description": "Checkbox letting user choose whether to block annoyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
-    "message": "Chặn phần từ"
+    "message": "Chặn phần tử"
   }, 
   "block_privacy_on_youtube": {
     "message": "Bảo vệ sự riêng tư của tôi trên YouTube™", 
@@ -495,9 +495,6 @@
     "message": "HOẶC, chỉ cần kích vào nút này để chúng tôi làm tất cả những việc trên:[[Vô hiệu hóa tất cả các tiện ích mở rộng]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Sau khi đóng của sổ này, hãy ấn chuột (hoặc ấn chuột phải) vào đối tượng mà bạn cần khóa trên trang."
-  }, 
   "clickthead": {
     "message": "Nhấp vào phần quảng cáo, và tôi sẽ hướng dẫn bạn cách chặn nó.", 
     "description": "User has to click the ad they want to block."
@@ -620,6 +617,9 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "Xoá"
+  }, 
   "delete_migration_error_messages": {
     "message": "Xóa thông điệp", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -640,6 +640,74 @@
     "message": "Trình chặn quảng cáo duy nhất cho YouTube™ bởi AdBlock, tiện ích phổ biến nhất trên Chrome với 60 triệu người dùng trên toàn cầu", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Kiểm tra những bộ lọc Quảng Cáo Chấp Nhận Được:", 
     "description": "Section header on the ad report page"
@@ -655,9 +723,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Quảng cáo đã loại bỏ</strong> trên trang này"
   }, 
   "disabled_on_this_channel": {
     "message": "Bạn đã cho phép hiển thị quảng cáo trên kênh này.", 
@@ -765,9 +830,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Đã bật</strong> trên trang này"
   }, 
   "enableotherextensionscomplete": {
     "message": "Những tiện ích mở rộng bị vô hiệu hóa trước đây đã được kích hoạt lại.", 
@@ -1028,6 +1090,10 @@
     "message": "Tiếng Hy Lạp", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Tiếng Indonesia", 
     "description": "A filter list"
@@ -1038,6 +1104,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Tiếng Ba Lan", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1165,6 +1235,15 @@
     "message": "Mục đích của câu hỏi này là để xác định ai sẽ nhận được báo cáo của bạn. Nếu bạn trả lời câu hỏi này không chính xác, báo cáo sẽ được gửi đến nhầm người. do đó nó có thể bị bỏ qua.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_browser_store_android": {
+    "message": "Ứng dụng Android trên Google Play"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "Có sẵn trên Kho ứng dụng iTunes"
+  }, 
+  "firstRun_fair_title": {
+    "message": "Sử dụng hợp lý"
+  }, 
   "firstRun_warning_dataCorrupted_intro": {
     "message": "Một số người dùng gặp sự cố khi trang này mở ra mỗi khi trình duyệt của họ khởi chạy. Có thể giải quyết vấn đề này bằng cách gỡ cài đặt và cài đặt lại AdBlock:"
   }, 
@@ -1269,6 +1348,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "Chúng tôi không thể trở lại với bạn và sẽ hạ mức ưu tiên của báo cáo của bạn."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "Đóng"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "Điền bình luận"
   }, 
@@ -1283,6 +1365,9 @@
   }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Lưu ý:</strong> Một thẻ bổ sung sẽ tạm thời mở ra để trang bạn đang truy cập sẽ không bị ảnh hưởng bởi Trình báo cáo sự cố."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Chi tiết"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Xong"
@@ -1300,7 +1385,7 @@
     "message": "Chọn tùy chọn này nếu một quảng cáo vẫn hiển thị cho dù AdBlock đang được bật."
   }, 
   "issueReporter_falseNegative_label": {
-    "message": "AdBlock không chặn một quảng cáo"
+    "message": "Tôi vẫn thấy quảng cáo"
   }, 
   "issueReporter_falsePositive_description": {
     "message": "Chọn tùy chọn này nếu trang thiếu nội dung quan trọng, hiển thị không chính xác hoặc không vận hành đúng. Bạn có thể xác định xem AdBlock có phải là nguyên nhân không bằng cách tạm thời vô hiệu hóa nó."
@@ -1308,14 +1393,29 @@
   "issueReporter_falsePositive_label": {
     "message": "AdBlock chặn quá nhiều"
   }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Tô đậm vấn đề"
+  }, 
   "issueReporter_knownIssueMessage": {
     "message": "Vấn đề mà bạn báo cáo có thể đã được biết. Thông tin thêm:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Đánh dấu vấn đề"
   }, 
   "issueReporter_page_title": {
     "message": "Trình báo cáo lỗi"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Chính sách riêng tư"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Ẩn"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Tô đậm"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Chọn vấn đề"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Gửi báo cáo"
@@ -1330,7 +1430,7 @@
     "message": "Hiện dữ liệu báo cáo"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "Cửa sổ này sẽ hướng dẫn bạn qua các bước cần thiết cho việc gửi lên một báo cáo vấn đề của AdBlock. Trước tiên, hãy chọn kiểu vấn đề mà bạn đang gặp trên trang này:"
+    "message": "Vui lòng chọn vấn đề bạn đang gặp phải:"
   }, 
   "issueReporter_typeSelector_heading": {
     "message": "Chọn kiểu vấn đề"
@@ -1841,40 +1941,16 @@
     "message": "Tùy chỉnh AdBlock, thêm hoặc xóa danh sách lọc, tạo và duy trì các danh sách lọc của riêng bạn"
   }, 
   "options_close": {
-    "message": "ĐÓNG"
+    "message": "đóng"
   }, 
   "options_control_remove_title": {
-    "message": "Loại bỏ"
+    "message": "loại bỏ"
   }, 
   "options_customFilter_cancel": {
-    "message": "HỦY"
-  }, 
-  "options_customFilter_edit": {
-    "message": "Sửa bộ lọc"
-  }, 
-  "options_customFilter_save": {
-    "message": "LƯU"
+    "message": "Hủy bỏ"
   }, 
   "options_customFilters_description": {
     "message": "Điền các bộ lọc tùy chỉnh của riêng bạn để hạn chế thêm nội dung nào AdBlock cho phép hoặc chặn."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "ví dụ: $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Tìm hiểu cách viết các danh sách lọc"
-  }, 
-  "options_customFilters_start": {
-    "message": "Bắt đầu viết danh sách lọc của tôi"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Các bộ lọc bạn tạo sẽ hiển thị ở đây."
   }, 
   "options_customFilters_title": {
     "message": "TẠO VÀ CHỈNH SỬA DANH SÁCH LỌC CỦA BẠN"
@@ -1888,6 +1964,9 @@
   "options_customize_blockElement_tooltip": {
     "message": "Tạm thời chặn những thành phần gây khó chịu trên một trang web, ví dụ các hình ảnh hay hoạt hình."
   }, 
+  "options_customize_header": {
+    "message": "Tùy biến"
+  }, 
   "options_customize_showDevToolsPanel": {
     "message": "Hiển thị bảng điều khiển ‘AdBlock’ trong các công cụ của nhà phát triển"
   }, 
@@ -1898,10 +1977,10 @@
     "message": "Hiện thông báo hữu ích"
   }, 
   "options_dialog_about_copyright": {
-    "message": "Bản quyền © $currentYear$ eyeo GmbH.", 
+    "message": "Bản quyền © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -1949,7 +2028,7 @@
     "message": "Tiếng Anh"
   }, 
   "options_filterList_add": {
-    "message": "+ THÊM MỘT DANH SÁCH LỌC MỚI"
+    "message": "THÊM MỘT DANH SÁCH LỌC MỚI"
   }, 
   "options_filterList_column_name": {
     "message": "Danh sách lọc"
@@ -2024,10 +2103,10 @@
     "message": "Tìm kiếm trợ giúp hoặc liên hệ với chúng tôi"
   }, 
   "options_language_add": {
-    "message": "+ THÊM NGÔN NGỮ"
+    "message": "THÊM NGÔN NGỮ"
   }, 
   "options_language_change": {
-    "message": "THAY ĐỔI"
+    "message": "thay đổi"
   }, 
   "options_language_description": {
     "message": "Tối ưu AdBlock cho (các) ngôn ngữ mà bạn thường truy cập các trang web."
@@ -2067,13 +2146,16 @@
     "message": "Thiết đặt"
   }, 
   "options_privacy_header": {
-    "message": "RIÊNG TƯ & BẢO MẬT"
+    "message": "Riêng tư & bảo mật"
   }, 
   "options_protection_privacy_tooltip": {
     "message": "Bảo vệ quyền riêng tư của bạn khỏi các thực thể đã biết mà có thể theo dõi hoạt động trực tuyến của bạn trên các trang web bạn truy cập."
   }, 
   "options_protection_social_tooltip": {
     "message": "Các biểu tượng mạng xã hội trên các trang web mà bạn ghé thăm cho phép các mạng xã hội tạo ra hồ sơ về bạn dựa trên những thói quen duyệt web của bạn - ngay cả khi bạn không bấm vào chúng. Ẩn những biểu tượng này đi có thể bảo vệ hồ sơ của bạn."
+  }, 
+  "options_refresh": {
+    "message": "Làm mới"
   }, 
   "options_report_bug": {
     "message": "Tìm thấy lỗi? <a>Gửi cho chúng tôi báo cáo lỗi</a>"
@@ -2183,6 +2265,9 @@
   "overlay_notification_button_yes": {
     "message": "Có"
   }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "Đóng"
+  }, 
   "overlay_notification_closing_button_optout": {
     "message": "Dừng hiện thông báo"
   }, 
@@ -2218,6 +2303,9 @@
     "message": "Chính sách bảo mật", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Bạn có hứng thú với AdBlock cho di động?"
+  }, 
   "pwyw": {
     "message": "Trả bất cứ thứ gì bạn muốn!", 
     "description": "Text of a payment request link"
@@ -2237,6 +2325,9 @@
   "reenableadsonebyone": {
     "message": "Tuyệt vời! Bây giờ hãy tìm hiểu xem tiện ích nào là nguyên nhân gây ra quảng cáo. Bật lần lượt từng tiện ích một, tiện ích nào khi bật gây ra quảng cáo chính là tiện ích bạn cần gỡ bỏ để loại bỏ quảng cáo.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Nhấn vào <strong>Làm mới</strong> để thay đổi có hiệu lực."
   }, 
   "refusetocheck": {
     "message": "Tôi không muốn kiểm tra cái này", 
@@ -2348,6 +2439,9 @@
     "message": "select language", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "sendReport": {
+    "message": "Báo cáo vấn đề"
+  }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -2413,7 +2507,7 @@
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
   "stats_label_page": {
-    "message": "<strong>$number$</strong> quảng cáo đã chặn trên trang này", 
+    "message": "<strong>$number$</strong> trên trang này", 
     "placeholders": {
       "number": {
         "content": "$1"
@@ -2428,15 +2522,12 @@
       }
     }
   }, 
-  "stats_show_iconnumber": {
-    "message": "Hiện số quảng cáo đã chặn trên icon"
-  }, 
-  "stats_title": {
-    "message": "Quảng cáo đã bị chặn"
-  }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Chặn quảng cáo trên:"
   }, 
   "status_paused": {
     "message": "AdBlock đã bị tạm dừng.", 

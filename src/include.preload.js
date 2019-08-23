@@ -107,7 +107,7 @@ document.addEventListener(randomEventName, event =>
   browser.runtime.sendMessage({
     type: "request.blockedByRTCWrapper",
     url
-  }, block =>
+  }).then(block =>
   {
     document.dispatchEvent(new CustomEvent(
       randomEventName + "-" + url, {detail: block}
@@ -186,33 +186,6 @@ function injected(eventName, injectedIntoContentWindow)
                           contentWindowDesc);
     Object.defineProperty(element.prototype, "contentDocument",
                           contentDocumentDesc);
-  }
-
-  /*
-   * Shadow root getter wrapper
-   *
-   * After creating our shadowRoot we must wrap the getter to prevent the
-   * website from accessing it (#4191, #4298). This is required as a
-   * workaround for the lack of user style support in Chrome.
-   * See https://bugs.chromium.org/p/chromium/issues/detail?id=632009&desc=2
-   */
-  if ("shadowRoot" in Element.prototype)
-  {
-    let ourShadowRoot = document.documentElement.shadowRoot;
-    if (ourShadowRoot)
-    {
-      let desc = Object.getOwnPropertyDescriptor(Element.prototype,
-                                                 "shadowRoot");
-      let shadowRoot = Function.prototype.call.bind(desc.get);
-
-      Object.defineProperty(Element.prototype, "shadowRoot", {
-        configurable: true, enumerable: true, get()
-        {
-          let thisShadow = shadowRoot(this);
-          return thisShadow == ourShadowRoot ? null : thisShadow;
-        }
-      });
-    }
   }
 
   /*
@@ -457,18 +430,19 @@ if (document instanceof HTMLDocument)
     script.async = false;
 
     // Firefox 58 only bypasses site CSPs when assigning to 'src',
-    // while Chrome 67 only bypasses site CSPs when using 'textContent'.
-    if (browser.runtime.getURL("").startsWith("chrome-extension://"))
-    {
-      script.textContent = code;
-      document.documentElement.appendChild(script);
-    }
-    else
+    // while Chrome 67 and Microsoft Edge 44.17763.1.0
+    // only bypass site CSPs when using 'textContent'.
+    if (browser.runtime.getURL("").startsWith("moz-extension://"))
     {
       let url = URL.createObjectURL(new Blob([code]));
       script.src = url;
       document.documentElement.appendChild(script);
       URL.revokeObjectURL(url);
+    }
+    else
+    {
+      script.textContent = code;
+      document.documentElement.appendChild(script);
     }
 
     document.documentElement.removeChild(script);
@@ -715,22 +689,19 @@ function checkCollapse(element)
       urls,
       mediatype,
       baseURL: document.location.href
-    },
-    collapse =>
+    }).then(collapse =>
     {
       if (collapse)
       {
-        if (selector) {
+        if (selector)
           contentFiltering.addSelectors([selector], "collapsing", true);
           if (typeof checkElement === "function") {
             checkElement(element);
           }
-        } else {
+        else
           hideElement(element);
-        }
       }
-    }
-  );
+    });
 }
 
 function checkSitekey()
@@ -740,9 +711,10 @@ function checkSitekey()
     browser.runtime.sendMessage({type: "filters.addKey", token: attr});
 }
 
-function ElementHidingTracer()
+function ElementHidingTracer(selectors, exceptions)
 {
-  this.selectors = [];
+  this.selectors = selectors;
+  this.exceptions = exceptions;
   this.changedNodes = [];
   this.timeout = null;
   this.observer = new MutationObserver(this.observe.bind(this));
@@ -754,19 +726,12 @@ function ElementHidingTracer()
     this.trace();
 }
 ElementHidingTracer.prototype = {
-  addSelectors(selectors)
-  {
-    if (document.readyState != "loading")
-      this.checkNodes([document], selectors);
-
-    this.selectors.push(...selectors);
-  },
-
-  checkNodes(nodes, selectors)
+  checkNodes(nodes)
   {
     let effectiveSelectors = [];
+    let effectiveExceptions = [];
 
-    for (let selector of selectors)
+    for (let selector of this.selectors)
     {
       nodes: for (let node of nodes)
       {
@@ -784,19 +749,31 @@ ElementHidingTracer.prototype = {
       }
     }
 
-    if (effectiveSelectors.length > 0)
+    for (let exception of this.exceptions)
+    {
+      for (let node of nodes)
+      {
+        if (node.querySelector(exception.selector))
+        {
+          effectiveExceptions.push(exception.text);
+          break;
+        }
+      }
+    }
+
+    if (effectiveSelectors.length > 0 || effectiveExceptions.length > 0)
     {
       browser.runtime.sendMessage({
         type: "hitLogger.traceElemHide",
         selectors: effectiveSelectors,
-        filters: []
+        filters: effectiveExceptions
       });
     }
   },
 
   onTimeout()
   {
-    this.checkNodes(this.changedNodes, this.selectors);
+    this.checkNodes(this.changedNodes);
     this.changedNodes = [];
     this.timeout = null;
   },
@@ -858,7 +835,7 @@ ElementHidingTracer.prototype = {
 
   trace()
   {
-    this.checkNodes([document], this.selectors);
+    this.checkNodes([document]);
 
     this.observer.observe(
       document,
@@ -929,8 +906,7 @@ ContentFiltering.prototype = {
       selectors,
       groupName,
       appendOnly
-    },
-    rules =>
+    }).then(rules =>
     {
       if (rules)
       {
@@ -968,21 +944,24 @@ ContentFiltering.prototype = {
     browser.runtime.sendMessage({
       type: "content.applyFilters",
       filterTypes
-    },
-    response =>
+    }).then(response =>
     {
       if (this.tracer)
+      {
         this.tracer.disconnect();
-      this.tracer = null;
-
-      if (response.trace)
-        this.tracer = new ElementHidingTracer();
+        this.tracer = null;
+      }
 
       if (response.inline)
         this.addRulesInline(response.rules);
 
-      if (this.tracer)
-        this.tracer.addSelectors(response.selectors);
+      if (response.trace)
+      {
+        this.tracer = new ElementHidingTracer(
+          response.selectors,
+          response.exceptions
+        );
+      }
 
       this.elemHideEmulation.apply(response.emulatedPatterns);
     });
@@ -1433,8 +1412,7 @@ class PropsSelector
     if (propertyExpression.length >= 2 && propertyExpression[0] == "/" &&
         propertyExpression[propertyExpression.length - 1] == "/")
     {
-      regexpString = propertyExpression.slice(1, -1)
-        .replace("\\7B ", "{").replace("\\7D ", "}");
+      regexpString = propertyExpression.slice(1, -1);
     }
     else
       regexpString = filterToRegExp(propertyExpression);
@@ -1451,11 +1429,11 @@ class PropsSelector
           if (subSelector.startsWith("*") &&
               !incompletePrefixRegexp.test(prefix))
           {
-            subSelector = subSelector.substr(1);
+            subSelector = subSelector.substring(1);
           }
           let idx = subSelector.lastIndexOf("::");
           if (idx != -1)
-            subSelector = subSelector.substr(0, idx);
+            subSelector = subSelector.substring(0, idx);
           yield qualifySelector(subSelector, prefix);
         }
   }
@@ -1667,7 +1645,7 @@ class ElemHideEmulation
 
     let selectors = [];
     if (match.index > 0)
-      selectors.push(new PlainSelector(selector.substr(0, match.index)));
+      selectors.push(new PlainSelector(selector.substring(0, match.index)));
 
     let startIndex = match.index + match[0].length;
     let content = parseSelectorContent(selector, startIndex);
@@ -1698,7 +1676,7 @@ class ElemHideEmulation
       return null;
     }
 
-    let suffix = this.parseSelector(selector.substr(content.end + 1));
+    let suffix = this.parseSelector(selector.substring(content.end + 1));
     if (suffix == null)
       return null;
 
@@ -2198,6 +2176,10 @@ function qualifySelector(selector, qualifier)
 {
   let qualifiedSelector = "";
 
+  let qualifierTargetSelectorIndex = findTargetSelectorIndex(qualifier);
+  let [, qualifierType = ""] =
+    /^([a-z][a-z-]*)?/i.exec(qualifier.substring(qualifierTargetSelectorIndex));
+
   for (let sub of splitSelector(selector))
   {
     sub = sub.trim();
@@ -2205,15 +2187,27 @@ function qualifySelector(selector, qualifier)
     qualifiedSelector += ", ";
 
     let index = findTargetSelectorIndex(sub);
-    let [, type = "", rest] = /^([a-z][a-z-]*)?(.*)/i.exec(sub.substr(index));
 
     // Note that the first group in the regular expression is optional. If it
     // doesn't match (e.g. "#foo::nth-child(1)"), type will be an empty string.
-    qualifiedSelector += sub.substr(0, index) + type + qualifier + rest;
+    let [, type = "", rest] =
+      /^([a-z][a-z-]*)?\*?(.*)/i.exec(sub.substring(index));
+
+    if (type == qualifierType)
+      type = "";
+
+    // If the qualifier ends in a combinator (e.g. "body #foo>"), we put the
+    // type and the rest of the selector after the qualifier
+    // (e.g. "body #foo>div.bar"); otherwise (e.g. "body #foo") we merge the
+    // type into the qualifier (e.g. "body div#foo.bar").
+    if (/[\s>+~]$/.test(qualifier))
+      qualifiedSelector += sub.substring(0, index) + qualifier + type + rest;
+    else
+      qualifiedSelector += sub.substring(0, index) + type + qualifier + rest;
   }
 
   // Remove the initial comma and space.
-  return qualifiedSelector.substr(2);
+  return qualifiedSelector.substring(2);
 }
 
 exports.qualifySelector = qualifySelector;
@@ -2287,9 +2281,7 @@ exports.indexOf = indexOf;
 /* 6 */
 /***/ (function(module, exports) {
 
-chrome.runtime.sendMessage({ message: 'load_my_adblock' }, function () {
-
-});
+chrome.runtime.sendMessage({ message: 'load_my_adblock' });
 
 
 /***/ })

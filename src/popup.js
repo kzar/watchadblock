@@ -18,11 +18,82 @@
 
 "use strict";
 
+let browserName = "unknown";
+
+// Firefox only, which is exactly the one
+// we are looking for in order to patch events' layerX
+if (browser.runtime.getBrowserInfo)
+{
+  browser.runtime.getBrowserInfo().then(info =>
+  {
+    browserName = info.name.toLowerCase();
+  });
+}
+
+// used as legacy fallback in events.key(event) via keys[event.keyCode]
+const keys = {
+  9: "Tab",
+  13: "Enter",
+  27: "Escape",
+  37: "ArrowLeft",
+  38: "ArrowUp",
+  39: "ArrowRight",
+  40: "ArrowDown"
+};
+
 module.exports = {
   $: (selector, container = document) => container.querySelector(selector),
   $$: (selector, container = document) => container.querySelectorAll(selector),
+
   // helper to format as indented string any HTML/XML node
   asIndentedString,
+
+  // basic copy and paste clipboard utility
+  clipboard: {
+    // warning: Firefox needs a proper event to work
+    //          such click or mousedown or similar.
+    copy(text)
+    {
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ?
+                        selection.getRangeAt(0) : null;
+      const el = document.createElement("textarea");
+      el.value = text;
+      el.setAttribute("readonly", "");
+      el.style.cssText = "position:fixed;top:-999px";
+      document.body.appendChild(el).select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      if (selected)
+      {
+        selection.removeAllRanges();
+        // simply putting back selected doesn't work anymore
+        const range = document.createRange();
+        range.setStart(selected.startContainer, selected.startOffset);
+        range.setEnd(selected.endContainer, selected.endOffset);
+        selection.addRange(range);
+      }
+    },
+    // optionally accepts a `paste` DOM event
+    // it uses global clipboardData, if available, otherwise.
+    // i.e. input.onpaste = event => console.log(dom.clipboard.paste(event));
+    paste(event)
+    {
+      if (!event)
+        event = window;
+      const clipboardData = event.clipboardData || window.clipboardData;
+      return clipboardData ? clipboardData.getData("text") : "";
+    }
+  },
+
+  events: {
+    // necessary to retrieve the right key before Chrome 51
+    key(event)
+    {
+      return "key" in event ? event.key : keys[event.keyCode];
+    }
+  },
+
   // helper to provide the relative coordinates
   // to the closest positioned containing element
   relativeCoordinates(event)
@@ -30,10 +101,16 @@ module.exports = {
     // good old way that will work properly in older browsers too
     // mandatory for Chrome 49, still better than manual fallback
     // in all other browsers that provide such functionality
-    if ("layerX" in event && "layerY" in event)
-      return {x: event.layerX, y: event.layerY};
-    // fallback when layerX/Y will be removed (since deprecated)
     let el = event.currentTarget;
+    if ("layerX" in event && "layerY" in event)
+    {
+      let {layerX} = event;
+      // see https://issues.adblockplus.org/ticket/7134
+      if (browserName === "firefox")
+        layerX -= el.offsetLeft;
+      return {x: layerX, y: event.layerY};
+    }
+    // fallback when layerX/Y will be removed (since deprecated)
     let x = 0;
     let y = 0;
     do
@@ -281,8 +358,26 @@ class IOElement extends HyperHTMLElement
     return IOElement.getID(this);
   }
 
+  // returns true only when the component is live and styled
+  get ready()
+  {
+    return !!this.offsetParent && this.isStyled();
+  }
+
   // whenever an element is created, render its content once
   created() { this.render(); }
+
+  // based on a `--component-name: ready;` convention
+  // under the `component-name {}` related stylesheet,
+  // this method returns true only if such stylesheet
+  // has been already loaded.
+  isStyled()
+  {
+    const computed = window.getComputedStyle(this, null);
+    const property = "--" + this.nodeName.toLowerCase();
+    // in some case Edge returns '#fff' instead of ready
+    return computed.getPropertyValue(property).trim() !== "";
+  }
 
   // by default, render is a no-op
   render() {}
@@ -451,10 +546,8 @@ function setupBlock(tab)
     cancelClickHide(tab);
   });
 
-  browser.tabs.sendMessage(
-    tab.id,
-    {type: "composer.content.getState"},
-    response =>
+  browser.tabs.sendMessage(tab.id, {type: "composer.content.getState"})
+    .then(response =>
     {
       if (response && response.active)
         $("#page-info").classList.add("blocking");
@@ -508,6 +601,7 @@ require("./popup.notifications.js");
 
 const setupToggle = require("./popup.toggle.js");
 const setupBlock = require("./popup.blockelement.js");
+const {activeTab} = require("./popup.utils.js");
 const {$, $$} = require("./dom");
 
 const {
@@ -547,10 +641,11 @@ const getTab = new Promise(
   {
     document.addEventListener("DOMContentLoaded", () =>
     {
-      browser.tabs.query({active: true, lastFocusedWindow: true}, tabs =>
-      {
-        resolve({id: tabs[0].id, url: tabs[0].url});
-      });
+      browser.tabs.query({active: true, lastFocusedWindow: true})
+        .then(tabs =>
+        {
+          resolve({id: tabs[0].id, url: tabs[0].url});
+        });
     });
   }
 );
@@ -648,15 +743,14 @@ function updateStats(tab)
   browser.runtime.sendMessage({
     type: "stats.getBlockedPerPage",
     tab
-  },
-  blockedPage =>
+  }).then(blockedPage =>
   {
     ext.i18n.setElementText(statsPage, "stats_label_page",
                             [blockedPage.toLocaleString()]);
   });
 
   const statsTotal = $("#stats-total");
-  getPref("blocked_total", blockedTotal =>
+  getPref("blocked_total").then(blockedTotal =>
   {
     ext.i18n.setElementText(statsTotal, "stats_label_total",
                             [blockedTotal.toLocaleString()]);
@@ -683,26 +777,26 @@ function updateStats(tab)
 
 "use strict";
 
-const {getDocLinks, setPref} = require("./popup.utils.js");
+const {activeTab, getDocLinks, setPref} = require("./popup.utils.js");
 const {wire} = require("./io-element");
 const {$} = require("./dom");
 
-window.addEventListener(
-  "load", () =>
+activeTab
+  .then((tab) =>
   {
-    browser.runtime.sendMessage({
+    return browser.runtime.sendMessage({
       type: "notifications.get",
-      displayMethod: "popup"
-    }, notification =>
-    {
-      if (notification)
-        window.dispatchEvent(
-          new CustomEvent("extension:notification", {detail: notification})
-        );
+      displayMethod: "popup",
+      url: tab.url
     });
-  },
-  {once: true}
-);
+  })
+  .then((notification) =>
+  {
+    if (notification)
+      window.dispatchEvent(
+        new CustomEvent("extension:notification", {detail: notification})
+      );
+  });
 
 // Using an event to make testing as easy as possible.
 /* @example
@@ -827,7 +921,7 @@ module.exports = setupToggle;
 
 function setupToggle(tab)
 {
-  isPageWhitelisted(tab, whitelisted =>
+  isPageWhitelisted(tab).then(whitelisted =>
   {
     if (whitelisted)
       whitelistedPage();
@@ -904,6 +998,21 @@ function whitelistedPage()
 },{"./dom":1,"./popup.utils.js":9}],9:[function(require,module,exports){
 "use strict";
 
+// create the tab object once at the right time
+const activeTab = new Promise(
+  resolve =>
+  {
+    document.addEventListener("DOMContentLoaded", () =>
+    {
+      browser.tabs.query({active: true, lastFocusedWindow: true})
+        .then((tabs) =>
+        {
+          resolve({id: tabs[0].id, url: tabs[0].url});
+        });
+    }, {once: true});
+  }
+);
+
 function getDocLinks(notification)
 {
   if (!notification.links)
@@ -912,26 +1021,23 @@ function getDocLinks(notification)
   return Promise.all(
     notification.links.map(link =>
     {
-      return new Promise((resolve, reject) =>
-      {
-        browser.runtime.sendMessage({
-          type: "app.get",
-          what: "doclink",
-          link
-        }, resolve);
+      return browser.runtime.sendMessage({
+        type: "app.get",
+        what: "doclink",
+        link
       });
     })
   );
 }
 
-function getPref(key, callback)
+function getPref(key)
 {
-  browser.runtime.sendMessage({type: "prefs.get", key}, callback);
+  return browser.runtime.sendMessage({type: "prefs.get", key});
 }
 
-function isPageWhitelisted(tab, callback)
+function isPageWhitelisted(tab)
 {
-  browser.runtime.sendMessage({type: "filters.isWhitelisted", tab}, callback);
+  return browser.runtime.sendMessage({type: "filters.isWhitelisted", tab});
 }
 
 function reportIssue(tab)
@@ -946,14 +1052,14 @@ function reportIssue(tab)
   );
 }
 
-function setPref(key, value, callback)
+function setPref(key, value)
 {
-  browser.runtime.sendMessage({type: "prefs.set", key, value}, callback);
+  return browser.runtime.sendMessage({type: "prefs.set", key, value});
 }
 
-function togglePref(key, callback)
+function togglePref(key)
 {
-  browser.runtime.sendMessage({type: "prefs.toggle", key}, callback);
+  return browser.runtime.sendMessage({type: "prefs.toggle", key});
 }
 
 function whenPageReady(tab)
@@ -975,8 +1081,7 @@ function whenPageReady(tab)
     browser.runtime.sendMessage({
       type: "composer.isPageReady",
       pageId: tab.id
-    },
-    ready =>
+    }).then(ready =>
     {
       if (ready)
       {
@@ -988,6 +1093,7 @@ function whenPageReady(tab)
 }
 
 module.exports = {
+  activeTab,
   getDocLinks,
   getPref,
   isPageWhitelisted,

@@ -18,11 +18,124 @@
 
 "use strict";
 
+function send(type, args)
+{
+  args = Object.assign({}, {type}, args);
+  return browser.runtime.sendMessage(args);
+}
+
+const app = {
+  get: (what) => send("app.get", {what}),
+  open: (what) => send("app.open", {what})
+};
+module.exports.app = app;
+
+const doclinks = {
+  get: (link) => send("app.get", {what: "doclink", link})
+};
+module.exports.doclinks = doclinks;
+
+// For now we are merely reusing the port for long-lived communications to fix
+// https://gitlab.com/eyeo/adblockplus/abpui/adblockplusui/issues/415
+const port = browser.runtime.connect({name: "ui"});
+module.exports.port = port;
+
+},{}],2:[function(require,module,exports){
+/*
+ * This file is part of Adblock Plus <https://adblockplus.org/>,
+ * Copyright (C) 2006-present eyeo GmbH
+ *
+ * Adblock Plus is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 3 as
+ * published by the Free Software Foundation.
+ *
+ * Adblock Plus is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"use strict";
+
+let browserName = "unknown";
+
+// Firefox only, which is exactly the one
+// we are looking for in order to patch events' layerX
+if (browser.runtime.getBrowserInfo)
+{
+  browser.runtime.getBrowserInfo().then(info =>
+  {
+    browserName = info.name.toLowerCase();
+  });
+}
+
+// used as legacy fallback in events.key(event) via keys[event.keyCode]
+const keys = {
+  9: "Tab",
+  13: "Enter",
+  27: "Escape",
+  37: "ArrowLeft",
+  38: "ArrowUp",
+  39: "ArrowRight",
+  40: "ArrowDown"
+};
+
 module.exports = {
   $: (selector, container = document) => container.querySelector(selector),
   $$: (selector, container = document) => container.querySelectorAll(selector),
+
   // helper to format as indented string any HTML/XML node
   asIndentedString,
+
+  // basic copy and paste clipboard utility
+  clipboard: {
+    // warning: Firefox needs a proper event to work
+    //          such click or mousedown or similar.
+    copy(text)
+    {
+      const selection = document.getSelection();
+      const selected = selection.rangeCount > 0 ?
+                        selection.getRangeAt(0) : null;
+      const el = document.createElement("textarea");
+      el.value = text;
+      el.setAttribute("readonly", "");
+      el.style.cssText = "position:fixed;top:-999px";
+      document.body.appendChild(el).select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      if (selected)
+      {
+        selection.removeAllRanges();
+        // simply putting back selected doesn't work anymore
+        const range = document.createRange();
+        range.setStart(selected.startContainer, selected.startOffset);
+        range.setEnd(selected.endContainer, selected.endOffset);
+        selection.addRange(range);
+      }
+    },
+    // optionally accepts a `paste` DOM event
+    // it uses global clipboardData, if available, otherwise.
+    // i.e. input.onpaste = event => console.log(dom.clipboard.paste(event));
+    paste(event)
+    {
+      if (!event)
+        event = window;
+      const clipboardData = event.clipboardData || window.clipboardData;
+      return clipboardData ? clipboardData.getData("text") : "";
+    }
+  },
+
+  events: {
+    // necessary to retrieve the right key before Chrome 51
+    key(event)
+    {
+      return "key" in event ? event.key : keys[event.keyCode];
+    }
+  },
+
   // helper to provide the relative coordinates
   // to the closest positioned containing element
   relativeCoordinates(event)
@@ -30,10 +143,16 @@ module.exports = {
     // good old way that will work properly in older browsers too
     // mandatory for Chrome 49, still better than manual fallback
     // in all other browsers that provide such functionality
-    if ("layerX" in event && "layerY" in event)
-      return {x: event.layerX, y: event.layerY};
-    // fallback when layerX/Y will be removed (since deprecated)
     let el = event.currentTarget;
+    if ("layerX" in event && "layerY" in event)
+    {
+      let {layerX} = event;
+      // see https://issues.adblockplus.org/ticket/7134
+      if (browserName === "firefox")
+        layerX -= el.offsetLeft;
+      return {x: layerX, y: event.layerY};
+    }
+    // fallback when layerX/Y will be removed (since deprecated)
     let x = 0;
     let y = 0;
     do
@@ -86,7 +205,7 @@ function asIndentedString(element, indentation = 0)
   return new XMLSerializer().serializeToString(element);
 }
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -384,7 +503,7 @@ function stop(event)
   event.stopPropagation();
 }
 
-},{"./dom":1,"./io-element":3}],3:[function(require,module,exports){
+},{"./dom":2,"./io-element":4}],4:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -503,8 +622,26 @@ class IOElement extends HyperHTMLElement
     return IOElement.getID(this);
   }
 
+  // returns true only when the component is live and styled
+  get ready()
+  {
+    return !!this.offsetParent && this.isStyled();
+  }
+
   // whenever an element is created, render its content once
   created() { this.render(); }
+
+  // based on a `--component-name: ready;` convention
+  // under the `component-name {}` related stylesheet,
+  // this method returns true only if such stylesheet
+  // has been already loaded.
+  isStyled()
+  {
+    const computed = window.getComputedStyle(this, null);
+    const property = "--" + this.nodeName.toLowerCase();
+    // in some case Edge returns '#fff' instead of ready
+    return computed.getPropertyValue(property).trim() !== "";
+  }
 
   // by default, render is a no-op
   render() {}
@@ -543,7 +680,7 @@ IOElement.intent("i18n", id =>
 
 module.exports = IOElement;
 
-},{"document-register-element/pony":20,"hyperhtml-element/cjs":27}],4:[function(require,module,exports){
+},{"document-register-element/pony":21,"hyperhtml-element/cjs":28}],5:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -688,7 +825,7 @@ const changeMode = (self, mode) =>
   self.setState({drawing});
 };
 
-},{"./drawing-handler":2,"./io-element":3}],5:[function(require,module,exports){
+},{"./drawing-handler":3,"./io-element":4}],6:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -813,7 +950,7 @@ function reset()
 
 IOSteps.define("io-steps");
 
-},{"./io-element":3}],6:[function(require,module,exports){
+},{"./io-element":4}],7:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -833,11 +970,12 @@ IOSteps.define("io-steps");
 
 "use strict";
 
+const {port} = require("./api");
+
 const reportData = new DOMParser().parseFromString("<report></report>",
                                                  "text/xml");
 let dataGatheringTabId = null;
 let isMinimumTimeMet = false;
-const port = browser.runtime.connect({name: "ui"});
 
 port.onMessage.addListener((message) =>
 {
@@ -906,7 +1044,7 @@ module.exports = {
   {
     const tabId = parseInt(location.search.replace(/^\?/, ""), 10);
 
-    if (!tabId)
+    if (!tabId && tabId !== 0)
       return Promise.reject(new Error("invalid tab id"));
 
     return Promise.all([
@@ -1170,7 +1308,7 @@ function validateCommentsPage()
                         {detail: !sendButton.disabled}));
 }
 
-},{}],7:[function(require,module,exports){
+},{"./api":1}],8:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1329,7 +1467,7 @@ function enableContinue()
   document.querySelector("#continue").disabled = false;
 }
 
-},{"./io-highlighter":4,"./io-steps":5}],8:[function(require,module,exports){
+},{"./io-highlighter":5,"./io-steps":6}],9:[function(require,module,exports){
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1355,6 +1493,11 @@ const {$, asIndentedString} = require("./dom");
 
 document.addEventListener("DOMContentLoaded", () =>
 {
+  ext.i18n.setElementLinks(
+    "sr-warning",
+    "mailto:support@adblockplus.org"
+  );
+
   const cancelButton = $("#cancel");
   cancelButton.addEventListener("click", closeMe);
   $("#hide-notification").addEventListener("click", () =>
@@ -1369,30 +1512,20 @@ document.addEventListener("DOMContentLoaded", () =>
     closeMe();
   });
 
-  const manageSteps = new Promise(resolve =>
-  {
-    browser.tabs.captureVisibleTab(
-      null,
-      {format: "png"},
-      screenshot =>
-      {
-        // activate current tab and let the user report
-        browser.tabs.getCurrent((tab) =>
-        {
-          browser.tabs.update(
-            tab.id,
-            {active: true},
-            () => resolve({screenshot})
-          );
-        });
-      }
-    );
-  }).then(stepsManager);
+  const manageSteps = browser.tabs.captureVisibleTab(null, {format: "png"})
+    .then(screenshot =>
+    {
+      // activate current tab and let the user report
+      return browser.tabs.getCurrent()
+        .then(tab => browser.tabs.update(tab.id, {active: true}))
+        .then(() => stepsManager({screenshot}));
+    });
 
-  $("#send").addEventListener("click", event =>
+  $("#send").addEventListener("click", function sendAll(event)
   {
     const sendButton = event.currentTarget;
     const lastStep = $("io-steps button:last-child");
+    sendButton.removeEventListener("click", sendAll);
     sendButton.disabled = true;
     lastStep.disabled = false;
     lastStep.click();
@@ -1421,7 +1554,7 @@ document.addEventListener("DOMContentLoaded", () =>
       cancelButton.hidden = true;
       sendReport(reportWithScreenshot(...results));
       sendButton.textContent =
-        browser.i18n.getMessage("issueReporter_doneButton_label");
+        browser.i18n.getMessage("issueReporter_closeButton_label");
       $("io-steps").setCompleted(-1, true);
     });
   });
@@ -1603,6 +1736,12 @@ function sendReport(reportData)
     resultFrame.hidden = false;
 
     document.getElementById("continue").disabled = false;
+
+    if (success)
+    {
+      $("#send").disabled = false;
+      $("#send").addEventListener("click", closeMe);
+    }
   };
 
   const request = new XMLHttpRequest();
@@ -1638,7 +1777,7 @@ function encodeHTML(str)
   }[c]));
 }
 
-},{"./dom":1,"./issue-reporter-report":6,"./issue-reporter-steps-manager":7}],9:[function(require,module,exports){
+},{"./dom":2,"./issue-reporter-report":7,"./issue-reporter-steps-manager":8}],10:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var createContent = (function (document) {'use strict';
   var FRAGMENT = 'fragment';
@@ -1697,7 +1836,7 @@ var createContent = (function (document) {'use strict';
 }(document));
 module.exports = createContent;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 self.CustomEvent = typeof CustomEvent === 'function' ?
@@ -1714,7 +1853,7 @@ self.CustomEvent = typeof CustomEvent === 'function' ?
   }('prototype'));
 module.exports = self.CustomEvent;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.Map = Map; }
@@ -1751,7 +1890,7 @@ catch (Map) {
 }
 module.exports = self.Map;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakSet = WeakSet; }
@@ -1777,7 +1916,7 @@ catch (WeakSet) {
 }
 module.exports = self.WeakSet;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var importNode = (function (
   document,
@@ -1822,7 +1961,7 @@ var importNode = (function (
 ));
 module.exports = importNode;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 var isArray = Array.isArray || (function (toString) {
   var $ = toString.call([]);
   return function isArray(object) {
@@ -1831,7 +1970,7 @@ var isArray = Array.isArray || (function (toString) {
 }({}.toString));
 module.exports = isArray;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var templateLiteral = (function () {'use strict';
   var RAW = 'raw';
@@ -1870,7 +2009,7 @@ var templateLiteral = (function () {'use strict';
 }());
 module.exports = templateLiteral;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 const unique = (require('@ungap/template-literal'));
 
@@ -1883,13 +2022,13 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = function (
   return args;
 };
 
-},{"@ungap/template-literal":15}],17:[function(require,module,exports){
+},{"@ungap/template-literal":16}],18:[function(require,module,exports){
 var trim = ''.trim || function () {
   return String(this).replace(/^\s+|\s+/g, '');
 };
 module.exports = trim;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var self = this || /* istanbul ignore next */ {};
 try { self.WeakMap = WeakMap; }
@@ -1926,7 +2065,7 @@ catch (WeakMap) {
 }
 module.exports = self.WeakMap;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /*! (c) Andrea Giammarchi */
 function disconnected(poly) {'use strict';
   var CONNECTED = 'connected';
@@ -2038,7 +2177,7 @@ function disconnected(poly) {'use strict';
 }
 module.exports = disconnected;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /*!
 ISC License
 
@@ -3549,7 +3688,7 @@ function installCustomElements(window, polyfill) {'use strict';
 
 module.exports = installCustomElements;
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 /*! (c) 2018 Andrea Giammarchi (ISC) */
 
@@ -3773,7 +3912,7 @@ const domdiff = (
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = domdiff;
 
-},{"./utils.js":22}],22:[function(require,module,exports){
+},{"./utils.js":23}],23:[function(require,module,exports){
 'use strict';
 const Map = (require('@ungap/essential-map'));
 
@@ -4156,7 +4295,7 @@ const smartDiff = (
 };
 exports.smartDiff = smartDiff;
 
-},{"@ungap/essential-map":11}],23:[function(require,module,exports){
+},{"@ungap/essential-map":12}],24:[function(require,module,exports){
 'use strict';
 // Custom
 var UID = '-' + Math.random().toFixed(6) + '%';
@@ -4189,7 +4328,7 @@ exports.TEXT_NODE = TEXT_NODE;
 exports.SHOULD_USE_TEXT_CONTENT = SHOULD_USE_TEXT_CONTENT;
 exports.VOID_ELEMENTS = VOID_ELEMENTS;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 // globals
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -4296,7 +4435,7 @@ function cleanContent(fragment) {
   }
 }
 
-},{"./sanitizer.js":25,"./walker.js":26,"@ungap/create-content":9,"@ungap/import-node":13,"@ungap/trim":17,"@ungap/weakmap":18}],25:[function(require,module,exports){
+},{"./sanitizer.js":26,"./walker.js":27,"@ungap/create-content":10,"@ungap/import-node":14,"@ungap/trim":18,"@ungap/weakmap":19}],26:[function(require,module,exports){
 'use strict';
 const {UID, UIDC, VOID_ELEMENTS} = require('./constants.js');
 
@@ -4328,7 +4467,7 @@ function fullClosing($0, $1, $2) {
   return VOID_ELEMENTS.test($1) ? $0 : ('<' + $1 + $2 + '></' + $1 + '>');
 }
 
-},{"./constants.js":23}],26:[function(require,module,exports){
+},{"./constants.js":24}],27:[function(require,module,exports){
 'use strict';
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
 const trim = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/trim'));
@@ -4458,7 +4597,7 @@ function parseAttributes(node, holes, parts, path) {
   }
 }
 
-},{"./constants.js":23,"@ungap/essential-map":11,"@ungap/trim":17}],27:[function(require,module,exports){
+},{"./constants.js":24,"@ungap/essential-map":12,"@ungap/trim":18}],28:[function(require,module,exports){
 'use strict';
 /*! (C) 2017-2018 Andrea Giammarchi - ISC Style License */
 
@@ -4839,7 +4978,7 @@ function isReady(created) {
   return false;
 }
 
-},{"hyperhtml":33}],28:[function(require,module,exports){
+},{"hyperhtml":34}],29:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var hyperStyle = (function (){'use strict';
   // from https://github.com/developit/preact/blob/33fc697ac11762a1cb6e71e9847670d047af7ce5/src/varants.js
@@ -4926,7 +5065,7 @@ var hyperStyle = (function (){'use strict';
 }());
 module.exports = hyperStyle;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*! (c) Andrea Giammarchi - ISC */
 var Wire = (function (slice, proto) {
 
@@ -4976,7 +5115,7 @@ var Wire = (function (slice, proto) {
 }([].slice));
 module.exports = Wire;
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const Map = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-map'));
@@ -5144,7 +5283,7 @@ Object.defineProperties(
   }
 );
 
-},{"@ungap/custom-event":10,"@ungap/essential-map":11,"@ungap/weakmap":18}],31:[function(require,module,exports){
+},{"@ungap/custom-event":11,"@ungap/essential-map":12,"@ungap/weakmap":19}],32:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -5185,7 +5324,7 @@ function upgrade(template) {
 
 Object.defineProperty(exports, '__esModule', {value: true}).default = render;
 
-},{"../objects/Updates.js":35,"../shared/constants.js":36,"@ungap/template-tag-arguments":16,"@ungap/weakmap":18}],32:[function(require,module,exports){
+},{"../objects/Updates.js":36,"../shared/constants.js":37,"@ungap/template-tag-arguments":17,"@ungap/weakmap":19}],33:[function(require,module,exports){
 'use strict';
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
 const tta = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/template-tag-arguments'));
@@ -5271,7 +5410,7 @@ exports.content = content;
 exports.weakly = weakly;
 Object.defineProperty(exports, '__esModule', {value: true}).default = wire;
 
-},{"../objects/Updates.js":35,"@ungap/template-tag-arguments":16,"@ungap/weakmap":18,"hyperhtml-wire":29}],33:[function(require,module,exports){
+},{"../objects/Updates.js":36,"@ungap/template-tag-arguments":17,"@ungap/weakmap":19,"hyperhtml-wire":30}],34:[function(require,module,exports){
 'use strict';
 /*! (c) Andrea Giammarchi (ISC) */
 const WeakMap = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/weakmap'));
@@ -5350,7 +5489,7 @@ function hyper(HTML) {
 }
 Object.defineProperty(exports, '__esModule', {value: true}).default = hyper
 
-},{"./classes/Component.js":30,"./hyper/render.js":31,"./hyper/wire.js":32,"./objects/Intent.js":34,"./objects/Updates.js":35,"@ungap/essential-weakset":12,"@ungap/weakmap":18,"domdiff":21}],34:[function(require,module,exports){
+},{"./classes/Component.js":31,"./hyper/render.js":32,"./hyper/wire.js":33,"./objects/Intent.js":35,"./objects/Updates.js":36,"@ungap/essential-weakset":13,"@ungap/weakmap":19,"domdiff":22}],35:[function(require,module,exports){
 'use strict';
 const attributes = {};
 const intents = {};
@@ -5392,7 +5531,7 @@ Object.defineProperty(exports, '__esModule', {value: true}).default = {
   }
 };
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 const CustomEvent = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/custom-event'));
 const WeakSet = (m => m.__esModule ? /* istanbul ignore next */ m.default : /* istanbul ignore next */ m)(require('@ungap/essential-weakset'));
@@ -5740,7 +5879,7 @@ Tagger.prototype = {
   }
 };
 
-},{"../classes/Component.js":30,"../shared/constants.js":36,"./Intent.js":34,"@ungap/create-content":9,"@ungap/custom-event":10,"@ungap/essential-weakset":12,"@ungap/is-array":14,"disconnected":19,"domdiff":21,"domtagger":24,"hyperhtml-style":28,"hyperhtml-wire":29}],36:[function(require,module,exports){
+},{"../classes/Component.js":31,"../shared/constants.js":37,"./Intent.js":35,"@ungap/create-content":10,"@ungap/custom-event":11,"@ungap/essential-weakset":13,"@ungap/is-array":15,"disconnected":20,"domdiff":22,"domtagger":25,"hyperhtml-style":29,"hyperhtml-wire":30}],37:[function(require,module,exports){
 'use strict';
 // Node.CONSTANTS
 // 'cause some engine has no global Node defined
@@ -5760,4 +5899,4 @@ exports.CONNECTED = CONNECTED;
 const DISCONNECTED = 'dis' + CONNECTED;
 exports.DISCONNECTED = DISCONNECTED;
 
-},{}]},{},[8]);
+},{}]},{},[9]);

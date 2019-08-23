@@ -92,7 +92,7 @@ var getAdblockVersion = function(version) {
         'dev.getadblock.com' === document.location.hostname ||
         'dev1.getadblock.com' === document.location.hostname ||
         'dev2.getadblock.com' === document.location.hostname) {
-      chrome.storage.local.get('userid', function (response) {
+      chrome.storage.local.get('userid').then((response) => {
         var adblock_user_id = response['userid'];
         var adblock_version = chrome.runtime.getManifest().version;
         var elem = document.createElement('script');
@@ -182,7 +182,7 @@ var run_bandaids = function()
             event.origin === "https://getadblock.com" &&
             event.data.command === "payment_success") {
           window.removeEventListener("message", receiveMessage);
-          chrome.runtime.sendMessage({ "command" : "payment_success", "version": 1 }, function (response) {
+          chrome.runtime.sendMessage({ "command" : "payment_success", "version": 1 }).then((response) => {
             window.postMessage(response, "*");
           });
         }
@@ -194,7 +194,7 @@ var run_bandaids = function()
         if (event.data &&
             event.origin === "https://getadblock.com" &&
             typeof event.data.magicCode === "string") {
-          chrome.runtime.sendMessage({ magicCode : event.data.magicCode }, function (response) {
+          chrome.runtime.sendMessage({ magicCode : event.data.magicCode }).then((response) => {
             // hookup options page link
             let link = document.getElementById('open-options-page');
             if (link) {
@@ -212,7 +212,7 @@ var run_bandaids = function()
         }
       }
 
-      chrome.storage.local.get("userid", function(response)
+      chrome.storage.local.get("userid").then((response) =>
       {
         if (response.userid)
         {

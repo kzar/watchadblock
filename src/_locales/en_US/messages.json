@@ -502,10 +502,6 @@
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "description": "Instructions shown in popup UI before it disapears, when \"Block element\" action is executed", 
-    "message": "After closing this popup, click (or right-click) an element on the page."
-  }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
     "description": "User has to click the ad they want to block."
@@ -572,6 +568,10 @@
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
   }, 
+  "copy_selected": {
+    "description": "Copy selected items button label", 
+    "message": "Copy selected"
+  }, 
   "correctfilters": {
     "message": "Make sure you're using the right language filter(s):", 
     "description": "On the ad report page, label describing having the right filter lists enabled"
@@ -634,6 +634,10 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "description": "Delete button label", 
+    "message": "Delete"
+  }, 
   "delete_migration_error_messages": {
     "message": "Delete messages", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -654,6 +658,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Check the Acceptable Ads filters:", 
     "description": "Section header on the ad report page"
@@ -669,10 +741,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "description": "Popup balloon label to disable blocking", 
-    "message": "<strong>Disabled</strong> on this site"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -782,10 +850,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "description": "Popup balloon label to enable blocking", 
-    "message": "<strong>Enabled</strong> on this site"
-  }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -861,6 +925,10 @@
   "ff_checkinchrometitle": {
     "message": "Check in Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_action_failed": {
+    "description": "One or more filters could not be saved or updated.", 
+    "message": "Something went wrong. Please try again."
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
@@ -941,6 +1009,10 @@
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_slow": {
+    "description": "A slow filter highlighted through the warning icon", 
+    "message": "To ensure a fast filter, please check the length of the pattern and ensure it doesn't contain a regular expression."
   }, 
   "filter_snippet_nodomain": {
     "message": "No active domain specified for snippet filter"
@@ -1048,6 +1120,10 @@
     "message": "Greek", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesian", 
     "description": "A filter list"
@@ -1058,6 +1134,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polish", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1327,19 +1407,14 @@
     "message": "Invalid list URL. It'll be deleted.", 
     "description": "Message when you subscribe to a non-list URL"
   }, 
-  "invalid_css_selector": {
-    "message": "$selector$ is not a valid CSS selector", 
-    "placeholders": {
-      "selector": {
-        "content": "$1"
-      }
-    }
-  }, 
   "issueReporter_anonymousSubmission_label": {
     "message": "Anonymous submission"
   }, 
   "issueReporter_anonymousSubmission_warning": {
     "message": "We won't be able to come back to you and will likely prioritize the report lower."
+  }, 
+  "issueReporter_closeButton_label": {
+    "message": "Close"
   }, 
   "issueReporter_commentPage_heading": {
     "message": "Leave a comment"
@@ -1403,6 +1478,9 @@
   }, 
   "issueReporter_processing_screenshot": {
     "message": "processing"
+  }, 
+  "issueReporter_screenreader_warning": {
+    "message": "To help us better understand the issue, a screenshot is required when submitting an issue report. Depending on the website you're currently on, the screenshot might contain personal information. If you're uncomfortable submitting a screenshot, please email your issue to <a0>support@adblockplus.org</a0>."
   }, 
   "issueReporter_screenshot_hide": {
     "message": "Hide"
@@ -1893,9 +1971,6 @@
   "notification_open_all": {
     "message": "Open all links from this notification"
   }, 
-  "notification_with_buttons": {
-    "message": "Click 'OK' to open all links in this notification."
-  }, 
   "notification_without_buttons": {
     "message": "Click on the notification to open all links in it."
   }, 
@@ -1971,43 +2046,13 @@
     "description": "Label below raw view of user's filter list in Advanced tab", 
     "message": "Cancel"
   }, 
-  "options_customFilter_edit": {
-    "description": "Label below single input view of user's filter list in Advanced tab", 
-    "message": "Edit filters"
-  }, 
-  "options_customFilter_save": {
-    "description": "Label below raw view of user's filter list in Advanced tab", 
-    "message": "Save"
-  }, 
   "options_customFilters_description": {
     "description": "Custom filter lists section description in Advanced tab", 
-    "message": "Create your own filters to further control what content AdBlock blocks. <a0>Learn how to create filters</a0>"
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "description": "Custom filter widget(empty) placeholder text in Advanced tab", 
-    "message": "e.g. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "description": "Custom filter widget(empty) link text in Advanced tab", 
-    "message": "Learn how to create filters"
-  }, 
-  "options_customFilters_start": {
-    "description": "Custom filter widget(empty) button text in Advanced tab", 
-    "message": "Start creating my filter list"
-  }, 
-  "options_customFilters_tip": {
-    "description": "Custom filter widget(empty) hint text in Advanced tab", 
-    "message": "Filters you create will show up here."
+    "message": "Create and maintain your own filters to further control what content AdBlock allows or blocks. <a0>Learn how to write filters</a0>"
   }, 
   "options_customFilters_title": {
     "description": "Section title in Advanced tab", 
-    "message": "Create and edit your filter list"
+    "message": "Your custom filters"
   }, 
   "options_customFilters_widget_title": {
     "description": "Custom filter widget title in Advanced tab", 
@@ -2047,10 +2092,10 @@
   }, 
   "options_dialog_about_copyright": {
     "description": "Copyright information in 'about AdBlock' modal dialog", 
-    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "message": "Copyright © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2175,7 +2220,7 @@
   }, 
   "options_filterList_state_disabled": {
     "description": "State of filter list in Advanced tab", 
-    "message": "Disabled"
+    "message": "Inactive"
   }, 
   "options_filterList_title": {
     "description": "Section title in Advanced tab", 
@@ -2193,9 +2238,12 @@
     "description": "Context menu item in advanced tab, appears after click on subscription", 
     "message": "website"
   }, 
+  "options_filter_list_rule": {
+    "message": "Filter rule"
+  }, 
   "options_filters_search_or_add": {
     "description": "The filter search placeholder.", 
-    "message": "Search / add filter (e.g. $filter$)", 
+    "message": "Search or add filter(s) (e.g. $filter$)", 
     "placeholders": {
       "filter": {
         "content": "/ads/track/*"
@@ -2237,6 +2285,20 @@
   "options_language_header": {
     "description": "Section title in General tab", 
     "message": "Language"
+  }, 
+  "options_language_join": {
+    "description": "Combines language filter list specifications(language names) together, ex: -> https://gitlab.com/eyeo/specs/spec/blob/master/spec/abp/options-page.md#language-drop-down", 
+    "message": "$lang1$, $lang2$", 
+    "placeholders": {
+      "lang1": {
+        "content": "$1", 
+        "example": "čeština"
+      }, 
+      "lang2": {
+        "content": "$2", 
+        "example": "slovenčina"
+      }
+    }
   }, 
   "options_language_tip": {
     "description": "Language section tip in General tab", 
@@ -2701,14 +2763,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "description": "Toggle for displaying the number of blocked ads in the icon.", 
-    "message": "Show number in icon"
-  }, 
-  "stats_title": {
-    "description": "Title for the stats section in the popup.", 
-    "message": "Ads blocked"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

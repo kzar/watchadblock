@@ -15,8 +15,6 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* eslint-env jquery */
-
 "use strict";
 
 let targetPageId = null;
@@ -40,8 +38,7 @@ function addFilters()
   browser.runtime.sendMessage({
     type: "filters.importRaw",
     text: document.getElementById("filters").value
-  },
-  errors =>
+  }).then((errors) =>
   {
     if (errors.length > 0)
       alert(errors.join("\n"));
@@ -86,9 +83,6 @@ function init()
     "click", closeDialog.bind(null, false)
   );
 
-  // Apply jQuery UI styles
-  $("button").button();
-
   document.getElementById("filters").focus();
 
   ext.onMessage.addListener((msg, sender, sendResponse) =>
@@ -97,10 +91,10 @@ function init()
     {
       case "composer.dialog.init":
         targetPageId = msg.sender;
-        let filtersTextArea = document.getElementById("filters");
+        const filtersTextArea = document.getElementById("filters");
         filtersTextArea.value = msg.filters.join("\n");
         filtersTextArea.disabled = false;
-        $("#addButton").button("option", "disabled", false);
+        document.getElementById("addButton").disabled = false;
 
         // Firefox sometimes tells us this window had loaded before it has[1],
         // to work around that we send the "composer.dialog.init" message again

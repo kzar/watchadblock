@@ -487,6 +487,9 @@
     "message": "Puhdista lista", 
     "description": "Label at the bottom of the 'Customize' tab of the Options page"
   }, 
+  "click_element_to_block_it": {
+    "message": "Klikkaa elementtiä sivustolla estääksesi se."
+  }, 
   "clickdisableaa": {
     "message": "Klikkaa tästä: [[poista hyväksyttävät mainokset käytöstä]]", 
     "description": "Instruction on ad report page"
@@ -494,9 +497,6 @@
   "clickdisableotherextensions": {
     "message": "TAI, klikkaa tätä painiketta, niin teemme kaiken puolestasi: [[Poista kaikki muut laajennukset käytöstä]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
-  }, 
-  "clickhide_instructions": {
-    "message": "Tämän ikkunan sulkemisen jälkeen klikkaa (tai oikea klikkaa) elementtiä jonka haluat estää."
   }, 
   "clickthead": {
     "message": "Klikkaa mainosta estääksesi sen.", 
@@ -509,6 +509,21 @@
   "close": {
     "message": "Sulje", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Piilota Adblock varoitussanomat"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Estä haittaohjelmat"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Estä muu seuranta"
+  }, 
+  "common_feature_social_title": {
+    "message": "Estä sosiaalisen median kuvakkeet"
+  }, 
+  "common_notification_hide": {
+    "message": "Sulje ilmoitus"
   }, 
   "confirm_undo_custom_filters": {
     "message": "Oletko varma, että haluat poistaa $count$ estoa, jotka olet estänyt verkkotunnuksessa $host$?", 
@@ -625,6 +640,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Tarkista hyväksyttävien mainosten suodatinlistat:", 
     "description": "Section header on the ad report page"
@@ -640,9 +723,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Poistettu</strong> tältä sivulta"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -750,9 +830,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Käytössä</strong> tällä sivulla"
   }, 
   "enableotherextensionscomplete": {
     "message": "Laajennukset, jotka oli aiemmin poistettu käytöstä, on nyt otettu takaisin käyttöön.", 
@@ -1013,6 +1090,10 @@
     "message": "kreikka", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesia", 
     "description": "A filter list"
@@ -1023,6 +1104,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "puola", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1149,6 +1234,45 @@
   "firefox_explanation": {
     "message": "Tämän kysymyksen tarkoitus on se, kuka saa vastaanottaa raporttisi. Jos vastaat tähän kysymykseen väärin, raportti lähetetään väärille henkilöille, ja se saatetaan hylätä.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
+  }, 
+  "firstRun_browser_store_android": {
+    "message": "Android sovellus Google Play:ssa"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "Saatavilla iTunes sovelluskaupasta"
+  }, 
+  "firstRun_browser_title": {
+    "message": "Adblock Browser sovellus"
+  }, 
+  "firstRun_control_title": {
+    "message": "Sinä päätät"
+  }, 
+  "firstRun_fair_title": {
+    "message": "Reilu käyttö"
+  }, 
+  "firstRun_footer_copyright": {
+    "message": "Copyright © $year$ Kaikki oikeudet pidätetään AdBlock® on rekisteröity <a0>eyeo GmbH</a0> tavaramerkki.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
+  }, 
+  "firstRun_subtitle": {
+    "message": "Otit juuri selaimesi hallinnan."
+  }, 
+  "firstRun_title": {
+    "message": "Asennus onnistui!"
+  }, 
+  "firstRun_warning_dataCorrupted_step1": {
+    "message": "Avaa selaimesi laajennukset -välilehti."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "Paikanna AdBlock ja poista se."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "Uudelleenasenna AdBlock osoitteesta <a>adblockplus.org</a>."
   }, 
   "fixityourself": {
     "message": "OK, voit edelleen estää mainoksen vain itsellesi Asetukset-sivulla. Kiitos!", 
@@ -1794,14 +1918,26 @@
     "message": "Asetukset", 
     "description": "The text of the link on chrome://chrome/extensions that takes you to the Options page"
   }, 
+  "options_acceptableAds_ads_label": {
+    "message": "Salli hyväksyttävät mainokset"
+  }, 
   "options_acceptableAds_header": {
     "message": "Hyväksytyt mainokset"
   }, 
   "options_close": {
     "message": "sulje"
   }, 
+  "options_control_remove_title": {
+    "message": "poista"
+  }, 
   "options_customFilter_cancel": {
     "message": "Peruuta"
+  }, 
+  "options_customFilters_widget_title": {
+    "message": "Oma suodatinluettelo"
+  }, 
+  "options_customize_header": {
+    "message": "Mukauttaminen"
   }, 
   "options_customize_showNotifications": {
     "message": "Näytä hyödylliset ilmoitukset"
@@ -1818,14 +1954,35 @@
   "options_filterList_column_status": {
     "message": "Tila"
   }, 
+  "options_filterList_column_update": {
+    "message": "Viimeksi päivitetty"
+  }, 
+  "options_filterList_hours": {
+    "message": "tuntia sitten"
+  }, 
   "options_filterList_lastDownload_checksumMismatch": {
     "message": "Epäonnistui, tarkistussumma ei täsmää"
   }, 
   "options_filterList_lastDownload_connectionError": {
     "message": "Epäonnistui, latausvirhe"
   }, 
+  "options_filterList_lastDownload_inProgress": {
+    "message": "Päivitetään"
+  }, 
   "options_filterList_lastDownload_invalidURL": {
     "message": "Epäonnistui, kelvoton osoite"
+  }, 
+  "options_filterList_minutes": {
+    "message": "minuuttia sitten"
+  }, 
+  "options_filterList_now": {
+    "message": "Juuri nyt"
+  }, 
+  "options_filterList_source": {
+    "message": "lähde"
+  }, 
+  "options_filterList_state_active": {
+    "message": "Aktiivinen"
   }, 
   "options_filterList_state_disabled": {
     "message": "Ei käytössä"
@@ -1833,11 +1990,38 @@
   "options_filterList_title": {
     "message": "Suodatinlistat"
   }, 
+  "options_filterList_update": {
+    "message": "päivitä kaikki suodatinlistat"
+  }, 
   "options_filterList_updateNow": {
     "message": "päivitä nyt"
   }, 
+  "options_filterList_website": {
+    "message": "sivusto"
+  }, 
+  "options_footer_about": {
+    "message": "Tietoa AdBlock"
+  }, 
+  "options_footer_contribute": {
+    "message": "Avusta"
+  }, 
+  "options_language_add": {
+    "message": "+ lisää kieli"
+  }, 
+  "options_language_change": {
+    "message": "muuta"
+  }, 
   "options_language_header": {
     "message": "Kieli"
+  }, 
+  "options_learn_more": {
+    "message": "Lue lisää"
+  }, 
+  "options_more_filters_header": {
+    "message": "Lisää suodattimia"
+  }, 
+  "options_new_label": {
+    "message": "Uusi"
   }, 
   "options_page_document_title": {
     "message": "Asetukset"
@@ -1849,11 +2033,20 @@
   "options_page_title": {
     "message": "Asetukset"
   }, 
+  "options_privacy_header": {
+    "message": "Yksityisyys & tietoturva"
+  }, 
+  "options_refresh": {
+    "message": "Virkistä"
+  }, 
   "options_short": {
     "message": "Asetukset"
   }, 
   "options_support_title": {
     "message": "Tuki"
+  }, 
+  "options_tab_advanced": {
+    "message": "Edistynyt"
   }, 
   "options_tab_general": {
     "message": "Yleiset"
@@ -1863,6 +2056,12 @@
   }, 
   "options_tab_whitelist": {
     "message": "Sallitut sivustot"
+  }, 
+  "options_tracking_warning_acknowledgment": {
+    "message": "OK, asia selvä"
+  }, 
+  "options_whitelist_add": {
+    "message": "Lisää sivusto"
   }, 
   "optionstitle": {
     "message": "AdBlockin asetukset", 
@@ -1900,6 +2099,9 @@
   "overlay_notification_button_yes": {
     "message": "Kyllä"
   }, 
+  "overlay_notification_closing_button_hide": {
+    "message": "Sulje"
+  }, 
   "overlay_notification_closing_button_optout": {
     "message": "Lopeta ilmoitusten näyttäminen"
   }, 
@@ -1935,6 +2137,9 @@
     "message": "Yksityisyyskäytännöt", 
     "description": "Link to AdBlock's privacy policy"
   }, 
+  "promote_abp_module": {
+    "message": "Kiinnostunut AdBlock mobiiliversiosta?"
+  }, 
   "pwyw": {
     "message": "Maksa mitä haluat!", 
     "description": "Text of a payment request link"
@@ -1954,6 +2159,9 @@
   "reenableadsonebyone": {
     "message": "Hienoa! Selvitetäänpä nyt, mistä laajennuksesta ongelma johtuu. Ota laajennukset yksi kerrallaan käyttöön. Laajennus, jonka käyttöönoton myötä mainos palaa, on sellainen, joka sinun tulee poistaa päästäksesi eroon mainoksesta.", 
     "description": "Tells the user to re-enable the extensions one by one"
+  }, 
+  "refresh_to_take_effect": {
+    "message": "Klikkaa <strong>Virkistä</strong> jotta muutokset tulevat voimaan."
   }, 
   "refusetocheck": {
     "message": "En halua tarkistaa tätä", 
@@ -2065,6 +2273,9 @@
     "message": "select language", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
+  "sendReport": {
+    "message": "Ilmoita ongelmasta"
+  }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
     "description": "Part of Options page message letting users know of settings change."
@@ -2129,6 +2340,9 @@
     "message": "Lähdekoodi on [[vapaasti saatavilla]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
   }, 
+  "stats_header": {
+    "message": "Estettyjen kohteiden määrä"
+  }, 
   "stats_label_page": {
     "message": "<strong>$number$</strong> tällä sivulla", 
     "placeholders": {
@@ -2145,15 +2359,12 @@
       }
     }
   }, 
-  "stats_show_iconnumber": {
-    "message": "Näytä numerot kuvakkeessa"
-  }, 
-  "stats_title": {
-    "message": "Mainokset estetty"
-  }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 
     "description": "Message shown in toolbar button when AdBlock is not running on a specific domain"
+  }, 
+  "status_header": {
+    "message": "Estä mainoksia:"
   }, 
   "status_paused": {
     "message": "AdBlock on pysäytetty.", 
@@ -2579,6 +2790,21 @@
   "updatenowmessage2": {
     "message": "Automaattiset päivitykset ovat käytössä; voit myös [[päivittää nyt]]", 
     "description": "Update filters text and button"
+  }, 
+  "updates_heading": {
+    "message": "AdBlock on päivitetty!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "Upouusi asetussivu - uudistettu yksityisyys- ja tietoturva-asetukset - joten on helpompaa <a>mukauttaa AdBlock juuri niin kuin haluat</a>."
+  }, 
+  "updates_phone": {
+    "message": "Mutta odota! Entä puhelimesi?"
+  }, 
+  "updates_status": {
+    "message": "Päivitys suoritettu"
+  }, 
+  "updates_subheading": {
+    "message": "Mitä uutta?"
   }, 
   "updateyourlists": {
     "message": "Varmista, että suodatinlistasi ovat ajan tasalla:", 

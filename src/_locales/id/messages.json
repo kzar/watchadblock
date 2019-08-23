@@ -495,9 +495,6 @@
     "message": "ATAU, cukup klik tombol ini untuk kita untuk melakukan semua hal di atas: [[Nonaktifkan semua ekstensi lainnya]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Setelah menutup munculan ini , klik (atau klik kanan) elemen pada halaman web."
-  }, 
   "clickthead": {
     "message": "Klik iklannya, dan saya akan menuntun anda memblokirnya.", 
     "description": "User has to click the ad they want to block."
@@ -509,6 +506,18 @@
   "close": {
     "message": "Tutup", 
     "description": "Generic message for buttons that close a view or window"
+  }, 
+  "common_feature_anti_adblock_title": {
+    "message": "Sembunyikan Pesan Peringatan Adblock"
+  }, 
+  "common_feature_malware_title": {
+    "message": "Blokir Malware"
+  }, 
+  "common_feature_privacy_title": {
+    "message": "Blokir tambahan pelacakan"
+  }, 
+  "common_feature_social_title": {
+    "message": "Blokir pelacakan ikon sosial media"
   }, 
   "common_notification_hide": {
     "message": "Tutup pemberitahuan"
@@ -628,6 +637,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Cek filter iklan yang dapat diterima:", 
     "description": "Section header on the ad report page"
@@ -643,9 +720,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Nonaktifkan</strong> pada situs ini"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -753,9 +827,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Diaktifkan</strong> pada situs ini"
   }, 
   "enableotherextensionscomplete": {
     "message": "Ekstensi yang telah dinonaktifkan sebelumnya telah diaktifkan kembali.", 
@@ -913,6 +984,9 @@
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
   }, 
+  "filter_snippet_nodomain": {
+    "message": "Tidak ada domain aktif yang ditetapkan untuk potongan penyaring"
+  }, 
   "filter_unknown_option": {
     "message": "Opsi filter yang tidak diketahui"
   }, 
@@ -1016,6 +1090,10 @@
     "message": "Bahasa Yunani", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesia", 
     "description": "A filter list"
@@ -1026,6 +1104,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polandia", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1803,27 +1885,6 @@
   "options_customFilter_cancel": {
     "message": "Batal"
   }, 
-  "options_customFilter_edit": {
-    "message": "Ubah Filter"
-  }, 
-  "options_customFilter_save": {
-    "message": "Simpan"
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "misalnya $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Belajar bagaimana menulis daftar filter"
-  }, 
-  "options_customFilters_start": {
-    "message": "Mulai menulis daftar filter"
-  }, 
   "options_customize_showNotifications": {
     "message": "Tampilkan pemberitahuan yang berguna"
   }, 
@@ -2246,12 +2307,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Tampilkan angka didalam ikon"
-  }, 
-  "stats_title": {
-    "message": "Iklan terblokir"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

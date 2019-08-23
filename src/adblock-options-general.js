@@ -99,7 +99,7 @@ var acceptableAdsPrivacyClicked = function(isEnabled) {
 
   if (isEnabled) {
     if (acceptableAdsPrivacy instanceof DownloadableSubscription) {
-      Synchronizer.execute(acceptableAdsPrivacy);
+      synchronizer.execute(acceptableAdsPrivacy);
     }
     filterStorage.addSubscription(acceptableAdsPrivacy);
     filterStorage.removeSubscription(acceptableAds);
@@ -119,7 +119,7 @@ var acceptableAdsClicked = function (isEnabled) {
     filterStorage.addSubscription(subscription);
     if (subscription instanceof DownloadableSubscription)
     {
-      Synchronizer.execute(subscription);
+      synchronizer.execute(subscription);
     }
     updateAcceptableAdsUI(true, false);
   } else

@@ -495,9 +495,6 @@
     "message": "ELLER så kan du bare klikke på denne knappen, så fikser vi alt: [[Deaktiver alle andre utvidelser]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Klikk (eller høyreklikk) på et element på siden etter at du har lukket dette vinduet."
-  }, 
   "clickthead": {
     "message": "Klikk på annonsen, så hjelper jeg deg med å blokkere den.", 
     "description": "User has to click the ad they want to block."
@@ -640,6 +637,74 @@
     "message": "Den eneste YouTube™-reklameblokkereren laget av AdBlock, den mest populære Chrome-utvidelsen med 60 millioner brukere verden over", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Sjekk \"Akseptable reklamer\"-filterne:", 
     "description": "Section header on the ad report page"
@@ -655,9 +720,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Beklager, AdBlock på YouTube™ er deaktivert på denne siden av en av innstillingene dine.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Deaktivert</strong> på dette nettstedet"
   }, 
   "disabled_on_this_channel": {
     "message": "Du har tillatt reklamer på denne kanalen.", 
@@ -765,9 +827,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Aktivert</strong> på dette nettstedet"
   }, 
   "enableotherextensionscomplete": {
     "message": "De tidligere deaktiverte utvidelsene har blitt aktivert igjen.", 
@@ -1028,6 +1087,10 @@
     "message": "Gresk", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesisk", 
     "description": "A filter list"
@@ -1038,6 +1101,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polsk", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1165,6 +1232,36 @@
     "message": "Formålet med dette spørsmålet er å avgjøre hvem som skal motta rapporten. Hvis du svarer på dette spørsmålet feil, vil rapporten sendes til feil person, så det kan bli ignorert.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_browser_description": {
+    "message": "Fra gruppen bak AdBlock, den mest populære annonse blokkeren for nettlesere på datamaskinen. Adblock Browser er nå tilgjengelig for dine Android eller iOS enheter."
+  }, 
+  "firstRun_browser_store_android": {
+    "message": "Android applikasjoner fra Google Play"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "Tilgjengelig i iTunes App Store"
+  }, 
+  "firstRun_browser_title": {
+    "message": "Adblock Browser app"
+  }, 
+  "firstRun_control_title": {
+    "message": "Du har kontrollen"
+  }, 
+  "firstRun_subtitle": {
+    "message": "Du tok nettopp kontrollen over din nettleser."
+  }, 
+  "firstRun_title": {
+    "message": "Vellykket installasjon!"
+  }, 
+  "firstRun_warning_dataCorrupted_note": {
+    "message": "Dersom du fortsatt trenger hjelp, kontakt oss på <a0>support@adblockplus.org</a0> eller besøk vårt <a1>Hjelpesenterr</a1>."
+  }, 
+  "firstRun_warning_dataCorrupted_step2": {
+    "message": "Lokaliser AdBlock og fjern den."
+  }, 
+  "firstRun_warning_dataCorrupted_step3": {
+    "message": "Installer AdBlock på nytt fra <a>adblockplus.org</a>."
+  }, 
   "fixityourself": {
     "message": "OK, du kan fremdeles blokkere denne reklamen selv, under innstillinger. Takk!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1274,6 +1371,9 @@
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Merk:</strong> En ny fane vil bli åpnet midlertidig slik at siden du er på ikke blir påvirket av Problemrapportereren."
   }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Detaljer"
+  }, 
   "issueReporter_doneButton_label": {
     "message": "Fullfør"
   }, 
@@ -1298,14 +1398,35 @@
   "issueReporter_falsePositive_label": {
     "message": "AdBlock blokkerer for mye"
   }, 
+  "issueReporter_highlighter_description": {
+    "message": "Velg dette verktøyet for å velge hver reklame eller skjule sensitiv informasjon i skjermbildet. Markering av reklame vil hjelpe oss med å rette problemet raskere."
+  }, 
+  "issueReporter_highlighter_heading": {
+    "message": "Marker problem"
+  }, 
   "issueReporter_knownIssueMessage": {
     "message": "Problemet du rapporterte inn er allerede kjent for oss. Mer informasjon:"
+  }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Marker problem"
   }, 
   "issueReporter_page_title": {
     "message": "Problemrapporterer"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Personvern"
+  }, 
+  "issueReporter_processing_screenshot": {
+    "message": "behandler"
+  }, 
+  "issueReporter_screenshot_hide": {
+    "message": "Skjul"
+  }, 
+  "issueReporter_screenshot_highlight": {
+    "message": "Marker"
+  }, 
+  "issueReporter_selectIssueButton_label": {
+    "message": "Velg problem"
   }, 
   "issueReporter_sendButton_label": {
     "message": "Send rapport"
@@ -1818,6 +1939,9 @@
   "options_acceptableAds_header": {
     "message": "Akseptable annonser"
   }, 
+  "options_acceptableAds_privacy_label": {
+    "message": "Bare tillat annonser uten tredjeparts sporing"
+  }, 
   "options_close": {
     "message": "lukk"
   }, 
@@ -1827,32 +1951,8 @@
   "options_customFilter_cancel": {
     "message": "Avbryt"
   }, 
-  "options_customFilter_edit": {
-    "message": "Rediger filter"
-  }, 
-  "options_customFilter_save": {
-    "message": "Lagre"
-  }, 
   "options_customFilters_description": {
     "message": "Lag dine egne tilpassede filter for å kontrollere hvilket innhold AdBlock tillater eller blokkerer ytterligere."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "f.eks $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Lær å lage filterlister"
-  }, 
-  "options_customFilters_start": {
-    "message": "Begynn å lage min filterliste"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Filter du lager vil vises her."
   }, 
   "options_customFilters_title": {
     "message": "Opprett og rediger dine filterlister"
@@ -1860,11 +1960,26 @@
   "options_customFilters_widget_title": {
     "message": "Min filterliste"
   }, 
+  "options_customize_showDevToolsPanel": {
+    "message": "Vis \"AdBlock\"-panelet i utviklerverktøyene"
+  }, 
   "options_customize_showNotifications": {
     "message": "Vis nyttige varsler"
   }, 
   "options_dialog_about_title": {
     "message": "Om AdBlock"
+  }, 
+  "options_dialog_about_version": {
+    "message": "Versjonnummer $version$", 
+    "placeholders": {
+      "version": {
+        "content": "$1", 
+        "example": "2.6.7"
+      }
+    }
+  }, 
+  "options_dialog_import_subscription_location_error": {
+    "message": "Angi en gyldig URL"
   }, 
   "options_dialog_import_title": {
     "message": "Legg til en filterliste"
@@ -1944,6 +2059,14 @@
   "options_filterList_website": {
     "message": "nettside"
   }, 
+  "options_filters_search_or_add": {
+    "message": "Søk / Legg til filter (f.eks. $filter$)", 
+    "placeholders": {
+      "filter": {
+        "content": "/ads/track/*"
+      }
+    }
+  }, 
   "options_footer_about": {
     "message": "Om AdBlock"
   }, 
@@ -1961,6 +2084,9 @@
   }, 
   "options_language_change": {
     "message": "endre"
+  }, 
+  "options_language_empty": {
+    "message": "Du har ingen språkspesifikke filtre."
   }, 
   "options_language_header": {
     "message": "Språk"
@@ -1986,6 +2112,12 @@
   }, 
   "options_privacy_header": {
     "message": "Personvern & sikkerhet"
+  }, 
+  "options_report_bug": {
+    "message": "Funnet en feil? <a>Send oss en feilrapport</a>"
+  }, 
+  "options_report_forum": {
+    "message": "Ønsker du støtte fra vårt fellesskap? <a>Besøk forumet</a>"
   }, 
   "options_short": {
     "message": "Alternativer"
@@ -2324,12 +2456,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Vis tall i ikonet"
-  }, 
-  "stats_title": {
-    "message": "Blokkerte annonser"
   }, 
   "status_domain_paused": {
     "message": "AdBlock er pauset på dette nettstedet.", 
@@ -2760,8 +2886,20 @@
     "message": "Jeg vil laste ned oppdateringer automatisk; du kan også [[oppdatere nå]]", 
     "description": "Update filters text and button"
   }, 
+  "updates_adblockBrowser": {
+    "message": "Hvis du tar kontroll på datamaskinen, så kan du blokkere annonser og forbedre ditt personvern og din sikkerhet på mobil også. Få <a>Adblock Browser appen under</a>."
+  }, 
+  "updates_blockAds": {
+    "message": "Open Source Rebel Alliance oppretter nye blokkeringsfiltre som lar deg fjerne skjulte annonser på nettsteder som Facebook, selv om de prøver å skjule det."
+  }, 
   "updates_heading": {
     "message": "AdBlock har blitt oppdatert!"
+  }, 
+  "updates_optionsPageNews": {
+    "message": "Nye side for innstillinger - fornyet og restaurert med mer privat- og sikkerhetsalternativer - så det er lettere å <a>tilpasse AdBlock akkurat som du vil ha den</a>."
+  }, 
+  "updates_phone": {
+    "message": "Men vent! Hva med telefonen din?"
   }, 
   "updates_status": {
     "message": "Oppdatering fullført"

@@ -498,9 +498,6 @@
     "message": "OR, just click this button for us to do all of the above: [[Disable all other extensions]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Pärast hüpikakna sulgemist klõpsake (või paremklõpsake) mõnel lehe elemendil."
-  }, 
   "clickthead": {
     "message": "Click the ad, and I'll walk you through blocking it.", 
     "description": "User has to click the ad they want to block."
@@ -560,6 +557,9 @@
   "contributors": {
     "message": "We've got a page to help you find out the [[people behind AdBlock]], as well!", 
     "description": "Link to the contributors page on the Support tab"
+  }, 
+  "copy_selected": {
+    "message": "Kopeeri valitud"
   }, 
   "correctfilters": {
     "message": "Make sure you're using the right language filter(s):", 
@@ -623,6 +623,9 @@
     "message": "Default", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "delete": {
+    "message": "Kustuta"
+  }, 
   "delete_migration_error_messages": {
     "message": "Delete messages", 
     "description": "Button to delete error messages when adding custom filters manually"
@@ -643,6 +646,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Check the Acceptable Ads filters:", 
     "description": "Section header on the ad report page"
@@ -658,9 +729,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Sorry, AdBlock on YouTube™ is disabled on this page by one of your options.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Keelatud</strong> sellel saidil"
   }, 
   "disabled_on_this_channel": {
     "message": "You allowed ads on this channel.", 
@@ -769,9 +837,6 @@
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
   }, 
-  "enabled_for_site": {
-    "message": "<strong>Kasutusel</strong> sellel saidil"
-  }, 
   "enableotherextensionscomplete": {
     "message": "The extensions that were previously disabled have been re-enabled.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
@@ -847,6 +912,9 @@
   "ff_checkinchrometitle": {
     "message": "Check in Chrome", 
     "description": "Tell a user to see if a reported ad also appears in Chrome"
+  }, 
+  "filter_action_failed": {
+    "message": "Midagi läks valesti. Palun proovi uuesti."
   }, 
   "filter_annoyances_explained": {
     "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
@@ -927,6 +995,9 @@
   "filter_russian": {
     "message": "Russian & Ukrainian + EasyList", 
     "description": "A filter list combined with EasyList"
+  }, 
+  "filter_slow": {
+    "message": "Kiire filtri tagamiseks palun kontrolli mustri pikkust ja veendu, et see ei sisalda regulaaravaldist."
   }, 
   "filter_unknown_option": {
     "message": "Tundmatu filtri valik"
@@ -1031,6 +1102,10 @@
     "message": "Greek", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonesian", 
     "description": "A filter list"
@@ -1041,6 +1116,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polish", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1168,6 +1247,30 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "firstRun_browser_store_android": {
+    "message": "Androidi äpp Google Play's"
+  }, 
+  "firstRun_browser_store_ios": {
+    "message": "Saadaval iTunes App Store'is"
+  }, 
+  "firstRun_browser_title": {
+    "message": "Adblock Browser äpp"
+  }, 
+  "firstRun_fair_description": {
+    "message": "Julgustame sind AdBlocki ja selle võimalust veebisaite lubatute nimekirja lisada õiglaselt kasutama. Sõltuvalt kasutatavatest filtritest, sa mõistad ja nõustud, et ilmneda võivad tahtmatud tulemused (nt. blokeeritud sisu veebilehel). AdBlocki õiglase kasutamise kohta lähema teabe saamiseks vaata <a0>Kasutustingimusi</a0>."
+  }, 
+  "firstRun_fair_title": {
+    "message": "Õiglane kasutamine"
+  }, 
+  "firstRun_footer_copyright": {
+    "message": "Copyright © $year$ Kõik õigused kaitstud. AdBlock® on ettevõtte <a0>eyeo GmbH</a0> registreeritud kaubamärk.", 
+    "placeholders": {
+      "year": {
+        "content": "$1", 
+        "example": "1984"
+      }
+    }
+  }, 
   "firstRun_subtitle": {
     "message": "Sa just võtsid kontrolli oma veebilehitseja üle."
   }, 
@@ -1286,6 +1389,9 @@
   "issueReporter_anonymousSubmission_warning": {
     "message": "Meil ei ole võimalik sinu poole tagasi pöörduda ja tõenäoliselt omistame sellele teatele madamala prioriteedi."
   }, 
+  "issueReporter_closeButton_label": {
+    "message": "Sulge"
+  }, 
   "issueReporter_commentPage_heading": {
     "message": "Kommenteeri"
   }, 
@@ -1337,11 +1443,17 @@
   "issueReporter_knownIssueMessage": {
     "message": "Seda probleemi tõenäoliselt juba teatakse. Rohkem infot:"
   }, 
+  "issueReporter_markIssueButton_label": {
+    "message": "Märgista viga"
+  }, 
   "issueReporter_page_title": {
     "message": "Probleemidest teatamine"
   }, 
   "issueReporter_privacyPolicy": {
     "message": "Privaatsus"
+  }, 
+  "issueReporter_screenreader_warning": {
+    "message": "Et aidata meil paremini probleemist eru saada, on veateadet saates vajalik lisada ekraanipilt. Sõltuvalt hetkel külastatavast veebisaidist võib ekraanipilt sisaldada isiklikke andmeid. Kui sa ei soovi ekraanipilti saata, palun saada oma veateade e-postiaadressile <a0>support@adblockplus.org</a0>."
   }, 
   "issueReporter_screenshot_hide": {
     "message": "Peida"
@@ -1365,10 +1477,10 @@
     "message": "Näita teate andmeid"
   }, 
   "issueReporter_typeSelector_description": {
-    "message": "Antud aknas saab teatada AdBlocki probleemidest, tehes läbi vajalikud sammud. Kõigepealt tuleb valida probleemi liik, millega sa antud lehel kokku puutud:"
+    "message": "Palun vali vea tüüp:"
   }, 
   "issueReporter_typeSelector_heading": {
-    "message": "Vali probleemi liik"
+    "message": "Mis laadi probleemi sul esineb?"
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1896,35 +2008,11 @@
   "options_customFilter_cancel": {
     "message": "Loobu"
   }, 
-  "options_customFilter_edit": {
-    "message": "Muuda filtreid"
-  }, 
-  "options_customFilter_save": {
-    "message": "Salvesta"
-  }, 
   "options_customFilters_description": {
-    "message": "Kirjuta oma kohandatud filtrid, et veelgi täpsemini juhtida, millist sisu AdBlock lubab või blokeerib."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "nt. $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Loe, kuidas filtrite nimekirju kirjutada"
-  }, 
-  "options_customFilters_start": {
-    "message": "Hakka kirjutama oma filtrite nimekirja"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Sinu loodavad filtrid ilmuvad siia."
+    "message": "Kirjuta ja halda oma filtreid, et veelgi täpsemalt juhtida, millist sisu AdBlock lubab või blokeerib. <a0>Õpi filtrite kirjutamist</a0>"
   }, 
   "options_customFilters_title": {
-    "message": "Loo ja muuda oma filtrite nimekirja"
+    "message": "Sinu kohandatud filtrid"
   }, 
   "options_customFilters_widget_title": {
     "message": "Minu filtrite nimekiri"
@@ -1954,10 +2042,10 @@
     "message": "Luba AdBlocki teavitused (kriitiliste jõudlusprobleemidega seotud teatisi näidatakse alati)."
   }, 
   "options_dialog_about_copyright": {
-    "message": "Autoriõigus © $currentYear$ eyeo GmbH.", 
+    "message": "Autoriõigus © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2053,7 +2141,7 @@
     "message": "Aktiivne"
   }, 
   "options_filterList_state_disabled": {
-    "message": "Keelatud"
+    "message": "Mitteaktiivne"
   }, 
   "options_filterList_title": {
     "message": "Filtrite nimekirjad"
@@ -2067,8 +2155,11 @@
   "options_filterList_website": {
     "message": "veebisait"
   }, 
+  "options_filter_list_rule": {
+    "message": "Filtri reegel"
+  }, 
   "options_filters_search_or_add": {
-    "message": "Otsi / lisa filtrit (nt. $filter$)", 
+    "message": "Otsi või lisa filtrit(-eid) (nt. $filter$)", 
     "placeholders": {
       "filter": {
         "content": "/ads/track/*"
@@ -2525,12 +2616,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Näita loendurit ikoonil"
-  }, 
-  "stats_title": {
-    "message": "Blokeeritud reklaame"
   }, 
   "status_domain_paused": {
     "message": "AdBlock is paused on this site.", 

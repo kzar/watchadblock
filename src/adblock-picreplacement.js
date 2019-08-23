@@ -5,9 +5,8 @@ let hiddenElements = [];
 let cssRules = [];
 const minDimension = 60;
 
-chrome.runtime.sendMessage({type: "getSelectors"}, response =>
-{
-  if (response.selectors && response.selectors) {
+chrome.runtime.sendMessage({type: "getSelectors"}).then((response) => {
+  if (response && response.selectors) {
     cssRules = response.selectors;
   }
 });
@@ -63,7 +62,7 @@ onReady(function() {
   for (let i = 0; i < allElements.length; i++) {
     const data = allElements[i];
     const size = imageSwap.getSize(data);
- 
+
     if (imageSwap.isInvalidSize(size)) {
         continue;
     }
@@ -336,7 +335,7 @@ var imageSwap = {
       return false;
     }
 
-    chrome.runtime.sendMessage({ message: 'get_random_listing', opts: { width:t.x, height:t.y, type:t.type, position:t.position } }, function (pic) {
+    chrome.runtime.sendMessage({ message: 'get_random_listing', opts: { width:t.x, height:t.y, type:t.type, position:t.position } }).then((pic) => {
       if (!pic || pic.disabledOnPage) {
         callback(false);
         return false;

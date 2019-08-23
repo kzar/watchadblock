@@ -495,9 +495,6 @@
     "message": "NEBO, prostě klikněte na toto tlačítko a my vše uděláme za Vás: [[Zakázat všechna ostatní rozšíření]]", 
     "description": "On the ad report page, an alternative way to disable other extensions"
   }, 
-  "clickhide_instructions": {
-    "message": "Po zavření tohoto vyskakovacího okna klikněte levým (nebo pravým) tlačítkem myši na prvek na stránce."
-  }, 
   "clickthead": {
     "message": "Klikněte na reklamu, a jám vám ji pomohu zablokovat.", 
     "description": "User has to click the ad they want to block."
@@ -634,6 +631,74 @@
     "message": "The only YouTube™ ad blocker built by AdBlock, the most popular Chrome extension with 60 million users worldwide", 
     "description": "Description for the AdBlock on YouTube extension. Should not exceed 132 characters."
   }, 
+  "devtools_action_block": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Block item"
+  }, 
+  "devtools_action_remove": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Remove rule"
+  }, 
+  "devtools_action_unblock": {
+    "description": "Button text on the dev tools panel.", 
+    "message": "Add exception"
+  }, 
+  "devtools_filter_origin_custom": {
+    "description": "sub-title text of the rule showing the source of the rule as custom rules", 
+    "message": "user-defined"
+  }, 
+  "devtools_filter_origin_none": {
+    "description": "sub-title text of the rule showing the source of the rule as a unamed filter list", 
+    "message": "unnamed subscription"
+  }, 
+  "devtools_filter_subtitle": {
+    "description": "sub-title text of the rule showing the source of the rule a named filter list", 
+    "message": "Origin"
+  }, 
+  "devtools_filter_title": {
+    "description": "Text of the filter that was applied to the list item.", 
+    "message": "Filter"
+  }, 
+  "devtools_footer": {
+    "description": "message on the bottom of the panel", 
+    "message": "<a0>Reload</a0> page to see effect of filter changes"
+  }, 
+  "devtools_header": {
+    "description": "Text on the top of the dev tools panel to show all items of any type; slot0 and slot1 are two seperate drop down lists", 
+    "message": "Show <slot0></slot0> items of <slot1></slot1> type"
+  }, 
+  "devtools_header_state_all": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "all"
+  }, 
+  "devtools_header_state_blocked": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "blocked"
+  }, 
+  "devtools_header_state_whitelisted": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "whitelisted"
+  }, 
+  "devtools_header_type_any": {
+    "description": "one of the items in the drop down list in the header of the dev tools panel", 
+    "message": "any"
+  }, 
+  "devtools_request_subtitle": {
+    "description": "sub title text for the request-column header of the dev tools panel", 
+    "message": "Document domain"
+  }, 
+  "devtools_request_title": {
+    "description": "title text for the request-column header of the dev tools panel", 
+    "message": "Request"
+  }, 
+  "devtools_request_url": {
+    "description": "sub title text for the request-column of the dev tools panel when the request is rewritten e.g. http://example.com/foo rewritten to http://example.com/bar", 
+    "message": "<a0></a0> rewritten to <a1></a1>"
+  }, 
+  "devtools_type_title": {
+    "description": "Type column header text", 
+    "message": "Type"
+  }, 
   "disableaa": {
     "message": "Zkontrolovat filtry nerušivých reklam:", 
     "description": "Section header on the ad report page"
@@ -649,9 +714,6 @@
   "disabled_by_filter_lists_yt": {
     "message": "Omlouváme se, AdBlock na YouTube™ je na této stránce zakázán jedním z vašich nastavení.", 
     "description": "Message shown when a user tries to un-whitelist a web page that has been whitelisted by a rule in a subscribed filter list. Specific to the 'AdBlock on YouTube' extension."
-  }, 
-  "disabled_for_site": {
-    "message": "<strong>Zakázáno</strong> na této stránce"
   }, 
   "disabled_on_this_channel": {
     "message": "Povolil jste reklamy na tomto kanálu.", 
@@ -759,9 +821,6 @@
   "enable_do_not_track_advice": {
     "message": "For this feature to work properly, please enable Do Not Track (DNT) in your browser preferences.", 
     "description": "The text advicing to enable DNT if Acceptable Ads is enabled in the General tab"
-  }, 
-  "enabled_for_site": {
-    "message": "<strong>Povoleno</strong> na této stránce"
   }, 
   "enableotherextensionscomplete": {
     "message": "Doplňky, které byly předtím vypnuty, byly opět zapnuty.", 
@@ -1022,6 +1081,10 @@
     "message": "Řečtina", 
     "description": "A filter list"
   }, 
+  "filtereasylist_plus_indian": {
+    "message": "IndianList + EasyList", 
+    "description": "A filter list"
+  }, 
   "filtereasylist_plus_indonesian": {
     "message": "Indonéština", 
     "description": "A filter list"
@@ -1032,6 +1095,10 @@
   }, 
   "filtereasylist_plus_polish": {
     "message": "Polština", 
+    "description": "A filter list"
+  }, 
+  "filtereasylist_plus_portuguese": {
+    "message": "Portuguese + EasyList", 
     "description": "A filter list"
   }, 
   "filtereasylist_plus_romanian": {
@@ -1285,6 +1352,9 @@
   }, 
   "issueReporter_data_gathering_tab": {
     "message": "<strong>Poznámka:</strong> Dočasně se otevře další karta, takže stránka, na které se právě nacházíte, nebude funkcí hlášení problémů (Issue Reporter) nijak ovlivněna."
+  }, 
+  "issueReporter_detailsButton_label": {
+    "message": "Podrobnosti"
   }, 
   "issueReporter_doneButton_label": {
     "message": "Hotovo"
@@ -1848,32 +1918,8 @@
   "options_customFilter_cancel": {
     "message": "ZRUŠIT"
   }, 
-  "options_customFilter_edit": {
-    "message": "Upravit filtry"
-  }, 
-  "options_customFilter_save": {
-    "message": "ULOŽIT"
-  }, 
   "options_customFilters_description": {
     "message": "Zadejte své vlastní filtry tak, abyste mohli dále řídit obsah, který má AdBlock povolit nebo blokovat."
-  }, 
-  "options_customFilters_edit_placeholder": {
-    "message": "např.: $filter$", 
-    "placeholders": {
-      "filter": {
-        "content": "$1", 
-        "example": "/ads/track/*"
-      }
-    }
-  }, 
-  "options_customFilters_learn": {
-    "message": "Naučte se psát seznamy filtrů"
-  }, 
-  "options_customFilters_start": {
-    "message": "Začněte psát svůj seznam filtrů"
-  }, 
-  "options_customFilters_tip": {
-    "message": "Zde se zobrazují vámi vytvořené filtry."
   }, 
   "options_customFilters_title": {
     "message": "VYTVOŘIT A UPRAVIT VLASTNÍ SEZNAM FILTRŮ"
@@ -1887,6 +1933,9 @@
   "options_customize_blockElement_tooltip": {
     "message": "Dočasně zablokujte nepříjemné položky na webové stránce, například obrázky nebo animované prezentace."
   }, 
+  "options_customize_header": {
+    "message": "Přizpůsobení"
+  }, 
   "options_customize_showDevToolsPanel": {
     "message": "V nástrojích pro vývojáře zobrazte panel AdBlock"
   }, 
@@ -1897,10 +1946,10 @@
     "message": "Zobrazovat užitečná upozornění"
   }, 
   "options_dialog_about_copyright": {
-    "message": "Copyright © $currentYear$ eyeo GmbH.", 
+    "message": "Copyright © $currentYear$ <a0>eyeo GmbH</a0>.", 
     "placeholders": {
       "currentYear": {
-        "content": "2017", 
+        "content": "$1", 
         "example": "2017"
       }
     }
@@ -2411,12 +2460,6 @@
         "content": "$1"
       }
     }
-  }, 
-  "stats_show_iconnumber": {
-    "message": "Zobrazit číslo v ikoně"
-  }, 
-  "stats_title": {
-    "message": "Blokovaných reklam"
   }, 
   "status_domain_paused": {
     "message": "AdBlock je pozastaven na této webové stránce.", 
