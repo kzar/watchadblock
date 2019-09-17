@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.55.0";
+exports.addonVersion = "3.55.1";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -10683,9 +10683,13 @@ const STATS = (function exportStats() {
   const scheduleNextPing = function () {
     chrome.storage.local.get(STATS.totalPingStorageKey).then((response) => {
       let localTotalPings = storageGet(totalPingStorageKey);
-      localTotalPings = Number.isNaN(localTotalPings) ? 0 : localTotalPings;
+      if (!localTotalPings || Number.isNaN(localTotalPings)) {
+        localTotalPings = 0;
+      }
       let totalPings = response[STATS.totalPingStorageKey];
-      totalPings = Number.isNaN(totalPings) ? 0 : totalPings;
+      if (!totalPings || Number.isNaN(totalPings)) {
+        totalPings = 0;
+      }
       totalPings = Math.max(localTotalPings, totalPings);
       totalPings += 1;
       // store in redundant locations
@@ -10731,10 +10735,14 @@ const STATS = (function exportStats() {
     window.setTimeout(() => {
       chrome.storage.local.get(STATS.nextPingTimeStorageKey).then((response) => {
         let localNextPingTime = storageGet(STATS.nextPingTimeStorageKey);
-        localNextPingTime = Number.isNaN(localNextPingTime) ? 0 : localNextPingTime;
-        const nextPingTimeStored = response[STATS.nextPingTimeStorageKey];
-        let nextPingTime = Number.isNaN(nextPingTimeStored) ? 0 : nextPingTimeStored;
-        nextPingTime = Math.max(localNextPingTime, nextPingTime);
+        if (!localNextPingTime || Number.isNaN(localNextPingTime)) {
+          localNextPingTime = 0;
+        }
+        let nextPingTimeStored = response[STATS.nextPingTimeStorageKey];
+        if (!nextPingTimeStored || Number.isNaN(nextPingTimeStored)) {
+          nextPingTimeStored = 0;
+        }
+        const nextPingTime = Math.max(localNextPingTime, nextPingTimeStored);
         // if this is the first time we've run (just installed), millisTillNextPing is 0
         if (nextPingTime === 0 && STATS.firstRun) {
           callbackFN(0);
@@ -10742,7 +10750,7 @@ const STATS = (function exportStats() {
         }
         // if we don't have a 'next ping time', or it's not a valid number,
         // default to 55 minute ping interval
-        if (nextPingTime === 0 || Number.isNaN(nextPingTime)) {
+        if (nextPingTime === 0 || !nextPingTime || Number.isNaN(nextPingTime)) {
           callbackFN(FiftyFiveMinutes);
           return;
         }
