@@ -1216,6 +1216,10 @@
     "message": "터키어", 
     "description": "A filter list"
   }, 
+  "filterviewsource": {
+    "message": "View filter list", 
+    "description": "Title for links to view filter lists on website"
+  }, 
   "filterwarning_removal": {
     "message": "Adblock 경고 제거 목록 (광고 차단 프로그램 이용 경고 메시지 제거)", 
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
@@ -2925,6 +2929,16 @@
       "seconds": {
         "content": "$1", 
         "example": "15"
+      }
+    }
+  }, 
+  "updatedtimestamp": {
+    "message": "updated on $ts$", 
+    "description": "Label for filter list subscription last updated timestamp", 
+    "placeholders": {
+      "ts": {
+        "content": "$1", 
+        "example": "8/26/2019 10:23:44 PM"
       }
     }
   }, 

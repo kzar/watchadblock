@@ -91,8 +91,8 @@
  * @fileOverview Definition of Filter class and its subclasses.
  */
 
-const {extend} = __webpack_require__(26);
-const {filterToRegExp} = __webpack_require__(27);
+const {extend} = __webpack_require__(25);
+const {filterToRegExp} = __webpack_require__(26);
 const {normalizeHostname, domainSuffixes} = __webpack_require__(10);
 const {Cache} = __webpack_require__(18);
 const {filterNotifier} = __webpack_require__(1);
@@ -1423,67 +1423,6 @@ exports.filterNotifier = filterNotifier;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-
-
-let platformVersion = null;
-let application = null;
-let applicationVersion;
-
-let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
-let match;
-
-while (match = regexp.exec(navigator.userAgent))
-{
-  let app = match[1];
-  let ver = match[2];
-
-  if (app == "Chrome")
-  {
-    platformVersion = ver;
-  }
-  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
-  {
-    // For compatibility with legacy websites, Chrome's UA
-    // also includes a Mozilla, AppleWebKit and Safari token.
-    // Any further name/version pair indicates a fork.
-    application = {OPR: "opera", Edg: "edge"}[app] || app.toLowerCase();
-    applicationVersion = ver;
-  }
-}
-
-// not a Chromium-based UA, probably modifed by the user
-if (!platformVersion)
-{
-  application = "unknown";
-  applicationVersion = platformVersion = "0";
-}
-
-// no additional name/version, so this is upstream Chrome
-if (!application)
-{
-  application = "chrome";
-  applicationVersion = platformVersion;
-}
-
-
-exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.54.0";
-
-exports.application = application;
-exports.applicationVersion = applicationVersion;
-
-exports.platform = "chromium";
-exports.platformVersion = platformVersion;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -1505,7 +1444,7 @@ exports.platformVersion = platformVersion;
 
 
 
-const info = __webpack_require__(2);
+const info = __webpack_require__(5);
 const {EventEmitter} = __webpack_require__(6);
 
 const keyPrefix = "pref:";
@@ -1887,7 +1826,7 @@ init();
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1918,7 +1857,7 @@ const {recommendations} = __webpack_require__(44);
 const {ActiveFilter, BlockingFilter,
        WhitelistFilter, ElemHideBase} = __webpack_require__(0);
 const {filterNotifier} = __webpack_require__(1);
-const {extend} = __webpack_require__(26);
+const {extend} = __webpack_require__(25);
 
 /**
  * Subscription types by URL.
@@ -2665,7 +2604,7 @@ DownloadableSubscription.prototype = extend(RegularSubscription, {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2694,10 +2633,10 @@ DownloadableSubscription.prototype = extend(RegularSubscription, {
  */
 
 const {IO} = __webpack_require__(41);
-const {Prefs} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 const {Filter, ActiveFilter} = __webpack_require__(0);
 const {Subscription, SpecialSubscription,
-       ExternalSubscription} = __webpack_require__(4);
+       ExternalSubscription} = __webpack_require__(3);
 const {filterNotifier} = __webpack_require__(1);
 const {INIParser} = __webpack_require__(46);
 
@@ -3336,6 +3275,67 @@ exports.filterStorage = filterStorage;
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+
+let platformVersion = null;
+let application = null;
+let applicationVersion;
+
+let regexp = /(\S+)\/(\S+)(?:\s*\(.*?\))?/g;
+let match;
+
+while (match = regexp.exec(navigator.userAgent))
+{
+  let app = match[1];
+  let ver = match[2];
+
+  if (app == "Chrome")
+  {
+    platformVersion = ver;
+  }
+  else if (app != "Mozilla" && app != "AppleWebKit" && app != "Safari")
+  {
+    // For compatibility with legacy websites, Chrome's UA
+    // also includes a Mozilla, AppleWebKit and Safari token.
+    // Any further name/version pair indicates a fork.
+    application = {OPR: "opera", Edg: "edge"}[app] || app.toLowerCase();
+    applicationVersion = ver;
+  }
+}
+
+// not a Chromium-based UA, probably modifed by the user
+if (!platformVersion)
+{
+  application = "unknown";
+  applicationVersion = platformVersion = "0";
+}
+
+// no additional name/version, so this is upstream Chrome
+if (!application)
+{
+  application = "chrome";
+  applicationVersion = platformVersion;
+}
+
+
+exports.addonName = "adblockforchrome";
+exports.addonVersion = "3.55.0";
+
+exports.application = application;
+exports.applicationVersion = applicationVersion;
+
+exports.platform = "chromium";
+exports.platformVersion = platformVersion;
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3692,7 +3692,7 @@ exports.getPort = function(window)
 const {defaultMatcher} = __webpack_require__(11);
 const {Filter, RegExpFilter} = __webpack_require__(0);
 const {filterNotifier} = __webpack_require__(1);
-const {filterStorage} = __webpack_require__(5);
+const {filterStorage} = __webpack_require__(4);
 const {extractHostFromFrame} = __webpack_require__(7);
 const {port} = __webpack_require__(8);
 const {logWhitelistedDocument} = __webpack_require__(12);
@@ -4295,9 +4295,9 @@ exports.URLRequest = URLRequest;
  */
 
 const {RegExpFilter, WhitelistFilter} = __webpack_require__(0);
-const {filterToRegExp} = __webpack_require__(27);
+const {filterToRegExp} = __webpack_require__(26);
 const {normalizeHostname, domainSuffixes, URLRequest} = __webpack_require__(10);
-const {FiltersByDomain, FilterMap} = __webpack_require__(28);
+const {FiltersByDomain, FilterMap} = __webpack_require__(27);
 const {Cache} = __webpack_require__(18);
 
 /**
@@ -5244,7 +5244,7 @@ exports.defaultMatcher = defaultMatcher;
 
 const {extractHostFromFrame} = __webpack_require__(7);
 const {EventEmitter} = __webpack_require__(6);
-const {filterStorage} = __webpack_require__(5);
+const {filterStorage} = __webpack_require__(4);
 const {port} = __webpack_require__(8);
 const {Filter, RegExpFilter,
        ElemHideFilter} = __webpack_require__(0);
@@ -5386,58 +5386,34 @@ port.on("hitLogger.traceElemHide", (message, sender) =>
 
 /***/ }),
 /* 13 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-﻿// Log an 'error' message on GAB log server.
-let ServerMessages = exports.ServerMessages = (function()
-{
-  var recordErrorMessage = function (msg, callback, additionalParams)
-  {
-    recordMessageWithUserID(msg, 'error', callback, additionalParams);
-  };
+"use strict";
 
-  // Log an 'status' related message on GAB log server.
-  var recordStatusMessage = function (msg, callback, additionalParams)
-  {
-    recordMessageWithUserID(msg, 'stats', callback, additionalParams);
-  };
 
-  // Log a 'general' message on GAB log server.
-  var recordGeneralMessage = function (msg, callback, additionalParams)
-  {
-    recordMessageWithUserID(msg, 'general', callback, additionalParams);
-  };
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, exports, STATS, log, logging, determineUserLanguage */
 
-  // Log a 'adreport' message on GAB log server.
-  var recordAdreportMessage = function (msg, callback, additionalParams)
-  {
-    recordMessageWithUserID(msg, 'adreport', callback, additionalParams);
-  };
-
-  var postFilterStatsToLogServer = function(data, callback)
-  {
-    if (!data)
-    {
+// Log an 'error' message on GAB log server.
+const ServerMessages = (function serverMessages() {
+  const postFilterStatsToLogServer = function (data, callback) {
+    if (!data) {
       return;
     }
-    var payload = {'event':  'filter_stats', 'payload': data };
+    const payload = { event: 'filter_stats', payload: data };
     $.ajax({
       jsonp: false,
       type: 'POST',
-      url: "https://log.getadblock.com/v2/record_log.php",
+      url: 'https://log.getadblock.com/v2/record_log.php',
       data: JSON.stringify(payload),
-      success: function (text, status, xhr)
-      {
-        if (typeof callback === "function")
-        {
+      success(text, status, xhr) {
+        if (typeof callback === 'function') {
           callback(text, status, xhr);
         }
       },
-      error : function(xhr, textStatus, errorThrown)
-      {
+      error(xhr, textStatus, errorThrown) {
         log('message server returned error: ', textStatus, errorThrown);
-        if (callback)
-        {
+        if (callback) {
           callback(errorThrown, textStatus, xhr);
         }
       },
@@ -5447,87 +5423,100 @@ let ServerMessages = exports.ServerMessages = (function()
   // Log a message on GAB log server. The user's userid will be prepended to the
   // message.
   // If callback() is specified, call callback() after logging has completed
-  var recordMessageWithUserID = function (msg, queryType, callback, additionalParams)
-  {
-    if (!msg || !queryType)
-    {
-      return;
-    }
-    var payload = {
-      "u": STATS.userId(),
-      "f": STATS.flavor,
-      "o": STATS.os,
-      "l": determineUserLanguage(),
-      "t": queryType,
-      "v": chrome.runtime.getManifest().version,
-    };
-    if (typeof additionalParams === "object") {
-      for (var prop in additionalParams) {
-        payload[prop] = additionalParams[prop];
-      }
-    }
-    var payload = {'event':  msg, 'payload': payload};
-    sendMessageToLogServer(payload, callback);
-  };
-
-  // Log a message on GAB log server.
-  // If callback() is specified, call callback() after logging has completed
-  var recordAnonymousMessage = function (msg, queryType, callback, additionalParams)
-  {
-    if (!msg || !queryType)
-    {
-      return;
-    }
-
-    var payload = {
-      "f": STATS.flavor,
-      "o": STATS.os,
-      "l": determineUserLanguage(),
-      "t": queryType,
-    };
-    if (typeof additionalParams === "object") {
-      for (var prop in additionalParams) {
-        payload[prop] = additionalParams[prop];
-      }
-    }
-    var payload = {'event':  msg, 'payload': payload};
-    sendMessageToLogServer(payload, callback);
-  };
-
-  // Log a message on GAB log server. The user's userid will be prepended to the
-  // message.
-  // If callback() is specified, call callback() after logging has completed
-  var sendMessageToLogServer = function (payload, callback)
-  {
+  const sendMessageToLogServer = function (payload, callback) {
     $.ajax({
       jsonp: false,
       type: 'POST',
-      url: "https://log.getadblock.com/v2/record_log.php",
+      url: 'https://log.getadblock.com/v2/record_log.php',
       data: JSON.stringify(payload),
-      success: function ()
-      {
-        if (typeof callback === "function")
-        {
+      success() {
+        if (typeof callback === 'function') {
           callback();
         }
       },
 
-      error: function (e)
-      {
+      error(e) {
         log('message server returned error: ', e.status);
       },
     });
   };
 
-  return {
-    recordErrorMessage : recordErrorMessage,
-    recordAnonymousMessage: recordAnonymousMessage,
-    postFilterStatsToLogServer: postFilterStatsToLogServer,
-    recordStatusMessage: recordStatusMessage,
-    recordGeneralMessage: recordGeneralMessage,
-    recordAdreportMessage: recordAdreportMessage,
+  // Log a message on GAB log server. The user's userid will be prepended to the
+  // message.
+  // If callback() is specified, call callback() after logging has completed
+  const recordMessageWithUserID = function (msg, queryType, callback, additionalParams) {
+    if (!msg || !queryType) {
+      return;
+    }
+    const payload = {
+      u: STATS.userId(),
+      f: STATS.flavor,
+      o: STATS.os,
+      l: determineUserLanguage(),
+      t: queryType,
+      v: chrome.runtime.getManifest().version,
+    };
+    if (typeof additionalParams === 'object') {
+      for (const prop in additionalParams) {
+        payload[prop] = additionalParams[prop];
+      }
+    }
+    const eventWithPayload = { event: msg, payload };
+    sendMessageToLogServer(eventWithPayload, callback);
   };
-})();
+
+  // Log a message on GAB log server.
+  // If callback() is specified, call callback() after logging has completed
+  const recordAnonymousMessage = function (msg, queryType, callback, additionalParams) {
+    if (!msg || !queryType) {
+      return;
+    }
+
+    const payload = {
+      f: STATS.flavor,
+      o: STATS.os,
+      l: determineUserLanguage(),
+      t: queryType,
+    };
+    if (typeof additionalParams === 'object') {
+      for (const prop in additionalParams) {
+        payload[prop] = additionalParams[prop];
+      }
+    }
+    const eventWithPayload = { event: msg, payload };
+    sendMessageToLogServer(eventWithPayload, callback);
+  };
+
+  const recordErrorMessage = function (msg, callback, additionalParams) {
+    recordMessageWithUserID(msg, 'error', callback, additionalParams);
+  };
+
+  // Log an 'status' related message on GAB log server.
+  const recordStatusMessage = function (msg, callback, additionalParams) {
+    recordMessageWithUserID(msg, 'stats', callback, additionalParams);
+  };
+
+  // Log a 'general' message on GAB log server.
+  const recordGeneralMessage = function (msg, callback, additionalParams) {
+    recordMessageWithUserID(msg, 'general', callback, additionalParams);
+  };
+
+  // Log a 'adreport' message on GAB log server.
+  const recordAdreportMessage = function (msg, callback, additionalParams) {
+    recordMessageWithUserID(msg, 'adreport', callback, additionalParams);
+  };
+
+  return {
+    recordErrorMessage,
+    recordAnonymousMessage,
+    postFilterStatsToLogServer,
+    recordStatusMessage,
+    recordGeneralMessage,
+    recordAdreportMessage,
+  };
+}());
+
+exports.ServerMessages = ServerMessages;
 
 
 /***/ }),
@@ -5583,7 +5572,7 @@ let Utils = exports.Utils = {
 
   getDocLink(linkID)
   {
-    let docLink = __webpack_require__(3).Prefs.documentation_link;
+    let docLink = __webpack_require__(2).Prefs.documentation_link;
     return docLink.replace(/%LINK%/g, linkID)
                   .replace(/%LANG%/g, Utils.appLocale);
   },
@@ -5624,13 +5613,13 @@ let Utils = exports.Utils = {
 
 const {Downloader, Downloadable,
        MILLIS_IN_SECOND, MILLIS_IN_MINUTE,
-       MILLIS_IN_HOUR, MILLIS_IN_DAY} = __webpack_require__(30);
+       MILLIS_IN_HOUR, MILLIS_IN_DAY} = __webpack_require__(29);
 const {Filter} = __webpack_require__(0);
-const {filterStorage} = __webpack_require__(5);
+const {filterStorage} = __webpack_require__(4);
 const {filterNotifier} = __webpack_require__(1);
-const {Prefs} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 const {Subscription,
-       DownloadableSubscription} = __webpack_require__(4);
+       DownloadableSubscription} = __webpack_require__(3);
 
 const INITIAL_DELAY = 1 * MILLIS_IN_MINUTE;
 const CHECK_INTERVAL = 1 * MILLIS_IN_HOUR;
@@ -5885,7 +5874,7 @@ class Synchronizer
         subscription.errors = 0;
 
         let fallbackURL = Prefs.subscriptions_fallbackurl;
-        const {addonVersion} = __webpack_require__(2);
+        const {addonVersion} = __webpack_require__(5);
         fallbackURL = fallbackURL.replace(/%VERSION%/g,
                                           encodeURIComponent(addonVersion));
         fallbackURL = fallbackURL.replace(/%SUBSCRIPTION%/g,
@@ -5965,10 +5954,10 @@ exports.synchronizer = synchronizer;
  * @fileOverview Handles notifications.
  */
 
-const {Prefs} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 const {Downloader, Downloadable,
        MILLIS_IN_MINUTE, MILLIS_IN_HOUR,
-       MILLIS_IN_DAY} = __webpack_require__(30);
+       MILLIS_IN_DAY} = __webpack_require__(29);
 const {Utils} = __webpack_require__(14);
 const {Matcher, defaultMatcher} = __webpack_require__(11);
 const {Filter, RegExpFilter, WhitelistFilter} = __webpack_require__(0);
@@ -6254,7 +6243,7 @@ let Notification = exports.Notification =
       return null;
 
     const {addonName, addonVersion, application,
-           applicationVersion, platform, platformVersion} = __webpack_require__(2);
+           applicationVersion, platform, platformVersion} = __webpack_require__(5);
 
     let targetChecks = {
       extension: v => v == addonName,
@@ -6520,47 +6509,62 @@ Notification.init();
 
 /***/ }),
 /* 17 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-let LocalCDN = exports.LocalCDN = (function() {
-  "use-strict";
+"use strict";
 
-  var urlsMatchPattern = ["http://*/*", "https://*/*"];
-  var hostRegex = /ajax\.googleapis\.com|ajax\.aspnetcdn\.com|ajax\.microsoft\.com|cdnjs\.cloudflare\.com|code\.jquery\.com|cdn\.jsdelivr\.net|yastatic\.net|yandex\.st|libs\.baidu\.com|lib\.sinaapp\.com|upcdn\.b0\.upaiyun\.com/;
-  var pathRegex = { jquery: /jquery[\/\-](\d*\.\d*\.\d*)/ };
-  var libraryPaths = { jquery: { prefix: "jquery-", postfix: ".min.js.local" }};
-  var headersToRemove = ["Cookie", "Origin", "Referer"];
-  var localFiles = {};
-  var libraries = [];
-  var versionArray = {};
-  var redirectCountKey = "redirectCount";
-  var dataCountKey = "redirectDataCount";
-  var missedVersionsKey = "missedVersions";
 
-  // Completes necessary set up for the LocalCDN
-  // Post:  localFiles, libraries, and versionArray are populated based on
-  //        available local files
-  var setUp = function() {
-    localFiles = getAvailableFiles();
-    libraries = Object.getOwnPropertyNames(localFiles);
-    versionArray = populateVersionArray();
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, parseUri, exports, getAvailableFiles, adblockIsPaused */
+
+const LocalCDN = (function getLocalCDN() {
+  const urlsMatchPattern = ['http://*/*', 'https://*/*'];
+  const hostRegex = /ajax\.googleapis\.com|ajax\.aspnetcdn\.com|ajax\.microsoft\.com|cdnjs\.cloudflare\.com|code\.jquery\.com|cdn\.jsdelivr\.net|yastatic\.net|yandex\.st|libs\.baidu\.com|lib\.sinaapp\.com|upcdn\.b0\.upaiyun\.com/;
+  const pathRegex = { jquery: /jquery[/-](\d*\.\d*\.\d*)/ };
+  const libraryPaths = { jquery: { prefix: 'jquery-', postfix: '.min.js.local' } };
+  const headersToRemove = ['Cookie', 'Origin', 'Referer'];
+  const redirectCountKey = 'redirectCount';
+  const dataCountKey = 'redirectDataCount';
+  const missedVersionsKey = 'missedVersions';
+  let localFiles = {};
+  let libraries = [];
+  let versionArray = {};
+
+  // Gets a stored value from localStorage if available, and parses it. Otherwise,
+  // if the value isn't currently stored or if the parse fails, returns a default
+  // value.
+  // Param: keyName: the key under which the value is stored
+  //        defaultValue: the value to be returned if the stored value cannot be
+  //                      retrieved
+  const getStoredValue = function (keyName, defaultValue) {
+    let storedValue = localStorage.getItem(keyName);
+    try {
+      storedValue = JSON.parse(storedValue);
+    } catch (err) {
+      storedValue = defaultValue;
+    } finally {
+      if (!storedValue) {
+        storedValue = defaultValue;
+      }
+    }
+    return storedValue;
   };
 
   // Populates the version array based on the files available locally
   // Pre: localFiles and libraries must be populated first
-  var populateVersionArray = function() {
-    var libraryVersions = {};
+  const populateVersionArray = function () {
+    const libraryVersions = {};
     // go through each libarary
-    for (var i = 0; i < libraries.length; i++) {
+    for (let i = 0; i < libraries.length; i++) {
       // check for path info
       if (libraryPaths[libraries[i]]) {
         // get the filenames
-        var filenames = Object.getOwnPropertyNames(localFiles[libraries[i]]);
+        const filenames = Object.getOwnPropertyNames(localFiles[libraries[i]]);
         libraryVersions[libraries[i]] = [];
-        for (var j = 0; j < filenames.length; j++){
+        for (let j = 0; j < filenames.length; j++) {
           // extract the version from the filesname
-          var version = filenames[j].replace(libraryPaths[libraries[i]].prefix, "");
-          version = version.replace(libraryPaths[libraries[i]].postfix, "");
+          let version = filenames[j].replace(libraryPaths[libraries[i]].prefix, '');
+          version = version.replace(libraryPaths[libraries[i]].postfix, '');
           libraryVersions[libraries[i]].push(version);
         }
       }
@@ -6569,57 +6573,23 @@ let LocalCDN = exports.LocalCDN = (function() {
     return libraryVersions;
   };
 
-  // Handles a webRequest.onBeforeRequest event.
-  // Redirects any requests for locally available files from a matching host,
-  // if AdBlock is not paused. Otherwise allows request to continue as normal.
-  // Records any redirects, bytes of data redirected, and missing versions of
-  // supported libararies.
-  // Param: details: holds information about the request, including the URL.
-  var libRequestHandler = function(details) {
-    // respect pause
-    if (!adblockIsPaused()) {
-      var targetLibrary = null;
-      var requestUrl = parseUri(details.url);
-
-      // check if the url contains a library keyword
-      for (var i = 0; i < libraries.length; i++) {
-        if (requestUrl.pathname.indexOf(libraries[i]) != -1) {
-          targetLibrary = libraries[i];
-        }
-      }
-
-      // check the request host
-      if (targetLibrary != null && hostRegex.test(requestUrl.host)) {
-        // check the path
-        var matches = pathRegex[targetLibrary].exec(requestUrl.pathname);
-        if (matches) {
-          var version = matches[1];
-
-          // check if we have the version locally
-          if (versionArray[targetLibrary].indexOf(version) != -1) {
-            var fileName = libraryPaths[targetLibrary].prefix + version + libraryPaths[targetLibrary].postfix;
-            var localPath = "localLib/" + targetLibrary + "/" + fileName;
-            incrementRedirectCount();
-            addToDataCount(targetLibrary, fileName);
-            return { redirectUrl: chrome.runtime.getURL(localPath) };
-          } else {
-            addMissedVersion(targetLibrary, version);
-          }
-        }
-      }
-    }
-
-    return { cancel: false };
+  // Completes necessary set up for the LocalCDN
+  // Post:  localFiles, libraries, and versionArray are populated based on
+  //        available local files
+  const setUp = function () {
+    localFiles = getAvailableFiles();
+    libraries = Object.getOwnPropertyNames(localFiles);
+    versionArray = populateVersionArray();
   };
 
   // Increments the redirect count by one.
   // The redirect count is loaded from and saved to localStorage.
-  var incrementRedirectCount = function() {
+  const incrementRedirectCount = function () {
     // get stored redirect count
-    var storedRedirectCount = getStoredValue(redirectCountKey, 0);
+    let storedRedirectCount = getStoredValue(redirectCountKey, 0);
 
     // increment
-    storedRedirectCount++;
+    storedRedirectCount += 1;
 
     // store updated count
     localStorage.setItem(redirectCountKey, JSON.stringify(storedRedirectCount));
@@ -6629,12 +6599,12 @@ let LocalCDN = exports.LocalCDN = (function() {
   // The data count is loaded from and saved to localStorage.
   // Param: targetLibrary: the library that the file belongs to
   //        fileName: the file to be added to the data count
-  var addToDataCount = function(targetLibrary, fileName) {
+  const addToDataCount = function (targetLibrary, fileName) {
     // get stored redirect count
-    var storedDataCount = getStoredValue(dataCountKey, 0);
+    let storedDataCount = getStoredValue(dataCountKey, 0);
 
     // add file size to data count
-    storedDataCount = storedDataCount + localFiles[targetLibrary][fileName];
+    storedDataCount += localFiles[targetLibrary][fileName];
 
     // store updated count
     localStorage.setItem(dataCountKey, JSON.stringify(storedDataCount));
@@ -6646,16 +6616,17 @@ let LocalCDN = exports.LocalCDN = (function() {
   // The missed versions object is loaded from and saved to localStorage.
   // Param: targetLibrary: the library that the missing version belongs to
   //        version: the missing version to be added
-  var addMissedVersion = function(targetLibrary, version) {
+  const addMissedVersion = function (targetLibrary, version) {
     // get stored missed versions
-    var storedMissedVersions = getStoredValue(missedVersionsKey, {});
+    const storedMissedVersions = getStoredValue(missedVersionsKey, {});
+    const storedMissedVersion = storedMissedVersions[targetLibrary][version];
 
     // add new missed version
     if (!storedMissedVersions[targetLibrary]) {
       storedMissedVersions[targetLibrary] = {};
     }
     if (storedMissedVersions[targetLibrary][version] > 0) {
-      storedMissedVersions[targetLibrary][version] = storedMissedVersions[targetLibrary][version] + 1;
+      storedMissedVersions[targetLibrary][version] = storedMissedVersion + 1;
     } else {
       storedMissedVersions[targetLibrary][version] = 1;
     }
@@ -6664,24 +6635,48 @@ let LocalCDN = exports.LocalCDN = (function() {
     localStorage.setItem(missedVersionsKey, JSON.stringify(storedMissedVersions));
   };
 
-  // Gets a stored value from localStorage if available, and parses it. Otherwise,
-  // if the value isn't currently stored or if the parse fails, returns a default
-  // value.
-  // Param: keyName: the key under which the value is stored
-  //        defaultValue: the value to be returned if the stored value cannot be
-  //                      retrieved
-  var getStoredValue = function(keyName, defaultValue) {
-    var storedValue = localStorage.getItem(keyName);
-    try {
-      storedValue = JSON.parse(storedValue);
-    } catch(err) {
-      storedValue = defaultValue;
-    } finally {
-      if (!storedValue) {
-        storedValue = defaultValue;
+  // Handles a webRequest.onBeforeRequest event.
+  // Redirects any requests for locally available files from a matching host,
+  // if AdBlock is not paused. Otherwise allows request to continue as normal.
+  // Records any redirects, bytes of data redirected, and missing versions of
+  // supported libararies.
+  // Param: details: holds information about the request, including the URL.
+  const libRequestHandler = function (details) {
+    // respect pause
+    if (!adblockIsPaused()) {
+      let targetLibrary = null;
+      const requestUrl = parseUri(details.url);
+
+      // check if the url contains a library keyword
+      for (let i = 0; i < libraries.length; i++) {
+        if (requestUrl.pathname.indexOf(libraries[i]) !== -1) {
+          targetLibrary = libraries[i];
+        }
       }
-      return storedValue;
+
+      // check the request host
+      if (targetLibrary !== null && hostRegex.test(requestUrl.host)) {
+        // check the path
+        const matches = pathRegex[targetLibrary].exec(requestUrl.pathname);
+        if (matches) {
+          const version = matches[1];
+
+          // check if we have the version locally
+          if (versionArray[targetLibrary].indexOf(version) !== -1) {
+            const libraryPrefix = libraryPaths[targetLibrary].prefix;
+            const libraryPostfix = libraryPaths[targetLibrary].postfix;
+            const fileName = libraryPrefix + version + libraryPostfix;
+            const localPath = `localLib/${targetLibrary}/${fileName}`;
+            incrementRedirectCount();
+            addToDataCount(targetLibrary, fileName);
+            return { redirectUrl: chrome.runtime.getURL(localPath) };
+          }
+          addMissedVersion(targetLibrary, version);
+        }
+      }
     }
+
+    return { cancel: false };
   };
 
   // Handles a webrequest.onBeforeSendHeaders event.
@@ -6690,15 +6685,15 @@ let LocalCDN = exports.LocalCDN = (function() {
   // allows request to continue as normal.
   // Param: details: holds information about the request, including the URL and request
   //                 headers
-  var stripMetadataHandler = function(details) {
+  const stripMetadataHandler = function (details) {
     // respect pause
     if (!adblockIsPaused()) {
-      var requestUrl = parseUri(details.url);
-      var match = false;
+      const requestUrl = parseUri(details.url);
+      let match = false;
 
       // check if the url contains a library keyword
-      for (var k = 0; k < libraries.length; k++) {
-        if (requestUrl.pathname.indexOf(libraries[k]) != -1) {
+      for (let k = 0; k < libraries.length; k++) {
+        if (requestUrl.pathname.indexOf(libraries[k]) !== -1) {
           match = true;
         }
       }
@@ -6706,55 +6701,58 @@ let LocalCDN = exports.LocalCDN = (function() {
       // check for a matching host
       if (match && hostRegex.test(requestUrl.host)) {
         // strip the headers to remove, if present
-        for (var i = 0; i < details.requestHeaders.length; i++) {
-          var aHeader = details.requestHeaders[i].name;
-          if (aHeader === headersToRemove[0] || aHeader === headersToRemove[1] || aHeader === headersToRemove[2]) {
-            details.requestHeaders.splice(i--, 1);
+        for (let i = 0; i < details.requestHeaders.length; i++) {
+          const aHeader = details.requestHeaders[i].name;
+          if (headersToRemove.includes(aHeader)) {
+            details.requestHeaders.splice(i -= 1, 1);
           }
         }
       }
     }
 
-    return {requestHeaders: details.requestHeaders};
+    return { requestHeaders: details.requestHeaders };
   };
 
   // Sets redirect count, data count, and missed versions back to default
   // (0 for redirect count and data count, and an empty object for missed
   // versions)
-  var resetCollectedData = function() {
-    localStorage.setItem(redirectCountKey, "0");
-    localStorage.setItem(dataCountKey, "0");
-    localStorage.setItem(missedVersionsKey, "{}");
+  const resetCollectedData = function () {
+    localStorage.setItem(redirectCountKey, '0');
+    localStorage.setItem(dataCountKey, '0');
+    localStorage.setItem(missedVersionsKey, '{}');
   };
 
   return {
-    setUp: setUp,
+    setUp,
     // Starts the LocalCDN listeners
-    start: function() {
-      chrome.webRequest.onBeforeRequest.addListener(libRequestHandler, { urls: urlsMatchPattern }, ["blocking"]);
-      chrome.webRequest.onBeforeSendHeaders.addListener(stripMetadataHandler, { urls: urlsMatchPattern }, ["blocking", "requestHeaders"]);
+    start() {
+      chrome.webRequest.onBeforeRequest.addListener(libRequestHandler, { urls: urlsMatchPattern }, ['blocking']);
+      chrome.webRequest.onBeforeSendHeaders.addListener(stripMetadataHandler, { urls: urlsMatchPattern }, ['blocking', 'requestHeaders']);
     },
     // Stops the LocalCDN listeners and reset data
-    end: function() {
+    end() {
       chrome.webRequest.onBeforeRequest.removeListener(libRequestHandler);
       chrome.webRequest.onBeforeSendHeaders.removeListener(stripMetadataHandler);
       resetCollectedData();
     },
     // Gets the redirect count as a number of redirects
-    getRedirectCount: function() {
+    getRedirectCount() {
       return getStoredValue(redirectCountKey, 0);
     },
     // Gets the data count as a number of bytes
-    getDataCount: function() {
+    getDataCount() {
       return getStoredValue(dataCountKey, 0);
     },
     // Gets the missed versions object, which includes a count of how many
     // times the missed version has been requested
-    getMissedVersions: function() {
+    getMissedVersions() {
       return getStoredValue(missedVersionsKey, undefined);
-    }
+    },
   };
-})();
+}());
+
+exports.LocalCDN = LocalCDN;
+
 
 /***/ }),
 /* 18 */
@@ -6876,7 +6874,7 @@ exports.Cache = Cache;
 const {ElemHideExceptions} = __webpack_require__(20);
 const {filterNotifier} = __webpack_require__(1);
 const {normalizeHostname, domainSuffixes} = __webpack_require__(10);
-const {FiltersByDomain} = __webpack_require__(28);
+const {FiltersByDomain} = __webpack_require__(27);
 const {Cache} = __webpack_require__(18);
 
 /**
@@ -7649,7 +7647,7 @@ exports.ElemHideEmulation = ElemHideEmulation;
 
 
 
-const {Prefs} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 const {BlockingFilter} = __webpack_require__(0);
 const {filterNotifier} = __webpack_require__(1);
 const {port} = __webpack_require__(8);
@@ -7915,991 +7913,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery v2.1.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-const SyncService = (function () {
-  let storedSyncDomainPauses = [];
-  let syncCommitVersion = 0;
-  let currentExtensionName = '';
-  let pubnub;
-  const syncSchemaVersion = 1;
-  const syncCommitVersionKey = 'SyncCommitKey';
-  const syncLogMessageKey = 'SyncLogMessageKey';
-  const syncPreviousDataKey = 'SyncPreviousDataKey';
-  const syncExtensionNameKey = 'SyncExtensionNameKey';
-  const { EventEmitter } = __webpack_require__(6);
-  const syncNotifier = new EventEmitter();
-  let lastPostStatusCode = 200;
-  let lastGetStatusCode = 200;
-  let lastGetErrorResponse = {};
-
-  settings.onload().then(() => {
-    if (getSettings().sync_settings) {
-      License.ready().then(() => {
-        chrome.storage.local.get(syncCommitVersionKey).then((response) => {
-          syncCommitVersion = response[syncCommitVersionKey] || 0;
-          getSyncData();
-          enableSync();
-        });
-      });
-    }
-    License.ready().then(() => {
-      chrome.storage.local.get(syncExtensionNameKey).then((response) => {
-        currentExtensionName = response[syncExtensionNameKey] || '';
-      });
-    });
-  });
-
-  function debounced(delay, fn) {
-    let timerId;
-    return function (...args) {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-      timerId = setTimeout(() => {
-        fn(...args);
-        timerId = null;
-      }, delay);
-    };
-  }
-
-  const getCurrentExtensionName = function () {
-    return currentExtensionName;
-  };
-
-  const getAllExtensionNames = function (callback) {
-    syncNotifier.emit('extension.names.downloading');
-    $.ajax({
-      jsonp: false,
-      cache: false,
-      headers: {
-        'X-GABSYNC-PARAMS': JSON.stringify({ extensionGUID: STATS.userId(), licenseId: License.get().licenseId, extInfo: getExtensionInfo() }),
-      },
-      url: `${License.MAB_CONFIG.syncURL}/devices/list`,
-      type: 'GET',
-      success(text, status) {
-        let responseObj = {};
-        if (typeof text === 'object') {
-          responseObj = text;
-        } else if (typeof text === 'string') {
-          try {
-            responseObj = JSON.parse(text);
-          } catch (e) {
-            console.log('Something went wrong with parsing license data.');
-            console.log('error', e);
-            console.log(text);
-            return;
-          }
-        }
-        syncNotifier.emit('extension.names.downloaded', responseObj);
-        if (typeof callback === 'function') {
-          callback(responseObj);
-        }
-      },
-      error(xhr, textStatus, errorThrown) {
-        if (xhr.status === 404 && typeof callback === 'function' && xhr.responseText) {
-          callback(xhr.responseText);
-        }
-        syncNotifier.emit('extension.names.downloading.error', xhr.status);
-      },
-    });
-  };
-
-  const setCurrentExtensionName = function (newName) {
-    if (newName && newName.trim().length >= 1 && newName.trim().length <= 50) {
-      currentExtensionName = newName.trim();
-      chromeStorageSetHelper(syncExtensionNameKey, currentExtensionName);
-      const thedata = {
-        deviceName: currentExtensionName,
-        extensionGUID: STATS.userId(),
-        licenseId: License.get().licenseId,
-        extInfo: getExtensionInfo(),
-      };
-      syncNotifier.emit('extension.name.updating');
-      $.ajax({
-        jsonp: false,
-        url: `${License.MAB_CONFIG.syncURL}/devices/add`,
-        type: 'post',
-        success(text, status, xhr) {
-          syncNotifier.emit('extension.name.updated');
-        },
-        error(xhr, textStatus, errorThrown) {
-          syncNotifier.emit('extension.name.updated.error', xhr.status);
-        },
-        data: thedata,
-      });
-    }
-  };
-
-  const removeCurrentExtensionName = function () {
-    const thedata = {
-      deviceName: currentExtensionName,
-      extensionGUID: STATS.userId(),
-      licenseId: License.get().licenseId,
-      extInfo: getExtensionInfo(),
-    };
-    syncNotifier.emit('extension.name.remove');
-    $.ajax({
-      jsonp: false,
-      url: `${License.MAB_CONFIG.syncURL}/devices/remove`,
-      type: 'post',
-      success(text, status, xhr) {
-        currentExtensionName = '';
-        chromeStorageSetHelper(syncExtensionNameKey, currentExtensionName);
-        syncNotifier.emit('extension.name.removed');
-      },
-      error(xhr, textStatus, errorThrown) {
-        syncNotifier.emit('extension.name.remove.error', xhr.status);
-      },
-      data: thedata,
-    });
-  };
-
-  // return all of the current user configurable extension options (settings, Prefs, filter list sub, custom rules, themes, etc.
-  // since a comparison will be done in this, and other sync'd extensions, the payload should only contain settings, Prefs, etc
-  // and not data that can change from browser to brower, version to version, etc.
-  const getSyncInformation = function () {
-    const payload = {};
-    payload.settings = getSettings();
-    payload.subscriptions = {};
-    const subscriptions = getSubscriptionsMinusText();
-
-    for (const id in subscriptions) {
-      if (subscriptions[id].subscribed && subscriptions[id].url) {
-        payload.subscriptions[id] = subscriptions[id].url;
-      }
-    }
-    payload.customFilterRules = cleanCustomFilter(getUserFilters());
-    payload.prefs = {};
-    for (const inx in abpPrefPropertyNames) {
-      const name = abpPrefPropertyNames[inx];
-      payload.prefs[name] = Prefs[name];
-    }
-    payload.channels = {};
-    const guide = channels.getGuide();
-    for (const id in guide) {
-      payload.channels[guide[id].name] = guide[id].enabled;
-    }
-    return payload;
-  };
-
-  // return meta data about the extension installation
-  const getExtensionInfo = function () {
-    return {
-      flavor: STATS.flavor,
-      browserVersion: STATS.browserVersion,
-      os: STATS.os,
-      osVersion: STATS.osVersion,
-      extVersion: STATS.version,
-      syncSchemaVersion: syncSchemaVersion,
-    };
-  };
-
-
-  const postDataSync = function (callback, initialGet) {
-    if (!getSettings().sync_settings) {
-      return;
-    }
-    const payload = getSyncInformation();
-    const thedata = {
-      data: JSON.stringify(payload),
-      commitVersion: syncCommitVersion,
-      extensionGUID: STATS.userId(),
-      licenseId: License.get().licenseId,
-      extInfo: getExtensionInfo(),
-    };
-
-    chrome.storage.local.get(syncPreviousDataKey).then((response) => {
-      const previousData = response[syncPreviousDataKey] || '{}';
-      if (objectComparison(payload, JSON.parse(previousData))) {
-        return;
-      }
-      syncNotifier.emit('post.data.sending');
-      lastPostStatusCode = 200;
-      $.ajax({
-        jsonp: false,
-        url: License.MAB_CONFIG.syncURL,
-        type: 'post',
-        success(text, status, xhr) {
-          lastPostStatusCode = xhr.status;
-          let responseObj = {};
-          if (typeof text === 'object') {
-            responseObj = text;
-          } else if (typeof text === 'string') {
-            try {
-              responseObj = JSON.parse(text);
-            } catch (e) {
-              console.log('Something went wrong with parsing license data.');
-              console.log('error', e);
-              console.log(text);
-              return;
-            }
-          }
-          if (responseObj && responseObj.commitVersion > syncCommitVersion) {
-            syncCommitVersion = text.commitVersion;
-            chromeStorageSetHelper(syncCommitVersionKey, responseObj.commitVersion);
-          }
-          chromeStorageSetHelper(syncPreviousDataKey, thedata.data);
-          if (typeof callback === 'function') {
-            callback();
-          }
-          syncNotifier.emit('post.data.sent');
-        },
-        error(xhr, textStatus, errorThrown) {
-          syncNotifier.emit('post.data.sent.error', xhr.status, initialGet);
-          lastPostStatusCode = xhr.status;
-          if (xhr.status === 409) {
-            // this extension probably had an version of the sync data
-            // aka - the sync commit version was behind the sync server
-            // so, undo / revert all of the user changes that were just posted
-            // by doing a 'GET'
-            // because we want the above error to be persisted, will set the
-            // 'disableEmitMsg' to true
-            getSyncData(false, true);
-            return;
-          }
-          // process all other currently known errors by reverting all
-          // of the changes posted
-          if (xhr.status === 0 || xhr.status === 401 || xhr.status === 404 || xhr.status === 500) {
-            revertToPreviousSyncData();
-          }
-        },
-        data: thedata,
-      });
-    });
-  };
-  const debounceWaitTime = 3000; // time in ms before posting data
-  const postDataSyncHandler = debounced(debounceWaitTime, postDataSync);
-
-  const revertToPreviousSyncData = function () {
-    chrome.storage.local.get(syncPreviousDataKey).then((response) => {
-      const previousData = response[syncPreviousDataKey] || '{}';
-      processSyncUpdate(JSON.parse(previousData));
-    });
-  };
-
-  // Sync Listeners
-  function onFilterAdded(filter, subscription, position, calledPreviously) {
-    // a delay is added to allow the domain pause filters time to be saved to storage
-    // otherwise the domain pause filter check below would always fail
-    if (calledPreviously === undefined) {
-      setTimeout(() => {
-        onFilterAdded(filter, subscription, position, true);
-      }, 500);
-      return;
-    }
-    if (isPauseFilter(filter.text)) {
-      return;
-    }
-    if (isDomainPauseFilter(filter.text)) {
-      storedSyncDomainPauses.push(filter.text);
-      return;
-    }
-    postDataSyncHandler();
-  }
-
-  function onFilterRemoved(filter) {
-    if (isPauseFilter(filter.text)) {
-      return;
-    }
-    if (isDomainPauseFilter(filter.text)) {
-      storedSyncDomainPauses = storedSyncDomainPauses.slice(storedSyncDomainPauses.indexOf(filter.text));
-      return;
-    }
-    postDataSyncHandler();
-  }
-
-  // a delay is added to allow the domain pause filters time to be saved to storage
-  // otherwise the domain pause filter check below would always fail
-  const onFilterListsSubAdded = function (sub, calledPreviously) {
-    if (calledPreviously === undefined) {
-      setTimeout(() => {
-        onFilterListsSubAdded(sub, true);
-      }, 500);
-      return;
-    }
-    let containsPauseFilter = false;
-    if (sub.url && sub.url.startsWith('~user~') && sub._filterText.length) {
-      const arrayLength = sub._filterText.length;
-      for (let i = 0; i < arrayLength; i++) {
-        const filter = sub._filterText[i];
-        containsPauseFilter = isPauseFilter(filter);
-        if (!containsPauseFilter && isDomainPauseFilter(filter)) {
-          containsPauseFilter = true;
-          storedSyncDomainPauses.push(filter.text);
-        }
-      }
-    }
-    if (containsPauseFilter) {
-      return;
-    }
-    postDataSyncHandler();
-  };
-
-  const onFilterListsSubRemoved = function (sub) {
-    let containsPauseFilter = false;
-    if (sub.url && sub.url.startsWith('~user~') && sub._filterText.length) {
-      const arrayLength = sub._filterText.length;
-      for (let i = 0; i < arrayLength; i++) {
-        const filter = sub._filterText[i];
-        containsPauseFilter = isPauseFilter(filter);
-        if (!containsPauseFilter && isDomainPauseFilter(filter.text)) {
-          containsPauseFilter = true;
-          storedSyncDomainPauses = storedSyncDomainPauses.slice(storedSyncDomainPauses.indexOf(filter.text));
-          return;
-        }
-      }
-    }
-    if (containsPauseFilter) {
-      return;
-    }
-    postDataSyncHandler();
-  };
-
-  const onSettingsChanged = function (name) {
-    if (name === 'sync_settings') {
-      return; // don't process any sync setting changes
-    }
-    postDataSyncHandler();
-  };
-
-  const updateNetworkStatus = function () {
-    if (navigator.onLine) {
-      // may not be needed if we get the update from PN
-      getSyncData();
-    }
-  };
-
-  const enableSync = function (initialGet) {
-    setSetting('sync_settings', true);
-    const addListeners = function () {
-      syncNotifier.on('sync.data.getting.error', onSyncDataGettingErrorAddLogEntry);
-      syncNotifier.on('sync.data.getting.error.initial.fail', onSyncDataGettingErrorInitialFailAddLogEntry);
-      syncNotifier.on('extension.names.downloading', onExtensionNamesDownloadingAddLogEntry);
-      syncNotifier.on('sync.data.receieved', onSyncDataReceievedAddLogEntry);
-      syncNotifier.on('sync.data.getting', onSyncDataGettingAddLogEntry);
-      syncNotifier.on('post.data.sent.error', onPostDataSentErrorAddLogEntry);
-      syncNotifier.on('post.data.sending', onPostDataSendingAddLogEntry);
-      syncNotifier.on('post.data.sent', onPostDataSentAddLogEntry);
-      syncNotifier.on('extension.name.remove.error', onExtensionNamesRemoveErrorAddLogEntry);
-      syncNotifier.on('extension.name.removed', onExtensionNameRemovedAddLogEntry);
-      syncNotifier.on('extension.name.remove', onExtensionNameRemoveAddLogEntry);
-      syncNotifier.on('extension.name.updated.error', onExtensionNameUpdatedErrorAddLogEntry);
-      syncNotifier.on('extension.name.updated', onExtensionNameUpdatedAddLogEntry);
-      syncNotifier.on('extension.name.updating', onExtensionNameUpdatingAddLogEntry);
-      syncNotifier.on('extension.names.downloaded', onExtensionNamesDownloadedAddLogEntry);
-      syncNotifier.on('extension.names.downloading.error', onExtensionNamesDownloadingErrorAddLogEntry);
-
-      filterNotifier.on('subscription.removed', onFilterListsSubRemoved);
-      filterNotifier.on('subscription.added', onFilterListsSubAdded);
-
-      filterNotifier.on('filter.added', onFilterAdded);
-      filterNotifier.on('filter.removed', onFilterRemoved);
-
-      settingsNotifier.on('settings.changed', onSettingsChanged);
-      channelsNotifier.on('channels.changed', postDataSyncHandler);
-
-      for (const inx in abpPrefPropertyNames) {
-        const name = abpPrefPropertyNames[inx];
-        Prefs.on(name, postDataSyncHandler);
-      }
-      // wait a moment at start to allow all of the backgound scripts to load
-      setTimeout(() => {
-        enablePubNub();
-      }, 1000);
-
-      window.addEventListener('online', updateNetworkStatus);
-      window.addEventListener('offline', updateNetworkStatus);
-    };
-
-    if (initialGet) {
-      SyncService.getSyncData(initialGet, false, (response) => {
-        if (response === 200 || response === 304) {
-          addListeners();
-        }
-      });
-      return;
-    }
-
-    addListeners();
-  };
-
-  const disableSync = function () {
-    setSetting('sync_settings', false);
-    syncCommitVersion = 0;
-    disablePubNub();
-
-    filterNotifier.off('subscription.added', onFilterListsSubAdded);
-    filterNotifier.off('subscription.removed', onFilterListsSubRemoved);
-
-    filterNotifier.off('filter.added', onFilterAdded);
-    filterNotifier.off('filter.removed', onFilterRemoved);
-
-    settingsNotifier.off('settings.changed', onSettingsChanged);
-    channelsNotifier.off('channels.changed', postDataSyncHandler);
-
-    for (const inx in abpPrefPropertyNames) {
-      const name = abpPrefPropertyNames[inx];
-      Prefs.off(name, postDataSyncHandler);
-    }
-
-    storedSyncDomainPauses = [];
-    removeCurrentExtensionName();
-
-    currentExtensionName = '';
-    chromeStorageSetHelper(syncExtensionNameKey, currentExtensionName);
-
-    syncNotifier.off('sync.data.getting.error', onSyncDataGettingErrorAddLogEntry);
-    syncNotifier.off('sync.data.getting.error.initial.fail', onSyncDataGettingErrorInitialFailAddLogEntry);
-    syncNotifier.off('extension.names.downloading', onExtensionNamesDownloadingAddLogEntry);
-    syncNotifier.off('sync.data.receieved', onSyncDataReceievedAddLogEntry);
-    syncNotifier.off('sync.data.getting', onSyncDataGettingAddLogEntry);
-    syncNotifier.off('post.data.sent.error', onPostDataSentErrorAddLogEntry);
-    syncNotifier.off('post.data.sending', onPostDataSendingAddLogEntry);
-    syncNotifier.off('post.data.sent', onPostDataSentAddLogEntry);
-    syncNotifier.off('extension.name.remove.error', onExtensionNamesRemoveErrorAddLogEntry);
-    syncNotifier.off('extension.name.removed', onExtensionNameRemovedAddLogEntry);
-    syncNotifier.off('extension.name.remove', onExtensionNameRemoveAddLogEntry);
-    syncNotifier.off('extension.name.updated.error', onExtensionNameUpdatedErrorAddLogEntry);
-    syncNotifier.off('extension.name.updated', onExtensionNameUpdatedAddLogEntry);
-    syncNotifier.off('extension.name.updating', onExtensionNameUpdatingAddLogEntry);
-    syncNotifier.off('extension.names.downloaded', onExtensionNamesDownloadedAddLogEntry);
-    syncNotifier.off('extension.names.downloading.error', onExtensionNamesDownloadingErrorAddLogEntry);
-
-    window.removeEventListener('online', updateNetworkStatus);
-    window.removeEventListener('offline', updateNetworkStatus);
-  };
-
-  const isPauseFilter = function (filterText) {
-    return (isWhitelistFilter(filterText) && ((pausedFilterText1 === filterText) || (pausedFilterText2 === filterText)));
-  };
-
-  const isDomainPauseFilter = function (filterText) {
-    if (isWhitelistFilter(filterText)) {
-      const domains = adblockIsDomainPaused();
-      for (const domain in domains) {
-        if (`@@${domain}$document` === filterText) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-
-  // Retreive the sync data from the sync server
-  // Input: successCallback:function - function that will be called when success occurs, the callback will be provided the response data
-  //        errorCallback:function - function that will be called when  failure occurs, the callback will be provided the error code
-  //        attemptCount:integer - the number of 'get' attempts made (only used internally by the retry logic)
-  //        shouldForce:boolean - optional, force a response from the server (even if the commit versions match), defaults to false
-  const requestSyncData = function (successCallback, errorCallback, attemptCount, shouldForce) {
-    if (!attemptCount) {
-      attemptCount = 1;
-    } else {
-      attemptCount += 1;
-    }
-    let forceParam = shouldForce || false;
-
-    $.ajax({
-      jsonp: false,
-      cache: false,
-      headers: {
-        'X-GABSYNC-PARAMS': JSON.stringify({
-          extensionGUID: STATS.userId(), licenseId: License.get().licenseId, commitVersion: syncCommitVersion, force: forceParam, extInfo: getExtensionInfo(),
-        }),
-      },
-      url: License.MAB_CONFIG.syncURL,
-      type: 'GET',
-      success(text, textStatus, xhr) {
-        if (typeof successCallback === 'function') {
-          successCallback(text, xhr.status);
-        }
-      },
-      error(xhr, textStatus, errorThrown) {
-        if (xhr.status !== 404 && attemptCount < 3) {
-          setTimeout(() => {
-            requestSyncData(successCallback, errorCallback, attemptCount, shouldForce);
-          }, 1000); // wait 1 second for retry
-          return;
-        }
-        if (typeof errorCallback === 'function') {
-          errorCallback(xhr.status, textStatus, errorThrown, xhr.responseJSON);
-        }
-      },
-    });
-  };
-
-  // Retreive or 'get' the sync data from the sync server
-  // Input: initialGet:boolean - if true, and the server returns a 404 error code, then a 'post' is invoked
-  //        disableEmitMsg:boolean - if true, then no sync notifier message will be emitted (usually used for post error processing)
-  //        callback:function - function that will be called when success or failure occurs
-  //        shouldForce:boolean - optional, force a response from the server (even if the commit versions match), defaults to false
-  const getSyncData = function (initialGet, disableEmitMsg, callback, shouldForce) {
-
-    const getSuccess = function (text, statusCode) {
-      let responseObj = {};
-      if (text && typeof text === 'object') {
-        responseObj = text;
-      } else if (text && typeof text === 'string') {
-        try {
-          responseObj = JSON.parse(text);
-        } catch (e) {
-          console.log('Something went wrong with parsing license data.');
-          console.log('error', e);
-          console.log(text);
-          return;
-        }
-      }
-      if (responseObj && ((responseObj.commitVersion > syncCommitVersion) || shouldForce)) {
-        if (responseObj.data) {
-          try {
-            processSyncUpdate(JSON.parse(responseObj.data));
-          } catch (e) {
-            console.log('failed to parse response data from server', responseObj.data);
-            console.log(e);
-          }
-        }
-        syncCommitVersion = responseObj.commitVersion;
-        chromeStorageSetHelper(syncCommitVersionKey, responseObj.commitVersion);
-        chromeStorageSetHelper(syncPreviousDataKey, responseObj.data);
-      }
-      if (!disableEmitMsg) {
-        syncNotifier.emit('sync.data.receieved');
-      }
-      if (typeof callback === 'function') {
-        callback(statusCode);
-      }
-    };
-
-    const getFailure = function (statusCode, textStatus, errorThrown, responseJSON) {
-      lastGetStatusCode = statusCode;
-      lastGetErrorResponse = responseJSON;
-      if (initialGet && statusCode === 404) {
-        postDataSync(callback, initialGet);
-        // now that the initial post is complete, enable Sync (add listeners, etc.)
-        // with 'initialGet' now set to false
-        enableSync();
-        return;
-      }
-      if (initialGet && !disableEmitMsg) {
-        syncNotifier.emit('sync.data.getting.error.initial.fail', statusCode);
-      } else if (!disableEmitMsg) {
-        syncNotifier.emit('sync.data.getting.error', statusCode, responseJSON);
-      }
-      if (typeof callback === 'function') {
-        callback(statusCode);
-      }
-    };
-
-    if (!disableEmitMsg) {
-      syncNotifier.emit('sync.data.getting');
-    }
-    lastGetStatusCode = 200;
-    lastGetErrorResponse = {};
-    requestSyncData(getSuccess, getFailure, undefined, shouldForce);
-  };
-
-  const processSyncUpdate = function (payload) {
-    // do we need a check or comparison of payload.version vs. syncSchemaVersion ?
-    if (payload.settings) {
-      for (const id in payload.settings) {
-        setSetting(id, payload.settings[id]);
-      }
-    }
-    if (payload.subscriptions) {
-      const currentSubs = getSubscriptionsMinusText();
-      for (const id in currentSubs) {
-        if (!payload.subscriptions[id] && currentSubs[id].subscribed) {
-          const subscription = Subscription.fromURL(currentSubs[id].url);
-          setTimeout(() => {
-            filterStorage.removeSubscription(subscription);
-          }, 1);
-        }
-      }
-      for (const id in payload.subscriptions) {
-        if (!currentSubs[id] || !currentSubs[id].subscribed) {
-          let url = getUrlFromId(id);
-          let subscription = Subscription.fromURL(url);
-          if (!url && id.startsWith('url:')) {
-            url = id.slice(4);
-            subscription = Subscription.fromURL(url);
-          }
-          filterStorage.addSubscription(subscription);
-          synchronizer.execute(subscription);
-        }
-      }
-    }
-
-    if (payload.customFilterRules) {
-      // capture, then remove all current custom filters, account for pause filters in current processing
-      let currentUserFilters = getUserFilters();
-      for (const inx in payload.customFilterRules) {
-        const result = parseFilter(payload.customFilterRules[inx]);
-        if (result.filter) {
-          filterStorage.addFilter(result.filter);
-        }
-      }
-      if (currentUserFilters &&
-        currentUserFilters.length) {
-        currentUserFilters = cleanCustomFilter(currentUserFilters);
-        // Delete / remove filters the user removed...
-        if (currentUserFilters) {
-          for (let i = 0; (i < currentUserFilters.length); i++) {
-            let filter = currentUserFilters[i];
-            if (payload.customFilterRules.indexOf(filter) === -1) {
-              filter = filter.trim();
-              if (filter.length > 0) {
-                const result = parseFilter(filter);
-                if (result.filter) {
-                  filterStorage.removeFilter(result.filter);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    if (payload.prefs) {
-      for (const key in payload.prefs) {
-        Prefs[key] = payload.prefs[key];
-        // add any new Prefs to the array of Preferences we're tracking for sync
-        if (abpPrefPropertyNames.indexOf(key) < 0) {
-          abpPrefPropertyNames.push(key);
-        }
-      }
-    }
-    if (payload.channels) {
-      const guide = channels.getGuide();
-      for (const name in payload.channels) {
-        const channelId = channels.getIdByName(name);
-        if (channelId) {
-          channels.setEnabled(channelId, payload.channels[name]);
-        } else {
-          // create a new channel to save the channel name and the enabled indicator
-          channels.add({ name, param: undefined, enabled: payload.channels[name] });
-        }
-      }
-    }
-  };
-
-  function cleanCustomFilter(filters) {
-    // Remove the global pause white-list item if adblock is paused
-    if (adblockIsPaused()) {
-      let index = filters.indexOf(pausedFilterText1);
-      if (index >= 0) {
-        filters.splice(index, 1);
-      }
-      index = filters.indexOf(pausedFilterText2);
-      if (index >= 0) {
-        filters.splice(index, 1);
-      }
-    }
-
-    // Remove the domain pause white-list items
-    const domainPauses = adblockIsDomainPaused();
-    for (const aDomain in domainPauses) {
-      const index = filters.indexOf(`@@${aDomain}$document`);
-      if (index >= 0) {
-        filters.splice(index, 1);
-      }
-    }
-    return filters;
-  }
-
-  function getCommitVersion() {
-    return syncCommitVersion;
-  }
-
-  function setCommitVersion(newVersionNum) {
-    syncCommitVersion = newVersionNum;
-  }
-
-  function getLastPostStatusCode() {
-    return lastPostStatusCode;
-  }
-
-  function resetLastPostStatusCode() {
-    lastPostStatusCode = 200;
-  }
-
-  function setLastPostStatusCode(newCode) {
-    lastPostStatusCode = newCode;
-  }
-
-  function getLastGetStatusCode() {
-    return lastGetStatusCode;
-  }
-
-  function resetLastGetStatusCode() {
-    lastGetStatusCode = 200;
-  }
-
-  function setLastGetStatusCode(newCode) {
-    lastGetStatusCode = newCode;
-  }
-
-  function getLastGetErrorResponse() {
-    return lastGetErrorResponse;
-  }
-
-  function resetLastGetErrorResponse() {
-    lastGetErrorResponse = {};
-  }
-
-  function setLastGetErrorResponse(newObject) {
-    lastGetErrorResponse = newObject;
-  }
-
-  function enablePubNub() {
-    pubnub = new PubNub({
-      subscribeKey: License.MAB_CONFIG.subscribeKey,
-      authKey: `${License.get().licenseId}_${STATS.userId()}`,
-      ssl: true,
-    });
-
-    pubnub.addListener({
-      message(response) {
-        if (response.message && response.message && response.message.commitVersion) {
-          processFetchRequest(response.message.commitVersion);
-        }
-      },
-      status(msg) {
-        if (msg.category === 'PNNetworkUpCategory') {
-          pubnub.subscribe({
-            channels: [License.get().licenseId],
-          });
-        }
-      },
-    });
-
-    pubnub.subscribe({
-      channels: [License.get().licenseId],
-    });
-  }
-
-  function disablePubNub() {
-    if (!pubnub) {
-      return;
-    }
-
-    pubnub.removeAllListeners();
-    pubnub.unsubscribeAll();
-    pubnub = undefined;
-  }
-
-
-  function processFetchRequest(fetchCommitVersion) {
-    if (!fetchCommitVersion) {
-      return;
-    }
-    if (typeof fetchCommitVersion === 'string') {
-      fetchCommitVersion = Number.parseInt(fetchCommitVersion, 10);
-    }
-    if (fetchCommitVersion === syncCommitVersion) {
-      return;
-    }
-    getSyncData();
-  }
-
-  // Helper to return a value's internal object [[Class]]
-  // That this returns [object Type] even for primitives
-  function getClass(obj) {
-    return Object.prototype.toString.call(obj);
-  }
-
-  /*
-  ** @param a, b        - values (Object, Date, etc.)
-  ** @returns {boolean} - true if a and b are the same object or
-  **                      same primitive value or
-  **                      have the same properties with the same values
-  **                      otherwise false
-  */
-  function objectComparison(a, b) {
-    // If a and b reference the same value, return true
-    if (a === b) {
-      return true;
-    }
-
-    // If a and b aren't the same type, return false
-    if (typeof a !== typeof b) {
-      return false;
-    }
-
-    // Already know types are the same, so if type is number
-    // and both NaN, return true
-    if (typeof a === 'number' && Number.isNaN(a) && Number.isNaN(b)) {
-      return true;
-    }
-
-    // Get internal [[Class]]
-    const aClass = getClass(a);
-    const bClass = getClass(b);
-
-    // Return false if not same class
-    if (aClass !== bClass) {
-      return false;
-    }
-
-    // If they're Boolean, String or Number objects, check values
-    if (aClass === '[object Boolean]' || aClass === '[object String]' || aClass === '[object Number]') {
-      if (a.valueOf() !== b.valueOf()) {
-        return false;
-      }
-    }
-
-    // If they're RegExps, Dates or Error objects, check stringified values
-    if (aClass === '[object RegExp]' || aClass === '[object Date]' || aClass === '[object Error]') {
-      if (a.toString() !== b.toString()) {
-        return false;
-      }
-    }
-
-    // For functions, check stringigied values are the same
-    // Almost impossible to be equal if a and b aren't trivial
-    // and are different functions
-    if (aClass === '[object Function]' && a.toString() !== b.toString()) {
-      return false;
-    }
-
-    // For all objects, (including Objects, Functions, Arrays and host objects),
-    // check the properties
-    const aKeys = Object.keys(a);
-    const bKeys = Object.keys(b);
-
-    // If they don't have the same number of keys, return false
-    if (aKeys.length !== bKeys.length) {
-      return false;
-    }
-
-    // Check they have the same keys
-    if (!aKeys.every(key => b.hasOwnProperty(key))) {
-      return false;
-    }
-
-    // Check key values - uses ES5 Object.keys
-    return aKeys.every(key => objectComparison(a[key], b[key]));
-  }
-
-  // Sync log message processing
-
-  const onExtensionNamesDownloadingAddLogEntry = function () {
-    addSyncLogText('extension.names.downloading');
-  };
-
-  const onExtensionNamesDownloadedAddLogEntry = function () {
-    addSyncLogText('extension.names.downloaded');
-  };
-
-  const onExtensionNamesDownloadingErrorAddLogEntry = function (errorCode) {
-    addSyncLogText(`extension.names.downloading.error: ${errorCode}`);
-  };
-
-  const onExtensionNameUpdatingAddLogEntry = function () {
-    addSyncLogText('extension.name.updating');
-  };
-
-  const onExtensionNameUpdatedAddLogEntry = function () {
-    addSyncLogText('extension.name.updated');
-  };
-
-  const onExtensionNameUpdatedErrorAddLogEntry = function (errorCode) {
-    addSyncLogText(`extension.names.updated.error: ${errorCode}`);
-  };
-
-  const onExtensionNameRemoveAddLogEntry = function () {
-    addSyncLogText('extension.name.remove');
-  };
-
-  const onExtensionNameRemovedAddLogEntry = function () {
-    addSyncLogText('extension.name.removed');
-  };
-
-  const onExtensionNamesRemoveErrorAddLogEntry = function (errorCode) {
-    addSyncLogText(`extension.name.remove.error: ${errorCode}`);
-  };
-
-  const onPostDataSendingAddLogEntry = function () {
-    addSyncLogText('post.data.sending');
-  };
-
-  const onPostDataSentAddLogEntry = function () {
-    addSyncLogText(`post.data.sent, commit version: ${getCommitVersion()}`);
-  };
-
-  const onPostDataSentErrorAddLogEntry = function (errorCode) {
-    addSyncLogText(`post.data.sent.error: ${errorCode}`);
-  };
-
-  const onSyncDataGettingAddLogEntry = function () {
-    addSyncLogText('sync.data.getting');
-  };
-
-  const onSyncDataReceievedAddLogEntry = function () {
-    addSyncLogText(`sync.data.receieved, commit version: ${getCommitVersion()}`);
-  };
-
-  const onSyncDataGettingErrorAddLogEntry = function (errorCode) {
-    addSyncLogText(`sync.data.getting.error: ${errorCode}`);
-  };
-
-  const onSyncDataGettingErrorInitialFailAddLogEntry = function (errorCode) {
-    addSyncLogText(`sync.data.getting.error.initial.fail: ${errorCode}`);
-  };
-
-  const addSyncLogText = function (msg) {
-    const storedLog = JSON.parse(localStorage.getItem(syncLogMessageKey) || '[]');
-    storedLog.push(`${new Date().toUTCString()} , ${msg}`);
-    while (storedLog.length > 500) { // only keep the last 500 log entries
-      storedLog.shift();
-    }
-    localStorage.setItem(syncLogMessageKey, JSON.stringify(storedLog));
-  };
-
-  const getSyncLog = function () {
-    const storedLog = JSON.parse(localStorage.getItem(syncLogMessageKey) || '[]');
-    const theReturnObj = {};
-    Object.assign(theReturnObj, storedLog);
-    return theReturnObj;
-  };
-
-  // TODO - when should we delete the log file???
-  const deleteSyncLog = function () {
-    localStorage.removeItem(syncLogMessageKey);
-  };
-
-  return {
-    enableSync,
-    disableSync,
-    getSyncData,
-    processFetchRequest,
-    getCurrentExtensionName,
-    getAllExtensionNames,
-    setCurrentExtensionName,
-    removeCurrentExtensionName,
-    syncNotifier,
-    getCommitVersion,
-    setCommitVersion,
-    getLastPostStatusCode,
-    resetLastPostStatusCode,
-    setLastPostStatusCode,
-    getLastGetStatusCode,
-    resetLastGetStatusCode,
-    setLastGetStatusCode,
-    getLastGetErrorResponse,
-    resetLastGetErrorResponse,
-    setLastGetErrorResponse,
-    getSyncLog,
-    deleteSyncLog,
-  };
-}());
-
-exports.SyncService = SyncService;
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /*
  * This file is part of Adblock Plus <https://adblockplus.org/>,
  * Copyright (C) 2006-present eyeo GmbH
@@ -8960,7 +7973,7 @@ exports.indexOf = indexOf;
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9199,7 +8212,7 @@ exports.qualifySelector = qualifySelector;
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9481,7 +8494,7 @@ exports.FiltersByDomain = FiltersByDomain;
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9724,7 +8737,7 @@ exports.compileScript = compileScript;
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9920,7 +8933,7 @@ class Downloader
   getDownloadUrl(downloadable)
   {
     const {addonName, addonVersion, application, applicationVersion,
-           platform, platformVersion} = __webpack_require__(2);
+           platform, platformVersion} = __webpack_require__(5);
     let url = downloadable.redirectURL || downloadable.url;
     if (url.includes("?"))
       url += "&";
@@ -10138,7 +9151,7 @@ exports.Downloadable = Downloadable;
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10165,11 +9178,11 @@ exports.Downloadable = Downloadable;
 
 const {Filter, RegExpFilter, BlockingFilter} =
   __webpack_require__(0);
-const {Subscription} = __webpack_require__(4);
+const {Subscription} = __webpack_require__(3);
 const {defaultMatcher} = __webpack_require__(11);
 const {filterNotifier} = __webpack_require__(1);
 const {parseURL} = __webpack_require__(10);
-const {Prefs} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 const {checkWhitelisted, getKey} = __webpack_require__(9);
 const {extractHostFromFrame} = __webpack_require__(7);
 const {port} = __webpack_require__(8);
@@ -10468,7 +9481,7 @@ filterNotifier.on("load", onFilterChange);
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10499,9 +9512,9 @@ const {Notification: NotificationStorage} =
   __webpack_require__(16);
 const {initAntiAdblockNotification} =
   __webpack_require__(57);
-const {Prefs} = __webpack_require__(3);
-const {showOptions} = __webpack_require__(33);
-const info = __webpack_require__(2);
+const {Prefs} = __webpack_require__(2);
+const {showOptions} = __webpack_require__(32);
+const info = __webpack_require__(5);
 
 let activeNotification = null;
 let activeButtons = null;
@@ -10774,7 +9787,7 @@ NotificationStorage.addShowListener(showNotification);
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10800,7 +9813,7 @@ NotificationStorage.addShowListener(showNotification);
 
 
 const {checkWhitelisted} = __webpack_require__(9);
-const info = __webpack_require__(2);
+const info = __webpack_require__(5);
 
 const manifest = browser.runtime.getManifest();
 const optionsUrl = manifest.options_page || manifest.options_ui.page;
@@ -11011,7 +10024,7 @@ browser.browserAction.onClicked.addListener(() =>
 
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11022,15 +10035,15 @@ browser.browserAction.onClicked.addListener(() =>
 const {Subscription,
        DownloadableSubscription,
        SpecialSubscription} =
-  __webpack_require__(4);
-const {filterStorage} = __webpack_require__(5);
+  __webpack_require__(3);
+const {filterStorage} = __webpack_require__(4);
 const {filterNotifier} = __webpack_require__(1);
 const {recommendations} = __webpack_require__(23);
-const info = __webpack_require__(2);
-const {Prefs} = __webpack_require__(3);
+const info = __webpack_require__(5);
+const {Prefs} = __webpack_require__(2);
 const {synchronizer} = __webpack_require__(15);
 const {Utils} = __webpack_require__(14);
-const {initNotifications} = __webpack_require__(32);
+const {initNotifications} = __webpack_require__(31);
 const {updatesVersion} = __webpack_require__(59);
 
 let firstRun;
@@ -11303,7 +10316,7 @@ Promise.all([
   .then(addSubscriptionsAndNotifyUser)
   // We have to require the "uninstall" module on demand,
   // as the "uninstall" module in turn requires this module.
-  .then(() => { __webpack_require__(35).setUninstallURL(); })
+  .then(() => { __webpack_require__(34).setUninstallURL(); })
   .then(initNotifications);
 
 /**
@@ -11339,19 +10352,19 @@ exports.chooseFilterSubscriptions = chooseFilterSubscriptions;
 
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /** @module adblock-betafish/alias/uninstall */
 
-const {filterStorage} = __webpack_require__(5);
-const {STATS} = __webpack_require__(36);
+const {filterStorage} = __webpack_require__(4);
+const {STATS} = __webpack_require__(35);
 
 let uninstallInit = exports.uninstallInit = function()
 {
   if (chrome.runtime.setUninstallURL)
   {
-    var Prefs = __webpack_require__(3).Prefs;
+    var Prefs = __webpack_require__(2).Prefs;
     STATS.untilLoaded(function(userID)
     {
       var uninstallURL = "https://getadblock.com/uninstall/?u=" + userID;
@@ -11414,62 +10427,70 @@ let uninstallInit = exports.uninstallInit = function()
 exports.setUninstallURL = uninstallInit;
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Prefs = __webpack_require__(3).Prefs;
-const {LocalCDN} = __webpack_require__(17);
-const {SURVEY} = __webpack_require__(37);
-const {recordGeneralMessage, recordErrorMessage} = __webpack_require__(13).ServerMessages;
+"use strict";
 // Allows interaction with the server to track install rate
 // and log messages.
-let STATS = exports.STATS = (function()
-{
-  var userIDStorageKey = "userid";
-  var totalPingStorageKey = "total_pings";
-  var nextPingTimeStorageKey = "next_ping_time";
-  var stats_url = "https://ping.getadblock.com/stats/";
 
-  var FiftyFiveMinutes = 3300000;
 
-  var dataCorrupt = false;
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, exports, require, log, getSettings, determineUserLanguage,
+   replacedCounts, chromeStorageSetHelper, getAllSubscriptionsMinusText,
+   checkPingResponseForProtect, License, channels */
+
+const { Prefs } = __webpack_require__(2);
+const { LocalCDN } = __webpack_require__(17);
+const { SURVEY } = __webpack_require__(36);
+const { recordGeneralMessage, recordErrorMessage } = __webpack_require__(13).ServerMessages;
+
+const STATS = (function exportStats() {
+  const userIDStorageKey = 'userid';
+  const totalPingStorageKey = 'total_pings';
+  const nextPingTimeStorageKey = 'next_ping_time';
+  const statsUrl = 'https://ping.getadblock.com/stats/';
+  const FiftyFiveMinutes = 3300000;
+  let dataCorrupt = false;
 
   // Get some information about the version, os, and browser
-  var version = chrome.runtime.getManifest().version;
-  var match = navigator.userAgent.match(/(CrOS\ \w+|Windows\ NT|Mac\ OS\ X|Linux)\ ([\d\._]+)?/);
-  var os = (match || [])[1] || "Unknown";
-  var osVersion = (match || [])[2] || "Unknown";
-  var flavor = "E"; // Chrome
-  match = navigator.userAgent.match(/(?:Chrome|Version)\/([\d\.]+)/);
-  var edgeMatch = navigator.userAgent.match(/(?:Edg|Version)\/([\d\.]+)/);
+  const { version } = chrome.runtime.getManifest();
+  let match = navigator.userAgent.match(/(CrOS \w+|Windows NT|Mac OS X|Linux) ([\d._]+)?/);
+  const os = (match || [])[1] || 'Unknown';
+  const osVersion = (match || [])[2] || 'Unknown';
+  let flavor = 'E'; // Chrome
+  match = navigator.userAgent.match(/(?:Chrome|Version)\/([\d.]+)/);
+  const edgeMatch = navigator.userAgent.match(/(?:Edg|Version)\/([\d.]+)/);
   if (edgeMatch) { // null in Chrome browsers
-    flavor = "M"; // MS - Edge
+    flavor = 'M'; // MS - Edge
     match = edgeMatch;
   }
-  var browserVersion = (match || [])[1] || "Unknown";
+  const browserVersion = (match || [])[1] || 'Unknown';
 
-  var firstRun = false;
+  const firstRun = false;
 
-  var user_ID;
+  let userID;
 
   // Inputs: key:string.
   // Returns value if key exists, else undefined.
   // Note: "_alt" is appended to the key to make it the key different
   // from the previous items stored in localstorage
-  var storage_get = function(key) {
-    var store = localStorage;
+  const storageGet = function (key) {
+    const storageKey = `${key}_alt`;
+    const store = localStorage;
     if (store === undefined) {
-        return undefined;
-    }
-    key = key + "_alt";
-    var json = store.getItem(key);
-    if (json == null)
       return undefined;
+    }
+    const json = store.getItem(storageKey);
+    if (json == null) {
+      return undefined;
+    }
     try {
       return JSON.parse(json);
     } catch (ex) {
       if (ex && ex.message) {
-        recordErrorMessage('storage_get_error ', undefined, { errorMessage: ex.message});
+        recordErrorMessage('storage_get_error ', undefined, { errorMessage: ex.message });
       }
       return undefined;
     }
@@ -11480,15 +10501,16 @@ let STATS = exports.STATS = (function()
   // from the previous items stored in localstorage
   // If value === undefined, removes key from storage.
   // Returns undefined.
-  var storage_set = function(key, value) {
-    var store = localStorage;
-    key = key + "_alt";
+  const storageSet = function (key, value) {
+    const storageKey = `${key}_alt`;
+    const store = localStorage;
+
     if (value === undefined) {
-      store.removeItem(key);
+      store.removeItem(storageKey);
       return;
     }
     try {
-      store.setItem(key, JSON.stringify(value));
+      store.setItem(storageKey, JSON.stringify(value));
     } catch (ex) {
       dataCorrupt = true;
     }
@@ -11497,82 +10519,70 @@ let STATS = exports.STATS = (function()
   // Give the user a userid if they don't have one yet.
   function readUserIDPromisified() {
     return new Promise(
-      function (resolve, reject) {
-        chrome.storage.local.get(STATS.userIDStorageKey).then((response) =>
-        {
-            var localuserid = storage_get(STATS.userIDStorageKey);
-            if (!response[STATS.userIDStorageKey] && !localuserid)
-            {
-              STATS.firstRun = true;
-              var time_suffix = (Date.now()) % 1e8; // 8 digits from end of
-                                                    // timestamp
-              var alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
-              var result = [];
-              for (var i = 0; i < 8; i++)
-              {
-                var choice = Math.floor(Math.random() * alphabet.length);
-                result.push(alphabet[choice]);
-              }
-              user_ID = result.join('') + time_suffix;
-              // store in redundant locations
-              chromeStorageSetHelper(STATS.userIDStorageKey, user_ID);
-              storage_set(STATS.userIDStorageKey, user_ID);
+      ((resolve) => {
+        chrome.storage.local.get(STATS.userIDStorageKey).then((response) => {
+          const localuserid = storageGet(STATS.userIDStorageKey);
+          if (!response[STATS.userIDStorageKey] && !localuserid) {
+            STATS.firstRun = true;
+            const timeSuffix = (Date.now()) % 1e8; // 8 digits from end of
+            // timestamp
+            const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            const result = [];
+            for (let i = 0; i < 8; i++) {
+              const choice = Math.floor(Math.random() * alphabet.length);
+              result.push(alphabet[choice]);
             }
-            else
-            {
-              user_ID = response[STATS.userIDStorageKey] || localuserid;
-              if (!response[STATS.userIDStorageKey] && localuserid)
-              {
-                chromeStorageSetHelper(STATS.userIDStorageKey, user_ID);
-              }
-              if (response[STATS.userIDStorageKey] && !localuserid)
-              {
-                storage_set(STATS.userIDStorageKey, user_ID);
-              }
+            userID = result.join('') + timeSuffix;
+            // store in redundant locations
+            chromeStorageSetHelper(STATS.userIDStorageKey, userID);
+            storageSet(STATS.userIDStorageKey, userID);
+          } else {
+            userID = response[STATS.userIDStorageKey] || localuserid;
+            if (!response[STATS.userIDStorageKey] && localuserid) {
+              chromeStorageSetHelper(STATS.userIDStorageKey, userID);
             }
-            resolve(user_ID);
-          });
+            if (response[STATS.userIDStorageKey] && !localuserid) {
+              storageSet(STATS.userIDStorageKey, userID);
+            }
+          }
+          resolve(userID);
         });
+      }),
+    );
   }
 
-  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse)
-  {
-    if (message.command !== "get_adblock_user_id")
-    {
-      return;
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message.command !== 'get_adblock_user_id') {
+      return undefined;
     }
-    readUserIDPromisified().then(function(userID)
-    {
-      sendResponse(userID);
+    readUserIDPromisified().then((resolvedUserID) => {
+      sendResponse(resolvedUserID);
     });
     return true;
   });
 
-  var getPingData = function(callbackFN)
-  {
-    if (!callbackFN && (typeof callbackFN !== 'function'))
-    {
+  const getPingData = function (callbackFN) {
+    if (!callbackFN && (typeof callbackFN !== 'function')) {
       return;
     }
-    chrome.storage.local.get(STATS.totalPingStorageKey).then((response) =>
-    {
-      var settingsObj = getSettings();
-      var localTotalPings = storage_get(STATS.totalPingStorageKey);
-      var total_pings = response[STATS.totalPingStorageKey] || localTotalPings || 0;
-      var themeOptionsPage = settingsObj.color_themes.options_page.replace('_theme', '');
-      var themePopupMenu = settingsObj.color_themes.popup_menu.replace('_theme', '');
-      var data = {
-        u : user_ID,
-        v : version,
-        f : flavor,
-        o : os,
-        bv : browserVersion,
-        ov : osVersion,
-        ad: settingsObj.show_advanced_options ? '1': '0',
-        yt: settingsObj.youtube_channel_whitelist ? '1': '0',
-        l : determineUserLanguage(),
-        pc : total_pings,
-        dcv2 : settingsObj.data_collection_v2 ? '1' : '0',
+    chrome.storage.local.get(STATS.totalPingStorageKey).then((response) => {
+      const settingsObj = getSettings();
+      const localTotalPings = storageGet(STATS.totalPingStorageKey);
+      const totalPings = response[STATS.totalPingStorageKey] || localTotalPings || 0;
+      const themeOptionsPage = settingsObj.color_themes.options_page.replace('_theme', '');
+      const themePopupMenu = settingsObj.color_themes.popup_menu.replace('_theme', '');
+      const data = {
+        u: userID,
+        v: version,
+        f: flavor,
+        o: os,
+        bv: browserVersion,
+        ov: osVersion,
+        ad: settingsObj.show_advanced_options ? '1' : '0',
+        yt: settingsObj.youtube_channel_whitelist ? '1' : '0',
+        l: determineUserLanguage(),
+        pc: totalPings,
+        dcv2: settingsObj.data_collection_v2 ? '1' : '0',
         cdn: settingsObj.local_cdn ? '1' : '0',
         cdnr: LocalCDN.getRedirectCount(),
         cdnd: LocalCDN.getDataCount(),
@@ -11583,19 +10593,18 @@ let STATS = exports.STATS = (function()
         ir: channels.isAnyEnabled() ? '1' : '0',
         twh: settingsObj.twitch_hiding ? '1' : '0',
       };
+
       // only on Chrome
-      if (flavor === "E" && Prefs.blocked_total)
-      {
-        data["b"] = Prefs.blocked_total;
+      if (flavor === 'E' && Prefs.blocked_total) {
+        data.b = Prefs.blocked_total;
       }
-      if (chrome.runtime.id)
-      {
-        data["extid"] = chrome.runtime.id;
+      if (chrome.runtime.id) {
+        data.extid = chrome.runtime.id;
       }
-      var subs = getAllSubscriptionsMinusText();
+      const subs = getAllSubscriptionsMinusText();
       if (subs) {
-        var aa = subs["acceptable_ads"];
-        var aaPrivacy = subs["acceptable_ads_privacy"];
+        const aa = subs.acceptable_ads;
+        const aaPrivacy = subs.acceptable_ads_privacy;
 
         if (!aa && !aaPrivacy) {
           data.aa = 'u'; // Both filter lists unavailable
@@ -11608,257 +10617,219 @@ let STATS = exports.STATS = (function()
         }
       }
 
-
-      data["dc"] = dataCorrupt ? '1' : '0';
-      SURVEY.types(function(response)
-      {
-          data["st"] = response;
-          callbackFN(data);
+      data.dc = dataCorrupt ? '1' : '0';
+      SURVEY.types((res) => {
+        data.st = res;
+        callbackFN(data);
       });
     });
   };
   // Tell the server we exist.
-  var pingNow = function()
-  {
-    getPingData(function(data)
-    {
-      if (!data.u)
-      {
+  const pingNow = function () {
+    const handlePingResponse = function (responseData) {
+      SURVEY.maybeSurvey(responseData);
+      License.checkPingResponse(responseData);
+      checkPingResponseForProtect(responseData);
+    };
+
+    getPingData((data) => {
+      const pingData = data;
+
+      if (!pingData.u) {
         return;
       }
       // attempt to stop users that are pinging us 'alot'
       // by checking the current ping count,
       // if the ping count is above a theshold,
       // then only ping 'occasionally'
-      if (data.pc > 5000)
-      {
-        if (data.pc > 5000 && data.pc < 100000 && ((data.pc % 5000) !== 0))
-        {
+      if (pingData.pc > 5000) {
+        if (pingData.pc > 5000 && pingData.pc < 100000 && ((pingData.pc % 5000) !== 0)) {
           return;
         }
-        if (data.pc >= 100000 && ((data.pc % 50000) !== 0))
-        {
+        if (pingData.pc >= 100000 && ((pingData.pc % 50000) !== 0)) {
           return;
         }
       }
-      data["cmd"] = 'ping';
-      var ajaxOptions = {
-        type : 'POST',
-        url : stats_url,
-        data : data,
-        success : handlePingResponse, // TODO: Remove when we no longer do a/b
-                                      // tests
-        error : function(e)
-        {
-          console.log("Ping returned error: ", e.status);
+      pingData.cmd = 'ping';
+      const ajaxOptions = {
+        type: 'POST',
+        url: statsUrl,
+        data: pingData,
+        success: handlePingResponse, // TODO: Remove when we no longer do a/b
+        // tests
+        error(e) {
+          // eslint-disable-next-line no-console
+          console.log('Ping returned error: ', e.status);
         },
       };
 
-      if (chrome.management && chrome.management.getSelf)
-      {
-        chrome.management.getSelf(function(info)
-        {
-          data["it"] = info.installType.charAt(0);
+      if (chrome.management && chrome.management.getSelf) {
+        chrome.management.getSelf((info) => {
+          pingData.it = info.installType.charAt(0);
           $.ajax(ajaxOptions);
         });
-      }
-      else
-      {
+      } else {
         $.ajax(ajaxOptions);
       }
 
-      var missedVersions = LocalCDN.getMissedVersions();
-      if (missedVersions)
-      {
-        recordGeneralMessage("cdn_miss_stats", undefined, {"cdnm": missedVersions});
+      const missedVersions = LocalCDN.getMissedVersions();
+      if (missedVersions) {
+        recordGeneralMessage('cdn_miss_stats', undefined, { cdnm: missedVersions });
       }
     });
   };
 
-  var handlePingResponse = function(responseData, textStatus, jqXHR)
-  {
-    SURVEY.maybeSurvey(responseData);
-    License.checkPingResponse(responseData);
-    checkPingResponseForProtect(responseData);
-  };
-
   // Called just after we ping the server, to schedule our next ping.
-  var scheduleNextPing = function()
-  {
-    chrome.storage.local.get(STATS.totalPingStorageKey).then((response) =>
-    {
-      var localTotalPings = storage_get(totalPingStorageKey);
-      localTotalPings = isNaN(localTotalPings) ? 0 : localTotalPings;
-      var total_pings = response[STATS.totalPingStorageKey]
-      total_pings = isNaN(total_pings) ? 0 : total_pings;
-      total_pings = Math.max(localTotalPings, total_pings);
-      total_pings += 1;
+  const scheduleNextPing = function () {
+    chrome.storage.local.get(STATS.totalPingStorageKey).then((response) => {
+      let localTotalPings = storageGet(totalPingStorageKey);
+      localTotalPings = Number.isNaN(localTotalPings) ? 0 : localTotalPings;
+      let totalPings = response[STATS.totalPingStorageKey];
+      totalPings = Number.isNaN(totalPings) ? 0 : totalPings;
+      totalPings = Math.max(localTotalPings, totalPings);
+      totalPings += 1;
       // store in redundant locations
-      chromeStorageSetHelper(STATS.totalPingStorageKey, total_pings);
-      storage_set(STATS.totalPingStorageKey, total_pings);
+      chromeStorageSetHelper(STATS.totalPingStorageKey, totalPings);
+      storageSet(STATS.totalPingStorageKey, totalPings);
 
-      var delay_hours;
-      if (total_pings == 1) // Ping one hour after install
-        delay_hours = 1;
-      else if (total_pings < 9) // Then every day for a week
-        delay_hours = 24;
-      else
-        // Then weekly forever
-        delay_hours = 24 * 7;
+      let delayHours;
+      if (totalPings === 1) { // Ping one hour after install
+        delayHours = 1;
+      } else if (totalPings < 9) { // Then every day for a week
+        delayHours = 24;
+      } else { // Then weekly forever
+        delayHours = 24 * 7;
+      }
 
-      var millis = 1000 * 60 * 60 * delay_hours;
-      var nextPingTime = Date.now() + millis;
+      const millis = 1000 * 60 * 60 * delayHours;
+      const nextPingTime = Date.now() + millis;
 
       // store in redundant location
-      chromeStorageSetHelper(STATS.nextPingTimeStorageKey, nextPingTime, function(error)
-      {
-        if (error)
-        {
+      chromeStorageSetHelper(STATS.nextPingTimeStorageKey, nextPingTime, (error) => {
+        if (error) {
           dataCorrupt = true;
-        }
-        else
-        {
+        } else {
           dataCorrupt = false;
         }
       });
-      storage_set(STATS.nextPingTimeStorageKey, nextPingTime);
+      storageSet(STATS.nextPingTimeStorageKey, nextPingTime);
     });
   };
 
   // Return the number of milliseconds until the next scheduled ping.
-  var millisTillNextPing = function(callbackFN)
-  {
-    if (!callbackFN || (typeof callbackFN !== 'function'))
-    {
+  const millisTillNextPing = function (callbackFN) {
+    if (!callbackFN || (typeof callbackFN !== 'function')) {
       return;
     }
     // If we've detected data corruption issues,
     // then default to a 55 minute ping interval
-    if (dataCorrupt)
-    {
+    if (dataCorrupt) {
       callbackFN(FiftyFiveMinutes);
       return;
     }
     // Wait 10 seconds to allow the previous 'set' to finish
-    window.setTimeout(function()
-    {
-      chrome.storage.local.get(STATS.nextPingTimeStorageKey).then((response) =>
-      {
-        var local_next_ping_time = storage_get(STATS.nextPingTimeStorageKey);
-        local_next_ping_time = isNaN(local_next_ping_time) ? 0 : local_next_ping_time;
-        var next_ping_time = isNaN(response[STATS.nextPingTimeStorageKey]) ? 0 : response[STATS.nextPingTimeStorageKey];
-        next_ping_time = Math.max(local_next_ping_time, next_ping_time);
+    window.setTimeout(() => {
+      chrome.storage.local.get(STATS.nextPingTimeStorageKey).then((response) => {
+        let localNextPingTime = storageGet(STATS.nextPingTimeStorageKey);
+        localNextPingTime = Number.isNaN(localNextPingTime) ? 0 : localNextPingTime;
+        const nextPingTimeStored = response[STATS.nextPingTimeStorageKey];
+        let nextPingTime = Number.isNaN(nextPingTimeStored) ? 0 : nextPingTimeStored;
+        nextPingTime = Math.max(localNextPingTime, nextPingTime);
         // if this is the first time we've run (just installed), millisTillNextPing is 0
-        if (next_ping_time === 0 && STATS.firstRun)
-        {
+        if (nextPingTime === 0 && STATS.firstRun) {
           callbackFN(0);
           return;
         }
         // if we don't have a 'next ping time', or it's not a valid number,
         // default to 55 minute ping interval
-        if (next_ping_time === 0 || isNaN(next_ping_time))
-        {
+        if (nextPingTime === 0 || Number.isNaN(nextPingTime)) {
           callbackFN(FiftyFiveMinutes);
           return;
         }
-        callbackFN(next_ping_time - Date.now());
+        callbackFN(nextPingTime - Date.now());
       }); // end of get
     }, 10000);
   };
 
   // Used to rate limit .message()s. Rate limits reset at startup.
-  var throttle = {
+  const throttle = {
     // A small initial amount in case the server is bogged down.
     // The server will tell us the correct amount.
-    max_events_per_hour : 3, // null if no limit
+    maxEventsPerHour: 3, // null if no limit
     // Called when attempting an event. If not rate limited, returns
     // true and records the event.
-    attempt : function()
-    {
-      var now = Date.now(), one_hour = 1000 * 60 * 60;
-      var times = this._event_times, mph = this.max_events_per_hour;
+    attempt() {
+      const now = Date.now();
+      const oneHour = 1000 * 60 * 60;
+      const times = this.eventTimes;
+      const mph = this.maxEventsPerHour;
       // Discard old or irrelevant events
-      while (times[0] && (times[0] + one_hour < now || mph === null))
+      while (times[0] && (times[0] + oneHour < now || mph === null)) {
         times.shift();
-      if (mph === null)
-        return true; // no limit
-      if (times.length >= mph)
-        return false; // used our quota this hour
+      }
+      if (mph === null) {
+        return true;
+      } // no limit
+      if (times.length >= mph) {
+        return false;
+      } // used our quota this hour
       times.push(now);
       return true;
     },
-    _event_times : []
+    eventTimes: [],
   };
 
   return {
-    userIDStorageKey : userIDStorageKey,
-    totalPingStorageKey : totalPingStorageKey,
-    nextPingTimeStorageKey : nextPingTimeStorageKey,
-    // True if AdBlock was just installed.
-    firstRun : firstRun,
-    userId : function()
-    {
-      return user_ID;
+    userIDStorageKey,
+    totalPingStorageKey,
+    nextPingTimeStorageKey,
+    firstRun, // True if AdBlock was just installed.
+    userId() {
+      return userID;
     },
-    version : version,
-    flavor : flavor,
-    browser : ({
-      E : "Chrome"
+    version,
+    flavor,
+    browser: ({
+      E: 'Chrome',
     })[flavor],
-    browserVersion : browserVersion,
-    os : os,
-    osVersion : osVersion,
-    pingNow : pingNow,
-    statsUrl : stats_url,
-    untilLoaded : function(callback)
-    {
-      readUserIDPromisified().then(function(userID) {
-        if (typeof callback === 'function')
-        {
-          callback(userID);
+    browserVersion,
+    os,
+    osVersion,
+    pingNow,
+    statsUrl,
+    untilLoaded(callback) {
+      readUserIDPromisified().then((resUserId) => {
+        if (typeof callback === 'function') {
+          callback(resUserId);
         }
       });
     },
     // Ping the server when necessary.
-    startPinging : function()
-    {
-      function sleepThenPing()
-      {
-        millisTillNextPing(function(delay)
-        {
-          window.setTimeout(function()
-          {
+    startPinging() {
+      function sleepThenPing() {
+        millisTillNextPing((delay) => {
+          window.setTimeout(() => {
             pingNow();
             scheduleNextPing();
             sleepThenPing();
           }, delay);
         });
-      };
+      }
 
-      readUserIDPromisified().then(function(userID)
-      {
+      readUserIDPromisified().then(() => {
         // Do 'stuff' when we're first installed...
         // - send a message
-        chrome.storage.local.get(STATS.totalPingStorageKey).then((response) =>
-        {
-          if (!response[STATS.totalPingStorageKey])
-          {
-            if (chrome.management && chrome.management.getSelf)
-            {
-              chrome.management.getSelf(function(info)
-              {
-                if (info)
-                {
-                  recordGeneralMessage('new_install_' + info.installType);
-                }
-                else
-                {
+        chrome.storage.local.get(STATS.totalPingStorageKey).then((response) => {
+          if (!response[STATS.totalPingStorageKey]) {
+            if (chrome.management && chrome.management.getSelf) {
+              chrome.management.getSelf((info) => {
+                if (info) {
+                  recordGeneralMessage(`new_install_${info.installType}`);
+                } else {
                   recordGeneralMessage('new_install');
                 }
               });
-            }
-            else
-            {
+            } else {
               recordGeneralMessage('new_install');
             }
           }
@@ -11870,319 +10841,117 @@ let STATS = exports.STATS = (function()
     },
 
     // Record some data, if we are not rate limited.
-    msg : function(message)
-    {
-      if (!throttle.attempt())
-      {
-        log("Rate limited:", message);
+    msg(message) {
+      if (!throttle.attempt()) {
+        log('Rate limited:', message);
         return;
       }
-      var data = {
-        cmd : "msg2",
-        m : message,
-        u : user_ID,
-        v : version,
-        fr : firstRun,
-        f : flavor,
-        bv : browserVersion,
-        o : os,
-        ov : osVersion
+      const data = {
+        cmd: 'msg2',
+        m: message,
+        u: userID,
+        v: version,
+        fr: firstRun,
+        f: flavor,
+        bv: browserVersion,
+        o: os,
+        ov: osVersion,
       };
-      if (chrome.runtime.id)
-      {
-        data["extid"] = chrome.runtime.id;
+      if (chrome.runtime.id) {
+        data.extid = chrome.runtime.id;
       }
-      $.ajax(stats_url, {
-        type : "POST",
-        data : data,
-        complete : function(xhr)
-        {
-          var mph = parseInt(xhr.getResponseHeader("X-RateLimit-MPH"), 10);
-          if (isNaN(mph) || mph < -1) // Server is sick
+      $.ajax(statsUrl, {
+        type: 'POST',
+        data,
+        complete(xhr) {
+          let mph = parseInt(xhr.getResponseHeader('X-RateLimit-MPH'), 10);
+          if (Number.isNaN(mph) || mph < -1) { // Server is sick
             mph = 1;
-          if (mph === -1)
-            mph = null; // no rate limit
-          throttle.max_events_per_hour = mph;
-        }
+          }
+          if (mph === -1) {
+            mph = null;
+          } // no rate limit
+          throttle.maxEventsPerHour = mph;
+        },
       });
-    }
+    },
   };
+}());
 
-})();
+exports.STATS = STATS;
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, exports, STATS, log, getSettings, Prefs, openTab */
 
 // if the ping reponse indicates a survey (tab or overlay)
 // gracefully processes the request
-const {recordGeneralMessage, recordErrorMessage} = __webpack_require__(13).ServerMessages;
-let SURVEY = exports.SURVEY = (function() {
+const stats = __webpack_require__(22);
+const { recordGeneralMessage, recordErrorMessage } = __webpack_require__(13).ServerMessages;
+
+const SURVEY = (function getSurvey() {
   // Only allow one survey per browser startup, to make sure users don't get
   // spammed due to bugs in AdBlock / the ping server / the browser.
-  var surveyAllowed = true;
-  var lastNotificationID = "";
+  let surveyAllowed = true;
+  let lastNotificationID = '';
 
   // Call |callback(tab)|, where |tab| is the active tab, or undefined if
   // there is no active tab.
-  var getActiveTab = function(callback) {
-    chrome.tabs.query({active: true, currentWindow: true}).then((tabs) => {
+  const getActiveTab = function (callback) {
+    chrome.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
       callback(tabs[0]);
     });
   };
 
   // True if we are willing to show an overlay on this tab.
-  var validTab = function(tab) {
-    if (tab.incognito || tab.status !== "complete") {
+  const validTab = function (tab) {
+    if (tab.incognito || tab.status !== 'complete') {
       return false;
     }
     return /^http:/.test(tab.url);
   };
 
-  var getBlockCountOnActiveTab = function(callback) {
+  const getBlockCountOnActiveTab = function (callback) {
     chrome.tabs.query(
-    {
-      active: true,
-      lastFocusedWindow: true,
-    }).then((tabs) =>
-    {
-      if (tabs.length === 0)
       {
+        active: true,
+        lastFocusedWindow: true,
+      },
+    ).then((tabs) => {
+      if (tabs.length === 0) {
         return;
       }
-      page = tabs[0];
-      var blockedPerPage = __webpack_require__(22).getBlockedPerPage(page);
+      const blockedPerPage = stats.getBlockedPerPage(tabs[0]);
       callback(blockedPerPage);
     });
-  }
+  };
 
-  //create a Notification
-  var processNotification = function(surveyData) {
-    // Check to see if we should show the survey before showing the overlay.
-    var showNotificationIfAllowed = function(tab) {
-      shouldShowSurvey(surveyData, function(updatedSurveyData) {
-        lastNotificationID = (Math.floor(Math.random() * 3000)).toString();
-        if (updatedSurveyData) {
-          newSurveyData = surveyDataFrom(JSON.stringify(updatedSurveyData));
-          if (newSurveyData.survey_id === surveyData.survey_id) {
-            surveyData = newSurveyData;
-          } else {
-            recordGeneralMessage("survey_ids_do_not_match", undefined, {original_sid: surveyData.survey_id, updated_sid: newSurveyData.survey_id });
-            return;
-          }
-        }
-        if (!surveyData.notification_options ||
-            !surveyData.notification_options.type ||
-            !surveyData.notification_options.message ||
-            !surveyData.notification_options.icon_url ||
-            isNaN(surveyData.notification_options.priority)) {
-          recordGeneralMessage("invalid_survey_data", undefined, { sid: surveyData.survey_id });
-          return;
-        }
-        var notificationOptions = {
-          title: surveyData.notification_options.title,
-          iconUrl: surveyData.notification_options.icon_url,
-          type: surveyData.notification_options.type,
-          priority: surveyData.notification_options.priority,
-          message: surveyData.notification_options.message
-        };
-        if (surveyData.notification_options.context_message) {
-          notificationOptions.contextMessage = surveyData.notification_options.context_message;
-        }
-        if (surveyData.notification_options.require_interaction) {
-          notificationOptions.requireInteraction = surveyData.notification_options.require_interaction;
-        }
-        if (surveyData.notification_options.is_clickable) {
-          notificationOptions.isClickable = surveyData.notification_options.is_clickable;
-        }
-        // click handler for notification
-        var notificationClicked = function(notificationId) {
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-          if (notificationId === lastNotificationID && surveyData.notification_options.clicked_url) {
-            recordGeneralMessage("notification_clicked" , undefined, { sid: surveyData.survey_id });
-            openTab("https://getadblock.com/" + surveyData.notification_options.clicked_url);
-          } else {
-            recordGeneralMessage("notification_clicked_no_URL_to_open", undefined, { sid: surveyData.survey_id });
-          }
-        };
-        var buttonNotificationClicked = function(notificationId, buttonIndex) {
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-          if (surveyData.notification_options.buttons) {
-            if (notificationId === lastNotificationID && buttonIndex === 0) {
-                recordGeneralMessage("button_0_clicked", undefined, { sid: surveyData.survey_id });
-                openTab("https://getadblock.com/" + surveyData.notification_options.buttons[0].clicked_url);
-            }
-            if (notificationId === lastNotificationID && buttonIndex === 1) {
-                recordGeneralMessage("button_1_clicked", undefined, { sid: surveyData.survey_id });
-                openTab("https://getadblock.com/" + surveyData.notification_options.buttons[1].clicked_url);
-            }
-          }
-        };
-        var closedClicked = function(notificationId, byUser) {
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-          recordGeneralMessage("notification_closed", undefined, { sid: surveyData.survey_id , bu: byUser });
-        };
-        chrome.notifications.onClicked.removeListener(notificationClicked);
-        chrome.notifications.onClicked.addListener(notificationClicked);
-        if (surveyData.notification_options.buttons) {
-          var buttonArray = [];
-          if (surveyData.notification_options.buttons[0]) {
-            buttonArray.push({title: surveyData.notification_options.buttons[0].title,
-                           iconUrl: surveyData.notification_options.buttons[0].icon_url})
-          }
-          if (surveyData.notification_options.buttons[1]) {
-            buttonArray.push({title: surveyData.notification_options.buttons[1].title,
-                           iconUrl: surveyData.notification_options.buttons[1].icon_url})
-          }
-          notificationOptions.buttons = buttonArray;
-        }
-        chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-        chrome.notifications.onButtonClicked.addListener(buttonNotificationClicked);
-        chrome.notifications.onClosed.addListener(closedClicked);
-        // show the notification to the user.
-        chrome.notifications.create(lastNotificationID, notificationOptions).then(() => {
-          recordGeneralMessage("survey_shown", undefined, { sid: surveyData.survey_id });
-        }).catch(error => {
-          recordGeneralMessage("error_survey_not_shown", undefined, { sid: surveyData.survey_id });
-          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
-          chrome.notifications.onClicked.removeListener(notificationClicked);
-          chrome.notifications.onClosed.removeListener(closedClicked);
-        });
-      });
-    };
-
-    var retryInFiveMinutes = function() {
-      var fiveMinutes = 5 * 60 * 1000;
-      setTimeout(function() {
-        processNotification(surveyData);
-      }, fiveMinutes);
-    };
-    // check (again) if we still have permission to show a notification
-    if (chrome &&
-        chrome.notifications &&
-        chrome.notifications.getPermissionLevel) {
-        chrome.notifications.getPermissionLevel(function(permissionLevel){
-          if (permissionLevel === "granted") {
-            if (isNaN(surveyData.block_count_limit)) {
-              log('invalid block_count_limit', surveyData.block_count_limit);
-              return;
-            }
-            surveyData.block_count_limit = Number(surveyData.block_count_limit);
-            chrome.idle.queryState(60, function(state) {
-              if (state === "active") {
-                getBlockCountOnActiveTab(function(blockedPerPage) {
-                  if (blockedPerPage >= surveyData.block_count_limit) {
-                    getActiveTab(function(tab) {
-                      if (tab && validTab(tab)) {
-                        showNotificationIfAllowed(tab);
-                      } else {
-                        // We didn't find an appropriate tab
-                        retryInFiveMinutes();
-                      }
-                    });
-                  } else {
-                    retryInFiveMinutes();
-                  }
-                }); // end getBlockCountOnActiveTab
-              } else {
-                // browser is idle or locked
-                retryInFiveMinutes();
-              }
-            }); // end chrome.idle.queryState
-          }
-        });
-    }
-  }; //end of processNotification()
-
-  //open a Tab for a full page survey
-  var processTab = function(surveyData) {
-
-    var openTabIfAllowed = function() {
-      setTimeout(function () {
-        shouldShowSurvey(surveyData, function (responseData) {
-          chrome.tabs.create({ url: 'https://getadblock.com/' + responseData.open_this_url });
-        });
-      }, 10000); // 10 seconds
-    };
-
-    var waitForUserAction = function() {
-      chrome.tabs.onCreated.removeListener(waitForUserAction);
-      openTabIfAllowed();
-    };
-
-    chrome.idle.queryState(60, function(state) {
-      if (state === "active") {
-        openTabIfAllowed();
-      } else {
-        chrome.tabs.onCreated.removeListener(waitForUserAction);
-        chrome.tabs.onCreated.addListener(waitForUserAction);
-      }
-    });
-  }; //end of processTab()
-
-  //Display a notification overlay on the active tab
-  // To avoid security issues, the tab that is selected must not be incognito mode (Chrome only),
-  // and must not be using SSL / HTTPS
-  var processOverlay = function(surveyData) {
-
-    // Check to see if we should show the survey before showing the overlay.
-    var showOverlayIfAllowed = function(tab) {
-      shouldShowSurvey(surveyData, function() {
-        var data = { command: "showoverlay", overlayURL: surveyData.open_this_url, tabURL:tab.url};
-        var validateResponseFromTab = function(response) {
-          if (!response || response.ack !== data.command) {
-            recordErrorMessage('invalid_response_from_notification_overlay_script', undefined, { errorMessage: response });
-          }
-        };
-        chrome.tabs.sendMessage(tab.id, data).then(validateResponseFromTab).catch(error => {
-          recordErrorMessage('overlay_message_error', undefined, { errorMessage: JSON.stringify(error) });
-        });
-      });
-    };
-
-    var retryInFiveMinutes = function() {
-      var fiveMinutes = 5 * 60 * 1000;
-      setTimeout(function() {
-        processOverlay(surveyData);
-      }, fiveMinutes);
-    };
-
-    getActiveTab(function(tab) {
-      if (tab && validTab(tab)) {
-        showOverlayIfAllowed(tab);
-      } else {
-        // We didn't find an appropriate tab
-        retryInFiveMinutes();
-      }
-    });
-  }; //end of processOverlay()
-
-  //functions below are used by both Tab and Overlay Surveys
+  // functions below are used by both Tab and Overlay Surveys
 
   // Double check that the survey should be shown
   // Inputs:
   //   surveyData: JSON survey information from ping server
   //   callback(): called with no arguments if the survey should be shown
-  var shouldShowSurvey = function(surveyData, callback) {
+  const shouldShowSurvey = function (surveyData, callback) {
     // Check if we should show survey only if it can actually be shown
     // based on surveyAllowed.
     if (surveyAllowed) {
-      var data = { cmd: "survey", u: STATS.userId(), sid: surveyData.survey_id };
-      if (STATS.flavor === "E" && Prefs.blocked_total) {
-        data["b"] = Prefs.blocked_total;
+      let data = { cmd: 'survey', u: STATS.userId(), sid: surveyData.survey_id };
+      if (STATS.flavor === 'E' && Prefs.blocked_total) {
+        data.b = Prefs.blocked_total;
       }
-      $.post(STATS.statsUrl, data, function(responseData) {
+      $.post(STATS.statsUrl, data, (responseData) => {
         try {
-          var data = JSON.parse(responseData);
+          data = JSON.parse(responseData);
         } catch (e) {
-          log('Error parsing JSON: ', responseData, " Error: ", e);
+          log('Error parsing JSON: ', responseData, ' Error: ', e);
         }
         if (data && data.should_survey === 'true' && surveyAllowed) {
           surveyAllowed = false;
@@ -12190,7 +10959,7 @@ let SURVEY = exports.SURVEY = (function() {
         }
       });
     } else {
-     log('survey not allowed');
+      log('survey not allowed');
     }
   };
 
@@ -12199,31 +10968,265 @@ let SURVEY = exports.SURVEY = (function() {
   // Otherwise, return null.
   // Inputs:
   //   responseData: string response from a ping
-  var surveyDataFrom = function(responseData) {
-      if (responseData.length === 0 || responseData.trim().length === 0)
-        return null;
+  const surveyDataFrom = function (responseData) {
+    let surveyData;
 
-      try {
-        var surveyData = JSON.parse(responseData);
-        if (!surveyData)
-          return;
-      } catch (e) {
-        console.log("Something went wrong with parsing survey data.");
-        console.log('error', e);
-        console.log('response data', responseData);
+    if (responseData.length === 0 || responseData.trim().length === 0) {
+      return null;
+    }
+    try {
+      surveyData = JSON.parse(responseData);
+      if (!surveyData) {
         return null;
       }
-      return surveyData;
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('Something went wrong with parsing survey data.');
+      // eslint-disable-next-line no-console
+      console.log('error', e);
+      // eslint-disable-next-line no-console
+      console.log('response data', responseData);
+      return null;
+    }
+    return surveyData;
   };
 
-  return {
-    maybeSurvey: function(responseData) {
-      if (getSettings().show_survey === false)
-        return;
+  // create a Notification
+  const processNotification = function (surveyDataParam) {
+    let surveyData = surveyDataParam;
 
-      var surveyData = surveyDataFrom(responseData);
-      if (!surveyData)
+    // Check to see if we should show the survey before showing the overlay.
+    const showNotificationIfAllowed = function () {
+      shouldShowSurvey(surveyData, (updatedSurveyData) => {
+        lastNotificationID = (Math.floor(Math.random() * 3000)).toString();
+        if (updatedSurveyData) {
+          const newSurveyData = surveyDataFrom(JSON.stringify(updatedSurveyData));
+          if (newSurveyData.survey_id === surveyData.survey_id) {
+            surveyData = newSurveyData;
+          } else {
+            recordGeneralMessage('survey_ids_do_not_match', undefined, {
+              original_sid: surveyData.survey_id,
+              updated_sid: newSurveyData.survey_id,
+            });
+            return;
+          }
+        }
+        if (!surveyData.notification_options
+            || !surveyData.notification_options.type
+            || !surveyData.notification_options.message
+            || !surveyData.notification_options.icon_url
+            || Number.isNaN(surveyData.notification_options.priority)) {
+          recordGeneralMessage('invalid_survey_data', undefined, { sid: surveyData.survey_id });
+          return;
+        }
+        const notificationOptions = {
+          title: surveyData.notification_options.title,
+          iconUrl: surveyData.notification_options.icon_url,
+          type: surveyData.notification_options.type,
+          priority: surveyData.notification_options.priority,
+          message: surveyData.notification_options.message,
+        };
+        if (surveyData.notification_options.context_message) {
+          const contextMessage = surveyData.notification_options.context_message;
+          notificationOptions.contextMessage = contextMessage;
+        }
+        if (surveyData.notification_options.require_interaction) {
+          const requireInteraction = surveyData.notification_options.require_interaction;
+          notificationOptions.requireInteraction = requireInteraction;
+        }
+        if (surveyData.notification_options.is_clickable) {
+          const isClickable = surveyData.notification_options.is_clickable;
+          notificationOptions.isClickable = isClickable;
+        }
+        // click handler for notification
+        const notificationClicked = function (notificationId) {
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          // Exceptions required since the errors cannot be resolved by changing
+          // the order of function definitions. TODO: refactor to remove exceptions
+          // eslint-disable-next-line no-use-before-define
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          // eslint-disable-next-line no-use-before-define
+          chrome.notifications.onClosed.removeListener(closedClicked);
+
+          const clickedUrl = surveyData.notification_options.clicked_url;
+          if (notificationId === lastNotificationID && clickedUrl) {
+            recordGeneralMessage('notification_clicked', undefined, { sid: surveyData.survey_id });
+            openTab(`https://getadblock.com/${surveyData.notification_options.clicked_url}`);
+          } else {
+            recordGeneralMessage('notification_clicked_no_URL_to_open', undefined, { sid: surveyData.survey_id });
+          }
+        };
+        const buttonNotificationClicked = function (notificationId, buttonIndex) {
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          // Exception required since the error cannot be resolved by changing
+          // the order of function definitions. TODO: refactor to remove exception
+          // eslint-disable-next-line no-use-before-define
+          chrome.notifications.onClosed.removeListener(closedClicked);
+          if (surveyData.notification_options.buttons) {
+            if (notificationId === lastNotificationID && buttonIndex === 0) {
+              recordGeneralMessage('button_0_clicked', undefined, { sid: surveyData.survey_id });
+              openTab(`https://getadblock.com/${surveyData.notification_options.buttons[0].clicked_url}`);
+            }
+            if (notificationId === lastNotificationID && buttonIndex === 1) {
+              recordGeneralMessage('button_1_clicked', undefined, { sid: surveyData.survey_id });
+              openTab(`https://getadblock.com/${surveyData.notification_options.buttons[1].clicked_url}`);
+            }
+          }
+        };
+        const closedClicked = function (notificationId, byUser) {
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          chrome.notifications.onClosed.removeListener(closedClicked);
+          recordGeneralMessage('notification_closed', undefined, { sid: surveyData.survey_id, bu: byUser });
+        };
+        chrome.notifications.onClicked.removeListener(notificationClicked);
+        chrome.notifications.onClicked.addListener(notificationClicked);
+        if (surveyData.notification_options.buttons) {
+          const buttonArray = [];
+          if (surveyData.notification_options.buttons[0]) {
+            buttonArray.push({
+              title: surveyData.notification_options.buttons[0].title,
+              iconUrl: surveyData.notification_options.buttons[0].icon_url,
+            });
+          }
+          if (surveyData.notification_options.buttons[1]) {
+            buttonArray.push({
+              title: surveyData.notification_options.buttons[1].title,
+              iconUrl: surveyData.notification_options.buttons[1].icon_url,
+            });
+          }
+          notificationOptions.buttons = buttonArray;
+        }
+        chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+        chrome.notifications.onButtonClicked.addListener(buttonNotificationClicked);
+        chrome.notifications.onClosed.addListener(closedClicked);
+        // show the notification to the user.
+        chrome.notifications.create(lastNotificationID, notificationOptions).then(() => {
+          recordGeneralMessage('survey_shown', undefined, { sid: surveyData.survey_id });
+        }).catch(() => {
+          recordGeneralMessage('error_survey_not_shown', undefined, { sid: surveyData.survey_id });
+          chrome.notifications.onButtonClicked.removeListener(buttonNotificationClicked);
+          chrome.notifications.onClicked.removeListener(notificationClicked);
+          chrome.notifications.onClosed.removeListener(closedClicked);
+        });
+      });
+    };
+
+    const retryInFiveMinutes = function () {
+      const fiveMinutes = 5 * 60 * 1000;
+      setTimeout(() => {
+        processNotification(surveyData);
+      }, fiveMinutes);
+    };
+    // check (again) if we still have permission to show a notification
+    if (chrome
+        && chrome.notifications
+        && chrome.notifications.getPermissionLevel) {
+      chrome.notifications.getPermissionLevel((permissionLevel) => {
+        if (permissionLevel === 'granted') {
+          if (Number.isNaN(surveyData.block_count_limit)) {
+            log('invalid block_count_limit', surveyData.block_count_limit);
+            return;
+          }
+          surveyData.block_count_limit = Number(surveyData.block_count_limit);
+          chrome.idle.queryState(60, (state) => {
+            if (state === 'active') {
+              getBlockCountOnActiveTab((blockedPerPage) => {
+                if (blockedPerPage >= surveyData.block_count_limit) {
+                  getActiveTab((tab) => {
+                    if (tab && validTab(tab)) {
+                      showNotificationIfAllowed(tab);
+                    } else {
+                      // We didn't find an appropriate tab
+                      retryInFiveMinutes();
+                    }
+                  });
+                } else {
+                  retryInFiveMinutes();
+                }
+              }); // end getBlockCountOnActiveTab
+            } else {
+              // browser is idle or locked
+              retryInFiveMinutes();
+            }
+          }); // end chrome.idle.queryState
+        }
+      });
+    }
+  }; // end of processNotification()
+
+  // open a Tab for a full page survey
+  const processTab = function (surveyData) {
+    const openTabIfAllowed = function () {
+      setTimeout(() => {
+        shouldShowSurvey(surveyData, (responseData) => {
+          chrome.tabs.create({ url: `https://getadblock.com/${responseData.open_this_url}` });
+        });
+      }, 10000); // 10 seconds
+    };
+
+    const waitForUserAction = function () {
+      chrome.tabs.onCreated.removeListener(waitForUserAction);
+      openTabIfAllowed();
+    };
+
+    chrome.idle.queryState(60, (state) => {
+      if (state === 'active') {
+        openTabIfAllowed();
+      } else {
+        chrome.tabs.onCreated.removeListener(waitForUserAction);
+        chrome.tabs.onCreated.addListener(waitForUserAction);
+      }
+    });
+  }; // end of processTab()
+
+  // Display a notification overlay on the active tab
+  // To avoid security issues, the tab that is selected must not be incognito mode (Chrome only),
+  // and must not be using SSL / HTTPS
+  const processOverlay = function (surveyData) {
+    // Check to see if we should show the survey before showing the overlay.
+    const showOverlayIfAllowed = function (tab) {
+      shouldShowSurvey(surveyData, () => {
+        const data = { command: 'showoverlay', overlayURL: surveyData.open_this_url, tabURL: tab.url };
+        const validateResponseFromTab = function (response) {
+          if (!response || response.ack !== data.command) {
+            recordErrorMessage('invalid_response_from_notification_overlay_script', undefined, { errorMessage: response });
+          }
+        };
+        chrome.tabs.sendMessage(tab.id, data).then(validateResponseFromTab).catch((error) => {
+          recordErrorMessage('overlay_message_error', undefined, { errorMessage: JSON.stringify(error) });
+        });
+      });
+    };
+
+    const retryInFiveMinutes = function () {
+      const fiveMinutes = 5 * 60 * 1000;
+      setTimeout(() => {
+        processOverlay(surveyData);
+      }, fiveMinutes);
+    };
+
+    getActiveTab((tab) => {
+      if (tab && validTab(tab)) {
+        showOverlayIfAllowed(tab);
+      } else {
+        // We didn't find an appropriate tab
+        retryInFiveMinutes();
+      }
+    });
+  }; // end of processOverlay()
+
+  return {
+    maybeSurvey(responseData) {
+      if (getSettings().show_survey === false) {
         return;
+      }
+
+      const surveyData = surveyDataFrom(responseData);
+      if (!surveyData) {
+        return;
+      }
 
       if (surveyData.type === 'overlay') {
         processOverlay(surveyData);
@@ -12232,63 +11235,1097 @@ let SURVEY = exports.SURVEY = (function() {
       } else if (surveyData.type === 'notification') {
         processNotification(surveyData);
       }
-    },//end of maybeSurvey
-    types: function(callback) {
+    }, // end of maybeSurvey
+    types(callback) {
       // 'O' = Overlay Surveys
       // 'T' = Tab Surveys
       // 'N' = Notifications
-      if (chrome &&
-          chrome.notifications &&
-          chrome.notifications.getPermissionLevel) {
-          chrome.notifications.getPermissionLevel(function(permissionLevel){
-            if (permissionLevel === "granted") {
-              callback("OTN");
-            } else {
-              callback("OT");
-            }
-          });
-          return;
+      if (chrome
+          && chrome.notifications
+          && chrome.notifications.getPermissionLevel) {
+        chrome.notifications.getPermissionLevel((permissionLevel) => {
+          if (permissionLevel === 'granted') {
+            callback('OTN');
+          } else {
+            callback('OT');
+          }
+        });
+        return;
       }
-      callback("OT");
+      callback('OT');
+    },
+  };
+}());
+
+exports.SURVEY = SURVEY;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, exports, settings, getSettings, setSetting, License, STATS, channels,
+   getSubscriptionsMinusText, chromeStorageSetHelper, getUserFilters, Prefs, abpPrefPropertyNames,
+   Subscription, adblockIsDomainPaused, PubNub, adblockIsPaused, filterStorage, parseFilter,
+   synchronizer, pausedFilterText1, pausedFilterText2, getUrlFromId, channelsNotifier,
+   settingsNotifier, filterNotifier, isWhitelistFilter, */
+
+const { EventEmitter } = __webpack_require__(6);
+
+const SyncService = (function getSyncService() {
+  let storedSyncDomainPauses = [];
+  let syncCommitVersion = 0;
+  let currentExtensionName = '';
+  let pubnub;
+  const syncSchemaVersion = 1;
+  const syncCommitVersionKey = 'SyncCommitKey';
+  const syncLogMessageKey = 'SyncLogMessageKey';
+  const syncPreviousDataKey = 'SyncPreviousDataKey';
+  const syncExtensionNameKey = 'SyncExtensionNameKey';
+  const syncNotifier = new EventEmitter();
+  let lastPostStatusCode = 200;
+  let lastGetStatusCode = 200;
+  let lastGetErrorResponse = {};
+  const debounceWaitTime = 3000; // time in ms before posting data
+
+  function setCommitVersion(newVersionNum) {
+    syncCommitVersion = newVersionNum;
+  }
+
+  function getLastPostStatusCode() {
+    return lastPostStatusCode;
+  }
+
+  function resetLastPostStatusCode() {
+    lastPostStatusCode = 200;
+  }
+
+  function setLastPostStatusCode(newCode) {
+    lastPostStatusCode = newCode;
+  }
+
+  function getLastGetStatusCode() {
+    return lastGetStatusCode;
+  }
+
+  function resetLastGetStatusCode() {
+    lastGetStatusCode = 200;
+  }
+
+  function setLastGetStatusCode(newCode) {
+    lastGetStatusCode = newCode;
+  }
+
+  function getLastGetErrorResponse() {
+    return lastGetErrorResponse;
+  }
+
+  function resetLastGetErrorResponse() {
+    lastGetErrorResponse = {};
+  }
+
+  function setLastGetErrorResponse(newObject) {
+    lastGetErrorResponse = newObject;
+  }
+
+  const getCurrentExtensionName = function () {
+    return currentExtensionName;
+  };
+
+  const getSyncLog = function () {
+    const storedLog = JSON.parse(localStorage.getItem(syncLogMessageKey) || '[]');
+    const theReturnObj = {};
+    Object.assign(theReturnObj, storedLog);
+    return theReturnObj;
+  };
+
+  // TODO - when should we delete the log file???
+  const deleteSyncLog = function () {
+    localStorage.removeItem(syncLogMessageKey);
+  };
+
+  function debounced(delay, fn) {
+    let timerId;
+    return function debouncedAgain(...args) {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      timerId = setTimeout(() => {
+        fn(...args);
+        timerId = null;
+      }, delay);
+    };
+  }
+
+  // return meta data about the extension installation
+  const getExtensionInfo = function () {
+    return {
+      flavor: STATS.flavor,
+      browserVersion: STATS.browserVersion,
+      os: STATS.os,
+      osVersion: STATS.osVersion,
+      extVersion: STATS.version,
+      syncSchemaVersion,
+    };
+  };
+
+  /*
+  ** @param a, b        - values (Object, Date, etc.)
+  ** @returns {boolean} - true if a and b are the same object or
+  **                      same primitive value or
+  **                      have the same properties with the same values
+  **                      otherwise false
+  */
+  function objectComparison(a, b) {
+    // Helper to return a value's internal object [[Class]]
+    // That this returns [object Type] even for primitives
+    function getClass(obj) {
+      return Object.prototype.toString.call(obj);
+    }
+
+    // If a and b reference the same value, return true
+    if (a === b) {
+      return true;
+    }
+
+    // If a and b aren't the same type, return false
+    if (typeof a !== typeof b) {
+      return false;
+    }
+
+    // Already know types are the same, so if type is number
+    // and both NaN, return true
+    if (typeof a === 'number' && Number.isNaN(a) && Number.isNaN(b)) {
+      return true;
+    }
+
+    // Get internal [[Class]]
+    const aClass = getClass(a);
+    const bClass = getClass(b);
+
+    // Return false if not same class
+    if (aClass !== bClass) {
+      return false;
+    }
+
+    // If they're Boolean, String or Number objects, check values
+    if (
+      aClass === '[object Boolean]'
+      || aClass === '[object String]'
+      || aClass === '[object Number]'
+    ) {
+      if (a.valueOf() !== b.valueOf()) {
+        return false;
+      }
+    }
+
+    // If they're RegExps, Dates or Error objects, check stringified values
+    if (aClass === '[object RegExp]' || aClass === '[object Date]' || aClass === '[object Error]') {
+      if (a.toString() !== b.toString()) {
+        return false;
+      }
+    }
+
+    // For functions, check stringigied values are the same
+    // Almost impossible to be equal if a and b aren't trivial
+    // and are different functions
+    if (aClass === '[object Function]' && a.toString() !== b.toString()) {
+      return false;
+    }
+
+    // For all objects, (including Objects, Functions, Arrays and host objects),
+    // check the properties
+    const aKeys = Object.keys(a);
+    const bKeys = Object.keys(b);
+
+    // If they don't have the same number of keys, return false
+    if (aKeys.length !== bKeys.length) {
+      return false;
+    }
+
+    // Check they have the same keys
+    if (!aKeys.every(key => Object.prototype.hasOwnProperty.call(b, key))) {
+      return false;
+    }
+
+    // Check key values - uses ES5 Object.keys
+    return aKeys.every(key => objectComparison(a[key], b[key]));
+  }
+
+  const isDomainPauseFilter = function (filterText) {
+    if (isWhitelistFilter(filterText)) {
+      const domains = adblockIsDomainPaused();
+      for (const domain in domains) {
+        if (`@@${domain}$document` === filterText) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  const isPauseFilter = function (filterText) {
+    return (
+      isWhitelistFilter(filterText) && ((pausedFilterText1 === filterText)
+      || (pausedFilterText2 === filterText))
+    );
+  };
+
+  function getCommitVersion() {
+    return syncCommitVersion;
+  }
+
+  // Sync log message processing
+
+  const addSyncLogText = function (msg) {
+    const storedLog = JSON.parse(localStorage.getItem(syncLogMessageKey) || '[]');
+    storedLog.push(`${new Date().toUTCString()} , ${msg}`);
+    while (storedLog.length > 500) { // only keep the last 500 log entries
+      storedLog.shift();
+    }
+    localStorage.setItem(syncLogMessageKey, JSON.stringify(storedLog));
+  };
+
+  const onExtensionNamesDownloadingAddLogEntry = function () {
+    addSyncLogText('extension.names.downloading');
+  };
+
+  const onExtensionNamesDownloadedAddLogEntry = function () {
+    addSyncLogText('extension.names.downloaded');
+  };
+
+  const onExtensionNamesDownloadingErrorAddLogEntry = function (errorCode) {
+    addSyncLogText(`extension.names.downloading.error: ${errorCode}`);
+  };
+
+  const onExtensionNameUpdatingAddLogEntry = function () {
+    addSyncLogText('extension.name.updating');
+  };
+
+  const onExtensionNameUpdatedAddLogEntry = function () {
+    addSyncLogText('extension.name.updated');
+  };
+
+  const onExtensionNameUpdatedErrorAddLogEntry = function (errorCode) {
+    addSyncLogText(`extension.names.updated.error: ${errorCode}`);
+  };
+
+  const onExtensionNameRemoveAddLogEntry = function () {
+    addSyncLogText('extension.name.remove');
+  };
+
+  const onExtensionNameRemovedAddLogEntry = function () {
+    addSyncLogText('extension.name.removed');
+  };
+
+  const onExtensionNamesRemoveErrorAddLogEntry = function (errorCode) {
+    addSyncLogText(`extension.name.remove.error: ${errorCode}`);
+  };
+
+  const onPostDataSendingAddLogEntry = function () {
+    addSyncLogText('post.data.sending');
+  };
+
+  const onPostDataSentAddLogEntry = function () {
+    addSyncLogText(`post.data.sent, commit version: ${getCommitVersion()}`);
+  };
+
+  const onPostDataSentErrorAddLogEntry = function (errorCode) {
+    addSyncLogText(`post.data.sent.error: ${errorCode}`);
+  };
+
+  const onSyncDataGettingAddLogEntry = function () {
+    addSyncLogText('sync.data.getting');
+  };
+
+  const onSyncDataReceievedAddLogEntry = function () {
+    addSyncLogText(`sync.data.receieved, commit version: ${getCommitVersion()}`);
+  };
+
+  const onSyncDataGettingErrorAddLogEntry = function (errorCode) {
+    addSyncLogText(`sync.data.getting.error: ${errorCode}`);
+  };
+
+  const onSyncDataGettingErrorInitialFailAddLogEntry = function (errorCode) {
+    addSyncLogText(`sync.data.getting.error.initial.fail: ${errorCode}`);
+  };
+
+  function cleanCustomFilter(filters) {
+    // Remove the global pause white-list item if adblock is paused
+    if (adblockIsPaused()) {
+      let index = filters.indexOf(pausedFilterText1);
+      if (index >= 0) {
+        filters.splice(index, 1);
+      }
+      index = filters.indexOf(pausedFilterText2);
+      if (index >= 0) {
+        filters.splice(index, 1);
+      }
+    }
+
+    // Remove the domain pause white-list items
+    const domainPauses = adblockIsDomainPaused();
+    for (const aDomain in domainPauses) {
+      const index = filters.indexOf(`@@${aDomain}$document`);
+      if (index >= 0) {
+        filters.splice(index, 1);
+      }
+    }
+    return filters;
+  }
+
+  const processSyncUpdate = function (payload) {
+    // do we need a check or comparison of payload.version vs. syncSchemaVersion ?
+    if (payload.settings) {
+      for (const id in payload.settings) {
+        setSetting(id, payload.settings[id]);
+      }
+    }
+    if (payload.subscriptions) {
+      const currentSubs = getSubscriptionsMinusText();
+      for (const id in currentSubs) {
+        if (!payload.subscriptions[id] && currentSubs[id].subscribed) {
+          const subscription = Subscription.fromURL(currentSubs[id].url);
+          setTimeout(() => {
+            filterStorage.removeSubscription(subscription);
+          }, 1);
+        }
+      }
+      for (const id in payload.subscriptions) {
+        if (!currentSubs[id] || !currentSubs[id].subscribed) {
+          let url = getUrlFromId(id);
+          let subscription = Subscription.fromURL(url);
+          if (!url && id.startsWith('url:')) {
+            url = id.slice(4);
+            subscription = Subscription.fromURL(url);
+          }
+          filterStorage.addSubscription(subscription);
+          synchronizer.execute(subscription);
+        }
+      }
+    }
+
+    if (payload.customFilterRules) {
+      // capture, then remove all current custom filters, account for pause filters in
+      // current processing
+      let currentUserFilters = getUserFilters();
+      for (const inx in payload.customFilterRules) {
+        const result = parseFilter(payload.customFilterRules[inx]);
+        if (result.filter) {
+          filterStorage.addFilter(result.filter);
+        }
+      }
+      if (currentUserFilters && currentUserFilters.length) {
+        currentUserFilters = cleanCustomFilter(currentUserFilters);
+        // Delete / remove filters the user removed...
+        if (currentUserFilters) {
+          for (let i = 0; (i < currentUserFilters.length); i++) {
+            let filter = currentUserFilters[i];
+            if (payload.customFilterRules.indexOf(filter) === -1) {
+              filter = filter.trim();
+              if (filter.length > 0) {
+                const result = parseFilter(filter);
+                if (result.filter) {
+                  filterStorage.removeFilter(result.filter);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    if (payload.prefs) {
+      for (const key in payload.prefs) {
+        Prefs[key] = payload.prefs[key];
+        // add any new Prefs to the array of Preferences we're tracking for sync
+        if (abpPrefPropertyNames.indexOf(key) < 0) {
+          abpPrefPropertyNames.push(key);
+        }
+      }
+    }
+    if (payload.channels) {
+      for (const name in payload.channels) {
+        const channelId = channels.getIdByName(name);
+        if (channelId) {
+          channels.setEnabled(channelId, payload.channels[name]);
+        } else {
+          // create a new channel to save the channel name and the enabled indicator
+          channels.add({ name, param: undefined, enabled: payload.channels[name] });
+        }
+      }
     }
   };
-})();
+
+  // Retreive or 'get' the sync data from the sync server
+  // Input: initialGet:boolean - if true, and the server returns a 404 error code,
+  //                             then a 'post' is invoked
+  //        disableEmitMsg:boolean - if true, then no sync notifier message will be emitted
+  //                                 (usually used for post error processing)
+  //        callback:function - function that will be called when success or failure occurs
+  //        shouldForce:boolean - optional, force a response from the server (even if the commit
+  //                              versions match), defaults to false
+  const getSyncData = function (initialGet, disableEmitMsg, callback, shouldForce) {
+    const getSuccess = function (text, statusCode) {
+      let responseObj = {};
+      if (text && typeof text === 'object') {
+        responseObj = text;
+      } else if (text && typeof text === 'string') {
+        try {
+          responseObj = JSON.parse(text);
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.log('Something went wrong with parsing license data.');
+          // eslint-disable-next-line no-console
+          console.log('error', e);
+          // eslint-disable-next-line no-console
+          console.log(text);
+          return;
+        }
+      }
+      if (responseObj && ((responseObj.commitVersion > syncCommitVersion) || shouldForce)) {
+        if (responseObj.data) {
+          try {
+            processSyncUpdate(JSON.parse(responseObj.data));
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('failed to parse response data from server', responseObj.data);
+            // eslint-disable-next-line no-console
+            console.log(e);
+          }
+        }
+        syncCommitVersion = responseObj.commitVersion;
+        chromeStorageSetHelper(syncCommitVersionKey, responseObj.commitVersion);
+        chromeStorageSetHelper(syncPreviousDataKey, responseObj.data);
+      }
+      if (!disableEmitMsg) {
+        syncNotifier.emit('sync.data.receieved');
+      }
+      if (typeof callback === 'function') {
+        callback(statusCode);
+      }
+    };
+
+    const getFailure = function (statusCode, textStatus, errorThrown, responseJSON) {
+      lastGetStatusCode = statusCode;
+      lastGetErrorResponse = responseJSON;
+      if (initialGet && statusCode === 404) {
+        // eslint-disable-next-line no-use-before-define
+        postDataSync(callback, initialGet);
+        // now that the initial post is complete, enable Sync (add listeners, etc.)
+        // with 'initialGet' now set to false
+        // eslint-disable-next-line no-use-before-define
+        enableSync();
+        return;
+      }
+      if (initialGet && !disableEmitMsg) {
+        syncNotifier.emit('sync.data.getting.error.initial.fail', statusCode);
+      } else if (!disableEmitMsg) {
+        syncNotifier.emit('sync.data.getting.error', statusCode, responseJSON);
+      }
+      if (typeof callback === 'function') {
+        callback(statusCode);
+      }
+    };
+
+    if (!disableEmitMsg) {
+      syncNotifier.emit('sync.data.getting');
+    }
+    lastGetStatusCode = 200;
+    lastGetErrorResponse = {};
+    // eslint-disable-next-line no-use-before-define
+    requestSyncData(getSuccess, getFailure, undefined, shouldForce);
+  };
+
+  const getAllExtensionNames = function (callback) {
+    syncNotifier.emit('extension.names.downloading');
+    $.ajax({
+      jsonp: false,
+      cache: false,
+      headers: {
+        'X-GABSYNC-PARAMS': JSON.stringify({
+          extensionGUID: STATS.userId(),
+          licenseId: License.get().licenseId,
+          extInfo: getExtensionInfo(),
+        }),
+      },
+      url: `${License.MAB_CONFIG.syncURL}/devices/list`,
+      type: 'GET',
+      success(text) {
+        let responseObj = {};
+        if (typeof text === 'object') {
+          responseObj = text;
+        } else if (typeof text === 'string') {
+          try {
+            responseObj = JSON.parse(text);
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log('Something went wrong with parsing license data.');
+            // eslint-disable-next-line no-console
+            console.log('error', e);
+            // eslint-disable-next-line no-console
+            console.log(text);
+            return;
+          }
+        }
+        syncNotifier.emit('extension.names.downloaded', responseObj);
+        if (typeof callback === 'function') {
+          callback(responseObj);
+        }
+      },
+      error(xhr) {
+        if (xhr.status === 404 && typeof callback === 'function' && xhr.responseText) {
+          callback(xhr.responseText);
+        }
+        syncNotifier.emit('extension.names.downloading.error', xhr.status);
+      },
+    });
+  };
+
+  const setCurrentExtensionName = function (newName) {
+    if (newName && newName.trim().length >= 1 && newName.trim().length <= 50) {
+      currentExtensionName = newName.trim();
+      chromeStorageSetHelper(syncExtensionNameKey, currentExtensionName);
+      const thedata = {
+        deviceName: currentExtensionName,
+        extensionGUID: STATS.userId(),
+        licenseId: License.get().licenseId,
+        extInfo: getExtensionInfo(),
+      };
+      syncNotifier.emit('extension.name.updating');
+      $.ajax({
+        jsonp: false,
+        url: `${License.MAB_CONFIG.syncURL}/devices/add`,
+        type: 'post',
+        success() {
+          syncNotifier.emit('extension.name.updated');
+        },
+        error(xhr) {
+          syncNotifier.emit('extension.name.updated.error', xhr.status);
+        },
+        data: thedata,
+      });
+    }
+  };
+
+  const removeCurrentExtensionName = function () {
+    const thedata = {
+      deviceName: currentExtensionName,
+      extensionGUID: STATS.userId(),
+      licenseId: License.get().licenseId,
+      extInfo: getExtensionInfo(),
+    };
+    syncNotifier.emit('extension.name.remove');
+    $.ajax({
+      jsonp: false,
+      url: `${License.MAB_CONFIG.syncURL}/devices/remove`,
+      type: 'post',
+      success() {
+        currentExtensionName = '';
+        chromeStorageSetHelper(syncExtensionNameKey, currentExtensionName);
+        syncNotifier.emit('extension.name.removed');
+      },
+      error(xhr) {
+        syncNotifier.emit('extension.name.remove.error', xhr.status);
+      },
+      data: thedata,
+    });
+  };
+
+  // return all of the current user configurable extension options (settings, Prefs, filter list
+  // sub, custom rules, themes, etc. Since a comparison will be done in this, and other sync'd
+  // extensions, the payload should only contain settings, Prefs, etc and not data that can change
+  // from browser to brower, version to version, etc.
+  const getSyncInformation = function () {
+    const payload = {};
+    payload.settings = getSettings();
+    payload.subscriptions = {};
+    const subscriptions = getSubscriptionsMinusText();
+
+    for (const id in subscriptions) {
+      if (subscriptions[id].subscribed && subscriptions[id].url) {
+        payload.subscriptions[id] = subscriptions[id].url;
+      }
+    }
+    payload.customFilterRules = cleanCustomFilter(getUserFilters());
+    payload.prefs = {};
+    for (const inx in abpPrefPropertyNames) {
+      const name = abpPrefPropertyNames[inx];
+      payload.prefs[name] = Prefs[name];
+    }
+    payload.channels = {};
+    const guide = channels.getGuide();
+    for (const id in guide) {
+      payload.channels[guide[id].name] = guide[id].enabled;
+    }
+    return payload;
+  };
+
+  const revertToPreviousSyncData = function () {
+    chrome.storage.local.get(syncPreviousDataKey).then((response) => {
+      const previousData = response[syncPreviousDataKey] || '{}';
+      processSyncUpdate(JSON.parse(previousData));
+    });
+  };
+
+  const postDataSync = function (callback, initialGet) {
+    if (!getSettings().sync_settings) {
+      return;
+    }
+    const payload = getSyncInformation();
+    const thedata = {
+      data: JSON.stringify(payload),
+      commitVersion: syncCommitVersion,
+      extensionGUID: STATS.userId(),
+      licenseId: License.get().licenseId,
+      extInfo: getExtensionInfo(),
+    };
+
+    chrome.storage.local.get(syncPreviousDataKey).then((response) => {
+      const previousData = response[syncPreviousDataKey] || '{}';
+      if (objectComparison(payload, JSON.parse(previousData))) {
+        return;
+      }
+      syncNotifier.emit('post.data.sending');
+      lastPostStatusCode = 200;
+      $.ajax({
+        jsonp: false,
+        url: License.MAB_CONFIG.syncURL,
+        type: 'post',
+        success(text, status, xhr) {
+          lastPostStatusCode = xhr.status;
+          let responseObj = {};
+          if (typeof text === 'object') {
+            responseObj = text;
+          } else if (typeof text === 'string') {
+            try {
+              responseObj = JSON.parse(text);
+            } catch (e) {
+              // eslint-disable-next-line no-console
+              console.log('Something went wrong with parsing license data.');
+              // eslint-disable-next-line no-console
+              console.log('error', e);
+              // eslint-disable-next-line no-console
+              console.log(text);
+              return;
+            }
+          }
+          if (responseObj && responseObj.commitVersion > syncCommitVersion) {
+            syncCommitVersion = text.commitVersion;
+            chromeStorageSetHelper(syncCommitVersionKey, responseObj.commitVersion);
+          }
+          chromeStorageSetHelper(syncPreviousDataKey, thedata.data);
+          if (typeof callback === 'function') {
+            callback();
+          }
+          syncNotifier.emit('post.data.sent');
+        },
+        error(xhr) {
+          syncNotifier.emit('post.data.sent.error', xhr.status, initialGet);
+          lastPostStatusCode = xhr.status;
+          if (xhr.status === 409) {
+            // this extension probably had an version of the sync data
+            // aka - the sync commit version was behind the sync server
+            // so, undo / revert all of the user changes that were just posted
+            // by doing a 'GET'
+            // because we want the above error to be persisted, will set the
+            // 'disableEmitMsg' to true
+            getSyncData(false, true);
+            return;
+          }
+          // process all other currently known errors by reverting all
+          // of the changes posted
+          if (xhr.status === 0 || xhr.status === 401 || xhr.status === 404 || xhr.status === 500) {
+            revertToPreviousSyncData();
+          }
+        },
+        data: thedata,
+      });
+    });
+  };
+
+  const postDataSyncHandler = debounced(debounceWaitTime, postDataSync);
+
+  // Sync Listeners
+  function onFilterAdded(filter, subscription, position, calledPreviously) {
+    // a delay is added to allow the domain pause filters time to be saved to storage
+    // otherwise the domain pause filter check below would always fail
+    if (calledPreviously === undefined) {
+      setTimeout(() => {
+        onFilterAdded(filter, subscription, position, true);
+      }, 500);
+      return;
+    }
+    if (isPauseFilter(filter.text)) {
+      return;
+    }
+    if (isDomainPauseFilter(filter.text)) {
+      storedSyncDomainPauses.push(filter.text);
+      return;
+    }
+    postDataSyncHandler();
+  }
+
+  function onFilterRemoved(filter) {
+    if (isPauseFilter(filter.text)) {
+      return;
+    }
+    if (isDomainPauseFilter(filter.text)) {
+      const filterTextIndex = storedSyncDomainPauses.indexOf(filter.text);
+      storedSyncDomainPauses = storedSyncDomainPauses.slice(filterTextIndex);
+      return;
+    }
+    postDataSyncHandler();
+  }
+
+  // a delay is added to allow the domain pause filters time to be saved to storage
+  // otherwise the domain pause filter check below would always fail
+  const onFilterListsSubAdded = function (sub, calledPreviously) {
+    if (calledPreviously === undefined) {
+      setTimeout(() => {
+        onFilterListsSubAdded(sub, true);
+      }, 500);
+      return;
+    }
+    let containsPauseFilter = false;
+    if (sub.url && sub.url.startsWith('~user~') && sub._filterText.length) {
+      const arrayLength = sub._filterText.length;
+      for (let i = 0; i < arrayLength; i++) {
+        const filter = sub._filterText[i];
+        containsPauseFilter = isPauseFilter(filter);
+        if (!containsPauseFilter && isDomainPauseFilter(filter)) {
+          containsPauseFilter = true;
+          storedSyncDomainPauses.push(filter.text);
+        }
+      }
+    }
+    if (containsPauseFilter) {
+      return;
+    }
+    postDataSyncHandler();
+  };
+
+  const onFilterListsSubRemoved = function (sub) {
+    let containsPauseFilter = false;
+    if (sub.url && sub.url.startsWith('~user~') && sub._filterText.length) {
+      const arrayLength = sub._filterText.length;
+      for (let i = 0; i < arrayLength; i++) {
+        const filter = sub._filterText[i];
+        containsPauseFilter = isPauseFilter(filter);
+        if (!containsPauseFilter && isDomainPauseFilter(filter.text)) {
+          containsPauseFilter = true;
+          const filterTextIndex = storedSyncDomainPauses.indexOf(filter.text);
+          storedSyncDomainPauses = storedSyncDomainPauses.slice(filterTextIndex);
+          return;
+        }
+      }
+    }
+    if (containsPauseFilter) {
+      return;
+    }
+    postDataSyncHandler();
+  };
+
+  const onSettingsChanged = function (name) {
+    if (name === 'sync_settings') {
+      return; // don't process any sync setting changes
+    }
+    postDataSyncHandler();
+  };
+
+  const updateNetworkStatus = function () {
+    if (navigator.onLine) {
+      // may not be needed if we get the update from PN
+      getSyncData();
+    }
+  };
+
+  function processFetchRequest(commitVersion) {
+    let fetchCommitVersion = commitVersion;
+    if (!fetchCommitVersion) {
+      return;
+    }
+    if (typeof fetchCommitVersion === 'string') {
+      fetchCommitVersion = Number.parseInt(fetchCommitVersion, 10);
+    }
+    if (fetchCommitVersion === syncCommitVersion) {
+      return;
+    }
+    getSyncData();
+  }
+
+  function enablePubNub() {
+    pubnub = new PubNub({
+      subscribeKey: License.MAB_CONFIG.subscribeKey,
+      authKey: `${License.get().licenseId}_${STATS.userId()}`,
+      ssl: true,
+    });
+
+    pubnub.addListener({
+      message(response) {
+        if (response.message && response.message && response.message.commitVersion) {
+          processFetchRequest(response.message.commitVersion);
+        }
+      },
+      status(msg) {
+        if (msg.category === 'PNNetworkUpCategory') {
+          pubnub.subscribe({
+            channels: [License.get().licenseId],
+          });
+        }
+      },
+    });
+
+    pubnub.subscribe({
+      channels: [License.get().licenseId],
+    });
+  }
+
+  const enableSync = function (initialGet) {
+    setSetting('sync_settings', true);
+    const addListeners = function () {
+      syncNotifier.on('sync.data.getting.error', onSyncDataGettingErrorAddLogEntry);
+      syncNotifier.on('sync.data.getting.error.initial.fail', onSyncDataGettingErrorInitialFailAddLogEntry);
+      syncNotifier.on('extension.names.downloading', onExtensionNamesDownloadingAddLogEntry);
+      syncNotifier.on('sync.data.receieved', onSyncDataReceievedAddLogEntry);
+      syncNotifier.on('sync.data.getting', onSyncDataGettingAddLogEntry);
+      syncNotifier.on('post.data.sent.error', onPostDataSentErrorAddLogEntry);
+      syncNotifier.on('post.data.sending', onPostDataSendingAddLogEntry);
+      syncNotifier.on('post.data.sent', onPostDataSentAddLogEntry);
+      syncNotifier.on('extension.name.remove.error', onExtensionNamesRemoveErrorAddLogEntry);
+      syncNotifier.on('extension.name.removed', onExtensionNameRemovedAddLogEntry);
+      syncNotifier.on('extension.name.remove', onExtensionNameRemoveAddLogEntry);
+      syncNotifier.on('extension.name.updated.error', onExtensionNameUpdatedErrorAddLogEntry);
+      syncNotifier.on('extension.name.updated', onExtensionNameUpdatedAddLogEntry);
+      syncNotifier.on('extension.name.updating', onExtensionNameUpdatingAddLogEntry);
+      syncNotifier.on('extension.names.downloaded', onExtensionNamesDownloadedAddLogEntry);
+      syncNotifier.on('extension.names.downloading.error', onExtensionNamesDownloadingErrorAddLogEntry);
+
+      filterNotifier.on('subscription.removed', onFilterListsSubRemoved);
+      filterNotifier.on('subscription.added', onFilterListsSubAdded);
+
+      filterNotifier.on('filter.added', onFilterAdded);
+      filterNotifier.on('filter.removed', onFilterRemoved);
+
+      settingsNotifier.on('settings.changed', onSettingsChanged);
+      channelsNotifier.on('channels.changed', postDataSyncHandler);
+
+      for (const inx in abpPrefPropertyNames) {
+        const name = abpPrefPropertyNames[inx];
+        Prefs.on(name, postDataSyncHandler);
+      }
+      // wait a moment at start to allow all of the backgound scripts to load
+      setTimeout(() => {
+        enablePubNub();
+      }, 1000);
+
+      window.addEventListener('online', updateNetworkStatus);
+      window.addEventListener('offline', updateNetworkStatus);
+    };
+
+    if (initialGet) {
+      SyncService.getSyncData(initialGet, false, (response) => {
+        if (response === 200 || response === 304) {
+          addListeners();
+        }
+      });
+      return;
+    }
+
+    addListeners();
+  };
+
+  function disablePubNub() {
+    if (!pubnub) {
+      return;
+    }
+
+    pubnub.removeAllListeners();
+    pubnub.unsubscribeAll();
+    pubnub = undefined;
+  }
+
+  const disableSync = function () {
+    setSetting('sync_settings', false);
+    syncCommitVersion = 0;
+    disablePubNub();
+
+    filterNotifier.off('subscription.added', onFilterListsSubAdded);
+    filterNotifier.off('subscription.removed', onFilterListsSubRemoved);
+
+    filterNotifier.off('filter.added', onFilterAdded);
+    filterNotifier.off('filter.removed', onFilterRemoved);
+
+    settingsNotifier.off('settings.changed', onSettingsChanged);
+    channelsNotifier.off('channels.changed', postDataSyncHandler);
+
+    for (const inx in abpPrefPropertyNames) {
+      const name = abpPrefPropertyNames[inx];
+      Prefs.off(name, postDataSyncHandler);
+    }
+
+    storedSyncDomainPauses = [];
+    removeCurrentExtensionName();
+
+    currentExtensionName = '';
+    chromeStorageSetHelper(syncExtensionNameKey, currentExtensionName);
+
+    syncNotifier.off('sync.data.getting.error', onSyncDataGettingErrorAddLogEntry);
+    syncNotifier.off('sync.data.getting.error.initial.fail', onSyncDataGettingErrorInitialFailAddLogEntry);
+    syncNotifier.off('extension.names.downloading', onExtensionNamesDownloadingAddLogEntry);
+    syncNotifier.off('sync.data.receieved', onSyncDataReceievedAddLogEntry);
+    syncNotifier.off('sync.data.getting', onSyncDataGettingAddLogEntry);
+    syncNotifier.off('post.data.sent.error', onPostDataSentErrorAddLogEntry);
+    syncNotifier.off('post.data.sending', onPostDataSendingAddLogEntry);
+    syncNotifier.off('post.data.sent', onPostDataSentAddLogEntry);
+    syncNotifier.off('extension.name.remove.error', onExtensionNamesRemoveErrorAddLogEntry);
+    syncNotifier.off('extension.name.removed', onExtensionNameRemovedAddLogEntry);
+    syncNotifier.off('extension.name.remove', onExtensionNameRemoveAddLogEntry);
+    syncNotifier.off('extension.name.updated.error', onExtensionNameUpdatedErrorAddLogEntry);
+    syncNotifier.off('extension.name.updated', onExtensionNameUpdatedAddLogEntry);
+    syncNotifier.off('extension.name.updating', onExtensionNameUpdatingAddLogEntry);
+    syncNotifier.off('extension.names.downloaded', onExtensionNamesDownloadedAddLogEntry);
+    syncNotifier.off('extension.names.downloading.error', onExtensionNamesDownloadingErrorAddLogEntry);
+
+    window.removeEventListener('online', updateNetworkStatus);
+    window.removeEventListener('offline', updateNetworkStatus);
+  };
+
+  // Retreive the sync data from the sync server
+  // Input: successCallback:function - function that will be called when success occurs, the
+  //                                   callback will be provided the response data
+  //        errorCallback:function - function that will be called when  failure occurs, the
+  //                                 callback will be provided the error code
+  //        totalAttempts:integer - the number of 'get' attempts made (only used internally by
+  //                               the retry logic)
+  //        shouldForce:boolean - optional, force a response from the server (even if the commit
+  //                              versions match), defaults to false
+  const requestSyncData = function (successCallback, errorCallback, totalAttempts, shouldForce) {
+    let attemptCount = totalAttempts;
+    if (!attemptCount) {
+      attemptCount = 1;
+    } else {
+      attemptCount += 1;
+    }
+    const forceParam = shouldForce || false;
+
+    $.ajax({
+      jsonp: false,
+      cache: false,
+      headers: {
+        'X-GABSYNC-PARAMS': JSON.stringify({
+          extensionGUID: STATS.userId(),
+          licenseId: License.get().licenseId,
+          commitVersion: syncCommitVersion,
+          force: forceParam,
+          extInfo: getExtensionInfo(),
+        }),
+      },
+      url: License.MAB_CONFIG.syncURL,
+      type: 'GET',
+      success(text, textStatus, xhr) {
+        if (typeof successCallback === 'function') {
+          successCallback(text, xhr.status);
+        }
+      },
+      error(xhr, textStatus, errorThrown) {
+        if (xhr.status !== 404 && attemptCount < 3) {
+          setTimeout(() => {
+            requestSyncData(successCallback, errorCallback, attemptCount, shouldForce);
+          }, 1000); // wait 1 second for retry
+          return;
+        }
+        if (typeof errorCallback === 'function') {
+          errorCallback(xhr.status, textStatus, errorThrown, xhr.responseJSON);
+        }
+      },
+    });
+  };
+
+  settings.onload().then(() => {
+    if (getSettings().sync_settings) {
+      License.ready().then(() => {
+        chrome.storage.local.get(syncCommitVersionKey).then((response) => {
+          syncCommitVersion = response[syncCommitVersionKey] || 0;
+          getSyncData();
+          enableSync();
+        });
+      });
+    }
+    License.ready().then(() => {
+      chrome.storage.local.get(syncExtensionNameKey).then((response) => {
+        currentExtensionName = response[syncExtensionNameKey] || '';
+      });
+    });
+  });
+
+  return {
+    enableSync,
+    disableSync,
+    getSyncData,
+    processFetchRequest,
+    getCurrentExtensionName,
+    getAllExtensionNames,
+    setCurrentExtensionName,
+    removeCurrentExtensionName,
+    syncNotifier,
+    getCommitVersion,
+    setCommitVersion,
+    getLastPostStatusCode,
+    resetLastPostStatusCode,
+    setLastPostStatusCode,
+    getLastGetStatusCode,
+    resetLastGetStatusCode,
+    setLastGetStatusCode,
+    getLastGetErrorResponse,
+    resetLastGetErrorResponse,
+    setLastGetErrorResponse,
+    getSyncLog,
+    deleteSyncLog,
+  };
+}());
+
+exports.SyncService = SyncService;
 
 
 /***/ }),
 /* 38 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global exports:true */
 
 // Used by both channels.js and picreplacement.js
 // Since this file is conditional loaded, and not part of the content script web pack,
 // 'exports' may not be defined, so we use this hack
-if (typeof exports === "undefined") {
-  var exports = {};
+if (false) {
+  const overrideExports = {};
+  window.exports = overrideExports;
 }
 
-const imageSizesMap =
-exports.imageSizesMap = new Map([
-  ["NONE", 0],
-  ["wide", 1],
-  ["tall", 2],
-  ["skinnywide", 4],
-  ["skinnytall", 8],
-  ["big", 16],
-  ["small", 32]
+const imageSizesMap = new Map([
+  ['NONE', 0],
+  ['wide', 1],
+  ['tall', 2],
+  ['skinnywide', 4],
+  ['skinnytall', 8],
+  ['big', 16],
+  ['small', 32],
 ]);
 
-const WIDE =
-exports.WIDE = imageSizesMap.get("wide");
-const TALL =
-exports.TALL = imageSizesMap.get("tall");
-const SKINNYWIDE =
-exports.SKINNYWIDE = imageSizesMap.get("skinnywide");
-const SKINNYTALL =
-exports.SKINNYTALL = imageSizesMap.get("skinnytall");
-const BIG =
-exports.BIG = imageSizesMap.get("big");
-const SMALL =
-exports.SMALL = imageSizesMap.get("small");
+exports.imageSizesMap = imageSizesMap;
+exports.WIDE = imageSizesMap.get('wide');
+exports.TALL = imageSizesMap.get('tall');
+exports.BIG = imageSizesMap.get('big');
+exports.SMALL = imageSizesMap.get('small');
+exports.SKINNYWIDE = imageSizesMap.get('skinnywide');
+exports.SKINNYTALL = imageSizesMap.get('skinnytall');
 
 
 /***/ }),
@@ -12298,7 +12335,7 @@ exports.SMALL = imageSizesMap.get("small");
 __webpack_require__(40);
 __webpack_require__(15);
 __webpack_require__(47);
-__webpack_require__(31);
+__webpack_require__(30);
 __webpack_require__(51);
 __webpack_require__(22);
 __webpack_require__(52);
@@ -12307,12 +12344,12 @@ __webpack_require__(54);
 __webpack_require__(24);
 __webpack_require__(61);
 __webpack_require__(62);
-__webpack_require__(37);
+__webpack_require__(36);
 __webpack_require__(63);
 __webpack_require__(64);
 __webpack_require__(65);
 __webpack_require__(69);
-__webpack_require__(34);
+__webpack_require__(33);
 __webpack_require__(70);
 __webpack_require__(38);
 __webpack_require__(71);
@@ -12321,7 +12358,7 @@ __webpack_require__(73);
 __webpack_require__(74);
 __webpack_require__(75);
 __webpack_require__(76);
-__webpack_require__(25);
+__webpack_require__(37);
 module.exports = __webpack_require__(77);
 
 
@@ -12357,18 +12394,18 @@ module.exports = __webpack_require__(77);
 const {Services} = Cu.import("resource://gre/modules/Services.jsm", {});
 const {XPCOMUtils} = Cu.import("resource://gre/modules/XPCOMUtils.jsm", {});
 
-const {filterStorage} = __webpack_require__(5);
+const {filterStorage} = __webpack_require__(4);
 const {filterNotifier} = __webpack_require__(1);
 const {ElemHide} = __webpack_require__(19);
 const {ElemHideEmulation} = __webpack_require__(21);
 const {ElemHideExceptions} = __webpack_require__(20);
-const {snippets} = __webpack_require__(29);
+const {snippets} = __webpack_require__(28);
 const {defaultMatcher} = __webpack_require__(11);
 const {Filter, ActiveFilter, RegExpFilter,
        ElemHideBase, ElemHideFilter, ElemHideEmulationFilter,
        SnippetFilter} = __webpack_require__(0);
-const {SpecialSubscription} = __webpack_require__(4);
-const {Prefs} = __webpack_require__(3);
+const {SpecialSubscription} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 
 /**
  * Increases on filter changes, filters will be saved if it exceeds 1.
@@ -12951,7 +12988,7 @@ module.exports = [{"type":"ads","languages":["id","ms"],"title":"ABPindo+EasyLis
  */
 
 const {Filter} = __webpack_require__(0);
-const {Subscription} = __webpack_require__(4);
+const {Subscription} = __webpack_require__(3);
 
 /**
  * Parses filter data.
@@ -13107,9 +13144,9 @@ const {RegExpFilter,
        ElemHideFilter,
        ElemHideException} = __webpack_require__(0);
 const {SpecialSubscription} =
-  __webpack_require__(4);
+  __webpack_require__(3);
 const {parseURL} = __webpack_require__(10);
-const {filterStorage} = __webpack_require__(5);
+const {filterStorage} = __webpack_require__(4);
 const {defaultMatcher} = __webpack_require__(11);
 const {filterNotifier} = __webpack_require__(1);
 const {extractHostFromFrame} = __webpack_require__(7);
@@ -14880,12 +14917,12 @@ const {ElemHide, createStyleSheet,
        rulesFromStyleSheet} = __webpack_require__(19);
 const {ElemHideEmulation} = __webpack_require__(21);
 const {filterNotifier} = __webpack_require__(1);
-const {snippets, compileScript} = __webpack_require__(29);
+const {snippets, compileScript} = __webpack_require__(28);
 const {checkWhitelisted} = __webpack_require__(9);
 const {extractHostFromFrame} = __webpack_require__(7);
 const {port} = __webpack_require__(8);
 const {HitLogger, logRequest} = __webpack_require__(12);
-const info = __webpack_require__(2);
+const info = __webpack_require__(5);
 
 // Chromium's support for tabs.removeCSS is still a work in progress and the
 // API is likely to be different from Firefox's; for now we just don't use it
@@ -15163,32 +15200,32 @@ fetch(browser.extension.getURL("/snippets.js"), {cache: "no-cache"})
 (function(global)
 {
   const {port} = __webpack_require__(8);
-  const {Prefs} = __webpack_require__(3);
+  const {Prefs} = __webpack_require__(2);
   const {Utils} = __webpack_require__(14);
-  const {filterStorage} = __webpack_require__(5);
+  const {filterStorage} = __webpack_require__(4);
   const {filterNotifier} = __webpack_require__(1);
   const {isSlowFilter, Matcher} = __webpack_require__(11);
   const {Notification: NotificationStorage} = __webpack_require__(16);
   const {getActiveNotification, shouldDisplay,
-         notificationClicked} = __webpack_require__(32);
+         notificationClicked} = __webpack_require__(31);
   const {HitLogger} = __webpack_require__(12);
   const {
     Filter, ActiveFilter, InvalidFilter, RegExpFilter
   } = __webpack_require__(0);
   const {synchronizer} = __webpack_require__(15);
-  const info = __webpack_require__(2);
+  const info = __webpack_require__(5);
   const {
     Subscription,
     DownloadableSubscription,
     SpecialSubscription,
     RegularSubscription
-  } = __webpack_require__(4);
-  const {showOptions} = __webpack_require__(33);
+  } = __webpack_require__(3);
+  const {showOptions} = __webpack_require__(32);
   const {recommendations} = __webpack_require__(23);
 
   port.on("types.get", (message, sender) =>
   {
-    const filterTypes = Array.from(__webpack_require__(31).filterTypes);
+    const filterTypes = Array.from(__webpack_require__(30).filterTypes);
     filterTypes.push(...filterTypes.splice(filterTypes.indexOf("OTHER"), 1));
     return filterTypes;
   });
@@ -15360,7 +15397,7 @@ fetch(browser.extension.getURL("/snippets.js"), {cache: "no-cache"})
   {
     if (message.what == "issues")
     {
-      const subscriptionInit = __webpack_require__(34);
+      const subscriptionInit = __webpack_require__(33);
       return {
         dataCorrupted: subscriptionInit.isDataCorrupted(),
         filterlistsReinitialized: subscriptionInit.isReinitialized()
@@ -15935,7 +15972,7 @@ exports.compareVersions = compareVersions;
 
 
 const {filterNotifier} = __webpack_require__(1);
-const info = __webpack_require__(2);
+const info = __webpack_require__(5);
 
 const frameOpacities = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
                         1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
@@ -16204,11 +16241,11 @@ if (info.platform == "chromium")
 
 
 
-const {Prefs} = __webpack_require__(3);
+const {Prefs} = __webpack_require__(2);
 const {Filter, ActiveFilter} = __webpack_require__(0);
-const {filterStorage} = __webpack_require__(5);
+const {filterStorage} = __webpack_require__(4);
 const {filterNotifier} = __webpack_require__(1);
-const {Subscription} = __webpack_require__(4);
+const {Subscription} = __webpack_require__(3);
 const {Notification} = __webpack_require__(16);
 
 exports.initAntiAdblockNotification = function initAntiAdblockNotification()
@@ -16331,45 +16368,49 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 /* 61 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-﻿// Send the file name and line number of any error message. This will help us
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, chromeStorageSetHelper */
+
+// Send the file name and line number of any error message. This will help us
 // to trace down any frequent errors we can't confirm ourselves.
-window.addEventListener("error", function(e)
-{
+window.addEventListener('error', (e) => {
   if (!e.filename && !e.lineno && !e.colno && !e.error && !e.message) {
     return;
   }
-  var str = "Error: " +
-           (e.filename||"anywhere").replace(chrome.extension.getURL(""), "") +
-           ":" + (e.lineno||"anywhere") +
-           ":" + (e.colno||"anycol");
+  let str = `Error: ${
+    (e.filename || 'anywhere').replace(chrome.extension.getURL(''), '')
+  }:${e.lineno || 'anywhere'
+  }:${e.colno || 'anycol'}`;
   if (e.message) {
-    str += ": " + e.message;
+    str += `: ${e.message}`;
   }
-  var src = e.target.src || e.target.href;
+  const src = e.target.src || e.target.href;
   if (src) {
-    str += "src: " + src;
+    str += `src: ${src}`;
   }
-  if (e.error)
-  {
-      var stack = "-" + (e.error.message ||"") +
-                  "-" + (e.error.stack ||"");
-      stack = stack.replace(/:/gi, ";").replace(/\n/gi, "");
-      //only append the stack info if there isn't any URL info in the stack trace
-      if (stack.indexOf("http") === -1)
-      {
-         str += stack;
-      }
-      //don't send large stack traces
-      if (str.length > 1024)
-      {
-        str = str.substr(0,1023);
-      }
+  if (e.error) {
+    let stack = `-${e.error.message || ''
+    }-${e.error.stack || ''}`;
+    stack = stack.replace(/:/gi, ';').replace(/\n/gi, '');
+    // only append the stack info if there isn't any URL info in the stack trace
+    if (stack.indexOf('http') === -1) {
+      str += stack;
+    }
+    // don't send large stack traces
+    if (str.length > 1024) {
+      str = str.substr(0, 1023);
+    }
   }
-  chromeStorageSetHelper("errorkey", "Date added:" + new Date() + " " + str);
+  chromeStorageSetHelper('errorkey', `Date added:${new Date()} ${str}`);
+  // eslint-disable-next-line no-console
   console.log(str);
 });
+
 
 /***/ }),
 /* 62 */
@@ -16377,236 +16418,237 @@ window.addEventListener("error", function(e)
 
 "use strict";
 
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, log, License, openTab, runBandaids */
+
 // Set to true to get noisier console.log statements
-var VERBOSE_DEBUG = false;
+const VERBOSE_DEBUG = false;
+let loggingEnable = false;
 
 // Enabled in adblock_start_common.js and background.js if the user wants
-var logging = function (enabled) {
+const logging = function (enabled) {
   if (enabled) {
     loggingEnable = true;
-    window.log = function () {
-      if (VERBOSE_DEBUG || arguments[0] !== '[DEBUG]') { // comment out for verbosity
-        console.log.apply(console, arguments);
+    window.log = function log(...args) {
+      if (VERBOSE_DEBUG || args[0] !== '[DEBUG]') { // comment out for verbosity
+        // eslint-disable-next-line no-console
+        console.log(...args);
       }
-    }
+    };
   } else {
-    window.log = function () {
-    }
+    window.log = function log() {
+    };
 
     loggingEnable = false;
   }
-}
+};
 
 logging(false); // disabled by default
-var loggingEnable = false;
 
 // Behaves very similarly to $.ready() but does not require jQuery.
-var onReady = function (callback) {
-    if (document.readyState === 'complete')
-        window.setTimeout(callback, 0);
-    else
-        window.addEventListener('load', callback, false);
-  };
+const onReady = function (callback) {
+  if (document.readyState === 'complete') {
+    window.setTimeout(callback, 0);
+  } else {
+    window.addEventListener('load', callback, false);
+  }
+};
 
 // Excecute any bandaid for the specific site, if the bandaids.js was loaded.
-onReady(function()
-{
-  if (typeof run_bandaids === "function")
-  {
-    run_bandaids();
+onReady(() => {
+  if (typeof runBandaids === 'function') {
+    runBandaids();
   }
 });
 
-var translate = function (messageID, args) {
-  if (Array.isArray(args)) {
-    for (var i = 0; i < args.length; i++) {
-      if (typeof args[i] !== 'string') {
-        args[i] = args[i].toString();
+const translate = function (messageID, ...args) {
+  let params = args;
+  if (Array.isArray(params)) {
+    for (let i = 0; i < params.length; i++) {
+      if (typeof params[i] !== 'string') {
+        params[i] = params[i].toString();
       }
     }
-  } else if (args && typeof args !== 'string') {
-    args = args.toString();
+  } else if (params && typeof params !== 'string') {
+    params = params.toString();
   }
 
   // if VERBOSE_DEBUG is set to true, duplicate (double the length) of the translated strings
   // used for testing purposes only
   if (VERBOSE_DEBUG) {
-    return chrome.i18n.getMessage(messageID, args) + " " + chrome.i18n.getMessage(messageID, args);
+    return `${chrome.i18n.getMessage(messageID, args)} ${chrome.i18n.getMessage(messageID, args)}`;
   }
   return chrome.i18n.getMessage(messageID, args);
 };
 
-var splitMessageWithReplacementText = function(rawMessageText, messageID) {
-    var anchorStartPos = rawMessageText.indexOf('[[');
-    var anchorEndPos = rawMessageText.indexOf(']]');
+const splitMessageWithReplacementText = function (rawMessageText, messageID) {
+  const anchorStartPos = rawMessageText.indexOf('[[');
+  const anchorEndPos = rawMessageText.indexOf(']]');
 
-    if (anchorStartPos === -1 || anchorEndPos === -1) {
-      log("replacement tag not found", messageID, rawMessageText, anchorStartPos, anchorEndPos);
-      return { error: "no brackets found" };
-    }
-    var returnObj = {};
-    returnObj.anchorPrefixText = rawMessageText.substring(0, anchorStartPos);
-    returnObj.anchorText = rawMessageText.substring(anchorStartPos + 2, anchorEndPos);
-    returnObj.anchorPostfixText = rawMessageText.substring(anchorEndPos + 2);
-    return returnObj;
+  if (anchorStartPos === -1 || anchorEndPos === -1) {
+    log('replacement tag not found', messageID, rawMessageText, anchorStartPos, anchorEndPos);
+    return { error: 'no brackets found' };
+  }
+  const returnObj = {};
+  returnObj.anchorPrefixText = rawMessageText.substring(0, anchorStartPos);
+  returnObj.anchorText = rawMessageText.substring(anchorStartPos + 2, anchorEndPos);
+  returnObj.anchorPostfixText = rawMessageText.substring(anchorEndPos + 2);
+  return returnObj;
 };
 
-const processReplacementChildren = function($element, replacementText, messageID) {
-    // Replace a dummy <a/> inside of localized text with a real element.
-    // Give the real element the same text as the dummy link.
-    var messageID = $element.attr("i18n") || messageID;
-    if (!messageID || typeof messageID !== "string") {
-      $(this).addClass("i18n-replaced");
-      return;
-    }
-    if (!$element.get(0).firstChild) {
-       log("returning, no first child found", $element.attr("i18n"));
-       return;
-    }
-    if (!$element.get(0).lastChild) {
-       log("returning, no last child found", $element.attr("i18n"));
-       return;
-    }
-    var replaceElId = '#' + $element.attr("i18n_replacement_el");
-    if ($(replaceElId).length === 0) {
-      log("returning, no child element found", $element.attr("i18n"), replaceElId);
-      return;
-    }
-    var rawMessageText = chrome.i18n.getMessage(messageID) || "";
-    var messageSplit = splitMessageWithReplacementText(rawMessageText, messageID);
-    $element.get(0).firstChild.nodeValue = messageSplit.anchorPrefixText;
-    $element.get(0).lastChild.nodeValue = messageSplit.anchorPostfixText;
-    if ($(replaceElId).get(0).tagName === "INPUT") {
-      $('#' + $element.attr("i18n_replacement_el")).prop('value', replacementText || messageSplit.anchorText);
-    } else {
-      $('#' + $element.attr("i18n_replacement_el")).text(replacementText || messageSplit.anchorText);
-    }
+const processReplacementChildren = function ($el, replacementText, messageId) {
+  // Replace a dummy <a/> inside of localized text with a real element.
+  // Give the real element the same text as the dummy link.
+  const $element = $el;
+  const messageID = $element.attr('i18n') || messageId;
+  if (!messageID || typeof messageID !== 'string') {
+    $(this).addClass('i18n-replaced');
+    return;
+  }
+  if (!$element.get(0).firstChild) {
+    log('returning, no first child found', $element.attr('i18n'));
+    return;
+  }
+  if (!$element.get(0).lastChild) {
+    log('returning, no last child found', $element.attr('i18n'));
+    return;
+  }
+  const replaceElId = `#${$element.attr('i18n_replacement_el')}`;
+  if ($(replaceElId).length === 0) {
+    log('returning, no child element found', $element.attr('i18n'), replaceElId);
+    return;
+  }
+  const rawMessageText = chrome.i18n.getMessage(messageID) || '';
+  const messageSplit = splitMessageWithReplacementText(rawMessageText, messageID);
+  $element.get(0).firstChild.nodeValue = messageSplit.anchorPrefixText;
+  $element.get(0).lastChild.nodeValue = messageSplit.anchorPostfixText;
+  if ($(replaceElId).get(0).tagName === 'INPUT') {
+    $(`#${$element.attr('i18n_replacement_el')}`).prop('value', replacementText || messageSplit.anchorText);
+  } else {
+    $(`#${$element.attr('i18n_replacement_el')}`).text(replacementText || messageSplit.anchorText);
+  }
 
-    // If localizePage is run again, don't let the [i18n] code above
-    // clobber our work
-    $element.addClass("i18n-replaced");
-}
-
-var localizePage = function () {
-
-    //translate a page into the users language
-    $('[i18n]:not(.i18n-replaced, [i18n_replacement_el])').each(function () {
-        $(this).text(translate($(this).attr('i18n')));
-    });
-
-    $('[i18n_value]:not(.i18n-replaced)').each(function () {
-        $(this).val(translate($(this).attr('i18n_value')));
-    });
-
-    $('[i18n_title]:not(.i18n-replaced)').each(function () {
-        $(this).attr('title', translate($(this).attr('i18n_title')));
-    });
-
-    $('[i18n_placeholder]:not(.i18n-replaced)').each(function () {
-        $(this).attr('placeholder', translate($(this).attr('i18n_placeholder')));
-    });
-
-    $("[i18n_replacement_el]:not(.i18n-replaced)").each(function() {
-      processReplacementChildren($(this));
-    });
-
-    // Make a right-to-left translation for Arabic and Hebrew languages
-    var language = determineUserLanguage();
-    if (language === 'ar' || language === 'he') {
-      $('#main_nav').removeClass('right').addClass('left');
-      $('.adblock-logo').removeClass('left').addClass('right');
-      $('.closelegend').css('float', 'left');
-      document.documentElement.dir = 'rtl';
-    }
-
-};  // end of localizePage
+  // If localizePage is run again, don't let the [i18n] code above
+  // clobber our work
+  $element.addClass('i18n-replaced');
+};
 
 // Determine what language the user's browser is set to use
-var determineUserLanguage = function () {
-    if ((typeof navigator.language !== 'undefined') &&
-        navigator.language)
-        return navigator.language.match(/^[a-z]+/i)[0];
-    else
-        return null;
-  };
+const determineUserLanguage = function () {
+  if ((typeof navigator.language !== 'undefined')
+        && navigator.language) {
+    return navigator.language.match(/^[a-z]+/i)[0];
+  }
+  return null;
+};
+
+const localizePage = function () {
+  // translate a page into the users language
+  $('[i18n]:not(.i18n-replaced, [i18n_replacement_el])').each(function i18n() {
+    $(this).text(translate($(this).attr('i18n')));
+  });
+
+  $('[i18n_value]:not(.i18n-replaced)').each(function i18nValue() {
+    $(this).val(translate($(this).attr('i18n_value')));
+  });
+
+  $('[i18n_title]:not(.i18n-replaced)').each(function i18nTitle() {
+    $(this).attr('title', translate($(this).attr('i18n_title')));
+  });
+
+  $('[i18n_placeholder]:not(.i18n-replaced)').each(function i18nPlaceholder() {
+    $(this).attr('placeholder', translate($(this).attr('i18n_placeholder')));
+  });
+
+  $('[i18n_replacement_el]:not(.i18n-replaced)').each(function i18nReplacementEl() {
+    processReplacementChildren($(this));
+  });
+
+  // Make a right-to-left translation for Arabic and Hebrew languages
+  const language = determineUserLanguage();
+  if (language === 'ar' || language === 'he') {
+    $('#main_nav').removeClass('right').addClass('left');
+    $('.adblock-logo').removeClass('left').addClass('right');
+    $('.closelegend').css('float', 'left');
+    document.documentElement.dir = 'rtl';
+  }
+}; // end of localizePage
 
 // Parse a URL. Based upon http://blog.stevenlevithan.com/archives/parseuri
 // parseUri 1.2.2, (c) Steven Levithan <stevenlevithan.com>, MIT License
 // Inputs: url: the URL you want to parse
 // Outputs: object containing all parts of |url| as attributes
-const parseUriRegEx = /^(([^:]+(?::|$))(?:(?:\w+:)?\/\/)?(?:[^:@\/]*(?::[^:@\/]*)?@)?(([^:\/?#]*)(?::(\d*))?))((?:[^?#\/]*\/)*[^?#]*)(\?[^#]*)?(\#.*)?/;
-var parseUri = function (url) {
-    var matches = parseUriRegEx.exec(url);
+const parseUriRegEx = /^(([^:]+(?::|$))(?:(?:\w+:)?\/\/)?(?:[^:@/]*(?::[^:@/]*)?@)?(([^:/?#]*)(?::(\d*))?))((?:[^?#/]*\/)*[^?#]*)(\?[^#]*)?(#.*)?/;
+const parseUri = function (url) {
+  const matches = parseUriRegEx.exec(url);
 
-    // The key values are identical to the JS location object values for that key
-    var keys = ['href', 'origin', 'protocol', 'host', 'hostname', 'port',
-        'pathname', 'search', 'hash', ];
-    var uri = {};
-    for (var i = 0; (matches && i < keys.length); i++)
-        uri[keys[i]] = matches[i] || '';
-    return uri;
-  };
+  // The key values are identical to the JS location object values for that key
+  const keys = ['href', 'origin', 'protocol', 'host', 'hostname', 'port',
+    'pathname', 'search', 'hash'];
+  const uri = {};
+  for (let i = 0; (matches && i < keys.length); i++) {
+    uri[keys[i]] = matches[i] || '';
+  }
+  return uri;
+};
 
-// Parses the search part of a URL into an key: value object.
+// Parses the search part of a URL into a key: value object.
 // e.g., ?hello=world&ext=adblock would become {hello:"world", ext:"adblock"}
 // Inputs: search: the search query of a URL. Must have &-separated values.
-parseUri.parseSearch = function (search) {
+parseUri.parseSearch = function parseSearch(searchQuery) {
+  const params = {};
+  let search = searchQuery;
+  let pair;
 
-    // Fails if a key exists twice (e.g., ?a=foo&a=bar would return {a:"bar"}
-    search = search.substring(search.indexOf('?') + 1).split('&');
-    var params = {}, pair;
-    for (var i = 0; i < search.length; i++) {
-      pair = search[i].split('=');
-      if (pair[0] && !pair[1])
-          pair[1] = '';
-      if (!params[decodeURIComponent(pair[0])] && decodeURIComponent(pair[1]) === 'undefined') {
-        continue;
-      } else {
-        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-      }
+  // Fails if a key exists twice (e.g., ?a=foo&a=bar would return {a:"bar"}
+  search = search.substring(search.indexOf('?') + 1).split('&');
+
+  for (let i = 0; i < search.length; i++) {
+    pair = search[i].split('=');
+    if (pair[0] && !pair[1]) {
+      pair[1] = '';
     }
-
-    return params;
-  };
+    const pairKey = decodeURIComponent(pair[0]);
+    const pairValue = decodeURIComponent(pair[1]);
+    if (pairKey && pairValue !== 'undefined') {
+      params[pairKey] = pairValue;
+    }
+  }
+  return params;
+};
 
 // Strip third+ level domain names from the domain and return the result.
 // Inputs: domain: the domain that should be parsed
 // keepDot: true if trailing dots should be preserved in the domain
 // Returns: the parsed domain
-parseUri.secondLevelDomainOnly = function(domain, keepDot)
-{
-  if (domain)
-  {
-    var match = domain.match(/([^\.]+\.(?:co\.)?[^\.]+)\.?$/) || [domain, domain];
+parseUri.secondLevelDomainOnly = function stripThirdPlusLevelDomain(domain, keepDot) {
+  if (domain) {
+    const match = domain.match(/([^.]+\.(?:co\.)?[^.]+)\.?$/) || [domain, domain];
     return match[keepDot ? 0 : 1].toLowerCase();
   }
-  else
-  {
-    return domain;
-  }
+
+  return domain;
 };
 
 // Inputs: key:string.
 // Returns value if key exists, else undefined.
-var sessionstorage_get = function(key)
-{
-  var json = sessionStorage.getItem(key);
-  if (json == null)
+const sessionStorageGet = function (key) {
+  const json = sessionStorage.getItem(key);
+  if (json == null) {
     return undefined;
-  try
-  {
+  }
+  try {
     return JSON.parse(json);
-  }
-  catch (e)
-  {
-    log("Couldn't parse json for " + key);
+  } catch (e) {
+    log(`Couldn't parse json for ${key}`);
     return undefined;
   }
 };
 
 // Inputs: key:string.
 // Returns value if key exists, else undefined.
-var sessionstorage_set = function(key, value) {
+const sessionStorageSet = function (key, value) {
   if (value === undefined) {
     sessionStorage.removeItem(key);
     return;
@@ -16614,9 +16656,10 @@ var sessionstorage_set = function(key, value) {
   try {
     sessionStorage.setItem(key, JSON.stringify(value));
   } catch (ex) {
-    if (ex.name == "QUOTA_EXCEEDED_ERR") {
-      alert(translate("storage_quota_exceeded"));
-      openTab("options/index.html#ui-tabs-2");
+    if (ex.name === 'QUOTA_EXCEEDED_ERR') {
+      // eslint-disable-next-line no-alert
+      alert(translate('storage_quota_exceeded'));
+      openTab('options/index.html#ui-tabs-2');
     }
   }
 };
@@ -16626,20 +16669,20 @@ var sessionstorage_set = function(key, value) {
 // first, a string - the name of the function to call
 // then, any arguments to pass to the function (optional)
 // then, a callback:function(return_value:any) (optional)
-var BGcall = function()
-{
-  var args = [];
-  for (var i = 0; i < arguments.length; i++)
-    args.push(arguments[i]);
-  var fn = args.shift();
-  var has_callback = (typeof args[args.length - 1] == "function");
-  var callback = (has_callback ? args.pop() : function() {});
+const BGcall = function (...args) {
+  const params = [];
+  for (let i = 0; i < args.length; i++) {
+    params.push(args[i]);
+  }
+  const fn = params.shift();
+  const hasCallback = (typeof params[params.length - 1] === 'function');
+  const callback = (hasCallback ? params.pop() : function callback() {});
   chrome.runtime.sendMessage({
-    command : "call",
-    fn : fn,
-    args : args
+    command: 'call',
+    fn,
+    args: params,
   }).then((response) => {
-    if (has_callback) {
+    if (hasCallback) {
       callback(response);
     }
   });
@@ -16650,98 +16693,133 @@ var BGcall = function()
 // The following two functions should only be used when
 // multiple 'sets' & 'gets' may occur in immediately preceding each other
 // chrome.storage.local.get & set instead
-var storage_get = function(key) {
-  var store = localStorage;
-  var json = store.getItem(key);
-  if (json == null)
+const storageGet = function (key) {
+  const store = localStorage;
+  const json = store.getItem(key);
+  if (json == null) {
     return undefined;
+  }
   try {
     return JSON.parse(json);
   } catch (e) {
-    log("Couldn't parse json for " + key, e);
+    log(`Couldn't parse json for ${key}`, e);
     return undefined;
   }
 };
 
 // Inputs: key:string, value:object.
 // Returns undefined.
-var storage_set = function(key, value) {
-  var store = localStorage;
+const storageSet = function (key, value) {
+  const store = localStorage;
   try {
     store.setItem(key, JSON.stringify(value));
   } catch (ex) {
-    console.log(ex)
+    // eslint-disable-next-line no-console
+    console.log(ex);
   }
 };
 
-var chromeStorageSetHelper = function(key, value, callback)
-{
-    let items = {};
-    items[key] = value;
-    chrome.storage.local.set(items).then(() =>
-    {
-      if (typeof callback === "function")
-      {
-        callback();
-      }
-    }).catch(error =>
-    {
-      if (typeof callback === "function")
-      {
-        callback(error);
-      }
-    });
-};
-
-function chromeStorageGetHelper(storageKey) {
-  return new Promise(function(resolve, reject) {
-    chrome.storage.local.get(storageKey).then((items) => {
-      resolve(items[storageKey]);
-    }).catch(error => {
-        console.error(error);
-        reject(error);
-    });
+const chromeStorageSetHelper = function (key, value, callback) {
+  const items = {};
+  items[key] = value;
+  chrome.storage.local.set(items).then(() => {
+    if (typeof callback === 'function') {
+      callback();
+    }
+  }).catch((error) => {
+    if (typeof callback === 'function') {
+      callback(error);
+    }
   });
 };
 
-function chromeLocalStorageOnChangedHelper(storageKey, callback) {
-  chrome.storage.onChanged.addListener(function(changes, namespace) {
-    if (namespace !== 'local') return;
+const chromeStorageGetHelper = function (storageKey) {
+  return new Promise(((resolve, reject) => {
+    chrome.storage.local.get(storageKey).then((items) => {
+      resolve(items[storageKey]);
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      reject(error);
+    });
+  }));
+};
 
-    for (var key in changes) {
-      if (key !== storageKey) return;
+const chromeLocalStorageOnChangedHelper = function (storageKey, callback) {
+  chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (namespace !== 'local') {
+      return;
+    }
+    for (const key in changes) {
+      if (key !== storageKey) {
+        return;
+      }
       callback();
     }
   });
 };
 
-var reloadOptionsPageTabs = function() {
-  var optionTabQuery = {
-    url: 'chrome-extension://' + chrome.runtime.id + '/options.html*'
+const reloadOptionsPageTabs = function () {
+  const optionTabQuery = {
+    url: `chrome-extension://${chrome.runtime.id}/options.html*`,
   };
   chrome.tabs.query(optionTabQuery).then((tabs) => {
-    for (var i in tabs) {
+    for (const i in tabs) {
       chrome.tabs.reload(tabs[i].id);
     }
   });
 };
 
-var reloadAllOpenedTabs = function() {
-  var optionTabQuery = {
-    url: 'chrome-extension://' + chrome.runtime.id + '/*'
+const reloadAllOpenedTabs = function () {
+  const optionTabQuery = {
+    url: `chrome-extension://${chrome.runtime.id}/*`,
   };
   chrome.tabs.query(optionTabQuery).then((tabs) => {
-    for (var i in tabs) {
+    for (const i in tabs) {
       chrome.tabs.reload(tabs[i].id);
     }
   });
+};
+
+// selected attaches a click and keydown event handler to the matching selector and calls
+// the handler if a click or keydown event occurs (with a CR or space is pressed). We support
+// both mouse and keyboard events to increase accessibility of the popup menu.
+const selected = function (selector, handler) {
+  const $matched = $(selector);
+  $matched.click(handler);
+  $matched.keydown((event) => {
+    if (event.which === 13 || event.which === 32) {
+      handler(event);
+    }
+  });
+};
+
+// selectedOnce adds event listeners to the given element for mouse click or keydown CR or space
+// events which runs the handler and immediately removes the event handlers so it cannot fire again.
+const selectedOnce = function (element, handler) {
+  if (!element) {
+    return;
+  }
+  const clickHandler = function () {
+    element.removeEventListener('click', clickHandler);
+    handler();
+  };
+  element.addEventListener('click', clickHandler);
+
+  const keydownHandler = function (event) {
+    if (event.keyCode === 13 || event.keyCode === 32) {
+      element.removeEventListener('keydown', keydownHandler);
+      handler();
+    }
+  };
+  element.addEventListener('keydown', keydownHandler);
 };
 
 Object.assign(window, {
-  sessionstorage_set,
-  sessionstorage_get,
-  storage_get,
-  storage_set,
+  sessionStorageSet,
+  sessionStorageGet,
+  storageGet,
+  storageSet,
   BGcall,
   parseUri,
   determineUserLanguage,
@@ -16752,7 +16830,10 @@ Object.assign(window, {
   reloadOptionsPageTabs,
   reloadAllOpenedTabs,
   chromeLocalStorageOnChangedHelper,
+  selected,
+  selectedOnce,
 });
+
 
 /***/ }),
 /* 63 */
@@ -16797,125 +16878,110 @@ LocalCDN.setUp();
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(24);
-window.jQuery = $;
-window.$ = $;
-const {LocalCDN} = __webpack_require__(17);
-const {EventEmitter} = __webpack_require__(6);
-let settingsNotifier = new EventEmitter();
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, log, chromeStorageSetHelper, logging */
+
+const { EventEmitter } = __webpack_require__(6);
+const { LocalCDN } = __webpack_require__(17);
+const minjQuery = __webpack_require__(24);
+
+const settingsNotifier = new EventEmitter();
+const abpPrefPropertyNames = ['show_statsinicon', 'shouldShowBlockElementMenu', 'show_statsinpopup', 'show_devtools_panel'];
+const validThemes = ['default_theme', 'dark_theme', 'watermelon_theme', 'solarized_theme', 'ocean_theme', 'sunshine_theme'];
+
+window.jQuery = minjQuery;
+window.$ = minjQuery;
 
 // OPTIONAL SETTINGS
-function Settings()
-{
-  this._settingsKey = 'settings';
-  this._defaults = {
-    debug_logging : false,
-    youtube_channel_whitelist : false,
-    show_advanced_options : false,
-    show_block_counts_help_link : true,
-    show_survey : true,
-    local_cdn : false,
-    picreplacement : false,
-    twitch_hiding : false,
+function Settings() {
+  this.settingsKey = 'settings';
+  this.defaults = {
+    debug_logging: false,
+    youtube_channel_whitelist: false,
+    show_advanced_options: false,
+    show_block_counts_help_link: true,
+    show_survey: true,
+    local_cdn: false,
+    picreplacement: false,
+    twitch_hiding: false,
     color_themes: {
       popup_menu: 'default_theme',
-      options_page: 'default_theme'
-    }
+      options_page: 'default_theme',
+    },
   };
-  var _this = this;
-  this._init = new Promise(function(resolve)
-  {
-    chrome.storage.local.get(_this._settingsKey).then((response) =>
-    {
-      var settings = response.settings || {};
-      _this._data = $.extend(_this._defaults, settings);
-      if (settings.debug_logging)
-      {
+  const that = this;
+  this.init = new Promise(((resolve) => {
+    chrome.storage.local.get(that.settingsKey).then((response) => {
+      const settings = response.settings || {};
+      that.data = $.extend(that.defaults, settings);
+      if (settings.debug_logging) {
         logging(true);
       }
-      if (settings.local_cdn)
-      {
+      if (settings.local_cdn) {
         LocalCDN.start();
       }
 
       resolve();
     });
-  }).then(function()
-  {
+  })).then(() => {
     log('\n===SETTINGS FINISHED LOADING===\n\n');
   });
 }
 
 Settings.prototype = {
-  set : function(name, isEnabled, callback)
-  {
-    const originalValue = this._data[name];
-    this._data[name] = isEnabled;
-    var _this = this;
+  set(name, isEnabled, callback) {
+    const originalValue = this.data[name];
+    this.data[name] = isEnabled;
+    const that = this;
 
     // Don't store defaults that the user hasn't modified
-    chrome.storage.local.get(this._settingsKey).then((response) =>
-    {
-      var storedData = response.settings || {};
+    chrome.storage.local.get(this.settingsKey).then((response) => {
+      const storedData = response.settings || {};
 
       storedData[name] = isEnabled;
-      chromeStorageSetHelper(_this._settingsKey, storedData);
-      if (originalValue !== isEnabled)
-      {
-        settingsNotifier.emit("settings.changed", name, isEnabled, originalValue);
+      chromeStorageSetHelper(that.settingsKey, storedData);
+      if (originalValue !== isEnabled) {
+        settingsNotifier.emit('settings.changed', name, isEnabled, originalValue);
       }
-      if (callback !== undefined && typeof callback === 'function')
-      {
+      if (callback !== undefined && typeof callback === 'function') {
         callback();
       }
     });
   },
 
-  get_all : function()
-  {
-    return this._data;
+  getAll() {
+    return this.data;
   },
 
-  onload : function()
-  {
-    return this._init;
+  onload() {
+    return this.init;
   },
 
 };
 
-var settings = new Settings();
+const settings = new Settings();
 settings.onload();
 
-var getSettings = function()
-{
-  return settings.get_all();
+const getSettings = function () {
+  return settings.getAll();
 };
 
-var setSetting = function(name, isEnabled, callback)
-{
+const setSetting = function (name, isEnabled, callback) {
   settings.set(name, isEnabled, callback);
 
-  if (name === 'debug_logging')
-  {
+  if (name === 'debug_logging') {
     logging(isEnabled);
   }
 };
 
-var disableSetting = function(name)
-{
+const disableSetting = function (name) {
   settings.set(name, false);
 };
 
-const isValidTheme = (themeName) => {
-  return validThemes.includes(themeName);
-}
-
-const validThemes = [
-  'default_theme', 'dark_theme', 'watermelon_theme',
-  'solarized_theme', 'ocean_theme', 'sunshine_theme'
-];
-
-const abpPrefPropertyNames = ['show_statsinicon', 'shouldShowBlockElementMenu', 'show_statsinpopup', 'show_devtools_panel'];
+const isValidTheme = themeName => validThemes.includes(themeName);
 
 // Attach methods to window
 Object.assign(window, {
@@ -16925,48 +16991,62 @@ Object.assign(window, {
   settings,
   settingsNotifier,
   isValidTheme,
-  abpPrefPropertyNames
+  abpPrefPropertyNames,
 });
+
 
 /***/ }),
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const getDecodedHostname = __webpack_require__(7).getDecodedHostname;
+"use strict";
 
-const Filter = __webpack_require__(0).Filter;
-const WhitelistFilter = __webpack_require__(0).WhitelistFilter;
 
-const {checkWhitelisted} = __webpack_require__(9);
 
-const Subscription = __webpack_require__(4).Subscription;
-const DownloadableSubscription = __webpack_require__(4).DownloadableSubscription;
-const SpecialSubscription = __webpack_require__(4).SpecialSubscription;
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, chromeStorageSetHelper, log, License, translate,
+   gabQuestion, ext, getSettings, parseUri, sessionStorageGet, setSetting,
+  blockCounts, sessionStorageSet, updateButtonUIAndContextMenus, settings */
 
-const {filterStorage} = __webpack_require__(5);
-const {filterNotifier} = __webpack_require__(1);
-const Prefs = __webpack_require__(3).Prefs;
-const {synchronizer} = __webpack_require__(15);
-const Utils = __webpack_require__(14).Utils;
-const {normalizeHostname, domainSuffixes, URLRequest} = __webpack_require__(10);
+const { Filter } = __webpack_require__(0);
+const { WhitelistFilter } = __webpack_require__(0);
+const { checkWhitelisted } = __webpack_require__(9);
+const { Subscription } = __webpack_require__(3);
+const { DownloadableSubscription } = __webpack_require__(3);
+const { SpecialSubscription } = __webpack_require__(3);
+const { filterStorage } = __webpack_require__(4);
+const { filterNotifier } = __webpack_require__(1);
+const { Prefs } = __webpack_require__(2);
+const { synchronizer } = __webpack_require__(15);
+const { Utils } = __webpack_require__(14);
+const { getBlockedPerPage } = __webpack_require__(22);
 const NotificationStorage = __webpack_require__(16).Notification;
-
-const {RegExpFilter, InvalidFilter} = __webpack_require__(0);
-
-const {getBlockedPerPage} = __webpack_require__(22);
-
-const info = __webpack_require__(2);
+const { RegExpFilter, InvalidFilter } = __webpack_require__(0);
+const { URLRequest } = __webpack_require__(10);
+const info = __webpack_require__(5);
 
 // Object's used on the option, pop up, etc. pages...
-const {STATS} = __webpack_require__(36);
-const {SyncService} = __webpack_require__(25);
-const {DataCollectionV2} = __webpack_require__(66);
-const {LocalCDN} = __webpack_require__(17);
-const {ServerMessages} = __webpack_require__(13);
-const {recordGeneralMessage, recordErrorMessage, recordAdreportMessage} = __webpack_require__(13).ServerMessages;
-const {recommendations} = __webpack_require__(23);
-const {getUrlFromId, unsubscribe, getSubscriptionsMinusText, getAllSubscriptionsMinusText, getIdFromURL, getSubscriptionInfoFromURL, isLanguageSpecific } = __webpack_require__(68).SubscriptionAdapter;
-const {uninstallInit} = __webpack_require__(35);
+const { STATS } = __webpack_require__(35);
+const { SyncService } = __webpack_require__(37);
+const { DataCollectionV2 } = __webpack_require__(66);
+const { LocalCDN } = __webpack_require__(17);
+const { ServerMessages } = __webpack_require__(13);
+const { recommendations } = __webpack_require__(23);
+const { uninstallInit } = __webpack_require__(34);
+const {
+  recordGeneralMessage,
+  recordErrorMessage,
+  recordAdreportMessage,
+} = __webpack_require__(13).ServerMessages;
+const {
+  getUrlFromId,
+  unsubscribe,
+  getSubscriptionsMinusText,
+  getAllSubscriptionsMinusText,
+  getIdFromURL,
+  getSubscriptionInfoFromURL,
+  isLanguageSpecific,
+} = __webpack_require__(68).SubscriptionAdapter;
 
 Object.assign(window, {
   filterStorage,
@@ -16977,7 +17057,6 @@ Object.assign(window, {
   Subscription,
   SpecialSubscription,
   DownloadableSubscription,
-  parseFilter,
   Filter,
   WhitelistFilter,
   info,
@@ -17001,82 +17080,71 @@ Object.assign(window, {
 });
 
 // CUSTOM FILTERS
-// Creates a custom filter entry that whitelists a given page
-// Inputs: url:string url of the page
-// Returns: null if successful, otherwise an exception
-var createPageWhitelistFilter = function (url)
-{
-  var url = url.replace(/#.*$/, ''); // Remove anchors
-  var parts = url.match(/^([^\?]+)(\??)/); // Detect querystring
-  var hasQuerystring = parts[2];
-  var filter = '@@|' + parts[1] + (hasQuerystring ? '?' : '|') + '$document';
-  return addCustomFilter(filter);
+
+const isSelectorFilter = function (text) {
+  // This returns true for both hiding rules as hiding whitelist rules
+  // This means that you'll first have to check if something is an excluded rule
+  // before checking this, if the difference matters.
+  return /#@?#./.test(text);
 };
 
-// UNWHITELISTING
+// custom filter countCache singleton.
+const countCache = (function countCache() {
+  let cache;
 
-// Look for a custom filter that would whitelist the 'url' parameter
-// and if any exist, remove the first one.
-// Inputs: url:string - a URL that may be whitelisted by a custom filter
-// Returns: true if a filter was found and removed; false otherwise.
-var tryToUnwhitelist = function (url)
-{
-  url = url.replace(/#.*$/, ''); // Whitelist ignores anchors
-  var customFilters = getUserFilters();
-  if (!customFilters || !customFilters.length === 0)
-  {
-    return false;
-  }
+  // Update custom filter count stored in localStorage
+  const updateCustomFilterCount = function () {
+    chromeStorageSetHelper('custom_filter_count', cache);
+  };
 
-  for (var i = 0; i < customFilters.length; i++)
-  {
-    var text = customFilters[i];
-    var whitelist = text.search(/@@\*\$document,domain=\~/);
+  return {
+    // Update custom filter count cache and value stored in localStorage.
+    // Inputs: new_count_map:count map - count map to replace existing count
+    // cache
+    updateCustomFilterCountMap(newCountMap) {
+      cache = newCountMap || cache;
+      updateCustomFilterCount();
+    },
 
-    // Blacklist site, which is whitelisted by global @@*&document,domain=~
-    // filter
-    if (whitelist > -1)
-    {
-      // Remove protocols
-      url = url.replace(/((http|https):\/\/)?(www.)?/, '').split(/[/?#]/)[0];
-      var oldFilter = Filter.fromText(text);
-      filterStorage.removeFilter(oldFilter);
-      var newFilter = Filter.fromText(text + '|~' + url);
-      filterStorage.addFilter(newFilter);
-      return true;
-    } else
-    {
-      if (!isWhitelistFilter(text))
-      {
-        continue;
+    // Remove custom filter count for host
+    // Inputs: host:string - url of the host
+    removeCustomFilterCount(host) {
+      if (host && cache[host]) {
+        delete cache[host];
+        updateCustomFilterCount();
       }
-      try
-      {
-        var filter = Filter.fromText(text);
-      }
-      catch (ex)
-      {
-        continue;
-      }
+    },
 
-      if (!filter.matches(URLRequest.from(url), RegExpFilter.typeMap.DOCUMENT, false))
-      {
-        continue;
-      }
-      filterStorage.removeFilter(filter);
-      return true;
-    }
-  }
+    // Get current custom filter count for a particular domain
+    // Inputs: host:string - url of the host
+    getCustomFilterCount(host) {
+      return cache[host] || 0;
+    },
 
-  return false;
-};
+    // Add 1 to custom filter count for the filters domain.
+    // Inputs: filter:string - line of text to be added to custom filters.
+    addCustomFilterCount(filter) {
+      const host = filter.split('##')[0];
+      cache[host] = this.getCustomFilterCount(host) + 1;
+      updateCustomFilterCount();
+    },
+
+    init() {
+      chrome.storage.local.get('custom_filter_count').then((response) => {
+        cache = response.custom_filter_count || {};
+      });
+    },
+  };
+}());
+
+countCache.init();
 
 // Add a new custom filter entry.
 // Inputs: filter:string line of text to add to custom filters.
 // Returns: null if succesfull, otherwise an exception
-var addCustomFilter = function (filterText) {
+const addCustomFilter = function (filterText) {
   try {
-    var filter = Filter.fromText(filterText);
+    const filter = Filter.fromText(filterText);
     filterStorage.addFilter(filter);
     if (isSelectorFilter(filterText)) {
       countCache.addCustomFilterCount(filterText);
@@ -17090,113 +17158,119 @@ var addCustomFilter = function (filterText) {
   }
 };
 
-// Removes a custom filter entry.
-// Inputs: host:domain of the custom filters to be reset.
-var removeCustomFilter = function (host)
-{
-  var customFilters = getUserFilters();
-  if (!customFilters || !customFilters.length === 0)
-  {
+// Creates a custom filter entry that whitelists a given page
+// Inputs: pageUrl:string url of the page
+// Returns: null if successful, otherwise an exception
+const createPageWhitelistFilter = function (pageUrl) {
+  const url = pageUrl.replace(/#.*$/, ''); // Remove anchors
+  const parts = url.match(/^([^?]+)(\??)/); // Detect querystring
+  const hasQuerystring = parts[2];
+  const filter = `@@|${parts[1]}${hasQuerystring ? '?' : '|'}$document`;
+  return addCustomFilter(filter);
+};
+
+// UNWHITELISTING
+
+function getUserFilters() {
+  const filters = [];
+
+  for (const subscription of filterStorage.subscriptions()) {
+    if ((subscription instanceof SpecialSubscription)) {
+      for (let j = 0; j < subscription._filterText.length; j++) {
+        const filter = subscription._filterText[j];
+        filters.push(filter);
+      }
+    }
+  }
+  return filters;
+}
+
+
+const isWhitelistFilter = function (text) {
+  return /^@@/.test(text);
+};
+
+// Look for a custom filter that would whitelist the 'url' parameter
+// and if any exist, remove the first one.
+// Inputs: url:string - a URL that may be whitelisted by a custom filter
+// Returns: true if a filter was found and removed; false otherwise.
+const tryToUnwhitelist = function (pageUrl) {
+  const url = pageUrl.replace(/#.*$/, ''); // Whitelist ignores anchors
+  const customFilters = getUserFilters();
+  if (!customFilters || !customFilters.length === 0) {
     return false;
   }
 
-  var identifier = host;
+  for (let i = 0; i < customFilters.length; i++) {
+    const text = customFilters[i];
+    const whitelist = text.search(/@@\*\$document,domain=~/);
 
-  for (var i = 0; i < customFilters.length; i++)
-  {
-    var entry = customFilters[i];
+    // Blacklist site, which is whitelisted by global @@*&document,domain=~
+    // filter
+    if (whitelist > -1) {
+      // Remove protocols
+      const [finalUrl] = url.replace(/((http|https):\/\/)?(www.)?/, '').split(/[/?#]/);
+      const oldFilter = Filter.fromText(text);
+      filterStorage.removeFilter(oldFilter);
+      const newFilter = Filter.fromText(`${text}|~${finalUrl}`);
+      filterStorage.addFilter(newFilter);
+      return true;
+    }
+
+    if (isWhitelistFilter(text)) {
+      try {
+        const filter = Filter.fromText(text);
+        if (filter.matches(URLRequest.from(url), RegExpFilter.typeMap.DOCUMENT, false)) {
+          filterStorage.removeFilter(filter);
+          return true;
+        }
+      } catch (ex) {
+        // do nothing;
+      }
+    }
+  }
+  return false;
+};
+
+// Removes a custom filter entry.
+// Inputs: host:domain of the custom filters to be reset.
+const removeCustomFilter = function (host) {
+  const customFilters = getUserFilters();
+  if (!customFilters || !customFilters.length === 0) {
+    return;
+  }
+
+  const identifier = host;
+
+  for (let i = 0; i < customFilters.length; i++) {
+    const entry = customFilters[i];
 
     // If the identifier is at the start of the entry
     // then delete it.
-    if (entry.indexOf(identifier) === 0)
-    {
-      var filter = Filter.fromText(entry);
+    if (entry.indexOf(identifier) === 0) {
+      const filter = Filter.fromText(entry);
       filterStorage.removeFilter(filter);
     }
   }
 };
 
-// custom filter countCache singleton.
-var countCache = (function ()
-{
-  var cache;
-
-  // Update custom filter count stored in localStorage
-  var _updateCustomFilterCount = function ()
-  {
-    chromeStorageSetHelper('custom_filter_count', cache);
-  };
-
-  return {
-    // Update custom filter count cache and value stored in localStorage.
-    // Inputs: new_count_map:count map - count map to replace existing count
-    // cache
-    updateCustomFilterCountMap: function (newCountMap)
-    {
-      cache = newCountMap || cache;
-      _updateCustomFilterCount();
-    },
-
-    // Remove custom filter count for host
-    // Inputs: host:string - url of the host
-    removeCustomFilterCount: function (host)
-    {
-      if (host && cache[host])
-      {
-        delete cache[host];
-        _updateCustomFilterCount();
-      }
-    },
-
-    // Get current custom filter count for a particular domain
-    // Inputs: host:string - url of the host
-    getCustomFilterCount: function (host)
-    {
-      return cache[host] || 0;
-    },
-
-    // Add 1 to custom filter count for the filters domain.
-    // Inputs: filter:string - line of text to be added to custom filters.
-    addCustomFilterCount: function (filter)
-    {
-      var host = filter.split('##')[0];
-      cache[host] = this.getCustomFilterCount(host) + 1;
-      _updateCustomFilterCount();
-    },
-
-    init: function ()
-    {
-      chrome.storage.local.get('custom_filter_count').then((response) =>
-      {
-        cache = response.custom_filter_count || {};
-      });
-    },
-  };
-})();
-
-countCache.init();
-
 // Entry point for customize.js, used to update custom filter count cache.
-var updateCustomFilterCountMap = function (newCountMap)
-{
+const updateCustomFilterCountMap = function (newCountMap) {
   countCache.updateCustomFilterCountMap(newCountMap);
 };
 
-var removeCustomFilterForHost = function (host)
-{
-  if (countCache.getCustomFilterCount(host))
-  {
+const removeCustomFilterForHost = function (host) {
+  if (countCache.getCustomFilterCount(host)) {
     removeCustomFilter(host);
     countCache.removeCustomFilterCount(host);
   }
 };
 
-var confirmRemovalOfCustomFiltersOnHost = function (host, activeTab)
-{
-  var customFilterCount = countCache.getCustomFilterCount(host);
-  var confirmationText = translate('confirm_undo_custom_filters', [customFilterCount, host]);
-  if (!confirm(confirmationText))
-  {
+const confirmRemovalOfCustomFiltersOnHost = function (host, activeTab) {
+  const customFilterCount = countCache.getCustomFilterCount(host);
+  const confirmationText = translate('confirm_undo_custom_filters', [customFilterCount, host]);
+  // eslint-disable-next-line no-alert
+  if (!window.confirm(confirmationText)) {
     return;
   }
 
@@ -17206,90 +17280,85 @@ var confirmRemovalOfCustomFiltersOnHost = function (host, activeTab)
 
 // Reload already opened tab
 // Input:
-// tabId: integer - id of the tab which should be reloaded
-var reloadTab = function(tabId, callback) {
-  var localCallback = callback;
-  var listener = function (tabId, changeInfo, tab) {
-      if (changeInfo.status === 'complete' &&
-          tab.status === 'complete') {
-        setTimeout(function () {
-            chrome.tabs.sendMessage(tabId, { command: 'reloadcomplete' });
-            if (typeof localCallback === "function") {
-              localCallback(tab);
-            }
-            chrome.tabs.onUpdated.removeListener(listener);
-          }, 2000);
-      }
-    };
+// id: integer - id of the tab which should be reloaded
+const reloadTab = function (id, callback) {
+  let tabId = id;
+  const localCallback = callback;
+  const listener = function (updatedTabId, changeInfo, tab) {
+    if (changeInfo.status === 'complete' && tab.status === 'complete') {
+      setTimeout(() => {
+        chrome.tabs.sendMessage(updatedTabId, { command: 'reloadcomplete' });
+        if (typeof localCallback === 'function') {
+          localCallback(tab);
+        }
+        chrome.tabs.onUpdated.removeListener(listener);
+      }, 2000);
+    }
+  };
 
   if (typeof tabId === 'string') {
-    tabId = parseInt(tabId);
+    tabId = parseInt(tabId, 10);
   }
   chrome.tabs.onUpdated.addListener(listener);
-  chrome.tabs.reload(tabId, { bypassCache: true }, function () {
-
-  });
+  chrome.tabs.reload(tabId, { bypassCache: true });
 };
 
-var isSelectorFilter = function (text)
-{
-  // This returns true for both hiding rules as hiding whitelist rules
-  // This means that you'll first have to check if something is an excluded rule
-  // before checking this, if the difference matters.
-  return /\#\@?\#./.test(text);
+const isSelectorExcludeFilter = function (text) {
+  return /#@#./.test(text);
 };
 
-var isWhitelistFilter = function (text)
-{
-  return /^\@\@/.test(text);
-};
+(function dispatchBGcall() {
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.command !== 'call') {
+      return;
+    } // not for us
 
-var isSelectorExcludeFilter = function (text)
-{
-  return /\#\@\#./.test(text);
-};
-
-// BGcall DISPATCH
-(function ()
-{
-  chrome.runtime.onMessage.addListener(function (message, sender, sendResponse)
-  {
-    if (message.command != 'call')
-      return; // not for us
-
-    var fn = window[message.fn];
-    if (!fn)
-    {
+    const fn = window[message.fn];
+    if (!fn) {
+      // eslint-disable-next-line no-console
       console.log('FN not found, message', message, sender);
     }
 
-    if (message.args && message.args.push)
-    {
+    if (message.args && message.args.push) {
       message.args.push(sender);
     }
 
-    var result = fn.apply(window, message.args);
+    const result = fn.apply(window, message.args);
     sendResponse(result);
   });
-})();
+}());
 
-var getAdblockUserId = function ()
-{
+const getAdblockUserId = function () {
   return STATS.userId();
 };
 
 // passthrough functions
-var addGABTabListeners = function (sender)
-{
+const addGABTabListeners = function (sender) {
   gabQuestion.addGABTabListeners(sender);
 };
 
-var removeGABTabListeners = function (saveState)
-{
+const removeGABTabListeners = function (saveState) {
   gabQuestion.removeGABTabListeners(saveState);
 };
 
 // INFO ABOUT CURRENT PAGE
+
+const ytChannelNamePages = new Map();
+
+// Returns true if the url cannot be blocked
+const pageIsUnblockable = function (url) {
+  if (!url) { // Protect against empty URLs - e.g. Safari empty/bookmarks/top sites page
+    return true;
+  }
+  let scheme = '';
+  if (!url.protocol) {
+    scheme = parseUri(url).protocol;
+  } else {
+    scheme = url.protocol;
+  }
+
+  return (scheme !== 'http:' && scheme !== 'https:' && scheme !== 'feed:');
+};
 
 // Get interesting information about the current tab.
 // Inputs:
@@ -17306,54 +17375,43 @@ var removeGABTabListeners = function (saveState)
 // menu
 // }
 // Returns: null (asynchronous)
-var getCurrentTabInfo = function (callback, secondTime)
-{
-  try
-  {
-    chrome.tabs.query(
-    {
+const getCurrentTabInfo = function (callback, secondTime) {
+  try {
+    chrome.tabs.query({
       active: true,
       lastFocusedWindow: true,
-    }).then((tabs) =>
-    {
-      try
-      {
-        if (tabs.length === 0)
-        {
+    }).then((tabs) => {
+      try {
+        if (tabs.length === 0) {
           return; // For example: only the background devtools or a popup are opened
         }
-        tab = tabs[0];
+        const tab = tabs[0];
 
-        if (tab && !tab.url)
-        {
+        if (tab && !tab.url) {
           // Issue 6877: tab URL is not set directly after you opened a window
           // using window.open()
-          if (!secondTime)
-            window.setTimeout(function ()
-            {
+          if (!secondTime) {
+            window.setTimeout(() => {
               getCurrentTabInfo(callback, true);
             }, 250);
+          }
 
           return;
         }
-        chrome.storage.local.get(License.myAdBlockEnrollmentFeatureKey).then((myAdBlockInfo) =>
-        {
-          try
-          {
+        chrome.storage.local.get(License.myAdBlockEnrollmentFeatureKey).then((myAdBlockInfo) => {
+          try {
             const page = new ext.Page(tab);
-            var disabledSite = pageIsUnblockable(page.url.href);
+            const disabledSite = pageIsUnblockable(page.url.href);
 
-            var result =
-            {
-              page: page,
-              tab: tab,
-              disabledSite: disabledSite,
+            const result = {
+              page,
+              tab,
+              disabledSite,
               settings: getSettings(),
-              myAdBlockInfo: myAdBlockInfo
+              myAdBlockInfo,
             };
 
-            if (!disabledSite)
-            {
+            if (!disabledSite) {
               result.whitelisted = checkWhitelisted(page);
             }
             if (getSettings().youtube_channel_whitelist
@@ -17368,188 +17426,97 @@ var getCurrentTabInfo = function (callback, secondTime)
               }
             }
             callback(result);
-          }
-          catch(err)
-          {
+          } catch (err) {
             callback({ errorStr: err.toString(), stack: err.stack, message: err.message });
           }
         });// end of chrome.storage.local.get
-      }
-      catch(err)
-      {
+      } catch (err) {
         callback({ errorStr: err.toString(), stack: err.stack, message: err.message });
       }
     });
-  }
-  catch(err)
-  {
+  } catch (err) {
     callback({ errorStr: err.toString(), stack: err.stack, message: err.message });
   }
-}
-
-// Returns true if the url cannot be blocked
-var pageIsUnblockable = function (url) {
-  if (!url) { // Protect against empty URLs - e.g. Safari empty/bookmarks/top sites page
-    return true;
-  } else {
-    var scheme = '';
-    if (!url.protocol) {
-      scheme = parseUri(url).protocol;
-    } else {
-      scheme = url.protocol;
-    }
-
-    return (scheme !== 'http:' && scheme !== 'https:' && scheme !== 'feed:');
-  }
-}
+};
 
 // Returns true if the page is whitelisted.
 // Called from a content script
-var pageIsWhitelisted = function(sender) {
-  return (checkWhitelisted(sender.page) != undefined);
-}
+const pageIsWhitelisted = function (sender) {
+  return (checkWhitelisted(sender.page) !== undefined);
+};
+
+const parseFilter = function (filterText) {
+  let filter = null;
+  let error = null;
+  const text = Filter.normalize(filterText);
+  if (text) {
+    if (text[0] === '[') {
+      error = 'unexpected_filter_list_header';
+    } else {
+      filter = Filter.fromText(text);
+      if (filter instanceof InvalidFilter) {
+        error = filter.reason;
+      }
+    }
+  }
+  return { filter, error };
+};
+
+const pausedKey = 'paused';
+// white-list all blocking requests regardless of frame / document, but still allows element hiding
+const pausedFilterText1 = '@@';
+// white-list all documents, which prevents element hiding
+const pausedFilterText2 = '@@*$document';
 
 // Get or set if AdBlock is paused
 // Inputs: newValue (optional boolean): if true, AdBlock will be paused, if
 // false, AdBlock will not be paused.
 // Returns: undefined if newValue was specified, otherwise it returns true
 // if paused, false otherwise.
-var pausedKey = 'paused';
-var pausedFilterText1 = '@@';  // white-list all blocking requests regardless of frame / document, but still allows element hiding
-var pausedFilterText2 = '@@*$document';  // white-list all documents, which prevents element hiding
-var adblockIsPaused = function (newValue)
-{
-  if (newValue === undefined)
-  {
-    return (sessionstorage_get(pausedKey) === true);
+const adblockIsPaused = function (newValue) {
+  if (newValue === undefined) {
+    return (sessionStorageGet(pausedKey) === true);
   }
 
   // Add a filter to white list every page.
-  var result1 = parseFilter(pausedFilterText1);
-  var result2 = parseFilter(pausedFilterText2);
-  if (newValue === true)
-  {
+  const result1 = parseFilter(pausedFilterText1);
+  const result2 = parseFilter(pausedFilterText2);
+  if (newValue === true) {
     filterStorage.addFilter(result1.filter);
     filterStorage.addFilter(result2.filter);
     chromeStorageSetHelper(pausedKey, true);
-  } else
-  {
+  } else {
     filterStorage.removeFilter(result1.filter);
     filterStorage.removeFilter(result2.filter);
     chrome.storage.local.remove(pausedKey);
   }
-
-  sessionstorage_set(pausedKey, newValue);
+  sessionStorageSet(pausedKey, newValue);
+  return undefined;
 };
 
-// Get or set if AdBlock is domain paused for the domain of the specified tab
-// Inputs:  activeTab (optional object with url and id properties): the paused tab
-//          newValue (optional boolean): if true, AdBlock will be domain paused
-// on the tab's domain, if false, AdBlock will not be domain paused on that domain.
-// Returns: undefined if activeTab and newValue were specified; otherwise if activeTab
-// is specified it returns true if domain paused, false otherwise; finally it returns
-// the complete storedDomainPauses if activeTab is not specified
-var domainPausedKey = 'domainPaused';
-var adblockIsDomainPaused = function (activeTab, newValue)
-{
-  // get stored domain pauses
-  var storedDomainPauses = sessionstorage_get(domainPausedKey);
+const domainPausedKey = 'domainPaused';
 
-  // return the complete list of stored domain pauses if activeTab is undefined
-  if (activeTab === undefined)
-  {
-    return storedDomainPauses;
-  }
-
-  // return a boolean indicating whether the domain is paused if newValue is undefined
-  var activeDomain = parseUri(activeTab.url).host;
-  if (newValue === undefined)
-  {
-    if (storedDomainPauses)
-    {
-      return (storedDomainPauses.hasOwnProperty(activeDomain));
-    } else
-    {
-      return false;
-    }
-  }
-
-  // create storedDomainPauses object if needed
-  if (!storedDomainPauses)
-  {
-    storedDomainPauses = {};
-  }
-
-  // set or delete a domain pause
-  var result = parseFilter("@@" + activeDomain + "$document");
-  if (newValue === true)
-  {
-    // add a domain pause
-    filterStorage.addFilter(result.filter);
-    storedDomainPauses[activeDomain] = activeTab.id;
-    chrome.tabs.onUpdated.removeListener(domainPauseNavigationHandler);
-    chrome.tabs.onRemoved.removeListener(domainPauseClosedTabHandler);
-    chrome.tabs.onUpdated.addListener(domainPauseNavigationHandler);
-    chrome.tabs.onRemoved.addListener(domainPauseClosedTabHandler);
-  } else
-  {
-    // remove the domain pause
-    filterStorage.removeFilter(result.filter);
-    delete storedDomainPauses[activeDomain];
-  }
-
-  // save the updated list of domain pauses
-  saveDomainPauses(storedDomainPauses);
-};
-
-// Handle the effects of a tab update event on any existing domain pauses
-// Inputs:  tabId (required integer): identifier for the affected tab
-//          changeInfo (required object with a url property): contains the
-// new url for the tab
-//          tab (optional Tab object): the affected tab
+// Helper that saves the domain pauses
+// Inputs:  domainPauses (required object): domain pauses to save
 // Returns: undefined
-var domainPauseNavigationHandler = function(tabId, changeInfo, tab)
-{
-  if (changeInfo === undefined || changeInfo.url === undefined || tabId === undefined)
-  {
-    return;
-  }
-
-  var newDomain = parseUri(changeInfo.url).host;
-
-  domainPauseChangeHelper(tabId, newDomain);
-};
-
-// Handle the effects of a tab remove event on any existing domain pauses
-// Inputs:  tabId (required integer): identifier for the affected tab
-//          changeInfo (optional object): info about the remove event
-// Returns: undefined
-var domainPauseClosedTabHandler = function(tabId, removeInfo)
-{
-  if (tabId === undefined)
-  {
-    return;
-  }
-
-  domainPauseChangeHelper(tabId);
+const saveDomainPauses = function (domainPauses) {
+  chromeStorageSetHelper(domainPausedKey, domainPauses);
+  sessionStorageSet(domainPausedKey, domainPauses);
 };
 
 // Helper that removes any domain pause filter rules based on tab events
 // Inputs:  tabId (required integer): identifier for the affected tab
 //          newDomain (optional string): the current domain of the tab
 // Returns: undefined
-var domainPauseChangeHelper = function(tabId, newDomain)
-{
+const domainPauseChangeHelper = function (tabId, newDomain) {
   // get stored domain pauses
-  var storedDomainPauses = sessionstorage_get(domainPausedKey);
+  const storedDomainPauses = sessionStorageGet(domainPausedKey);
 
   // check if any of the stored domain pauses match the affected tab
-  for (var aDomain in storedDomainPauses)
-  {
-    if (storedDomainPauses[aDomain] === tabId && aDomain != newDomain)
-    {
+  for (const aDomain in storedDomainPauses) {
+    if (storedDomainPauses[aDomain] === tabId && aDomain !== newDomain) {
       // Remove the filter that white-listed the domain
-      var result = parseFilter("@@" + aDomain + "$document");
+      const result = parseFilter(`@@${aDomain}$document`);
       filterStorage.removeFilter(result.filter);
       delete storedDomainPauses[aDomain];
 
@@ -17560,76 +17527,137 @@ var domainPauseChangeHelper = function(tabId, newDomain)
   updateButtonUIAndContextMenus();
 };
 
-// Helper that saves the domain pauses
-// Inputs:  domainPauses (required object): domain pauses to save
+// Handle the effects of a tab update event on any existing domain pauses
+// Inputs:  tabId (required integer): identifier for the affected tab
+//          changeInfo (required object with a url property): contains the
+// new url for the tab
+//          tab (optional Tab object): the affected tab
 // Returns: undefined
-var saveDomainPauses = function(domainPauses)
-{
-  chromeStorageSetHelper(domainPausedKey, domainPauses);
-  sessionstorage_set(domainPausedKey, domainPauses);
-}
+const domainPauseNavigationHandler = function (tabId, changeInfo) {
+  if (changeInfo === undefined || changeInfo.url === undefined || tabId === undefined) {
+    return;
+  }
+
+  const newDomain = parseUri(changeInfo.url).host;
+
+  domainPauseChangeHelper(tabId, newDomain);
+};
+
+// Handle the effects of a tab remove event on any existing domain pauses
+// Inputs:  tabId (required integer): identifier for the affected tab
+//          changeInfo (optional object): info about the remove event
+// Returns: undefined
+const domainPauseClosedTabHandler = function (tabId) {
+  if (tabId === undefined) {
+    return;
+  }
+
+  domainPauseChangeHelper(tabId);
+};
+
+// Get or set if AdBlock is domain paused for the domain of the specified tab
+// Inputs:  activeTab (optional object with url and id properties): the paused tab
+//          newValue (optional boolean): if true, AdBlock will be domain paused
+// on the tab's domain, if false, AdBlock will not be domain paused on that domain.
+// Returns: undefined if activeTab and newValue were specified; otherwise if activeTab
+// is specified it returns true if domain paused, false otherwise; finally it returns
+// the complete storedDomainPauses if activeTab is not specified
+
+const adblockIsDomainPaused = function (activeTab, newValue) {
+  // get stored domain pauses
+  let storedDomainPauses = sessionStorageGet(domainPausedKey);
+
+  // return the complete list of stored domain pauses if activeTab is undefined
+  if (activeTab === undefined) {
+    return storedDomainPauses;
+  }
+
+  // return a boolean indicating whether the domain is paused if newValue is undefined
+  const activeDomain = parseUri(activeTab.url).host;
+  if (newValue === undefined) {
+    if (storedDomainPauses) {
+      return Object.prototype.hasOwnProperty.call(storedDomainPauses, activeDomain);
+    }
+    return false;
+  }
+
+  // create storedDomainPauses object if needed
+  if (!storedDomainPauses) {
+    storedDomainPauses = {};
+  }
+
+  // set or delete a domain pause
+  const result = parseFilter(`@@${activeDomain}$document`);
+  if (newValue === true) {
+    // add a domain pause
+    filterStorage.addFilter(result.filter);
+    storedDomainPauses[activeDomain] = activeTab.id;
+    chrome.tabs.onUpdated.removeListener(domainPauseNavigationHandler);
+    chrome.tabs.onRemoved.removeListener(domainPauseClosedTabHandler);
+    chrome.tabs.onUpdated.addListener(domainPauseNavigationHandler);
+    chrome.tabs.onRemoved.addListener(domainPauseClosedTabHandler);
+  } else {
+    // remove the domain pause
+    filterStorage.removeFilter(result.filter);
+    delete storedDomainPauses[activeDomain];
+  }
+
+  // save the updated list of domain pauses
+  saveDomainPauses(storedDomainPauses);
+  return undefined;
+};
 
 // If AdBlock was paused on shutdown (adblock_is_paused is true), then
 // unpause / remove the white-list all entry at startup.
-chrome.storage.local.get(pausedKey).then((response) =>
-{
-  if (response[pausedKey])
-  {
-    var pauseHandler = function (action)
-    {
-      filterNotifier.off("load", pauseHandler);
-      var result1 = parseFilter(pausedFilterText1);
-      var result2 = parseFilter(pausedFilterText2);
+chrome.storage.local.get(pausedKey).then((response) => {
+  if (response[pausedKey]) {
+    const pauseHandler = function () {
+      filterNotifier.off('load', pauseHandler);
+      const result1 = parseFilter(pausedFilterText1);
+      const result2 = parseFilter(pausedFilterText2);
       filterStorage.removeFilter(result1.filter);
       filterStorage.removeFilter(result2.filter);
       chrome.storage.local.remove(pausedKey);
     };
 
-    filterNotifier.on("load", pauseHandler);
+    filterNotifier.on('load', pauseHandler);
   }
 });
 
 // If AdBlock was domain paused on shutdown, then unpause / remove
 // all domain pause white-list entries at startup.
-chrome.storage.local.get(domainPausedKey).then((response) =>
-{
-  try
-  {
-    var storedDomainPauses = response[domainPausedKey];
-    if (!jQuery.isEmptyObject(storedDomainPauses))
-    {
-      var domainPauseHandler = function (action)
-      {
-        filterNotifier.off("load", domainPauseHandler);
-        for (var aDomain in storedDomainPauses)
-        {
-          var result = parseFilter("@@" + aDomain + "$document");
+chrome.storage.local.get(domainPausedKey).then((response) => {
+  try {
+    const storedDomainPauses = response[domainPausedKey];
+    if (!jQuery.isEmptyObject(storedDomainPauses)) {
+      const domainPauseHandler = function () {
+        filterNotifier.off('load', domainPauseHandler);
+        for (const aDomain in storedDomainPauses) {
+          const result = parseFilter(`@@${aDomain}$document`);
           filterStorage.removeFilter(result.filter);
         }
         chrome.storage.local.remove(domainPausedKey);
       };
-      filterNotifier.on("load", domainPauseHandler);
+      filterNotifier.on('load', domainPauseHandler);
     }
-  } catch (err)
-  {
+  } catch (err) {
     // do nothing
   }
 });
 
-chrome.commands.onCommand.addListener(function(command) {
-  if (command === "toggle_pause") {
+chrome.commands.onCommand.addListener((command) => {
+  if (command === 'toggle_pause') {
     adblockIsPaused(!adblockIsPaused());
-    recordGeneralMessage("pause_shortcut_used");
+    recordGeneralMessage('pause_shortcut_used');
   }
 });
 
 // Return the contents of a local file.
 // Inputs: file:string - the file relative address, eg "js/foo.js".
 // Returns: the content of the file.
-var readfile = function (file)
-{
+const readfile = function (file) {
   // A bug in jquery prevents local files from being read, so use XHR.
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.open('GET', chrome.extension.getURL(file), false);
   xhr.send();
   return xhr.responseText;
@@ -17638,65 +17666,55 @@ var readfile = function (file)
 // BETA CODE
 if (chrome.runtime.id === 'pljaalgmajnlogcgiohkhdmgpomjcihk') {
   // Display beta page after each update for beta-users only
-  chrome.runtime.onInstalled.addListener(function (details) {
+  chrome.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'update' || details.reason === 'install') {
       chrome.tabs.create({ url: 'https://getadblock.com/beta' });
     }
   });
 }
 
-var updateStorageKey = 'last_known_version';
-chrome.runtime.onInstalled.addListener(function (details)
-{
-  if (details.reason === 'update' || details.reason === 'install')
-  {
+const updateStorageKey = 'last_known_version';
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'update' || details.reason === 'install') {
     localStorage.setItem(updateStorageKey, chrome.runtime.getManifest().version);
   }
 });
 
-var openTab = function (url)
-{
-  chrome.tabs.create({ url })
+const openTab = function (url) {
+  chrome.tabs.create({ url });
 };
 
-if (chrome.runtime.id)
-{
-  var updateTabRetryCount = 0;
-  var getUpdatedURL = function()
-  {
-    var updatedURL = 'https://getadblock.com/update/' + encodeURIComponent(chrome.runtime.getManifest().version) + '/?u=' + STATS.userId();
-    updatedURL = updatedURL + '&bc=' + Prefs.blocked_total;
-    updatedURL = updatedURL + '&rt=' + updateTabRetryCount;
+if (chrome.runtime.id) {
+  let updateTabRetryCount = 0;
+  const getUpdatedURL = function () {
+    const encodedVersion = encodeURIComponent(chrome.runtime.getManifest().version);
+    let updatedURL = `https://getadblock.com/update/${encodedVersion}/?u=${STATS.userId()}`;
+    updatedURL = `${updatedURL}&bc=${Prefs.blocked_total}`;
+    updatedURL = `${updatedURL}&rt=${updateTabRetryCount}`;
     return updatedURL;
   };
-  var waitForUserAction = function()
-  {
+  const waitForUserAction = function () {
     chrome.tabs.onCreated.removeListener(waitForUserAction);
-    setTimeout(function ()
-    {
-      updateTabRetryCount++;
+    setTimeout(() => {
+      updateTabRetryCount += 1;
+      // eslint-disable-next-line no-use-before-define
       openUpdatedPage();
     }, 10000); // 10 seconds
   };
-  var openUpdatedPage = function()
-  {
-    var updatedURL = getUpdatedURL();
-    chrome.tabs.create({ url: updatedURL }).then((tab) =>
-    {
+  const openUpdatedPage = function () {
+    const updatedURL = getUpdatedURL();
+    chrome.tabs.create({ url: updatedURL }).then((tab) => {
       // if we couldn't open a tab to '/updated_tab', send a message
-      if (!tab)
-      {
+      if (!tab) {
         recordErrorMessage('updated_tab_failed_to_open');
         chrome.tabs.onCreated.removeListener(waitForUserAction);
         chrome.tabs.onCreated.addListener(waitForUserAction);
         return;
       }
-      if (updateTabRetryCount > 0)
-      {
-        recordGeneralMessage('updated_tab_retry_success_count_' + updateTabRetryCount);
+      if (updateTabRetryCount > 0) {
+        recordGeneralMessage(`updated_tab_retry_success_count_${updateTabRetryCount}`);
       }
-    }).catch(error =>
-    {
+    }).catch(() => {
       // if we couldn't open a tab to '/updated_tab', send a message
       recordErrorMessage('updated_tab_failed_to_open');
       chrome.tabs.onCreated.removeListener(waitForUserAction);
@@ -17708,67 +17726,54 @@ if (chrome.runtime.id)
 // Creates a custom filter entry that whitelists a YouTube channel
 // Inputs: url:string url of the page
 // Returns: null if successful, otherwise an exception
-var createWhitelistFilterForYoutubeChannel = function (url)
-{
-  if (/ab_channel=/.test(url))
-  {
-    var ytChannel = url.match(/ab_channel=([^]*)/)[1];
-  } else
-  {
-    var ytChannel = url.split('/').pop();
+const createWhitelistFilterForYoutubeChannel = function (url) {
+  let ytChannel;
+  if (/ab_channel=/.test(url)) {
+    [, ytChannel] = url.match(/ab_channel=([^]*)/);
+  } else {
+    ytChannel = url.split('/').pop();
   }
-
-  if (ytChannel)
-  {
-    var filter = '@@|https://www.youtube.com/*' + ytChannel + '|$document';
+  if (ytChannel) {
+    const filter = `@@|https://www.youtube.com/*${ytChannel}|$document`;
     return addCustomFilter(filter);
   }
+  return undefined;
 };
 
 // YouTube Channel Whitelist and AdBlock Bandaids
-var runChannelWhitelist = function (tabUrl, tabId)
-{
-  if (parseUri(tabUrl).hostname === 'www.youtube.com' && getSettings().youtube_channel_whitelist && !parseUri.parseSearch(tabUrl).ab_channel)
-  {
+const runChannelWhitelist = function (tabUrl, tabId) {
+  const isYouTube = parseUri(tabUrl).hostname === 'www.youtube.com';
+  const abChannel = parseUri.parseSearch(tabUrl).ab_channel;
+  if (isYouTube && getSettings().youtube_channel_whitelist && !abChannel) {
     chrome.tabs.executeScript(tabId,
-    {
-      file: 'adblock-ytchannel.js',
-      runAt: 'document_start',
-    });
+      {
+        file: 'adblock-ytchannel.js',
+        runAt: 'document_start',
+      });
   }
 };
 
-chrome.tabs.onCreated.addListener(function (tab)
-{
-  if (chrome.runtime.lastError)
-  {
+chrome.tabs.onCreated.addListener((tab) => {
+  if (chrome.runtime.lastError) {
     return;
   }
-  chrome.tabs.get(tab.id).then((tabs) =>
-  {
-    if (tabs && tabs.url && tabs.id)
-    {
+  chrome.tabs.get(tab.id).then((tabs) => {
+    if (tabs && tabs.url && tabs.id) {
       runChannelWhitelist(tabs.url, tabs.id);
     }
   });
 });
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)
-{
-  if (chrome.runtime.lastError)
-  {
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+  if (chrome.runtime.lastError) {
     return;
   }
-  if (changeInfo.status === 'loading')
-  {
-    if (chrome.runtime.lastError)
-    {
+  if (changeInfo.status === 'loading') {
+    if (chrome.runtime.lastError) {
       return;
     }
-    chrome.tabs.get(tabId).then((tabs) =>
-    {
-      if (tabs && tabs.url && tabs.id)
-      {
+    chrome.tabs.get(tabId).then((tabs) => {
+      if (tabs && tabs.url && tabs.id) {
         runChannelWhitelist(tabs.url, tabs.id);
       }
     });
@@ -17778,64 +17783,53 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab)
 // On single page sites, such as YouTube, that update the URL using the History API pushState(),
 // they don't actually load a new page, we need to get notified when this happens
 // and update the URLs in the Page and Frame objects
-var youTubeHistoryStateUpdateHanlder = function(details) {
-  if (details &&
-      details.hasOwnProperty("frameId") &&
-      details.hasOwnProperty("tabId") &&
-      details.hasOwnProperty("url") &&
-      details.hasOwnProperty("transitionType") &&
-      details.transitionType === "link")
-  {
-    var myURL = new URL(details.url);
-    if (myURL.hostname === "www.youtube.com")
-    {
-      var myFrame = ext.getFrame(details.tabId, details.frameId);
-      var myPage = ext.getPage(details.tabId);
-      var previousWhitelistState = checkWhitelisted(myPage);
+const youTubeHistoryStateUpdateHanlder = function (details) {
+  if (details
+      && Object.prototype.hasOwnProperty.call(details, 'frameId')
+      && Object.prototype.hasOwnProperty.call(details, 'tabId')
+      && Object.prototype.hasOwnProperty.call(details, 'url')
+      && Object.prototype.hasOwnProperty.call(details, 'transitionType')
+      && details.transitionType === 'link') {
+    const myURL = new URL(details.url);
+    if (myURL.hostname === 'www.youtube.com') {
+      const myFrame = ext.getFrame(details.tabId, details.frameId);
+      const myPage = ext.getPage(details.tabId);
+      const previousWhitelistState = checkWhitelisted(myPage);
       myPage.url = myURL;
-      myPage._url = myURL;
       myFrame.url = myURL;
       myFrame._url = myURL;
-      var currentWhitelistState = checkWhitelisted(myPage);
+      const currentWhitelistState = checkWhitelisted(myPage);
       if (!currentWhitelistState && (currentWhitelistState !== previousWhitelistState)) {
-        chrome.tabs.sendMessage(details.tabId, {type: "reloadStyleSheet"});
+        chrome.tabs.sendMessage(details.tabId, { type: 'reloadStyleSheet' });
       }
-      if (myURL.pathname === "/") {
-        ytChannelNamePages.set(myPage.id, "");
+      if (myURL.pathname === '/') {
+        ytChannelNamePages.set(myPage.id, '');
       }
     }
   }
 };
 
-var addYouTubeHistoryStateUpdateHanlder = function() {
+const addYouTubeHistoryStateUpdateHanlder = function () {
   chrome.webNavigation.onHistoryStateUpdated.addListener(youTubeHistoryStateUpdateHanlder);
 };
 
-var removeYouTubeHistoryStateUpdateHanlder = function() {
+const removeYouTubeHistoryStateUpdateHanlder = function () {
   chrome.webNavigation.onHistoryStateUpdated.removeListener(youTubeHistoryStateUpdateHanlder);
 };
 
-settings.onload().then(function()
-{
-  if (getSettings().youtube_channel_whitelist)
-  {
+settings.onload().then(() => {
+  if (getSettings().youtube_channel_whitelist) {
     addYouTubeHistoryStateUpdateHanlder();
-    chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab)
-    {
-      if (!getSettings().youtube_channel_whitelist)
-      {
+    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+      if (!getSettings().youtube_channel_whitelist) {
         return;
       }
-      if (ytChannelNamePages.get(tabId) && parseUri(tab.url).hostname !== 'www.youtube.com')
-      {
+      if (ytChannelNamePages.get(tabId) && parseUri(tab.url).hostname !== 'www.youtube.com') {
         ytChannelNamePages.delete(tabId);
-        return;
       }
     });
-    chrome.tabs.onRemoved.addListener(function(tabId)
-    {
-      if (!getSettings().youtube_channel_whitelist)
-      {
+    chrome.tabs.onRemoved.addListener((tabId) => {
+      if (!getSettings().youtube_channel_whitelist) {
         return;
       }
       ytChannelNamePages.delete(tabId);
@@ -17843,14 +17837,14 @@ settings.onload().then(function()
   }
 });
 
-var previousYTchannelId ="";
-var previousYTvideoId ="";
-var previousYTuserId ="";
+let previousYTchannelId = '';
+let previousYTvideoId = '';
+let previousYTuserId = '';
 
 // Listen for the message from the ytchannel.js content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.command === 'updateYouTubeChannelName' && message.args === false) {
-    ytChannelNamePages.set(sender.tab.id, "");
+    ytChannelNamePages.set(sender.tab.id, '');
     sendResponse({});
     return;
   }
@@ -17862,107 +17856,130 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.command === 'get_channel_name_by_channel_id' && message.channelId) {
     if (previousYTchannelId !== message.channelId) {
       previousYTchannelId = message.channelId;
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://www.googleapis.com/youtube/v3/channels?part=snippet&id=" + message.channelId + "&key=" + atob("QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz"));
-      xhr.onload = function() {
+      const xhr = new XMLHttpRequest();
+      const { channelId } = message;
+      const key = atob('QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz');
+      const url = 'https://www.googleapis.com/youtube/v3/channels';
+      xhr.open('GET', `${url}?part=snippet&id=${channelId}&key=${key}`);
+      xhr.onload = function xhrOnload() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           const json = JSON.parse(xhr.response);
           // Got name of the channel
           if (json && json.items && json.items[0]) {
             const channelName = json.items[0].snippet.title;
             ytChannelNamePages.set(sender.tab.id, channelName);
-            chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: channelName });
+            chrome.tabs.sendMessage(sender.tab.id, {
+              command: 'updateURLWithYouTubeChannelName',
+              channelName,
+            });
           }
         }
-      }
+      };
       xhr.send();
       sendResponse({});
       return;
-    } else {
-      chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: ytChannelNamePages.get(sender.tab.id) });
-      sendResponse({});
-      return;
     }
+    chrome.tabs.sendMessage(sender.tab.id, {
+      command: 'updateURLWithYouTubeChannelName',
+      channelName: ytChannelNamePages.get(sender.tab.id),
+    });
+    sendResponse({});
+    return;
   }
   if (message.command === 'get_channel_name_by_video_id' && message.videoId) {
     if (previousYTvideoId !== message.videoId) {
       previousYTvideoId = message.videoId;
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + message.videoId + "&key=" + atob("QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz"));
-      xhr.onload = function() {
+      const xhr = new XMLHttpRequest();
+      const { videoId } = message;
+      const key = atob('QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz');
+      const url = 'https://www.googleapis.com/youtube/v3/videos';
+      xhr.open('GET', `${url}?part=snippet&id=${videoId}&key=${key}`);
+      xhr.onload = function xhrOnload() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           const json = JSON.parse(xhr.response);
           // Got name of the channel
           if (json && json.items && json.items[0]) {
             const channelName = json.items[0].snippet.channelTitle;
             ytChannelNamePages.set(sender.tab.id, channelName);
-            chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: channelName });
+            chrome.tabs.sendMessage(sender.tab.id, {
+              command: 'updateURLWithYouTubeChannelName',
+              channelName,
+            });
           }
         }
-      }
+      };
       xhr.send();
       sendResponse({});
       return;
-    } else {
-      chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: ytChannelNamePages.get(sender.tab.id) });
-      sendResponse({});
-      return;
     }
+    chrome.tabs.sendMessage(sender.tab.id, {
+      command: 'updateURLWithYouTubeChannelName',
+      channelName: ytChannelNamePages.get(sender.tab.id),
+    });
+    sendResponse({});
+    return;
   }
   if (message.command === 'get_channel_name_by_user_id' && message.userId) {
     if (previousYTuserId !== message.userId) {
       previousYTuserId = message.userId;
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://www.googleapis.com/youtube/v3/channels?part=snippet&forUsername=" + message.userId + "&key=" + atob("QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz"));
-      xhr.onload = function() {
+      const xhr = new XMLHttpRequest();
+      const { userId } = message;
+      const key = atob('QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz');
+      const url = 'https://www.googleapis.com/youtube/v3/channels';
+      xhr.open('GET', `${url}?part=snippet&forUsername=${userId}&key=${key}`);
+      xhr.onload = function xhrOnload() {
         if (xhr.readyState === 4 && xhr.status === 200) {
           const json = JSON.parse(xhr.response);
           // Got name of the channel
-          if (json && json.items && json.items[0])
-          {
+          if (json && json.items && json.items[0]) {
             const channelName = json.items[0].snippet.title;
             ytChannelNamePages.set(sender.tab.id, channelName);
-            chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: channelName });
+            chrome.tabs.sendMessage(sender.tab.id, {
+              command: 'updateURLWithYouTubeChannelName',
+              channelName,
+            });
           }
         }
-      }
+      };
       xhr.send();
       sendResponse({});
-      return;
     } else {
-      chrome.tabs.sendMessage(sender.tab.id, { command: 'updateURLWithYouTubeChannelName', channelName: ytChannelNamePages.get(sender.tab.id) });
+      chrome.tabs.sendMessage(sender.tab.id, {
+        command: 'updateURLWithYouTubeChannelName',
+        channelName: ytChannelNamePages.get(sender.tab.id),
+      });
       sendResponse({});
-      return;
     }
   }
 });
-var ytChannelNamePages = new Map();
+
 
 // These functions are usually only called by content scripts.
 
 // DEBUG INFO
 
 // Get debug info as a JSON object for bug reporting and ad reporting
-var getDebugInfo = function (callback) {
-  response = {};
-  response.other_info = {};
+const getDebugInfo = function (callback) {
+  const response = {};
+  response.otherInfo = {};
 
   // Is this installed build of AdBlock the official one?
   if (chrome.runtime.id === 'pljaalgmajnlogcgiohkhdmgpomjcihk') {
-    response.other_info.buildtype = ' Beta';
-  } else if (chrome.runtime.id === 'gighmmpiobklfepjocnamgkkbiglidom' || chrome.runtime.id === 'aobdicepooefnbaeokijohmhjlleamfj') {
-    response.other_info.buildtype = ' Stable';
+    response.otherInfo.buildtype = ' Beta';
+  } else if (chrome.runtime.id === 'gighmmpiobklfepjocnamgkkbiglidom'
+            || chrome.runtime.id === 'aobdicepooefnbaeokijohmhjlleamfj') {
+    response.otherInfo.buildtype = ' Stable';
   } else {
-    response.other_info.buildtype = ' Unofficial';
+    response.otherInfo.buildtype = ' Unofficial';
   }
 
   // Get AdBlock version
-  response.other_info.version = chrome.runtime.getManifest().version;
+  response.otherInfo.version = chrome.runtime.getManifest().version;
 
   // Get subscribed filter lists
-  var subscriptionInfo = {};
-  var subscriptions = getSubscriptionsMinusText();
-  for (var id in subscriptions) {
+  const subscriptionInfo = {};
+  const subscriptions = getSubscriptionsMinusText();
+  for (const id in subscriptions) {
     if (subscriptions[id].subscribed) {
       subscriptionInfo[id] = {};
       subscriptionInfo[id].lastSuccess = new Date(subscriptions[id].lastSuccess * 1000);
@@ -17974,102 +17991,99 @@ var getDebugInfo = function (callback) {
 
   response.subscriptions = subscriptionInfo;
 
-  var userFilters = getUserFilters();
+  const userFilters = getUserFilters();
   if (userFilters && userFilters.length) {
-    response.custom_filters = userFilters.join("\n");
+    response.customFilters = userFilters.join('\n');
   }
 
   // Get settings
-  var adblockSettings = {};
-  var settings = getSettings();
-  for (setting in settings) {
+  const adblockSettings = {};
+  const settings = getSettings();
+  for (const setting in settings) {
     adblockSettings[setting] = JSON.stringify(settings[setting]);
   }
 
   response.settings = adblockSettings;
   response.prefs = JSON.stringify(Prefs);
-  response.other_info.browser = STATS.browser;
-  response.other_info.browserVersion = STATS.browserVersion;
-  response.other_info.osVersion = STATS.osVersion;
-  response.other_info.os = STATS.os;
-  if (window['blockCounts']) {
-    response.other_info.blockCounts = blockCounts.get();
+  response.otherInfo.browser = STATS.browser;
+  response.otherInfo.browserVersion = STATS.browserVersion;
+  response.otherInfo.osVersion = STATS.osVersion;
+  response.otherInfo.os = STATS.os;
+  if (window.blockCounts) {
+    response.otherInfo.blockCounts = blockCounts.get();
   }
-  if (localStorage &&
-      localStorage.length) {
-    response.other_info.localStorageInfo = {};
-    response.other_info.localStorageInfo['length'] = localStorage.length;
-    var inx = 1;
-    for (var key in localStorage) {
-      response.other_info.localStorageInfo['key'+inx]= key;
-      inx++;
+  if (localStorage
+      && localStorage.length) {
+    response.otherInfo.localStorageInfo = {};
+    response.otherInfo.localStorageInfo.length = localStorage.length;
+    let inx = 1;
+    for (const key in localStorage) {
+      response.otherInfo.localStorageInfo[`key${inx}`] = key;
+      inx += 1;
     }
   } else {
-    response.other_info.localStorageInfo = "no data";
+    response.otherInfo.localStorageInfo = 'no data';
   }
-  response.other_info.is_adblock_paused = adblockIsPaused();
-  response.other_info.license_state = License.get().status;
-  response.other_info.license_version = License.get().lv;
+  response.otherInfo.isAdblockPaused = adblockIsPaused();
+  response.otherInfo.licenseState = License.get().status;
+  response.otherInfo.licenseVersion = License.get().lv;
 
   // Get total pings
-  chrome.storage.local.get('total_pings').then((storageResponse) =>
-  {
-    response.other_info.total_pings = storageResponse.total_pings || 0;
+  chrome.storage.local.get('total_pings').then((storageResponse) => {
+    response.otherInfo.totalPings = storageResponse.totalPings || 0;
 
     // Now, add exclude filters (if there are any)
-    var excludeFiltersKey = 'exclude_filters';
+    const excludeFiltersKey = 'exclude_filters';
     chrome.storage.local.get(excludeFiltersKey).then((secondResponse) => {
       if (secondResponse && secondResponse[excludeFiltersKey]) {
-        response.excluded_filters = secondResponse[excludeFiltersKey];
+        response.excludedFilters = secondResponse[excludeFiltersKey];
       }
       // Now, add JavaScript exception error (if there is one)
-      var errorKey = 'errorkey';
+      const errorKey = 'errorkey';
       chrome.storage.local.get(errorKey).then((errorResponse) => {
         if (errorResponse && errorResponse[errorKey]) {
-          response.other_info[errorKey] = errorResponse[errorKey];
+          response.otherInfo[errorKey] = errorResponse[errorKey];
         }
         // Now, add the migration messages (if there are any)
-        var migrateLogMessageKey = 'migrateLogMessageKey';
+        const migrateLogMessageKey = 'migrateLogMessageKey';
         chrome.storage.local.get(migrateLogMessageKey).then((migrateLogMessageResponse) => {
           if (migrateLogMessageResponse && migrateLogMessageResponse[migrateLogMessageKey]) {
-            messages = migrateLogMessageResponse[migrateLogMessageKey].split('\n');
-            for (var i = 0; i < messages.length; i++) {
-              var key = 'migration_message_' + i;
-              response.other_info[key] = messages[i];
+            const messages = migrateLogMessageResponse[migrateLogMessageKey].split('\n');
+            for (let i = 0; i < messages.length; i++) {
+              const key = `migration_message_${i}`;
+              response.otherInfo[key] = messages[i];
             }
           }
           if (License.isActiveLicense()) {
-            response.other_info.license_info = {};
-            response.other_info.license_info.extensionGUID = STATS.userId();
-            response.other_info.license_info.licenseId = License.get().licenseId;
+            response.otherInfo.licenseInfo = {};
+            response.otherInfo.licenseInfo.extensionGUID = STATS.userId();
+            response.otherInfo.licenseInfo.licenseId = License.get().licenseId;
             if (getSettings().sync_settings) {
-              response.other_info.sync_info = {};
-              response.other_info.sync_info['SyncCommitVersion'] = SyncService.getCommitVersion();
-              response.other_info.sync_info['SyncCommitName'] = SyncService.getCurrentExtensionName();
-              response.other_info.sync_info['SyncCommitLog'] = SyncService.getSyncLog();
+              response.otherInfo.syncInfo = {};
+              response.otherInfo.syncInfo.SyncCommitVersion = SyncService.getCommitVersion();
+              response.otherInfo.syncInfo.SyncCommitName = SyncService.getCurrentExtensionName();
+              response.otherInfo.syncInfo.SyncCommitLog = SyncService.getSyncLog();
             }
-            chrome.alarms.getAll(function(alarms) {
+            chrome.alarms.getAll((alarms) => {
               if (alarms && alarms.length > 0) {
-                response.other_info['Alarm info'] = 'length: ' + alarms.length;
-                for (var i = 0; i < alarms.length; i++) {
-                  var alarm = alarms[i];
-                  response.other_info[i + " Alarm Name"] = alarm.name;
-                  response.other_info[i + " Alarm Scheduled Time"] = new Date(alarm.scheduledTime);
+                response.otherInfo['Alarm info'] = `length: ${alarms.length}`;
+                for (let i = 0; i < alarms.length; i++) {
+                  const alarm = alarms[i];
+                  response.otherInfo[`${i} Alarm Name`] = alarm.name;
+                  response.otherInfo[`${i} Alarm Scheduled Time`] = new Date(alarm.scheduledTime);
                 }
               } else {
-                response.other_info['No alarm info'];
+                response.otherInfo['No alarm info'] = 'No alarm info';
               }
-              License.getLicenseInstallationDate(function(installdate) {
-                response.other_info["License Installation Date"] = installdate;
+              License.getLicenseInstallationDate((installdate) => {
+                response.otherInfo['License Installation Date'] = installdate;
                 if (typeof callback === 'function') {
                   callback(response);
                 }
               });
             });
-          } else { // License is not active
-            if (typeof callback === 'function') {
-              callback(response);
-            }
+          } else if (typeof callback === 'function') { // License is not active
+            callback(response);
           }
         });
       });
@@ -18078,80 +18092,29 @@ var getDebugInfo = function (callback) {
 };
 
 // Called when user explicitly requests filter list updates
-function updateFilterLists()
-{
-  for (let subscription of filterStorage.subscriptions()) {
-    if (subscription instanceof DownloadableSubscription)
-    {
+function updateFilterLists() {
+  for (const subscription of filterStorage.subscriptions()) {
+    if (subscription instanceof DownloadableSubscription) {
       synchronizer.execute(subscription, true, true);
     }
   }
 }
 
-function getUserFilters()
-{
-  var filters = [];
-  var exceptions = [];
-
-  for (let subscription of filterStorage.subscriptions()) {
-    if (!(subscription instanceof SpecialSubscription))
-    {
-      continue;
-    }
-    for (var j = 0; j < subscription._filterText.length; j++)
-    {
-      var filter = subscription._filterText[j];
-      filters.push(filter);
-    }
-  }
-
-  return filters;
-}
-
-function parseFilter(text)
-{
-  let filter = null;
-  let error = null;
-
-  text = Filter.normalize(text);
-  if (text)
-  {
-    if (text[0] == "[")
-    {
-      error = "unexpected_filter_list_header";
-    }
-    else
-    {
-      filter = Filter.fromText(text);
-      if (filter instanceof InvalidFilter)
-        error = filter.reason;
-    }
-  }
-
-  return { filter, error };
-}
-
-
-STATS.untilLoaded(function(userID)
-{
+STATS.untilLoaded(() => {
   STATS.startPinging();
   uninstallInit();
 });
 
 // Create the "blockage stats" for the uninstall logic ...
-chrome.runtime.onInstalled.addListener(function (details)
-{
-  if (details.reason === 'install')
-  {
-    chrome.storage.local.get("blockage_stats").then((response) =>
-    {
-      var blockage_stats = response.blockage_stats;
-      if (!blockage_stats)
-      {
-        data = {};
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    chrome.storage.local.get('blockage_stats').then((response) => {
+      const { blockage_stats } = response;
+      if (!blockage_stats) {
+        const data = {};
         data.start = Date.now();
         data.version = 1;
-        chromeStorageSetHelper("blockage_stats", data);
+        chromeStorageSetHelper('blockage_stats', data);
       }
     });
   }
@@ -18159,16 +18122,18 @@ chrome.runtime.onInstalled.addListener(function (details)
 
 // AdBlock Protect integration
 //
-// Check the response from a ping to see if it contains valid show AdBlock Protect enrollment instructions.
-// If so, set the "show_protect_enrollment" setting
+// Check the response from a ping to see if it contains valid show AdBlock Protect
+// enrollment instructions. If so, set the "show_protect_enrollment" setting
 // if an empty / zero length string is returned, and a user was previously enrolled then
 // set "show_protect_enrollment" to false
 // Inputs:
 //   responseData: string response from a ping
 function checkPingResponseForProtect(responseData) {
+  let pingData;
+
   if (responseData.length === 0 || responseData.trim().length === 0) {
     if (getSettings().show_protect_enrollment) {
-      setSetting("show_protect_enrollment", false);
+      setSetting('show_protect_enrollment', false);
     }
     return;
   }
@@ -18178,34 +18143,37 @@ function checkPingResponseForProtect(responseData) {
     return;
   }
   try {
-    var pingData = JSON.parse(responseData);
+    pingData = JSON.parse(responseData);
   } catch (e) {
-    console.log("Something went wrong with parsing survey data.");
+    // eslint-disable-next-line no-console
+    console.log('Something went wrong with parsing survey data.');
+    // eslint-disable-next-line no-console
     console.log('error', e);
+    // eslint-disable-next-line no-console
     console.log('response data', responseData);
     return;
   }
-  if (!pingData){
+  if (!pingData) {
     return;
   }
-  if (typeof pingData.protect_enrollment === "boolean") {
-    setSetting("show_protect_enrollment", pingData.protect_enrollment);
+  if (typeof pingData.protect_enrollment === 'boolean') {
+    setSetting('show_protect_enrollment', pingData.protect_enrollment);
   }
 }
 
 function isAcceptableAds(filterList) {
   if (!filterList) {
-    return;
+    return undefined;
   }
   return filterList.id === 'acceptable_ads';
-};
+}
 
 function isAcceptableAdsPrivacy(filterList) {
   if (!filterList) {
-    return;
+    return undefined;
   }
   return filterList.id === 'acceptable_ads_privacy';
-};
+}
 
 // Attach methods to window
 Object.assign(window, {
@@ -18223,7 +18191,6 @@ Object.assign(window, {
   pageIsUnblockable,
   getCurrentTabInfo,
   getAdblockUserId,
-  createPageWhitelistFilter,
   tryToUnwhitelist,
   addCustomFilter,
   removeCustomFilter,
@@ -18244,6 +18211,7 @@ Object.assign(window, {
   isLanguageSpecific,
   isAcceptableAds,
   isAcceptableAdsPrivacy,
+  parseFilter,
 });
 
 
@@ -18251,75 +18219,110 @@ Object.assign(window, {
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-﻿const {postFilterStatsToLogServer} = __webpack_require__(13).ServerMessages;
+"use strict";
 
-let DataCollectionV2 = exports.DataCollectionV2 = (function()
-{
 
-  "use strict";
-  const {extractHostFromFrame} = __webpack_require__(7);
-  const {RegExpFilter,
-         WhitelistFilter,
-         ElemHideFilter} = __webpack_require__(0);
-  const {filterNotifier} = __webpack_require__(1);
-  const {port} = __webpack_require__(8);
-  const {idleHandler} = __webpack_require__(67);
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, ext, exports, chromeStorageSetHelper, getSettings, adblockIsPaused,
+   adblockIsDomainPaused, filterStorage, Filter, parseUri, settings, getAllSubscriptionsMinusText,
+   getUserFilters, Utils */
+
+const { extractHostFromFrame } = __webpack_require__(7);
+const { ElemHideFilter } = __webpack_require__(0);
+const { filterNotifier } = __webpack_require__(1);
+const { port } = __webpack_require__(8);
+const { postFilterStatsToLogServer } = __webpack_require__(13).ServerMessages;
+const info = __webpack_require__(5);
+const { idleHandler } = __webpack_require__(67);
+
+const DataCollectionV2 = (function getDataCollectionV2() {
   const HOUR_IN_MS = 1000 * 60 * 60;
-  const TIME_LAST_PUSH_KEY = "timeLastPush";
+  const TIME_LAST_PUSH_KEY = 'timeLastPush';
 
   // Setup memory cache
-  var dataCollectionCache = {};
+  let dataCollectionCache = {};
   dataCollectionCache.filters = {};
   dataCollectionCache.domains = {};
 
-  var handleTabUpdated = function(tabId, changeInfo, tabInfo)
-  {
-    if (chrome.runtime.lastError)
-    {
+  const handleTabUpdated = function (tabId, changeInfo, tabInfo) {
+    if (chrome.runtime.lastError) {
       return;
     }
-    if (!tabInfo || !tabInfo.url || !tabInfo.url.startsWith("http"))
-    {
+    if (!tabInfo || !tabInfo.url || !tabInfo.url.startsWith('http')) {
       return;
     }
-    if (getSettings().data_collection_v2 && !adblockIsPaused() && !adblockIsDomainPaused({"url": tabInfo.url, "id": tabId}) && changeInfo.status === 'complete'  )
-    {
+    if (
+      getSettings().data_collection_v2
+      && !adblockIsPaused()
+      && !adblockIsDomainPaused({ url: tabInfo.url, id: tabId })
+      && changeInfo.status === 'complete'
+    ) {
       chrome.tabs.executeScript(tabId,
-      {
+        {
           file: 'adblock-datacollection-contentscript.js',
           allFrames: true,
-      });
+        });
     }
   };
 
-  var addMessageListener = function()
-  {
-    port.on("datacollection.elementHide", (message, sender) =>
-    {
-      if (getSettings().data_collection_v2 && !adblockIsPaused() && !adblockIsDomainPaused({"url": sender.page.url, "id": sender.page.id}))
-      {
+  const addFilterToCache = function (filter, page) {
+    const validFilterText = filter && filter.text && (typeof filter.text === 'string');
+    if (validFilterText && page && page.url && page.url.hostname) {
+      const domain = page.url.hostname;
+      if (!domain) {
+        return;
+      }
+      const { text } = filter;
 
-        var selectors = message.selectors;
-        var docDomain = extractHostFromFrame(sender.frame);
-        for (let subscription of filterStorage.subscriptions())
-        {
-          if (subscription.disabled) {
-            continue;
-          }
-          for (let text of subscription.filterText())
-          {
-            let filter = Filter.fromText(text);
+      if (!(text in dataCollectionCache.filters)) {
+        dataCollectionCache.filters[text] = {};
+        dataCollectionCache.filters[text].firstParty = {};
+        dataCollectionCache.filters[text].thirdParty = {};
+        dataCollectionCache.filters[text].subscriptions = [];
+      }
+      if (filter.thirdParty) {
+        if (!dataCollectionCache.filters[text].thirdParty[domain]) {
+          dataCollectionCache.filters[text].thirdParty[domain] = {};
+          dataCollectionCache.filters[text].thirdParty[domain].hits = 0;
+        }
+        dataCollectionCache.filters[text].thirdParty[domain].hits += 1;
+      } else {
+        if (!dataCollectionCache.filters[text].firstParty[domain]) {
+          dataCollectionCache.filters[text].firstParty[domain] = {};
+          dataCollectionCache.filters[text].firstParty[domain].hits = 0;
+        }
+        dataCollectionCache.filters[text].firstParty[domain].hits += 1;
+      }
+      for (const sub of filterStorage.subscriptions(text)) {
+        const dataCollectionSubscriptions = dataCollectionCache.filters[text].subscriptions;
+        if (!sub.disabled && sub.url && dataCollectionSubscriptions.indexOf(sub.url) === -1) {
+          dataCollectionCache.filters[text].subscriptions.push(sub.url);
+        }
+      }
+    }
+  };
 
-            // We only know the exact filter in case of element hiding emulation.
-            // For regular element hiding filters, the content script only knows
-            // the selector, so we have to find a filter that has an identical
-            // selector and is active on the domain the match was reported from.
-            let isActiveElemHideFilter = filter instanceof ElemHideFilter &&
-                                         selectors.includes(filter.selector) &&
-                                         filter.isActiveOnDomain(docDomain);
-
-            if (isActiveElemHideFilter) {
-              addFilterToCache(filter, sender.page);
+  const addMessageListener = function () {
+    port.on('datacollection.elementHide', (message, sender) => {
+      const dataCollectionEnabled = getSettings().data_collection_v2;
+      const domainInfo = { url: sender.page.url, id: sender.page.id };
+      if (dataCollectionEnabled && !adblockIsPaused() && !adblockIsDomainPaused(domainInfo)) {
+        const { selectors } = message;
+        const docDomain = extractHostFromFrame(sender.frame);
+        for (const subscription of filterStorage.subscriptions()) {
+          if (!subscription.disabled) {
+            for (const text of subscription.filterText()) {
+              const filter = Filter.fromText(text);
+              // We only know the exact filter in case of element hiding emulation.
+              // For regular element hiding filters, the content script only knows
+              // the selector, so we have to find a filter that has an identical
+              // selector and is active on the domain the match was reported from.
+              const isActiveElemHideFilter = filter instanceof ElemHideFilter
+                                           && selectors.includes(filter.selector)
+                                           && filter.isActiveOnDomain(docDomain);
+              if (isActiveElemHideFilter) {
+                addFilterToCache(filter, sender.page);
+              }
             }
           }
         }
@@ -18327,156 +18330,99 @@ let DataCollectionV2 = exports.DataCollectionV2 = (function()
     });
   };
 
-  var webRequestListener = function(details)
-  {
-    if (details.url && details.type === "main_frame" && !adblockIsPaused() && !adblockIsDomainPaused({"url": details.url, "id": details.id}))
-    {
-      var domain = parseUri(details.url).host;
+  const webRequestListener = function (details) {
+    if (details.url && details.type === 'main_frame' && !adblockIsPaused() && !adblockIsDomainPaused({ url: details.url, id: details.id })) {
+      const domain = parseUri(details.url).host;
       if (!dataCollectionCache.domains[domain]) {
         dataCollectionCache.domains[domain] = {};
         dataCollectionCache.domains[domain].pages = 0;
       }
-      dataCollectionCache.domains[domain].pages++;
+      dataCollectionCache.domains[domain].pages += 1;
     }
   };
 
-  var addFilterToCache = function(filter, page)
-  {
-    if (filter && filter.text && (typeof filter.text === 'string') && page && page.url && page.url.hostname)
-    {
-      let domain = page.url.hostname;
-      if (!domain)
-      {
-        return;
-      }
-      let text = filter.text;
-
-      if (!(text in dataCollectionCache.filters))
-      {
-        dataCollectionCache.filters[text] = {};
-        dataCollectionCache.filters[text].firstParty = {};
-        dataCollectionCache.filters[text].thirdParty = {};
-        dataCollectionCache.filters[text].subscriptions = [];
-      }
-      if (filter.thirdParty)
-      {
-        if (!dataCollectionCache.filters[text].thirdParty[domain])
-        {
-          dataCollectionCache.filters[text].thirdParty[domain] = {};
-          dataCollectionCache.filters[text].thirdParty[domain].hits = 0;
-        }
-        dataCollectionCache.filters[text].thirdParty[domain].hits++;
-      }
-      else
-      {
-        if (!dataCollectionCache.filters[text].firstParty[domain])
-        {
-          dataCollectionCache.filters[text].firstParty[domain] = {};
-          dataCollectionCache.filters[text].firstParty[domain].hits = 0;
-        }
-        dataCollectionCache.filters[text].firstParty[domain].hits++;
-      }
-      for (let sub of filterStorage.subscriptions(text))
-      {
-        if (!sub.disabled && sub.url && dataCollectionCache.filters[text].subscriptions.indexOf(sub.url) === -1)
-        {
-          dataCollectionCache.filters[text].subscriptions.push(sub.url);
-        }
-      }
-    }
-  };
-
-  var filterListener = function(item, newValue, oldValue, tabIds)
-  {
-    if (getSettings().data_collection_v2 && !adblockIsPaused())
-    {
-      for (let tabId of tabIds)
-      {
-        let page = new ext.Page({id: tabId});
-        if (page && !adblockIsDomainPaused({"url": page.url.href, "id": page.id})) {
+  const filterListener = function (item, newValue, oldValue, tabIds) {
+    if (getSettings().data_collection_v2 && !adblockIsPaused()) {
+      for (const tabId of tabIds) {
+        const page = new ext.Page({ id: tabId });
+        if (page && !adblockIsDomainPaused({ url: page.url.href, id: page.id })) {
           addFilterToCache(item, page);
         }
       }
-    }
-    else if (!getSettings().data_collection_v2)
-    {
-      filterNotifier.off("filter.hitCount", filterListener);
+    } else if (!getSettings().data_collection_v2) {
+      filterNotifier.off('filter.hitCount', filterListener);
     }
   };
 
   // If enabled at startup periodic saving of memory cache &
   // sending of data to the log server
-  settings.onload().then(function()
-  {
-    if (getSettings().data_collection_v2)
-    {
-      window.setInterval(function()
-      {
-        idleHandler.scheduleItemOnce(function()
-        {
-          if (getSettings().data_collection_v2 && Object.keys(dataCollectionCache.filters).length > 0)
-          {
-            var subscribedSubs = [];
-            var subs = getAllSubscriptionsMinusText();
-            for (var id in subs) {
+  settings.onload().then(() => {
+    const dataCollectionEnabled = getSettings().data_collection_v2;
+    if (dataCollectionEnabled) {
+      window.setInterval(() => {
+        idleHandler.scheduleItemOnce(() => {
+          if (dataCollectionEnabled && Object.keys(dataCollectionCache.filters).length > 0) {
+            const subscribedSubs = [];
+            const subs = getAllSubscriptionsMinusText();
+            for (const id in subs) {
               if (subs[id].subscribed) {
                 subscribedSubs.push(subs[id].url);
               }
             }
             if (getUserFilters().length) {
-              subscribedSubs.push("customlist");
+              subscribedSubs.push('customlist');
             }
-            var data = {
-              version:                 "4",
-              addonName:               __webpack_require__(2).addonName,
-              addonVersion:            __webpack_require__(2).addonVersion,
-              application:             __webpack_require__(2).application,
-              applicationVersion:      __webpack_require__(2).applicationVersion,
-              platform:                __webpack_require__(2).platform,
-              platformVersion:         __webpack_require__(2).platformVersion,
-              appLocale:               Utils.appLocale,
+            const data = {
+              version: '4',
+              addonName: info.addonName,
+              addonVersion: info.addonVersion,
+              application: info.application,
+              applicationVersion: info.applicationVersion,
+              platform: info.platform,
+              platformVersion: info.platformVersion,
+              appLocale: Utils.appLocale,
               filterListSubscriptions: subscribedSubs,
-              domains:                 dataCollectionCache.domains,
-              filters:                 dataCollectionCache.filters
+              domains: dataCollectionCache.domains,
+              filters: dataCollectionCache.filters,
             };
             chrome.storage.local.get(TIME_LAST_PUSH_KEY).then((response) => {
-              var timeLastPush = "n/a";
+              let timeLastPush = 'n/a';
               if (response[TIME_LAST_PUSH_KEY]) {
-                var serverTimestamp = new Date(response[TIME_LAST_PUSH_KEY]);
+                const serverTimestamp = new Date(response[TIME_LAST_PUSH_KEY]);
                 // Format the timeLastPush
-                var yearStr = serverTimestamp.getUTCFullYear() + "";
-                var monthStr = (serverTimestamp.getUTCMonth() + 1) + "";
-                var dateStr = serverTimestamp.getUTCDate() + "";
-                var hourStr = serverTimestamp.getUTCHours() + "";
+                const yearStr = `${serverTimestamp.getUTCFullYear()}`;
+                let monthStr = `${serverTimestamp.getUTCMonth() + 1}`;
+                let dateStr = `${serverTimestamp.getUTCDate()}`;
+                let hourStr = `${serverTimestamp.getUTCHours()}`;
                 // round the minutes up to the nearest 10
-                var minStr = (Math.floor(serverTimestamp.getUTCMinutes() / 10) * 10) + "";
+                let minStr = `${Math.floor(serverTimestamp.getUTCMinutes() / 10) * 10}`;
 
                 if (monthStr.length === 1) {
-                   monthStr = "0" + monthStr;
+                  monthStr = `0${monthStr}`;
                 }
                 if (dateStr.length === 1) {
-                   dateStr = "0" + dateStr;
+                  dateStr = `0${dateStr}`;
                 }
                 if (hourStr.length === 1) {
-                   hourStr = "0" + hourStr;
+                  hourStr = `0${hourStr}`;
                 }
                 if (minStr.length === 1) {
-                   minStr = "0" + minStr;
+                  minStr = `0${minStr}`;
                 }
-                if (minStr === "60") {
-                   minStr = "00";
+                if (minStr === '60') {
+                  minStr = '00';
                 }
-                timeLastPush = yearStr + "-" + monthStr + "-" + dateStr + " " + hourStr + ":" + minStr + ":00";
+                timeLastPush = `${yearStr}-${monthStr}-${dateStr} ${hourStr}:${minStr}:00`;
               }
               data.timeOfLastPush = timeLastPush;
-              postFilterStatsToLogServer( data, function(text, status, xhr) {
-                var nowTimestamp = (new Date()).toGMTString();
-                if (xhr && typeof xhr.getResponseHeader === "function") {
+              postFilterStatsToLogServer(data, (text, status, xhr) => {
+                let nowTimestamp = (new Date()).toGMTString();
+                if (xhr && typeof xhr.getResponseHeader === 'function') {
                   try {
-                    if (xhr.getResponseHeader("Date")) {
-                      nowTimestamp = xhr.getResponseHeader("Date");
+                    if (xhr.getResponseHeader('Date')) {
+                      nowTimestamp = xhr.getResponseHeader('Date');
                     }
-                  } catch(e) {
+                  } catch (e) {
                     nowTimestamp = (new Date()).toGMTString();
                   }
                 }
@@ -18486,115 +18432,133 @@ let DataCollectionV2 = exports.DataCollectionV2 = (function()
                 dataCollectionCache.filters = {};
                 dataCollectionCache.domains = {};
               });
-            });  // end of TIME_LAST_PUSH_KEY
+            }); // end of TIME_LAST_PUSH_KEY
           }
         });
       }, HOUR_IN_MS);
-      filterNotifier.on("filter.hitCount", filterListener);
-      chrome.webRequest.onBeforeRequest.addListener(webRequestListener, { urls:  ["http://*/*", "https://*/*"],types: ["main_frame"] });
+      filterNotifier.on('filter.hitCount', filterListener);
+      chrome.webRequest.onBeforeRequest.addListener(webRequestListener, {
+        urls: ['http://*/*', 'https://*/*'],
+        types: ['main_frame'],
+      });
       chrome.tabs.onUpdated.addListener(handleTabUpdated);
       addMessageListener();
     }
   });// End of then
 
-  var returnObj = {};
-  returnObj.start = function()
-  {
+  const returnObj = {};
+  returnObj.start = function returnObjStart() {
     dataCollectionCache.filters = {};
     dataCollectionCache.domains = {};
-    filterNotifier.on("filter.hitCount", filterListener);
-    chrome.webRequest.onBeforeRequest.addListener(webRequestListener, { urls:  ["http://*/*", "https://*/*"],types: ["main_frame"] });
+    filterNotifier.on('filter.hitCount', filterListener);
+    chrome.webRequest.onBeforeRequest.addListener(webRequestListener, {
+      urls: ['http://*/*', 'https://*/*'],
+      types: ['main_frame'],
+    });
     chrome.tabs.onUpdated.addListener(handleTabUpdated);
     addMessageListener();
   };
-  returnObj.end = function()
-  {
+  returnObj.end = function returnObjEnd() {
     dataCollectionCache = {};
-    filterNotifier.off("filter.hitCount", filterListener);
+    filterNotifier.off('filter.hitCount', filterListener);
     chrome.webRequest.onBeforeRequest.removeListener(webRequestListener);
     chrome.storage.local.remove(TIME_LAST_PUSH_KEY);
     chrome.tabs.onUpdated.removeListener(handleTabUpdated);
   };
-  returnObj.getCache = function()
-  {
+  returnObj.getCache = function returnObjGetCache() {
     return dataCollectionCache;
   };
 
   return returnObj;
-})();
+}());
+
+exports.DataCollectionV2 = DataCollectionV2;
 
 
 /***/ }),
 /* 67 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, exports, log */
 
 // Schedules a function to be executed once when the computer is idle.
 // Call idleHandler.scheduleItem to schedule a function for exection upon idle
 // inputs: theFunction: function to be executed
 //         seconds: maximum time to wait upon idle, in seconds. 600 if omitted.
-let idleHandler = exports.idleHandler = {
-  scheduleItemOnce : function(callback, seconds) {
+const idleHandler = {
+  scheduleItemOnce(callback, seconds) {
     // Schedule the item to be executed
-    idleHandler._scheduledItems.push({
-      callback : callback,
-      runAt : new Date(Date.now() + 1000 * (seconds || 600))
+    idleHandler.scheduledItems.push({
+      callback,
+      runAt: new Date(Date.now() + 1000 * (seconds || 600)),
     });
-    if (!idleHandler._timer) {
-      idleHandler._timer = window.setInterval(idleHandler._runIfIdle, 5000);
+    if (!idleHandler.timer) {
+      idleHandler.timer = window.setInterval(idleHandler.runIfIdle, 5000);
     }
   },
-  _timer : null,
-  _scheduledItems : [],
-  _runIfIdle : function() {
+  timer: null,
+  scheduledItems: [],
+  runIfIdle() {
     // Checks if the browser is idle. If so, it executes all waiting functions
     // Otherwise, it checks if an item has waited longer than allowed, and
     // executes the ones who should be executed
-    chrome.idle.queryState(15, function(state) {
-      if (state === "idle") {
-        while (idleHandler._scheduledItems.length) {
-          idleHandler._scheduledItems.shift().callback();
+    chrome.idle.queryState(15, (state) => {
+      if (state === 'idle') {
+        while (idleHandler.scheduledItems.length) {
+          idleHandler.scheduledItems.shift().callback();
         }
       } else {
-        var now = Date.now();
+        const now = Date.now();
         // Inversed loop, to prevent splice() making it skip the item after an
         // executed item.
-        for (var i = idleHandler._scheduledItems.length - 1; i >= 0; i--) {
-          if (idleHandler._scheduledItems[i].runAt <= now) {
-            idleHandler._scheduledItems.splice(i, 1)[0].callback();
+        for (let i = idleHandler.scheduledItems.length - 1; i >= 0; i--) {
+          if (idleHandler.scheduledItems[i].runAt <= now) {
+            idleHandler.scheduledItems.splice(i, 1)[0].callback();
           }
         }
       }
-      if (!idleHandler._scheduledItems.length) {
-        idleHandler._timer = window.clearInterval(idleHandler._timer);
+      if (!idleHandler.scheduledItems.length) {
+        idleHandler.timer = window.clearInterval(idleHandler.timer);
       }
-    })
-  }
+    });
+  },
 };
+
+exports.idleHandler = idleHandler;
+
 
 /***/ }),
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-﻿
-const {filterStorage} = __webpack_require__(5);
-with (__webpack_require__(4))
-{
-  this.Subscription = Subscription;
-  this.SpecialSubscription = SpecialSubscription;
-  this.DownloadableSubscription = DownloadableSubscription;
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global require, exports, recommendations, Subscription
+   DownloadableSubscription */
+
+const { filterStorage } = __webpack_require__(4);
+const subClasses = __webpack_require__(3);
+
+if (subClasses) {
+  this.Subscription = subClasses.Subscription;
+  this.SpecialSubscription = subClasses.SpecialSubscription;
+  this.DownloadableSubscription = subClasses.DownloadableSubscription;
 }
+
 // Adapters & helpers to add the legacy AB 'id' to the ABP subscriptions
 // Also adds the 'language' and 'hidden' properties
-let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
-{
+const SubscriptionAdapter = (function getSubscriptionAdapter() {
   // Get the URL for the corresponding ID
-  var getUrlFromId = function(searchID)
-  {
-    for (let subscription of recommendations())
-    {
-      let {url, id} = subscription;
-      if (searchID === id)
-      {
+  const getUrlFromId = function (searchID) {
+    for (const subscription of recommendations()) {
+      const { url, id } = subscription;
+      if (searchID === id) {
         return url;
       }
     }
@@ -18602,13 +18566,10 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
   };
 
   // Get the ID for the corresponding URL
-  var getIdFromURL = function(searchURL)
-  {
-    for (let subscription of recommendations())
-    {
-      let {url, id} = subscription;
-      if (searchURL === url)
-      {
+  const getIdFromURL = function (searchURL) {
+    for (const subscription of recommendations()) {
+      const { url, id } = subscription;
+      if (searchURL === url) {
         return id;
       }
     }
@@ -18618,13 +18579,10 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
   // determine if the specified filter list is language specific
   // returns the boolean language attribue (if found)
   //         false otherwise
-  var isLanguageSpecific = function(searchID)
-  {
-    for (let subscription of recommendations())
-    {
-      let {id} = subscription;
-      if (id === searchID)
-      {
+  const isLanguageSpecific = function (searchID) {
+    for (const subscription of recommendations()) {
+      const { id } = subscription;
+      if (id === searchID) {
         return id.language;
       }
     }
@@ -18632,13 +18590,10 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
   };
 
   // Get the ID for the corresponding URL
-  var getSubscriptionInfoFromURL = function(searchURL)
-  {
-    for (let subscription of recommendations())
-    {
-      let {url} = subscription;
-      if (searchURL === url)
-      {
+  const getSubscriptionInfoFromURL = function (searchURL) {
+    for (const subscription of recommendations()) {
+      const { url } = subscription;
+      if (searchURL === url) {
         return subscription;
       }
     }
@@ -18646,37 +18601,29 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
   };
 
   // Unsubcribe the user from the subscription specified in the arguement
-  var unsubscribe = function(options)
-  {
-    var subscriptionUrl = getUrlFromId(options.id);
-    if (subscriptionUrl !== '')
-    {
-      var subscription = Subscription.fromURL(subscriptionUrl);
-      if (subscription)
-      {
+  const unsubscribe = function (options) {
+    const subscriptionUrl = getUrlFromId(options.id);
+    if (subscriptionUrl !== '') {
+      const subscription = Subscription.fromURL(subscriptionUrl);
+      if (subscription) {
         filterStorage.removeSubscription(subscription);
       }
     }
-  }
+  };
 
   // Get only the user's subscriptions with in the AB format
   // without the filter contents (text)
-  var getSubscriptionsMinusText = function()
-  {
-    var result = {};
-    for (let subscription of filterStorage.subscriptions())
-    {
-      if (subscription instanceof DownloadableSubscription)
-      {
-        var tempSub = {};
-        for (var attr in subscription)
-        {
-          // if the subscription has a 'URL' property, use it to add the other attributes (id, language, hidden)
-          if (attr === "url")
-          {
-            let subscriptionInfo = getSubscriptionInfoFromURL(subscription[attr]);
-            if (subscriptionInfo && subscriptionInfo.url)
-            {
+  const getSubscriptionsMinusText = function () {
+    const result = {};
+    for (const subscription of filterStorage.subscriptions()) {
+      if (subscription instanceof DownloadableSubscription) {
+        const tempSub = {};
+        for (const attr in subscription) {
+          // if the subscription has a 'URL' property use it to
+          // add the other attributes (id, language, hidden)
+          if (attr === 'url') {
+            const subscriptionInfo = getSubscriptionInfoFromURL(subscription[attr]);
+            if (subscriptionInfo && subscriptionInfo.url) {
               tempSub.id = subscriptionInfo.id;
               tempSub.languages = subscriptionInfo.languages;
               tempSub.language = subscriptionInfo.language;
@@ -18686,48 +18633,44 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
               tempSub.hidden = subscriptionInfo.hidden;
             }
           }
-          if (attr === "_filterText")
-          {
-            continue;
+          if (attr !== '_filterText') {
+            tempSub[attr] = subscription[attr];
           }
-          tempSub[attr] = subscription[attr];
         }
         // if the subscription doesn't have a 'id' property, use the 'URL' as an
         // 'id' property
-        if (!tempSub["id"] || tempSub["id"] === undefined)
-        {
-          tempSub["id"] = "url:" + subscription.url;
+        if (!tempSub.id || tempSub.id === undefined) {
+          tempSub.id = `url:${subscription.url}`;
         }
         // Since FilterStorage.subscriptions only contains subscribed FilterLists,
         // add the 'subscribed' property
-        tempSub['subscribed'] = true;
-        result[tempSub["id"]] = tempSub;
+        tempSub.subscribed = true;
+        result[tempSub.id] = tempSub;
       }
     }
     return result;
-  }
+  };
 
   // Get all subscriptions in the AB format
   // without the filter contents (text)
-  var getAllSubscriptionsMinusText = function()
-  {
-    var userSubs = getSubscriptionsMinusText();
-    for (let subscription of recommendations())
-    {
-      let {url, id, languages, language, type, title, homepage, hidden} = subscription;
-      if (!(id in userSubs))
-      {
+  const getAllSubscriptionsMinusText = function () {
+    const userSubs = getSubscriptionsMinusText();
+    for (const subscription of recommendations()) {
+      const {
+        url, id, languages, language, type, title, homepage, hidden,
+      } = subscription;
+      if (!(id in userSubs)) {
         userSubs[id] = {};
-        userSubs[id]['subscribed'] = false;
-        userSubs[id]['id'] = id;
-        userSubs[id]['url'] = url;
-        userSubs[id]['user_submitted'] = false;
-        userSubs[id]['language'] = language;
-        userSubs[id]['languages'] = languages;
-        userSubs[id]['hidden'] = hidden;
-        userSubs[id]['type'] = type;
-        userSubs[id]['title'] = title;
-        userSubs[id]['homepage'] = homepage;
+        userSubs[id].subscribed = false;
+        userSubs[id].id = id;
+        userSubs[id].url = url;
+        userSubs[id].userSubmitted = false;
+        userSubs[id].language = language;
+        userSubs[id].languages = languages;
+        userSubs[id].hidden = hidden;
+        userSubs[id].type = type;
+        userSubs[id].title = title;
+        userSubs[id].homepage = homepage;
       }
     }
     return userSubs;
@@ -18741,184 +18684,54 @@ let SubscriptionAdapter = exports.SubscriptionAdapter = (function()
     getSubscriptionsMinusText,
     getAllSubscriptionsMinusText,
     getIdFromURL,
-    isLanguageSpecific
+    isLanguageSpecific,
   };
+}());
 
-})();
+exports.SubscriptionAdapter = SubscriptionAdapter;
+
 
 /***/ }),
 /* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const {checkWhitelisted} = __webpack_require__(9);
-const {filterNotifier} = __webpack_require__(1);
-const Prefs = __webpack_require__(3).Prefs;
+"use strict";
 
-var updateButtonUIAndContextMenus = function ()
-{
-  chrome.tabs.query({}).then((tabs) =>
-  {
-    for (let tab of tabs) {
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, ext, adblockIsPaused, adblockIsDomainPaused
+   recordGeneralMessage, log */
+
+const { checkWhitelisted } = __webpack_require__(9);
+const { filterNotifier } = __webpack_require__(1);
+const { Prefs } = __webpack_require__(2);
+
+const updateButtonUIAndContextMenus = function () {
+  chrome.tabs.query({}).then((tabs) => {
+    for (const tab of tabs) {
       const page = new ext.Page(tab);
-      if (adblockIsPaused() || adblockIsDomainPaused({"url": tab.url.href, "id": tab.id}))
-      {
+      if (adblockIsPaused() || adblockIsDomainPaused({ url: tab.url.href, id: tab.id })) {
         page.browserAction.setBadge({ number: '' });
       }
+      // eslint-disable-next-line no-use-before-define
       updateContextMenuItems(page);
     }
   });
 };
 
-var updateContextMenuItems = function (page)
-{
-  // Remove the AdBlock context menu items
-  chrome.contextMenus.removeAll();
-
-  // Check if the context menu items should be added
-  if (!Prefs.shouldShowBlockElementMenu) {
-    return;
-  }
-
-  const adblockIsPaused = window.adblockIsPaused();
-  const domainIsPaused = window.adblockIsDomainPaused({"url": page.url.href, "id": page.id});
-  if (adblockIsPaused)
-  {
-    chrome.contextMenus.create(contextMenuItem.unpauseAll);
-  }
-  else if (domainIsPaused)
-  {
-    chrome.contextMenus.create(contextMenuItem.unpauseDomain);
-  }
-  else if (checkWhitelisted(page))
-  {
-    chrome.contextMenus.create(contextMenuItem.pauseAll);
-  }
-  else
-  {
-    chrome.contextMenus.create(contextMenuItem.blockThisAd);
-    chrome.contextMenus.create(contextMenuItem.blockAnAd);
-    chrome.contextMenus.create(contextMenuItem.pauseDomain);
-    chrome.contextMenus.create(contextMenuItem.pauseAll);
-  }
-};
-
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) =>
-{
-  if (changeInfo.status) {
-    updateContextMenuItems(new ext.Page(tab));
-  }
-});
-
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse)
-{
-  switch (msg.type)
-  {
-    case 'report-html-page':
-      updateContextMenuItems(sender.page);
-      break;
-  }
-});
-
-// Update browser actions and context menus when whitelisting might have
-// changed. That is now when initally loading the filters and later when
-// importing backups or saving filter changes.
-filterNotifier.on("load", updateButtonUIAndContextMenus);
-filterNotifier.on("save", updateButtonUIAndContextMenus);
-
-Prefs.on(Prefs.shouldShowBlockElementMenu, function ()
-{
-  updateButtonUIAndContextMenus();
-});
-
-updateButtonUIAndContextMenus();
-
-const contextMenuItem = (() =>
-{
-  return {
-    pauseAll:
-    {
-      title: chrome.i18n.getMessage('pause_adblock_everywhere'),
-      contexts: ['all'],
-      onclick: () =>
-      {
-        recordGeneralMessage('cm_pause_clicked');
-        adblockIsPaused(true);
-        updateButtonUIAndContextMenus();
-      },
-    },
-    unpauseAll:
-    {
-      title: chrome.i18n.getMessage('resume_blocking_ads'),
-      contexts: ['all'],
-      onclick: () =>
-      {
-        recordGeneralMessage('cm_unpause_clicked');
-        adblockIsPaused(false);
-        updateButtonUIAndContextMenus();
-      },
-    },
-    pauseDomain:
-    {
-      title: chrome.i18n.getMessage('domain_pause_adblock'),
-      contexts: ['all'],
-      onclick: (info, tab) =>
-      {
-        recordGeneralMessage('cm_domain_pause_clicked');
-        adblockIsDomainPaused({'url': tab.url, 'id': tab.id}, true);
-        updateButtonUIAndContextMenus();
-      },
-    },
-    unpauseDomain:
-    {
-      title: chrome.i18n.getMessage('resume_blocking_ads'),
-      contexts: ['all'],
-      onclick: (info, tab) =>
-      {
-        recordGeneralMessage('cm_domain_unpause_clicked');
-        adblockIsDomainPaused({'url': tab.url, 'id': tab.id}, false);
-        updateButtonUIAndContextMenus();
-      },
-    },
-    blockThisAd:
-    {
-      title: chrome.i18n.getMessage('block_this_ad'),
-      contexts: ['all'],
-      onclick: function (info, tab)
-      {
-        emitPageBroadcast(
-          { fn:'top_open_blacklist_ui', options:{ info: info } },
-          { tab: tab }
-        );
-      },
-    },
-    blockAnAd:
-    {
-      title: chrome.i18n.getMessage('block_an_ad_on_this_page'),
-      contexts: ['all'],
-      onclick: function (info, tab)
-      {
-        emitPageBroadcast(
-          { fn:'top_open_blacklist_ui', options:{ nothing_clicked: true } },
-          { tab: tab }
-        );
-      },
-    },
-  };
-})();
-
 // Bounce messages back to content scripts.
-var emitPageBroadcast = (function () {
-  var injectMap = {
-      top_open_whitelist_ui:
+const emitPageBroadcast = (function emitBroadcast() {
+  const injectMap = {
+    topOpenWhitelistUI:
       {
         allFrames: false,
         include: [
           'adblock-jquery.js',
           'adblock-uiscripts-load_wizard_resources.js',
           'adblock-uiscripts-top_open_whitelist_ui.js',
-          ],
+        ],
       },
-      top_open_blacklist_ui:
+    topOpenBlacklistUI:
       {
         allFrames: false,
         include: [
@@ -18929,123 +18742,231 @@ var emitPageBroadcast = (function () {
           'adblock-uiscripts-blacklisting-elementchain.js',
           'adblock-uiscripts-blacklisting-blacklistui.js',
           'adblock-uiscripts-top_open_blacklist_ui.js',
-          ],
+        ],
       },
-      send_content_to_back:
+    sendContentToBack:
       {
         allFrames: true,
         include: ['adblock-uiscripts-send_content_to_back.js'],
       },
-    };
+  };
 
   // Inject the required scripts to execute fnName(parameter) in
   // the current tab.
   // Inputs: fnName:string name of function to execute on tab.
   //         fnName must exist in injectMap above.
   //         parameter:object to pass to fnName.  Must be JSON.stringify()able.
-  //         injectedSoFar?:int used to recursively inject required scripts.
-  var executeOnTab = function (fnName, parameter, injectedSoFar) {
-    injectedSoFar = injectedSoFar || 0;
-    var data = injectMap[fnName];
-    var details = { allFrames: data.allFrames };
+  //         alreadyInjected?:int used to recursively inject required scripts.
+  const executeOnTab = function (fnName, parameter, alreadyInjected) {
+    const injectedSoFar = alreadyInjected || 0;
+    const data = injectMap[fnName];
+    const details = { allFrames: data.allFrames };
 
     // If there's anything to inject, inject the next item and recurse.
     if (data.include.length > injectedSoFar) {
       details.file = data.include[injectedSoFar];
       chrome.tabs.executeScript(undefined, details).then(() => {
         executeOnTab(fnName, parameter, injectedSoFar + 1);
-      }).catch(error => {
+      }).catch((error) => {
         log(error);
       });
     } else {
       // Nothing left to inject, so execute the function.
-      var param = JSON.stringify(parameter);
-      details.code = fnName + '(' + param + ');';
+      const param = JSON.stringify(parameter);
+      details.code = `${fnName}(${param});`;
       chrome.tabs.executeScript(undefined, details);
     }
   };
 
   // The emitPageBroadcast() function
-  var theFunction = function (request) {
+  const theFunction = function (request) {
     executeOnTab(request.fn, request.options);
   };
 
   return theFunction;
-})();
+}());
+
+const contextMenuItem = (() => ({
+  pauseAll:
+    {
+      title: chrome.i18n.getMessage('pause_adblock_everywhere'),
+      contexts: ['all'],
+      onclick: () => {
+        recordGeneralMessage('cm_pause_clicked');
+        adblockIsPaused(true);
+        updateButtonUIAndContextMenus();
+      },
+    },
+  unpauseAll:
+    {
+      title: chrome.i18n.getMessage('resume_blocking_ads'),
+      contexts: ['all'],
+      onclick: () => {
+        recordGeneralMessage('cm_unpause_clicked');
+        adblockIsPaused(false);
+        updateButtonUIAndContextMenus();
+      },
+    },
+  pauseDomain:
+    {
+      title: chrome.i18n.getMessage('domain_pause_adblock'),
+      contexts: ['all'],
+      onclick: (info, tab) => {
+        recordGeneralMessage('cm_domain_pause_clicked');
+        adblockIsDomainPaused({ url: tab.url, id: tab.id }, true);
+        updateButtonUIAndContextMenus();
+      },
+    },
+  unpauseDomain:
+    {
+      title: chrome.i18n.getMessage('resume_blocking_ads'),
+      contexts: ['all'],
+      onclick: (info, tab) => {
+        recordGeneralMessage('cm_domain_unpause_clicked');
+        adblockIsDomainPaused({ url: tab.url, id: tab.id }, false);
+        updateButtonUIAndContextMenus();
+      },
+    },
+  blockThisAd:
+    {
+      title: chrome.i18n.getMessage('block_this_ad'),
+      contexts: ['all'],
+      onclick(info, tab) {
+        emitPageBroadcast(
+          { fn: 'topOpenBlacklistUI', options: { info } },
+          { tab },
+        );
+      },
+    },
+  blockAnAd:
+    {
+      title: chrome.i18n.getMessage('block_an_ad_on_this_page'),
+      contexts: ['all'],
+      onclick(info, tab) {
+        emitPageBroadcast(
+          { fn: 'topOpenBlacklistUI', options: { nothingClicked: true } },
+          { tab },
+        );
+      },
+    },
+}))();
+
+const updateContextMenuItems = function (page) {
+  // Remove the AdBlock context menu items
+  chrome.contextMenus.removeAll();
+
+  // Check if the context menu items should be added
+  if (!Prefs.shouldShowBlockElementMenu) {
+    return;
+  }
+
+  const adblockIsPaused = window.adblockIsPaused();
+  const domainIsPaused = window.adblockIsDomainPaused({ url: page.url.href, id: page.id });
+  if (adblockIsPaused) {
+    chrome.contextMenus.create(contextMenuItem.unpauseAll);
+  } else if (domainIsPaused) {
+    chrome.contextMenus.create(contextMenuItem.unpauseDomain);
+  } else if (checkWhitelisted(page)) {
+    chrome.contextMenus.create(contextMenuItem.pauseAll);
+  } else {
+    chrome.contextMenus.create(contextMenuItem.blockThisAd);
+    chrome.contextMenus.create(contextMenuItem.blockAnAd);
+    chrome.contextMenus.create(contextMenuItem.pauseDomain);
+    chrome.contextMenus.create(contextMenuItem.pauseAll);
+  }
+};
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status) {
+    updateContextMenuItems(new ext.Page(tab));
+  }
+});
+
+chrome.runtime.onMessage.addListener((msg, sender) => {
+  if (msg.type === 'report-html-page') {
+    updateContextMenuItems(sender.page);
+  }
+});
+
+// Update browser actions and context menus when whitelisting might have
+// changed. That is now when initally loading the filters and later when
+// importing backups or saving filter changes.
+filterNotifier.on('load', updateButtonUIAndContextMenus);
+filterNotifier.on('save', updateButtonUIAndContextMenus);
+
+Prefs.on(Prefs.shouldShowBlockElementMenu, () => {
+  updateButtonUIAndContextMenus();
+});
+
+updateButtonUIAndContextMenus();
 
 Object.assign(window, {
   emitPageBroadcast,
-  updateButtonUIAndContextMenus
+  updateButtonUIAndContextMenus,
 });
+
 
 /***/ }),
 /* 70 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-﻿// Module for removing individual filters from filter lists
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, exports, filterNotifier, parseFilter, chromeStorageSetHelper */
+
+// Module for removing individual filters from filter lists
 // An 'advance' feature, used on the Customize tab, titled "disabled filters"
-ExcludeFilter = (function ()
-{
-  var ABRemoveFilter = function (filter)
-  {
-    for (let currentSubscription of filter.subscriptions())
-    {
-      let positions = [];
+const ExcludeFilter = (function excludeFilter() {
+  const ABRemoveFilter = function (filter) {
+    for (const currentSubscription of filter.subscriptions()) {
+      const positions = [];
       let index = -1;
-      do
-      {
+      do {
         index = currentSubscription.searchFilter(filter, index + 1);
         if (index >= 0) {
           positions.push(index);
         }
       } while (index >= 0);
 
-      for (let j = positions.length - 1; j >= 0; j--)
-      {
-        let currentPosition = positions[j];
-        let currentFilter = currentSubscription.filterAt(currentPosition);
-        if (currentFilter && currentFilter.text == filter.text)
-        {
+      for (let j = positions.length - 1; j >= 0; j--) {
+        const currentPosition = positions[j];
+        const currentFilter = currentSubscription.filterAt(currentPosition);
+        if (currentFilter && currentFilter.text === filter.text) {
           currentSubscription.deleteFilterAt(currentPosition);
-          if (currentSubscription.searchFilter(filter) < 0)
+          if (currentSubscription.searchFilter(filter) < 0) {
             filter.removeSubscription(currentSubscription);
-          filterNotifier.emit("filter.removed", filter, currentSubscription,
-                              currentPosition);
+          }
+          filterNotifier.emit('filter.removed', filter, currentSubscription,
+            currentPosition);
         }
       }
     }
 
 
-
-    for (let subscription of filter.subscriptions())
-    {
-      var positions = [];
-      var index = -1;
-      do
-      {
+    for (const subscription of filter.subscriptions()) {
+      const positions = [];
+      let index = -1;
+      do {
         index = subscription._filterText.indexOf(filter, index + 1);
-        if (index >= 0)
-        {
+        if (index >= 0) {
           positions.push(index);
         }
       }
       while (index >= 0);
 
-      for (var j = positions.length - 1; j >= 0; j--)
-      {
-        var position = positions[j];
-        if (subscription._filterText[position] === filter)
-        {
+      for (let j = positions.length - 1; j >= 0; j--) {
+        const position = positions[j];
+        if (subscription._filterText[position] === filter) {
           subscription._filterText.splice(position, 1);
-          if (subscription._filterText.indexOf(filter) < 0)
-          {
-            var index = filter._subscriptions.indexOf(subscription);
-            if (index >= 0)
-            {
+          if (subscription._filterText.indexOf(filter) < 0) {
+            index = filter._subscriptions.indexOf(subscription);
+            if (index >= 0) {
               filter._subscriptions.splice(index, 1);
             }
           }
-          filterNotifier.emit("filter.removed", filter, currentSubscription, currentPosition);
+          filterNotifier.emit('filter.removed', filter, subscription, position);
         }
       }
     }
@@ -19055,17 +18976,15 @@ ExcludeFilter = (function ()
   // saves the valid entries
   // Note:  any invalid filters are ignored
   // Inputs: filters:string the new filters.
-  var setExcludeFilters = function (excludeFilters) {
-    excludeFilters = excludeFilters.trim();
-    var excludeFiltersArray = excludeFilters.split('\n');
-    var validExcludeFiltersArray = [];
-    for (var i = 0; i < excludeFiltersArray.length; i++)
-    {
-      var filter = excludeFiltersArray[i];
-      filter     = filter.trim();
-      if (filter.length > 0)
-      {
-        var result = parseFilter(filter);
+  const setExcludeFilters = function (filtersToExclude) {
+    const excludeFilters = filtersToExclude.trim();
+    const excludeFiltersArray = excludeFilters.split('\n');
+    const validExcludeFiltersArray = [];
+    for (let i = 0; i < excludeFiltersArray.length; i++) {
+      let filter = excludeFiltersArray[i];
+      filter = filter.trim();
+      if (filter.length > 0) {
+        const result = parseFilter(filter);
         if (result.filter) {
           validExcludeFiltersArray.push(result.filter);
           ABRemoveFilter(result.filter);
@@ -19073,72 +18992,76 @@ ExcludeFilter = (function ()
       }
     }
 
-    if (validExcludeFiltersArray.length > 0)
-    {
+    if (validExcludeFiltersArray.length > 0) {
       chromeStorageSetHelper('exclude_filters', validExcludeFiltersArray.join('\n'));
-    } else
-    {
+    } else {
       chrome.storage.local.remove('exclude_filters');
     }
   };
 
-  function excludeFilterChangeListener(action, item, param1, param2)
-  {
-    var excludeFiltersKey = 'exclude_filters';
-    chrome.storage.local.get(excludeFiltersKey).then((response) =>
-    {
-      if (response[excludeFiltersKey])
-      {
-        var excludeFiltersArray = response[excludeFiltersKey].split('\n');
-        for (var i = 0; i < excludeFiltersArray.length; i++)
-        {
-          var filter = excludeFiltersArray[i];
-          if (filter.length > 0)
-          {
-            var result = parseFilter(filter);
-            if (result.filter)
-            {
+  function excludeFilterChangeListener() {
+    const excludeFiltersKey = 'exclude_filters';
+    chrome.storage.local.get(excludeFiltersKey).then((response) => {
+      if (response[excludeFiltersKey]) {
+        const excludeFiltersArray = response[excludeFiltersKey].split('\n');
+        for (let i = 0; i < excludeFiltersArray.length; i++) {
+          const filter = excludeFiltersArray[i];
+          if (filter.length > 0) {
+            const result = parseFilter(filter);
+            if (result.filter) {
               ABRemoveFilter(result.filter);
             }
           }
         }
-      } else
-      {
-        filterNotifier.off("save", excludeFilterChangeListener);
+      } else {
+        filterNotifier.off('save', excludeFilterChangeListener);
       }
     });
   }
 
   // At startup, add a listener to so that the exclude filters
   // can be removed if the filter lists are updated
-  filterNotifier.on("save", excludeFilterChangeListener);
+  filterNotifier.on('save', excludeFilterChangeListener);
 
   return {
-    setExcludeFilters: setExcludeFilters,
+    setExcludeFilters,
   };
-})();
+}());
+
+exports.ExcludeFilter = ExcludeFilter;
 
 
 /***/ }),
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $ = __webpack_require__(24);
-const Subscription = __webpack_require__(4).Subscription;
-const {filterStorage} = __webpack_require__(5);
-const {imageSizesMap, WIDE, TALL, SKINNYWIDE, SKINNYTALL, BIG, SMALL} = __webpack_require__(38);
-const {EventEmitter} = __webpack_require__(6);
-let channelsNotifier = new EventEmitter();
+"use strict";
 
-var subscription1 = Subscription.fromURL(getUrlFromId("antisocial"));
-var subscription2 = Subscription.fromURL(getUrlFromId("annoyances"));
-// Inputs: width:int, height:int, url:url, title:string, attribution_url:url
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome, require, getUrlFromId, getSettings, storageGet, storageSet */
+
+const { Subscription } = __webpack_require__(3);
+const { filterStorage } = __webpack_require__(4);
+const { EventEmitter } = __webpack_require__(6);
+const {
+  imageSizesMap, WIDE, TALL, SKINNYWIDE, SKINNYTALL,
+} = __webpack_require__(38);
+
+const minjQuery = __webpack_require__(24);
+
+const channelsNotifier = new EventEmitter();
+
+const subscription1 = Subscription.fromURL(getUrlFromId('antisocial'));
+const subscription2 = Subscription.fromURL(getUrlFromId('annoyances'));
+
+// Inputs: width:int, height:int, url:url, title:string, attributionUrl:url
 function Listing(data) {
   this.width = data.width;
   this.height = data.height;
   this.url = data.url;
   this.title = data.title;
-  this.attribution_url = data.attribution_url;
+  this.attributionUrl = data.attributionUrl;
   if (data.name) {
     this.name = data.name;
   }
@@ -19146,7 +19069,7 @@ function Listing(data) {
     this.thumbURL = data.thumbURL;
   }
   if (data.userLink) {
-    this.userLink = data.userLink
+    this.userLink = data.userLink;
   }
   if (data.anySize) {
     this.anySize = data.anySize;
@@ -19157,13 +19080,12 @@ function Listing(data) {
   if (data.ratio) {
     this.ratio = data.ratio;
   }
-};
+}
 
 // Contains and provides access to all the photo channels.
 function Channels() {
-  var that = this;
-  this._channelGuide = undefined; // maps channel ids to channels and metadata
-  this._loadFromStorage();
+  this.channelGuide = undefined; // maps channel ids to channels and metadata
+  this.loadFromStorage();
 }
 Channels.prototype = {
   // Inputs:
@@ -19172,47 +19094,49 @@ Channels.prototype = {
   //   enabled:bool - true if this channel is to be used for pictures.
   // Returns:
   //   id of newly created channel, or undefined if the channel already existed.
-  add: function(data) {
-    var klass = window[data.name];
-    if (!klass) {
-      klass = window["UnknownChannel"];
+  add(data) {
+    let Klass = window[data.name];
+    if (!Klass) {
+      Klass = window.UnknownChannel;
     }
-    var dataParam = JSON.stringify(data.param);
-    for (var id in this._channelGuide) {
-      var c = this._channelGuide[id];
-      if (c.name === data.name && JSON.stringify(c.param) === dataParam)
-        return;
+    const dataParam = JSON.stringify(data.param);
+    for (const id in this.channelGuide) {
+      const c = this.channelGuide[id];
+      if (c.name === data.name && JSON.stringify(c.param) === dataParam) {
+        return undefined;
+      }
     }
-    var id = Math.floor(Math.random() * Date.now());
-    var channel = new klass(data.param);
-    this._channelGuide[id] = {
+    const id = Math.floor(Math.random() * Date.now());
+    const channel = new Klass(data.param);
+    this.channelGuide[id] = {
       name: data.name,
       param: data.param,
       enabled: data.enabled,
-      channel: channel
+      channel,
     };
-    this._saveToStorage();
-    var that = this;
-    $(channel).bind("updated", function(event) {
-      chrome.extension.sendRequest({command: "channel-updated", id: id});
-      if (that._channelGuide[id].enabled)
-        that._channelGuide[id].channel.prefetch();
+    this.saveToStorage();
+    const that = this;
+    minjQuery(channel).bind('updated', () => {
+      chrome.extension.sendRequest({ command: 'channel-updated', id });
+      if (that.channelGuide[id].enabled) {
+        that.channelGuide[id].channel.prefetch();
+      }
     });
     channel.refresh();
     return id;
   },
 
-  remove: function(channelId) {
-    delete this._channelGuide[channelId];
-    this._saveToStorage();
+  remove(channelId) {
+    delete this.channelGuide[channelId];
+    this.saveToStorage();
   },
 
   // Return read-only map from each channel ID to
   // { name, param, enabled }.
-  getGuide: function() {
-    var results = {};
-    for (var id in this._channelGuide) {
-      var c = this._channelGuide[id];
+  getGuide() {
+    const results = {};
+    for (const id in this.channelGuide) {
+      const c = this.channelGuide[id];
       results[id] = {
         name: c.name,
         param: c.param,
@@ -19224,38 +19148,39 @@ Channels.prototype = {
   },
 
   // Return id for channel name
-  getIdByName: function(name) {
-    for (var id in this._channelGuide) {
-      if (this._channelGuide[id].name === name) {
+  getIdByName(name) {
+    for (const id in this.channelGuide) {
+      if (this.channelGuide[id].name === name) {
         return id;
       }
     }
     return undefined;
   },
 
-  getListings: function(id) {
-    return this._channelGuide[id].channel.getListings();
+  getListings(id) {
+    return this.channelGuide[id].channel.getListings();
   },
-  setEnabled: function(id, enabled) {
-    const originalValue = this._channelGuide[id].enabled;
-    this._channelGuide[id].enabled = enabled;
-    this._saveToStorage();
+  setEnabled(id, enabled) {
+    const originalValue = this.channelGuide[id].enabled;
+    this.channelGuide[id].enabled = enabled;
+    this.saveToStorage();
     if (originalValue !== enabled) {
-      channelsNotifier.emit("channels.changed", id, enabled, originalValue);
+      channelsNotifier.emit('channels.changed', id, enabled, originalValue);
     }
   },
 
-  refreshAllEnabled: function() {
-    for (var id in this._channelGuide) {
-      var data = this._channelGuide[id];
-      if (data.enabled)
+  refreshAllEnabled() {
+    for (const id in this.channelGuide) {
+      const data = this.channelGuide[id];
+      if (data.enabled) {
         data.channel.refresh();
+      }
     }
   },
 
-  isAnyEnabled: function() {
-    for (var id in this._channelGuide) {
-      var channel = this._channelGuide[id];
+  isAnyEnabled() {
+    for (const id in this.channelGuide) {
+      const channel = this.channelGuide[id];
       if (channel.enabled) {
         return true;
       }
@@ -19266,65 +19191,75 @@ Channels.prototype = {
   // Returns a random Listing from all enabled channels or from channel
   // |channelId| if specified, trying to match the ratio of |width| and
   // |height| decently.  Returns undefined if there are no enabled channels.
-  randomListing: function(opts) {
+  randomListing(opts) {
     if (!getSettings().picreplacement && !this.isAnyEnabled()) {
       return undefined;
     }
-    // if the element to be replace is 'fixed' in position, it may make for bad pic replacement element.
-    if (opts.position === "fixed") {
-      for (let subscription of filterStorage.subscriptions()) {
+    // if the element to be replace is 'fixed' in position, it may make for bad pic
+    // replacement element.
+    if (opts.position === 'fixed') {
+      for (const sub of filterStorage.subscriptions()) {
         if (sub.url === subscription1.url || sub.url === subscription2.url) {
           return undefined;
         }
       }
     }
 
-    var heightLowRange = opts.height;
-    var widthLowRange = opts.width;
-    var heightHighRange = (opts.height * 1.25);
-    var widthHighRange = (opts.width * 1.25);
-    var targetRatio = Math.max(opts.width, opts.height) / Math.min(opts.width, opts.height);
-    var typeMatchListings = [];
-    var rangeLimitedListings = [];
+    const heightLowRange = opts.height;
+    const widthLowRange = opts.width;
+    const heightHighRange = (opts.height * 1.25);
+    const widthHighRange = (opts.width * 1.25);
+    const typeMatchListings = [];
+    const rangeLimitedListings = [];
+    let targetRatio = Math.max(opts.width, opts.height) / Math.min(opts.width, opts.height);
 
-    for (var id in this._channelGuide) {
-      var data = this._channelGuide[id];
+    for (const id in this.channelGuide) {
+      const data = this.channelGuide[id];
       if (opts.channelId === id || (data.enabled && !opts.channelId)) {
-        data.channel.getListings().forEach(function(element) {
-            if ((opts.type === WIDE || opts.type === SKINNYWIDE) &&
-                 (element.type !== SKINNYTALL) &&
-                 (element.width <= widthHighRange) &&
-                 (element.height >= heightLowRange) &&
-                 (element.height <= heightHighRange)) {
-               rangeLimitedListings.push(element);
-            } else if ((opts.type === TALL || opts.type === SKINNYTALL) &&
-                (element.type !== SKINNYWIDE) &&
-                (element.width >= widthLowRange) &&
-                (element.width <= widthHighRange) &&
-                (element.height <= heightHighRange)) {
-               rangeLimitedListings.push(element);
-            } else if ((opts.type !== WIDE) &&
-                (opts.type !== TALL) &&
-                (opts.type !== SKINNYTALL) &&
-                (opts.type !== SKINNYWIDE) &&
-                (element.width >= widthLowRange) &&
-                (element.width <= widthHighRange) &&
-                (element.height >= heightLowRange) &&
-                (element.height <= heightHighRange)) {
-               rangeLimitedListings.push(element);
-            }
-            if (opts.type === element.type &&
-                element.width >= widthLowRange &&
-                element.height >= heightLowRange) {
-              typeMatchListings.push(element);
-            }
+        data.channel.getListings().forEach((element) => {
+          if (
+            (opts.type === WIDE || opts.type === SKINNYWIDE)
+            && (element.type !== SKINNYTALL)
+            && (element.width <= widthHighRange)
+            && (element.height >= heightLowRange)
+            && (element.height <= heightHighRange)
+          ) {
+            rangeLimitedListings.push(element);
+          } else if (
+            (opts.type === TALL || opts.type === SKINNYTALL)
+            && (element.type !== SKINNYWIDE)
+            && (element.width >= widthLowRange)
+            && (element.width <= widthHighRange)
+            && (element.height <= heightHighRange)
+          ) {
+            rangeLimitedListings.push(element);
+          } else if (
+            (opts.type !== WIDE)
+            && (opts.type !== TALL)
+            && (opts.type !== SKINNYTALL)
+            && (opts.type !== SKINNYWIDE)
+            && (element.width >= widthLowRange)
+            && (element.width <= widthHighRange)
+            && (element.height >= heightLowRange)
+            && (element.height <= heightHighRange)
+          ) {
+            rangeLimitedListings.push(element);
+          }
+          if (
+            opts.type === element.type
+            && element.width >= widthLowRange
+            && element.height >= heightLowRange
+          ) {
+            typeMatchListings.push(element);
+          }
         });
       }
     }
-    var exactTypeMatchListings = [];
+
+    let exactTypeMatchListings = [];
     if (rangeLimitedListings.length > 0) {
-      var randomIndex = Math.floor(Math.random() * rangeLimitedListings.length);
-      var theListing = Object.assign({}, rangeLimitedListings[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * rangeLimitedListings.length);
+      const theListing = Object.assign({}, rangeLimitedListings[randomIndex]);
       theListing.listingHeight = theListing.height;
       theListing.listingWidth = theListing.width;
       if (opts.height !== theListing.height && opts.width !== theListing.width) {
@@ -19332,58 +19267,64 @@ Channels.prototype = {
         theListing.width = opts.width;
       }
       return theListing;
-    } else {
-      var bestMatch = null;
-      var bestMatchRatio = 0;
-      var targetRatio = Math.max(opts.width, opts.height) / Math.min(opts.width, opts.height);
-      typeMatchListings.forEach(function(listing) {
-        if (Math.abs(listing.ratio - targetRatio) < Math.abs(bestMatchRatio - targetRatio)) {
-          exactTypeMatchListings = []; // remove previous matches
-          exactTypeMatchListings.push(listing);
-          bestMatch = listing;
-          bestMatchRatio = listing.ratio;
-        } else if (listing.ratio === bestMatchRatio) {
-          exactTypeMatchListings.push(listing);
-        }
-      });
-      if (exactTypeMatchListings.length > 0) {
-        var randomIndex = Math.floor(Math.random() * exactTypeMatchListings.length);
-        var theListing = Object.assign({}, exactTypeMatchListings[randomIndex]);
-        theListing.listingHeight = theListing.height;
-        theListing.listingWidth = theListing.width;
-        return theListing;
-      }
     }
+    let bestMatchRatio = 0;
+    targetRatio = Math.max(opts.width, opts.height) / Math.min(opts.width, opts.height);
+    typeMatchListings.forEach((listing) => {
+      if (Math.abs(listing.ratio - targetRatio) < Math.abs(bestMatchRatio - targetRatio)) {
+        exactTypeMatchListings = []; // remove previous matches
+        exactTypeMatchListings.push(listing);
+        bestMatchRatio = listing.ratio;
+      } else if (listing.ratio === bestMatchRatio) {
+        exactTypeMatchListings.push(listing);
+      }
+    });
+    if (exactTypeMatchListings.length > 0) {
+      const randomIndex = Math.floor(Math.random() * exactTypeMatchListings.length);
+      const theListing = Object.assign({}, exactTypeMatchListings[randomIndex]);
+      theListing.listingHeight = theListing.height;
+      theListing.listingWidth = theListing.width;
+      return theListing;
+    }
+
     return undefined;
   },
 
-  _loadFromStorage: function() {
-    this._channelGuide = {};
+  loadFromStorage() {
+    this.channelGuide = {};
 
-    var entries = storage_get("channels");
+    const entries = storageGet('channels');
     if (!entries || (entries.length > 0 && !entries[0].name)) {
-      this.add({name: "DogsChannel", param: undefined,
-                enabled: false});
-      this.add({name: "CatsChannel", param: undefined,
-                enabled: true});
-      this.add({name: "LandscapesChannel", param: undefined,
-                enabled: false});
-    }
-    else {
-      for (var i=0; i < entries.length; i++) {
+      this.add({
+        name: 'DogsChannel',
+        param: undefined,
+        enabled: false,
+      });
+      this.add({
+        name: 'CatsChannel',
+        param: undefined,
+        enabled: true,
+      });
+      this.add({
+        name: 'LandscapesChannel',
+        param: undefined,
+        enabled: false,
+      });
+    } else {
+      for (let i = 0; i < entries.length; i++) {
         this.add(entries[i]);
       }
     }
   },
 
-  _saveToStorage: function() {
-    var toStore = [];
-    var guide = this.getGuide();
-    for (var id in guide)
+  saveToStorage() {
+    const toStore = [];
+    const guide = this.getGuide();
+    for (const id in guide) {
       toStore.push(guide[id]);
-    storage_set("channels", toStore);
+    }
+    storageSet('channels', toStore);
   },
-
 };
 
 
@@ -19391,1333 +19332,1378 @@ Channels.prototype = {
 // Concrete constructors must accept a single argument, because Channels.add()
 // relies on that.
 function Channel() {
-  this.__listings = [];
-};
+  this.listings = [];
+}
 Channel.prototype = {
-  getListings: function() {
-    return this.__listings.slice(0); // shallow copy
+  getListings() {
+    return this.listings.slice(0); // shallow copy
   },
 
   // Update the channel's listings and trigger an 'updated' event.
-  refresh: function() {
-    var that = this;
-    this._getLatestListings(function(listings) {
-      that.__listings = listings;
-      $(that).trigger("updated");
+  refresh() {
+    const that = this;
+    this.getLatestListings((listings) => {
+      that.listings = listings;
+      minjQuery(that).trigger('updated');
     });
   },
 
   // Load all photos so that they're in the cache.
-  prefetch: function() {
-    //current - noop, since all of the URLs are hard coded.
+  prefetch() {
+    // current - noop, since all of the URLs are hard coded.
   },
 
-  _getLatestListings: function(callback) {
-    throw "Implemented by subclass. Call callback with up-to-date listings.";
+  getLatestListings() {
+    throw new Error('Implemented by subclass. Call callback with up-to-date listings.');
   },
 
-  _calculateType: function(w, h) {
-    if (typeof w === "string") {
-      w = parseInt(w, 10);
+  calculateType(w, h) {
+    let width = w;
+    let height = h;
+
+    if (typeof width === 'string') {
+      width = parseInt(width, 10);
     }
-    if (typeof h === "string") {
-      h = parseInt(h, 10);
+    if (typeof height === 'string') {
+      height = parseInt(height, 10);
     }
-    var type = "";
-    var ratio = Math.max(w,h) / Math.min(w, h);
+    let type = '';
+    const ratio = Math.max(width, height) / Math.min(width, height);
     if (ratio >= 1.5 && ratio < 7) {
-      type = (w > h ? imageSizesMap.get("wide") : imageSizesMap.get("tall"));
+      type = (width > height ? imageSizesMap.get('wide') : imageSizesMap.get('tall'));
     } else if (ratio > 7) {
-      type = (w > h ? imageSizesMap.get("skinnywide") : imageSizesMap.get("skinnytall"));
+      type = (width > height ? imageSizesMap.get('skinnywide') : imageSizesMap.get('skinnytall'));
     } else {
-      type = ((w > 125 || h > 125)  ? imageSizesMap.get("big") : imageSizesMap.get("small"));
+      type = ((width > 125 || height > 125) ? imageSizesMap.get('big') : imageSizesMap.get('small'));
     }
     return type;
-  }
+  },
 };
 
 Object.assign(window, {
   Channel,
   Channels,
   Listing,
-  channelsNotifier
+  channelsNotifier,
 });
+
 
 /***/ }),
 /* 72 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global Channel, Listing */
 
 
 // Channel containing hard coded cats loaded from disk.
 // Subclass of Channel.
 function CatsChannel() {
   Channel.call(this);
-};
+}
+
 CatsChannel.prototype = {
   __proto__: Channel.prototype,
 
-  _getLatestListings: function(callback) {
-    var that = this;
+  getLatestListings(callback) {
+    const that = this;
     function L(w, h, u) {
-      var type = that._calculateType(w, h);
-      if (typeof w === "number") {
-        w = "" + w + "";
+      let width = w;
+      let height = h;
+      const url = u;
+      const type = that.calculateType(width, height);
+
+      if (typeof width === 'number') {
+        width = `${width}`;
       }
-      if (typeof h === "number") {
-        h = "" + h + "";
+      if (typeof height === 'number') {
+        height = `${height}`;
       }
       return new Listing({
-        width: w,
-        height: h,
-        url: u,
-        attribution_url: u,
-        type: type,
-        ratio: Math.max(w, h) / Math.min(w, h),
-        title: "This is a cat!"
+        width,
+        height,
+        url,
+        attributionUrl: url,
+        type,
+        ratio: Math.max(width, height) / Math.min(width, height),
+        title: 'This is a cat!',
       });
     }
     // the listings never change
     callback([
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-7784.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-animal-animal-portrait-pet.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-feline-cute-domestic.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-kitten-rozkosne-little.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/eyes-cats-cat-couch.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-7784.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-animal-animal-portrait-pet.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-feline-cute-domestic.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-kitten-rozkosne-little.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/eyes-cats-cat-couch.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-7784.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-82072.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-animal-animal-portrait-pet.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-animal-cute-pet-39500.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-balcony-surprised-look-80363.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-british-shorthair-mieze-blue-eye-162174.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-british-shorthair-thoroughbred-adidas-162064.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-close-animal-cat-face-162309.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-eyes-view-face-66292.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-cute-domestic.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-furry-pet-53446.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-kitty-kitten-39380.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-home-animal-cat-s-eyes-46208.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-kitten-rozkosne-little.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-pet-eyes-animal-50566.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-pet-furry-face-162319.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-portrait-eyes-animal-162216.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-portrait-kitten-cute-128884.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-relax-chill-out-camacho-70844.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-tiger-getiegert-feel-at-home-160722.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/eyes-cats-cat-couch.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-105587.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-106131.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-116835.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-135859.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-142615.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-171216.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-172420.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-173909.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-192384.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-207166.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208845.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208860.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208878.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208880.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208906.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208907.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208954.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208971.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208998.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-209117.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-209800.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-210081.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-214657.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220826.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220876.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220951.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220970.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220983.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-236630.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-236633.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-244848.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-247007.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-248254.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-248289.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-248304.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-257423.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-271889.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-272124.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-289345.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-289381.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-290263.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-327014.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-349388.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-372651.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-372657.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-416088.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-416138.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-416208.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-437886.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-461872.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-549237.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-576802.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-583250.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-596590.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-599492.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-605048.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-622549.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-65536.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-674568.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-674577 (1).jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-674577.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-679855.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-680437.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-683205.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-689042.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-709482.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-720684.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-731553.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-731637.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-733105.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-736528.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-745241.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-749212.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-751050.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-89951.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-92174.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-94434.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-95328.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-close-animal-cat-face-1623-9.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-kitty-kitten-3938-.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-1-5587.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-17242-.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-1739-9.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-2-886-.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-2-8878.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-58325-.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-6832-5.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-7-9482.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-751-5-.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-7784.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-82072.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-animal-animal-portrait-pet.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-animal-cute-pet-39500.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-balcony-surprised-look-80363.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-british-shorthair-mieze-blue-eye-162174.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-british-shorthair-thoroughbred-adidas-162064.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-close-animal-cat-face-162309.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-eyes-view-face-66292.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-feline-cute-domestic.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-feline-furry-pet-53446.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-feline-kitty-kitten-39380.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-home-animal-cat-s-eyes-46208.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-kitten-rozkosne-little.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-pet-eyes-animal-50566.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-pet-furry-face-162319.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-portrait-eyes-animal-162216.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-portrait-kitten-cute-128884.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-relax-chill-out-camacho-70844.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-tiger-getiegert-feel-at-home-160722.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/eyes-cats-cat-couch.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-105587.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-106131.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-116835.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-135859.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-142615.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-171216.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-172420.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-173909.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-192384.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-207166.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208845.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208860.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208878.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208880.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208906.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208907.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208954.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208971.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208998.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-209117.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-209800.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-210081.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-214657.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220826.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220876.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220951.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220970.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220983.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-236630.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-236633.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-244848.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-247007.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-248254.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-248289.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-248304.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-257423.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-271889.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-272124.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-289345.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-289381.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-290263.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-327014.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-349388.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-372651.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-372657.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-416088.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-416138.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-416208.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-437886.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-461872.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-549237.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-576802.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-583250.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-596590.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-599492.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-605048.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-622549.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-65536.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-674568.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-674577 (1).jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-674577.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-679855.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-680437.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-683205.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-689042.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-709482.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-720684.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-731553.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-731637.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-733105.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-736528.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-745241.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-749212.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-751050.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-89951.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-92174.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-94434.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-95328.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-1-6131.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-2-89-6.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-2-9117.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-22-983.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-23663-.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-4162-8.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-5768-2.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-68-437.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-7331-5.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-116835.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-59659-.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-7331-5.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-94434.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-7784.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-animal-animal-portrait-pet.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-feline-cute-domestic.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-kitten-rozkosne-little.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/eyes-cats-cat-couch.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-7784.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-animal-animal-portrait-pet.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-feline-cute-domestic.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-kitten-rozkosne-little.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/eyes-cats-cat-couch.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-7784.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-animal-animal-portrait-pet.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-feline-cute-domestic.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-kitten-rozkosne-little.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/eyes-cats-cat-couch.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-7784.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-animal-animal-portrait-pet.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-feline-cute-domestic.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-kitten-rozkosne-little.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/eyes-cats-cat-couch.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_01.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_02.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_03.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_04.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_05.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-2.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-3.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-4.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-5.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_-3.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_01.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_02.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_03.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_04.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_05.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x12-_-1.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/-4.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_01.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_02.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_03.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_04.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_05.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/-1.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/-2.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/-3.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_12--x5-_-3.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_12--x5-_-5.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_01.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_02.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_03.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_04.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_05.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/-1.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/-2.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_24--x1--_-2.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_24--x1--_-4.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_01.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_02.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_03.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_04.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_05.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/-3.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/-4.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1-9-x43_-5.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_01.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_02.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_03.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_04.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_05.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-2.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-3.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-4.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-5.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_218-x86_-1.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_218-x86_-3.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_01.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_02.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_03.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_04.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_05.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/-1.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/-2.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_01.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_02.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_03.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_04.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_05.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-1.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-2.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-3.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-4.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-5.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-1.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-2.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-3.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-4.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-5.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_01.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_02.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_03.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_04.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_05.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_01.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_02.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_03.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_04.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_05.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/-1.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/-4.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/-5.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-1.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-2.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-3.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-4.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-5.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-1.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-2.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-3.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-4.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-5.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-1.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-2.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-3.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-4.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-5.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_01.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_02.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_03.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_04.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_05.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_01.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_02.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_03.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_04.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_05.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-3.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-4.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-6.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-7.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-8.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_1-.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_01.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_02.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_03.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_04.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_05.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_01.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_02.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_03.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_04.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_05.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_-4.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_-1.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_01.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_02.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_03.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_04.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_05.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_01.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_02.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_03.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_04.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_05.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-1.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-2.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-4.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-5.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-9.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_1-.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_11.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Cats/16-x6--/32-x12--/cat-kitten-rozkosne-little.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Cats/16-x6--/32-x12--/cat-7784.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-437886.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-2-8845.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-21--81.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-22-983.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-22-97-.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-416138.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-59659-.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-731553.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-89951.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/cat-7784.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/cat-82-72.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/cat-feline-cute-domestic.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-1-5587.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-1-6131.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-142615.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-17242-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-1739-9.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-8845.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-886-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-888-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-89-6.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-89-7.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-9117.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-98--.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-826.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-876.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-951.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-983.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-244848.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2483-4.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-416138.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-549237.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-59659-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-599492.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-6-5-48.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-622549.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-674568.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-674577.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-679855.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-689-42.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-7-9482.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-7331-5.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-736528.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-745241.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-749212.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/cat-7784.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/cat-82-72.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/cat-feline-cute-domestic.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/domestic-cat-cat-adidas-relaxed.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-1-5587.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-1-6131.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-142615.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-17242-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-1739-9.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-8845.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-886-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-888-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-89-6.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-89-7.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-9117.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-98--.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-826.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-876.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-951.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-983.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-244848.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2483-4.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-416138.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-549237.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-59659-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-599492.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-6-5-48.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-622549.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-674568.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-674577.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-679855.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-689-42.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-7-9482.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-7331-5.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-736528.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-745241.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-749212.jpg"),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-7784.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-animal-animal-portrait-pet.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-feline-cute-domestic.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/cat-kitten-rozkosne-little.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/12--x628/eyes-cats-cat-couch.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-7784.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-animal-animal-portrait-pet.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-feline-cute-domestic.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/cat-kitten-rozkosne-little.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Cats/12--x628/24--x1256/eyes-cats-cat-couch.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-7784.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-82072.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-animal-animal-portrait-pet.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-animal-cute-pet-39500.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-balcony-surprised-look-80363.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-british-shorthair-mieze-blue-eye-162174.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-british-shorthair-thoroughbred-adidas-162064.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-close-animal-cat-face-162309.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-eyes-view-face-66292.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-cute-domestic.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-furry-pet-53446.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-kitty-kitten-39380.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-home-animal-cat-s-eyes-46208.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-kitten-rozkosne-little.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-pet-eyes-animal-50566.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-pet-furry-face-162319.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-portrait-eyes-animal-162216.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-portrait-kitten-cute-128884.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-relax-chill-out-camacho-70844.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-tiger-getiegert-feel-at-home-160722.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/eyes-cats-cat-couch.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-105587.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-106131.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-116835.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-135859.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-142615.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-171216.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-172420.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-173909.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-192384.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-207166.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208845.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208860.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208878.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208880.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208906.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208907.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208954.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208971.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-208998.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-209117.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-209800.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-210081.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-214657.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220826.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220876.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220951.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220970.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-220983.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-236630.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-236633.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-244848.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-247007.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-248254.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-248289.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-248304.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-257423.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-271889.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-272124.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-289345.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-289381.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-290263.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-327014.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-349388.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-372651.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-372657.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-416088.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-416138.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-416208.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-437886.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-461872.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-549237.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-576802.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-583250.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-596590.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-599492.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-605048.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-622549.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-65536.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-674568.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-674577 (1).jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-674577.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-679855.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-680437.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-683205.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-689042.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-709482.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-720684.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-731553.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-731637.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-733105.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-736528.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-745241.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-749212.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-751050.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-89951.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-92174.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-94434.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-95328.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-close-animal-cat-face-1623-9.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/cat-feline-kitty-kitten-3938-.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-1-5587.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-17242-.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-1739-9.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-2-886-.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-2-8878.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-58325-.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-6832-5.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-7-9482.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/3--x25-/pexels-photo-751-5-.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-7784.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-82072.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-animal-animal-portrait-pet.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-animal-cute-pet-39500.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-balcony-surprised-look-80363.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-british-shorthair-mieze-blue-eye-162174.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-british-shorthair-thoroughbred-adidas-162064.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-close-animal-cat-face-162309.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-eyes-view-face-66292.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-feline-cute-domestic.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-feline-furry-pet-53446.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-feline-kitty-kitten-39380.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-home-animal-cat-s-eyes-46208.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-kitten-rozkosne-little.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-pet-eyes-animal-50566.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-pet-furry-face-162319.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-portrait-eyes-animal-162216.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-portrait-kitten-cute-128884.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-relax-chill-out-camacho-70844.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/cat-tiger-getiegert-feel-at-home-160722.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/eyes-cats-cat-couch.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-105587.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-106131.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-116835.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-135859.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-142615.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-171216.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-172420.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-173909.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-192384.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-207166.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208845.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208860.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208878.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208880.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208906.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208907.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208954.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208971.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-208998.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-209117.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-209800.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-210081.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-214657.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220826.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220876.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220951.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220970.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-220983.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-236630.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-236633.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-244848.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-247007.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-248254.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-248289.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-248304.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-257423.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-271889.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-272124.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-289345.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-289381.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-290263.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-327014.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-349388.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-372651.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-372657.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-416088.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-416138.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-416208.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-437886.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-461872.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-549237.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-576802.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-583250.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-596590.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-599492.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-605048.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-622549.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-65536.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-674568.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-674577 (1).jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-674577.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-679855.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-680437.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-683205.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-689042.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-709482.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-720684.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-731553.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-731637.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-733105.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-736528.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-745241.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-749212.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-751050.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-89951.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-92174.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-94434.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-95328.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-1-6131.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-2-89-6.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-2-9117.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-22-983.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-23663-.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-4162-8.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-5768-2.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-68-437.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/6--x5--/pexels-photo-7331-5.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-116835.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-59659-.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-7331-5.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Cats/3--x25-/_6--x5--/pexels-photo-94434.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-7784.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-animal-animal-portrait-pet.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-feline-cute-domestic.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/cat-kitten-rozkosne-little.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/3--x6--/eyes-cats-cat-couch.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-7784.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-animal-animal-portrait-pet.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-feline-cute-domestic.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/cat-kitten-rozkosne-little.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Cats/3--x6--/6--x12--/eyes-cats-cat-couch.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-7784.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-animal-animal-portrait-pet.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-feline-cute-domestic.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/cat-kitten-rozkosne-little.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/336x28-/eyes-cats-cat-couch.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-7784.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-animal-animal-portrait-pet.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-feline-cute-domestic.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/cat-kitten-rozkosne-little.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Cats/336x28-/672x56-/eyes-cats-cat-couch.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_01.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_02.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_03.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_04.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_05.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-2.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-3.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-4.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/-5.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/468x6-/cat_468x6-_-3.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_01.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_02.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_03.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_04.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x120_05.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/cat_936x12-_-1.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Cats/468x6-/936x12-/-4.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_01.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_02.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_03.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_04.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_1200x50_05.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/-1.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/-2.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/-3.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_12--x5-_-3.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/12--x5-/cat_12--x5-_-5.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_01.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_02.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_03.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_04.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_2400x100_05.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/-1.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/-2.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_24--x1--_-2.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Cats/12--x5-/24--x1--/cat_24--x1--_-4.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_01.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_02.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_03.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_04.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1090x43_05.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/-3.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/-4.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/1-9-x43/ad_1-9-x43_-5.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_01.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_02.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_03.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_04.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_2180x86_05.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-2.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-3.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-4.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/-5.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_218-x86_-1.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Cats/1-9-x43/218-x86/cat_218-x86_-3.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_01.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_02.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_03.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_04.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/cat_450x62_05.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/-1.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/45-x62/-2.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_01.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_02.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_03.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_04.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_900x124_05.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-1.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-2.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-3.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-4.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/-5.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-1.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-2.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-3.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-4.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Cats/45-x62/9--x124/cat_9--x124_-5.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_01.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_02.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_03.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_04.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/1440x90/cat_1440x90_05.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_01.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_02.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_03.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_04.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/2880x180/cat_2880x180_05.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/-1.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/-4.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/-5.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-1.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-2.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-3.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-4.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/144-x9-/cat_144-x9-_-5.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-1.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-2.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-3.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-4.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/-5.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-1.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-2.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-3.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-4.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Cats/144-x9-/288-x18-/cat_288-x18-_-5.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_01.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_02.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_03.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_04.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x180_05.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_01.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_02.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_03.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_04.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_05.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-3.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-4.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-6.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-7.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_-8.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/1456x18-/cat_1456x18-_1-.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_01.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_02.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_03.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_04.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x90_05.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_01.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_02.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_03.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_04.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_05.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_-4.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Cats/728x9-/728x9-/cat_728x9-_-1.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_01.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_02.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_03.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_04.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/34-x9-/Cats_34-x9-_05.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_01.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_02.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_03.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_04.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_05.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-1.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-2.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-4.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-5.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_-9.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_1-.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Cats/34-x9-/68-x18-/Cats_68-x18-_11.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Cats/16-x6--/32-x12--/cat-kitten-rozkosne-little.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Cats/16-x6--/32-x12--/cat-7784.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-437886.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-2-8845.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-21--81.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/112-x1344/pexels-photo-22-983.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-22-97-.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-416138.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-59659-.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-731553.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Cats/56-x672/56-x672/pexels-photo-89951.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/cat-7784.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/cat-82-72.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/cat-feline-cute-domestic.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-1-5587.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-1-6131.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-142615.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-17242-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-1739-9.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-8845.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-886-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-888-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-89-6.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-89-7.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-9117.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2-98--.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-826.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-876.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-951.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-22-983.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-244848.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-2483-4.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-416138.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-549237.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-59659-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-599492.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-6-5-48.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-622549.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-674568.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-674577.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-679855.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-689-42.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-7-9482.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-7331-5.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-736528.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-745241.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/18-x68-/pexels-photo-749212.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/cat-7784.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/cat-82-72.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/cat-feline-cute-domestic.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/domestic-cat-cat-adidas-relaxed.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-1-5587.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-1-6131.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-142615.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-17242-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-1739-9.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-8845.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-886-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-888-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-89-6.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-89-7.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-9117.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2-98--.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-826.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-876.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-951.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-22-983.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-244848.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-2483-4.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-416138.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-549237.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-59659-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-599492.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-6-5-48.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-622549.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-674568.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-674577.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-679855.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-689-42.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-7-9482.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-7331-5.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-736528.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-745241.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Cats/18-x68-/36-x136-/pexels-photo-749212.jpg'),
     ]);
-  }
+  },
 };
 
 Object.assign(window, {
-  CatsChannel
+  CatsChannel,
 });
+
 
 /***/ }),
 /* 73 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global Channel, Listing */
+
 
 // Channel containing hard coded dogs loaded from CDN
 // Subclass of Channel.
 function DogsChannel() {
   Channel.call(this);
-};
+}
 DogsChannel.prototype = {
   __proto__: Channel.prototype,
 
-  _getLatestListings: function(callback) {
-    var that = this;
+  getLatestListings(callback) {
+    const that = this;
     function L(w, h, u) {
-      var type = that._calculateType(w, h);
-      if (typeof w === "number") {
-        w = "" + w + "";
+      let width = w;
+      let height = h;
+      const url = u;
+      const type = that.calculateType(width, height);
+
+      if (typeof width === 'number') {
+        width = `${width}`;
       }
-      if (typeof h === "number") {
-        h = "" + h + "";
+      if (typeof height === 'number') {
+        height = `${height}`;
       }
       return new Listing({
-        width: w,
-        height: h,
-        url: u,
-        attribution_url: u,
-        type: type,
-        ratio: Math.max(w, h) / Math.min(w, h),
-        title: "This is a dog!"
+        width,
+        height,
+        url,
+        attributionUrl: url,
+        type,
+        ratio: Math.max(width, height) / Math.min(width, height),
+        title: 'This is a dog!',
       });
     }
     // the listings never change
     callback([
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/animal-dog-golden-retriever-9716.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/animal-dog-pet-brown.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/bordeaux-mastiff-dog-animal.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dalmatians-dog-animal-head.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dog-brown-snout-fur.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dog-cute-pet.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dog-young-dog-small-dog-maltese.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/nature-animal-dog-pet.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/night-animal-dog-pet.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/night-garden-yellow-animal.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/wall-animal-dog-pet.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/animal-dog-golden-retriever-9716.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/animal-dog-pet-brown.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/bordeaux-mastiff-dog-animal.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dalmatians-dog-animal-head.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dog-brown-snout-fur.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dog-cute-pet.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dog-young-dog-small-dog-maltese.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/nature-animal-dog-pet.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/night-animal-dog-pet.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/night-garden-yellow-animal.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/wall-animal-dog-pet.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/animal-dog-golden-retriever-9716.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/animal-dog-pet-brown.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/bordeaux-mastiff-dog-animal.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dalmatians-dog-animal-head.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dog-brown-snout-fur.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dog-cute-pet.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dog-young-dog-small-dog-maltese.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/nature-animal-dog-pet.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/night-animal-dog-pet.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/night-garden-yellow-animal.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/wall-animal-dog-pet.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/animal-dog-golden-retriever-9716.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/animal-dog-pet-brown.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/bordeaux-mastiff-dog-animal.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dalmatians-dog-animal-head.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dog-brown-snout-fur.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dog-cute-pet.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dog-young-dog-small-dog-maltese.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/nature-animal-dog-pet.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/night-animal-dog-pet.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/night-garden-yellow-animal.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/wall-animal-dog-pet.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/animal-dog-golden-retriever-9716.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/animal-dog-pet-brown.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/bordeaux-mastiff-dog-animal.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dalmatians-dog-animal-head.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dog-brown-snout-fur.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dog-cute-pet.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dog-young-dog-small-dog-maltese.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/nature-animal-dog-pet.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/night-animal-dog-pet.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/night-garden-yellow-animal.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/wall-animal-dog-pet.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/animal-dog-golden-retriever-9716.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/animal-dog-pet-brown.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/bordeaux-mastiff-dog-animal.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dalmatians-dog-animal-head.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dog-brown-snout-fur.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dog-cute-pet.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dog-young-dog-small-dog-maltese.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/nature-animal-dog-pet.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/night-animal-dog-pet.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/night-garden-yellow-animal.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/wall-animal-dog-pet.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/animal-dog-golden-retriever-9716.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/animal-dog-pet-brown.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/bordeaux-mastiff-dog-animal.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dalmatians-dog-animal-head.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dog-brown-snout-fur.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dog-cute-pet.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dog-young-dog-small-dog-maltese.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/nature-animal-dog-pet.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/night-animal-dog-pet.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/night-garden-yellow-animal.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/wall-animal-dog-pet.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/animal-dog-golden-retriever-9716.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/animal-dog-pet-brown.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/bordeaux-mastiff-dog-animal.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dalmatians-dog-animal-head.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dog-brown-snout-fur.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dog-cute-pet.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dog-young-dog-small-dog-maltese.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/nature-animal-dog-pet.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/night-animal-dog-pet.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/night-garden-yellow-animal.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/wall-animal-dog-pet.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_01.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_02.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_03.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_04.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_05.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/-3.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/-4.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_-2.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_-4.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_01.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_02.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_03.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_04.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_05.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-1.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-2.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-3.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-4.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-5.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-1.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-2.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-4.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-5.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_01.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_02.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_03.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_04.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_05.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/-4.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/-5.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_45-x62_-1.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_01.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_02.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_03.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_04.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_05.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-1.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-3.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-4.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-5.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-1.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-2.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-3.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-4.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-5.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_01.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_02.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_03.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_04.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_05.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/-2.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/-3.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1-9-x43_-1.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1-9-x43_-2.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1-9-x43_-3.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_01.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_02.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_03.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_04.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_05.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-1.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-2.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-3.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-5.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_218-x86_-2.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_218-x86_-3.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_218-x86_-4.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_01.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_02.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_03.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_04.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_05.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/-2.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_12--x5-_-2.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_12--x5-_-3.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_01.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_02.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_03.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_04.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_05.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/-3.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/-4.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_24--x1--_-1.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_24--x1--_-4.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_01.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_02.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_03.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_04.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_05.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/-5.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_144-x9-_-2.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_01.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_02.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_03.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_04.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_05.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/-2.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_288-x18-_-5.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/-5.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_01.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_02.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_03.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_04.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_05.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_01.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_02.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_03.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_04.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_05.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-1.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-2.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-3.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-4.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-5.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-6.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-7.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-8.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-9.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_1-.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_11.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_01.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_02.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_03.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_04.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_05.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_01.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_02.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_03.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_04.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_05.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_-2.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_-4.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_01.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_02.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_03.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_04.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_05.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-1.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-3.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-4.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-8.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-9.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_1-.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_01.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_02.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_03.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_04.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_05.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-1.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-2.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-4.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-5.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-6.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-7.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-9.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_1-.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_11.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/bordeaux-mastiff-dog-animal.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/dog-cute-pet.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/wall-animal-dog-pet.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/animal-dog-pet-brown.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/bordeaux-mastiff-dog-animal.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/dog-young-dog-small-dog-maltese.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/night-garden-yellow-animal.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/56-x672/pexels-photo-97863.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/56-x672/dog-animal-friend-pointer-16226-.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/56-x672/pexels-photo-594687.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-113883.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-434-9-.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-46-186.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-58997.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/pexels-photo-89249.png"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/pexels-photo-89249.png"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/pexels-photo-89249.png"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/pexels-photo-89249.png"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/pexels-photo-89249.png"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/pexels-photo-89249.png"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/pexels-photo-89249.png"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/pexels-photo-89249.png"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/pexels-photo-89249.png"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/bordeaux-mastiff-dog-animal.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dalmatians-dog-animal-head.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-bernese-mountain-dog-berner-senner-dog-577-8.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-bulldog-white-tongue-4-986.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-cavalier-king-charles-spaniel-funny-pet-162193.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-hybrid-animal-lying-162349.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-young-dog-puppy-59965.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-young-dog-small-dog-maltese.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/english-bulldog-bulldog-canine-dog-4-544.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/french-bulldog-summer-smile-joy-16-846.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/nature-animal-dog-pet.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/papillon-dog-animal-59969.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-13-763.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-134392.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-164446.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-169524.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-2358-5.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-247997.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-25757-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-257577.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-271824.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-356378.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-3749-8.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-412465.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-4162-4.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-452772.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-46-132.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-46-823.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-485294.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-532423.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-58997.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-594687.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-612813.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-61372.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-66687-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-688694.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-71-927.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-72-678.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-752383.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-8--33-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-9238-.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/tibet-terrier-cute-pet-dog-162276.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/wall-animal-dog-pet.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/weimaraner-puppy-dog-snout-97-82.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/wildlife-photography-pet-photography-dog-animal-159541.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/wildlife-photography-pet-photography-dog-dog-runs-159492.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/bordeaux-mastiff-dog-animal.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dalmatians-dog-animal-head.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-bernese-mountain-dog-berner-senner-dog-577-8.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-bulldog-white-tongue-4-986.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-cavalier-king-charles-spaniel-funny-pet-162193.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-hybrid-animal-lying-162349.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-young-dog-puppy-59965.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-young-dog-small-dog-maltese.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/english-bulldog-bulldog-canine-dog-4-544.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/french-bulldog-summer-smile-joy-16-846.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/nature-animal-dog-pet.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/papillon-dog-animal-59969.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-13-763.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-134392.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-164446.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-169524.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-2358-5.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-247997.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-25757-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-257577.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-271824.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-356378.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-3749-8.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-412465.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-4162-4.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-452772.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-46-132.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-46-823.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-485294.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-532423.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-58997.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-594687.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-612813.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-61372.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-66687-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-688694.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-71-927.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-72-678.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-752383.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-8--33-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-9238-.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/tibet-terrier-cute-pet-dog-162276.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/wall-animal-dog-pet.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/weimaraner-puppy-dog-snout-97-82.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/wildlife-photography-pet-photography-dog-animal-159541.jpg"),
-      L(360,1360,"https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/wildlife-photography-pet-photography-dog-dog-runs-159492.jpg"),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/animal-dog-golden-retriever-9716.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/animal-dog-pet-brown.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/bordeaux-mastiff-dog-animal.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dalmatians-dog-animal-head.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dog-brown-snout-fur.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dog-cute-pet.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/dog-young-dog-small-dog-maltese.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/nature-animal-dog-pet.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/night-animal-dog-pet.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/night-garden-yellow-animal.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/wall-animal-dog-pet.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/animal-dog-golden-retriever-9716.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/animal-dog-pet-brown.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/bordeaux-mastiff-dog-animal.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dalmatians-dog-animal-head.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dog-brown-snout-fur.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dog-cute-pet.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/dog-young-dog-small-dog-maltese.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/nature-animal-dog-pet.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/night-animal-dog-pet.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/night-garden-yellow-animal.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/wall-animal-dog-pet.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/animal-dog-golden-retriever-9716.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/animal-dog-pet-brown.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/bordeaux-mastiff-dog-animal.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dalmatians-dog-animal-head.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dog-brown-snout-fur.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dog-cute-pet.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/dog-young-dog-small-dog-maltese.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/nature-animal-dog-pet.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/night-animal-dog-pet.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/night-garden-yellow-animal.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/wall-animal-dog-pet.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/animal-dog-golden-retriever-9716.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/animal-dog-pet-brown.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/bordeaux-mastiff-dog-animal.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dalmatians-dog-animal-head.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dog-brown-snout-fur.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dog-cute-pet.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/dog-young-dog-small-dog-maltese.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/nature-animal-dog-pet.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/night-animal-dog-pet.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/night-garden-yellow-animal.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/wall-animal-dog-pet.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/animal-dog-golden-retriever-9716.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/animal-dog-pet-brown.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/bordeaux-mastiff-dog-animal.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dalmatians-dog-animal-head.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dog-brown-snout-fur.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dog-cute-pet.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/dog-young-dog-small-dog-maltese.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/nature-animal-dog-pet.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/night-animal-dog-pet.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/night-garden-yellow-animal.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/wall-animal-dog-pet.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/animal-dog-golden-retriever-9716.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/animal-dog-pet-brown.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/bordeaux-mastiff-dog-animal.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dalmatians-dog-animal-head.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dog-brown-snout-fur.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dog-cute-pet.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/dog-young-dog-small-dog-maltese.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/nature-animal-dog-pet.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/night-animal-dog-pet.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/night-garden-yellow-animal.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/wall-animal-dog-pet.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/animal-dog-golden-retriever-9716.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/animal-dog-pet-brown.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/bordeaux-mastiff-dog-animal.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dalmatians-dog-animal-head.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dog-brown-snout-fur.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dog-cute-pet.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/dog-young-dog-small-dog-maltese.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/nature-animal-dog-pet.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/night-animal-dog-pet.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/night-garden-yellow-animal.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/wall-animal-dog-pet.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/animal-dog-golden-retriever-9716.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/animal-dog-pet-brown.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/bordeaux-mastiff-dog-animal.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dalmatians-dog-animal-head.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dog-brown-snout-fur.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dog-cute-pet.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/dog-young-dog-small-dog-maltese.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/nature-animal-dog-pet.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/night-animal-dog-pet.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/night-garden-yellow-animal.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/wall-animal-dog-pet.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_01.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_02.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_03.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_04.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_05.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/-3.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/-4.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_-2.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/468x6-/dog_468x6-_-4.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_01.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_02.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_03.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_04.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x120_05.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-1.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-2.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-3.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-4.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/-5.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-1.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-2.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-4.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Dogs/468x6-/936x12-/dog_936x12-_-5.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_01.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_02.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_03.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_04.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_450x62_05.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/-4.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/-5.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/45-x62/dog_45-x62_-1.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_01.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_02.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_03.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_04.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_900x124_05.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-1.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-3.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-4.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/-5.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-1.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-2.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-3.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-4.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Dogs/45-x62/9--x124/dog_9--x124_-5.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_01.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_02.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_03.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_04.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1090x43_05.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/-2.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/-3.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1-9-x43_-1.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1-9-x43_-2.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/1-9-x43/dog_1-9-x43_-3.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_01.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_02.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_03.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_04.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_2180x86_05.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-1.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-2.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-3.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/-5.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_218-x86_-2.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_218-x86_-3.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Dogs/1-9-x43/218-x86/dog_218-x86_-4.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_01.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_02.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_03.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_04.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_1200x50_05.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/-2.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_12--x5-_-2.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/12--x5-/dog_12--x5-_-3.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_01.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_02.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_03.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_04.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_2400x100_05.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/-3.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/-4.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_24--x1--_-1.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Dogs/12--x5-/24--x1--/dog_24--x1--_-4.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_01.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_02.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_03.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_04.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_1440x90_05.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/-5.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/144-x9-/dog_144-x9-_-2.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_01.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_02.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_03.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_04.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_2880x180_05.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/-2.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/dog_288-x18-_-5.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Dogs/144-x9-/288-x18-/-5.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_01.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_02.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_03.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_04.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x180_05.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_01.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_02.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_03.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_04.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_05.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-1.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-2.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-3.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-4.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-5.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-6.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-7.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-8.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_-9.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_1-.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/1456x18-/Dog_1456x18-_11.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_01.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_02.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_03.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_04.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x90_05.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_01.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_02.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_03.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_04.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_05.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_-2.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Dogs/728x9-/728x9-/Dog_728x9-_-4.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_01.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_02.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_03.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_04.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_05.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-1.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-3.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-4.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-8.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_-9.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/34-x9-/Dogs_34-x9-_1-.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_01.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_02.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_03.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_04.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_05.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-1.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-2.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-4.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-5.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-6.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-7.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_-9.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_1-.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Dogs/34-x9-/68-x18-/Dogs_68-x18-_11.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/bordeaux-mastiff-dog-animal.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/dog-cute-pet.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/wall-animal-dog-pet.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/animal-dog-pet-brown.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/bordeaux-mastiff-dog-animal.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/dog-young-dog-small-dog-maltese.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/32-x12--/night-garden-yellow-animal.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/56-x672/pexels-photo-97863.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/56-x672/dog-animal-friend-pointer-16226-.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/56-x672/pexels-photo-594687.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-113883.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-434-9-.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-46-186.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Dogs/56-x672/112-x1344/pexels-photo-58997.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/12--x628/pexels-photo-89249.png'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Dogs/12--x628/24--x1256/pexels-photo-89249.png'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/3--x25-/pexels-photo-89249.png'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Dogs/3--x25-/6--x5--/pexels-photo-89249.png'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/3--x6--/pexels-photo-89249.png'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Dogs/3--x6--/6--x12--/pexels-photo-89249.png'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/336x28-/pexels-photo-89249.png'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Dogs/336x28-/672x56-/pexels-photo-89249.png'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Dogs/16-x6--/16-x6--/pexels-photo-89249.png'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/bordeaux-mastiff-dog-animal.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dalmatians-dog-animal-head.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-bernese-mountain-dog-berner-senner-dog-577-8.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-bulldog-white-tongue-4-986.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-cavalier-king-charles-spaniel-funny-pet-162193.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-hybrid-animal-lying-162349.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-young-dog-puppy-59965.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/dog-young-dog-small-dog-maltese.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/english-bulldog-bulldog-canine-dog-4-544.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/french-bulldog-summer-smile-joy-16-846.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/nature-animal-dog-pet.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/papillon-dog-animal-59969.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-13-763.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-134392.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-164446.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-169524.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-2358-5.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-247997.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-25757-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-257577.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-271824.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-356378.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-3749-8.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-412465.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-4162-4.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-452772.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-46-132.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-46-823.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-485294.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-532423.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-58997.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-594687.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-612813.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-61372.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-66687-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-688694.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-71-927.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-72-678.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-752383.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-8--33-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/pexels-photo-9238-.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/tibet-terrier-cute-pet-dog-162276.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/wall-animal-dog-pet.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/weimaraner-puppy-dog-snout-97-82.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/wildlife-photography-pet-photography-dog-animal-159541.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/18-x68-/wildlife-photography-pet-photography-dog-dog-runs-159492.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/bordeaux-mastiff-dog-animal.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dalmatians-dog-animal-head.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-bernese-mountain-dog-berner-senner-dog-577-8.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-bulldog-white-tongue-4-986.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-cavalier-king-charles-spaniel-funny-pet-162193.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-hybrid-animal-lying-162349.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-young-dog-puppy-59965.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/dog-young-dog-small-dog-maltese.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/english-bulldog-bulldog-canine-dog-4-544.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/french-bulldog-summer-smile-joy-16-846.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/nature-animal-dog-pet.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/papillon-dog-animal-59969.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-13-763.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-134392.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-164446.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-169524.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-2358-5.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-247997.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-25757-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-257577.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-271824.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-356378.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-3749-8.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-412465.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-4162-4.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-452772.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-46-132.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-46-823.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-485294.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-532423.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-58997.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-594687.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-612813.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-61372.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-66687-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-688694.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-71-927.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-72-678.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-752383.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-8--33-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/pexels-photo-9238-.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/tibet-terrier-cute-pet-dog-162276.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/wall-animal-dog-pet.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/weimaraner-puppy-dog-snout-97-82.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/wildlife-photography-pet-photography-dog-animal-159541.jpg'),
+      L(360, 1360, 'https://cdn.adblockcdn.com/pix/Dogs/18-x68-/36-x136-/wildlife-photography-pet-photography-dog-dog-runs-159492.jpg'),
     ]);
-  }
+  },
 };
 
 Object.assign(window, {
-  DogsChannel
+  DogsChannel,
 });
+
 
 /***/ }),
 /* 74 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global Channel, Listing */
+
 
 // Channel containing hard coded Landscapes loaded from CDN.
 // Subclass of Channel.
 function LandscapesChannel() {
   Channel.call(this);
-};
+}
 LandscapesChannel.prototype = {
   __proto__: Channel.prototype,
 
-  _getLatestListings: function(callback) {
-    var that = this;
+  getLatestListings(callback) {
+    const that = this;
     function L(w, h, u) {
-      var type = that._calculateType(w, h);
-      if (typeof w === "number") {
-        w = "" + w + "";
+      let width = w;
+      let height = h;
+      const url = u;
+      const type = that.calculateType(width, height);
+
+      if (typeof width === 'number') {
+        width = `${width}`;
       }
-      if (typeof h === "number") {
-        h = "" + h + "";
+      if (typeof height === 'number') {
+        height = `${height}`;
       }
       return new Listing({
-        width: w,
-        height: h,
-        url: u,
-        attribution_url: u,
-        type: type,
-        ratio: Math.max(w, h) / Math.min(w, h),
-        title: "This is a landscape!"
+        width,
+        height,
+        url,
+        attributionUrl: url,
+        type,
+        ratio: Math.max(width, height) / Math.min(width, height),
+        title: 'This is a landscape!',
       });
     }
     // the listings never change
     callback([
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/amazing-animal-beautiful-beautifull.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/amazing-beautiful-beauty-blue.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/delicate-arch-night-stars-landscape.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/italian-landscape-mountains-nature.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/pexels-photo (1).jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/pexels-photo (2).jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/pexels-photo.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/road-sun-rays-path.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/sunrise-phu-quoc-island-ocean.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/sunset-field-poppy-sun-priroda.jpg"),
-      L(1200,628,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/switzerland-zermatt-mountains-snow.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/amazing-animal-beautiful-beautifull.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/amazing-beautiful-beauty-blue.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/delicate-arch-night-stars-landscape.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/italian-landscape-mountains-nature.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/pexels-photo (1).jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/pexels-photo (2).jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/pexels-photo.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/road-sun-rays-path.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/sunrise-phu-quoc-island-ocean.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/sunset-field-poppy-sun-priroda.jpg"),
-      L(2400,1256,"https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/switzerland-zermatt-mountains-snow.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/amazing-animal-beautiful-beautifull.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/amazing-beautiful-beauty-blue.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/delicate-arch-night-stars-landscape.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/italian-landscape-mountains-nature.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/pexels-photo (1).jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/pexels-photo (2).jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/pexels-photo.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/road-sun-rays-path.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/sunrise-phu-quoc-island-ocean.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/sunset-field-poppy-sun-priroda.jpg"),
-      L(300,250,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/switzerland-zermatt-mountains-snow.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/amazing-animal-beautiful-beautifull.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/amazing-beautiful-beauty-blue.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/delicate-arch-night-stars-landscape.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/italian-landscape-mountains-nature.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/pexels-photo (1).jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/pexels-photo (2).jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/pexels-photo.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/road-sun-rays-path.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/sunrise-phu-quoc-island-ocean.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/sunset-field-poppy-sun-priroda.jpg"),
-      L(600,500,"https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/switzerland-zermatt-mountains-snow.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/amazing-animal-beautiful-beautifull.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/amazing-beautiful-beauty-blue.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/delicate-arch-night-stars-landscape.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/italian-landscape-mountains-nature.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/pexels-photo (1).jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/pexels-photo (2).jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/pexels-photo.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/road-sun-rays-path.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/sunrise-phu-quoc-island-ocean.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/sunset-field-poppy-sun-priroda.jpg"),
-      L(300,600,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/switzerland-zermatt-mountains-snow.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/amazing-animal-beautiful-beautifull.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/amazing-beautiful-beauty-blue.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/delicate-arch-night-stars-landscape.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/italian-landscape-mountains-nature.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/pexels-photo (1).jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/pexels-photo (2).jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/pexels-photo.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/road-sun-rays-path.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/sunrise-phu-quoc-island-ocean.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/sunset-field-poppy-sun-priroda.jpg"),
-      L(600,1200,"https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/switzerland-zermatt-mountains-snow.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/amazing-animal-beautiful-beautifull.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/amazing-beautiful-beauty-blue.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/delicate-arch-night-stars-landscape.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/italian-landscape-mountains-nature.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/pexels-photo (1).jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/pexels-photo (2).jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/pexels-photo.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/road-sun-rays-path.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/sunrise-phu-quoc-island-ocean.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/sunset-field-poppy-sun-priroda.jpg"),
-      L(336,280,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/switzerland-zermatt-mountains-snow.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/amazing-animal-beautiful-beautifull.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/amazing-beautiful-beauty-blue.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/delicate-arch-night-stars-landscape.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/italian-landscape-mountains-nature.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/pexels-photo (1).jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/pexels-photo (2).jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/pexels-photo.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/road-sun-rays-path.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/sunrise-phu-quoc-island-ocean.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/sunset-field-poppy-sun-priroda.jpg"),
-      L(672,560,"https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/switzerland-zermatt-mountains-snow.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_01.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_02.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_03.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_04.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_05.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/-2.jpg"),
-      L(1090,43,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1-9-x43_-2.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_01.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_02.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_03.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_04.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_05.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_218-x86_-1.jpg"),
-      L(2180,86,"https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_218-x86_-4.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_01.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_02.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_03.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_04.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_05.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/-3.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/-4.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/-5.jpg"),
-      L(450,62,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_45-x62_-5.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_01.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_02.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_03.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_04.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_05.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-1.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-2.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-3.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-4.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-5.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_9--x124_-2.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_9--x124_-3.jpg"),
-      L(900,124,"https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_9--x124_-4.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_01.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_02.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_03.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_04.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_05.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-1.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-2.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-3.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-5.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_144-x9-_-1.jpg"),
-      L(1440,90,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_144-x9-_-3.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_01.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_02.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_03.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_04.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_05.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/-3.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_288-x18-_-2.jpg"),
-      L(2880,180,"https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_288-x18-_-5.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_01.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_02.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_03.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_04.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_05.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-1.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-2.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-3.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-4.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-5.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-2.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-3.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-4.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-5.jpg"),
-      L(1200,50,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-1.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_01.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_02.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_03.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_04.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_05.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-1.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-2.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-3.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-4.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-5.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-1.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-2.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-3.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-4.jpg"),
-      L(2400,100,"https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-5.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_01.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_02.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_03.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_04.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_05.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/-4.jpg"),
-      L(468,60,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_-4.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_01.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_02.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_03.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_04.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_05.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/-1.jpg"),
-      L(936,120,"https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x12-_-3.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_01.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_02.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_03.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_04.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_05.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_01.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_02.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_03.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_04.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_05.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-3.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-4.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-7.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_1-.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_11.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_12.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_15.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_17.jpg"),
-      L(1456,180,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-2.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_01.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_02.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_03.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_04.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_05.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_01.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_02.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_03.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_04.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_05.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_-1.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_-4.jpg"),
-      L(728,90,"https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_-5.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_01.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_02.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_03.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_04.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_05.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_-2.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_-3.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_-4.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_1-.jpg"),
-      L(340,90,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_11.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_01.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_02.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_03.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_04.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_05.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-2.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-3.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-5.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-6.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-8.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_1-.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_11.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_12.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_14.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_15.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_16.jpg"),
-      L(680,180,"https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_17.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/amazing-animal-beautiful-beautifull.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/amazing-beautiful-beauty-blue.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/delicate-arch-night-stars-landscape.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/italian-landscape-mountains-nature.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/pexels-photo (1).jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/pexels-photo (2).jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/road-sun-rays-path.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/sunset-field-poppy-sun-priroda.jpg"),
-      L(160,600,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/switzerland-zermatt-mountains-snow.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/amazing-beautiful-beauty-blue.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/antelope-canyon-lower-canyon-arizona.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/italian-landscape-mountains-nature.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/pexels-photo (1).jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/pexels-photo (2).jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/road-sun-rays-path.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/sunrise-phu-quoc-island-ocean.jpg"),
-      L(320,1200,"https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/switzerland-zermatt-mountains-snow.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/18-x68-/pexels-photo-414-83.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/18-x68-/pexels-photo-351448.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/amazing-animal-beautiful-beautifull.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-164196.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-189848.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-21-186.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-221148.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-388-65.jpg"),
-      L(180,680,"https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-443446.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/112-x1344/pexels-photo-355241.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/112-x1344/pexels-photo-552791.jpg"),
-      L(1120,1344,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/112-x1344/switzerland-zermatt-mountains-snow.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/boat-house-cottage-waters-lake-65225.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/pexels-photo (1).jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/pexels-photo-117843.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/pexels-photo-221148.jpg"),
-      L(560,672,"https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/yellowstone-national-park-sunset-twilight-dusk-158489.jpg"),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/amazing-animal-beautiful-beautifull.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/amazing-beautiful-beauty-blue.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/delicate-arch-night-stars-landscape.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/italian-landscape-mountains-nature.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/pexels-photo (1).jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/pexels-photo (2).jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/pexels-photo.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/road-sun-rays-path.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/sunrise-phu-quoc-island-ocean.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/sunset-field-poppy-sun-priroda.jpg'),
+      L(1200, 628, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/12--x628/switzerland-zermatt-mountains-snow.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/amazing-animal-beautiful-beautifull.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/amazing-beautiful-beauty-blue.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/delicate-arch-night-stars-landscape.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/italian-landscape-mountains-nature.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/pexels-photo (1).jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/pexels-photo (2).jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/pexels-photo.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/road-sun-rays-path.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/sunrise-phu-quoc-island-ocean.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/sunset-field-poppy-sun-priroda.jpg'),
+      L(2400, 1256, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x628/24--x1256/switzerland-zermatt-mountains-snow.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/amazing-animal-beautiful-beautifull.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/amazing-beautiful-beauty-blue.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/delicate-arch-night-stars-landscape.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/italian-landscape-mountains-nature.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/pexels-photo (1).jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/pexels-photo (2).jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/pexels-photo.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/road-sun-rays-path.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/sunrise-phu-quoc-island-ocean.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/sunset-field-poppy-sun-priroda.jpg'),
+      L(300, 250, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/3--x25-/switzerland-zermatt-mountains-snow.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/amazing-animal-beautiful-beautifull.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/amazing-beautiful-beauty-blue.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/delicate-arch-night-stars-landscape.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/italian-landscape-mountains-nature.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/pexels-photo (1).jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/pexels-photo (2).jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/pexels-photo.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/road-sun-rays-path.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/sunrise-phu-quoc-island-ocean.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/sunset-field-poppy-sun-priroda.jpg'),
+      L(600, 500, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x25-/6--x5--/switzerland-zermatt-mountains-snow.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/amazing-animal-beautiful-beautifull.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/amazing-beautiful-beauty-blue.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/delicate-arch-night-stars-landscape.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/italian-landscape-mountains-nature.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/pexels-photo (1).jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/pexels-photo (2).jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/pexels-photo.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/road-sun-rays-path.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/sunrise-phu-quoc-island-ocean.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/sunset-field-poppy-sun-priroda.jpg'),
+      L(300, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/3--x6--/switzerland-zermatt-mountains-snow.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/amazing-animal-beautiful-beautifull.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/amazing-beautiful-beauty-blue.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/delicate-arch-night-stars-landscape.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/italian-landscape-mountains-nature.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/pexels-photo (1).jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/pexels-photo (2).jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/pexels-photo.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/road-sun-rays-path.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/sunrise-phu-quoc-island-ocean.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/sunset-field-poppy-sun-priroda.jpg'),
+      L(600, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/3--x6--/6--x12--/switzerland-zermatt-mountains-snow.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/amazing-animal-beautiful-beautifull.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/amazing-beautiful-beauty-blue.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/delicate-arch-night-stars-landscape.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/italian-landscape-mountains-nature.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/pexels-photo (1).jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/pexels-photo (2).jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/pexels-photo.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/road-sun-rays-path.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/sunrise-phu-quoc-island-ocean.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/sunset-field-poppy-sun-priroda.jpg'),
+      L(336, 280, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/336x28-/switzerland-zermatt-mountains-snow.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/amazing-animal-beautiful-beautifull.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/amazing-beautiful-beauty-blue.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/delicate-arch-night-stars-landscape.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/italian-landscape-mountains-nature.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/pexels-photo (1).jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/pexels-photo (2).jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/pexels-photo.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/road-sun-rays-path.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/sunrise-phu-quoc-island-ocean.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/sunset-field-poppy-sun-priroda.jpg'),
+      L(672, 560, 'https://cdn.adblockcdn.com/pix/Landscapes/336x28-/672x56-/switzerland-zermatt-mountains-snow.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_01.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_02.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_03.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_04.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1090x43_05.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/-2.jpg'),
+      L(1090, 43, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/1-9-x43/landscape_1-9-x43_-2.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_01.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_02.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_03.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_04.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_2180x86_05.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_218-x86_-1.jpg'),
+      L(2180, 86, 'https://cdn.adblockcdn.com/pix/Landscapes/1-9-x43/218-x86/landscape_218-x86_-4.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_01.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_02.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_03.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_04.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_450x62_05.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/-3.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/-4.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/-5.jpg'),
+      L(450, 62, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/45-x62/landscape_45-x62_-5.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_01.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_02.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_03.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_04.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_900x124_05.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-1.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-2.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-3.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-4.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/-5.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_9--x124_-2.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_9--x124_-3.jpg'),
+      L(900, 124, 'https://cdn.adblockcdn.com/pix/Landscapes/45-x62/9--x124/landscape_9--x124_-4.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_01.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_02.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_03.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_04.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_1440x90_05.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-1.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-2.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-3.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/-5.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_144-x9-_-1.jpg'),
+      L(1440, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/144-x9-/landscape_144-x9-_-3.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_01.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_02.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_03.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_04.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_2880x180_05.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/-3.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_288-x18-_-2.jpg'),
+      L(2880, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/144-x9-/288-x18-/landscape_288-x18-_-5.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_01.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_02.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_03.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_04.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_1200x50_05.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-1.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-2.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-3.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-4.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/-5.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-2.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-3.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-4.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-5.jpg'),
+      L(1200, 50, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/12--x5-/landscape_12--x5-_-1.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_01.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_02.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_03.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_04.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_2400x100_05.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-1.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-2.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-3.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-4.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/-5.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-1.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-2.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-3.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-4.jpg'),
+      L(2400, 100, 'https://cdn.adblockcdn.com/pix/Landscapes/12--x5-/24--x1--/landscape_24--x1--_-5.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_01.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_02.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_03.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_04.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_05.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/-4.jpg'),
+      L(468, 60, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/468x6-/landscape_468x6-_-4.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_01.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_02.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_03.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_04.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x120_05.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/-1.jpg'),
+      L(936, 120, 'https://cdn.adblockcdn.com/pix/Landscapes/468x6-/936x12-/landscape_936x12-_-3.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_01.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_02.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_03.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_04.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x180_05.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_01.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_02.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_03.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_04.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_05.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-3.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-4.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-7.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_1-.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_11.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_12.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_15.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_17.jpg'),
+      L(1456, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/1456x18-/Landscape_1456x18-_-2.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_01.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_02.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_03.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_04.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x90_05.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_01.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_02.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_03.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_04.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_05.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_-1.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_-4.jpg'),
+      L(728, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/728x9-/728x9-/Landscape_728x9-_-5.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_01.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_02.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_03.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_04.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_05.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_-2.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_-3.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_-4.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_1-.jpg'),
+      L(340, 90, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/34-x9-/Landscape_34-x9-_11.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_01.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_02.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_03.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_04.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_05.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-2.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-3.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-5.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-6.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_-8.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_1-.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_11.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_12.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_14.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_15.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_16.jpg'),
+      L(680, 180, 'https://cdn.adblockcdn.com/pix/Landscapes/34-x9-/68-x18-/Landscape_68-x18-_17.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/amazing-animal-beautiful-beautifull.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/amazing-beautiful-beauty-blue.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/delicate-arch-night-stars-landscape.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/italian-landscape-mountains-nature.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/pexels-photo (1).jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/pexels-photo (2).jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/road-sun-rays-path.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/sunset-field-poppy-sun-priroda.jpg'),
+      L(160, 600, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/16-x6--/switzerland-zermatt-mountains-snow.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/amazing-beautiful-beauty-blue.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/antelope-canyon-lower-canyon-arizona.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/italian-landscape-mountains-nature.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/pexels-photo (1).jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/pexels-photo (2).jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/road-sun-rays-path.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/sunrise-phu-quoc-island-ocean.jpg'),
+      L(320, 1200, 'https://cdn.adblockcdn.com/pix/Landscapes/16-x6--/32-x12--/switzerland-zermatt-mountains-snow.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/18-x68-/pexels-photo-414-83.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/18-x68-/pexels-photo-351448.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/amazing-animal-beautiful-beautifull.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-164196.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-189848.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-21-186.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-221148.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-388-65.jpg'),
+      L(180, 680, 'https://cdn.adblockcdn.com/pix/Landscapes/18-x68-/36-x136-/pexels-photo-443446.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/112-x1344/pexels-photo-355241.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/112-x1344/pexels-photo-552791.jpg'),
+      L(1120, 1344, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/112-x1344/switzerland-zermatt-mountains-snow.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/boat-house-cottage-waters-lake-65225.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/pexels-photo (1).jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/pexels-photo-117843.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/pexels-photo-221148.jpg'),
+      L(560, 672, 'https://cdn.adblockcdn.com/pix/Landscapes/56-x672/56-x672/yellowstone-national-park-sunset-twilight-dusk-158489.jpg'),
     ]);
-  }
+  },
 };
 
 Object.assign(window, {
-  LandscapesChannel
+  LandscapesChannel,
 });
+
 
 /***/ }),
 /* 75 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global Channel */
 
 // Empty Channel
 // Subclass of Channel.
@@ -20726,86 +20712,81 @@ Object.assign(window, {
 // when the sync process recieves a request with a unknown channel name
 function UnknownChannel() {
   Channel.call(this);
-};
+}
+
 UnknownChannel.prototype = {
   __proto__: Channel.prototype,
 
-  _getLatestListings: function(callback) {
+  getLatestListings(callback) {
     callback([]);
-  }
+  },
 };
 
 Object.assign(window, {
-  UnknownChannel
+  UnknownChannel,
 });
+
 
 /***/ }),
 /* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global ext, chrome, require, storageGet, storageSet, log, STATS, Channels, Prefs,
+   getSettings, setSetting, translate, reloadOptionsPageTabs */
+
 // Yes, you could hack my code to not check the license.  But please don't.
 // Paying for this extension supports the work on AdBlock.  Thanks very much.
-const {checkWhitelisted} = __webpack_require__(9);
-const {recordGeneralMessage} = __webpack_require__(13).ServerMessages;
-const {SyncService} = __webpack_require__(25);
-const MY_ADBLOCK_FEATURE_VERSION = 0;
-const {EventEmitter} = __webpack_require__(6);
-let licenseNotifier = new EventEmitter();
+const { checkWhitelisted } = __webpack_require__(9);
+const { EventEmitter } = __webpack_require__(6);
+const { recordGeneralMessage } = __webpack_require__(13).ServerMessages;
 
-var License = (function () {
+const MY_ADBLOCK_FEATURE_VERSION = 0;
+const licenseNotifier = new EventEmitter();
+
+const License = (function getLicense() {
   const isProd = true;
   const licenseStorageKey = 'license';
   const installTimestampStorageKey = 'install_timestamp';
   const myAdBlockEnrollmentFeatureKey = 'myAdBlockFeature';
   const statsInIconKey = 'current_show_statsinicon';
   const popupMenuCtaClosedKey = 'popup_menu_cta_closed';
-  var licenseAlarmName = 'licenseAlarm';
-  var theLicense = undefined;
-  var oneDayInMinutes = 1140;
-  var fiveMinutes = 300000;
-  var initialized = false;
-  var ajaxRetryCount = 0;
-  var overlayMsgInProgress = false;
-  var OneHourInMilliSeconds = 3600000;
-  var _readyComplete;
-  var _promise = new Promise(function (resolve, reject) {
-      _readyComplete = resolve;
-  });
-
-  var chrome_storage_set = function (key, value, callback) {
-    if (value === undefined) {
-      chrome.storage.local.remove(key);
-      return;
-    }
-
-    var saveData = {};
-    saveData[key] = value;
-    chrome.storage.local.set(saveData, callback);
-  };
+  const licenseAlarmName = 'licenseAlarm';
+  let theLicense;
+  const fiveMinutes = 300000;
+  const initialized = false;
+  let ajaxRetryCount = 0;
+  let readyComplete;
+  const licensePromise = new Promise(((resolve) => {
+    readyComplete = resolve;
+  }));
 
   const mabConfig = {
     prod: {
-      licenseURL: "https://myadblock-licensing.firebaseapp.com/license/",
-      syncURL: "https://myadblock.sync.getadblock.com/v1/sync",
+      licenseURL: 'https://myadblock-licensing.firebaseapp.com/license/',
+      syncURL: 'https://myadblock.sync.getadblock.com/v1/sync',
       iframeUrl: 'https://getadblock.com/myadblock/enrollment/v3/',
-      subscribeKey: "sub-c-9eccffb2-8c6a-11e9-97ab-aa54ad4b08ec"
+      subscribeKey: 'sub-c-9eccffb2-8c6a-11e9-97ab-aa54ad4b08ec',
     },
     dev: {
-      licenseURL: "https://dev.myadblock.licensing.getadblock.com/license/",
-      syncURL: "https://dev.myadblock.sync.getadblock.com/v1/sync",
+      licenseURL: 'https://dev.myadblock.licensing.getadblock.com/license/',
+      syncURL: 'https://dev.myadblock.sync.getadblock.com/v1/sync',
       iframeUrl: 'http://dev.getadblock.com/myadblock/enrollment/v3/',
-      subscribeKey: "sub-c-9e0a7270-83e7-11e9-99de-d6d3b84c4a25"
+      subscribeKey: 'sub-c-9e0a7270-83e7-11e9-99de-d6d3b84c4a25',
     },
   };
   const MAB_CONFIG = isProd ? mabConfig.prod : mabConfig.dev;
 
 
-  chrome.alarms.onAlarm.addListener(function(alarm) {
+  chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm && alarm.name === licenseAlarmName) {
       // At this point, no alarms exists, so
       // create an temporary alarm to avoid race condition issues
-      chrome.alarms.create(licenseAlarmName, {delayInMinutes: (24 * 60)});
-      License.ready().then(function() {
+      chrome.alarms.create(licenseAlarmName, { delayInMinutes: (24 * 60) });
+      License.ready().then(() => {
         License.updatePeriodically();
       });
     }
@@ -20815,20 +20796,20 @@ var License = (function () {
   // that should fired during the sleep, then
   // remove it, and fire the update ourselves.
   // see - https://bugs.chromium.org/p/chromium/issues/detail?id=471524
-  chrome.idle.onStateChanged.addListener(function(newState) {
+  chrome.idle.onStateChanged.addListener((newState) => {
     if (newState === 'active') {
-      chrome.alarms.get(licenseAlarmName, function(alarm) {
+      chrome.alarms.get(licenseAlarmName, (alarm) => {
         if (alarm && Date.now() > alarm.scheduledTime) {
-          chrome.alarms.clear(licenseAlarmName, function(wasCleared){
+          chrome.alarms.clear(licenseAlarmName, () => {
             License.updatePeriodically();
           });
         } else if (alarm) {
           // if the alarm should fire in the future,
           // re-add the license so it fires at the correct time
-          var originalTime = alarm.scheduledTime;
-          chrome.alarms.clear(licenseAlarmName, function(wasCleared){
+          const originalTime = alarm.scheduledTime;
+          chrome.alarms.clear(licenseAlarmName, (wasCleared) => {
             if (wasCleared) {
-              chrome.alarms.create(licenseAlarmName, {when: originalTime});
+              chrome.alarms.create(licenseAlarmName, { when: originalTime });
             }
           });
         } else {
@@ -20840,52 +20821,55 @@ var License = (function () {
 
   // Load the license from persistent storage
   // Should only be called during startup / initialization
-  var loadFromStorage = function(callback) {
+  const loadFromStorage = function (callback) {
     chrome.storage.local.get(licenseStorageKey).then((response) => {
-      var localLicense = storage_get(licenseStorageKey);
+      const localLicense = storageGet(licenseStorageKey);
       theLicense = response[licenseStorageKey] || localLicense || {};
-      if (typeof callback === "function") {
+      if (typeof callback === 'function') {
         callback();
       }
     });
   };
 
-  // Check the response from a ping to see if it contains valid show MyAdBlock enrollment instructions.
-  // If so, return an object containing data
-  // Otherwise, return null.
+  // Check the response from a ping to see if it contains valid show MyAdBlock enrollment
+  // instructions. If so, return an object containing data. Otherwise, return null.
   // Inputs:
   //   responseData: string response from a ping
-  var myAdBlockDataFrom = function(responseData) {
-      if (responseData.length === 0 || responseData.trim().length === 0) {
+  const myAdBlockDataFrom = function (responseData) {
+    if (responseData.length === 0 || responseData.trim().length === 0) {
+      return null;
+    }
+    let pingData;
+    try {
+      pingData = JSON.parse(responseData);
+      if (!pingData) {
         return null;
       }
-
-      try {
-        var pingData = JSON.parse(responseData);
-        if (!pingData)
-          return null;
-      } catch (e) {
-        console.log("Something went wrong with parsing survey data.");
-        console.log('error', e);
-        console.log('response data', responseData);
-        return null;
-      }
-      return pingData;
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('Something went wrong with parsing survey data.');
+      // eslint-disable-next-line no-console
+      console.log('error', e);
+      // eslint-disable-next-line no-console
+      console.log('response data', responseData);
+      return null;
+    }
+    return pingData;
   };
 
   return {
-    licenseStorageKey: licenseStorageKey,
-    myAdBlockEnrollmentFeatureKey: myAdBlockEnrollmentFeatureKey,
-    popupMenuCtaClosedKey: popupMenuCtaClosedKey,
-    initialized: initialized,
-    licenseAlarmName: licenseAlarmName,
+    licenseStorageKey,
+    myAdBlockEnrollmentFeatureKey,
+    popupMenuCtaClosedKey,
+    initialized,
+    licenseAlarmName,
     licenseTimer: undefined, // the license update timer token
-    licenseNotifier: licenseNotifier,
-    MAB_CONFIG: MAB_CONFIG,
-    isProd: isProd,
-    checkPingResponse: function(pingResponseData) {
+    licenseNotifier,
+    MAB_CONFIG,
+    isProd,
+    checkPingResponse(pingResponseData) {
       if (pingResponseData.length === 0 || pingResponseData.trim().length === 0) {
-        loadFromStorage(function() {
+        loadFromStorage(() => {
           if (theLicense.myadblock_enrollment === true) {
             theLicense.myadblock_enrollment = false;
             License.set(theLicense);
@@ -20893,12 +20877,12 @@ var License = (function () {
         });
         return;
       }
-      var pingData = myAdBlockDataFrom(pingResponseData);
-      if (!pingData){
+      const pingData = myAdBlockDataFrom(pingResponseData);
+      if (!pingData) {
         return;
       }
       if (pingData.myadblock_enrollment === true) {
-        loadFromStorage(function() {
+        loadFromStorage(() => {
           theLicense.myadblock_enrollment = true;
           theLicense.var = pingData.var;
           theLicense.exp = pingData.exp;
@@ -20911,142 +20895,148 @@ var License = (function () {
           if (!$.isEmptyObject(myAdBlockInfo)) {
             return;
           }
-          var myAdBlockFeature = {
-            'version': MY_ADBLOCK_FEATURE_VERSION,
-            'displayPopupMenuBanner': true,
-            'takeUserToMyAdBlockTab': false,
+          const myAdBlockFeature = {
+            version: MY_ADBLOCK_FEATURE_VERSION,
+            displayPopupMenuBanner: true,
+            takeUserToMyAdBlockTab: false,
           };
           chrome.storage.local.set({ myAdBlockFeature });
         });
-
       }
     },
-    get: function() {
+    get() {
       return theLicense;
     },
-    set: function(newLicense) {
+    set(newLicense) {
       if (newLicense) {
         theLicense = newLicense;
         // store in redudant locations
-        chrome.storage.local.set({ 'license': theLicense });
-        storage_set('license', theLicense);
+        chrome.storage.local.set({ license: theLicense });
+        storageSet('license', theLicense);
       }
     },
-    initialize: function(callback) {
-      loadFromStorage(function() {
-        if (typeof callback === "function")  {
+    initialize(callback) {
+      loadFromStorage(() => {
+        if (typeof callback === 'function') {
           callback();
         }
-        _readyComplete();
+        readyComplete();
       });
     },
     // Get the latest license data from the server, and talk to the user if needed.
-    update: function() {
-      STATS.untilLoaded(function(userID)
-      {
-        licenseNotifier.emit("license.updating");
-        var postData = {};
+    update() {
+      STATS.untilLoaded((userID) => {
+        licenseNotifier.emit('license.updating');
+        const postData = {};
         postData.u = userID;
-        postData.cmd = "license_check";
-        var licsenseStatusBefore = License.get().status;
+        postData.cmd = 'license_check';
+        const licsenseStatusBefore = License.get().status;
         // license version
-        postData.v = "1";
+        postData.v = '1';
         $.ajax({
-            jsonp: false,
-            url: License.MAB_CONFIG.licenseURL,
-            type: 'post',
-            success: function (text, status, xhr) {
-                ajaxRetryCount = 0;
-                var updatedLicense = {};
-                if (typeof text === "object") {
-                  updatedLicense = text;
-                } else if (typeof text === "string") {
-                  try {
-                    updatedLicense = JSON.parse(text);
-                  } catch (e) {
-                    console.log("Something went wrong with parsing license data.");
-                    console.log('error', e);
-                    console.log(text)
-                    return;
-                  }
-                }
-                licenseNotifier.emit("license.updated", updatedLicense);
-                if (!updatedLicense) {
-                  return;
-                }
-                // merge the updated license
-                theLicense = $.extend(theLicense, updatedLicense);
-                theLicense.licenseId = theLicense.code;
-                License.set(theLicense);
-                // now check to see if we need to do anything because of a status change
-                if (licsenseStatusBefore === "active" && updatedLicense.status && updatedLicense.status === "expired") {
-                  License.processExpiredLicense();
-                  recordGeneralMessage("trial_license_expired");
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                log("license server error response", xhr, textStatus, errorThrown, ajaxRetryCount);
-                licenseNotifier.emit("license.updated.error", ajaxRetryCount);
-                ajaxRetryCount++;
-                if (ajaxRetryCount > 3) {
-                  log("Retry Count exceeded, giving up", ajaxRetryCount);
-                  return;
-                }
-                var oneMinute = 1 * 60 * 1000;
-                setTimeout(function() {
-                  License.updatePeriodically("error" + ajaxRetryCount);
-                }, oneMinute);
-            },
-            data: postData
+          jsonp: false,
+          url: License.MAB_CONFIG.licenseURL,
+          type: 'post',
+          success(text) {
+            ajaxRetryCount = 0;
+            let updatedLicense = {};
+            if (typeof text === 'object') {
+              updatedLicense = text;
+            } else if (typeof text === 'string') {
+              try {
+                updatedLicense = JSON.parse(text);
+              } catch (e) {
+                // eslint-disable-next-line no-console
+                console.log('Something went wrong with parsing license data.');
+                // eslint-disable-next-line no-console
+                console.log('error', e);
+                // eslint-disable-next-line no-console
+                console.log(text);
+                return;
+              }
+            }
+            licenseNotifier.emit('license.updated', updatedLicense);
+            if (!updatedLicense) {
+              return;
+            }
+            // merge the updated license
+            theLicense = $.extend(theLicense, updatedLicense);
+            theLicense.licenseId = theLicense.code;
+            License.set(theLicense);
+            // now check to see if we need to do anything because of a status change
+            if (
+              licsenseStatusBefore === 'active'
+              && updatedLicense.status
+              && updatedLicense.status === 'expired'
+            ) {
+              License.processExpiredLicense();
+              recordGeneralMessage('trial_license_expired');
+            }
+          },
+          error(xhr, textStatus, errorThrown) {
+            log('license server error response', xhr, textStatus, errorThrown, ajaxRetryCount);
+            licenseNotifier.emit('license.updated.error', ajaxRetryCount);
+            ajaxRetryCount += 1;
+            if (ajaxRetryCount > 3) {
+              log('Retry Count exceeded, giving up', ajaxRetryCount);
+              return;
+            }
+            const oneMinute = 1 * 60 * 1000;
+            setTimeout(() => {
+              License.updatePeriodically(`error${ajaxRetryCount}`);
+            }, oneMinute);
+          },
+          data: postData,
         });
       });
     },
     processExpiredLicense() {
-      var theLicense = License.get();
+      theLicense = License.get();
       theLicense.myadblock_enrollment = true;
       License.set(theLicense);
-      setSetting("picreplacement", false);
-      setSetting("sync_settings", false);
-      setSetting("color_themes", { popup_menu: 'default_theme', options_page: 'default_theme'});
+      setSetting('picreplacement', false);
+      setSetting('sync_settings', false);
+      setSetting('color_themes', { popup_menu: 'default_theme', options_page: 'default_theme' });
       chrome.alarms.clear(licenseAlarmName);
     },
-    ready: function () {
-      return _promise;
+    ready() {
+      return licensePromise;
     },
-    updatePeriodically: function() {
+    updatePeriodically() {
       if (!License.isActiveLicense()) {
         return;
       }
       License.update();
       chrome.storage.local.get(installTimestampStorageKey).then((response) => {
-        var localTimestamp = storage_get(installTimestampStorageKey);
-        var originalInstallTimestamp = response[installTimestampStorageKey] || localTimestamp || Date.now();
-        // If the installation timestamp is missing from both storage locations, save an updated version
+        let installTimestamp = response[installTimestampStorageKey];
+        const localTimestamp = storageGet(installTimestampStorageKey);
+        const originalInstallTimestamp = installTimestamp || localTimestamp || Date.now();
+        // If the installation timestamp is missing from both storage locations,
+        // save an updated version
         if (!(response[installTimestampStorageKey] || localTimestamp)) {
-          var install_timestamp = Date.now();
-          storage_set(installTimestampStorageKey, install_timestamp);
-          chrome.storage.local.set({ 'install_timestamp': install_timestamp });
+          installTimestamp = Date.now();
+          storageSet(installTimestampStorageKey, installTimestamp);
+          chrome.storage.local.set({ install_timestamp: installTimestamp });
         }
-        var originalInstallDate = new Date(originalInstallTimestamp);
-        var nextLicenseCheck = new Date();
-        if (originalInstallDate.getHours() <= nextLicenseCheck.getHours())
-        {
+        const originalInstallDate = new Date(originalInstallTimestamp);
+        let nextLicenseCheck = new Date();
+        if (originalInstallDate.getHours() <= nextLicenseCheck.getHours()) {
           nextLicenseCheck.setDate(nextLicenseCheck.getDate() + 1);
         }
         nextLicenseCheck.setHours(originalInstallDate.getHours());
         nextLicenseCheck.setMinutes(originalInstallDate.getMinutes());
-        // we need to add 5 minutes to the 'minutes' to make sure we've allowed enought time for '1' day
+        // Add 5 minutes to the 'minutes' to make sure we've allowed enought time for '1' day
         nextLicenseCheck = new Date(nextLicenseCheck.getTime() + fiveMinutes);
-        chrome.alarms.create(licenseAlarmName, {when: nextLicenseCheck.getTime()});
+        chrome.alarms.create(licenseAlarmName, { when: nextLicenseCheck.getTime() });
       });
     },
-    getLicenseInstallationDate: function(callback) {
-      if (typeof callback !== "function") {
+    getLicenseInstallationDate(callback) {
+      if (typeof callback !== 'function') {
         return;
       }
       chrome.storage.local.get(installTimestampStorageKey).then((response) => {
-        var localTimestamp = storage_get(installTimestampStorageKey);
-        var originalInstallTimestamp = response[installTimestampStorageKey] || localTimestamp;
+        const localTimestamp = storageGet(installTimestampStorageKey);
+        const originalInstallTimestamp = response[installTimestampStorageKey] || localTimestamp;
         if (originalInstallTimestamp) {
           callback(new Date(originalInstallTimestamp));
         } else {
@@ -21054,33 +21044,35 @@ var License = (function () {
         }
       });
     },
-    // activate the current license and configure the extension in licensed mode. Call with an optional delay parameter
-    // (in milliseconds) if the first license update should be delayed by a custom delay (default is 30 minutes).
-    activate: function(delay) {
-      let currentLicense = License.get() || {};
-      currentLicense.status = "active";
+    // activate the current license and configure the extension in licensed mode.
+    // Call with an optional delay parameter (in milliseconds) if the first license
+    // update should be delayed by a custom delay (default is 30 minutes).
+    activate(delayMs) {
+      let delay = delayMs;
+      const currentLicense = License.get() || {};
+      currentLicense.status = 'active';
       License.set(currentLicense);
       reloadOptionsPageTabs();
       if (typeof delay !== 'number') {
         delay = 30 * 60 * 1000; // 30 minutes
       }
       if (!this.licenseTimer) {
-        this.licenseTimer = window.setTimeout(function () {
+        this.licenseTimer = window.setTimeout(() => {
           License.updatePeriodically();
         }, delay);
       }
-      setSetting("picreplacement", true);
+      setSetting('picreplacement', true);
     },
-    isActiveLicense: function() {
-      return License && License.get() && License.get().status === "active";
+    isActiveLicense() {
+      return License && License.get() && License.get().status === 'active';
     },
-    isMyAdBlockEnrolled: function() {
+    isMyAdBlockEnrolled() {
       return License && License.get() && License.get().myadblock_enrollment === true;
     },
-    shouldShowMyAdBlockEnrollment: function() {
+    shouldShowMyAdBlockEnrollment() {
       return License.isMyAdBlockEnrolled() && !License.isActiveLicense();
     },
-    displayPopupMenuNewCTA: function() {
+    displayPopupMenuNewCTA() {
       const isNotActive = !License.isActiveLicense();
       const variant = License.get() ? License.get().var : undefined;
       return License && isNotActive && [3, 4].includes(variant);
@@ -21092,7 +21084,7 @@ var License = (function () {
      * - Remove it if the popup menu opened
      * @param {Boolean} [stopShowing]
      */
-    setIconBadgeCTA: function(stopShowing) {
+    setIconBadgeCTA(stopShowing) {
       if (!License || !License.get() || !License.get().var) {
         return;
       }
@@ -21100,33 +21092,35 @@ var License = (function () {
       const showNewBadge = varCTA === 2 || varCTA === 4;
 
       if (showNewBadge && !stopShowing) {
-        storage_set(statsInIconKey, Prefs.show_statsinicon);
+        storageSet(statsInIconKey, Prefs.show_statsinicon);
         Prefs.show_statsinicon = false;
-        chrome.browserAction.setBadgeBackgroundColor({color: '#03bcfc'})
-        chrome.browserAction.setBadgeText({text: translate('new_badge')});
+        chrome.browserAction.setBadgeBackgroundColor({ color: '#03bcfc' });
+        chrome.browserAction.setBadgeText({ text: translate('new_badge') });
       } else {
-        const storedValue = storage_get(statsInIconKey);
+        const storedValue = storageGet(statsInIconKey);
 
         // Restore show_statsinicon if we previously stored its value
         if (typeof storedValue === 'boolean') {
           Prefs.show_statsinicon = storedValue;
         }
-        chrome.browserAction.setBadgeText({text: ''});
+        chrome.browserAction.setBadgeText({ text: '' });
       }
     },
-    // fetchLicenseAPI automates the common steps required to call the /license/api endpoint. POST bodies
-    // will always automatically contain the command, license and userid so only provide the missing fields
-    // in the body parameter. The ok callback handler receives the data returned by the API and the fail
-    // handler receives any error information available.
-    fetchLicenseAPI: function(command, body, ok, fail) {
-      let licenseCode = License.get().code;
-      let userID = STATS.userId();
+    // fetchLicenseAPI automates the common steps required to call the /license/api endpoint.
+    // POST bodies will always automatically contain the command, license and userid so only
+    // provide the missing fields in the body parameter. The ok callback handler receives the
+    // data returned by the API and the fail handler receives any error information available.
+    fetchLicenseAPI(command, requestBody, ok, requestFail) {
+      const licenseCode = License.get().code;
+      const userID = STATS.userId();
+      const body = requestBody;
+      let fail = requestFail;
       body.cmd = command;
       body.userid = userID;
       if (licenseCode) {
         body.license = licenseCode;
       }
-      let request = new Request('https://myadblock.licensing.getadblock.com/license/api/', {
+      const request = new Request('https://myadblock.licensing.getadblock.com/license/api/', {
         method: 'POST',
         body: JSON.stringify(body),
       });
@@ -21146,12 +21140,12 @@ var License = (function () {
           fail(err);
         });
     },
-    // resendEmail that contains license information and a "magic link" to activate other extensions.
-    // This is a workaround for MAB not being generally available so other extensions needing MAB
-    // must be enrolled somehow in MAB. The license is sent to the currently registered email for the
-    // original license purchase and is returned to the `ok` handler for UI display. If an error sending
-    // the email occurs, the `fail` handler is called with the failure error encountered.
-    resendEmail: function(ok, fail) {
+    // resendEmail that contains license information and a "magic link" to activate other
+    // extensions. This is a workaround for MAB not being generally available so other extensions
+    // needing MAB must be enrolled somehow in MAB. The license is sent to the currently registered
+    // email for the original license purchase and is returned to the `ok` handler for UI display.
+    // If an error sending the email occurs, the `fail` handler is called with the failure error.
+    resendEmail(ok, fail) {
       License.fetchLicenseAPI('resend_email', {}, (data) => {
         if (data && data.email) {
           ok(data.email);
@@ -21160,151 +21154,161 @@ var License = (function () {
         }
       }, (err) => {
         fail(err);
-      })
-    }
+      });
+    },
   };
-})();
+}());
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if (request.command === "payment_success" && request.version === 1) {
-        License.activate();
-        sendResponse({ ack: true });
+  (request, sender, sendResponse) => {
+    if (request.command === 'payment_success' && request.version === 1) {
+      License.activate();
+      sendResponse({ ack: true });
     } else if (typeof request.magicCode === 'string') {
       // Find MAB status: justInstalled | alreadyActive
-      let status = License.isMyAdBlockEnrolled() ? 'alreadyActive' : 'justInstalled';
+      const status = License.isMyAdBlockEnrolled() ? 'alreadyActive' : 'justInstalled';
       if (status === 'alreadyActive') {
-        sendResponse({ack: true, status});
+        sendResponse({ ack: true, status });
       } else {
         // We need to validate the magic code
-        License.fetchLicenseAPI('validate_magic_code', {magiccode: request.magicCode}, (data) => {
+        License.fetchLicenseAPI('validate_magic_code', { magiccode: request.magicCode }, (data) => {
           if (data && data.success === true) {
             // Not sure if we should do something with the `data`
-            sendResponse({ack: true, status});
+            sendResponse({ ack: true, status });
             // Set up extension with MAB enrollment
-            License.checkPingResponse(JSON.stringify({myadblock_enrollment: true}));
+            License.checkPingResponse(JSON.stringify({ myadblock_enrollment: true }));
             // Assume the magic link activates the license and update immediately
             License.activate(0);
           } else {
-            sendResponse({ack: false, status});
+            sendResponse({ ack: false, status });
           }
         }, (err) => {
-          sendResponse({ack: false, status, error: err});
+          sendResponse({ ack: false, status, error: err });
         });
       }
     }
 
     return true;
-});
+  },
+);
 
-var channels = {};
-License.ready().then(function() {
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (!(request.message == "load_my_adblock")) {
+const replacedPerPage = new ext.PageMap();
+
+// Records how many ads have been replaced by AdBlock.  This is used
+// by the AdBlock to display statistics to the user.
+const replacedCounts = (function getReplacedCount() {
+  const key = 'replaced_stats';
+  let data = storageGet(key);
+  if (!data) {
+    data = {};
+  }
+  if (data.start === undefined) {
+    data.start = Date.now();
+  }
+  if (data.total === undefined) {
+    data.total = 0;
+  }
+  data.version = 1;
+  storageSet(key, data);
+
+  return {
+    recordOneAdReplaced(tabId) {
+      data = storageGet(key);
+      data.total += 1;
+      storageSet(key, data);
+
+      const myPage = ext.getPage(tabId);
+      let replaced = replacedPerPage.get(myPage) || 0;
+      replacedPerPage.set(myPage, replaced += 1);
+    },
+    get() {
+      return storageGet(key);
+    },
+    getTotalAdsReplaced(tabId) {
+      if (tabId) {
+        return replacedPerPage.get(ext.getPage(tabId));
+      }
+      return this.get().total;
+    },
+  };
+}());
+
+let channels = {};
+License.ready().then(() => {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (!(request.message === 'load_my_adblock')) {
       return;
     }
-    if (sender.url && sender.url.startsWith("http") && getSettings().picreplacement && channels.isAnyEnabled()) {
-      const logError = function(e) {
+    if (
+      sender.url
+      && sender.url.startsWith('http')
+      && getSettings().picreplacement
+      && channels.isAnyEnabled()
+    ) {
+      const logError = function (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
       };
-      chrome.tabs.executeScript(sender.tab.id, {file: "adblock-picreplacement-image-sizes-map.js", frameId: sender.frameId, runAt:"document_start"}).catch(logError);
-      chrome.tabs.executeScript(sender.tab.id, {file: "adblock-picreplacement.js", frameId: sender.frameId, runAt:"document_start"}).catch(logError);
+      chrome.tabs.executeScript(sender.tab.id, { file: 'adblock-picreplacement-image-sizes-map.js', frameId: sender.frameId, runAt: 'document_start' }).catch(logError);
+      chrome.tabs.executeScript(sender.tab.id, { file: 'adblock-picreplacement.js', frameId: sender.frameId, runAt: 'document_start' }).catch(logError);
     }
     sendResponse({});
   });
 
   channels = new Channels();
   Object.assign(window, {
-    channels
+    channels,
   });
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.message !== "get_random_listing") {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.message !== 'get_random_listing') {
       return;
     }
 
-    var myPage = ext.getPage(sender.tab.id);
+    const myPage = ext.getPage(sender.tab.id);
     if (checkWhitelisted(myPage) || !License.isActiveLicense()) {
       sendResponse({ disabledOnPage: true });
       return;
     }
-    var result = channels.randomListing(request.opts);
+    const result = channels.randomListing(request.opts);
     if (result) {
       sendResponse(result);
     } else {
-      // if not found, and data collection enabled, send message to log server with domain, and request
+      // if not found, and data collection enabled, send message to log server with domain,
+      // and request
       sendResponse({ disabledOnPage: true });
     }
   });
 
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === 'recordOneAdReplaced') {
       sendResponse({});
       if (License.isActiveLicense()) {
-        replacedCounts.recordOneAdReplaced(sender.tab.id)
+        replacedCounts.recordOneAdReplaced(sender.tab.id);
       }
     }
   });
 
   chrome.extension.onRequest.addListener(
-    function(request, sender, sendResponse) {
-      if (request.command !== "picreplacement_inject_jquery")
-        return; // not for us
-      if (sender.url && sender.url.startsWith("http") && sender.tab && sender.tab.id) {
-        chrome.tabs.executeScript(sender.tab.id, {allFrames: request.allFrames, file: "adblock-jquery.js"});
+    (request, sender) => {
+      if (request.command !== 'picreplacement_inject_jquery') {
+        return;
+      } // not for us
+      if (sender.url && sender.url.startsWith('http') && sender.tab && sender.tab.id) {
+        chrome.tabs.executeScript(sender.tab.id, { allFrames: request.allFrames, file: 'adblock-jquery.js' });
       }
-    }
+    },
   );
-
 });
-// Records how many ads have been replaced by AdBlock.  This is used
-// by the AdBlock to display statistics to the user.
-var replacedCounts = (function() {
-  var key = "replaced_stats";
-  var data = storage_get(key);
-  if (!data)
-    data = {};
-  if (data.start === undefined)
-    data.start = Date.now();
-  if (data.total === undefined)
-    data.total = 0;
-  data.version = 1;
-  storage_set(key, data);
 
-  return {
-    recordOneAdReplaced: function(tabId) {
-      var data = storage_get(key);
-      data.total += 1;
-      storage_set(key, data);
-
-      var myPage = ext.getPage(tabId);
-      let replaced = replacedPerPage.get(myPage) || 0;
-      replacedPerPage.set( myPage, ++replaced);
-    },
-    get: function() {
-      return storage_get(key);
-    },
-    getTotalAdsReplaced: function(tabId){
-      if (tabId) {
-        return replacedPerPage.get(ext.getPage(tabId));
-      }
-      return this.get().total;
-    }
-  };
-})();
-
-let replacedPerPage = new ext.PageMap();
-
-getReplacedPerPage = page => replacedPerPage.get(page) || 0;
-
-License.initialize(function() {
+License.initialize(() => {
   if (!License.initialized) {
-      License.initialized = true;
+    License.initialized = true;
   }
 });
 
 Object.assign(window, {
   License,
-  replacedCounts
+  replacedCounts,
 });
 
 
@@ -21319,38 +21323,38 @@ Object.assign(window, {
 
 
 
+/* For ESLint: List any global identifiers used in this file below */
+/* global require, */
 
-const {ElemHide} = __webpack_require__(19);
-const {RegExpFilter} = __webpack_require__(0);
-const {ElemHideEmulation} = __webpack_require__(21);
-const {checkWhitelisted} = __webpack_require__(9);
-const {extractHostFromFrame} = __webpack_require__(7);
-const {port} = __webpack_require__(8);
+const { ElemHide } = __webpack_require__(19);
+const { RegExpFilter } = __webpack_require__(0);
+const { ElemHideEmulation } = __webpack_require__(21);
+const { checkWhitelisted } = __webpack_require__(9);
+const { extractHostFromFrame } = __webpack_require__(7);
+const { port } = __webpack_require__(8);
 
-port.on("getSelectors", (message, sender) =>
-{
+port.on('getSelectors', (_message, sender) => {
   let selectors = [];
-  let emulatedPatterns = [];
+  const emulatedPatterns = [];
 
   if (!checkWhitelisted(sender.page, sender.frame, null,
-                        RegExpFilter.typeMap.DOCUMENT |
-                        RegExpFilter.typeMap.ELEMHIDE))
-  {
-    let hostname = extractHostFromFrame(sender.frame);
-    let specificOnly = checkWhitelisted(sender.page, sender.frame, null,
-                                        RegExpFilter.typeMap.GENERICHIDE);
+    RegExpFilter.typeMap.DOCUMENT || RegExpFilter.typeMap.ELEMHIDE)) {
+    const hostname = extractHostFromFrame(sender.frame);
+    const specificOnly = checkWhitelisted(sender.page, sender.frame, null,
+      RegExpFilter.typeMap.GENERICHIDE);
 
-    selectors = ElemHide.generateStyleSheetForDomain(
+    ({ selectors } = ElemHide.generateStyleSheetForDomain(
       hostname,
       specificOnly ? ElemHide.SPECIFIC_ONLY : ElemHide.ALL_MATCHING,
-      true
-    ).selectors;
+      true,
+    ));
 
-    for (let filter of ElemHideEmulation.getRulesForDomain(hostname))
-      emulatedPatterns.push({selector: filter.selector, text: filter.text});
+    for (const filter of ElemHideEmulation.getRulesForDomain(hostname)) {
+      emulatedPatterns.push({ selector: filter.selector, text: filter.text });
+    }
   }
 
-  let response = {emulatedPatterns, selectors};
+  const response = { emulatedPatterns, selectors };
 
   return response;
 });

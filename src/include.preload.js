@@ -2279,7 +2279,13 @@ exports.indexOf = indexOf;
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* For ESLint: List any global identifiers used in this file below */
+/* global chrome */
 
 chrome.runtime.sendMessage({ message: 'load_my_adblock' });
 

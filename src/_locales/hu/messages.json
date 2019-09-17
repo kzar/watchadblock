@@ -1234,6 +1234,10 @@
     "message": "Török", 
     "description": "A filter list"
   }, 
+  "filterviewsource": {
+    "message": "View filter list", 
+    "description": "Title for links to view filter lists on website"
+  }, 
   "filterwarning_removal": {
     "message": "Adblock figyelmeztetés eltávolítási lista (törli a hirdetésblokkolók használatával kapcsolatos figyelmeztetéseket)", 
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
@@ -3066,6 +3070,16 @@
       "seconds": {
         "content": "$1", 
         "example": "15"
+      }
+    }
+  }, 
+  "updatedtimestamp": {
+    "message": "updated on $ts$", 
+    "description": "Label for filter list subscription last updated timestamp", 
+    "placeholders": {
+      "ts": {
+        "content": "$1", 
+        "example": "8/26/2019 10:23:44 PM"
       }
     }
   }, 
