@@ -178,13 +178,11 @@
       return;
     }
 
-    const iframeData = MABPayment.initialize('themes');
+    const payInfo = MABPayment.initialize('themes');
     if (License.shouldShowMyAdBlockEnrollment()) {
-      $('.theme-wrapper.locked .theme-box').click(() => {
-        MABPayment.freeUserLogic(iframeData);
-      });
+      MABPayment.freeUserLogic(payInfo);
     } else if (License.isActiveLicense()) {
-      MABPayment.paidUserLogic(iframeData);
+      MABPayment.paidUserLogic(payInfo);
     }
 
     documentEventsHandling();

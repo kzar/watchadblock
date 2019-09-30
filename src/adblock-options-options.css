@@ -154,6 +154,7 @@ a .link-text-color:hover {
   --grey-background-color: #999999;
   --grey-background-color-hover: #666666;
   --color: white;
+  --color-on-light-bg: #333333;
   --font-weight-hover: bold;
   --btn-height: 35px;
   --border: none;
@@ -171,6 +172,9 @@ a .link-text-color:hover {
 }
 .btn.long {
   min-width: 212px;
+}
+.btn.medium {
+  min-width: 176px;
 }
 .btn.short {
   min-width: 106px;
@@ -190,6 +194,13 @@ a .link-text-color:hover {
 }
 .btn.red:hover {
   background-color: var(--red-background-color-hover);
+}
+.btn.yellow {
+  color: var(--color-on-light-bg);
+  background-color: var(--yellow-btn-color);
+}
+.btn.yellow:hover {
+  background-color: var(--yellow-btn-color);
 }
 .btn.grey:hover {
   background-color: var(--grey-background-color-hover);
@@ -211,15 +222,6 @@ a .link-text-color:hover {
   margin: 24px 20px;
   max-width: 711px;
   width: 711px;
-}
-.option-page-content.center-if-iframe {
-  margin: 24px 20px 24px auto;
-}
-.center-if-iframe .page-title,
-.center-if-iframe .section-title,
-.center-if-iframe #myadblock-features,
-.center-if-iframe #themes-sections {
-  margin-left: 20px;
 }
 
 /* GENERAL TAB */

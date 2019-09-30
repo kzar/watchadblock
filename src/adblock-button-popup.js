@@ -497,7 +497,7 @@ try {
 
       selected('#div_myadblock_enrollment, #div_myadblock_enrollment_v2', () => {
         BG.recordGeneralMessage('myadblock_cta_clicked');
-        openPage(chrome.extension.getURL('options.html#mab'));
+        openPage(License.MAB_CONFIG.payURL);
         closeAndReloadPopup();
       });
 

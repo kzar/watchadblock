@@ -179,9 +179,11 @@ const runBandaids = function () {
     },
     getadblock() {
       function receiveMessage(event) {
-        if (event.data
-            && event.origin === 'https://getadblock.com'
-            && event.data.command === 'payment_success') {
+        if (
+          event.data
+          && event.origin === 'https://getadblock.com'
+          && event.data.command === 'payment_success'
+        ) {
           window.removeEventListener('message', receiveMessage);
           chrome.runtime.sendMessage({ command: 'payment_success', version: 1 })
             .then((response) => {
@@ -189,6 +191,7 @@ const runBandaids = function () {
             });
         }
       }
+
       window.addEventListener('message', receiveMessage, false);
 
       function receiveMagicCodeMessage(event) {
@@ -248,7 +251,23 @@ const runBandaids = function () {
           };
         }
       }
+
+      // Listen to clicks on 'Get Started With MyAdBlock' on v4 payment page
+      const getStartedElements = document.querySelectorAll('.get-started-with-myadblock');
+      if (getStartedElements && getStartedElements.length) {
+        for (let i = 0; i < getStartedElements.length; ++i) {
+          getStartedElements[i].onclick = function getStartedWithMyAdBlock(event) {
+            if (event.isTrusted === false) {
+              return;
+            }
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            BGcall('openTab', 'options.html#mab');
+          };
+        }
+      }
     },
+
     // The following Twitch-related code is used under the terms of the MIT license
     // from https://greasyfork.org/en/scripts/371186-twitch-mute-ads-and-optionally-hide-them
     twitch() {

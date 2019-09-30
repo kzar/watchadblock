@@ -3,7 +3,20 @@
 <div class="option-page-box mab-page-box">
   <div class="option-page-content">
     <section>
-      <h1 i18n="myadblock_options_page_header" class="page-title"></h1>
+      <!-- Start: Payment section visible only to free MAB users -->
+      <section id="locked-user-pay-section-mab" class="bottom-line" style="display: none;">
+        <p i18n="myadblock_short_description_to_pay"></p>
+        <a
+          id="get-it-now-mab"
+          i18n="get_it_now"
+          class="btn yellow long"
+          target="_blank"
+          href="https://getadblock.com/myadblock/enrollment/v4/"
+        ></a>
+      </section>
+      <!-- End: Payment section visible only to free MAB users -->
+
+      <h1 i18n="myadblock_page_title" class="page-title"></h1>
 
       <div id="mab-enrollment-section" style="display: none">
         <header>
@@ -73,11 +86,11 @@
           <a href="#mab-themes">
             <section class="mab-feature-header">
               <i class="material-icons md-24 header-icon">featured_video</i>
-              <span i18n="themes">Themes</span>
+              <span i18n="make_adblock_yours_title"></span>
             </section>
             <section class="mab-feature-body">
-              <span i18n="myadblock_themes_description"></span>
-              <img id="themes-preview" />
+              <span i18n="make_adblock_yours_description"></span>
+              <img id="themes-preview" class="feature-preview" />
             </section>
           </a>
         </div>
@@ -88,14 +101,11 @@
           <a href="#mab-image-swap">
             <section class="mab-feature-header">
               <i class="material-icons md-24 header-icon">photo</i>
-              <span i18n="image_swap">Image Swap</span>
-              <img id="landscape-icon" class="mab-icon" />
-              <img id="dog-icon" class="mab-icon" />
-              <img id="cat-icon" class="mab-icon" />
+              <span i18n="see_photos_no_ads_title"></span>
             </section>
             <section class="mab-feature-body">
-              <span i18n="myadblock_pic_replacemenet_description"></span>
-              <img id="image-swap-preview" />
+              <span i18n="see_photos_no_ads_description"></span>
+              <img id="image-swap-preview" class="feature-preview" />
             </section>
           </a>
 
@@ -112,11 +122,11 @@
           <a href="#sync">
             <section class="mab-feature-header">
               <i class="material-icons black md-24 header-icon">sync</i>
-              <span i18n="sync_tab_item"></span>
+              <span i18n="sync_your_settings_title"></span>
             </section>
             <section class="mab-feature-body">
-              <span i18n="myadblock_sync_description"></span>
-              <img id="sync-preview" />
+              <span i18n="sync_your_settings_description"></span>
+              <img id="sync-preview" class="feature-preview" />
             </section>
           </a>
 
@@ -142,6 +152,7 @@
       </div>
       <div class="translation_credits italic do-not-display"></div>
     </section>
+
     <footer style="display: none;">
       <section>
         <h2 i18n="myadblock_feedback_title"></h2>
@@ -152,19 +163,4 @@
       </div>
     </footer>
   </div>
-
-  <!-- START: payment iframe block -->
-  <div id="payment-iframe-mab"></div>
-  <div id="payment-iframe-error-mab">
-    <div id="error-title-mab" class="bottom-line">
-      <div class="align-items-center">
-        <i class="material-icons circle-icon-bg-24 error-icon">cancel</i>
-        &nbsp;&nbsp;
-        <span i18n="myadblock_payment_not_available_callout"></span>
-      </div>
-      <div i18n="myadblock_payment_not_available_subtitle"></div>
-    </div>
-    <p i18n="myadblock_payment_not_available_text"></p>
-  </div>
-  <!-- END: payment iframe block -->
 </div>

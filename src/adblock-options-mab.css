@@ -1,9 +1,5 @@
 /* MAB page */
 
-#mab-new-feature {
-  color: #ffae00;
-  font-weight: bold;
-}
 #myadblock-features {
   margin-top: 20px;
   display: flex;
@@ -37,23 +33,25 @@
   width: 100%;
   display: flex;
   align-items: center;
+  line-height: normal;
   border-radius: 6px 6px 0 0;
-  background-color: var(--feature-card-header-bg-color);
+  background-color: var(--mab-feature-card-header-locked-bg);
 }
 .mab-feature:not(.teaser):not(.locked) .mab-feature-header {
   color: white;
-  background-color: #e40d0d;
+  background-color: var(--mab-feature-card-header-unlocked-bg);
 }
 .teaser .mab-feature-header,
 .teaser .mab-feature-header i {
-  color: var(--teaser-card-header-text-color);
+  color: var(--mab-feature-card-text-color);
 }
 .mab-feature-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px 24px 24px 24px;
-  background-color: var(--feature-card-body-bg-color);
+  padding: 16px 24px 0px 24px;
+  color: var(--mab-feature-card-text-color);
+  background-color: var(--mab-feature-card-body-bg);
   height: calc(100% - 64px);
   border-radius: 0 0 6px 6px;
   line-height: normal;
@@ -66,7 +64,7 @@
 }
 .mab-feature.locked:not(.teaser) .header-icon,
 .mab-feature.locked:not(.teaser) a .mab-feature-header {
-  color: var(--feature-card-header-text-color);
+  color: var(--mab-feature-card-text-color);
 }
 .mab-icon {
   height: 18px;
@@ -101,32 +99,21 @@
   text-align: center;
   cursor: pointer;
 }
-#landscape-icon {
-  content: url(icons/adblock-picreplacement-images-menu-landscape.png);
-}
-#dog-icon {
-  content: url(icons/adblock-picreplacement-images-menu-dog.png);
-}
-#cat-icon {
-  content: url(icons/adblock-picreplacement-images-menu-cat.png);
-}
-#image-swap-preview {
-  width: 267px;
-  content: url(icons/adblock-picreplacement-image-swap.png);
-  align-self: center;
-}
-#themes-preview {
-  width: 271px;
-  height: 151px;
-  content: url(icons/themes.svg);
+.feature-preview {
+  width: 258px;
+  height: 72px;
+  flex: 1;
   align-self: center;
   border-radius: 7px;
 }
+#image-swap-preview {
+  content: url(icons/image-swap-preview.svg);
+}
+#themes-preview {
+  content: url(icons/themes-preview.svg);
+}
 #sync-preview {
-  width: 288px;
-  height: 142px;
-  content: url(icons/sync-content-4.svg);
-  align-self: center;
+  content: url(icons/sync-preview.svg);
 }
 
 /* MAB enrollment "magic box" */
@@ -349,10 +336,6 @@ div.mab-page-box > .option-page-content > footer {
   margin: 30px -15px -15px -15px;
 }
 
-div.mab-page-box > .center-if-iframe > footer {
-  margin-left: 5px;
-}
-
 div.mab-page-box > .option-page-content > footer::before,
 div.mab-page-box > .option-page-content > footer::after {
   background-color: var(--background-color);
@@ -409,56 +392,33 @@ div.mab-page-box > .option-page-content > footer > div {
 
 /* End: MAB Feedback CTA */
 
-/* MAB iframe */
+/* Start: MAB payment section */
 
-#payment-iframe-mab,
-#payment-iframe-themes {
-  display: none;
-  width: 336px;
-  min-height: 100vh;
-  align-self: stretch;
-  margin-left: auto;
-  background: transparent;
+[id^="locked-user-pay-section-"] {
+  width: 100%;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-#payment-iframe-error-mab,
-#payment-iframe-error-themes {
-  display: none;
-  padding: 50px 14px;
-  width: 336px;
-  min-height: 100vh;
-  align-self: stretch;
-  margin-left: auto;
-  background-color: var(--options-header-bg-color);
-}
-#payment-iframe-themes,
-#payment-iframe-error-themes {
-  transition: transform 0.65s ease-in;
-  transform: scaleX(0);
-  transform-origin: right;
-}
-#payment-iframe-themes.slide-in,
-#payment-iframe-error-themes.slide-in {
-  transform: scaleX(1);
-}
-#error-title-mab,
-#error-title-themes {
+
+[id^="locked-user-pay-section-"] > p {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: normal;
+  font-style: normal;
+  line-height: normal;
   color: var(--options-page-title-color);
+  overflow-wrap: break-word;
+  max-width: 470px;
 }
-#error-title-mab,
-#error-title-mab > div:first-child,
-#error-title-themes,
-#error-title-themes > div:first-child {
-  padding-bottom: 15px;
+
+[id^="locked-user-pay-section-"] > a {
+  font-size: 14px;
+  font-weight: bold;
+  max-width: 176px;
 }
-#error-title-mab .error-icon:hover #error-title-themes .error-icon:hover {
-  cursor: default;
-}
-#error-title-mab .error-icon,
-#error-title-themes .error-icon {
-  color: #e40d0d;
-}
+
+/* End: MAB payment section */
 
 /* Image Swap */
 
@@ -766,22 +726,6 @@ input.invisible-overlay {
 }
 .sync-error-link-text-color {
   color: #4ecdf9;
-}
-
-/* Retina & hi DPI displays only */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  #landscape-icon {
-    content: url(icons/adblock-picreplacement-images-menu-landscape@2x.png);
-  }
-  #dog-icon {
-    content: url(icons/adblock-picreplacement-images-menu-dog@2x.png);
-  }
-  #cat-icon {
-    content: url(icons/adblock-picreplacement-images-menu-cat@2x.png);
-  }
-  #image-swap-preview {
-    content: url(icons/adblock-picreplacement-image-swap@2x.png);
-  }
 }
 
 /* Screen size support */

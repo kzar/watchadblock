@@ -3,6 +3,19 @@
 <div class="option-page-box mab-page-box">
   <div class="option-page-content">
     <section>
+      <!-- Start: Payment section visible only to free MAB users -->
+      <section id="locked-user-pay-section-themes" class="bottom-line" style="display: none;">
+        <p i18n="myadblock_short_description_to_pay"></p>
+        <a
+          id="get-it-now-themes"
+          i18n="get_it_now"
+          class="btn yellow long"
+          target="_blank"
+          href="https://getadblock.com/myadblock/enrollment/v4/"
+        ></a>
+      </section>
+      <!-- End: Payment section visible only to free MAB users -->
+
       <div class="page-title align-items-center">
         <i id="video-icon" class="material-icons md-24">featured_video</i>
         <h1 id="themes-title" i18n="themes" class="page-title"></h1>
@@ -202,19 +215,4 @@
       </div>
     </footer>
   </div>
-
-  <!-- START: payment iframe block -->
-  <div id="payment-iframe-themes"></div>
-  <div id="payment-iframe-error-themes">
-    <div id="error-title-themes" class="bottom-line">
-      <div class="align-items-center">
-        <i class="material-icons circle-icon-bg-24 error-icon">cancel</i>
-        &nbsp;&nbsp;
-        <span i18n="myadblock_payment_not_available_callout"></span>
-      </div>
-      <div i18n="myadblock_payment_not_available_subtitle"></div>
-    </div>
-    <p i18n="myadblock_payment_not_available_text"></p>
-  </div>
-  <!-- END: payment iframe block -->
 </div>

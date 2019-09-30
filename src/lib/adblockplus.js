@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.55.1";
+exports.addonVersion = "3.56.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -20776,14 +20776,14 @@ const License = (function getLicense() {
     prod: {
       licenseURL: 'https://myadblock-licensing.firebaseapp.com/license/',
       syncURL: 'https://myadblock.sync.getadblock.com/v1/sync',
-      iframeUrl: 'https://getadblock.com/myadblock/enrollment/v3/',
       subscribeKey: 'sub-c-9eccffb2-8c6a-11e9-97ab-aa54ad4b08ec',
+      payURL: 'https://getadblock.com/myadblock/enrollment/v4/',
     },
     dev: {
       licenseURL: 'https://dev.myadblock.licensing.getadblock.com/license/',
       syncURL: 'https://dev.myadblock.sync.getadblock.com/v1/sync',
-      iframeUrl: 'http://dev.getadblock.com/myadblock/enrollment/v3/',
       subscribeKey: 'sub-c-9e0a7270-83e7-11e9-99de-d6d3b84c4a25',
+      payURL: 'https://getadblock.com/myadblock/enrollment/v4/?testmode=true',
     },
   };
   const MAB_CONFIG = isProd ? mabConfig.prod : mabConfig.dev;

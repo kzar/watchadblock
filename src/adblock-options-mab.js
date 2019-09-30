@@ -78,15 +78,15 @@ $(document).ready(() => {
     return;
   }
 
-  const iframeData = MABPayment.initialize('mab');
+  const payInfo = MABPayment.initialize('mab');
   if (License.shouldShowMyAdBlockEnrollment()) {
-    MABPayment.freeUserLogic(iframeData);
+    MABPayment.freeUserLogic(payInfo);
   } else if (License.isActiveLicense()) {
-    MABPayment.paidUserLogic(iframeData);
+    MABPayment.paidUserLogic(payInfo);
     showEnrollmentBox();
   }
 
-  $('.mab-feature:not(.locked) a').click(() => {
+  $('.mab-feature:not(.locked) a').click(function goToTab() {
     activateTab($(this).attr('href'));
   });
 });
