@@ -105,9 +105,13 @@
   flex: 1;
   align-self: center;
   border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #image-swap-preview {
-  content: url(icons/image-swap-preview.svg);
+  width: 100%; /* Remove this rule if file is svg */
+  content: url(icons/image-swap-preview.png);
 }
 #themes-preview {
   content: url(icons/themes-preview.svg);
@@ -736,5 +740,12 @@ input.invisible-overlay {
       flex-wrap: wrap;
       justify-content: space-evenly;
     }
+  }
+}
+
+/* Retina & hi DPI displays only */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #image-swap-preview {
+    content: url(icons/image-swap-preview@2x.png);
   }
 }

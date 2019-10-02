@@ -257,13 +257,11 @@ const onPostDataSentError = function (errorCode, initialGet) {
       syncErrorCode = errorCode;
     }
   } else if (!initialGet && [0, 401, 404, 500].includes(errorCode)) {
-    const revertMsg2 = translate('sync_header_error_revert_message_part_2');
-    const errMsgSuffix = translate('sync_header_message_error_suffix');
-    showSyncMessage(`${setupFailMsgPrefix} ${revertMsg2} ${errMsgSuffix}`, false, true);
-    if ($('#customize').is(':visible')) {
-      $customizeSyncHeader.text(`${setupFailMsgPrefix} ${revertMsg2} ${errMsgSuffix}`);
-      syncErrorCode = errorCode;
-    }
+    const revertMsg2 = translate('sync_header_error_save_message_part_2');
+    const revertMsg3 = translate('sync_header_error_save_message_part_3');
+    showSyncMessage(`${setupFailMsgPrefix} ${revertMsg2} ${revertMsg3}`, false, true);
+    $customizeSyncHeader.text(`${setupFailMsgPrefix} ${revertMsg2} ${revertMsg3}`);
+    syncErrorCode = errorCode;
   }
 };
 

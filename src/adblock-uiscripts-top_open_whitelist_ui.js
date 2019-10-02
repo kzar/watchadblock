@@ -158,19 +158,8 @@ function topOpenWhitelistUI() {
   // Existing page styles are reset in the shadow at the top of `adblock-wizard.css`
   // using `:host` to select our base and the CCS rule `all:initial;` to perform the reset.
   const base = document.createElement('div');
-  base.setAttribute('id', 'adblock-host');
-  let $base;
-  if ('attachShadow' in base) {
-    // allow forcing the fallback using feature flag
-    if (sessionStorage.getItem('adblock.wizard.shadow') === 'ignore') {
-      $base = $(base);
-    } else {
-      $base = $(base.attachShadow({ mode: 'open' }));
-    }
-  } else {
-    // fallback to using the host node as a poor man's shadow
-    $base = $(base);
-  }
+  const $base = $(base.attachShadow({ mode: 'open' }));
+
   loadWizardResources($base, () => {
     // check if we're running on website with a frameset, if so, tell
     // the user we can't run on it.
@@ -182,39 +171,39 @@ function topOpenWhitelistUI() {
     }
 
     const html = `
-<div id="adblock-dialog">
-<header class="adblock">
-  <img class="adblock" aria-hidden="true" height="24px" width="24px" src="${chrome.extension.getURL('/icons/icon24.png')}">
-  <h1 class="adblock">${translate('whitelistertitle2')}</h1>
-</header>
-<section class="adblock">
-  <p class="adblock">${translate('adblock_wont_run_on_pages_matching')}</p>
-  <ul class="adblock" id="adblock-parts">
-      <li class="adblock adblock-part-item" id="adblock-domain-part"></li>
-      <li class="adblock adblock-part-item" id="adblock-path-part"></li>
-  </ul>
-  <p class="adblock" id="slider-directions">${translate('you_can_slide_to_change')}</p>
-  <form class="adblock" id="adblock-wizard-form">
-      <fieldset class="adblock" id="adblock-sliders">
-        <div id="modifydomain">
-          <label class="adblock" for="adblock-domain-slider">${translate('modifydomain')}</label>
-          <input class="adblock" id="adblock-domain-slider" type="range" min="0" value="0"/>
-        </div>
-        <div id="modifypath">
-          <label class="adblock" for="adblock-path-slider">${translate('modifypath')}</label>
-          <input class="adblock" id="adblock-path-slider" type="range" min="0" value="0"/>
-        </div>
-      </fieldset>
-      <fieldset class="adblock">
-        <input class="adblock" type="checkbox" id="adblock-reload-page" checked/>
-        <label class="adblock" for="adblock-reload-page">${translate('reloadpageafterwhitelist')}</label>
-      </fieldset>
-  </form>
-</section>
-<footer class="adblock">
-  <button class="adblock primary adblock-default-button">${translate('buttonexclude')}</button>
-  <button class="adblock cancel">${translate('buttoncancel')}</button>
-</footer>
+<div id="wizard">
+  <header >
+    <img aria-hidden="true" src="${chrome.extension.getURL('/icons/icon24.png')}">
+    <h1 >${translate('whitelistertitle2')}</h1>
+  </header>
+  <section >
+    <p >${translate('adblock_wont_run_on_pages_matching')}</p>
+    <ul id="adblock-parts">
+        <li id="adblock-domain-part"></li>
+        <li id="adblock-path-part"></li>
+    </ul>
+    <p id="slider-directions">${translate('you_can_slide_to_change')}</p>
+    <form  id="adblock-wizard-form">
+        <fieldset id="adblock-sliders">
+          <div id="modifydomain">
+            <label for="adblock-domain-slider">${translate('modifydomain')}</label>
+            <input id="adblock-domain-slider" type="range" min="0" value="0"/>
+          </div>
+          <div id="modifypath">
+            <label for="adblock-path-slider">${translate('modifypath')}</label>
+            <input id="adblock-path-slider" type="range" min="0" value="0"/>
+          </div>
+        </fieldset>
+        <fieldset >
+          <input type="checkbox" id="adblock-reload-page" checked/>
+          <label for="adblock-reload-page">${translate('reloadpageafterwhitelist')}</label>
+        </fieldset>
+    </form>
+  </section>
+  <footer >
+    <button class="primary adblock-default-button">${translate('buttonexclude')}</button>
+    <button class="cancel">${translate('buttoncancel')}</button>
+  </footer>
 </div>
 `;
     const $dialog = $(html);

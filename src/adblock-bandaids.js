@@ -3,6 +3,8 @@
 /* For ESLint: List any global identifiers used in this file below */
 /* global chrome, BGcall, adblock_installed, adblock_userid, adblock_version */
 
+const invalidGUIDChars = /[^a-z0-9]/g;
+
 let abort = (function shouldAbort() {
   if (document instanceof HTMLDocument === false) {
     if (document instanceof XMLDocument === false
@@ -106,7 +108,10 @@ const getAdblockVersion = function (version) {
         || document.location.hostname === 'dev1.getadblock.com'
         || document.location.hostname === 'dev2.getadblock.com') {
     chrome.storage.local.get('userid').then((response) => {
-      const adblockUserId = response.userid;
+      let adblockUserId = response.userid;
+      if (adblockUserId.match(invalidGUIDChars)) {
+        adblockUserId = 'invalid';
+      }
       const adblockVersion = chrome.runtime.getManifest().version;
       const elem = document.createElement('script');
       const scriptToInject = `(${getAdblockDomain.toString()})();`

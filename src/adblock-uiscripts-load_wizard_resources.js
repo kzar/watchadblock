@@ -31,12 +31,21 @@ function setTextDirection($dialog) {
 //   - $base : jQuery Element to attach the CSS as children
 //   - callback : function to call when loading is complete
 function loadWizardResources($base, callback) {
-  function loadCss(src) {
-    const url = chrome.extension.getURL(src);
-    const link = $('<link rel="stylesheet" type="text/css" />')
-      .attr('href', url)
-      .addClass('adblock-ui-stylesheet');
-    $base.append(link);
+  function loadCss(cssSrc) {
+    const cssUrl = chrome.runtime.getURL(cssSrc);
+    const fontCssUrl = chrome.runtime.getURL('fonts/font-face.css');
+    const $styleTag = $('<style />').addClass('adblock-ui-stylesheet');
+
+    // HTML element <link> is ignored in shadow tree in Chrome 53
+    // so we must load the CSS file in some other ways e.g. using <style>
+    $.get(cssUrl, (wizardCssRules) => {
+      $styleTag.text(`${$styleTag.text()}${wizardCssRules}`);
+    });
+    $.get(fontCssUrl, (fontFaceRules) => {
+      $styleTag.text(`${$styleTag.text()}${fontFaceRules}`);
+    });
+
+    $base.append($styleTag);
   }
 
   function loadFont(name, style, weight, unicodeRange) {

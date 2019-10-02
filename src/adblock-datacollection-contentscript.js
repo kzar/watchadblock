@@ -5,6 +5,7 @@
 
 let pairs = [];
 const matchSelectors = [];
+const matchExceptions = [];
 const chunkSize = 1000;
 function* genFunc() {
   let i = pairs.length;
@@ -17,6 +18,7 @@ function* genFunc() {
 chrome.runtime.sendMessage({ type: 'getSelectors' }).then((response) => {
   if (document.readyState !== 'loading') {
     pairs = response.selectors;
+    const { exceptions } = response;
 
     const interval = setInterval(() => {
       const val = genFunc().next();
@@ -28,6 +30,15 @@ chrome.runtime.sendMessage({ type: 'getSelectors' }).then((response) => {
             type: 'datacollection.elementHide',
             selectors: noDuplicates,
           });
+        }
+        for (const exceptionSelectors of exceptions) {
+          if (document.querySelectorAll(exceptionSelectors.body).length) {
+            matchExceptions.push(exceptionSelectors.text);
+          }
+        }
+        if (matchExceptions.length > 0) {
+          const noDuplicates = Array.from(new Set(matchExceptions)); // remove any duplicates
+          chrome.runtime.sendMessage({ type: 'datacollection.exceptionElementHide', exceptions: noDuplicates });
         }
       } else {
         const selectors = val.value;

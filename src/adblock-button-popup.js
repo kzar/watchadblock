@@ -63,10 +63,6 @@ const processError = function (err, stack, message) {
   const errorMsgDiv = document.getElementById('div_status_error');
   if (errorMsgDiv) {
     selectedOnce(document.getElementById('errorreport'), () => {
-      // The exception is added because the ESLint error is linked to a known bug that we're going
-      // to solve as part of this task: https://app.asana.com/0/1109822185966748/1139019576928674/f
-      // eslint-disable-next-line no-undef
-      sendErrorReport.removeEventListener('keydown', clickHandler);
       sendErrorPayload();
       const firstMsg = document.getElementById('first_msg');
       firstMsg.style.display = 'none';
@@ -276,12 +272,12 @@ try {
             show(['div_sync_outofdate_error_msg']);
             SyncService.resetLastGetStatusCode(); // reset the code, so it doesn't show again.
             SyncService.resetLastGetErrorResponse(); // reset the code, so it doesn't show again.
-          } else if (info.settings.sync_settings && SyncService.getLastPostStatusCode() >= 400) {
+          } else if (
+            // eslint-disable-next-line max-len
+            (SyncService.getLastPostStatusCode() >= 400 || SyncService.getLastPostStatusCode() === 0)
+            && info.settings.sync_settings
+          ) {
             show(['div_sync_error_msg']);
-            SyncService.resetLastPostStatusCode(); // reset the code, so it doesn't show again.
-          } else if (info.settings.sync_settings && SyncService.getLastPostStatusCode() === 0) {
-            show(['div_sync_error_msg']);
-            $('#div_sync_error_msg').text(`${translate('sync_header_message_setup_fail_prefix')} ${translate('sync_header_error_revert_message_part_2')} ${translate('sync_header_message_error_suffix')}`);
             SyncService.resetLastPostStatusCode(); // reset the code, so it doesn't show again.
           } else {
             hide(['div_sync_error_msg']);

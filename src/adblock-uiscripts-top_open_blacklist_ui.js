@@ -80,19 +80,8 @@ function topOpenBlacklistUI(options) {
   // Existing page styles are reset in the shadow/base at the top of `adblock-wizard.css`
   // using `:host` to select our base and the CCS rule `all:initial;` to perform the reset.
   const base = document.createElement('div');
-  base.setAttribute('id', 'adblock-host');
-  let $base;
-  if ('attachShadow' in base) {
-    // allow forcing the fallback using feature flag
-    if (sessionStorage.getItem('adblock.wizard.shadow') === 'ignore') {
-      $base = $(base);
-    } else {
-      $base = $(base.attachShadow({ mode: 'open' }));
-    }
-  } else {
-    // fallback to using the host node as a poor man's shadow
-    $base = $(base);
-  }
+  const $base = $(base.attachShadow({ mode: 'open' }));
+
   loadWizardResources($base, () => {
     // If they chose 'Block an ad on this page...' ask them to click the ad
     if (options.nothingClicked) {
@@ -118,70 +107,65 @@ function topOpenBlacklistUI(options) {
       mayOpenDialogUi = true;
       return;
     }
-
     const html = `
-    <div id='adblock-dialog'>
-
-      <div class='adblock page' id='page_0'>
-        <header class='adblock'>
-          <img class='adblock' aria-hidden='true' src='${chrome.extension.getURL('/icons/icon24.png')}'>
-          <h1 class='adblock'>${translate('blockanadtitle')}</h1>
+    <div id='wizard'>
+      <div class='page' id='page_0'>
+        <header>
+          <img aria-hidden='true' src='${chrome.extension.getURL('/icons/icon24.png')}'>
+          <h1>${translate('blockanadtitle')}</h1>
         </header>
-        <section class='adblock'>
-          <p class='adblock'>${translate('clickthead')}</p>
+        <section>
+          <p>${translate('clickthead')}</p>
         </section>
-        <footer class='adblock'>
-          <button class='adblock cancel'>${translate('buttoncancel')}</button>
+        <footer>
+          <button class='cancel'>${translate('buttoncancel')}</button>
         </footer>
       </div>
-
-      <div class='adblock page' id='page_1' style='display:none;'>
-        <header class='adblock'>
-          <img class='adblock' aria-hidden='true' src='${chrome.extension.getURL('/icons/icon24.png')}'>
-          <h1 class='adblock'>${translate('slidertitle')}</h1>
+      <div class='page' id='page_1' style='display:none;'>
+        <header>
+          <img aria-hidden='true' src='${chrome.extension.getURL('/icons/icon24.png')}'>
+          <h1>${translate('slidertitle')}</h1>
         </header>
-        <section class='adblock'>
-          <p class='adblock'>${translate('sliderexplanation')}</p>
-          <input class='adblock' id='slider' type='range' min='0' value='0'/>
+        <section>
+          <p>${translate('sliderexplanation')}</p>
+          <input id='slider' type='range' min='0' value='0'/>
         </section>
-        <section class='adblock' id='selected_data'>
-          <b class='adblock'>${translate('blacklisterblockedelement')}</b>
+        <section id='selected-data'>
+          <b>${translate('blacklisterblockedelement')}</b>
           <br><br>
-          <span class='adblock'>&lt;&nbsp;</span><i class='adblock' id='selected_node_name'></i>
-          <iclass='adblock' id='selected_closing_tag'>&nbsp;&gt;</i>
+          <span>&lt;&nbsp;</span><i id='selected_node_name'></i>
+          <i id='selected_closing_tag'>&nbsp;&gt;</i>
         </section>
-        <footer class='adblock'>
-          <button class='adblock primary looks-good adblock-default-button'>${translate('buttonlooksgood')}</button>
-          <button class='adblock cancel'>${translate('buttoncancel')}</button>
+        <footer>
+          <button class='primary looks-good adblock-default-button'>${translate('buttonlooksgood')}</button>
+          <button class='cancel'>${translate('buttoncancel')}</button>
         </footer>
       </div>
-
-      <div class='adblock page' id='page_2' style='display:none;'>
-        <header class='adblock'>
-          <img class='adblock' aria-hidden='true' src='${chrome.extension.getURL('/icons/icon24.png')}'>
-          <h1 class='adblock'>${translate('blacklisteroptionstitle')}</h1>
+      <div class='page' id='page_2' style='display:none;'>
+        <header>
+          <img aria-hidden='true' src='${chrome.extension.getURL('/icons/icon24.png')}'>
+          <h1>${translate('blacklisteroptionstitle')}</h1>
         </header>
-        <section class='adblock'>
+        <section>
           <div>${translate('blacklisteroptions1')}</div>
           <div id='adblock-details'></div>
         </section>
-        <center class='adblock' id='count'></center>
-        <section class='adblock'>
+        <center id='count'></center>
+        <section>
           <div>${translate('blacklisternotsure')}</div>
           <div>${translate('blacklisterthefilter')}</div>
           <div>
             <div id='summary'></div><br/>
-            <div id='filter_warning'></div>
+            <div id='filter-warning'></div>
           </div>
         </section>
-        <footer class='adblock'>
-          <button class='adblock primary block-it adblock-default-button'>${translate('buttonblockit')}</button>
-          <button class='adblock edit advanced-user'>${translate('buttonedit')}</button>
-          <button class='adblock back'>${translate('buttonback')}</button>
-          <button class='adblock cancel'>${translate('buttoncancel')}</button>
+        <footer>
+          <button class='primary block-it adblock-default-button'>${translate('buttonblockit')}</button>
+          <button class='edit advanced-user'>${translate('buttonedit')}</button>
+          <button class='back'>${translate('buttonback')}</button>
+          <button class='cancel'>${translate('buttoncancel')}</button>
         </footer>
       </div>
-
     </div>
     `;
     const $dialog = $(html);

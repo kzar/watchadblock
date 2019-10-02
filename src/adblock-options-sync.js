@@ -210,7 +210,7 @@ const onSyncDataInitialGetError = function () {
 
     $('#btnSyncNow').click(() => {
       setTimeout(() => {
-        SyncService.getSyncData(false, false, undefined, true);
+        SyncService.processUserSyncRequest();
       }, 0);
     });
 

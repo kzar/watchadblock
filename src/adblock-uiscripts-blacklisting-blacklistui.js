@@ -242,7 +242,7 @@ BlacklistUi.prototype.redrawPage1 = function redrawPage1() {
   const element = this.chain.current();
   const elementTag = element[0].nodeName;
   const attrs = ['id', 'class', 'name', 'src', 'href', 'data'];
-  const $selectedData = this.$dialog.children('.page').find('#selected_data');
+  const $selectedData = this.$dialog.children('.page').find('#selected-data');
   const $selectedNodeName = $selectedData.find('#selected_node_name');
   const $closingTag = $selectedData.find('#selected_closing_tag');
 
@@ -276,7 +276,7 @@ BlacklistUi.prototype.makeFilter = function makeFilter() {
   const el = this.chain.current();
   const $pageTwo = this.$dialog.children('#page_2');
   const $pageTwoDetails = $pageTwo.find('#adblock-details');
-  const $pageTwoWarning = $pageTwo.find('#filter_warning');
+  const $pageTwoWarning = $pageTwo.find('#filter-warning');
 
   if ($("input[type='checkbox']#cknodeName", $pageTwoDetails).is(':checked')) {
     result.push(el.prop('nodeName'));
@@ -397,14 +397,12 @@ BlacklistUi.prototype.preview = function preview(selector) {
   csspreview.type = 'text/css';
   csspreview.id = 'adblock_blacklistpreview_css';
 
-  const d = 'body #adblock-host';
-
   if (this.currentStep === 0) {
     // Raise highlight.
     csspreview.innerText = 'body .adblock-highlight-node,';
   } else if (this.currentStep === 1) {
     // Show ui_page1.
-    csspreview.innerText = `${d}, ${d} * {opacity:1!important;} `;
+    csspreview.innerText = 'body, body * {opacity:1!important;} ';
   } else if (this.currentStep === 2) {
     // Fade the selector, while skipping any matching children.
     csspreview.innerText += `
