@@ -321,7 +321,7 @@ function loadOptionalSettings() {
     // Check or uncheck each option.
     optionalSettings = backgroundPage.getSettings();
   }
-  if (optionalSettings.sync_settings) {
+  if (optionalSettings && optionalSettings.sync_settings) {
     addSyncListeners();
     window.addEventListener('unload', () => {
       removeSyncListeners();

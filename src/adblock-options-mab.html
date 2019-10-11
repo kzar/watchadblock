@@ -35,6 +35,8 @@
             id="mab-enrollment-resend-success-icon"
             style="display: none"
             class="material-icons md-24"
+            role="img"
+            i18n-aria-label="success"
             >check_circle</i
           >
           <p id="mab-enrollment-resend-success" style="display: none">
@@ -49,6 +51,8 @@
             id="mab-enrollment-resend-error-icon"
             style="display: none"
             class="material-icons md-24"
+            role="img"
+            i18n-aria-label="error"
             >cancel</i
           >
           <p id="mab-enrollment-resend-error" style="display: none">
@@ -76,7 +80,7 @@
           </div>
         </section>
         <button id="mab-enrollment-close">
-          <i class="material-icons md-18">close</i><span class="sr-only" i18n="close"></span>
+          <i class="material-icons md-18" role="img" i18n-aria-label="close">close</i>
         </button>
       </div>
 
@@ -85,12 +89,14 @@
         <div class="mab-feature hover-shadow">
           <a href="#mab-themes">
             <section class="mab-feature-header">
-              <i class="material-icons md-24 header-icon">featured_video</i>
+              <i class="material-icons md-24 header-icon" aria-hidden="true">featured_video</i>
               <span i18n="make_adblock_yours_title"></span>
             </section>
             <section class="mab-feature-body">
               <span i18n="make_adblock_yours_description"></span>
-              <section class="feature-preview"><img id="themes-preview" /></section>
+              <section class="feature-preview">
+                <img id="themes-preview" i18n-alt="example_themes" />
+              </section>
             </section>
           </a>
         </div>
@@ -100,20 +106,24 @@
         <div class="mab-feature locked">
           <a href="#mab-image-swap">
             <section class="mab-feature-header">
-              <i class="material-icons md-24 header-icon">photo</i>
+              <i class="material-icons md-24 header-icon" aria-hidden="true">photo</i>
               <span i18n="see_photos_no_ads_title"></span>
             </section>
             <section class="mab-feature-body">
               <span i18n="see_photos_no_ads_description"></span>
-              <section class="feature-preview"><img id="image-swap-preview" /></section>
+              <section class="feature-preview">
+                <img id="image-swap-preview" i18n-alt="image_swap_example" />
+              </section>
             </section>
           </a>
 
           <div class="hover-overlay">
-            <i class="material-icons md-64 hover-locked-icon">lock</i>
+            <i class="material-icons md-64 hover-locked-icon" role="img" i18n-aria-label="locked"
+              >lock</i
+            >
             <span i18n="myadblock_subscribe_invite"></span>
           </div>
-          <i class="adblock-icon feature-locked-icon">lock_circle</i>
+          <i class="adblock-icon feature-locked-icon" role="img" aria-hidden="true">lock_circle</i>
         </div>
         <!-- END: Image Swap tab feature -->
 
@@ -121,27 +131,35 @@
         <div class="mab-feature locked">
           <a href="#sync">
             <section class="mab-feature-header">
-              <i class="material-icons black md-24 header-icon">sync</i>
+              <i class="material-icons black md-24 header-icon" role="img" aria-hidden="true"
+                >sync</i
+              >
               <span i18n="sync_your_settings_title"></span>
             </section>
             <section class="mab-feature-body">
               <span i18n="sync_your_settings_description"></span>
-              <section class="feature-preview"><img id="sync-preview" /></section>
+              <section class="feature-preview">
+                <img id="sync-preview" i18n-alt="sync_example" />
+              </section>
             </section>
           </a>
 
           <div class="hover-overlay">
-            <i class="material-icons md-64 hover-locked-icon">lock</i>
+            <i class="material-icons md-64 hover-locked-icon" role="img" i18n-aria-label="locked"
+              >lock</i
+            >
             <span i18n="myadblock_subscribe_invite"></span>
           </div>
-          <i class="adblock-icon feature-locked-icon">lock_circle</i>
+          <i class="adblock-icon feature-locked-icon" role="img" aria-hidden="true">lock_circle</i>
         </div>
         <!-- END: Sync tab  tab feature -->
 
         <!-- START: Teaser -->
         <div class="mab-feature teaser">
           <section class="mab-feature-header">
-            <i class="material-icons md-24 header-icon">access_time</i>
+            <i class="material-icons md-24 header-icon" role="img" aria-hidden="true"
+              >access_time</i
+            >
             <span i18n="myadblock_more_coming_soon"></span>
           </section>
           <section class="mab-feature-body">

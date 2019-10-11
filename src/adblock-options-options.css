@@ -127,9 +127,6 @@ a .link-text-color:hover {
   padding-left: 35px;
   text-indent: -35px;
 }
-.extra-info {
-  padding-left: 35px;
-}
 .bottom-line {
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -296,9 +293,6 @@ a .link-text-color:hover {
 .filter-list-link .material-icons:hover {
   color: var(--link-hovered-color);
 }
-.label-max-width {
-  max-width: 70%;
-}
 #btnShowLinks {
   opacity: 0.7;
   padding-left: 3px;
@@ -307,7 +301,6 @@ a .link-text-color:hover {
   opacity: 1;
   -webkit-transition: all 0.2s ease-out;
   transition: all 0.2s ease-out;
-  cursor: pointer;
 }
 #language_dropdown_container {
   display: flex;
@@ -367,12 +360,37 @@ select#language_select optgroup {
   border-radius: 6px;
 }
 
+#ad_blocking_list label:not(.switch),
+#language_list label,
+#other_filter_lists label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#ad_blocking_list label h1,
+#language_list label h1,
+#other_filter_lists label h1 {
+  display: inline;
+  font-size: 18px;
+  font-weight: normal;
+}
+/* Visually hide the timestamp - screen readers only. */
+.timestamp_info {
+  opacity: 0;
+  position: absolute;
+  color: var(--help-icon-color);
+}
+.subscription_info {
+  color: var(--help-icon-color);
+}
+
 /* CUSTOMIZE TAB */
 
 .accordion-icon {
   line-height: 0;
   pointer-events: none;
-  transition-delay: 0;
+  transition-delay: 0s;
   transition-duration: 0.5s;
   transition-property: all;
   transition-timing-function: ease-in-out;
@@ -429,7 +447,7 @@ label {
 .icon {
   background: url("../img/logo.png") no-repeat;
   height: 55px;
-  background-size: 180;
+  background-size: 180px;
   margin-left: 20px;
 }
 input[type="button"],
@@ -960,13 +978,11 @@ div.wide-themes-row {
   margin-top: 110px;
 }
 #bug-report-page-content {
-  margin-left: var(--defaul-sidebar-width, 204px);
+  margin-left: var(--default-sidebar-width, 204px);
 }
 
 /* TOGGLE */
-
 .toggle-indentation {
-  padding-left: 50px;
   text-indent: -50px;
 }
 .filter-toggle-indentation {
@@ -979,21 +995,24 @@ div.wide-themes-row {
 .switch {
   position: relative;
   display: inline-block;
-  width: 24px;
-  height: 12px;
   vertical-align: middle;
   margin-right: 20px;
 }
 .switch input {
-  display: none;
+  opacity: 0;
+}
+.switch span:last-child {
+  padding-left: 4.5em;
 }
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0;
+  top: 0.5em;
   left: 0;
   right: 0;
   bottom: 0;
+  height: 12px;
+  width: 24px;
   background-color: #e6e6e6;
   -webkit-transition: 0.4s;
   transition: 0.4s;

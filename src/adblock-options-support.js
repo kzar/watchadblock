@@ -1,14 +1,14 @@
 'use strict';
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, backgroundPage */
+/* global chrome, backgroundPage, selected */
 
 $(document).ready(() => {
   if (navigator.language.substring(0, 2) !== 'en') {
     $('.english-only').removeClass('do-not-display');
   }
   // Show debug info
-  $('#debug').click(() => {
+  selected('#debug', () => {
     let debugInfo = null;
     const showDebugInfo = function () {
       $('#debugInfo').text(debugInfo)
@@ -86,7 +86,7 @@ $(document).ready(() => {
   });
 
   // Show the changelog
-  $('#whatsnew_link').click(() => {
+  selected('#whatsnew_link', () => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', chrome.extension.getURL('CHANGELOG.txt'), false);
     xhr.send();

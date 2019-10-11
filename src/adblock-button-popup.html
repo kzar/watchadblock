@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title i18n="popup_menu_title"></title>
     <link rel="stylesheet" href="adblock-button-popup.css" />
     <script src="polyfill.js"></script>
     <script src="adblock-jquery.js"></script>
@@ -10,11 +11,25 @@
     <div id="wrapper">
       <div id="menu-items">
         <div id="titletext">
-          <img class="header-logo" />
+          <img class="header-logo" i18n-alt="adblock_logo" />
 
           <span id="header-icons">
-            <i tabindex="10" class="material-icons md-18" id="help_link">live_help</i>
-            <i tabindex="10" class="material-icons md-18" id="svg_options">settings</i>
+            <i
+              tabindex="10"
+              class="material-icons md-18"
+              id="help_link"
+              role="img"
+              i18n-aria-label="help"
+              >live_help</i
+            >
+            <i
+              tabindex="10"
+              class="material-icons md-18"
+              id="svg_options"
+              role="img"
+              i18n-aria-label="settings"
+              >settings</i
+            >
           </span>
         </div>
 
@@ -99,53 +114,68 @@
 
         <div id="div_adblock_protect_enrollment" class="menu-entry">
           <span id="protect_enrollment_text" i18n="adblockprotectenrollmenttext"></span>
-          <div tabindex="0" id="protect_enrollment_btn" i18n="adblockprotectenrollmentbutton"></div>
+          <div
+            tabindex="0"
+            id="protect_enrollment_btn"
+            i18n="adblockprotectenrollmentbutton"
+            role="link"
+          ></div>
         </div>
 
         <div id="separator-1" class="separator"></div>
 
-        <div tabindex="0" id="div_myadblock_enrollment" class="menu-entry">
+        <div tabindex="0" id="div_myadblock_enrollment" class="menu-entry" role="link">
           <span id="newText" i18n="newmyadblockenrollment"></span>&nbsp<span
             i18n="myadblockenrollment"
           ></span>
           <img
             id="landscape_enrollment"
             class="myadblocklogo landscape"
+            aria-hidden="true"
             src="icons/adblock-picreplacement-images-menu-landscape.png"
           />
           <img
             id="dog_enrollment"
             class="myadblocklogo dog"
+            aria-hidden="true"
             src="icons/adblock-picreplacement-images-menu-dog.png"
           />
           <img
             id="cat_enrollment"
             class="myadblocklogo cat"
+            aria-hidden="true"
             src="icons/adblock-picreplacement-images-menu-cat.png"
           />
         </div>
 
         <div id="div_myadblock_enrollment_v2" class="menu-entry">
           <span id="newText_v2" i18n="new_badge"></span>
-          <span id="mabNewCtaText" i18n="new_cta_default_text"><span></span></span>
-          <span id="mabNewCtaClose"><i class="material-icons md-18">close</i></span>
+          <span tabindex="0" id="mabNewCtaText" i18n="new_cta_default_text" role="link"
+            ><span></span
+          ></span>
+          <span tabindex="0" id="mabNewCtaClose" role="button">
+            <i class="material-icons md-18" role="img" arial-label="close">close</i>
+          </span>
         </div>
 
-        <div tabindex="0" id="div_myadblock_options" class="menu-entry">
+        <div tabindex="0" id="div_myadblock_options" class="menu-entry" role="link">
           <span id="myadblockoptionstext" i18n="myadblockoptions"></span>
           <img
             id="landscape_option"
             class="myadblocklogo landscape"
+            aria-hidden="true"
             src="icons/adblock-picreplacement-images-menu-landscape.png"
           />
           <img
             id="dog_option"
             class="myadblocklogo dog"
+            aria-hidden="true"
             src="icons/adblock-picreplacement-images-menu-dog.png"
           />
           <img
             id="cat_option"
             class="myadblocklogo cat"
+            aria-hidden="true"
             src="icons/adblock-picreplacement-images-menu-cat.png"
           />
         </div>
@@ -154,9 +184,15 @@
 
         <!-- ************ Standard menu entries *********** -->
 
-        <div tabindex="0" i18n="undo_last_block_site" id="div_undo" class="menu-entry"></div>
+        <div
+          tabindex="0"
+          i18n="undo_last_block_site"
+          id="div_undo"
+          class="menu-entry"
+          role="button"
+        ></div>
 
-        <div tabindex="0" id="div_whitelist_channel" class="menu-entry"></div>
+        <div tabindex="0" id="div_whitelist_channel" class="menu-entry" role="button"></div>
 
         <div id="separator0" class="separator"></div>
 
@@ -165,6 +201,7 @@
           i18n="enable_adblock"
           id="div_enable_adblock_on_this_page"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div
@@ -172,6 +209,7 @@
           i18n="domain_pause_adblock"
           id="div_domain_pause_adblock"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div
@@ -179,6 +217,7 @@
           i18n="resume_blocking_ads"
           id="div_domain_paused_adblock"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div
@@ -186,6 +225,7 @@
           i18n="pause_adblock_everywhere"
           id="div_pause_adblock"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div
@@ -193,6 +233,7 @@
           i18n="resume_blocking_ads"
           id="div_paused_adblock"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div id="separator4" class="separator"></div>
@@ -202,6 +243,7 @@
           i18n="block_an_ad_on_this_page"
           id="div_blacklist"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div
@@ -209,12 +251,14 @@
           i18n="dont_run_on_this_page"
           id="div_whitelist_page"
           class="menu-entry"
+          role="button"
         ></div>
 
         <div
           tabindex="0"
           id="div_whitelist"
           class="menu-entry"
+          role="button"
           i18n="dont_run_on_pages_on_site"
         ></div>
 
@@ -224,6 +268,7 @@
           tabindex="0"
           id="div_troubleshoot_an_ad"
           class="menu-entry"
+          role="link"
           i18n="troubleshoot_an_ad"
         ></div>
 

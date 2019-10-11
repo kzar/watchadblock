@@ -2,7 +2,7 @@
 
 /* For ESLint: List any global identifiers used in this file below */
 /* global chrome, BGcall, translate, bindEnterClickToDefault, mayOpenDialogUi:true,
-   setTextDirection, loadWizardResources, parseUri */
+   setLangAndDirAttributes, loadWizardResources, parseUri */
 
 
 // Global lock so we can't open more than once on a tab.
@@ -259,7 +259,7 @@ function topOpenWhitelistUI() {
       (document.body || document.documentElement).removeChild(base);
     });
 
-    setTextDirection($dialog);
+    setLangAndDirAttributes($dialog.get(0));
     bindEnterClickToDefault($dialog);
 
     $base.append($dialog);

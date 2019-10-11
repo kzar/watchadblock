@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="ltr" lang="en-US">
   <head>
     <title>AdBlock - Report a bug</title>
     <link rel="stylesheet" href="adblock-options-options.css" />
@@ -13,7 +13,7 @@
       <div id="sidebar-content">
         <section id="sidebar-content-top">
           <a id="adblock-logo-link" href="https://www.getadblock.com" target="_blank">
-            <img id="sidebar-adblock-logo" />
+            <img id="sidebar-adblock-logo" i18n-alt="adblock_home" />
           </a>
         </section>
 
@@ -62,8 +62,13 @@
             <div class="checkbox-indentation">
               <span class="checkbox md-stack">
                 <input type="checkbox" checked="true" id="rememberDetails" />
-                <i class="unchecked material-icons">lens</i>
-                <i class="checked material-icons circle-icon-bg-24 checkbox-icon">check_circle</i>
+                <i class="unchecked material-icons" role="img" aria-hidden="true">lens</i>
+                <i
+                  class="checked material-icons circle-icon-bg-24 checkbox-icon"
+                  role="img"
+                  aria-hidden="true"
+                  >check_circle</i
+                >
               </span>
               <label for="rememberDetails">Remember my name and email for next time!</label>
             </div>

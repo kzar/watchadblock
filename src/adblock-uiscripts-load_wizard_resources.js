@@ -19,14 +19,6 @@ function bindEnterClickToDefault($dialog) {
   });
 }
 
-// Set RTL for Arabic and Hebrew users in blacklist and whitelist wizards
-function setTextDirection($dialog) {
-  const langRTL = ('ar', 'he');
-  const lang = navigator.language.match(/^[a-z]+/i)[0];
-  const textDirection = langRTL.includes(lang) ? 'rtl' : 'ltr';
-  $dialog.attr('dir', textDirection);
-}
-
 // Inputs:
 //   - $base : jQuery Element to attach the CSS as children
 //   - callback : function to call when loading is complete

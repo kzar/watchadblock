@@ -1,4 +1,18 @@
 {
+  "a_theme_preview": {
+    "message": "$theme_name$ theme preview for $extension_page$", 
+    "description": "Text in the alt attribute of the image previewing a theme on an extension page.", 
+    "placeholders": {
+      "theme_name": {
+        "content": "$1", 
+        "example": "Dark"
+      }, 
+      "extension_page": {
+        "content": "$2", 
+        "example": "pop-up menu"
+      }
+    }
+  }, 
   "aalinkadreport": {
     "message": "Find out more about the Acceptable Ads program.", 
     "description": "Acceptable Ads link message on ad report page"
@@ -43,6 +57,10 @@
     "message": "Allow some non-intrusive advertising", 
     "description": "Checkbox on the 'General' tab of the Options page to enable the Acceptable Ads filter list"
   }, 
+  "ad_everywhere_malware": {
+    "message": "If you're seeing this ad everywhere, you might be infected with malware.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "ad_report_please": {
     "message": "If you're seeing an ad, don't make a bug report, make an [[ad report]]!", 
     "description": "Link to the ad report page on AdBlock's help site. This is found on the Support tab of the options."
@@ -59,6 +77,14 @@
     "message": "AdBlock Facebook", 
     "description": "Title for link to AdBlock's Facebook account"
   }, 
+  "adblock_home": {
+    "message": "AdBlock home", 
+    "description": "Text in the alt attribute of an AdBlock logo / icon that links to getadblock.com."
+  }, 
+  "adblock_logo": {
+    "message": "AdBlock logo", 
+    "description": "Text in the alt attribute of an AdBlock logo image."
+  }, 
   "adblock_twitter": {
     "message": "AdBlock Twitter", 
     "description": "Title for link to AdBlock's Twitter account"
@@ -66,6 +92,18 @@
   "adblock_website": {
     "message": "AdBlock Home Page", 
     "description": "Title for link to AdBlock's website"
+  }, 
+  "adblock_will_block_ads_again": {
+    "message": "If clicked, AdBlock will block ads again.", 
+    "description": "Second sentence in the aria-label of the pop-up menu action to resume blocking ads."
+  }, 
+  "adblock_will_pause_on_all_sites": {
+    "message": "If clicked, AdBlock will stop blocking ads on all sites.", 
+    "description": "Second sentence in the aria-label of the pop-up menu action to pause blocking ads on all sites."
+  }, 
+  "adblock_will_pause_on_this_site": {
+    "message": "If clicked, AdBlock will stop blocking ads on this site.", 
+    "description": "Second sentence in the aria-label of the pop-up menu action to pause blocking ads on this site."
   }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "AdBlock won't run on any page matching:", 
@@ -100,6 +138,14 @@
   }, 
   "add_filters_msg": {
     "message": "Ավելացնել ֆիլտր?"
+  }, 
+  "additional_help": {
+    "message": "Need additional help?", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "additional_troubleshooting": {
+    "message": "Here are some [[additional troubleshooting steps]] you can take to resolve this issue.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "adreport_all_debug_info": {
     "message": "The following information will also be included in the ad report.", 
@@ -443,6 +489,14 @@
     "message": "Please check your email.", 
     "description": "Prompt the user to check their email for a message from AdBlock"
   }, 
+  "check_whitelist": {
+    "message": "Let's check your whitelist to see if that might be the problem.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "checked_basics": {
+    "message": "We've checked the basics, and updated your filter lists.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "checkinfirefox_1": {
     "message": "Install Firefox if you don't have it.", 
     "description": "instruction for how to check Firefox for a reported ad"
@@ -521,9 +575,17 @@
       }
     }
   }, 
+  "contact_support": {
+    "message": "[[Contact our Support team!]]", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "contact_support_if_errors_continue": {
     "message": "If you continue to see this error, please contact [[support]].", 
     "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
+  }, 
+  "contact_the_site": {
+    "message": "We recommend getting in touch with the site.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
     "message": "We turned off Safari Content Blocking because you opted to allow non-intrusive ads. You can only select one at a time. ([[Why?]])", 
@@ -762,6 +824,18 @@
     "message": "Love this? Consider donating!", 
     "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
   }, 
+  "done": {
+    "message": "Done", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "done_reload_page": {
+    "message": "As soon as we're done, please reload the page.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "dont_know_help_me": {
+    "message": "I don't know. Help me!", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "Don't run on pages on this domain", 
     "description": "Menu entry to open the whitelist wizard"
@@ -801,6 +875,10 @@
     "message": "We recommend subscribing to either \"EasyList Lite\" or \"EasyList\" but not both.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
+  "edit_filter_lists": {
+    "message": "You may need to [[edit your filter lists]].", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "enable_adblock": {
     "message": "Enable AdBlock on this page", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -817,6 +895,10 @@
     "message": "The extensions that were previously disabled have been re-enabled.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
   }, 
+  "english_site": {
+    "message": "Are you on an English language website?", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "englishonly": {
     "message": "English only", 
     "description": "Lets the user know that a link/page is only available in English."
@@ -824,6 +906,10 @@
   "enter_url": {
     "message": "enter a URL", 
     "description": "Placeholder text in the Custom Filter list URL bar"
+  }, 
+  "error": {
+    "message": "Error", 
+    "description": "Text in the aria-label attribute of an icon indicating an error occurred."
   }, 
   "error_msg_header": {
     "message": "Oops! We're sorry, the AdBlock menu had trouble loading.", 
@@ -848,6 +934,10 @@
   "error_msg_thank_you": {
     "message": "Thank you", 
     "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "example_themes": {
+    "message": "Example themes", 
+    "description": "Text in the alt attribute of an image in the Options page mab that visualizes the themes feature."
   }, 
   "excludedomainorurl": {
     "message": "The domain or url where AdBlock shouldn't block anything", 
@@ -1212,6 +1302,10 @@
     "message": "The purpose of this question is to determine who should receive your report. If you answer this question incorrectly, the report will be sent to the wrong people, so it may get ignored.", 
     "description": "Explanation of the 'Check in Firefox or Chrome' step on the ad report page"
   }, 
+  "first_time_seeing_ad": {
+    "message": "This is my first time seeing this ad", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "fixityourself": {
     "message": "OK, you can still block this ad for yourself on the Options page. Thanks!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1252,6 +1346,10 @@
     "message": "Get It Now", 
     "description": "The text in a button visible to locked users in the MyAdBlock Options page"
   }, 
+  "got_it": {
+    "message": "Got it.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "header": {
     "message": "Header", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 10 characters)"
@@ -1267,6 +1365,10 @@
   "headertype": {
     "message": "Type", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help": {
+    "message": "Help", 
+    "description": "Text in the aria-label attribute of the support icon on the pop-up menu."
   }, 
   "help_and_feedback": {
     "message": "Help and Feedback", 
@@ -1284,9 +1386,27 @@
     "message": "How?", 
     "description": "Text of a link pointing to instructions on how to do something"
   }, 
+  "how_can_we_help": {
+    "message": "How can we help?", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "image_of_channel": {
+    "message": "Image of $image_category$", 
+    "description": "Text in the alt attribute of an image injected into a page as part of the Image Swap feature.", 
+    "placeholders": {
+      "image_category": {
+        "content": "$1", 
+        "example": "Dogs"
+      }
+    }
+  }, 
   "image_swap": {
     "message": "Image Swap", 
     "description": "Title of the Image Swap sub-tab of the Options page"
+  }, 
+  "image_swap_example": {
+    "message": "Image swap example", 
+    "description": "Text in the alt attribute of an image in the Options page mab that visualizes the Image Swap feature."
   }, 
   "images_coming_soon": {
     "message": "More photos coming soon!", 
@@ -1364,6 +1484,10 @@
   }, 
   "issueReporter_typeSelector_heading": {
     "message": "Խնդրի ընտրում"
+  }, 
+  "issue_unrelated_adblock": {
+    "message": "It seems that there's an issue with the site unrelated to AdBlock.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "landscapechannelswitchlabel": {
     "message": "Landscapes", 
@@ -1533,6 +1657,18 @@
     "message": "Learn more.", 
     "description": "Link to Knowledge Base article with more information about the settings change"
   }, 
+  "learn_more_filter_lists": {
+    "message": "You may also want to [[learn more about filter lists]].", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "learn_more_to_resolve": {
+    "message": "You can [[learn more here]] to help resolve that.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "learn_more_without_period": {
+    "message": "Learn more", 
+    "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
+  }, 
   "legend": {
     "message": "Legend: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1564,6 +1700,10 @@
   "local_cdn_option": {
     "message": "Enable local content caching for popular website libraries", 
     "description": "Option to let the user enable Local CDN feature."
+  }, 
+  "locked": {
+    "message": "Locked", 
+    "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "New!", 
@@ -1830,6 +1970,10 @@
     "message": "No", 
     "description": "A negative response to a question"
   }, 
+  "no_changes_see_ad": {
+    "message": "We won't change anything so you'll continue to see ads.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "nodefaultfilter1": {
     "message": "We don't have a default filter list for that language.\nPlease [[try to find a suitable list that supports this language]] or block this ad for yourself via the AdBlock menu.", 
     "description": "Instructions on ad report page pointing users to EasyList subscriptions list."
@@ -1851,6 +1995,10 @@
   "ocean_theme": {
     "message": "Ocean", 
     "description": "Name of a theme in the Themes tab of the Options page"
+  }, 
+  "ok": {
+    "message": "OK", 
+    "description": "Message for help flow in popup menu."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "One moment while we gather all of your subscriptions", 
@@ -1894,6 +2042,10 @@
   }, 
   "options_language_header": {
     "message": "Լեզու"
+  }, 
+  "options_page": {
+    "message": "options page", 
+    "description": "General text used to define the extension options page."
   }, 
   "options_page_document_title": {
     "message": "Կարգավորել"
@@ -1944,6 +2096,14 @@
   "overlay_notification_button_yes": {
     "message": "Այո"
   }, 
+  "page_is_whitelisted": {
+    "message": "This page is on your whitelist, which is why you're seeing an ad.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "page_not_whitelisted": {
+    "message": "This page is not on your whitelist.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "pagelanguagecheck": {
     "message": "In what language is that page written?", 
     "description": "Question on ad report page"
@@ -1960,9 +2120,29 @@
     "message": "Pause ad blocking", 
     "description": "Menu entry to pause the extension (stop blocking ads)"
   }, 
+  "pause_on_all_sites": {
+    "message": "Pause on all sites.", 
+    "description": "First sentence in the aria-label of the pop-up menu action to pause blocking ads on all sites."
+  }, 
+  "pause_on_this_site": {
+    "message": "Pause on this site.", 
+    "description": "First sentence in the aria-label of the pop-up menu action to pause blocking ads on this site."
+  }, 
+  "paused_not_blocking": {
+    "message": "AdBlock is currently paused, so we're not blocking any ads.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "paused_site_issue": {
+    "message": "AdBlock is currently paused, so it seems there's an issue with the site unrelated to AdBlock.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "please_try_again": {
     "message": "Please try again.", 
     "description": "Prompt the user to retry the last action."
+  }, 
+  "popup_menu": {
+    "message": "pop-up menu", 
+    "description": "General text used to define the pop-up menu."
   }, 
   "popup_menu_theme": {
     "message": "Pop-up Menu Theme", 
@@ -1972,9 +2152,37 @@
     "message": "AdBlock Popup Menu", 
     "description": "Title for the popup menu."
   }, 
+  "preview_a_theme": {
+    "message": "Preview $theme_name$ theme for $extension_page$", 
+    "description": "Text in the aria-label attribute of an icon indicating that clicking will show the preview image of a theme on an extension page.", 
+    "placeholders": {
+      "theme_name": {
+        "content": "$1", 
+        "example": "Dark"
+      }, 
+      "extension_page": {
+        "content": "$2", 
+        "example": "options page"
+      }
+    }
+  }, 
+  "preview_channel_image": {
+    "message": "Preview image of $image_category$", 
+    "description": "Text in the alt attribute of an image previewed as part of the Image Swap feature.", 
+    "placeholders": {
+      "image_category": {
+        "content": "$1", 
+        "example": "Cats"
+      }
+    }
+  }, 
   "privacy_policy": {
     "message": "Privacy Policy", 
     "description": "Link to AdBlock's privacy policy"
+  }, 
+  "problem_solved": {
+    "message": "Awesome! Problem solved.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "pwyw": {
     "message": "Pay what you want!", 
@@ -2000,6 +2208,18 @@
     "message": "I don't want to check this", 
     "description": "User is telling us they don't wish to investigate something for us"
   }, 
+  "reload_not_see_ad": {
+    "message": "Reload the page so you won't see that ad anymore!", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "reload_the_page": {
+    "message": "Reload the page", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "reload_when_ready": {
+    "message": "Please click below to reload the page when you are ready.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "reloadadpage": {
     "message": "Reload the page with the ad.", 
     "description": "Instruction on ad report page"
@@ -2007,6 +2227,10 @@
   "reloadpageafterwhitelist": {
     "message": "Reload the page.", 
     "description": "Checkbox in the whitelist wizard"
+  }, 
+  "removed_url": {
+    "message": "OK! We've removed the URL from your whitelist.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "removefromlist": {
     "message": "Remove from list", 
@@ -2051,6 +2275,14 @@
   "resume_blocking_ads": {
     "message": "Resume blocking ads", 
     "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused on this site' or 'AdBlock is paused on all sites'"
+  }, 
+  "resume_blocking_ads_period": {
+    "message": "Resume blocking ads.", 
+    "description": "First sentence in the aria-label of the pop-up menu action to resume blocking ads."
+  }, 
+  "resume_reload": {
+    "message": "Do you want to resume blocking ads and reload the page?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "retryaftersubscribe": {
     "message": "Subscribe to this filter list, then try again: $list_title$", 
@@ -2098,6 +2330,14 @@
     "message": "Don't forget to save!", 
     "description": "Reminder to click 'Save'"
   }, 
+  "see_ad": {
+    "message": "I see an ad", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "see_ad_everywhere": {
+    "message": "I see this ad everywhere", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "see_photos_no_ads_description": {
     "message": "We’ll still block ads, but we’ll replace some with pretty pictures of cats, dogs, and nature.", 
     "description": "The main text of a feature box in the MyAdBlock Options page"
@@ -2106,6 +2346,10 @@
     "message": "See Photos, Not Ads", 
     "description": "The title of a feature box in the MyAdBlock Options page"
   }, 
+  "selected": {
+    "message": "Selected", 
+    "description": "Text in the aria-label attribute of an icon showing an option is selected."
+  }, 
   "selectlanguage": {
     "message": " -- Select Language -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
@@ -2113,6 +2357,10 @@
   "selectlanguage2": {
     "message": "select language", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
+  }, 
+  "settings": {
+    "message": "Settings", 
+    "description": "Text in the aria-label attribute of the gear icon on the pop-up menu."
   }, 
   "settings_changed": {
     "message": "In preparation, AdBlock now works differently and some of your settings may have changed.", 
@@ -2174,6 +2422,14 @@
     "message": "Solarized", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
+  "something_else_going_on": {
+    "message": "Hmm, something else must be going on.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "something_not_working": {
+    "message": "Hmm, something's not working.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "sourcecode": {
     "message": "The source code is [[freely available]]!", 
     "description": "Link to the source code of AdBlock on the Support tab"
@@ -2193,6 +2449,10 @@
   "stay_tuned": {
     "message": "Stay tuned", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "still_see_ad": {
+    "message": "Do you still see the ad?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "stop_blocking_ads": {
     "message": "Stop blocking ads:", 
@@ -2236,6 +2496,10 @@
     "message": "Subscribing to filter list...", 
     "description": "abp: link subscriber title"
   }, 
+  "success": {
+    "message": "Success", 
+    "description": "Text in the aria-label attribute of an icon indicating successful results."
+  }, 
   "sunshine_theme": {
     "message": "Sunshine", 
     "description": "Name of a theme in the Themes tab of the Options page"
@@ -2261,6 +2525,10 @@
         "example": "April 30, 2019 6:25 pm for US/English locale"
       }
     }
+  }, 
+  "sync_example": {
+    "message": "Sync example", 
+    "description": "Text in the alt attribute of an image in the Options page mab that visualizes the Sync feature."
   }, 
   "sync_extension_name_placeholder": {
     "message": "Name this extension…", 
@@ -2440,6 +2708,10 @@
     "message": "body text", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 22 characters)"
   }, 
+  "thanks": {
+    "message": "Thanks", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "themes": {
     "message": "Themes", 
     "description": "Title of the Themes tab of the Options page"
@@ -2467,6 +2739,14 @@
   "troubleshoot_an_ad": {
     "message": "Troubleshoot an ad", 
     "description": "Entry in the AdBlock button menu"
+  }, 
+  "try_manual_update": {
+    "message": "Please try [[manually updating your filter lists]].", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "try_pausing": {
+    "message": "OK, let's try pausing AdBlock.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "twitch_hiding_option": {
     "message": "Enable hiding of streaming ads on Twitch™", 
@@ -2556,6 +2836,10 @@
     "message": "Unpause ad blocking", 
     "description": "Menu entry to unpause the extension (start blocking ads again)"
   }, 
+  "unpaused_reload": {
+    "message": "We just unpaused AdBlock and reloaded the page.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "unsubscribe_from_all_confirmation": {
     "message": "AdBlock can't block ads if you disable all the filter lists. We recommend pausing AdBlock instead. Unsubscribe from this list anyway?", 
     "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
@@ -2563,6 +2847,10 @@
   "unsubscribedlabel": {
     "message": "Unsubscribed.", 
     "description": "Status label when unselecting a filter list"
+  }, 
+  "update_filter_lists_now": {
+    "message": "Update Filter Lists Now", 
+    "description": "Text in the aria-label attribute of the 'update now' button on the Options page in the Filter Lists tab."
   }, 
   "updateddayago": {
     "message": "updated 1 day ago", 
@@ -2638,9 +2926,21 @@
     "message": "Make sure your filter lists are up to date:", 
     "description": "Section header on the ad report page"
   }, 
+  "updating_filter_lists": {
+    "message": "AdBlock is updating your filter lists now to see if that might be the problem.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "urgent_safari_changes": {
     "message": "URGENT: Apple is changing Safari extensions.", 
     "description": "Title for Options page message letting users know of settings change."
+  }, 
+  "visit_help_center": {
+    "message": "You may want to [[visit our Help Center]] for more troubleshooting options.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "want_to_remove": {
+    "message": "Do you want to remove it?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "warning_overrules_filters": {
     "message": "Warning: on all other sites you will see ads!\nThis overrules all other filters for those sites.", 
@@ -2649,6 +2949,14 @@
   "watermelon_theme": {
     "message": "Watermelon", 
     "description": "Name of a theme in the Themes tab of the Options page"
+  }, 
+  "website_broken": {
+    "message": "The website is broken", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "website_still_broken": {
+    "message": "Is the website still broken?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "whatmakesadblocktick": {
     "message": "Want to see what makes AdBlock tick?", 
@@ -2691,6 +2999,10 @@
   "wizardcantrunonframesets": {
     "message": "This AdBlock feature does not work on this site because it uses out of date technology. You can blacklist or whitelist resources manually in the 'Customize' tab of the options page.", 
     "description": "Alert shown when the user tries to use a blacklist/whitelist wizard on an old website"
+  }, 
+  "wont_change_anything": {
+    "message": "We won't change anything so you'll continue to see the ad.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "work_around_hulu_problems": {
     "message": "Work around Hulu.com videos not playing (requires restarting your browser)", 

@@ -1,7 +1,8 @@
 'use strict';
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, translate, Prefs, storageGet, localizePage, storageSet, selected, selectedOnce */
+/* global chrome, translate, Prefs, storageGet, localizePage, storageSet, selected, selectedOnce,
+   i18nJoin */
 
 let errorOccurred = false;
 
@@ -164,6 +165,15 @@ try {
     }
 
     try {
+      // For better accessibility on pause/resume actions
+      let ariaLabel = i18nJoin('pause_on_this_site', 'adblock_will_pause_on_this_site');
+      $('#div_domain_pause_adblock').attr('aria-label', ariaLabel);
+      ariaLabel = i18nJoin('pause_on_all_sites', 'adblock_will_pause_on_all_sites');
+      $('#div_pause_adblock').attr('aria-label', ariaLabel);
+      ariaLabel = i18nJoin('resume_blocking_ads_period', 'adblock_will_block_ads_again');
+      $('#div_domain_paused_adblock').attr('aria-label', ariaLabel);
+      $('#div_paused_adblock').attr('aria-label', ariaLabel);
+
       localizePage();
 
       // Set menu entries appropriately for the selected tab.

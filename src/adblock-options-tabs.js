@@ -1,7 +1,7 @@
 'use strict';
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, License, localizePage */
+/* global chrome, License, localizePage, getUILanguage */
 
 function tabIsLocked(tabID) {
   const $tabToActivate = $(`.tablink[href=${tabID}]`);
@@ -12,9 +12,9 @@ function tabIsLocked(tabID) {
 const syncMessageDiv = `
   <div class="sync-header-message page-title sync-header-message-hidden">
     <span>
-      <i class="material-icons md-24 sync-icon sync-header-error-icon">error_outline</i>
-      <i class="material-icons md-24 sync-icon sync-header-sync-icon">sync</i>
-      <i class="material-icons md-24 sync-icon sync-header-done-icon">check_circle</i>
+      <i class="material-icons md-24 sync-icon sync-header-error-icon" role="img" aria-hidden="true">error_outline</i>
+      <i class="material-icons md-24 sync-icon sync-header-sync-icon" role="img" aria-hidden="true">sync</i>
+      <i class="material-icons md-24 sync-icon sync-header-done-icon" role="img" aria-hidden="true">check_circle</i>
     </span>
     <span id="themes-sync-header-message" class="sync-header-message-text"></span>
   </div>`;
@@ -23,7 +23,7 @@ function getSyncOutOfDateMessageDiv(id) {
   return `
   <div class="sync-out-of-date-header-message sync-out-of-date-header-message-hidden sync-message-error">
     <span>
-      <i class="material-icons md-24 sync-icon sync-out-of-date-header-error-icon">error_outline</i>
+      <i class="material-icons md-24 sync-icon sync-out-of-date-header-error-icon" role="img" aria-hidden="true">error_outline</i>
     </span>
     <span i18n="sync_message_old_version_part_1"></span>&nbsp;
     <a i18n="sync_message_old_version_part_2" i18n_replacement_el="oldversionlink_${id}"
@@ -149,27 +149,27 @@ function addMyAdBlockTab() {
   const myAdBlockTab = `
   <li id="myadblock-tab">
     <a href="#mab" class="tablink">
-      <i class="material-icons md-18">account_circle</i>
+      <i class="material-icons md-18" role="img" aria-hidden="true">account_circle</i>
       <span i18n="myadblockoptions"></span>
     </a>
     <ul data-parent-tab="#mab">
       <li>
         <a href="#mab-themes" class="tablink">
-          <i class="material-icons md-18 unlocked">featured_video</i>
+          <i class="material-icons md-18 unlocked" role="img" aria-hidden="true">featured_video</i>
           <span i18n="themes"></span>
         </a>
       </li>
       <li class="locked">
         <a href="#mab-image-swap" class="tablink">
-          <i class="material-icons md-18 unlocked">image</i>
-          <i class="material-icons md-18 locked">lock</i>
+          <i class="material-icons md-18 unlocked" role="img" aria-hidden="true">image</i>
+          <i class="material-icons md-18 locked" role="img" i18n-aria-label="locked">lock</i>
           <span i18n="image_swap"></span>
         </a>
       </li>
       <li class="locked">
         <a href="#sync" class="tablink">
-          <i class="material-icons md-18 unlocked">sync</i>
-          <i class="material-icons md-18 locked">lock</i>
+          <i class="material-icons md-18 unlocked" role="img" aria-hidden="true">sync</i>
+          <i class="material-icons md-18 locked" role="img" i18n-aria-label="locked">lock</i>
           <span i18n="sync_tab_item"></span>
         </a>
       </li>
@@ -205,7 +205,7 @@ function addMyAdBlockTab() {
 // MAB - Image Swap
 // MAB - Sync
 const displayMABFeedbackCTA = function () {
-  const lang = chrome.i18n.getUILanguage();
+  const lang = getUILanguage();
   if (lang === 'en' || lang.startsWith('en-')) {
     $('div.mab-page-box > .option-page-content > footer').removeAttr('style');
     const $feedbackButton = $('.mab-feedback-button');

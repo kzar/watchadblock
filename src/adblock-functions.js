@@ -117,14 +117,31 @@ const processReplacementChildren = function ($el, replacementText, messageId) {
 
 // Determine what language the user's browser is set to use
 const determineUserLanguage = function () {
-  if ((typeof navigator.language !== 'undefined')
-        && navigator.language) {
+  if (typeof navigator.language !== 'undefined' && navigator.language) {
     return navigator.language.match(/^[a-z]+/i)[0];
   }
   return null;
 };
 
+const getUILanguage = function () {
+  return chrome.i18n.getUILanguage();
+};
+
+// Set dir and lang attributes to the given el or to document.documentElement by default
+const setLangAndDirAttributes = function (el) {
+  const element = el instanceof HTMLElement ? el : document.documentElement;
+  chrome.runtime.sendMessage({
+    type: 'app.get',
+    what: 'localeInfo',
+  }).then((localeInfo) => {
+    element.lang = localeInfo.locale;
+    element.dir = localeInfo.bidiDir;
+  });
+};
+
 const localizePage = function () {
+  setLangAndDirAttributes();
+
   // translate a page into the users language
   $('[i18n]:not(.i18n-replaced, [i18n_replacement_el])').each(function i18n() {
     $(this).text(translate($(this).attr('i18n')));
@@ -144,6 +161,14 @@ const localizePage = function () {
 
   $('[i18n_replacement_el]:not(.i18n-replaced)').each(function i18nReplacementEl() {
     processReplacementChildren($(this));
+  });
+
+  $('[i18n-alt]').each(function i18nImgAlt() {
+    $(this).attr('alt', translate($(this).attr('i18n-alt')));
+  });
+
+  $('[i18n-aria-label]').each(function i18nAriaLabel() {
+    $(this).attr('aria-label', translate($(this).attr('i18n-aria-label')));
   });
 
   // Make a right-to-left translation for Arabic and Hebrew languages
@@ -396,6 +421,21 @@ const selectedOnce = function (element, handler) {
   element.addEventListener('keydown', keydownHandler);
 };
 
+// Join 2 or more sentences once translated.
+// Inputs: arg:str -- Each arg is the string of a full sentence in message.json
+const i18nJoin = function (...args) {
+  let joined = '';
+  for (let i = 0; i < args.length; i++) {
+    const isLastSentence = i + 1 === args.length;
+    if (!isLastSentence) {
+      joined += `${translate(args[i])} `;
+    } else {
+      joined += `${translate(args[i])}`;
+    }
+  }
+  return joined;
+};
+
 Object.assign(window, {
   sessionStorageSet,
   sessionStorageGet,
@@ -404,6 +444,7 @@ Object.assign(window, {
   BGcall,
   parseUri,
   determineUserLanguage,
+  getUILanguage,
   chromeStorageSetHelper,
   logging,
   translate,
@@ -413,4 +454,5 @@ Object.assign(window, {
   chromeLocalStorageOnChangedHelper,
   selected,
   selectedOnce,
+  i18nJoin,
 });

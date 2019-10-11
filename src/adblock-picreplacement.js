@@ -320,6 +320,7 @@ const imageSwap = {
       result.t = t;
       result.listingHeight = pic.listingHeight;
       result.listingWidth = pic.listingWidth;
+      result.channelName = pic.channelName;
       callback(result);
       return true;
     });
@@ -340,6 +341,8 @@ const imageSwap = {
     const newPic = document.createElement('img');
     newPic.classList.add('picreplacement-image');
     newPic.src = placement.url;
+    newPic.alt = translate('image_of_channel', translate(placement.channelName));
+
 
     // Overlay info card
     const infoCardOverlay = document.createElement('div');
@@ -348,6 +351,7 @@ const imageSwap = {
     const overlayLogo = document.createElement('img');
     overlayLogo.classList.add('ab-logo-header');
     overlayLogo.src = chrome.extension.getURL('icons/dark_theme/logo.svg');
+    overlayLogo.alt = translate('adblock_logo');
 
     const overlayIcons = document.createElement('div');
     overlayIcons.classList.add('ab-icons-header');
@@ -508,10 +512,12 @@ const imageSwap = {
       return false;
     }, false);
     containerNodes.seeIcon.addEventListener('click', () => {
-      const u = encodeURIComponent(placement.attributionUrl);
-      const w = placement.listingWidth;
-      const h = placement.listingHeight;
-      BGcall('openTab', `adblock-picreplacement-imageview.html?url=${u}&width=${w}&height=${h}`);
+      const url = encodeURIComponent(placement.attributionUrl);
+      const width = placement.listingWidth;
+      const height = placement.listingHeight;
+      const channel = placement.channelName;
+      const queryStrings = `url=${url}&width=${width}&height=${height}&channel=${channel}`;
+      BGcall('openTab', `adblock-picreplacement-imageview.html?${queryStrings}`);
     });
     containerNodes.settingsIcon.addEventListener('click', () => {
       BGcall('openTab', 'options.html#mab-image-swap');

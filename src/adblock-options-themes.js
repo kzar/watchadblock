@@ -1,7 +1,7 @@
 'use strict';
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global backgroundPage, translate, License, MABPayment, settingsNotifier */
+/* global backgroundPage, translate, License, MABPayment, settingsNotifier, localizePage */
 
 (function onThemesLoaded() {
   const updateThemeSettings = ($newTheme) => {
@@ -54,20 +54,23 @@
     const component = $(clickEvent.target).closest('.theme-box').data('key');
     const htmlTagID = 'options-page-html';
     const { scrollHeight } = document.getElementById(htmlTagID);
-    const $overlayContent = $('<div></div>');
-    const $imgPreview = $('<img/>');
-    const $closeIcon = $('<i></i>');
-    const $overlay = $('<div></div>');
+    const $overlayContent = $('<div>');
+    const $imgPreview = $('<img>');
+    const $closeIcon = $('<i>');
+    const $overlay = $('<div>');
     $closeIcon
       .addClass('material-icons')
       .addClass('circle-icon-bg-24')
       .addClass('close-preview-icon')
-      .text('cancel');
+      .text('cancel')
+      .attr('role', 'img')
+      .attr('i18n-aria-label', 'close');
 
     $imgPreview
       .addClass(theme)
       .addClass(component)
-      .addClass('preview');
+      .addClass('preview')
+      .attr('alt', translate('a_theme_preview', translate(theme), translate(component)));
 
     $overlayContent
       .addClass('fixed-box')
@@ -91,6 +94,7 @@
     }
 
     const $darkOverlayPreview = createPreviewNode(clickEvent);
+    localizePage();
     $darkOverlayPreview.show();
 
     // Remove poupup menu preview if clicked anywhere but preview image
@@ -171,7 +175,12 @@
     if (backgroundPage && backgroundPage.getSettings()) {
       colorThemes = backgroundPage.getSettings().color_themes;
     }
-
+    $('.theme-hover-overlay .search[role=img]').each(function i18nSupport() {
+      const $preview = $(this);
+      const theme = $preview.closest('.theme-box').data('theme');
+      const component = $preview.closest('.theme-box').data('key');
+      $preview.attr('aria-label', translate('preview_a_theme', translate(theme), translate(component)));
+    });
     selectCurrentThemes(colorThemes);
 
     if (!License || $.isEmptyObject(License) || !MABPayment) {

@@ -3,7 +3,7 @@
 /* For ESLint: List any global identifiers used in this file below */
 /* global chrome, backgroundPage, synchronizer, optionalSettings, Subscription, filterStorage,
    filterNotifier, translate, DownloadableSubscription, updateAcceptableAdsUI, port,
-   delayedSubscriptionSelection, startSubscriptionSelection */
+   delayedSubscriptionSelection, startSubscriptionSelection, selected */
 
 // Contains all filter lists and their respective containers.
 const filterListSections = {
@@ -171,7 +171,9 @@ FilterListUtil.updateSubscriptionInfoForId = (id) => {
     $div = $('[name=acceptable_ads]');
   }
   const $infoLabel = $('.subscription_info', $div);
+  const $timestampLabel = $('.timestamp_info', $div);
   let text = $infoLabel.text();
+  let timestamp = '';
   const lastUpdate = subscription.lastDownload || subscription._lastDownload;
   // If filter list is invalid, skip it.
   if ($infoLabel.text() === translate('invalidListUrl')) {
@@ -192,32 +194,33 @@ FilterListUtil.updateSubscriptionInfoForId = (id) => {
       text = subscription.downloadStatus;
     }
   } else if (lastUpdate > 0) {
+    timestamp = translate('updatedtimestamp', [new Date(lastUpdate * 1000).toLocaleString()]);
     const howLongAgo = Date.now() - (lastUpdate * 1000);
     const seconds = Math.round(howLongAgo / 1000);
     const minutes = Math.round(seconds / 60);
     const hours = Math.round(minutes / 60);
     const days = Math.round(hours / 24);
-    text = '';
     if (seconds < 10) {
-      text += translate('updatedrightnow');
+      text = translate('updatedrightnow');
     } else if (seconds < 60) {
-      text += translate('updatedsecondsago', [seconds]);
+      text = translate('updatedsecondsago', [seconds]);
     } else if (minutes === 1) {
-      text += translate('updatedminuteago');
+      text = translate('updatedminuteago');
     } else if (minutes < 60) {
-      text += translate('updatedminutesago', [minutes]);
+      text = translate('updatedminutesago', [minutes]);
     } else if (hours === 1) {
-      text += translate('updatedhourago');
+      text = translate('updatedhourago');
     } else if (hours < 24) {
-      text += translate('updatedhoursago', [hours]);
+      text = translate('updatedhoursago', [hours]);
     } else if (days === 1) {
-      text += translate('updateddayago');
+      text = translate('updateddayago');
     } else {
-      text += translate('updateddaysago', [days]);
+      text = translate('updateddaysago', [days]);
     }
   }
 
   $infoLabel.text(text);
+  $timestampLabel.text(timestamp);
 };
 
 // Update checkbox for the filter list according to it's current state.
@@ -406,32 +409,36 @@ function getDefaultFilterUI(filterList, checkboxID, filterListType) {
   const isAcceptableAds = backgroundPage.isAcceptableAds(filterList);
   const isLanguageFilter = filterListType === 'languageFilterList';
   const aaPrivacy = FilterListUtil.cachedSubscriptions.acceptable_ads_privacy;
-  let isSelected = filterList.subscribed;
   let filterListUrl = filterList.url;
 
   if (isAcceptableAds && aaPrivacy.subscribed) {
-    isSelected = true;
     filterListUrl = aaPrivacy.url;
   }
 
   const $filterListIcon = $('<i>')
     .addClass('material-icons')
     .addClass('md-24')
+    .attr('role', 'img')
+    .attr('aria-label', translate('filterviewsource'))
     .text('format_list_bulleted');
 
   const $checkBox = $('<input>')
     .attr('type', 'checkbox')
     .attr('id', checkboxID)
-    .prop('checked', isSelected);
+    .prop('checked', !!filterList.subscribed);
 
   const $checkBoxIcons = $(`
-    <i class="unchecked material-icons">lens</i>
-    <i class="checked material-icons circle-icon-bg-24 checkbox-icon">check_circle</i>'`);
+    <i role="img" aria-hidden="true" class="unchecked material-icons">lens</i>
+    <i role="img" aria-hidden="true" class="checked material-icons circle-icon-bg-24 checkbox-icon">check_circle</i>'`);
+
   const $checkBoxWrapper = $('<span>')
     .addClass('checkbox')
     .addClass('md-stack')
     .append($checkBox)
     .append($checkBoxIcons);
+
+  const $filterTitle = $('<h1>')
+    .text(filterList.label || filterList.title || `${filterList.url.substr(0, 40)}...`);
 
   const $link = $('<a>')
     .addClass('filter-list-link')
@@ -440,16 +447,37 @@ function getDefaultFilterUI(filterList, checkboxID, filterListType) {
     .attr('href', filterListUrl)
     .append($filterListIcon);
 
-  const $label = $('<label>')
-    .text(filterList.label || filterList.title || `${filterList.url.substr(0, 40)}...`)
-    .attr('title', filterList.url)
-    .attr('for', checkboxID)
+  const $filterHeader = $('<div>')
+    .append($filterTitle)
     .append($link);
 
   const $infoSpan = $('<span>')
     .addClass('subscription_info')
-    .addClass('light-grey-text')
+    .attr('aria-hidden', true)
     .text(filterList.subscribed && !filterList.lastDownload ? translate('fetchinglabel') : '');
+
+  const $timestampSpan = $('<span>')
+    .addClass('timestamp_info')
+    .text(filterList.subscribed && !filterList.lastDownload ? translate('fetchinglabel') : '');
+
+  const $infoSection = $('<div>')
+    .append($infoSpan)
+    .append($timestampSpan);
+
+  const $extraInformation = $('<div>')
+    .addClass('extra-info')
+    .addClass('italic')
+    .text(translate(`filter_${filterList.id}_explained`));
+
+  const $filterInfo = $('<div>')
+    .append($filterHeader)
+    .append($extraInformation);
+
+  const $label = $('<label>')
+    .attr('title', filterList.url)
+    .attr('for', checkboxID)
+    .append($filterInfo)
+    .append($infoSection);
 
   const $removeFilterListLabel = filterList.userSubmitted ? $('<a>')
     .addClass('remove_filterList')
@@ -467,16 +495,6 @@ function getDefaultFilterUI(filterList, checkboxID, filterListType) {
       removeBottomLine('custom_filters');
     }) : null;
 
-  const $checkboxAndLabel = $('<div>')
-    .addClass('label-max-width')
-    .append($checkBoxWrapper)
-    .append($label)
-    .append($link);
-
-  const $extraInformations = $('<div>')
-    .append($infoSpan)
-    .append($removeFilterListLabel);
-
   const $checkboxHeaderLine = $('<div>')
     .addClass('subscription')
     .addClass(filterListType)
@@ -484,22 +502,16 @@ function getDefaultFilterUI(filterList, checkboxID, filterListType) {
     .addClass(isAcceptableAds ? 'section-padding' : '')
     .addClass(isAcceptableAds ? 'bottom-line' : '')
     .attr('name', filterList.id)
-    .append($checkboxAndLabel)
-    .append($extraInformations);
-
-  const $extraInformation = $('<div>')
-    .addClass('extra-info')
-    .addClass('italic')
-    .text(translate(`filter_${filterList.id}_explained`));
+    .append($checkBoxWrapper)
+    .append($label)
+    .append($removeFilterListLabel);
 
   const $filterWrapper = $('<div>')
-    .addClass('checkbox-indentation')
     .addClass('filter-subscription-wrapper')
     .addClass(isAcceptableAds ? '' : 'section-padding')
     .addClass(isAcceptableAds ? 'no-bottom-line' : 'bottom-line')
     .css('display', isLanguageFilter && !filterList.subscribed ? 'none' : 'block')
-    .append($checkboxHeaderLine)
-    .append($extraInformation);
+    .append($checkboxHeaderLine);
 
   return {
     checkbox: $checkBox,
@@ -517,15 +529,16 @@ function getToggleFilterUI(filterList, checkboxID) {
     .addClass('slider')
     .addClass('round');
 
+  const $spanText = $('<span>')
+    .text(translate('acceptable_ads_privacy'));
+
   const $label = $('<label>')
     .addClass('switch')
     .attr('title', filterList.url)
     .attr('for', checkboxID)
     .append($checkBox)
-    .append($spanSlider);
-
-  const $spanText = $('<span>')
-    .text(translate('acceptable_ads_privacy'));
+    .append($spanSlider)
+    .append($spanText);
 
   const $toggleItem = $('<div>')
     .addClass('filter-toggle-indentation')
@@ -533,8 +546,7 @@ function getToggleFilterUI(filterList, checkboxID) {
     .addClass('subscription')
     .addClass('bottom-line')
     .attr('name', filterList.id)
-    .append($label)
-    .append($spanText);
+    .append($label);
 
   return {
     checkbox: $checkBox,
@@ -1030,7 +1042,9 @@ $(() => {
     }, 300000); // Re-enable update button after 5 minutes.
   });
 
-  $('#btnShowLinks').click(() => {
+  selected('#btnShowLinks', (e) => {
+    e.stopImmediatePropagation();
+    e.preventDefault();
     $('.filter-list-link').fadeIn('slow');
     $('#btnShowLinks').remove();
   });

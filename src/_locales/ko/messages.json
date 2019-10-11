@@ -1,4 +1,18 @@
 {
+  "a_theme_preview": {
+    "message": "$theme_name$ theme preview for $extension_page$", 
+    "description": "Text in the alt attribute of the image previewing a theme on an extension page.", 
+    "placeholders": {
+      "theme_name": {
+        "content": "$1", 
+        "example": "Dark"
+      }, 
+      "extension_page": {
+        "content": "$2", 
+        "example": "pop-up menu"
+      }
+    }
+  }, 
   "aalinkadreport": {
     "message": "허용할만한 광고 프로그램에 대해 자세히 알아보세요.", 
     "description": "Acceptable Ads link message on ad report page"
@@ -43,6 +57,10 @@
     "message": "비침입형 광고 허용", 
     "description": "Checkbox on the 'General' tab of the Options page to enable the Acceptable Ads filter list"
   }, 
+  "ad_everywhere_malware": {
+    "message": "If you're seeing this ad everywhere, you might be infected with malware.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "ad_report_please": {
     "message": "혹시 차단되어야 할 광고가 보여지고 있다면 버그 리포트 대신 [[광고 리포트]]를 해주시기 바랍니다.", 
     "description": "Link to the ad report page on AdBlock's help site. This is found on the Support tab of the options."
@@ -59,6 +77,14 @@
     "message": "AdBlock Facebook", 
     "description": "Title for link to AdBlock's Facebook account"
   }, 
+  "adblock_home": {
+    "message": "AdBlock home", 
+    "description": "Text in the alt attribute of an AdBlock logo / icon that links to getadblock.com."
+  }, 
+  "adblock_logo": {
+    "message": "AdBlock logo", 
+    "description": "Text in the alt attribute of an AdBlock logo image."
+  }, 
   "adblock_twitter": {
     "message": "AdBlock Twitter", 
     "description": "Title for link to AdBlock's Twitter account"
@@ -66,6 +92,18 @@
   "adblock_website": {
     "message": "AdBlock Home Page", 
     "description": "Title for link to AdBlock's website"
+  }, 
+  "adblock_will_block_ads_again": {
+    "message": "If clicked, AdBlock will block ads again.", 
+    "description": "Second sentence in the aria-label of the pop-up menu action to resume blocking ads."
+  }, 
+  "adblock_will_pause_on_all_sites": {
+    "message": "If clicked, AdBlock will stop blocking ads on all sites.", 
+    "description": "Second sentence in the aria-label of the pop-up menu action to pause blocking ads on all sites."
+  }, 
+  "adblock_will_pause_on_this_site": {
+    "message": "If clicked, AdBlock will stop blocking ads on this site.", 
+    "description": "Second sentence in the aria-label of the pop-up menu action to pause blocking ads on this site."
   }, 
   "adblock_wont_run_on_pages_matching": {
     "message": "다음과 일치하는 페이지는 AdBlock이 동작하지 않을 것입니다:", 
@@ -76,11 +114,11 @@
     "description": "Subtitle on the Filter lists tab: List of filter lists to block ads."
   }, 
   "adblockprotectenrollmentbutton": {
-    "message": "Try Now — It’s Free", 
+    "message": "사용해 보세요 — 무료입니다", 
     "description": "The text of the button in the menu item in the popup menu for AdBlock Protect extension.  Will automatically be converted to all uppercase"
   }, 
   "adblockprotectenrollmenttext": {
-    "message": "Keep your personal information safe with AdBlock Protect", 
+    "message": "AdBlock Protect로 개인정보를 안전하게 보호하세요", 
     "description": "The text of the menu item in the popup menu that takes users for the AdBlock Protect extension"
   }, 
   "adblockreportinganad": {
@@ -100,6 +138,14 @@
   }, 
   "add_filters_msg": {
     "message": "새 필터를 추가하시겠습니까?"
+  }, 
+  "additional_help": {
+    "message": "Need additional help?", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "additional_troubleshooting": {
+    "message": "Here are some [[additional troubleshooting steps]] you can take to resolve this issue.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "adreport_all_debug_info": {
     "message": "다음 정보가 광고 보고에 포함됩니다.", 
@@ -206,11 +252,11 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "allow_whitelisting_youtube_channels2": {
-    "message": "Allow whitelisting of specific YouTube™ channels", 
+    "message": "특정 YouTube™ 채널을 허용 목록에 추가", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "apply_theme": {
-    "message": "Apply Theme", 
+    "message": "테마 적용", 
     "description": "Text of clickable element that applies the theme of a theme box in the Themes tab of the Options page"
   }, 
   "betalabel": {
@@ -315,7 +361,7 @@
   }, 
   "block_annonyances_on_youtube": {
     "message": "YouTube™에서 성가신 요소들 제거", 
-    "description": "Checkbox letting user choose whether to block annonyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
+    "description": "Checkbox letting user choose whether to block annoyances on youtube.com (such as comments, suggested videos, annotations, and recommended channels)"
   }, 
   "block_element": {
     "message": "이 요소 숨기기"
@@ -369,7 +415,7 @@
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "blockmoreads2": {
-    "message": "Block more ads", 
+    "message": "더 많은 광고 차단", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "blockurlwithtext": {
@@ -442,6 +488,14 @@
   "check_email": {
     "message": "Please check your email.", 
     "description": "Prompt the user to check their email for a message from AdBlock"
+  }, 
+  "check_whitelist": {
+    "message": "Let's check your whitelist to see if that might be the problem.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "checked_basics": {
+    "message": "We've checked the basics, and updated your filter lists.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "checkinfirefox_1": {
     "message": "Firefox가 없다면 먼저 설치하시기 바랍니다.", 
@@ -536,9 +590,17 @@
       }
     }
   }, 
+  "contact_support": {
+    "message": "[[Contact our Support team!]]", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "contact_support_if_errors_continue": {
     "message": "If you continue to see this error, please contact [[support]].", 
     "description": "Warn the user if they continue to see the same error they should contact AdBlock support."
+  }, 
+  "contact_the_site": {
+    "message": "We recommend getting in touch with the site.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "content_blocking_acceptable_ads_disbled_message": {
     "message": "허용할만한 광고를 허용하기 위해 Safari의 콘텐츠 차단 기능을 껐습니다. 둘 중 단 하나의 설정만 켤 수 있습니다. ([[어째서인가요?]])", 
@@ -594,7 +656,7 @@
     }
   }, 
   "dark_theme": {
-    "message": "Dark", 
+    "message": "어둡게", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "datacollectionoption": {
@@ -610,11 +672,11 @@
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "debuginlogoption2": {
-    "message": "Show debug statements in Console Log", 
+    "message": "콘솔 로그에 디버그 문구 보이기", 
     "description": "Checkbox on the 'General' tab of the Options page"
   }, 
   "default_theme": {
-    "message": "Default", 
+    "message": "기본", 
     "description": "Name of a theme in the Themes tab of the Options page"
   }, 
   "delete_migration_error_messages": {
@@ -703,7 +765,7 @@
   }, 
   "devtools_type_title": {
     "description": "Type column header text", 
-    "message": "Type"
+    "message": "유형"
   }, 
   "disableaa": {
     "message": "허용할만한 광고 필터 확인:", 
@@ -777,6 +839,18 @@
     "message": "AdBlock on YouTube™가 마음에 드시나요? 저희를 후원해주세요!", 
     "description": "Text of a donate link in the toolbar button menu. 'This' refers to the 'AdBlock on YouTube' extension."
   }, 
+  "done": {
+    "message": "Done", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "done_reload_page": {
+    "message": "As soon as we're done, please reload the page.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "dont_know_help_me": {
+    "message": "I don't know. Help me!", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "dont_run_on_pages_on_domain": {
     "message": "이 도메인에서 사용 중지", 
     "description": "Menu entry to open the whitelist wizard"
@@ -816,6 +890,10 @@
     "message": "\"EasyList\" 또는 \"EasyList Lite\" 둘 중 하나를 구독하는 것을 추천해 드립니다만, 이 둘을 동시에 구독하지는 마십시오.", 
     "description": "Message shown to users after disabling both EasyList Lite and EasyList via the Filter lists tab on the Options page."
   }, 
+  "edit_filter_lists": {
+    "message": "You may need to [[edit your filter lists]].", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "enable_adblock": {
     "message": "해당 페이지에 AdBlock 적용", 
     "description": "Link text to un-whitelist a page, displayed immediately after 'AdBlock is disabled on this page'"
@@ -832,16 +910,24 @@
     "message": "중지되었던 확장 프로그램을 다시 켰습니다.", 
     "description": "On the ad report page, alert notifying users that we've re-enabled extensions that were previously disabled"
   }, 
+  "english_site": {
+    "message": "Are you on an English language website?", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "englishonly": {
     "message": "영문 전용", 
     "description": "Lets the user know that a link/page is only available in English."
   }, 
   "enter_url": {
-    "message": "enter a URL", 
+    "message": "URL 입력", 
     "description": "Placeholder text in the Custom Filter list URL bar"
   }, 
+  "error": {
+    "message": "Error", 
+    "description": "Text in the aria-label attribute of an icon indicating an error occurred."
+  }, 
   "error_msg_header": {
-    "message": "Oops! We're sorry, the AdBlock menu had trouble loading.", 
+    "message": "죄송합니다! AdBlock 메뉴를 불러올 수 없습니다.", 
     "description": "The text on the popup menu when an error has occurred"
   }, 
   "error_msg_help": {
@@ -849,7 +935,7 @@
     "description": "DO NOT TRANSLATE"
   }, 
   "error_msg_help_us": {
-    "message": "Help us resolve this problem by sending us some debug data: Click ", 
+    "message": "디버그 정보를 보내주세요. 여기를 클릭하세요: ", 
     "description": "DO NOT TRANSLATE"
   }, 
   "error_msg_here": {
@@ -861,8 +947,12 @@
     "description": "DO NOT TRANSLATE"
   }, 
   "error_msg_thank_you": {
-    "message": "Thank you", 
+    "message": "감사합니다!", 
     "description": "The text on the popup menu when an error has occurred"
+  }, 
+  "example_themes": {
+    "message": "Example themes", 
+    "description": "Text in the alt attribute of an image in the Options page mab that visualizes the themes feature."
   }, 
   "excludedomainorurl": {
     "message": "광고를 아무것도 차단하지 않을 도메인 또는 URL을 입력하세요", 
@@ -905,11 +995,11 @@
     "description": "Tell a user to see if a reported ad also appears in Chrome"
   }, 
   "filter_annoyances_explained": {
-    "message": "blocks in-page pop-ups, social media and related widgets, and other annoyances", 
+    "message": "페이지 내 팝업, 소셜 미디어와 위젯 등 성가신 요소를 차단합니다", 
     "description": "A filter list explanation"
   }, 
   "filter_antisocial_explained": {
-    "message": "removes social media buttons", 
+    "message": "소셜 미디어 버튼을 제거합니다", 
     "description": "A filter list explaination"
   }, 
   "filter_chinese": {
@@ -988,7 +1078,7 @@
     "message": "알 수 없는 필터 옵션"
   }, 
   "filter_warning_removal_explained": {
-    "message": "removes warnings about using ad blockers", 
+    "message": "광고 차단기 경고를 제거합니다", 
     "description": "A filter list explanation"
   }, 
   "filteracceptable_ads": {
@@ -1020,7 +1110,7 @@
     "description": "A filter list"
   }, 
   "filterantisocial2": {
-    "message": "Antisocial filter list", 
+    "message": "Antisocial 필터 리스트", 
     "description": "A filter list"
   }, 
   "filterbitcoin_mining_protection": {
@@ -1156,7 +1246,7 @@
     "description": "Header text on the Customize tab"
   }, 
   "filterlistsrock2": {
-    "message": "The filter lists block most ads on the web. You can also...", 
+    "message": "필터 목록은 웹상의 대다수 광고를 차단합니다. 여기서는 다음 기능을 사용할 수 있습니다.", 
     "description": "Header text on the Customize tab"
   }, 
   "filtermalware": {
@@ -1189,11 +1279,11 @@
     "description": "Warning when manually editing filters."
   }, 
   "filtersavewarning_part1": {
-    "message": "Be careful: if you make a mistake here a lot of other filters, including the official filters, could get broken too!", 
+    "message": "조심하세요! 실수하게 된다면 공식 필터를 포함한 다른 필터가 동작하지 않을 수 있습니다!", 
     "description": "Warning when manually editing filters -- first part not clickable."
   }, 
   "filtersavewarning_part2": {
-    "message": "Read the [[filter syntax tutorial]] to learn how to add advanced blacklist and whitelist filters.", 
+    "message": "고급 차단 목록 및 허용 목록 필터를 추가하는 방법을 알아보려면 [[필터 문법 안내서]]를 읽어보세요.", 
     "description": "Warning when manually editing filters -- second part clickable."
   }, 
   "filtersavewarning_ytadblock_1": {
@@ -1225,7 +1315,7 @@
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "filterwarning_removal2": {
-    "message": "Adblock Warning Removal list", 
+    "message": "광고 차단 경고 제거 리스트", 
     "description": "A filter list. \"Adblock\" is written with a lowercase B in this string as it refers to ad blocking extensions in general, not just AdBlock specifically."
   }, 
   "findingads": {
@@ -1263,6 +1353,10 @@
   "firstRun_warning_reinitialized": {
     "message": "문제가 발생하여 모든 필터가 제거되고, 백업을 복원할 수 없습니다. 그러므로 사용자 필터와 허용 광고 설정을 초기화했어야 합니다. <a>애드블록 플러스 옵션</a>에서 구독필터와 허용 광고 설정을 확인하십시오."
   }, 
+  "first_time_seeing_ad": {
+    "message": "This is my first time seeing this ad", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "fixityourself": {
     "message": "설정 페이지에서 이 광고를 스스로 차단할 수 있습니다. 감사합니다!", 
     "description": "Telling users who won't report an ad to us how to handle it for themselves"
@@ -1296,15 +1390,19 @@
     "description": "Title of the first Options page tab"
   }, 
   "generaloptions2": {
-    "message": "General Options", 
+    "message": "일반 설정", 
     "description": "Title of one of the Options page tabs"
   }, 
   "get_it_now": {
     "message": "Get It Now", 
     "description": "The text in a button visible to locked users in the MyAdBlock Options page"
   }, 
+  "got_it": {
+    "message": "Got it.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "header": {
-    "message": "Header", 
+    "message": "헤더", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 10 characters)"
   }, 
   "headerfilter": {
@@ -1318,6 +1416,10 @@
   "headertype": {
     "message": "유형", 
     "description": "Resource list page: title of a column"
+  }, 
+  "help": {
+    "message": "Help", 
+    "description": "Text in the aria-label attribute of the support icon on the pop-up menu."
   }, 
   "help_and_feedback": {
     "message": "도움말 및 의견", 
@@ -1335,12 +1437,30 @@
     "message": "어떻게 하나요?", 
     "description": "Text of a link pointing to instructions on how to do something"
   }, 
+  "how_can_we_help": {
+    "message": "How can we help?", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "image_of_channel": {
+    "message": "Image of $image_category$", 
+    "description": "Text in the alt attribute of an image injected into a page as part of the Image Swap feature.", 
+    "placeholders": {
+      "image_category": {
+        "content": "$1", 
+        "example": "Dogs"
+      }
+    }
+  }, 
   "image_swap": {
     "message": "Image Swap", 
     "description": "Title of the Image Swap sub-tab of the Options page"
   }, 
+  "image_swap_example": {
+    "message": "Image swap example", 
+    "description": "Text in the alt attribute of an image in the Options page mab that visualizes the Image Swap feature."
+  }, 
   "images_coming_soon": {
-    "message": "More photos coming soon!", 
+    "message": "더 많은 사진이 곧 추가됩니다!", 
     "description": "The text telling MyAdBlock active users that there will be more photos for MyAdBlock."
   }, 
   "invalidListUrl": {
@@ -1426,6 +1546,10 @@
   }, 
   "issueReporter_typeSelector_heading": {
     "message": "문제 유형 선택"
+  }, 
+  "issue_unrelated_adblock": {
+    "message": "It seems that there's an issue with the site unrelated to AdBlock.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "landscapechannelswitchlabel": {
     "message": "풍경", 
@@ -1595,6 +1719,18 @@
     "message": "자세히 알아보세요.", 
     "description": "Link to Knowledge Base article with more information about the settings change"
   }, 
+  "learn_more_filter_lists": {
+    "message": "You may also want to [[learn more about filter lists]].", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "learn_more_to_resolve": {
+    "message": "You can [[learn more here]] to help resolve that.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "learn_more_without_period": {
+    "message": "Learn more", 
+    "description": "Text in the aria-label attribute of an icon linking to extra information about an option."
+  }, 
   "legend": {
     "message": "범례: ", 
     "description": "Resource list page: followed by color codes for various resource statuses (blocked, whitelisted, hidden)"
@@ -1626,6 +1762,10 @@
   "local_cdn_option": {
     "message": "유명 웹사이트 라이브러리의 로컬 콘텐츠 캐싱 허용", 
     "description": "Option to let the user enable Local CDN feature."
+  }, 
+  "locked": {
+    "message": "Locked", 
+    "description": "Text in the aria-label attribute of an icon showing a feature/option is locked."
   }, 
   "mac_app_message_menu_part_one": {
     "message": "신규 업데이트!", 
@@ -1680,7 +1820,7 @@
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualexcludefilteredit2": {
-    "message": "Edit disabled filters", 
+    "message": "비활성 필터 편집", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualfilteredit": {
@@ -1688,7 +1828,7 @@
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualfilteredit2": {
-    "message": "Manually edit your filters", 
+    "message": "필터를 수동으로 수정하기", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "manualfilteredit_yt": {
@@ -1712,7 +1852,7 @@
     "description": "Caption for the whitelist wizard slider that modifies the path part of a URL"
   }, 
   "more_themes_coming_soon": {
-    "message": "Check back soon, more themes are on the way!", 
+    "message": "나중에 다시 들러보세요. 더 많은 테마가 곧 추가됩니다!", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 60 characters)"
   }, 
   "more_themes_on_the_way": {
@@ -1770,7 +1910,7 @@
     "description": "Title for MyAdBlock feedback call to action."
   }, 
   "myadblock_more_coming_soon": {
-    "message": "More features coming soon!", 
+    "message": "더 많은 기능이 곧 출시 예정입니다!", 
     "description": "Title of the teaser MyAdBlock feature box in the MyAdBlock tab of the Options page"
   }, 
   "myadblock_options_page_header": {
@@ -1790,19 +1930,19 @@
     "description": "The sub-title of an error message box in payment iframe in the Options page."
   }, 
   "myadblock_payment_not_available_text": {
-    "message": "We’re so glad you are interested in MyAdBlock! Unfortunately, we can’t process payments at this time. Please try again later.", 
+    "message": "MyAdBlock에 관심을 가져 주셔서 감사합니다! 안타깝게도 지금은 결제를 처리할 수 없습니다. 나중에 다시 시도해주세요.", 
     "description": "The text of an error message box in the MyAdBlock tab in option page when we cannot load iframe."
   }, 
   "myadblock_payment_not_available_title": {
-    "message": "OH NO! We were unable to connect to our servers", 
+    "message": "서버에 연결할 수 없습니다", 
     "description": "The title of an error message box in the MyAdBlock tab in option page when we cannot load iframe."
   }, 
   "myadblock_pic_replacemenet_description": {
-    "message": "Replace ads with images you love", 
+    "message": "내가 좋아하는 이미지로 광고 대체하기", 
     "description": "The text briefly describing what the feature does in the MyAdBlock tab in the option page."
   }, 
   "myadblock_picreplacement_exlained": {
-    "message": "Select from the categories below and AdBlock will occasionally replace ads with high-quality images to brighten your day.", 
+    "message": "아래 있는 카테고리를 선택하면 AdBlock이 광고를 양질의 이미지로 대체합니다.", 
     "description": "The label text for the switch on the MyAdBlock Options page"
   }, 
   "myadblock_short_description": {
@@ -1854,7 +1994,7 @@
   }, 
   "name_devbuild": {
     "description": "Extension name to be shown for development builds. Note: this cannot be longer than 45 characters. Should not be translated", 
-    "message": "AdBlock development build"
+    "message": "Adblock 개발 빌드"
   }, 
   "name_releasebuild": {
     "description": "Extension name to be shown for release / published builds.  Should not be translated", 
@@ -1873,7 +2013,7 @@
     "description": "Text of a temporary call-to-action hovered item in the popup menu."
   }, 
   "new_myadblock_feature_available": {
-    "message": "Click here to unlock new features!", 
+    "message": "여기를 눌러 새 기능들을 사용해보세요!", 
     "description": "The text in the popup menu item saying there is a new MyAdBlock feature and takes you to the MyAdBlock tab in the option page."
   }, 
   "new_resourcelist_explanation_osx": {
@@ -1891,6 +2031,10 @@
   "no": {
     "message": "아니요", 
     "description": "A negative response to a question"
+  }, 
+  "no_changes_see_ad": {
+    "message": "We won't change anything so you'll continue to see ads.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "nodefaultfilter1": {
     "message": "아직 이 언어의 기본 필터 목록이 없습니다.\n[[해당 언어를 지원하는 적합한 목록]]을 찾아보거나, AdBlock 메뉴에서 광고를 스스로 차단할 수 있습니다.", 
@@ -1925,6 +2069,10 @@
   "ocean_theme": {
     "message": "Ocean", 
     "description": "Name of a theme in the Themes tab of the Options page"
+  }, 
+  "ok": {
+    "message": "확인", 
+    "description": "Message for help flow in popup menu."
   }, 
   "one_moment_all_youtube_channels": {
     "message": "구독 목록을 모으는 동안 잠시 기다려주세요", 
@@ -2149,11 +2297,15 @@
   "options_new_label": {
     "message": "신규"
   }, 
+  "options_page": {
+    "message": "options page", 
+    "description": "General text used to define the extension options page."
+  }, 
   "options_page_document_title": {
     "message": "설정"
   }, 
   "options_page_theme": {
-    "message": "Options Page Theme", 
+    "message": "설정 페이지 테마", 
     "description": "Section title of the Themes tab of the Options page"
   }, 
   "options_page_title": {
@@ -2276,6 +2428,14 @@
   "overlay_notification_closing_button_optout": {
     "message": "알림 표시를 중지합니다"
   }, 
+  "page_is_whitelisted": {
+    "message": "This page is on your whitelist, which is why you're seeing an ad.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "page_not_whitelisted": {
+    "message": "This page is not on your whitelist.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "pagelanguagecheck": {
     "message": "웹 페이지가 어떤 언어로 작성되었습니까?", 
     "description": "Question on ad report page"
@@ -2292,28 +2452,76 @@
     "message": "광고 차단 일시 중지", 
     "description": "Menu entry to pause the extension (stop blocking ads)"
   }, 
+  "pause_on_all_sites": {
+    "message": "Pause on all sites.", 
+    "description": "First sentence in the aria-label of the pop-up menu action to pause blocking ads on all sites."
+  }, 
+  "pause_on_this_site": {
+    "message": "Pause on this site.", 
+    "description": "First sentence in the aria-label of the pop-up menu action to pause blocking ads on this site."
+  }, 
+  "paused_not_blocking": {
+    "message": "AdBlock is currently paused, so we're not blocking any ads.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "paused_site_issue": {
+    "message": "AdBlock is currently paused, so it seems there's an issue with the site unrelated to AdBlock.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "please_try_again": {
     "message": "Please try again.", 
     "description": "Prompt the user to retry the last action."
   }, 
+  "popup_menu": {
+    "message": "pop-up menu", 
+    "description": "General text used to define the pop-up menu."
+  }, 
   "popup_menu_theme": {
-    "message": "Pop-up Menu Theme", 
+    "message": "팝업 메뉴 테마", 
     "description": "Section title of the Themes tab of the Options page"
   }, 
   "popup_menu_title": {
     "message": "AdBlock Popup Menu", 
     "description": "Title for the popup menu."
   }, 
+  "preview_a_theme": {
+    "message": "Preview $theme_name$ theme for $extension_page$", 
+    "description": "Text in the aria-label attribute of an icon indicating that clicking will show the preview image of a theme on an extension page.", 
+    "placeholders": {
+      "theme_name": {
+        "content": "$1", 
+        "example": "Dark"
+      }, 
+      "extension_page": {
+        "content": "$2", 
+        "example": "options page"
+      }
+    }
+  }, 
+  "preview_channel_image": {
+    "message": "Preview image of $image_category$", 
+    "description": "Text in the alt attribute of an image previewed as part of the Image Swap feature.", 
+    "placeholders": {
+      "image_category": {
+        "content": "$1", 
+        "example": "Cats"
+      }
+    }
+  }, 
   "privacy_policy": {
     "message": "개인정보 보호정책", 
     "description": "Link to AdBlock's privacy policy"
+  }, 
+  "problem_solved": {
+    "message": "Awesome! Problem solved.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "pwyw": {
     "message": "자발적 후원", 
     "description": "Text of a payment request link"
   }, 
   "pwyw2": {
-    "message": "Pay What You Want!", 
+    "message": "원하는 만큼 후원하세요!", 
     "description": "Text of a payment request link"
   }, 
   "questionoridea": {
@@ -2332,6 +2540,18 @@
     "message": "체크하지 않음", 
     "description": "User is telling us they don't wish to investigate something for us"
   }, 
+  "reload_not_see_ad": {
+    "message": "Reload the page so you won't see that ad anymore!", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "reload_the_page": {
+    "message": "Reload the page", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "reload_when_ready": {
+    "message": "Please click below to reload the page when you are ready.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "reloadadpage": {
     "message": "광고가 있는 페이지를 새로 고치세요.", 
     "description": "Instruction on ad report page"
@@ -2339,6 +2559,10 @@
   "reloadpageafterwhitelist": {
     "message": "페이지 새로고침", 
     "description": "Checkbox in the whitelist wizard"
+  }, 
+  "removed_url": {
+    "message": "OK! We've removed the URL from your whitelist.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "removefromlist": {
     "message": "목록에서 제거", 
@@ -2363,7 +2587,7 @@
     "description": "Ad report page string, when you're about to submit a report."
   }, 
   "require_restart_browser": {
-    "message": "requires restarting your browser", 
+    "message": "브라우저를 재시작해야 합니다", 
     "description": "Text displayed within an option to notify users to restart the browser to fully enable the option"
   }, 
   "resourceblocktitle": {
@@ -2383,6 +2607,14 @@
   "resume_blocking_ads": {
     "message": "광고 차단 다시 시작", 
     "description": "Link text to start blocking ads again, displayed immediately after 'AdBlock is paused on this site' or 'AdBlock is paused on all sites'"
+  }, 
+  "resume_blocking_ads_period": {
+    "message": "Resume blocking ads.", 
+    "description": "First sentence in the aria-label of the pop-up menu action to resume blocking ads."
+  }, 
+  "resume_reload": {
+    "message": "Do you want to resume blocking ads and reload the page?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "retryaftersubscribe": {
     "message": "$list_title$ 필터를 구독한 후 다시 시도해보세요.", 
@@ -2430,6 +2662,14 @@
     "message": "저장하는 것을 잊지 마세요!", 
     "description": "Reminder to click 'Save'"
   }, 
+  "see_ad": {
+    "message": "I see an ad", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "see_ad_everywhere": {
+    "message": "I see this ad everywhere", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "see_photos_no_ads_description": {
     "message": "We’ll still block ads, but we’ll replace some with pretty pictures of cats, dogs, and nature.", 
     "description": "The main text of a feature box in the MyAdBlock Options page"
@@ -2438,16 +2678,24 @@
     "message": "See Photos, Not Ads", 
     "description": "The title of a feature box in the MyAdBlock Options page"
   }, 
+  "selected": {
+    "message": "Selected", 
+    "description": "Text in the aria-label attribute of an icon showing an option is selected."
+  }, 
   "selectlanguage": {
     "message": " -- 언어 선택 -- ", 
     "description": "First option in the language dropdown menu on the Filter lists tab. Include the ' -- ' on either side of your translation."
   }, 
   "selectlanguage2": {
-    "message": "select language", 
+    "message": "언어 선택", 
     "description": "First option in the language dropdown menu on the Filter lists tab."
   }, 
   "sendReport": {
     "message": "문제 보고"
+  }, 
+  "settings": {
+    "message": "Settings", 
+    "description": "Text in the aria-label attribute of the gear icon on the pop-up menu."
   }, 
   "settings_changed": {
     "message": "이제 AdBlock이 전과는 다르게 동작하게 되며, 몇몇 설정들이 변경되었습니다.", 
@@ -2502,12 +2750,20 @@
     "description": "'Block an ad' wizard title"
   }, 
   "slows_down_extension": {
-    "message": "slows down the extension", 
+    "message": "확장 기능을 느리게 함", 
     "description": "Text of an option telling users that the option slows down the extension"
   }, 
   "solarized_theme": {
     "message": "Solarized", 
     "description": "Name of a theme in the Themes tab of the Options page"
+  }, 
+  "something_else_going_on": {
+    "message": "Hmm, something else must be going on.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "something_not_working": {
+    "message": "Hmm, something's not working.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "sourcecode": {
     "message": "소스 코드는 [[무료로 배포]]됩니다!", 
@@ -2548,15 +2804,19 @@
     "description": "Message shown in toolbar button when AdBlock is not running on all domains"
   }, 
   "stay_tuned": {
-    "message": "Stay tuned", 
+    "message": "계속 지켜봐 주세요!", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 30 characters)"
+  }, 
+  "still_see_ad": {
+    "message": "Do you still see the ad?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "stop_blocking_ads": {
     "message": "광고 차단 중단:", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "stop_blocking_ads2": {
-    "message": "Stop blocking ads", 
+    "message": "광고 차단 중단", 
     "description": "Subtitle on the 'Customize' tab"
   }, 
   "storage_quota_exceeded": {
@@ -2593,6 +2853,10 @@
     "message": "구독 필터를 추가하는 중...", 
     "description": "abp: link subscriber title"
   }, 
+  "success": {
+    "message": "Success", 
+    "description": "Text in the aria-label attribute of an icon indicating successful results."
+  }, 
   "sunshine_theme": {
     "message": "Sunshine", 
     "description": "Name of a theme in the Themes tab of the Options page"
@@ -2618,6 +2882,10 @@
         "example": "April 30, 2019 6:25 pm for US/English locale"
       }
     }
+  }, 
+  "sync_example": {
+    "message": "Sync example", 
+    "description": "Text in the alt attribute of an image in the Options page mab that visualizes the Sync feature."
   }, 
   "sync_extension_name_placeholder": {
     "message": "Name this extension…", 
@@ -2786,7 +3054,7 @@
     "description": "A tab on the Options page"
   }, 
   "tabthemes": {
-    "message": "Themes", 
+    "message": "테마", 
     "description": "A tab on the Options page"
   }, 
   "tabtranslations": {
@@ -2794,11 +3062,15 @@
     "description": "A tab on the Options page"
   }, 
   "text_body": {
-    "message": "body text", 
+    "message": "본문 텍스트", 
     "description": "Text in theme box of the Themes tab of the Options page (no more than 22 characters)"
   }, 
+  "thanks": {
+    "message": "Thanks", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "themes": {
-    "message": "Themes", 
+    "message": "테마", 
     "description": "Title of the Themes tab of the Options page"
   }, 
   "thirdparty": {
@@ -2814,7 +3086,7 @@
     "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
   }, 
   "translator_credit2": {
-    "message": "Credit for translation goes to...", 
+    "message": "한국어 번역자:", 
     "description": "This message will be followed by a list of names of the translators who contributed to the language AdBlock is currently displayed in. Do not add any names to this string."
   }, 
   "translators": {
@@ -2824,6 +3096,14 @@
   "troubleshoot_an_ad": {
     "message": "광고 문제 해결", 
     "description": "Entry in the AdBlock button menu"
+  }, 
+  "try_manual_update": {
+    "message": "Please try [[manually updating your filter lists]].", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "try_pausing": {
+    "message": "OK, let's try pausing AdBlock.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "twitch_hiding_option": {
     "message": "Enable hiding of streaming ads on Twitch™", 
@@ -2916,6 +3196,10 @@
     "message": "광고 차단 일시 중지 해제", 
     "description": "Menu entry to unpause the extension (start blocking ads again)"
   }, 
+  "unpaused_reload": {
+    "message": "We just unpaused AdBlock and reloaded the page.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "unsubscribe_from_all_confirmation": {
     "message": "모든 필터 목록을 사용하지 않도록 설정한다면 AdBlock은 광고를 차단할 수 없습니다. AdBlock을 일시 중지하는 것을 추천해 드립니다. 그래도 이 목록을 구독 해지하시겠습니까?", 
     "description": "Confirmation message shown to user if they try to unsubscribe from all filter lists. The user will have two options: OK and Cancel."
@@ -2923,6 +3207,10 @@
   "unsubscribedlabel": {
     "message": "구독 중지됨", 
     "description": "Status label when unselecting a filter list"
+  }, 
+  "update_filter_lists_now": {
+    "message": "Update Filter Lists Now", 
+    "description": "Text in the aria-label attribute of the 'update now' button on the Options page in the Filter Lists tab."
   }, 
   "updateddayago": {
     "message": "1일 전 업데이트됨", 
@@ -3019,9 +3307,21 @@
     "message": "필터가 최신 상태인지 확인하세요:", 
     "description": "Section header on the ad report page"
   }, 
+  "updating_filter_lists": {
+    "message": "AdBlock is updating your filter lists now to see if that might be the problem.", 
+    "description": "Message for help flow in popup menu."
+  }, 
   "urgent_safari_changes": {
     "message": "긴급: 곧 Apple이 Safari 확장 프로그램을 폐지합니다.", 
     "description": "Title for Options page message letting users know of settings change."
+  }, 
+  "visit_help_center": {
+    "message": "You may want to [[visit our Help Center]] for more troubleshooting options.", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "want_to_remove": {
+    "message": "Do you want to remove it?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "warning_overrules_filters": {
     "message": "주의: 해당 사이트 이외의 광고는 허용됩니다!\n이 설정은 개별 사이트 필터 설정보다 우선됩니다.", 
@@ -3030,6 +3330,14 @@
   "watermelon_theme": {
     "message": "Watermelon", 
     "description": "Name of a theme in the Themes tab of the Options page"
+  }, 
+  "website_broken": {
+    "message": "The website is broken", 
+    "description": "Message for help flow in popup menu."
+  }, 
+  "website_still_broken": {
+    "message": "Is the website still broken?", 
+    "description": "Message for help flow in popup menu."
   }, 
   "whatmakesadblocktick": {
     "message": "AdBlock이 어떻게 만들어지는지 궁금하세요?", 
@@ -3072,6 +3380,10 @@
   "wizardcantrunonframesets": {
     "message": "이 AdBlock 기능은 해당 사이트의 뒤떨어진 기술 사용으로 동작하지 않습니다. 설정 페이지의 '사용자 필터' 탭에서 수동으로 차단하거나 허용할 수 있습니다.", 
     "description": "Alert shown when the user tries to use a blacklist/whitelist wizard on an old website"
+  }, 
+  "wont_change_anything": {
+    "message": "We won't change anything so you'll continue to see the ad.", 
+    "description": "Message for help flow in popup menu."
   }, 
   "work_around_hulu_problems": {
     "message": "Hulu.com 동영상이 재생 안 되는 문제 해결 시도 (브라우저 재시작 필요함)", 
