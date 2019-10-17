@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.58.0";
+exports.addonVersion = "3.59.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -10897,9 +10897,9 @@ exports.STATS = STATS;
 
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, require, exports, STATS, log, getSettings, Prefs, openTab */
+/* global chrome, require, exports, STATS, log, getSettings, Prefs, openTab, License */
 
-// if the ping reponse indicates a survey (tab or overlay)
+// if the ping response indicates a survey (tab or overlay)
 // gracefully processes the request
 const stats = __webpack_require__(22);
 const { recordGeneralMessage, recordErrorMessage } = __webpack_require__(13).ServerMessages;
@@ -10963,6 +10963,7 @@ const SURVEY = (function getSurvey() {
         }
         if (data && data.should_survey === 'true' && surveyAllowed) {
           surveyAllowed = false;
+          License.checkPingResponse(responseData);
           callback(data);
         }
       });
@@ -16969,14 +16970,24 @@ const reloadAllOpenedTabs = function () {
 // selected attaches a click and keydown event handler to the matching selector and calls
 // the handler if a click or keydown event occurs (with a CR or space is pressed). We support
 // both mouse and keyboard events to increase accessibility of the popup menu.
+// Returns a reference to the keydown handler for future removal.
 const selected = function (selector, handler) {
   const $matched = $(selector);
   $matched.click(handler);
-  $matched.keydown((event) => {
+  function keydownHandler(event) {
     if (event.which === 13 || event.which === 32) {
       handler(event);
     }
-  });
+  }
+  $matched.keydown(keydownHandler);
+  return keydownHandler;
+};
+
+// selectedOff removes a click and keydown event handler from the matching selector.
+const selectedOff = function (selector, clickHandler, keydownHandler) {
+  const $matched = $(selector);
+  $matched.off('click', clickHandler);
+  $matched.off('keydown', keydownHandler);
 };
 
 // selectedOnce adds event listeners to the given element for mouse click or keydown CR or space
@@ -17262,6 +17273,7 @@ Object.assign(window, {
   DownloadableSubscription,
   Filter,
   WhitelistFilter,
+  checkWhitelisted,
   info,
   getBlockedPerPage,
   Utils,
@@ -17646,7 +17658,8 @@ const getCurrentTabInfo = function (callback, secondTime) {
 // Returns true if the page is whitelisted.
 // Called from a content script
 const pageIsWhitelisted = function (sender) {
-  return (checkWhitelisted(sender.page) !== undefined);
+  const whitelisted = checkWhitelisted(sender.page);
+  return (whitelisted !== undefined && whitelisted !== null);
 };
 
 const parseFilter = function (filterText) {
@@ -18304,6 +18317,22 @@ function updateFilterLists() {
   }
 }
 
+// Checks if the filter lists are currently in the process of
+// updating and if there were errors the last time they were
+// updated
+function checkUpdateProgress() {
+  let inProgress = false;
+  let filterError = false;
+  for (const subscription of filterStorage.subscriptions()) {
+    if (synchronizer.isExecuting(subscription.url)) {
+      inProgress = true;
+    } else if (subscription.downloadStatus && subscription.downloadStatus !== 'synchronize_ok') {
+      filterError = true;
+    }
+  }
+  return { inProgress, filterError };
+}
+
 STATS.untilLoaded(() => {
   STATS.startPinging();
   uninstallInit();
@@ -18385,6 +18414,7 @@ Object.assign(window, {
   createPageWhitelistFilter,
   getUserFilters,
   updateFilterLists,
+  checkUpdateProgress,
   getDebugInfo,
   createWhitelistFilterForYoutubeChannel,
   openTab,
@@ -18800,7 +18830,7 @@ const SubscriptionAdapter = (function getSubscriptionAdapter() {
     for (const subscription of recommendations()) {
       const { id } = subscription;
       if (id === searchID) {
-        return id.language;
+        return subscription.language;
       }
     }
     return false;
