@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.60.0";
+exports.addonVersion = "3.61.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -16482,7 +16482,7 @@ exports.initAntiAdblockNotification = function initAntiAdblockNotification()
 /* 59 */
 /***/ (function(module, exports) {
 
-module.exports = [{"url":"https://easylist-downloads.adblockplus.org/exceptionrules.txt","id":"acceptable_ads","homepage":"","languages":[],"type":"","title":"Acceptable Ads"},{"url":"https://easylist-downloads.adblockplus.org/exceptionrules-privacy-friendly.txt","id":"acceptable_ads_privacy","homepage":"","languages":[],"type":"","title":"Acceptable Ads Privacy"},{"url":"https://cdn.adblockcdn.com/filters/adblock_custom.txt","id":"adblock_custom","homepage":"https://getadblock.com/help","languages":[],"type":"ads","title":"AdBlock Custom"},{"url":"https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt","id":"bitcoin_mining_protection","homepage":"","languages":[],"type":"","title":"Acceptable Ads"},{"url":"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt","id":"warning_removal","homepage":"","languages":[],"type":"","title":"Warning Removal"},{"url":"https://www.void.gr/kargig/void-gr-filters.txt","id":"easylist_plus_greek","homepage":"mailto:kargig at void.gr","languages":["el"],"type":"ads","title":"EasyList Greek+EasyList"},{"url":"https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt","id":"hungarian","homepage":"mailto:pete at teamlupus.hu","languages":["hu"],"type":"ads","title":"EasyList Hungarian+EasyList"},{"url":"https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt","id":"japanese","homepage":"https://github.com/k2jp/abp-japanese-filters/","languages":["ja"],"type":"ads","title":"Japanese"},{"url":"https://adblock.schack.dk/block.txt","id":"danish_old","homepage":"mailto:henrik at schack.dk","languages":["da"],"type":"ads","title":"Danish"},{"url":"https://adblock.gardar.net/is.abp.txt","id":"icelandic","homepage":"mailto:adblock at gardar.net","languages":["is"],"type":"ads","title":"Icelandic"},{"url":"https://easylist-downloads.adblockplus.org/malwaredomains_full.txt","id":"malware","homepage":"http://malwaredomains.com/?page_id=2","languages":[],"type":"ads","title":"Malware"},{"url":"https://easylist-downloads.adblockplus.org/abpindo+easylist.txt","id":"easylist_plus_indonesian","homepage":"http://abpindo.blogspot.com/","languages":["id","ms"],"type":"ads","title":"ABPindo+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/abpvn+easylist.txt","id":"easylist_plus_vietnamese","homepage":"http://abpvn.com/","languages":["vi"],"type":"ads","title":"ABPVN List+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt","id":"easylist_plus_bulgarian","homepage":"http://stanev.org/abp/","languages":["bg"],"type":"ads","title":"Bulgarian list+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylist.txt","id":"easylist","homepage":"https://easylist.to/","languages":["en"],"type":"ads","title":"EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt","id":"chinese","homepage":"http://abpchina.org/forum/","languages":["zh"],"type":"ads","title":"EasyList China+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt","id":"czech","homepage":"https://adblock.sk/","languages":["cs","sk"],"type":"ads","title":"EasyList Czech and Slovak+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt","id":"dutch","homepage":"https://easylist.to/","languages":["nl"],"type":"ads","title":"EasyList Dutch+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt","id":"easylist_plus_german","homepage":"https://easylist.to/","languages":["de"],"type":"ads","title":"EasyList Germany+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/israellist+easylist.txt","id":"israeli","homepage":"https://github.com/easylist/EasyListHebrew","languages":["he"],"type":"ads","title":"EasyList Hebrew+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt","id":"italian","homepage":"https://easylist.to/","languages":["it"],"type":"ads","title":"EasyList Italy+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt","id":"easylist_plus_lithuania","homepage":"http://margevicius.lt/","languages":["lt"],"type":"ads","title":"EasyList Lithuania+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt","id":"easylist_plus_polish","homepage":"https://easylist.to/","languages":["pl"],"type":"ads","title":"EasyList Polish+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt","id":"easylist_plus_portuguese","homepage":"https://easylist.to/","languages":["pt"],"type":"ads","title":"EasyList Portuguese+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt","id":"easylist_plus_spanish","homepage":"https://easylist.to/","languages":["es"],"type":"ads","title":"EasyList Spanish+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/indianlist+easylist.txt","id":"easylist_plus_indian","homepage":"https://easylist.to/","languages":["bn","gu","hi","pa"],"type":"ads","title":"IndianList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt","id":"easylist_plun_korean","homepage":"https://easylist.to/","languages":["ko"],"type":"ads","title":"KoreanList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt","id":"latvian","homepage":"https://notabug.org/latvian-list/adblock-latvian","languages":["lv"],"type":"ads","title":"Latvian List+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/liste_ar+liste_fr+easylist.txt","id":"easylist_plus_arabic_plus_french","homepage":"https://code.google.com/p/liste-ar-adblock/","languages":["ar"],"type":"ads","title":"Liste AR+Liste FR+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt","id":"easylist_plus_french","homepage":"https://forums.lanik.us/viewforum.php?f","languages":["fr"],"type":"ads","title":"Liste FR+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/rolist+easylist.txt","id":"easylist_plus_romanian","homepage":"http://www.zoso.ro/rolist","languages":["ro"],"type":"ads","title":"ROList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt","id":"russian","homepage":"https://forums.lanik.us/viewforum.php?f","languages":["ru","uk"],"type":"ads","title":"RuAdList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt","id":"anticircumvent","homepage":"https://github.com/abp-filters/abp-filters-anti-cv","languages":[],"type":"circumvention","title":"ABP filters"},{"url":"https://easylist-downloads.adblockplus.org/easyprivacy.txt","id":"easyprivacy","homepage":"https://easylist.to/","languages":[],"type":"privacy","title":"EasyPrivacy"},{"url":"https://easylist-downloads.adblockplus.org/fanboy-social.txt","id":"antisocial","homepage":"https://easylist.to/","languages":[],"type":"social","title":"Fanboy's Social Blocking List"},{"url":"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt","id":"annoyances","homepage":"https://easylist.to/","languages":[],"type":"social","title":"Fanboy's Annoyances"},{"url":"https://fanboy.co.nz/fanboy-turkish.txt","id":"turkish","language":true,"hidden":false},{"url":"https://easylist-downloads.adblockplus.org/Liste_AR.txt","id":"easylist_plus_arabic","language":true,"hidden":true},{"url":"https://margevicius.lt/easylistlithuania.txt","id":"easylist_plus_lithuania_old","language":true,"hidden":true},{"url":"https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt","id":"latvian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistitaly.txt","id":"italian_old","language":true,"hidden":true},{"url":"https://stanev.org/abp/adblock_bg.txt","id":"easylist_plus_bulgarian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistdutch.txt","id":"dutch_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/liste_fr.txt","id":"easylist_plus_french_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistgermany.txt","id":"easylist_plus_german_old","language":true,"hidden":true},{"url":"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt","id":"easylist_plus_indonesian_old","language":true,"hidden":true},{"url":"https://www.certyficate.it/adblock/adblock.txt","id":"easylist_plus_polish_old","language":true,"hidden":true},{"url":"https://www.zoso.ro/pages/rolist.txt","id":"easylist_plus_romanian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/advblock.txt","id":"russian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistchina.txt","id":"chinese_old","language":true,"hidden":true},{"url":"https://raw.github.com/tomasko126/easylistczechandslovak/master/filters.txt","id":"czech_old","language":true,"hidden":true},{"url":"https://adblock.schack.dk/block.txt","id":"danish_old","language":true,"hidden":true},{"url":"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFiltersABP.txt","id":"norwegian","language":true,"hidden":false,"languages":["no"]}]
+module.exports = [{"url":"https://easylist-downloads.adblockplus.org/exceptionrules.txt","id":"acceptable_ads","homepage":"","languages":[],"type":"","title":"Acceptable Ads"},{"url":"https://easylist-downloads.adblockplus.org/exceptionrules-privacy-friendly.txt","id":"acceptable_ads_privacy","homepage":"","languages":[],"type":"","title":"Acceptable Ads Privacy"},{"url":"https://cdn.adblockcdn.com/filters/adblock_custom.txt","id":"adblock_custom","homepage":"https://getadblock.com/help","languages":[],"type":"ads","title":"AdBlock Custom"},{"url":"https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/nocoin.txt","id":"bitcoin_mining_protection","homepage":"","languages":[],"type":"","title":"Acceptable Ads"},{"url":"https://easylist-downloads.adblockplus.org/antiadblockfilters.txt","id":"warning_removal","homepage":"","languages":[],"type":"","title":"Warning Removal"},{"url":"https://www.void.gr/kargig/void-gr-filters.txt","id":"easylist_plus_greek","homepage":"mailto:kargig at void.gr","languages":["el"],"type":"ads","title":"EasyList Greek+EasyList"},{"url":"https://raw.githubusercontent.com/szpeter80/hufilter/master/hufilter.txt","id":"hungarian","homepage":"mailto:pete at teamlupus.hu","languages":["hu"],"type":"ads","title":"EasyList Hungarian+EasyList"},{"url":"https://raw.githubusercontent.com/k2jp/abp-japanese-filters/master/abpjf.txt","id":"japanese","homepage":"https://github.com/k2jp/abp-japanese-filters/","languages":["ja"],"type":"ads","title":"Japanese"},{"url":"https://adblock.gardar.net/is.abp.txt","id":"icelandic","homepage":"mailto:adblock at gardar.net","languages":["is"],"type":"ads","title":"Icelandic"},{"url":"https://easylist-downloads.adblockplus.org/malwaredomains_full.txt","id":"malware","homepage":"http://malwaredomains.com/?page_id=2","languages":[],"type":"ads","title":"Malware"},{"url":"https://easylist-downloads.adblockplus.org/abpindo+easylist.txt","id":"easylist_plus_indonesian","homepage":"http://abpindo.blogspot.com/","languages":["id","ms"],"type":"ads","title":"ABPindo+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/abpvn+easylist.txt","id":"easylist_plus_vietnamese","homepage":"http://abpvn.com/","languages":["vi"],"type":"ads","title":"ABPVN List+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/bulgarian_list+easylist.txt","id":"easylist_plus_bulgarian","homepage":"http://stanev.org/abp/","languages":["bg"],"type":"ads","title":"Bulgarian list+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylist.txt","id":"easylist","homepage":"https://easylist.to/","languages":["en"],"type":"ads","title":"EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistchina+easylist.txt","id":"chinese","homepage":"http://abpchina.org/forum/","languages":["zh"],"type":"ads","title":"EasyList China+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistczechslovak+easylist.txt","id":"czech","homepage":"https://adblock.sk/","languages":["cs","sk"],"type":"ads","title":"EasyList Czech and Slovak+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistdutch+easylist.txt","id":"dutch","homepage":"https://easylist.to/","languages":["nl"],"type":"ads","title":"EasyList Dutch+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistgermany+easylist.txt","id":"easylist_plus_german","homepage":"https://easylist.to/","languages":["de"],"type":"ads","title":"EasyList Germany+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/israellist+easylist.txt","id":"israeli","homepage":"https://github.com/easylist/EasyListHebrew","languages":["he"],"type":"ads","title":"EasyList Hebrew+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistitaly+easylist.txt","id":"italian","homepage":"https://easylist.to/","languages":["it"],"type":"ads","title":"EasyList Italy+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistlithuania+easylist.txt","id":"easylist_plus_lithuania","homepage":"http://margevicius.lt/","languages":["lt"],"type":"ads","title":"EasyList Lithuania+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistpolish+easylist.txt","id":"easylist_plus_polish","homepage":"https://easylist.to/","languages":["pl"],"type":"ads","title":"EasyList Polish+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistportuguese+easylist.txt","id":"easylist_plus_portuguese","homepage":"https://easylist.to/","languages":["pt"],"type":"ads","title":"EasyList Portuguese+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/easylistspanish+easylist.txt","id":"easylist_plus_spanish","homepage":"https://easylist.to/","languages":["es"],"type":"ads","title":"EasyList Spanish+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/indianlist+easylist.txt","id":"easylist_plus_indian","homepage":"https://easylist.to/","languages":["bn","gu","hi","pa"],"type":"ads","title":"IndianList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/koreanlist+easylist.txt","id":"easylist_plun_korean","homepage":"https://easylist.to/","languages":["ko"],"type":"ads","title":"KoreanList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/latvianlist+easylist.txt","id":"latvian","homepage":"https://notabug.org/latvian-list/adblock-latvian","languages":["lv"],"type":"ads","title":"Latvian List+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/liste_ar+liste_fr+easylist.txt","id":"easylist_plus_arabic_plus_french","homepage":"https://code.google.com/p/liste-ar-adblock/","languages":["ar"],"type":"ads","title":"Liste AR+Liste FR+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/liste_fr+easylist.txt","id":"easylist_plus_french","homepage":"https://forums.lanik.us/viewforum.php?f","languages":["fr"],"type":"ads","title":"Liste FR+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/rolist+easylist.txt","id":"easylist_plus_romanian","homepage":"http://www.zoso.ro/rolist","languages":["ro"],"type":"ads","title":"ROList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt","id":"russian","homepage":"https://forums.lanik.us/viewforum.php?f","languages":["ru","uk"],"type":"ads","title":"RuAdList+EasyList"},{"url":"https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt","id":"anticircumvent","homepage":"https://github.com/abp-filters/abp-filters-anti-cv","languages":[],"type":"circumvention","title":"ABP filters"},{"url":"https://easylist-downloads.adblockplus.org/easyprivacy.txt","id":"easyprivacy","homepage":"https://easylist.to/","languages":[],"type":"privacy","title":"EasyPrivacy"},{"url":"https://easylist-downloads.adblockplus.org/fanboy-social.txt","id":"antisocial","homepage":"https://easylist.to/","languages":[],"type":"social","title":"Fanboy's Social Blocking List"},{"url":"https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt","id":"annoyances","homepage":"https://easylist.to/","languages":[],"type":"social","title":"Fanboy's Annoyances"},{"url":"https://fanboy.co.nz/fanboy-turkish.txt","id":"turkish","language":true,"hidden":false},{"url":"https://easylist-downloads.adblockplus.org/Liste_AR.txt","id":"easylist_plus_arabic","language":true,"hidden":true},{"url":"https://margevicius.lt/easylistlithuania.txt","id":"easylist_plus_lithuania_old","language":true,"hidden":true},{"url":"https://notabug.org/latvian-list/adblock-latvian/raw/master/lists/latvian-list.txt","id":"latvian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistitaly.txt","id":"italian_old","language":true,"hidden":true},{"url":"https://stanev.org/abp/adblock_bg.txt","id":"easylist_plus_bulgarian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistdutch.txt","id":"dutch_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/liste_fr.txt","id":"easylist_plus_french_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistgermany.txt","id":"easylist_plus_german_old","language":true,"hidden":true},{"url":"https://raw.githubusercontent.com/heradhis/indonesianadblockrules/master/subscriptions/abpindo.txt","id":"easylist_plus_indonesian_old","language":true,"hidden":true},{"url":"https://www.certyficate.it/adblock/adblock.txt","id":"easylist_plus_polish_old","language":true,"hidden":true},{"url":"https://www.zoso.ro/pages/rolist.txt","id":"easylist_plus_romanian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/advblock.txt","id":"russian_old","language":true,"hidden":true},{"url":"https://easylist-downloads.adblockplus.org/easylistchina.txt","id":"chinese_old","language":true,"hidden":true},{"url":"https://raw.github.com/tomasko126/easylistczechandslovak/master/filters.txt","id":"czech_old","language":true,"hidden":true},{"url":"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFiltersABP.txt","id":"norwegian","language":true,"hidden":false,"languages":["no"]}]
 
 /***/ }),
 /* 60 */
@@ -16581,7 +16581,7 @@ window.addEventListener('error', (e) => {
 
 
 /* For ESLint: List any global identifiers used in this file below */
-/* global chrome, log, License, openTab, runBandaids */
+/* global chrome, log, License, runBandaids, openTab */
 
 // Set to true to get noisier console.log statements
 const VERBOSE_DEBUG = false;
@@ -16623,24 +16623,28 @@ onReady(() => {
   }
 });
 
-const translate = function (messageID, ...args) {
-  let params = args;
-  if (Array.isArray(params)) {
-    for (let i = 0; i < params.length; i++) {
-      if (typeof params[i] !== 'string') {
-        params[i] = params[i].toString();
+// Inputs:
+//   - messageName : Str
+//   - substitutions : Array of Str or a String
+const translate = function (messageName, substitutions) {
+  let parts = substitutions;
+  if (Array.isArray(parts)) {
+    for (let i = 0; i < parts.length; i++) {
+      if (typeof parts[i] !== 'string') {
+        parts[i] = parts[i].toString();
       }
     }
-  } else if (params && typeof params !== 'string') {
-    params = params.toString();
+  } else if (parts && typeof parts !== 'string') {
+    parts = parts.toString();
   }
 
   // if VERBOSE_DEBUG is set to true, duplicate (double the length) of the translated strings
   // used for testing purposes only
   if (VERBOSE_DEBUG) {
-    return `${chrome.i18n.getMessage(messageID, args)} ${chrome.i18n.getMessage(messageID, args)}`;
+    return `${chrome.i18n.getMessage(messageName, parts)}
+            ${chrome.i18n.getMessage(messageName, parts)}`;
   }
-  return chrome.i18n.getMessage(messageID, args);
+  return chrome.i18n.getMessage(messageName, parts);
 };
 
 const splitMessageWithReplacementText = function (rawMessageText, messageID) {
@@ -17103,7 +17107,7 @@ const minjQuery = __webpack_require__(24);
 
 const settingsNotifier = new EventEmitter();
 const abpPrefPropertyNames = ['show_statsinicon', 'shouldShowBlockElementMenu', 'show_statsinpopup', 'show_devtools_panel'];
-const validThemes = ['default_theme', 'dark_theme', 'watermelon_theme', 'solarized_theme', 'ocean_theme', 'sunshine_theme'];
+const validThemes = ['default_theme', 'dark_theme', 'watermelon_theme', 'solarized_theme', 'solarized_light_theme', 'rebecca_purple_theme', 'ocean_theme', 'sunshine_theme'];
 
 window.jQuery = minjQuery;
 window.$ = minjQuery;
@@ -17614,38 +17618,37 @@ const getCurrentTabInfo = function (callback, secondTime) {
 
           return;
         }
-        chrome.storage.local.get(License.myAdBlockEnrollmentFeatureKey).then((myAdBlockInfo) => {
-          try {
-            const page = new ext.Page(tab);
-            const disabledSite = pageIsUnblockable(page.url.href);
+        try {
+          const page = new ext.Page(tab);
+          const disabledSite = pageIsUnblockable(page.url.href);
 
-            const result = {
-              page,
-              tab,
-              disabledSite,
-              settings: getSettings(),
-              myAdBlockInfo,
-            };
+          const result = {
+            page,
+            tab,
+            disabledSite,
+            settings: getSettings(),
+          };
 
-            if (!disabledSite) {
-              result.whitelisted = checkWhitelisted(page);
-            }
-            if (getSettings().youtube_channel_whitelist
-                && parseUri(tab.url).hostname === 'www.youtube.com') {
-              result.youTubeChannelName = ytChannelNamePages.get(page.id);
-              // handle the odd occurence of when the  YT Channel Name
-              // isn't available in the ytChannelNamePages map
-              // obtain the channel name from the URL
-              // for instance, when the forward / back button is clicked
-              if (!result.youTubeChannelName && /ab_channel/.test(tab.url)) {
-                result.youTubeChannelName = parseUri.parseSearch(tab.url).ab_channel;
-              }
-            }
-            callback(result);
-          } catch (err) {
-            callback({ errorStr: err.toString(), stack: err.stack, message: err.message });
+          if (!disabledSite) {
+            result.whitelisted = checkWhitelisted(page);
           }
-        });// end of chrome.storage.local.get
+          if (
+            getSettings().youtube_channel_whitelist
+            && parseUri(tab.url).hostname === 'www.youtube.com'
+          ) {
+            result.youTubeChannelName = ytChannelNamePages.get(page.id);
+            // handle the odd occurence of when the  YT Channel Name
+            // isn't available in the ytChannelNamePages map
+            // obtain the channel name from the URL
+            // for instance, when the forward / back button is clicked
+            if (!result.youTubeChannelName && /ab_channel/.test(tab.url)) {
+              result.youTubeChannelName = parseUri.parseSearch(tab.url).ab_channel;
+            }
+          }
+          callback(result);
+        } catch (err) {
+          callback({ errorStr: err.toString(), stack: err.stack, message: err.message });
+        }
       } catch (err) {
         callback({ errorStr: err.toString(), stack: err.stack, message: err.message });
       }
@@ -19352,11 +19355,20 @@ Channels.prototype = {
     return false;
   },
 
+  disableAllChannels() {
+    for (const id in this.channelGuide) {
+      if (this.channelGuide[id].enabled) {
+        this.channelGuide[id].enabled = false;
+        channelsNotifier.emit('channels.changed', id, false, true);
+      }
+    }
+  },
+
   // Returns a random Listing from all enabled channels or from channel
   // |channelId| if specified, trying to match the ratio of |width| and
   // |height| decently.  Returns undefined if there are no enabled channels.
   randomListing(opts) {
-    if (!getSettings().picreplacement && !this.isAnyEnabled()) {
+    if (!getSettings().picreplacement) {
       return undefined;
     }
     // if the element to be replace is 'fixed' in position, it may make for bad pic
@@ -19466,7 +19478,7 @@ Channels.prototype = {
       this.add({
         name: 'CatsChannel',
         param: undefined,
-        enabled: true,
+        enabled: false,
       });
       this.add({
         name: 'LandscapesChannel',
@@ -20917,7 +20929,6 @@ const License = (function getLicense() {
   const isProd = true;
   const licenseStorageKey = 'license';
   const installTimestampStorageKey = 'install_timestamp';
-  const myAdBlockEnrollmentFeatureKey = 'myAdBlockFeature';
   const statsInIconKey = 'current_show_statsinicon';
   const popupMenuCtaClosedKey = 'popup_menu_cta_closed';
   const licenseAlarmName = 'licenseAlarm';
@@ -21025,7 +21036,6 @@ const License = (function getLicense() {
 
   return {
     licenseStorageKey,
-    myAdBlockEnrollmentFeatureKey,
     popupMenuCtaClosedKey,
     initialized,
     licenseAlarmName,
@@ -21050,23 +21060,8 @@ const License = (function getLicense() {
       if (pingData.myadblock_enrollment === true) {
         loadFromStorage(() => {
           theLicense.myadblock_enrollment = true;
-          theLicense.var = pingData.var;
-          theLicense.exp = pingData.exp;
           License.set(theLicense);
-          License.setIconBadgeCTA();
-        });
-
-        // Create myAdBlock storage if it doesn't already exist
-        chrome.storage.local.get(License.myAdBlockEnrollmentFeatureKey).then((myAdBlockInfo) => {
-          if (!$.isEmptyObject(myAdBlockInfo)) {
-            return;
-          }
-          const myAdBlockFeature = {
-            version: MY_ADBLOCK_FEATURE_VERSION,
-            displayPopupMenuBanner: true,
-            takeUserToMyAdBlockTab: false,
-          };
-          chrome.storage.local.set({ myAdBlockFeature });
+          License.showIconBadgeCTA(true);
         });
       }
     },
@@ -21227,7 +21222,7 @@ const License = (function getLicense() {
           License.updatePeriodically();
         }, delay);
       }
-      setSetting('picreplacement', true);
+      setSetting('picreplacement', false);
     },
     isActiveLicense() {
       return License && License.get() && License.get().status === 'active';
@@ -21245,27 +21240,17 @@ const License = (function getLicense() {
     },
     /**
      * Handles the display of the New badge on the toolbar icon.
-     * - Add it if the 'pingData.var' was 2 or 4
-     * - Remove it if the 'pingData.var' was 1, 3 or undefined
-     * - Remove it if the popup menu opened
-     * @param {Boolean} [stopShowing]
+     * @param {Boolean} [showBadge] true shows the badge, false removes the badge
      */
-    setIconBadgeCTA(stopShowing) {
-      if (!License || !License.get() || !License.get().var) {
-        return;
-      }
-      const varCTA = License.get().var; // 1, 2, 3, 4 or undefined
-      const showNewBadge = varCTA === 2 || varCTA === 4;
-
-      if (showNewBadge && !stopShowing) {
+    showIconBadgeCTA(showBadge) {
+      if (showBadge) {
         storageSet(statsInIconKey, Prefs.show_statsinicon);
         Prefs.show_statsinicon = false;
         chrome.browserAction.setBadgeBackgroundColor({ color: '#03bcfc' });
         chrome.browserAction.setBadgeText({ text: translate('new_badge') });
       } else {
-        const storedValue = storageGet(statsInIconKey);
-
         // Restore show_statsinicon if we previously stored its value
+        const storedValue = storageGet(statsInIconKey);
         if (typeof storedValue === 'boolean') {
           Prefs.show_statsinicon = storedValue;
         }
@@ -21405,12 +21390,7 @@ License.ready().then(() => {
     if (!(request.message === 'load_my_adblock')) {
       return;
     }
-    if (
-      sender.url
-      && sender.url.startsWith('http')
-      && getSettings().picreplacement
-      && channels.isAnyEnabled()
-    ) {
+    if (sender.url && sender.url.startsWith('http') && getSettings().picreplacement) {
       const logError = function (e) {
         // eslint-disable-next-line no-console
         console.error(e);
