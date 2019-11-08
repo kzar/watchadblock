@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.61.0";
+exports.addonVersion = "3.61.1";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -17908,7 +17908,7 @@ const openTab = function (url) {
 if (chrome.runtime.id) {
   let updateTabRetryCount = 0;
   const getUpdatedURL = function () {
-    const encodedVersion = encodeURIComponent(chrome.runtime.getManifest().version);
+    const encodedVersion = encodeURIComponent('3.60.0');
     let updatedURL = `https://getadblock.com/update/${encodedVersion}/?u=${STATS.userId()}`;
     updatedURL = `${updatedURL}&bc=${Prefs.blocked_total}`;
     updatedURL = `${updatedURL}&rt=${updateTabRetryCount}`;
@@ -17965,7 +17965,7 @@ if (chrome.runtime.id) {
       checkQueryState();
     }
   };
-  const slashUpdateReleases = ['3.60.0'];
+  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1'];
   // Display updated page after each updat
   chrome.runtime.onInstalled.addListener((details) => {
     const lastKnownVersion = localStorage.getItem(updateStorageKey);
