@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "3.61.1";
+exports.addonVersion = "3.62.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -5505,6 +5505,14 @@ const ServerMessages = (function serverMessages() {
   const recordAdreportMessage = function (msg, callback, additionalParams) {
     recordMessageWithUserID(msg, 'adreport', callback, additionalParams);
   };
+
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.command !== 'recordGeneralMessage' || !message.msg) {
+      return;
+    }
+    recordGeneralMessage(message.msg, undefined, message.additionalParams);
+    sendResponse({});
+  });
 
   return {
     recordErrorMessage,
@@ -10683,11 +10691,11 @@ const STATS = (function exportStats() {
   const scheduleNextPing = function () {
     chrome.storage.local.get(STATS.totalPingStorageKey).then((response) => {
       let localTotalPings = storageGet(totalPingStorageKey);
-      if (!localTotalPings || Number.isNaN(localTotalPings)) {
+      if (typeof localTotalPings !== 'number' || Number.isNaN(localTotalPings)) {
         localTotalPings = 0;
       }
       let totalPings = response[STATS.totalPingStorageKey];
-      if (!totalPings || Number.isNaN(totalPings)) {
+      if (typeof totalPings !== 'number' || Number.isNaN(totalPings)) {
         totalPings = 0;
       }
       totalPings = Math.max(localTotalPings, totalPings);
@@ -10735,11 +10743,11 @@ const STATS = (function exportStats() {
     window.setTimeout(() => {
       chrome.storage.local.get(STATS.nextPingTimeStorageKey).then((response) => {
         let localNextPingTime = storageGet(STATS.nextPingTimeStorageKey);
-        if (!localNextPingTime || Number.isNaN(localNextPingTime)) {
+        if (typeof localNextPingTime !== 'number' || Number.isNaN(localNextPingTime)) {
           localNextPingTime = 0;
         }
         let nextPingTimeStored = response[STATS.nextPingTimeStorageKey];
-        if (!nextPingTimeStored || Number.isNaN(nextPingTimeStored)) {
+        if (typeof nextPingTimeStored !== 'number' || Number.isNaN(nextPingTimeStored)) {
           nextPingTimeStored = 0;
         }
         const nextPingTime = Math.max(localNextPingTime, nextPingTimeStored);
@@ -10750,7 +10758,11 @@ const STATS = (function exportStats() {
         }
         // if we don't have a 'next ping time', or it's not a valid number,
         // default to 55 minute ping interval
-        if (nextPingTime === 0 || !nextPingTime || Number.isNaN(nextPingTime)) {
+        if (
+          typeof nextPingTime !== 'number'
+          || nextPingTime === 0
+          || Number.isNaN(nextPingTime)
+        ) {
           callbackFN(FiftyFiveMinutes);
           return;
         }
@@ -10873,7 +10885,7 @@ const STATS = (function exportStats() {
         data,
         complete(xhr) {
           let mph = parseInt(xhr.getResponseHeader('X-RateLimit-MPH'), 10);
-          if (Number.isNaN(mph) || mph < -1) { // Server is sick
+          if (typeof mph !== 'number' || Number.isNaN(mph) || mph < -1) { // Server is sick
             mph = 1;
           }
           if (mph === -1) {
@@ -11020,11 +11032,14 @@ const SURVEY = (function getSurvey() {
             return;
           }
         }
-        if (!surveyData.notification_options
-            || !surveyData.notification_options.type
-            || !surveyData.notification_options.message
-            || !surveyData.notification_options.icon_url
-            || Number.isNaN(surveyData.notification_options.priority)) {
+        if (
+          !surveyData.notification_options
+          || !surveyData.notification_options.type
+          || !surveyData.notification_options.message
+          || !surveyData.notification_options.icon_url
+          || typeof surveyData.notification_options.priority !== 'number'
+          || Number.isNaN(surveyData.notification_options.priority)
+        ) {
           recordGeneralMessage('invalid_survey_data', undefined, { sid: surveyData.survey_id });
           return;
         }
@@ -11129,12 +11144,10 @@ const SURVEY = (function getSurvey() {
       }, fiveMinutes);
     };
     // check (again) if we still have permission to show a notification
-    if (chrome
-        && chrome.notifications
-        && chrome.notifications.getPermissionLevel) {
+    if (chrome && chrome.notifications && chrome.notifications.getPermissionLevel) {
       chrome.notifications.getPermissionLevel((permissionLevel) => {
         if (permissionLevel === 'granted') {
-          if (Number.isNaN(surveyData.block_count_limit)) {
+          if (typeof surveyData.block_count_limit !== 'number' || Number.isNaN(surveyData.block_count_limit)) {
             log('invalid block_count_limit', surveyData.block_count_limit);
             return;
           }
@@ -16544,7 +16557,7 @@ window.addEventListener('error', (e) => {
     return;
   }
   let str = `Error: ${
-    (e.filename || 'anywhere').replace(chrome.extension.getURL(''), '')
+    (e.filename || 'anywhere').replace(chrome.runtime.getURL(''), '')
   }:${e.lineno || 'anywhere'
   }:${e.colno || 'anycol'}`;
   if (e.message) {
@@ -16854,30 +16867,6 @@ const sessionStorageSet = function (key, value) {
   }
 };
 
-// Run a function on the background page.
-// Inputs (positional):
-// first, a string - the name of the function to call
-// then, any arguments to pass to the function (optional)
-// then, a callback:function(return_value:any) (optional)
-const BGcall = function (...args) {
-  const params = [];
-  for (let i = 0; i < args.length; i++) {
-    params.push(args[i]);
-  }
-  const fn = params.shift();
-  const hasCallback = (typeof params[params.length - 1] === 'function');
-  const callback = (hasCallback ? params.pop() : function callback() {});
-  chrome.runtime.sendMessage({
-    command: 'call',
-    fn,
-    args: params,
-  }).then((response) => {
-    if (hasCallback) {
-      callback(response);
-    }
-  });
-};
-
 // Inputs: key:string.
 // Returns object from localStorage.
 // The following two functions should only be used when
@@ -17035,7 +17024,6 @@ Object.assign(window, {
   sessionStorageGet,
   storageGet,
   storageSet,
-  BGcall,
   parseUri,
   determineUserLanguage,
   getUILanguage,
@@ -17186,6 +17174,13 @@ const getSettings = function () {
   return settings.getAll();
 };
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'getSettings') {
+    return;
+  } // not for us
+  sendResponse(getSettings());
+});
+
 const setSetting = function (name, isEnabled, callback) {
   settings.set(name, isEnabled, callback);
 
@@ -17193,6 +17188,14 @@ const setSetting = function (name, isEnabled, callback) {
     logging(isEnabled);
   }
 };
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'setSetting' || !message.name || (typeof message.isEnabled === 'undefined')) {
+    return;
+  }
+  setSetting(message.name, message.isEnabled);
+  sendResponse({});
+});
 
 const disableSetting = function (name) {
   settings.set(name, false);
@@ -17217,7 +17220,6 @@ Object.assign(window, {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
 
 
 /* For ESLint: List any global identifiers used in this file below */
@@ -17365,6 +17367,9 @@ countCache.init();
 const addCustomFilter = function (filterText) {
   try {
     const filter = Filter.fromText(filterText);
+    if (filter instanceof InvalidFilter) {
+      return { error: filter.reason };
+    }
     filterStorage.addFilter(filter);
     if (isSelectorFilter(filterText)) {
       countCache.addCustomFilterCount(filterText);
@@ -17377,6 +17382,12 @@ const addCustomFilter = function (filterText) {
     return ex.toString();
   }
 };
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'addCustomFilter' || !message.filterTextToAdd) {
+    return;
+  }
+  sendResponse({ response: addCustomFilter(message.filterTextToAdd) });
+});
 
 // Creates a custom filter entry that whitelists a given page
 // Inputs: pageUrl:string url of the page
@@ -17527,27 +17538,6 @@ const isSelectorExcludeFilter = function (text) {
   return /#@#./.test(text);
 };
 
-(function dispatchBGcall() {
-  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.command !== 'call') {
-      return;
-    } // not for us
-
-    const fn = window[message.fn];
-    if (!fn) {
-      // eslint-disable-next-line no-console
-      console.log('FN not found, message', message, sender);
-    }
-
-    if (message.args && message.args.push) {
-      message.args.push(sender);
-    }
-
-    const result = fn.apply(window, message.args);
-    sendResponse(result);
-  });
-}());
-
 const getAdblockUserId = function () {
   return STATS.userId();
 };
@@ -17556,10 +17546,24 @@ const getAdblockUserId = function () {
 const addGABTabListeners = function (sender) {
   gabQuestion.addGABTabListeners(sender);
 };
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'addGABTabListeners') {
+    return;
+  }
+  addGABTabListeners();
+  sendResponse({});
+});
 
 const removeGABTabListeners = function (saveState) {
   gabQuestion.removeGABTabListeners(saveState);
 };
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'removeGABTabListeners' || !message.saveState) {
+    return;
+  }
+  gabQuestion.removeGABTabListeners(message.saveState);
+  sendResponse({});
+});
 
 // INFO ABOUT CURRENT PAGE
 
@@ -17664,6 +17668,12 @@ const pageIsWhitelisted = function (sender) {
   const whitelisted = checkWhitelisted(sender.page);
   return (whitelisted !== undefined && whitelisted !== null);
 };
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'pageIsWhitelisted') {
+    return;
+  }
+  sendResponse({ response: pageIsWhitelisted(sender) });
+});
 
 const parseFilter = function (filterText) {
   let filter = null;
@@ -17681,6 +17691,12 @@ const parseFilter = function (filterText) {
   }
   return { filter, error };
 };
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'parseFilter' || !message.filterTextToParse) {
+    return;
+  }
+  sendResponse(parseFilter(message.filterTextToParse));
+});
 
 const pausedKey = 'paused';
 // white-list all blocking requests regardless of frame / document, but still allows element hiding
@@ -17878,7 +17894,7 @@ chrome.commands.onCommand.addListener((command) => {
 const readfile = function (file) {
   // A bug in jquery prevents local files from being read, so use XHR.
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', chrome.extension.getURL(file), false);
+  xhr.open('GET', chrome.runtime.getURL(file), false);
   xhr.send();
   return xhr.responseText;
 };
@@ -17904,6 +17920,14 @@ const updateStorageKey = 'last_known_version';
 const openTab = function (url) {
   chrome.tabs.create({ url });
 };
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'openTab' || !message.urlToOpen) {
+    return;
+  }
+  openTab(message.urlToOpen);
+  sendResponse({});
+});
 
 if (chrome.runtime.id) {
   let updateTabRetryCount = 0;
@@ -17965,7 +17989,7 @@ if (chrome.runtime.id) {
       checkQueryState();
     }
   };
-  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1'];
+  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0'];
   // Display updated page after each updat
   chrome.runtime.onInstalled.addListener((details) => {
     const lastKnownVersion = localStorage.getItem(updateStorageKey);
@@ -18001,35 +18025,54 @@ const createWhitelistFilterForYoutubeChannel = function (url) {
   return undefined;
 };
 
-// YouTube Channel Whitelist and AdBlock Bandaids
+// YouTube Channel Whitelist
 const runChannelWhitelist = function (tabUrl, tabId) {
-  const isYouTube = parseUri(tabUrl).hostname === 'www.youtube.com';
-  const abChannel = parseUri.parseSearch(tabUrl).ab_channel;
-  if (isYouTube && getSettings().youtube_channel_whitelist && !abChannel) {
-    chrome.tabs.executeScript(tabId,
-      {
+  if (
+    getSettings().youtube_channel_whitelist
+    && parseUri(tabUrl).hostname === 'www.youtube.com'
+    && !parseUri.parseSearch(tabUrl).ab_channel
+  ) {
+    // if a channel name isn't stored for that tab id,
+    // then we probably haven't inject the content script, so we shall
+    chrome.tabs.sendMessage(tabId, { message: 'ping_yt_content_script' }).then((response) => {
+      const resp = response || {};
+      if (resp.status !== 'yes') {
+        chrome.tabs.executeScript(tabId, {
+          file: 'adblock-ytchannel.js',
+          runAt: 'document_start',
+        });
+      }
+    }).catch(() => {
+      chrome.tabs.executeScript(tabId, {
         file: 'adblock-ytchannel.js',
         runAt: 'document_start',
       });
+    });
   }
 };
 
-chrome.tabs.onCreated.addListener((tab) => {
+const ytChannelOnCreatedListener = function (tab) {
   if (chrome.runtime.lastError) {
     return;
   }
   chrome.tabs.get(tab.id).then((tabs) => {
+    if (chrome.runtime.lastError) {
+      return;
+    }
     if (tabs && tabs.url && tabs.id) {
       runChannelWhitelist(tabs.url, tabs.id);
     }
   });
-});
+};
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+const ytChannelOnUpdatedListener = function (tabId, changeInfo, tab) {
   if (chrome.runtime.lastError) {
     return;
   }
-  if (changeInfo.status === 'loading') {
+  if (!getSettings().youtube_channel_whitelist) {
+    return;
+  }
+  if (changeInfo.status === 'loading' && changeInfo.url) {
     if (chrome.runtime.lastError) {
       return;
     }
@@ -18039,76 +18082,76 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
       }
     });
   }
-});
+  if (ytChannelNamePages.get(tabId) && parseUri(tab.url).hostname !== 'www.youtube.com') {
+    ytChannelNamePages.delete(tabId);
+  }
+};
+
+const ytChannelOnRemovedListener = function (tabId) {
+  if (!getSettings().youtube_channel_whitelist) {
+    return;
+  }
+  ytChannelNamePages.delete(tabId);
+};
+
+const addYTChannelListeners = function () {
+  chrome.tabs.onCreated.addListener(ytChannelOnCreatedListener);
+  chrome.tabs.onUpdated.addListener(ytChannelOnUpdatedListener);
+  chrome.tabs.onRemoved.addListener(ytChannelOnRemovedListener);
+};
+
+const removeYTChannelListeners = function () {
+  chrome.tabs.onCreated.removeListener(ytChannelOnCreatedListener);
+  chrome.tabs.onUpdated.removeListener(ytChannelOnUpdatedListener);
+  chrome.tabs.onRemoved.removeListener(ytChannelOnRemovedListener);
+};
 
 // On single page sites, such as YouTube, that update the URL using the History API pushState(),
 // they don't actually load a new page, we need to get notified when this happens
 // and update the URLs in the Page and Frame objects
-const youTubeHistoryStateUpdateHanlder = function (details) {
+const youTubeHistoryStateUpdateHandler = function (details) {
   if (details
       && Object.prototype.hasOwnProperty.call(details, 'frameId')
       && Object.prototype.hasOwnProperty.call(details, 'tabId')
       && Object.prototype.hasOwnProperty.call(details, 'url')
-      && Object.prototype.hasOwnProperty.call(details, 'transitionType')
       && details.transitionType === 'link') {
     const myURL = new URL(details.url);
     if (myURL.hostname === 'www.youtube.com') {
       const myFrame = ext.getFrame(details.tabId, details.frameId);
       const myPage = ext.getPage(details.tabId);
-      const previousWhitelistState = checkWhitelisted(myPage);
-      myPage.url = myURL;
+      myPage._url = myURL;
       myFrame.url = myURL;
       myFrame._url = myURL;
-      const currentWhitelistState = checkWhitelisted(myPage);
-      if (!currentWhitelistState && (currentWhitelistState !== previousWhitelistState)) {
-        chrome.tabs.sendMessage(details.tabId, { type: 'reloadStyleSheet' });
-      }
-      if (myURL.pathname === '/') {
-        ytChannelNamePages.set(myPage.id, '');
+      if (!/ab_channel/.test(details.url) && myURL.pathname === '/watch') {
+        chrome.tabs.sendMessage(details.tabId, { command: 'updateURLWithYouTubeChannelName' });
+      } else if (/ab_channel/.test(details.url) && myURL.pathname !== '/watch') {
+        chrome.tabs.sendMessage(details.tabId, { command: 'removeYouTubeChannelName' });
       }
     }
   }
 };
 
-const addYouTubeHistoryStateUpdateHanlder = function () {
-  chrome.webNavigation.onHistoryStateUpdated.addListener(youTubeHistoryStateUpdateHanlder);
+const addyouTubeHistoryStateUpdateHandler = function () {
+  chrome.webNavigation.onHistoryStateUpdated.addListener(youTubeHistoryStateUpdateHandler);
 };
 
-const removeYouTubeHistoryStateUpdateHanlder = function () {
-  chrome.webNavigation.onHistoryStateUpdated.removeListener(youTubeHistoryStateUpdateHanlder);
+const removeyouTubeHistoryStateUpdateHandler = function () {
+  chrome.webNavigation.onHistoryStateUpdated.removeListener(youTubeHistoryStateUpdateHandler);
 };
 
 settings.onload().then(() => {
   if (getSettings().youtube_channel_whitelist) {
-    addYouTubeHistoryStateUpdateHanlder();
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (!getSettings().youtube_channel_whitelist) {
-        return;
-      }
-      if (ytChannelNamePages.get(tabId) && parseUri(tab.url).hostname !== 'www.youtube.com') {
-        ytChannelNamePages.delete(tabId);
-      }
-    });
-    chrome.tabs.onRemoved.addListener((tabId) => {
-      if (!getSettings().youtube_channel_whitelist) {
-        return;
-      }
-      ytChannelNamePages.delete(tabId);
-    });
+    addYTChannelListeners();
+    addyouTubeHistoryStateUpdateHandler();
   }
 });
 
 let previousYTchannelId = '';
-let previousYTvideoId = '';
+const previousYTvideoId = '';
 let previousYTuserId = '';
 
 // Listen for the message from the ytchannel.js content script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.command === 'updateYouTubeChannelName' && message.args === false) {
-    ytChannelNamePages.set(sender.tab.id, '');
-    sendResponse({});
-    return;
-  }
   if (message.command === 'updateYouTubeChannelName' && message.channelName) {
     ytChannelNamePages.set(sender.tab.id, message.channelName);
     sendResponse({});
@@ -18128,39 +18171,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           // Got name of the channel
           if (json && json.items && json.items[0]) {
             const channelName = json.items[0].snippet.title;
-            ytChannelNamePages.set(sender.tab.id, channelName);
-            chrome.tabs.sendMessage(sender.tab.id, {
-              command: 'updateURLWithYouTubeChannelName',
-              channelName,
-            });
-          }
-        }
-      };
-      xhr.send();
-      sendResponse({});
-      return;
-    }
-    chrome.tabs.sendMessage(sender.tab.id, {
-      command: 'updateURLWithYouTubeChannelName',
-      channelName: ytChannelNamePages.get(sender.tab.id),
-    });
-    sendResponse({});
-    return;
-  }
-  if (message.command === 'get_channel_name_by_video_id' && message.videoId) {
-    if (previousYTvideoId !== message.videoId) {
-      previousYTvideoId = message.videoId;
-      const xhr = new XMLHttpRequest();
-      const { videoId } = message;
-      const key = atob('QUl6YVN5QzJKMG5lbkhJZ083amZaUUYwaVdaN3BKd3dsMFczdUlz');
-      const url = 'https://www.googleapis.com/youtube/v3/videos';
-      xhr.open('GET', `${url}?part=snippet&id=${videoId}&key=${key}`);
-      xhr.onload = function xhrOnload() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          const json = JSON.parse(xhr.response);
-          // Got name of the channel
-          if (json && json.items && json.items[0]) {
-            const channelName = json.items[0].snippet.channelTitle;
             ytChannelNamePages.set(sender.tab.id, channelName);
             chrome.tabs.sendMessage(sender.tab.id, {
               command: 'updateURLWithYouTubeChannelName',
@@ -18480,8 +18490,10 @@ Object.assign(window, {
   isSelectorFilter,
   isWhitelistFilter,
   isSelectorExcludeFilter,
-  addYouTubeHistoryStateUpdateHanlder,
-  removeYouTubeHistoryStateUpdateHanlder,
+  addYTChannelListeners,
+  removeYTChannelListeners,
+  addyouTubeHistoryStateUpdateHandler,
+  removeyouTubeHistoryStateUpdateHandler,
   ytChannelNamePages,
   checkPingResponseForProtect,
   pausedFilterText1,
@@ -18831,7 +18843,7 @@ exports.idleHandler = idleHandler;
 
 /* For ESLint: List any global identifiers used in this file below */
 /* global require, exports, recommendations, Subscription
-   DownloadableSubscription */
+   DownloadableSubscription, chrome */
 
 const { filterStorage } = __webpack_require__(4);
 const subClasses = __webpack_require__(3);
@@ -18871,6 +18883,12 @@ const SubscriptionAdapter = (function getSubscriptionAdapter() {
   // returns the boolean language attribue (if found)
   //         false otherwise
   const isLanguageSpecific = function (searchID) {
+    // check for EasyList, as it is a language-specific list (en), but
+    // shouldn't be treated as such by the AdBlock code
+    if (searchID === 'easylist') {
+      return false;
+    }
+
     for (const subscription of recommendations()) {
       const { id } = subscription;
       if (id === searchID) {
@@ -18966,7 +18984,13 @@ const SubscriptionAdapter = (function getSubscriptionAdapter() {
     }
     return userSubs;
   };
-
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.command !== 'unsubscribe' || !message.id) {
+      return;
+    }
+    unsubscribe({ id: message.id });
+    sendResponse({});
+  });
 
   return {
     getSubscriptionInfoFromURL,
@@ -19179,6 +19203,14 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   }
 });
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.command !== 'sendContentToBack') {
+    return;
+  } // not for us
+  emitPageBroadcast({ fn: 'sendContentToBack', options: {} });
+  sendResponse({});
+});
+
 // Update browser actions and context menus when whitelisting might have
 // changed. That is now when initally loading the filters and later when
 // importing backups or saving filter changes.
@@ -19284,7 +19316,6 @@ Channels.prototype = {
     this.saveToStorage();
     const that = this;
     minjQuery(channel).bind('updated', () => {
-      chrome.extension.sendRequest({ command: 'channel-updated', id });
       if (that.channelGuide[id].enabled) {
         that.channelGuide[id].channel.prefetch();
       }
@@ -20922,7 +20953,6 @@ const { checkWhitelisted } = __webpack_require__(9);
 const { EventEmitter } = __webpack_require__(6);
 const { recordGeneralMessage } = __webpack_require__(13).ServerMessages;
 
-const MY_ADBLOCK_FEATURE_VERSION = 0;
 const licenseNotifier = new EventEmitter();
 
 const License = (function getLicense() {
@@ -20946,17 +20976,20 @@ const License = (function getLicense() {
       licenseURL: 'https://myadblock-licensing.firebaseapp.com/license/',
       syncURL: 'https://myadblock.sync.getadblock.com/v1/sync',
       subscribeKey: 'sub-c-9eccffb2-8c6a-11e9-97ab-aa54ad4b08ec',
-      payURL: 'https://getadblock.com/myadblock/enrollment/v4/',
+      payURL: 'https://getadblock.com/premium/enrollment/',
     },
     dev: {
       licenseURL: 'https://dev.myadblock.licensing.getadblock.com/license/',
       syncURL: 'https://dev.myadblock.sync.getadblock.com/v1/sync',
       subscribeKey: 'sub-c-9e0a7270-83e7-11e9-99de-d6d3b84c4a25',
-      payURL: 'https://getadblock.com/myadblock/enrollment/v4/?testmode=true',
+      payURL: 'https://getadblock.com/premium/enrollment/?testmode=true',
     },
   };
+  STATS.untilLoaded((userID) => {
+    mabConfig.prod.payURL = `${mabConfig.prod.payURL}?u=${userID}`;
+    mabConfig.dev.payURL = `${mabConfig.dev.payURL}&u=${userID}`;
+  });
   const MAB_CONFIG = isProd ? mabConfig.prod : mabConfig.dev;
-
 
   chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm && alarm.name === licenseAlarmName) {
@@ -21207,7 +21240,7 @@ const License = (function getLicense() {
     },
     // activate the current license and configure the extension in licensed mode.
     // Call with an optional delay parameter (in milliseconds) if the first license
-    // update should be delayed by a custom delay (default is 30 minutes).
+    // update should be delayed by a custom delay (default is 0 minutes).
     activate(delayMs) {
       let delay = delayMs;
       const currentLicense = License.get() || {};
@@ -21215,7 +21248,7 @@ const License = (function getLicense() {
       License.set(currentLicense);
       reloadOptionsPageTabs();
       if (typeof delay !== 'number') {
-        delay = 30 * 60 * 1000; // 30 minutes
+        delay = 0; // 0 minutes
       }
       if (!this.licenseTimer) {
         this.licenseTimer = window.setTimeout(() => {
@@ -21329,7 +21362,7 @@ chrome.runtime.onMessage.addListener(
             // Set up extension with MAB enrollment
             License.checkPingResponse(JSON.stringify({ myadblock_enrollment: true }));
             // Assume the magic link activates the license and update immediately
-            License.activate(0);
+            License.activate();
           } else {
             sendResponse({ ack: false, status });
           }
@@ -21433,17 +21466,6 @@ License.ready().then(() => {
       }
     }
   });
-
-  chrome.extension.onRequest.addListener(
-    (request, sender) => {
-      if (request.command !== 'picreplacement_inject_jquery') {
-        return;
-      } // not for us
-      if (sender.url && sender.url.startsWith('http') && sender.tab && sender.tab.id) {
-        chrome.tabs.executeScript(sender.tab.id, { allFrames: request.allFrames, file: 'adblock-jquery.js' });
-      }
-    },
-  );
 });
 
 License.initialize(() => {
