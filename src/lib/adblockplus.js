@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.0.1";
+exports.addonVersion = "4.0.2";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -16640,6 +16640,7 @@ onReady(() => {
 //   - substitutions : Array of Str or a String
 const translate = function (messageName, substitutions) {
   if (!messageName || typeof messageName !== 'string') {
+    // eslint-disable-next-line no-console
     console.trace('missing messageName');
     return '';
   }
@@ -17993,7 +17994,7 @@ if (chrome.runtime.id) {
       checkQueryState();
     }
   };
-  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0', '4.0.0', '4.0.1'];
+  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0', '4.0.0', '4.0.1', '4.0.2'];
   // Display updated page after each updat
   chrome.runtime.onInstalled.addListener((details) => {
     const lastKnownVersion = localStorage.getItem(updateStorageKey);
