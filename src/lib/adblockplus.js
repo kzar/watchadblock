@@ -3327,7 +3327,7 @@ if (!application)
 
 
 exports.addonName = "adblockforchrome";
-exports.addonVersion = "4.0.2";
+exports.addonVersion = "4.1.0";
 
 exports.application = application;
 exports.applicationVersion = applicationVersion;
@@ -16717,6 +16717,33 @@ const processReplacementChildren = function ($el, replacementText, messageId) {
   $element.addClass('i18n-replaced');
 };
 
+// Processes any replacement children in the passed-in element. Unlike the
+// above processReplacementChildren, this function expects the text to already
+// be inside the element (as textContent).
+const processReplacementChildrenInContent = function ($el) {
+  // Replace a dummy <a/> inside of localized text with a real element.
+  // Give the real element the same text as the dummy link.
+  const $element = $el;
+  const message = $element.get(0).textContent;
+  if (!message || typeof message !== 'string' || !$element.get(0).firstChild || !$element.get(0).lastChild) {
+    return;
+  }
+  const replaceElId = `#${$element.attr('i18n_replacement_el')}`;
+  const replaceEl = $element.find(replaceElId);
+  if (replaceEl.length === 0) {
+    log('returning, no child element found', replaceElId);
+    return;
+  }
+  const messageSplit = splitMessageWithReplacementText(message);
+  $element.get(0).firstChild.nodeValue = messageSplit.anchorPrefixText;
+  $element.get(0).lastChild.nodeValue = messageSplit.anchorPostfixText;
+  if (replaceEl.get(0).tagName === 'INPUT') {
+    replaceEl.prop('value', messageSplit.anchorText);
+  } else {
+    replaceEl.text(messageSplit.anchorText);
+  }
+};
+
 // Determine what language the user's browser is set to use
 const determineUserLanguage = function () {
   if (typeof navigator.language !== 'undefined' && navigator.language) {
@@ -17994,7 +18021,8 @@ if (chrome.runtime.id) {
       checkQueryState();
     }
   };
-  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0', '4.0.0', '4.0.1', '4.0.2'];
+  const slashUpdateReleases = ['3.60.0', '3.61.0', '3.61.1', '3.62.0', '4.0.0', '4.0.1', '4.0.2', '4.1.0'];
+
   // Display updated page after each updat
   chrome.runtime.onInstalled.addListener((details) => {
     const lastKnownVersion = localStorage.getItem(updateStorageKey);
@@ -18104,18 +18132,6 @@ const ytChannelOnRemovedListener = function (tabId) {
   ytChannelNamePages.delete(tabId);
 };
 
-const addYTChannelListeners = function () {
-  chrome.tabs.onCreated.addListener(ytChannelOnCreatedListener);
-  chrome.tabs.onUpdated.addListener(ytChannelOnUpdatedListener);
-  chrome.tabs.onRemoved.addListener(ytChannelOnRemovedListener);
-};
-
-const removeYTChannelListeners = function () {
-  chrome.tabs.onCreated.removeListener(ytChannelOnCreatedListener);
-  chrome.tabs.onUpdated.removeListener(ytChannelOnUpdatedListener);
-  chrome.tabs.onRemoved.removeListener(ytChannelOnRemovedListener);
-};
-
 // On single page sites, such as YouTube, that update the URL using the History API pushState(),
 // they don't actually load a new page, we need to get notified when this happens
 // and update the URLs in the Page and Frame objects
@@ -18141,18 +18157,23 @@ const youTubeHistoryStateUpdateHandler = function (details) {
   }
 };
 
-const addyouTubeHistoryStateUpdateHandler = function () {
+const addYTChannelListeners = function () {
+  chrome.tabs.onCreated.addListener(ytChannelOnCreatedListener);
+  chrome.tabs.onUpdated.addListener(ytChannelOnUpdatedListener);
+  chrome.tabs.onRemoved.addListener(ytChannelOnRemovedListener);
   chrome.webNavigation.onHistoryStateUpdated.addListener(youTubeHistoryStateUpdateHandler);
 };
 
-const removeyouTubeHistoryStateUpdateHandler = function () {
+const removeYTChannelListeners = function () {
+  chrome.tabs.onCreated.removeListener(ytChannelOnCreatedListener);
+  chrome.tabs.onUpdated.removeListener(ytChannelOnUpdatedListener);
+  chrome.tabs.onRemoved.removeListener(ytChannelOnRemovedListener);
   chrome.webNavigation.onHistoryStateUpdated.removeListener(youTubeHistoryStateUpdateHandler);
 };
 
 settings.onload().then(() => {
   if (getSettings().youtube_channel_whitelist) {
     addYTChannelListeners();
-    addyouTubeHistoryStateUpdateHandler();
   }
 });
 
@@ -18293,8 +18314,7 @@ const getDebugInfo = function (callback) {
   if (window.blockCounts) {
     response.otherInfo.blockCounts = blockCounts.get();
   }
-  if (localStorage
-      && localStorage.length) {
+  if (localStorage && localStorage.length) {
     response.otherInfo.localStorageInfo = {};
     response.otherInfo.localStorageInfo.length = localStorage.length;
     let inx = 1;
@@ -18502,8 +18522,6 @@ Object.assign(window, {
   isSelectorExcludeFilter,
   addYTChannelListeners,
   removeYTChannelListeners,
-  addyouTubeHistoryStateUpdateHandler,
-  removeyouTubeHistoryStateUpdateHandler,
   ytChannelNamePages,
   checkPingResponseForProtect,
   pausedFilterText1,
@@ -19025,7 +19043,7 @@ exports.SubscriptionAdapter = SubscriptionAdapter;
 
 /* For ESLint: List any global identifiers used in this file below */
 /* global chrome, require, ext, adblockIsPaused, adblockIsDomainPaused
-   recordGeneralMessage, log */
+   recordGeneralMessage, log, License, reloadTab */
 
 const { checkWhitelisted } = __webpack_require__(9);
 const { filterNotifier } = __webpack_require__(1);
@@ -19056,6 +19074,15 @@ const emitPageBroadcast = (function emitBroadcast() {
           'adblock-uiscripts-top_open_whitelist_ui.js',
         ],
       },
+    topOpenWhitelistCompletionUI:
+      {
+        allFrames: false,
+        include: [
+          'adblock-jquery.js',
+          'adblock-uiscripts-load_wizard_resources.js',
+          'adblock-uiscripts-top_open_whitelist_completion_ui.js',
+        ],
+      },
     topOpenBlacklistUI:
       {
         allFrames: false,
@@ -19077,12 +19104,14 @@ const emitPageBroadcast = (function emitBroadcast() {
   };
 
   // Inject the required scripts to execute fnName(parameter) in
-  // the current tab.
+  // the given tab.
   // Inputs: fnName:string name of function to execute on tab.
   //         fnName must exist in injectMap above.
   //         parameter:object to pass to fnName.  Must be JSON.stringify()able.
   //         alreadyInjected?:int used to recursively inject required scripts.
-  const executeOnTab = function (fnName, parameter, alreadyInjected) {
+  //         tabID:int representing the ID of the tab to execute in.
+  //         tabID defaults to the active tab
+  const executeOnTab = function (fnName, parameter, alreadyInjected, tabID) {
     const injectedSoFar = alreadyInjected || 0;
     const data = injectMap[fnName];
     const details = { allFrames: data.allFrames };
@@ -19090,8 +19119,8 @@ const emitPageBroadcast = (function emitBroadcast() {
     // If there's anything to inject, inject the next item and recurse.
     if (data.include.length > injectedSoFar) {
       details.file = data.include[injectedSoFar];
-      chrome.tabs.executeScript(undefined, details).then(() => {
-        executeOnTab(fnName, parameter, injectedSoFar + 1);
+      chrome.tabs.executeScript(tabID, details).then(() => {
+        executeOnTab(fnName, parameter, injectedSoFar + 1, tabID);
       }).catch((error) => {
         log(error);
       });
@@ -19099,13 +19128,13 @@ const emitPageBroadcast = (function emitBroadcast() {
       // Nothing left to inject, so execute the function.
       const param = JSON.stringify(parameter);
       details.code = `${fnName}(${param});`;
-      chrome.tabs.executeScript(undefined, details);
+      chrome.tabs.executeScript(tabID, details);
     }
   };
 
   // The emitPageBroadcast() function
   const theFunction = function (request) {
-    executeOnTab(request.fn, request.options);
+    executeOnTab(request.fn, request.options, 0, request.tabID);
   };
 
   return theFunction;
@@ -19157,10 +19186,16 @@ const contextMenuItem = (() => ({
       title: chrome.i18n.getMessage('block_this_ad'),
       contexts: ['all'],
       onclick(info, tab) {
-        emitPageBroadcast(
-          { fn: 'topOpenBlacklistUI', options: { info } },
-          { tab },
-        );
+        emitPageBroadcast({
+          fn: 'topOpenBlacklistUI',
+          options: {
+            info,
+            isActiveLicense: License.isActiveLicense(),
+            showBlacklistCTA: License.shouldShowBlacklistCTA(),
+          },
+        }, {
+          tab,
+        });
       },
     },
   blockAnAd:
@@ -19168,10 +19203,16 @@ const contextMenuItem = (() => ({
       title: chrome.i18n.getMessage('block_an_ad_on_this_page'),
       contexts: ['all'],
       onclick(info, tab) {
-        emitPageBroadcast(
-          { fn: 'topOpenBlacklistUI', options: { nothingClicked: true } },
-          { tab },
-        );
+        emitPageBroadcast({
+          fn: 'topOpenBlacklistUI',
+          options: {
+            nothingClicked: true,
+            isActiveLicense: License.isActiveLicense(),
+            showBlacklistCTA: License.shouldShowBlacklistCTA(),
+          },
+        }, {
+          tab,
+        });
       },
     },
 }))();
@@ -19219,6 +19260,38 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   } // not for us
   emitPageBroadcast({ fn: 'sendContentToBack', options: {} });
   sendResponse({});
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.command === 'reloadTabForWhitelist') {
+    reloadTab(sender.tab.id, () => {
+      emitPageBroadcast({
+        fn: 'topOpenWhitelistCompletionUI',
+        options: {
+          rule: request.rule,
+          isActiveLicense: License.isActiveLicense(),
+          showWhitelistCTA: License.shouldShowWhitelistCTA(),
+        },
+        tabID: sender.tab.id,
+      });
+    });
+    sendResponse({});
+  }
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.command === 'showWhitelistCompletion') {
+    emitPageBroadcast({
+      fn: 'topOpenWhitelistCompletionUI',
+      options: {
+        rule: request.rule,
+        isActiveLicense: License.isActiveLicense(),
+        showWhitelistCTA: License.shouldShowWhitelistCTA(),
+      },
+      tabID: sender.tab.id,
+    });
+    sendResponse({});
+  }
 });
 
 // Update browser actions and context menus when whitelisting might have
@@ -20955,7 +21028,8 @@ Object.assign(window, {
 
 /* For ESLint: List any global identifiers used in this file below */
 /* global ext, chrome, require, storageGet, storageSet, log, STATS, Channels, Prefs,
-   getSettings, setSetting, translate, reloadOptionsPageTabs, filterNotifier */
+   getSettings, setSetting, translate, reloadOptionsPageTabs, filterNotifier, openTab,
+   emitPageBroadcast */
 
 // Yes, you could hack my code to not check the license.  But please don't.
 // Paying for this extension supports the work on AdBlock.  Thanks very much.
@@ -20970,7 +21044,11 @@ const License = (function getLicense() {
   const licenseStorageKey = 'license';
   const installTimestampStorageKey = 'install_timestamp';
   const statsInIconKey = 'current_show_statsinicon';
+  const userClosedSyncCTAKey = 'user_closed_sync_cta';
+  const userSawSyncCTAKey = 'user_saw_sync_cta';
+  const pageReloadedOnSettingChangeKey = 'page_reloaded_on_user_settings_change';
   const popupMenuCtaClosedKey = 'popup_menu_cta_closed';
+  const showPopupMenuThemesCtaKey = 'popup_menu_themes_cta';
   const licenseAlarmName = 'licenseAlarm';
   let theLicense;
   const fiveMinutes = 300000;
@@ -20980,7 +21058,10 @@ const License = (function getLicense() {
   const licensePromise = new Promise(((resolve) => {
     readyComplete = resolve;
   }));
-
+  const themesForCTA = [
+    'solarized_theme', 'solarized_light_theme', 'watermelon_theme', 'sunshine_theme', 'ocean_theme',
+  ];
+  let currentThemeIndex = 0;
   const mabConfig = {
     prod: {
       licenseURL: 'https://myadblock-licensing.firebaseapp.com/license/',
@@ -21056,6 +21137,11 @@ const License = (function getLicense() {
   return {
     licenseStorageKey,
     popupMenuCtaClosedKey,
+    userClosedSyncCTAKey,
+    userSawSyncCTAKey,
+    showPopupMenuThemesCtaKey,
+    themesForCTA,
+    pageReloadedOnSettingChangeKey,
     initialized,
     licenseAlarmName,
     licenseTimer: undefined, // the license update timer token
@@ -21093,6 +21179,12 @@ const License = (function getLicense() {
         }
         readyComplete();
       });
+    },
+    getCurrentPopupMenuThemeCTA() {
+      const theme = License.themesForCTA[currentThemeIndex];
+      const lastThemeIndex = License.themesForCTA.length - 1;
+      currentThemeIndex = lastThemeIndex === currentThemeIndex ? 0 : currentThemeIndex += 1;
+      return theme || '';
     },
     // Get the latest license data from the server, and talk to the user if needed.
     update() {
@@ -21245,6 +21337,34 @@ const License = (function getLicense() {
     },
     shouldShowMyAdBlockEnrollment() {
       return License.isMyAdBlockEnrolled() && !License.isActiveLicense();
+    },
+    shouldShowBlacklistCTA(newValue) {
+      const currentLicense = License.get() || {};
+      if (typeof newValue === 'boolean') {
+        currentLicense.showBlacklistCTA = newValue;
+        License.set(currentLicense);
+        return null;
+      }
+
+      if (typeof currentLicense.showBlacklistCTA === 'undefined') {
+        currentLicense.showBlacklistCTA = true;
+        License.set(currentLicense);
+      }
+      return License && License.get() && License.get().showBlacklistCTA === true;
+    },
+    shouldShowWhitelistCTA(newValue) {
+      const currentLicense = License.get() || {};
+      if (typeof newValue === 'boolean') {
+        currentLicense.showWhitelistCTA = newValue;
+        License.set(currentLicense);
+        return null;
+      }
+
+      if (typeof currentLicense.showWhitelistCTA === 'undefined') {
+        currentLicense.showWhitelistCTA = true;
+        License.set(currentLicense);
+      }
+      return License && License.get() && License.get().showWhitelistCTA === true;
     },
     displayPopupMenuNewCTA() {
       const isNotActive = !License.isActiveLicense();
@@ -21443,6 +21563,31 @@ License.ready().then(() => {
       if (License.isActiveLicense()) {
         replacedCounts.recordOneAdReplaced(sender.tab.id);
       }
+    }
+  });
+
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.command === 'setBlacklistCTAStatus') {
+      if (typeof request.isEnabled === 'boolean') {
+        License.shouldShowBlacklistCTA(request.isEnabled);
+      }
+      sendResponse({});
+    }
+  });
+
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.command === 'setWhitelistCTAStatus') {
+      if (typeof request.isEnabled === 'boolean') {
+        License.shouldShowWhitelistCTA(request.isEnabled);
+      }
+      sendResponse({});
+    }
+  });
+
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.command === 'openPremiumPayURL') {
+      openTab(License.MAB_CONFIG.payURL);
+      sendResponse({});
     }
   });
 });
